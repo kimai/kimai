@@ -20,18 +20,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Converts normal select boxes into javascript enhanced versions.
  */
-class EnhancedChoiceTypeExtension extends AbstractTypeExtension
+final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
 {
     public const TYPE_SELECTPICKER = 'selectpicker';
 
     /**
      * @var string|null
      */
-    protected $type = null;
+    private $type = null;
 
     public function __construct(ThemeConfiguration $configuration)
     {
-        $this->type = $configuration->getSelectPicker();
+        //$this->type = $configuration->getSelectPicker();
+        $this->type = self::TYPE_SELECTPICKER;
     }
 
     public static function getExtendedTypes(): iterable

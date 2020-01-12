@@ -23,6 +23,9 @@ class ThemeConfiguration implements SystemBundleConfiguration, \ArrayAccess
         return (bool) $this->find('auto_reload_datatable');
     }
 
+    /**
+     * Currently unused, as JS selects are always activated.
+     */
     public function getSelectPicker(): string
     {
         return (string) $this->find('select_type');
