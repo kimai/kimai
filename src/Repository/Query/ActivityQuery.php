@@ -27,7 +27,7 @@ class ActivityQuery extends ProjectQuery
      */
     private $globalsOnly = false;
     /**
-     * @var bool 
+     * @var bool
      */
     private $excludeGlobals = false;
 

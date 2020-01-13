@@ -297,11 +297,11 @@ class ActivityRepository extends EntityRepository
             $orX = $qb->expr()->orX(
                 $qb->expr()->eq('a.project', ':project')
             );
-            
+
             if (!$query->isExcludeGlobals()) {
                 $orX->add($qb->expr()->isNull('a.project'));
             }
-            
+
             $where->add($orX);
             $qb->setParameter('project', $query->getProject());
         } elseif (null !== $query->getCustomer()) {
@@ -348,7 +348,7 @@ class ActivityRepository extends EntityRepository
 
         // this will make sure, that we do not accidentally create results with multiple rows
         //   => which would result in a wrong LIMIT / pagination results
-        // the second group by is needed due to SQL standard (even though logically not really required for this query) 
+        // the second group by is needed due to SQL standard (even though logically not really required for this query)
         $qb->addGroupBy('a.id')->addGroupBy($orderBy);
 
         return $qb;
