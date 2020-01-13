@@ -12,19 +12,17 @@ namespace App\Utils;
 /**
  * A simple class to parse markdown syntax and return HTML.
  */
-class Markdown
+final class Markdown
 {
     /**
      * @var ParsedownExtension
      */
     private $parser;
 
-    /**
-     * Markdown constructor.
-     */
     public function __construct()
     {
         $this->parser = new ParsedownExtension();
+        $this->parser->setUrlsLinked(true);
     }
 
     /**

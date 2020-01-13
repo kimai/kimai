@@ -15,7 +15,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 /**
- * A twig extension to handle markdown parser.
+ * A twig extension to handle markdown content.
  */
 class MarkdownExtension extends AbstractExtension
 {
@@ -26,10 +26,9 @@ class MarkdownExtension extends AbstractExtension
     /**
      * @var TimesheetConfiguration
      */
-    protected $configuration;
+    private $configuration;
 
     /**
-     * MarkdownExtension constructor.
      * @param Markdown $parser
      */
     public function __construct(Markdown $parser, TimesheetConfiguration $configuration)
@@ -46,8 +45,36 @@ class MarkdownExtension extends AbstractExtension
         return [
             new TwigFilter('md2html', [$this, 'markdownToHtml'], ['is_safe' => ['html']]),
             new TwigFilter('desc2html', [$this, 'timesheetContent'], ['is_safe' => ['html']]),
-            new TwigFilter('comment2html', [$this, 'timesheetContent'], ['is_safe' => ['html']]),
+            new TwigFilter('comment2html', [$this, 'commentContent'], ['is_safe' => ['html']]),
         ];
+    }
+
+    /**
+     * Transforms the entities comment (customer, project, activity ...) into HTML.
+     *
+     * @param string $content
+     * @param bool $fullLength
+     * @return string
+     */
+    public function commentContent(?string $content, bool $fullLength = false): string
+    {
+        if (empty($content)) {
+            return '';
+        }
+
+        if (!$fullLength && strlen($content) > 101) {
+            $content = trim(substr($content, 0, 100)) . ' &hellip;';
+        }
+
+        if ($this->configuration->isMarkdownEnabled()) {
+            $content = $this->markdown->toHtml($content, false);
+        } elseif (!$fullLength) {
+            $content = nl2br($content);
+        } else {
+            $content = '<p>' . nl2br($content) . '</p>';
+        }
+
+        return $content;
     }
 
     /**

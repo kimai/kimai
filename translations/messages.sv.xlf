@@ -248,10 +248,6 @@
                 <source>label.customer</source>
                 <target state="translated">Kund</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
-                <target state="translated">Konto</target>
-            </trans-unit>            
             <trans-unit id="label.email">
                 <source>label.email</source>
                 <target state="translated">E-post</target>
@@ -790,10 +786,6 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             <trans-unit id="invoice.total_working_time">
                 <source>invoice.total_working_time</source>            
                 <target state="translated">Total varaktighet</target>
-            </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
-                <target>Ordernummer</target>                
             </trans-unit>
             <trans-unit id="label.orderNumber">
                 <source>label.orderNumber</source>

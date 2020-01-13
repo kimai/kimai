@@ -86,11 +86,15 @@ kimai:
         # mapping complex rule sets of single permissions to named "sets" ("set name" = [array of "permissions and sets"])
         sets:
             ACTIVITIES: ['view_activity','create_activity','edit_activity','budget_activity','delete_activity']
-            ACTIVITIES_TEAM: ['view_activity','create_activity','edit_teamlead_activity','budget_teamlead_activity']
-            PROJECTS: ['view_project','create_project','edit_project','budget_project','delete_project','permissions_project']
-            PROJECTS_TEAM: ['view_project','edit_teamlead_project','budget_teamlead_project','permissions_teamlead_project']
-            CUSTOMERS: ['view_customer','create_customer','edit_customer','budget_customer','delete_customer','permissions_customer']
-            CUSTOMERS_TEAM: ['view_customer','edit_teamlead_customer','budget_teamlead_customer']
+            ACTIVITIES_TEAMLEAD: ['view_activity','create_activity','edit_teamlead_activity','budget_teamlead_activity']
+            PROJECTS: ['view_project','create_project','edit_project','budget_project','delete_project','permissions_project','comments_project','details_project']
+            PROJECTS_ALL_TEAMLEAD: ['view_teamlead_project','edit_teamlead_project','budget_teamlead_project','permissions_teamlead_project','comments_teamlead_project','details_teamlead_project']
+            PROJECTS_ALL_TEAM: ['view_team_project','edit_team_project','budget_team_project','permissions_team_project','comments_team_project','details_team_project']
+            PROJECTS_TEAMLEAD:     ['view_teamlead_project','edit_teamlead_project','budget_teamlead_project','permissions_teamlead_project','comments_teamlead_project','details_teamlead_project']
+            CUSTOMERS: ['view_customer','create_customer','edit_customer','budget_customer','delete_customer','permissions_customer','comments_customer','details_customer']
+            CUSTOMERS_ALL_TEAMLEAD: ['view_teamlead_customer','edit_teamlead_customer','budget_teamlead_customer','permissions_teamlead_customer','comments_teamlead_customer','details_teamlead_customer']
+            CUSTOMERS_ALL_TEAM: ['view_team_customer','edit_team_customer','budget_team_customer','permissions_team_customer','comments_team_customer','details_team_customer']
+            CUSTOMERS_TEAMLEAD: ['view_teamlead_customer','edit_teamlead_customer','budget_teamlead_customer','comments_teamlead_customer','details_teamlead_customer']
             INVOICE: ['view_invoice','create_invoice']
             INVOICE_TEMPLATE: ['manage_invoice_template']
             TIMESHEET: ['view_own_timesheet','start_own_timesheet','stop_own_timesheet','create_own_timesheet','edit_own_timesheet','export_own_timesheet','delete_own_timesheet']
@@ -110,7 +114,7 @@ kimai:
             SINGLE_SUPER_ADMIN: ['hourly-rate_own_profile','hourly-rate_other_profile','delete_own_profile','roles_own_profile','system_information','system_configuration','plugins','edit_exported_timesheet','teams_own_profile','view_team_member']
             # link above sets to one complete set for each user role
             ROLE_USER: ['@TIMESHEET','@PROFILE','@SINGLE_USER']
-            ROLE_TEAMLEAD: ['@ACTIVITIES_TEAM','@PROJECTS_TEAM','@CUSTOMERS_TEAM','@TIMESHEET_OTHER','@INVOICE','@TIMESHEET','@PROFILE','@EXPORT','@TAGS','@SINGLE_TEAMLEAD']
+            ROLE_TEAMLEAD: ['@ACTIVITIES_TEAMLEAD','@PROJECTS_TEAMLEAD','@CUSTOMERS_TEAMLEAD','@TIMESHEET_OTHER','@INVOICE','@TIMESHEET','@PROFILE','@EXPORT','@TAGS','@SINGLE_TEAMLEAD']
             ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_TEMPLATE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_ADMIN']
             ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_TEMPLATE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_SUPER_ADMIN']
         # mapping "sets" or permissions to user roles ("role name" = [array of "set names"])
@@ -119,6 +123,8 @@ kimai:
             ROLE_TEAMLEAD: ['ROLE_TEAMLEAD']
             ROLE_ADMIN: ['ROLE_ADMIN']
             ROLE_SUPER_ADMIN: ['ROLE_SUPER_ADMIN']
+            # only here to register the (partially) unused permissions in the UI
+            ROLE_FAKE: ['CUSTOMERS_ALL_TEAMLEAD','CUSTOMERS_ALL_TEAM','PROJECTS_ALL_TEAMLEAD','PROJECTS_ALL_TEAM']
         # add or remove single permissions
         roles:
             ROLE_USER: []

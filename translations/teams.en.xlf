@@ -14,6 +14,18 @@
                 <source>teams.customer_access</source>
                 <target>Grant access to customers</target>
             </trans-unit>
+            <trans-unit id="team.visibility_global">
+                <source>team.visibility_global</source>
+                <target>Visible to everyone, as no team was assigned yet</target>
+            </trans-unit>
+            <trans-unit id="team.visibility_restricted">
+                <source>team.visibility_restricted</source>
+                <target>Only visible to the following teams and all admins</target>
+            </trans-unit>
+            <trans-unit id="team.create_default">
+                <source>team.create_default</source>
+                <target>Create a new team to prevent global access by all users</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

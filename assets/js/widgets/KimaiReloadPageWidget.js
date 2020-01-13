@@ -13,14 +13,18 @@ import jQuery from "jquery";
 
 export default class KimaiReloadPageWidget {
 
-    constructor(events) {
+    constructor(events, fullReload) {
         this.overlay = jQuery('<div class="overlay-wrapper"><div class="overlay"><div class="fa fa-refresh fa-spin"></div></div></div>');
         this.widget = jQuery('div.content-wrapper');
 
         const self = this;
 
         const reloadPage = function (event) {
-            self.loadPage(document.location);
+            if (fullReload) {
+                document.location.reload(true);
+            } else {
+                self.loadPage(document.location);
+            }
         };
 
         for (const eventName of events.split(' ')) {
@@ -28,8 +32,11 @@ export default class KimaiReloadPageWidget {
         }
     }
     
-    static create(events) {
-        return new KimaiReloadPageWidget(events);
+    static create(events, fullReload) {
+        if (fullReload === undefined || fullReload === null) {
+            fullReload = false;
+        }
+        return new KimaiReloadPageWidget(events, fullReload);
     }
     
     _showOverlay() {
