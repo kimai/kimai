@@ -11,14 +11,12 @@ namespace App\Tests\Controller;
 
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
-use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 
 /**
@@ -69,21 +67,12 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_customer_admin', 5);
     }
 
-    public function testBudgetAction()
+    public function testDetailsAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-
-        $fixture = new TimesheetFixtures();
-        $fixture->setAmount(10);
-        $fixture->setProjects($em->getRepository(Project::class)->findAll());
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_ADMIN));
-        $this->importFixture($em, $fixture);
-
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/customer/1/budget');
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
         self::assertHasProgressbar($client);
+        // TODO add more tests!
     }
 
     public function testCreateAction()
@@ -107,9 +96,8 @@ class CustomerControllerTest extends ControllerBaseTest
                 'name' => 'Test Customer',
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/2/details'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
         $this->assertHasFlashSuccess($client);
     }
 
@@ -137,9 +125,8 @@ class CustomerControllerTest extends ControllerBaseTest
                 'name' => 'Test Customer 2'
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
         $this->request($client, '/admin/customer/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
         $this->assertEquals('Test Customer 2', $editForm->get('customer_edit_form[name]')->getValue());

@@ -69,7 +69,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_project_admin', 5);
     }
 
-    public function testBudgetAction()
+    public function testDetailsAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
@@ -82,8 +82,9 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->importFixture($em, $fixture);
 
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/project/1/budget');
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
         self::assertHasProgressbar($client);
+        // TODO add more tests!
     }
 
     public function testCreateAction()

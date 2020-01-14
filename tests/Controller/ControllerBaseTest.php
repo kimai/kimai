@@ -299,7 +299,7 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertHasFlashSuccess(Client $client, string $message = null)
     {
         $node = $client->getCrawler()->filter('div.alert.alert-success.alert-dismissible');
-        self::assertNotEmpty($node->text());
+        self::assertNotEmpty($node->text(), 'Could not find flash success message');
         if (null !== $message) {
             self::assertStringContainsString($message, $node->text());
         }

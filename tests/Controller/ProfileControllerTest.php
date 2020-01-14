@@ -88,7 +88,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
 
         $this->assertStringContainsString('<h3 class="box-title">About me</h3>', $content);
-        $this->assertStringContainsString('<span class="pull-right badge bg-blue">' . $username . '</span>', $content);
+        $this->assertStringContainsString('<td class="text-nowrap pull-right">' . $username . '</td>', $content);
     }
 
     public function getTabTestData()
