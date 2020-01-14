@@ -399,14 +399,14 @@
                         {% endif %}
                     {% endfor %}
                     <th class="text-nowrap column-duration">
-                        {{ timeWorked|duration }}
+                        {{- timeWorked|duration -}}
                     </th>
                     <th class="text-nowrap column-rate">
-                        {% if currency is not null and currency is not same as(false) %}
+                        {%- if currency is not null and currency is not same as(false) %}
                             {{ rateTotal|money(currency) }}
                         {% else %}
                             {{ rateTotal|money }}
-                        {% endif %}
+                        {% endif -%}
                     </th>
                 </tr>
                 </tbody>
