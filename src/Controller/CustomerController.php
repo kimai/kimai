@@ -60,11 +60,6 @@ final class CustomerController extends AbstractController
         $this->dispatcher = $dispatcher;
     }
 
-    private function getRepository(): CustomerRepository
-    {
-        return $this->repository;
-    }
-
     /**
      * @Route(path="/", defaults={"page": 1}, name="admin_customer", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_customer_paginated", methods={"GET"})
@@ -83,7 +78,7 @@ final class CustomerController extends AbstractController
             $query->resetByFormError($form->getErrors());
         }
 
-        $entries = $this->getRepository()->getPagerfantaForQuery($query);
+        $entries = $this->repository->getPagerfantaForQuery($query);
 
         return $this->render('customer/index.html.twig', [
             'entries' => $entries,
@@ -139,7 +134,7 @@ final class CustomerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->getRepository()->saveCustomer($customer);
+                $this->repository->saveCustomer($customer);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_customer');
@@ -163,7 +158,7 @@ final class CustomerController extends AbstractController
         $customerId = $comment->getCustomer()->getId();
 
         try {
-            $this->getRepository()->deleteComment($comment);
+            $this->repository->deleteComment($comment);
         } catch (\Exception $ex) {
             $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
         }
@@ -184,7 +179,7 @@ final class CustomerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->getRepository()->saveComment($comment);
+                $this->repository->saveComment($comment);
             } catch (\Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
@@ -201,7 +196,7 @@ final class CustomerController extends AbstractController
     {
         $comment->setPinned(!$comment->isPinned());
         try {
-            $this->getRepository()->saveComment($comment);
+            $this->repository->saveComment($comment);
         } catch (\Exception $ex) {
             $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
         }
@@ -289,7 +284,7 @@ final class CustomerController extends AbstractController
         }
 
         if ($this->isGranted('budget', $customer)) {
-            $stats = $this->getRepository()->getCustomerStatistics($customer);
+            $stats = $this->repository->getCustomerStatistics($customer);
         }
 
         if ($this->isGranted('comments', $customer)) {
@@ -327,7 +322,7 @@ final class CustomerController extends AbstractController
      */
     public function deleteAction(Customer $customer, Request $request)
     {
-        $stats = $this->getRepository()->getCustomerStatistics($customer);
+        $stats = $this->repository->getCustomerStatistics($customer);
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
@@ -355,7 +350,7 @@ final class CustomerController extends AbstractController
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
-                $this->getRepository()->deleteCustomer($customer, $deleteForm->get('customer')->getData());
+                $this->repository->deleteCustomer($customer, $deleteForm->get('customer')->getData());
                 $this->flashSuccess('action.delete.success');
             } catch (ORMException $ex) {
                 $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
@@ -384,7 +379,7 @@ final class CustomerController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->getRepository()->saveCustomer($customer);
+                $this->repository->saveCustomer($customer);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);

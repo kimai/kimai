@@ -19,21 +19,17 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 class ProjectVoter extends AbstractVoter
 {
-    public const VIEW = 'view';
-    public const EDIT = 'edit';
-    public const BUDGET = 'budget';
-    public const DELETE = 'delete';
-    public const PERMISSIONS = 'permissions';
-
     /**
-     * support rules based on the given $subject (here: Project)
+     * support rules based on the given project
      */
     public const ALLOWED_ATTRIBUTES = [
-        self::VIEW,
-        self::EDIT,
-        self::BUDGET,
-        self::DELETE,
-        self::PERMISSIONS,
+        'view',
+        'edit',
+        'budget',
+        'delete',
+        'permissions',
+        'comments',
+        'details',
     ];
 
     /**
@@ -72,12 +68,24 @@ class ProjectVoter extends AbstractVoter
             return true;
         }
 
+        // those cannot be assigned to teams
+        if (in_array($attribute, ['create', 'delete'])) {
+            return false;
+        }
+
         $hasTeamleadPermission = $this->hasRolePermission($user, $attribute . '_teamlead_project');
         $hasTeamPermission = $this->hasRolePermission($user, $attribute . '_team_project');
 
         if (!$hasTeamleadPermission && !$hasTeamPermission) {
             return false;
         }
+
+        // global projects don't have teams, add something like 'edit_global_project'?
+        /*
+        if ($subject->getTeams()->count() === 0 && null !== $customer && $customer->getTeams()->count() === 0) {
+            return true;
+        }
+        */
 
         /** @var Team $team */
         foreach ($subject->getTeams() as $team) {
@@ -90,8 +98,10 @@ class ProjectVoter extends AbstractVoter
             }
         }
 
+        $customer = $subject->getCustomer();
+
         // new projects have no customer
-        if (null === ($customer = $subject->getCustomer())) {
+        if (null === $customer) {
             return false;
         }
 

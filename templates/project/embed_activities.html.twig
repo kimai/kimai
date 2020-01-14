@@ -1,0 +1,25 @@
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'project': project, 'activities': activities, 'page': page} %}
+    {% import "activity/actions.html.twig" as actions %}
+    {% block box_title %}{{ 'menu.admin_activity'|trans }}{% endblock %}
+    {% block box_attributes %}
+        id="activity_list_for_{{ project.id }}"  data-href="{{ path('project_activities', {'id': project.id}) }}" data-reload="kimai.activityUpdate"
+    {% endblock %}
+    {% block box_tools %}
+        {{ pagerfanta(activities, 'twitter_bootstrap3_translated', { proximity: 1, css_container_class: 'pagination pagination-sm inline', routeName: 'project_activities', routeParams: {'id': project.id} }) }}
+    {% endblock %}
+    {% block box_body_class %}no-padding{% endblock %}
+    {% block box_tools_attributes %}data-page="{{ page }}"{% endblock %}
+    {% block box_body %}
+        <table class="table table-hover dataTable">
+        {% for activity in activities %}
+            <tr>
+                <td>{{ activity.name }}</td>
+                <td class="actions">{{ actions.activity(activity, 'custom') }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% endblock %}
+{% endembed %}
+<script type="text/javascript">
+    KimaiPaginatedBoxWidget.create('#activity_list_for_{{ project.id }}');
+</script>

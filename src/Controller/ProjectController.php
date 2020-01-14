@@ -13,16 +13,21 @@ use App\Configuration\FormConfiguration;
 use App\Entity\Customer;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
+use App\Entity\ProjectComment;
+use App\Entity\Team;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Event\ProjectMetaDisplayEvent;
+use App\Form\ProjectCommentForm;
 use App\Form\ProjectEditForm;
 use App\Form\ProjectTeamPermissionForm;
 use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
+use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
-use Doctrine\ORM\ORMException;
+use App\Repository\TeamRepository;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -33,12 +38,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Controller used to manage projects in the admin part of the site.
+ * Controller used to manage projects.
  *
  * @Route(path="/admin/project")
- * @Security("is_granted('view_project')")
+ * @Security("is_granted('view_project') or is_granted('view_teamlead_project') or is_granted('view_team_project')")
  */
-class ProjectController extends AbstractController
+final class ProjectController extends AbstractController
 {
     /**
      * @var ProjectRepository
@@ -51,7 +56,7 @@ class ProjectController extends AbstractController
     /**
      * @var EventDispatcherInterface
      */
-    protected $dispatcher;
+    private $dispatcher;
 
     public function __construct(ProjectRepository $repository, FormConfiguration $configuration, EventDispatcherInterface $dispatcher)
     {
@@ -60,15 +65,9 @@ class ProjectController extends AbstractController
         $this->dispatcher = $dispatcher;
     }
 
-    protected function getRepository(): ProjectRepository
-    {
-        return $this->repository;
-    }
-
     /**
      * @Route(path="/", defaults={"page": 1}, name="admin_project", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_project_paginated", methods={"GET"})
-     * @Security("is_granted('view_project')")
      */
     public function indexAction($page, Request $request)
     {
@@ -85,7 +84,7 @@ class ProjectController extends AbstractController
         }
 
         /* @var $entries Pagerfanta */
-        $entries = $this->getRepository()->getPagerfantaForQuery($query);
+        $entries = $this->repository->getPagerfantaForQuery($query);
 
         return $this->render('project/index.html.twig', [
             'entries' => $entries,
@@ -122,11 +121,11 @@ class ProjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->getRepository()->saveProject($project);
+                $this->repository->saveProject($project);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_project');
-            } catch (ORMException $ex) {
+            } catch (\Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
         }
@@ -154,18 +153,154 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/budget", name="admin_project_budget", methods={"GET"})
-     * @Security("is_granted('budget', project)")
+     * @Route(path="/{id}/comment_delete", name="project_comment_delete", methods={"GET"})
+     * @Security("is_granted('edit', comment.getProject())")
      */
-    public function budgetAction(Project $project)
+    public function deleteCommentAction(ProjectComment $comment)
     {
-        $stats = $this->getRepository()->getProjectStatistics($project);
+        $projectId = $comment->getProject()->getId();
 
-        // TODO sent event with stats
+        try {
+            $this->repository->deleteComment($comment);
+        } catch (\Exception $ex) {
+            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+        }
 
-        return $this->render('project/budget.html.twig', [
+        return $this->redirectToRoute('project_details', ['id' => $projectId]);
+    }
+
+    /**
+     * @Route(path="/{id}/comment_add", name="project_comment_add", methods={"POST"})
+     * @Security("is_granted('edit', project)")
+     */
+    public function addCommentAction(Project $project, Request $request)
+    {
+        $comment = new ProjectComment();
+        $form = $this->getCommentForm($project, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->repository->saveComment($comment);
+            } catch (\Exception $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+    }
+
+    /**
+     * @Route(path="/{id}/comment_pin", name="project_comment_pin", methods={"GET"})
+     * @Security("is_granted('edit', comment.getProject())")
+     */
+    public function pinCommentAction(ProjectComment $comment)
+    {
+        $comment->setPinned(!$comment->isPinned());
+        try {
+            $this->repository->saveComment($comment);
+        } catch (\Exception $ex) {
+            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+        }
+
+        return $this->redirectToRoute('project_details', ['id' => $comment->getProject()->getId()]);
+    }
+
+    /**
+     * @Route(path="/{id}/create_team", name="project_team_create", methods={"GET"})
+     * @Security("is_granted('create_team') and is_granted('edit', project)")
+     */
+    public function createDefaultTeamAction(Project $project, TeamRepository $teamRepository)
+    {
+        $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
+        if (null !== $defaultTeam) {
+            $this->flashError('action.update.error', ['%reason%' => 'Team already existing']);
+
+            return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+        }
+
+        $defaultTeam = new Team();
+        $defaultTeam->setName($project->getName());
+        $defaultTeam->setTeamLead($this->getUser());
+        $defaultTeam->addProject($project);
+
+        try {
+            $teamRepository->saveTeam($defaultTeam);
+        } catch (\Exception $ex) {
+            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+        }
+
+        return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+    }
+
+    /**
+     * @Route(path="/{id}/activities/{page}", defaults={"page": 1}, name="project_activities", methods={"GET", "POST"})
+     * @Security("is_granted('view', project)")
+     */
+    public function activitiesAction(Project $project, int $page, ActivityRepository $activityRepository)
+    {
+        $query = new ActivityQuery();
+        $query->setCurrentUser($this->getUser());
+        $query->setPage($page);
+        $query->setPageSize(5);
+        $query->setProject($project);
+        $query->setExcludeGlobals(true);
+
+        /* @var $entries Pagerfanta */
+        $entries = $activityRepository->getPagerfantaForQuery($query);
+
+        return $this->render('project/embed_activities.html.twig', [
             'project' => $project,
-            'stats' => $stats
+            'activities' => $entries,
+            'page' => $page,
+        ]);
+    }
+
+    /**
+     * @Route(path="/{id}/details", name="project_details", methods={"GET", "POST"})
+     * @Security("is_granted('view', project)")
+     */
+    public function detailsAction(Project $project, TeamRepository $teamRepository)
+    {
+        $event = new ProjectMetaDefinitionEvent($project);
+        $this->dispatcher->dispatch($event);
+
+        $stats = null;
+        $defaultTeam = null;
+        $commentForm = null;
+        $attachments = [];
+        $comments = null;
+        $teams = null;
+
+        if ($this->isGranted('edit', $project)) {
+            $commentForm = $this->getCommentForm($project, new ProjectComment())->createView();
+
+            if ($this->isGranted('create_team')) {
+                $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
+            }
+        }
+
+        if ($this->isGranted('budget', $project)) {
+            $stats = $this->repository->getProjectStatistics($project);
+        }
+
+        if ($this->isGranted('comments', $project)) {
+            $comments = $this->repository->getComments($project);
+        }
+
+        if ($this->isGranted('permissions', $project) || $this->isGranted('details', $project) || $this->isGranted('view_team')) {
+            $teams = $project->getTeams();
+        }
+
+        return $this->render('project/details.html.twig', [
+            'project' => $project,
+            'comments' => $comments,
+            'commentForm' => $commentForm,
+            'attachments' => $attachments,
+            'stats' => $stats,
+            'team' => $defaultTeam,
+            'teams' => $teams,
         ]);
     }
 
@@ -184,7 +319,7 @@ class ProjectController extends AbstractController
      */
     public function deleteAction(Project $project, Request $request)
     {
-        $stats = $this->getRepository()->getProjectStatistics($project);
+        $stats = $this->repository->getProjectStatistics($project);
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
@@ -213,9 +348,9 @@ class ProjectController extends AbstractController
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
-                $this->getRepository()->deleteProject($project, $deleteForm->get('project')->getData());
+                $this->repository->deleteProject($project, $deleteForm->get('project')->getData());
                 $this->flashSuccess('action.delete.success');
-            } catch (ORMException $ex) {
+            } catch (\Exception $ex) {
                 $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
             }
 
@@ -234,17 +369,14 @@ class ProjectController extends AbstractController
      * @param Request $request
      * @return RedirectResponse|Response
      */
-    protected function renderProjectForm(Project $project, Request $request)
+    private function renderProjectForm(Project $project, Request $request)
     {
-        $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event);
-
         $editForm = $this->createEditForm($project);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->getRepository()->saveProject($project);
+                $this->repository->saveProject($project);
                 $this->flashSuccess('action.update.success');
 
                 if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
@@ -256,7 +388,7 @@ class ProjectController extends AbstractController
                 } else {
                     return $this->redirectToRoute('admin_project');
                 }
-            } catch (ORMException $ex) {
+            } catch (\Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
         }
@@ -277,8 +409,24 @@ class ProjectController extends AbstractController
         ]);
     }
 
+    private function getCommentForm(Project $project, ProjectComment $comment): FormInterface
+    {
+        if (null === $comment->getId()) {
+            $comment->setProject($project);
+            $comment->setCreatedBy($this->getUser());
+        }
+
+        return $this->createForm(ProjectCommentForm::class, $comment, [
+            'action' => $this->generateUrl('project_comment_add', ['id' => $project->getId()]),
+            'method' => 'POST',
+        ]);
+    }
+
     private function createEditForm(Project $project): FormInterface
     {
+        $event = new ProjectMetaDefinitionEvent($project);
+        $this->dispatcher->dispatch($event);
+
         $currency = $this->configuration->getCustomerDefaultCurrency();
         $url = $this->generateUrl('admin_project_create');
 
