@@ -197,7 +197,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertDataTableRowCount(Client $client, string $id, int $count)
     {
-        $node = $client->getCrawler()->filter('section.content div#' . $id . ' table.table-striped tbody tr');
+        $node = $client->getCrawler()->filter('section.content div#' . $id . ' table.table-striped tbody tr:not(.summary)');
         self::assertEquals($count, $node->count());
     }
 
