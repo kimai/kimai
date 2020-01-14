@@ -98,10 +98,8 @@ class ProjectVoter extends AbstractVoter
             }
         }
 
-        $customer = $subject->getCustomer();
-
         // new projects have no customer
-        if (null === $customer) {
+        if (null === ($customer = $subject->getCustomer())) {
             return false;
         }
 

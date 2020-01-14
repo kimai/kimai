@@ -23,9 +23,9 @@ If you are using teams, please read on: The following list of permissions are no
 They are more strict, as they allow only access to team specific items, the older permissions without `_teamlead_`/`_team_` work on a global level instead.
   
 - `view_teamlead_customer`, `edit_teamlead_customer`, `budget_teamlead_customer`, `permissions_teamlead_customer`, `comments_teamlead_customer`, `details_teamlead_customer` - allows access to customer data when user is teamlead of a team assigned to the customer (replaces more global permission like `view_customer` for teamleads)
-- `view_team_customer`, `edit_team_customer`, `budget_team_customer`, `permissions_team_customer`, `comments_team_customer`, `details_team_customer` - allows access to customer data when user is member of a team assigned to the customer (replaces more global permission like `view_customer` for users)
+- `view_team_customer`, `edit_team_customer`, `budget_team_customer`, `comments_team_customer`, `details_team_customer` - allows access to customer data when user is member of a team assigned to the customer (replaces more global permission like `view_customer` for users)
 - `view_teamlead_project`, `edit_teamlead_project`, `budget_teamlead_project`, `permissions_teamlead_project`, `comments_teamlead_project`, `details_teamlead_project` - allows access to customer data when user is teamlead of a team assigned to the project (replaces more global permission like `view_project` for teamleads)
-- `view_team_project`, `edit_team_project`, `budget_team_project`, `permissions_team_project`, `comments_team_project`, `details_team_project` - allows access to customer data when user is member of a team assigned to the project (replaces more global permission like `view_project` for users)
+- `view_team_project`, `edit_team_project`, `budget_team_project`, `comments_team_project`, `details_team_project` - allows access to customer data when user is member of a team assigned to the project (replaces more global permission like `view_project` for users)
 
 ### ExpenseBundle
 
