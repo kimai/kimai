@@ -1,0 +1,21 @@
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'customer': customer, 'stats': stats} %}
+    {% import "macros/progressbar.html.twig" as progress %}
+    {% block box_title %}{{ 'label.budget'|trans }}{% endblock %}
+    {% block box_body %}
+        {% set params = {
+            '%activity%': '<strong>' ~ stats.activityAmount ~ '</strong>',
+            '%project%': '<strong>' ~ stats.projectAmount ~ '</strong>',
+            '%customer%': '<strong>' ~ customer.name ~ '</strong>',
+            '%records%': '<strong>' ~ stats.recordAmount ~ '</strong>',
+            '%duration%': '<strong>' ~ stats.recordDuration|duration ~ '</strong>',
+            '%rate%': '<strong>' ~ stats.recordRate|money ~ '</strong>'
+        } %}
+
+        <p>
+            {{ 'admin_customer.short_stats'|trans(params)|raw }}
+        </p>
+
+        {{ progress.progressbar(customer.budget, stats.recordRate, 'label.budget'|trans, stats.recordRate|money(customer.currency) ~ ' / ' ~ customer.budget|money(customer.currency) ) }}
+        {{ progress.progressbar(customer.timeBudget, stats.recordDuration, 'label.timeBudget'|trans, stats.recordDuration|duration ~ ' / ' ~ customer.timeBudget|duration ) }}
+    {% endblock %}
+{% endembed %}

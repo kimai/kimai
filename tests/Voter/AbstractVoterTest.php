@@ -14,7 +14,6 @@ use App\Repository\RolePermissionRepository;
 use App\Security\AclDecisionManager;
 use App\Security\RolePermissionManager;
 use App\Voter\AbstractVoter;
-use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractVoterTest extends TestCase
@@ -41,20 +40,23 @@ abstract class AbstractVoterTest extends TestCase
 
     /**
      * @param int $id
-     * @param string $role
+     * @param string|null $role
      * @return User
      */
-    protected function getUser($id, $role)
+    protected function getUser($id, ?string $role)
     {
         $roles = [];
         if (!empty($role)) {
             $roles[] = $role;
         }
 
-        $user = $this->getMockBuilder(User::class)->getMock();
-        $user->method('getId')->willReturn($id);
-        $user->method('getRoles')->willReturn($roles);
-        $user->method('getTeams')->willReturn(new ArrayCollection());
+        $user = new User();
+        $user->setRoles($roles);
+
+        $reflection = new \ReflectionClass($user);
+        $property = $reflection->getProperty('id');
+        $property->setAccessible(true);
+        $property->setValue($user, $id);
 
         return $user;
     }
@@ -69,10 +71,10 @@ abstract class AbstractVoterTest extends TestCase
         if (!$overwrite) {
             $activities = ['view_activity', 'edit_activity', 'budget_activity', 'delete_activity', 'create_activity'];
             $activitiesTeam = ['view_activity', 'create_activity', 'edit_teamlead_activity', 'budget_teamlead_activity'];
-            $projects = ['view_project', 'edit_project', 'budget_project', 'delete_project', 'create_project'];
-            $projectsTeam = ['view_project', 'edit_teamlead_project', 'budget_teamlead_project', 'permissions_teamlead_project'];
-            $customers = ['view_customer', 'edit_customer', 'budget_customer', 'delete_customer', 'create_customer'];
-            $customersTeam = ['view_customer', 'edit_teamlead_customer', 'budget_teamlead_customer'];
+            $projects = ['view_project', 'create_project', 'edit_project', 'budget_project', 'delete_project', 'permissions_project', 'comments_project', 'details_project'];
+            $projectsTeam = ['view_teamlead_project', 'edit_teamlead_project', 'budget_teamlead_project', 'permissions_teamlead_project', 'comments_teamlead_project', 'details_teamlead_project'];
+            $customers = ['view_customer', 'create_customer', 'edit_customer', 'budget_customer', 'delete_customer', 'permissions_customer', 'comments_customer', 'details_customer'];
+            $customersTeam = ['view_teamlead_customer', 'edit_teamlead_customer', 'budget_teamlead_customer', 'comments_teamlead_customer', 'details_teamlead_customer'];
             $invoice = ['view_invoice', 'create_invoice'];
             $invoiceTemplate = ['manage_invoice_template'];
             $timesheet = ['view_own_timesheet', 'start_own_timesheet', 'stop_own_timesheet', 'create_own_timesheet', 'edit_own_timesheet', 'export_own_timesheet', 'delete_own_timesheet'];

@@ -9,7 +9,6 @@
 
 namespace App\Form\Extension;
 
-use App\Configuration\ThemeConfiguration;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,15 +24,9 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
     public const TYPE_SELECTPICKER = 'selectpicker';
 
     /**
-     * @var string|null
+     * @var string
      */
-    private $type = null;
-
-    public function __construct(ThemeConfiguration $configuration)
-    {
-        //$this->type = $configuration->getSelectPicker();
-        $this->type = self::TYPE_SELECTPICKER;
-    }
+    private $type = self::TYPE_SELECTPICKER;
 
     public static function getExtendedTypes(): iterable
     {
