@@ -51,6 +51,29 @@
         document.getElementById('summary-show').addEventListener('click', function(event) {
             document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
         });
+        document.getElementById('summary-duration').addEventListener('click', function(event) {
+            if (!document.getElementById('summary-rate').checked) {
+                return;
+            }
+            document.getElementById('summary-rate').disabled = !event.target.checked;
+            var cells = document.getElementsByClassName('summary-duration');
+            for (var columnCell of cells) {
+                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+            }
+        });
+        document.getElementById('summary-rate').addEventListener('click', function(event) {
+            if (!document.getElementById('summary-duration').checked) {
+                return;
+            }
+            document.getElementById('summary-duration').disabled = !event.target.checked;
+            var cells = document.getElementsByClassName('summary-rate');
+            for (var columnCell of cells) {
+                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+            }
+        });
+        document.getElementById('summary-show').addEventListener('click', function(event) {
+            document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
+        });
         document.getElementById('records-show').addEventListener('click', function(event) {
             document.getElementById('export-records').style.display = event.target.checked ? 'block' : 'none';
         });
@@ -107,6 +130,18 @@
                         {{ 'label.activity'|trans }}
                     </label>
                 </div>
+                <div class="form-group">
+                    <label class="control-label" for="summary-duration">
+                        <input type="checkbox" id="summary-duration" name="summary-duration" checked>
+                        {{ 'label.duration'|trans }}
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="summary-rate">
+                        <input type="checkbox" id="summary-rate" name="summary-rate" checked>
+                        {{ 'label.rate'|trans }}
+                    </label>
+                </div>
             </form>
 
             <form class="navbar-form">
@@ -149,8 +184,8 @@
                 <tr>
                     <th>{{ 'label.customer'|trans }}</th>
                     <th>{{ 'label.project'|trans }}</th>
-                    <th class="duration">{{ 'label.duration'|trans }}</th>
-                    <th class="cost">{{ 'label.rate'|trans }}</th>
+                    <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
+                    <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -166,8 +201,8 @@
                     {% if customer is not same as(summary.customer) %}
                         <tr class="summary">
                             <td colspan="2"></td>
-                            <td class="totals duration">{{ customerDuration|duration }}</td>
-                            <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                            <td class="totals duration summary-duration">{{ customerDuration|duration }}</td>
+                            <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                         </tr>
                         {% set customerCurrency = summary.currency %}
                         {% set customer = summary.customer %}
@@ -177,8 +212,8 @@
                     <tr>
                         <td>{{ summary.customer }}</td>
                         <td>{{ summary.project }}</td>
-                        <td class="duration">{{ summary.duration|duration }}</td>
-                        <td class="cost">{{ summary.rate|money(summary.currency) }}</td>
+                        <td class="duration summary-duration">{{ summary.duration|duration }}</td>
+                        <td class="cost summary-rate">{{ summary.rate|money(summary.currency) }}</td>
                     </tr>
                     {% set customerDuration = customerDuration + summary.duration %}
                     {% set customerRate = customerRate + summary.rate %}
@@ -186,8 +221,8 @@
                 {% if customer is not same as(null) %}
                     <tr class="summary">
                         <td colspan="2"></td>
-                        <td class="totals duration">{{ customerDuration|duration }}</td>
-                        <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                        <td class="totals duration summary-duration">{{ customerDuration|duration }}</td>
+                        <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
                 {% endif %}
                 </tbody>
@@ -199,8 +234,8 @@
                     <th>{{ 'label.customer'|trans }}</th>
                     <th>{{ 'label.project'|trans }}</th>
                     <th>{{ 'label.activity'|trans }}</th>
-                    <th class="duration">{{ 'label.duration'|trans }}</th>
-                    <th class="cost">{{ 'label.rate'|trans }}</th>
+                    <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
+                    <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -216,8 +251,8 @@
                 {% if customer is not same as(summary.customer) %}
                     <tr class="summary">
                         <td colspan="3"></td>
-                        <td class="totals duration">{{ customerDuration|duration }}</td>
-                        <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                        <td class="totals duration summary-duration">{{ customerDuration|duration }}</td>
+                        <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
                     {% set customerCurrency = summary.currency %}
                     {% set customer = summary.customer %}
@@ -229,8 +264,8 @@
                     <td>{{ summary.customer }}</td>
                     <td>{{ summary.project }}</td>
                     <td>{{ activitySummary.activity }}</td>
-                    <td class="duration">{{ activitySummary.duration|duration }}</td>
-                    <td class="cost">{{ activitySummary.rate|money(activitySummary.currency) }}</td>
+                    <td class="duration summary-duration">{{ activitySummary.duration|duration }}</td>
+                    <td class="cost summary-rate">{{ activitySummary.rate|money(activitySummary.currency) }}</td>
                 </tr>
                 {% endfor %}
                 {% set customerDuration = customerDuration + summary.duration %}
@@ -239,8 +274,8 @@
                 {% if customer is not same as(null) %}
                     <tr class="summary">
                         <td colspan="3"></td>
-                        <td class="totals duration">{{ customerDuration|duration }}</td>
-                        <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                        <td class="totals duration summary-duration">{{ customerDuration|duration }}</td>
+                        <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
                 {% endif %}
                 </tbody>
