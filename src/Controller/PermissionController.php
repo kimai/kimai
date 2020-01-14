@@ -75,9 +75,69 @@ final class PermissionController extends AbstractController
             }
         }
 
+        // be careful, the order of the search keys is important!
+        $permissionOrder = [
+            'Audit' => 'audit_',
+            'User' => '_user',
+            'User profile (own)' => '_own_profile',
+            'User profile (other)' => '_other_profile',
+            'Customer (Teamlead)' => '_teamlead_customer',
+            'Customer (Team member)' => '_team_customer',
+            'Customer (Admin)' => '_customer',
+            'Project (Teamlead)' => '_teamlead_project',
+            'Project (Team member)' => '_team_project',
+            'Project (Admin)' => '_project',
+            'Activity' => '_activity',
+            'Timesheet (own)' => '_own_timesheet',
+            'Timesheet (other)' => '_other_timesheet',
+            'Invoice' => '_invoice',
+            'Teams' => '_team',
+            'Tags' => '_tag',
+            'Expense' => '_expense',
+            'Task' => 'task_',
+        ];
+        $permissionSorted = [];
+        $other = [];
+
+        foreach ($permissionOrder as $title => $search) {
+            $permissionSorted[$title] = [];
+        }
+
+        foreach ($this->manager->getPermissions() as $permission) {
+            $found = false;
+
+            foreach ($permissionOrder as $title => $search) {
+                if (strpos($permission, $search) !== false) {
+                    $permissionSorted[$title][] = $permission;
+                    $found = true;
+                    break;
+                }
+            }
+
+            if (!$found) {
+                $other[] = $permission;
+            }
+        }
+
+        ksort($permissionSorted);
+
+        $permissionSorted['Other'] = $other;
+
+        // order the roles from most powerful to least powerful, custom roles at the end
+        $roles = [
+            'ROLE_SUPER_ADMIN' => null,
+            'ROLE_ADMIN' => null,
+            'ROLE_TEAMLEAD' => null,
+            'ROLE_USER' => null,
+        ];
+        foreach ($this->roleRepository->findAll() as $role) {
+            $roles[$role->getName()] = $role;
+        }
+
         return $this->render('user/permissions.html.twig', [
-            'roles' => $this->roleRepository->findAll(),
+            'roles' => array_values($roles),
             'permissions' => $this->manager->getPermissions(),
+            'sorted' => $permissionSorted,
             'manager' => $this->manager,
             'system_roles' => $this->roleService->getSystemRoles(),
         ]);
