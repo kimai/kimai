@@ -9,17 +9,16 @@
 
 namespace App\Tests\Entity;
 
-use App\Entity\CommentTableTypeTrait;
+use App\Entity\CommentInterface;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractCommentEntityTest extends TestCase
 {
-    abstract protected function getEntity();
+    abstract protected function getEntity(): CommentInterface;
 
     public function testDefaultValues()
     {
-        /** @var CommentTableTypeTrait $sut */
         $sut = $this->getEntity();
 
         self::assertNull($sut->getId());
@@ -32,7 +31,6 @@ abstract class AbstractCommentEntityTest extends TestCase
 
     public function testSetterAndGetter()
     {
-        /** @var CommentTableTypeTrait $sut */
         $sut = $this->getEntity();
 
         $sut->setPinned(true);

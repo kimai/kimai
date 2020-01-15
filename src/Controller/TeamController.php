@@ -16,7 +16,6 @@ use App\Form\TeamProjectForm;
 use App\Form\Toolbar\TeamToolbarForm;
 use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
-use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,7 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route(path="/admin/teams")
  * @Security("is_granted('view_team')")
  */
-class TeamController extends AbstractController
+final class TeamController extends AbstractController
 {
     /**
      * @var TeamRepository
@@ -116,7 +115,7 @@ class TeamController extends AbstractController
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-            } catch (ORMException $ex) {
+            } catch (\Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
         }
@@ -156,7 +155,7 @@ class TeamController extends AbstractController
                     $this->flashSuccess('action.update.success');
 
                     return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                } catch (ORMException $ex) {
+                } catch (\Exception $ex) {
                     $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
                 }
             }
@@ -176,7 +175,7 @@ class TeamController extends AbstractController
                         $this->flashSuccess('action.update.success');
 
                         return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                    } catch (ORMException $ex) {
+                    } catch (\Exception $ex) {
                         $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
                     }
                 }
@@ -195,7 +194,7 @@ class TeamController extends AbstractController
                         $this->flashSuccess('action.update.success');
 
                         return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                    } catch (ORMException $ex) {
+                    } catch (\Exception $ex) {
                         $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
                     }
                 }

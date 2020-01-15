@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\CommentInterface;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 
@@ -18,7 +19,7 @@ use App\Entity\CustomerComment;
  */
 class CustomerCommentTest extends AbstractCommentEntityTest
 {
-    protected function getEntity()
+    protected function getEntity(): CommentInterface
     {
         return new CustomerComment();
     }

@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  */
-class CustomerComment
+class CustomerComment implements CommentInterface
 {
     use CommentTableTypeTrait;
 

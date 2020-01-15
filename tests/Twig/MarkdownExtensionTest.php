@@ -86,7 +86,7 @@ class MarkdownExtensionTest extends TestCase
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals(
             "<ul>\n<li>test</li>\n<li>foo</li>\n</ul>\n<p>foo <strong>bar</strong></p>",
-            $sut->timesheetContent("- test\n- foo\n\nfoo __bar__")
+            $sut->commentContent("- test\n- foo\n\nfoo __bar__")
         );
     }
 }
