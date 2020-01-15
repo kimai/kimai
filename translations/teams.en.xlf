@@ -16,15 +16,19 @@
             </trans-unit>
             <trans-unit id="team.visibility_global">
                 <source>team.visibility_global</source>
-                <target>Visible to everyone, as no team was assigned yet</target>
+                <target>Visible to everyone, as no team was assigned yet.</target>
             </trans-unit>
             <trans-unit id="team.visibility_restricted">
                 <source>team.visibility_restricted</source>
-                <target>Only visible to the following teams and all admins</target>
+                <target>Only visible to the following teams and all admins.</target>
+            </trans-unit>
+            <trans-unit id="team.project_visibility_inherited">
+                <source>team.project_visibility_inherited</source>
+                <target>The project has limited access, because team permissions are set for the customer.</target>
             </trans-unit>
             <trans-unit id="team.create_default">
                 <source>team.create_default</source>
-                <target>Create a new team to prevent global access by all users</target>
+                <target>Create a new team to limit access</target>
             </trans-unit>
         </body>
     </file>

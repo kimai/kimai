@@ -1,4 +1,13 @@
-{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'teams': teams, 'team': team|default(null), 'route_create': route_create|default(null), 'route_edit': route_edit|default(null)} %}
+{% 
+    set options = {
+        'teams': teams, 
+        'team': team|default(null), 
+        'route_create': route_create|default(null), 
+        'route_edit': route_edit|default(null), 
+        'empty_message': empty_message|default('team.visibility_global')
+    } 
+%}
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' with options %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_tools %}
         {% if teams|length == 0 and team is null and route_create is not null and is_granted('create_team') %}
@@ -16,7 +25,7 @@
             <p>{{ 'team.visibility_restricted'|trans({}, 'teams') }}</p>
             {{ widgets.team_list(teams) }}
         {% else %}
-            <p>{{ 'team.visibility_global'|trans({}, 'teams') }}</p>
+            <p>{{ empty_message|default('team.visibility_global')|trans({}, 'teams') }}</p>
         {% endif %}
     {% endblock %}
 {% endembed %}
