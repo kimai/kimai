@@ -386,7 +386,7 @@ final class ProjectController extends AbstractController
                     $editForm->get('create_more')->setData(true);
                     $project = $newProject;
                 } else {
-                    return $this->redirectToRoute('admin_project');
+                    return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
                 }
             } catch (\Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
