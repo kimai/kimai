@@ -99,9 +99,8 @@ class ProjectControllerTest extends ControllerBaseTest
                 'name' => 'Test 2',
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/2/details'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
         $this->assertHasFlashSuccess($client);
     }
 
@@ -161,9 +160,8 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'project_edit_form' => ['name' => 'Test 2']
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
         $this->request($client, '/admin/project/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
         $this->assertEquals('Test 2', $editForm->get('project_edit_form[name]')->getValue());
