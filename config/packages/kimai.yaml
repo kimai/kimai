@@ -21,7 +21,7 @@ kimai:
 # --------------------------------------------------------------------------------
 # TIME-TRACKING
 # All configs related to time-tracking, timesheets and record management
-# Most settings can be configured in the System configuration screen     
+# Most settings can be configured in the System configuration screen
 # --------------------------------------------------------------------------------
     timesheet:
 
@@ -103,7 +103,7 @@ kimai:
             RATE_OTHER: ['view_rate_other_timesheet','edit_rate_other_timesheet']
             EXPORT: ['create_export','edit_export_own_timesheet','edit_export_other_timesheet']
             TEAMS: ['view_team','create_team','edit_team','delete_team']
-            # some single default definitions for roles 
+            # some single default definitions for roles
             SINGLE_USER: ['view_team_member','budget_team_project']
             SINGLE_TEAMLEAD: ['view_rate_own_timesheet','view_rate_other_timesheet','hourly-rate_own_profile','view_team_member']
             SINGLE_ADMIN: ['hourly-rate_own_profile','edit_exported_timesheet','teams_own_profile','view_team_member']
@@ -211,26 +211,36 @@ kimai:
 # Locale specific settings, like date formats
 # --------------------------------------------------------------------------------
     languages:
+        ar:
+            date_time_type: 'yyyy-MM-dd HH:mm'
+            date_type: 'yyyy-MM-dd'
+            date: 'Y-m-d'
+            date_time: 'm-d H:i'
+            duration: '%%h:%%m h'
         cs:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m H:i'
+            duration: '%%h:%%m h'
         da:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
+            duration: '%%h:%%m h'
         de:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
+            duration: '%%h:%%m h'
         de_CH:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
+            duration: '%%h:%%m h'
         en:
             date_time_type: 'yyyy-MM-dd HH:mm'
             date_type: 'yyyy-MM-dd'
@@ -242,6 +252,13 @@ kimai:
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
+            duration: '%%h:%%m h'
+        eu:
+            date_time_type: 'yyyy-MM-dd HH:mm'
+            date_type: 'yyyy-MM-dd'
+            date: 'Y-m-d'
+            date_time: 'm-d H:i'
+            duration: '%%h:%%m h'
         fr:
             date_time_type: 'dd/MM/yyyy HH:mm'
             date_type: 'dd/MM/yyyy'
@@ -253,11 +270,25 @@ kimai:
             date_type: 'yyyy.MM.dd.'
             date: 'Y.m.d.'
             date_time: 'm.d. H:i'
+            duration: '%%h:%%m h'
         it:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
+            duration: '%%h:%%m h'
+        ja:
+            date_time_type: 'yyyy-MM-dd HH:mm'
+            date_type: 'yyyy-MM-dd'
+            date: 'Y-m-d'
+            date_time: 'm-d H:i'
+            duration: '%%h:%%m tim'
+        ko:
+            date_time_type: 'yyyy-MM-dd HH:mm'
+            date_type: 'yyyy-MM-dd'
+            date: 'Y-m-d'
+            date_time: 'm-d H:i'
+            duration: '%%h:%%m h'
         nl:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
@@ -269,18 +300,31 @@ kimai:
             date_type: 'dd-MM-yyyy'
             date: 'd-m-Y'
             date_time: 'd-m H:i'
+            duration: '%%h:%%m h'
         ru:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
+            duration: '%%h:%%m h'
         sk:
             date_time_type: 'dd. MM. yyyy HH:mm'
             date_type: 'dd. MM. yyyy'
             date: 'd. m. Y'
             date_time: 'd. m.  H:i'
+            duration: '%%h:%%m h'
         sv:
+            date_time_type: 'yyyy-MM-dd HH:mm'
+            date_type: 'yyyy-MM-dd'
+            date: 'Y-m-d'
+            date_time: 'm-d H:i'
             duration: '%%h:%%m tim'
+        tr:
+            date_time_type: 'yyyy-MM-dd HH:mm'
+            date_type: 'yyyy-MM-dd'
+            date: 'Y-m-d'
+            date_time: 'm-d H:i'
+            duration: '%%h:%%m h'
 # --------------------------------------------------------------------------------
 
 
