@@ -66,12 +66,10 @@ class MarkdownExtension extends AbstractExtension
             $content = trim(substr($content, 0, 100)) . ' &hellip;';
         }
 
-        $content = nl2br($content);
-
         if ($this->configuration->isMarkdownEnabled()) {
             $content = $this->markdown->toHtml($content, false);
         } elseif ($fullLength) {
-            $content = '<p>' . $content . '</p>';
+            $content = '<p>' . nl2br($content) . '</p>';
         }
 
         return $content;
@@ -89,13 +87,11 @@ class MarkdownExtension extends AbstractExtension
             return '';
         }
 
-        $content = nl2br($content);
-
         if ($this->configuration->isMarkdownEnabled()) {
             return $this->markdown->toHtml($content, false);
         }
 
-        return $content;
+        return nl2br($content);
     }
 
     /**
@@ -106,8 +102,6 @@ class MarkdownExtension extends AbstractExtension
      */
     public function markdownToHtml(string $content): string
     {
-        $content = nl2br($content);
-
         return $this->markdown->toHtml($content, false);
     }
 }

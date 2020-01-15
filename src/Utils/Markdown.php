@@ -23,6 +23,7 @@ final class Markdown
     {
         $this->parser = new ParsedownExtension();
         $this->parser->setUrlsLinked(true);
+        $this->parser->setBreaksEnabled(true);
     }
 
     /**

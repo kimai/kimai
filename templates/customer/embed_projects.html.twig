@@ -15,6 +15,7 @@
             {% for project in projects %}
                 <tr>
                     <td>{{ project.name }}</td>
+                    <td>{{ project.comment|comment2html }}</td>
                     <td class="actions">{{ actions.project(project, 'custom') }}</td>
                 </tr>
             {% endfor %}
