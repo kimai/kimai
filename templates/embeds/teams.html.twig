@@ -17,6 +17,7 @@
             <a class="modal-ajax-form open-edit btn btn-box-tool" href="{{ route_edit }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
         {% endif %}
     {% endblock %}
+    {% block box_attributes %}id="team_listing_box"{% endblock %}
     {% block box_title %}
         {{ 'permissions'|trans({}, 'actions') }}
     {% endblock %}

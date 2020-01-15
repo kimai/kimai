@@ -154,7 +154,7 @@ final class ProjectController extends AbstractController
 
     /**
      * @Route(path="/{id}/comment_delete", name="project_comment_delete", methods={"GET"})
-     * @Security("is_granted('edit', comment.getProject())")
+     * @Security("is_granted('edit', comment.getProject()) and is_granted('comments', comment.getProject())")
      */
     public function deleteCommentAction(ProjectComment $comment)
     {
@@ -163,7 +163,7 @@ final class ProjectController extends AbstractController
         try {
             $this->repository->deleteComment($comment);
         } catch (\Exception $ex) {
-            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
         }
 
         return $this->redirectToRoute('project_details', ['id' => $projectId]);
@@ -171,7 +171,7 @@ final class ProjectController extends AbstractController
 
     /**
      * @Route(path="/{id}/comment_add", name="project_comment_add", methods={"POST"})
-     * @Security("is_granted('edit', project)")
+     * @Security("is_granted('edit', project) and is_granted('comments', project)")
      */
     public function addCommentAction(Project $project, Request $request)
     {
@@ -193,7 +193,7 @@ final class ProjectController extends AbstractController
 
     /**
      * @Route(path="/{id}/comment_pin", name="project_comment_pin", methods={"GET"})
-     * @Security("is_granted('edit', comment.getProject())")
+     * @Security("is_granted('edit', comment.getProject()) and is_granted('comments', comment.getProject())")
      */
     public function pinCommentAction(ProjectComment $comment)
     {

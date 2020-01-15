@@ -11,6 +11,7 @@
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% import "customer/actions.html.twig" as customerActions %}
+        {% block box_attributes %}id="project_details_box"{% endblock %}
         {% block box_tools %}
             {% if can_edit %}
                 <a class="modal-ajax-form open-edit btn btn-box-tool" data-href="{{ path('admin_project_edit', {'id': project.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>

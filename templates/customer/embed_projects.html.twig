@@ -3,7 +3,7 @@
         {% import "project/actions.html.twig" as actions %}
         {% block box_title %}{{ 'menu.admin_project'|trans }}{% endblock %}
         {% block box_attributes %}
-            id="project_list_for_{{ customer.id }}"  data-href="{{ path('customer_projects', {'id': customer.id}) }}" data-reload="kimai.projectUpdate"
+            id="project_list_box"  data-href="{{ path('customer_projects', {'id': customer.id}) }}" data-reload="kimai.projectUpdate"
         {% endblock %}
         {% block box_tools %}
             {{ pagerfanta(projects, 'twitter_bootstrap3_translated', { proximity: 1, css_container_class: 'pagination pagination-sm inline', routeName: 'customer_projects', routeParams: {'id': customer.id} }) }}
@@ -23,6 +23,6 @@
         {% endblock %}
     {% endembed %}
     <script type="text/javascript">
-        KimaiPaginatedBoxWidget.create('#project_list_for_{{ customer.id }}');
+        KimaiPaginatedBoxWidget.create('#project_list_box');
     </script>
 {% endif %}

@@ -151,7 +151,7 @@ final class CustomerController extends AbstractController
 
     /**
      * @Route(path="/{id}/comment_delete", name="customer_comment_delete", methods={"GET"})
-     * @Security("is_granted('edit', comment.getCustomer())")
+     * @Security("is_granted('edit', comment.getCustomer()) and is_granted('comments', comment.getCustomer())")
      */
     public function deleteCommentAction(CustomerComment $comment)
     {
@@ -160,7 +160,7 @@ final class CustomerController extends AbstractController
         try {
             $this->repository->deleteComment($comment);
         } catch (\Exception $ex) {
-            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
         }
 
         return $this->redirectToRoute('customer_details', ['id' => $customerId]);
@@ -168,7 +168,7 @@ final class CustomerController extends AbstractController
 
     /**
      * @Route(path="/{id}/comment_add", name="customer_comment_add", methods={"POST"})
-     * @Security("is_granted('edit', customer)")
+     * @Security("is_granted('edit', customer) and is_granted('comments', customer)")
      */
     public function addCommentAction(Customer $customer, Request $request)
     {
@@ -190,7 +190,7 @@ final class CustomerController extends AbstractController
 
     /**
      * @Route(path="/{id}/comment_pin", name="customer_comment_pin", methods={"GET"})
-     * @Security("is_granted('edit', comment.getCustomer())")
+     * @Security("is_granted('edit', comment.getCustomer()) and is_granted('comments', comment.getCustomer())")
      */
     public function pinCommentAction(CustomerComment $comment)
     {

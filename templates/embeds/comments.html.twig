@@ -1,6 +1,7 @@
 {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'form': form, 'comments': comments, 'route_pin': route_pin|default(null), 'route_delete': route_delete|default(null)} %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_title %}{{ 'label.comment'|trans }}{% endblock %}
+    {% block box_attributes %}id="comments_box"{% endblock %}
     {% block box_body_class %}box-comments{% endblock %}
     {% block box_body %}
         {% set replacer = {} %}

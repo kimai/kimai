@@ -1,15 +1,16 @@
-{% set params = {
-    '%project%': '<strong>' ~ project.name ~ '</strong>',
-    '%customer%': '<strong>' ~ project.customer.name ~ '</strong>',
-    '%records%': '<strong>' ~ stats.recordAmount ~ '</strong>',
-    '%activities%': '<strong>' ~ stats.activityAmount ~ '</strong>',
-    '%duration%': '<strong>' ~ stats.recordDuration|duration ~ '</strong>'
-} %}
-
 {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
     {% import "macros/progressbar.html.twig" as progress %}
     {% block box_title %}{{ 'label.budget'|trans }}{% endblock %}
+    {% block box_attributes %}id="budget_box"{% endblock %}
     {% block box_body %}
+        {% set params = {
+            '%project%': '<strong>' ~ project.name ~ '</strong>',
+            '%customer%': '<strong>' ~ project.customer.name ~ '</strong>',
+            '%records%': '<strong>' ~ stats.recordAmount ~ '</strong>',
+            '%activities%': '<strong>' ~ stats.activityAmount ~ '</strong>',
+            '%duration%': '<strong>' ~ stats.recordDuration|duration ~ '</strong>'
+        } %}
+        
         <p>
             {{ 'admin_project.short_stats'|trans(params)|raw }}
         </p>

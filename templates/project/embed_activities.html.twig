@@ -3,7 +3,7 @@
         {% import "activity/actions.html.twig" as actions %}
         {% block box_title %}{{ 'menu.admin_activity'|trans }}{% endblock %}
         {% block box_attributes %}
-            id="activity_list_for_{{ project.id }}"  data-href="{{ path('project_activities', {'id': project.id}) }}" data-reload="kimai.activityUpdate"
+            id="activity_list_box"  data-href="{{ path('project_activities', {'id': project.id}) }}" data-reload="kimai.activityUpdate"
         {% endblock %}
         {% block box_tools %}
             {{ pagerfanta(activities, 'twitter_bootstrap3_translated', { proximity: 1, css_container_class: 'pagination pagination-sm inline', routeName: 'project_activities', routeParams: {'id': project.id} }) }}
@@ -22,6 +22,6 @@
         {% endblock %}
     {% endembed %}
     <script type="text/javascript">
-        KimaiPaginatedBoxWidget.create('#activity_list_for_{{ project.id }}');
+        KimaiPaginatedBoxWidget.create('#activity_list_box');
     </script>
 {% endif %}

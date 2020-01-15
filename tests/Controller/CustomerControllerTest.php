@@ -72,8 +72,92 @@ class CustomerControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/details');
         self::assertHasProgressbar($client);
-        // TODO add more tests!
+
+        $node = $client->getCrawler()->filter('div.box#customer_details_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#project_list_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#budget_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#team_listing_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#comments_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn-box-tool');
+        self::assertEquals(2, $node->count());
     }
+
+    public function testAddCommentAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
+        $client->submit($form, [
+            'customer_comment_form' => [
+                'message' => 'A beautiful and short comment **with some** markdown formatting',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        self::assertStringContainsString('<p>A beautiful and short comment <strong>with some</strong> markdown formatting</p>', $node->html());
+    }
+
+    public function testDeleteCommentActionWithError()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
+        $client->submit($form, [
+            'customer_comment_form' => [
+                'message' => 'Blah foo bar',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        self::assertStringContainsString('Blah foo bar', $node->html());
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.confirmation-link');
+        self::assertEquals($this->createUrl('/admin/customer/1/comment_delete'), $node->attr('href'));
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/customer/1/comment_delete');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        self::assertStringContainsString('There were no comments posted yet', $node->html());
+    }
+
+    public function testPinCommentActionWithError()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
+        $client->submit($form, [
+            'customer_comment_form' => [
+                'message' => 'Blah foo bar',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        self::assertStringContainsString('Blah foo bar', $node->html());
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.btn.active');
+        self::assertEquals(0, $node->count());
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/customer/1/comment_pin');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.btn.active');
+        self::assertEquals(1, $node->count());
+        self::assertEquals($this->createUrl('/admin/customer/1/comment_pin'), $node->attr('href'));
+    }
+
+    // #####################################
+    // FIXME createDefaultTeamAction
+    // FIXME projectAction
+    // ####################################
 
     public function testCreateAction()
     {

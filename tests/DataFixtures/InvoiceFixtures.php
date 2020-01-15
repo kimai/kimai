@@ -11,7 +11,7 @@ namespace App\Tests\DataFixtures;
 
 use App\Entity\InvoiceTemplate;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
