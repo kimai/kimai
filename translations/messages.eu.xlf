@@ -1,0 +1,1053 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eu" datatype="plaintext" original="messages.en.xlf">
+        <body>
+            <!--
+              Global template keys
+            -->
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Denbora jarraipena</target>
+            </trans-unit>
+            <trans-unit id="yes">
+                <source>yes</source>
+                <target>Bai</target>
+            </trans-unit>
+            <trans-unit id="no">
+                <source>no</source>
+                <target>Ez</target>
+            </trans-unit>
+            <trans-unit id="both">
+                <source>both</source>
+                <target>Biak</target>
+            </trans-unit>
+            <trans-unit id="This is a mandatory field">
+                <source>This is a mandatory field</source>
+                <target>Beharrezkoa!</target>
+            </trans-unit>
+            <trans-unit id="create">
+                <source>create</source>
+                <target>Sortu</target>
+            </trans-unit>
+            <trans-unit id="confirm.delete">
+                <source>confirm.delete</source>
+                <target>Ziur ezabatu nahi duzula?</target>
+            </trans-unit>
+            <trans-unit id="admin_entity.delete_confirm">
+                <source>admin_entity.delete_confirm</source>
+                <target>
+                    Kontuz! Datuak ezabatzear zaude.
+                    Ezabatu beharrean, beste nonbait gorde nahi?
+                </target>
+            </trans-unit>
+            <trans-unit id="delete.not_in_use">
+                <source>delete.not_in_use</source>
+                <target>Erabilera gabeko elementua. Ezabatu?</target>
+            </trans-unit>
+            <trans-unit id="cancel">
+                <source>cancel</source>
+                <target>Ezeztatu</target>
+            </trans-unit>
+            <trans-unit id="confirm">
+                <source>confirm</source>
+                <target>Baieztatu</target>
+            </trans-unit>
+            <trans-unit id="search">
+                <source>search</source>
+                <target>Bilatu</target>
+            </trans-unit>
+            <trans-unit id="my.profile">
+                <source>my.profile</source>
+                <target>Nire kontua</target>
+            </trans-unit>
+
+            <!--
+              Login / Security
+            -->
+            <trans-unit id="label.password">
+                <source>label.password</source>
+                <target>Pasahitza</target>
+            </trans-unit>
+            <trans-unit id="label.password_repeat">
+                <source>label.password_repeat</source>
+                <target>Pasahitza errepikatu</target>
+            </trans-unit>
+            <trans-unit id="label.logout">
+                <source>label.logout</source>
+                <target>Irten</target>
+            </trans-unit>
+            <trans-unit id="label.user_profile">
+                <source>label.user_profile</source>
+                <target>Nire kontua</target>
+            </trans-unit>
+            <trans-unit id="label.api_token">
+                <source>label.api_token</source>
+                <target>API pasahitza</target>
+            </trans-unit>
+            <trans-unit id="label.api_token_repeat">
+                <source>label.api_token_repeat</source>
+                <target>API pasahitza errepikatu</target>
+            </trans-unit>
+            <trans-unit id="login_required">
+                <source>login_required</source>
+                <target>Jarraitzeko baimen nahikorik ez. Saioa (ber)hasi behar duzu.</target>
+            </trans-unit>
+
+            <!--
+              Menu / Navbar items
+            -->
+            <trans-unit id="menu.homepage">
+                <source>menu.homepage</source>
+                <target>Orrialde nagusia</target>
+            </trans-unit>
+            <trans-unit id="menu.admin">
+                <source>menu.admin</source>
+                <target>Admin</target>
+            </trans-unit>
+            <trans-unit id="menu.system">
+                <source>menu.system</source>
+                <target>Sistema</target>
+            </trans-unit>
+            <trans-unit id="menu.logout">
+                <source>menu.logout</source>
+                <target>Saioa bukatu</target>
+            </trans-unit>
+            <trans-unit id="menu.timesheet">
+                <source>menu.timesheet</source>
+                <target>Nire orduak</target>
+            </trans-unit>
+            <trans-unit id="menu.invoice">
+                <source>menu.invoice</source>
+                <target>Fakturak</target>
+            </trans-unit>
+            <trans-unit id="menu.export">
+                <source>menu.export</source>
+                <target>Exportatu</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_timesheet">
+                <source>menu.admin_timesheet</source>
+                <target>Ordu taula</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_customer">
+                <source>menu.admin_customer</source>
+                <target>Bezeroak</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_project">
+                <source>menu.admin_project</source>
+                <target>Proiektuak</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_activity">
+                <source>menu.admin_activity</source>
+                <target>Jarduerak</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_user">
+                <source>menu.admin_user</source>
+                <target>Erabiltzaileak</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_team">
+                <source>menu.admin_team</source>
+                <target>Lan Taldeak</target>
+            </trans-unit>
+            <trans-unit id="menu.plugin">
+                <source>menu.plugin</source>
+                <target>Pluginak</target>
+            </trans-unit>
+            <trans-unit id="menu.system_configuration">
+                <source>menu.system_configuration</source>
+                <target>Konfigurazioa</target>
+            </trans-unit>
+            <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>Etiketak</target>
+            </trans-unit>
+            <trans-unit id="menu.doctor">
+                <source>menu.doctor</source>
+                <target>Medikua</target>
+            </trans-unit>
+
+            <!--
+              Error templates
+            -->
+            <trans-unit id="error.no_entries_found">
+                <source>error.no_entries_found</source>
+                <target>Ez da emaitzarik aurkitu (aukeratutako filtroekin)</target>
+            </trans-unit>
+
+            <!--
+              General labels
+            -->
+            <trans-unit id="label.date">
+                <source>label.date</source>
+                <target>Data</target>
+            </trans-unit>
+            <trans-unit id="label.starttime">
+                <source>label.starttime</source>
+                <target>Hasiera denbora</target>
+            </trans-unit>
+            <trans-unit id="label.endtime">
+                <source>label.endtime</source>
+                <target>Bukaera denbora</target>
+            </trans-unit>
+            <trans-unit id="label.duration">
+                <source>label.duration</source>
+                <target>Iraupena</target>
+            </trans-unit>
+            <trans-unit id="label.user">
+                <source>label.user</source>
+                <target>Erabiltzailea</target>
+            </trans-unit>
+            <trans-unit id="label.username">
+                <source>label.username</source>
+                <target>Erabiltzaile izena</target>
+            </trans-unit>
+            <trans-unit id="label.description">
+                <source>label.description</source>
+                <target>Deskribapena</target>
+            </trans-unit>
+            <trans-unit id="label.name">
+                <source>label.name</source>
+                <target>Izena</target>
+            </trans-unit>
+            <trans-unit id="label.comment">
+                <source>label.comment</source>
+                <target>Iruzkina</target>
+            </trans-unit>
+            <trans-unit id="label.id">
+                <source>label.id</source>
+                <target>ID</target>
+            </trans-unit>
+            <trans-unit id="label.visible">
+                <source>label.visible</source>
+                <target>Agerikoa</target>
+            </trans-unit>
+            <trans-unit id="label.budget">
+                <source>label.budget</source>
+                <target>Aurrekontua</target>
+            </trans-unit>
+            <trans-unit id="label.timeBudget">
+                <source>label.timeBudget</source>
+                <target>Ordu-poltsa</target>
+            </trans-unit>
+            <trans-unit id="label.activity">
+                <source>label.activity</source>
+                <target>Jarduera</target>
+            </trans-unit>
+            <trans-unit id="label.project">
+                <source>label.project</source>
+                <target>Proiektua</target>
+            </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>Etiketak</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>Etiketak</target>
+            </trans-unit>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
+                <target>Orduko tarifa</target>
+            </trans-unit>
+            <trans-unit id="label.hourly_rate">
+                <source>label.hourly_rate</source>
+                <target>Orduko tarifa</target>
+            </trans-unit>
+            <trans-unit id="label.skin">
+                <source>label.skin</source>
+                <target>Kimai-gaia</target>
+            </trans-unit>
+            <trans-unit id="label.hours">
+                <source>label.hours</source>
+                <target>Orduak</target>
+            </trans-unit>
+            <trans-unit id="label.rate">
+                <source>label.rate</source>
+                <target>Tarifa</target>
+            </trans-unit>
+            <trans-unit id="label.language">
+                <source>label.language</source>
+                <target>Hizkuntza</target>
+            </trans-unit>
+            <trans-unit id="label.customer">
+                <source>label.customer</source>
+                <target>Bezeroa</target>
+            </trans-unit>
+            <trans-unit id="label.email">
+                <source>label.email</source>
+                <target>Emaila</target>
+            </trans-unit>
+            <trans-unit id="label.team">
+                <source>label.team</source>
+                <target>Taldea</target>
+            </trans-unit>
+            <trans-unit id="label.teamlead">
+                <source>label.teamlead</source>
+                <target>Talde Leaderra</target>
+            </trans-unit>
+            <trans-unit id="label.create_more">
+                <source>label.create_more</source>
+                <target>Gehiago sortu</target>
+            </trans-unit>
+
+            <!--
+              Buttons & Actions
+            -->
+            <trans-unit id="label.actions">
+                <source>label.actions</source>
+                <target>Ekintzak</target>
+            </trans-unit>
+            <trans-unit id="action.edit">
+                <source>action.edit</source>
+                <target>Editatu</target>
+            </trans-unit>
+            <trans-unit id="action.delete">
+                <source>action.delete</source>
+                <target>Ezabatu</target>
+            </trans-unit>
+            <trans-unit id="action.save">
+                <source>action.save</source>
+                <target>Gorde</target>
+            </trans-unit>
+            <trans-unit id="action.reset">
+                <source>action.reset</source>
+                <target>Berrezarri</target>
+            </trans-unit>
+            <trans-unit id="action.back">
+                <source>action.back</source>
+                <target>Atzera</target>
+            </trans-unit>
+            <trans-unit id="action.close">
+                <source>action.close</source>
+                <target>Itxi</target>
+            </trans-unit>
+
+            <!--
+              Dashboard
+            -->
+            <trans-unit id="dashboard.title">
+                <source>dashboard.title</source>
+                <target>Orri nagusia</target>
+            </trans-unit>
+            <trans-unit id="dashboard.subtitle">
+                <source>dashboard.subtitle</source>
+                <target>Ongi etorri!</target>
+            </trans-unit>
+            <trans-unit id="dashboard.all">
+                <source>dashboard.all</source>
+                <target>Erabiltzaile guztiak</target>
+            </trans-unit>
+
+            <!--
+              Widgets
+            -->
+            <trans-unit id="more.info.link">
+                <source>more.info.link</source>
+                <target>Gehigo ikusi...</target>
+            </trans-unit>
+            <trans-unit id="label.toggle_dropdown">
+                <source>label.toggle_dropdown</source>
+                <target>Menua erakutsi</target>
+            </trans-unit>
+            <trans-unit id="label.my_teams">
+                <source>label.my_teams</source>
+                <target>Nire lan taldeak</target>
+            </trans-unit>
+            <trans-unit id="label.my_team_projects">
+                <source>label.my_team_projects</source>
+                <target>Proiektuak eta aurrekontuak</target>
+            </trans-unit>
+            <trans-unit id="label.progress">
+                <source>label.progress</source>
+                <target>Egoera</target>
+            </trans-unit>
+            <trans-unit id="label.plus_more">
+                <source>label.plus_more</source>
+                <target>+%count% gehiago</target>
+            </trans-unit>
+
+            <!--
+              Timesheet
+            -->
+            <trans-unit id="timesheet.title">
+                <source>timesheet.title</source>
+                <target>Nire orduak</target>
+            </trans-unit>
+            <trans-unit id="timesheet.edit">
+                <source>timesheet.edit</source>
+                <target>Aldatu</target>
+            </trans-unit>
+            <trans-unit id="label.begin">
+                <source>label.begin</source>
+                <target>Hasi</target>
+            </trans-unit>
+            <trans-unit id="label.end">
+                <source>label.end</source>
+                <target>Bukatu</target>
+            </trans-unit>
+            <trans-unit id="label.daterange">
+                <source>label.daterange</source>
+                <target>Denbora tartea</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.title">
+                <source>modal.columns.title</source>
+                <target>Zutabe bista aldatu</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.description">
+                <source>modal.columns.description</source>
+                <target>Aukeratu gabeko zutabeak izkutatuko dira</target>
+            </trans-unit>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
+                <target>Tarifa finkoa</target>
+            </trans-unit>
+            <trans-unit id="label.color">
+                <source>label.color</source>
+                <target>Kolorea</target>
+            </trans-unit>
+
+            <!--
+              User profile
+            -->
+            <trans-unit id="profile.title">
+                <source>profile.title</source>
+                <target>Profila</target>
+            </trans-unit>
+            <trans-unit id="profile.about_me">
+                <source>profile.about_me</source>
+                <target>Niri buruz</target>
+            </trans-unit>
+            <trans-unit id="profile.first_entry">
+                <source>profile.first_entry</source>
+                <target>Honez gero aktibo</target>
+            </trans-unit>
+            <trans-unit id="profile.settings">
+                <source>profile.settings</source>
+                <target>Aukerak</target>
+            </trans-unit>
+            <trans-unit id="profile.password">
+                <source>profile.password</source>
+                <target>Pasahitza</target>
+            </trans-unit>
+            <trans-unit id="profile.api-token">
+                <source>profile.api-token</source>
+                <target>API</target>
+            </trans-unit>
+            <trans-unit id="profile.roles">
+                <source>profile.roles</source>
+                <target>Rolak</target>
+            </trans-unit>
+            <trans-unit id="profile.teams">
+                <source>profile.teams</source>
+                <target>Taldeak</target>
+            </trans-unit>
+            <trans-unit id="profile.preferences">
+                <source>profile.preferences</source>
+                <target>Hobespenak</target>
+            </trans-unit>
+            <trans-unit id="label.theme.collapsed_sidebar">
+                <source>label.theme.collapsed_sidebar</source>
+                <target>Ezkerraldeko gunea txikitu</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.initial_view">
+                <source>label.calendar.initial_view</source>
+                <target>Egutegiaren hasierako bista</target>
+            </trans-unit>
+            <trans-unit id="label.login.initial_view">
+                <source>label.login.initial_view</source>
+                <target>Sarrerako bista</target>
+            </trans-unit>
+            <!-- Options for user-preference label.calendar.initial_view -->
+            <trans-unit id="month">
+                <source>month</source>
+                <target>Hilabetea</target>
+            </trans-unit>
+            <trans-unit id="agendaWeek">
+                <source>agendaWeek</source>
+                <target>Astea</target>
+            </trans-unit>
+            <trans-unit id="agendaDay">
+                <source>agendaDay</source>
+                <target>Eguna</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.daily_stats">
+                <source>label.timesheet.daily_stats</source>
+                <target>Eguneroko estatistikak erakutsi ordu taulan</target>
+            </trans-unit>
+
+            <!--
+              User timesheet calendar
+            -->
+            <trans-unit id="calendar.title">
+                <source>calendar.title</source>
+                <target>Egutegia</target>
+            </trans-unit>
+
+            <!--
+              Admin: Timesheet
+            -->
+            <trans-unit id="admin_timesheet.title">
+                <source>admin_timesheet.title</source>
+                <target>Ordu taula</target>
+            </trans-unit>
+
+            <!--
+              Admin: Projects
+            -->
+            <trans-unit id="admin_project.title">
+                <source>admin_project.title</source>
+                <target>Proiektuak</target>
+            </trans-unit>
+            <trans-unit id="admin_project.short_stats">
+                <source>admin_project.short_stats</source>
+                <target>
+                    %customer% bezeroarentzako %project% proiektuak, %activities% jarduera eta
+                   %records% sarrera ditu, guztizko %duration% iraupenarekin.
+                </target>
+            </trans-unit>
+
+            <!--
+              Admin: Activity
+            -->
+            <trans-unit id="admin_activity.title">
+                <source>admin_activity.title</source>
+                <target>Jarduerak</target>
+            </trans-unit>
+            <trans-unit id="admin_activity.short_stats">
+                <source>admin_activity.short_stats</source>
+                <target>
+                  %customer% bezeroarentzako %project% proiektuak
+                 %records% sarrera ditu, guztizko %duration% iraupenarekin.
+               </target>
+            </trans-unit>
+
+            <!--
+              Admin: Customer
+            -->
+            <trans-unit id="admin_customer.title">
+                <source>admin_customer.title</source>
+                <target>Bezeroak</target>
+            </trans-unit>
+            <trans-unit id="label.number">
+                <source>label.number</source>
+                <target>Kontua</target>
+            </trans-unit>
+            <trans-unit id="label.company">
+                <source>label.company</source>
+                <target>Enpresa</target>
+            </trans-unit>
+            <trans-unit id="label.vat">
+                <source>label.vat</source>
+                <target>Zerga</target>
+            </trans-unit>
+            <trans-unit id="label.contact">
+                <source>label.contact</source>
+                <target>Kontaktua</target>
+            </trans-unit>
+            <trans-unit id="label.address">
+                <source>label.address</source>
+                <target>Helbidea</target>
+            </trans-unit>
+            <trans-unit id="label.country">
+                <source>label.country</source>
+                <target>Herrialdea</target>
+            </trans-unit>
+            <trans-unit id="label.phone">
+                <source>label.phone</source>
+                <target>Telefonoa</target>
+            </trans-unit>
+            <trans-unit id="label.fax">
+                <source>label.fax</source>
+                <target>Fax-a</target>
+            </trans-unit>
+            <trans-unit id="label.mobile">
+                <source>label.mobile</source>
+                <target>Mugikorra</target>
+            </trans-unit>
+            <trans-unit id="label.homepage">
+                <source>label.homepage</source>
+                <target>Web Orrialdea</target>
+            </trans-unit>
+            <trans-unit id="label.timezone">
+                <source>label.timezone</source>
+                <target>Ordu zona</target>
+            </trans-unit>
+            <trans-unit id="label.currency">
+                <source>label.currency</source>
+                <target>Txanpoia</target>
+            </trans-unit>
+            <trans-unit id="admin_customer.short_stats">
+                <source>admin_customer.short_stats</source>
+                <target>
+                    %customer% bezeroak  %project% proiektu ditu %activity% jardurerarekin, %records% sarrera, %duration%-ko guztizko luzerarekin.
+                    Den-dena ezabatzear zaude!
+                </target>
+            </trans-unit>
+
+            <!--
+              Admin: User
+            -->
+            <trans-unit id="admin_user.title">
+                <source>admin_user.title</source>
+                <target>Erabiltzailea</target>
+            </trans-unit>
+            <trans-unit id="label.alias">
+                <source>label.alias</source>
+                <target>Izena</target>
+            </trans-unit>
+            <trans-unit id="label.title">
+                <source>label.title</source>
+                <target>Tituloa</target>
+            </trans-unit>
+            <trans-unit id="label.avatar">
+                <source>label.avatar</source>
+                <target>Profil irudia</target>
+            </trans-unit>
+            <trans-unit id="label.active">
+                <source>label.active</source>
+                <target>Actibo</target>
+            </trans-unit>
+            <trans-unit id="label.roles">
+                <source>label.roles</source>
+                <target>Rola</target>
+            </trans-unit>
+            <trans-unit id="admin_user.short_stats">
+                <source>admin_user.short_stats</source>
+                <target>
+                     %user%  erabiltzailea %records% sarrera ditu, guztizko %duration% iraupenarekin.
+                </target>
+            </trans-unit>
+
+            <!--
+              Admin: Plugins
+            -->
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target>Bertsioa</target>
+            </trans-unit>
+            <trans-unit id="label.required_version">
+                <source>label.required_version</source>
+                <target>Ondorengoekin bateragarria</target>
+            </trans-unit>
+
+            <!--
+              ROLES
+            -->
+            <trans-unit id="ROLE_SUPER_ADMIN">
+                <source>ROLE_SUPER_ADMIN</source>
+                <target>Sistema Administratzailea</target>
+            </trans-unit>
+            <trans-unit id="ROLE_ADMIN">
+                <source>ROLE_ADMIN</source>
+                <target>Administratzailea</target>
+            </trans-unit>
+            <trans-unit id="ROLE_TEAMLEAD">
+                <source>ROLE_TEAMLEAD</source>
+                <target>Talde Burua</target>
+            </trans-unit>
+            <trans-unit id="ROLE_USER">
+                <source>ROLE_USER</source>
+                <target>Erabiltzailea</target>
+            </trans-unit>
+
+            <!--
+              Statistics data for Dashboard & Users profile
+            -->
+            <trans-unit id="stats.durationToday">
+                <source>stats.durationToday</source>
+                <target>Gaurko lan orduak</target>
+            </trans-unit>
+            <trans-unit id="stats.durationWeek">
+                <source>stats.durationWeek</source>
+                <target>Asteko lan orduak</target>
+            </trans-unit>
+            <trans-unit id="stats.durationMonth">
+                <source>stats.durationMonth</source>
+                <target>Hilabeteko lan orduak</target>
+            </trans-unit>
+            <trans-unit id="stats.durationYear">
+                <source>stats.durationYear</source>
+                <target>Urteko lan orduak</target>
+            </trans-unit>
+            <trans-unit id="stats.durationTotal">
+                <source>stats.durationTotal</source>
+                <target>Lan orduak GUZTIRA</target>
+            </trans-unit>
+            <trans-unit id="stats.yourWorkingHours">
+                <source>stats.yourWorkingHours</source>
+                <target>Zure lan orduak</target>
+            </trans-unit>
+            <trans-unit id="stats.amountToday">
+                <source>stats.amountToday</source>
+                <target>Gaurko diru sarrea</target>
+            </trans-unit>
+            <trans-unit id="stats.amountWeek">
+                <source>stats.amountWeek</source>
+                <target>Asteko diru sarrera</target>
+            </trans-unit>
+            <trans-unit id="stats.amountMonth">
+                <source>stats.amountMonth</source>
+                <target>Hilabeteko diru sarrera</target>
+            </trans-unit>
+            <trans-unit id="stats.amountYear">
+                <source>stats.amountYear</source>
+                <target>Urteko diru sarrera</target>
+            </trans-unit>
+            <trans-unit id="stats.amountTotal">
+                <source>stats.amountTotal</source>
+                <target>Diru sarrera GUZTIRA</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveToday">
+                <source>stats.userActiveToday</source>
+                <target>Erabiltzaile aktiboak gaur</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveWeek">
+                <source>stats.userActiveWeek</source>
+                <target>Erabiltzaile aktiboak aste hontan</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveMonth">
+                <source>stats.userActiveMonth</source>
+                <target>Erabiltzaile aktiboak hilabete hontan</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveYear">
+                <source>stats.userActiveYear</source>
+                <target>Erabiltzaile aktiboak urte hontan</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveTotal">
+                <source>stats.userActiveTotal</source>
+                <target>Erabiltzaile aktiboak GUZTIRA</target>
+            </trans-unit>
+            <trans-unit id="stats.activeRecordings">
+                <source>stats.activeRecordings</source>
+                <target>Sarrera aktiboak</target>
+            </trans-unit>
+            <trans-unit id="stats.userTotal">
+                <source>stats.userTotal</source>
+                <target>Erabiltzaileak GUZTIRA</target>
+            </trans-unit>
+            <trans-unit id="stats.activityTotal">
+                <source>stats.activityTotal</source>
+                <target>Jarduerak GUZTIRA</target>
+            </trans-unit>
+            <trans-unit id="stats.projectTotal">
+                <source>stats.projectTotal</source>
+                <target>Proiektuak GUZTIRA</target>
+            </trans-unit>
+            <trans-unit id="stats.customerTotal">
+                <source>stats.customerTotal</source>
+                <target>Bezeroak GUZTIRA</target>
+            </trans-unit>
+            <trans-unit id="stats.percentUsed">
+                <source>stats.percentUsed</source>
+                <target>%%percent% erabilia</target>
+            </trans-unit>
+            <trans-unit id="stats.percentUsedLeft">
+                <source>stats.percentUsedLeft</source>
+                <target>%%percent% erabilia (%%left% faltan)</target>
+            </trans-unit>
+
+            <!--
+              Invoice
+            -->
+            <trans-unit id="admin_invoice_template.title">
+                <source>admin_invoice_template.title</source>
+                <target>Faktura eredua</target>
+            </trans-unit>
+            <trans-unit id="invoice.title">
+                <source>invoice.title</source>
+                <target>Fakturak</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtitle">
+                <source>invoice.subtitle</source>
+                <target>Faktura sortu ordu sarrerak erabiliaz.</target>
+            </trans-unit>
+            <trans-unit id="invoice.filter">
+                <source>invoice.filter</source>
+                <target>Faktura datuak filtratu</target>
+            </trans-unit>
+            <trans-unit id="button.preview">
+                <source>button.preview</source>
+                <target>Aurrebista</target>
+            </trans-unit>
+            <trans-unit id="button.print">
+                <source>button.print</source>
+                <target>Inprimatu</target>
+            </trans-unit>
+            <trans-unit id="button.csv">
+                <source>button.csv</source>
+                <target>CSV</target>
+            </trans-unit>
+            <trans-unit id="button.xlsx">
+                <source>button.xlsx</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="button.pdf">
+                <source>button.pdf</source>
+                <target>PDF</target>
+            </trans-unit>
+            <trans-unit id="button.ods">
+                <source>button.ods</source>
+                <target>ODS</target>
+            </trans-unit>
+            <trans-unit id="invoice_print">
+                <source>invoice_print</source>
+                <target>Faktura</target>
+            </trans-unit>
+            <trans-unit id="label.mark_as_exported">
+                <source>label.mark_as_exported</source>
+                <target>Exportatutzat markatu</target>
+            </trans-unit>
+            <trans-unit id="label.template">
+                <source>label.template</source>
+                <target>Eredua</target>
+            </trans-unit>
+            <trans-unit id="label.due_days">
+                <source>label.due_days</source>
+                <target>Epea egunetan</target>
+            </trans-unit>
+            <trans-unit id="invoice.due_days">
+                <source>invoice.due_days</source>
+                <target>Epe bukaera data</target>
+            </trans-unit>
+            <trans-unit id="invoice.from">
+                <source>invoice.from</source>
+                <target>Nork</target>
+            </trans-unit>
+            <trans-unit id="invoice.to">
+                <source>invoice.to</source>
+                <target>Nori</target>
+            </trans-unit>
+            <trans-unit id="invoice.number">
+                <source>invoice.number</source>
+                <target>Faktura zenbakia</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtotal">
+                <source>invoice.subtotal</source>
+                <target>Azpi Totala</target>
+            </trans-unit>
+            <trans-unit id="invoice.tax">
+                <source>invoice.tax</source>
+                <target>Zerga</target>
+            </trans-unit>
+            <trans-unit id="invoice.total">
+                <source>invoice.total</source>
+                <target>GUZTIRA</target>
+            </trans-unit>
+            <trans-unit id="invoice.service_date">
+                <source>invoice.service_date</source>
+                <target>Zerbitzu data</target>
+            </trans-unit>
+            <trans-unit id="label.amount">
+                <source>label.amount</source>
+                <target>Kopurua</target>
+            </trans-unit>
+            <trans-unit id="label.total_rate">
+                <source>label.total_rate</source>
+                <target>Erabilitako Tarifa</target>
+            </trans-unit>
+            <trans-unit id="label.unit_price">
+                <source>label.unit_price</source>
+                <target>Unitateko Prezioa</target>
+            </trans-unit>
+            <trans-unit id="label.payment_terms">
+                <source>label.payment_terms</source>
+                <target>Ordainketa Baldintzak</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_user">
+                <source>invoice.signature_user</source>
+                <target>Baieztapena: Data / Ornitzailearen Izena / Sinadura</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_customer">
+                <source>invoice.signature_customer</source>
+                <target>Baieztapena: Data / Bezeroaren Izena / Sinadura</target>
+            </trans-unit>
+            <trans-unit id="invoice.total_working_time">
+                <source>invoice.total_working_time</source>
+                <target>Guztizko Iraupena</target>
+            </trans-unit>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
+                <target>Agindu zenbakia</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_tax_number">
+                <source>label.invoice_tax_number</source>
+                <target>CIF/NIF.:</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_bank_account">
+                <source>label.invoice_bank_account</source>
+                <target>Kontu Korronte Zenbakia</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_salutation">
+                <source>label.invoice_salutation</source>
+                <target>
+                   Jaun-Andreok,
+
+                   Zuen eskaria eskertzen dut eta ondorengoa ordaindu beharko duzue:
+                </target>
+            </trans-unit>
+
+            <!--
+              Export
+            -->
+            <trans-unit id="export.title">
+                <source>export.title</source>
+                <target>Exportar</target>
+            </trans-unit>
+            <trans-unit id="export.subtitle">
+                <source>export.subtitle</source>
+                <target>Ordu taulak hainbat formatutan exportatu</target>
+            </trans-unit>
+            <trans-unit id="export.filter">
+                <source>export.filter</source>
+                <target>Exportatzeko datuak filtratu</target>
+            </trans-unit>
+            <trans-unit id="export.period">
+                <source>export.period</source>
+                <target>Garaia</target>
+            </trans-unit>
+            <trans-unit id="export.document_title">
+                <source>export.document_title</source>
+                <target>Gastu zerrenda</target>
+            </trans-unit>
+            <trans-unit id="export.full_list">
+                <source>export.full_list</source>
+                <target>Zerrenda osoa</target>
+            </trans-unit>
+            <trans-unit id="export.summary">
+                <source>export.summary</source>
+                <target>Laburpena</target>
+            </trans-unit>
+            <trans-unit id="export.page_of">
+                <source>export.page_of</source>
+                <target>%pages%-tik %page%. orrialdea </target>
+            </trans-unit>
+            <trans-unit id="export.date_copyright">
+                <source>export.date_copyright</source>
+                <target>%date%-n sortua %kimai%-ren bitartez</target>
+            </trans-unit>
+
+            <!--
+              Month names
+            -->
+            <trans-unit id="month.1">
+                <source>month.1</source>
+                <target>Urtarrila</target>
+            </trans-unit>
+            <trans-unit id="month.2">
+                <source>month.2</source>
+                <target>Otsaila</target>
+            </trans-unit>
+            <trans-unit id="month.3">
+                <source>month.3</source>
+                <target>Martxoa</target>
+            </trans-unit>
+            <trans-unit id="month.4">
+                <source>month.4</source>
+                <target>Apirila</target>
+            </trans-unit>
+            <trans-unit id="month.5">
+                <source>month.5</source>
+                <target>Maiatza</target>
+            </trans-unit>
+            <trans-unit id="month.6">
+                <source>month.6</source>
+                <target>Ekaina</target>
+            </trans-unit>
+            <trans-unit id="month.7">
+                <source>month.7</source>
+                <target>Uztaila</target>
+            </trans-unit>
+            <trans-unit id="month.8">
+                <source>month.8</source>
+                <target>Abuztua</target>
+            </trans-unit>
+            <trans-unit id="month.9">
+                <source>month.9</source>
+                <target>Iraila</target>
+            </trans-unit>
+            <trans-unit id="month.10">
+                <source>month.10</source>
+                <target>Urria</target>
+            </trans-unit>
+            <trans-unit id="month.11">
+                <source>month.11</source>
+                <target>Azaroa</target>
+            </trans-unit>
+            <trans-unit id="month.12">
+                <source>month.12</source>
+                <target>Abendua</target>
+            </trans-unit>
+
+            <!--
+             Navbar - recent entries and activities
+            -->
+            <trans-unit id="active.entries">
+                <source>active.entries</source>
+                <target>Zure denbora aktiboaren kalkuluak</target>
+            </trans-unit>
+            <trans-unit id="timesheet.all">
+                <source>timesheet.all</source>
+                <target>Sarrera guztiak ikusi</target>
+            </trans-unit>
+            <trans-unit id="recent.activities">
+                <source>recent.activities</source>
+                <target>Aurrejo jarduera bati berrekin</target>
+            </trans-unit>
+            <trans-unit id="recent.activities.format">
+                <source>recent.activities.format</source>
+                <target>%activity% jarduera %project% proiektuan %customer% bezeroarentzako</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start">
+                <source>timesheet.start</source>
+                <target>Sarrera berria sortu</target>
+            </trans-unit>
+
+            <!--
+              TOOLBARS
+            -->
+            <trans-unit id="label.pageSize">
+                <source>label.pageSize</source>
+                <target>Orrialde tamaina</target>
+            </trans-unit>
+            <trans-unit id="label.entryState">
+                <source>label.entryState</source>
+                <target>Sarrerak</target>
+            </trans-unit>
+            <trans-unit id="label.exported">
+                <source>label.exported</source>
+                <target>Exportatua</target>
+            </trans-unit>
+            <trans-unit id="entryState.exported">
+                <source>entryState.exported</source>
+                <target>Prozesaua</target>
+            </trans-unit>
+            <trans-unit id="entryState.not_exported">
+                <source>entryState.not_exported</source>
+                <target>Irekia</target>
+            </trans-unit>
+            <trans-unit id="entryState.all">
+                <source>entryState.all</source>
+                <target>Denak</target>
+            </trans-unit>
+            <trans-unit id="entryState.running">
+                <source>entryState.running</source>
+                <target>Aktiboak</target>
+            </trans-unit>
+            <trans-unit id="entryState.stopped">
+                <source>entryState.stopped</source>
+                <target>Geldituak</target>
+            </trans-unit>
+            <trans-unit id="export.clear_all">
+                <source>export.clear_all</source>
+                <target>Ageriko sarrera guztiak irekitzat eman?</target>
+            </trans-unit>
+            <trans-unit id="export.mark_all">
+                <source>export.mark_all</source>
+                <target>Ageriko sarrera guztiak prozesatutzat eman?</target>
+            </trans-unit>
+            <trans-unit id="label.globalsOnly">
+                <source>label.globalsOnly</source>
+                <target>Globalak soilik</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
