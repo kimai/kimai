@@ -72,7 +72,7 @@ trait CommentTableTypeTrait
         $this->message = $message;
     }
 
-    public function getCreatedBy(): User
+    public function getCreatedBy(): ?User
     {
         return $this->createdBy;
     }
