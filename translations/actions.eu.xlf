@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eu" datatype="plaintext" original="actiions.en.xlf">
+        <body>
+      <trans-unit id="bEXLcqN" resname="stop">
+        <source>stop</source>
+        <target>Gelditu</target>
+      </trans-unit>
+      <trans-unit id="PEgjRvN" resname="back">
+        <source>back</source>
+        <target>Atzera</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit">
+        <source>edit</source>
+        <target>Aldatu</target>
+      </trans-unit>
+      <trans-unit id="4G2jBDS" resname="trash">
+        <source>trash</source>
+        <target>Ezabatu</target>
+      </trans-unit>
+      <trans-unit id="hF6RgxM" resname="report">
+        <source>report</source>
+        <target>Txostena</target>
+      </trans-unit>
+      <trans-unit id="JeK2sQZ" resname="repeat">
+        <source>repeat</source>
+        <target>Errepikatu</target>
+      </trans-unit>
+      <trans-unit id="J0sRBY_" resname="profile-stats">
+        <source>profile-stats</source>
+        <target>Estatistikak</target>
+      </trans-unit>
+      <trans-unit id="zeD7Dew" resname="settings">
+        <source>settings</source>
+        <target>Dohiketak</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet">
+        <source>timesheet</source>
+        <target>Ordu taula</target>
+      </trans-unit>
+      <trans-unit id="tsRYY4d" resname="customer">
+        <source>customer</source>
+        <target>Bezeroak aukeratu</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project">
+        <source>project</source>
+        <target>Proiektuak aukeratu</target>
+      </trans-unit>
+      <trans-unit id="BlGGO.X" resname="activity">
+        <source>activity</source>
+        <target>Jarduerak aukeratu</target>
+      </trans-unit>
+      <trans-unit id="b1pgNOd" resname="copy">
+        <source>copy</source>
+        <target>Kopiatu</target>
+      </trans-unit>
+      <trans-unit id="TqFAWIF" resname="home">
+        <source>home</source>
+        <target>Orrialde nagusia</target>
+      </trans-unit>
+      <trans-unit id="PBlIO2x" resname="create-project">
+        <source>create-project</source>
+        <target>Proiektua sortu</target>
+      </trans-unit>
+      <trans-unit id="UbouFOs" resname="create-activity">
+        <source>create-activity</source>
+        <target>Jarduera sortu</target>
+      </trans-unit>
+      <trans-unit id="QR1nvcR" resname="create-timesheet">
+        <source>create-timesheet</source>
+        <target>Ordu taula sortu</target>
+      </trans-unit>
+      <trans-unit id="T_PN1AT" resname="permissions">
+        <source>permissions</source>
+        <target>Taldearen bahimenak</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
