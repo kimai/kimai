@@ -12,9 +12,10 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\Team;
+use App\Entity\User;
 use App\Form\API\TeamApiEditForm;
-use App\Form\TeamEditForm;
 use App\Repository\TeamRepository;
+use App\Repository\UserRepository;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
@@ -24,6 +25,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @RouteResource("Team")
@@ -237,6 +239,69 @@ final class TeamController extends BaseApiController
 
             return $this->viewHandler->handle($view);
         }
+
+        $this->repository->saveTeam($team);
+
+        $view = new View($team, Response::HTTP_OK);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Add a new member to a team
+     *
+     * @SWG\Post(
+     *  @SWG\Response(
+     *      response=200,
+     *      description="Adds a new user to a team. The user must not be deactivated.",
+     *      @SWG\Schema(ref="#/definitions/TeamEntity")
+     *  )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The team to where the new member will be added",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="userId",
+     *      in="path",
+     *      type="integer",
+     *      description="The team member to add (User ID)",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('edit_team')")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function postMemberAction(int $id, int $userId, UserRepository $repository): Response
+    {
+        $team = $this->repository->find($id);
+
+        if (null === $team) {
+            throw new NotFoundException('Team not found');
+        }
+
+        /** @var User $user */
+        $user = $repository->find($userId);
+
+        if (null === $user) {
+            throw new NotFoundException('User not found');
+        }
+
+        if (!$user->isEnabled()) {
+            throw new BadRequestHttpException('Cannot add disabled user to team');
+        }
+
+        if ($user->isInTeam($team)) {
+            throw new BadRequestHttpException('User is already member of the team');
+        }
+
+        $team->addUser($user);
 
         $this->repository->saveTeam($team);
 

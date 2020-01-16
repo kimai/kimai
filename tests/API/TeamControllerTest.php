@@ -143,6 +143,74 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_ADMIN, '/api/teams/' . $id);
     }
 
+    public function testPostMemberAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 1,
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertCount(1, $result['users']);
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/teams/' . $result['id'] . '/members/2', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertCount(2, $result['users']);
+    }
+
+    public function testPostMemberActionErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 1,
+            'users' => [2]
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        //  team not found
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/teams/999/members/999', 'POST', [], json_encode($data));
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('Team not found', $json['message']);
+
+        //  user not found
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/teams/' . $result['id'] . '/members/999', 'POST', [], json_encode($data));
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('User not found', $json['message']);
+
+        // add user
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/teams/' . $result['id'] . '/members/5', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        // cannot add existing member
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/teams/' . $result['id'] . '/members/5', 'POST', [], json_encode($data));
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('User is already member of the team', $json['message']);
+
+        // cannot add disabled user
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/teams/' . $result['id'] . '/members/3', 'POST', [], json_encode($data));
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('Cannot add disabled user to team', $json['message']);
+    }
+
     protected function assertStructure(array $result, $full = true)
     {
         $expectedKeys = [
