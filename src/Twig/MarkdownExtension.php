@@ -17,7 +17,7 @@ use Twig\TwigFilter;
 /**
  * A twig extension to handle markdown content.
  */
-class MarkdownExtension extends AbstractExtension
+final class MarkdownExtension extends AbstractExtension
 {
     /**
      * @var Markdown

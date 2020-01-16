@@ -326,6 +326,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('select_type')
                     ->defaultValue('selectpicker')
+                    ->setDeprecated()
                 ->end()
                 ->scalarNode('auto_reload_datatable')
                     ->defaultFalse()

@@ -140,7 +140,6 @@ class TeamControllerTest extends ControllerBaseTest
                 'name' => 'Test Team 2'
             ]
         ]);
-        // TODO assign users
         $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
         $client->followRedirect();
         $editForm = $client->getCrawler()->filter('form[name=team_edit_form]')->form();

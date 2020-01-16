@@ -21,12 +21,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
 {
-    public const TYPE_SELECTPICKER = 'selectpicker';
-
     /**
-     * @var string
+     * @deprecated since 1.7 will be removed with 2.0
      */
-    private $type = self::TYPE_SELECTPICKER;
+    public const TYPE_SELECTPICKER = 'selectpicker';
 
     public static function getExtendedTypes(): iterable
     {
@@ -40,10 +38,6 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if ($this->type !== self::TYPE_SELECTPICKER) {
-            return;
-        }
-
         if (isset($options['selectpicker']) && false === $options['selectpicker']) {
             return;
         }

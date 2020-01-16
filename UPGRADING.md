@@ -41,10 +41,6 @@ After the Kimai update was successful, you have to re-install the latest bundle 
 - Doctrine bundle was updated to v2, check your code for [the usage of RegistryInterface and ObjectManager](https://github.com/doctrine/DoctrineBundle/blob/master/UPGRADE-2.0.md)
 - Removed the webserver bundle and the command `server:run` - see [docs](https://www.kimai.org/documentation/developers.html)
 
-### Hosting
-
-- New features require the timezone date within MySQL/MariaDB. This is especially important for self-hosted systems: [you need to import the data manually](https://mariadb.com/kb/en/library/mysql_tzinfo_to_sql/).
-
 ## [1.6](https://github.com/kevinpapst/kimai2/releases/tag/1.6), [1.6.1](https://github.com/kevinpapst/kimai2/releases/tag/1.6.1), [1.6.2](https://github.com/kevinpapst/kimai2/releases/tag/1.6.2)
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**

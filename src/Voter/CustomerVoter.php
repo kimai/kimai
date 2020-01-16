@@ -81,13 +81,6 @@ class CustomerVoter extends AbstractVoter
             return false;
         }
 
-        // global customers don't have teams, add something like 'edit_global_customer'?
-        /*
-        if ($subject->getTeams()->count() === 0) {
-            return true;
-        }
-        */
-
         /** @var Team $team */
         foreach ($subject->getTeams() as $team) {
             if ($hasTeamleadPermission && $user->isTeamleadOf($team)) {

@@ -66,10 +66,6 @@
                 <source>label.timesheet.active_entries.soft_limit</source>
                 <target>Počet záznamů o době provozu, z nichž se zobrazí varování</target>
             </trans-unit>
-            <trans-unit id="label.theme.select_type">
-                <source>label.theme.select_type</source>
-                <target>Typ výběrových polí ve formulářích</target>
-            </trans-unit>
             <trans-unit id="label.calendar.week_numbers">
                 <source>label.calendar.week_numbers</source>
                 <target>Zobrazit čísla týdnů</target>

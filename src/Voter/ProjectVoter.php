@@ -80,13 +80,6 @@ class ProjectVoter extends AbstractVoter
             return false;
         }
 
-        // global projects don't have teams, add something like 'edit_global_project'?
-        /*
-        if ($subject->getTeams()->count() === 0 && null !== $customer && $customer->getTeams()->count() === 0) {
-            return true;
-        }
-        */
-
         /** @var Team $team */
         foreach ($subject->getTeams() as $team) {
             if ($hasTeamleadPermission && $user->isTeamleadOf($team)) {

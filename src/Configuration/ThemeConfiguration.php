@@ -25,6 +25,7 @@ class ThemeConfiguration implements SystemBundleConfiguration, \ArrayAccess
 
     /**
      * Currently unused, as JS selects are always activated.
+     * @deprecated since 1.7 will be removed with 2.0
      */
     public function getSelectPicker(): string
     {
