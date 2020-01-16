@@ -1,21 +1,30 @@
-<div class="box box-solid box-danger">
-    <div class="box-header">
-        <h3 class="box-title">{{ title|default('confirm.delete'|trans) }}</h3>
-    </div>
-    <div class="box-body">
-        {{ message|raw }}
-    </div>
-    {{ form_start(form) }}
-    <div class="box-body">
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'boxtype': 'danger'} %}
+    {% block box_before %}
+        {{ form_start(form) }}
+    {% endblock %}
+    {% block box_title %}
+        {{ title|default('confirm.delete'|trans) }}
+    {% endblock %}
+    {% block box_body %}
         {% block form_body %}
-            {{ form_widget(form) }}
+            {% if used is same as (false) %}
+                {{ 'delete.not_in_use'|trans }}
+                <div class="hidden">
+                    {{ form_widget(form) }}
+                </div>
+            {% else %}
+                <p>{{ message|raw }}</p>
+                {{ form_widget(form) }}
+            {% endif %}            
         {% endblock %}
-    </div>
-    <div class="box-footer">
+    {% endblock %}
+    {% block box_footer %}
         <input type="submit" value="{{ 'action.delete'|trans }}" class="btn btn-danger" />
         {% if back %}
             <a href="{{ back }}" class="btn btn-link">{{ 'action.back'|trans }}</a>
         {% endif %}
-    </div>
-    {{ form_end(form) }}
-</div>
+    {% endblock %}
+    {% block box_after %}
+        {{ form_end(form) }}
+    {% endblock %}
+{% endembed %}

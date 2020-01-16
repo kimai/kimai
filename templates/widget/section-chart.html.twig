@@ -1,41 +1,39 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="box">
-            {% if not title is empty %}
-            <div class="box-header with-border">
-                <h3 class="box-title">{{ title|trans }}</h3>
-            </div>
-            {% endif %}
-            <div class="box-body">
+        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+            {% block box_title %}
+                {% if not title is empty %}{{ title|trans }}{% endif %}
+            {% endblock %}
+            {% block box_body %}
                 <div class="row">
                     <div class="col-md-12">
                         {{ render_widget(widgets.0) }}
                     </div>
                 </div>
-            </div>
-            {% if widgets|length > 1 %}
-            <div class="box-footer">
-                <div class="row">
-                    {% set width = (widgets|length) - 1 %}
-                    {% set rawWidth = 12 / width %}
-                    {% set columnWidth = rawWidth|round(0, 'floor') %}
-                    {% for widget in widgets|slice(1, width) %}
-                        {% set data = widget.data %}
-                        {% if widget.option('dataType') == 'duration' %}
-                            {% set data = widget.data|duration %}
-                        {% elseif widget.option('dataType') == 'money' %}
-                            {% set data = widget.data|money %}
-                        {% endif %}
-                        <div class="col-sm-{{ columnWidth }} col-xs-{{ columnWidth * 2 }}">
-                            <div class="description-block border-right">
-                                <h5 class="description-header">{{ data }}</h5>
-                                <span class="description-text">{{ widget.title|trans }}</span>
+            {% endblock %}
+            {% block box_footer %}
+                {% if widgets|length > 1 %}
+                    <div class="row">
+                        {% set width = (widgets|length) - 1 %}
+                        {% set rawWidth = 12 / width %}
+                        {% set columnWidth = rawWidth|round(0, 'floor') %}
+                        {% for widget in widgets|slice(1, width) %}
+                            {% set data = widget.data %}
+                            {% if widget.option('dataType') == 'duration' %}
+                                {% set data = widget.data|duration %}
+                            {% elseif widget.option('dataType') == 'money' %}
+                                {% set data = widget.data|money %}
+                            {% endif %}
+                            <div class="col-sm-{{ columnWidth }} col-xs-{{ columnWidth * 2 }}">
+                                <div class="description-block border-right">
+                                    <h5 class="description-header">{{ data }}</h5>
+                                    <span class="description-text">{{ widget.title|trans }}</span>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+        {% endembed %}
     </div>
 </div>
