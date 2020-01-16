@@ -15,25 +15,22 @@ use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
- * A voter to check permissions on Customers.
+ * A voter to check authorization on Customers.
  */
 class CustomerVoter extends AbstractVoter
 {
-    public const VIEW = 'view';
-    public const EDIT = 'edit';
-    public const BUDGET = 'budget';
-    public const DELETE = 'delete';
-    public const PERMISSIONS = 'permissions';
-
     /**
-     * support rules based on the given $subject (here: Customer)
+     * supported attributes/rules based on the given customer
      */
     public const ALLOWED_ATTRIBUTES = [
-        self::VIEW,
-        self::EDIT,
-        self::BUDGET,
-        self::DELETE,
-        self::PERMISSIONS,
+        'view',
+        'create',
+        'edit',
+        'budget',
+        'delete',
+        'permissions',
+        'comments',
+        'details',
     ];
 
     /**
@@ -70,6 +67,11 @@ class CustomerVoter extends AbstractVoter
 
         if ($this->hasRolePermission($user, $attribute . '_customer')) {
             return true;
+        }
+
+        // those cannot be assigned to teams
+        if (in_array($attribute, ['create', 'delete'])) {
+            return false;
         }
 
         $hasTeamleadPermission = $this->hasRolePermission($user, $attribute . '_teamlead_customer');

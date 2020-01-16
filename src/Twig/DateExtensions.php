@@ -82,6 +82,7 @@ class DateExtensions extends AbstractExtension
     /**
      * @param DateTime|string $date
      * @return string
+     * @throws \Exception
      */
     public function dateShort($date)
     {
@@ -99,6 +100,7 @@ class DateExtensions extends AbstractExtension
     /**
      * @param DateTime|string $date
      * @return string
+     * @throws \Exception
      */
     public function dateTime($date)
     {
@@ -110,14 +112,16 @@ class DateExtensions extends AbstractExtension
             $date = new DateTime($date);
         }
 
-        return date_format($date, $this->dateTimeFormat);
+        return $date->format($this->dateTimeFormat);
     }
 
     /**
      * @param DateTime|string $date
-     * @return string
+     * @param bool $userTimezone
+     * @return bool|false|string
+     * @throws \Exception
      */
-    public function dateTimeFull($date)
+    public function dateTimeFull($date, bool $userTimezone = true)
     {
         if (null === $this->dateTimeTypeFormat) {
             $this->dateTimeTypeFormat = $this->localeSettings->getDateTimeTypeFormat();
@@ -127,11 +131,17 @@ class DateExtensions extends AbstractExtension
             $date = new DateTime($date);
         }
 
+        $timezone = date_default_timezone_get();
+
+        if (!$userTimezone) {
+            $timezone = $date->getTimezone()->getName();
+        }
+
         $formatter = new \IntlDateFormatter(
             $this->localeSettings->getLocale(),
             \IntlDateFormatter::MEDIUM,
             \IntlDateFormatter::MEDIUM,
-            date_default_timezone_get(),
+            $timezone,
             \IntlDateFormatter::GREGORIAN,
             $this->dateTimeTypeFormat
         );
@@ -143,6 +153,7 @@ class DateExtensions extends AbstractExtension
      * @param DateTime|string $date
      * @param string $format
      * @return false|string
+     * @throws \Exception
      */
     public function dateFormat($date, string $format)
     {
@@ -156,6 +167,7 @@ class DateExtensions extends AbstractExtension
     /**
      * @param DateTime|string $date
      * @return string
+     * @throws \Exception
      */
     public function time($date)
     {

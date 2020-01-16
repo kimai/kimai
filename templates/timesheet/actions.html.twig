@@ -47,6 +47,10 @@
             {% set actions = actions|merge({'edit': {'url': path('timesheet_edit', {'id': timesheet.id}), 'class': class}}) %}
         {% endif %}
 
+        {% if actions|length > 0 %}
+            {% set actions = actions|merge({'divider': null}) %}
+        {% endif %}
+
         {% if view == 'index' and is_granted('delete', timesheet) %}
             {% set actions = actions|merge({'trash': {'url': path('delete_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetDelete kimai.timesheetUpdate', 'data-method': 'DELETE', 'data-question': 'confirm.delete', 'data-msg-error': 'action.delete.error', 'data-msg-success': 'action.delete.success'}}}) %}
         {% endif %}

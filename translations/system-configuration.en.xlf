@@ -66,10 +66,6 @@
                 <source>label.timesheet.active_entries.soft_limit</source>
                 <target>Number of running time entries from which a warning is displayed</target>
             </trans-unit>
-            <trans-unit id="label.theme.select_type">
-                <source>label.theme.select_type</source>
-                <target>Type of select-boxes in forms</target>
-            </trans-unit>
             <trans-unit id="label.theme.autocomplete_chars">
                 <source>label.theme.autocomplete_chars</source>
                 <target>Minimum number of letters to start auto-completion</target>

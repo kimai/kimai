@@ -1,6 +1,3 @@
-{% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/progressbar.html.twig" as progress %}
-
 {% set projectStats = data %}
 {% set title = options.title|default('label.my_team_projects') %}
 {% set widgetId = options.id %}
@@ -8,18 +5,19 @@
 {% if projectStats|length > 0 %}
 <div class="row">
     <div class="col-md-12">
-        <div class="box box-{{ admin_lte_context.widget.type }} WidgetUserTeamProjects" id="{{ widgetId }}">
-            {% if not title is empty %}
-            <div class="box-header with-border">
-                <h3 class="box-title">{{ title|trans }}</h3>
-            </div>
-            {% endif %}
-            <div class="box-body">
+        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+            {% import "macros/widgets.html.twig" as widgets %}
+            {% import "macros/progressbar.html.twig" as progress %}
+            {% block box_attributes %}id="{{ widgetId }}"{% endblock %}
+            {% block box_title %}
+                {% if not title is empty %}{{ title|trans }}{% endif %}
+            {% endblock %}
+            {% block box_body %}
                 <table class="table table-hover dataTable" role="grid">
                     <thead>
                     <tr>
                         <th>{{ 'label.project'|trans }}</th>
-                        <th class="hidden-xs">{{ 'label.team'|trans }}</th>
+                        <th class="hidden-xs hidden-sm hidden-md">{{ 'label.team'|trans }}</th>
                         <th style="width:50%">{{ 'label.progress'|trans }}</th>
                     </tr>
                     </thead>
@@ -32,7 +30,7 @@
                                 <br>
                                 <small>{{ widgets.label_customer(stats.project.customer) }}</small>
                             </td>
-                            <td class="hidden-xs">
+                            <td class="hidden-xs hidden-sm hidden-md">
                                 {% for team in project.teams %}
                                     {% if app.user.isInTeam(team) %}
                                         {{ widgets.label_team(team) }}
@@ -51,10 +49,9 @@
                         </tr>
                     {% endfor %}
                     </tbody>
-                </table>
-            </div>
-        </div>
-
+                </table>                
+            {% endblock %}
+        {% endembed %}
     </div>
 </div>
 {% endif %}

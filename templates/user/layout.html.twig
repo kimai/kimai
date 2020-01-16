@@ -6,81 +6,104 @@
 {% block page_actions %}{{ actions.user(user, tab) }}{% endblock %}
 
 {% block main %}
-    {% import _self as macro %}
-    {% import "macros/widgets.html.twig" as widgets %}
-
     <div class="row">
-        <div class="col-md-9">
-
+        <div class="col-md-8">
             {% block profile_content %}{% endblock %}
-
         </div>
 
-        <div class="col-md-3">
-            {{ macro.profile_box(user, stats) }}
-            {{ macro.profile_infos(user, stats) }}
+        <div class="col-md-4">
+
+            {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+                {% import "macros/widgets.html.twig" as widgets %}
+                {% block box_body_class %}box-profile{% endblock %}
+                {% block box_body %}
+                    <div class="text-center">
+                        {{ widgets.user_avatar(user) }}
+                        <h3 class="profile-username">{{ widgets.username(user) }}</h3>
+                        <p class="text-muted">{{ user.title }}</p>
+                    </div>
+                    {% set seeOwnRate = is_granted('view_rate_own_timesheet') %}
+
+                    <table class="table">
+                        <tr>
+                            <th>{{ 'stats.durationMonth'|trans }}</th>
+                            <td class="text-nowrap pull-right">{{ stats.durationThisMonth|duration }}</td>
+                        </tr>
+                        {% if seeOwnRate %}
+                        <tr>
+                            <th>{{ 'stats.amountMonth'|trans }}</th>
+                            <td class="text-nowrap pull-right">{{ stats.amountThisMonth|money }}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{{ 'stats.durationTotal'|trans }}</th>
+                            <td class="text-nowrap pull-right">{{ stats.durationTotal|duration }}</td>
+                        </tr>
+                        {% if seeOwnRate %}
+                        <tr>
+                            <th>{{ 'stats.amountTotal'|trans }}</th>
+                            <td class="text-nowrap pull-right">{{ stats.amountTotal|money }}</td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                {% endblock %}
+            {% endembed %}
+
+            {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+                {% block box_title %}{{ 'profile.about_me'|trans }}{% endblock %}
+                {% block box_body %}
+                    {# colors = purple, blue, aqua, red, green #}
+                    <table class="table no-border">
+                        <tr>
+                            <th>{{ 'label.id'|trans }}</th>
+                            <td class="text-nowrap pull-right">{{ user.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'label.username'|trans }}</th>
+                            <td class="text-nowrap pull-right">{{ user.username }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'profile.first_entry'|trans }}</th>
+                            <td class="text-nowrap pull-right">{{ stats.firstEntry|date_short }}</td>
+                        </tr>
+                        {% if is_granted('hourly-rate', user) %}
+                        <tr>
+                            <th>{{ 'label.hourlyRate'|trans }}</th>
+                            <td class="text-nowrap pull-right">{{ user.preferenceValue('hourly_rate') }}</td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                {% endblock %}
+            {% endembed %}
+
+            {% if user.teams is not empty and (is_granted('teams', user) or (app.user == user and is_granted('view_team_member'))) %}
+                {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+                    {% import "macros/widgets.html.twig" as widgets %}
+                    {% block box_title %}{{ 'label.my_teams'|trans }}{% endblock %}
+                    {% block box_tools %}
+                        {% if is_granted('roles', user) %}
+                            <a class="btn-box-tool" href="{{ path('user_profile_teams', {'username': user.username}) }}"><i class="{{ 'edit'|icon }}"></i></a>
+                        {% endif %}    
+                    {% endblock %}
+                    {% block box_body %}
+                        {{ widgets.team_list(user.teams) }}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
+
         </div>
     </div>
 {% endblock %}
 
-{% macro profile_infos(user, stats) %}
-    <div class="box box-{{ admin_lte_context.widget.type }}">
-        <div class="box-header with-border">
-            <h3 class="box-title">{{ 'profile.about_me'|trans }}</h3>
-        </div>
-        <div class="box-body">
-            <ul class="nav nav-stacked">
-                {# colors = purple, blue, aqua, red, green #}
-                <li><a href="#">{{ 'label.id'|trans }} <span class="pull-right badge bg-aqua">{{ user.id }}</span></a></li>
-                <li><a href="#">{{ 'label.username'|trans }} <span class="pull-right badge bg-blue">{{ user.username }}</span></a></li>
-                <li><a href="#">{{ 'profile.first_entry'|trans }} <span class="pull-right badge bg-purple">{{ stats.firstEntry|date_short }}</span></a></li>
-                {% if is_granted('view_rate_own_timesheet') %}
-                <li><a href="#">{{ 'label.hourlyRate'|trans }} <span class="pull-right badge bg-blue">{{ user.preferenceValue('hourly_rate') }}</span></a></li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-{% endmacro %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('kimai.teamUpdate', true);
+        });
+    </script>
+{% endblock %}
 
-{% macro profile_box(user, stats) %}
-    {% import "@AdminLTE/Macros/default.html.twig" as macro %}
-    {% import "macros/widgets.html.twig" as widgets %}
-
-    <div class="box box-{{ admin_lte_context.widget.type }}">
-        <div class="box-body box-profile">
-            <div class="text-center">
-                {{ widgets.user_avatar(user) }}
-                <h3 class="profile-username">{{ widgets.username(user) }}</h3>
-                <p class="text-muted">{{ user.title }}</p>
-            </div>
-
-            <ul class="list-group list-group-unbordered">
-
-                <li class="list-group-item">
-                    <b>{{ 'stats.durationMonth'|trans }}</b> <a class="pull-right">{{ stats.durationThisMonth|duration }}</a>
-                </li>
-
-                {% if is_granted('view_rate_own_timesheet') %}
-                <li class="list-group-item">
-                    <b>{{ 'stats.amountMonth'|trans }}</b> <a class="pull-right">{{ stats.amountThisMonth|money }}</a>
-                </li>
-                {% endif %}
-
-                <li class="list-group-item">
-                    <b>{{ 'stats.durationTotal'|trans }}</b> <a class="pull-right">{{ stats.durationTotal|duration }}</a>
-                </li>
-
-                {% if is_granted('view_rate_own_timesheet') %}
-                <li class="list-group-item">
-                    <b>{{ 'stats.amountTotal'|trans }}</b> <a class="pull-right">{{ stats.amountTotal|money }}</a>
-                </li>
-                {% endif %}
-
-            </ul>
-
-        </div>
-    </div>
-{% endmacro %}
 
 {# -------------------------------- UNUSED FOR NOW -------------------------------- #}
 {% macro profile_list_unused(user, items) %}

@@ -58,10 +58,6 @@
                 <source>label.timesheet.active_entries.soft_limit</source>
                 <target>Nombre de relevés de temps d'activité à partir duquel un message d'avertissement est affiché</target>
             </trans-unit>
-            <trans-unit id="label.theme.select_type">
-                <source>label.theme.select_type</source>
-                <target>Type de sélecteur dans les formulaires</target>
-            </trans-unit>
             <trans-unit id="label.calendar.week_numbers">
                 <source>label.calendar.week_numbers</source>
                 <target>Afficher les numéros de semaine</target>

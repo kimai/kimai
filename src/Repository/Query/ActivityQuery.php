@@ -26,6 +26,10 @@ class ActivityQuery extends ProjectQuery
      * @var bool
      */
     private $globalsOnly = false;
+    /**
+     * @var bool
+     */
+    private $excludeGlobals = false;
 
     public function __construct()
     {
@@ -50,6 +54,18 @@ class ActivityQuery extends ProjectQuery
     public function setGlobalsOnly($globalsOnly): self
     {
         $this->globalsOnly = (bool) $globalsOnly;
+
+        return $this;
+    }
+
+    public function isExcludeGlobals(): bool
+    {
+        return (bool) $this->excludeGlobals;
+    }
+
+    public function setExcludeGlobals(bool $excludeGlobals): self
+    {
+        $this->excludeGlobals = (bool) $excludeGlobals;
 
         return $this;
     }
