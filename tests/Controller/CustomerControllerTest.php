@@ -11,10 +11,10 @@ namespace App\Tests\Controller;
 
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
-use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
+use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
@@ -69,21 +69,133 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_customer_admin', 5);
     }
 
-    public function testBudgetAction()
+    public function testDetailsAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        self::assertHasProgressbar($client);
+
+        $node = $client->getCrawler()->filter('div.box#customer_details_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#project_list_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#budget_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#team_listing_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#comments_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn-box-tool');
+        self::assertEquals(2, $node->count());
+    }
+
+    public function testAddCommentAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
+        $client->submit($form, [
+            'customer_comment_form' => [
+                'message' => 'A beautiful and short comment **with some** markdown formatting',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        self::assertStringContainsString('<p>A beautiful and short comment <strong>with some</strong> markdown formatting</p>', $node->html());
+    }
+
+    public function testDeleteCommentAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
+        $client->submit($form, [
+            'customer_comment_form' => [
+                'message' => 'Blah foo bar',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        self::assertStringContainsString('Blah foo bar', $node->html());
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.confirmation-link');
+        self::assertEquals($this->createUrl('/admin/customer/1/comment_delete'), $node->attr('href'));
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/customer/1/comment_delete');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        self::assertStringContainsString('There were no comments posted yet', $node->html());
+    }
+
+    public function testPinCommentAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
+        $client->submit($form, [
+            'customer_comment_form' => [
+                'message' => 'Blah foo bar',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        self::assertStringContainsString('Blah foo bar', $node->html());
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.btn.active');
+        self::assertEquals(0, $node->count());
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/customer/1/comment_pin');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.btn.active');
+        self::assertEquals(1, $node->count());
+        self::assertEquals($this->createUrl('/admin/customer/1/comment_pin'), $node->attr('href'));
+    }
+
+    public function testCreateDefaultTeamAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text());
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/customer/1/create_team');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text());
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
+        self::assertEquals(1, $node->count());
+    }
+
+    public function testProjectsAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/projects/1');
+        $node = $client->getCrawler()->filter('div.box#project_list_box .box-body table tbody tr');
+        self::assertEquals(1, $node->count());
+
         /** @var EntityManager $em */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-
-        $fixture = new TimesheetFixtures();
-        $fixture->setAmount(10);
-        $fixture->setProjects($em->getRepository(Project::class)->findAll());
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_ADMIN));
+        $customer = $em->getRepository(Customer::class)->find(1);
+        $fixture = new ProjectFixtures();
+        $fixture->setAmount(9); // to trigger a second page (every third activity is hidden)
+        $fixture->setCustomers([$customer]);
         $this->importFixture($em, $fixture);
 
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/customer/1/budget');
-        self::assertHasProgressbar($client);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/projects/1');
+
+        $node = $client->getCrawler()->filter('div.box#project_list_box .box-tools ul.pagination li');
+        self::assertEquals(4, $node->count());
+
+        $node = $client->getCrawler()->filter('div.box#project_list_box .box-body table tbody tr');
+        self::assertEquals(5, $node->count());
     }
 
     public function testCreateAction()
@@ -107,9 +219,8 @@ class CustomerControllerTest extends ControllerBaseTest
                 'name' => 'Test Customer',
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/2/details'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
         $this->assertHasFlashSuccess($client);
     }
 
@@ -137,9 +248,8 @@ class CustomerControllerTest extends ControllerBaseTest
                 'name' => 'Test Customer 2'
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
         $this->request($client, '/admin/customer/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
         $this->assertEquals('Test Customer 2', $editForm->get('customer_edit_form[name]')->getValue());

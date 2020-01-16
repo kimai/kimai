@@ -38,7 +38,7 @@ class UserTeamProjects extends SimpleWidget implements AuthorizedWidget
         $options = parent::getOptions($options);
 
         if (empty($options['id'])) {
-            $options['id'] = uniqid('UserTeamProjects_');
+            $options['id'] = 'WidgetUserTeamProjects';
         }
 
         return $options;

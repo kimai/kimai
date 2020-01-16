@@ -294,12 +294,15 @@ class ActivityRepository extends EntityRepository
         if ($query->isGlobalsOnly()) {
             $where->add($qb->expr()->isNull('a.project'));
         } elseif (null !== $query->getProject()) {
-            $where->add(
-                $qb->expr()->orX(
-                    $qb->expr()->eq('a.project', ':project'),
-                    $qb->expr()->isNull('a.project')
-                )
+            $orX = $qb->expr()->orX(
+                $qb->expr()->eq('a.project', ':project')
             );
+
+            if (!$query->isExcludeGlobals()) {
+                $orX->add($qb->expr()->isNull('a.project'));
+            }
+
+            $where->add($orX);
             $qb->setParameter('project', $query->getProject());
         } elseif (null !== $query->getCustomer()) {
             $where->add('p.customer = :customer');
@@ -343,6 +346,11 @@ class ActivityRepository extends EntityRepository
             }
         }
 
+        // this will make sure, that we do not accidentally create results with multiple rows
+        //   => which would result in a wrong LIMIT / pagination results
+        // the second group by is needed due to SQL standard (even though logically not really required for this query)
+        $qb->addGroupBy('a.id')->addGroupBy($orderBy);
+
         return $qb;
     }
 
@@ -352,6 +360,7 @@ class ActivityRepository extends EntityRepository
         $qb
             ->resetDQLPart('select')
             ->resetDQLPart('orderBy')
+            ->resetDQLPart('groupBy')
             ->select($qb->expr()->countDistinct('a.id'))
         ;
 

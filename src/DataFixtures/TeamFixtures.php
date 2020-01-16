@@ -36,7 +36,7 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
     public const BATCH_SIZE = 50;
 
     /**
-     * @return array
+     * @return class-string[]
      */
     public function getDependencies()
     {

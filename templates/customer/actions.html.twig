@@ -18,6 +18,9 @@
     {% set actions = {} %}
 
     {% if customer.id is not empty %}
+        {% if view != 'details' and is_granted('view', customer) %}
+            {% set actions = actions|merge({'details': path('customer_details', {'id': customer.id})}) %}
+        {% endif %}
         {% if is_granted('edit', customer) %}
             {% set class = '' %}
             {% if view != 'edit' %}
@@ -25,13 +28,17 @@
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_customer_edit', {'id': customer.id}), 'class': class}}) %}
         {% endif %}
-        {% if is_granted('budget', customer) %}
-            {% set actions = actions|merge({'report': {'url': path('admin_customer_budget', {'id': customer.id})}}) %}
-        {% endif %}
         {% if is_granted('permissions', customer) %}
-            {% set actions = actions|merge({'permissions': {'url': path('admin_customer_permissions', {'id': customer.id})}}) %}
+            {% set class = '' %}
+            {% if view != 'permissions' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'permissions': {'url': path('admin_customer_permissions', {'id': customer.id}), 'class': class}}) %}
         {% endif %}
-        {% if is_granted('view_project') %}
+        {% if actions|length > 0 %}
+            {% set actions = actions|merge({'divider': null}) %}
+        {% endif %}
+        {% if is_granted('view_project') or is_granted('view_teamlead_project') or is_granted('view_team_project') %}
             {% set actions = actions|merge({'project': path('admin_project', {'customer': customer.id})}) %}
         {% endif %}
         {% if is_granted('view_activity') %}
@@ -48,12 +55,12 @@
         {% endif %}
     {% endif %}
 
-    {% if view != 'index' %}
+    {% if view != 'index' and view != 'custom' %}
         {% set actions = actions|merge({'back': path('admin_customer')}) %}
     {% endif %}
 
     {% set event = trigger('actions.customer', {'actions': actions, 'view': view, 'customer': customer}) %}
-    {% if view == 'index' %}
+    {% if view == 'index' or view == 'custom' %}
         {{ widgets.table_actions(event.payload.actions) }}
     {% else %}
         {{ widgets.entity_actions(event.payload.actions) }}

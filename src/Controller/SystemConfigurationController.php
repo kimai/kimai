@@ -14,7 +14,6 @@ use App\Event\SystemConfigurationEvent;
 use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration as SystemConfigurationModel;
 use App\Form\SystemConfigurationForm;
-use App\Form\Type\EnhancedSelectboxType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\RoundingModeType;
 use App\Form\Type\SkinType;
@@ -293,25 +292,20 @@ class SystemConfigurationController extends AbstractController
                 ->setSection(SystemConfigurationModel::SECTION_THEME)
                 ->setConfiguration([
                     (new Configuration())
-                        ->setName('theme.select_type')
-                        ->setTranslationDomain('system-configuration')
-                        ->setType(EnhancedSelectboxType::class)
-                        ->setRequired(false),
+                        ->setName('theme.autocomplete_chars')
+                        ->setLabel('theme.autocomplete_chars')
+                        ->setType(IntegerType::class)
+                        ->setTranslationDomain('system-configuration'),
                     (new Configuration())
                         ->setName('timesheet.markdown_content')
                         ->setLabel('theme.markdown_content')
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
-                    (new Configuration())
-                        ->setName('theme.autocomplete_chars')
-                        ->setLabel('theme.autocomplete_chars')
-                        ->setType(IntegerType::class)
-                        ->setTranslationDomain('system-configuration'),
-                    // FIXME should that be configurable per user?
+                    // TODO should that be configurable per user?
                     /*
                     (new Configuration())
                         ->setName('theme.auto_reload_datatable')
-                        ->setLabel('theme.auto_reload_datatable') // FIXME translation
+                        ->setLabel('theme.auto_reload_datatable') // TODO translation
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
                     */

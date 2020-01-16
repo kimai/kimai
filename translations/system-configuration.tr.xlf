@@ -66,10 +66,6 @@
                 <source>label.timesheet.active_entries.soft_limit</source>
                 <target state="translated">Bir uyarı görüntülenmeden önce çalışan zaman çizelgesi kayıtlarının sayısı</target>
             </trans-unit>
-            <trans-unit id="label.theme.select_type">
-                <source>label.theme.select_type</source>
-                <target state="translated">Formlardaki seçim listesi türü</target>
-            </trans-unit>
             <trans-unit id="label.theme.autocomplete_chars">
                 <source>label.theme.autocomplete_chars</source>
                 <target state="translated">Otomatik tamamlama için gerekli en az harf adedi</target>

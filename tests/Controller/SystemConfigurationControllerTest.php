@@ -219,7 +219,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'system_configuration_form_theme' => [
                 'configuration' => [
-                    ['name' => 'theme.select_type', 'value' => 'selectpicker'],
+                    ['name' => 'theme.autocomplete_chars', 'value' => 5],
                     ['name' => 'timesheet.markdown_content', 'value' => 1],
                 ]
             ]

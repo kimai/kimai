@@ -13,6 +13,7 @@ use App\Entity\Project;
 use App\Entity\ProjectMeta;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
@@ -69,21 +70,150 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_project_admin', 5);
     }
 
-    public function testBudgetAction()
+    public function testDetailsAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
+        $project = $em->getRepository(Project::class)->find(1);
+
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
-        $fixture->setProjects($em->getRepository(Project::class)->findAll());
+        $fixture->setProjects([$project]);
         $fixture->setUser($this->getUserByRole($em, User::ROLE_ADMIN));
         $this->importFixture($em, $fixture);
 
+        $project = $em->getRepository(Project::class)->find(1);
+        $fixture = new ActivityFixtures();
+        $fixture->setAmount(6); // to trigger a second page
+        $fixture->setProjects([$project]);
+        $this->importFixture($em, $fixture);
+
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/project/1/budget');
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
         self::assertHasProgressbar($client);
+
+        $node = $client->getCrawler()->filter('div.box#project_details_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#activity_list_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#budget_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#team_listing_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#comments_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn-box-tool');
+        self::assertEquals(2, $node->count());
+    }
+
+    public function testAddCommentAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
+        $form = $client->getCrawler()->filter('form[name=project_comment_form]')->form();
+        $client->submit($form, [
+            'project_comment_form' => [
+                'message' => 'A beautiful and long comment **with some** markdown formatting',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        self::assertStringContainsString('<p>A beautiful and long comment <strong>with some</strong> markdown formatting</p>', $node->html());
+    }
+
+    public function testDeleteCommentAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
+        $form = $client->getCrawler()->filter('form[name=project_comment_form]')->form();
+        $client->submit($form, [
+            'project_comment_form' => [
+                'message' => 'Foo bar blub',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        self::assertStringContainsString('Foo bar blub', $node->html());
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.confirmation-link');
+        self::assertEquals($this->createUrl('/admin/project/1/comment_delete'), $node->attr('href'));
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/project/1/comment_delete');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        self::assertStringContainsString('There were no comments posted yet', $node->html());
+    }
+
+    public function testPinCommentAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
+        $form = $client->getCrawler()->filter('form[name=project_comment_form]')->form();
+        $client->submit($form, [
+            'project_comment_form' => [
+                'message' => 'Foo bar blub',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        self::assertStringContainsString('Foo bar blub', $node->html());
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.btn.active');
+        self::assertEquals(0, $node->count());
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/project/1/comment_pin');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.btn.active');
+        self::assertEquals(1, $node->count());
+        self::assertEquals($this->createUrl('/admin/project/1/comment_pin'), $node->attr('href'));
+    }
+
+    public function testCreateDefaultTeamAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text());
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/project/1/create_team');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text());
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
+        self::assertEquals(1, $node->count());
+    }
+
+    public function testActivitiesAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/1/activities/1');
+        self::assertEquals('', $client->getResponse()->getContent());
+
+        /** @var EntityManager $em */
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $project = $em->getRepository(Project::class)->find(1);
+        $fixture = new ActivityFixtures();
+        $fixture->setAmount(9); // to trigger a second page (every third activity is hidden)
+        $fixture->setProjects([$project]);
+        $this->importFixture($em, $fixture);
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/1/activities/1');
+
+        $node = $client->getCrawler()->filter('div.box#activity_list_box .box-tools ul.pagination li');
+        self::assertEquals(4, $node->count());
+
+        $node = $client->getCrawler()->filter('div.box#activity_list_box .box-body table tbody tr');
+        self::assertEquals(5, $node->count());
     }
 
     public function testCreateAction()
@@ -98,9 +228,8 @@ class ProjectControllerTest extends ControllerBaseTest
                 'name' => 'Test 2',
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/2/details'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
         $this->assertHasFlashSuccess($client);
     }
 
@@ -160,9 +289,8 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'project_edit_form' => ['name' => 'Test 2']
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
         $this->request($client, '/admin/project/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
         $this->assertEquals('Test 2', $editForm->get('project_edit_form[name]')->getValue());

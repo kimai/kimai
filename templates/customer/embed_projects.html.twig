@@ -1,0 +1,30 @@
+{% if projects|length > 0 %}
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'customer': customer, 'projects': projects, 'page': page} %}
+        {% import "project/actions.html.twig" as actions %}
+        {% block box_title %}{{ 'menu.admin_project'|trans }}{% endblock %}
+        {% block box_attributes %}
+            id="project_list_box"  data-href="{{ path('customer_projects', {'id': customer.id}) }}" data-reload="kimai.projectUpdate"
+        {% endblock %}
+        {% block box_tools %}
+            {{ pagerfanta(projects, 'twitter_bootstrap3_translated', { proximity: 1, css_container_class: 'pagination pagination-sm inline', routeName: 'customer_projects', routeParams: {'id': customer.id} }) }}
+        {% endblock %}
+        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_tools_attributes %}data-page="{{ page }}"{% endblock %}
+        {% block box_body %}
+            <table class="table table-hover dataTable">
+                <tbody>
+                {% for project in projects %}
+                    <tr>
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.comment|comment2html }}</td>
+                        <td class="actions">{{ actions.project(project, 'custom') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endblock %}
+    {% endembed %}
+    <script type="text/javascript">
+        KimaiPaginatedBoxWidget.create('#project_list_box');
+    </script>
+{% endif %}

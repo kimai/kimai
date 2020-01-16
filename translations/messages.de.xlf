@@ -64,6 +64,10 @@
                 <source>update_multiple</source>
                 <target>%action% von %count% Einträgen?</target>
             </trans-unit>
+            <trans-unit id="attachments">
+                <source>attachments</source>
+                <target>Files</target>
+            </trans-unit>
 
             <!--
               Login / Security
@@ -175,6 +179,10 @@
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
                 <target>Anhand ihrer ausgewählten Filter wurden keine Einträge gefunden.</target>
+            </trans-unit>
+            <trans-unit id="error.no_comments_found">
+                <source>error.no_comments_found</source>
+                <target>Es wurden noch keine Kommentare abgegeben.</target>
             </trans-unit>
 
             <!--

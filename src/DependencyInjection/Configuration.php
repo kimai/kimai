@@ -31,10 +31,10 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('kimai');
-        /** @var ArrayNodeDefinition $rootNode */
-        $rootNode = $treeBuilder->getRootNode();
+        /** @var ArrayNodeDefinition $node */
+        $node = $treeBuilder->getRootNode();
 
-        $rootNode
+        $node
             ->children()
                 ->scalarNode('data_dir')
                     ->isRequired()
@@ -75,7 +75,7 @@ class Configuration implements ConfigurationInterface
     protected function getTimesheetNode()
     {
         $builder = new TreeBuilder('timesheet');
-        /** @var ArrayNodeDefinition $rootNode */
+        /** @var ArrayNodeDefinition $node */
         $node = $builder->getRootNode();
 
         $node
@@ -205,7 +205,7 @@ class Configuration implements ConfigurationInterface
     protected function getInvoiceNode()
     {
         $builder = new TreeBuilder('invoice');
-        /** @var ArrayNodeDefinition $rootNode */
+        /** @var ArrayNodeDefinition $node */
         $node = $builder->getRootNode();
 
         $node
@@ -232,7 +232,7 @@ class Configuration implements ConfigurationInterface
     protected function getLanguagesNode()
     {
         $builder = new TreeBuilder('languages');
-        /** @var ArrayNodeDefinition $rootNode */
+        /** @var ArrayNodeDefinition $node */
         $node = $builder->getRootNode();
 
         $node
@@ -256,7 +256,7 @@ class Configuration implements ConfigurationInterface
     protected function getCalendarNode()
     {
         $builder = new TreeBuilder('calendar');
-        /** @var ArrayNodeDefinition $rootNode */
+        /** @var ArrayNodeDefinition $node */
         $node = $builder->getRootNode();
 
         $node
@@ -310,7 +310,7 @@ class Configuration implements ConfigurationInterface
     protected function getThemeNode()
     {
         $builder = new TreeBuilder('theme');
-        /** @var ArrayNodeDefinition $rootNode */
+        /** @var ArrayNodeDefinition $node */
         $node = $builder->getRootNode();
 
         $node
@@ -326,6 +326,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('select_type')
                     ->defaultValue('selectpicker')
+                    ->setDeprecated()
                 ->end()
                 ->scalarNode('auto_reload_datatable')
                     ->defaultFalse()
@@ -374,7 +375,7 @@ class Configuration implements ConfigurationInterface
     protected function getIndustryNode()
     {
         $builder = new TreeBuilder('industry');
-        /** @var ArrayNodeDefinition $rootNode */
+        /** @var ArrayNodeDefinition $node */
         $node = $builder->getRootNode();
 
         $node
@@ -390,7 +391,7 @@ class Configuration implements ConfigurationInterface
     protected function getUserNode()
     {
         $builder = new TreeBuilder('user');
-        /** @var ArrayNodeDefinition $rootNode */
+        /** @var ArrayNodeDefinition $node */
         $node = $builder->getRootNode();
 
         $node
@@ -411,7 +412,7 @@ class Configuration implements ConfigurationInterface
     protected function getWidgetsNode()
     {
         $builder = new TreeBuilder('widgets');
-        /** @var ArrayNodeDefinition $rootNode */
+        /** @var ArrayNodeDefinition $node */
         $node = $builder->getRootNode();
 
         $node
@@ -438,7 +439,7 @@ class Configuration implements ConfigurationInterface
     protected function getDashboardNode()
     {
         $builder = new TreeBuilder('dashboard');
-        /** @var ArrayNodeDefinition $rootNode */
+        /** @var ArrayNodeDefinition $node */
         $node = $builder->getRootNode();
 
         $node
@@ -467,7 +468,7 @@ class Configuration implements ConfigurationInterface
     protected function getDefaultsNode()
     {
         $builder = new TreeBuilder('defaults');
-        /** @var ArrayNodeDefinition $rootNode */
+        /** @var ArrayNodeDefinition $node */
         $node = $builder->getRootNode();
 
         $node
@@ -499,7 +500,7 @@ class Configuration implements ConfigurationInterface
     protected function getPermissionsNode()
     {
         $builder = new TreeBuilder('permissions');
-        /** @var ArrayNodeDefinition $rootNode */
+        /** @var ArrayNodeDefinition $node */
         $node = $builder->getRootNode();
 
         $node
