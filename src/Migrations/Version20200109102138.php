@@ -51,6 +51,10 @@ final class Version20200109102138 extends AbstractMigration
         $projectComment->addIndex(['project_id'], 'IDX_29A23638166D1F9C');
         $projectComment->addForeignKeyConstraint('kimai2_projects', ['project_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_29A23638166D1F9C');
         $projectComment->addForeignKeyConstraint('kimai2_users', ['created_by_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_29A23638B03A8386');
+
+        $this->addSql('DELETE from kimai2_configuration WHERE name = "theme.select_type"');
+        $this->addSql('DELETE from kimai2_roles_permissions WHERE permission = "delete_other_profile"');
+        $this->addSql('DELETE from kimai2_roles_permissions WHERE permission = "delete_own_profile"');
     }
 
     public function down(Schema $schema): void
