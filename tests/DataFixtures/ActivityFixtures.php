@@ -105,7 +105,6 @@ final class ActivityFixtures extends Fixture
         }
         $faker = Factory::create();
 
-        // random amount of timesheet entries for every user
         for ($i = 0; $i < $this->amount; $i++) {
             $project = null;
             if (false === $this->isGlobal) {

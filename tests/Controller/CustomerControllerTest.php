@@ -14,9 +14,11 @@ use App\Entity\CustomerMeta;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
+use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 
 /**
@@ -103,7 +105,7 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertStringContainsString('<p>A beautiful and short comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }
 
-    public function testDeleteCommentActionWithError()
+    public function testDeleteCommentAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/details');
@@ -128,7 +130,7 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertStringContainsString('There were no comments posted yet', $node->html());
     }
 
-    public function testPinCommentActionWithError()
+    public function testPinCommentAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/details');
@@ -154,10 +156,47 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertEquals($this->createUrl('/admin/customer/1/comment_pin'), $node->attr('href'));
     }
 
-    // #####################################
-    // FIXME createDefaultTeamAction
-    // FIXME projectAction
-    // ####################################
+    public function testCreateDefaultTeamAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text());
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/customer/1/create_team');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text());
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
+        self::assertEquals(1, $node->count());
+    }
+
+    public function testProjectsAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/projects/1');
+        $node = $client->getCrawler()->filter('div.box#project_list_box .box-body table tbody tr');
+        self::assertEquals(1, $node->count());
+
+        /** @var EntityManager $em */
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $customer = $em->getRepository(Customer::class)->find(1);
+        $fixture = new ProjectFixtures();
+        $fixture->setAmount(9); // to trigger a second page (every third activity is hidden)
+        $fixture->setCustomers([$customer]);
+        $this->importFixture($em, $fixture);
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/projects/1');
+
+        $node = $client->getCrawler()->filter('div.box#project_list_box .box-tools ul.pagination li');
+        self::assertEquals(4, $node->count());
+
+        $node = $client->getCrawler()->filter('div.box#project_list_box .box-body table tbody tr');
+        self::assertEquals(5, $node->count());
+    }
 
     public function testCreateAction()
     {

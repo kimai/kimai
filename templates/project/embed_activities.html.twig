@@ -12,12 +12,14 @@
         {% block box_tools_attributes %}data-page="{{ page }}"{% endblock %}
         {% block box_body %}
             <table class="table table-hover dataTable">
-            {% for activity in activities %}
-                <tr>
-                    <td>{{ activity.name }}</td>
-                    <td class="actions">{{ actions.activity(activity, 'custom') }}</td>
-                </tr>
-            {% endfor %}
+                <tbody>
+                {% for activity in activities %}
+                    <tr>
+                        <td>{{ activity.name }}</td>
+                        <td class="actions">{{ actions.activity(activity, 'custom') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
             </table>
         {% endblock %}
     {% endembed %}

@@ -32,6 +32,10 @@ final class ProjectFixtures extends Fixture
      * @var callable
      */
     private $callback;
+    /**
+     * @var Customer[]
+     */
+    private $customers = [];
 
     public function getAmount(): int
     {
@@ -48,6 +52,17 @@ final class ProjectFixtures extends Fixture
     public function setIsVisible(bool $visible): ProjectFixtures
     {
         $this->isVisible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * @param Customer[] $customers
+     * @return ProjectFixtures
+     */
+    public function setCustomers(array $customers): ProjectFixtures
+    {
+        $this->customers = $customers;
 
         return $this;
     }
@@ -70,7 +85,10 @@ final class ProjectFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $customers = $this->getAllCustomers($manager);
+        $customers = $this->customers;
+        if (empty($customers)) {
+            $customers = $this->getAllCustomers($manager);
+        }
         $faker = Factory::create();
 
         for ($i = 0; $i < $this->amount; $i++) {
