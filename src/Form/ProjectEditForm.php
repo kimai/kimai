@@ -38,7 +38,7 @@ class ProjectEditForm extends AbstractType
             $entry = $options['data'];
             $id = $entry->getId();
 
-            if ($id !== null) {
+            if (null !== $entry->getCustomer()) {
                 $customer = $entry->getCustomer();
                 $options['currency'] = $customer->getCurrency();
             }
@@ -52,7 +52,7 @@ class ProjectEditForm extends AbstractType
                 ],
             ])
             ->add('comment', TextareaType::class, [
-                'label' => 'label.comment',
+                'label' => 'label.description',
                 'required' => false,
             ])
             ->add('orderNumber', TextType::class, [

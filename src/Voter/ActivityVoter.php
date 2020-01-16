@@ -93,8 +93,12 @@ class ActivityVoter extends AbstractVoter
             }
         }
 
+        if (null === ($customer = $project->getCustomer())) {
+            return false;
+        }
+
         /** @var Team $team */
-        foreach ($project->getCustomer()->getTeams() as $team) {
+        foreach ($customer->getTeams() as $team) {
             if ($hasTeamleadPermission && $user->isTeamleadOf($team)) {
                 return true;
             }

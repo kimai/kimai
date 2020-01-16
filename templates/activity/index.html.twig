@@ -4,19 +4,23 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "activity/actions.html.twig" as actions %}
 
+{% set showVisibility = query.visibility != 1 %}
 {% set columns = {
     'name': 'alwaysVisible',
-    'customer': 'hidden-xs',
     'project': 'hidden-xs',
-    'comment': 'hidden-xs hidden-sm',
+    'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
         ('mf_' ~ field.name): {'title': field.label, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
     }) %}
 {% endfor %}
+{% if showVisibility %}
+    {% set columns = columns|merge({
+        'visible': {'class': 'text-center', 'orderBy': false},
+    }) %}
+{% endif %}
 {% set columns = columns|merge({
-    'visible': {'class': 'text-center', 'orderBy': false},
     'actions': 'actions alwaysVisible',
 }) %}
 
@@ -40,16 +44,16 @@
         {% for entry in entries %}
             <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_activity_edit', {'id': entry.id}) }}"{% endif %}>
                 <td>{{ widgets.label_color_dot('activity', true, entry.name, null, entry.color) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
-                    {% if entry.project and entry.project.customer %}
-                        {# only none-global activities have a project and customer assigned #}
-                        {{ widgets.label_customer(entry.project.customer) }}
-                    {% endif %}
-                </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
+                    {# only none-global activities have a project and customer assigned #}
                     {% if entry.project %}
-                        {# only none-global activities have a project and customer assigned #}
                         {{ widgets.label_project(entry.project) }}
+                        {% if entry.project.customer %}
+                            <br>
+                            <small>
+                                {{ widgets.label_customer(entry.project.customer) }}
+                            </small>
+                        {% endif %}
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
@@ -58,7 +62,9 @@
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                {% if showVisibility %}
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                {% endif %}
                 <td class="actions">
                     {{ actions.activity(entry, 'index') }}
                 </td>

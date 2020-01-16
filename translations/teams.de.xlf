@@ -14,6 +14,22 @@
                 <source>teams.customer_access</source>
                 <target>Zugriff auf Kunden gewähren</target>
             </trans-unit>
+            <trans-unit id="team.visibility_global">
+                <source>team.visibility_global</source>
+                <target>Sichtbar für alle Benutzer, da bisher noch kein Team zugewiesen wurde.</target>
+            </trans-unit>
+            <trans-unit id="team.visibility_restricted">
+                <source>team.visibility_restricted</source>
+                <target>Nur sichtbar für die folgenden Teams und alle Administratoren.</target>
+            </trans-unit>
+            <trans-unit id="team.project_visibility_inherited">
+                <source>team.project_visibility_inherited</source>
+                <target>Das Projekt ist nur eingeschränkt sichtbar, da Team Berechtigungen für den Kunden gesetzt sind.</target>
+            </trans-unit>
+            <trans-unit id="team.create_default">
+                <source>team.create_default</source>
+                <target>Erstelle ein neues Team um den Zugriff zu beschränken</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

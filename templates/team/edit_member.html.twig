@@ -1,0 +1,14 @@
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "team/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'teams.title'|trans({}, 'teams') }}{% endblock %}
+{% block page_actions %}{{ actions.team(team, 'edit') }}{% endblock %}
+
+{% block main %}
+    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
+        'title': team.name|default('create'|trans),
+        'form': form,
+        'back': path('admin_team')
+    }) }}
+{% endblock %}

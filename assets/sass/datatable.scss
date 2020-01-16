@@ -279,5 +279,8 @@ table.dataTable.table > tbody > tr > td {
     .img-circle {
         max-width: 35px;
         margin-right: 10px;
+        &.teamlead {
+            box-shadow: 0 0 5px 3px $gray-lte;
+        }
     }
 }

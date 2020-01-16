@@ -62,10 +62,6 @@
                 <source>label.timesheet.active_entries.soft_limit</source>
                 <target state="translated">Antal körtidsposter från vilka en varning visas</target>
             </trans-unit>
-            <trans-unit id="label.theme.select_type">
-                <source>label.theme.select_type</source>
-                <target state="translated">Typ av select-rutor i former</target>
-            </trans-unit>
             <trans-unit id="label.calendar.week_numbers">
                 <source>label.calendar.week_numbers</source>
                 <target state="translated">Visa veckonummer</target>

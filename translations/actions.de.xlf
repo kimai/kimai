@@ -74,6 +74,10 @@
                 <source>permissions</source>
                 <target>Team Berechtigungen</target>
             </trans-unit>
+            <trans-unit id="details">
+                <source>details</source>
+                <target>Anzeigen</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

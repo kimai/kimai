@@ -53,8 +53,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        document.addEventListener('kimai.userRoleUpdate', function() {
-            document.location.reload();
-        });
+        KimaiReloadPageWidget.create('kimai.userRoleUpdate');
     </script>
 {% endblock %}
