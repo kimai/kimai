@@ -94,7 +94,34 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
-        $this->assertEquals('User cannot create teams', $json['message']);
+        $this->assertEquals('Access denied.', $json['message']);
+    }
+
+    public function testPatchAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 1,
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 2,
+            'users' => [1, 5, 4]
+        ];
+        $this->request($client, '/api/teams/' . $result['id'], 'PATCH', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+        $this->assertCount(4, $result['users']);
     }
 
     public function testDeleteAction()

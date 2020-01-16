@@ -24,23 +24,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @RouteResource("Team")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
-class TeamController extends BaseApiController
+final class TeamController extends BaseApiController
 {
     /**
      * @var TeamRepository
      */
-    protected $repository;
+    private $repository;
     /**
      * @var ViewHandlerInterface
      */
-    protected $viewHandler;
+    private $viewHandler;
 
     public function __construct(ViewHandlerInterface $viewHandler, TeamRepository $repository)
     {
@@ -158,15 +157,13 @@ class TeamController extends BaseApiController
      *      @SWG\Schema(ref="#/definitions/TeamEditForm")
      * )
      *
+     * @Security("is_granted('create_team')")
+     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
     public function postAction(Request $request): Response
     {
-        if (!$this->isGranted('create_team')) {
-            throw new AccessDeniedHttpException('User cannot create teams');
-        }
-
         $team = new Team();
         $team->setTeamLead($this->getUser());
 
@@ -185,6 +182,65 @@ class TeamController extends BaseApiController
         }
 
         $view = new View($form);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Update an existing team
+     *
+     * @SWG\Patch(
+     *      description="Update an existing team, you can pass all or just a subset of all attributes (passing users will replace all existing ones)",
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Returns the updated team",
+     *          @SWG\Schema(ref="#/definitions/TeamEntity")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/TeamEditForm")
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Team ID to update",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('edit_team')")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function patchAction(Request $request, int $id): Response
+    {
+        $team = $this->repository->find($id);
+
+        if (null === $team) {
+            throw new NotFoundException();
+        }
+
+        $form = $this->createForm(TeamApiEditForm::class, $team);
+
+        $form->setData($team);
+        $form->submit($request->request->all(), false);
+        $team->addUser($team->getTeamLead());
+
+        if (false === $form->isValid()) {
+            $view = new View($form, Response::HTTP_OK);
+            $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        $this->repository->saveTeam($team);
+
+        $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
 
         return $this->viewHandler->handle($view);
