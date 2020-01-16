@@ -17,7 +17,7 @@ class UserTeams extends SimpleWidget implements AuthorizedWidget
     public function __construct(CurrentUser $user)
     {
         $this->setId('UserTeams');
-        $this->setTitle('label.teams');
+        $this->setTitle('label.my_teams');
         $this->setOptions([
             'user' => $user->getUser(),
             'id' => '',
@@ -29,7 +29,7 @@ class UserTeams extends SimpleWidget implements AuthorizedWidget
         $options = parent::getOptions($options);
 
         if (empty($options['id'])) {
-            $options['id'] = uniqid('UserTeams_');
+            $options['id'] = 'WidgetUserTeams';
         }
 
         return $options;

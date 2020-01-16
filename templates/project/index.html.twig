@@ -4,12 +4,11 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "project/actions.html.twig" as actions %}
 
+{% set showVisibility = query.visibility != 1 %}
 {% set columns = {
     'name': 'alwaysVisible',
     'customer': 'hidden-xs',
-    'comment': 'hidden-xs hidden-sm',
-    'orderNumber': 'hidden-xs hidden-sm',
-    'orderDate': 'hidden-xs hidden-sm',
+    'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
@@ -18,7 +17,13 @@
 {% endfor %}
 {% set columns = columns|merge({
     'team': {'class': 'text-center', 'orderBy': false},
-    'visible': {'class': 'text-center', 'orderBy': false},
+}) %}
+{% if showVisibility %}
+    {% set columns = columns|merge({
+        'visible': {'class': 'text-center', 'orderBy': false},
+    }) %}
+{% endif %}
+{% set columns = columns|merge({
     'actions': 'actions alwaysVisible',
 }) %}
 
@@ -37,21 +42,15 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.projectUpdate'}) }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.projectUpdate kimai.projectTeamUpdate'}) }}
 
         {% for entry in entries %}
-            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_project_edit', {'id': entry.id}) }}"{% endif %}>
+            <tr class="alternative-link open-edit" data-href="{{ path('project_details', {'id': entry.id}) }}">
                 <td>{{ widgets.label_color_dot('project', true, entry.name, null, entry.color) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
                     {{ widgets.label_customer(entry.customer) }}
                 </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'orderNumber') }}">{{ entry.orderNumber }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'orderDate') }}">
-                    {% if entry.orderDate is not empty %}
-                        {{ entry.orderDate|date_short }}
-                    {% endif %}
-                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html() }}</td>
                 {% for field in metaColumns %}
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
                         {{ tables.datatable_meta_column(entry, field) }}
@@ -64,7 +63,9 @@
                         {{ widgets.icon('unlocked') }}
                     {% endif %}
                 </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                {% if showVisibility %}
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                {% endif %}
                 <td class="actions">
                     {{ actions.project(entry, 'index') }}
                 </td>

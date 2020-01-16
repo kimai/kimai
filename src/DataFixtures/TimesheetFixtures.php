@@ -46,7 +46,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
     public const BATCH_SIZE = 100;
 
     /**
-     * @return array
+     * @return class-string[]
      */
     public function getDependencies()
     {

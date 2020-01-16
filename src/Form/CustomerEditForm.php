@@ -49,7 +49,7 @@ class CustomerEditForm extends AbstractType
                 'required' => false,
             ])
             ->add('comment', TextareaType::class, [
-                'label' => 'label.comment',
+                'label' => 'label.description',
                 'required' => false,
             ])
             ->add('company', TextType::class, [

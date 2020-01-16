@@ -4,11 +4,10 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "customer/actions.html.twig" as actions %}
 
+{% set showVisibility = query.visibility != 1 %}
 {% set columns = {
     'name': 'alwaysVisible',
-    'comment': 'hidden-xs',
-    'country': 'hidden-xs hidden-sm',
-    'number': 'hidden-xs',
+    'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
@@ -16,12 +15,14 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'email': {'class': 'text-center hidden hidden-xs', 'orderBy': false},
-    'homepage': {'class': 'text-center hidden hidden-xs', 'orderBy': false},
-    'mobile': {'class': 'text-center hidden hidden-xs', 'orderBy': false},
-    'phone': {'class': 'text-center hidden hidden-xs', 'orderBy': false},
     'team': {'class': 'text-center', 'orderBy': false},
-    'visible': {'class': 'text-center', 'orderBy': false},
+}) %}
+{% if showVisibility %}
+    {% set columns = columns|merge({
+        'visible': {'class': 'text-center', 'orderBy': false},
+    }) %}
+{% endif %}
+{% set columns = columns|merge({
     'actions': 'actions alwaysVisible',
 }) %}
 
@@ -40,47 +41,21 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.customerUpdate'}) }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.customerUpdate kimai.customerTeamUpdate'}) }}
 
         {% for entry in entries %}
-            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_customer_edit', {'id': entry.id}) }}"{% endif %}>
-                <td>{{ widgets.label_color_dot('customer', true, entry.name, null, entry.color) }} {% if entry.company is not empty %}({{ entry.company }}){% endif %}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'country') }}">{{ entry.country|country }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'number') }}">{{ entry.number }}</td>
+            <tr class="alternative-link open-edit" data-href="{{ path('customer_details', {'id': entry.id}) }}">
+                <td>
+                    {{ widgets.label_color_dot('customer', true, entry.name, null, entry.color) }}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">
+                    {{ entry.comment|comment2html }}
+                </td>
                 {% for field in metaColumns %}
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">
-                    {% if entry.email is not empty %}
-                        <a href="mailto:{{ entry.email }}"><i class="{{ 'mail'|icon }}"></i></a>
-                    {% else %}
-                        &ndash;
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'homepage') }}">
-                    {% if entry.homepage is not empty %}
-                        <a href="{{ entry.homepage }}" target="_blank"><i class="{{ 'home'|icon }}"></i></a>
-                    {% else %}
-                        &ndash;
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'mobile') }}">
-                    {% if entry.mobile is not empty %}
-                        <a href="tel:{{ entry.mobile }}"><i class="{{ 'mobile'|icon }}"></i></a>
-                    {% else %}
-                        &ndash;
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'phone') }}">
-                    {% if entry.phone is not empty %}
-                        <a href="tel:{{ entry.phone }}"><i class="{{ 'phone'|icon }}"></i></a>
-                    {% else %}
-                        &ndash;
-                    {% endif %}
-                </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">
                     {% if entry.teams|length > 0 %}
                         {{ widgets.badge_counter(entry.teams|length) }}
@@ -88,7 +63,9 @@
                         {{ widgets.icon('unlocked') }}
                     {% endif %}
                 </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                {% if showVisibility %}
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                {% endif %}
                 <td class="actions">
                     {{ actions.customer(entry, 'index') }}
                 </td>

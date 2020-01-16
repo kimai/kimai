@@ -19,21 +19,17 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 class ProjectVoter extends AbstractVoter
 {
-    public const VIEW = 'view';
-    public const EDIT = 'edit';
-    public const BUDGET = 'budget';
-    public const DELETE = 'delete';
-    public const PERMISSIONS = 'permissions';
-
     /**
-     * support rules based on the given $subject (here: Project)
+     * support rules based on the given project
      */
     public const ALLOWED_ATTRIBUTES = [
-        self::VIEW,
-        self::EDIT,
-        self::BUDGET,
-        self::DELETE,
-        self::PERMISSIONS,
+        'view',
+        'edit',
+        'budget',
+        'delete',
+        'permissions',
+        'comments',
+        'details',
     ];
 
     /**
@@ -70,6 +66,11 @@ class ProjectVoter extends AbstractVoter
 
         if ($this->hasRolePermission($user, $attribute . '_project')) {
             return true;
+        }
+
+        // those cannot be assigned to teams
+        if (in_array($attribute, ['create', 'delete'])) {
+            return false;
         }
 
         $hasTeamleadPermission = $this->hasRolePermission($user, $attribute . '_teamlead_project');

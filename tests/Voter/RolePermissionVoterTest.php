@@ -28,16 +28,17 @@ class RolePermissionVoterTest extends AbstractVoterTest
         $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
         $sut = $this->getVoter(RolePermissionVoter::class, $user);
 
-        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
+        $actual = $sut->vote($token, $subject, [$attribute]);
+        $this->assertEquals($result, $actual, sprintf('Failed voting "%s" for User with roles %s.', $attribute, implode(', ', $user->getRoles())));
     }
 
     public function getTestData()
     {
-        $user0 = $this->getUser(0, null);
-        $user1 = $this->getUser(1, User::ROLE_USER);
-        $user2 = $this->getUser(2, User::ROLE_TEAMLEAD);
-        $user3 = $this->getUser(3, User::ROLE_ADMIN);
-        $user4 = $this->getUser(4, User::ROLE_SUPER_ADMIN);
+        $userNoRole = $this->getUser(0, 'foo');
+        $userStandard = $this->getUser(1, User::ROLE_USER);
+        $userTeamlead = $this->getUser(2, User::ROLE_TEAMLEAD);
+        $userAdmin = $this->getUser(3, User::ROLE_ADMIN);
+        $userSuperAdmin = $this->getUser(4, User::ROLE_SUPER_ADMIN);
 
         $invoice = [
             'manage_invoice_template' => null,
@@ -70,7 +71,7 @@ class RolePermissionVoterTest extends AbstractVoterTest
         $result = VoterInterface::ACCESS_GRANTED;
 
         $entries = array_merge($timesheet);
-        foreach ([$user1, $user2, $user3, $user4] as $user) {
+        foreach ([$userNoRole, $userStandard, $userTeamlead, $userAdmin, $userSuperAdmin] as $user) {
             foreach ($entries as $permission => $entity) {
                 yield [$user, $entity, $permission, $result];
                 yield [$user, null, $permission, $result];
@@ -78,7 +79,7 @@ class RolePermissionVoterTest extends AbstractVoterTest
         }
 
         $entriesAdmin = array_merge($others, $timesheetOther, $invoice, $timesheet);
-        foreach ([$user3, $user4] as $user) {
+        foreach ([$userAdmin, $userSuperAdmin] as $user) {
             foreach ($entriesAdmin as $permission => $entity) {
                 yield [$user, $entity, $permission, $result];
                 yield [$user, null, $permission, $result];
@@ -87,35 +88,30 @@ class RolePermissionVoterTest extends AbstractVoterTest
 
         $entriesSuperAdmin = array_merge($users);
         foreach ($entriesSuperAdmin as $permission => $entity) {
-            yield [$user4, $entity, $permission, $result];
-            yield [$user4, null, $permission, $result];
+            yield [$userSuperAdmin, $entity, $permission, $result];
+            yield [$userSuperAdmin, null, $permission, $result];
         }
 
         // ================== DENIED ==================
         // this test might fail in the future due to the role permissions
         $result = VoterInterface::ACCESS_DENIED;
 
-        foreach ([$user0, $user1, $user2] as $user) {
+        foreach ([$userNoRole, $userStandard, $userTeamlead] as $user) {
             foreach ($others as $permission => $entity) {
                 yield [$user, $entity, $permission, $result];
             }
         }
-        foreach ([$user0, $user1] as $user) {
+        foreach ([$userNoRole, $userStandard] as $user) {
             foreach (['view_activity' => null] as $permission => $entity) {
                 yield [$user, $entity, $permission, $result];
             }
         }
-        foreach ([$user0, $user1] as $user) {
+        foreach ([$userNoRole, $userStandard] as $user) {
             foreach ($invoice as $permission => $entity) {
                 yield [$user, $entity, $permission, $result];
             }
         }
-        foreach ([$user0] as $user) {
-            foreach ($timesheet as $permission => $entity) {
-                yield [$user, $entity, $permission, $result];
-            }
-        }
-        foreach ([$user0, $user1] as $user) {
+        foreach ([$userNoRole, $userStandard] as $user) {
             foreach ($timesheetOther as $permission => $entity) {
                 yield [$user, $entity, $permission, $result];
             }
@@ -123,7 +119,7 @@ class RolePermissionVoterTest extends AbstractVoterTest
 
         // ================== ABSTAIN ==================
         $result = VoterInterface::ACCESS_ABSTAIN;
-        foreach ([$user3, $user4] as $user) {
+        foreach ([$userAdmin, $userSuperAdmin] as $user) {
             yield [$user, new Activity(), 'view', $result];
             yield [$user, new Activity(), 'edit', $result];
             yield [$user, new Activity(), 'delete', $result];
