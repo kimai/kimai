@@ -65,6 +65,9 @@
         {% if is_granted('preferences', user) %}
             {% set actions = actions|merge({'settings': {'url': path('user_profile_preferences', {'username' : user.username})}}) %}
         {% endif %}
+        {% if actions|length > 0 %}
+            {% set actions = actions|merge({'divider': null}) %}
+        {% endif %}
         {% if is_granted('view_other_timesheet') and user.enabled %}
             {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'users': [user.id]})}) %}
         {% endif %}

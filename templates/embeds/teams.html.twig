@@ -1,0 +1,32 @@
+{% 
+    set options = {
+        'teams': teams, 
+        'team': team|default(null), 
+        'route_create': route_create|default(null), 
+        'route_edit': route_edit|default(null), 
+        'empty_message': empty_message|default('team.visibility_global')
+    } 
+%}
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' with options %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% block box_tools %}
+        {% if teams|length == 0 and team is null and route_create is not null and is_granted('create_team') %}
+            <a class="btn-box-tool" href="{{ route_create }}" data-toggle="tooltip" data-placement="top" title="{{ 'team.create_default'|trans({}, 'teams') }}"><i class="{{ 'create'|icon }}"></i></a>
+        {% endif %}
+        {% if route_edit is not null %}
+            <a class="modal-ajax-form open-edit btn btn-box-tool" href="{{ route_edit }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
+        {% endif %}
+    {% endblock %}
+    {% block box_attributes %}id="team_listing_box"{% endblock %}
+    {% block box_title %}
+        {{ 'permissions'|trans({}, 'actions') }}
+    {% endblock %}
+    {% block box_body %}
+        {% if teams|length > 0 %}
+            <p>{{ 'team.visibility_restricted'|trans({}, 'teams') }}</p>
+            {{ widgets.team_list(teams) }}
+        {% else %}
+            <p>{{ empty_message|default('team.visibility_global')|trans({}, 'teams') }}</p>
+        {% endif %}
+    {% endblock %}
+{% endembed %}

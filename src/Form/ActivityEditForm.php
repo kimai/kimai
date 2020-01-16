@@ -59,7 +59,7 @@ class ActivityEditForm extends AbstractType
                 ],
             ])
             ->add('comment', TextareaType::class, [
-                'label' => 'label.comment',
+                'label' => 'label.description',
                 'required' => false,
             ])
         ;

@@ -16,7 +16,6 @@ use App\Form\TeamProjectForm;
 use App\Form\Toolbar\TeamToolbarForm;
 use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
-use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,7 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route(path="/admin/teams")
  * @Security("is_granted('view_team')")
  */
-class TeamController extends AbstractController
+final class TeamController extends AbstractController
 {
     /**
      * @var TeamRepository
@@ -93,6 +92,40 @@ class TeamController extends AbstractController
         return $this->renderEditScreen($team, $request);
     }
 
+    /**
+     * @Route(path="/{id}/edit_member", name="admin_team_member", methods={"GET", "POST"})
+     * @Security("is_granted('edit', team)")
+     */
+    public function editMemberAction(Team $team, Request $request)
+    {
+        $editForm = $this->createForm(TeamEditForm::class, $team, [
+            'action' => $this->generateUrl('admin_team_member', ['id' => $team->getId()]),
+            'method' => 'POST',
+        ]);
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            try {
+                // make sure that the teamlead is always part of the team, otherwise permission checks
+                // and filtering might not work as expected!
+                $team->addUser($team->getTeamLead());
+
+                $this->repository->saveTeam($team);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
+            } catch (\Exception $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->render('team/edit_member.html.twig', [
+            'team' => $team,
+            'form' => $editForm->createView(),
+        ]);
+    }
+
     private function renderEditScreen(Team $team, Request $request): Response
     {
         $customerForm = null;
@@ -122,7 +155,7 @@ class TeamController extends AbstractController
                     $this->flashSuccess('action.update.success');
 
                     return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                } catch (ORMException $ex) {
+                } catch (\Exception $ex) {
                     $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
                 }
             }
@@ -142,7 +175,7 @@ class TeamController extends AbstractController
                         $this->flashSuccess('action.update.success');
 
                         return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                    } catch (ORMException $ex) {
+                    } catch (\Exception $ex) {
                         $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
                     }
                 }
@@ -161,7 +194,7 @@ class TeamController extends AbstractController
                         $this->flashSuccess('action.update.success');
 
                         return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                    } catch (ORMException $ex) {
+                    } catch (\Exception $ex) {
                         $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
                     }
                 }

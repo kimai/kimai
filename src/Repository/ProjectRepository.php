@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Activity;
 use App\Entity\Project;
+use App\Entity\ProjectComment;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\ProjectStatistic;
@@ -351,6 +352,11 @@ class ProjectRepository extends EntityRepository
             }
         }
 
+        // this will make sure, that we do not accidentally create results with multiple rows
+        //   => which would result in a wrong LIMIT / pagination results
+        // the second group by is needed due to SQL standard (even though logically not really required for this query)
+        $qb->addGroupBy('p.id')->addGroupBy($orderBy);
+
         return $qb;
     }
 
@@ -360,6 +366,7 @@ class ProjectRepository extends EntityRepository
         $qb
             ->resetDQLPart('select')
             ->resetDQLPart('orderBy')
+            ->resetDQLPart('groupBy')
             ->select($qb->expr()->countDistinct('p.id'))
         ;
 
@@ -437,5 +444,34 @@ class ProjectRepository extends EntityRepository
             $em->rollback();
             throw $ex;
         }
+    }
+
+    public function getComments(Project $project): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->select('comments')
+            ->from(ProjectComment::class, 'comments')
+            ->andWhere($qb->expr()->eq('comments.project', ':project'))
+            ->addOrderBy('comments.pinned', 'DESC')
+            ->addOrderBy('comments.createdAt', 'DESC')
+            ->setParameter('project', $project)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function saveComment(ProjectComment $comment)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($comment);
+        $entityManager->flush();
+    }
+
+    public function deleteComment(ProjectComment $comment)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($comment);
+        $entityManager->flush();
     }
 }

@@ -66,10 +66,6 @@
                 <source>label.timesheet.active_entries.soft_limit</source>
                 <target>Antal af kørende tidsregistreringer fra hvilket en advarsel vises</target>
             </trans-unit>
-            <trans-unit id="label.theme.select_type">
-                <source>label.theme.select_type</source>
-                <target>Type af udvalgskasser i forme</target>
-            </trans-unit>
             <trans-unit id="label.theme.autocomplete_chars">
                 <source>label.theme.autocomplete_chars</source>
                 <target>Minimum antal af bogstaver for at starte autofulførelse</target>

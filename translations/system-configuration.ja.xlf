@@ -62,10 +62,6 @@
                 <source>label.timesheet.active_entries.soft_limit</source>
                 <target>同時進行の明細記録がこちらの数を超える場合に警告を表示する</target>
             </trans-unit>
-            <trans-unit id="label.theme.select_type">
-                <source>label.theme.select_type</source>
-                <target>入力フォームにおける選択ボックスの種類</target>
-            </trans-unit>
             <trans-unit id="label.calendar.week_numbers">
                 <source>label.calendar.week_numbers</source>
                 <target>週番号を表示する</target>

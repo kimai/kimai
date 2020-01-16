@@ -66,10 +66,6 @@
                 <source>label.timesheet.active_entries.soft_limit</source>
                 <target>Anzahl an laufenden Zeiteinträgen ab denen einen Warnung angezeigt wird</target>
             </trans-unit>
-            <trans-unit id="label.theme.select_type">
-                <source>label.theme.select_type</source>
-                <target>Art der Auswahl-Boxen in Formularen</target>
-            </trans-unit>
             <trans-unit id="label.theme.autocomplete_chars">
                 <source>label.theme.autocomplete_chars</source>
                 <target>Minimale Anzahl Buchstaben für den Start der Autovervollständigung</target>
