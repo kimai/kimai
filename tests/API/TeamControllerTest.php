@@ -211,6 +211,75 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertEquals('Cannot add disabled user to team', $json['message']);
     }
 
+    public function testDeleteMemberAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 1,
+            'users' => [2, 4, 5]
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertCount(4, $result['users']);
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/teams/' . $result['id'] . '/members/2', 'DELETE', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertCount(3, $result['users']);
+    }
+
+    public function testDeleteMemberActionErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 1,
+            'users' => [2, 4, 5]
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        //  team not found
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/teams/999/members/999', 'DELETE', [], json_encode($data));
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('Team not found', $json['message']);
+
+        //  user not found
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/teams/' . $result['id'] . '/members/999', 'DELETE', [], json_encode($data));
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('User not found', $json['message']);
+
+        // remove user
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/teams/' . $result['id'] . '/members/2', 'DELETE', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        // cannot remove non-member
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/teams/' . $result['id'] . '/members/2', 'DELETE', [], json_encode($data));
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('User is not a member of the team', $json['message']);
+
+        // cannot remove teamlead
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/teams/' . $result['id'] . '/members/1', 'DELETE', [], json_encode($data));
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('Cannot remove teamlead', $json['message']);
+    }
+
     protected function assertStructure(array $result, $full = true)
     {
         $expectedKeys = [

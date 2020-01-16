@@ -310,4 +310,67 @@ final class TeamController extends BaseApiController
 
         return $this->viewHandler->handle($view);
     }
+
+    /**
+     * Removes a member from the team
+     *
+     * @SWG\Delete(
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Removes a user from the team. The teamlead cannot be removed.",
+     *          @SWG\Schema(ref="#/definitions/TeamEntity")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The team from which the member will be removed",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="userId",
+     *      in="path",
+     *      type="integer",
+     *      description="The team member to remove (User ID)",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('edit_team')")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function deleteMemberAction(int $id, int $userId, UserRepository $repository): Response
+    {
+        $team = $this->repository->find($id);
+
+        if (null === $team) {
+            throw new NotFoundException('Team not found');
+        }
+
+        /** @var User $user */
+        $user = $repository->find($userId);
+
+        if (null === $user) {
+            throw new NotFoundException('User not found');
+        }
+
+        if (!$user->isInTeam($team)) {
+            throw new BadRequestHttpException('User is not a member of the team');
+        }
+
+        if ($team->isTeamlead($user)) {
+            throw new BadRequestHttpException('Cannot remove teamlead');
+        }
+
+        $team->removeUser($user);
+
+        $this->repository->saveTeam($team);
+
+        $view = new View($team, Response::HTTP_OK);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+
+        return $this->viewHandler->handle($view);
+    }
 }
