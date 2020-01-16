@@ -144,19 +144,19 @@ kimai:
 #        day_limit: 4
 #        slot_duration: '00:30:00'
 #        businessHours:
-#           days: [1, 2, 3, 4, 5]
-#           begin: '07:00'
-#            end: '23:00'
+#            days: [1, 2, 3, 4, 5]
+#            begin: '08:00'
+#            end: '18:00'
 #        visibleHours:
 #            begin: '00:00'
 #            end: '24:00'
 #
 #        # You can configure unlimited google calendars to display events for your company (e.g. holidays)
 #        google:
-#            api_key: 'AIzaSyAgJlv3Z1ftGr5-ldvekBtRe8DXG5VtGGI'
+#            api_key: 'your-restricted-google-api-key'
 #            sources:
 #                holidays:
-#                    id: 'fi.finnish#holiday@group.v.calendar.google.com'
+#                    id: 'de.german#holiday@group.v.calendar.google.com'
 #                    color: '#ccc'
 # --------------------------------------------------------------------------------
 
@@ -217,36 +217,26 @@ kimai:
 # Locale specific settings, like date formats
 # --------------------------------------------------------------------------------
     languages:
-        ar:
-            date_time_type: 'yyyy-MM-dd HH:mm'
-            date_type: 'yyyy-MM-dd'
-            date: 'Y-m-d'
-            date_time: 'm-d H:i'
-            duration: '%%h:%%m h'
         cs:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m H:i'
-            duration: '%%h:%%m h'
         da:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
-            duration: '%%h:%%m h'
         de:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
-            duration: '%%h:%%m h'
         de_CH:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
-            duration: '%%h:%%m h'
         en:
             date_time_type: 'yyyy-MM-dd HH:mm'
             date_type: 'yyyy-MM-dd'
@@ -258,7 +248,6 @@ kimai:
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
-            duration: '%%h:%%m h'
         fi:
             date_time_type: 'yyyy-MM-dd HH:mm'
             date_type: 'yyyy-MM-dd'
@@ -276,7 +265,6 @@ kimai:
             date_type: 'yyyy.MM.dd.'
             date: 'Y.m.d.'
             date_time: 'm.d. H:i'
-            duration: '%%h:%%m h'
         it:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
@@ -306,31 +294,18 @@ kimai:
             date_type: 'dd-MM-yyyy'
             date: 'd-m-Y'
             date_time: 'd-m H:i'
-            duration: '%%h:%%m h'
         ru:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
-            duration: '%%h:%%m h'
         sk:
             date_time_type: 'dd. MM. yyyy HH:mm'
             date_type: 'dd. MM. yyyy'
             date: 'd. m. Y'
             date_time: 'd. m.  H:i'
-            duration: '%%h:%%m h'
         sv:
-            date_time_type: 'yyyy-MM-dd HH:mm'
-            date_type: 'yyyy-MM-dd'
-            date: 'Y-m-d'
-            date_time: 'm-d H:i'
             duration: '%%h:%%m tim'
-        tr:
-            date_time_type: 'yyyy-MM-dd HH:mm'
-            date_type: 'yyyy-MM-dd'
-            date: 'Y-m-d'
-            date_time: 'm-d H:i'
-            duration: '%%h:%%m h'
 # --------------------------------------------------------------------------------
 
 
