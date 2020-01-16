@@ -28,6 +28,7 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('locale-' ~ app.request.locale) }}
 {% endblock %}
 
 {% block login_box_icon %}{% block error_icon %}{% endblock %}{% endblock %}

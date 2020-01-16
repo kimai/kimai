@@ -6,16 +6,6 @@
 
 {% block page_content_class %}{{ parent() }} dashboard{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('chart') }}
-{% endblock %}
-
-{% block head %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('chart') }}
-{% endblock %}
-
 {% block main %}
 
     {% if widgets is empty %}

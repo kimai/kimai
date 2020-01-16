@@ -7,6 +7,7 @@
     <title>{% block title %}{{ model.template.title }}{% endblock %}</title>
     {{ encore_entry_link_tags('app') }}
     {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('locale-' ~ app.request.locale) }}
 </head>
 <body class="invoice_print">
 <div class="wrapper">

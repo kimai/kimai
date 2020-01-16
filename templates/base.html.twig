@@ -190,6 +190,7 @@
 {% block head %}
     {{ parent() }}
     {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('locale-' ~ app.request.locale) }}
     {% include 'partials/head.html.twig' %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::HTML_HEAD')) %}
     {{ event.content|raw }}

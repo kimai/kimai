@@ -6,6 +6,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     {{ encore_entry_link_tags('app') }}
     {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('locale-' ~ app.request.locale) }}
     {% block styles %}{% endblock %}
 </head>
 <body class="pad export_print">
