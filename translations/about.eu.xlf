@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eu" datatype="plaintext" original="about.en.xlf">
+        <body>
+            <trans-unit id="about.title">
+                <source>about.title</source>
+                <target>Kimairi buruz</target>
+            </trans-unit>
+            <trans-unit id="support">
+                <source>support</source>
+                <target>Mantenua</target>
+            </trans-unit>
+            <trans-unit id="website">
+                <source>website</source>
+                <target>Web orrialdea</target>
+            </trans-unit>
+            <trans-unit id="help">
+                <source>help</source>
+                <target>Laguntza</target>
+            </trans-unit>
+            <trans-unit id="tab.thanks">
+                <source>tab.thanks</source>
+                <target>Eskerrak</target>
+            </trans-unit>
+            <trans-unit id="donate">
+                <source>donate</source>
+                <target>Kimai proiektua diruz lagundu nahi?</target>
+            </trans-unit>
+            <trans-unit id="published_under">
+                <source>published_under</source>
+                <target>%kimai% lizentzia</target>
+            </trans-unit>
+            <trans-unit id="special_thanks">
+                <source>special_thanks</source>
+                <target>Mila esker …</target>
+            </trans-unit>
+            <trans-unit id="library_authors">
+                <source>library_authors</source>
+                <target>… Kimai ez lebilke ondorengo kideen laguntzarik gabe: 👍</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
