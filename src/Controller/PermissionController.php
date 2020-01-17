@@ -11,12 +11,15 @@ namespace App\Controller;
 
 use App\Entity\Role;
 use App\Entity\RolePermission;
+use App\Event\PermissionSectionsEvent;
 use App\Form\RoleType;
+use App\Model\PermissionSection;
 use App\Repository\RolePermissionRepository;
 use App\Repository\RoleRepository;
 use App\Security\RolePermissionManager;
 use App\Security\RoleService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,7 +56,7 @@ final class PermissionController extends AbstractController
      * @Route(path="", name="admin_user_permissions", methods={"GET", "POST"})
      * @Security("is_granted('role_permissions')")
      */
-    public function permissions()
+    public function permissions(EventDispatcherInterface $dispatcher)
     {
         $all = $this->roleRepository->findAll();
         $existing = [];
@@ -75,9 +78,75 @@ final class PermissionController extends AbstractController
             }
         }
 
+        // be careful, the order of the search keys is important!
+        $permissionOrder = [
+            new PermissionSection('User', '_user'),
+            new PermissionSection('User profile (own)', '_own_profile'),
+            new PermissionSection('User profile (other)', '_other_profile'),
+            new PermissionSection('Customer (Teamlead)', '_teamlead_customer'),
+            new PermissionSection('Customer (Team member)', '_team_customer'),
+            new PermissionSection('Customer (Admin)', '_customer'),
+            new PermissionSection('Project (Teamlead)', '_teamlead_project'),
+            new PermissionSection('Project (Team member)', '_team_project'),
+            new PermissionSection('Project (Admin)', '_project'),
+            new PermissionSection('Activity', '_activity'),
+            new PermissionSection('Timesheet (own)', '_own_timesheet'),
+            new PermissionSection('Timesheet (other)', '_other_timesheet'),
+            new PermissionSection('Timesheet', '_timesheet'),
+            new PermissionSection('Export', '_export'),
+            new PermissionSection('Invoice', '_invoice'),
+            new PermissionSection('Teams', '_team'),
+            new PermissionSection('Tags', '_tag'),
+        ];
+
+        $event = new PermissionSectionsEvent();
+        foreach ($permissionOrder as $section) {
+            $event->addSection($section);
+        }
+        $dispatcher->dispatch($event);
+
+        $permissionSorted = [];
+        $other = [];
+
+        foreach ($event->getSections() as $section) {
+            $permissionSorted[$section->getTitle()] = [];
+        }
+
+        foreach ($this->manager->getPermissions() as $permission) {
+            $found = false;
+
+            foreach ($event->getSections() as $section) {
+                if ($section->filter($permission)) {
+                    $permissionSorted[$section->getTitle()][] = $permission;
+                    $found = true;
+                    break;
+                }
+            }
+
+            if (!$found) {
+                $other[] = $permission;
+            }
+        }
+
+        ksort($permissionSorted);
+
+        $permissionSorted['Other'] = $other;
+
+        // order the roles from most powerful to least powerful, custom roles at the end
+        $roles = [
+            'ROLE_SUPER_ADMIN' => null,
+            'ROLE_ADMIN' => null,
+            'ROLE_TEAMLEAD' => null,
+            'ROLE_USER' => null,
+        ];
+        foreach ($this->roleRepository->findAll() as $role) {
+            $roles[$role->getName()] = $role;
+        }
+
         return $this->render('user/permissions.html.twig', [
-            'roles' => $this->roleRepository->findAll(),
+            'roles' => array_values($roles),
             'permissions' => $this->manager->getPermissions(),
+            'sorted' => $permissionSorted,
             'manager' => $this->manager,
             'system_roles' => $this->roleService->getSystemRoles(),
         ]);
