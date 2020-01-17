@@ -3,12 +3,12 @@
     <file source-language="en" target-language="eu" datatype="plaintext" original="none">
         <body>
             <trans-unit id="previous">
-                <source>aurrekoa</source>
-                <target></target>
+                <source>previous</source>
+                <target>aurrekoa</target>
             </trans-unit>
             <trans-unit id="next">
-                <source>hurrengoa</source>
-                <target></target>
+                <source>next</source>
+                <target>hurrengoa</target>
             </trans-unit>
         </body>
     </file>
