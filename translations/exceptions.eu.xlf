@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eu" datatype="plaintext" original="exceptions.en.xlf">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target>Sarrera eragotzia</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target>Arazoak hemen du jatorria</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target>Arazoa</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Zeozer txarto irten da</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    Ustegabeko arazo bat suertatu da. Berriro saiatu, mesedez.
+                    Arazoak jarraituko balu, teknikari edo arduradun batekin harremantetan jarri, mesedez.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Ez dugu bilatzen duzun orrialdea aurkitu!</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    Ez dugu bilatzen duzuna aurkitzen.
+                    Orrialde nagusira itzuli eta berriro saiatu, mesedez.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>Sarrera mugatua</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
+                    Orrialde hau ikusteko baimen nahikorik ez duzu.
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

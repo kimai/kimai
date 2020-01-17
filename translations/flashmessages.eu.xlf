@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eu" datatype="plaintext" original="flashmessages.en.xlf">
+        <body>
+            <trans-unit id="warning">
+                <source>warning</source>
+                <target>Adi!</target>
+            </trans-unit>
+            <trans-unit id="timesheet.stop.success">
+                <source>timesheet.stop.success</source>
+                <target>Denbora gelditu da!</target>
+            </trans-unit>
+            <trans-unit id="timesheet.stop.error">
+                <source>timesheet.stop.error</source>
+                <target>Ezin izan da denbora gelditu</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.success">
+                <source>timesheet.start.success</source>
+                <target>Denbora abiarazi da!</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.error">
+                <source>timesheet.start.error</source>
+                <target>Ezin izan da denbora abiarazi.</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.exceeded_limit">
+                <source>timesheet.start.exceeded_limit</source>
+                <target>Sarrera aktibo muga gainditu da. Jarrai nahi bazenu, gelditu beti sarreraren bat lehendabizi</target>
+            </trans-unit>
+            <trans-unit id="timesheet.locked.warning">
+                <source>timesheet.locked.warning</source>
+                <target>Exportatutako sarrera bat aldatzen zaude</target>
+            </trans-unit>
+            <trans-unit id="action.update.success">
+                <source>action.update.success</source>
+                <target>Aldaketak gordeta</target>
+            </trans-unit>
+            <trans-unit id="action.update.error">
+                <source>action.update.error</source>
+                <target>Azken aldaketak ezin izan dira gorde!! %reason%</target>
+            </trans-unit>
+            <trans-unit id="action.delete.success">
+                <source>action.delete.success</source>
+                <target>Sarrera ezabatua!</target>
+            </trans-unit>
+            <trans-unit id="action.delete.error">
+                <source>action.delete.error</source>
+                <target>Ezin izan da sarrera ezabatu: %reason%</target>
+            </trans-unit>
+            <trans-unit id="invoice.first_template">
+                <source>invoice.first_template</source>
+                <target>Faktura eredu bat sortu behar duzu lehendabizi.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eu" datatype="plaintext" original="system-configuration.en.xlf">
+        <body>
+            <trans-unit id="title">
+                <source>title</source>
+                <target>Aukerak</target>
+            </trans-unit>
+            <trans-unit id="subtitle">
+                <source>subtitle</source>
+                <target>Denbora kontrol aukerak aldatu</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Ordu taula</target>
+            </trans-unit>
+            <trans-unit id="form_customer">
+                <source>form_customer</source>
+                <target>Bezeroa sortu - defektuzko balioekin</target>
+            </trans-unit>
+            <trans-unit id="form_user">
+                <source>form_user</source>
+                <target>Defektuzko balioak - erabiltzailea</target>
+            </trans-unit>
+            <trans-unit id="theme">
+                <source>theme</source>
+                <target>Itxura</target>
+            </trans-unit>
+            <trans-unit id="calendar">
+                <source>calendar</source>
+                <target>Egutegia</target>
+            </trans-unit>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target>Markdown formatua onartu deskribapen eta iruzkinetan</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode">
+                <source>label.timesheet.mode</source>
+                <target>Denbora jarraipen modua</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_default">
+                <source>label.timesheet.mode_default</source>
+                <target>Defektuz hasiera eta bukaera denbora edita daitezke</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_only">
+                <source>label.timesheet.mode_duration_only</source>
+                <target>[Iraupena] Bukaera ordua beharrean iraupena erakutsi</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+                <source>label.timesheet.mode_duration_fixed_begin</source>
+                <target>[Iraupena] hasiera ordu finko konfiguragarria. Iraupena soilik alda daiteke</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_punch">
+                <source>label.timesheet.mode_punch</source>
+                <target>[Kontrol erlojua] Erabiltzaileak sarreak abiarazi eta geldi ditzake, baina ezin ditu beranduago aldatu</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_future_times">
+                <source>label.timesheet.rules.allow_future_times</source>
+                <target>Etorkizuneko denbora sarrerak onartu</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.hard_limit">
+                <source>label.timesheet.active_entries.hard_limit</source>
+                <target>Gehinezko sarrera kopurua aldi berean</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.soft_limit">
+                <source>label.timesheet.active_entries.soft_limit</source>
+                <target>Aldibereko gehinezko sarrera kopurua oharra bota aurretik</target>
+            </trans-unit>
+            <trans-unit id="label.theme.select_type">
+                <source>label.theme.select_type</source>
+                <target>Formulariotako aukeraketa kutxa mota</target>
+            </trans-unit>
+            <trans-unit id="label.theme.autocomplete_chars">
+                <source>label.theme.autocomplete_chars</source>
+                <target>Auto-osaketarko gutxieneko letra kopurua</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.week_numbers">
+                <source>label.calendar.week_numbers</source>
+                <target>Aste zenbakia erakutsi</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.weekends">
+                <source>label.calendar.weekends</source>
+                <target>Asteburuak erakutsi</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.begin">
+                <source>label.calendar.businessHours.begin</source>
+                <target>Lan-egunaren hasiera ordua (nabarmendua izango da)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.end">
+                <source>label.calendar.businessHours.end</source>
+                <target>Lan-egunaren bukaera ordua (nabarmendua izango da)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.begin">
+                <source>label.calendar.visibleHours.begin</source>
+                <target>Ordu-denbora tartearen hasiera</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.end">
+                <source>label.calendar.visibleHours.end</source>
+                <target>Ordu-denbora tartearen bukaera</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
