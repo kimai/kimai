@@ -131,7 +131,7 @@
                     {% endif %}
                     {% for metaField in customer.visibleMetaFields %}
                         <tr>
-                            <th>{{ metaField.name }}</th>
+                            <th>{{ metaField.label }}</th>
                             <td>{{ widgets.form_type_value(metaField.type, metaField.value, customer) }}</td>
                         </tr>
                     {% endfor %}
