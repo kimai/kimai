@@ -60,6 +60,14 @@
                 <source>my.profile</source>
                 <target>Nire kontua</target>
             </trans-unit>
+            <trans-unit id="update_multiple">
+                <source>update_multiple</source>
+                <target>%action% %count% sarrera?</target>
+            </trans-unit>
+            <trans-unit id="attachments">
+                <source>attachments</source>
+                <target>Atxikipenak</target>
+            </trans-unit>
 
             <!--
               Login / Security
@@ -171,6 +179,10 @@
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
                 <target>Ez da emaitzarik aurkitu (aukeratutako filtroekin)</target>
+            </trans-unit>
+            <trans-unit id="error.no_comments_found">
+                <source>error.no_comments_found</source>
+                <target>Ez dago iruzkinik</target>
             </trans-unit>
 
             <!--
@@ -504,6 +516,14 @@
                    %records% sarrera ditu, guztizko %duration% iraupenarekin.
                 </target>
             </trans-unit>
+            <trans-unit id="label.project_start">
+                <source>label.project_start</source>
+                <target>Proiektu hasiera</target>
+            </trans-unit>
+            <trans-unit id="label.project_end">
+                <source>label.project_end</source>
+                <target>Proiektu bukaera</target>
+            </trans-unit>
 
             <!--
               Admin: Activity
@@ -538,6 +558,10 @@
             <trans-unit id="label.vat">
                 <source>label.vat</source>
                 <target>Zerga</target>
+            </trans-unit>
+            <trans-unit id="label.vat_id">
+                <source>label.vat_id</source>
+                <target>Zerga ID-a</target>
             </trans-unit>
             <trans-unit id="label.contact">
                 <source>label.contact</source>
@@ -615,6 +639,18 @@
                 <target>
                      %user%  erabiltzailea %records% sarrera ditu, guztizko %duration% iraupenarekin.
                 </target>
+            </trans-unit>
+            <trans-unit id="user_permissions.title">
+                <source>user_permissions.title</source>
+                <target>Erabiltzaile bahimenak</target>
+            </trans-unit>
+            <trans-unit id="user_role.title">
+                <source>user_role.title</source>
+                <target>Erabiltzaile rola</target>
+            </trans-unit>
+            <trans-unit id="Allowed character: A-Z and _">
+                <source>Allowed character: A-Z and _</source>
+                <target>Bahimentutako hizkia: A-Z eta _</target>
             </trans-unit>
 
             <!--
@@ -867,6 +903,10 @@
             <trans-unit id="label.orderNumber">
                 <source>label.orderNumber</source>
                 <target>Agindu zenbakia</target>
+            </trans-unit>
+            <trans-unit id="label.orderDate">
+                <source>label.orderDate</source>
+                <target>Agindu data</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">
                 <source>label.invoice_tax_number</source>
