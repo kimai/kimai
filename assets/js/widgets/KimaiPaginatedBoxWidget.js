@@ -63,6 +63,10 @@ export default class KimaiPaginatedBoxWidget {
                 const html = jQuery(response);
                 jQuery(selector + ' .box-tools').replaceWith(html.find('.box-tools'));
                 jQuery(selector + ' .box-body').replaceWith(html.find('.box-body'));
+                jQuery(selector + ' .box-title').replaceWith(html.find('.box-title'));
+                if (jQuery(selector + ' .box-footer').length > 0) {
+                    jQuery(selector + ' .box-footer').replaceWith(html.find('.box-footer'));
+                }
                 self.widget.removeData('error-retry');
                 self._hideOverlay();
             },
