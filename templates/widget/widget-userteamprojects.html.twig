@@ -28,7 +28,7 @@
                             <td class="hidden-xs hidden-sm hidden-md">
                                 {% for team in project.teams %}
                                     {% if app.user.isInTeam(team) %}
-                                        {{ team }}
+                                        {{ team.name }}
                                     {% endif %}
                                 {% endfor %}
                             </td>
