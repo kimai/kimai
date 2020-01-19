@@ -12,7 +12,7 @@
     {% set options = {'class': 'alwaysVisible text-center'} %}
     {% if canEditPermissions and role.name not in system_roles|keys %}
         {% set widget %}
-        &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id}) }}" class="confirmation-link" data-question="confirm.delete" data-msg-error="action.delete.error" data-msg-success="action.delete.success">{{ widgets.icon('trash') }}</a>
+        &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id}) }}" class="confirmation-link" data-question="confirm.delete">{{ widgets.icon('trash') }}</a>
         {% endset %}
         {% set options = options|merge({'html_after': widget}) %}
     {% endif %}

@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.7](https://github.com/kevinpapst/kimai2/tree/1.7) (2020-01-0?)
+## [1.7](https://github.com/kevinpapst/kimai2/tree/1.7) (2020-01-19)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.6.2...1.7)
 
 Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.7)

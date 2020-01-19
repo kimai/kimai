@@ -64,12 +64,23 @@ class ThemeOptionsSubscriber implements EventSubscriberInterface
         /** @var User $user */
         $user = $this->storage->getToken()->getUser();
 
+        /** @var UserPreference $ref */
         foreach ($user->getPreferences() as $ref) {
             $name = $ref->getName();
             switch ($name) {
                 case UserPreference::SKIN:
                     if (!empty($ref->getValue())) {
                         $this->helper->setOption('skin', 'skin-' . $ref->getValue());
+                    }
+                    break;
+
+                case 'theme.layout':
+                    if ($ref->getValue() === 'boxed') {
+                        $this->helper->setOption('boxed_layout', true);
+                        $this->helper->setOption('fixed_layout', false);
+                    } elseif ($ref->getValue() === 'fixed') {
+                        $this->helper->setOption('boxed_layout', false);
+                        $this->helper->setOption('fixed_layout', true);
                     }
                     break;
 

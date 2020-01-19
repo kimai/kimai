@@ -105,7 +105,7 @@
                     {% endif %}
                     {% for metaField in project.visibleMetaFields %}
                         <tr>
-                            <th>{{ metaField.name }}</th>
+                            <th>{{ metaField.label }}</th>
                             <td>{{ widgets.form_type_value(metaField.type, metaField.value, project) }}</td>
                         </tr>
                     {% endfor %}
