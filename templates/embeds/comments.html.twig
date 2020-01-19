@@ -22,7 +22,7 @@
                                 <a href="{{ path(route_pin, {'id': comment.id}) }}" class="btn btn-default btn-xs {% if comment.pinned %}active{% endif %}"><i class="{{ 'pin'|icon }}"></i></a>
                             {% endif %}
                             {% if route_delete is not null %}
-                                <a href="{{ path(route_delete, {'id': comment.id}) }}" class="confirmation-link btn btn-default btn-xs" data-method="POST" data-question="confirm.delete" data-msg-error="action.delete.error" data-msg-success="action.delete.success"><i class="{{ 'delete'|icon }}"></i></a>
+                                <a href="{{ path(route_delete, {'id': comment.id}) }}" class="confirmation-link btn btn-default btn-xs" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
                             {% endif %}
                             {{ comment.createdAt|date_full }}
                         </span>
