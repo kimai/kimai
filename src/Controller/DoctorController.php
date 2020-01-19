@@ -54,6 +54,29 @@ class DoctorController extends AbstractController
     {
         $this->projectDirectory = $projectDirectory;
     }
+    
+    /**
+     * @Route(path="/flush-log", name="doctor_flush_log", methods={"GET"})
+     * @Security("is_granted('system_configuration')")
+     */
+    public function deleteLogfileAction(): Response
+    {
+        $logfile = $this->getLogFilename();
+        
+        if (file_exists($logfile)) {
+            if (!is_writable($logfile)) {
+                $this->flashError('action.delete.error', ['%reason%' => 'Logfile cannot be written']);
+            } else {
+                if (false === file_put_contents($logfile, '')) {
+                    $this->flashError('action.delete.error', ['%reason%' => 'Failed writing to logfile']);
+                } else {
+                    $this->flashSuccess('action.delete.success');
+                }
+            }
+        }
+            
+        return $this->redirectToRoute('doctor');
+    }
 
     /**
      * @Route(path="", name="doctor", methods={"GET"})
@@ -61,6 +84,8 @@ class DoctorController extends AbstractController
     public function index(): Response
     {
         $logLines = 100;
+        
+        $canDeleteLogfile = $this->isGranted('system_configuration') && is_writable($this->getLogFilename());
 
         return $this->render('doctor/index.html.twig', array_merge(
             [
@@ -70,6 +95,7 @@ class DoctorController extends AbstractController
                 'settings' => $this->getIniSettings(),
                 'extensions' => $this->getLoadedExtensions(),
                 'directories' => $this->getFilePermissions(),
+                'log_delete' => $canDeleteLogfile,
                 'logs' => $this->getLog(),
                 'logLines' => $logLines,
                 'logSize' => $this->getLogSize(),
@@ -105,21 +131,32 @@ class DoctorController extends AbstractController
 
         return filesize($logfile);
     }
-
-    private function getLog(int $lines = 100)
+    
+    private function getLogFilename(): string 
     {
+        // why is this check here ???
         if (!in_array(getenv('APP_ENV'), ['test', 'dev', 'prod'])) {
-            return [
-                'Unsupported log environment'
-            ];
+            throw new \RuntimeException('Unsupported log environment');
         }
 
         $logfileName = 'var/log/' . getenv('APP_ENV') . '.log';
-        $logfile = $this->projectDirectory . '/' . $logfileName;
+        
+        return $this->projectDirectory . '/' . $logfileName;
+    }
 
+    private function getLog(int $lines = 100)
+    {
+        try {
+            $logfile = $this->getLogFilename();
+        } catch (\Exception $ex) {
+            return [
+                $ex->getMessage()
+            ];
+        }
+        
         if (!file_exists($logfile)) {
             return [
-                'Could not find logfile: ' . $logfileName
+                'Empty or missing logfile'
             ];
         }
 
