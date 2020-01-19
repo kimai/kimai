@@ -54,7 +54,7 @@ class DoctorController extends AbstractController
     {
         $this->projectDirectory = $projectDirectory;
     }
-    
+
     /**
      * @Route(path="/flush-log", name="doctor_flush_log", methods={"GET"})
      * @Security("is_granted('system_configuration')")
@@ -62,7 +62,7 @@ class DoctorController extends AbstractController
     public function deleteLogfileAction(): Response
     {
         $logfile = $this->getLogFilename();
-        
+
         if (file_exists($logfile)) {
             if (!is_writable($logfile)) {
                 $this->flashError('action.delete.error', ['%reason%' => 'Logfile cannot be written']);
@@ -74,7 +74,7 @@ class DoctorController extends AbstractController
                 }
             }
         }
-            
+
         return $this->redirectToRoute('doctor');
     }
 
@@ -84,7 +84,7 @@ class DoctorController extends AbstractController
     public function index(): Response
     {
         $logLines = 100;
-        
+
         $canDeleteLogfile = $this->isGranted('system_configuration') && is_writable($this->getLogFilename());
 
         return $this->render('doctor/index.html.twig', array_merge(
@@ -131,8 +131,8 @@ class DoctorController extends AbstractController
 
         return filesize($logfile);
     }
-    
-    private function getLogFilename(): string 
+
+    private function getLogFilename(): string
     {
         // why is this check here ???
         if (!in_array(getenv('APP_ENV'), ['test', 'dev', 'prod'])) {
@@ -140,7 +140,7 @@ class DoctorController extends AbstractController
         }
 
         $logfileName = 'var/log/' . getenv('APP_ENV') . '.log';
-        
+
         return $this->projectDirectory . '/' . $logfileName;
     }
 
@@ -153,7 +153,7 @@ class DoctorController extends AbstractController
                 $ex->getMessage()
             ];
         }
-        
+
         if (!file_exists($logfile)) {
             return [
                 'Empty or missing logfile'
