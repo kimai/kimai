@@ -29,8 +29,8 @@ class UserPasswordType extends AbstractType
         $builder
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'label.password'],
-                'second_options' => ['label' => 'label.password_repeat'],
+                'first_options' => ['label' => 'label.password', 'attr' => ['autocomplete' => 'new-password']],
+                'second_options' => ['label' => 'label.password_repeat', 'attr' => ['autocomplete' => 'new-password']],
             ])
         ;
     }

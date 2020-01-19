@@ -74,6 +74,11 @@
     {% endif %}
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' with logOpts %}
         {% block box_title %}Logfile (max. {{ logLines }} last lines){% endblock %}
+        {% block box_tools %}
+            {% if log_delete %}
+                <a class="btn-box-tool confirmation-link" href="{{ path('doctor_flush_log') }}" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
+            {% endif %}
+        {% endblock %}
         {% block box_body %}
             {% if logSize > 52428800 %}
                 <p>Your logfile is larger than 50 MB, consider deleting it (it will be re-created automatically).</p>

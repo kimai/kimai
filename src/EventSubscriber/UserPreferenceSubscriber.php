@@ -18,6 +18,7 @@ use App\Form\Type\CalendarViewType;
 use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
+use App\Form\Type\ThemeLayoutType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -127,6 +128,12 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setValue($this->getDefaultTheme())
                 ->setOrder(400)
                 ->setType(SkinType::class),
+
+            (new UserPreference())
+                ->setName('theme.layout')
+                ->setValue('fixed')
+                ->setOrder(450)
+                ->setType(ThemeLayoutType::class),
 
             (new UserPreference())
                 ->setName('theme.collapsed_sidebar')

@@ -14,7 +14,7 @@ import jQuery from "jquery";
 export default class KimaiReloadPageWidget {
 
     constructor(events, fullReload) {
-        this.overlay = jQuery('<div class="overlay-wrapper"><div class="overlay"><div class="fa fa-refresh fa-spin"></div></div></div>');
+        this.overlay = jQuery('<div class="overlay-wrapper"><div class="overlay"><div class="fas fa-sync fa-spin"></div></div></div>');
         this.widget = jQuery('div.content-wrapper');
 
         const self = this;

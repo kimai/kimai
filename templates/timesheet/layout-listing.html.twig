@@ -58,6 +58,11 @@
 
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
+        <script type="text/javascript">
+            document.addEventListener('kimai.initialized', function() {
+                KimaiReloadPageWidget.create('kimai.timesheetUpdate');
+            });
+        </script>        
     {% else %}
         {{ tables.datatable_header(tableName, columns, query, {'striped': not showSummary, 'reload': 'kimai.timesheetUpdate'}) }}
 
