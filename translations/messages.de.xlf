@@ -266,7 +266,11 @@
             </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
-                <target>Kimai-Theme</target>
+                <target>Darstellung: Farben</target>
+            </trans-unit>
+            <trans-unit id="label.theme.layout">
+                <source>label.theme.layout</source>
+                <target>Darstellung: Layout</target>
             </trans-unit>
             <trans-unit id="label.hours">
                 <source>label.hours</source>
