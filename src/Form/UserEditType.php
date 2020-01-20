@@ -31,9 +31,6 @@ class UserEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class, [
-                'label' => 'label.email',
-            ])
             ->add('alias', TextType::class, [
                 'label' => 'label.alias',
                 'required' => false,
@@ -44,6 +41,9 @@ class UserEditType extends AbstractType
             ])
             ->add('avatar', AvatarType::class, [
                 'required' => false,
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'label.email',
             ])
         ;
 

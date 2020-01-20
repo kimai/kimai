@@ -166,8 +166,6 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertEquals('Access denied.', $json['message']);
     }
 
-    // ===============================================
-
     public function testPatchAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
