@@ -100,7 +100,7 @@ class UserVoter extends AbstractVoter
         $permission .= '_';
 
         // extend me for "team" support later on
-        if ($subject->getId() == $user->getId()) {
+        if ($subject->getId() === $user->getId()) {
             $permission .= 'own';
         } else {
             $permission .= 'other';

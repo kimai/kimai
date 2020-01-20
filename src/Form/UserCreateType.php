@@ -9,7 +9,6 @@
 
 namespace App\Form;
 
-use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -37,26 +36,33 @@ class UserCreateType extends UserEditType
             ->add('plainPassword', RepeatedType::class, [
                 'required' => true,
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'label.password'],
-                'second_options' => ['label' => 'label.password_repeat'],
+                'first_options' => ['label' => 'label.password', 'documentation' => [
+                    'type' => 'string',
+                    'description' => 'Plain text password',
+                ]],
+                'second_options' => ['label' => 'label.password_repeat', 'documentation' => [
+                    'type' => 'string',
+                    'description' => 'Repeated plain text password, must match first version',
+                ]],
             ]);
 
         parent::buildForm($builder, $options);
 
-        $builder->add('create_more', CheckboxType::class, [
-            'label' => 'label.create_more',
-            'required' => false,
-            'mapped' => false,
-        ]);
+        if ($options['include_add_more'] === true) {
+            $builder->add('create_more', CheckboxType::class, [
+                'label' => 'label.create_more',
+                'required' => false,
+                'mapped' => false,
+            ]);
+        }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
-            'class' => User::class,
+            'include_add_more' => false,
         ]);
     }
 }
