@@ -13,9 +13,9 @@
  */
 
 import jQuery from 'jquery';
-import KimaiClickHandlerReducedInTableRow from "./KimaiClickHandlerReducedInTableRow";
+import KimaiReducedClickHandler from "./KimaiReducedClickHandler";
 
-export default class KimaiAlternativeLinks extends KimaiClickHandlerReducedInTableRow {
+export default class KimaiAlternativeLinks extends KimaiReducedClickHandler {
 
     constructor(selector) {
         super();
@@ -23,7 +23,7 @@ export default class KimaiAlternativeLinks extends KimaiClickHandlerReducedInTab
     }
 
     init() {
-        this._addClickHandlerReducedInTableRow(this.selector, function(href) {
+        this._addClickHandler(this.selector, function(href) {
             window.location = href;
         });
     }

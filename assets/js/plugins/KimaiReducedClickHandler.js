@@ -6,24 +6,24 @@
  */
 
 /*!
- * [KIMAI] KimaiClickHandlerReducedInTableRow: abstract class
+ * [KIMAI] KimaiReducedClickHandler: abstract class
  */
 
 import jQuery from 'jquery';
 import KimaiPlugin from "../KimaiPlugin";
 
-export default class KimaiClickHandlerReducedInTableRow extends KimaiPlugin {
+export default class KimaiReducedClickHandler extends KimaiPlugin {
 
-    _addClickHandlerReducedInTableRow(selector, callback)  {
+    _addClickHandler(selector, callback)  {
         jQuery('body').on('click', selector, function(event) {
             // just in case an inner element is editable, than this should not be triggered
             if (event.target.parentNode.isContentEditable || event.target.isContentEditable) {
                 return;
             }
 
-            // handles the "click" on table rows to open an entry for editing 
+            // handles the "click" on table rows or list elements
             let target = event.target;
-            if (event.currentTarget.matches('tr')) {
+            if (event.currentTarget.matches('tr') || event.currentTarget.matches('li')) {
                 while (target !== null && !target.matches('body')) {
                     // when an element within the row is clicked, that can trigger stuff itself, we don't want the event to be processed
                     // don't act if a link, button or form element was clicked
