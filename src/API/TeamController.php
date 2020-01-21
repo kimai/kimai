@@ -11,9 +11,13 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Entity\Customer;
+use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Form\API\TeamApiEditForm;
+use App\Repository\CustomerRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -262,7 +266,7 @@ final class TeamController extends BaseApiController
      *      name="id",
      *      in="path",
      *      type="integer",
-     *      description="The team to where the new member will be added",
+     *      description="The team which will receive the new member",
      *      required=true,
      * )
      * @SWG\Parameter(
@@ -365,6 +369,250 @@ final class TeamController extends BaseApiController
         }
 
         $team->removeUser($user);
+
+        $this->repository->saveTeam($team);
+
+        $view = new View($team, Response::HTTP_OK);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Grant the team access to a customer
+     *
+     * @SWG\Post(
+     *  @SWG\Response(
+     *      response=200,
+     *      description="Adds a new customer to a team. The customer must not be invisible.",
+     *      @SWG\Schema(ref="#/definitions/TeamEntity")
+     *  )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The team that is granted access",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="customerId",
+     *      in="path",
+     *      type="integer",
+     *      description="The customer to grant acecess to (Customer ID)",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('edit_team')")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function postCustomerAction(int $id, int $customerId, CustomerRepository $repository): Response
+    {
+        $team = $this->repository->find($id);
+
+        if (null === $team) {
+            throw new NotFoundException('Team not found');
+        }
+
+        /** @var Customer $customer */
+        $customer = $repository->find($customerId);
+
+        if (null === $customer) {
+            throw new NotFoundException('Customer not found');
+        }
+
+        if (!$customer->isVisible()) {
+            throw new BadRequestHttpException('Cannot grant access to an invisible customer');
+        }
+
+        if ($team->hasCustomer($customer)) {
+            throw new BadRequestHttpException('Team has already access to customer');
+        }
+
+        $team->addCustomer($customer);
+
+        $this->repository->saveTeam($team);
+
+        $view = new View($team, Response::HTTP_OK);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Revokes access for a customer from a team
+     *
+     * @SWG\Delete(
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Removes a customer from the team.",
+     *          @SWG\Schema(ref="#/definitions/TeamEntity")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The team whose permission will be revoked",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="customerId",
+     *      in="path",
+     *      type="integer",
+     *      description="The customer to remove (Customer ID)",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('edit_team')")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function deleteCustomerAction(int $id, int $customerId, CustomerRepository $repository): Response
+    {
+        $team = $this->repository->find($id);
+
+        if (null === $team) {
+            throw new NotFoundException('Team not found');
+        }
+
+        /** @var Customer $customer */
+        $customer = $repository->find($customerId);
+
+        if (null === $customer) {
+            throw new NotFoundException('Customer not found');
+        }
+
+        if (!$team->hasCustomer($customer)) {
+            throw new BadRequestHttpException('Customer is not assigned to the team');
+        }
+
+        $team->removeCustomer($customer);
+
+        $this->repository->saveTeam($team);
+
+        $view = new View($team, Response::HTTP_OK);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Grant the team access to a project
+     *
+     * @SWG\Post(
+     *  @SWG\Response(
+     *      response=200,
+     *      description="Adds a new project to a team. The project must not be invisible.",
+     *      @SWG\Schema(ref="#/definitions/TeamEntity")
+     *  )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The team that is granted access",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="projectId",
+     *      in="path",
+     *      type="integer",
+     *      description="The project to grant acecess to (Project ID)",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('edit_team')")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function postProjectAction(int $id, int $projectId, ProjectRepository $repository): Response
+    {
+        $team = $this->repository->find($id);
+
+        if (null === $team) {
+            throw new NotFoundException('Team not found');
+        }
+
+        /** @var Project $project */
+        $project = $repository->find($projectId);
+
+        if (null === $project) {
+            throw new NotFoundException('Project not found');
+        }
+
+        if (!$project->isVisible()) {
+            throw new BadRequestHttpException('Cannot grant access to an invisible project');
+        }
+
+        if ($team->hasProject($project)) {
+            throw new BadRequestHttpException('Team has already access to project');
+        }
+
+        $team->addProject($project);
+
+        $this->repository->saveTeam($team);
+
+        $view = new View($team, Response::HTTP_OK);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Revokes access for a project from a team
+     *
+     * @SWG\Delete(
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Removes a project from the team.",
+     *          @SWG\Schema(ref="#/definitions/TeamEntity")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The team whose permission will be revoked",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="projectId",
+     *      in="path",
+     *      type="integer",
+     *      description="The project to remove (Project ID)",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('edit_team')")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function deleteProjectAction(int $id, int $projectId, ProjectRepository $repository): Response
+    {
+        $team = $this->repository->find($id);
+
+        if (null === $team) {
+            throw new NotFoundException('Team not found');
+        }
+
+        /** @var Project $project */
+        $project = $repository->find($projectId);
+
+        if (null === $project) {
+            throw new NotFoundException('Project not found');
+        }
+
+        if (!$team->hasProject($project)) {
+            throw new BadRequestHttpException('Project is not assigned to the team');
+        }
+
+        $team->removeProject($project);
 
         $this->repository->saveTeam($team);
 
