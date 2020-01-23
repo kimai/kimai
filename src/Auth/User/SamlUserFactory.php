@@ -19,19 +19,42 @@ final class SamlUserFactory implements SamlUserFactoryInterface
      * @var array
      */
     private $mapping;
+    /**
+     * @var string
+     */
+    private $groupAttribute;
+    /**
+     * @var array
+     */
+    private $groupMapping;
 
     public function __construct(array $attributes)
     {
         $this->mapping = $attributes['mapping'];
+        $this->groupAttribute = $attributes['groups']['attribute'];
+        $this->groupMapping = $attributes['groups']['mapping'];
     }
 
     public function createUser(SamlTokenInterface $token)
     {
         $user = new User();
-        // "enabled" state is currently ignored when using SAML, but lets set it properly
         $user->setEnabled(true);
         $user->setUsername($token->getUsername());
         $user->setPassword('');
+
+        // extract user roles from a special saml attribute
+        if (!empty($this->groupAttribute) && $token->hasAttribute($this->groupAttribute)) {
+            $samlGroups = $token->getAttribute($this->groupAttribute);
+            if (is_string($samlGroups)) {
+                $samlGroups = [$samlGroups];
+            }
+            foreach ($samlGroups as $groupName) {
+                if (array_key_exists($groupName, $this->groupMapping)) {
+                    $groupName = $this->groupMapping[$groupName];
+                }
+                $user->addRole($groupName);
+            }
+        }
 
         $reflection = new \ReflectionClass(User::class);
         foreach ($this->mapping as $field => $attribute) {
@@ -56,10 +79,13 @@ final class SamlUserFactory implements SamlUserFactoryInterface
 
     private function getPropertyValue($token, $attribute)
     {
-        if (is_string($attribute) && '$' == substr($attribute, 0, 1)) {
+        if (is_string($attribute)) {
             $attributes = $token->getAttributes();
-
-            return $attributes[substr($attribute, 1)][0];
+            if ('$$' === substr($attribute, 0, 1)) {
+                return $attributes[substr($attribute, 2)];
+            } elseif ('$' === substr($attribute, 0, 1)) {
+                return $attributes[substr($attribute, 1)][0];
+            }
         }
 
         return $attribute;
