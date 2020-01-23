@@ -189,6 +189,7 @@ class Kernel extends BaseKernel
 
         // some routes are based on app configs and will be imported manually
         $this->configureFosUserRoutes($routes);
+        $this->configureSamlRoutes($routes);
 
         // load bundle specific route files
         if (is_dir($confDir . '/routes/')) {
@@ -228,5 +229,16 @@ class Kernel extends BaseKernel
                 '/{_locale}/resetting'
             );
         }
+    }
+
+    protected function configureSamlRoutes(RouteCollectionBuilder $routes)
+    {
+        $saml = $this->getContainer()->getParameter('kimai.saml');
+
+        if (!$saml['activate']) {
+            return;
+        }
+
+        $routes->import('../src/Auth/Controller/', '/auth', 'annotation');
     }
 }

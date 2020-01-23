@@ -21,3 +21,12 @@
     {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}
     {{ event.content|raw }}
 {% endblock %}
+
+{% block login_social_auth %}
+    {% if saml.activate %}
+    <a href="{{ path('saml_login') }}" class="btn btn-block btn-google">
+        {{ saml.title|trans }}
+    </a>
+    <br>
+    {% endif %}
+{% endblock %}

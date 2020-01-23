@@ -65,7 +65,7 @@ class AppExtension extends Extension
         $this->createPermissionParameter($config['permissions'], $container);
         $this->createThemeParameter($config['theme'], $container);
         $this->createUserParameter($config['user'], $container);
-
+        $container->setParameter('kimai.saml', $config['saml']);
         $container->setParameter('kimai.timesheet', $config['timesheet']);
         $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
         $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);

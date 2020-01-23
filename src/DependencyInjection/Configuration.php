@@ -55,6 +55,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->append($this->getUserNode())
+                ->append($this->getSamlNode())
                 ->append($this->getTimesheetNode())
                 ->append($this->getInvoiceNode())
                 ->append($this->getLanguagesNode())
@@ -402,6 +403,32 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->booleanNode('password_reset')
                     ->defaultTrue()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    protected function getSamlNode()
+    {
+        $builder = new TreeBuilder('saml');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('activate')
+                    ->defaultFalse()
+                ->end()
+                ->scalarNode('title')
+                    ->defaultValue('Login with SAML')
+                ->end()
+                ->arrayNode('mapping')
+                    ->useAttributeAsKey('name')
+                    ->scalarPrototype()
+                    ->end()
                 ->end()
             ->end()
         ;
