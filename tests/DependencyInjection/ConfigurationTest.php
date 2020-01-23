@@ -349,6 +349,15 @@ class ConfigurationTest extends TestCase
                     'userDnAttribute' => 'member',
                     'groups' => [],
                 ],
+            ],
+            'saml' => [
+                'activate' => false,
+                'title' => 'Login with SAML',
+                'groups' => [
+                    'attribute' => null,
+                    'mapping' => []
+                ],
+                'mapping' => [],
             ]
         ];
 
