@@ -63,6 +63,34 @@ class SamlUserFactoryTest extends TestCase
         $user = $sut->createUser($token);
     }
 
+    public function testCreateUserThrowsExceptionOnInvalidMapping()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Invalid mapping field given: foo');
+
+        $mapping = [
+            'mapping' => [
+                'avatar' => '$$avatar',
+                'email' => '$Email',
+                'foo' => '$Email',
+            ],
+            'groups' => [
+                'attribute' => '',
+                'mapping' => []
+            ]
+        ];
+
+        $attributes = [
+            'Email' => ['test@example.com'],
+        ];
+
+        $token = new SamlToken();
+        $token->setAttributes($attributes);
+
+        $sut = new SamlUserFactory($mapping);
+        $user = $sut->createUser($token);
+    }
+
     public function testCreateUser()
     {
         $mapping = [

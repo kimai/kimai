@@ -239,6 +239,6 @@ class Kernel extends BaseKernel
             return;
         }
 
-        $routes->import('../src/Auth/Controller/', '/auth', 'annotation');
+        $routes->import('../src/Auth/Controller/SamlController.php', '/auth', 'annotation');
     }
 }
