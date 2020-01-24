@@ -33,6 +33,10 @@ final class SamlUserFactory implements SamlUserFactoryInterface
         $this->mapping = $attributes['mapping'];
         $this->groupAttribute = $attributes['groups']['attribute'];
         $this->groupMapping = $attributes['groups']['mapping'];
+
+        if (!array_key_exists('email', $attributes['mapping'])) {
+            throw new \InvalidArgumentException('Your SAML mapping is missing an attribute for the users email');
+        }
     }
 
     public function createUser(SamlTokenInterface $token)
@@ -60,11 +64,8 @@ final class SamlUserFactory implements SamlUserFactoryInterface
         foreach ($this->mapping as $field => $attribute) {
             $value = $this->getPropertyValue($token, $attribute);
             $setter = 'set' . ucfirst($field);
-            $adder = 'add' . ucfirst($field);
             if (method_exists($user, $setter)) {
                 $user->$setter($value);
-            } elseif (method_exists($user, $adder)) {
-                $user->$adder($value);
             } elseif (property_exists($user, $field)) {
                 $property = $reflection->getProperty($field);
                 $property->setAccessible(true);
@@ -74,6 +75,10 @@ final class SamlUserFactory implements SamlUserFactoryInterface
             }
         }
 
+        if (empty($user->getUsername())) {
+            $user->setUsername($user->getEmail());
+        }
+
         return $user;
     }
 
@@ -81,10 +86,20 @@ final class SamlUserFactory implements SamlUserFactoryInterface
     {
         if (is_string($attribute)) {
             $attributes = $token->getAttributes();
-            if ('$$' === substr($attribute, 0, 1)) {
-                return $attributes[substr($attribute, 2)];
+            if ('$$' === substr($attribute, 0, 2)) {
+                $key = substr($attribute, 2);
+                if (isset($attributes[$key])) {
+                    return $attributes[$key][0];
+                }
+
+                return null;
             } elseif ('$' === substr($attribute, 0, 1)) {
-                return $attributes[substr($attribute, 1)][0];
+                $key = substr($attribute, 1);
+                if (!isset($attributes[$key])) {
+                    throw new \RuntimeException('Missing user attribute: ' . $key);
+                }
+
+                return $attributes[$key][0];
             }
         }
 
