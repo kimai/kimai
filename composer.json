@@ -22,10 +22,10 @@
         "friendsofsymfony/rest-bundle": "^2.5",
         "friendsofsymfony/user-bundle": "dev-master",
         "gedmo/doctrine-extensions": "^2.4",
-        "hslavich/oneloginsaml-bundle": "dev-kimai",
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.2",
         "kevinpapst/adminlte-bundle": "~3.0",
+        "kevinpapst/oneloginsaml-bundle": "^1.4",
         "kimai/kimai2-composer": "^0.1",
         "laravolt/avatar": "^3.0",
         "league/csv": "^9.4",
@@ -80,10 +80,6 @@
         {
             "type": "artifact",
             "url": "var/packages/"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/kevinpapst/OneloginSamlBundle"
         }
     ],    
     "config": {

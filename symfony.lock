@@ -186,9 +186,6 @@
     "hoa/zformat": {
         "version": "1.17.01.10"
     },
-    "hslavich/oneloginsaml-bundle": {
-        "version": "v1.4.1"
-    },
     "illuminate/cache": {
         "version": "v6.0.4"
     },
@@ -221,6 +218,9 @@
     },
     "kevinpapst/adminlte-bundle": {
         "version": "0.3"
+    },
+    "kevinpapst/oneloginsaml-bundle": {
+        "version": "v1.4.1"
     },
     "kimai/kimai2-composer": {
         "version": "0.1"
