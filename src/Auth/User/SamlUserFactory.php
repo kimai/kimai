@@ -49,9 +49,6 @@ final class SamlUserFactory implements SamlUserFactoryInterface
         // extract user roles from a special saml attribute
         if (!empty($this->groupAttribute) && $token->hasAttribute($this->groupAttribute)) {
             $samlGroups = $token->getAttribute($this->groupAttribute);
-            if (is_string($samlGroups)) {
-                $samlGroups = [$samlGroups];
-            }
             foreach ($samlGroups as $groupName) {
                 if (array_key_exists($groupName, $this->groupMapping)) {
                     $groupName = $this->groupMapping[$groupName];
@@ -60,16 +57,11 @@ final class SamlUserFactory implements SamlUserFactoryInterface
             }
         }
 
-        $reflection = new \ReflectionClass(User::class);
         foreach ($this->mapping as $field => $attribute) {
             $value = $this->getPropertyValue($token, $attribute);
             $setter = 'set' . ucfirst($field);
             if (method_exists($user, $setter)) {
                 $user->$setter($value);
-            } elseif (property_exists($user, $field)) {
-                $property = $reflection->getProperty($field);
-                $property->setAccessible(true);
-                $property->setValue($user, $value);
             } else {
                 throw new \RuntimeException('Invalid mapping field given: ' . $field);
             }
