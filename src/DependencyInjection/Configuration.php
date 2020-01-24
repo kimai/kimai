@@ -410,45 +410,6 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getSamlNode()
-    {
-        $builder = new TreeBuilder('saml');
-        /** @var ArrayNodeDefinition $node */
-        $node = $builder->getRootNode();
-
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->booleanNode('activate')
-                    ->defaultFalse()
-                ->end()
-                ->scalarNode('title')
-                    ->defaultValue('Login with SAML')
-                ->end()
-                ->arrayNode('groups')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('attribute')
-                            ->defaultNull()
-                        ->end()
-                        ->arrayNode('mapping')
-                            ->useAttributeAsKey('name')
-                            ->scalarPrototype()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-                ->arrayNode('mapping')
-                    ->useAttributeAsKey('name')
-                    ->scalarPrototype()
-                    ->end()
-                ->end()
-            ->end()
-        ;
-
-        return $node;
-    }
-
     protected function getWidgetsNode()
     {
         $builder = new TreeBuilder('widgets');
@@ -701,6 +662,69 @@ class Configuration implements ConfigurationInterface
                     return null !== $v['connection']['host'] && empty($v['user']['baseDn']);
                 })
                 ->thenInvalid('The "ldap.user.baseDn" config must be set if LDAP is activated.')
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    protected function getSamlNode()
+    {
+        $builder = new TreeBuilder('saml');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('activate')
+                    ->defaultFalse()
+                ->end()
+                ->scalarNode('title')
+                    ->defaultValue('Login with SAML')
+                ->end()
+                ->arrayNode('roles')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('attribute')
+                            ->defaultNull()
+                        ->end()
+                        ->arrayNode('mapping')
+                            ->defaultValue([])
+                            ->arrayPrototype()
+                                ->children()
+                                    ->scalarNode('saml')->isRequired()->cannotBeEmpty()->end()
+                                    ->scalarNode('kimai')->isRequired()->cannotBeEmpty()->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('mapping')
+                    ->defaultValue([])
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('saml')->isRequired()->cannotBeEmpty()->end()
+                            ->scalarNode('kimai')->isRequired()->cannotBeEmpty()->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+            ->validate()
+                ->ifTrue(static function ($v) {
+                    if (true !== $v['activate']) {
+                        return false;
+                    }
+                    $found = false;
+                    foreach ($v['mapping'] as $mapping) {
+                        if ($mapping['kimai'] === 'email') {
+                            $found = true;
+                        }
+                    }
+
+                    return !$found;
+                })
+                ->thenInvalid('You need to configure a SAML mapping for the email attribute.')
             ->end()
         ;
 

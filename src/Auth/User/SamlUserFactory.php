@@ -31,12 +31,8 @@ final class SamlUserFactory implements SamlUserFactoryInterface
     public function __construct(array $attributes)
     {
         $this->mapping = $attributes['mapping'];
-        $this->groupAttribute = $attributes['groups']['attribute'];
-        $this->groupMapping = $attributes['groups']['mapping'];
-
-        if (!array_key_exists('email', $attributes['mapping'])) {
-            throw new \InvalidArgumentException('Your SAML mapping is missing an attribute for the users email');
-        }
+        $this->groupAttribute = $attributes['roles']['attribute'];
+        $this->groupMapping = $attributes['roles']['mapping'];
     }
 
     public function createUser(SamlTokenInterface $token)
@@ -48,16 +44,25 @@ final class SamlUserFactory implements SamlUserFactoryInterface
 
         // extract user roles from a special saml attribute
         if (!empty($this->groupAttribute) && $token->hasAttribute($this->groupAttribute)) {
+            $groupMap = [];
+            foreach ($this->groupMapping as $mapping) {
+                $field = $mapping['kimai'];
+                $attribute = $mapping['saml'];
+                $groupMap[$attribute] = $field;
+            }
+
             $samlGroups = $token->getAttribute($this->groupAttribute);
             foreach ($samlGroups as $groupName) {
-                if (array_key_exists($groupName, $this->groupMapping)) {
-                    $groupName = $this->groupMapping[$groupName];
+                if (array_key_exists($groupName, $groupMap)) {
+                    $groupName = $groupMap[$groupName];
                 }
                 $user->addRole($groupName);
             }
         }
 
-        foreach ($this->mapping as $field => $attribute) {
+        foreach ($this->mapping as $mapping) {
+            $field = $mapping['kimai'];
+            $attribute = $mapping['saml'];
             $value = $this->getPropertyValue($token, $attribute);
             $setter = 'set' . ucfirst($field);
             if (method_exists($user, $setter)) {

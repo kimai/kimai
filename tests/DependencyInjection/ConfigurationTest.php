@@ -181,6 +181,20 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
+    public function testValidateSamlIsMissingMappingFormEmail()
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.saml": You need to configure a SAML mapping for the email attribute.');
+
+        $config = $this->getMinConfig();
+        $config['saml'] = [
+            'activate' => true,
+            'mapping' => [],
+        ];
+
+        $this->assertConfig($config, []);
+    }
+
     public function testDefaultLdapSettings()
     {
         $finalizedConfig = $this->getCompiledConfig($this->getMinConfig());
@@ -353,7 +367,7 @@ class ConfigurationTest extends TestCase
             'saml' => [
                 'activate' => false,
                 'title' => 'Login with SAML',
-                'groups' => [
+                'roles' => [
                     'attribute' => null,
                     'mapping' => []
                 ],

@@ -19,22 +19,6 @@ use PHPUnit\Framework\TestCase;
  */
 class SamlUserFactoryTest extends TestCase
 {
-    public function testConstructThrowsExceptionOnMissingEmailMapping()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Your SAML mapping is missing an attribute for the users email');
-
-        $mapping = [
-            'mapping' => [],
-            'groups' => [
-                'attribute' => '',
-                'mapping' => []
-            ]
-        ];
-
-        $sut = new SamlUserFactory($mapping);
-    }
-
     public function testCreateUserThrowsExceptionOnMissingAttribute()
     {
         $this->expectException(\RuntimeException::class);
@@ -42,11 +26,11 @@ class SamlUserFactoryTest extends TestCase
 
         $mapping = [
             'mapping' => [
-                'avatar' => '$$avatar',
-                'email' => '$Email',
-                'title' => '$title',
+                ['saml' => '$$avatar', 'kimai' => 'avatar'],
+                ['saml' => '$Email', 'kimai' => 'email'],
+                ['saml' => '$title', 'kimai' => 'title'],
             ],
-            'groups' => [
+            'roles' => [
                 'attribute' => '',
                 'mapping' => []
             ]
@@ -70,11 +54,11 @@ class SamlUserFactoryTest extends TestCase
 
         $mapping = [
             'mapping' => [
-                'avatar' => '$$avatar',
-                'email' => '$Email',
-                'foo' => '$Email',
+                ['saml' => '$$avatar', 'kimai' => 'avatar'],
+                ['saml' => '$Email', 'kimai' => 'email'],
+                ['saml' => '$Email', 'kimai' => 'foo'],
             ],
-            'groups' => [
+            'roles' => [
                 'attribute' => '',
                 'mapping' => []
             ]
@@ -95,15 +79,15 @@ class SamlUserFactoryTest extends TestCase
     {
         $mapping = [
             'mapping' => [
-                'email' => '$Email',
-                'title' => 'A static super title',
-                'avatar' => '$$avatar',
+                ['saml' => '$$avatar', 'kimai' => 'avatar'],
+                ['saml' => '$Email', 'kimai' => 'email'],
+                ['saml' => 'A static super title', 'kimai' => 'title'],
             ],
-            'groups' => [
+            'roles' => [
                 'attribute' => 'RoLeS',
                 'mapping' => [
-                    'fooobar' => 'ROLE_ADMIN',
-                    'ROLE_1' => 'ROLE_TEAMLEAD',
+                    ['saml' => 'fooobar', 'kimai' => 'ROLE_ADMIN'],
+                    ['saml' => 'ROLE_1', 'kimai' => 'ROLE_TEAMLEAD'],
                 ]
             ]
         ];
@@ -134,12 +118,12 @@ class SamlUserFactoryTest extends TestCase
     {
         $mapping = [
             'mapping' => [
-                'email' => '$Email',
-                'title' => 'A static super title',
-                'avatar' => '$$avatar',
-                'username' => 'Mr. T',
+                ['saml' => '$$avatar', 'kimai' => 'avatar'],
+                ['saml' => '$Email', 'kimai' => 'email'],
+                ['saml' => 'A static super title', 'kimai' => 'title'],
+                ['saml' => 'Mr. T', 'kimai' => 'username'],
             ],
-            'groups' => [
+            'roles' => [
                 'attribute' => null,
                 'mapping' => []
             ]
