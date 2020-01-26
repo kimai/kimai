@@ -33,11 +33,15 @@ final class SamlUserProvider implements UserProviderInterface
             /** @var User $user */
             $user = $this->repository->loadUserByUsername($username);
         } catch (\Exception $ex) {
-            throw new UsernameNotFoundException();
+            throw new UsernameNotFoundException(sprintf('User "%s" not found', $username));
+        }
+
+        if (null === $user) {
+            throw new UsernameNotFoundException(sprintf('User "%s" not found', $username));
         }
 
         if (!$user->isSamlUser()) {
-            throw new UsernameNotFoundException();
+            throw new UsernameNotFoundException(sprintf('User "%s" is registered, but not as SAML user.', $username));
         }
 
         return $user;

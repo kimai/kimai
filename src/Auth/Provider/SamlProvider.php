@@ -37,18 +37,14 @@ final class SamlProvider implements AuthenticationProviderInterface
      * @var EntityManager
      */
     private $entityManager;
-    /**
-     * @var array
-     */
-    private $options;
 
+    // this constructor is defined by the bundle and receives options, that we don't need
     public function __construct(UserProviderInterface $userProvider, array $options = [])
     {
         $this->userProvider = $userProvider;
-        $this->options = $options;
     }
 
-    // the following setters are here, becuase the bundle creates the service like this and we (unfortunately)
+    // the following setters are here, because the bundle creates the service like this and we
     // cannot simply change that to constructor injection
 
     public function setUserFactory(SamlUserFactory $userFactory)
@@ -61,7 +57,7 @@ final class SamlProvider implements AuthenticationProviderInterface
         $this->tokenFactory = $tokenFactory;
     }
 
-    public function setEntityManager($entityManager)
+    public function setEntityManager(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
     }
@@ -85,7 +81,9 @@ final class SamlProvider implements AuthenticationProviderInterface
             $this->entityManager->persist($user);
             $this->entityManager->flush();
         } catch (\Exception $ex) {
-            throw new AuthenticationException('Failed creating or hydrating user: ' . $ex->getMessage());
+            throw new AuthenticationException(
+                sprintf('Failed creating or hydrating user "%s": %s', $token->getUsername(), $ex->getMessage())
+            );
         }
 
         if ($user) {
