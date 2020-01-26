@@ -8,8 +8,10 @@ security:
                 providers: [fos_userbundle]
         kimai_ldap:
             id: App\Ldap\LdapUserProvider
+        kimai_saml:
+            id: App\Auth\User\SamlUserProvider
         fos_userbundle:
-            id: fos_user.user_provider.username_email
+            id: App\Auth\User\DoctrineUserProvider
 
     firewalls:
         dev:

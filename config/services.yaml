@@ -160,8 +160,13 @@ services:
     App\Auth\User\SamlUserFactory:
         arguments: ['%kimai.saml%']
 
-    hslavich_onelogin_saml.user_provider:
-        class: App\Repository\UserRepository
+    hslavich_onelogin_saml.saml_provider:
+        class: App\Auth\Provider\SamlProvider
+        arguments: [""]
+        calls:
+            -   method: setUserFactory
+                arguments:
+                    - '@App\Auth\User\SamlUserFactory'
 
     # ================================================================================
     # REPOSITORIES

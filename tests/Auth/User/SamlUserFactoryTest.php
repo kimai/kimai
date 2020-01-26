@@ -88,12 +88,13 @@ class SamlUserFactoryTest extends TestCase
                 'mapping' => [
                     ['saml' => 'fooobar', 'kimai' => 'ROLE_ADMIN'],
                     ['saml' => 'ROLE_1', 'kimai' => 'ROLE_TEAMLEAD'],
+                    ['saml' => 'ROLE_2', 'kimai' => 'ROLE_2'],
                 ]
             ]
         ];
 
         $attributes = [
-            'RoLeS' => ['ROLE_1', 'ROLE_2'],
+            'RoLeS' => ['ROLE_1', 'ROLE_2', 'ROLE_3'],
             'Email' => ['test@example.com'],
             'FOOO' => ['test', 'test2'],
             'avatar' => ['http://www.example.com/test.jpg'],

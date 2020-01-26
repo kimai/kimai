@@ -40,8 +40,14 @@ final class SamlUserFactory implements SamlUserFactoryInterface
         $user = new User();
         $user->setEnabled(true);
         $user->setUsername($token->getUsername());
-        $user->setPassword('');
 
+        $this->hydrateUser($user, $token);
+
+        return $user;
+    }
+
+    public function hydrateUser(User $user, SamlTokenInterface $token): void
+    {
         // extract user roles from a special saml attribute
         if (!empty($this->groupAttribute) && $token->hasAttribute($this->groupAttribute)) {
             $groupMap = [];
@@ -51,13 +57,14 @@ final class SamlUserFactory implements SamlUserFactoryInterface
                 $groupMap[$attribute] = $field;
             }
 
+            $roles = [];
             $samlGroups = $token->getAttribute($this->groupAttribute);
             foreach ($samlGroups as $groupName) {
                 if (array_key_exists($groupName, $groupMap)) {
-                    $groupName = $groupMap[$groupName];
+                    $roles[] = $groupMap[$groupName];
                 }
-                $user->addRole($groupName);
             }
+            $user->setRoles($roles);
         }
 
         foreach ($this->mapping as $mapping) {
@@ -76,7 +83,9 @@ final class SamlUserFactory implements SamlUserFactoryInterface
             $user->setUsername($user->getEmail());
         }
 
-        return $user;
+        // fill them after hydrating account, so they can't be overwritten
+        $user->setPassword('');
+        $user->setAuth(User::AUTH_SAML);
     }
 
     private function getPropertyValue($token, $attribute)

@@ -38,6 +38,10 @@ class User extends BaseUser implements UserInterface
     public const DEFAULT_ROLE = self::ROLE_USER;
     public const DEFAULT_LANGUAGE = 'en';
 
+    public const AUTH_INTERNAL = 'kimai';
+    public const AUTH_LDAP = 'ldap';
+    public const AUTH_SAML = 'saml';
+
     /**
      * @var int
      *
@@ -112,6 +116,13 @@ class User extends BaseUser implements UserInterface
     private $teams;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="auth", type="string", length=20, nullable=true)
+     */
+    private $auth;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -120,6 +131,7 @@ class User extends BaseUser implements UserInterface
         $this->registeredAt = new \DateTime();
         $this->preferences = new ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->auth = self::AUTH_INTERNAL;
     }
 
     public function getId(): ?int
@@ -287,6 +299,10 @@ class User extends BaseUser implements UserInterface
      */
     public function addPreference(UserPreference $preference): User
     {
+        if (null === $this->preferences) {
+            $this->preferences = new ArrayCollection();
+        }
+
         $this->preferences->add($preference);
         $preference->setUser($this);
 
@@ -349,6 +365,33 @@ class User extends BaseUser implements UserInterface
         }
 
         return $this->getUsername();
+    }
+
+    public function getAuth(): ?string
+    {
+        return $this->auth;
+    }
+
+    public function setAuth(string $auth): User
+    {
+        $this->auth = $auth;
+
+        return $this;
+    }
+
+    public function isSamlUser(): bool
+    {
+        return $this->auth === self::AUTH_SAML;
+    }
+
+    public function isLdapUser(): bool
+    {
+        return $this->auth === self::AUTH_LDAP;
+    }
+
+    public function isInternalUser(): bool
+    {
+        return $this->auth === null || $this->auth === self::AUTH_INTERNAL;
     }
 
     /**
