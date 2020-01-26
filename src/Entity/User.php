@@ -120,7 +120,7 @@ class User extends BaseUser implements UserInterface
      *
      * @ORM\Column(name="auth", type="string", length=20, nullable=true)
      */
-    private $auth;
+    private $auth = self::AUTH_INTERNAL;
 
     /**
      * User constructor.
@@ -131,7 +131,6 @@ class User extends BaseUser implements UserInterface
         $this->registeredAt = new \DateTime();
         $this->preferences = new ArrayCollection();
         $this->teams = new ArrayCollection();
-        $this->auth = self::AUTH_INTERNAL;
     }
 
     public function getId(): ?int

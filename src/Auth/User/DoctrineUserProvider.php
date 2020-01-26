@@ -23,9 +23,6 @@ final class DoctrineUserProvider implements UserProviderInterface
      */
     private $userManager;
 
-    /**
-     * Constructor.
-     */
     public function __construct(UserManagerInterface $userManager)
     {
         $this->userManager = $userManager;
@@ -40,13 +37,13 @@ final class DoctrineUserProvider implements UserProviderInterface
         $user = $this->userManager->findUserByUsernameOrEmail($username);
 
         if (!$user) {
-            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
+            throw new UsernameNotFoundException(sprintf('User "%s" not found.', $username));
         }
 
         // this needs improvements: should not check for LDAP user, but we have to ... as LDAP users cannot
         // be clearly identified by now, because the auth column was introduced after LDAP!
         if (!$user->isInternalUser() && !$user->isLdapUser()) {
-            throw new UsernameNotFoundException(sprintf('Username "%s" is registered, but not as internal user.', $username));
+            throw new UsernameNotFoundException(sprintf('User "%s" is registered, but not as internal user.', $username));
         }
 
         return $user;
@@ -70,7 +67,7 @@ final class DoctrineUserProvider implements UserProviderInterface
 
         // this needs improvements, should not check for LDAP user!
         if (!$reloadedUser->isInternalUser() && !$reloadedUser->isLdapUser()) {
-            throw new UnsupportedUserException(sprintf('Username "%s" was found, but is not registered as internal user.', $reloadedUser->getUsername()));
+            throw new UnsupportedUserException(sprintf('User "%s" is registered, but not as internal user.', $reloadedUser->getUsername()));
         }
 
         return $reloadedUser;
