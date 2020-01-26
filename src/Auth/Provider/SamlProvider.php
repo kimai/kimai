@@ -10,6 +10,7 @@
 namespace App\Auth\Provider;
 
 use App\Auth\User\SamlUserFactory;
+use Doctrine\ORM\EntityManager;
 use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlTokenFactoryInterface;
 use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlTokenInterface;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
@@ -33,7 +34,7 @@ final class SamlProvider implements AuthenticationProviderInterface
      */
     private $tokenFactory;
     /**
-     * @var
+     * @var EntityManager
      */
     private $entityManager;
     /**
