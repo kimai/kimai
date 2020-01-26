@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="company">
                 <source>company</source>
-                <target>Faktúra spoločnosti</target>
+                <target>Spoločnosť</target>
             </trans-unit>
         </body>
     </file>
