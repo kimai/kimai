@@ -186,8 +186,8 @@
                 <target>Neboli nájdené žiadne položky.</target>
             </trans-unit>
             <trans-unit id="error.no_comments_found">
-            <source>error.no_comments_found</source>
-            <target>Nebolí nájdené žiadne komentáre.</target>
+                <source>error.no_comments_found</source>
+                <target>Nebolí nájdené žiadne komentáre.</target>
             </trans-unit>
 
             <!--
@@ -552,7 +552,6 @@
                 <source>label.project_end</source>
                 <target>Koniec projektu</target>
             </trans-unit>
-            
 
             <!--
               Admin: Activity
@@ -734,8 +733,9 @@
                 <source>ROLE_USER</source>
                 <target>User</target>
             </trans-unit>
-<!--
-Statistics data for Dashboard & Users profile
+
+            <!--
+            Statistics data for Dashboard & Users profile
             -->
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
