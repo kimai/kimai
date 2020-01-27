@@ -77,15 +77,15 @@ class DoctrineUserProviderTest extends TestCase
         self::assertFalse($sut->supportsClass(UserInterface::class));
         self::assertFalse($sut->supportsClass(SamlUserInterface::class));
         self::assertFalse($sut->supportsClass(\FOS\UserBundle\Model\User::class));
-        self::assertFalse($sut->supportsClass(TestUser::class));
+        self::assertFalse($sut->supportsClass(TestUserEntity::class));
     }
 
     public function testRefreshUserThrowsExceptionOnUnsupportedUserClass()
     {
         $this->expectException(UnsupportedUserException::class);
-        $this->expectExceptionMessage('Expected an instance of App\Entity\User, but got "App\Tests\Auth\User\TestUser".');
+        $this->expectExceptionMessage('Expected an instance of App\Entity\User, but got "App\Tests\Auth\User\TestUserEntity".');
 
-        $user = new TestUser();
+        $user = new TestUserEntity();
         $user->setUsername('foobar');
 
         $manager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
@@ -155,8 +155,4 @@ class DoctrineUserProviderTest extends TestCase
         self::assertSame($user, $actual);
         self::assertTrue($user->isInternalUser());
     }
-}
-
-class TestUser extends \FOS\UserBundle\Model\User
-{
 }

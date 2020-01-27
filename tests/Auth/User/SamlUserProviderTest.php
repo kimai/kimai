@@ -87,7 +87,7 @@ class SamlUserProviderTest extends TestCase
         self::assertFalse($sut->supportsClass(UserInterface::class));
         self::assertFalse($sut->supportsClass(SamlUserInterface::class));
         self::assertFalse($sut->supportsClass(\FOS\UserBundle\Model\User::class));
-        self::assertFalse($sut->supportsClass(TestUser::class));
+        self::assertFalse($sut->supportsClass(TestUserEntity::class));
     }
 
     public function testRefreshUserReturnsNullThrowsException()

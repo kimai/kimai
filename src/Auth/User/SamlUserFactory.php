@@ -79,11 +79,8 @@ final class SamlUserFactory implements SamlUserFactoryInterface
             }
         }
 
-        if (empty($user->getUsername())) {
-            $user->setUsername($user->getEmail());
-        }
-
         // fill them after hydrating account, so they can't be overwritten
+        $user->setUsername($token->getUsername());
         $user->setPassword('');
         $user->setAuth(User::AUTH_SAML);
     }

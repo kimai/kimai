@@ -109,13 +109,13 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 
     /**
      * @param string $username
-     * @return mixed|null|\Symfony\Component\Security\Core\User\UserInterface
+     * @return null|User
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function loadUserByUsername($username)
     {
-        return $this->createQueryBuilder('u')
+        $query = $this->createQueryBuilder('u')
             ->select('u', 'p', 't', 'tu', 'tl')
             ->leftJoin('u.preferences', 'p')
             ->leftJoin('u.teams', 't')
@@ -123,9 +123,15 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->leftJoin('t.teamlead', 'tl')
             ->where('u.username = :username')
             ->orWhere('u.email = :username')
-            ->setParameter('username', $username)
-            ->getQuery()
-            ->getSingleResult();
+            ->getQuery();
+
+        $result = $query->execute(['username' => $username]);
+
+        if (empty($result)) {
+            return null;
+        }
+
+        return $result[0];
     }
 
     public function getQueryBuilderForFormType(UserFormTypeQuery $query): QueryBuilder

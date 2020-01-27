@@ -101,6 +101,7 @@ class SamlUserFactoryTest extends TestCase
         ];
 
         $token = new SamlToken();
+        $token->setUser('foo@example.com');
         $token->setAttributes($attributes);
 
         $sut = new SamlUserFactory($mapping);
@@ -110,12 +111,12 @@ class SamlUserFactoryTest extends TestCase
         self::assertTrue($user->isEnabled());
         self::assertEquals('', $user->getPassword());
         self::assertEquals('test@example.com', $user->getEmail());
-        self::assertEquals('test@example.com', $user->getUsername());
+        self::assertEquals('foo@example.com', $user->getUsername());
         self::assertEquals('A static super title', $user->getTitle());
         self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_2', 'ROLE_USER'], $user->getRoles());
     }
 
-    public function testCreateUserWithUsername()
+    public function testCreateUserDoesOverwriteUsername()
     {
         $mapping = [
             'mapping' => [
@@ -137,6 +138,7 @@ class SamlUserFactoryTest extends TestCase
         ];
 
         $token = new SamlToken();
+        $token->setUser('foo@example.com');
         $token->setAttributes($attributes);
 
         $sut = new SamlUserFactory($mapping);
@@ -146,7 +148,7 @@ class SamlUserFactoryTest extends TestCase
         self::assertTrue($user->isEnabled());
         self::assertEquals('', $user->getPassword());
         self::assertEquals('test@example.com', $user->getEmail());
-        self::assertEquals('Mr. T', $user->getUsername());
+        self::assertEquals('foo@example.com', $user->getUsername());
         self::assertEquals('A static super title', $user->getTitle());
         self::assertEquals(['ROLE_USER'], $user->getRoles());
     }

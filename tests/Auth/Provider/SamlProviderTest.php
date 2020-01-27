@@ -72,6 +72,7 @@ class SamlProviderTest extends TestCase
         $user->setAuth(User::AUTH_SAML);
 
         $token = new SamlToken([]);
+        $token->setUser('foo1@example.com');
         $token->setAttributes([
             'Email' => ['foo@example.com'],
             'title' => ['Tralalala'],
@@ -87,7 +88,7 @@ class SamlProviderTest extends TestCase
         $tokenUser = $authToken->getUser();
 
         self::assertSame($user, $tokenUser);
-        self::assertEquals('foo@example.com', $tokenUser->getUsername());
+        self::assertEquals('foo1@example.com', $tokenUser->getUsername());
         self::assertEquals('Tralalala', $tokenUser->getTitle());
         self::assertEquals('foo@example.com', $tokenUser->getEmail());
     }
@@ -95,6 +96,7 @@ class SamlProviderTest extends TestCase
     public function testAuthenticatCreatesNewUser()
     {
         $token = new SamlToken([]);
+        $token->setUser('foo1@example.com');
         $token->setAttributes([
             'Email' => ['foo@example.com'],
             'title' => ['Tralalala'],
@@ -109,7 +111,7 @@ class SamlProviderTest extends TestCase
         /** @var User $tokenUser */
         $tokenUser = $authToken->getUser();
 
-        self::assertEquals('foo@example.com', $tokenUser->getUsername());
+        self::assertEquals('foo1@example.com', $tokenUser->getUsername());
         self::assertEquals('Tralalala', $tokenUser->getTitle());
         self::assertEquals('foo@example.com', $tokenUser->getEmail());
     }
