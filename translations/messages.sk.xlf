@@ -6,8 +6,8 @@
               Global template keys
             -->
             <trans-unit id="time_tracking">
-            <source>time_tracking</source>
-            <target>Sledovanie času</target>
+                <source>time_tracking</source>
+                <target>Sledovanie času</target>
             </trans-unit>
             <trans-unit id="browser.title">
                 <source>browser.title</source>
@@ -58,20 +58,20 @@
                 <target>Potvrdiť</target>
             </trans-unit>
             <trans-unit id="search">
-            <source>search</source>
-            <target>Hľadať</target>
+                <source>search</source>
+                <target>Hľadať</target>
             </trans-unit>
             <trans-unit id="my.profile">
-            <source>my.profile</source>
-            <target>Môj profil</target>
+                <source>my.profile</source>
+                <target>Môj profil</target>
             </trans-unit>
             <trans-unit id="update_multiple">
-            <source>update_multiple</source>
-            <target>%action% %count% záznamov?</target>
+                <source>update_multiple</source>
+                <target>%action% %count% záznamov?</target>
             </trans-unit>
             <trans-unit id="attachments">
-            <source>attachments</source>
-            <target>Prílohy</target>
+                <source>attachments</source>
+                <target>Prílohy</target>
             </trans-unit>
 
             <!--
@@ -102,8 +102,8 @@
                 <target>Zopakujte API heslo</target>
             </trans-unit>
             <trans-unit id="login_required">
-            <source>login_required</source>
-            <target>Nedostatočné oprávnenia. Presmerovať na prihlásenie?</target>
+                <source>login_required</source>
+                <target>Nedostatočné oprávnenia. Presmerovať na prihlásenie?</target>
             </trans-unit>
 
             <!--
@@ -158,8 +158,8 @@
                 <target>Používateľ</target>
             </trans-unit>
             <trans-unit id="menu.admin_team">
-            <source>menu.admin_team</source>
-            <target>Tímy</target>
+                <source>menu.admin_team</source>
+                <target>Tímy</target>
             </trans-unit>
             <trans-unit id="menu.plugin">
                 <source>menu.plugin</source>
@@ -170,12 +170,12 @@
                 <target>Nastavenia</target>
             </trans-unit>
             <trans-unit id="menu.tags">
-            <source>menu.tags</source>
-            <target>Značky</target>
+                <source>menu.tags</source>
+                <target>Značky</target>
             </trans-unit>
             <trans-unit id="menu.doctor">
-            <source>menu.doctor</source>
-            <target>Sys-Doktor</target>
+                <source>menu.doctor</source>
+                <target>Sys-Doktor</target>
             </trans-unit>
 
             <!--
@@ -254,12 +254,12 @@
                 <target>Projekt</target>
             </trans-unit>
             <trans-unit id="label.tag">
-            <source>label.tag</source>
-            <target>Značka</target>
+                <source>label.tag</source>
+                <target>Značka</target>
             </trans-unit>
             <trans-unit id="label.tags">
-            <source>label.tags</source>
-            <target>Značky</target>
+                <source>label.tags</source>
+                <target>Značky</target>
             </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
@@ -294,12 +294,12 @@
                 <target>Email</target>
             </trans-unit>
             <trans-unit id="label.team">
-            <source>label.team</source>
-            <target>Tím</target>
+                <source>label.team</source>
+                <target>Tím</target>
             </trans-unit>
             <trans-unit id="label.teamlead">
-            <source>label.teamlead</source>
-            <target>Teamleader</target>
+                <source>label.teamlead</source>
+                <target>Teamleader</target>
             </trans-unit>
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
@@ -326,8 +326,8 @@
                 <target>Uložiť</target>
             </trans-unit>
             <trans-unit id="action.reset">
-            <source>action.reset</source>
-            <target>Resetovať</target>
+                <source>action.reset</source>
+                <target>Resetovať</target>
             </trans-unit>
             <trans-unit id="action.back">
                 <source>action.back</source>
@@ -370,20 +370,20 @@
                 <target>Zobraziť menu</target>
             </trans-unit>
             <trans-unit id="label.my_teams">
-            <source>label.my_teams</source>
-            <target>Moje tímy</target>
+                <source>label.my_teams</source>
+                <target>Moje tímy</target>
             </trans-unit>
             <trans-unit id="label.my_team_projects">
-            <source>label.my_team_projects</source>
-            <target>Moje tímové &amp; projekty</target>
+                <source>label.my_team_projects</source>
+                <target>Moje tímové &amp; projekty</target>
             </trans-unit>
             <trans-unit id="label.progress">
-            <source>label.progress</source>
-            <target>Stav postupu</target>
+                <source>label.progress</source>
+                <target>Stav postupu</target>
             </trans-unit>
             <trans-unit id="label.plus_more">
-            <source>label.plus_more</source>
-            <target>+%count% viac</target>
+                <source>label.plus_more</source>
+                <target>+%count% viac</target>
             </trans-unit>
 
             <!--
@@ -422,16 +422,16 @@
                 <target>Pevne stanovená sadzba</target>
             </trans-unit>
             <trans-unit id="label.color">
-            <source>label.color</source>
-            <target>Farba</target>
+                <source>label.color</source>
+                <target>Farba</target>
             </trans-unit>
             <trans-unit id="label.replaceTags">
-            <source>label.replaceTags</source>
-            <target>Zmeniť značky</target>
+                <source>label.replaceTags</source>
+                <target>Zmeniť značky</target>
             </trans-unit>
             <trans-unit id="label.appendTags">
-            <source>label.appendTags</source>
-            <target>Pridať značky</target>
+                <source>label.appendTags</source>
+                <target>Pridať značky</target>
             </trans-unit>
 
             <!--
