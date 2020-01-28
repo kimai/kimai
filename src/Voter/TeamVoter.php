@@ -15,17 +15,13 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class TeamVoter extends AbstractVoter
 {
-    public const VIEW = 'view';
-    public const EDIT = 'edit';
-    public const DELETE = 'delete';
-
     /**
      * support rules based on the given $subject (here: Team)
      */
     public const ALLOWED_ATTRIBUTES = [
-        self::VIEW,
-        self::EDIT,
-        self::DELETE,
+        'view',
+        'edit',
+        'delete',
     ];
 
     /**

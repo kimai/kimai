@@ -17,26 +17,16 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 class UserVoter extends AbstractVoter
 {
-    public const VIEW = 'view';
-    public const EDIT = 'edit';
-    public const DELETE = 'delete';
-    public const PASSWORD = 'password';
-    public const ROLES = 'roles';
-    public const TEAMS = 'teams';
-    public const PREFERENCES = 'preferences';
-    public const API_TOKEN = 'api-token';
-    public const HOURLY_RATE = 'hourly-rate';
-
     public const ALLOWED_ATTRIBUTES = [
-        self::VIEW,
-        self::EDIT,
-        self::ROLES,
-        self::TEAMS,
-        self::PASSWORD,
-        self::DELETE,
-        self::PREFERENCES,
-        self::API_TOKEN,
-        self::HOURLY_RATE,
+        'view',
+        'edit',
+        'roles',
+        'teams',
+        'password',
+        'delete',
+        'preferences',
+        'api-token',
+        'hourly-rate',
     ];
 
     /**
@@ -71,39 +61,21 @@ class UserVoter extends AbstractVoter
             return false;
         }
 
-        $permission = '';
-
-        switch ($attribute) {
-            // special case for the UserController
-            case self::DELETE:
-                if ($subject->getId() === $user->getId()) {
-                    return false;
-                }
-
-                return $this->hasRolePermission($user, 'delete_user');
-
-            case self::VIEW:
-            case self::EDIT:
-            case self::PREFERENCES:
-            case self::PASSWORD:
-            case self::API_TOKEN:
-            case self::ROLES:
-            case self::TEAMS:
-            case self::HOURLY_RATE:
-                $permission .= $attribute;
-                break;
-
-            default:
+        if ($attribute === 'delete') {
+            if ($subject->getId() === $user->getId()) {
                 return false;
+            }
+
+            return $this->hasRolePermission($user, 'delete_user');
         }
 
-        $permission .= '_';
+        $permission = $attribute;
 
         // extend me for "team" support later on
-        if ($subject->getId() == $user->getId()) {
-            $permission .= 'own';
+        if ($subject->getId() === $user->getId()) {
+            $permission .= '_own';
         } else {
-            $permission .= 'other';
+            $permission .= '_other';
         }
 
         $permission .= '_profile';
