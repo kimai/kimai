@@ -1,6 +1,6 @@
 # ========== KIMAI ==========
-# IDE
 .idea/
+.DS_Store
 
 /bin/*
 !bin/console
@@ -39,10 +39,6 @@ templates/invoice/renderer/.~lock*
 /public/bundles/
 /vendor/
 ###< symfony/framework-bundle ###
-
-###> symfony/web-server-bundle ###
-.web-server-pid
-###< symfony/web-server-bundle ###
 
 ###> phpunit/phpunit ###
 /phpunit.xml

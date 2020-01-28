@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="es" datatype="plaintext" original="invoice-renderer.en.xlf">
+        <body>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target>Plantilla de factura</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Factura (default)</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Hoja de tiempo</target>
+            </trans-unit>
+            <trans-unit id="freelancer">
+                <source>freelancer</source>
+                <target>Autónomo</target>
+            </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target>Calc hoja de cálculo</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="export">
+                <source>export</source>
+                <target>Exportar datos</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target>Factura de empresa</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

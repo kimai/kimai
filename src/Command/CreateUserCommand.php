@@ -10,7 +10,7 @@
 namespace App\Command;
 
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,34 +21,23 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * Command used to create application user.
- */
-class CreateUserCommand extends Command
+final class CreateUserCommand extends Command
 {
     /**
      * @var UserPasswordEncoderInterface
      */
-    protected $encoder;
+    private $encoder;
     /**
-     * @var RegistryInterface
+     * @var ManagerRegistry
      */
-    protected $doctrine;
+    private $doctrine;
     /**
      * @var ValidatorInterface
      */
-    protected $validator;
+    private $validator;
 
-    /**
-     * @param UserPasswordEncoderInterface $encoder
-     * @param RegistryInterface $registry
-     * @param ValidatorInterface $validator
-     */
-    public function __construct(
-        UserPasswordEncoderInterface $encoder,
-        RegistryInterface $registry,
-        ValidatorInterface $validator
-    ) {
+    public function __construct(UserPasswordEncoderInterface $encoder, ManagerRegistry $registry, ValidatorInterface $validator)
+    {
         $this->encoder = $encoder;
         $this->doctrine = $registry;
         $this->validator = $validator;
@@ -130,14 +119,14 @@ class CreateUserCommand extends Command
             $entityManager->persist($user);
             $entityManager->flush();
             $io->success('Success! Created user: ' . $user->getUsername());
-
-            return 0;
         } catch (\Exception $ex) {
             $io->error('Failed to create user: ' . $user->getUsername());
             $io->error('Reason: ' . $ex->getMessage());
+
+            return 2;
         }
 
-        return 2;
+        return 0;
     }
 
     /**

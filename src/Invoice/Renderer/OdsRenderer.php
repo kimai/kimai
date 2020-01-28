@@ -13,7 +13,7 @@ use App\Invoice\RendererInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
+final class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
 {
     /**
      * @return string[]

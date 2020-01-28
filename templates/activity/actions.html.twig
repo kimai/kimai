@@ -28,6 +28,9 @@
         {% if is_granted('budget', activity) %}
             {% set actions = actions|merge({'report': {'url': path('admin_activity_budget', {'id': activity.id})}}) %}
         {% endif %}
+        {% if actions|length > 0 %}
+            {% set actions = actions|merge({'divider': null}) %}
+        {% endif %}
         {% if is_granted('view_other_timesheet') %}
             {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': activity.project ? activity.project.customer.id : null, 'project': activity.project ? activity.project.id : null, 'activity': activity.id})}) %}
         {% endif %}
@@ -39,12 +42,12 @@
         {% endif %}
     {% endif %}
 
-    {% if view != 'index' %}
+    {% if view != 'index' and view != 'custom' %}
         {% set actions = actions|merge({'back': path('admin_activity')}) %}
     {% endif %}
 
     {% set event = trigger('actions.activity', {'actions': actions, 'view': view, 'activity': activity}) %}
-    {% if view == 'index' %}
+    {% if view == 'index' or view == 'custom' %}
         {{ widgets.table_actions(event.payload.actions) }}
     {% else %}
         {{ widgets.entity_actions(event.payload.actions) }}

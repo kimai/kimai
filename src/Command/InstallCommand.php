@@ -136,12 +136,6 @@ final class InstallCommand extends Command
 
     protected function createDatabase(SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
-        if (!$this->connection->isConnected() && !$this->connection->connect()) {
-            throw new \Exception(
-                sprintf('Database connection could not be established: %s', $this->connection->getDatabase())
-            );
-        }
-
         if ($this->connection->isConnected()) {
             $io->note(sprintf('Database is existing and connection could be established'));
 
@@ -152,8 +146,17 @@ final class InstallCommand extends Command
             throw new \Exception('Skipped database creation, aborting installation');
         }
 
+        $options = [];
+        if ($this->connection->getDatabasePlatform()->getName() !== 'sqlite') {
+            $options = ['--if-not-exists' => true];
+        }
+
         $command = $this->getApplication()->find('doctrine:database:create');
-        $command->run(new ArrayInput([]), $output);
+        $result = $command->run(new ArrayInput($options), $output);
+
+        if (0 !== $result) {
+            throw new \Exception('Failed creating database. Check your credentials in DATABASE_URL');
+        }
     }
 
     /**

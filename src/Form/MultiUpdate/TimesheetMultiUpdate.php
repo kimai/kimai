@@ -11,6 +11,8 @@ namespace App\Form\MultiUpdate;
 
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
+use App\Form\Type\FixedRateType;
+use App\Form\Type\HourlyRateType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\TagsInputType;
 use App\Form\Type\UserType;
@@ -57,6 +59,7 @@ class TimesheetMultiUpdate extends AbstractType
         $activity = null;
         $project = null;
         $customer = null;
+        $currency = null;
         $customerCount = $this->customers->countCustomer(true);
 
         if (isset($options['data'])) {
@@ -69,6 +72,10 @@ class TimesheetMultiUpdate extends AbstractType
 
             if (null === $project && null !== $activity) {
                 $project = $activity->getProject();
+            }
+
+            if (null !== $customer) {
+                $currency = $customer->getCurrency();
             }
         }
 
@@ -189,6 +196,16 @@ class TimesheetMultiUpdate extends AbstractType
             ]);
         }
 
+        if ($options['include_rate']) {
+            $builder
+                ->add('fixedRate', FixedRateType::class, [
+                    'currency' => $currency,
+                ])
+                ->add('hourlyRate', HourlyRateType::class, [
+                    'currency' => $currency,
+                ]);
+        }
+
         $builder->add('entities', HiddenType::class, [
             'required' => false,
         ]);
@@ -226,6 +243,7 @@ class TimesheetMultiUpdate extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_multiupdate',
             'include_user' => false,
+            'include_rate' => false,
             'include_exported' => false,
         ]);
     }

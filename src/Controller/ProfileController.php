@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\Form\UserApiTokenType;
 use App\Form\UserEditType;
@@ -20,6 +21,7 @@ use App\Form\UserTeamsType;
 use App\Repository\TeamRepository;
 use App\Repository\TimesheetRepository;
 use App\Voter\UserVoter;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -209,6 +211,13 @@ class ProfileController extends AbstractController
         // we need to prepare the user preferences, which is done via an EventSubscriber
         $event = new PrepareUserEvent($profile);
         $this->dispatcher->dispatch($event);
+
+        /** @var \ArrayIterator $iterator */
+        $iterator = $profile->getPreferences()->getIterator();
+        $iterator->uasort(function (UserPreference $a, UserPreference $b) {
+            return ($a->getOrder() < $b->getOrder()) ? -1 : 1;
+        });
+        $profile->setPreferences(new ArrayCollection(iterator_to_array($iterator)));
 
         $original = [];
         foreach ($profile->getPreferences() as $preference) {

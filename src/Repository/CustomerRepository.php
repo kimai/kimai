@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Activity;
 use App\Entity\Customer;
+use App\Entity\CustomerComment;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
@@ -208,9 +209,13 @@ class CustomerRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('c')
+        $qb
+            ->select('c')
             ->from(Customer::class, 'c')
-            ->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
+        ;
+
+        $orderBy = 'c.' . $query->getOrderBy();
+        $qb->orderBy($orderBy, $query->getOrder());
 
         if (CustomerQuery::SHOW_VISIBLE == $query->getVisibility()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
@@ -260,6 +265,11 @@ class CustomerRepository extends EntityRepository
             }
         }
 
+        // this will make sure, that we do not accidentally create results with multiple rows
+        //   => which would result in a wrong LIMIT / pagination results
+        // the second group by is needed due to SQL standard (even though logically not really required for this query)
+        $qb->addGroupBy('c.id')->addGroupBy($orderBy);
+
         return $qb;
     }
 
@@ -272,16 +282,22 @@ class CustomerRepository extends EntityRepository
         return $paginator;
     }
 
-    protected function getPaginatorForQuery(CustomerQuery $query): PaginatorInterface
+    public function countCustomersForQuery(CustomerQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb
             ->resetDQLPart('select')
             ->resetDQLPart('orderBy')
+            ->resetDQLPart('groupBy')
             ->select($qb->expr()->countDistinct('c.id'))
         ;
-        $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
+    protected function getPaginatorForQuery(CustomerQuery $query): PaginatorInterface
+    {
+        $counter = $this->countCustomersForQuery($query);
         $qb = $this->getQueryBuilderForQuery($query);
 
         return new LoaderPaginator(new CustomerLoader($qb->getEntityManager()), $qb, $counter);
@@ -330,5 +346,34 @@ class CustomerRepository extends EntityRepository
             $em->rollback();
             throw $ex;
         }
+    }
+
+    public function getComments(Customer $customer): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->select('comments')
+            ->from(CustomerComment::class, 'comments')
+            ->andWhere($qb->expr()->eq('comments.customer', ':customer'))
+            ->addOrderBy('comments.pinned', 'DESC')
+            ->addOrderBy('comments.createdAt', 'DESC')
+            ->setParameter('customer', $customer)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function saveComment(CustomerComment $comment)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($comment);
+        $entityManager->flush();
+    }
+
+    public function deleteComment(CustomerComment $comment)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($comment);
+        $entityManager->flush();
     }
 }

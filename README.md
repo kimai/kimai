@@ -21,14 +21,14 @@ It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Do
 ### Requirements
 
 - PHP 7.2 or higher
-- Database (MySQL, MariaDB, SQLite)
+- Database (MySQL/MariaDB with timezone data, SQLite for development)
 - Webserver (nginx, Apache)
 - A modern browser
 - [Other libraries](https://www.kimai.org/download/)
 
 ### About
 
-This is new version of the open source timetracker Kimai. It is stable and production ready, ships
+This is the new version of the open source timetracker Kimai. It is stable and production ready, ships
 with most advanced features from Kimai 1 and many new ones, including but not limited to: 
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
@@ -59,9 +59,9 @@ You can see a rough development roadmap in the [Milestones](https://github.com/k
 It is open for changes and input from the community, your [ideas and questions](https://github.com/kevinpapst/kimai2/issues) are welcome.
 
 > Kimai 2 uses a rolling release concept for delivering updates.
-> You can upgrade Kimai at any time, you don't need to wait for the next official release.
+> You can upgrade Kimai at any time , you don't need to wait for the next official release.
 
-Release versions will be created on a regular base (approx. one release per month) and you can use these tags if you are familiar with git.
+Release versions will be created on a regular base (approx. one release per month) and you can should use these tags if you are not familiar with git.
 Every code change, whether it's a new feature or a bug fix, will be done on the master branch. 
 I have to do it this way, as I develop Kimai in my free time and want to put my effort into the software instead of backporting changes for old versions. 
 

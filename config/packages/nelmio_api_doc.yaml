@@ -21,11 +21,12 @@ nelmio_api_doc:
             - { alias: TimesheetMeta,             type: App\Entity\TimesheetMeta,                 groups: [Default, Timesheet] }
             - { alias: TimesheetCollection,       type: App\Entity\Timesheet,                     groups: [Default, Collection, Timesheet] }
             - { alias: TimesheetSubCollection,    type: App\Entity\Timesheet,                     groups: [Default, Subresource, Timesheet] }
-            - { alias: UserEntity,                type: App\Entity\User,                          groups: [Default, Entity, User] }
+            - { alias: UserEntity,                type: App\Entity\User,                          groups: [Default, Entity, User, User_Entity] }
             - { alias: UserCollection,            type: App\Entity\User,                          groups: [Default, Collection, User] }
-            - { alias: TeamEntity,                type: App\Entity\Team,                          groups: [Default, Entity, Team] }
+            - { alias: TeamEntity,                type: App\Entity\Team,                          groups: [Default, Entity, Team, Team_Entity] }
             - { alias: TeamCollection,            type: App\Entity\Team,                          groups: [Default, Collection, Team] }
             - { alias: I18nConfig,                type: App\API\Model\I18n,                       groups: [Default] }
+            - { alias: TimesheetConfig,           type: App\API\Model\TimesheetConfig,            groups: [Default] }
     areas:
         path_patterns:
             - ^/api(?!/doc)

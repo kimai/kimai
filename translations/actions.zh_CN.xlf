@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="zh-CN" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="stop">
+                <source>stop</source>
+                <target>停止</target>
+            </trans-unit>
+            <trans-unit id="back">
+                <source>back</source>
+                <target>返回</target>
+            </trans-unit>
+            <trans-unit id="edit">
+                <source>edit</source>
+                <target>编辑</target>
+            </trans-unit>
+            <trans-unit id="trash">
+                <source>trash</source>
+                <target>删除</target>
+            </trans-unit>
+            <trans-unit id="report">
+                <source>report</source>
+                <target>报告</target>
+            </trans-unit>
+            <trans-unit id="repeat">
+                <source>repeat</source>
+                <target>再次开始</target>
+            </trans-unit>
+            <trans-unit id="profile-stats">
+                <source>profile-stats</source>
+                <target>个人资料</target>
+            </trans-unit>
+            <trans-unit id="settings">
+                <source>settings</source>
+                <target>参数选择</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>时间表</target>
+            </trans-unit>
+            <trans-unit id="customer">
+                <source>customer</source>
+                <target>筛选用户</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>筛选项目</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>筛选活动</target>
+            </trans-unit>
+            <trans-unit id="copy">
+                <source>copy</source>
+                <target>创建复制</target>
+            </trans-unit>
+            <trans-unit id="home">
+                <source>home</source>
+                <target>主页</target>
+            </trans-unit>
+            <trans-unit id="create-project">
+                <source>create-project</source>
+                <target>创建项目</target>
+            </trans-unit>
+            <trans-unit id="create-activity">
+                <source>create-activity</source>
+                <target>创建活动</target>
+            </trans-unit>
+            <trans-unit id="create-timesheet">
+                <source>create-timesheet</source>
+                <target>创建时间表</target>
+            </trans-unit>
+            <trans-unit id="permissions">
+                <source>permissions</source>
+                <target>团队批准</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

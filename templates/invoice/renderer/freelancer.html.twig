@@ -4,18 +4,11 @@
 
 {% block invoice %}
 
-{% set signature = null %}
-{# You can overwrite these settings in your config/packages/local.yaml under the key "twig.globals.company" - previously '/build/images/signature.png' #}
-{% set company = company|default({signature: null}) %}
-{% if company.signature is defined and company.signature is not empty %}
-    {% set signature = company.signature %}
-{% endif %}
-
 <div class="row" id="freelancer-invoice">
     <div class="col-xs-12">
         <header>
             <address>
-                <p contenteditable="true">{{ model.template.address|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}</p>
+                <p contenteditable="true">{{ model.template.company }} &ndash; {{ model.template.address|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}</p>
             </address>
         </header>
         <article class="address">
@@ -61,7 +54,7 @@
                 {% endif %}
             </table>
         </article>
-        <article>
+        <article class="invoice-items">
             <h2>{{ model.template.title|default('timesheet'|trans({}, 'invoice-renderer')) }}</h2>
             <p contenteditable="true">
                 {{ 'label.invoice_salutation'|trans|nl2br }}
@@ -70,9 +63,9 @@
                 <thead>
                     <tr>
                         <th>{{ 'label.description'|trans }}</th>
-                        <th>{{ 'label.unit_price'|trans }}</th>
-                        <th>{{ 'label.amount'|trans }}</th>
-                        <th>{{ 'label.total_rate'|trans }}</th>
+                        <th class="text-right">{{ 'label.unit_price'|trans }}</th>
+                        <th class="text-right">{{ 'label.amount'|trans }}</th>
+                        <th class="text-right">{{ 'label.total_rate'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,11 +73,9 @@
                     {% set duration = entry.duration|duration %}
                     {% if entry.fixedRate is not null %}
                         {% set rate = entry.fixedRate %}
-                        {% set duration = entry.amount %}
-                    {% elseif entry.hourlyRate is not null %}
-                        {% set rate = entry.hourlyRate %}
+                        {% set duration = entry.amount|amount %}
                     {% else %}
-                        {% set rate = app.user.getPreferenceValue('hourly_rate') %}
+                        {% set rate = entry.hourlyRate %}
                     {% endif %}
 
                     <tr>
@@ -92,12 +83,12 @@
                             {% if entry.description is not empty %}
                                 {{ entry.description|nl2br }}
                             {% else %}
-                                {{ entry.activity.name }} / {{ entry.project.name }}
+                                {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
                             {% endif %}
                         </td>
-                        <td contenteditable="true">{{ rate|money(model.calculator.currency) }}</td>
-                        <td contenteditable="true">{{ duration }}</td>
-                        <td>{{ entry.rate|money(model.calculator.currency) }}</td>
+                        <td class="text-right text-nowrap">{{ rate|money(model.calculator.currency) }}</td>
+                        <td class="text-right text-nowrap">{{ duration }}</td>
+                        <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -119,12 +110,9 @@
         </article>
         {% if model.template.paymentTerms is not empty %}
             <article class="paymentTerms">
-                <p contenteditable="true">
+                <div contenteditable="true">
                     {{ model.template.paymentTerms|nl2br|md2html }}
-                </p>
-                {% if signature is not empty %}
-                    <img src="{{ signature }}">
-                {% endif %}
+                </div>
             </article>
         {% endif %}
         <footer class="footer">
@@ -134,6 +122,7 @@
                         <strong>{{ 'label.address'|trans }}</strong>
                     </p>
                     <p>
+                        {{ model.template.company }}<br>
                         {{ model.template.address|nl2br }}
                     </p>
                 </div>

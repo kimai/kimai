@@ -10,13 +10,14 @@
 namespace App\Export\Base;
 
 use App\Entity\MetaTableTypeInterface;
-use App\Entity\Timesheet;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Event\MetaDisplayEventInterface;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
+use App\Export\ExportItemInterface;
+use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
 use DateTime;
@@ -60,6 +61,30 @@ abstract class AbstractSpreadsheetRenderer
      * @var AuthorizationCheckerInterface
      */
     protected $voter;
+    /**
+     * @var array
+     */
+    protected $columns = [
+        'date' => [],
+        'begin' => [],
+        'end' => [],
+        'duration' => [],
+        'rate' => [],
+        'user' => [],
+        'customer' => [],
+        'project' => [],
+        'activity' => [],
+        'description' => [],
+        'exported' => [],
+        'tags' => [],
+        'hourlyRate' => [],
+        'fixedRate' => [],
+        'timesheet-meta' => [],
+        'customer-meta' => [],
+        'project-meta' => [],
+        'activity-meta' => [],
+        'user-meta' => [],
+    ];
 
     public function __construct(TranslatorInterface $translator, DateExtensions $dateExtension, EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter)
     {
@@ -71,7 +96,11 @@ abstract class AbstractSpreadsheetRenderer
 
     protected function isRenderRate(TimesheetQuery $query): bool
     {
-        return true;
+        if (null !== $query->getUser()) {
+            return $this->voter->isGranted('view_rate_own_timesheet');
+        }
+
+        return $this->voter->isGranted('view_rate_other_timesheet');
     }
 
     protected function setFormattedDateTime(Worksheet $sheet, $column, $row, ?DateTime $date)
@@ -151,73 +180,302 @@ abstract class AbstractSpreadsheetRenderer
     }
 
     /**
-     * @param Timesheet[] $timesheets
+     * @param ExportItemInterface[] $exportItems
+     * @param TimesheetQuery $query
+     * @param array $columns
+     * @return array
+     */
+    protected function getColumns(array $exportItems, TimesheetQuery $query, array $columns): array
+    {
+        $showRates = $this->isRenderRate($query);
+
+        if (isset($columns['date']) && !isset($columns['date']['render'])) {
+            $columns['date']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $this->setFormattedDate($sheet, $column, $row, $entity->getBegin());
+            };
+        }
+
+        if (isset($columns['begin']) && !isset($columns['begin']['render'])) {
+            $columns['begin']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $this->setFormattedTime($sheet, $column, $row, $entity->getBegin());
+            };
+        }
+
+        if (isset($columns['end']) && !isset($columns['end']['render'])) {
+            $columns['end']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $this->setFormattedTime($sheet, $column, $row, $entity->getEnd());
+            };
+        }
+
+        if (isset($columns['duration']) && !isset($columns['duration']['render'])) {
+            $columns['duration']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $this->setDuration($sheet, $column, $row, $entity->getDuration());
+            };
+        }
+
+        if ($showRates && isset($columns['rate']) && !isset($columns['rate']['render'])) {
+            $columns['rate']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $currency = '';
+                if (null !== $entity->getProject()) {
+                    $currency = $entity->getProject()->getCustomer()->getCurrency();
+                }
+                $this->setRate($sheet, $column, $row, $entity->getRate(), $currency);
+            };
+        }
+
+        if (isset($columns['user']) && !isset($columns['user']['render'])) {
+            $columns['user']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $user = '';
+                if (null !== $entity->getUser()) {
+                    $user = $entity->getUser()->getDisplayName();
+                }
+                $sheet->setCellValueByColumnAndRow($column, $row, $user);
+            };
+        }
+
+        if (isset($columns['customer']) && !isset($columns['customer']['render'])) {
+            $columns['customer']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $customer = '';
+                if (null !== $entity->getProject()) {
+                    $customer = $entity->getProject()->getCustomer()->getName();
+                }
+                $sheet->setCellValueByColumnAndRow($column, $row, $customer);
+            };
+        }
+
+        if (isset($columns['project']) && !isset($columns['project']['render'])) {
+            $columns['project']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $project = '';
+                if (null !== $entity->getProject()) {
+                    $project = $entity->getProject()->getName();
+                }
+                $sheet->setCellValueByColumnAndRow($column, $row, $project);
+            };
+        }
+
+        if (isset($columns['activity']) && !isset($columns['activity']['render'])) {
+            $columns['activity']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $activity = '';
+                if (null !== $entity->getActivity()) {
+                    $activity = $entity->getActivity()->getName();
+                }
+                $sheet->setCellValueByColumnAndRow($column, $row, $activity);
+            };
+        }
+
+        if (isset($columns['description']) && !isset($columns['description']['render'])) {
+            $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $sheet->setCellValueByColumnAndRow($column, $row, $entity->getDescription());
+            };
+        }
+
+        if (isset($columns['exported']) && !isset($columns['exported']['render'])) {
+            $columns['exported']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $exported = $entity->isExported() ? 'entryState.exported' : 'entryState.not_exported';
+                $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans($exported));
+            };
+        }
+
+        if (isset($columns['tags']) && !isset($columns['tags']['render'])) {
+            $columns['tags']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $sheet->setCellValueByColumnAndRow($column, $row, implode(',', $entity->getTagsAsArray()));
+            };
+        }
+
+        if ($showRates && isset($columns['hourlyRate']) && !isset($columns['hourlyRate']['render'])) {
+            $columns['hourlyRate']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $currency = '';
+                if (null !== $entity->getProject()) {
+                    $currency = $entity->getProject()->getCustomer()->getCurrency();
+                }
+                $this->setRate($sheet, $column, $row, $entity->getHourlyRate(), $currency);
+            };
+        }
+
+        if ($showRates && isset($columns['fixedRate']) && !isset($columns['fixedRate']['render'])) {
+            $columns['fixedRate']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $currency = '';
+                if (null !== $entity->getProject()) {
+                    $currency = $entity->getProject()->getCustomer()->getCurrency();
+                }
+                $this->setRate($sheet, $column, $row, $entity->getFixedRate(), $currency);
+            };
+        }
+
+        if (isset($columns['timesheet-meta'])) {
+            $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT));
+
+            $columns['timesheet-meta'] = [
+                'header' => function (Worksheet $sheet, $row, $column) use ($timesheetMetaFields) {
+                    foreach ($timesheetMetaFields as $metaField) {
+                        $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
+                    }
+
+                    return count($timesheetMetaFields);
+                },
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($timesheetMetaFields) {
+                    foreach ($timesheetMetaFields as $metaField) {
+                        $metaFieldValue = '';
+                        $metaField = $entity->getMetaField($metaField->getName());
+                        if (null !== $metaField) {
+                            $metaFieldValue = $metaField->getValue();
+                        }
+                        $sheet->setCellValueByColumnAndRow($column++, $row, $metaFieldValue);
+                    }
+
+                    return count($timesheetMetaFields);
+                }
+            ];
+        }
+
+        if (isset($columns['customer-meta'])) {
+            /** @var CustomerQuery $customerQuery */
+            $customerQuery = $query->copyTo(new CustomerQuery());
+            $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($customerQuery, CustomerMetaDisplayEvent::EXPORT));
+
+            $columns['customer-meta'] = [
+                'header' => function (Worksheet $sheet, $row, $column) use ($customerMetaFields) {
+                    foreach ($customerMetaFields as $metaField) {
+                        $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
+                    }
+
+                    return count($customerMetaFields);
+                },
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($customerMetaFields) {
+                    foreach ($customerMetaFields as $metaField) {
+                        $metaFieldValue = '';
+                        if (null !== $entity->getProject()) {
+                            $metaField = $entity->getProject()->getCustomer()->getMetaField($metaField->getName());
+                            if (null !== $metaField) {
+                                $metaFieldValue = $metaField->getValue();
+                            }
+                        }
+                        $sheet->setCellValueByColumnAndRow($column++, $row, $metaFieldValue);
+                    }
+
+                    return count($customerMetaFields);
+                }
+            ];
+        }
+
+        if (isset($columns['project-meta'])) {
+            $projectMetaFields = $this->findMetaColumns(new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT));
+            $columns['project-meta'] = [
+                'header' => function (Worksheet $sheet, $row, $column) use ($projectMetaFields) {
+                    foreach ($projectMetaFields as $metaField) {
+                        $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
+                    }
+
+                    return count($projectMetaFields);
+                },
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($projectMetaFields) {
+                    foreach ($projectMetaFields as $metaField) {
+                        $metaFieldValue = '';
+                        if (null !== $entity->getProject()) {
+                            $metaField = $entity->getProject()->getMetaField($metaField->getName());
+                            if (null !== $metaField) {
+                                $metaFieldValue = $metaField->getValue();
+                            }
+                        }
+                        $sheet->setCellValueByColumnAndRow($column++, $row, $metaFieldValue);
+                    }
+
+                    return count($projectMetaFields);
+                }
+            ];
+        }
+
+        if (isset($columns['activity-meta'])) {
+            $activityMetaFields = $this->findMetaColumns(new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT));
+            $columns['activity-meta'] = [
+                'header' => function (Worksheet $sheet, $row, $column) use ($activityMetaFields) {
+                    foreach ($activityMetaFields as $metaField) {
+                        $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
+                    }
+
+                    return count($activityMetaFields);
+                },
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($activityMetaFields) {
+                    foreach ($activityMetaFields as $metaField) {
+                        $metaFieldValue = '';
+                        if (null !== $entity->getActivity()) {
+                            $metaField = $entity->getActivity()->getMetaField($metaField->getName());
+                            if (null !== $metaField) {
+                                $metaFieldValue = $metaField->getValue();
+                            }
+                        }
+                        $sheet->setCellValueByColumnAndRow($column++, $row, $metaFieldValue);
+                    }
+
+                    return count($activityMetaFields);
+                }
+            ];
+        }
+
+        if (isset($columns['user-meta'])) {
+            $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT);
+            $this->dispatcher->dispatch($event);
+            $userPreferences = $event->getPreferences();
+            $columns['user-meta'] = [
+                'header' => function (Worksheet $sheet, $row, $column) use ($userPreferences) {
+                    foreach ($userPreferences as $metaField) {
+                        $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
+                    }
+
+                    return count($userPreferences);
+                },
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($userPreferences) {
+                    foreach ($userPreferences as $preference) {
+                        $metaFieldValue = '';
+                        if (null !== $entity->getUser()) {
+                            $metaField = $entity->getUser()->getPreference($preference->getName());
+                            if (null !== $metaField) {
+                                $metaFieldValue = $metaField->getValue();
+                            }
+                        }
+                        $sheet->setCellValueByColumnAndRow($column++, $row, $metaFieldValue);
+                    }
+
+                    return count($userPreferences);
+                }
+            ];
+        }
+
+        if (!$showRates) {
+            $removes = ['rate', 'fixedRate', 'hourlyRate'];
+            foreach ($removes as $removeMe) {
+                if (array_key_exists($removeMe, $columns)) {
+                    unset($columns[$removeMe]);
+                }
+            }
+        }
+
+        return $columns;
+    }
+
+    /**
+     * @param ExportItemInterface[] $exportItems
      * @param TimesheetQuery $query
      * @return Spreadsheet
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    protected function fromArrayToSpreadsheet(array $timesheets, TimesheetQuery $query): Spreadsheet
+    protected function fromArrayToSpreadsheet(array $exportItems, TimesheetQuery $query): Spreadsheet
     {
-        $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT));
-        $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::EXPORT));
-        $projectMetaFields = $this->findMetaColumns(new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT));
-        $activityMetaFields = $this->findMetaColumns(new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT));
-
-        $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT);
-        $this->dispatcher->dispatch($event);
-        $userPreferences = $event->getPreferences();
-
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        $showRates = $this->isRenderRate($query);
         $recordsHeaderColumn = 1;
         $recordsHeaderRow = 1;
 
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.date'));
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.begin'));
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.end'));
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.duration'));
-        if ($showRates) {
-            $sheet->setCellValueByColumnAndRow(
-                $recordsHeaderColumn++,
-                $recordsHeaderRow,
-                $this->translator->trans('label.rate')
-            );
-        }
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.user'));
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.customer'));
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.project'));
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.activity'));
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.description'));
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.exported'));
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.tags'));
-        if ($showRates) {
-            $sheet->setCellValueByColumnAndRow(
-                $recordsHeaderColumn++,
-                $recordsHeaderRow,
-                $this->translator->trans('label.hourlyRate')
-            );
-            $sheet->setCellValueByColumnAndRow(
-                $recordsHeaderColumn++,
-                $recordsHeaderRow,
-                $this->translator->trans('label.fixedRate')
-            );
-        }
-        foreach ($timesheetMetaFields as $metaField) {
-            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($metaField->getLabel()));
-        }
-        foreach ($customerMetaFields as $metaField) {
-            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($metaField->getLabel()));
-        }
-        foreach ($projectMetaFields as $metaField) {
-            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($metaField->getLabel()));
-        }
-        foreach ($activityMetaFields as $metaField) {
-            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($metaField->getLabel()));
-        }
-        foreach ($userPreferences as $preference) {
-            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($preference->getLabel()));
+        $columns = $this->getColumns($exportItems, $query, $this->columns);
+
+        foreach ($columns as $label => $settings) {
+            if (isset($settings['header'])) {
+                $amount = $settings['header']($sheet, $recordsHeaderRow, $recordsHeaderColumn);
+                $recordsHeaderColumn += $amount;
+            } else {
+                $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.' . $label));
+            }
         }
 
         $entryHeaderRow = $recordsHeaderRow + 1;
@@ -225,111 +483,22 @@ abstract class AbstractSpreadsheetRenderer
         $durationColumn = null;
         $rateColumn = null;
 
-        foreach ($timesheets as $timesheet) {
+        foreach ($exportItems as $exportItem) {
             $entryHeaderColumn = 1;
 
-            $customerCurrency = $timesheet->getProject()->getCustomer()->getCurrency();
-            $exported = $timesheet->isExported() ? 'entryState.exported' : 'entryState.not_exported';
-
-            $this->setFormattedDate($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getBegin());
-            $entryHeaderColumn++;
-
-            $this->setFormattedTime($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getBegin());
-            $entryHeaderColumn++;
-
-            $this->setFormattedTime($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getEnd());
-            $entryHeaderColumn++;
-
-            $this->setDuration($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getDuration());
-            $durationColumn = $entryHeaderColumn;
-            $entryHeaderColumn++;
-
-            if ($showRates) {
-                $this->setRate($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getRate(), $customerCurrency);
-                $rateColumn = $entryHeaderColumn;
-                $entryHeaderColumn++;
-            }
-
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getUser()->getDisplayName());
-            $entryHeaderColumn++;
-
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getProject()->getCustomer()->getName());
-            $entryHeaderColumn++;
-
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getProject()->getName());
-            $entryHeaderColumn++;
-
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getActivity()->getName());
-            $entryHeaderColumn++;
-
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getDescription());
-            $entryHeaderColumn++;
-
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $this->translator->trans($exported));
-            $entryHeaderColumn++;
-
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, implode(',', $timesheet->getTagsAsArray()));
-            $entryHeaderColumn++;
-
-            if ($showRates) {
-                $this->setRate(
-                    $sheet,
-                    $entryHeaderColumn,
-                    $entryHeaderRow,
-                    $timesheet->getHourlyRate(),
-                    $customerCurrency
-                );
-                $entryHeaderColumn++;
-
-                $this->setRate(
-                    $sheet,
-                    $entryHeaderColumn,
-                    $entryHeaderRow,
-                    $timesheet->getFixedRate(),
-                    $customerCurrency
-                );
-                $entryHeaderColumn++;
-            }
-
-            foreach ($timesheetMetaFields as $metaField) {
-                $metaField = $timesheet->getMetaField($metaField->getName());
-                $metaFieldValue = '';
-                if (null !== $metaField) {
-                    $metaFieldValue = $metaField->getValue();
+            foreach ($columns as $label => $settings) {
+                if ($label === 'duration') {
+                    $durationColumn = $entryHeaderColumn;
+                } elseif ($label === 'rate') {
+                    $rateColumn = $entryHeaderColumn;
                 }
-                $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
-            }
-            foreach ($customerMetaFields as $metaField) {
-                $metaField = $timesheet->getProject()->getCustomer()->getMetaField($metaField->getName());
-                $metaFieldValue = '';
-                if (null !== $metaField) {
-                    $metaFieldValue = $metaField->getValue();
+
+                if (!array_key_exists('render', $settings) || !is_callable($settings['render'])) {
+                    throw new \RuntimeException(sprintf('Missing renderer for export column %s', $label));
                 }
-                $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
-            }
-            foreach ($projectMetaFields as $metaField) {
-                $metaField = $timesheet->getProject()->getMetaField($metaField->getName());
-                $metaFieldValue = '';
-                if (null !== $metaField) {
-                    $metaFieldValue = $metaField->getValue();
-                }
-                $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
-            }
-            foreach ($activityMetaFields as $metaField) {
-                $metaField = $timesheet->getActivity()->getMetaField($metaField->getName());
-                $metaFieldValue = '';
-                if (null !== $metaField) {
-                    $metaFieldValue = $metaField->getValue();
-                }
-                $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
-            }
-            foreach ($userPreferences as $preference) {
-                $metaField = $timesheet->getUser()->getPreference($preference->getName());
-                $metaFieldValue = '';
-                if (null !== $metaField) {
-                    $metaFieldValue = $metaField->getValue();
-                }
-                $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
+
+                $amount = $settings['render']($sheet, $entryHeaderRow, $entryHeaderColumn, $exportItem);
+                $entryHeaderColumn += (null === $amount) ? 1 : $amount;
             }
 
             $entryHeaderRow++;
@@ -357,15 +526,15 @@ abstract class AbstractSpreadsheetRenderer
     }
 
     /**
-     * @param Timesheet[] $timesheets
+     * @param ExportItemInterface[] $exportItems
      * @param TimesheetQuery $query
      * @return Response
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function render(array $timesheets, TimesheetQuery $query): Response
+    public function render(array $exportItems, TimesheetQuery $query): Response
     {
-        $spreadsheet = $this->fromArrayToSpreadsheet($timesheets, $query);
+        $spreadsheet = $this->fromArrayToSpreadsheet($exportItems, $query);
         $filename = $this->saveSpreadsheet($spreadsheet);
 
         return $this->getFileResponse($filename, 'kimai-export' . $this->getFileExtension());

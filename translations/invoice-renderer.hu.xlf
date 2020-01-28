@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="hu" datatype="plaintext" original="invoice-renderer.en.xlf">
+        <body>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target>Számlaformátum</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Számla (alapértelmezett)</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Rögzített órák</target>
+            </trans-unit>
+            <trans-unit id="freelancer">
+                <source>freelancer</source>
+                <target>Szabadúszó</target>
+            </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target>Calc táblázat</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target>Excel táblázat</target>
+            </trans-unit>
+            <trans-unit id="export">
+                <source>export</source>
+                <target>Adat exportálás</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target>Céges számla</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -32,9 +32,13 @@ class MarkdownTest extends TestCase
 <h1 id="test">test</h1>
 <p>asdfasdfa</p>
 <pre><code>ssdfsdf</code></pre>
+<p><a href="http://example.com/foo-bar.html" target="_blank">http://example.com/foo-bar.html</a><br />
+<a href="file:///home/kimai/images/beautiful-flower.png" target="_blank">file:///home/kimai/images/beautiful-flower.png</a></p>
 <p>sdfsdf <a href="#test-1">asdfasdf</a> asdfasdf</p>
 <h1 id="test-1">test</h1>
-<p>aasdfasdf</p>
+<p>aasdfasdf<br />
+1111<br />
+222</p>
 EOT;
 
         $markdown = <<<EOT
@@ -48,10 +52,15 @@ asdfasdfa
 
     ssdfsdf
     
+http://example.com/foo-bar.html
+file:///home/kimai/images/beautiful-flower.png
+
 sdfsdf [asdfasdf](#test-1) asdfasdf
 
 # test
 aasdfasdf
+1111
+222
 EOT;
         $this->assertEquals($html, $sut->toHtml($markdown));
     }

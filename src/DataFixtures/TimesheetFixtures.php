@@ -35,8 +35,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
     public const MIN_TIMESHEETS_PER_USER = 50;
     public const MAX_TIMESHEETS_PER_USER = 500;
     public const MAX_TIMESHEETS_TOTAL = 5000;
-    public const MIN_RUNNING_TIMESHEETS_PER_USER = 0;
-    public const MAX_RUNNING_TIMESHEETS_PER_USER = 3;
+    public const MAX_RUNNING_TIMESHEETS_PER_USER = 2;
     public const TIMERANGE_DAYS = 1095; // 3 years
     public const TIMERANGE_RUNNING = 1047; // in minutes = 17:45 hours
     public const MIN_MINUTES_PER_ENTRY = 15;
@@ -47,7 +46,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
     public const BATCH_SIZE = 100;
 
     /**
-     * @return array
+     * @return class-string[]
      */
     public function getDependencies()
     {
@@ -79,7 +78,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
             // random amount of timesheet entries for every user
             $timesheetForUser = rand(self::MIN_TIMESHEETS_PER_USER, self::MAX_TIMESHEETS_PER_USER);
             for ($i = 1; $i <= $timesheetForUser; $i++) {
-                if ($all > self::MAX_TIMESHEETS_TOTAL) {
+                if ($all > self::MAX_TIMESHEETS_TOTAL && $i > self::MIN_TIMESHEETS_PER_USER) {
                     break;
                 }
 
@@ -109,7 +108,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
             }
 
             // create active recordings for test user
-            $activeEntries = rand(self::MIN_RUNNING_TIMESHEETS_PER_USER, self::MAX_RUNNING_TIMESHEETS_PER_USER);
+            $activeEntries = rand(0, self::MAX_RUNNING_TIMESHEETS_PER_USER);
             for ($i = 0; $i < $activeEntries; $i++) {
                 $entry = $this->createTimesheetEntry(
                     $user,
@@ -144,12 +143,12 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
-     * @return Tag[]
+     * @return array<int|string, Tag>
      */
-    protected function getAllTags(ObjectManager $manager)
+    protected function getAllTags(ObjectManager $manager): array
     {
         $all = [];
-        /* @var Tag[] $entries */
+        /** @var Tag[] $entries */
         $entries = $manager->getRepository(Tag::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
@@ -160,12 +159,12 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
-     * @return User[]
+     * @return array<int|string, User>
      */
-    protected function getAllUsers(ObjectManager $manager)
+    protected function getAllUsers(ObjectManager $manager): array
     {
         $all = [];
-        /* @var User[] $entries */
+        /** @var User[] $entries */
         $entries = $manager->getRepository(User::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
@@ -176,12 +175,12 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
-     * @return Project[]
+     * @return array<int|string, Project>
      */
-    protected function getAllProjects(ObjectManager $manager)
+    protected function getAllProjects(ObjectManager $manager): array
     {
         $all = [];
-        /* @var Project[] $entries */
+        /** @var Project[] $entries */
         $entries = $manager->getRepository(Project::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
@@ -192,12 +191,12 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
-     * @return Activity[]
+     * @return array<int|string, Activity>
      */
-    protected function getAllActivities(ObjectManager $manager)
+    protected function getAllActivities(ObjectManager $manager): array
     {
         $all = [];
-        /* @var Activity[] $entries */
+        /** @var Activity[] $entries */
         $entries = $manager->getRepository(Activity::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;

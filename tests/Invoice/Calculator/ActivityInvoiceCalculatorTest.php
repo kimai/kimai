@@ -18,6 +18,7 @@ use App\Entity\User;
 use App\Invoice\Calculator\ActivityInvoiceCalculator;
 use App\Invoice\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
+use App\Tests\Invoice\DebugFormatter;
 
 /**
  * @covers \App\Invoice\Calculator\ActivityInvoiceCalculator
@@ -30,6 +31,33 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
     public function testEmptyModel()
     {
         $this->assertEmptyModel(new ActivityInvoiceCalculator());
+    }
+
+    public function testExceptionNoActivity()
+    {
+        $this->expectException('Exception');
+        $this->expectExceptionMessage('Cannot work with invoice items that do not have an activity');
+        $timesheet = new Timesheet();
+
+        $sut = new ActivityInvoiceCalculator();
+        $model = $this->getEmptyModel();
+        $model->addEntries([$timesheet]);
+        $sut->setModel($model);
+        $sut->getEntries();
+    }
+
+    public function testExceptionNoId()
+    {
+        $this->expectException('Exception');
+        $this->expectExceptionMessage('Cannot handle un-persisted activities');
+        $timesheet = new Timesheet();
+        $timesheet->setActivity(new Activity());
+
+        $sut = new ActivityInvoiceCalculator();
+        $model = $this->getEmptyModel();
+        $model->addEntries([$timesheet]);
+        $sut->setModel($model);
+        $sut->getEntries();
     }
 
     public function testWithMultipleEntries()
@@ -105,7 +133,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
         $query = new InvoiceQuery();
         $query->setActivity($activity1);
 
-        $model = new InvoiceModel();
+        $model = new InvoiceModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->setEntries($entries);

@@ -18,22 +18,14 @@ use App\Entity\User;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
+use App\Tests\Invoice\DebugFormatter;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractCalculatorTest extends TestCase
 {
     protected function assertEmptyModel(CalculatorInterface $sut)
     {
-        $customer = new Customer();
-        $template = new InvoiceTemplate();
-        $query = new InvoiceQuery();
-
-        $model = new InvoiceModel();
-        $model->setCustomer($customer);
-        $model->setTemplate($template);
-        $model->setQuery($query);
-
-        $sut->setModel($model);
+        $sut->setModel($this->getEmptyModel());
 
         $this->assertEquals(0, $sut->getTotal());
         $this->assertEquals(0, $sut->getVat());
@@ -42,6 +34,20 @@ abstract class AbstractCalculatorTest extends TestCase
         $this->assertEquals(0, $sut->getTimeWorked());
         $this->assertEquals(0, count($sut->getEntries()));
         $this->assertEquals(0, $sut->getTax());
+    }
+
+    protected function getEmptyModel()
+    {
+        $customer = new Customer();
+        $template = new InvoiceTemplate();
+        $query = new InvoiceQuery();
+
+        $model = new InvoiceModel(new DebugFormatter());
+        $model->setCustomer($customer);
+        $model->setTemplate($template);
+        $model->setQuery($query);
+
+        return $model;
     }
 
     protected function assertDescription(CalculatorInterface $sut, $addProject = false, $addActivity = false)
@@ -80,7 +86,7 @@ abstract class AbstractCalculatorTest extends TestCase
             ->setActivity($activity)
             ->setProject($project);
 
-        $model = new InvoiceModel();
+        $model = new InvoiceModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->setEntries([$timesheet]);

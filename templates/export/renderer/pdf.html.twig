@@ -63,7 +63,7 @@
     </td>
     <td align="right">
     {% if kimai_context.branding.company is not empty %}
-        {{ kimai_context.branding.company }} &ndash; {{ now|date_full }}
+        {{ kimai_context.branding.company|raw }} &ndash; {{ now|date_full }}
     {% else %}
         {{ 'export.date_copyright'|trans({'%date%': now|date_full, '%kimai%': '<a href="' ~ constant('App\\Constants::HOMEPAGE') ~ '">' ~ constant('App\\Constants::SOFTWARE') ~ '</a>'})|raw }}
     {% endif %}
@@ -182,7 +182,7 @@ mpdf-->
                 <td>{{ entry.user.displayName }}</td>
             {% endif %}
             <td>
-                {{ entry.project.customer.name }} - {{ entry.project.name }} - {{ entry.activity.name }}
+                {{ entry.project.customer.name }} - {{ entry.project.name }}{% if entry.activity is not null %} - {{ entry.activity.name }}{% endif %}
                 {% if entry.description is not empty %}
                     <br>
                     <i>{{ entry.description|escape|desc2html }}</i>
@@ -209,7 +209,7 @@ mpdf-->
         {% endif %}
         <td class="totals duration">{{ duration|duration }}</td>
         {% if showRateColumn %}
-        <td class="totals cost">{{ rate|money(currency) }}</td>
+        <td class="totals cost">{% if currency is not null %}{{ rate|money(currency) }}{% endif %}</td>
         {% endif %}
     </tr>
     </tbody>

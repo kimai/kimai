@@ -54,7 +54,6 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
             default:
                 throw new \Exception(sprintf('Unknown role "%s"', $role));
-                break;
         }
 
         return $client;

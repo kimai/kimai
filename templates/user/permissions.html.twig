@@ -7,12 +7,12 @@
 {% set columns = {
     'label.name': 'alwaysVisible',
 } %}
-{% set canEditPedrmissions = is_granted('role_permissions') %}
+{% set canEditPermissions = is_granted('role_permissions') %}
 {% for role in roles %}
     {% set options = {'class': 'alwaysVisible text-center'} %}
-    {% if canEditPedrmissions and role.name not in system_roles|keys %}
+    {% if canEditPermissions and role.name not in system_roles|keys %}
         {% set widget %}
-        &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id}) }}" class="confirmation-link" data-question="confirm.delete" data-msg-error="action.delete.error" data-msg-success="action.delete.success">{{ widgets.icon('trash') }}</a>
+        &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id}) }}" class="confirmation-link" data-question="confirm.delete">{{ widgets.icon('trash') }}</a>
         {% endset %}
         {% set options = options|merge({'html_after': widget}) %}
     {% endif %}
@@ -28,22 +28,31 @@
 
 {% block main %}
     {{ tables.datatable_header(tableName, columns, null, {'translationPrefix': ''}) }}
+    
+    {% set colspan = 1 + (roles|length) %}
 
-    {% for permission in permissions|sort %}
-        <tr>
-            <td>{{ permission }}</td>
-            {% for role in roles %}
-                {% set value = manager.permission(role.name, permission) %}
-                <td class="text-center">
-                    {# see RolePermissionManager for this special case #}
-                    {% if (permission != 'role_permissions' and permission != 'view_user') or role.name != 'ROLE_SUPER_ADMIN' %}
-                        <a href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': (value ? '0' : '1')}) }}">{{ widgets.label_boolean(value) }}</a>
-                    {% else %}
-                        {{ widgets.label_boolean(value) }}
-                    {% endif %}
-                </td>
+    {% for title, perms in sorted %}
+        {% if perms|length > 0 %}
+            <tr class="summary info">
+                <td colspan="{{ colspan }}">{{ title }}</td>
+            </tr>
+            {% for permission in perms|sort %}
+                <tr>
+                    <td>{{ permission }}</td>
+                    {% for role in roles %}
+                        {% set value = manager.permission(role.name, permission) %}
+                        <td class="text-center">
+                            {# see RolePermissionManager for this special case #}
+                            {% if (permission != 'role_permissions' and permission != 'view_user') or role.name != 'ROLE_SUPER_ADMIN' %}
+                                <a href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': (value ? '0' : '1')}) }}">{{ widgets.label_boolean(value) }}</a>
+                            {% else %}
+                                {{ widgets.label_boolean(value) }}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
             {% endfor %}
-        </tr>
+        {% endif %}
     {% endfor %}
 
     {{ tables.data_table_footer(permissions) }}
@@ -53,8 +62,8 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        document.addEventListener('kimai.userRoleUpdate', function() {
-            document.location.reload();
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('kimai.userRoleUpdate');
         });
     </script>
 {% endblock %}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="ko" datatype="plaintext" original="flashmessages.en.xlf">
+        <body>
+            <trans-unit id="warning">
+                <source>warning</source>
+                <target state="translated">경고 </target>
+            </trans-unit>
+            <trans-unit id="timesheet.stop.success">
+                <source>timesheet.stop.success</source>
+                <target state="translated">시간 기록을 멈춥니다.</target>
+            </trans-unit>
+            <trans-unit id="timesheet.stop.error">
+                <source>timesheet.stop.error</source>
+                <target state="translated">시간 기록을 멈출 수 없습니다. </target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.success">
+                <source>timesheet.start.success</source>
+                <target state="translated">시간 기록을 시작합니다.</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.error">
+                <source>timesheet.start.error</source>
+                <target state="translated">시간 기록을 시작할 수 없습니다. </target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.exceeded_limit">
+                <source>timesheet.start.exceeded_limit</source>
+                <target state="translated">활성 시간 기록의 한계에 도달했습니다. 최소 한 개 이상의 활성 중인 시간 기록을 중지하십시오.</target>
+            </trans-unit>
+            <trans-unit id="timesheet.locked.warning">
+                <source>timesheet.locked.warning</source>
+                <target state="translated">완료된 기록을 편집하고 있습니다. </target>
+            </trans-unit>
+            <trans-unit id="action.update.success">
+                <source>action.update.success</source>
+                <target state="translated">변경사항 저장하기</target>
+            </trans-unit>
+            <trans-unit id="action.update.error">
+                <source>action.update.error</source>
+                <target state="translated">변경사항을 저장할 수 없습니다: %reason%</target>
+            </trans-unit>
+            <trans-unit id="action.delete.success">
+                <source>action.delete.success</source>
+                <target state="translated">등록이 지워짐</target>
+            </trans-unit>
+            <trans-unit id="action.delete.error">
+                <source>action.delete.error</source>
+                <target state="translated">등록을 지울 수 없습니다: %reason%</target>
+            </trans-unit>
+            <trans-unit id="invoice.first_template">
+                <source>invoice.first_template</source>
+                <target state="translated">계속 진행하기 전에 첫 번째 템플릿 인보이스를 만들어야 합니다.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

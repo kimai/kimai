@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * A tracking-mode defines the behaviour of the user timesheet.
  * It is NOT used for the timesheet administration.
+ *
+ * @internal do not implement this interface in your bundle, but rather drop a PR to add it to Kimai core
  */
 interface TrackingModeInterface
 {
@@ -23,9 +25,9 @@ interface TrackingModeInterface
      * before form data is rendered/processed.
      *
      * @param Timesheet $timesheet
-     * @param Request $request
+     * @param Request|null $request
      */
-    public function create(Timesheet $timesheet, Request $request): void;
+    public function create(Timesheet $timesheet, ?Request $request = null): void;
 
     /**
      * Whether the user can edit the begin datetime.

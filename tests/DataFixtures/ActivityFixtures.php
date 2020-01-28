@@ -11,9 +11,8 @@ namespace App\Tests\DataFixtures;
 
 use App\Entity\Activity;
 use App\Entity\Project;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
@@ -37,6 +36,10 @@ final class ActivityFixtures extends Fixture
      * @var callable
      */
     private $callback;
+    /**
+     * @var Project[]
+     */
+    private $projects = [];
 
     /**
      * Will be called prior to persisting the object.
@@ -81,14 +84,27 @@ final class ActivityFixtures extends Fixture
     }
 
     /**
+     * @param Project[] $projects
+     * @return ActivityFixtures
+     */
+    public function setProjects(array $projects): ActivityFixtures
+    {
+        $this->projects = $projects;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
-        $projects = $this->getAllProjects($manager);
+        $projects = $this->projects;
+        if (empty($projects)) {
+            $projects = $this->getAllProjects($manager);
+        }
         $faker = Factory::create();
 
-        // random amount of timesheet entries for every user
         for ($i = 0; $i < $this->amount; $i++) {
             $project = null;
             if (false === $this->isGlobal) {
@@ -117,12 +133,12 @@ final class ActivityFixtures extends Fixture
 
     /**
      * @param ObjectManager $manager
-     * @return Project[]
+     * @return array<int|string, Project>
      */
-    protected function getAllProjects(ObjectManager $manager)
+    protected function getAllProjects(ObjectManager $manager): array
     {
         $all = [];
-        /* @var User[] $entries */
+        /** @var Project[] $entries */
         $entries = $manager->getRepository(Project::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;

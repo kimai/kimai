@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="system-configuration.en.xlf">
+        <body>
+            <trans-unit id="title">
+                <source>title</source>
+                <target>Settings</target>
+            </trans-unit>
+            <trans-unit id="subtitle">
+                <source>subtitle</source>
+                <target>Change global configurations of your time-tracker</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Timesheet</target>
+            </trans-unit>
+            <trans-unit id="form_customer">
+                <source>form_customer</source>
+                <target>Create customer—default values</target>
+            </trans-unit>
+            <trans-unit id="form_user">
+                <source>form_user</source>
+                <target>User—default values</target>
+            </trans-unit>
+            <trans-unit id="theme">
+                <source>theme</source>
+                <target>Theme</target>
+            </trans-unit>
+            <trans-unit id="calendar">
+                <source>calendar</source>
+                <target>Calendar</target>
+            </trans-unit>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target>Allow markdown-formattings in descriptions and comments</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode">
+                <source>label.timesheet.mode</source>
+                <target>Timetracking mode</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_default">
+                <source>label.timesheet.mode_default</source>
+                <target>[Default] start and end times can be edited</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_only">
+                <source>label.timesheet.mode_duration_only</source>
+                <target>[Duration] replaces the end time with a duration input-field</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+                <source>label.timesheet.mode_duration_fixed_begin</source>
+                <target>[Duration] configurable fixed start-time, only duration can be changed</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_punch">
+                <source>label.timesheet.mode_punch</source>
+                <target>[Time-clock] user can start and stop records, but not edit the times or duration</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_future_times">
+                <source>label.timesheet.rules.allow_future_times</source>
+                <target>Allow time entries in the future</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.hard_limit">
+                <source>label.timesheet.active_entries.hard_limit</source>
+                <target>Permitted number of simultaneously running time entries</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.soft_limit">
+                <source>label.timesheet.active_entries.soft_limit</source>
+                <target>Number of running time entries from which a warning is displayed</target>
+            </trans-unit>
+            <trans-unit id="label.theme.autocomplete_chars">
+                <source>label.theme.autocomplete_chars</source>
+                <target>Minimum number of letters to start auto-completion</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.week_numbers">
+                <source>label.calendar.week_numbers</source>
+                <target>Display week numbers</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.weekends">
+                <source>label.calendar.weekends</source>
+                <target>Display weekends</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.begin">
+                <source>label.calendar.businessHours.begin</source>
+                <target>Start of normal business hours (will be highlighted)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.end">
+                <source>label.calendar.businessHours.end</source>
+                <target>End of normal business hours (will be highlighted)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.begin">
+                <source>label.calendar.visibleHours.begin</source>
+                <target>Start of visible time range</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.end">
+                <source>label.calendar.visibleHours.end</source>
+                <target>End of visible time range</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.slot_duration">
+                <source>label.calendar.slot_duration</source>
+                <target>Slot duration for week- and day view (format: hh:mm:ss)</target>
+            </trans-unit>
+            <trans-unit id="branding">
+                <source>branding</source>
+                <target>Branding</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.logo">
+                <source>label.theme.branding.logo</source>
+                <target>Logo (Image URL, replaces the company in login screen)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.company">
+                <source>label.theme.branding.company</source>
+                <target>Company</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.mini">
+                <source>label.theme.branding.mini</source>
+                <target>Mini Logo (collapsed sidebar)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.title">
+                <source>label.theme.branding.title</source>
+                <target>Browser Title</target>
+            </trans-unit>
+            <trans-unit id="rounding">
+                <source>rounding</source>
+                <target>Time rounding</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.begin">
+                <source>label.timesheet.rounding.default.begin</source>
+                <target>Rounding of the start time in minutes (0 = deactivated)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.end">
+                <source>label.timesheet.rounding.default.end</source>
+                <target>Rounding of the end time in minutes (0 = deactivated)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.duration">
+                <source>label.timesheet.rounding.default.duration</source>
+                <target>Rounding of the duration in minutes (0 = deactivated)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.mode">
+                <source>label.timesheet.rounding.default.mode</source>
+                <target>Rounding mode</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.days">
+                <source>label.timesheet.rounding.default.days</source>
+                <target>Days of the week when rounding will be applied</target>
+            </trans-unit>
+            <trans-unit id="Monday">
+                <source>Monday</source>
+                <target>Monday</target>
+            </trans-unit>
+            <trans-unit id="Tuesday">
+                <source>Tuesday</source>
+                <target>Tuesday</target>
+            </trans-unit>
+            <trans-unit id="Wednesday">
+                <source>Wednesday</source>
+                <target>Wednesday</target>
+            </trans-unit>
+            <trans-unit id="Thursday">
+                <source>Thursday</source>
+                <target>Thursday</target>
+            </trans-unit>
+            <trans-unit id="Friday">
+                <source>Friday</source>
+                <target>Friday</target>
+            </trans-unit>
+            <trans-unit id="Saturday">
+                <source>Saturday</source>
+                <target>Saturday</target>
+            </trans-unit>
+            <trans-unit id="Sunday">
+                <source>Sunday</source>
+                <target>Sunday</target>
+            </trans-unit>
+            <trans-unit id="Ceil">
+                <source>Ceil</source>
+                <target>Ceil: begin, end and duration will be rounded up</target>
+            </trans-unit>
+            <trans-unit id="Closest">
+                <source>Closest</source>
+                <target>Closest: mathematical rounding to the nearest value</target>
+            </trans-unit>
+            <trans-unit id="Default">
+                <source>Default</source>
+                <target>Standard: begin will be rounded down, end and duration up</target>
+            </trans-unit>
+            <trans-unit id="Floor">
+                <source>Floor</source>
+                <target>Floor: begin, end and duration will be rounded down</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

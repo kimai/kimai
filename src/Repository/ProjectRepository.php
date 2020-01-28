@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Activity;
 use App\Entity\Project;
+use App\Entity\ProjectComment;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\ProjectStatistic;
@@ -182,6 +183,36 @@ class ProjectRepository extends EntityRepository
 
         $qb->andWhere($qb->expr()->eq('p.visible', ':visible'));
         $qb->andWhere($qb->expr()->eq('c.visible', ':customer_visible'));
+
+        if (!$query->isIgnoreDate()) {
+            $now = new \DateTime();
+            $qb->andWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->orX(
+                        $qb->expr()->lte('p.start', ':start'),
+                        $qb->expr()->isNull('p.start')
+                    ),
+                    $qb->expr()->orX(
+                        $qb->expr()->gte('p.end', ':start'),
+                        $qb->expr()->isNull('p.end')
+                    )
+                )
+            )->setParameter('start', $now);
+
+            $qb->andWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->orX(
+                        $qb->expr()->gte('p.end', ':end'),
+                        $qb->expr()->isNull('p.end')
+                    ),
+                    $qb->expr()->orX(
+                        $qb->expr()->lte('p.start', ':end'),
+                        $qb->expr()->isNull('p.start')
+                    )
+                )
+            )->setParameter('end', $now);
+        }
+
         $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
         $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
 
@@ -246,6 +277,47 @@ class ProjectRepository extends EntityRepository
                 ->setParameter('customer', $query->getCustomer());
         }
 
+        // this is far from being perfect, possible enhancements:
+        // there could also be a range selection to be able to select all projects that were active between from and to
+        // begin = null and end = null
+        // begin = null and end <= to
+        // begin < to and end = null
+        // begin > from and end < to
+        // ... and more ...
+
+        $begin = $query->getProjectStart();
+        $end = $query->getProjectEnd();
+
+        if (null !== $begin) {
+            $qb->andWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->orX(
+                        $qb->expr()->lte('p.start', ':start'),
+                        $qb->expr()->isNull('p.start')
+                    ),
+                    $qb->expr()->orX(
+                        $qb->expr()->gte('p.end', ':start'),
+                        $qb->expr()->isNull('p.end')
+                    )
+                )
+            )->setParameter('start', $query->getProjectStart());
+        }
+
+        if (null !== $end) {
+            $qb->andWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->orX(
+                        $qb->expr()->gte('p.end', ':end'),
+                        $qb->expr()->isNull('p.end')
+                    ),
+                    $qb->expr()->orX(
+                        $qb->expr()->lte('p.start', ':end'),
+                        $qb->expr()->isNull('p.start')
+                    )
+                )
+            )->setParameter('end', $query->getProjectEnd());
+        }
+
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
         if ($query->hasSearchTerm()) {
@@ -280,7 +352,25 @@ class ProjectRepository extends EntityRepository
             }
         }
 
+        // this will make sure, that we do not accidentally create results with multiple rows
+        //   => which would result in a wrong LIMIT / pagination results
+        // the second group by is needed due to SQL standard (even though logically not really required for this query)
+        $qb->addGroupBy('p.id')->addGroupBy($orderBy);
+
         return $qb;
+    }
+
+    public function countProjectsForQuery(ProjectQuery $query): int
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+        $qb
+            ->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->resetDQLPart('groupBy')
+            ->select($qb->expr()->countDistinct('p.id'))
+        ;
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     public function getPagerfantaForQuery(ProjectQuery $query): Pagerfanta
@@ -294,14 +384,7 @@ class ProjectRepository extends EntityRepository
 
     private function getPaginatorForQuery(ProjectQuery $query): PaginatorInterface
     {
-        $qb = $this->getQueryBuilderForQuery($query);
-        $qb
-            ->resetDQLPart('select')
-            ->resetDQLPart('orderBy')
-            ->select($qb->expr()->countDistinct('p.id'))
-        ;
-        $counter = (int) $qb->getQuery()->getSingleScalarResult();
-
+        $counter = $this->countProjectsForQuery($query);
         $qb = $this->getQueryBuilderForQuery($query);
 
         return new LoaderPaginator(new ProjectLoader($qb->getEntityManager()), $qb, $counter);
@@ -361,5 +444,34 @@ class ProjectRepository extends EntityRepository
             $em->rollback();
             throw $ex;
         }
+    }
+
+    public function getComments(Project $project): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->select('comments')
+            ->from(ProjectComment::class, 'comments')
+            ->andWhere($qb->expr()->eq('comments.project', ':project'))
+            ->addOrderBy('comments.pinned', 'DESC')
+            ->addOrderBy('comments.createdAt', 'DESC')
+            ->setParameter('project', $project)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function saveComment(ProjectComment $comment)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($comment);
+        $entityManager->flush();
+    }
+
+    public function deleteComment(ProjectComment $comment)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($comment);
+        $entityManager->flush();
     }
 }

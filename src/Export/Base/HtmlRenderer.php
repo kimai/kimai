@@ -10,13 +10,14 @@
 namespace App\Export\Base;
 
 use App\Entity\MetaTableTypeInterface;
-use App\Entity\Timesheet;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Event\MetaDisplayEventInterface;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
+use App\Export\ExportItemInterface;
+use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,7 +54,7 @@ class HtmlRenderer
     }
 
     /**
-     * @param Timesheet[] $timesheets
+     * @param ExportItemInterface[] $timesheets
      * @param TimesheetQuery $query
      * @return Response
      * @throws \Twig\Error\LoaderError
@@ -62,8 +63,11 @@ class HtmlRenderer
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
+        /** @var CustomerQuery $customerQuery */
+        $customerQuery = $query->copyTo(new CustomerQuery());
+
         $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT));
-        $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::EXPORT));
+        $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($customerQuery, CustomerMetaDisplayEvent::EXPORT));
         $projectMetaFields = $this->findMetaColumns(new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT));
         $activityMetaFields = $this->findMetaColumns(new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT));
 

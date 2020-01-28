@@ -8,12 +8,46 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
-## [1.6](https://github.com/kevinpapst/kimai2/releases/tag/1.6)
+## [1.7](https://github.com/kevinpapst/kimai2/releases/tag/1.7)
 
-- Moved CSV, ODS and XSLX invoice templates to [another repository](https://github.com/Keleo/kimai2-invoice-templates) - if you use them, add them manually (see [invoice documentation](https://www.kimai.org/documentation/invoices.html))
-- Added new invoice fields (VAT, bank account) and customer fields (VAT), check if you want to update your settings 
-- New functionality to manage permissions via Admin UI were added. Please move your permission settings from [local.yaml to your database](https://www.kimai.org/documentation/permissions.html)
-- New database tables were created, don't forget to [run the migrations](https://www.kimai.org/documentation/updates.html)
+**New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+New permissions:
+
+- `comments_customer` - show comment list on customer detail page (new feature) 
+- `details_customer` - show detail information for customers (customer number, vat, rates, meta-fields, assigned teams ...)
+- `comments_project` - show comment list on project detail page (new feature) 
+- `details_project` - show detail information for projects (rates, meta-fields, assigned teams ...)
+
+If you are using teams, please read on: The following list of permissions are now also available in the UI and they (can) replace the `X_project` and `X_customer` permissions. 
+They are more strict, as they allow only access to team specific items, the older permissions without `_teamlead_`/`_team_` work on a global level instead.
+  
+- `view_teamlead_customer`, `edit_teamlead_customer`, `budget_teamlead_customer`, `permissions_teamlead_customer`, `comments_teamlead_customer`, `details_teamlead_customer` - allows access to customer data when user is teamlead of a team assigned to the customer (replaces more global permission like `view_customer` for teamleads)
+- `view_team_customer`, `edit_team_customer`, `budget_team_customer`, `comments_team_customer`, `details_team_customer` - allows access to customer data when user is member of a team assigned to the customer (replaces more global permission like `view_customer` for users)
+- `view_teamlead_project`, `edit_teamlead_project`, `budget_teamlead_project`, `permissions_teamlead_project`, `comments_teamlead_project`, `details_teamlead_project` - allows access to customer data when user is teamlead of a team assigned to the project (replaces more global permission like `view_project` for teamleads)
+- `view_team_project`, `edit_team_project`, `budget_team_project`, `comments_team_project`, `details_team_project` - allows access to customer data when user is member of a team assigned to the project (replaces more global permission like `view_project` for users)
+
+### ExpenseBundle
+
+**ATTENTION** due to incompatibilities in the underlying frameworks users of the ExpenseBundle need to do one more step:
+You need to delete the bundle before updating: `rm -r var/plugins/ExpenseBundle`, otherwise you will run into errors during the update.
+After the Kimai update was successful, you have to re-install the latest bundle version, which is compatible with Kimai 1.7 only. 
+
+### Developer
+
+- Projects now have a start and end date and the API will only return those, which are either unconfigured or currently active, you might want to reload the list of projects once the user entered begin and end datetime OR use the new `ignoreDates` parameter.
+- Doctrine bundle was updated to v2, check your code for [the usage of RegistryInterface and ObjectManager](https://github.com/doctrine/DoctrineBundle/blob/master/UPGRADE-2.0.md)
+- Removed the webserver bundle and the command `server:run` - see [docs](https://www.kimai.org/documentation/developers.html)
+
+## [1.6](https://github.com/kevinpapst/kimai2/releases/tag/1.6), [1.6.1](https://github.com/kevinpapst/kimai2/releases/tag/1.6.1), [1.6.2](https://github.com/kevinpapst/kimai2/releases/tag/1.6.2)
+
+**New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+- Invoice changes:
+  - Moved CSV, ODS and XSLX invoice templates to [another repository](https://github.com/Keleo/kimai2-invoice-templates). Using them? Install them manually (see [invoice documentation](https://www.kimai.org/documentation/invoices.html)).
+  - Added new invoice fields (VAT, contact, payment details) and customer field (VAT). Used the twig settings before? Move them to the respective invoice template settings.
+- Permissions can be managed via Admin UI. Please move your permission settings from [local.yaml to your database](https://www.kimai.org/documentation/permissions.html).
+- Important permission change: regular users with the `view_other_timesheet` permission could see all timesheets. This was a legacy from the time before team permissions were introduced. If you rely on this behavior, you need to create a team with all users and the teamlead being the user who needs access to all timesheets. 
 
 ### Developer
 

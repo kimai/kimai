@@ -197,7 +197,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertDataTableRowCount(Client $client, string $id, int $count)
     {
-        $node = $client->getCrawler()->filter('section.content div#' . $id . ' table.table-striped tbody tr');
+        $node = $client->getCrawler()->filter('section.content div#' . $id . ' table.table-striped tbody tr:not(.summary)');
         self::assertEquals($count, $node->count());
     }
 
@@ -299,7 +299,7 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertHasFlashSuccess(Client $client, string $message = null)
     {
         $node = $client->getCrawler()->filter('div.alert.alert-success.alert-dismissible');
-        self::assertNotEmpty($node->text());
+        self::assertGreaterThan(0, $node->count(), 'Could not find flash success message');
         if (null !== $message) {
             self::assertStringContainsString($message, $node->text());
         }
@@ -312,7 +312,7 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertHasFlashError(Client $client, string $message = null)
     {
         $node = $client->getCrawler()->filter('div.alert.alert-error.alert-dismissible');
-        self::assertNotEmpty($node->text());
+        self::assertGreaterThan(0, $node->count(), 'Could not find flash error message');
         if (null !== $message) {
             self::assertStringContainsString($message, $node->text());
         }

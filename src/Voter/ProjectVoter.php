@@ -19,21 +19,17 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 class ProjectVoter extends AbstractVoter
 {
-    public const VIEW = 'view';
-    public const EDIT = 'edit';
-    public const BUDGET = 'budget';
-    public const DELETE = 'delete';
-    public const PERMISSIONS = 'permissions';
-
     /**
-     * support rules based on the given $subject (here: Project)
+     * support rules based on the given project
      */
     public const ALLOWED_ATTRIBUTES = [
-        self::VIEW,
-        self::EDIT,
-        self::BUDGET,
-        self::DELETE,
-        self::PERMISSIONS,
+        'view',
+        'edit',
+        'budget',
+        'delete',
+        'permissions',
+        'comments',
+        'details',
     ];
 
     /**
@@ -72,6 +68,11 @@ class ProjectVoter extends AbstractVoter
             return true;
         }
 
+        // those cannot be assigned to teams
+        if (in_array($attribute, ['create', 'delete'])) {
+            return false;
+        }
+
         $hasTeamleadPermission = $this->hasRolePermission($user, $attribute . '_teamlead_project');
         $hasTeamPermission = $this->hasRolePermission($user, $attribute . '_team_project');
 
@@ -90,8 +91,13 @@ class ProjectVoter extends AbstractVoter
             }
         }
 
+        // new projects have no customer
+        if (null === ($customer = $subject->getCustomer())) {
+            return false;
+        }
+
         /** @var Team $team */
-        foreach ($subject->getCustomer()->getTeams() as $team) {
+        foreach ($customer->getTeams() as $team) {
             if ($hasTeamleadPermission && $user->isTeamleadOf($team)) {
                 return true;
             }

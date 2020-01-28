@@ -23,10 +23,7 @@ span.label-customer {
 table.dataTable {
     /* action column */
     .actions {
-        width: 90px;
-        li.delete a {
-            color: #dd4b39;
-        }
+        width: 40px;
     }
     tr {
         /* summary row - provided in the users own timesheet table */
@@ -34,9 +31,6 @@ table.dataTable {
             font-weight: bold;
             border-bottom: 1px solid #ccc;
             background-color: #eaeaea;
-        }
-        &.open-edit {
-            cursor: pointer;
         }
         th.multiCheckbox {
             width: 15px;

@@ -88,7 +88,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
 
         $this->assertStringContainsString('<h3 class="box-title">About me</h3>', $content);
-        $this->assertStringContainsString('<span class="pull-right badge bg-blue">' . $username . '</span>', $content);
+        $this->assertStringContainsString('<td class="text-nowrap pull-right">' . $username . '</td>', $content);
     }
 
     public function getTabTestData()
@@ -133,8 +133,8 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
 
-        /** @var User $user */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var User $user */
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
@@ -209,8 +209,8 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/password');
 
-        /** @var User $user */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var User $user */
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         /** @var EncoderFactoryInterface $passwordEncoder */
@@ -248,8 +248,8 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/api-token');
 
-        /** @var User $user */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var User $user */
         $user = $this->getUserByRole($em, User::ROLE_USER);
         /** @var EncoderFactoryInterface $passwordEncoder */
         $passwordEncoder = $client->getContainer()->get('test.PasswordEncoder');
@@ -293,8 +293,8 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/roles');
 
-        /** @var User $user */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var User $user */
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
@@ -385,8 +385,8 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, '/profile/' . $username . '/prefs');
 
-        /** @var User $user */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var User $user */
         $user = $this->getUserByName($em, $username);
 
         $this->assertEquals($hourlyRateOriginal, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
@@ -402,6 +402,7 @@ class ProfileControllerTest extends ControllerBaseTest
                     ['name' => 'timezone', 'value' => 'America/Creston'],
                     ['name' => 'language', 'value' => 'ar'],
                     ['name' => UserPreference::SKIN, 'value' => 'blue'],
+                    ['name' => 'theme.layout', 'value' => 'fixed'],
                     ['name' => 'theme.collapsed_sidebar', 'value' => true],
                     ['name' => 'calendar.initial_view', 'value' => 'agendaDay'],
                 ]

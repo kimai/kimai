@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="ja" datatype="plaintext" original="daterangepicker.en.xlf">
+        <body>
+            <trans-unit id="daterangepicker.today">
+                <source>daterangepicker.today</source>
+                <target>今日</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.yesterday">
+                <source>daterangepicker.yesterday</source>
+                <target>昨日</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.lastWeek">
+                <source>daterangepicker.lastWeek</source>
+                <target>先週</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.thisWeek">
+                <source>daterangepicker.thisWeek</source>
+                <target>今週</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.lastMonth">
+                <source>daterangepicker.lastMonth</source>
+                <target>先月</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.thisMonth">
+                <source>daterangepicker.thisMonth</source>
+                <target>今月</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.lastYear">
+                <source>daterangepicker.lastYear</source>
+                <target>去年</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.thisYear">
+                <source>daterangepicker.thisYear</source>
+                <target>今年</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.customRange">
+                <source>daterangepicker.customRange</source>
+                <target>期間指定</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

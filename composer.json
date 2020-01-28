@@ -27,12 +27,13 @@
         "kevinpapst/adminlte-bundle": "~3.0",
         "kimai/kimai2-composer": "^0.1",
         "laravolt/avatar": "^3.0",
-        "mpdf/mpdf": "^7.1",
+        "league/csv": "^9.4",
+        "mpdf/mpdf": "^8.0",
         "nelmio/api-doc-bundle": "^3.2",
         "nelmio/cors-bundle": "^1.5",
-        "ocramius/proxy-manager": "2.1.1",
-        "phpoffice/phpspreadsheet": "^1.4",
-        "phpoffice/phpword": "^0.15.0",
+        "ocramius/proxy-manager": "^2.1.1",
+        "phpoffice/phpspreadsheet": "^1.10",
+        "phpoffice/phpword": "^0.17",
         "psr/log": "^1.1",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/asset": "^4.0",
@@ -63,18 +64,16 @@
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "friendsofphp/php-cs-fixer": "^2.10",
         "fzaninotto/faker": "^1.8",
-        "phpstan/phpstan": "^0.11.7",
-        "phpstan/phpstan-doctrine": "^0.11.4",
-        "phpstan/phpstan-phpunit": "^0.11.2",
-        "phpstan/phpstan-symfony": "^0.11.6",
+        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan-doctrine": "^0.12",
+        "phpstan/phpstan-phpunit": "^0.12",
+        "phpstan/phpstan-symfony": "^0.12",
         "phpunit/phpunit": "^8.0",
         "symfony/browser-kit": "^4.0",
         "symfony/css-selector": "^4.0",
         "symfony/maker-bundle": "^1.12",
         "symfony/phpunit-bridge": "^4.0",
-        "symfony/profiler-pack": "^1.0",
-        "symfony/thanks": "^1.0",
-        "symfony/web-server-bundle": "^4.0"
+        "symfony/profiler-pack": "^1.0"
     },
     "repositories": [
         {
@@ -123,11 +122,14 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "kimai:code-check":  [
+        "kimai:pre-commit":  [
             "@kimai:codestyle",
             "@kimai:phpstan",
             "@kimai:code-lint",
-            "@kimai:tests-unit",
+            "@kimai:tests-unit"
+        ],
+        "kimai:code-check":  [
+            "@kimai:pre-commit",
             "@kimai:tests-integration"
         ],
         "kimai:code-lint":  [

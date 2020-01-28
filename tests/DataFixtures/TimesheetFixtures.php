@@ -17,7 +17,7 @@ use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Timesheet\Util;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
@@ -297,12 +297,12 @@ final class TimesheetFixtures extends Fixture
 
     /**
      * @param ObjectManager $manager
-     * @return Activity[]
+     * @return array<int|string, Activity>
      */
-    protected function getAllActivities(ObjectManager $manager)
+    protected function getAllActivities(ObjectManager $manager): array
     {
         $all = [];
-        /* @var Activity[] $entries */
+        /** @var Activity[] $entries */
         $entries = $manager->getRepository(Activity::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
@@ -313,12 +313,12 @@ final class TimesheetFixtures extends Fixture
 
     /**
      * @param ObjectManager $manager
-     * @return Project[]
+     * @return array<int|string, Project>
      */
-    protected function getAllProjects(ObjectManager $manager)
+    protected function getAllProjects(ObjectManager $manager): array
     {
         $all = [];
-        /* @var Project[] $entries */
+        /** @var Project[] $entries */
         $entries = $manager->getRepository(Project::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;

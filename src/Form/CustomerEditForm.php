@@ -10,10 +10,10 @@
 namespace App\Form;
 
 use App\Entity\Customer;
+use App\Form\Type\MailType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -49,7 +49,7 @@ class CustomerEditForm extends AbstractType
                 'required' => false,
             ])
             ->add('comment', TextareaType::class, [
-                'label' => 'label.comment',
+                'label' => 'label.description',
                 'required' => false,
             ])
             ->add('company', TextType::class, [
@@ -88,8 +88,7 @@ class CustomerEditForm extends AbstractType
                 'required' => false,
                 'attr' => ['icon' => 'mobile'],
             ])
-            ->add('email', EmailType::class, [
-                'label' => 'label.email',
+            ->add('email', MailType::class, [
                 'required' => false,
             ])
             ->add('homepage', UrlType::class, [

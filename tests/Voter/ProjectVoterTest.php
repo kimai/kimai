@@ -22,14 +22,6 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
  */
 class ProjectVoterTest extends AbstractVoterTest
 {
-    /**
-     * @dataProvider getTestData
-     */
-    public function testVote(User $user, $subject, $attribute, $result)
-    {
-        $this->assertVote($user, $subject, $attribute, $result);
-    }
-
     protected function assertVote(User $user, $subject, $attribute, $result)
     {
         $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
@@ -39,53 +31,62 @@ class ProjectVoterTest extends AbstractVoterTest
             $subject->setCustomer(new Customer());
         }
 
-        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
+        $actual = $sut->vote($token, $subject, [$attribute]);
+        $this->assertEquals($result, $actual, sprintf('Failed voting "%s" for User with roles %s.', $attribute, implode(', ', $user->getRoles())));
     }
 
-    public function getTestData()
+    public function testVote()
     {
-        $user0 = $this->getUser(0, null);
-        $user1 = $this->getUser(1, User::ROLE_USER);
-        $user2 = $this->getUser(2, User::ROLE_TEAMLEAD);
-        $user3 = $this->getUser(3, User::ROLE_ADMIN);
-        $user4 = $this->getUser(4, User::ROLE_SUPER_ADMIN);
+        $userNoRole = $this->getUser(0, 'foo');
+        $userStandard = $this->getUser(1, User::ROLE_USER);
+        $userTeamlead = $this->getUser(2, User::ROLE_TEAMLEAD);
+        $userAdmin = $this->getUser(3, User::ROLE_ADMIN);
+        $userSuperAdmin = $this->getUser(4, User::ROLE_SUPER_ADMIN);
 
         $result = VoterInterface::ACCESS_GRANTED;
-        foreach ([$user3, $user4] as $user) {
-            yield [$user, new Project(), 'view', $result];
-            yield [$user, new Project(), 'edit', $result];
-            yield [$user, new Project(), 'budget', $result];
-            yield [$user, new Project(), 'delete', $result];
+        foreach ([$userAdmin, $userSuperAdmin] as $user) {
+            $this->assertVote($user, new Project(), 'view', $result);
+            $this->assertVote($user, new Project(), 'edit', $result);
+            $this->assertVote($user, new Project(), 'budget', $result);
+            $this->assertVote($user, new Project(), 'delete', $result);
         }
 
-        foreach ([$user2] as $user) {
-            yield [$user, new Project(), 'view', $result];
+        $team = new Team();
+        $team->setTeamLead($userTeamlead);
+        foreach ([$userTeamlead] as $user) {
+            $project = new Project();
+            $team->addProject($project);
+            $this->assertVote($user, $project, 'view', $result);
+            $team->removeProject($project);
         }
+
+        $userTeamlead = $this->getUser(2, User::ROLE_TEAMLEAD);
 
         $result = VoterInterface::ACCESS_DENIED;
-        foreach ([$user0, $user1] as $user) {
-            yield [$user, new Project(), 'view', $result];
-            yield [$user, new Project(), 'edit', $result];
-            yield [$user, new Project(), 'budget', $result];
-            yield [$user, new Project(), 'delete', $result];
+        foreach ([$userNoRole, $userStandard] as $user) {
+            $this->assertVote($user, new Project(), 'view', $result);
+            $this->assertVote($user, new Project(), 'edit', $result);
+            $this->assertVote($user, new Project(), 'budget', $result);
+            $this->assertVote($user, new Project(), 'delete', $result);
         }
 
-        foreach ([$user2] as $user) {
-            yield [$user, new Project(), 'edit', $result];
-            yield [$user, new Project(), 'budget', $result];
-            yield [$user, new Project(), 'delete', $result];
+        foreach ([$userTeamlead] as $user) {
+            $this->assertVote($user, new Project(), 'view', $result);
+            $this->assertVote($user, new Project(), 'edit', $result);
+            $this->assertVote($user, new Project(), 'budget', $result);
+            $this->assertVote($user, new Project(), 'delete', $result);
         }
 
         $result = VoterInterface::ACCESS_ABSTAIN;
-        foreach ([$user0, $user1, $user2] as $user) {
-            yield [$user, new Project(), 'create_project', $result];
-            yield [$user, new Project(), 'view_project', $result];
-            yield [$user, new Project(), 'edit_project', $result];
-            yield [$user, new Project(), 'budget_project', $result];
-            yield [$user, new Project(), 'delete_project', $result];
-            yield [$user, new \stdClass(), 'view', $result];
-            yield [$user, null, 'edit', $result];
-            yield [$user, $user, 'delete', $result];
+        foreach ([$userNoRole, $userStandard, $userTeamlead] as $user) {
+            $this->assertVote($user, new Project(), 'create_project', $result);
+            $this->assertVote($user, new Project(), 'view_project', $result);
+            $this->assertVote($user, new Project(), 'edit_project', $result);
+            $this->assertVote($user, new Project(), 'budget_project', $result);
+            $this->assertVote($user, new Project(), 'delete_project', $result);
+            $this->assertVote($user, new \stdClass(), 'view', $result);
+            $this->assertVote($user, null, 'edit', $result);
+            $this->assertVote($user, $user, 'delete', $result);
         }
     }
 

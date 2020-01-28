@@ -13,7 +13,10 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\User;
 
-class InvoiceItem
+/**
+ * @internal
+ */
+final class InvoiceItem
 {
     /**
      * @var float
@@ -28,7 +31,7 @@ class InvoiceItem
      */
     private $rate = 0.00;
     /**
-     * @var int
+     * @var float
      */
     private $amount = 0;
     /**
@@ -63,6 +66,14 @@ class InvoiceItem
      * @var array
      */
     private $additionalFields = [];
+    /**
+     * @var string
+     */
+    private $type;
+    /**
+     * @var string
+     */
+    private $category;
 
     public function addAdditionalField(string $name, ?string $value): InvoiceItem
     {
@@ -141,12 +152,12 @@ class InvoiceItem
         return $this;
     }
 
-    public function getAmount(): int
+    public function getAmount(): float
     {
         return $this->amount;
     }
 
-    public function setAmount(int $amount): InvoiceItem
+    public function setAmount(float $amount): InvoiceItem
     {
         $this->amount = $amount;
 
@@ -209,6 +220,30 @@ class InvoiceItem
     public function setUser(?User $user): InvoiceItem
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): InvoiceItem
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): InvoiceItem
+    {
+        $this->category = $category;
 
         return $this;
     }

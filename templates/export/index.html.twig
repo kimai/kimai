@@ -30,6 +30,7 @@
         {% block box_title %}{{ 'export.filter'|trans }}{% endblock %}
         {% block box_before %}{{ form_start(form) }}{% endblock %}
         {% block box_body %}
+            {{ form_errors(form) }}
             {{ form_row(form.searchTerm) }}
             {{ form_row(form.daterange) }}
             {{ form_row(form.customer) }}
@@ -82,7 +83,7 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-nowrap">
                         {{ rate|money(currency) }}
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-nowrap">
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-nowrap" data-duration="{{ entry.duration }}">
                         {{ duration }}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }} text-nowrap">

@@ -29,6 +29,8 @@ class ProjectTest extends TestCase
         self::assertNull($sut->getName());
         self::assertNull($sut->getOrderNumber());
         self::assertNull($sut->getOrderDate());
+        self::assertNull($sut->getStart());
+        self::assertNull($sut->getEnd());
         self::assertNull($sut->getComment());
         self::assertTrue($sut->getVisible());
         self::assertTrue($sut->isVisible());
@@ -63,6 +65,16 @@ class ProjectTest extends TestCase
         self::assertSame($dateTime, $sut->getOrderDate());
         self::assertInstanceOf(Project::class, $sut->setOrderDate(null));
         self::assertNull($sut->getOrderDate());
+
+        self::assertInstanceOf(Project::class, $sut->setStart($dateTime));
+        self::assertSame($dateTime, $sut->getStart());
+        self::assertInstanceOf(Project::class, $sut->setStart(null));
+        self::assertNull($sut->getStart());
+
+        self::assertInstanceOf(Project::class, $sut->setEnd($dateTime));
+        self::assertSame($dateTime, $sut->getEnd());
+        self::assertInstanceOf(Project::class, $sut->setEnd(null));
+        self::assertNull($sut->getEnd());
 
         self::assertInstanceOf(Project::class, $sut->setComment('a comment'));
         self::assertEquals('a comment', $sut->getComment());

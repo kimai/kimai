@@ -7,6 +7,7 @@
 {% set columns = {
     'date': 'alwaysVisible',
     'user': 'hidden-xs hidden-sm',
+    'project': 'hidden-xs hidden-sm',
     'description': 'hidden-xs hidden-sm',
     'unit_price': 'hidden-xs text-center',
     'amount': 'text-center',
@@ -32,12 +33,15 @@
             {% block box_title %}{{ 'invoice.filter'|trans }}{% endblock %}
             {% block box_before %}{{ form_start(form) }}{% endblock %}
             {% block box_body %}
+                {{ form_errors(form) }}
                 {{ form_row(form.searchTerm) }}
                 {{ form_row(form.daterange) }}
                 {{ form_row(form.customer) }}
                 {{ form_row(form.project) }}
                 {{ form_row(form.activity) }}
-                {{ form_row(form.users) }}
+                {% if form.users is defined %}
+                    {{ form_row(form.users) }}
+                {% endif %}
                 {{ form_row(form.tags) }}
                 {{ form_row(form.exported) }}
                 {{ form_row(form.template) }}
@@ -61,7 +65,7 @@
             {{ tables.data_table_header(tableName, columns) }}
             {% for entry in entries %}
                 {% set amount = entry.amount %}
-                {% set duration = entry.duration|duration_decimal ~ ' / ' ~ entry.duration|duration %}
+                {% set duration = entry.duration|duration %}
                 {% set rate = 0 %}
                 {% if entry.fixedRate is not null %}
                     {% set rate = entry.fixedRate %}
@@ -71,16 +75,23 @@
                 <tr>
                     <td class="text-nowrap">{{ entry.begin|date_short }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.label_user(entry.user) }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
+                        {{ widgets.label_project(entry.project) }}
+                        {% if entry.activity is not null %}
+                        <br>
+                        <small>
+                            {{ widgets.label_activity(entry.activity) }}
+                        </small>
+                        {% endif %}
+                    </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">
                         {% if entry.description is not empty %}
                             {{ entry.description|escape|desc2html }}
-                        {% else %}
-                            {{ entry.activity.name }} / {{ entry.project.name }}
                         {% endif %}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-center">{{ rate|money(model.calculator.currency) }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }} text-center text-nowrap">{{ amount }}</td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-center text-nowrap">{{ duration }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-center text-nowrap" data-duration="{{ entry.duration }}">{{ duration }}</td>
                     <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
                 </tr>
             {% endfor %}

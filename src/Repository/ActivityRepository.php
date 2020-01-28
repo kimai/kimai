@@ -294,12 +294,15 @@ class ActivityRepository extends EntityRepository
         if ($query->isGlobalsOnly()) {
             $where->add($qb->expr()->isNull('a.project'));
         } elseif (null !== $query->getProject()) {
-            $where->add(
-                $qb->expr()->orX(
-                    $qb->expr()->eq('a.project', ':project'),
-                    $qb->expr()->isNull('a.project')
-                )
+            $orX = $qb->expr()->orX(
+                $qb->expr()->eq('a.project', ':project')
             );
+
+            if (!$query->isExcludeGlobals()) {
+                $orX->add($qb->expr()->isNull('a.project'));
+            }
+
+            $where->add($orX);
             $qb->setParameter('project', $query->getProject());
         } elseif (null !== $query->getCustomer()) {
             $where->add('p.customer = :customer');
@@ -343,7 +346,25 @@ class ActivityRepository extends EntityRepository
             }
         }
 
+        // this will make sure, that we do not accidentally create results with multiple rows
+        //   => which would result in a wrong LIMIT / pagination results
+        // the second group by is needed due to SQL standard (even though logically not really required for this query)
+        $qb->addGroupBy('a.id')->addGroupBy($orderBy);
+
         return $qb;
+    }
+
+    public function countActivitiesForQuery(ActivityQuery $query): int
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+        $qb
+            ->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->resetDQLPart('groupBy')
+            ->select($qb->expr()->countDistinct('a.id'))
+        ;
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     public function getPagerfantaForQuery(ActivityQuery $query): Pagerfanta
@@ -357,14 +378,7 @@ class ActivityRepository extends EntityRepository
 
     protected function getPaginatorForQuery(ActivityQuery $query): PaginatorInterface
     {
-        $qb = $this->getQueryBuilderForQuery($query);
-        $qb
-            ->resetDQLPart('select')
-            ->resetDQLPart('orderBy')
-            ->select($qb->expr()->countDistinct('a.id'))
-        ;
-        $counter = (int) $qb->getQuery()->getSingleScalarResult();
-
+        $counter = $this->countActivitiesForQuery($query);
         $qb = $this->getQueryBuilderForQuery($query);
 
         return new LoaderPaginator(new ActivityLoader($qb->getEntityManager()), $qb, $counter);

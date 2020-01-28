@@ -3,8 +3,12 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 
-{% set showSummary = showSummary|default(false) %}
-{% set showStartEndTime = showStartEndTime|default(true) %}
+{% if not showSummary is defined %}
+    {% set showSummary = false %}
+{% endif %}
+{% if not showStartEndTime is defined %}
+    {% set showStartEndTime = true %}
+{% endif %}
 
 {% set columns = {
     'id': {'class': 'alwaysVisible multiCheckbox', 'orderBy': false, 'title': false, 'html_before': tables.datatable_multiupdate_all()},
@@ -54,6 +58,11 @@
 
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
+        <script type="text/javascript">
+            document.addEventListener('kimai.initialized', function() {
+                KimaiReloadPageWidget.create('kimai.timesheetUpdate');
+            });
+        </script>        
     {% else %}
         {{ tables.datatable_header(tableName, columns, query, {'striped': not showSummary, 'reload': 'kimai.timesheetUpdate'}) }}
 
@@ -72,7 +81,11 @@
                 {% set dayRate = {} %}
             {%- endif -%}
             <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit{% if not entry.end %} recording{% endif %}" data-href="{{ path(editRoute, {'id': entry.id}) }}"{% endif %}>
-                <td class="text-nowrap">{{ tables.datatable_multiupdate_row(entry.id) }}</td>
+                <td class="text-nowrap">
+                    {% if is_granted('edit', entry) or is_granted('delete', entry) %}
+                        {{ tables.datatable_multiupdate_row(entry.id) }}
+                    {% endif %}
+                </td>
                 <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
 
                 {% if showStartEndTime %}

@@ -53,9 +53,6 @@
             "ref": "44d3aa7752dd46f77ba11af2297a25e1dedfb4d0"
         }
     },
-    "doctrine/doctrine-cache-bundle": {
-        "version": "1.3.2"
-    },
     "doctrine/doctrine-fixtures-bundle": {
         "version": "3.0",
         "recipe": {
@@ -204,9 +201,6 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
-    "jean85/pretty-package-versions": {
-        "version": "1.2"
-    },
     "jms/metadata": {
         "version": "1.6.0"
     },
@@ -230,6 +224,9 @@
     },
     "laravolt/avatar": {
         "version": "3.0.0"
+    },
+    "league/csv": {
+        "version": "9.4.1"
     },
     "markbaker/complex": {
         "version": "1.4.6"
@@ -267,30 +264,6 @@
     "nesbot/carbon": {
         "version": "2.24.0"
     },
-    "nette/bootstrap": {
-        "version": "v3.0.0"
-    },
-    "nette/di": {
-        "version": "v3.0.0"
-    },
-    "nette/finder": {
-        "version": "v2.5.0"
-    },
-    "nette/neon": {
-        "version": "v3.0.0"
-    },
-    "nette/php-generator": {
-        "version": "v3.2.2"
-    },
-    "nette/robot-loader": {
-        "version": "v3.2.0"
-    },
-    "nette/schema": {
-        "version": "v1.0.0"
-    },
-    "nette/utils": {
-        "version": "v3.0.1"
-    },
     "nikic/php-parser": {
         "version": "v4.0.2"
     },
@@ -315,6 +288,9 @@
     "phar-io/version": {
         "version": "1.0.1"
     },
+    "php": {
+        "version": "7.2"
+    },
     "php-cs-fixer/diff": {
         "version": "v1.2.0"
     },
@@ -338,9 +314,6 @@
     },
     "phpspec/prophecy": {
         "version": "1.7.3"
-    },
-    "phpstan/phpdoc-parser": {
-        "version": "0.3.3"
     },
     "phpstan/phpstan": {
         "version": "0.11.7"
@@ -672,9 +645,6 @@
     "symfony/templating": {
         "version": "v4.1.1"
     },
-    "symfony/thanks": {
-        "version": "v1.0.7"
-    },
     "symfony/translation": {
         "version": "3.3",
         "recipe": {
@@ -715,15 +685,6 @@
             "branch": "master",
             "version": "3.3",
             "ref": "6bdfa1a95f6b2e677ab985cd1af2eae35d62e0f6"
-        }
-    },
-    "symfony/web-server-bundle": {
-        "version": "3.3",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "3.3",
-            "ref": "dae9b39fd6717970be7601101ce5aa960bf53d9a"
         }
     },
     "symfony/webpack-encore-bundle": {

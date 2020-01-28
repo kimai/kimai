@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="ja" datatype="plaintext" original="exceptions.en.xlf">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target>アクセスが拒否されました</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target>ここで問題が発生しました</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target>エラー</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Oops! エラーが発生しました。</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    予期せぬエラーが発生しました。再試行してください。
+                    バグが存在する可能性があります。
+                    もし再試行しても問題が残るようでしたら、サーバーの管理者に連絡してください。
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Oops! ページが見付かりませんでした。</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    お探しのページを見付けることができませんでした。
+                    しばらくしてから、ダッシュボードからやり直してください。
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>このページへのアクセスは制限されています。</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
+                    残念ながら、あなたはこのページを表示するのに十分な権限をお持ちではありません。
+                    もしもエラーの可能性があるようでしたら、サーバーの管理者に連絡してください。
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

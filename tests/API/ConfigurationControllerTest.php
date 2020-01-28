@@ -16,7 +16,7 @@ use App\Entity\User;
  */
 class ConfigurationControllerTest extends APIControllerBaseTest
 {
-    public function testI18nIsSecure()
+    public function testIsI18nSecure()
     {
         $this->assertUrlIsSecured('/api/config/i18n');
     }
@@ -30,16 +30,43 @@ class ConfigurationControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(7, count($result));
-        $this->assertStructure($result);
+        $this->assertI18nStructure($result);
     }
 
-    protected function assertStructure(array $result)
+    protected function assertI18nStructure(array $result)
     {
         $expectedKeys = ['date', 'dateTime', 'duration', 'formDate', 'formDateTime', 'is24hours', 'time'];
         $actual = array_keys($result);
         sort($actual);
         sort($expectedKeys);
 
-        $this->assertEquals($expectedKeys, $actual, 'Activity structure does not match');
+        $this->assertEquals($expectedKeys, $actual, 'Config structure does not match');
+    }
+
+    public function testIsTimesheetSecure()
+    {
+        $this->assertUrlIsSecured('/api/config/timesheet');
+    }
+
+    public function testGetTimesheet()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/config/timesheet', 'GET');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(5, count($result));
+        $this->assertTimesheetStructure($result);
+    }
+
+    protected function assertTimesheetStructure(array $result)
+    {
+        $expectedKeys = ['activeEntriesHardLimit', 'activeEntriesSoftLimit', 'defaultBeginTime', 'isAllowFutureTimes', 'trackingMode'];
+        $actual = array_keys($result);
+        sort($actual);
+        sort($expectedKeys);
+
+        $this->assertEquals($expectedKeys, $actual, 'Config structure does not match');
     }
 }

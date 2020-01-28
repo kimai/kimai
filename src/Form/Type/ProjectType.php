@@ -65,6 +65,7 @@ class ProjectType extends AbstractType
             'query_builder_for_user' => true,
             'activity_enabled' => false,
             'activity_visibility' => ActivityQuery::SHOW_VISIBLE,
+            'ignore_date' => false,
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {
@@ -72,6 +73,9 @@ class ProjectType extends AbstractType
                 $query = new ProjectFormTypeQuery();
                 if (true === $options['query_builder_for_user']) {
                     $query->setUser($options['user']);
+                }
+                if (true === $options['ignore_date']) {
+                    $query->setIgnoreDate(true);
                 }
 
                 return $repo->getQueryBuilderForFormType($query);
@@ -83,7 +87,7 @@ class ProjectType extends AbstractType
                 return [
                     'select' => 'activity',
                     'route' => 'get_activities',
-                    'route_params' => ['project' => '-s-', 'visible' => $options['activity_visibility']],
+                    'route_params' => ['project' => '%project%', 'visible' => $options['activity_visibility']],
                     'empty_route_params' => ['globals' => 'true', 'visible' => $options['activity_visibility']],
                 ];
             }

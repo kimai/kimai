@@ -17,7 +17,7 @@ class Constants
     /**
      * The current release version
      */
-    public const VERSION = '1.6';
+    public const VERSION = '1.8';
     /**
      * The current release status, either "stable" or "dev"
      */
@@ -38,4 +38,8 @@ class Constants
      * Homepage, used in multiple views
      */
     public const HOMEPAGE = 'https://www.kimai.org';
+    /**
+     * Application wide default locale.
+     */
+    public const DEFAULT_LOCALE = 'en';
 }

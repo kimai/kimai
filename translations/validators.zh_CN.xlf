@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="zh-CN" datatype="plaintext" original="validators.en.xlf">
+        <body>
+            <trans-unit id="This value is not a valid role.">
+                <source>This value is not a valid role.</source>
+                <target>此值不是有效角色。</target>
+            </trans-unit>
+            <trans-unit id="End date must not be earlier then start date.">
+                <source>End date must not be earlier then start date.</source>
+                <target>结束日期必须早于开始日期。</target>
+            </trans-unit>
+            <trans-unit id="The begin date cannot be in the future.">
+                <source>The begin date cannot be in the future.</source>
+                <target>开始日期不能是未来的某一日期。</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="sv" datatype="plaintext" original="invoice-renderer.en.xlf">
+        <body>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target state="translated">Fakturadokument</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target state="translated">Faktura (standard)</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target state="translated">Tidrapport</target>
+            </trans-unit>
+            <trans-unit id="freelancer">
+                <source>freelancer</source>
+                <target state="translated">Frilansare</target>
+            </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target state="translated">Beräkna kalkylbladet</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="export">
+                <source>export</source>
+                <target state="translated">Exportera data</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target state="translated">Företagsfaktura</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

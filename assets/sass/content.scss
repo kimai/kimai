@@ -49,3 +49,12 @@ td {
 .label-gray {
     background-color: $gray-lte;
 }
+
+/* Delete link in action dropdowns */
+.dropdown-menu > li.delete > a {
+    color: #dd4b39;
+}
+
+.open-edit {
+    cursor: pointer;
+}

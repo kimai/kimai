@@ -11,9 +11,8 @@ namespace App\Tests\DataFixtures;
 
 use App\Entity\Customer;
 use App\Entity\Project;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
@@ -33,6 +32,10 @@ final class ProjectFixtures extends Fixture
      * @var callable
      */
     private $callback;
+    /**
+     * @var Customer[]
+     */
+    private $customers = [];
 
     public function getAmount(): int
     {
@@ -49,6 +52,17 @@ final class ProjectFixtures extends Fixture
     public function setIsVisible(bool $visible): ProjectFixtures
     {
         $this->isVisible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * @param Customer[] $customers
+     * @return ProjectFixtures
+     */
+    public function setCustomers(array $customers): ProjectFixtures
+    {
+        $this->customers = $customers;
 
         return $this;
     }
@@ -71,7 +85,10 @@ final class ProjectFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $customers = $this->getAllCustomers($manager);
+        $customers = $this->customers;
+        if (empty($customers)) {
+            $customers = $this->getAllCustomers($manager);
+        }
         $faker = Factory::create();
 
         for ($i = 0; $i < $this->amount; $i++) {
@@ -99,12 +116,12 @@ final class ProjectFixtures extends Fixture
 
     /**
      * @param ObjectManager $manager
-     * @return Customer[]
+     * @return array<int|string, Customer>
      */
-    protected function getAllCustomers(ObjectManager $manager)
+    protected function getAllCustomers(ObjectManager $manager): array
     {
         $all = [];
-        /* @var User[] $entries */
+        /** @var Customer[] $entries */
         $entries = $manager->getRepository(Customer::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;

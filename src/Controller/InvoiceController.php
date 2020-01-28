@@ -10,8 +10,11 @@
 namespace App\Controller;
 
 use App\Entity\InvoiceTemplate;
+use App\Event\InvoicePostRenderEvent;
+use App\Event\InvoicePreRenderEvent;
 use App\Form\InvoiceTemplateForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
+use App\Invoice\InvoiceFormatter;
 use App\Invoice\InvoiceItemInterface;
 use App\Invoice\InvoiceModel;
 use App\Invoice\ServiceInvoice;
@@ -25,6 +28,7 @@ use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Controller used to create invoices and manage invoice templates.
@@ -32,26 +36,36 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route(path="/invoice")
  * @Security("is_granted('view_invoice')")
  */
-class InvoiceController extends AbstractController
+final class InvoiceController extends AbstractController
 {
     /**
      * @var ServiceInvoice
      */
-    protected $service;
+    private $service;
     /**
      * @var InvoiceTemplateRepository
      */
-    protected $invoiceRepository;
+    private $invoiceRepository;
     /**
      * @var UserDateTimeFactory
      */
-    protected $dateTimeFactory;
+    private $dateTimeFactory;
+    /**
+     * @var InvoiceFormatter
+     */
+    private $formatter;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $dispatcher;
 
-    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $invoice, UserDateTimeFactory $dateTimeFactory)
+    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $invoice, UserDateTimeFactory $dateTimeFactory, InvoiceFormatter $formatter, EventDispatcherInterface $dispatcher)
     {
         $this->service = $service;
         $this->invoiceRepository = $invoice;
         $this->dateTimeFactory = $dateTimeFactory;
+        $this->formatter = $formatter;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -115,7 +129,13 @@ class InvoiceController extends AbstractController
         $query->setEnd($end);
         $query->setExported(InvoiceQuery::STATE_NOT_EXPORTED);
         $query->setState(InvoiceQuery::STATE_STOPPED);
+        // limit access to data from teams
         $query->setCurrentUser($this->getUser());
+
+        if (!$this->isGranted('view_other_timesheet')) {
+            // limit access to own data
+            $query->setUser($this->getUser());
+        }
 
         return $query;
     }
@@ -135,10 +155,14 @@ class InvoiceController extends AbstractController
 
         foreach ($this->service->getRenderer() as $renderer) {
             if ($renderer->supports($document)) {
+                $this->dispatcher->dispatch(new InvoicePreRenderEvent($model, $document, $renderer));
+
                 $response = $renderer->render($document, $model);
                 if ($query->isMarkAsExported()) {
                     $this->markEntriesAsExported($entries);
                 }
+
+                $this->dispatcher->dispatch(new InvoicePostRenderEvent($model, $document, $renderer, $response));
 
                 return $response;
             }
@@ -216,9 +240,10 @@ class InvoiceController extends AbstractController
      */
     protected function prepareModel(InvoiceQuery $query): InvoiceModel
     {
-        $model = new InvoiceModel();
+        $model = new InvoiceModel($this->formatter);
         $model
             ->setQuery($query)
+            ->setUser($this->getUser())
             ->setCustomer($query->getCustomer())
         ;
 
@@ -287,6 +312,9 @@ class InvoiceController extends AbstractController
                 ->setPaymentTerms($copyFrom->getPaymentTerms())
                 ->setAddress($copyFrom->getAddress())
                 ->setNumberGenerator($copyFrom->getNumberGenerator())
+                ->setContact($copyFrom->getContact())
+                ->setPaymentDetails($copyFrom->getPaymentDetails())
+                ->setVatId($copyFrom->getVatId())
             ;
         }
 
@@ -337,6 +365,7 @@ class InvoiceController extends AbstractController
         return $this->createForm(InvoiceToolbarForm::class, $query, [
             'action' => $this->generateUrl('invoice', []),
             'method' => $method,
+            'include_user' => $this->isGranted('view_other_timesheet'),
             'attr' => [
                 'id' => 'invoice-print-form'
             ],

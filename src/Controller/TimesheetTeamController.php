@@ -108,6 +108,11 @@ class TimesheetTeamController extends TimesheetAbstractController
         return 'edit_export_other_timesheet';
     }
 
+    protected function getPermissionEditRate(): string
+    {
+        return 'edit_rate_other_timesheet';
+    }
+
     protected function getCreateFormClassName(): string
     {
         return TimesheetAdminEditForm::class;
@@ -118,9 +123,13 @@ class TimesheetTeamController extends TimesheetAbstractController
         return TimesheetAdminEditForm::class;
     }
 
-    protected function includeUserInForms(): bool
+    protected function includeUserInForms(string $formName): bool
     {
-        return true;
+        if ($formName === 'toolbar') {
+            return true;
+        }
+
+        return $this->isGranted('edit_other_timesheet');
     }
 
     protected function getTimesheetRoute(): string

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="zh-CN" datatype="plaintext" original="invoice-calculator.en.xlf">
+        <body>
+            <trans-unit id="label.invoice_calculator">
+                <source>label.invoice_calculator</source>
+                <target>总和计算</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>默认：每次记录一个条目</target>
+            </trans-unit>
+            <trans-unit id="short">
+                <source>short</source>
+                <target>时间：记录总和，只有一个条目</target>
+            </trans-unit>
+            <trans-unit id="user">
+                <source>user</source>
+                <target>用户：每个用户一个条目</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>活动：每次活动一个条目</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>项目：每个项目一个条目</target>
+            </trans-unit>
+            <trans-unit id="date">
+                <source>date</source>
+                <target>日期：每天一个条目（用户开始日期）</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

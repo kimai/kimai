@@ -48,7 +48,7 @@ class CreateReleaseCommand extends Command
             ->setName('kimai:create-release')
             ->setDescription('Create a pre-installed release package')
             ->setHelp('This command will create a release package with pre-installed composer, SQLite database and user.')
-            ->addOption('directory', null, InputOption::VALUE_OPTIONAL, 'Directory where the release package will be stored', 'var/data/')
+            ->addOption('directory', null, InputOption::VALUE_OPTIONAL, 'Directory where the release package will be stored', '/tmp/')
             ->addOption('release', null, InputOption::VALUE_OPTIONAL, 'The version that should be zipped', Constants::VERSION)
         ;
 
@@ -103,15 +103,12 @@ class CreateReleaseCommand extends Command
         $io->success('Prepare new packages for Kimai ' . $version . ' in ' . $tmpDir);
 
         $gitCmd = sprintf(self::CLONE_CMD, $version);
-        $tar = 'kimai-release-' . $version;
         $zip = 'kimai-release-' . $version;
 
         if ($version === Constants::VERSION && Constants::STATUS !== 'stable') {
-            $tar .= '_' . Constants::STATUS;
             $zip .= '_' . Constants::STATUS;
         }
 
-        $tar .= '.tar.gz';
         $zip .= '.zip';
 
         $prefix = 'APP_ENV=prod DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite';
@@ -119,9 +116,7 @@ class CreateReleaseCommand extends Command
         $commands = [
             'Clone repository' => $gitCmd . ' ' . $tmpDir,
             'Install composer dependencies' => sprintf('cd %s && %s composer install --no-dev --optimize-autoloader', $tmpDir, $prefix),
-            'Create database' => sprintf('cd %s && %s bin/console doctrine:database:create -n', $tmpDir, $prefix),
-            'Create tables' => sprintf('cd %s && %s bin/console doctrine:schema:create -n', $tmpDir, $prefix),
-            'Add all migrations' => sprintf('cd %s && %s bin/console doctrine:migrations:version --add --all -n', $tmpDir, $prefix),
+            'Create database' => sprintf('cd %s && %s bin/console kimai:install -n', $tmpDir, $prefix),
         ];
 
         $filesToDelete = [
@@ -137,7 +132,6 @@ class CreateReleaseCommand extends Command
             'phpunit.xml.dist',
             'webpack.config.js',
             'assets/',
-            'bin/',
             'tests/',
             'var/cache/*',
             'var/data/kimai_test.sqlite',
@@ -150,25 +144,24 @@ class CreateReleaseCommand extends Command
         }
 
         $commands = array_merge($commands, [
-            'Create tar' => 'cd ' . $tmpDir . ' && tar -czf ' . $directory . '/' . $tar . ' .',
-            'Create zip' => 'cd ' . $tmpDir . ' && zip -r ' . $directory . '/' . $zip . ' .',
+            'Create release zip' => 'cd ' . $tmpDir . ' && zip -q -r ' . $directory . '/' . $zip . ' .',
             'Remove tmp directory' => 'rm -rf ' . $tmpDir,
         ]);
 
         $exitCode = 0;
         foreach ($commands as $title => $command) {
-            $io->success($title);
             passthru($command, $exitCode);
             if ($exitCode !== 0) {
                 $io->error('Failed with command: ' . $command);
 
                 return -1;
+            } else {
+                $io->success($title);
             }
         }
 
         $io->success(
-            'New release packages available at: ' . PHP_EOL .
-            $directory . '/' . $tar . PHP_EOL .
+            'New release package available at: ' . PHP_EOL .
             $directory . '/' . $zip
         );
 

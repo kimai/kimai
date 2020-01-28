@@ -15,7 +15,17 @@
     {% import _self as macro %}
     <div class="breadcrumb">
         <div class="box-tools">
-            {{ macro.table_actions(tools) }}
+            <div class="btn-group">
+            {% set actions = {} %}
+            {%- for icon, values in tools  %}
+                {% if icon == 'back' %}
+                    {{ macro.action_button(icon, values) }}
+                {% else %}
+                    {% set actions = actions|merge({(icon): values}) %}
+                {% endif %}
+            {% endfor %}
+            {{ macro.table_actions(actions, '') }}
+            </div>
         </div>
     </div>
 {%- endmacro -%}
@@ -67,13 +77,12 @@
     {{ macro.label(team.name, class|default('primary')) }}
 {% endmacro %}
 
-{% macro user_avatar(user, tooltip) %}
+{% macro user_avatar(user, tooltip, class) %}
     {% set avatar = avatar(user, admin_lte_context.default_avatar) %}
-    {% set showTooltip = tooltip|default(true) %}
-    {% if tooltip is not defined or tooltip is same as (false)%}
-    <img src="{{ avatar }}" class="{{ class|default('img-circle') }}" alt="{{ user.displayName }}" />
+    {% if tooltip is same as (false) %}
+    <img src="{{ avatar }}" class="img-circle{% if class is not empty %} {{ class }}{% endif %}" alt="{{ user.displayName }}" />
     {% else %}
-    <img src="{{ avatar }}" class="{{ class|default('img-circle') }}" data-toggle="tooltip" data-placement="top" alt="{{ user.displayName }}" title="{{ user.displayName }}" />
+    <img src="{{ avatar }}" class="img-circle{% if class is not empty %} {{ class }}{% endif %}" data-toggle="tooltip" data-placement="top" alt="{{ user.displayName }}" title="{{ tooltip|default(user.displayName) }}" />
     {% endif %}
 {% endmacro %}
 
@@ -200,30 +209,50 @@
     </div>
 {% endmacro %}
 
-{% macro table_actions(actions) %}
+{% macro table_actions(actions, class) %}
     {%- import _self as macro -%}
     {% if actions|length >= 1 %}
-        <div class="btn-group">
-            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{ 'label.actions'|trans }}
-                <span class="fa fa-caret-down"></span></button>
+        {% if class is null %}
+            {% set class = 'btn-sm' %}
+        {% endif %}
+        {% set trash = null %}
+        {% set divider = false %}
+        <div class="btn-group dropdown">
+            <button type="button" class="btn btn-default {{ class }} dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="fa fa-chevron-down"></span>
+            </button>
             <ul class="dropdown-menu dropdown-menu-right">
                 {%- apply spaceless -%}
                     {%- for icon,values in actions  %}
-                        {% set class = '' %}
-                        {% if icon == 'trash' %}
-                            {% set class = 'delete' %}
-                            {% if actions|length > 1 %}
-                            <li class="divider"></li>
+                        {% if icon == 'divider' and values is null %}
+                            {% if not loop.last and divider is same as (false) %}
+                                <li class="divider"></li>
+                            {% endif %}
+                            {% set divider = true %}
+                        {% else %}
+                            {% if values is iterable %}
+                                {% set values = values|merge({'title': icon|trans({}, 'actions')}) %}
+                            {% else %}
+                                {% set values = {'url': values, 'title': icon|trans({}, 'actions')} %}
+                            {% endif %}
+                            {% if icon == 'trash' %}
+                                {% set trash = values %}
+                            {% else %}
+                                {% set divider = false %}
+                                <li>
+                                    {{ macro.action_button(icon, values, false) }}
+                                </li>
                             {% endif %}
                         {% endif %}
-                        <li class="{{ class }}">
-                            {% if values is iterable %}
-                                {{ macro.action_button(icon, values|merge({'title': icon|trans({}, 'actions')}), false) }}
-                            {% else %}
-                                {{ macro.action_button(icon, {'url': values, 'title': icon|trans({}, 'actions')}, false) }}
-                            {% endif %}
-                        </li>
                     {% endfor -%}
+                    {%- if trash is not null %}
+                        {% if actions|length > 1 and divider is same as (false) %}
+                            <li class="divider"></li>
+                        {% endif %}
+                        <li class="delete">
+                            {{ macro.action_button('trash', trash, false) }}
+                        </li>
+                    {% endif -%}
                 {% endapply %}
             </ul>
         </div>
@@ -370,4 +399,50 @@
     {% else %}
         {{ value }}
     {% endif %}
+{% endmacro %}
+
+{% macro team_list(teams, showTitle) %}
+    {% if showTitle is null %}
+        {% set showTitle = true %}
+    {% endif %}
+    {% import _self as macro %}
+    <table class="table table-hover dataTable" role="grid">
+        {% if showTitle %}
+        <thead>
+            <tr>
+                <th>{{ 'label.team'|trans }}</th>
+                <th>{{ 'label.user'|trans }}</th>
+            </tr>
+        </thead>
+        {% endif %}
+        <tbody>
+        {% for team in teams %}
+            <tr{% if is_granted('edit', team) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_team_member', {'id': team.id}) }}"{% endif %}>
+                <td>
+                    {{ team.name }}
+                </td>
+                <td class="avatars">
+                    {% set userTeamCount = team.users|length %}
+                    {{ macro.user_avatar(team.teamlead, ('label.teamlead'|trans ~ ': ' ~ team.teamlead.displayName), 'teamlead') }}
+                    {% set teamHiddenId = 'team_' ~ team.id ~ '_hiddenUser' ~ random() %}
+                    {% set counter = 0  %}
+                    {% for user in team.users %}
+                        {% if user != team.teamlead %}
+                            {{ macro.user_avatar(user) }}
+                            {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if userTeamCount > 5 and counter == 4 and not loop.last %}
+                            <a href="#" onclick="$('#{{ teamHiddenId }}').toggleClass('hidden');$(this).hide();return false;" class="badge">{{ 'label.plus_more'|trans({'%count%': (userTeamCount - 5)}) }}</a>
+                            <span class="hidden" id="{{ teamHiddenId }}">
+                            {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if userTeamCount > 5 and counter != 4 and loop.last %}
+                            </span>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endmacro %}

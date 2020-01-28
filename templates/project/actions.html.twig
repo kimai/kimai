@@ -18,6 +18,9 @@
     {% set actions = {} %}
 
     {% if project.id is not empty %}
+        {% if view != 'details' and is_granted('view', project) %}
+            {% set actions = actions|merge({'details': path('project_details', {'id': project.id})}) %}
+        {% endif %}
         {% if is_granted('edit', project) %}
             {% set class = '' %}
             {% if view != 'edit' %}
@@ -25,11 +28,15 @@
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_project_edit', {'id': project.id}), 'class': class}}) %}
         {% endif %}
-        {% if is_granted('budget', project) %}
-            {% set actions = actions|merge({'report': {'url': path('admin_project_budget', {'id': project.id})}}) %}
-        {% endif %}
         {% if is_granted('permissions', project) %}
-            {% set actions = actions|merge({'permissions': {'url': path('admin_project_permissions', {'id': project.id})}}) %}
+            {% set class = '' %}
+            {% if view != 'permissions' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'permissions': {'url': path('admin_project_permissions', {'id': project.id}), 'class': class}}) %}
+        {% endif %}
+        {% if actions|length > 0 %}
+            {% set actions = actions|merge({'divider': null}) %}
         {% endif %}
         {% if is_granted('view_activity') %}
             {% set actions = actions|merge({'activity': path('admin_activity', {'customer': project.customer.id, 'project': project.id})}) %}
@@ -45,12 +52,12 @@
         {% endif %}
     {% endif %}
 
-    {% if view != 'index' %}
+    {% if view != 'index' and view != 'custom' %}
         {% set actions = actions|merge({'back': path('admin_project')}) %}
     {% endif %}
 
     {% set event = trigger('actions.project', {'actions': actions, 'view': view, 'project': project}) %}
-    {% if view == 'index' %}
+    {% if view == 'index' or view == 'custom' %}
         {{ widgets.table_actions(event.payload.actions) }}
     {% else %}
         {{ widgets.entity_actions(event.payload.actions) }}

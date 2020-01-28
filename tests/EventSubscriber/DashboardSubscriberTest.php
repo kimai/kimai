@@ -75,16 +75,16 @@ class DashboardSubscriberTest extends TestCase
         $authMock->method('isGranted')->willReturn($isAdmin);
 
         $userMock = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
-        $userMock->method('countUser')->willReturn($userCount);
+        $userMock->method('countUsersForQuery')->willReturn($userCount);
 
         $projectMock = $this->getMockBuilder(ProjectRepository::class)->disableOriginalConstructor()->getMock();
-        $projectMock->method('countProject')->willReturn($projectCount);
+        $projectMock->method('countProjectsForQuery')->willReturn($projectCount);
 
         $activityMock = $this->getMockBuilder(ActivityRepository::class)->disableOriginalConstructor()->getMock();
-        $activityMock->method('countActivity')->willReturn($activityCount);
+        $activityMock->method('countActivitiesForQuery')->willReturn($activityCount);
 
         $customerMock = $this->getMockBuilder(CustomerRepository::class)->disableOriginalConstructor()->getMock();
-        $customerMock->method('countCustomer')->willReturn($customerCount);
+        $customerMock->method('countCustomersForQuery')->willReturn($customerCount);
 
         return new DashboardSubscriber($authMock, $userMock, $activityMock, $projectMock, $customerMock);
     }

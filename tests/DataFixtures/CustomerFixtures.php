@@ -10,9 +10,8 @@
 namespace App\Tests\DataFixtures;
 
 use App\Entity\Customer;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
@@ -96,21 +95,5 @@ final class CustomerFixtures extends Fixture
         }
 
         $manager->flush();
-    }
-
-    /**
-     * @param ObjectManager $manager
-     * @return Customer[]
-     */
-    protected function getAllCustomers(ObjectManager $manager)
-    {
-        $all = [];
-        /* @var User[] $entries */
-        $entries = $manager->getRepository(Customer::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
     }
 }
