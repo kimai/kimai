@@ -99,11 +99,13 @@ final class UpdateCommand extends Command
             $command = $this->getApplication()->find('doctrine:migrations:migrate');
             $cmdInput = new ArrayInput(['--allow-no-migration' => true]);
             $cmdInput->setInteractive(false);
-            $command->run($cmdInput, $output);
+            if (0 !== $command->run($cmdInput, $output)) {
+                throw new \RuntimeException('CRITICAL: problem when migrating database');
+            }
 
             $io->writeln('');
         } catch (\Exception $ex) {
-            $io->error('Failed to set migration status: ' . $ex->getMessage());
+            $io->error($ex->getMessage());
 
             return self::ERROR_MIGRATIONS;
         }
@@ -111,12 +113,19 @@ final class UpdateCommand extends Command
         // flush the cache, in case values from the database are cached
         $cacheResult = $this->rebuildCaches($environment, $io, $input, $output);
 
-        $io->success(
-            sprintf('Congratulations! Successfully updated %s to version %s (%s)', Constants::SOFTWARE, Constants::VERSION, Constants::STATUS)
-        );
-
         if ($cacheResult !== 0) {
-            $io->warning('Problem resetting cache, please execute cache clean manually');
+            $io->warning(
+                [
+                    sprintf('Updated %s to version %s (%s) but the cache could not be rebuilt.', Constants::SOFTWARE, Constants::VERSION, Constants::STATUS),
+                    'Please run the cache commands manually:',
+                    'bin/console cache:clear --env=' . $environment . PHP_EOL .
+                    'bin/console cache:warmup --env=' . $environment
+                ]
+            );
+        } else {
+            $io->success(
+                sprintf('Congratulations! Successfully updated %s to version %s (%s)', Constants::SOFTWARE, Constants::VERSION, Constants::STATUS)
+            );
         }
 
         return 0;
@@ -128,18 +137,22 @@ final class UpdateCommand extends Command
 
         $command = $this->getApplication()->find('cache:clear');
         try {
-            $command->run(new ArrayInput(['--env' => $environment]), $output);
+            if (0 !== $command->run(new ArrayInput(['--env' => $environment]), $output)) {
+                throw new \RuntimeException('Could not clear cache, missing permissions?');
+            }
         } catch (\Exception $ex) {
-            $io->error('Failed to clear cache: ' . $ex->getMessage());
+            $io->error($ex->getMessage());
 
             return self::ERROR_CACHE_CLEAN;
         }
 
         $command = $this->getApplication()->find('cache:warmup');
         try {
-            $command->run(new ArrayInput(['--env' => $environment]), $output);
+            if (0 !== $command->run(new ArrayInput(['--env' => $environment]), $output)) {
+                throw new \RuntimeException('Could not warmup cache, missing permissions?');
+            }
         } catch (\Exception $ex) {
-            $io->error('Failed to warmup cache: ' . $ex->getMessage());
+            $io->error($ex->getMessage());
 
             return self::ERROR_CACHE_WARMUP;
         }
