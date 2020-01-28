@@ -183,16 +183,16 @@ kimai:
             order: 10
             permission: view_own_timesheet
             widgets: [PaginatedWorkingTimeChart]
-        user_rates:
-            title: ~
-            order: 20
-            permission: view_rate_own_timesheet
-            widgets: [userAmountToday, userAmountWeek, userAmountMonth, userAmountYear]
         user_teams:
             title: ~
             order: 15
             permission: ROLE_USER
             widgets: [UserTeams, UserTeamProjects]
+        user_rates:
+            title: ~
+            order: 20
+            permission: view_rate_own_timesheet
+            widgets: [userAmountToday, userAmountWeek, userAmountMonth, userAmountYear]
         duration:
             title: dashboard.all
             order: 30

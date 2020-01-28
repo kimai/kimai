@@ -15,7 +15,7 @@ export default class KimaiPaginatedBoxWidget {
 
     constructor(boxId) {
         this.selector = boxId;
-        this.overlay = jQuery('<div class="overlay"><div class="fa fa-refresh fa-spin"></div></div>');
+        this.overlay = jQuery('<div class="overlay"><div class="fas fa-sync fa-spin"></div></div>');
         this.widget = jQuery(this.selector);
         this.href = this.widget.data('href');
         this.events = this.widget.data('reload').split(' ');
@@ -67,6 +67,7 @@ export default class KimaiPaginatedBoxWidget {
                 if (jQuery(selector + ' .box-footer').length > 0) {
                     jQuery(selector + ' .box-footer').replaceWith(html.find('.box-footer'));
                 }
+                jQuery(selector + ' .box-body [data-toggle="tooltip"]').tooltip();
                 self.widget.removeData('error-retry');
                 self._hideOverlay();
             },

@@ -135,6 +135,8 @@ class DebugRendererTest extends TestCase
                 'project.hourly_rate_nc',
                 'project.hourly_rate_plain',
                 'project.meta.foo-project',
+                'project.start_date',
+                'project.end_date',
             ]);
         }
 
@@ -174,10 +176,13 @@ class DebugRendererTest extends TestCase
             'entry.user_title',
             'entry.activity',
             'entry.activity_id',
+            'entry.activity.meta.foo-activity',
             'entry.project',
-            'entry.customer',
             'entry.project_id',
+            'entry.project.meta.foo-project',
+            'entry.customer',
             'entry.customer_id',
+            'entry.customer.meta.foo-customer',
             'entry.category',
             'entry.type',
         ];

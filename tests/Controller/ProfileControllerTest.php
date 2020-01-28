@@ -402,6 +402,7 @@ class ProfileControllerTest extends ControllerBaseTest
                     ['name' => 'timezone', 'value' => 'America/Creston'],
                     ['name' => 'language', 'value' => 'ar'],
                     ['name' => UserPreference::SKIN, 'value' => 'blue'],
+                    ['name' => 'theme.layout', 'value' => 'fixed'],
                     ['name' => 'theme.collapsed_sidebar', 'value' => true],
                     ['name' => 'calendar.initial_view', 'value' => 'agendaDay'],
                 ]

@@ -131,7 +131,7 @@
                     {% endif %}
                     {% for metaField in customer.visibleMetaFields %}
                         <tr>
-                            <th>{{ metaField.name }}</th>
+                            <th>{{ metaField.label }}</th>
                             <td>{{ widgets.form_type_value(metaField.type, metaField.value, customer) }}</td>
                         </tr>
                     {% endfor %}
@@ -168,7 +168,7 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.customerTeamUpdate kimai.customerUpdate kimai.teamUpdate');
+            KimaiReloadPageWidget.create('kimai.customerTeamUpdate kimai.customerUpdate kimai.teamUpdate kimai.projectTeamUpdate kimai.projectUpdate');
         });
     </script>
 {% endblock %}

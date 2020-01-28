@@ -5,9 +5,13 @@
             <!--
               Global template keys
             -->
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Sledovanie času</target>
+            </trans-unit>
             <trans-unit id="browser.title">
                 <source>browser.title</source>
-                <target>GlansArt s.r.o. - Sledovanie času</target>
+                <target>Profect s.r.o. - Sledovanie času</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -19,11 +23,11 @@
             </trans-unit>
             <trans-unit id="both">
                 <source>both</source>
-                <target>Obidva</target>
+                <target>Oba</target>
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
-                <target>Povinné</target>
+                <target>Povinný údaj</target>
             </trans-unit>
             <trans-unit id="create">
                 <source>create</source>
@@ -31,15 +35,15 @@
             </trans-unit>
             <trans-unit id="confirm.delete">
                 <source>confirm.delete</source>
-                <target>Naozaj ju chcete odstrániť?</target>
+                <target>Naozaj chcete odstrániť?</target>
             </trans-unit>
             <trans-unit id="admin_entity.delete_confirm">
                 <source>admin_entity.delete_confirm</source>
-                <target>Vymazanie musíte potvrdiť, pretože sú tam aj prepojené objekty, ktoré budú tiež vymazané.</target>
+                <target>Vymazanie musíte potvrdiť, pretože sú prepojené objekty, ktoré budú tiež vymazané.</target>
             </trans-unit>
             <trans-unit id="confirm.delete_message">
                 <source>confirm.delete_message</source>
-                <target>Vymazanie musíte potvrdiť, pretože sú tam aj prepojené objekty, ktoré budú tiež vymazané.</target>
+                <target>Vymazanie musíte potvrdiť, pretože sú prepojené objekty, ktoré budú tiež vymazané.</target>
             </trans-unit>
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
@@ -52,6 +56,22 @@
             <trans-unit id="confirm">
                 <source>confirm</source>
                 <target>Potvrdiť</target>
+            </trans-unit>
+            <trans-unit id="search">
+                <source>search</source>
+                <target>Hľadať</target>
+            </trans-unit>
+            <trans-unit id="my.profile">
+                <source>my.profile</source>
+                <target>Môj profil</target>
+            </trans-unit>
+            <trans-unit id="update_multiple">
+                <source>update_multiple</source>
+                <target>%action% %count% záznamov?</target>
+            </trans-unit>
+            <trans-unit id="attachments">
+                <source>attachments</source>
+                <target>Prílohy</target>
             </trans-unit>
 
             <!--
@@ -79,7 +99,11 @@
             </trans-unit>
             <trans-unit id="label.api_token_repeat">
                 <source>label.api_token_repeat</source>
-                <target>Zopakujte heslo API</target>
+                <target>Zopakujte API heslo</target>
+            </trans-unit>
+            <trans-unit id="login_required">
+                <source>login_required</source>
+                <target>Nedostatočné oprávnenia. Presmerovať na prihlásenie?</target>
             </trans-unit>
 
             <!--
@@ -87,11 +111,11 @@
             -->
             <trans-unit id="menu.homepage">
                 <source>menu.homepage</source>
-                <target>Dashboard</target>
+                <target>Prehľad</target>
             </trans-unit>
             <trans-unit id="menu.admin">
                 <source>menu.admin</source>
-                <target>Administration</target>
+                <target>Administrácia</target>
             </trans-unit>
             <trans-unit id="menu.system">
                 <source>menu.system</source>
@@ -119,7 +143,7 @@
             </trans-unit>
             <trans-unit id="menu.admin_customer">
                 <source>menu.admin_customer</source>
-                <target>Zákazník</target>
+                <target>Zákazníci</target>
             </trans-unit>
             <trans-unit id="menu.admin_project">
                 <source>menu.admin_project</source>
@@ -133,13 +157,25 @@
                 <source>menu.admin_user</source>
                 <target>Používateľ</target>
             </trans-unit>
+            <trans-unit id="menu.admin_team">
+                <source>menu.admin_team</source>
+                <target>Tímy</target>
+            </trans-unit>
             <trans-unit id="menu.plugin">
                 <source>menu.plugin</source>
-                <target>Plugins</target>
+                <target>Doplnky</target>
             </trans-unit>
             <trans-unit id="menu.system_configuration">
                 <source>menu.system_configuration</source>
                 <target>Nastavenia</target>
+            </trans-unit>
+            <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>Značky</target>
+            </trans-unit>
+            <trans-unit id="menu.doctor">
+                <source>menu.doctor</source>
+                <target>Sys-Doktor</target>
             </trans-unit>
 
             <!--
@@ -147,7 +183,11 @@
             -->
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
-                <target>Na základe vybratých filtrov neboli nájdené žiadne položky.</target>
+                <target>Neboli nájdené žiadne položky.</target>
+            </trans-unit>
+            <trans-unit id="error.no_comments_found">
+                <source>error.no_comments_found</source>
+                <target>Nebolí nájdené žiadne komentáre.</target>
             </trans-unit>
 
             <!--
@@ -159,7 +199,7 @@
             </trans-unit>
             <trans-unit id="label.starttime">
                 <source>label.starttime</source>
-                <target>Začať</target>
+                <target>Začiatok</target>
             </trans-unit>
             <trans-unit id="label.endtime">
                 <source>label.endtime</source>
@@ -175,7 +215,7 @@
             </trans-unit>
             <trans-unit id="label.username">
                 <source>label.username</source>
-                <target>Užívateľské meno</target>
+                <target>Prihlasovacie meno</target>
             </trans-unit>
             <trans-unit id="label.description">
                 <source>label.description</source>
@@ -207,11 +247,19 @@
             </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
-                <target>Činnosť</target>
+                <target>Činnosti</target>
             </trans-unit>
             <trans-unit id="label.project">
                 <source>label.project</source>
                 <target>Projekt</target>
+            </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>Značka</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>Značky</target>
             </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
@@ -223,7 +271,7 @@
             </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
-                <target>Kimai-Theme</target>
+                <target>Farebná téma</target>
             </trans-unit>
             <trans-unit id="label.hours">
                 <source>label.hours</source>
@@ -245,9 +293,17 @@
                 <source>label.email</source>
                 <target>Email</target>
             </trans-unit>
+            <trans-unit id="label.team">
+                <source>label.team</source>
+                <target>Tím</target>
+            </trans-unit>
+            <trans-unit id="label.teamlead">
+                <source>label.teamlead</source>
+                <target>Teamleader</target>
+            </trans-unit>
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
-                <target>Vytvorte ďalšie záznamy</target>
+                <target>Vytvoriť ďalšie</target>
             </trans-unit>
 
             <!--
@@ -269,6 +325,10 @@
                 <source>action.save</source>
                 <target>Uložiť</target>
             </trans-unit>
+            <trans-unit id="action.reset">
+                <source>action.reset</source>
+                <target>Resetovať</target>
+            </trans-unit>
             <trans-unit id="action.back">
                 <source>action.back</source>
                 <target>Späť</target>
@@ -283,7 +343,7 @@
             -->
             <trans-unit id="dashboard.title">
                 <source>dashboard.title</source>
-                <target>Dashboard</target>
+                <target>Prehľad</target>
             </trans-unit>
             <trans-unit id="dashboard.subtitle">
                 <source>dashboard.subtitle</source>
@@ -309,6 +369,22 @@
                 <source>label.toggle_dropdown</source>
                 <target>Zobraziť menu</target>
             </trans-unit>
+            <trans-unit id="label.my_teams">
+                <source>label.my_teams</source>
+                <target>Moje tímy</target>
+            </trans-unit>
+            <trans-unit id="label.my_team_projects">
+                <source>label.my_team_projects</source>
+                <target>Moje tímové &amp; projekty</target>
+            </trans-unit>
+            <trans-unit id="label.progress">
+                <source>label.progress</source>
+                <target>Stav postupu</target>
+            </trans-unit>
+            <trans-unit id="label.plus_more">
+                <source>label.plus_more</source>
+                <target>+%count% viac</target>
+            </trans-unit>
 
             <!--
               Timesheet
@@ -331,19 +407,31 @@
             </trans-unit>
             <trans-unit id="label.daterange">
                 <source>label.daterange</source>
-                <target>Časové rozpätie</target>
+                <target>Rozpätie</target>
             </trans-unit>
             <trans-unit id="modal.columns.title">
                 <source>modal.columns.title</source>
-                <target>Zmeňte viditeľnosť stĺpca</target>
+                <target>Zmeniť zobrazenie stĺpca</target>
             </trans-unit>
             <trans-unit id="modal.columns.description">
                 <source>modal.columns.description</source>
-                <target>Po uložení nezaškrtnutých stĺpcov budú skryté a toto nastavenie bude uložené v súbore cookie prehliadača. Ak odstránite súbory cookie, nastavenia sa vymažú.</target>
+                <target>Po uložení budú nezaškrtnuté stĺpce skryté a toto nastavenie bude uložené v súbore cookie prehliadača.</target>
             </trans-unit>
             <trans-unit id="label.fixedRate">
                 <source>label.fixedRate</source>
-                <target>Pevne stanovena sadzba</target>
+                <target>Pevne stanovená sadzba</target>
+            </trans-unit>
+            <trans-unit id="label.color">
+                <source>label.color</source>
+                <target>Farba</target>
+            </trans-unit>
+            <trans-unit id="label.replaceTags">
+                <source>label.replaceTags</source>
+                <target>Zmeniť značky</target>
+            </trans-unit>
+            <trans-unit id="label.appendTags">
+                <source>label.appendTags</source>
+                <target>Pridať značky</target>
             </trans-unit>
 
             <!--
@@ -359,7 +447,7 @@
             </trans-unit>
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
-                <target>Pracuje už od</target>
+                <target>Pracuje u nás od</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
@@ -381,9 +469,13 @@
                 <source>profile.preferences</source>
                 <target>Preferencie</target>
             </trans-unit>
+            <trans-unit id="profile.teams">
+                <source>profile.teams</source>
+                <target>Tímy</target>
+            </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
-                <target>Minimalizujte ľavý bočný panel</target>
+                <target>Minimalizovať bočný panel</target>
             </trans-unit>
             <trans-unit id="label.calendar.initial_view">
                 <source>label.calendar.initial_view</source>
@@ -408,7 +500,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.daily_stats">
                 <source>label.timesheet.daily_stats</source>
-                <target>Zobraziť denné štatistiky v časovom rozvrhu</target>
+                <target>Zobraziť denné štatistiky v prehľade</target>
             </trans-unit>
 
             <!--
@@ -452,6 +544,14 @@
                     Alternatívne môžete vybrať projekt, do ktorého sa prenesú všetky existujúce aktivity a položky:
                 </target>
             </trans-unit>
+            <trans-unit id="label.project_start">
+                <source>label.project_start</source>
+                <target>Začiatok projektu</target>
+            </trans-unit>
+            <trans-unit id="label.project_end">
+                <source>label.project_end</source>
+                <target>Koniec projektu</target>
+            </trans-unit>
 
             <!--
               Admin: Activity
@@ -487,7 +587,11 @@
             </trans-unit>
             <trans-unit id="label.vat">
                 <source>label.vat</source>
-                <target>Daň</target>
+                <target>DIČ</target>
+            </trans-unit>
+            <trans-unit id="label.vat_id">
+                <source>label.vat_id</source>
+                <target>IČ DPH</target>
             </trans-unit>
             <trans-unit id="label.contact">
                 <source>label.contact</source>
@@ -515,7 +619,7 @@
             </trans-unit>
             <trans-unit id="label.homepage">
                 <source>label.homepage</source>
-                <target>Úvodná stránka</target>
+                <target>Web stránka</target>
             </trans-unit>
             <trans-unit id="label.timezone">
                 <source>label.timezone</source>
@@ -585,6 +689,30 @@
                     Tieto časové záznamy budú tiež vymazané!
                 </target>
             </trans-unit>
+            <trans-unit id="user_permissions.title">
+                <source>user_permissions.title</source>
+                <target>Pridelené oprávnenia</target>
+            </trans-unit>
+            <trans-unit id="user_role.title">
+                <source>user_role.title</source>
+                <target>Rola užívateľa</target>
+            </trans-unit>
+            <trans-unit id="Allowed character: A-Z and _">
+                <source>Allowed character: A-Z and _</source>
+                <target>Povolené znaky: A-Z a _</target>
+            </trans-unit>
+
+            <!--
+              Admin: Plugins
+            -->
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target>Verzia</target>
+            </trans-unit>
+            <trans-unit id="label.required_version">
+                <source>label.required_version</source>
+                <target>Potrebná verzia</target>
+            </trans-unit>
 
             <!--
               ROLES
@@ -607,7 +735,7 @@
             </trans-unit>
 
             <!--
-              Statistics data for Dashboard & Users profile
+            Statistics data for Dashboard & Users profile
             -->
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
@@ -615,19 +743,19 @@
             </trans-unit>
             <trans-unit id="stats.durationWeek">
                 <source>stats.durationWeek</source>
-                <target>Pracovný čas v tomto týždni</target>
+                <target>Pracovný čas tento týždeň</target>
             </trans-unit>
             <trans-unit id="stats.durationMonth">
                 <source>stats.durationMonth</source>
-                <target>Pracovný čas v tomto mesiaci</target>
+                <target>Pracovný čas tento mesiac</target>
             </trans-unit>
             <trans-unit id="stats.durationYear">
                 <source>stats.durationYear</source>
-                <target>Pracovné hodiny v tomto roku</target>
+                <target>Pracovný čas tento rok</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
-                <target>Celkový počet pracovných hodín</target>
+                <target>Celkový pracovný čas</target>
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>
@@ -635,15 +763,15 @@
             </trans-unit>
             <trans-unit id="stats.amountWeek">
                 <source>stats.amountWeek</source>
-                <target>Príjmy v tomto týždni</target>
+                <target>Príjmy tento týždeň</target>
             </trans-unit>
             <trans-unit id="stats.amountMonth">
                 <source>stats.amountMonth</source>
-                <target>Príjmy v tomto mesiaci</target>
+                <target>Príjmy tento mesiac</target>
             </trans-unit>
             <trans-unit id="stats.amountYear">
                 <source>stats.amountYear</source>
-                <target>Príjmy v tomto roku</target>
+                <target>Príjmy tento rok</target>
             </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
@@ -655,15 +783,15 @@
             </trans-unit>
             <trans-unit id="stats.userActiveWeek">
                 <source>stats.userActiveWeek</source>
-                <target>Aktívni užívatelia tento týždeň</target>
+                <target>Aktívni používatelia týždeň</target>
             </trans-unit>
             <trans-unit id="stats.userActiveMonth">
                 <source>stats.userActiveMonth</source>
-                <target>Aktívni používatelia tento mesiac</target>
+                <target>Aktívni používatelia mesiac</target>
             </trans-unit>
             <trans-unit id="stats.userActiveYear">
                 <source>stats.userActiveYear</source>
-                <target>Aktívni užívatelia v tomto roku</target>
+                <target>Aktívni používatelia rok</target>
             </trans-unit>
             <trans-unit id="stats.userActiveTotal">
                 <source>stats.userActiveTotal</source>
@@ -679,7 +807,7 @@
             </trans-unit>
             <trans-unit id="stats.activityTotal">
                 <source>stats.activityTotal</source>
-                <target>Čiastkové aktivity</target>
+                <target>Počet aktivít</target>
             </trans-unit>
             <trans-unit id="stats.projectTotal">
                 <source>stats.projectTotal</source>
@@ -688,6 +816,14 @@
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
                 <target>Počet zákazníkov</target>
+            </trans-unit>
+            <trans-unit id="stats.percentUsed">
+                <source>stats.percentUsed</source>
+                <target>%percent%% minutých</target>
+            </trans-unit>
+            <trans-unit id="stats.percentUsedLeft">
+                <source>stats.percentUsedLeft</source>
+                <target>%percent%% minutých (%left% zostáva)</target>
             </trans-unit>
 
             <!--
@@ -703,7 +839,11 @@
             </trans-unit>
             <trans-unit id="invoice.subtitle">
                 <source>invoice.subtitle</source>
-                <target>Vytvorte faktúry z vašich zaznamenaných položiek časového rozvrhu.</target>
+                <target>Vytvorte faktúry z vašich položiek časového rozvrhu.</target>
+            </trans-unit>
+            <trans-unit id="invoice.filter">
+                <source>invoice.filter</source>
+                <target>Filtrovať dáta faktúr</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -739,7 +879,7 @@
             </trans-unit>
             <trans-unit id="invoice.due_days">
                 <source>invoice.due_days</source>
-                <target>Cieľ platby</target>
+                <target>Lehota splatnosti</target>
             </trans-unit>
             <trans-unit id="invoice.from">
                 <source>invoice.from</source>
@@ -767,7 +907,7 @@
             </trans-unit>
             <trans-unit id="invoice.service_date">
                 <source>invoice.service_date</source>
-                <target>Dátum služby</target>
+                <target>Dátum dodania</target>
             </trans-unit>
             <trans-unit id="label.amount">
                 <source>label.amount</source>
@@ -787,11 +927,11 @@
             </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
-                <target>Potvrdenie: Dátum / Meno Konzultant / Podpis</target>
+                <target>Potvrdenie: Dátum / Meno Konzultanta / Podpis</target>
             </trans-unit>
             <trans-unit id="invoice.signature_customer">
                 <source>invoice.signature_customer</source>
-                <target>Potvrdenie: Dátum / Meno Zákazník / Podpis</target>
+                <target>Potvrdenie: Dátum / Meno Zákazníka / Podpis</target>
             </trans-unit>
             <trans-unit id="invoice.total_working_time">
                 <source>invoice.total_working_time</source>
@@ -800,6 +940,10 @@
             <trans-unit id="label.orderNumber">
                 <source>label.orderNumber</source>
                 <target>Číslo objednávky</target>
+            </trans-unit>
+            <trans-unit id="label.orderDate">
+                <source>label.orderDate</source>
+                <target>Dátum objednávky</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">
                 <source>label.invoice_tax_number</source>
@@ -827,7 +971,11 @@
             </trans-unit>
             <trans-unit id="export.subtitle">
                 <source>export.subtitle</source>
-                <target>Exportujte údaje časového rozvrhu do rôznych formátov</target>
+                <target>Exportujte údaje časového záznamu do rôznych formátov</target>
+            </trans-unit>
+            <trans-unit id="export.filter">
+                <source>export.filter</source>
+                <target>Filtrovať dáta pre export</target>
             </trans-unit>
             <trans-unit id="export.period">
                 <source>export.period</source>
@@ -835,7 +983,7 @@
             </trans-unit>
             <trans-unit id="export.document_title">
                 <source>export.document_title</source>
-                <target>Zoznam výdavkov</target>
+                <target>Prehľad výkonov</target>
             </trans-unit>
             <trans-unit id="export.full_list">
                 <source>export.full_list</source>
@@ -851,7 +999,7 @@
             </trans-unit>
             <trans-unit id="export.date_copyright">
                 <source>export.date_copyright</source>
-                <target>Vytvorené %date% s %kimai%</target>
+                <target>Vytvorené %date%</target>
             </trans-unit>
 
             <!--
@@ -929,7 +1077,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target>Vytvorte nový časový záznam</target>
+                <target>Vytvoriť nový časový záznam</target>
             </trans-unit>
 
             <!--
@@ -973,7 +1121,7 @@
             </trans-unit>
             <trans-unit id="export.mark_all">
                 <source>export.mark_all</source>
-                <target>Označiť všetky zobrazené záznamy ako zrušené?</target>
+                <target>Označiť všetky zobrazené záznamy ako exportované?</target>
             </trans-unit>
             <trans-unit id="label.globalsOnly">
                 <source>label.globalsOnly</source>

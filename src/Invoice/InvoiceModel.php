@@ -304,6 +304,8 @@ final class InvoiceModel
                 'project.name' => $project->getName(),
                 'project.comment' => $project->getComment(),
                 'project.order_number' => $project->getOrderNumber(),
+                'project.start_date' => null !== $project->getStart() ? $formatter->getFormattedDateTime($project->getStart()) : '',
+                'project.end_date' => null !== $project->getEnd() ? $formatter->getFormattedDateTime($project->getEnd()) : '',
                 'project.order_date' => null !== $project->getOrderDate() ? $formatter->getFormattedDateTime($project->getOrderDate()) : '',
                 'project.fixed_rate' => $formatter->getFormattedMoney($project->getFixedRate(), $currency),
                 'project.fixed_rate_nc' => $formatter->getFormattedMoney($project->getFixedRate(), null),
@@ -408,13 +410,46 @@ final class InvoiceModel
             'entry.user_name' => $user->getUsername(),
             'entry.user_title' => $user->getTitle(),
             'entry.user_alias' => $user->getAlias(),
-            'entry.activity' => $activity->getName(),
-            'entry.activity_id' => $activity->getId(),
-            'entry.project' => $project->getName(),
-            'entry.project_id' => $project->getId(),
-            'entry.customer' => $customer->getName(),
-            'entry.customer_id' => $customer->getId(),
         ];
+
+        if (null !== $activity) {
+            $values = array_merge($values, [
+                'entry.activity' => $activity->getName(),
+                'entry.activity_id' => $activity->getId(),
+            ]);
+
+            foreach ($activity->getVisibleMetaFields() as $metaField) {
+                $values = array_merge($values, [
+                    'entry.activity.meta.' . $metaField->getName() => $metaField->getValue(),
+                ]);
+            }
+        }
+
+        if (null !== $project) {
+            $values = array_merge($values, [
+                'entry.project' => $project->getName(),
+                'entry.project_id' => $project->getId(),
+            ]);
+
+            foreach ($project->getVisibleMetaFields() as $metaField) {
+                $values = array_merge($values, [
+                    'entry.project.meta.' . $metaField->getName() => $metaField->getValue(),
+                ]);
+            }
+        }
+
+        if (null !== $customer) {
+            $values = array_merge($values, [
+                'entry.customer' => $customer->getName(),
+                'entry.customer_id' => $customer->getId(),
+            ]);
+
+            foreach ($customer->getVisibleMetaFields() as $metaField) {
+                $values = array_merge($values, [
+                    'entry.customer.meta.' . $metaField->getName() => $metaField->getValue(),
+                ]);
+            }
+        }
 
         foreach ($invoiceItem->getAdditionalFields() as $name => $value) {
             $values = array_merge($values, [
