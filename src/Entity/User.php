@@ -277,6 +277,27 @@ class User extends BaseUser implements UserInterface
         return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get());
     }
 
+    public function getLanguage(): string
+    {
+        return $this->getLocale();
+    }
+
+    public function setLanguage(?string $language)
+    {
+        if ($language === null) {
+            $language = User::DEFAULT_LANGUAGE;
+        }
+        $this->setPreferenceValue(UserPreference::LOCALE, $language);
+    }
+
+    public function setTimezone(?string $timezone)
+    {
+        if ($timezone === null) {
+            $timezone = date_default_timezone_get();
+        }
+        $this->setPreferenceValue(UserPreference::TIMEZONE, $timezone);
+    }
+
     /**
      * @param string $name
      * @param mixed $default
