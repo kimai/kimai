@@ -29,15 +29,25 @@ class TeamEditForm extends AbstractType
                 'attr' => [
                     'autofocus' => 'autofocus'
                 ],
+                // documentation is for NelmioApiDocBundle
+                'documentation' => [
+                    'type' => 'string',
+                    'description' => 'Name of the new team',
+                ],
             ])
             ->add('teamlead', UserType::class, [
                 'label' => 'label.teamlead',
                 'multiple' => false,
                 'expanded' => false,
+                // documentation is for NelmioApiDocBundle
+                'documentation' => [
+                    'type' => 'integer',
+                    'description' => 'User ID for the teamlead',
+                ],
             ])
             ->add('users', UserType::class, [
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => $options['expand_users'],
                 'by_reference' => false,
             ])
         ;
@@ -52,6 +62,7 @@ class TeamEditForm extends AbstractType
             'data_class' => Team::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
+            'expand_users' => true,
             'csrf_token_id' => 'admin_team_edit',
             'attr' => [
                 'data-form-event' => 'kimai.teamUpdate'
