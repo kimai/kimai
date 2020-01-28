@@ -1,6 +1,6 @@
 App\Entity\Team:
     exclusion_policy: All
-    custom_accessor_order: [id, name, teamlead, users]
+    custom_accessor_order: [id, name, teamlead, users, customers, projects]
     properties:
         id:
             include: true
@@ -13,6 +13,8 @@ App\Entity\Team:
             include: true
             groups: [Team_Entity]
         customers:
-            exclude: true
+            include: true
+            groups: [Team_Entity]
         projects:
-            exclude: true
+            include: true
+            groups: [Team_Entity]

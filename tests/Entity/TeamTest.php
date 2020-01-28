@@ -57,8 +57,10 @@ class TeamTest extends TestCase
         self::assertEmpty($customer->getTeams());
 
         $sut = new Team();
+        self::assertFalse($sut->hasCustomer($customer));
         $sut->addCustomer($customer);
         self::assertEquals(1, $sut->getCustomers()->count());
+        self::assertTrue($sut->hasCustomer($customer));
         $actual = $sut->getCustomers()[0];
         self::assertSame($actual, $customer);
         self::assertSame($sut, $customer->getTeams()[0]);
@@ -75,8 +77,10 @@ class TeamTest extends TestCase
         self::assertEmpty($project->getTeams());
 
         $sut = new Team();
+        self::assertFalse($sut->hasProject($project));
         $sut->addProject($project);
         self::assertEquals(1, $sut->getProjects()->count());
+        self::assertTrue($sut->hasProject($project));
         $actual = $sut->getProjects()[0];
         self::assertSame($actual, $project);
         self::assertSame($sut, $project->getTeams()[0]);

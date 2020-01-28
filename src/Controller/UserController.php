@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Configuration\FormConfiguration;
 use App\Entity\User;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Form\Toolbar\UserToolbarForm;
@@ -31,20 +32,20 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * @Route(path="/admin/user")
  * @Security("is_granted('view_user')")
  */
-class UserController extends AbstractController
+final class UserController extends AbstractController
 {
     /**
      * @var UserPasswordEncoderInterface
      */
-    protected $encoder;
+    private $encoder;
     /**
      * @var UserRepository
      */
-    protected $repository;
+    private $repository;
     /**
      * @var EventDispatcherInterface
      */
-    protected $dispatcher;
+    private $dispatcher;
 
     public function __construct(UserPasswordEncoderInterface $encoder, UserRepository $repository, EventDispatcherInterface $dispatcher)
     {
@@ -93,23 +94,31 @@ class UserController extends AbstractController
         ]);
     }
 
+    private function createNewDefaultUser(FormConfiguration $config): User
+    {
+        $user = new User();
+        $user->setEnabled(true);
+        $user->setRoles([User::DEFAULT_ROLE]);
+        $user->setTimezone($config->getUserDefaultTimezone());
+        $user->setLanguage($config->getUserDefaultLanguage());
+
+        return $user;
+    }
+
     /**
      * @Route(path="/create", name="admin_user_create", methods={"GET", "POST"})
      * @Security("is_granted('create_user')")
      */
-    public function createAction(Request $request): Response
+    public function createAction(Request $request, FormConfiguration $config): Response
     {
-        $user = new User();
-        $user->setEnabled(true);
-        $editForm = $this->createEditForm($user);
+        $user = $this->createNewDefaultUser($config);
+        $editForm = $this->getCreateUserForm($user);
 
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $password = $this->encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-            $user->setEnabled(true);
-            $user->setRoles([User::DEFAULT_ROLE]);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -121,8 +130,12 @@ class UserController extends AbstractController
                 return $this->redirectToRoute('user_profile_edit', ['username' => $user->getUsername()]);
             }
 
-            $user = new User();
-            $editForm = $this->createEditForm($user);
+            $firstUser = $user;
+            $user = $this->createNewDefaultUser($config);
+            $user->setLanguage($firstUser->getLanguage());
+            $user->setTimezone($firstUser->getTimezone());
+
+            $editForm = $this->getCreateUserForm($user);
             $editForm->get('create_more')->setData(true);
         }
 
@@ -187,12 +200,14 @@ class UserController extends AbstractController
         ]);
     }
 
-    private function createEditForm(User $user): FormInterface
+    private function getCreateUserForm(User $user): FormInterface
     {
         return $this->createForm(UserCreateType::class, $user, [
             'action' => $this->generateUrl('admin_user_create'),
             'method' => 'POST',
-            'include_active_flag' => true
+            'include_active_flag' => true,
+            'include_preferences' => $this->isGranted('preferences', $user),
+            'include_add_more' => true,
         ]);
     }
 }

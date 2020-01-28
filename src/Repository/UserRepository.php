@@ -17,6 +17,7 @@ use App\Repository\Query\BaseQuery;
 use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -32,7 +33,19 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     }
 
     /**
-     * Used to fetch the currently logged-in user.
+     * @param User $user
+     * @throws ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveUser(User $user)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+    }
+
+    /**
+     * Used to fetch a user by its ID.
      *
      * @param int $id
      * @return null|User

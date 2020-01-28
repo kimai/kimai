@@ -21,8 +21,11 @@ nelmio_api_doc:
             - { alias: TimesheetMeta,             type: App\Entity\TimesheetMeta,                 groups: [Default, Timesheet] }
             - { alias: TimesheetCollection,       type: App\Entity\Timesheet,                     groups: [Default, Collection, Timesheet] }
             - { alias: TimesheetSubCollection,    type: App\Entity\Timesheet,                     groups: [Default, Subresource, Timesheet] }
+            - { alias: UserCreateForm,            type: App\Form\API\UserApiCreateForm,           groups: [Default, Entity, User, User_Entity] }
+            - { alias: UserEditForm,              type: App\Form\API\UserApiEditForm,             groups: [Default, Entity, User, User_Entity] }
             - { alias: UserEntity,                type: App\Entity\User,                          groups: [Default, Entity, User, User_Entity] }
             - { alias: UserCollection,            type: App\Entity\User,                          groups: [Default, Collection, User] }
+            - { alias: TeamEditForm,              type: App\Form\API\TeamApiEditForm,             groups: [Default, Entity, Team] }
             - { alias: TeamEntity,                type: App\Entity\Team,                          groups: [Default, Entity, Team, Team_Entity] }
             - { alias: TeamCollection,            type: App\Entity\Team,                          groups: [Default, Collection, Team] }
             - { alias: I18nConfig,                type: App\API\Model\I18n,                       groups: [Default] }
