@@ -32,13 +32,6 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return $this->getUserById($id);
     }
 
-    public function saveUser(User $user)
-    {
-        $entityManager = $this->getEntityManager();
-        $entityManager->persist($user);
-        $entityManager->flush();
-    }
-
     /**
      * @param User $user
      * @throws ORMException
