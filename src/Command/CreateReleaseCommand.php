@@ -48,7 +48,7 @@ class CreateReleaseCommand extends Command
             ->setName('kimai:create-release')
             ->setDescription('Create a pre-installed release package')
             ->setHelp('This command will create a release package with pre-installed composer, SQLite database and user.')
-            ->addOption('directory', null, InputOption::VALUE_OPTIONAL, 'Directory where the release package will be stored', 'var/data/')
+            ->addOption('directory', null, InputOption::VALUE_OPTIONAL, 'Directory where the release package will be stored', '/tmp/')
             ->addOption('release', null, InputOption::VALUE_OPTIONAL, 'The version that should be zipped', Constants::VERSION)
         ;
 
