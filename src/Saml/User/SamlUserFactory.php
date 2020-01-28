@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Auth\User;
+namespace App\Saml\User;
 
 use App\Entity\User;
 use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlTokenInterface;

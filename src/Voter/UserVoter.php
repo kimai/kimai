@@ -82,10 +82,16 @@ class UserVoter extends AbstractVoter
 
                 return $this->hasRolePermission($user, 'delete_user');
 
+            case self::PASSWORD:
+                if (!$subject->isInternalUser()) {
+                    return false;
+                }
+                $permission .= $attribute;
+                break;
+
             case self::VIEW:
             case self::EDIT:
             case self::PREFERENCES:
-            case self::PASSWORD:
             case self::API_TOKEN:
             case self::ROLES:
             case self::TEAMS:

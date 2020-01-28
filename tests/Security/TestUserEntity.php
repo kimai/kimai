@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Auth\User;
+namespace App\Tests\Security;
 
 use FOS\UserBundle\Model\User;
 

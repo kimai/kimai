@@ -5,13 +5,11 @@ security:
     providers:
         chain_provider:
             chain:
-                providers: [fos_userbundle]
+                providers: [kimai_internal]
         kimai_ldap:
             id: App\Ldap\LdapUserProvider
-        kimai_saml:
-            id: App\Auth\User\SamlUserProvider
-        fos_userbundle:
-            id: App\Auth\User\DoctrineUserProvider
+        kimai_internal:
+            id: App\Security\DoctrineUserProvider
 
     firewalls:
         dev:

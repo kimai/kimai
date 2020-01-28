@@ -7,16 +7,17 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Auth\Provider;
+namespace App\Saml\Provider;
 
-use App\Auth\User\SamlUserFactory;
-use Doctrine\ORM\EntityManager;
-use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlTokenFactoryInterface;
+use App\Repository\UserRepository;
+use App\Saml\SamlTokenFactory;
+use App\Saml\User\SamlUserFactory;
 use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlTokenInterface;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\User\ChainUserProvider;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 final class SamlProvider implements AuthenticationProviderInterface
@@ -30,41 +31,28 @@ final class SamlProvider implements AuthenticationProviderInterface
      */
     private $userFactory;
     /**
-     * @var SamlTokenFactoryInterface
+     * @var SamlTokenFactory
      */
     private $tokenFactory;
     /**
-     * @var EntityManager
+     * @var UserRepository
      */
-    private $entityManager;
+    private $repository;
 
-    // this constructor is defined by the bundle and receives options, that we don't need
-    public function __construct(UserProviderInterface $userProvider, array $options = [])
+    public function __construct(UserRepository $repository, UserProviderInterface $userProvider, SamlTokenFactory $tokenFactory, SamlUserFactory $userFactory)
     {
+        $this->repository = $repository;
         $this->userProvider = $userProvider;
-    }
-
-    // the following setters are here, because the bundle creates the service like this and we
-    // cannot simply change that to constructor injection
-
-    public function setUserFactory(SamlUserFactory $userFactory)
-    {
-        $this->userFactory = $userFactory;
-    }
-
-    public function setTokenFactory(SamlTokenFactoryInterface $tokenFactory)
-    {
         $this->tokenFactory = $tokenFactory;
-    }
-
-    public function setEntityManager(EntityManager $entityManager)
-    {
-        $this->entityManager = $entityManager;
+        $this->userFactory = $userFactory;
     }
 
     public function authenticate(TokenInterface $token)
     {
         $user = null;
+
+        /** @var ChainUserProvider $p */
+        $p = $this->userProvider;
 
         try {
             $user = $this->userProvider->loadUserByUsername($token->getUsername());
@@ -78,8 +66,7 @@ final class SamlProvider implements AuthenticationProviderInterface
                 $this->userFactory->hydrateUser($user, $token);
             }
 
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+            $this->repository->saveUser($user);
         } catch (\Exception $ex) {
             throw new AuthenticationException(
                 sprintf('Failed creating or hydrating user "%s": %s', $token->getUsername(), $ex->getMessage())

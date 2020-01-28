@@ -398,6 +398,9 @@ class ConfigurationTest extends TestCase
                     'mapping' => []
                 ],
                 'mapping' => [],
+                'connection' => [
+                    'organization' => []
+                ],
             ]
         ];
 

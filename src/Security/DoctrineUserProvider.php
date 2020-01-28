@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Auth\User;
+namespace App\Security;
 
 use App\Entity\User;
-use FOS\UserBundle\Model\UserManagerInterface;
+use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
@@ -19,13 +19,13 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 final class DoctrineUserProvider implements UserProviderInterface
 {
     /**
-     * @var UserManagerInterface
+     * @var UserRepository
      */
-    private $userManager;
+    private $repository;
 
-    public function __construct(UserManagerInterface $userManager)
+    public function __construct(UserRepository $repository)
     {
-        $this->userManager = $userManager;
+        $this->repository = $repository;
     }
 
     /**
@@ -33,17 +33,16 @@ final class DoctrineUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        /** @var User $user */
-        $user = $this->userManager->findUserByUsernameOrEmail($username);
+        $user = null;
 
-        if (!$user) {
-            throw new UsernameNotFoundException(sprintf('User "%s" not found.', $username));
+        try {
+            /** @var User $user */
+            $user = $this->repository->loadUserByUsername($username);
+        } catch (\Exception $ex) {
         }
 
-        // this needs improvements: should not check for LDAP user, but we have to ... as LDAP users cannot
-        // be clearly identified by now, because the auth column was introduced after LDAP!
-        if (!$user->isInternalUser() && !$user->isLdapUser()) {
-            throw new UsernameNotFoundException(sprintf('User "%s" is registered, but not as internal user.', $username));
+        if (null === $user) {
+            throw new UsernameNotFoundException(sprintf('User "%s" not found.', $username));
         }
 
         return $user;
@@ -59,15 +58,10 @@ final class DoctrineUserProvider implements UserProviderInterface
         }
 
         /** @var User $reloadedUser */
-        $reloadedUser = $this->userManager->findUserBy(['id' => $user->getId()]);
+        $reloadedUser = $this->repository->getUserById($user->getId());
 
         if (null === $reloadedUser) {
             throw new UsernameNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
-        }
-
-        // this needs improvements, should not check for LDAP user!
-        if (!$reloadedUser->isInternalUser() && !$reloadedUser->isLdapUser()) {
-            throw new UnsupportedUserException(sprintf('User "%s" is registered, but not as internal user.', $reloadedUser->getUsername()));
         }
 
         return $reloadedUser;

@@ -31,6 +31,13 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return $this->getUserById($id);
     }
 
+    public function saveUser(User $user)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+    }
+
     /**
      * Used to fetch the currently logged-in user.
      *
@@ -39,21 +46,16 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
      */
     public function getUserById($id): ?User
     {
-        try {
-            return $this->createQueryBuilder('u')
-                ->select('u', 'p', 't', 'tu', 'tl')
-                ->leftJoin('u.preferences', 'p')
-                ->leftJoin('u.teams', 't')
-                ->leftJoin('t.users', 'tu')
-                ->leftJoin('t.teamlead', 'tl')
-                ->where('u.id = :id')
-                ->setParameter('id', $id)
-                ->getQuery()
-                ->getSingleResult();
-        } catch (\Exception $ex) {
-        }
-
-        return null;
+        return $this->createQueryBuilder('u')
+            ->select('u', 'p', 't', 'tu', 'tl')
+            ->leftJoin('u.preferences', 'p')
+            ->leftJoin('u.teams', 't')
+            ->leftJoin('t.users', 'tu')
+            ->leftJoin('t.teamlead', 'tl')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
@@ -115,7 +117,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
      */
     public function loadUserByUsername($username)
     {
-        $query = $this->createQueryBuilder('u')
+        return $this->createQueryBuilder('u')
             ->select('u', 'p', 't', 'tu', 'tl')
             ->leftJoin('u.preferences', 'p')
             ->leftJoin('u.teams', 't')
@@ -123,15 +125,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->leftJoin('t.teamlead', 'tl')
             ->where('u.username = :username')
             ->orWhere('u.email = :username')
-            ->getQuery();
-
-        $result = $query->execute(['username' => $username]);
-
-        if (empty($result)) {
-            return null;
-        }
-
-        return $result[0];
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     public function getQueryBuilderForFormType(UserFormTypeQuery $query): QueryBuilder

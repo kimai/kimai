@@ -146,27 +146,8 @@ services:
     # LDAP
     # ================================================================================
 
-    kimai_ldap.security.authentication.provider:
-        class: App\Ldap\LdapAuthenticationProvider
+    App\Ldap\LdapAuthenticationProvider:
         arguments: ['@App\Security\UserChecker', '', '', '', '@App\Configuration\LdapConfiguration', '%security.authentication.hide_user_not_found%']
-
-    # ================================================================================
-    # SAML
-    # ================================================================================
-
-    OneLogin\Saml2\Auth:
-        alias: onelogin_auth
-
-    App\Auth\User\SamlUserFactory:
-        arguments: ['%kimai.saml%']
-
-    hslavich_onelogin_saml.saml_provider:
-        class: App\Auth\Provider\SamlProvider
-        arguments: [""]
-        calls:
-            -   method: setUserFactory
-                arguments:
-                    - '@App\Auth\User\SamlUserFactory'
 
     # ================================================================================
     # REPOSITORIES

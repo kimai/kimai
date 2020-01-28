@@ -7,15 +7,15 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Auth\User;
+namespace App\Tests\Saml\User;
 
-use App\Auth\User\SamlUserFactory;
 use App\Entity\User;
+use App\Saml\User\SamlUserFactory;
 use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlToken;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Auth\User\SamlUserFactory
+ * @covers \App\Saml\User\SamlUserFactory
  */
 class SamlUserFactoryTest extends TestCase
 {

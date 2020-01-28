@@ -23,6 +23,7 @@ use App\Invoice\NumberGeneratorInterface;
 use App\Invoice\RendererInterface as InvoiceRendererInterface;
 use App\Ldap\FormLoginLdapFactory;
 use App\Plugin\PluginInterface;
+use App\Saml\Security\SamlFactory;
 use App\Timesheet\CalculatorInterface as TimesheetCalculator;
 use App\Timesheet\Rounding\RoundingInterface;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
@@ -85,6 +86,7 @@ class Kernel extends BaseKernel
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');
         $extension->addSecurityListenerFactory(new FormLoginLdapFactory());
+        $extension->addSecurityListenerFactory(new SamlFactory());
     }
 
     public function registerBundles()
@@ -174,6 +176,7 @@ class Kernel extends BaseKernel
         }
         $loader->load($confDir . '/packages/local' . self::CONFIG_EXTS, 'glob');
         $loader->load($confDir . '/services' . self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir . '/services-*' . self::CONFIG_EXTS, 'glob');
         $loader->load($confDir . '/services_' . $this->environment . self::CONFIG_EXTS, 'glob');
 
         $container->addCompilerPass(new DoctrineCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
@@ -239,6 +242,6 @@ class Kernel extends BaseKernel
             return;
         }
 
-        $routes->import('../src/Auth/Controller/SamlController.php', '/auth', 'annotation');
+        $routes->import('../src/Saml/Controller/SamlController.php', '/auth', 'annotation');
     }
 }

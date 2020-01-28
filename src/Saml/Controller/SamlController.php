@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Auth\Controller;
+namespace App\Saml\Controller;
 
 use OneLogin\Saml2\Auth;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,7 +52,7 @@ final class SamlController extends AbstractController
             throw new \RuntimeException($error->getMessage());
         }
 
-        $this->oneLoginAuth->login();
+        $this->oneLoginAuth->login($session->get('_security.main.target_path'));
     }
 
     /**

@@ -7,22 +7,22 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Auth\Provider;
+namespace App\Tests\Saml\Provider;
 
-use App\Auth\Provider\SamlProvider;
-use App\Auth\User\SamlUserFactory;
-use App\Auth\User\SamlUserProvider;
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
+use App\Saml\Provider\SamlProvider;
+use App\Saml\SamlTokenFactory;
+use App\Saml\User\SamlUserFactory;
+use App\Security\DoctrineUserProvider;
 use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlToken;
-use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlTokenFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\User\ChainUserProvider;
 
 /**
- * @covers \App\Auth\Provider\SamlProvider
+ * @covers \App\Saml\Provider\SamlProvider
  */
 class SamlProviderTest extends TestCase
 {
@@ -46,14 +46,8 @@ class SamlProviderTest extends TestCase
         if ($loadUser !== false) {
             $repository->expects($this->once())->method('loadUserByUsername')->willReturn($loadUser);
         }
-        $userProvider = new SamlUserProvider($repository);
-        $provider = new SamlProvider($userProvider, []);
-
-        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
-        $provider->setEntityManager($em);
-
-        $provider->setTokenFactory(new SamlTokenFactory());
-        $provider->setUserFactory(new SamlUserFactory($mapping));
+        $userProvider = new ChainUserProvider([new DoctrineUserProvider($repository)]);
+        $provider = new SamlProvider($repository, $userProvider, new SamlTokenFactory(), new SamlUserFactory($mapping));
 
         return $provider;
     }

@@ -1,0 +1,29 @@
+
+services:
+
+    # ================================================================================
+    # SAML
+    # ================================================================================
+
+    OneLogin\Saml2\Auth:
+        alias: onelogin_auth
+
+    onelogin_auth:
+        class: OneLogin\Saml2\Auth
+        arguments: ['%kimai.saml.connection%']
+
+    App\Saml\User\SamlUserFactory:
+        arguments: ['%kimai.saml%']
+
+    kimai.saml_listener:
+        class: Hslavich\OneloginSamlBundle\Security\Firewall\SamlListener
+        parent: security.authentication.listener.abstract
+        abstract: true
+        calls:
+            - [setOneLoginAuth, ["@onelogin_auth"]]
+
+    App\Saml\Provider\SamlProvider:
+        arguments: ['@App\Repository\UserRepository', '', '@App\Saml\SamlTokenFactory', '@App\Saml\User\SamlUserFactory']
+
+    App\Saml\Security\SamlAuthenticationSuccessHandler:
+        parent: security.authentication.success_handler
