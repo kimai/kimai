@@ -24,7 +24,7 @@
             </trans-unit>
             <trans-unit id="repeat">
                 <source>repeat</source>
-                <target>Začať znovu</target>
+                <target>Opakovať</target>
             </trans-unit>
             <trans-unit id="profile-stats">
                 <source>profile-stats</source>
@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="settings">
                 <source>settings</source>
-                <target>Nastavenie</target>
+                <target>Nastavenia</target>
             </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
@@ -40,19 +40,19 @@
             </trans-unit>
             <trans-unit id="customer">
                 <source>customer</source>
-                <target>Filtrovať zákazníkov</target>
+                <target>Zákazník</target>
             </trans-unit>
             <trans-unit id="project">
                 <source>project</source>
-                <target>Filtrovať projekty</target>
+                <target>Projekt</target>
             </trans-unit>
             <trans-unit id="activity">
                 <source>activity</source>
-                <target>Filtrovať činnosti</target>
+                <target>Činnosť</target>
             </trans-unit>
             <trans-unit id="copy">
                 <source>copy</source>
-                <target>Vytvoriť kópiu</target>
+                <target>Kópia</target>
             </trans-unit>
             <trans-unit id="home">
                 <source>home</source>
@@ -69,6 +69,14 @@
             <trans-unit id="create-timesheet">
                 <source>create-timesheet</source>
                 <target>Vytvoriť pracovný výkaz</target>
+            </trans-unit>
+            <trans-unit id="permissions">
+                <source>permissions</source>
+                <target>Oprávnenia</target>
+            </trans-unit>
+            <trans-unit id="details">
+                <source>details</source>
+                <target>Detaily</target>
             </trans-unit>
         </body>
     </file>

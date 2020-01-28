@@ -4,11 +4,11 @@
         <body>
             <trans-unit id="access.denied">
                 <source>access.denied</source>
-                <target>Prístup bol odmietnutý</target>
+                <target>Prístup odmietnutý</target>
             </trans-unit>
             <trans-unit id="stacktrace">
                 <source>stacktrace</source>
-                <target>Vyskytol sa tu problém</target>
+                <target>Vyskytol sa problém</target>
             </trans-unit>
             <trans-unit id="http_error.title">
                 <source>http_error.title</source>

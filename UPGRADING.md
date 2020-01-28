@@ -30,9 +30,7 @@ They are more strict, as they allow only access to team specific items, the olde
 ### ExpenseBundle
 
 **ATTENTION** due to incompatibilities in the underlying frameworks users of the ExpenseBundle need to do one more step:
-
 You need to delete the bundle before updating: `rm -r var/plugins/ExpenseBundle`, otherwise you will run into errors during the update.
-
 After the Kimai update was successful, you have to re-install the latest bundle version, which is compatible with Kimai 1.7 only. 
 
 ### Developer

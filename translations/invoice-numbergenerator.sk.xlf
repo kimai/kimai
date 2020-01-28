@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="label.invoice_number_generator">
                 <source>label.invoice_number_generator</source>
-                <target>Generátor čísla faktúry</target>
+                <target>Generátor čísiel faktúr</target>
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>

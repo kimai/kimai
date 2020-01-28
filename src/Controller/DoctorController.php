@@ -149,26 +149,41 @@ class DoctorController extends AbstractController
         try {
             $logfile = $this->getLogFilename();
         } catch (\Exception $ex) {
-            return [
-                $ex->getMessage()
-            ];
+            return ['ATTENTION: ' . $ex->getMessage()];
         }
 
         if (!file_exists($logfile)) {
-            return [
-                'Empty or missing logfile'
-            ];
+            return ['ATTENTION: Missing logfile'];
+        }
+
+        if (!is_readable($logfile)) {
+            return ['ATTENTION: Cannot read log file'];
         }
 
         $file = new \SplFileObject($logfile, 'r');
+
+        if ($file->getSize() === 0) {
+            return ['Empty log'];
+        }
+
         $file->seek($file->getSize());
         $last_line = $file->key();
         while ($last_line - $lines < 0) {
             $lines--;
         }
-        $lines = new \LimitIterator($file, $last_line - $lines, $last_line);
+        $iterator = new \LimitIterator($file, $last_line - $lines, $last_line);
 
-        return iterator_to_array($lines);
+        $result = [];
+
+        if ($iterator->valid()) {
+            $result = iterator_to_array($iterator);
+        }
+
+        if (!is_writable($logfile)) {
+            $result[] = 'ATTENTION: Cannot write log file';
+        }
+
+        return $result;
     }
 
     private function getFilePermissions()
