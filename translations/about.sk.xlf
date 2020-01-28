@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="support">
                 <source>support</source>
-                <target>Support</target>
+                <target>Podpora</target>
             </trans-unit>
             <trans-unit id="website">
                 <source>website</source>
@@ -16,15 +16,15 @@
             </trans-unit>
             <trans-unit id="help">
                 <source>help</source>
-                <target>Dokumentácia</target>
+                <target>Pomoc</target>
             </trans-unit>
             <trans-unit id="tab.thanks">
                 <source>tab.thanks</source>
-                <target>Špeciálne poďakovanie</target>
+                <target>Poďakovanie</target>
             </trans-unit>
             <trans-unit id="donate">
                 <source>donate</source>
-                <target>Darujte pre budúcnosť Kimai</target>
+                <target>Podporte Kimai</target>
             </trans-unit>
             <trans-unit id="published_under">
                 <source>published_under</source>
@@ -32,11 +32,11 @@
             </trans-unit>
             <trans-unit id="special_thanks">
                 <source>special_thanks</source>
-                <target>Špeciálne poďakovanie patrí ...</target>
+                <target>Špeciálne poďakovanie</target>
             </trans-unit>
             <trans-unit id="library_authors">
                 <source>library_authors</source>
-                <target>… Autori nasledujúcich softvérových knižníc, Kimai, by bez teba neboli možné 👍</target>
+                <target>… Autori softvérových knižníc využívaných Kimai 👍</target>
             </trans-unit>
         </body>
     </file>

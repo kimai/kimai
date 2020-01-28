@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="plugins.title">
                 <source>plugins.title</source>
-                <target>Plugins</target>
+                <target>Rozšírenia</target>
             </trans-unit>
             <trans-unit id="plugins.subtitle">
                 <source>plugins.subtitle</source>
