@@ -208,7 +208,7 @@ final class UserController extends BaseApiController
 
         $form = $this->createForm(UserApiCreateForm::class, $user, [
             'include_roles' => $this->isGranted('roles', $user),
-            'include_active_flag' => ($user->getId() !== $this->getUser()->getId()),
+            'include_active_flag' => true,
             'include_preferences' => $this->isGranted('preferences', $user),
         ]);
 
