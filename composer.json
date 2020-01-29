@@ -44,6 +44,7 @@
         "symfony/flex": "^1.0",
         "symfony/form": "^4.0",
         "symfony/framework-bundle": "^4.0",
+        "symfony/http-client": "4.3.*",
         "symfony/intl": "^4.0",
         "symfony/monolog-bundle": "^3.4",
         "symfony/orm-pack": "^1.0",
