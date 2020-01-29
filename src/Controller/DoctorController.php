@@ -165,7 +165,7 @@ class DoctorController extends AbstractController
         if ($file->getSize() === 0) {
             return ['Empty log'];
         }
-dump($file);
+
         $file->seek($file->getSize());
         $last_line = $file->key();
         while ($last_line - $lines < 0) {
