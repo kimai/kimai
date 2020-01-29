@@ -165,7 +165,7 @@ class DoctorController extends AbstractController
         if ($file->getSize() === 0) {
             return ['Empty log'];
         }
-
+dump($file);
         $file->seek($file->getSize());
         $last_line = $file->key();
         while ($last_line - $lines < 0) {
@@ -175,8 +175,10 @@ class DoctorController extends AbstractController
 
         $result = [];
 
-        if ($iterator->valid()) {
+        try {
             $result = iterator_to_array($iterator);
+        } catch (\Exception $ex) {
+            $result = ['ATTENTION: Failed reading log file'];
         }
 
         if (!is_writable($logfile)) {
