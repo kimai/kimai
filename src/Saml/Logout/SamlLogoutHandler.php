@@ -9,8 +9,8 @@
 
 namespace App\Saml\Logout;
 
+use App\Saml\SamlAuth;
 use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlTokenInterface;
-use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Error;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,11 +20,11 @@ use Symfony\Component\Security\Http\Logout\LogoutHandlerInterface;
 final class SamlLogoutHandler implements LogoutHandlerInterface
 {
     /**
-     * @var Auth
+     * @var SamlAuth
      */
     private $samlAuth;
 
-    public function __construct(Auth $samlAuth)
+    public function __construct(SamlAuth $samlAuth)
     {
         $this->samlAuth = $samlAuth;
     }

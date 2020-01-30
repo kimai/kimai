@@ -11,8 +11,8 @@ namespace App\Tests\Saml\Logout;
 
 use App\Entity\User;
 use App\Saml\Logout\SamlLogoutHandler;
+use App\Saml\SamlAuth;
 use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlToken;
-use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Error;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class SamlLogoutHandlerTest extends TestCase
 {
     public function testLogout()
     {
-        $auth = $this->getMockBuilder(Auth::class)->disableOriginalConstructor()->getMock();
+        $auth = $this->getMockBuilder(SamlAuth::class)->disableOriginalConstructor()->getMock();
         $auth->expects($this->once())->method('processSLO')->willThrowException(new Error('blub'));
         $auth->expects($this->once())->method('getSLOurl')->willReturn('');
 
@@ -39,7 +39,7 @@ class SamlLogoutHandlerTest extends TestCase
 
     public function testLogoutWithLogoutUrl()
     {
-        $auth = $this->getMockBuilder(Auth::class)->disableOriginalConstructor()->getMock();
+        $auth = $this->getMockBuilder(SamlAuth::class)->disableOriginalConstructor()->getMock();
         $auth->expects($this->once())->method('processSLO')->willThrowException(new Error('blub'));
         $auth->expects($this->once())->method('getSLOurl')->willReturn('/logout');
         $auth->expects($this->once())->method('logout')->willReturnCallback(function () {

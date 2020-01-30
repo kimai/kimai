@@ -9,7 +9,7 @@
 
 namespace App\Saml\Controller;
 
-use OneLogin\Saml2\Auth;
+use App\Saml\SamlAuth;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,11 +22,11 @@ use Symfony\Component\Security\Core\Security;
 final class SamlController extends AbstractController
 {
     /**
-     * @var Auth
+     * @var SamlAuth
      */
     private $oneLoginAuth;
 
-    public function __construct(Auth $oneLoginAuth)
+    public function __construct(SamlAuth $oneLoginAuth)
     {
         $this->oneLoginAuth = $oneLoginAuth;
     }

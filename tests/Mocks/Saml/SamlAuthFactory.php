@@ -9,12 +9,14 @@
 
 namespace App\Tests\Mocks\Saml;
 
+use App\Saml\SamlAuth;
 use App\Tests\Mocks\AbstractMockFactory;
-use OneLogin\Saml2\Auth;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class SamlAuthFactory extends AbstractMockFactory
 {
-    public function create(?array $connection = null): Auth
+    public function create(?array $connection = null): SamlAuth
     {
         if (null === $connection) {
             $connection = [
@@ -74,6 +76,9 @@ class SamlAuthFactory extends AbstractMockFactory
             ];
         }
 
-        return new Auth($connection);
+        $requestStack = new RequestStack();
+        $requestStack->push(new Request());
+
+        return new SamlAuth($requestStack, $connection);
     }
 }

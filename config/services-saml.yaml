@@ -5,12 +5,15 @@ services:
     # SAML
     # ================================================================================
 
+    App\Saml\SamlAuth:
+        alias: onelogin_auth
+
     OneLogin\Saml2\Auth:
         alias: onelogin_auth
 
     onelogin_auth:
-        class: OneLogin\Saml2\Auth
-        arguments: ['%kimai.saml.connection%']
+        class: App\Saml\SamlAuth
+        arguments: ['@request_stack', '%kimai.saml.connection%']
 
     App\Saml\User\SamlUserFactory:
         arguments: ['%kimai.saml%']
