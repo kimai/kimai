@@ -86,8 +86,8 @@ final class PaginatedWorkingTimeChart extends SimpleWidget
             ),
             'month' => $this->repository->getStatistic(
                 'duration',
-                (clone $weekBegin)->setDate($options['year'], $weekBegin->format('n'), 1)->setTime(0, 0, 0),
-                (clone $weekBegin)->setDate($options['year'], $weekBegin->format('n'), 1)->setTime(23, 59, 59)->modify('last day of this month'),
+                (clone $weekBegin)->setDate($weekBegin->format('Y'), $weekBegin->format('n'), 1)->setTime(0, 0, 0),
+                (clone $weekBegin)->setDate($weekBegin->format('Y'), $weekBegin->format('n'), $weekBegin->format('t'))->setTime(23, 59, 59),
                 $user
             ),
             'year' => $this->repository->getStatistic(
