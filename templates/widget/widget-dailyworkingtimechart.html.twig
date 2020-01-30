@@ -12,76 +12,85 @@
     {% endif %}
 {% endif %}
 
-{{ encore_entry_link_tags('chart') }}
-{{ encore_entry_script_tags('chart') }}
-
 <div class="chart">
     <canvas id="{{ chart_id }}" style="height: {{ kimai_context.chart.height }}px;"></canvas>
 </div>
 
 <script type="text/javascript">
-document.addEventListener('kimai.initialized', function() {
-    new Chart(
-        document.getElementById('{{ chart_id }}').getContext('2d'), {
-            type: '{{ type }}',
-            data: {
-                labels: [
-                    {% for day in data -%}
-                    moment('{{ day.day|date_format('Y-m-d') }}').format('ll')
-                    {% if not loop.last %},{% endif -%}
-                    {%- endfor %}
-                ],
-                datasets: [
-                    {
-                        backgroundColor: '{{ backgroundColor }}',
-                        borderColor: '{{ borderColor }}',
-                        data: [
-                            {% for day in data -%}
-                            {{ (day.totalDuration / 3600)|number_format(2, '.', '') }}
-                            {%- if not loop.last %},{% endif -%}
-                            {%- endfor %}
-                        ],
-                        realData: [
-                            {% for day in data -%}
-                            '{{ day.totalDuration|duration }}'
-                            {%- if not loop.last %},{% endif -%}
-                            {%- endfor %}
-                        ]
-                    }
-                ]
-            },
-            options: {
-                maintainAspectRatio: true,
-                responsive: true,
-                legend: false,
-                barPercentage: 0.5,
-                categoryPercentage: 0.9,
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display: false
-                        },
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        },
-                        gridLines: {
-                            display: true,
-                            color: '{{ gridColor }}',
-                            lineWidth: 1
+    var myChart = null;
+    
+    var paintChart = function() {
+        myChart = new Chart(
+            document.getElementById('{{ chart_id }}').getContext('2d'), {
+                type: '{{ type }}',
+                data: {
+                    labels: [
+                        {% for day in data -%}
+                        moment('{{ day.day|date_format('Y-m-d') }}').format('ll')
+                        {% if not loop.last %},{% endif -%}
+                        {%- endfor %}
+                    ],
+                    datasets: [
+                        {
+                            backgroundColor: '{{ backgroundColor }}',
+                            borderColor: '{{ borderColor }}',
+                            data: [
+                                {% for day in data -%}
+                                {{ (day.totalDuration / 3600)|number_format(2, '.', '') }}
+                                {%- if not loop.last %},{% endif -%}
+                                {%- endfor %}
+                            ],
+                            realData: [
+                                {% for day in data -%}
+                                '{{ day.totalDuration|duration }}'
+                                {%- if not loop.last %},{% endif -%}
+                                {%- endfor %}
+                            ]
                         }
-                    }]
+                    ]
                 },
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            return data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                options: {
+                    maintainAspectRatio: true,
+                    responsive: true,
+                    legend: false,
+                    barPercentage: 0.5,
+                    categoryPercentage: 0.9,
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                display: false
+                            },
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            gridLines: {
+                                display: true,
+                                color: '{{ gridColor }}',
+                                lineWidth: 1
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                            }
                         }
                     }
                 }
             }
-        }
-    );
-});
+        );
+    };
+    
+    var destroyChart = function () {
+        myChart.destroy();
+    };
+    
+    {% if app.request.xmlHttpRequest %}
+        paintChart();
+    {% else %}
+        document.addEventListener('kimai.initialized', paintChart);
+    {% endif %}
 </script>
