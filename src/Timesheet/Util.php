@@ -24,7 +24,7 @@ class Util
     public static function calculateRate(float $hourlyRate, int $seconds): float
     {
         $rate = (float) ($hourlyRate * ($seconds / 3600));
-        $rate = round($rate, 2);
+        $rate = round($rate, 3);
 
         return $rate;
     }

@@ -192,7 +192,7 @@ class RateCalculatorTest extends TestCase
             [
                 31837,
                 [],
-                663.27
+                663.271
             ],
             [
                 31837,
@@ -206,7 +206,7 @@ class RateCalculatorTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                1326.54
+                1326.542
             ],
             [
                 31837,
@@ -220,7 +220,7 @@ class RateCalculatorTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                2321.45
+                2321.448
             ],
         ];
     }
