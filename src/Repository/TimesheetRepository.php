@@ -431,19 +431,19 @@ class TimesheetRepository extends EntityRepository
      */
     public function getDailyStats(User $user, DateTime $begin, DateTime $end): array
     {
-        $results = $this->getDailyData($begin, $end, $user);
-
         /** @var Day[] $days */
         $days = [];
 
         // prefill the array
         $tmp = clone $end;
         $until = (int) $begin->format('Ymd');
-        while ((int) $tmp->format('Ymd') > $until) {
-            $tmp->modify('-1 day');
+        while ((int) $tmp->format('Ymd') >= $until) {
             $last = clone $tmp;
             $days[$last->format('Ymd')] = new Day($last, 0, 0.00);
+            $tmp->modify('-1 day');
         }
+
+        $results = $this->getDailyData($begin, $end, $user);
 
         foreach ($results as $statRow) {
             $dateTime = new DateTime();
