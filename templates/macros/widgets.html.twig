@@ -396,6 +396,10 @@
         {% else %}
             {{ value }}
         {% endif %}
+    {% elseif '\\TextareaType' in type %}
+        {{ value|nl2br }}
+    {% elseif '\\EmailType' in type %}
+        <a href="mailto:{{ value }}">{{ value }}</a>
     {% else %}
         {{ value }}
     {% endif %}

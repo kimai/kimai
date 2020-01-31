@@ -57,7 +57,9 @@ final class DurationFixedBeginMode implements TrackingModeInterface
             $timesheet->setBegin($this->dateTime->createDateTime());
         }
 
-        $timesheet->getBegin()->modify($this->configuration->getDefaultBeginTime());
+        $newBegin = clone $timesheet->getBegin();
+        $newBegin->modify($this->configuration->getDefaultBeginTime());
+        $timesheet->setBegin($newBegin);
     }
 
     public function getId(): string

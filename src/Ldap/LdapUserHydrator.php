@@ -71,8 +71,9 @@ class LdapUserHydrator
             $user->setEmail($user->getUsername());
         }
 
-        // prevent that users will define a password for the internal account
+        // fill them after hydrating account, so they can't be overwritten
         $user->setPassword('');
+        $user->setAuth(User::AUTH_LDAP);
 
         $user->setPreferenceValue('ldap.dn', $ldapEntry['dn']);
     }

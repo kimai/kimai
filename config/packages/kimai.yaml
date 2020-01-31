@@ -179,11 +179,10 @@ kimai:
 # --------------------------------------------------------------------------------
     dashboard:
         user_duration:
-            title: stats.yourWorkingHours
+            title: ~
             order: 10
             permission: view_own_timesheet
-            type: '\App\Widget\Type\CompoundChart'
-            widgets: [DailyWorkingTimeChart, userDurationToday, userDurationWeek, userDurationMonth, userDurationYear]
+            widgets: [PaginatedWorkingTimeChart]
         user_teams:
             title: ~
             order: 15

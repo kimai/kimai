@@ -36,11 +36,13 @@ final class ClosestRounding implements RoundingInterface
             return;
         }
 
+        $newBegin = clone $record->getBegin();
         if ($diff > ($seconds / 2)) {
-            $record->getBegin()->setTimestamp($timestamp - $diff + $seconds);
+            $newBegin->setTimestamp($timestamp - $diff + $seconds);
         } else {
-            $record->getBegin()->setTimestamp($timestamp - $diff);
+            $newBegin->setTimestamp($timestamp - $diff);
         }
+        $record->setBegin($newBegin);
     }
 
     /**
@@ -61,11 +63,13 @@ final class ClosestRounding implements RoundingInterface
             return;
         }
 
+        $newEnd = clone $record->getEnd();
         if ($diff > ($seconds / 2)) {
-            $record->getEnd()->setTimestamp($timestamp - $diff + $seconds);
+            $newEnd->setTimestamp($timestamp - $diff + $seconds);
         } else {
-            $record->getEnd()->setTimestamp($timestamp - $diff);
+            $newEnd->setTimestamp($timestamp - $diff);
         }
+        $record->setEnd($newEnd);
     }
 
     /**
