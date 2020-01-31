@@ -4,7 +4,4 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'form/kimai-theme.html.twig'
-    # cannot be activated, as it breaks fosrestbundle - wait until fosrest 2.7 is released, see
-    # https://github.com/FriendsOfSymfony/FOSRestBundle/pull/2036
-    # https://github.com/FriendsOfSymfony/FOSRestBundle/issues/2059
-    #exception_controller: null
+    exception_controller: null
