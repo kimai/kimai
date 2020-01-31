@@ -101,9 +101,11 @@ class DailyWorkingTimeChartTest extends TestCase
     public function testGetData()
     {
         $repository = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->onlyMethods(['getDailyData'])->getMock();
-        $repository->expects($this->once())->method('getDailyData')->willReturnCallback(function ($user, $begin, $end) {
+        $repository->expects($this->once())->method('getDailyData')->willReturnCallback(function ($begin, $end, $user) {
+            $today = (new \DateTime());
+
             return [
-                ['year' => '2019', 'month' => '1', 'day' => 1, 'rate' => 13.75, 'duration' => 1234]
+                ['year' => $today->format('Y'), 'month' => $today->format('n'), 'day' => $today->format('j'), 'rate' => 13.75, 'duration' => 1234]
             ];
         });
 

@@ -175,8 +175,10 @@ class DoctorController extends AbstractController
 
         $result = [];
 
-        if ($iterator->valid()) {
+        try {
             $result = iterator_to_array($iterator);
+        } catch (\Exception $ex) {
+            $result = ['ATTENTION: Failed reading log file'];
         }
 
         if (!is_writable($logfile)) {

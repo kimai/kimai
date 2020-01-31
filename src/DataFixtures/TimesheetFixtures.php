@@ -234,7 +234,9 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
                 ->setDuration($duration);
         } else {
             // running entries should be short
-            $entry->getBegin()->setTimestamp(time())->modify('- ' . rand(10, self::TIMERANGE_RUNNING) . ' minutes');
+            $newBegin = clone $entry->getBegin();
+            $newBegin->setTimestamp(time())->modify('- ' . rand(10, self::TIMERANGE_RUNNING) . ' minutes');
+            $entry->setBegin($newBegin);
         }
 
         return $entry;

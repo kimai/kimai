@@ -50,7 +50,9 @@ final class DurationOnlyMode extends AbstractTrackingMode
             $timesheet->setBegin($this->dateTime->createDateTime());
         }
 
-        $timesheet->getBegin()->modify($this->configuration->getDefaultBeginTime());
+        $newBegin = clone $timesheet->getBegin();
+        $newBegin->modify($this->configuration->getDefaultBeginTime());
+        $timesheet->setBegin($newBegin);
 
         parent::create($timesheet, $request);
     }
