@@ -137,6 +137,12 @@ class DebugRendererTest extends TestCase
                 'project.meta.foo-project',
                 'project.start_date',
                 'project.end_date',
+                'project.budget_money',
+                'project.budget_money_nc',
+                'project.budget_money_plain',
+                'project.budget_time',
+                'project.budget_time_decimal',
+                'project.budget_time_minutes',
             ]);
         }
 
