@@ -36,7 +36,9 @@ final class FloorRounding implements RoundingInterface
             return;
         }
 
-        $record->getBegin()->setTimestamp($timestamp - $diff);
+        $newBegin = clone $record->getBegin();
+        $newBegin->setTimestamp($timestamp - $diff);
+        $record->setBegin($newBegin);
     }
 
     /**
@@ -57,7 +59,9 @@ final class FloorRounding implements RoundingInterface
             return;
         }
 
-        $record->getEnd()->setTimestamp($timestamp - $diff);
+        $newEnd = clone $record->getEnd();
+        $newEnd->setTimestamp($timestamp - $diff);
+        $record->setEnd($newEnd);
     }
 
     /**
