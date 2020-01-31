@@ -25,13 +25,13 @@ require('select2/dist/js/i18n/it');
 require('select2/dist/js/i18n/ja');
 require('select2/dist/js/i18n/ko');
 require('select2/dist/js/i18n/nl');
+require('select2/dist/js/i18n/pl');
 require('select2/dist/js/i18n/pt-BR');
 require('select2/dist/js/i18n/ru');
 require('select2/dist/js/i18n/sk');
 require('select2/dist/js/i18n/sv');
 require('select2/dist/js/i18n/tr');
 require('select2/dist/js/i18n/zh-CN');
-require('select2/dist/js/i18n/pl');
 
 const Moment = require('moment');
 global.moment = Moment;
@@ -48,13 +48,13 @@ require('moment/locale/it');
 require('moment/locale/ja');
 require('moment/locale/ko');
 require('moment/locale/nl');
+require('moment/locale/pl');
 require('moment/locale/pt-br');
 require('moment/locale/ru');
 require('moment/locale/sk');
 require('moment/locale/sv');
 require('moment/locale/tr');
 require('moment/locale/zh-cn');
-require('moment/locale/pl');
 
 
 require('daterangepicker');
