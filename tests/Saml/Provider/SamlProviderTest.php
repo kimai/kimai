@@ -31,7 +31,6 @@ class SamlProviderTest extends TestCase
         if (null === $mapping) {
             $mapping = [
                 'mapping' => [
-                    ['saml' => '$$avatar', 'kimai' => 'avatar'],
                     ['saml' => '$Email', 'kimai' => 'email'],
                     ['saml' => '$title', 'kimai' => 'title'],
                 ],

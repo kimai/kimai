@@ -85,25 +85,30 @@ final class SamlUserFactory implements SamlUserFactoryInterface
         $user->setAuth(User::AUTH_SAML);
     }
 
-    private function getPropertyValue($token, $attribute)
+    private function getPropertyValue(SamlTokenInterface $token, $attribute)
     {
-        if (is_string($attribute)) {
-            $attributes = $token->getAttributes();
-            if ('$$' === substr($attribute, 0, 2)) {
-                $key = substr($attribute, 2);
-                if (isset($attributes[$key])) {
-                    return $attributes[$key][0];
-                }
+        $results = [];
+        $attributes = $token->getAttributes();
 
-                return null;
-            } elseif ('$' === substr($attribute, 0, 1)) {
-                $key = substr($attribute, 1);
+        $parts = explode(' ', $attribute);
+        foreach ($parts as $part) {
+            if (empty(trim($part))) {
+                continue;
+            }
+            if ($part[0] === '$') {
+                $key = substr($part, 1);
                 if (!isset($attributes[$key])) {
                     throw new \RuntimeException('Missing user attribute: ' . $key);
                 }
 
-                return $attributes[$key][0];
+                $results[] = $attributes[$key][0];
+            } else {
+                $results[] = $part;
             }
+        }
+
+        if (!empty($results)) {
+            return implode(' ', $results);
         }
 
         return $attribute;

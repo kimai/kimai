@@ -26,9 +26,34 @@ class SamlUserFactoryTest extends TestCase
 
         $mapping = [
             'mapping' => [
-                ['saml' => '$$avatar', 'kimai' => 'avatar'],
                 ['saml' => '$Email', 'kimai' => 'email'],
                 ['saml' => '$title', 'kimai' => 'title'],
+            ],
+            'roles' => [
+                'attribute' => '',
+                'mapping' => []
+            ]
+        ];
+
+        $attributes = [
+            'Email' => ['test@example.com'],
+        ];
+
+        $token = new SamlToken();
+        $token->setAttributes($attributes);
+
+        $sut = new SamlUserFactory($mapping);
+        $user = $sut->createUser($token);
+    }
+
+    public function testCreateUserThrowsExceptionOnMissingAttributeInMultiple()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Missing user attribute: test');
+
+        $mapping = [
+            'mapping' => [
+                ['saml' => '$Email $test', 'kimai' => 'email'],
             ],
             'roles' => [
                 'attribute' => '',
@@ -54,7 +79,6 @@ class SamlUserFactoryTest extends TestCase
 
         $mapping = [
             'mapping' => [
-                ['saml' => '$$avatar', 'kimai' => 'avatar'],
                 ['saml' => '$Email', 'kimai' => 'email'],
                 ['saml' => '$Email', 'kimai' => 'foo'],
             ],
@@ -79,9 +103,11 @@ class SamlUserFactoryTest extends TestCase
     {
         $mapping = [
             'mapping' => [
-                ['saml' => '$$avatar', 'kimai' => 'avatar'],
+                ['saml' => '$avatar', 'kimai' => 'avatar'],
                 ['saml' => '$Email', 'kimai' => 'email'],
                 ['saml' => 'A static super title', 'kimai' => 'title'],
+                // double space between "$LastName  $FOOO" on purpose!!!
+                ['saml' => '$FirstName $LastName  $FOOO me', 'kimai' => 'alias'],
             ],
             'roles' => [
                 'attribute' => 'RoLeS',
@@ -97,6 +123,8 @@ class SamlUserFactoryTest extends TestCase
             'RoLeS' => ['ROLE_1', 'ROLE_2', 'ROLE_3'],
             'Email' => ['test@example.com'],
             'FOOO' => ['test', 'test2'],
+            'FirstName' => ['Kevin'],
+            'LastName' => ['Papst'],
             'avatar' => ['http://www.example.com/test.jpg'],
         ];
 
@@ -113,6 +141,7 @@ class SamlUserFactoryTest extends TestCase
         self::assertEquals('test@example.com', $user->getEmail());
         self::assertEquals('foo@example.com', $user->getUsername());
         self::assertEquals('A static super title', $user->getTitle());
+        self::assertEquals('Kevin Papst test me', $user->getAlias());
         self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_2', 'ROLE_USER'], $user->getRoles());
     }
 
@@ -120,7 +149,7 @@ class SamlUserFactoryTest extends TestCase
     {
         $mapping = [
             'mapping' => [
-                ['saml' => '$$avatar', 'kimai' => 'avatar'],
+                ['saml' => '$avatar', 'kimai' => 'avatar'],
                 ['saml' => '$Email', 'kimai' => 'email'],
                 ['saml' => 'A static super title', 'kimai' => 'title'],
                 ['saml' => 'Mr. T', 'kimai' => 'username'],
