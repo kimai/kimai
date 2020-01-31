@@ -125,7 +125,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     /**
      * @var float
      *
-     * @ORM\Column(name="rate", type="float", precision=10, scale=2, nullable=false)
+     * @ORM\Column(name="rate", type="float", nullable=false)
      * @Assert\GreaterThanOrEqual(0)
      */
     private $rate = 0.00;
