@@ -186,6 +186,9 @@
     "hoa/zformat": {
         "version": "1.17.01.10"
     },
+    "hslavich/oneloginsaml-bundle": {
+        "version": "v1.4.1"
+    },
     "illuminate/cache": {
         "version": "v6.0.4"
     },
@@ -272,6 +275,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
+    },
+    "onelogin/php-saml": {
+        "version": "3.4.1"
     },
     "pagerfanta/pagerfanta": {
         "version": "v1.0.5"
@@ -368,6 +374,9 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
+    },
+    "robrichards/xmlseclibs": {
+        "version": "3.0.4"
     },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"

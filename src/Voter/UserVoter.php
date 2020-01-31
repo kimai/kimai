@@ -67,6 +67,10 @@ class UserVoter extends AbstractVoter
             }
 
             return $this->hasRolePermission($user, 'delete_user');
+        } elseif ($attribute === 'password') {
+            if (!$subject->isInternalUser()) {
+                return false;
+            }
         }
 
         $permission = $attribute;
