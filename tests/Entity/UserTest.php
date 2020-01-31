@@ -24,23 +24,54 @@ class UserTest extends TestCase
     {
         $user = new User();
         $this->assertInstanceOf(ArrayCollection::class, $user->getPreferences());
-        $this->assertNull($user->getTitle());
-        $this->assertNull($user->getDisplayName());
-        $this->assertNull($user->getAvatar());
-        $this->assertNull($user->getAlias());
-        $this->assertNull($user->getId());
-        $this->assertNull($user->getApiToken());
-        $this->assertNull($user->getPlainApiToken());
-        $this->assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
+        self::assertNull($user->getTitle());
+        self::assertNull($user->getDisplayName());
+        self::assertNull($user->getAvatar());
+        self::assertNull($user->getAlias());
+        self::assertNull($user->getId());
+        self::assertNull($user->getApiToken());
+        self::assertNull($user->getPlainApiToken());
+        self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
 
         $user->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
-        $this->assertEquals('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', $user->getAvatar());
+        self::assertEquals('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', $user->getAvatar());
+
         $user->setApiToken('nbvfdswe34567ujko098765rerfghbgvfcdsert');
-        $this->assertEquals('nbvfdswe34567ujko098765rerfghbgvfcdsert', $user->getApiToken());
+        self::assertEquals('nbvfdswe34567ujko098765rerfghbgvfcdsert', $user->getApiToken());
+
         $user->setPlainApiToken('https://www.gravatar.com/avatar/nbvfdswe34567ujko098765rerfghbgvfcdsert');
-        $this->assertEquals('https://www.gravatar.com/avatar/nbvfdswe34567ujko098765rerfghbgvfcdsert', $user->getPlainApiToken());
+        self::assertEquals('https://www.gravatar.com/avatar/nbvfdswe34567ujko098765rerfghbgvfcdsert', $user->getPlainApiToken());
+
         $user->setTitle('Mr. Code Blaster');
-        $this->assertEquals('Mr. Code Blaster', $user->getTitle());
+        self::assertEquals('Mr. Code Blaster', $user->getTitle());
+    }
+
+    public function testAuth()
+    {
+        $user = new User();
+
+        self::assertEquals(User::AUTH_INTERNAL, $user->getAuth());
+        self::assertFalse($user->isLdapUser());
+        self::assertFalse($user->isSamlUser());
+        self::assertTrue($user->isInternalUser());
+
+        $user->setAuth(User::AUTH_LDAP);
+        self::assertEquals(User::AUTH_LDAP, $user->getAuth());
+        self::assertTrue($user->isLdapUser());
+        self::assertFalse($user->isSamlUser());
+        self::assertFalse($user->isInternalUser());
+
+        $user->setAuth(User::AUTH_SAML);
+        self::assertEquals(User::AUTH_SAML, $user->getAuth());
+        self::assertFalse($user->isLdapUser());
+        self::assertTrue($user->isSamlUser());
+        self::assertFalse($user->isInternalUser());
+
+        $user->setAuth(User::AUTH_INTERNAL);
+        self::assertEquals(User::AUTH_INTERNAL, $user->getAuth());
+        self::assertFalse($user->isLdapUser());
+        self::assertFalse($user->isSamlUser());
+        self::assertTrue($user->isInternalUser());
     }
 
     public function testDatetime()
@@ -48,30 +79,30 @@ class UserTest extends TestCase
         $date = new \DateTime('+1 day');
         $user = new User();
         $user->setRegisteredAt($date);
-        $this->assertEquals($date, $user->getRegisteredAt());
+        self::assertEquals($date, $user->getRegisteredAt());
     }
 
     public function testPreferences()
     {
         $user = new User();
-        $this->assertNull($user->getPreference('test'));
-        $this->assertNull($user->getPreferenceValue('test'));
-        $this->assertEquals('foo', $user->getPreferenceValue('test', 'foo'));
+        self::assertNull($user->getPreference('test'));
+        self::assertNull($user->getPreferenceValue('test'));
+        self::assertEquals('foo', $user->getPreferenceValue('test', 'foo'));
 
         $preference = new UserPreference();
         $preference
             ->setName('test')
             ->setValue('foobar');
         $user->addPreference($preference);
-        $this->assertEquals('foobar', $user->getPreferenceValue('test', 'foo'));
-        $this->assertEquals($preference, $user->getPreference('test'));
+        self::assertEquals('foobar', $user->getPreferenceValue('test', 'foo'));
+        self::assertEquals($preference, $user->getPreference('test'));
 
         $user->setPreferenceValue('test', 'Hello World');
-        $this->assertEquals('Hello World', $user->getPreferenceValue('test', 'foo'));
+        self::assertEquals('Hello World', $user->getPreferenceValue('test', 'foo'));
 
-        $this->assertNull($user->getPreferenceValue('test2'));
+        self::assertNull($user->getPreferenceValue('test2'));
         $user->setPreferenceValue('test2', 'I like rain');
-        $this->assertEquals('I like rain', $user->getPreferenceValue('test2'));
+        self::assertEquals('I like rain', $user->getPreferenceValue('test2'));
     }
 
     public function testDisplayName()
@@ -79,28 +110,28 @@ class UserTest extends TestCase
         $user = new User();
 
         $user->setUsername('bar');
-        $this->assertEquals('bar', $user->getDisplayName());
-        $this->assertEquals('bar', $user->getUsername());
-        $this->assertEquals('bar', (string) $user);
+        self::assertEquals('bar', $user->getDisplayName());
+        self::assertEquals('bar', $user->getUsername());
+        self::assertEquals('bar', (string) $user);
 
         $user->setAlias('foo');
-        $this->assertEquals('foo', $user->getAlias());
-        $this->assertEquals('bar', $user->getUsername());
-        $this->assertEquals('foo', $user->getDisplayName());
-        $this->assertEquals('foo', (string) $user);
+        self::assertEquals('foo', $user->getAlias());
+        self::assertEquals('bar', $user->getUsername());
+        self::assertEquals('foo', $user->getDisplayName());
+        self::assertEquals('foo', (string) $user);
     }
 
     public function testGetLocale()
     {
         $sut = new User();
-        $this->assertEquals(User::DEFAULT_LANGUAGE, $sut->getLocale());
+        self::assertEquals(User::DEFAULT_LANGUAGE, $sut->getLocale());
 
         $language = new UserPreference();
         $language->setName(UserPreference::LOCALE);
         $language->setValue('fr');
         $sut->addPreference($language);
 
-        $this->assertEquals('fr', $sut->getLocale());
+        self::assertEquals('fr', $sut->getLocale());
     }
 
     public function testTeams()
@@ -141,5 +172,26 @@ class UserTest extends TestCase
         self::assertFalse($sut->isTeamlead());
         $sut->addRole(User::ROLE_TEAMLEAD);
         self::assertTrue($sut->isTeamlead());
+    }
+
+    public function testPreferencesCollectionIsCreatedOnBrokenUser()
+    {
+        // this code is only used in some rare edge cases, maybe even only in development ...
+        // lets keep it, as it occured during the work on SAML authentication
+        $sut = new User();
+
+        $preference = new UserPreference();
+        $preference
+            ->setName('test')
+            ->setValue('foobar');
+
+        $property = new \ReflectionProperty(User::class, 'preferences');
+        $property->setAccessible(true);
+        $property->setValue($sut, null);
+
+        // make sure that addPreference will work, even if the internal collection was set to null
+        $sut->addPreference($preference);
+
+        self::assertEquals('foobar', $sut->getPreferenceValue('test'));
     }
 }

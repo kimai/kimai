@@ -181,6 +181,46 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
+    public function testValidateSamlIsMissingMappingForEmail()
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.saml": You need to configure a SAML mapping for the email attribute.');
+
+        $config = $this->getMinConfig();
+        $config['saml'] = [
+            'activate' => true,
+            'mapping' => [],
+        ];
+
+        $this->assertConfig($config, []);
+    }
+
+    public function testValidateSamlDoesNotTriggerOnDeactivatedSaml()
+    {
+        $finalizedConfig = $this->getCompiledConfig($this->getMinConfig());
+        $config = $this->getMinConfig();
+        $config['saml'] = [
+            'activate' => false,
+            'mapping' => [],
+        ];
+
+        $this->assertConfig($config, $finalizedConfig);
+    }
+
+    public function testValidateSamlDoesNotTriggerWhenEmailMappingExists()
+    {
+        $config = $this->getMinConfig();
+        $config['saml'] = [
+            'activate' => true,
+            'mapping' => [
+                ['saml' => 'email', 'kimai' => 'email']
+            ],
+        ];
+        $finalizedConfig = $this->getCompiledConfig($config);
+
+        $this->assertConfig($config, $finalizedConfig);
+    }
+
     public function testDefaultLdapSettings()
     {
         $finalizedConfig = $this->getCompiledConfig($this->getMinConfig());
@@ -348,6 +388,18 @@ class ConfigurationTest extends TestCase
                     'nameAttribute' => 'cn',
                     'userDnAttribute' => 'member',
                     'groups' => [],
+                ],
+            ],
+            'saml' => [
+                'activate' => false,
+                'title' => 'Login with SAML',
+                'roles' => [
+                    'attribute' => null,
+                    'mapping' => []
+                ],
+                'mapping' => [],
+                'connection' => [
+                    'organization' => []
                 ],
             ]
         ];
