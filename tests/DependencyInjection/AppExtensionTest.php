@@ -57,6 +57,9 @@ class AppExtensionTest extends TestCase
                 'data_dir' => '/tmp/',
                 'plugin_dir' => '/tmp/',
                 'timesheet' => [],
+                'saml' => [
+                    'connection' => []
+                ]
             ]
         ];
     }

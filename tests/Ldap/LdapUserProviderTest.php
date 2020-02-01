@@ -10,9 +10,11 @@
 namespace App\Tests\Ldap;
 
 use App\Entity\User;
+use App\Ldap\LdapDriverException;
 use App\Ldap\LdapManager;
 use App\Ldap\LdapUserProvider;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 /**
@@ -51,6 +53,7 @@ class LdapUserProviderTest extends TestCase
         $user = new User();
         $user->setUsername('foobar');
         $user->setPreferenceValue('ldap.dn', 'sdfdsf');
+        self::assertFalse($user->isLdapUser());
 
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['updateUser'])->getMock();
 
@@ -59,5 +62,36 @@ class LdapUserProviderTest extends TestCase
 
         self::assertInstanceOf(User::class, $actual);
         self::assertSame($user, $actual);
+        self::assertTrue($user->isLdapUser());
+    }
+
+    public function testRefreshUserThrowsExceptionOnNonLdapUser()
+    {
+        $this->expectException(UnsupportedUserException::class);
+        $this->expectExceptionMessage('Account "foobar" is not a registered LDAP user.');
+
+        $user = new User();
+        $user->setUsername('foobar');
+
+        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['updateUser'])->getMock();
+
+        $sut = new LdapUserProvider($manager);
+        $actual = $sut->refreshUser($user);
+    }
+
+    public function testRefreshUserThrowsExceptionOnBrokenUpdateUser()
+    {
+        $this->expectException(UnsupportedUserException::class);
+        $this->expectExceptionMessage('Failed to refresh user "foobar", probably DN is expired.');
+
+        $user = new User();
+        $user->setUsername('foobar');
+        $user->setPreferenceValue('ldap.dn', 'sdfdsf');
+
+        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['updateUser'])->getMock();
+        $manager->expects($this->once())->method('updateUser')->willThrowException(new LdapDriverException('blub'));
+
+        $sut = new LdapUserProvider($manager);
+        $actual = $sut->refreshUser($user);
     }
 }

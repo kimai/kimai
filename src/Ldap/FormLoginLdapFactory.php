@@ -20,12 +20,12 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class FormLoginLdapFactory implements SecurityFactoryInterface
 {
-    public function create(ContainerBuilder $container, $id, $config, $userProviderId, $defaultEntryPointId)
+    public function create(ContainerBuilder $container, $id, $config, $userProviderId, $defaultEntryPoint)
     {
         $authProviderId = $this->createAuthProvider($container, $id, $userProviderId);
         $listenerId = $this->createListener($container, $id, $config);
 
-        return [$authProviderId, $listenerId, $defaultEntryPointId];
+        return [$authProviderId, $listenerId, $defaultEntryPoint];
     }
 
     public function getPosition()
@@ -44,11 +44,10 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
 
     protected function createAuthProvider(ContainerBuilder $container, $id, $userProviderId)
     {
-        $provider = 'kimai_ldap.security.authentication.provider';
-        $providerId = $provider . '.' . $id;
+        $providerId = 'security.authentication.provider.kimai_ldap.' . $id;
 
         $container
-            ->setDefinition($providerId, new ChildDefinition($provider))
+            ->setDefinition($providerId, new ChildDefinition(LdapAuthenticationProvider::class))
             ->replaceArgument(1, $id)
             ->replaceArgument(2, new Reference($userProviderId))
         ;
@@ -58,14 +57,14 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
 
     protected function createListener(ContainerBuilder $container, $id, $config)
     {
-        $listenerId = 'security.authentication.listener.form';
+        $listener = 'security.authentication.listener.form';
+        $listenerId = $listener . '.' . $id;
 
-        $listener = new ChildDefinition($listenerId);
-        $listener->replaceArgument(4, $id);
-        $listener->replaceArgument(5, $config);
-
-        $listenerId .= '.' . $id;
-        $container->setDefinition($listenerId, $listener);
+        $container
+            ->setDefinition($listenerId, new ChildDefinition($listener))
+            ->replaceArgument(4, $id)
+            ->replaceArgument(5, $config)
+        ;
 
         return $listenerId;
     }
