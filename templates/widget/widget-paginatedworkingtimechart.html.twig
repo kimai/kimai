@@ -25,8 +25,8 @@
                         {% else %}
                             {% set nextWeek = nextWeek + 1 %}
                         {% endif %}
-                        <li class="prev"><a onclick="destroyChart()" href="{{ path('widgets_working_time_chart', {'year': prevYear, 'week': prevWeek}) }}" rel="prev">← </a></li>
-                        <li class="next"><a onclick="destroyChart()" href="{{ path('widgets_working_time_chart', {'year': nextYear, 'week': nextWeek}) }}" rel="next"> →</a></li>
+                        <li class="prev"><a onclick="destroyChart()" href="{{ path('widgets_working_time_chart', {'year': prevYear, 'week': prevWeek}) }}" rel="prev"><span class="fa fa-chevron-left"></span></a></li>
+                        <li class="next"><a onclick="destroyChart()" href="{{ path('widgets_working_time_chart', {'year': nextYear, 'week': nextWeek}) }}" rel="next"><span class="fa fa-chevron-right"></span></a></li>
                     </ul>
             {% endblock %}
             {% block box_body %}
