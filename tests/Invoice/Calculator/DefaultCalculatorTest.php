@@ -70,7 +70,7 @@ class DefaultCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals('default', $sut->getId());
         $this->assertEquals(581.17, $sut->getTotal());
         $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $sut->getCurrency());
+        $this->assertEquals('EUR', $model->getCurrency());
         $this->assertEquals(488.38, $sut->getSubtotal());
         $this->assertEquals(5800, $sut->getTimeWorked());
     }

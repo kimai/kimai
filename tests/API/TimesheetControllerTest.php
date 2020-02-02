@@ -56,7 +56,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1))
             ->setAllowEmptyDescriptions(false)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
     }
 
     public function testIsSecure()
