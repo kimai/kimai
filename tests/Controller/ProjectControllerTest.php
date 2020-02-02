@@ -180,14 +180,14 @@ class ProjectControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
-        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text());
+        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
 
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/admin/project/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
-        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text());
+        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
         self::assertEquals(1, $node->count());
     }
