@@ -89,7 +89,7 @@ abstract class AbstractCalculatorTest extends TestCase
         $model = new InvoiceModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
-        $model->setEntries([$timesheet]);
+        $model->addEntries([$timesheet]);
         $model->setQuery($query);
 
         $sut->setModel($model);

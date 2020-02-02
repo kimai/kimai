@@ -61,7 +61,7 @@ class DefaultCalculatorTest extends AbstractCalculatorTest
         $model = new InvoiceModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
-        $model->setEntries($entries);
+        $model->addEntries($entries);
         $model->setQuery(new InvoiceQuery());
 
         $sut = new DefaultCalculator();

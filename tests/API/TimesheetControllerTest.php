@@ -501,7 +501,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $timesheet = $em->getRepository(Timesheet::class)->find(1);
         $timesheet->setExported(true);
         $em->persist($timesheet);
-        $em->flush($timesheet);
+        $em->flush();
 
         $this->request($client, '/api/timesheets/1', 'DELETE');
         $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to delete this timesheet');
@@ -516,7 +516,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $timesheet = $em->getRepository(Timesheet::class)->find(1);
         $timesheet->setExported(true);
         $em->persist($timesheet);
-        $em->flush($timesheet);
+        $em->flush();
 
         $this->request($client, '/api/timesheets/1', 'DELETE');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -734,7 +734,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $timesheet->setMetaField((new TimesheetMeta())->setName('xxxxxxx')->setValue('asdasdasd'));
         $timesheet->setMetaField((new TimesheetMeta())->setName('1234567890')->setValue('1234567890')->setIsVisible(true));
         $em->persist($timesheet);
-        $em->flush($timesheet);
+        $em->flush();
 
         $timesheet = $em->getRepository(Timesheet::class)->find(1);
         $this->assertEquals('foo', $timesheet->getDescription());
