@@ -52,6 +52,7 @@ interface CalculatorInterface
     /**
      * Returns the currency for the invoices amounts.
      *
+     * @deprecated since 1.8 will be removed with 2.0
      * @return string
      */
     public function getCurrency(): string;
