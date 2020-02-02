@@ -81,35 +81,35 @@
                             {% endif %}
                         </td>
                     </tr>
-                    {% if can_edit %}
-                        <tr>
-                            <th>{{ 'label.fixedRate'|trans }}</th>
-                            <td>
-                                {% if project.fixedRate is not empty %}
-                                    {{ project.fixedRate|money(project.customer.currency) }}
-                                {% else %}
-                                    &ndash;
-                                {% endif %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>{{ 'label.hourlyRate'|trans }}</th>
-                            <td>
-                                {% if project.hourlyRate is not empty %}
-                                    {{ project.hourlyRate|money(project.customer.currency) }}
-                                {% else %}
-                                    &ndash;
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endif %}
-                    {% for metaField in project.visibleMetaFields %}
-                        <tr>
-                            <th>{{ metaField.label }}</th>
-                            <td>{{ widgets.form_type_value(metaField.type, metaField.value, project) }}</td>
-                        </tr>
-                    {% endfor %}
                 {% endif %}
+                {% if can_edit %}
+                    <tr>
+                        <th>{{ 'label.fixedRate'|trans }}</th>
+                        <td>
+                            {% if project.fixedRate is not empty %}
+                                {{ project.fixedRate|money(project.customer.currency) }}
+                            {% else %}
+                                &ndash;
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'label.hourlyRate'|trans }}</th>
+                        <td>
+                            {% if project.hourlyRate is not empty %}
+                                {{ project.hourlyRate|money(project.customer.currency) }}
+                            {% else %}
+                                &ndash;
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% for metaField in project.visibleMetaFields %}
+                    <tr>
+                        <th>{{ metaField.label }}</th>
+                        <td>{{ widgets.form_type_value(metaField.type, metaField.value, project) }}</td>
+                    </tr>
+                {% endfor %}
             </table>
         {% endblock %}
     {% endembed %}

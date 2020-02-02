@@ -30,6 +30,7 @@ class CustomerVoter extends AbstractVoter
         'delete',
         'permissions',
         'comments',
+        'comments_create',
         'details',
     ];
 
