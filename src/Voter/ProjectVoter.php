@@ -29,6 +29,7 @@ class ProjectVoter extends AbstractVoter
         'delete',
         'permissions',
         'comments',
+        'comments_create',
         'details',
     ];
 

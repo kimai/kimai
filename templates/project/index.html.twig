@@ -45,7 +45,7 @@
         {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.projectUpdate kimai.projectTeamUpdate'}) }}
 
         {% for entry in entries %}
-            <tr class="alternative-link open-edit" data-href="{{ path('project_details', {'id': entry.id}) }}">
+            <tr{% if is_granted('view', entry) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': entry.id}) }}"{% endif %}>
                 <td>{{ widgets.label_color_dot('project', true, entry.name, null, entry.color) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
                     {{ widgets.label_customer(entry.customer) }}
