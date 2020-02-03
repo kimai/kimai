@@ -171,7 +171,7 @@ final class ProjectController extends AbstractController
 
     /**
      * @Route(path="/{id}/comment_add", name="project_comment_add", methods={"POST"})
-     * @Security("is_granted('edit', project) and is_granted('comments', project)")
+     * @Security("is_granted('comments_create', project)")
      */
     public function addCommentAction(Project $project, Request $request)
     {
@@ -273,12 +273,8 @@ final class ProjectController extends AbstractController
         $comments = null;
         $teams = null;
 
-        if ($this->isGranted('edit', $project)) {
-            $commentForm = $this->getCommentForm($project, new ProjectComment())->createView();
-
-            if ($this->isGranted('create_team')) {
-                $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
-            }
+        if ($this->isGranted('edit', $project) && $this->isGranted('create_team')) {
+            $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
         }
 
         if ($this->isGranted('budget', $project)) {
@@ -287,6 +283,10 @@ final class ProjectController extends AbstractController
 
         if ($this->isGranted('comments', $project)) {
             $comments = $this->repository->getComments($project);
+        }
+
+        if ($this->isGranted('comments_create', $project)) {
+            $commentForm = $this->getCommentForm($project, new ProjectComment())->createView();
         }
 
         if ($this->isGranted('permissions', $project) || $this->isGranted('details', $project) || $this->isGranted('view_team')) {

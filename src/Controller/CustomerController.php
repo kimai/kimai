@@ -168,7 +168,7 @@ final class CustomerController extends AbstractController
 
     /**
      * @Route(path="/{id}/comment_add", name="customer_comment_add", methods={"POST"})
-     * @Security("is_granted('edit', customer) and is_granted('comments', customer)")
+     * @Security("is_granted('comments_create', customer)")
      */
     public function addCommentAction(Customer $customer, Request $request)
     {
@@ -271,12 +271,8 @@ final class CustomerController extends AbstractController
         $teams = null;
         $projects = null;
 
-        if ($this->isGranted('edit', $customer)) {
-            $commentForm = $this->getCommentForm($customer, new CustomerComment())->createView();
-
-            if ($this->isGranted('create_team')) {
-                $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
-            }
+        if ($this->isGranted('edit', $customer) && $this->isGranted('create_team')) {
+            $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
         }
 
         if (null !== $customer->getTimezone()) {
@@ -289,6 +285,10 @@ final class CustomerController extends AbstractController
 
         if ($this->isGranted('comments', $customer)) {
             $comments = $this->repository->getComments($customer);
+        }
+
+        if ($this->isGranted('comments_create', $customer)) {
+            $commentForm = $this->getCommentForm($customer, new CustomerComment())->createView();
         }
 
         if ($this->isGranted('permissions', $customer) || $this->isGranted('details', $customer) || $this->isGranted('view_team')) {
