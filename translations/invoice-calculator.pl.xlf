@@ -12,11 +12,11 @@
             </trans-unit>
             <trans-unit id="short">
                 <source>short</source>
-                <target>Godzinowy: wpisy cżąstkowe sumowane , pojedyńcza pozycja dla całości</target>
+                <target>Godzinowy: Wpisy cżąstkowe sumowane , pojedyńcza pozycja dla całości</target>
             </trans-unit>
             <trans-unit id="user">
                 <source>user</source>
-                <target>Użytkownik: Jedea pozycja per użytkownika</target>
+                <target>Użytkownik: Jedna pozycja per użytkownika</target>
             </trans-unit>
             <trans-unit id="activity">
                 <source>activity</source>

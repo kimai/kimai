@@ -112,7 +112,7 @@
             </trans-unit>
             <trans-unit id="label.theme.branding.mini">
                 <source>label.theme.branding.mini</source>
-                <target>Mini Logo (obiżona ramka)</target>
+                <target>Mini Logo (obniżona ramka)</target>
             </trans-unit>
             <trans-unit id="label.theme.branding.title">
                 <source>label.theme.branding.title</source>
@@ -124,7 +124,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.rounding.default.begin">
                 <source>label.timesheet.rounding.default.begin</source>
-                <target>Zaokrąglanie czasu startu w minutaach (0 = nieaktywne)</target>
+                <target>Zaokrąglanie czasu startu w minutach (0 = nieaktywne)</target>
             </trans-unit>
             <trans-unit id="label.timesheet.rounding.default.end">
                 <source>label.timesheet.rounding.default.end</source>

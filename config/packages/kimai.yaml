@@ -179,20 +179,21 @@ kimai:
 # --------------------------------------------------------------------------------
     dashboard:
         user_duration:
-            title: ~
+            title: stats.yourWorkingHours
             order: 10
             permission: view_own_timesheet
-            widgets: [PaginatedWorkingTimeChart]
-        user_teams:
-            title: ~
-            order: 15
-            permission: ROLE_USER
-            widgets: [UserTeams, UserTeamProjects]
+            type: '\App\Widget\Type\CompoundChart'
+            widgets: [DailyWorkingTimeChart, userDurationToday, userDurationWeek, userDurationMonth, userDurationYear]
         user_rates:
             title: ~
             order: 20
             permission: view_rate_own_timesheet
             widgets: [userAmountToday, userAmountWeek, userAmountMonth, userAmountYear]
+        user_teams:
+            title: ~
+            order: 15
+            permission: ROLE_USER
+            widgets: [UserTeams, UserTeamProjects]
         duration:
             title: dashboard.all
             order: 30
@@ -292,6 +293,12 @@ kimai:
             date_time: 'd. m.  H:i'
         sv:
             duration: '%%h:%%m tim'
+        pl:
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date: 'd.m.Y'
+            date_time: 'd.m. H:i'
+
 # --------------------------------------------------------------------------------
 
 

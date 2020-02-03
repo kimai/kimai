@@ -524,8 +524,8 @@
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
                 <target>
-                    Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activities% 
-                    czynności oraz  %records% wpisów czasu, które sumują się do łącznej długości %duration% .
+                    Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activities% czynności
+                    oraz  %records% wpisów czasu, które sumują się do łącznej długości %duration% .
                 </target>
             </trans-unit>
             <trans-unit id="label.project_start">
@@ -547,9 +547,9 @@
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target>
-                    Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activities% 
-                    czynności oraz  %records% wpisów czasu, które sumują się do łacznej długości %duration% .
-                </target>
+                    Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activities% czynności
+                    oraz  %records% wpisów czasu, które sumują się do łącznej długości %duration% .		
+		 </target>
             </trans-unit>
 
             <!--
@@ -614,8 +614,8 @@
             <trans-unit id="admin_customer.short_stats">
                 <source>admin_customer.short_stats</source>
                 <target>
-                     Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activities% 
-                     czynności oraz  %records% wpisów czasu, które sumują się do łacznej długości %duration% .
+                    Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activity% czynności
+                    oraz  %records% wpisów czasu, które sumują się do łącznej długości %duration% .
                 </target>
             </trans-unit>
 
@@ -982,7 +982,7 @@
             -->
             <trans-unit id="month.1">
                 <source>month.1</source>
-                <target>Styczeń</target>
+                <target>styczeń</target>
             </trans-unit>
             <trans-unit id="month.2">
                 <source>month.2</source>
