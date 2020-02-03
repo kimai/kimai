@@ -308,4 +308,3 @@ kimai:
     data_dir: '%kernel.project_dir%/var/data'
     plugin_dir: '%kernel.project_dir%/var/plugins'
 # --------------------------------------------------------------------------------
-
