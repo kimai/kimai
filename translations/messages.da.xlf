@@ -908,14 +908,6 @@
                 <source>label.invoice_bank_account</source>
                 <target>Bankkonto</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target>
-                    Damer og herrer,
-
-                    Jeg takker jer for jeres ordre og anmoder for min ydelse:
-                </target>
-            </trans-unit>
 
             <!--
               Export

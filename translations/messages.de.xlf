@@ -928,13 +928,9 @@
                 <source>label.invoice_bank_account</source>
                 <target>Bankverbindung</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target>
-                    Sehr geehrte Damen und Herren,
-
-                    für Ihren Auftrag bedanke ich mich und berechne für meine Leistungen:
-                </target>
+            <trans-unit id="label.decimalDuration">
+                <source>label.decimalDuration</source>
+                <target>Dauer als Dezimalzahl anzeigen</target>
             </trans-unit>
 
             <!--
