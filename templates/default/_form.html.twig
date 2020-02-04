@@ -1,31 +1,33 @@
 {% if form_theme is defined %}
     {% form_theme form form_theme %}
 {% endif %}
-<div class="box box-primary">
-    {% block form_before %}{% endblock %}
-    {{ form_start(form) }}
-    <div class="box-header with-border">
-        <h3 class="box-title">
-            {{ title }}
-            {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
-                <a href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="{{ 'help'|icon }}"></i></a>
-            {% endif %}
-        </h3>
-    </div>
-    <div class="box-body">
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'boxtype': 'primary'} %}
+    {% block box_before %}
+        {% block form_before %}{% endblock %}
+        {{ form_start(form) }}
+    {% endblock %}
+    {% block box_title %}
+        {{ title }}
+        {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
+            <a href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="{{ 'help'|icon }}"></i></a>
+        {% endif %}
+    {% endblock %}
+    {% block box_body %}
         {% block form_body %}
             {{ form_widget(form) }}
         {% endblock %}
-    </div>
-    <div class="box-footer">
+    {% endblock %}
+    {% block box_footer %}
         <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
         {% if back|default(false) %}
             <a href="{{ back }}" class="btn btn-link">{{ 'action.back'|trans }}</a>
         {% endif %}
         {% if reset|default(true) %}
-        <input type="reset" value="{{ 'action.reset'|trans }}" class="btn btn-link pull-right" />
+            <input type="reset" value="{{ 'action.reset'|trans }}" class="btn btn-link pull-right" />
         {% endif %}
-    </div>
-    {{ form_end(form) }}
-    {% block form_after %}{% endblock %}
-</div>
+    {% endblock %}
+    {% block box_after %}
+        {{ form_end(form) }}
+        {% block form_after %}{% endblock %}
+    {% endblock %}
+{% endembed %}
