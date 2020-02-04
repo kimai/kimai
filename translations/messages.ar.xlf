@@ -653,14 +653,6 @@
                 <source>label.invoice_bank_account</source>
                 <target>حساب البنك</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target>
-                    السيدات والسادة،
-
-                    أشكرك على طلبك ورسوم خدماتي:
-                </target>
-            </trans-unit>
 
             <!--
               Month names

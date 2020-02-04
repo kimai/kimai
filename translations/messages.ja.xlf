@@ -804,12 +804,6 @@
                 <source>label.invoice_bank_account</source>
                 <target>銀行口座</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target>
-                    ご注文を頂きましたことならびにお支払い頂きますことに対して深く感謝申し上げます:
-                </target>
-            </trans-unit>
 
             <!--
               Export

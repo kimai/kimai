@@ -286,7 +286,7 @@
         "version": "1.0.1"
     },
     "php": {
-        "version": "7.2"
+        "version": "7.2.9"
     },
     "php-cs-fixer/diff": {
         "version": "v1.2.0"
@@ -567,11 +567,17 @@
     "symfony/polyfill-ctype": {
         "version": "v1.8.0"
     },
+    "symfony/polyfill-intl-grapheme": {
+        "version": "v1.13.1"
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.6.0"
     },
     "symfony/polyfill-intl-idn": {
         "version": "v1.11.0"
+    },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.13.1"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.6.0"
@@ -632,6 +638,9 @@
     },
     "symfony/stopwatch": {
         "version": "v4.0.3"
+    },
+    "symfony/string": {
+        "version": "v5.0.4"
     },
     "symfony/swiftmailer-bundle": {
         "version": "2.5",
@@ -711,14 +720,14 @@
     "theseer/tokenizer": {
         "version": "1.1.0"
     },
-    "twig/extensions": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "4851df0afc426b8f07204379d21fca25b6df5d68"
-        }
+    "twig/extra-bundle": {
+        "version": "v3.0.1"
+    },
+    "twig/intl-extra": {
+        "version": "v3.0.1"
+    },
+    "twig/string-extra": {
+        "version": "v3.0.1"
     },
     "twig/twig": {
         "version": "v2.4.4"

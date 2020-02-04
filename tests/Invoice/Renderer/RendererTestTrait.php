@@ -107,6 +107,7 @@ trait RendererTestTrait
         $user->addPreference((new UserPreference())->setName('hello')->setValue('world'));
 
         $customer = new Customer();
+        $customer->setName('customer,with/special#name');
         $customer->setCurrency('EUR');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
@@ -232,6 +233,7 @@ trait RendererTestTrait
         $user->addPreference((new UserPreference())->setName('hello')->setValue('world'));
 
         $customer = new Customer();
+        $customer->setName('customer,with/special#name');
         $customer->setCurrency('USD');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
