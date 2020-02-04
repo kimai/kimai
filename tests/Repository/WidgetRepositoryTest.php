@@ -14,6 +14,7 @@ use App\Repository\TimesheetRepository;
 use App\Repository\WidgetRepository;
 use App\Tests\Mocks\Security\CurrentUserFactory;
 use App\Widget\Type\CompoundChart;
+use App\Widget\Type\Counter;
 use App\Widget\WidgetException;
 use PHPUnit\Framework\TestCase;
 
@@ -87,6 +88,7 @@ class WidgetRepositoryTest extends TestCase
             'end' => null,
             'query' => $query,
             'title' => 'Test widget',
+            'type' => Counter::class,
         ];
 
         $sut = new WidgetRepository($repoMock, $userMock, ['test' => $widget]);

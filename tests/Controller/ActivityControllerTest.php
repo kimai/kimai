@@ -40,7 +40,7 @@ class ActivityControllerTest extends ControllerBaseTest
     public function testIndexActionWithSearchTermQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
         $fixture = new ActivityFixtures();
         $fixture->setAmount(5);
         $fixture->setCallback(function (Activity $activity) {
@@ -49,7 +49,7 @@ class ActivityControllerTest extends ControllerBaseTest
             $activity->setMetaField((new ActivityMeta())->setName('location')->setValue('homeoffice'));
             $activity->setMetaField((new ActivityMeta())->setName('feature')->setValue('timetracking'));
         });
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/');
@@ -77,7 +77,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $fixture->setAmount(10);
         $fixture->setActivities($em->getRepository(Activity::class)->findAll());
         $fixture->setUser($this->getUserByRole($em, User::ROLE_ADMIN));
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/1/budget');
@@ -125,11 +125,9 @@ class ActivityControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new ProjectFixtures();
         $fixture->setAmount(10);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->assertAccessIsGranted($client, '/admin/activity/create');
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
@@ -224,10 +222,11 @@ class ActivityControllerTest extends ControllerBaseTest
 
         /** @var EntityManager $em */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
         $fixture->setAmount(10);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         $this->assertEquals(10, count($timesheets));
@@ -264,13 +263,14 @@ class ActivityControllerTest extends ControllerBaseTest
 
         /** @var EntityManager $em */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
         $fixture->setAmount(10);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
         $fixture = new ActivityFixtures();
         $fixture->setAmount(1)->setIsGlobal(true)->setIsVisible(true);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         $this->assertEquals(10, count($timesheets));

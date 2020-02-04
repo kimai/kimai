@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\Project;
+use App\Entity\User;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\API\ProjectApiEditForm;
 use App\Repository\ProjectRepository;
@@ -89,8 +90,11 @@ class ProjectController extends BaseApiController
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         $query = new ProjectQuery();
-        $query->setCurrentUser($this->getUser());
+        $query->setCurrentUser($user);
 
         if (null !== ($order = $paramFetcher->get('order'))) {
             $query->setOrder($order);

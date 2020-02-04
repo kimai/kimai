@@ -9,6 +9,7 @@
 >
     <php>
         <ini name="error_reporting" value="-1" />
+        <ini name="max_execution_time" value="-1" />
         <ini name="intl.default_locale" value="en_US" />
         <env name="KERNEL_CLASS" value="App\Kernel" force="true"/>
         <env name="APP_ENV" value="test" force="true"/>
@@ -56,10 +57,16 @@
         </whitelist>
     </filter>
 
+    <!--
+        begins a database transaction before every testcase and rolls it back after the test finished, so
+        tests can manipulate the database without affecting other tests
+        @see https://github.com/dmaicher/doctrine-test-bundle
+    -->
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
+
     <listeners>
-        <!-- it begins a database transaction before every testcase and rolls it back after
-             the test finished, so tests can manipulate the database without affecting other tests -->
-        <listener class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitListener" />
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
 </phpunit>

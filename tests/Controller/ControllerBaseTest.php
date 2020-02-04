@@ -279,7 +279,7 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertCalloutWidgetWithMessage(Client $client, string $message)
     {
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
-        self::assertStringContainsString($message, $node->text());
+        self::assertStringContainsString($message, $node->text(null, true));
     }
 
     protected function assertHasFlashDeleteSuccess(Client $client)
@@ -301,7 +301,7 @@ abstract class ControllerBaseTest extends WebTestCase
         $node = $client->getCrawler()->filter('div.alert.alert-success.alert-dismissible');
         self::assertGreaterThan(0, $node->count(), 'Could not find flash success message');
         if (null !== $message) {
-            self::assertStringContainsString($message, $node->text());
+            self::assertStringContainsString($message, $node->text(null, true));
         }
     }
 
@@ -314,7 +314,7 @@ abstract class ControllerBaseTest extends WebTestCase
         $node = $client->getCrawler()->filter('div.alert.alert-error.alert-dismissible');
         self::assertGreaterThan(0, $node->count(), 'Could not find flash error message');
         if (null !== $message) {
-            self::assertStringContainsString($message, $node->text());
+            self::assertStringContainsString($message, $node->text(null, true));
         }
     }
 
