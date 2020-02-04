@@ -58,7 +58,7 @@ class OdsRendererTest extends TestCase
 
         $file = $response->getFile();
         $this->assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=open-spreadsheet.ods', $response->headers->get('Content-Disposition'));
+        $this->assertEquals('attachment; filename=200204-customer_with_special_name.ods', $response->headers->get('Content-Disposition'));
 
         $this->assertTrue(file_exists($file->getRealPath()));
 

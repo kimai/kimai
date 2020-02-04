@@ -22,10 +22,10 @@
         "friendsofsymfony/rest-bundle": "^2.5",
         "friendsofsymfony/user-bundle": "dev-master",
         "gedmo/doctrine-extensions": "^2.4",
+        "hslavich/oneloginsaml-bundle": "^1.4",
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.2",
         "kevinpapst/adminlte-bundle": "^3.0",
-        "hslavich/oneloginsaml-bundle": "^1.4",
         "kimai/kimai2-composer": "^0.1",
         "laravolt/avatar": "^3.0",
         "league/csv": "^9.4",
@@ -57,7 +57,9 @@
         "symfony/validator": "^4.0",
         "symfony/webpack-encore-bundle": "^1.5",
         "symfony/yaml": "^4.0",
-        "twig/extensions": "^1.5",
+        "twig/extra-bundle": "^3.0",
+        "twig/intl-extra": "^3.0",
+        "twig/string-extra": "^3.0",
         "white-october/pagerfanta-bundle": "^1.1"
     },
     "require-dev": {
@@ -86,7 +88,7 @@
     ],    
     "config": {
         "platform": {
-            "php": "7.2"
+            "php": "7.2.9"
         },
         "preferred-install": {
             "*": "dist"

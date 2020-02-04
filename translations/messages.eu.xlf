@@ -916,14 +916,6 @@
                 <source>label.invoice_bank_account</source>
                 <target>Kontu Korronte Zenbakia</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target>
-                   Jaun-Andreok,
-
-                   Zuen eskaria eskertzen dut eta ondorengoa ordaindu beharko duzue:
-                </target>
-            </trans-unit>
 
             <!--
               Export

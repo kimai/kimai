@@ -1,0 +1,58 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Tests\Invoice\Hydrator;
+
+use App\Invoice\Hydrator\InvoiceModelActivityHydrator;
+use App\Tests\Invoice\Renderer\RendererTestTrait;
+use PHPUnit\Framework\TestCase;
+
+/**
+ * @covers \App\Invoice\Hydrator\InvoiceModelActivityHydrator
+ */
+class InvoiceModelActivityHydratorTest extends TestCase
+{
+    use RendererTestTrait;
+
+    public function testHydrate()
+    {
+        $model = $this->getInvoiceModel();
+
+        $sut = new InvoiceModelActivityHydrator();
+
+        $result = $sut->hydrate($model);
+        $this->assertModelStructure($result);
+
+        $model->getQuery()->setActivity(null);
+        $result = $sut->hydrate($model);
+        self::assertEmpty($result);
+    }
+
+    protected function assertModelStructure(array $model)
+    {
+        $keys = [
+            'activity.id',
+            'activity.name',
+            'activity.comment',
+            'activity.fixed_rate',
+            'activity.fixed_rate_nc',
+            'activity.fixed_rate_plain',
+            'activity.hourly_rate',
+            'activity.hourly_rate_nc',
+            'activity.hourly_rate_plain',
+            'activity.meta.foo-activity',
+        ];
+
+        $givenKeys = array_keys($model);
+        sort($keys);
+        sort($givenKeys);
+
+        $this->assertEquals($keys, $givenKeys);
+    }
+}
