@@ -10,8 +10,10 @@
 namespace App\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
+use App\Invoice\InvoiceModel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\String\UnicodeString;
 
 /**
  * @internal
@@ -41,6 +43,18 @@ abstract class AbstractRenderer
         }
 
         return false;
+    }
+
+    protected function buildFilename(InvoiceModel $model): string
+    {
+        $company = $model->getCustomer()->getCompany();
+        if (empty($company)) {
+            $company = $model->getCustomer()->getName();
+        }
+
+        $company = new UnicodeString($company);
+
+        return $model->getNumberGenerator()->getInvoiceNumber() . '-' . $company->snake();
     }
 
     /**
