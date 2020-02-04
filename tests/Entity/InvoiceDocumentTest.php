@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \App\Entity\InvoiceDocument
  */
-class InvoiceTemplateTest extends TestCase
+class InvoiceDocumentTest extends TestCase
 {
     public function testDefaultValues()
     {

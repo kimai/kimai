@@ -47,14 +47,19 @@ abstract class AbstractRenderer
 
     protected function buildFilename(InvoiceModel $model): string
     {
+        $filename = $model->getNumberGenerator()->getInvoiceNumber();
+
         $company = $model->getCustomer()->getCompany();
         if (empty($company)) {
             $company = $model->getCustomer()->getName();
         }
 
-        $company = new UnicodeString($company);
+        if (!empty($company)) {
+            $company = new UnicodeString($company);
+            $filename .= '-' . $company->snake();
+        }
 
-        return $model->getNumberGenerator()->getInvoiceNumber() . '-' . $company->snake();
+        return $filename;
     }
 
     /**

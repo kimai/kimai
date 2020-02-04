@@ -47,7 +47,7 @@ class DocxRendererTest extends TestCase
 
         $file = $response->getFile();
         $this->assertEquals('application/vnd.openxmlformats-officedocument.wordprocessingml.document', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=company.docx', $response->headers->get('Content-Disposition'));
+        $this->assertEquals('attachment; filename=200204-customer_with_special_name.docx', $response->headers->get('Content-Disposition'));
 
         $this->assertTrue(file_exists($file->getRealPath()));
 

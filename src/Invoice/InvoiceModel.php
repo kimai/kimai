@@ -171,7 +171,7 @@ final class InvoiceModel
     }
 
     /**
-     * @param Customer $customer
+     * @param Customer|null $customer
      * @return InvoiceModel
      */
     public function setCustomer($customer): InvoiceModel

@@ -17,12 +17,13 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
     public function hydrate(InvoiceModel $model): array
     {
         $project = $model->getQuery()->getProject();
-        $formatter = $model->getFormatter();
-        $currency = $model->getCurrency();
 
         if (null === $project) {
             return [];
         }
+
+        $formatter = $model->getFormatter();
+        $currency = $model->getCurrency();
 
         $values = [
             'project.id' => $project->getId(),
