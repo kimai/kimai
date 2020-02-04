@@ -804,14 +804,6 @@
                 <source>label.invoice_bank_account</source>
                 <target>Conta Bancária</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target>
-                    Senhoras e senhores,
-
-                    Agradeço pelo seu pedido e cobro pelos meus serviços:
-                </target>
-            </trans-unit>
 
             <!--
               Export

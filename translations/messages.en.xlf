@@ -928,13 +928,9 @@
                 <source>label.invoice_bank_account</source>
                 <target>Bank account</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target>
-                    Ladies and gentlemen,
-
-                    I thank you for your order and charge for my services:
-                </target>
+            <trans-unit id="label.decimalDuration">
+                <source>label.decimalDuration</source>
+                <target>Display duration as decimal number</target>
             </trans-unit>
 
             <!--

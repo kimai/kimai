@@ -33,7 +33,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $result = $client->getCrawler()->filter('section.content div.box.box-primary');
         $this->assertEquals(count($expectedForms), count($result));
 
-        $result = $client->getCrawler()->filter('section.content div.box.box-primary form');
+        $result = $client->getCrawler()->filter('section.content form div.box.box-primary');
         $this->assertEquals(count($expectedForms), count($result));
 
         foreach ($expectedForms as $formConfig) {

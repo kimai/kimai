@@ -216,11 +216,11 @@ class ExtensionsTest extends TestCase
 
         $sut = $this->getSut($this->localeEn);
         $this->assertEquals('02:37 h', $sut->duration($record->getDuration()));
-        $this->assertEquals('02:37:17 h', $sut->duration($record->getDuration(), '%h:%m:%s h'));
+        $this->assertEquals('2.62', $sut->duration($record->getDuration(), true));
 
         // test Timesheet object
         $this->assertEquals('02:37 h', $sut->duration($record));
-        $this->assertEquals('02:37:17', $sut->duration($record, '%h:%m:%s'));
+        $this->assertEquals('2.62', $sut->duration($record, true));
 
         // test extended format
         $sut = $this->getSut($this->localeFake, 'XX');
@@ -237,6 +237,7 @@ class ExtensionsTest extends TestCase
         $sut = $this->getSut($this->localeEn, 'en');
 
         $this->assertEquals('00:00 h', $sut->duration(null));
+        $this->assertEquals('0', $sut->duration(null, true));
     }
 
     public function testDurationDecimal()
