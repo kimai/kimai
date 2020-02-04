@@ -66,7 +66,7 @@ class ExportControllerTest extends ControllerBaseTest
                 $em->persist($team);
             })
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
 
@@ -76,7 +76,7 @@ class ExportControllerTest extends ControllerBaseTest
             ->setAmount(2)
             ->setStartDate($begin)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
         $em->flush();
 
         $this->request($client, '/export/?preview=');
@@ -112,7 +112,7 @@ class ExportControllerTest extends ControllerBaseTest
             ->setAmount(20)
             ->setStartDate($begin)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/export/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -128,7 +128,7 @@ class ExportControllerTest extends ControllerBaseTest
             ->setAmount(2)
             ->setStartDate($begin)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/export/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -194,7 +194,7 @@ class ExportControllerTest extends ControllerBaseTest
             ->setAmount(20)
             ->setStartDate($begin)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/export/');
         $this->assertTrue($client->getResponse()->isSuccessful());

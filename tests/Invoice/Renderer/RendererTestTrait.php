@@ -204,7 +204,7 @@ trait RendererTestTrait
         $model = new InvoiceModel($this->getFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
-        $model->setEntries($entries);
+        $model->addEntries($entries);
         $model->setQuery($query);
         $model->setUser($user);
 
@@ -276,7 +276,7 @@ trait RendererTestTrait
         $model = new InvoiceModel($this->getFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
-        $model->setEntries($entries);
+        $model->addEntries($entries);
         $model->setQuery($query);
         $model->setUser($user);
 

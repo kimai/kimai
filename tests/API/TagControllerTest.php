@@ -21,14 +21,13 @@ class TagControllerTest extends APIControllerBaseTest
     protected function setUp(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $tagList = ['Test', 'Administration', 'Support', '#2018-001', '#2018-002', '#2018-003', 'Development',
             'Marketing', 'First Level Support', 'Bug Fixing'];
 
         $fixture = new TagFixtures();
         $fixture->setTagArray($tagList);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
     }
 
     public function testIsSecure()

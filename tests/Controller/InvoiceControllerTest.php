@@ -40,9 +40,8 @@ class InvoiceControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new InvoiceFixtures();
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/invoice/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -54,9 +53,8 @@ class InvoiceControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new InvoiceFixtures();
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/invoice/template');
 
@@ -94,7 +92,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new InvoiceFixtures();
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         /** @var InvoiceTemplate $template */
         $template = $em->getRepository(InvoiceTemplate::class)->find(1);
@@ -123,7 +121,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new InvoiceFixtures();
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $begin = new \DateTime('first day of this month');
         $end = new \DateTime('last day of this month');
@@ -133,7 +131,7 @@ class InvoiceControllerTest extends ControllerBaseTest
             ->setAmount(20)
             ->setStartDate($begin)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -186,9 +184,8 @@ class InvoiceControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new InvoiceFixtures();
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/invoice/template/1/edit?page=1');
         $form = $client->getCrawler()->filter('form[name=invoice_template_form]')->form();
@@ -216,7 +213,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new InvoiceFixtures();
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/invoice/template/1/delete');
         $this->assertIsRedirect($client, '/invoice/template');

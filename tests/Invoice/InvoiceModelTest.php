@@ -59,10 +59,6 @@ class InvoiceModelTest extends TestCase
         self::assertInstanceOf(InvoiceModel::class, $sut->setCalculator($calculator));
         self::assertSame($calculator, $sut->getCalculator());
 
-        $entries = [new Timesheet()];
-        self::assertInstanceOf(InvoiceModel::class, $sut->setEntries($entries));
-        self::assertSame($entries, $sut->getEntries());
-
         $generator = new DateNumberGenerator();
         self::assertInstanceOf(InvoiceModel::class, $sut->setNumberGenerator($generator));
         self::assertSame($generator, $sut->getNumberGenerator());
@@ -72,5 +68,17 @@ class InvoiceModelTest extends TestCase
         self::assertInstanceOf(InvoiceModel::class, $sut->setTemplate($template));
         self::assertSame($template, $sut->getTemplate());
         self::assertInstanceOf(\DateTime::class, $sut->getDueDate());
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testDeprecations()
+    {
+        $sut = new InvoiceModel(new DebugFormatter());
+
+        $entries = [new Timesheet()];
+        self::assertInstanceOf(InvoiceModel::class, $sut->setEntries($entries));
+        self::assertSame($entries, $sut->getEntries());
     }
 }
