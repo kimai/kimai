@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\Customer;
+use App\Entity\User;
 use App\Event\CustomerMetaDefinitionEvent;
 use App\Form\API\CustomerApiEditForm;
 use App\Repository\CustomerRepository;
@@ -78,8 +79,11 @@ class CustomerController extends BaseApiController
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         $query = new CustomerQuery();
-        $query->setCurrentUser($this->getUser());
+        $query->setCurrentUser($user);
 
         if (null !== ($order = $paramFetcher->get('order'))) {
             $query->setOrder($order);

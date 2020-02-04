@@ -170,8 +170,11 @@ final class TeamController extends BaseApiController
      */
     public function postAction(Request $request): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         $team = new Team();
-        $team->setTeamLead($this->getUser());
+        $team->setTeamLead($user);
 
         $form = $this->createForm(TeamApiEditForm::class, $team);
 

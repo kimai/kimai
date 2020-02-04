@@ -40,7 +40,6 @@
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/asset": "^4.0",
         "symfony/console": "^4.0",
-        "symfony/debug-pack": "^1.0",
         "symfony/dotenv": "^4.0",
         "symfony/expression-language": "^4.0",
         "symfony/flex": "^1.0",
@@ -62,7 +61,7 @@
         "white-october/pagerfanta-bundle": "^1.1"
     },
     "require-dev": {
-        "dama/doctrine-test-bundle": "^5.0",
+        "dama/doctrine-test-bundle": "^6.0",
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "friendsofphp/php-cs-fixer": "^2.10",
         "fzaninotto/faker": "^1.8",
@@ -73,9 +72,11 @@
         "phpunit/phpunit": "^8.0",
         "symfony/browser-kit": "^4.0",
         "symfony/css-selector": "^4.0",
+        "symfony/debug-bundle": "^4.0",
         "symfony/maker-bundle": "^1.12",
         "symfony/phpunit-bridge": "^4.0",
-        "symfony/profiler-pack": "^1.0"
+        "symfony/profiler-pack": "^1.0",
+        "symfony/var-dumper": "^4.0"
     },
     "repositories": [
         {
@@ -136,7 +137,7 @@
         ],
         "kimai:code-lint":  [
             "bin/console lint:yaml config --parse-tags",
-            "bin/console lint:twig templates",
+            "bin/console lint:twig templates --show-deprecations",
             "bin/console lint:xliff translations",
             "bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction"
         ],
@@ -157,7 +158,7 @@
         "symfony": {
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
             "allow-contrib": true,
-            "require": "4.3.*"
+            "require": "4.4.*"
         }
     }
 }

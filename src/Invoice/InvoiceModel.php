@@ -211,13 +211,23 @@ final class InvoiceModel
         return $this->formatter;
     }
 
+    public function getCurrency(): string
+    {
+        if (null === $this->getCustomer()) {
+            // this should be set from the configuration
+            return Customer::DEFAULT_CURRENCY;
+        }
+
+        return $this->getCustomer()->getCurrency();
+    }
+
     public function toArray(): array
     {
         $model = $this;
         $customer = $model->getCustomer();
         $project = $model->getQuery()->getProject();
         $activity = $model->getQuery()->getActivity();
-        $currency = $model->getCalculator()->getCurrency();
+        $currency = $this->getCurrency();
         $tax = $model->getCalculator()->getTax();
         $total = $model->getCalculator()->getTotal();
         $subtotal = $model->getCalculator()->getSubtotal();

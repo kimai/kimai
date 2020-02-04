@@ -4,3 +4,4 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'form/kimai-theme.html.twig'
+    exception_controller: null

@@ -143,7 +143,7 @@ class TimesheetRepository extends EntityRepository
 
         $entityManager = $this->getEntityManager();
         $entityManager->persist($entry);
-        $entityManager->flush($entry);
+        $entityManager->flush();
 
         return true;
     }
