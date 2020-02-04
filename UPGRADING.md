@@ -15,6 +15,9 @@ New permissions:
 - `comments_create_customer` - NEW: permission that allows to add new comments for customers  
 - `comments_create_team_customer` - NEW: permission that allows to add new comments for team members of the current customer 
 - `comments_create_teamlead_customer` - NEW: permission that allows to add new comments for a teamlead of the current customer 
+- `comments_create_project` - NEW: permission that allows to add new comments for project  
+- `comments_create_team_project` - NEW: permission that allows to add new comments for team members of the current project 
+- `comments_create_teamlead_project` - NEW: permission that allows to add new comments for a teamlead of the current project 
 - `edit_teamlead_project` - removed default permission from ROLE_TEAMLEAD (if you use it: change it in the Role & Permission UI) 
 - `edit_teamlead_customer` - removed default permission from ROLE_TEAMLEAD (if you use it: change it in the Role & Permission UI) 
 

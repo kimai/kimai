@@ -23,7 +23,7 @@
 
         {% set tableName = 'plugins' %}
 
-        {{ tables.data_table_header(tableName, columns) }}
+        {{ tables.datatable_header(tableName, columns, null, {}) }}
         {% for plugin in plugins %}
             <tr>
                 <td>{{ plugin.name }}</td>

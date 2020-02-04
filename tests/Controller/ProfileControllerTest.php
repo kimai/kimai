@@ -55,7 +55,7 @@ class ProfileControllerTest extends ControllerBaseTest
             $fixture->setAmount(10);
             $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
             $fixture->setStartDate($start);
-            $this->importFixture($em, $fixture);
+            $this->importFixture($client, $fixture);
         }
 
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
@@ -338,7 +338,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $fixture->setAddCustomer(true);
         $fixture->setAddUser(false);
         $fixture->addUserToIgnore($user);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/teams');
 

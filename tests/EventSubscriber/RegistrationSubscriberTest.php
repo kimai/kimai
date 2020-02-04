@@ -32,7 +32,10 @@ class RegistrationSubscriberTest extends TestCase
     }
 
     /**
+     * Legacy test becuase the user bundle won't update to a new release
+     *
      * @dataProvider getTestData
+     * @group legacy
      */
     public function testRoleAssignmentForNewUser(array $existingUsers, $expectedRoles)
     {

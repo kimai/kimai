@@ -90,7 +90,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $model = new InvoiceModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
-        $model->setEntries($entries);
+        $model->addEntries($entries);
         $model->setQuery($query);
 
         $sut = new ShortInvoiceCalculator();
@@ -99,7 +99,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals('short', $sut->getId());
         $this->assertEquals(562.28, $sut->getTotal());
         $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $sut->getCurrency());
+        $this->assertEquals('EUR', $model->getCurrency());
         $this->assertEquals(472.5, $sut->getSubtotal());
         $this->assertEquals(5800, $sut->getTimeWorked());
         $this->assertEquals(1, count($sut->getEntries()));
@@ -171,7 +171,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $model = new InvoiceModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
-        $model->setEntries($entries);
+        $model->addEntries($entries);
         $model->setQuery($query);
 
         $sut = new ShortInvoiceCalculator();
@@ -180,7 +180,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals('short', $sut->getId());
         $this->assertEquals(581.17, $sut->getTotal());
         $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $sut->getCurrency());
+        $this->assertEquals('EUR', $model->getCurrency());
         $this->assertEquals(488.38, $sut->getSubtotal());
         $this->assertEquals(5800, $sut->getTimeWorked());
         $this->assertEquals(1, count($sut->getEntries()));
@@ -250,7 +250,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $model = new InvoiceModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
-        $model->setEntries($entries);
+        $model->addEntries($entries);
         $model->setQuery($query);
 
         $sut = new ShortInvoiceCalculator();
@@ -259,7 +259,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals('short', $sut->getId());
         $this->assertEquals(581.17, $sut->getTotal());
         $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $sut->getCurrency());
+        $this->assertEquals('EUR', $model->getCurrency());
         $this->assertEquals(488.38, $sut->getSubtotal());
         $this->assertEquals(5400, $sut->getTimeWorked());
         $this->assertEquals(1, count($sut->getEntries()));
