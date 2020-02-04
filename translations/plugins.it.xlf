@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="it" datatype="plaintext" original="plugins.en.xlf">
+        <body>
+            <trans-unit id="plugins.title">
+                <source>plugins.title</source>
+                <target>Plugins</target>
+            </trans-unit>
+            <trans-unit id="plugins.subtitle">
+                <source>plugins.subtitle</source>
+                <target>Puoi estendere le funzionalità di Kimai con i plugins</target>
+            </trans-unit>
+            <trans-unit id="plugin.none_installed">
+                <source>plugin.none_installed</source>
+                <target>Non hai plugin installati per ora.</target>
+            </trans-unit>
+            <trans-unit id="plugin.marketplace">
+                <source>plugin.marketplace</source>
+                <target>Kimai marketplace</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

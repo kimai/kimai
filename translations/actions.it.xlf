@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="it" datatype="plaintext" original="actions.en.xlf">
+        <body>
+            <trans-unit id="stop">
+                <source>stop</source>
+                <target>Stop</target>
+            </trans-unit>
+            <trans-unit id="back">
+                <source>back</source>
+                <target>Indietro</target>
+            </trans-unit>
+            <trans-unit id="edit">
+                <source>edit</source>
+                <target>Modifica</target>
+            </trans-unit>
+            <trans-unit id="trash">
+                <source>trash</source>
+                <target>Cancella</target>
+            </trans-unit>
+            <trans-unit id="report">
+                <source>report</source>
+                <target>Report</target>
+            </trans-unit>
+            <trans-unit id="repeat">
+                <source>repeat</source>
+                <target>Ripeti</target>
+            </trans-unit>
+            <trans-unit id="profile-stats">
+                <source>profile-stats</source>
+                <target>Profilo</target>
+            </trans-unit>
+            <trans-unit id="settings">
+                <source>settings</source>
+                <target>Preferenze</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Schede attività</target>
+            </trans-unit>
+            <trans-unit id="customer">
+                <source>customer</source>
+                <target>Filtro clienti</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>Filetro progetti</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>Filtro attività</target>
+            </trans-unit>
+            <trans-unit id="copy">
+                <source>copy</source>
+                <target>Crea copia</target>
+            </trans-unit>
+            <trans-unit id="home">
+                <source>home</source>
+                <target>Homepage</target>
+            </trans-unit>
+            <trans-unit id="create-project">
+                <source>create-project</source>
+                <target>Crea progetto</target>
+            </trans-unit>
+            <trans-unit id="create-activity">
+                <source>create-activity</source>
+                <target>Crea attività</target>
+            </trans-unit>
+            <trans-unit id="create-timesheet">
+                <source>create-timesheet</source>
+                <target>Crea scheda attività</target>
+            </trans-unit>
+            <trans-unit id="permissions">
+                <source>permissions</source>
+                <target>Permessi Team</target>
+            </trans-unit>
+            <trans-unit id="details">
+                <source>details</source>
+                <target>Mostra</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
