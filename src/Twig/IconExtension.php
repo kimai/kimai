@@ -88,6 +88,8 @@ final class IconExtension extends AbstractExtension
         'visibility' => 'far fa-eye',
         'warning' => 'fas fa-exclamation-triangle',
         'xlsx' => 'fas fa-file-excel',
+        'left' => 'fas fa-chevron-left',
+        'right' => 'fas fa-chevron-right',
     ];
 
     /**
