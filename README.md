@@ -20,8 +20,8 @@ It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Do
 
 ### Requirements
 
-- PHP 7.2 or higher
-- Database (MySQL/MariaDB with timezone data, SQLite for development)
+- PHP 7.2.9 or higher
+- Database (MySQL/MariaDB, SQLite for development)
 - Webserver (nginx, Apache)
 - A modern browser
 - [Other libraries](https://www.kimai.org/download/)
@@ -32,7 +32,7 @@ This is the new version of the open source timetracker Kimai. It is stable and p
 with most advanced features from Kimai 1 and many new ones, including but not limited to: 
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
-LDAP and built-in authentication, customizable role permissions, responsive and ready for your mobile device, 
+authentication via SAML/LDAP/Database, customizable role permissions, responsive and ready for your mobile device, 
 hourly and fixed rates, advanced filtering, money and time budgets with report, support for plugins and many more.
 
 ## Installation
