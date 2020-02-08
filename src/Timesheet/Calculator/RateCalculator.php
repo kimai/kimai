@@ -101,6 +101,7 @@ class RateCalculator implements CalculatorInterface
 
         if (!empty($sorted)) {
             ksort($sorted);
+
             return end($sorted);
         }
 
