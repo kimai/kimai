@@ -11,8 +11,6 @@ namespace App\Form;
 
 use App\Form\Type\ColorPickerType;
 use App\Form\Type\DurationType;
-use App\Form\Type\FixedRateType;
-use App\Form\Type\HourlyRateType;
 use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -26,12 +24,6 @@ trait EntityFormTrait
         $currency = $options['currency'];
         $builder
             ->add('color', ColorPickerType::class)
-            ->add('fixedRate', FixedRateType::class, [
-                'currency' => $currency,
-            ])
-            ->add('hourlyRate', HourlyRateType::class, [
-                'currency' => $currency,
-            ])
         ;
 
         if ($options['include_budget']) {

@@ -29,12 +29,6 @@ class InvoiceModelActivityHydrator implements InvoiceModelHydrator
             'activity.id' => $activity->getId(),
             'activity.name' => $activity->getName(),
             'activity.comment' => $activity->getComment(),
-            'activity.fixed_rate' => $formatter->getFormattedMoney($activity->getFixedRate(), $currency),
-            'activity.fixed_rate_nc' => $formatter->getFormattedMoney($activity->getFixedRate(), null),
-            'activity.fixed_rate_plain' => $activity->getFixedRate(),
-            'activity.hourly_rate' => $formatter->getFormattedMoney($activity->getHourlyRate(), $currency),
-            'activity.hourly_rate_nc' => $formatter->getFormattedMoney($activity->getHourlyRate(), null),
-            'activity.hourly_rate_plain' => $activity->getHourlyRate(),
         ];
 
         foreach ($activity->getVisibleMetaFields() as $metaField) {

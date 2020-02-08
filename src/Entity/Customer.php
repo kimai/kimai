@@ -174,7 +174,6 @@ class Customer implements EntityWithMetaFields
     private $timezone;
 
     // keep the trait include exactly here, for placing the column at the correct position
-    use RatesTrait;
     use ColorTrait;
     use BudgetTrait;
 

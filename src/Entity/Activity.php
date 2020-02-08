@@ -74,7 +74,6 @@ class Activity implements EntityWithMetaFields
     private $visible = true;
 
     // keep the trait include exactly here, for placing the column at the correct position
-    use RatesTrait;
     use ColorTrait;
     use BudgetTrait;
 
@@ -136,6 +135,11 @@ class Activity implements EntityWithMetaFields
         $this->visible = $visible;
 
         return $this;
+    }
+
+    public function isGlobal(): bool
+    {
+        return $this->project === null;
     }
 
     public function isVisible(): bool

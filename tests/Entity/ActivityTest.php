@@ -27,8 +27,6 @@ class ActivityTest extends TestCase
         $this->assertNull($sut->getName());
         $this->assertNull($sut->getComment());
         $this->assertTrue($sut->getVisible());
-        $this->assertNull($sut->getFixedRate());
-        $this->assertNull($sut->getHourlyRate());
         $this->assertNull($sut->getColor());
         $this->assertEquals(0.0, $sut->getBudget());
         $this->assertEquals(0, $sut->getTimeBudget());
@@ -52,12 +50,6 @@ class ActivityTest extends TestCase
 
         $this->assertInstanceOf(Activity::class, $sut->setColor('#fffccc'));
         $this->assertEquals('#fffccc', $sut->getColor());
-
-        $this->assertInstanceOf(Activity::class, $sut->setFixedRate(13.47));
-        $this->assertEquals(13.47, $sut->getFixedRate());
-
-        $this->assertInstanceOf(Activity::class, $sut->setHourlyRate(99));
-        $this->assertEquals(99, $sut->getHourlyRate());
 
         $this->assertInstanceOf(Activity::class, $sut->setBudget(12345.67));
         $this->assertEquals(12345.67, $sut->getBudget());

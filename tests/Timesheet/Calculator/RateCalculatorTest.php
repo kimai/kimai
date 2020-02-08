@@ -10,11 +10,15 @@
 namespace App\Tests\Timesheet\Calculator;
 
 use App\Entity\Activity;
+use App\Entity\ActivityRate;
 use App\Entity\Customer;
+use App\Entity\CustomerRate;
 use App\Entity\Project;
+use App\Entity\ProjectRate;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Repository\RateRepository;
 use App\Timesheet\Calculator\RateCalculator;
 use PHPUnit\Framework\TestCase;
 
@@ -23,6 +27,16 @@ use PHPUnit\Framework\TestCase;
  */
 class RateCalculatorTest extends TestCase
 {
+    protected function getRateRepositoryMock(array $rates = [])
+    {
+        $mock = $this->getMockBuilder(RateRepository::class)->disableOriginalConstructor()->getMock();
+        if (!empty($rates)) {
+            $mock->expects($this->any())->method('findMatchingRates')->willReturn($rates);
+        }
+
+        return $mock;
+    }
+
     public function testCalculateWithTimesheetHourlyRate()
     {
         $record = new Timesheet();
@@ -31,7 +45,7 @@ class RateCalculatorTest extends TestCase
         $record->setHourlyRate(100);
         $record->setActivity(new Activity());
 
-        $sut = new RateCalculator([]);
+        $sut = new RateCalculator([], $this->getRateRepositoryMock());
         $sut->calculate($record);
         $this->assertEquals(50, $record->getRate());
     }
@@ -46,34 +60,34 @@ class RateCalculatorTest extends TestCase
         $record->setHourlyRate(99);
         $record->setActivity(new Activity());
 
-        $sut = new RateCalculator([]);
+        $sut = new RateCalculator([], $this->getRateRepositoryMock());
         $sut->calculate($record);
         $this->assertEquals(10, $record->getRate());
     }
 
     public function getRateTestData()
     {
-        yield 'a0' => [0.0, 0, 0, null, null, null, null, null, null, null, null];
-        yield 'a1' => [0.0, 1800, 0, null, null, null, null, null, null, null, null];
-        yield 'a2' => [0.5, 1800, 1, null, null, null, null, null, null, null, null];
-        yield 'a3' => [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        yield 'b1' => [1.5, 1800, 1, 3, null, 5, null, 7, null, 9, null];
-        yield 'b2' => [2.5, 1800, 1, null, null, 5, null, 7, null, 9, null];
-        yield 'b3' => [3.5, 1800, 1, null, null, null, null, 7, null, 9, null];
-        yield 'b4' => [4.5, 1800, 1, null, null, null, null, null, null, 9, null];
-        yield 'b5' => [2.0, 1800, 1, null, 2, null, 3, null, 4, null, 5];
-        yield 'b6' => [3.0, 1800, 1, null, null, null, 3, null, 4, null, 5];
-        yield 'b7' => [4.0, 1800, 1, null, null, null, null, null, 4, null, 5];
-        yield 'b8' => [3.0, 1800, 1, null, null, null, 3, null, null, null, 5];
-        yield 'b9' => [2.0, 1800, 1, null, 2, null, null, null, null, null, 5];
-        yield 'c0' => [5.0, 1800, 100, 10, null, null, null, null, null, null, null];
-        yield 'd0' => [10, 1800, 100, null, 10, null, null, null, null, null, null];
-        yield 'e0' => [10, 1800, 100, null, null, 20, null, null, null, null, null];
-        yield 'f0' => [20, 1800, 100, null, null, null, 20, null, null, null, null];
-        yield 'g0' => [15, 1800, 100, null, null, null, null, 30, null, null, null];
-        yield 'h0' => [30, 1800, 100, null, null, null, null, null, 30, null, null];
-        yield 'i0' => [20, 1800, 100, null, null, null, null, null, null, 40, null];
-        yield 'j0' => [40, 1800, 100, null, null, null, null, null, null, null, 40];
+        yield 'a0' => [0.0, 0,      0,      null,   null,   null,   null,   null,   null,   null,   null];
+        yield 'a1' => [0.0, 1800,   0,      null,   null,   null,   null,   null,   null,   null,   null];
+        yield 'a2' => [0.5, 1800,   1,      null,   null,   null,   null,   null,   null,   null,   null];
+        yield 'a3' => [0.0, 0,      0,      0,      0,      0,      0,      0,      0,      0,      0];
+        yield 'b1' => [1.5, 1800,   1,      3,      null,   5,      null,   7,      null,   9,      null];
+        yield 'b2' => [2.5, 1800,   1,      null,   null,   5,      null,   7,      null,   9,      null];
+        yield 'b3' => [3.5, 1800,   1,      null,   null,   null,   null,   7,      null,   9,      null];
+        yield 'b4' => [4.5, 1800,   1,      null,   null,   null,   null,   null,   null,   9,      null];
+        yield 'b5' => [2.0, 1800,   1,      null,   2,      null,   3,      null,   4,      null,   5];
+        yield 'b6' => [3.0, 1800,   1,      null,   null,   null,   3,      null,   4,      null,   5];
+        yield 'b7' => [4.0, 1800,   1,      null,   null,   null,   null,   null,   4,      null,   5];
+        yield 'b8' => [3.0, 1800,   1,      null,   null,   null,   3,      null,   null,   null,   5];
+        yield 'b9' => [2.0, 1800,   1,      null,   2,      null,   null,   null,   null,   null,   5];
+        yield 'c0' => [5.0, 1800,   100,    10,     null,   null,   null,   null,   null,   null,   null];
+        yield 'd0' => [10,  1800,   100,    null,   10,     null,   null,   null,   null,   null,   null];
+        yield 'e0' => [10,  1800,   100,    null,   null,   20,     null,   null,   null,   null,   null];
+        yield 'f0' => [20,  1800,   100,    null,   null,   null,   20,     null,   null,   null,   null];
+        yield 'g0' => [15,  1800,   100,    null,   null,   null,   null,   30,     null,   null,   null];
+        yield 'h0' => [30,  1800,   100,    null,   null,   null,   null,   null,   30,     null,   null];
+        yield 'i0' => [20,  1800,   100,    null,   null,   null,   null,   null,   null,   40,     null];
+        yield 'j0' => [40,  1800,   100,    null,   null,   null,   null,   null,   null,   null,   40];
     }
 
     /**
@@ -93,24 +107,12 @@ class RateCalculatorTest extends TestCase
         $customerFixed
     ) {
         $customer = new Customer();
-        $customer
-            ->setHourlyRate($customerHourly)
-            ->setFixedRate($customerFixed)
-        ;
 
         $project = new Project();
-        $project
-            ->setHourlyRate($projectHourly)
-            ->setFixedRate($projectFixed)
-            ->setCustomer($customer)
-        ;
+        $project->setCustomer($customer);
 
         $activity = new Activity();
-        $activity
-            ->setHourlyRate($activityHourly)
-            ->setFixedRate($activityFixed)
-            ->setProject($project)
-        ;
+        $activity->setProject($project);
 
         $timesheet = new Timesheet();
         $timesheet
@@ -123,7 +125,27 @@ class RateCalculatorTest extends TestCase
             ->setUser($this->getTestUser($userRate))
         ;
 
-        $sut = new RateCalculator([]);
+        $rates = [];
+
+        if (null !== $customerFixed) {
+            $rates[] = (new CustomerRate())->setRate($customerFixed)->setIsFixed(true);
+        } elseif (null !== $customerHourly) {
+            $rates[] = (new CustomerRate())->setRate($customerHourly);
+        }
+
+        if (null !== $projectFixed) {
+            $rates[] = (new ProjectRate())->setRate($projectFixed)->setIsFixed(true);
+        } elseif (null !== $projectHourly) {
+            $rates[] = (new ProjectRate())->setRate($projectHourly);
+        }
+
+        if (null !== $activityFixed) {
+            $rates[] = (new ActivityRate())->setRate($activityFixed)->setIsFixed(true);
+        } elseif (null !== $activityHourly) {
+            $rates[] = (new ActivityRate())->setRate($activityHourly);
+        }
+
+        $sut = new RateCalculator([], $this->getRateRepositoryMock($rates));
         $sut->calculate($timesheet);
         $this->assertEquals($exptectedRate, $timesheet->getRate());
     }
@@ -151,7 +173,7 @@ class RateCalculatorTest extends TestCase
 
         $this->assertEquals(0, $record->getRate());
 
-        $sut = new RateCalculator([]);
+        $sut = new RateCalculator([], $this->getRateRepositoryMock());
         $sut->calculate($record);
         $this->assertEquals(0, $record->getRate());
     }
@@ -177,7 +199,7 @@ class RateCalculatorTest extends TestCase
 
         $record->setEnd($end);
 
-        $sut = new RateCalculator($rules);
+        $sut = new RateCalculator($rules, $this->getRateRepositoryMock());
         $sut->calculate($record);
 
         $this->assertEquals($expectedRate, $record->getRate());
