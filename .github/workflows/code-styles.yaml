@@ -18,7 +18,7 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: none
-                    extensions: 'intl'
+                    extensions: intl
                     tools: cs2pr:1.0.1
             -   run: composer install --no-progress
             -   run: composer validate --no-check-all --strict
