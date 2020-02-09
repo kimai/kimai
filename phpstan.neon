@@ -4,7 +4,7 @@ includes:
     - vendor/phpstan/phpstan-symfony/rules.neon
 
 parameters:
-#    tmpDir: %rootDir%/../../../var/cache/phpstan
+    tmpDir: %rootDir%/../../../var/cache/phpstan
     autoload_directories:
         - %rootDir%/../../../src/Migrations
 #    symfony:
