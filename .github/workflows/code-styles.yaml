@@ -19,7 +19,7 @@ jobs:
                     php-version: ${{ matrix.php }}
                     coverage: none
                     extensions: 'intl'
-                    tools: cs2pr:1.0.1, php-cs-fixer, phpstan
+                    tools: cs2pr:1.0.1
             -   run: composer install --no-progress
             -   run: composer validate --no-check-all --strict
             -   run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php_cs.dist --using-cache=no --show-progress=none --format=checkstyle | cs2pr
