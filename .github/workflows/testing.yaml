@@ -32,6 +32,10 @@ jobs:
             -   run: |
                     composer install --no-progress
                     composer require zendframework/zend-ldap
+            -   name: Setup problem matchers for PHPUnit
+                run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+            -   name: Run unit tests
+                run: composer kimai:tests-unit
             -   name: Run migrations on MySQL
                 run: |
                     bin/console doctrine:database:create --if-not-exists -n
@@ -50,7 +54,5 @@ jobs:
                     DATABASE_URL: sqlite:///%kernel.project_dir%/var/data/kimai_migrations.sqlite
                     APP_ENV: dev
                     MAILER_URL: null://localhost
-            -   name: Setup Problem Matchers for PHPUnit
-                run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-            -   name: Run tests
-                run: vendor/bin/phpunit tests/
+            -   name: Run integration tests
+                run: composer kimai:tests-integration
