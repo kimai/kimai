@@ -185,7 +185,7 @@ class ActivityController extends BaseApiController
         $this->dispatcher->dispatch($event);
 
         /** @var Project $form */
-        $form = $this->createForm(ActivityApiEditForm::class, $activity);
+                $form = $this->createForm(ActivityApiEditForm::class, $activity);
 
         $form->submit($request->request->all());
 
