@@ -82,7 +82,7 @@ before_install:
   - php -m
 
 install:
-  - composer install
+  - composer install --no-progress
   - composer require zendframework/zend-ldap
 
 script:
