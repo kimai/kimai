@@ -187,6 +187,7 @@ class ActivityController extends BaseApiController
         /** @var Project $form */
         $form = $this->createForm(ActivityApiEditForm::class, $activity);
 
+
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
