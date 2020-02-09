@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="pl" datatype="plaintext" original="system-configuration.en.xlf">
+        <body>
+            <trans-unit id="title">
+                <source>title</source>
+                <target>Ustawienia</target>
+            </trans-unit>
+            <trans-unit id="subtitle">
+                <source>subtitle</source>
+                <target>Ustawienia globalne serwisu rejestrowania</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Ewidencje</target>
+            </trans-unit>
+            <trans-unit id="form_customer">
+                <source>form_customer</source>
+                <target>Utwórz ustawienia domyślne dla klientów</target>
+            </trans-unit>
+            <trans-unit id="form_user">
+                <source>form_user</source>
+                <target>Ustawienia domyślne dla użytkowników</target>
+            </trans-unit>
+            <trans-unit id="theme">
+                <source>theme</source>
+                <target>Kompozycja</target>
+            </trans-unit>
+            <trans-unit id="calendar">
+                <source>calendar</source>
+                <target>Kalendarz</target>
+            </trans-unit>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target>Zezwalaj na rozszerzone formatowanie w opisach i komentarzach</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode">
+                <source>label.timesheet.mode</source>
+                <target>Tryb rejestrowania czasu</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_default">
+                <source>label.timesheet.mode_default</source>
+                <target>[Domyślnie] Czasy początku  i końca moga być edytowane</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_only">
+                <source>label.timesheet.mode_duration_only</source>
+                <target>[Czas trwania] Zamienia czas końca na długość trwania (pole edycyjne) </target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+                <source>label.timesheet.mode_duration_fixed_begin</source>
+                <target>[Czas trwania] Konfigurowalny ustalony czas początku, możliwa zmiana jedynie długości trwania.</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_punch">
+                <source>label.timesheet.mode_punch</source>
+                <target>[Stoper] Uzytkownik może utuchomić i zatrzymać pomiar, bez mozliwości edycji czasów poczatku , końca czy też długości trwania</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_future_times">
+                <source>label.timesheet.rules.allow_future_times</source>
+                <target>Zezwalaj na przyszłe wpisy czasu</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.hard_limit">
+                <source>label.timesheet.active_entries.hard_limit</source>
+                <target>Dozwolona maksymalna ilość jednoczesnych czynności (pomiarów)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.soft_limit">
+                <source>label.timesheet.active_entries.soft_limit</source>
+                <target>Ilość jednoczesnych czynności (pomiarów) po której zostanie wyświetlone ostrzeżenie</target>
+            </trans-unit>
+            <trans-unit id="label.theme.autocomplete_chars">
+                <source>label.theme.autocomplete_chars</source>
+                <target>Minimalna ilość liter do auto-uzupełniania</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.week_numbers">
+                <source>label.calendar.week_numbers</source>
+                <target>Wyświetlaj nimery tygodnia</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.weekends">
+                <source>label.calendar.weekends</source>
+                <target>Wyświetlaj weekendy</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.begin">
+                <source>label.calendar.businessHours.begin</source>
+                <target>Poczatek normalnych godzin pracy (będzie wyrózniony)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.end">
+                <source>label.calendar.businessHours.end</source>
+                <target>Koniec normalnych godzin pracy (będzie wyrózniony)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.begin">
+                <source>label.calendar.visibleHours.begin</source>
+                <target>Początek widocznego zakresu czasu</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.end">
+                <source>label.calendar.visibleHours.end</source>
+                <target>Koniec widocznego zakresu czasu</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.slot_duration">
+                <source>label.calendar.slot_duration</source>
+                <target>Przedział czasowy dla widoku dziennego i tygodniowego (format: gg:mm:ss)</target>
+            </trans-unit>
+            <trans-unit id="branding">
+                <source>branding</source>
+                <target>Branding</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.logo">
+                <source>label.theme.branding.logo</source>
+                <target>Logo (URL grafiki, zamienia logo na stronie logowania)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.company">
+                <source>label.theme.branding.company</source>
+                <target>Firma</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.mini">
+                <source>label.theme.branding.mini</source>
+                <target>Mini Logo (obniżona ramka)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.title">
+                <source>label.theme.branding.title</source>
+                <target>Tytuł przeglądarki</target>
+            </trans-unit>
+            <trans-unit id="rounding">
+                <source>rounding</source>
+                <target>Zaokraglanie czasu</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.begin">
+                <source>label.timesheet.rounding.default.begin</source>
+                <target>Zaokrąglanie czasu startu w minutach (0 = nieaktywne)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.end">
+                <source>label.timesheet.rounding.default.end</source>
+                <target>Zaokrąglenie czasu końca w minutach (0 = nieaktywne)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.duration">
+                <source>label.timesheet.rounding.default.duration</source>
+                <target>Zaokrąglenie długości czasu trwania w minutach (0 = nieaktywne)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.mode">
+                <source>label.timesheet.rounding.default.mode</source>
+                <target>Tryb zaokraglania czasu</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.days">
+                <source>label.timesheet.rounding.default.days</source>
+                <target>Dni tygodnia w których zaokrąglanie czasu będzie stosowane</target>
+            </trans-unit>
+            <trans-unit id="Monday">
+                <source>Monday</source>
+                <target>Poniedziałek</target>
+            </trans-unit>
+            <trans-unit id="Tuesday">
+                <source>Tuesday</source>
+                <target>Wtorek</target>
+            </trans-unit>
+            <trans-unit id="Wednesday">
+                <source>Wednesday</source>
+                <target>Środa</target>
+            </trans-unit>
+            <trans-unit id="Thursday">
+                <source>Thursday</source>
+                <target>Czwartek</target>
+            </trans-unit>
+            <trans-unit id="Friday">
+                <source>Friday</source>
+                <target>Piatek</target>
+            </trans-unit>
+            <trans-unit id="Saturday">
+                <source>Saturday</source>
+                <target>Sobota</target>
+            </trans-unit>
+            <trans-unit id="Sunday">
+                <source>Sunday</source>
+                <target>Niedziela</target>
+            </trans-unit>
+            <trans-unit id="Ceil">
+                <source>Ceil</source>
+                <target>W górę: poczatek , koniec i długośc bedą zaokrąglane w górę</target>
+            </trans-unit>
+            <trans-unit id="Closest">
+                <source>Closest</source>
+                <target>Najbliższy: matematyczne zaokraglanie do najbliższej wartości</target>
+            </trans-unit>
+            <trans-unit id="Default">
+                <source>Default</source>
+                <target>Standart: poczatek będzie zaokraglany w doł , koniec i długość w górę</target>
+            </trans-unit>
+            <trans-unit id="Floor">
+                <source>Floor</source>
+                <target>W dół: poczatek , koniec i długośc będą zaokraglane w dół</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

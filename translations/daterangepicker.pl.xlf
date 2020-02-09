@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="pl" datatype="plaintext" original="daterangepicker.en.xlf">
+        <body>
+            <trans-unit id="daterangepicker.today">
+                <source>daterangepicker.today</source>
+                <target>Dzisiaj</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.yesterday">
+                <source>daterangepicker.yesterday</source>
+                <target>Wczoraj</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.lastWeek">
+                <source>daterangepicker.lastWeek</source>
+                <target>Ostatni tydzień</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.thisWeek">
+                <source>daterangepicker.thisWeek</source>
+                <target>Ten tydzień</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.lastMonth">
+                <source>daterangepicker.lastMonth</source>
+                <target>Ostatni miesiąch</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.thisMonth">
+                <source>daterangepicker.thisMonth</source>
+                <target>Ten miesiąc</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.lastYear">
+                <source>daterangepicker.lastYear</source>
+                <target>Zeszły rok</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.thisYear">
+                <source>daterangepicker.thisYear</source>
+                <target>Ten rok</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.customRange">
+                <source>daterangepicker.customRange</source>
+                <target>Własny zakres</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

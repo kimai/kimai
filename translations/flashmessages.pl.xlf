@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="pl" datatype="plaintext" original="flashmessages.en.xlf">
+        <body>
+            <trans-unit id="warning">
+                <source>warning</source>
+                <target>Uwaga</target>
+            </trans-unit>
+            <trans-unit id="timesheet.stop.success">
+                <source>timesheet.stop.success</source>
+                <target>Rejestrowanie czasu zatrzymane</target>
+            </trans-unit>
+            <trans-unit id="timesheet.stop.error">
+                <source>timesheet.stop.error</source>
+                <target>Nie mozna zatrzymać rejestrowania czasu</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.success">
+                <source>timesheet.start.success</source>
+                <target>Rejestrowanie czasu uruchomione</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.error">
+                <source>timesheet.start.error</source>
+                <target>Nie można uruchomić rejestrowania czasu</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.exceeded_limit">
+                <source>timesheet.start.exceeded_limit</source>
+                <target>Limit aktywnych jednoczesnych pomiarów czasu został osiągnięty , proszę zatrzymać przynajmniej jedną aktywność.</target>
+            </trans-unit>
+            <trans-unit id="timesheet.locked.warning">
+                <source>timesheet.locked.warning</source>
+                <target>Edytujesz wyeksportowany rekord</target>
+            </trans-unit>
+            <trans-unit id="action.update.success">
+                <source>action.update.success</source>
+                <target>Zapisano zmiany</target>
+            </trans-unit>
+            <trans-unit id="action.update.error">
+                <source>action.update.error</source>
+                <target>Nie mozna zapisać zmian: %reason%</target>
+            </trans-unit>
+            <trans-unit id="action.delete.success">
+                <source>action.delete.success</source>
+                <target>Wpis został usunięty</target>
+            </trans-unit>
+            <trans-unit id="action.delete.error">
+                <source>action.delete.error</source>
+                <target>Nie mozna usunąć wpisu: %reason%</target>
+            </trans-unit>
+            <trans-unit id="invoice.first_template">
+                <source>invoice.first_template</source>
+                <target>Należy utworzyć pierwszy wzorzec faktury aby kontynuować</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
