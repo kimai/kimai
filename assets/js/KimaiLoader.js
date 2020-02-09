@@ -35,6 +35,7 @@ import KimaiForm from "./plugins/KimaiForm";
 import KimaiDatePicker from "./plugins/KimaiDatePicker";
 import KimaiConfirmationLink from "./plugins/KimaiConfirmationLink";
 import KimaiMultiUpdateTable from "./plugins/KimaiMultiUpdateTable";
+import KimaiDateUtils from "./plugins/KimaiDateUtils";
 
 export default class KimaiLoader {
 
@@ -50,6 +51,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiEvent());
         kimai.registerPlugin(new KimaiAPI());
         kimai.registerPlugin(new KimaiAlert());
+        kimai.registerPlugin(new KimaiDateUtils());
         kimai.registerPlugin(new KimaiFormSelect('.selectpicker'));
         kimai.registerPlugin(new KimaiConfirmationLink('confirmation-link'));
         kimai.registerPlugin(new KimaiActiveRecordsDuration('[data-since]'));
