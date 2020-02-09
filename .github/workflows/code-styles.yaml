@@ -1,5 +1,9 @@
 name: Code Styles
-on: [push, pull_request]
+on:
+    pull_request: null
+    push:
+        branches:
+            - master
 jobs:
     tests:
         runs-on: ubuntu-latest
