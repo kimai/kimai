@@ -130,6 +130,9 @@ class ProjectControllerTest extends APIControllerBaseTest
             'name' => 'foo',
             'customer' => 1,
             'visible' => true,
+            'orderDate' => '2018-02-08T13:02:54',
+            'start' => '2019-02-01T19:32:17',
+            'end' => '2020-02-08T21:11:42',
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -138,6 +141,9 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertStructure($result);
         $this->assertNotEmpty($result['id']);
+        self::assertEquals('2018-02-08T13:02:54+0000', $result['orderDate']);
+        self::assertEquals('2019-02-01T19:32:17+0000', $result['start']);
+        self::assertEquals('2020-02-08T21:11:42+0000', $result['end']);
     }
 
     public function testPostActionWithInvalidUser()
