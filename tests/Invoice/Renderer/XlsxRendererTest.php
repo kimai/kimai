@@ -56,9 +56,10 @@ class XlsxRendererTest extends TestCase
         /** @var BinaryFileResponse $response */
         $response = $sut->render($document, $model);
 
+        $filename = $model->getNumberGenerator()->getInvoiceNumber() . '-customer_with_special_name.xlsx';
         $file = $response->getFile();
         $this->assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=200204-customer_with_special_name.xlsx', $response->headers->get('Content-Disposition'));
+        $this->assertEquals('attachment; filename=' . $filename, $response->headers->get('Content-Disposition'));
 
         $this->assertTrue(file_exists($file->getRealPath()));
 
