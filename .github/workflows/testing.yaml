@@ -50,5 +50,7 @@ jobs:
                     DATABASE_URL: sqlite:///%kernel.project_dir%/var/data/kimai_migrations.sqlite
                     APP_ENV: dev
                     MAILER_URL: null://localhost
+            -   name: Setup Problem Matchers for PHPUnit
+                run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
             -   name: Run tests
                 run: vendor/bin/phpunit tests/
