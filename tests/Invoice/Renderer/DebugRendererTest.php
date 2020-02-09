@@ -10,7 +10,10 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
+use App\Invoice\InvoiceItem;
+use App\Invoice\InvoiceItemHydrator;
 use App\Invoice\InvoiceModel;
+use App\Invoice\InvoiceModelHydrator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,6 +32,26 @@ class DebugRendererTest extends TestCase
      */
     public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject, $metaFields = [])
     {
+        $itemHydrator = new class() implements InvoiceItemHydrator {
+            public function setInvoiceModel(InvoiceModel $model)
+            {
+            }
+
+            public function hydrate(InvoiceItem $item): array
+            {
+                return ['testFromItemHydrator' => 'foo'];
+            }
+        };
+        $model->addItemHydrator($itemHydrator);
+
+        $modelHydrator = new class() implements InvoiceModelHydrator {
+            public function hydrate(InvoiceModel $model): array
+            {
+                return ['testFromModelHydrator' => 'foo'];
+            }
+        };
+        $model->addModelHydrator($modelHydrator);
+
         $document = new InvoiceDocument(new \SplFileInfo(__DIR__ . '/DebugRenderer.php'));
         $sut = new DebugRenderer();
         /** @var Response $response */
@@ -119,6 +142,7 @@ class DebugRendererTest extends TestCase
             'user.title',
             'user.meta.hello',
             'user.meta.kitty',
+            'testFromModelHydrator'
         ];
 
         if ($hasProject) {
@@ -191,6 +215,7 @@ class DebugRendererTest extends TestCase
             'entry.customer.meta.foo-customer',
             'entry.category',
             'entry.type',
+            'testFromItemHydrator'
         ];
 
         $keys = array_merge($keys, $metaFields);

@@ -99,8 +99,9 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
         }
 
         $filename = $this->saveSpreadsheet($spreadsheet);
+        $userFilename = $this->buildFilename($model) . '.' . $document->getFileExtension();
 
-        return $this->getFileResponse($filename, basename($document->getFilename()));
+        return $this->getFileResponse($filename, $userFilename);
     }
 
     /**

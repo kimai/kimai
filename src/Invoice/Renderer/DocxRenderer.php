@@ -30,8 +30,6 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
     {
         Settings::setOutputEscapingEnabled(false);
 
-        $filename = basename($document->getFilename());
-
         $xmlEscaper = new Xml();
         $template = new TemplateProcessor($document->getFilename());
 
@@ -69,6 +67,8 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
         $cacheFile = $template->save();
 
         clearstatcache(true, $cacheFile);
+
+        $filename = $this->buildFilename($model) . '.' . $document->getFileExtension();
 
         return $this->getFileResponse(new Stream($cacheFile), $filename);
     }

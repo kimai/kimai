@@ -20,6 +20,8 @@
                         <span class="text-muted pull-right">
                             {% if route_pin is not null %}
                                 <a href="{{ path(route_pin, {'id': comment.id}) }}" class="btn btn-default btn-xs {% if comment.pinned %}active{% endif %}"><i class="{{ 'pin'|icon }}"></i></a>
+                            {% elseif comment.pinned %}
+                                <i class="{{ 'pin'|icon }}"></i>
                             {% endif %}
                             {% if route_delete is not null %}
                                 <a href="{{ path(route_delete, {'id': comment.id}) }}" class="confirmation-link btn btn-default btn-xs" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>

@@ -13,7 +13,7 @@ require __DIR__.'/../vendor/autoload.php';
 use App\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Debug\Debug;
+use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 
 if (!isset($_SERVER['APP_ENV'])) {

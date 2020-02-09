@@ -9,44 +9,37 @@
 
 namespace App\Entity;
 
-class InvoiceDocument
+final class InvoiceDocument
 {
     /**
      * @var \SplFileInfo
      */
     private $file;
 
-    /**
-     * @param \SplFileInfo $file
-     */
     public function __construct(\SplFileInfo $file)
     {
         $this->file = $file;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         $file = $this->file->getFilename();
 
         return substr($file, 0, strpos($file, '.'));
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return basename($this->getFilename());
     }
 
-    /**
-     * @return string
-     */
     public function getFilename(): string
     {
         return $this->file->getRealPath();
+    }
+
+    public function getFileExtension(): string
+    {
+        return $this->file->getExtension();
     }
 }

@@ -876,14 +876,6 @@
                 <source>label.invoice_bank_account</source>
                 <target>Bankrekening</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target>
-                    Dames en heren, 
-
-                    Ik dank u voor uw bestelling en reken voor mijn diensten aan:
-                </target>
-            </trans-unit>
 
             <!--
               Export

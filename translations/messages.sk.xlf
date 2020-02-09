@@ -953,14 +953,6 @@
                 <source>label.invoice_bank_account</source>
                 <target>Bankový účet</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target>
-                    Dámy a páni,
-
-                    Ďakujem vám za vašu objednávku a poplatok za moje služby:
-                </target>
-            </trans-unit>
 
             <!--
               Export

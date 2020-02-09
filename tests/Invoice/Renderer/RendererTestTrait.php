@@ -107,6 +107,7 @@ trait RendererTestTrait
         $user->addPreference((new UserPreference())->setName('hello')->setValue('world'));
 
         $customer = new Customer();
+        $customer->setName('customer,with/special#name');
         $customer->setCurrency('EUR');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
@@ -204,7 +205,7 @@ trait RendererTestTrait
         $model = new InvoiceModel($this->getFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
-        $model->setEntries($entries);
+        $model->addEntries($entries);
         $model->setQuery($query);
         $model->setUser($user);
 
@@ -232,6 +233,7 @@ trait RendererTestTrait
         $user->addPreference((new UserPreference())->setName('hello')->setValue('world'));
 
         $customer = new Customer();
+        $customer->setName('customer,with/special#name');
         $customer->setCurrency('USD');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
@@ -276,7 +278,7 @@ trait RendererTestTrait
         $model = new InvoiceModel($this->getFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
-        $model->setEntries($entries);
+        $model->addEntries($entries);
         $model->setQuery($query);
         $model->setUser($user);
 

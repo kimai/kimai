@@ -147,7 +147,7 @@ class UserControllerTest extends ControllerBaseTest
         $fixture = new TimesheetFixtures();
         $fixture->setUser($user);
         $fixture->setAmount(10);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         $this->assertEquals(10, count($timesheets));
