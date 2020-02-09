@@ -9,6 +9,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+
 namespace App\API;
 
 use App\Entity\Activity;
@@ -40,7 +41,7 @@ class ActivityController extends BaseApiController
     /**
      * @var ActivityRepository
      */
-    private $repository;
+          private        $repository;
     /**
      * @var ViewHandlerInterface
      */
@@ -114,7 +115,6 @@ class ActivityController extends BaseApiController
         $data = $this->repository->getActivitiesForQuery($query);
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Collection', 'Activity']);
-
         return $this->viewHandler->handle($view);
     }
 
