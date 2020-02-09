@@ -51,7 +51,7 @@ class ProjectRateRepository extends EntityRepository
             ->leftJoin('r.user', 'u')
             ->leftJoin('r.project', 'p')
             ->andWhere(
-                $qb->expr()->eq('r.project', ':project'),
+                $qb->expr()->eq('r.project', ':project')
             )
             ->addOrderBy('u.alias')
             ->setParameter('project', $project)
