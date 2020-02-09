@@ -58,7 +58,7 @@ class ProjectRateForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Rate::class,
+            'data_class' => ProjectRate::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'expand_users' => true,
