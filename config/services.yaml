@@ -206,7 +206,7 @@ services:
     App\Repository\RateRepository:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
-        arguments: ['App\Entity\Rate']
+        arguments: ['App\Entity\ActivityRate']
 
     App\Repository\RolePermissionRepository:
         class:     Doctrine\ORM\EntityRepository

@@ -22,14 +22,6 @@ use Doctrine\ORM\ORMException;
 
 class RateRepository extends EntityRepository
 {
-    /**
-     * @return Rate[]
-     */
-    public function findAll()
-    {
-        return parent::findAll();
-    }
-
     public function saveRate(Rate $rate)
     {
         $entityManager = $this->getEntityManager();
@@ -182,7 +174,6 @@ class RateRepository extends EntityRepository
             ->setParameter('user', $timesheet->getUser())
             ->setParameter('customer', $timesheet->getProject()->getCustomer())
         ;
-
         $results = array_merge($results, $qb->getQuery()->getResult());
 
         return $results;
