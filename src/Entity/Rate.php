@@ -57,7 +57,7 @@ abstract class Rate
         return $this->id;
     }
 
-    public function setUser(User $user): Rate
+    public function setUser(?User $user): Rate
     {
         $this->user = $user;
 
