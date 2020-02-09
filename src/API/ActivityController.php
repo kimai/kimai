@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\Activity;
-use App\Entity\Project;
 use App\Event\ActivityMetaDefinitionEvent;
 use App\Form\API\ActivityApiEditForm;
 use App\Repository\ActivityRepository;
