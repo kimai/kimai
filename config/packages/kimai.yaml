@@ -292,6 +292,11 @@ kimai:
             date_time: 'd. m.  H:i'
         sv:
             duration: '%%h:%%m tim'
+        pl:
+            date_time_type: 'dd. MM. yyyy HH:mm'
+            date_type: 'dd. MM. yyyy'
+            date: 'd. m. Y'
+            date_time: 'd. m.  H:i'
 # --------------------------------------------------------------------------------
 
 

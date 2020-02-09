@@ -11,7 +11,6 @@
 
 import jQuery from 'jquery';
 import KimaiPlugin from '../KimaiPlugin';
-import moment from 'moment';
 
 export default class KimaiDatePicker extends KimaiPlugin {
 
@@ -26,6 +25,8 @@ export default class KimaiDatePicker extends KimaiPlugin {
 
     activateDatePicker(selector) {
         const TRANSLATE = this.getContainer().getTranslation();
+        const DATE_UTILS = this.getContainer().getPlugin('date');
+
         jQuery(selector + ' ' + this.selector).each(function(index) {
             let localeFormat = jQuery(this).data('format');
             jQuery(this).daterangepicker({
@@ -38,8 +39,8 @@ export default class KimaiDatePicker extends KimaiPlugin {
                     applyLabel: TRANSLATE.get('confirm'),
                     cancelLabel: TRANSLATE.get('cancel'),
                     customRangeLabel: TRANSLATE.get('customRange'),
-                    daysOfWeek: moment.weekdaysShort(),
-                    monthNames: moment.months(),
+                    daysOfWeek: DATE_UTILS.getWeekDaysShort(),
+                    monthNames: DATE_UTILS.getMonthNames(),
                 }
             });
 
