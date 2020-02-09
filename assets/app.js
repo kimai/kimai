@@ -56,7 +56,6 @@ require('moment/locale/sv');
 require('moment/locale/tr');
 require('moment/locale/zh-cn');
 
-
 require('daterangepicker');
 
 const Sortable = require('sortablejs/Sortable.min');
