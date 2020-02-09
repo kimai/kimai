@@ -1,4 +1,4 @@
-name: Code Styles
+name: Tests & Migrations
 on:
     pull_request: null
     push:
@@ -34,7 +34,7 @@ jobs:
                     composer require zendframework/zend-ldap
             -   name: Run migrations on MySQL
                 run: |
-                    bin/console doctrine:database:create -n
+                    bin/console doctrine:database:create --if-not-exists -n
                     bin/console doctrine:migrations:migrate -n
                     bin/console doctrine:migrations:migrate first -n
                 env:
