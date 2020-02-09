@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="pl" datatype="plaintext" original="exceptions.en.xlf">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target>Dostęp zabroniony</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target>Problem wystąpił tutaj</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target>Bład</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Coś poszło nie tak</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    Wystapił bład krytyczny , porsze spróbuj ponownie.
+                    Jeżeli znalazłeś błąd w oprogramowaniu, proszę skontaktuj sie z administratorem gdy bład się powtórzy.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Strona nnie znaleziona</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    Nie mogliśmy odnależć strony której szukałeś.
+                    Proszę powrócić do swojego pulpitu i spróbować jeszcze raz.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>Strona jest zastrzeżona</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
+                    Przepraszmy ale nie masz wystarczających uprawnień aby oglądać tą stronę.
+                    Proszę zwrócić się do administratora jezeli sądzisz że powinieneś miec takie uprawnienia.
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
