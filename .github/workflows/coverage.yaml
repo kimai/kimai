@@ -1,0 +1,35 @@
+name: Code coverage
+on:
+    pull_request: null
+    push:
+        branches:
+            - master
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php: ['7.4']
+
+        name: PHP ${{ matrix.php }}
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: shivammathur/setup-php@v1
+                with:
+                    php-version: ${{ matrix.php }}
+                    coverage: xdebug
+                    extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite
+            -   run: |
+                    composer install --no-progress
+                    composer require zendframework/zend-ldap
+            -   name: Setup Problem Matchers for PHPUnit
+                run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+            -   name: Run tests
+                run: vendor/bin/phpunit tests/ --coverage-clover=coverage.xml
+                env:
+                    TEST_WITH_BUNDLES: 1
+            -   name: Upload coverage to Codecov
+                uses: codecov/codecov-action@v1
+                with:
+                    token: ${{ secrets.CODECOV_TOKEN }}
+                    file: ./coverage.xml

@@ -124,8 +124,6 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertStructure($result, true);
-        // FIXME
-        self::assertEquals(13, $result['id']);
     }
 
     public function testNotFound()
