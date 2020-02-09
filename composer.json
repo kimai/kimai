@@ -147,8 +147,8 @@
         "kimai:tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
         "kimai:tests-integration": "vendor/bin/phpunit --group integration tests/",
         "kimai:phpstan": [
-            "vendor/bin/phpstan analyse src -c phpstan.neon --level=3 --no-progress",
-            "vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=4 --no-progress"
+            "vendor/bin/phpstan analyse src -c phpstan.neon --level=3",
+            "vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=4"
         ],
         "kimai:codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
         "kimai:codestyle-fix": "vendor/bin/php-cs-fixer fix"

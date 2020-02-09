@@ -9,10 +9,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-
 namespace App\API;
 
 use App\Entity\Activity;
+use App\Entity\Project;
 use App\Event\ActivityMetaDefinitionEvent;
 use App\Form\API\ActivityApiEditForm;
 use App\Repository\ActivityRepository;
@@ -41,7 +41,7 @@ class ActivityController extends BaseApiController
     /**
      * @var ActivityRepository
      */
-          private        $repository;
+    private $repository;
     /**
      * @var ViewHandlerInterface
      */
@@ -115,6 +115,7 @@ class ActivityController extends BaseApiController
         $data = $this->repository->getActivitiesForQuery($query);
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Collection', 'Activity']);
+
         return $this->viewHandler->handle($view);
     }
 
@@ -183,6 +184,7 @@ class ActivityController extends BaseApiController
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
 
+        /** @var Project $form */
         $form = $this->createForm(ActivityApiEditForm::class, $activity);
 
         $form->submit($request->request->all());
