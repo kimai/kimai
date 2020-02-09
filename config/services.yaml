@@ -203,6 +203,20 @@ services:
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Role']
 
+    App\Repository\RolePermissionRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\RolePermission']
+    
+    App\Repository\InvoiceDocumentRepository:
+        class: App\Repository\InvoiceDocumentRepository
+        arguments: ['%kimai.invoice.documents%']
+
+    App\Repository\CustomerRateRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\CustomerRate']
+
     App\Repository\ActivityRateRepository:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
@@ -212,17 +226,3 @@ services:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\ProjectRate']
-
-    App\Repository\CustomerRateRepository:
-        class:     Doctrine\ORM\EntityRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
-        arguments: ['App\Entity\CustomerRate']
-
-    App\Repository\RolePermissionRepository:
-        class:     Doctrine\ORM\EntityRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
-        arguments: ['App\Entity\RolePermission']
-    
-    App\Repository\InvoiceDocumentRepository:
-        class: App\Repository\InvoiceDocumentRepository
-        arguments: ['%kimai.invoice.documents%']

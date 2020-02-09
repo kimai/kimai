@@ -89,6 +89,4 @@ trait Rate
 
         return $this;
     }
-
-    abstract public function getScore(): int;
 }
