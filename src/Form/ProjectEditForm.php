@@ -44,6 +44,12 @@ class ProjectEditForm extends AbstractType
             }
         }
 
+        $dateTimeOptions = [];
+        // primarily for API usage, where we cannot use a user/locale specific format
+        if (null !== $options['date_format']) {
+            $dateTimeOptions['format'] = $options['date_format'];
+        }
+
         $builder
             ->add('name', TextType::class, [
                 'label' => 'label.name',
@@ -59,18 +65,18 @@ class ProjectEditForm extends AbstractType
                 'label' => 'label.orderNumber',
                 'required' => false,
             ])
-            ->add('orderDate', DateTimePickerType::class, [
+            ->add('orderDate', DateTimePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.orderDate',
                 'required' => false,
-            ])
-            ->add('start', DateTimePickerType::class, [
+            ]))
+            ->add('start', DateTimePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.project_start',
                 'required' => false,
-            ])
-            ->add('end', DateTimePickerType::class, [
+            ]))
+            ->add('end', DateTimePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.project_end',
                 'required' => false,
-            ])
+            ]))
             ->add('customer', CustomerType::class, [
                 'query_builder' => function (CustomerRepository $repo) use ($builder, $customer) {
                     $query = new CustomerFormTypeQuery($customer);
@@ -98,6 +104,7 @@ class ProjectEditForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_project_edit',
             'currency' => Customer::DEFAULT_CURRENCY,
+            'date_format' => null,
             'include_budget' => false,
             'create_more' => false,
             'attr' => [

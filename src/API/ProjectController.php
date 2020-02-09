@@ -202,7 +202,9 @@ class ProjectController extends BaseApiController
         $event = new ProjectMetaDefinitionEvent($project);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->createForm(ProjectApiEditForm::class, $project);
+        $form = $this->createForm(ProjectApiEditForm::class, $project, [
+            'date_format' => self::DATE_FORMAT,
+        ]);
 
         $form->submit($request->request->all());
 
@@ -264,7 +266,9 @@ class ProjectController extends BaseApiController
         $event = new ProjectMetaDefinitionEvent($project);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->createForm(ProjectApiEditForm::class, $project);
+        $form = $this->createForm(ProjectApiEditForm::class, $project, [
+            'date_format' => self::DATE_FORMAT,
+        ]);
 
         $form->setData($project);
         $form->submit($request->request->all(), false);
