@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\MappedSuperclass(repositoryClass="App\Repository\RateRepository")
  */
-abstract class Rate
+class Rate
 {
     /**
      * @var int
@@ -93,5 +93,8 @@ abstract class Rate
         return $this;
     }
 
-    abstract public function getScore(): int;
+    public function getScore(): int
+    {
+        return 0;
+    }
 }
