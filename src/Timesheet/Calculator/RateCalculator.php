@@ -10,9 +10,10 @@
 namespace App\Timesheet\Calculator;
 
 use App\Entity\Rate;
+use App\Entity\RateInterface;
 use App\Entity\Timesheet;
 use App\Entity\UserPreference;
-use App\Repository\RateRepository;
+use App\Repository\TimesheetRepository;
 use App\Timesheet\CalculatorInterface;
 use App\Timesheet\Util;
 
@@ -26,11 +27,11 @@ class RateCalculator implements CalculatorInterface
      */
     private $rates;
     /**
-     * @var RateRepository
+     * @var TimesheetRepository
      */
     private $repository;
 
-    public function __construct(array $rates, RateRepository $repository)
+    public function __construct(array $rates, TimesheetRepository $repository)
     {
         $this->rates = $rates;
         $this->repository = $repository;
@@ -85,10 +86,10 @@ class RateCalculator implements CalculatorInterface
         $record->setRate($totalRate);
     }
 
-    private function getBestFittingRate(Timesheet $timesheet): ?Rate
+    private function getBestFittingRate(Timesheet $timesheet): ?RateInterface
     {
         $rates = $this->repository->findMatchingRates($timesheet);
-        /** @var Rate[] $sorted */
+        /** @var RateInterface[] $sorted */
         $sorted = [];
         foreach ($rates as $rate) {
             $score = $rate->getScore();

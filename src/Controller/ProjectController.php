@@ -26,11 +26,11 @@ use App\Form\ProjectTeamPermissionForm;
 use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
 use App\Repository\ActivityRepository;
+use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
-use App\Repository\RateRepository;
 use App\Repository\TeamRepository;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -265,7 +265,7 @@ final class ProjectController extends AbstractController
      * @Route(path="/{id}/details", name="project_details", methods={"GET", "POST"})
      * @Security("is_granted('view', project)")
      */
-    public function detailsAction(Project $project, TeamRepository $teamRepository, RateRepository $rateRepository)
+    public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository)
     {
         $event = new ProjectMetaDefinitionEvent($project);
         $this->dispatcher->dispatch($event);
@@ -317,7 +317,7 @@ final class ProjectController extends AbstractController
      * @Route(path="/{id}/rate_delete/{rate}", name="admin_project_rate_delete", methods={"GET"})
      * @Security("is_granted('edit', project)")
      */
-    public function deleteRateAction(Project $project, ProjectRate $rate, Request $request, RateRepository $repository)
+    public function deleteRateAction(Project $project, ProjectRate $rate, ProjectRateRepository $repository)
     {
         if ($rate->getProject() !== $project) {
             $this->flashError('action.delete.error', ['%reason%' => 'Invalid project']);
@@ -336,7 +336,7 @@ final class ProjectController extends AbstractController
      * @Route(path="/{id}/rate", name="admin_project_rate_add", methods={"GET", "POST"})
      * @Security("is_granted('edit', project)")
      */
-    public function addRateAction(Project $project, Request $request, RateRepository $repository)
+    public function addRateAction(Project $project, Request $request, ProjectRateRepository $repository)
     {
         $rate = new ProjectRate();
         $rate->setProject($project);

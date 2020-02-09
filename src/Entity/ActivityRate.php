@@ -19,11 +19,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\UniqueConstraint(columns={"user_id", "activity_id"}),
  *     }
  * )
- * @ORM\Entity(repositoryClass="App\Repository\RateRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ActivityRateRepository")
  * @UniqueEntity({"user", "activity"}, ignoreNull=false)
  */
-class ActivityRate extends Rate
+class ActivityRate implements RateInterface
 {
+    use Rate;
+
     /**
      * @var Activity
      *
@@ -33,7 +35,7 @@ class ActivityRate extends Rate
      */
     private $activity;
 
-    public function setActivity(?Activity $activity): Rate
+    public function setActivity(?Activity $activity): ActivityRate
     {
         $this->activity = $activity;
 

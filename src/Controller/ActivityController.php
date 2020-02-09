@@ -20,10 +20,10 @@ use App\Form\ActivityEditForm;
 use App\Form\ActivityRateForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
+use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
-use App\Repository\RateRepository;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -111,7 +111,7 @@ final class ActivityController extends AbstractController
      * @Route(path="/{id}/details", name="activity_details", methods={"GET", "POST"})
      * @Security("is_granted('view', activity)")
      */
-    public function detailsAction(Activity $activity, RateRepository $rateRepository)
+    public function detailsAction(Activity $activity, ActivityRateRepository $rateRepository)
     {
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
@@ -138,10 +138,8 @@ final class ActivityController extends AbstractController
      * @Route(path="/{id}/rate_delete/{rate}", name="admin_activity_rate_delete", methods={"GET"})
      * @Security("is_granted('edit', activity)")
      */
-    public function deleteRateAction(Activity $activity, ActivityRate $rate, Request $request, RateRepository $repository)
+    public function deleteRateAction(Activity $activity, ActivityRate $rate, ActivityRateRepository $repository)
     {
-        $isGlobal = $rate->getActivity()->isGlobal();
-
         if ($rate->getActivity() !== $activity) {
             $this->flashError('action.delete.error', ['%reason%' => 'Invalid activity']);
         } else {
@@ -159,7 +157,7 @@ final class ActivityController extends AbstractController
      * @Route(path="/{id}/rate", name="admin_activity_rate_add", methods={"GET", "POST"})
      * @Security("is_granted('edit', activity)")
      */
-    public function addRateAction(Activity $activity, Request $request, RateRepository $repository)
+    public function addRateAction(Activity $activity, Request $request, ActivityRateRepository $repository)
     {
         $rate = new ActivityRate();
         $rate->setActivity($activity);

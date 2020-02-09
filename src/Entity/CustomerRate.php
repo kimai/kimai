@@ -19,11 +19,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\UniqueConstraint(columns={"user_id", "customer_id"}),
  *     }
  * )
- * @ORM\Entity(repositoryClass="App\Repository\RateRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CustomerRateRepository")
  * @UniqueEntity({"user", "customer"}, ignoreNull=false)
  */
-class CustomerRate extends Rate
+class CustomerRate implements RateInterface
 {
+    use Rate;
+
     /**
      * @var Customer
      *
@@ -33,7 +35,7 @@ class CustomerRate extends Rate
      */
     private $customer;
 
-    public function setCustomer(?Customer $customer): Rate
+    public function setCustomer(?Customer $customer): CustomerRate
     {
         $this->customer = $customer;
 

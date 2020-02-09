@@ -203,10 +203,20 @@ services:
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Role']
 
-    App\Repository\RateRepository:
+    App\Repository\ActivityRateRepository:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\ActivityRate']
+
+    App\Repository\ProjectRateRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\ProjectRate']
+
+    App\Repository\CustomerRateRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\CustomerRate']
 
     App\Repository\RolePermissionRepository:
         class:     Doctrine\ORM\EntityRepository

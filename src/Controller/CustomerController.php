@@ -24,12 +24,12 @@ use App\Form\CustomerRateForm;
 use App\Form\CustomerTeamPermissionForm;
 use App\Form\Toolbar\CustomerToolbarForm;
 use App\Form\Type\CustomerType;
+use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
-use App\Repository\RateRepository;
 use App\Repository\TeamRepository;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -260,7 +260,7 @@ final class CustomerController extends AbstractController
      * @Route(path="/{id}/details", name="customer_details", methods={"GET", "POST"})
      * @Security("is_granted('view', customer)")
      */
-    public function detailsAction(Customer $customer, TeamRepository $teamRepository, RateRepository $rateRepository)
+    public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository)
     {
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
@@ -319,7 +319,7 @@ final class CustomerController extends AbstractController
      * @Route(path="/{id}/rate_delete/{rate}", name="admin_customer_rate_delete", methods={"GET"})
      * @Security("is_granted('edit', customer)")
      */
-    public function deleteRateAction(Customer $customer, CustomerRate $rate, Request $request, RateRepository $repository)
+    public function deleteRateAction(Customer $customer, CustomerRate $rate, CustomerRateRepository $repository)
     {
         if ($rate->getCustomer() !== $customer) {
             $this->flashError('action.delete.error', ['%reason%' => 'Invalid customer']);
@@ -338,7 +338,7 @@ final class CustomerController extends AbstractController
      * @Route(path="/{id}/rate", name="admin_customer_rate_add", methods={"GET", "POST"})
      * @Security("is_granted('edit', customer)")
      */
-    public function addRateAction(Customer $customer, Request $request, RateRepository $repository)
+    public function addRateAction(Customer $customer, Request $request, CustomerRateRepository $repository)
     {
         $rate = new CustomerRate();
         $rate->setCustomer($customer);

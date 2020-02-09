@@ -12,10 +12,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\MappedSuperclass(repositoryClass="App\Repository\RateRepository")
- */
-abstract class Rate
+trait Rate
 {
     /**
      * @var int
@@ -57,7 +54,7 @@ abstract class Rate
         return $this->id;
     }
 
-    public function setUser(?User $user): Rate
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
@@ -69,7 +66,7 @@ abstract class Rate
         return $this->user;
     }
 
-    public function setRate(float $rate): Rate
+    public function setRate(float $rate): self
     {
         $this->rate = $rate;
 
@@ -86,7 +83,7 @@ abstract class Rate
         return $this->isFixed;
     }
 
-    public function setIsFixed(bool $isFixed): Rate
+    public function setIsFixed(bool $isFixed): self
     {
         $this->isFixed = $isFixed;
 

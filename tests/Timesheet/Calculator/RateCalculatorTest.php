@@ -18,7 +18,7 @@ use App\Entity\ProjectRate;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
-use App\Repository\RateRepository;
+use App\Repository\TimesheetRepository;
 use App\Timesheet\Calculator\RateCalculator;
 use PHPUnit\Framework\TestCase;
 
@@ -29,7 +29,7 @@ class RateCalculatorTest extends TestCase
 {
     protected function getRateRepositoryMock(array $rates = [])
     {
-        $mock = $this->getMockBuilder(RateRepository::class)->disableOriginalConstructor()->getMock();
+        $mock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
         if (!empty($rates)) {
             $mock->expects($this->any())->method('findMatchingRates')->willReturn($rates);
         }
