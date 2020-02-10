@@ -40,12 +40,6 @@ class InvoiceModelActivityHydratorTest extends TestCase
             'activity.id',
             'activity.name',
             'activity.comment',
-            'activity.fixed_rate',
-            'activity.fixed_rate_nc',
-            'activity.fixed_rate_plain',
-            'activity.hourly_rate',
-            'activity.hourly_rate_nc',
-            'activity.hourly_rate_plain',
             'activity.meta.foo-activity',
         ];
 

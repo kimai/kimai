@@ -12,22 +12,25 @@ namespace App\Controller;
 use App\Configuration\FormConfiguration;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
+use App\Entity\CustomerRate;
 use App\Entity\MetaTableTypeInterface;
+use App\Entity\Rate;
 use App\Entity\Team;
 use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Form\CustomerCommentForm;
 use App\Form\CustomerEditForm;
+use App\Form\CustomerRateForm;
 use App\Form\CustomerTeamPermissionForm;
 use App\Form\Toolbar\CustomerToolbarForm;
 use App\Form\Type\CustomerType;
+use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
-use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -257,7 +260,7 @@ final class CustomerController extends AbstractController
      * @Route(path="/{id}/details", name="customer_details", methods={"GET", "POST"})
      * @Security("is_granted('view', customer)")
      */
-    public function detailsAction(Customer $customer, TeamRepository $teamRepository)
+    public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository)
     {
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
@@ -270,9 +273,13 @@ final class CustomerController extends AbstractController
         $comments = null;
         $teams = null;
         $projects = null;
+        $rates = [];
 
-        if ($this->isGranted('edit', $customer) && $this->isGranted('create_team')) {
-            $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
+        if ($this->isGranted('edit', $customer)) {
+            if ($this->isGranted('create_team')) {
+                $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
+            }
+            $rates = $rateRepository->getRatesForCustomer($customer);
         }
 
         if (null !== $customer->getTimezone()) {
@@ -304,6 +311,59 @@ final class CustomerController extends AbstractController
             'team' => $defaultTeam,
             'teams' => $teams,
             'now' => new \DateTime('now', $timezone),
+            'rates' => $rates
+        ]);
+    }
+
+    /**
+     * @Route(path="/{id}/rate_delete/{rate}", name="admin_customer_rate_delete", methods={"GET"})
+     * @Security("is_granted('edit', customer)")
+     */
+    public function deleteRateAction(Customer $customer, CustomerRate $rate, CustomerRateRepository $repository)
+    {
+        if ($rate->getCustomer() !== $customer) {
+            $this->flashError('action.delete.error', ['%reason%' => 'Invalid customer']);
+        } else {
+            try {
+                $repository->deleteRate($rate);
+            } catch (\Exception $ex) {
+                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
+    }
+
+    /**
+     * @Route(path="/{id}/rate", name="admin_customer_rate_add", methods={"GET", "POST"})
+     * @Security("is_granted('edit', customer)")
+     */
+    public function addRateAction(Customer $customer, Request $request, CustomerRateRepository $repository)
+    {
+        $rate = new CustomerRate();
+        $rate->setCustomer($customer);
+
+        $form = $this->createForm(CustomerRateForm::class, $rate, [
+            'action' => $this->generateUrl('admin_customer_rate_add', ['id' => $customer->getId()]),
+            'method' => 'POST',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $repository->saveRate($rate);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
+            } catch (\Exception $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->render('customer/rates.html.twig', [
+            'customer' => $customer,
+            'form' => $form->createView()
         ]);
     }
 
@@ -352,7 +412,7 @@ final class CustomerController extends AbstractController
             try {
                 $this->repository->deleteCustomer($customer, $deleteForm->get('customer')->getData());
                 $this->flashSuccess('action.delete.success');
-            } catch (ORMException $ex) {
+            } catch (\Exception $ex) {
                 $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
             }
 
@@ -383,7 +443,7 @@ final class CustomerController extends AbstractController
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
-            } catch (ORMException $ex) {
+            } catch (\Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
         }

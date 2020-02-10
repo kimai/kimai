@@ -14,6 +14,11 @@ namespace DoctrineMigrations;
 use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
+/**
+ * Adds language and decimal_duration column to invoice template table
+ *
+ * @version 1.8
+ */
 final class Version20200204124425 extends AbstractMigration
 {
     public function getDescription(): string
