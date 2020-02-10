@@ -2,7 +2,7 @@
 {% import "project/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.project(project, 'permissions') }}{% endblock %}
+{% block page_actions %}{{ actions.project(project, 'rates') }}{% endblock %}
 
 {% block main %}
     {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {

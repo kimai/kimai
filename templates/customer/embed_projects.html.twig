@@ -33,6 +33,9 @@
         {% endblock %}
     {% endembed %}
     <script type="text/javascript">
-        KimaiPaginatedBoxWidget.create('#project_list_box');
+        {% set eventName = app.request.xmlHttpRequest ? 'kimai.reloadPage' : 'kimai.initialized' %}
+        document.addEventListener('{{ eventName }}', function() {
+            KimaiPaginatedBoxWidget.create('#project_list_box');
+        });
     </script>
 {% endif %}

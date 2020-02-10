@@ -106,6 +106,8 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn-box-tool');
         self::assertEquals(2, $node->count());
+        $node = $client->getCrawler()->filter('div.box#project_rates_box');
+        self::assertEquals(1, $node->count());
     }
 
     public function testAddCommentAction()

@@ -26,7 +26,7 @@
             <p>{{ 'team.visibility_restricted'|trans({}, 'teams') }}</p>
             {{ widgets.team_list(teams) }}
         {% else %}
-            <p>{{ empty_message|default('team.visibility_global')|trans({}, 'teams') }}</p>
+            {{ empty_message|default('team.visibility_global')|trans({}, 'teams') }}
         {% endif %}
     {% endblock %}
 {% endembed %}

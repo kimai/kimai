@@ -14,15 +14,19 @@ use App\Entity\Customer;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\ProjectComment;
+use App\Entity\ProjectRate;
+use App\Entity\Rate;
 use App\Entity\Team;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Form\ProjectCommentForm;
 use App\Form\ProjectEditForm;
+use App\Form\ProjectRateForm;
 use App\Form\ProjectTeamPermissionForm;
 use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
 use App\Repository\ActivityRepository;
+use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectFormTypeQuery;
@@ -261,7 +265,7 @@ final class ProjectController extends AbstractController
      * @Route(path="/{id}/details", name="project_details", methods={"GET", "POST"})
      * @Security("is_granted('view', project)")
      */
-    public function detailsAction(Project $project, TeamRepository $teamRepository)
+    public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository)
     {
         $event = new ProjectMetaDefinitionEvent($project);
         $this->dispatcher->dispatch($event);
@@ -272,9 +276,13 @@ final class ProjectController extends AbstractController
         $attachments = [];
         $comments = null;
         $teams = null;
+        $rates = [];
 
-        if ($this->isGranted('edit', $project) && $this->isGranted('create_team')) {
-            $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
+        if ($this->isGranted('edit', $project)) {
+            if ($this->isGranted('create_team')) {
+                $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
+            }
+            $rates = $rateRepository->getRatesForProject($project);
         }
 
         if ($this->isGranted('budget', $project)) {
@@ -301,6 +309,59 @@ final class ProjectController extends AbstractController
             'stats' => $stats,
             'team' => $defaultTeam,
             'teams' => $teams,
+            'rates' => $rates
+        ]);
+    }
+
+    /**
+     * @Route(path="/{id}/rate_delete/{rate}", name="admin_project_rate_delete", methods={"GET"})
+     * @Security("is_granted('edit', project)")
+     */
+    public function deleteRateAction(Project $project, ProjectRate $rate, ProjectRateRepository $repository)
+    {
+        if ($rate->getProject() !== $project) {
+            $this->flashError('action.delete.error', ['%reason%' => 'Invalid project']);
+        } else {
+            try {
+                $repository->deleteRate($rate);
+            } catch (\Exception $ex) {
+                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+    }
+
+    /**
+     * @Route(path="/{id}/rate", name="admin_project_rate_add", methods={"GET", "POST"})
+     * @Security("is_granted('edit', project)")
+     */
+    public function addRateAction(Project $project, Request $request, ProjectRateRepository $repository)
+    {
+        $rate = new ProjectRate();
+        $rate->setProject($project);
+
+        $form = $this->createForm(ProjectRateForm::class, $rate, [
+            'action' => $this->generateUrl('admin_project_rate_add', ['id' => $project->getId()]),
+            'method' => 'POST',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $repository->saveRate($rate);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+            } catch (\Exception $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->render('project/rates.html.twig', [
+            'project' => $project,
+            'form' => $form->createView()
         ]);
     }
 
