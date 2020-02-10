@@ -152,7 +152,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'customer' => 1,
-            'visible' => true
+            'visible' => true,
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $response = $client->getResponse();
@@ -283,7 +283,7 @@ class ProjectControllerTest extends APIControllerBaseTest
     protected function assertStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'name', 'visible', 'customer', 'hourlyRate', 'fixedRate', 'color', 'metaFields', 'parentTitle', 'start', 'end', 'teams'
+            'id', 'name', 'visible', 'customer', 'color', 'metaFields', 'parentTitle', 'start', 'end', 'teams'
         ];
 
         if ($full) {
