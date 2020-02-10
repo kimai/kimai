@@ -34,6 +34,7 @@
         "nelmio/cors-bundle": "^1.5",
         "ocramius/proxy-manager": "^2.1.1",
         "onelogin/php-saml": "^3.4",
+        "pagerfanta/pagerfanta": "^2.1",
         "phpoffice/phpspreadsheet": "^1.10",
         "phpoffice/phpword": "^0.17",
         "psr/log": "^1.1",
@@ -59,8 +60,7 @@
         "symfony/yaml": "^4.0",
         "twig/extra-bundle": "^3.0",
         "twig/intl-extra": "^3.0",
-        "twig/string-extra": "^3.0",
-        "white-october/pagerfanta-bundle": "^1.1"
+        "twig/string-extra": "^3.0"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^6.0",
