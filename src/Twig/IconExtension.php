@@ -46,6 +46,7 @@ final class IconExtension extends AbstractExtension
         'home' => 'fas fa-home',
         'invoice' => 'fas fa-file-invoice-dollar',
         'invoice-template' => 'fas fa-file-signature',
+        'left' => 'fas fa-chevron-left',
         'list' => 'fas fa-list',
         'locked' => 'fas fa-lock',
         'logout' => 'fas fa-sign-out-alt',
@@ -69,6 +70,7 @@ final class IconExtension extends AbstractExtension
         'profile-stats' => 'far fa-chart-bar',
         'project' => 'fas fa-briefcase',
         'repeat' => 'fas fa-redo-alt',
+        'right' => 'fas fa-chevron-right',
         'roles' => 'fas fa-user-shield',
         'search' => 'fas fa-search',
         'settings' => 'fas fa-cog',
@@ -88,8 +90,6 @@ final class IconExtension extends AbstractExtension
         'visibility' => 'far fa-eye',
         'warning' => 'fas fa-exclamation-triangle',
         'xlsx' => 'fas fa-file-excel',
-        'left' => 'fas fa-chevron-left',
-        'right' => 'fas fa-chevron-right',
     ];
 
     /**
