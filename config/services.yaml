@@ -211,3 +211,18 @@ services:
     App\Repository\InvoiceDocumentRepository:
         class: App\Repository\InvoiceDocumentRepository
         arguments: ['%kimai.invoice.documents%']
+
+    App\Repository\CustomerRateRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\CustomerRate']
+
+    App\Repository\ActivityRateRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\ActivityRate']
+
+    App\Repository\ProjectRateRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\ProjectRate']

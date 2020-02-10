@@ -40,33 +40,19 @@
                     {{ form_row(form.end) }}
                 </div>
             </div>
-            <fieldset>
-                {#<legend>Financial data</legend>#}
-                <div class="row">
-                    <div class="col-md-6">
-                        {{ form_row(form.fixedRate) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_row(form.hourlyRate) }}
-                    </div>
+            {% if form.budget is defined %}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.budget) }}
                 </div>
-                {% if form.budget is defined %}
-                <div class="row">
-                    <div class="col-md-6">
-                        {{ form_row(form.budget) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_row(form.timeBudget) }}
-                    </div>
+                <div class="col-md-6">
+                    {{ form_row(form.timeBudget) }}
                 </div>
-                {% endif %}
-            </fieldset>
+            </div>
+            {% endif %}
             {{ form_row(form.visible) }}
             {% if form.metaFields is defined and form.metaFields is not empty %}
-                <fieldset>
-                    {#<legend>Custom fields</legend>#}
-                    {{ form_row(form.metaFields) }}
-                </fieldset>
+                {{ form_row(form.metaFields) }}
             {% endif %}
             {{ form_widget(form) }}
         {% endblock %}

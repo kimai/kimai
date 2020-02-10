@@ -47,12 +47,6 @@ class InvoiceModelCustomerHydratorTest extends TestCase
             'customer.number',
             'customer.homepage',
             'customer.comment',
-            'customer.fixed_rate',
-            'customer.fixed_rate_nc',
-            'customer.fixed_rate_plain',
-            'customer.hourly_rate',
-            'customer.hourly_rate_nc',
-            'customer.hourly_rate_plain',
             'customer.meta.foo-customer',
         ];
 

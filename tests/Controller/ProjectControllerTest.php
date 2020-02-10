@@ -106,6 +106,56 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn-box-tool');
         self::assertEquals(2, $node->count());
+        $node = $client->getCrawler()->filter('div.box#project_rates_box');
+        self::assertEquals(1, $node->count());
+    }
+
+    public function testAddRateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/1/rate');
+        $form = $client->getCrawler()->filter('form[name=project_rate_form]')->form();
+        $client->submit($form, [
+            'project_rate_form' => [
+                'user' => null,
+                'rate' => 123.45,
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#project_rates_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr:not(.summary)');
+        self::assertEquals(1, $node->count());
+        self::assertStringContainsString('123.45', $node->text(null, true));
+    }
+
+    public function testDeleteRateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/1/rate');
+        $form = $client->getCrawler()->filter('form[name=project_rate_form]')->form();
+        $client->submit($form, [
+            'project_rate_form' => [
+                'user' => null,
+                'rate' => 123.45,
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#project_rates_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr:not(.summary)');
+        self::assertEquals(1, $node->count());
+        self::assertStringContainsString('123.45', $node->text(null, true));
+
+        $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr td.actions a');
+        self::assertEquals(1, $node->count());
+        $url = $node->attr('href');
+        $client->request('GET', $url);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
+        $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr:not(.summary)');
+        self::assertEquals(0, $node->count());
     }
 
     public function testAddCommentAction()

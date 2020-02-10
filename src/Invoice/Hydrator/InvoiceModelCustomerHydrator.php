@@ -36,12 +36,6 @@ class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             'customer.country' => $customer->getCountry(),
             'customer.homepage' => $customer->getHomepage(),
             'customer.comment' => $customer->getComment(),
-            'customer.fixed_rate' => $formatter->getFormattedMoney($customer->getFixedRate(), $currency),
-            'customer.fixed_rate_nc' => $formatter->getFormattedMoney($customer->getFixedRate(), null),
-            'customer.fixed_rate_plain' => $customer->getFixedRate(),
-            'customer.hourly_rate' => $formatter->getFormattedMoney($customer->getHourlyRate(), $currency),
-            'customer.hourly_rate_nc' => $formatter->getFormattedMoney($customer->getHourlyRate(), null),
-            'customer.hourly_rate_plain' => $customer->getHourlyRate(),
         ];
 
         foreach ($customer->getVisibleMetaFields() as $metaField) {

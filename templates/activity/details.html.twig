@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "activity/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.activity(activity, 'details') }}{% endblock %}
+
+{% block main %}
+    {% set can_edit = is_granted('edit', activity) %}
+    {% set currency = null %}
+    {% if activity.project is not null %}
+        {% set currency = activity.project.customer.currency %}
+    {% endif %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% import "customer/actions.html.twig" as customerActions %}
+        {% import "project/actions.html.twig" as projectActions %}
+        {% block box_attributes %}id="activity_details_box"{% endblock %}
+        {% block box_title %}
+            {{ widgets.label_activity(activity) }}
+        {% endblock %}
+        {% block box_tools %}
+            {% if can_edit %}
+                <a class="modal-ajax-form open-edit btn btn-box-tool" data-href="{{ path('admin_activity_edit', {'id': activity.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
+            {% endif %}
+        {% endblock %}
+        {% block box_body %}
+            {% if activity.comment is not empty %}
+                {{ activity.comment|comment2html(true) }}
+            {% endif %}
+            <table class="table table-hover">
+                {% if not activity.visible %}
+                    <tr>
+                        <th>{{ 'label.visible'|trans }}</th>
+                        <td>
+                            {{ widgets.label_boolean(activity.visible) }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if not activity.global %}
+                    <tr>
+                        <th>{{ 'label.customer'|trans }}</th>
+                        <td>
+                            {{ widgets.label_customer(activity.project.customer) }}
+                            {% if activity.project.customer.teams|length == 0 %}
+                                {{ widgets.icon('unlocked') }}
+                            {% endif %}
+                            &nbsp;
+                            {{ customerActions.customer(activity.project.customer, 'custom') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'label.project'|trans }}</th>
+                        <td>
+                            {{ widgets.label_project(activity.project) }}
+                            {% if activity.project.teams|length == 0 %}
+                                {{ widgets.icon('unlocked') }}
+                            {% endif %}
+                            &nbsp;
+                            {{ projectActions.project(activity.project, 'custom') }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% for metaField in activity.visibleMetaFields %}
+                    <tr>
+                        <th>{{ metaField.label }}</th>
+                        <td>{{ widgets.form_type_value(metaField.type, metaField.value, activity) }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    {% endembed %}
+
+    {% if stats is not null %}
+        {{ include('activity/embed_budget.html.twig', {'activity': activity, 'stats': stats}) }}
+    {% endif %}
+
+    {% if can_edit %}
+        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+            {% import "macros/widgets.html.twig" as widgets %}
+            {% block box_attributes %}id="activity_rates_box"{% endblock %}
+            {% block box_title %}
+                {{ 'rates.title'|trans }}
+            {% endblock %}
+            {% block box_tools %}
+                <a class="modal-ajax-form open-edit btn btn-box-tool" data-href="{{ path('admin_activity_rate_add', {'id': activity.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'create'|trans }}"><i class="{{ 'create'|icon }}"></i></a>
+            {% endblock %}
+            {% block box_body %}
+                {% if rates is empty %}
+                    {{ 'rates.empty'|trans }}
+                {% else %}
+                    <table class="table dataTable" >
+                        <thead>
+                        <tr>
+                            <th>
+                                {{ 'label.user'|trans }}
+                            </th>
+                            <th>
+                                {{ 'label.hourlyRate'|trans }}
+                            </th>
+                            <th>
+                                {{ 'label.fixedRate'|trans }}
+                            </th>
+                            <th class="actions"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for rate in rates %}
+                            <tr>
+                                <td>
+                                    {% if rate.user is not null %}
+                                        {{ widgets.user_avatar(rate.user) }}
+                                    {% else %}
+                                        &ndash;
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if not rate.fixed %}
+                                        {{ rate.rate|money(currency) }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if rate.fixed %}
+                                        {{ rate.rate|money(currency) }}
+                                    {% endif %}
+                                </td>
+                                <td class="actions">
+                                    <a href="{{ path('admin_activity_rate_delete', {'id': activity.id, 'rate': rate.id}) }}" class="confirmation-link btn btn-default btn-xs" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('kimai.activityUpdate kimai.teamUpdate kimai.projectTeamUpdate kimai.projectUpdate');
+        });
+    </script>
+{% endblock %}
