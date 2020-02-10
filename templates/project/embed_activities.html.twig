@@ -6,7 +6,7 @@
             id="activity_list_box"  data-href="{{ path('project_activities', {'id': project.id}) }}" data-reload="kimai.activityUpdate"
         {% endblock %}
         {% block box_tools %}
-            {{ pagerfanta(activities, 'twitter_bootstrap3_translated', { proximity: 1, css_container_class: 'pagination pagination-sm inline', routeName: 'project_activities', routeParams: {'id': project.id} }) }}
+            {{ pagination(activities, { css_container_class: 'pagination pagination-sm inline', routeName: 'project_activities', routeParams: {'id': project.id} }) }}
         {% endblock %}
         {% block box_body_class %}no-padding{% endblock %}
         {% block box_tools_attributes %}data-page="{{ page }}"{% endblock %}
