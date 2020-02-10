@@ -11,7 +11,7 @@ jobs:
             matrix:
                 php: ['7.4']
 
-        name: Code Styles - PHP ${{ matrix.php }}
+        name: Linting - PHP ${{ matrix.php }}
         steps:
             -   uses: actions/checkout@v2
             -   uses: shivammathur/setup-php@v1
