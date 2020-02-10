@@ -76,6 +76,23 @@ class PaginationExtensionTest extends TestCase
         $this->assertPaginationHtml($result);
     }
 
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedRenderPagerfantaWithoutTemplateName()
+    {
+        $sut = $this->getSut();
+
+        $values = array_fill(0, 151, 'blub');
+        $pagerfanta = new Pagerfanta(new ArrayAdapter($values));
+        $result = $sut->renderPagerfanta($pagerfanta, [
+            'css_container_class' => 'pagination pagination-sm inline',
+            'routeName' => 'project_activities',
+            'routeParams' => ['id' => 137]
+        ]);
+        $this->assertPaginationHtml($result);
+    }
+
     protected function assertPaginationHtml($result)
     {
         $expected =
@@ -100,6 +117,22 @@ class PaginationExtensionTest extends TestCase
         $result = $sut->renderPagination($pagerfanta, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
+            'routeParams' => ['id' => 137]
+        ]);
+        $this->assertPaginationHtml($result);
+    }
+
+    public function testRenderPaginationWithoutRouteName()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Pagination is missing the "routeName" option');
+
+        $sut = $this->getSut();
+
+        $values = array_fill(0, 151, 'blub');
+        $pagerfanta = new Pagerfanta(new ArrayAdapter($values));
+        $result = $sut->renderPagination($pagerfanta, [
+            'css_container_class' => 'pagination pagination-sm inline',
             'routeParams' => ['id' => 137]
         ]);
         $this->assertPaginationHtml($result);
