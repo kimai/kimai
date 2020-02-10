@@ -11,6 +11,7 @@ namespace App\Tests\Entity;
 
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
+use App\Entity\Project;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
@@ -27,6 +28,7 @@ class ActivityTest extends TestCase
         $this->assertNull($sut->getName());
         $this->assertNull($sut->getComment());
         $this->assertTrue($sut->getVisible());
+        $this->assertTrue($sut->isGlobal());
         $this->assertNull($sut->getColor());
         $this->assertEquals(0.0, $sut->getBudget());
         $this->assertEquals(0, $sut->getTimeBudget());
@@ -56,6 +58,10 @@ class ActivityTest extends TestCase
 
         $this->assertInstanceOf(Activity::class, $sut->setTimeBudget(937321));
         $this->assertEquals(937321, $sut->getTimeBudget());
+
+        $this->assertTrue($sut->isGlobal());
+        $this->assertInstanceOf(Activity::class, $sut->setProject(new Project()));
+        $this->assertFalse($sut->isGlobal());
     }
 
     public function testMetaFields()
