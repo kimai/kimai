@@ -62,38 +62,6 @@ final class Version20200205115243 extends AbstractMigration
         $activityRates->setPrimaryKey(['id']);
     }
 
-    public function postUp(Schema $schema): void
-    {
-        $migrates = [
-            ['kimai2_activities', 'activity_id', 'kimai2_activities_rates'],
-            ['kimai2_projects', 'project_id', 'kimai2_projects_rates'],
-            ['kimai2_customers', 'customer_id', 'kimai2_customers_rates'],
-        ];
-
-        foreach ($migrates as $migrateOpts) {
-            $tableName = $migrateOpts[0];
-            $fieldName = $migrateOpts[1];
-            $targetTable = $migrateOpts[2];
-
-            $rules = $this->connection->prepare(
-                'SELECT id, fixed_rate, hourly_rate FROM ' . $tableName . ' WHERE fixed_rate IS NOT NULL OR hourly_rate IS NOT NULL'
-            );
-            $rules->execute();
-
-            foreach ($rules->fetchAll() as $rateRule) {
-                $isFixed = $rateRule['fixed_rate'] !== null;
-                $rate = $rateRule['fixed_rate'] ?? $rateRule['hourly_rate'];
-                $params = ['user_id' => null, $fieldName => $rateRule['id'], 'rate' => $rate, 'fixed' => $isFixed];
-
-                $this->connection->insert($targetTable, $params, ['fixed' => \PDO::PARAM_BOOL]);
-            }
-        }
-
-        // FIXME drop hourly_rate, fixed_rate from tables
-
-        parent::postUp($schema);
-    }
-
     public function down(Schema $schema): void
     {
         $schema->dropTable('kimai2_activities_rates');
