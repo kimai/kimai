@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="email.en.xlf">
+        <body>
+            <trans-unit id="button_copy_url_to_browser">
+                <source>button_copy_url_to_browser</source>
+                <target>If the button doesn't work, please copy &amp; paste the following URL to your browser: %url%</target>
+            </trans-unit>
+            <trans-unit id="registration.subject">
+                <source>registration.subject</source>
+                <target>Activate your account</target>
+            </trans-unit>
+            <trans-unit id="registration.title">
+                <source>registration.title</source>
+                <target>Welcome %username%</target>
+            </trans-unit>
+            <trans-unit id="registration.button">
+                <source>registration.button</source>
+                <target>Activate your account</target>
+            </trans-unit>
+            <trans-unit id="registration.intro">
+                <source>registration.intro</source>
+                <target>You signed up at the Kimai time-tracker with the email %email%.</target>
+            </trans-unit>
+            <trans-unit id="registration.ignore">
+                <source>registration.ignore</source>
+                <target>If you didn't sign up for this account, please ignore/delete this email.</target>
+            </trans-unit>
+            <trans-unit id="reset.subject">
+                <source>reset.subject</source>
+                <target>Reset your password</target>
+            </trans-unit>
+            <trans-unit id="reset.title">
+                <source>reset.title</source>
+                <target>That can happen ...</target>
+            </trans-unit>
+            <trans-unit id="reset.button">
+                <source>reset.button</source>
+                <target>Reset your password</target>
+            </trans-unit>
+            <trans-unit id="reset.intro">
+                <source>reset.intro</source>
+                <target>... so you forgotten your password? Don't worry: Kimai will help you to create a new one now!</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
