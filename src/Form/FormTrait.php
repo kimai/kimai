@@ -15,7 +15,7 @@ use App\Entity\Project;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\ProjectType;
-use App\Form\Type\TagsInputType;
+use App\Form\Type\TagsType;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
@@ -29,6 +29,7 @@ use Symfony\Component\Form\FormEvents;
 
 /**
  * Defines the form used to manipulate Timesheet entries.
+ * @internal
  */
 trait FormTrait
 {
@@ -148,12 +149,7 @@ trait FormTrait
     protected function addTags(FormBuilderInterface $builder)
     {
         $builder
-            ->add('tags', TagsInputType::class, [
-                // documentation is for NelmioApiDocBundle
-                'documentation' => [
-                    'type' => 'string',
-                    'description' => 'Comma separated list of tags',
-                ],
+            ->add('tags', TagsType::class, [
                 'required' => false,
             ]);
     }

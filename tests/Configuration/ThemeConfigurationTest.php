@@ -48,6 +48,7 @@ class ThemeConfigurationTest extends TestCase
                 'title' => null,
             ],
             'auto_reload_datatable' => false,
+            'tags_create' => true,
         ];
     }
 
@@ -61,7 +62,16 @@ class ThemeConfigurationTest extends TestCase
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
         $this->assertFalse($sut->isAutoReloadDatatable());
-        $this->assertEquals('', $sut->getSelectPicker());
+        $this->assertTrue($sut->isAllowTagCreation());
         $this->assertNull($sut->getTitle());
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testDeprecations()
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        $this->assertEquals('', $sut->getSelectPicker());
     }
 }
