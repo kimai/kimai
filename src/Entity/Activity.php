@@ -211,4 +211,12 @@ class Activity implements EntityWithMetaFields
     {
         return $this->getName();
     }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+            $this->meta = new ArrayCollection();
+        }
+    }
 }

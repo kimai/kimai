@@ -382,4 +382,13 @@ class Project implements EntityWithMetaFields
     {
         return $this->getName();
     }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+            $this->teams = new ArrayCollection();
+            $this->meta = new ArrayCollection();
+        }
+    }
 }

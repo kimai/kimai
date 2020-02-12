@@ -89,4 +89,11 @@ trait Rate
 
         return $this;
     }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
+    }
 }

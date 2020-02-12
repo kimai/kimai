@@ -234,4 +234,11 @@ trait MetaTableTypeTrait
     {
         return $this->options;
     }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
+    }
 }
