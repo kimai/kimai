@@ -381,7 +381,7 @@ final class ProjectController extends AbstractController
      */
     public function duplicateAction(Project $project, Request $request, ProjectDuplicationService $projectDuplicationService)
     {
-        $newProject = $projectDuplicationService->duplicate($project, 'Copy of ' . $project->getName());
+        $newProject = $projectDuplicationService->duplicate($project, $project->getName() . ' [COPY]');
 
         return $this->redirectToRoute('project_details', ['id' => $newProject->getId()]);
     }
