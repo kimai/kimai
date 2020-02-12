@@ -5,3 +5,5 @@ twig:
     form_themes:
         - 'form/kimai-theme.html.twig'
     exception_controller: null
+    paths:
+        '%kernel.project_dir%/assets/css': css

@@ -5,9 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <p class="lead">
-        {{ 'registration.intro'|trans({'%email%': user.email}, 'email') }}
-    <p>
+    <p>{{ 'registration.intro'|trans({'%email%': user.email}, 'email') }}<p>
 
     <spacer size="16"></spacer>
 
