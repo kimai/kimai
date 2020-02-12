@@ -16,8 +16,10 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * This class intercepts the registration to make sure the first-ever
- * registered user will get the SUPER_ADMIN role.
+ * This class intercepts the registration to make sure:
+ *
+ * - the first-ever registered user will get the SUPER_ADMIN role
+ * - the user uses the current request locale as initial language setting
  */
 class RegistrationSubscriber implements EventSubscriberInterface
 {
@@ -49,7 +51,7 @@ class RegistrationSubscriber implements EventSubscriberInterface
      */
     public function onRegistrationSuccess(FormEvent $event)
     {
-        /** @var \FOS\UserBundle\Model\UserInterface $user */
+        /** @var User $user */
         $user = $event->getForm()->getData();
         $roles = [User::ROLE_USER];
 
@@ -57,6 +59,7 @@ class RegistrationSubscriber implements EventSubscriberInterface
             $roles = [User::ROLE_SUPER_ADMIN];
         }
 
+        $user->setLanguage($event->getRequest()->getLocale());
         $user->setRoles($roles);
     }
 }

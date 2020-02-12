@@ -1,0 +1,21 @@
+{% extends 'emails/layout.html.twig' %}
+
+{% block title %}
+    {{ 'registration.title'|trans({'%username%': user.displayName}, 'email') }}
+{% endblock %}
+
+{% block body %}
+    <p>{{ 'registration.intro'|trans({'%email%': user.email}, 'email') }}<p>
+
+    <spacer size="16"></spacer>
+
+    <button class="large primary" href="{{ confirmationUrl }}">{{ 'registration.button'|trans({'%url%': confirmationUrl}, 'email') }}</button>
+
+    <spacer size="16"></spacer>
+
+    <p><small>{{ 'button_copy_url_to_browser'|trans({'%url%': confirmationUrl}, 'email') }}</small></p>
+
+    <spacer size="16"></spacer>
+
+    <p><small>{{ 'automated_email_dont_answer'|trans({}, 'email') }}</small></p>
+{% endblock %}
