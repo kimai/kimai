@@ -33,6 +33,7 @@ class UserMailsTest extends TestCase
         $mailer->expects($this->once())->method('send')->willReturnCallback(function (Email $message) {
             self::assertEquals([new Address('zippel@example.com')], $message->getFrom());
             self::assertEquals([new Address('foo@example.com')], $message->getTo());
+            self::assertEquals('foo', $message->getSubject());
         });
         $kimaiMailer = new KimaiMailer($config, $mailer);
         $router = $this->createMock(UrlGeneratorInterface::class);
