@@ -37,7 +37,7 @@
         {% if is_granted('create_other_timesheet') %}
             {% set actions = actions|merge({'create-timesheet': {'url': path('admin_timesheet_create', {'project': activity.project ? activity.project.id : null, 'activity': activity.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
-        {% if view == 'index' and is_granted('delete', activity) %}
+        {% if (view == 'index' or view == 'custom') and is_granted('delete', activity) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_activity_delete', {'id': activity.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
     {% endif %}
