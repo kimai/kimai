@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait MetaTableTypeTrait
 {
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Id
      * @ORM\GeneratedValue

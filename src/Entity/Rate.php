@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait Rate
 {
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
