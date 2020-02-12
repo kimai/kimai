@@ -6,6 +6,10 @@
                 <source>button_copy_url_to_browser</source>
                 <target>Falls der Button nicht funktioniert, kopieren Sie bitte die folgende URL in ihren Browser: %url%</target>
             </trans-unit>
+            <trans-unit id="automated_email_dont_answer">
+                <source>automated_email_dont_answer</source>
+                <target>Dies ist eine automatisch generierte E-Mail. Bitte antworten Sie nicht, die Adresse wird nicht gelesen.</target>
+            </trans-unit>
             <trans-unit id="registration.subject">
                 <source>registration.subject</source>
                 <target>Benutzerkonto aktivieren</target>
@@ -22,10 +26,6 @@
                 <source>registration.intro</source>
                 <target>Sie haben sich für die Kimai Zeiterfassung mit der Email Adresse %email% registriert. Jetzt müssen Sie den Link in den nächsten Stunden anklicken, bevor der Link keine Gültigkeit mehr hat.</target>
             </trans-unit>
-            <trans-unit id="registration.ignore">
-                <source>registration.ignore</source>
-                <target>Bitte ignorieren Sie diese Email, falls Sie sich nicht selber angemeldet haben.</target>
-            </trans-unit>
             <trans-unit id="reset.subject">
                 <source>reset.subject</source>
                 <target>Passwort zurücksetzen</target>
@@ -40,7 +40,7 @@
             </trans-unit>
             <trans-unit id="reset.intro">
                 <source>reset.intro</source>
-                <target>... Du hast also Dein Passwort vergessen? Keine Sorge: Kimai wird Dir jetzt dabei helfen ein neues zu erstellen!</target>
+                <target>... Du hast also Dein Passwort vergessen? Keine Sorge: Kimai wird Dir dabei helfen ein neues zu erstellen:</target>
             </trans-unit>
         </body>
     </file>
