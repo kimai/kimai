@@ -9,8 +9,13 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Activity;
+use App\Entity\ActivityMeta;
+use App\Entity\ActivityRate;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
+use App\Entity\ProjectRate;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
@@ -139,7 +144,30 @@ class ProjectControllerTest extends ControllerBaseTest
     public function testDuplicateAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAddRate($client, 234.17, 1);
+        /** @var EntityManager $em */
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $project = $em->find(Project::class, 1);
+        $project->setMetaField((new ProjectMeta())->setName('foo')->setValue('bar'));
+        $project->setEnd(new \DateTime());
+        $em->persist($project);
+        $team = new Team();
+        $team->setTeamLead($this->getUserByRole($em, User::ROLE_ADMIN));
+        $team->addProject($project);
+        $team->setName('project 1');
+        $em->persist($team);
+        $rate = new ProjectRate();
+        $rate->setProject($project);
+        $rate->setRate(123.45);
+        $em->persist($rate);
+        $activity = new Activity();
+        $activity->setName('blub');
+        $activity->setProject($project);
+        $activity->setMetaField((new ActivityMeta())->setName('blub')->setValue('blab'));
+        $em->persist($activity);
+        $rate = new ActivityRate();
+        $rate->setActivity($activity);
+        $rate->setRate(123.45);
+        $em->persist($rate);
 
         $this->request($client, '/admin/project/1/duplicate');
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/2/details'));
@@ -148,7 +176,7 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
-        self::assertStringContainsString('234.17', $node->text(null, true));
+        self::assertStringContainsString('123.45', $node->text(null, true));
     }
 
     public function testDeleteRateAction()
