@@ -25,6 +25,7 @@ use App\Form\ProjectRateForm;
 use App\Form\ProjectTeamPermissionForm;
 use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
+use App\Project\ProjectDuplicationService;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
@@ -372,6 +373,17 @@ final class ProjectController extends AbstractController
     public function editAction(Project $project, Request $request)
     {
         return $this->renderProjectForm($project, $request);
+    }
+
+    /**
+     * @Route(path="/{id}/duplicate", name="admin_project_duplicate", methods={"GET", "POST"})
+     * @Security("is_granted('edit', project)")
+     */
+    public function duplicateAction(Project $project, Request $request, ProjectDuplicationService $projectDuplicationService)
+    {
+        $newProject = $projectDuplicationService->duplicate($project, 'Copy of ' . $project->getName());
+
+        return $this->redirectToRoute('project_details', ['id' => $newProject->getId()]);
     }
 
     /**

@@ -27,6 +27,7 @@
                 {% set class = 'modal-ajax-form' %}
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_project_edit', {'id': project.id}), 'class': class}}) %}
+            {% set actions = actions|merge({'copy': {'url': path('admin_project_duplicate', {'id': project.id})}}) %}
         {% endif %}
         {% if is_granted('permissions', project) %}
             {% set class = '' %}
