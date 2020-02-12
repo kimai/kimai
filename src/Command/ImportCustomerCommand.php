@@ -32,7 +32,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * @internal
  * @codeCoverageIgnore
  */
-class ImportProjectCommand extends Command
+class ImportCustomerCommand extends Command
 {
     protected static $defaultName = 'kimai:import:customer';
 

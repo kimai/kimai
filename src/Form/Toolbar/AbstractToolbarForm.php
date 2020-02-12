@@ -15,8 +15,7 @@ use App\Form\Type\DateRangeType;
 use App\Form\Type\PageSizeType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\SearchTermType;
-use App\Form\Type\TagsInputType;
-use App\Form\Type\TagsSelectType;
+use App\Form\Type\TagsType;
 use App\Form\Type\UserRoleType;
 use App\Form\Type\UserType;
 use App\Form\Type\VisibilityType;
@@ -225,17 +224,8 @@ abstract class AbstractToolbarForm extends AbstractType
 
     protected function addTagInputField(FormBuilderInterface $builder)
     {
-        $builder->add('tags', TagsInputType::class, [
+        $builder->add('tags', TagsType::class, [
             'required' => false
-        ]);
-    }
-
-    // TODO add a system setting to control if tags can be created on the fly
-    protected function addTagSelectField(FormBuilderInterface $builder)
-    {
-        $builder->add('tags', TagsSelectType::class, [
-            'required' => false,
-            'multiple' => true,
         ]);
     }
 

@@ -58,6 +58,11 @@ class TagsInputType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            // documentation is for NelmioApiDocBundle
+            'documentation' => [
+                'type' => 'string',
+                'description' => 'Comma separated list of tags',
+            ],
             'label' => 'label.tag',
             'attr' => [
                 'data-autocomplete-url' => $this->router->generate('get_tags'),
