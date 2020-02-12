@@ -28,6 +28,7 @@ class TagsSelectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'multiple' => true,
             'class' => Tag::class,
             'label' => 'label.tag',
             'choice_label' => function (Tag $tag) {

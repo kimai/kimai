@@ -337,6 +337,7 @@ class ConfigurationTest extends TestCase
                     'translation' => null,
                 ],
                 'autocomplete_chars' => 3,
+                'tags_create' => true,
             ],
             'industry' => [
                 'translation' => null,

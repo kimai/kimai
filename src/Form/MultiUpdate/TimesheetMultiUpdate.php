@@ -14,7 +14,7 @@ use App\Form\Type\CustomerType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
 use App\Form\Type\ProjectType;
-use App\Form\Type\TagsInputType;
+use App\Form\Type\TagsType;
 use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use App\Repository\ActivityRepository;
@@ -180,7 +180,7 @@ class TimesheetMultiUpdate extends AbstractType
             ]
         ]);
 
-        $builder->add('tags', TagsInputType::class, [
+        $builder->add('tags', TagsType::class, [
             'required' => false,
         ]);
 

@@ -23,12 +23,19 @@ class ThemeConfiguration implements SystemBundleConfiguration, \ArrayAccess
         return (bool) $this->find('auto_reload_datatable');
     }
 
+    public function isAllowTagCreation(): bool
+    {
+        return (bool) $this->find('tags_create');
+    }
+
     /**
      * Currently unused, as JS selects are always activated.
      * @deprecated since 1.7 will be removed with 2.0
      */
     public function getSelectPicker(): string
     {
+        @trigger_error('getSelectPicker() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+
         return (string) $this->find('select_type');
     }
 

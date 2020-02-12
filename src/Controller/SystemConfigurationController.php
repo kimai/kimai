@@ -301,6 +301,11 @@ class SystemConfigurationController extends AbstractController
                         ->setLabel('theme.markdown_content')
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('theme.tags_create')
+                        ->setLabel('theme.tags_create')
+                        ->setType(CheckboxType::class)
+                        ->setTranslationDomain('system-configuration'),
                     // TODO should that be configurable per user?
                     /*
                     (new Configuration())
