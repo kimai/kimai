@@ -47,7 +47,7 @@
         {% if is_granted('create_activity') and project.visible and project.customer.visible %}
             {% set actions = actions|merge({'create-activity': path('admin_activity_create_with_project', {'project': project.id})}) %}
         {% endif %}
-        {% if view == 'index' and is_granted('delete', project) %}
+        {% if (view == 'index' or view == 'custom') and is_granted('delete', project) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_project_delete', {'id': project.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
     {% endif %}
