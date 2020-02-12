@@ -21,6 +21,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
@@ -74,7 +75,7 @@ class ProjectControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $project = $em->getRepository(Project::class)->find(1);
 
@@ -113,21 +114,41 @@ class ProjectControllerTest extends ControllerBaseTest
     public function testAddRateAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/project/1/rate');
+        $this->assertAddRate($client, 123.45, 1);
+    }
+
+    protected function assertAddRate(HttpKernelBrowser $client, $rate, $projectId)
+    {
+        $this->assertAccessIsGranted($client, '/admin/project/' . $projectId . '/rate');
         $form = $client->getCrawler()->filter('form[name=project_rate_form]')->form();
         $client->submit($form, [
             'project_rate_form' => [
                 'user' => null,
-                'rate' => 123.45,
+                'rate' => $rate,
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/' . $projectId . '/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#project_rates_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
-        self::assertStringContainsString('123.45', $node->text(null, true));
+        self::assertStringContainsString($rate, $node->text(null, true));
+    }
+
+    public function testDuplicateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAddRate($client, 234.17, 1);
+
+        $this->request($client, '/admin/project/1/duplicate');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/2/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#project_rates_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr:not(.summary)');
+        self::assertEquals(1, $node->count());
+        self::assertStringContainsString('234.17', $node->text(null, true));
     }
 
     public function testDeleteRateAction()
@@ -249,7 +270,7 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertEquals('', $client->getResponse()->getContent());
 
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $project = $em->getRepository(Project::class)->find(1);
         $fixture = new ActivityFixtures();
         $fixture->setAmount(9); // to trigger a second page (every third activity is hidden)
@@ -286,7 +307,7 @@ class ProjectControllerTest extends ControllerBaseTest
     public function testCreateActionShowsMetaFields()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $client->getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
+        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
         $this->assertAccessIsGranted($client, '/admin/project/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -348,7 +369,7 @@ class ProjectControllerTest extends ControllerBaseTest
     public function testTeamPermissionAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
@@ -407,7 +428,7 @@ class ProjectControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
         $fixture->setAmount(10);
@@ -446,7 +467,7 @@ class ProjectControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
         $fixture->setAmount(10);

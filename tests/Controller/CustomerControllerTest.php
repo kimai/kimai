@@ -231,7 +231,7 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
 
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $customer = $em->getRepository(Customer::class)->find(1);
 
         $fixture = new ProjectFixtures();
@@ -278,7 +278,7 @@ class CustomerControllerTest extends ControllerBaseTest
     public function testCreateActionShowsMetaFields()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $client->getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
+        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
         $this->assertAccessIsGranted($client, '/admin/customer/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -309,7 +309,7 @@ class CustomerControllerTest extends ControllerBaseTest
     public function testTeamPermissionAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
@@ -368,7 +368,7 @@ class CustomerControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
         $fixture->setAmount(10);
@@ -407,7 +407,7 @@ class CustomerControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
         $fixture->setAmount(10);

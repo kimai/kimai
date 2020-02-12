@@ -13,8 +13,8 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
 use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
@@ -30,7 +30,7 @@ class TeamControllerTest extends ControllerBaseTest
     public function testIndexAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TeamFixtures();
         $fixture->setAmount(5);
         $this->importFixture($em, $fixture);
@@ -49,7 +49,7 @@ class TeamControllerTest extends ControllerBaseTest
     public function testIndexActionWithSearchTermQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TeamFixtures();
         $fixture->setAmount(5);
         $fixture->setCallback(function (Team $team) {
@@ -91,7 +91,7 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertHasCustomerAndProjectPermissionBoxes($client);
     }
 
-    protected function assertHasCustomerAndProjectPermissionBoxes(Client $client)
+    protected function assertHasCustomerAndProjectPermissionBoxes(HttpKernelBrowser $client)
     {
         $content = $client->getResponse()->getContent();
         $this->assertStringContainsString('Grant access to customers', $content);
@@ -104,7 +104,7 @@ class TeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $this->importFixture($em, $fixture);
@@ -127,7 +127,7 @@ class TeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $this->importFixture($em, $fixture);
@@ -151,7 +151,7 @@ class TeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
@@ -180,7 +180,7 @@ class TeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);

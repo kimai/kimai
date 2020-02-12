@@ -13,15 +13,15 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
-use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
  */
 class TeamControllerTest extends APIControllerBaseTest
 {
-    protected function importTeamFixtures(Client $client): void
+    protected function importTeamFixtures(HttpKernelBrowser $client): void
     {
         $fixture = new TeamFixtures();
         $fixture->setAmount(1);
@@ -334,7 +334,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $customer->setVisible(false);
         $customer->setCountry('DE');
         $customer->setTimezone('Europe/Berlin');
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $em->persist($customer);
         $em->flush();
 
@@ -472,7 +472,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $project->setName('foooo');
         $project->setVisible(false);
         $project->setCustomer($customer);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $em->persist($customer);
         $em->persist($project);
         $em->flush();
