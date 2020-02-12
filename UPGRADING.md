@@ -10,7 +10,9 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.8](https://github.com/kevinpapst/kimai2/releases/tag/1.8)
 
-New permissions:
+- New mailer library: check if emails are still working (eg. by using the "password forgotten" function) or if you need to adjust your configuration, [see docs at symfony.com](https://symfony.com/doc/current/components/mailer.html#transport)
+
+Permission changes:
 
 - `comments_create_customer` - NEW: permission that allows to add new comments for customers  
 - `comments_create_team_customer` - NEW: permission that allows to add new comments for team members of the current customer 
