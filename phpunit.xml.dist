@@ -13,7 +13,6 @@
         <ini name="intl.default_locale" value="en_US" />
         <env name="KERNEL_CLASS" value="App\Kernel" force="true"/>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
-        <!-- define your env variables for the test env here -->
         <env name="APP_ENV" value="test" force="true"/>
         <env name="APP_DEBUG" value="1" force="true"/>
         <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>

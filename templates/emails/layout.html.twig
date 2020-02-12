@@ -1,5 +1,4 @@
 {% apply inky_to_html|inline_css(source('@css/emails.css')) %}
-
     <style type="text/css">
         body, html, .body {
             background: #f3f3f3 !important;
@@ -22,13 +21,9 @@
     <container class="body-border">
         <row>
             <columns>
-
                 <spacer size="32"></spacer>
-
                 {% block body %}{% endblock %}
-
             </columns>
         </row>
     </container>
-
 {% endapply %}
