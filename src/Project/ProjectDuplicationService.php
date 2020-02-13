@@ -89,7 +89,7 @@ final class ProjectDuplicationService
 
             $this->activityRepository->saveActivity($newActivity);
 
-            foreach ($this->activityRateRepository->getRatesForActivity($newActivity) as $rate) {
+            foreach ($this->activityRateRepository->getRatesForActivity($activity) as $rate) {
                 /** @var ActivityRate $newRate */
                 $newRate = clone $rate;
                 $newRate->setActivity($newActivity);
