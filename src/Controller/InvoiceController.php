@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\InvoiceTemplate;
 use App\Event\InvoicePostRenderEvent;
 use App\Event\InvoicePreRenderEvent;
+use App\Form\InvoiceDocumentUploadForm;
 use App\Form\InvoiceTemplateForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
 use App\Invoice\InvoiceFormatter;
@@ -25,6 +26,7 @@ use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\SubmitButton;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -287,6 +289,65 @@ final class InvoiceController extends AbstractController
     public function editTemplateAction(InvoiceTemplate $template, Request $request): Response
     {
         return $this->renderTemplateForm($template, $request);
+    }
+
+    /**
+     * @Route(path="/document_upload", name="admin_invoice_document_upload", methods={"GET", "POST"})
+     * @Security("is_granted('manage_invoice_template')")
+     */
+    public function uploadDocumentAction(Request $request, string $projectDirectory)
+    {
+        $invoiceDir = $projectDirectory . DIRECTORY_SEPARATOR . 'var/invoices/';
+        $canUpload = true;
+        $form = null;
+
+        if (!file_exists($invoiceDir)) {
+            @mkdir($invoiceDir);
+        }
+        if (!file_exists($invoiceDir)) {
+            $this->flashError('Invoice directory at var/invoices/ is not existing and could not be created');
+            $canUpload = false;
+        }
+        if (!is_writable($invoiceDir)) {
+            $this->flashError('Invoice directory at var/invoices/ cannot be written');
+            $canUpload = false;
+        }
+
+        if ($canUpload) {
+            $form = $this->createForm(InvoiceDocumentUploadForm::class, null, [
+                'action' => $this->generateUrl('admin_invoice_document_upload', []),
+                'method' => 'POST'
+            ]);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                /** @var UploadedFile $uploadedFile */
+                $uploadedFile = $form->get('document')->getData();
+
+                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
+                    $originalFilename);
+                $newFilename = $safeFilename . '.' . $uploadedFile->guessExtension();
+
+                try {
+                    $uploadedFile->move($invoiceDir, $newFilename);
+                    $this->flashSuccess('action.update.success');
+
+                    return $this->redirectToRoute('admin_invoice_document_upload');
+                } catch (\Exception $e) {
+                    $this->flashError(
+                        sprintf('Failed uploading invoice document: %e', $e->getMessage())
+                    );
+                }
+            }
+        }
+
+        return $this->render('invoice/document_upload.html.twig', [
+            'form' => (null !== $form) ? $form->createView() : null,
+            'documents' => $this->service->getDocuments(),
+            'baseDirectory' => $projectDirectory . DIRECTORY_SEPARATOR,
+        ]);
     }
 
     /**

@@ -26,5 +26,6 @@ class InvoiceDocumentTest extends TestCase
         self::assertStringContainsString('templates/invoice/renderer/default.html.twig', $sut->getFilename());
         self::assertEquals('default', $sut->getId());
         self::assertEquals('default.html.twig', $sut->getName());
+        self::assertIsInt($sut->getLastChange());
     }
 }
