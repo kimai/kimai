@@ -11,13 +11,8 @@ namespace App\Command;
 
 use App\Configuration\FormConfiguration;
 use App\Entity\Customer;
-use App\Entity\Project;
-use App\Entity\Team;
 use App\Importer\InvalidFieldsException;
 use App\Repository\CustomerRepository;
-use App\Repository\ProjectRepository;
-use App\Repository\TeamRepository;
-use App\Repository\UserRepository;
 use League\Csv\Reader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -38,15 +33,19 @@ class ImportCustomerCommand extends Command
 
     private static $requiredHeader = [
         'Name',
-        'Customer',
     ];
 
     private static $supportedHeader = [
         'Name',
-        'Customer',
         'Comment',
-        'OrderNumber',
-        'OrderDate',
+        'Number',
+        'Country',
+        'Currency',
+        'Vat',
+        'Email',
+        'Address',
+        'Contact',
+        'Timezone',
     ];
 
     /**
@@ -54,45 +53,14 @@ class ImportCustomerCommand extends Command
      */
     private $customers;
     /**
-     * @var ProjectRepository
-     */
-    private $projects;
-    /**
-     * @var TeamRepository
-     */
-    private $teams;
-    /**
-     * @var UserRepository
-     */
-    private $users;
-    /**
      * @var FormConfiguration
      */
     private $configuration;
-    /**
-     * @var Customer[]
-     */
-    private $customerCache = [];
-    /**
-     * The datetime of this import as formatted string.
-     *
-     * @var string
-     */
-    private $dateTime = '';
-    /**
-     * Comment that will be added to new customers, projects and activities.
-     *
-     * @var string
-     */
-    private $comment = '';
 
-    public function __construct(CustomerRepository $customers, ProjectRepository $projects, TeamRepository $teams, UserRepository $users, FormConfiguration $configuration)
+    public function __construct(CustomerRepository $customers, FormConfiguration $configuration)
     {
         parent::__construct();
         $this->customers = $customers;
-        $this->projects = $projects;
-        $this->teams = $teams;
-        $this->users = $users;
         $this->configuration = $configuration;
     }
 
@@ -103,16 +71,14 @@ class ImportCustomerCommand extends Command
     {
         $this
             ->setName(self::$defaultName)
-            ->setDescription('Import projects from CSV file')
+            ->setDescription('Import customer from CSV file')
             ->setHelp(
-                'This command allows to import projects from a CSV file, creating customers (if not existing) and optional empty teams for each project.' . PHP_EOL .
+                'This command allows to import customers from a CSV file and create empty teams for each of them.' . PHP_EOL .
                 'Imported customer will be matched by name and optionally created on the fly.' . PHP_EOL .
                 'Required column names: ' . implode(', ', self::$requiredHeader) . PHP_EOL .
                 'Supported column names: ' . implode(', ', self::$supportedHeader) . PHP_EOL
             )
-            ->addOption('teamlead', null, InputOption::VALUE_REQUIRED, 'If you want to create empty teams for each project, give the username of the teamlead to be assigned')
             ->addOption('delimiter', null, InputOption::VALUE_OPTIONAL, 'The CSV field delimiter', ',')
-            ->addOption('comment', null, InputOption::VALUE_OPTIONAL, 'A description to be added to created customers and projects. %s will be replaced with the current datetime', 'Imported at %s')
             ->addArgument('file', InputArgument::REQUIRED, 'The CSV file to be imported')
         ;
     }
@@ -126,7 +92,7 @@ class ImportCustomerCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->title('Kimai importer: Projects');
+        $io->title('Kimai importer: Customers');
 
         $csvFile = $input->getArgument('file');
         if (!file_exists($csvFile)) {
@@ -141,35 +107,10 @@ class ImportCustomerCommand extends Command
             return 2;
         }
 
-        $this->dateTime = (new \DateTime())->format('Y.m.d H:i');
-        $this->comment = sprintf($input->getOption('comment'), $this->dateTime);
-
         $csv = Reader::createFromPath($csvFile, 'r');
         $csv->setDelimiter($input->getOption('delimiter'));
         $csv->setHeaderOffset(0);
         $header = $csv->getHeader();
-
-        // validate teamlead
-        $teamlead = $input->getOption('teamlead');
-        if (null !== $teamlead) {
-            $tmpUser = $this->users->findOneBy(['username' => $teamlead]);
-            if (null === $tmpUser) {
-                $tmpUser = $this->users->findOneBy(['email' => $teamlead]);
-                if (null === $tmpUser) {
-                    $io->error(
-                        sprintf(
-                            'You requested to create empty teams for each project, but the given teamlead cannot be found.' . PHP_EOL .
-                            'Please create a user with the name (or email) %s first, before continuing.' . PHP_EOL,
-                            $teamlead
-                        )
-                    );
-
-                    return 3;
-                }
-            }
-
-            $teamlead = $tmpUser;
-        }
 
         if (!$this->validateHeader($header)) {
             $io->error(
@@ -210,95 +151,89 @@ class ImportCustomerCommand extends Command
             return 5;
         }
 
-        $row = 0;
+        $created = 0;
+        $updated = 0;
         foreach ($records as $record) {
             $row++;
             try {
-                $customer = $this->getCustomer($record['Customer']);
-                $projectName = $record['Name'];
+                $tmpCustomer = $this->customers->findBy(['name' => $record['Name']]);
 
-                $project = new Project();
-                $project->setName($projectName);
-                $project->setCustomer($customer);
+                if (count($tmpCustomer) !== 1 && isset($record['Number']) && !empty($record['Number'])) {
+                    $tmpCustomer = $this->customers->findBy(['number' => $record['Number']]);
+                }
 
-                $comment = $this->comment;
+                $customer = null;
+
+                if (count($tmpCustomer) > 1) {
+                    throw new \Exception(
+                        sprintf('Found multiple matching customers by name "%s" or number "%s"', $record['Name'], $record['Number'])
+                    );
+                } elseif (count($tmpCustomer) === 1) {
+                    $updated++;
+                    $customer = $tmpCustomer[0];
+                } else {
+                    $created++;
+                    $customer = new Customer();
+                }
+
+                $customer->setName($record['Name']);
+
                 if (isset($record['Comment']) && !empty($record['Comment'])) {
-                    $comment = $record['Comment'];
-                }
-                $project->setComment($comment);
-
-                if (isset($record['OrderNumber']) && !empty($record['OrderNumber'])) {
-                    $project->setOrderNumber($record['OrderNumber']);
-                }
-                if (isset($record['OrderDate']) && !empty($record['OrderDate'])) {
-                    $project->setOrderDate($record['OrderDate']);
+                    $customer->setComment($record['Comment']);
                 }
 
-                $team = null;
-                if (null !== $teamlead) {
-                    $team = new Team();
-                    $team->setName($projectName);
-                    $team->setTeamLead($teamlead);
-
-                    $this->teams->saveTeam($team);
+                if (isset($record['Number']) && !empty($record['Number'])) {
+                    $customer->setNumber($record['Number']);
                 }
 
-                $this->projects->saveProject($project);
-
-                if (null !== $team) {
-                    $project->addTeam($team);
-                    $team->addProject($project);
-
-                    $this->teams->saveTeam($team);
-                    $this->projects->saveProject($project);
+                if (isset($record['Country']) && !empty($record['Country'])) {
+                    $customer->setCountry($record['Country']);
+                } else {
+                    $customer->setCountry($this->configuration->getCustomerDefaultCountry());
                 }
+
+                if (isset($record['Currency']) && !empty($record['Currency'])) {
+                    $customer->setCurrency($record['Currency']);
+                } else {
+                    $customer->setCurrency($this->configuration->getCustomerDefaultCurrency());
+                }
+
+                if (isset($record['Vat']) && !empty($record['Vat'])) {
+                    $customer->setVatId($record['Vat']);
+                }
+
+                if (isset($record['Email']) && !empty($record['Email'])) {
+                    $customer->setEmail($record['Email']);
+                }
+
+                if (isset($record['Address']) && !empty($record['Address'])) {
+                    $customer->setAddress($record['Address']);
+                }
+
+                if (isset($record['Contact']) && !empty($record['Contact'])) {
+                    $customer->setContact($record['Contact']);
+                }
+
+                $timezone = date_default_timezone_get();
+                if (isset($record['Timezone'])) {
+                    $timezone = $record['Timezone'];
+                } elseif (null !== $this->configuration->getCustomerDefaultTimezone()) {
+                    $timezone = $this->configuration->getCustomerDefaultTimezone();
+                }
+                $customer->setTimezone($timezone);
+
+                $this->customers->saveCustomer($customer);
             } catch (\Exception $ex) {
-                $io->error(sprintf('Failed importing project row %s with: %s', $row, $ex->getMessage()));
+                $io->error(sprintf('Failed importing customer row %s with: %s', $row, $ex->getMessage()));
 
                 return 6;
             }
         }
 
-        $io->success(sprintf('Imported %s rows', $row));
+        $io->success(sprintf('Updated %s customers', $updated));
+        $io->success(sprintf('Imported %s customers', $created));
 
         return 0;
-    }
-
-    private function getCustomer(string $customerName): Customer
-    {
-        if (!array_key_exists($customerName, $this->customerCache)) {
-            $tmpCustomer = $this->customers->findBy(['name' => $customerName]);
-
-            if (count($tmpCustomer) > 1) {
-                throw new \Exception(sprintf('Found multiple customers with the name: %s', $customerName));
-            } elseif (count($tmpCustomer) === 1) {
-                $tmpCustomer = $tmpCustomer[0];
-            }
-
-            if ($tmpCustomer instanceof Customer) {
-                $this->customerCache[$customerName] = $tmpCustomer;
-            }
-        }
-
-        if (array_key_exists($customerName, $this->customerCache)) {
-            return $this->customerCache[$customerName];
-        }
-
-        $customer = new Customer();
-        $customer->setName(sprintf($customerName, $this->dateTime));
-        $customer->setComment($this->comment);
-        $customer->setCountry($this->configuration->getCustomerDefaultCountry());
-        $timezone = date_default_timezone_get();
-        if (null !== $this->configuration->getCustomerDefaultTimezone()) {
-            $timezone = $this->configuration->getCustomerDefaultTimezone();
-        }
-        $customer->setTimezone($timezone);
-
-        $this->customers->saveCustomer($customer);
-
-        $this->customerCache[$customerName] = $customer;
-
-        return $customer;
     }
 
     /**
