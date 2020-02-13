@@ -14,8 +14,8 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
-use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
@@ -27,9 +27,9 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertUrlIsSecured('/api/activities');
     }
 
-    protected function loadActivityTestData(Client $client)
+    protected function loadActivityTestData(HttpKernelBrowser $client)
     {
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $project = $em->getRepository(Project::class)->find(1);
         $customer = $em->getRepository(Customer::class)->find(1);
@@ -266,7 +266,7 @@ class ActivityControllerTest extends APIControllerBaseTest
     public function testMetaAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $client->getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
+        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',
@@ -276,7 +276,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /** @var Activity $activity */
         $activity = $em->getRepository(Activity::class)->find(1);
         $this->assertEquals('another,testing,bar', $activity->getMetaField('metatestmock')->getValue());

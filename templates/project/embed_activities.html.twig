@@ -16,6 +16,7 @@
                 {% for activity in activities %}
                     <tr>
                         <td>{{ activity.name }}</td>
+                        <td>{{ activity.comment|comment2html }}</td>
                         <td class="actions">{{ actions.activity(activity, 'custom') }}</td>
                     </tr>
                 {% endfor %}

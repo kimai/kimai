@@ -89,7 +89,7 @@ class InvoiceControllerTest extends ControllerBaseTest
     public function testCopyTemplateAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new InvoiceFixtures();
         $this->importFixture($client, $fixture);
@@ -118,7 +118,7 @@ class InvoiceControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new InvoiceFixtures();
         $this->importFixture($client, $fixture);
@@ -211,7 +211,7 @@ class InvoiceControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new InvoiceFixtures();
         $this->importFixture($client, $fixture);
 

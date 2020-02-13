@@ -14,8 +14,8 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
-use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
@@ -39,9 +39,9 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertStructure($result[0], false);
     }
 
-    protected function loadProjectTestData(Client $client)
+    protected function loadProjectTestData(HttpKernelBrowser $client)
     {
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $customer = $em->getRepository(Customer::class)->find(1);
 
@@ -264,7 +264,7 @@ class ProjectControllerTest extends APIControllerBaseTest
     public function testMetaAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $client->getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
+        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',
@@ -274,7 +274,7 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
         $this->assertEquals('another,testing,bar', $project->getMetaField('metatestmock')->getValue());

@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait MetaTableTypeTrait
 {
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -233,5 +233,12 @@ trait MetaTableTypeTrait
     public function getOptions(): array
     {
         return $this->options;
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
     }
 }
