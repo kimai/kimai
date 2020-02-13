@@ -12,14 +12,14 @@ namespace App\Tests\Controller;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
-use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
  */
 class TagControllerTest extends ControllerBaseTest
 {
-    protected function importTags(Client $client): void
+    protected function importTags(HttpKernelBrowser $client): void
     {
         $tagList = ['Test', 'Administration', 'Support', '#2018-001', '#2018-002', '#2018-003', 'Development',
             'Marketing', 'First Level Support', 'Bug Fixing'];
@@ -110,7 +110,7 @@ class TagControllerTest extends ControllerBaseTest
         $node = $form->getFormNode();
         $node->setAttribute('action', $this->createUrl('/admin/tags/multi-delete'));
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /** @var Tag[] $tags */
         $tags = $em->getRepository(Tag::class)->findAll();
         self::assertCount(10, $tags);

@@ -63,7 +63,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
-        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals('default', $configService->find('timesheet.mode'));
         $this->assertEquals(true, $configService->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(1, $configService->find('timesheet.active_entries.hard_limit'));
@@ -86,7 +86,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
-        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals('duration_only', $configService->find('timesheet.mode'));
         $this->assertEquals(false, $configService->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(99, $configService->find('timesheet.active_entries.hard_limit'));
@@ -123,7 +123,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
-        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertNull($configService->find('defaults.customer.timezone'));
         $this->assertEquals('DE', $configService->find('defaults.customer.country'));
         $this->assertEquals('EUR', $configService->find('defaults.customer.currency'));
@@ -144,7 +144,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
-        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals('Atlantic/Canary', $configService->find('defaults.customer.timezone'));
         $this->assertEquals('BB', $configService->find('defaults.customer.country'));
         $this->assertEquals('GBP', $configService->find('defaults.customer.currency'));
@@ -155,7 +155,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
-        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertNull($configService->find('defaults.user.timezone'));
         $this->assertNull($configService->find('defaults.user.theme'));
         $this->assertEquals('en', $configService->find('defaults.user.language'));
@@ -176,7 +176,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
-        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals('Pacific/Tahiti', $configService->find('defaults.user.timezone'));
         $this->assertEquals('purple', $configService->find('defaults.user.theme'));
         $this->assertEquals('ru', $configService->find('defaults.user.language'));
@@ -211,7 +211,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
-        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals(false, $configService->find('timesheet.markdown_content'));
         $this->assertEquals('selectpicker', $configService->find('theme.select_type'));
 
@@ -230,7 +230,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
-        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals('selectpicker', $configService->find('theme.select_type'));
         $this->assertEquals(true, $configService->find('timesheet.markdown_content'));
     }
@@ -261,7 +261,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
-        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertTrue($configService->find('calendar.week_numbers'));
         $this->assertTrue($configService->find('calendar.weekends'));
         $this->assertEquals('08:00', $configService->find('calendar.businessHours.begin'));
@@ -288,7 +288,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
-        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertFalse($configService->find('calendar.week_numbers'));
         $this->assertFalse($configService->find('calendar.weekends'));
         $this->assertEquals('10:00', $configService->find('calendar.businessHours.begin'));

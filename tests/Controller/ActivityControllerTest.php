@@ -72,7 +72,7 @@ class ActivityControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
@@ -174,7 +174,7 @@ class ActivityControllerTest extends ControllerBaseTest
     public function testCreateActionShowsMetaFields()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $client->getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
+        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
         $this->assertAccessIsGranted($client, '/admin/activity/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -283,7 +283,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
@@ -324,7 +324,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));

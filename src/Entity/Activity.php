@@ -31,7 +31,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Activity implements EntityWithMetaFields
 {
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -210,5 +210,13 @@ class Activity implements EntityWithMetaFields
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+            $this->meta = new ArrayCollection();
+        }
     }
 }

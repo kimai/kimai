@@ -12,16 +12,16 @@ namespace App\Tests\API;
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Tests\Controller\ControllerBaseTest;
-use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * Adds some useful functions for writing API integration tests.
  */
 abstract class APIControllerBaseTest extends ControllerBaseTest
 {
-    protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER): Client
+    protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER): HttpKernelBrowser
     {
         switch ($role) {
             case User::ROLE_SUPER_ADMIN:
@@ -69,7 +69,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         return '/' . ltrim($url, '/') . ($json ? '.json' : '');
     }
 
-    protected function assertRequestIsSecured(Client $client, string $url, $method = 'GET')
+    protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, $method = 'GET')
     {
         $this->request($client, $url, $method);
         $this->assertResponseIsSecured($client->getResponse(), $url);
@@ -124,7 +124,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         );
     }
 
-    protected function request(Client $client, string $url, $method = 'GET', array $parameters = [], string $content = null): Crawler
+    protected function request(HttpKernelBrowser $client, string $url, $method = 'GET', array $parameters = [], string $content = null): Crawler
     {
         $server = ['HTTP_CONTENT_TYPE' => 'application/json', 'CONTENT_TYPE' => 'application/json'];
 
@@ -201,7 +201,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         self::assertEquals(['code' => 500, 'message' => $message], json_decode($response->getContent(), true));
     }
 
-    protected function assertApiAccessDenied(Client $client, string $url, string $message)
+    protected function assertApiAccessDenied(HttpKernelBrowser $client, string $url, string $message)
     {
         $this->request($client, $url);
         $this->assertApiResponseAccessDenied($client->getResponse(), $message);
