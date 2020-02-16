@@ -83,6 +83,11 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
                     $entity->setName($configuration->getName());
                 }
 
+                // this should be improved din the future
+                if (is_object($value) && method_exists($value, 'getId')) {
+                    $value = $value->getId();
+                }
+
                 $entity->setValue($value);
 
                 $em->persist($entity);
