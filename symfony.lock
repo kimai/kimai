@@ -744,6 +744,9 @@
     "zendframework/zend-eventmanager": {
         "version": "3.2.0"
     },
+    "zendframework/zend-ldap": {
+        "version": "2.10.1"
+    },
     "zircote/swagger-php": {
         "version": "2.0.13"
     }

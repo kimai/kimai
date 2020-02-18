@@ -57,7 +57,8 @@
         "symfony/webpack-encore-bundle": "^1.5",
         "symfony/yaml": "^4.0",
         "twig/extensions": "^1.5",
-        "white-october/pagerfanta-bundle": "^1.1"
+        "white-october/pagerfanta-bundle": "^1.1",
+        "zendframework/zend-ldap": "^2.10"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^5.0",
