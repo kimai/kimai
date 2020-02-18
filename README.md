@@ -1,9 +1,9 @@
 # Kimai 2 - online time-tracker
 
+[![CI Status](https://github.com/kevinpapst/kimai2/workflows/CI/badge.svg)](https://github.com/kevinpapst/kimai2/actions)
+[![Code Coverage](https://codecov.io/gh/kevinpapst/kimai2/branch/master/graph/badge.svg)](https://codecov.io/gh/kevinpapst/kimai2)
 [![Latest Stable Version](https://poser.pugx.org/kevinpapst/kimai2/v/stable)](https://packagist.org/packages/kevinpapst/kimai2)
 [![License](https://poser.pugx.org/kevinpapst/kimai2/license)](https://packagist.org/packages/kevinpapst/kimai2)
-[![Travis Status](https://travis-ci.org/kevinpapst/kimai2.svg?branch=master)](https://travis-ci.org/kevinpapst/kimai2)
-[![Code Coverage](https://codecov.io/gh/kevinpapst/kimai2/branch/master/graph/badge.svg)](https://codecov.io/gh/kevinpapst/kimai2)
 [![Gitter](https://badges.gitter.im/kimai2/support.svg)](https://gitter.im/kimai2/support)
 [![Bountysource](https://img.shields.io/bountysource/team/kimai2/activity)](https://www.bountysource.com/teams/kimai2)
 
@@ -20,8 +20,8 @@ It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Do
 
 ### Requirements
 
-- PHP 7.2 or higher
-- Database (MySQL/MariaDB with timezone data, SQLite for development)
+- PHP 7.2.9 or higher
+- Database (MySQL/MariaDB, SQLite for development)
 - Webserver (nginx, Apache)
 - A modern browser
 - [Other libraries](https://www.kimai.org/download/)
@@ -32,7 +32,7 @@ This is the new version of the open source timetracker Kimai. It is stable and p
 with most advanced features from Kimai 1 and many new ones, including but not limited to: 
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
-LDAP and built-in authentication, customizable role permissions, responsive and ready for your mobile device, 
+authentication via SAML/LDAP/Database, customizable role permissions, responsive and ready for your mobile device, 
 hourly and fixed rates, advanced filtering, money and time budgets with report, support for plugins and many more.
 
 ## Installation

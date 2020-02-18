@@ -112,6 +112,7 @@ final class InvoiceController extends AbstractController
         }
 
         return $this->render('invoice/index.html.twig', [
+            'query' => $query,
             'model' => $model,
             'form' => $form->createView(),
             'preview' => $showPreview,

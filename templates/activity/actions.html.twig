@@ -18,15 +18,15 @@
     {% set actions = {} %}
 
     {% if activity.id is not empty %}
+        {% if view != 'details' and is_granted('view', activity) %}
+            {% set actions = actions|merge({'details': path('activity_details', {'id': activity.id})}) %}
+        {% endif %}
         {% if is_granted('edit', activity) %}
             {% set class = '' %}
             {% if view != 'edit' %}
                 {% set class = 'modal-ajax-form' %}
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_activity_edit', {'id': activity.id}), 'class': class}}) %}
-        {% endif %}
-        {% if is_granted('budget', activity) %}
-            {% set actions = actions|merge({'report': {'url': path('admin_activity_budget', {'id': activity.id})}}) %}
         {% endif %}
         {% if actions|length > 0 %}
             {% set actions = actions|merge({'divider': null}) %}
@@ -37,7 +37,7 @@
         {% if is_granted('create_other_timesheet') %}
             {% set actions = actions|merge({'create-timesheet': {'url': path('admin_timesheet_create', {'project': activity.project ? activity.project.id : null, 'activity': activity.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
-        {% if view == 'index' and is_granted('delete', activity) %}
+        {% if (view == 'index' or view == 'custom') and is_granted('delete', activity) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_activity_delete', {'id': activity.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
     {% endif %}

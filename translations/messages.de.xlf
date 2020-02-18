@@ -66,7 +66,15 @@
             </trans-unit>
             <trans-unit id="attachments">
                 <source>attachments</source>
-                <target>Files</target>
+                <target>Dateien</target>
+            </trans-unit>
+            <trans-unit id="rates.empty">
+                <source>rates.empty</source>
+                <target>Es wurden noch keine Gebühren hinterlegt.</target>
+            </trans-unit>
+            <trans-unit id="rates.title">
+                <source>rates.title</source>
+                <target>Gebühren</target>
             </trans-unit>
 
             <!--
@@ -928,13 +936,9 @@
                 <source>label.invoice_bank_account</source>
                 <target>Bankverbindung</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target>
-                    Sehr geehrte Damen und Herren,
-
-                    für Ihren Auftrag bedanke ich mich und berechne für meine Leistungen:
-                </target>
+            <trans-unit id="label.decimalDuration">
+                <source>label.decimalDuration</source>
+                <target>Dauer als Dezimalzahl anzeigen</target>
             </trans-unit>
 
             <!--

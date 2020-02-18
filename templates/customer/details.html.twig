@@ -108,28 +108,6 @@
                         </tr>
                     {% endif %}
                 {% endif %}
-                {% if can_edit %}
-                    <tr>
-                        <th>{{ 'label.fixedRate'|trans }}</th>
-                        <td>
-                            {% if customer.fixedRate is not empty %}
-                                {{ customer.fixedRate|money(customer.currency) }}
-                            {% else %}
-                                &ndash;
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'label.hourlyRate'|trans }}</th>
-                        <td>
-                            {% if customer.hourlyRate is not empty %}
-                                {{ customer.hourlyRate|money(customer.currency) }}
-                            {% else %}
-                                &ndash;
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endif %}
                 {% for metaField in customer.visibleMetaFields %}
                     <tr>
                         <th>{{ metaField.label }}</th>
@@ -144,6 +122,67 @@
     
     {% if stats is not null %}
         {{ include('customer/embed_budget.html.twig', {'customer': customer, 'stats': stats}) }}
+    {% endif %}
+
+    {% if can_edit %}
+        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+            {% import "macros/widgets.html.twig" as widgets %}
+            {% block box_attributes %}id="customer_rates_box"{% endblock %}
+            {% block box_title %}
+                {{ 'rates.title'|trans }}
+            {% endblock %}
+            {% block box_tools %}
+                <a class="modal-ajax-form open-edit btn btn-box-tool" data-href="{{ path('admin_customer_rate_add', {'id': customer.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'create'|trans }}"><i class="{{ 'create'|icon }}"></i></a>
+            {% endblock %}
+            {% block box_body %}
+                {% if rates is empty %}
+                    {{ 'rates.empty'|trans }}
+                {% else %}
+                    <table class="table dataTable" >
+                        <thead>
+                        <tr>
+                            <th>
+                                {{ 'label.user'|trans }}
+                            </th>
+                            <th>
+                                {{ 'label.hourlyRate'|trans }}
+                            </th>
+                            <th>
+                                {{ 'label.fixedRate'|trans }}
+                            </th>
+                            <th class="actions"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for rate in rates %}
+                            <tr>
+                                <td>
+                                    {% if rate.user is not null %}
+                                        {{ widgets.user_avatar(rate.user) }}
+                                    {% else %}
+                                        &ndash;
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if not rate.fixed %}
+                                        {{ rate.rate|money(customer.currency) }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if rate.fixed %}
+                                        {{ rate.rate|money(customer.currency) }}
+                                    {% endif %}
+                                </td>
+                                <td class="actions">
+                                    <a href="{{ path('admin_customer_rate_delete', {'id': customer.id, 'rate': rate.id}) }}" class="confirmation-link btn btn-default btn-xs" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            {% endblock %}
+        {% endembed %}
     {% endif %}
 
     {% if teams is not null %}

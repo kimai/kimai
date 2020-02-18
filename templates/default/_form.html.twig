@@ -23,7 +23,7 @@
             <a href="{{ back }}" class="btn btn-link">{{ 'action.back'|trans }}</a>
         {% endif %}
         {% if reset|default(true) %}
-        <input type="reset" value="{{ 'action.reset'|trans }}" class="btn btn-link pull-right" />
+            <input type="reset" value="{{ 'action.reset'|trans }}" class="btn btn-link pull-right" />
         {% endif %}
     </div>
     {{ form_end(form) }}

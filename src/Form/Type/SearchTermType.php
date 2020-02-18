@@ -36,7 +36,7 @@ class SearchTermType extends AbstractType
             'label' => 'search',
             'required' => false,
             'constraints' => [
-                new Length(['min' => 3])
+                new Length(['min' => 3, 'allowEmptyString' => true])
             ],
         ]);
     }

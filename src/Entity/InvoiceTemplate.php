@@ -134,6 +134,25 @@ class InvoiceTemplate
      */
     private $paymentDetails;
 
+    /**
+     * Used when rendering HTML templates.
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="decimal_duration", type="boolean", nullable=false, options={"default": false})
+     * @Assert\NotNull()
+     */
+    private $decimalDuration = false;
+
+    /**
+     * Used when rendering HTML templates.
+     *
+     * @var string
+     *
+     * @ORM\Column(name="language", type="string", length=6, nullable=true)
+     */
+    private $language;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -291,6 +310,30 @@ class InvoiceTemplate
     public function setPaymentDetails(?string $paymentDetails): InvoiceTemplate
     {
         $this->paymentDetails = $paymentDetails;
+
+        return $this;
+    }
+
+    public function isDecimalDuration(): bool
+    {
+        return $this->decimalDuration;
+    }
+
+    public function setDecimalDuration(bool $decimalDuration): InvoiceTemplate
+    {
+        $this->decimalDuration = $decimalDuration;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?string $language): InvoiceTemplate
+    {
+        $this->language = $language;
 
         return $this;
     }

@@ -43,8 +43,6 @@ class CustomerTest extends TestCase
         self::assertNull($sut->getHomepage());
         self::assertNull($sut->getTimezone());
 
-        self::assertNull($sut->getFixedRate());
-        self::assertNull($sut->getHourlyRate());
         self::assertNull($sut->getColor());
         self::assertEquals(0.0, $sut->getBudget());
         self::assertEquals(0, $sut->getTimeBudget());
@@ -91,12 +89,6 @@ class CustomerTest extends TestCase
 
         self::assertInstanceOf(Customer::class, $sut->setHomepage('https://www.example.com'));
         self::assertEquals('https://www.example.com', $sut->getHomepage());
-
-        self::assertInstanceOf(Customer::class, $sut->setFixedRate(13.47));
-        self::assertEquals(13.47, $sut->getFixedRate());
-
-        self::assertInstanceOf(Customer::class, $sut->setHourlyRate(99));
-        self::assertEquals(99, $sut->getHourlyRate());
 
         self::assertInstanceOf(Customer::class, $sut->setBudget(12345.67));
         self::assertEquals(12345.67, $sut->getBudget());

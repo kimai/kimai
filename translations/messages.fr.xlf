@@ -804,16 +804,7 @@
                 <source>label.invoice_bank_account</source>
                 <target>N° de compte bancaire</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target>
-                    Madame, Monsieur,
 
-                    Je vous remercie pour votre commande. 
-                    Vous trouverez ci-après la facture pour mes services :
-                </target>
-            </trans-unit>
-            
             <!--
               Export
             -->

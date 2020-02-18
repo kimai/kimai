@@ -11,7 +11,6 @@
 
 import jQuery from 'jquery';
 import KimaiPlugin from '../KimaiPlugin';
-import moment from 'moment';
 
 export default class KimaiDateTimePicker extends KimaiPlugin {
 
@@ -25,25 +24,26 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
     }
 
     activateDateTimePicker(selector) {
-        let translator = this.getContainer().getTranslation();
-        let configuration = this.getContainer().getConfiguration();
+        const TRANSLATE = this.getContainer().getTranslation();
+        const CONFIG = this.getContainer().getConfiguration();
+        const DATE_UTILS = this.getContainer().getPlugin('date');
 
         jQuery(selector + ' ' + this.selector).each(function(index) {
             let localeFormat = jQuery(this).data('format');
             jQuery(this).daterangepicker({
                 singleDatePicker: true,
                 timePicker: true,
-                timePicker24Hour: configuration.get('twentyFourHours'),
+                timePicker24Hour: CONFIG.get('twentyFourHours'),
                 showDropdowns: true,
                 autoUpdateInput: false,
                 locale: {
                     format: localeFormat,
                     firstDay: 1,
-                    applyLabel: translator.get('confirm'),
-                    cancelLabel: translator.get('cancel'),
-                    customRangeLabel: translator.get('customRange'),
-                    daysOfWeek: moment.weekdaysShort(),
-                    monthNames: moment.months(),
+                    applyLabel: TRANSLATE.get('confirm'),
+                    cancelLabel: TRANSLATE.get('cancel'),
+                    customRangeLabel: TRANSLATE.get('customRange'),
+                    daysOfWeek: DATE_UTILS.getWeekDaysShort(),
+                    monthNames: DATE_UTILS.getMonthNames(),
                 }
             });
 

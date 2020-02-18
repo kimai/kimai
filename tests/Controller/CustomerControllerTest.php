@@ -42,7 +42,7 @@ class CustomerControllerTest extends ControllerBaseTest
     public function testIndexActionWithSearchTermQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
         $fixture = new CustomerFixtures();
         $fixture->setAmount(5);
         $fixture->setCallback(function (Customer $customer) {
@@ -51,7 +51,7 @@ class CustomerControllerTest extends ControllerBaseTest
             $customer->setMetaField((new CustomerMeta())->setName('location')->setValue('homeoffice'));
             $customer->setMetaField((new CustomerMeta())->setName('feature')->setValue('timetracking'));
         });
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/');
@@ -87,6 +87,56 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn-box-tool');
         self::assertEquals(2, $node->count());
+        $node = $client->getCrawler()->filter('div.box#customer_rates_box');
+        self::assertEquals(1, $node->count());
+    }
+
+    public function testAddRateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/rate');
+        $form = $client->getCrawler()->filter('form[name=customer_rate_form]')->form();
+        $client->submit($form, [
+            'customer_rate_form' => [
+                'user' => null,
+                'rate' => 123.45,
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#customer_rates_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#customer_rates_box table.dataTable tbody tr:not(.summary)');
+        self::assertEquals(1, $node->count());
+        self::assertStringContainsString('123.45', $node->text(null, true));
+    }
+
+    public function testDeleteRateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/rate');
+        $form = $client->getCrawler()->filter('form[name=customer_rate_form]')->form();
+        $client->submit($form, [
+            'customer_rate_form' => [
+                'user' => null,
+                'rate' => 123.45,
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#customer_rates_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#customer_rates_box table.dataTable tbody tr:not(.summary)');
+        self::assertEquals(1, $node->count());
+        self::assertStringContainsString('123.45', $node->text(null, true));
+
+        $node = $client->getCrawler()->filter('div.box#customer_rates_box table.dataTable tbody tr td.actions a');
+        self::assertEquals(1, $node->count());
+        $url = $node->attr('href');
+        $client->request('GET', $url);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $node = $client->getCrawler()->filter('div.box#customer_rates_box table.dataTable tbody tr:not(.summary)');
+        self::assertEquals(0, $node->count());
     }
 
     public function testAddCommentAction()
@@ -161,14 +211,14 @@ class CustomerControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/details');
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
-        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text());
+        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
 
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/admin/customer/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
-        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text());
+        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
         self::assertEquals(1, $node->count());
     }
@@ -181,12 +231,13 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
 
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $customer = $em->getRepository(Customer::class)->find(1);
+
         $fixture = new ProjectFixtures();
         $fixture->setAmount(9); // to trigger a second page (every third activity is hidden)
         $fixture->setCustomers([$customer]);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/projects/1');
@@ -227,7 +278,7 @@ class CustomerControllerTest extends ControllerBaseTest
     public function testCreateActionShowsMetaFields()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $client->getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
+        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
         $this->assertAccessIsGranted($client, '/admin/customer/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -258,7 +309,7 @@ class CustomerControllerTest extends ControllerBaseTest
     public function testTeamPermissionAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
@@ -267,7 +318,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $fixture->setAddCustomer(false);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->assertAccessIsGranted($client, '/admin/customer/1/permissions');
         $form = $client->getCrawler()->filter('form[name=customer_team_permission_form]')->form();
@@ -292,10 +343,9 @@ class CustomerControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/admin/customer/2/edit');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -318,11 +368,11 @@ class CustomerControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
         $fixture->setAmount(10);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         $this->assertEquals(10, count($timesheets));
@@ -357,14 +407,14 @@ class CustomerControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
         $fixture->setAmount(10);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1)->setIsVisible(true);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         $this->assertEquals(10, count($timesheets));

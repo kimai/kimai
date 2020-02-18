@@ -42,7 +42,7 @@
         {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.activityUpdate'}) }}
 
         {% for entry in entries %}
-            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_activity_edit', {'id': entry.id}) }}"{% endif %}>
+            <tr{% if is_granted('view', entry) %} class="alternative-link open-edit" data-href="{{ path('activity_details', {'id': entry.id}) }}"{% endif %}>
                 <td>{{ widgets.label_color_dot('activity', true, entry.name, null, entry.color) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                     {# only none-global activities have a project and customer assigned #}

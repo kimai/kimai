@@ -4,3 +4,7 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'form/kimai-theme.html.twig'
+    exception_controller: null
+    paths:
+        # used in templates/emails/layout.html.twig
+        '%kernel.project_dir%/assets/css': css

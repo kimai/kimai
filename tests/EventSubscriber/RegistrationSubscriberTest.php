@@ -32,7 +32,10 @@ class RegistrationSubscriberTest extends TestCase
     }
 
     /**
+     * Legacy test becuase the user bundle won't update to a new release
+     *
      * @dataProvider getTestData
+     * @group legacy
      */
     public function testRoleAssignmentForNewUser(array $existingUsers, $expectedRoles)
     {
@@ -47,6 +50,7 @@ class RegistrationSubscriberTest extends TestCase
         $form->method('getData')->willReturn($user);
 
         $request = $this->createMock(Request::class);
+        $request->expects($this->any())->method('getLocale')->willReturn('ru');
 
         $event = new FormEvent($form, $request);
 
@@ -54,6 +58,7 @@ class RegistrationSubscriberTest extends TestCase
         $sut->onRegistrationSuccess($event);
 
         $this->assertEquals($expectedRoles, $user->getRoles());
+        $this->assertEquals('ru', $user->getLanguage());
     }
 
     public function getTestData()

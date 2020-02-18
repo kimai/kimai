@@ -214,7 +214,6 @@ class DoctorController extends AbstractController
     {
         return [
             'APP_ENV' => getenv('APP_ENV'),
-            'MAILER_FROM' => getenv('MAILER_FROM'),
             'CORS_ALLOW_ORIGIN' => getenv('CORS_ALLOW_ORIGIN'),
         ];
     }

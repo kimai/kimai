@@ -99,15 +99,6 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
-    "easycorp/easy-log-handler": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
-        }
-    },
     "egulias/email-validator": {
         "version": "2.1.3"
     },
@@ -231,6 +222,12 @@
     "league/csv": {
         "version": "9.4.1"
     },
+    "league/html-to-markdown": {
+        "version": "4.9.1"
+    },
+    "lorenzo/pinky": {
+        "version": "1.0.5"
+    },
     "markbaker/complex": {
         "version": "1.4.6"
     },
@@ -280,7 +277,7 @@
         "version": "3.4.1"
     },
     "pagerfanta/pagerfanta": {
-        "version": "v1.0.5"
+        "version": "v2.1.3"
     },
     "paragonie/random_compat": {
         "version": "v2.0.17"
@@ -295,7 +292,7 @@
         "version": "1.0.1"
     },
     "php": {
-        "version": "7.2"
+        "version": "7.2.9"
     },
     "php-cs-fixer/diff": {
         "version": "v1.2.0"
@@ -426,8 +423,14 @@
     "setasign/fpdi": {
         "version": "1.6.2"
     },
-    "swiftmailer/swiftmailer": {
-        "version": "v6.0.2"
+    "symfony/amazon-mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "9648db3ecae5c8a6b1a5f74715d3907124348815"
+        }
     },
     "symfony/asset": {
         "version": "v4.0.3"
@@ -468,9 +471,6 @@
             "ref": "71d29aaf710fd59cd3abff2b1ade907ed73103c6"
         }
     },
-    "symfony/debug-pack": {
-        "version": "v1.0.4"
-    },
     "symfony/dependency-injection": {
         "version": "v4.0.3"
     },
@@ -482,6 +482,9 @@
     },
     "symfony/dotenv": {
         "version": "v4.0.3"
+    },
+    "symfony/error-handler": {
+        "version": "v4.4.3"
     },
     "symfony/event-dispatcher": {
         "version": "v4.0.3"
@@ -519,6 +522,15 @@
             "ref": "137a14eeb6b3f5370e7147af8aff6518504f50c7"
         }
     },
+    "symfony/google-mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
+        }
+    },
     "symfony/http-foundation": {
         "version": "v4.0.3"
     },
@@ -533,6 +545,36 @@
     },
     "symfony/ldap": {
         "version": "v4.2.8"
+    },
+    "symfony/mailchimp-mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "1be490e068472fc87e226cf54bc95fb6f2e49117"
+        }
+    },
+    "symfony/mailer": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "15658c2a0176cda2e7dba66276a2030b52bd81b2"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
+    },
+    "symfony/mailgun-mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "91bc9c127983c37808481733bcf83b7651b1f941"
+        }
     },
     "symfony/maker-bundle": {
         "version": "1.0",
@@ -561,9 +603,6 @@
     "symfony/options-resolver": {
         "version": "v4.0.3"
     },
-    "symfony/orm-pack": {
-        "version": "v1.0.6"
-    },
     "symfony/phpunit-bridge": {
         "version": "3.3",
         "recipe": {
@@ -576,11 +615,17 @@
     "symfony/polyfill-ctype": {
         "version": "v1.8.0"
     },
+    "symfony/polyfill-intl-grapheme": {
+        "version": "v1.13.1"
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.6.0"
     },
     "symfony/polyfill-intl-idn": {
         "version": "v1.11.0"
+    },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.13.1"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.6.0"
@@ -590,6 +635,15 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
+    },
+    "symfony/postmark-mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "84842f6791eaef80618dda244d4e3bbcbbcdf543"
+        }
     },
     "symfony/process": {
         "version": "v4.0.3"
@@ -633,6 +687,15 @@
     "symfony/security-http": {
         "version": "v4.3.3"
     },
+    "symfony/sendgrid-mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "b46e4f8f1adb2864f0aa9c0ff57aea3324a07199"
+        }
+    },
     "symfony/serializer": {
         "version": "v4.1.2"
     },
@@ -642,14 +705,8 @@
     "symfony/stopwatch": {
         "version": "v4.0.3"
     },
-    "symfony/swiftmailer-bundle": {
-        "version": "2.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.5",
-            "ref": "8daf8ede72274989fb0dc66b83cb4bc1693afbb9"
-        }
+    "symfony/string": {
+        "version": "v5.0.4"
     },
     "symfony/templating": {
         "version": "v4.1.1"
@@ -720,23 +777,29 @@
     "theseer/tokenizer": {
         "version": "1.1.0"
     },
-    "twig/extensions": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "4851df0afc426b8f07204379d21fca25b6df5d68"
-        }
+    "tijsverkoyen/css-to-inline-styles": {
+        "version": "2.2.2"
+    },
+    "twig/cssinliner-extra": {
+        "version": "v3.0.1"
+    },
+    "twig/extra-bundle": {
+        "version": "v3.0.1"
+    },
+    "twig/inky-extra": {
+        "version": "v3.0.1"
+    },
+    "twig/intl-extra": {
+        "version": "v3.0.1"
+    },
+    "twig/string-extra": {
+        "version": "v3.0.1"
     },
     "twig/twig": {
         "version": "v2.4.4"
     },
     "webmozart/assert": {
         "version": "1.2.0"
-    },
-    "white-october/pagerfanta-bundle": {
-        "version": "v1.1.2"
     },
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"

@@ -7,7 +7,7 @@
             id="project_list_box"  data-href="{{ path('customer_projects', {'id': customer.id}) }}" data-reload="kimai.projectUpdate"
         {% endblock %}
         {% block box_tools %}
-            {{ pagerfanta(projects, 'twitter_bootstrap3_translated', { proximity: 1, css_container_class: 'pagination pagination-sm inline', routeName: 'customer_projects', routeParams: {'id': customer.id} }) }}
+            {{ pagination(projects, { css_container_class: 'pagination pagination-sm inline', routeName: 'customer_projects', routeParams: {'id': customer.id} }) }}
         {% endblock %}
         {% block box_body_class %}no-padding{% endblock %}
         {% block box_tools_attributes %}data-page="{{ page }}"{% endblock %}
@@ -33,6 +33,9 @@
         {% endblock %}
     {% endembed %}
     <script type="text/javascript">
-        KimaiPaginatedBoxWidget.create('#project_list_box');
+        {% set eventName = app.request.xmlHttpRequest ? 'kimai.reloadPage' : 'kimai.initialized' %}
+        document.addEventListener('{{ eventName }}', function() {
+            KimaiPaginatedBoxWidget.create('#project_list_box');
+        });
     </script>
 {% endif %}
