@@ -819,6 +819,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals(2016, $result['rate']);
     }
 
+    public function testDuplicateThrowsNotFound()
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/11/duplicate', []);
+    }
+
     public function testExportAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
