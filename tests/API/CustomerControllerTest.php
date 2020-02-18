@@ -211,7 +211,7 @@ class CustomerControllerTest extends APIControllerBaseTest
     public function testMetaAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $client->getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
+        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',
@@ -221,7 +221,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
         $this->assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());
@@ -230,7 +230,7 @@ class CustomerControllerTest extends APIControllerBaseTest
     protected function assertStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'name', 'visible', 'hourlyRate', 'fixedRate', 'color', 'metaFields'
+            'id', 'name', 'visible', 'color', 'metaFields', 'teams'
         ];
 
         if ($full) {

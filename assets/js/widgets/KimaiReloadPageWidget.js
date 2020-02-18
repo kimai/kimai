@@ -59,6 +59,7 @@ export default class KimaiReloadPageWidget {
                 jQuery('section.content').replaceWith(
                     jQuery(response).find('section.content')
                 );
+                document.dispatchEvent(new Event('kimai.reloadPage'));
                 self._hideOverlay();
             },
             dataType: 'html',

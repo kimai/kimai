@@ -14,8 +14,8 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
-use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
@@ -39,9 +39,9 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertStructure($result[0], false);
     }
 
-    protected function loadProjectTestData(Client $client)
+    protected function loadProjectTestData(HttpKernelBrowser $client)
     {
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $customer = $em->getRepository(Customer::class)->find(1);
 
@@ -130,6 +130,9 @@ class ProjectControllerTest extends APIControllerBaseTest
             'name' => 'foo',
             'customer' => 1,
             'visible' => true,
+            'orderDate' => '2018-02-08T13:02:54',
+            'start' => '2019-02-01T19:32:17',
+            'end' => '2020-02-08T21:11:42',
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -138,6 +141,9 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertStructure($result);
         $this->assertNotEmpty($result['id']);
+        self::assertEquals('2018-02-08T13:02:54+0000', $result['orderDate']);
+        self::assertEquals('2019-02-01T19:32:17+0000', $result['start']);
+        self::assertEquals('2020-02-08T21:11:42+0000', $result['end']);
     }
 
     public function testPostActionWithInvalidUser()
@@ -146,7 +152,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'customer' => 1,
-            'visible' => true
+            'visible' => true,
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $response = $client->getResponse();
@@ -258,7 +264,7 @@ class ProjectControllerTest extends APIControllerBaseTest
     public function testMetaAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $client->getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
+        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',
@@ -268,7 +274,7 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
         $this->assertEquals('another,testing,bar', $project->getMetaField('metatestmock')->getValue());
@@ -277,7 +283,7 @@ class ProjectControllerTest extends APIControllerBaseTest
     protected function assertStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'name', 'visible', 'customer', 'hourlyRate', 'fixedRate', 'color', 'metaFields', 'parentTitle', 'start', 'end'
+            'id', 'name', 'visible', 'customer', 'color', 'metaFields', 'parentTitle', 'start', 'end', 'teams'
         ];
 
         if ($full) {

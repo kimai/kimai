@@ -10,6 +10,7 @@
 namespace App\Repository;
 
 use App\Entity\Activity;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\ActivityStatistic;
@@ -44,6 +45,15 @@ class ActivityRepository extends EntityRepository
         $loader->loadResults([$activity]);
 
         return $activity;
+    }
+
+    /**
+     * @param Project $project
+     * @return Activity[]
+     */
+    public function findByProject(Project $project)
+    {
+        return $this->findBy(['project' => $project]);
     }
 
     /**

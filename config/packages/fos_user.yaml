@@ -8,18 +8,8 @@ fos_user:
     registration:
         confirmation:
             enabled: false
-            template: '@FOSUser/Registration/email.txt.twig'
     resetting:
         retry_ttl: 7200
         token_ttl: 86400
-        email:
-            template: '@FOSUser/Resetting/email.txt.twig'
     service:
-        mailer: fos_user.mailer.twig_swift
-#    group:
-#        group_class:    ~ # Required when using groups
-#        group_manager:  fos_user.group_manager.default
-#        form:
-#            type:               FOS\UserBundle\Form\Type\GroupFormType # or 'fos_user_group' on Symfony < 2.8
-#            name:               fos_user_group_form
-#            validation_groups:  [Registration, Default]
+        mailer: App\Mail\UserMails

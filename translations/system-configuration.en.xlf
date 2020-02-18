@@ -34,6 +34,10 @@
                 <source>label.theme.markdown_content</source>
                 <target>Allow markdown-formattings in descriptions and comments</target>
             </trans-unit>
+            <trans-unit id="label.theme.tags_create">
+                <source>label.theme.tags_create</source>
+                <target>Tags: use auto-complete search and allow tag creation</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.mode">
                 <source>label.timesheet.mode</source>
                 <target>Timetracking mode</target>

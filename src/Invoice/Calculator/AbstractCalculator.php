@@ -9,6 +9,7 @@
 
 namespace App\Invoice\Calculator;
 
+use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceModel;
 
@@ -87,11 +88,17 @@ abstract class AbstractCalculator
     }
 
     /**
+     * @deprecated since 1.8 will be removed with 2.0
      * @return string
      */
     public function getCurrency(): string
     {
-        return $this->model->getCustomer()->getCurrency();
+        @trigger_error(
+            sprintf('%s::getCurrency() is deprecated and will be removed with 2.0', CalculatorInterface::class),
+            E_USER_DEPRECATED
+        );
+
+        return $this->model->getCurrency();
     }
 
     /**

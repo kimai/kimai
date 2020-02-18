@@ -11,10 +11,12 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Form\Type\AvatarType;
+use App\Form\Type\LanguageType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -45,6 +47,16 @@ class UserEditType extends AbstractType
             ])
         ;
 
+        if ($options['include_preferences']) {
+            $builder->add('language', LanguageType::class, [
+                'required' => true,
+            ]);
+
+            $builder->add('timezone', TimezoneType::class, [
+                'required' => true,
+            ]);
+        }
+
         if ($options['include_active_flag']) {
             $builder
                 ->add('enabled', YesNoType::class, [
@@ -64,7 +76,8 @@ class UserEditType extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'edit_user_profile',
-            'include_active_flag' => false,
+            'include_active_flag' => true,
+            'include_preferences' => true,
         ]);
     }
 }

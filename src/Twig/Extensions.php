@@ -102,16 +102,17 @@ class Extensions extends AbstractExtension
      * Transforms seconds into a duration string.
      *
      * @param int|Timesheet $duration
-     * @param string $format
+     * @param bool $decimal
      * @return string
      */
-    public function duration($duration, $format = null)
+    public function duration($duration, $decimal = false)
     {
-        $duration = $this->getSecondsForDuration($duration);
-
-        if (null === $format) {
-            $format = $this->localeSettings->getDurationFormat();
+        if ($decimal) {
+            return $this->durationDecimal($duration);
         }
+
+        $duration = $this->getSecondsForDuration($duration);
+        $format = $this->localeSettings->getDurationFormat();
 
         return $this->formatDuration($duration, $format);
     }

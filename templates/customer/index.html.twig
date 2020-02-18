@@ -11,7 +11,7 @@
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
+        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
@@ -44,7 +44,7 @@
         {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.customerUpdate kimai.customerTeamUpdate'}) }}
 
         {% for entry in entries %}
-            <tr class="alternative-link open-edit" data-href="{{ path('customer_details', {'id': entry.id}) }}">
+            <tr{% if is_granted('view', entry) %} class="alternative-link open-edit" data-href="{{ path('customer_details', {'id': entry.id}) }}"{% endif %}>
                 <td>
                     {{ widgets.label_color_dot('customer', true, entry.name, null, entry.color) }}
                 </td>
@@ -52,7 +52,7 @@
                     {{ entry.comment|comment2html }}
                 </td>
                 {% for field in metaColumns %}
-                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}

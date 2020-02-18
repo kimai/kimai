@@ -9,8 +9,11 @@
 
 namespace App\Timesheet\Calculator;
 
+use App\Entity\Rate;
+use App\Entity\RateInterface;
 use App\Entity\Timesheet;
 use App\Entity\UserPreference;
+use App\Repository\TimesheetRepository;
 use App\Timesheet\CalculatorInterface;
 use App\Timesheet\Util;
 
@@ -22,15 +25,16 @@ class RateCalculator implements CalculatorInterface
     /**
      * @var array
      */
-    protected $rates;
-
+    private $rates;
     /**
-     * RateCalculator constructor.
-     * @param array $rates
+     * @var TimesheetRepository
      */
-    public function __construct(array $rates)
+    private $repository;
+
+    public function __construct(array $rates, TimesheetRepository $repository)
     {
         $this->rates = $rates;
+        $this->repository = $repository;
     }
 
     /**
@@ -44,7 +48,21 @@ class RateCalculator implements CalculatorInterface
             return;
         }
 
-        $fixedRate = $this->findFixedRate($record);
+        $fixedRate = $record->getFixedRate();
+        $hourlyRate = $record->getHourlyRate();
+
+        if (null === $fixedRate && null === $hourlyRate) {
+            $rate = $this->getBestFittingRate($record);
+
+            if (null !== $rate) {
+                if ($rate->isFixed()) {
+                    $fixedRate = $rate->getRate();
+                } else {
+                    $hourlyRate = $rate->getRate();
+                }
+            }
+        }
+
         if (null !== $fixedRate) {
             $record->setRate($fixedRate);
             $record->setFixedRate($fixedRate);
@@ -52,74 +70,40 @@ class RateCalculator implements CalculatorInterface
             return;
         }
 
-        $hourlyRate = $this->findHourlyRate($record);
+        if (null === $hourlyRate) {
+            $hourlyRate = (float) $record->getUser()->getPreferenceValue(UserPreference::HOURLY_RATE, 0.00);
+        }
+
         $factor = $this->getRateFactor($record);
 
         $hourlyRate = (float) ($hourlyRate * $factor);
-        $rate = 0;
+        $totalRate = 0;
         if (null !== $record->getDuration()) {
-            $rate = Util::calculateRate($hourlyRate, $record->getDuration());
+            $totalRate = Util::calculateRate($hourlyRate, $record->getDuration());
         }
 
         $record->setHourlyRate($hourlyRate);
-        $record->setRate($rate);
+        $record->setRate($totalRate);
     }
 
-    /**
-     * @param Timesheet $record
-     * @return float
-     */
-    protected function findHourlyRate(Timesheet $record)
+    private function getBestFittingRate(Timesheet $timesheet): ?RateInterface
     {
-        if (null !== $record->getHourlyRate()) {
-            return $record->getHourlyRate();
-        }
-
-        $activity = $record->getActivity();
-        if (null !== $activity->getHourlyRate()) {
-            return $activity->getHourlyRate();
-        }
-
-        $project = $record->getProject();
-        if (null !== $project) {
-            if (null !== $project->getHourlyRate()) {
-                return $project->getHourlyRate();
+        $rates = $this->repository->findMatchingRates($timesheet);
+        /** @var RateInterface[] $sorted */
+        $sorted = [];
+        foreach ($rates as $rate) {
+            $score = $rate->getScore();
+            if (null !== $rate->getUser() && $timesheet->getUser() === $rate->getUser()) {
+                ++$score;
             }
 
-            $customer = $project->getCustomer();
-            if (null !== $customer->getHourlyRate()) {
-                return $customer->getHourlyRate();
-            }
+            $sorted[$score] = $rate;
         }
 
-        return (float) $record->getUser()->getPreferenceValue(UserPreference::HOURLY_RATE, 0);
-    }
+        if (!empty($sorted)) {
+            ksort($sorted);
 
-    /**
-     * @param Timesheet $record
-     * @return float|null
-     */
-    protected function findFixedRate(Timesheet $record)
-    {
-        if (null !== $record->getFixedRate()) {
-            return $record->getFixedRate();
-        }
-
-        $activity = $record->getActivity();
-        if (null !== $activity->getFixedRate()) {
-            return $activity->getFixedRate();
-        }
-
-        $project = $record->getProject();
-        if (null !== $project) {
-            if (null !== $project->getFixedRate()) {
-                return $project->getFixedRate();
-            }
-
-            $customer = $project->getCustomer();
-            if (null !== $customer->getFixedRate()) {
-                return $customer->getFixedRate();
-            }
+            return end($sorted);
         }
 
         return null;

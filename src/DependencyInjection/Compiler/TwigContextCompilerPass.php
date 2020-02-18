@@ -29,6 +29,9 @@ class TwigContextCompilerPass implements CompilerPassInterface
         $theme = $container->getDefinition(ThemeConfiguration::class);
         $twig->addMethodCall('addGlobal', ['kimai_context', $theme]);
 
+        $saml = $container->getParameter('kimai.saml');
+        $twig->addMethodCall('addGlobal', ['saml', $saml]);
+
         if ($container->hasDefinition('twig.loader.native_filesystem')) {
             $definition = $container->getDefinition('twig.loader.native_filesystem');
 

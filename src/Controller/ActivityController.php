@@ -11,17 +11,19 @@ namespace App\Controller;
 
 use App\Configuration\FormConfiguration;
 use App\Entity\Activity;
+use App\Entity\ActivityRate;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Event\ActivityMetaDefinitionEvent;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Form\ActivityEditForm;
+use App\Form\ActivityRateForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
+use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
-use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -37,7 +39,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route(path="/admin/activity")
  * @Security("is_granted('view_activity')")
  */
-class ActivityController extends AbstractController
+final class ActivityController extends AbstractController
 {
     /**
      * @var ActivityRepository
@@ -50,18 +52,13 @@ class ActivityController extends AbstractController
     /**
      * @var EventDispatcherInterface
      */
-    protected $dispatcher;
+    private $dispatcher;
 
     public function __construct(ActivityRepository $repository, FormConfiguration $configuration, EventDispatcherInterface $dispatcher)
     {
         $this->repository = $repository;
         $this->configuration = $configuration;
         $this->dispatcher = $dispatcher;
-    }
-
-    protected function getRepository(): ActivityRepository
-    {
-        return $this->repository;
     }
 
     /**
@@ -88,7 +85,7 @@ class ActivityController extends AbstractController
         }
 
         /* @var $entries Pagerfanta */
-        $entries = $this->getRepository()->getPagerfantaForQuery($query);
+        $entries = $this->repository->getPagerfantaForQuery($query);
 
         return $this->render('activity/index.html.twig', [
             'entries' => $entries,
@@ -111,6 +108,85 @@ class ActivityController extends AbstractController
     }
 
     /**
+     * @Route(path="/{id}/details", name="activity_details", methods={"GET", "POST"})
+     * @Security("is_granted('view', activity)")
+     */
+    public function detailsAction(Activity $activity, ActivityRateRepository $rateRepository)
+    {
+        $event = new ActivityMetaDefinitionEvent($activity);
+        $this->dispatcher->dispatch($event);
+
+        $stats = null;
+        $rates = [];
+
+        if ($this->isGranted('edit', $activity)) {
+            $rates = $rateRepository->getRatesForActivity($activity);
+        }
+
+        if ($this->isGranted('budget', $activity)) {
+            $stats = $this->repository->getActivityStatistics($activity);
+        }
+
+        return $this->render('activity/details.html.twig', [
+            'activity' => $activity,
+            'stats' => $stats,
+            'rates' => $rates
+        ]);
+    }
+
+    /**
+     * @Route(path="/{id}/rate_delete/{rate}", name="admin_activity_rate_delete", methods={"GET"})
+     * @Security("is_granted('edit', activity)")
+     */
+    public function deleteRateAction(Activity $activity, ActivityRate $rate, ActivityRateRepository $repository)
+    {
+        if ($rate->getActivity() !== $activity) {
+            $this->flashError('action.delete.error', ['%reason%' => 'Invalid activity']);
+        } else {
+            try {
+                $repository->deleteRate($rate);
+            } catch (\Exception $ex) {
+                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
+    }
+
+    /**
+     * @Route(path="/{id}/rate", name="admin_activity_rate_add", methods={"GET", "POST"})
+     * @Security("is_granted('edit', activity)")
+     */
+    public function addRateAction(Activity $activity, Request $request, ActivityRateRepository $repository)
+    {
+        $rate = new ActivityRate();
+        $rate->setActivity($activity);
+
+        $form = $this->createForm(ActivityRateForm::class, $rate, [
+            'action' => $this->generateUrl('admin_activity_rate_add', ['id' => $activity->getId()]),
+            'method' => 'POST',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $repository->saveRate($rate);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
+            } catch (\Exception $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->render('activity/rates.html.twig', [
+            'activity' => $activity,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route(path="/create", name="admin_activity_create", methods={"GET", "POST"})
      * @Route(path="/create/{project}", name="admin_activity_create_with_project", methods={"GET", "POST"})
      * @Security("is_granted('create_activity')")
@@ -127,25 +203,6 @@ class ActivityController extends AbstractController
         }
 
         return $this->renderActivityForm($activity, $request);
-    }
-
-    /**
-     * @Route(path="/{id}/budget", name="admin_activity_budget", methods={"GET"})
-     * @Security("is_granted('budget', activity)")
-     *
-     * @param Activity $activity
-     * @return Response
-     */
-    public function budgetAction(Activity $activity)
-    {
-        $stats = $this->getRepository()->getActivityStatistics($activity);
-
-        // TODO sent event with stats
-
-        return $this->render('activity/budget.html.twig', [
-            'activity' => $activity,
-            'stats' => $stats,
-        ]);
     }
 
     /**
@@ -171,7 +228,7 @@ class ActivityController extends AbstractController
      */
     public function deleteAction(Activity $activity, Request $request)
     {
-        $stats = $this->getRepository()->getActivityStatistics($activity);
+        $stats = $this->repository->getActivityStatistics($activity);
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
@@ -199,9 +256,9 @@ class ActivityController extends AbstractController
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
-                $this->getRepository()->deleteActivity($activity, $deleteForm->get('activity')->getData());
+                $this->repository->deleteActivity($activity, $deleteForm->get('activity')->getData());
                 $this->flashSuccess('action.delete.success');
-            } catch (ORMException $ex) {
+            } catch (\Exception $ex) {
                 $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
             }
 
@@ -233,7 +290,7 @@ class ActivityController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->getRepository()->saveActivity($activity);
+                $this->repository->saveActivity($activity);
                 $this->flashSuccess('action.update.success');
 
                 if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
@@ -245,7 +302,7 @@ class ActivityController extends AbstractController
                 } else {
                     return $this->redirectToRoute('admin_activity');
                 }
-            } catch (ORMException $ex) {
+            } catch (\Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
         }

@@ -38,6 +38,10 @@ class User extends BaseUser implements UserInterface
     public const DEFAULT_ROLE = self::ROLE_USER;
     public const DEFAULT_LANGUAGE = 'en';
 
+    public const AUTH_INTERNAL = 'kimai';
+    public const AUTH_LDAP = 'ldap';
+    public const AUTH_SAML = 'saml';
+
     /**
      * @var int
      *
@@ -110,6 +114,13 @@ class User extends BaseUser implements UserInterface
      * )
      */
     private $teams;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="auth", type="string", length=20, nullable=true)
+     */
+    private $auth = self::AUTH_INTERNAL;
 
     /**
      * User constructor.
@@ -266,6 +277,27 @@ class User extends BaseUser implements UserInterface
         return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get());
     }
 
+    public function getLanguage(): string
+    {
+        return $this->getLocale();
+    }
+
+    public function setLanguage(?string $language)
+    {
+        if ($language === null) {
+            $language = User::DEFAULT_LANGUAGE;
+        }
+        $this->setPreferenceValue(UserPreference::LOCALE, $language);
+    }
+
+    public function setTimezone(?string $timezone)
+    {
+        if ($timezone === null) {
+            $timezone = date_default_timezone_get();
+        }
+        $this->setPreferenceValue(UserPreference::TIMEZONE, $timezone);
+    }
+
     /**
      * @param string $name
      * @param mixed $default
@@ -287,6 +319,10 @@ class User extends BaseUser implements UserInterface
      */
     public function addPreference(UserPreference $preference): User
     {
+        if (null === $this->preferences) {
+            $this->preferences = new ArrayCollection();
+        }
+
         $this->preferences->add($preference);
         $preference->setUser($this);
 
@@ -349,6 +385,33 @@ class User extends BaseUser implements UserInterface
         }
 
         return $this->getUsername();
+    }
+
+    public function getAuth(): ?string
+    {
+        return $this->auth;
+    }
+
+    public function setAuth(string $auth): User
+    {
+        $this->auth = $auth;
+
+        return $this;
+    }
+
+    public function isSamlUser(): bool
+    {
+        return $this->auth === self::AUTH_SAML;
+    }
+
+    public function isLdapUser(): bool
+    {
+        return $this->auth === self::AUTH_LDAP;
+    }
+
+    public function isInternalUser(): bool
+    {
+        return $this->auth === null || $this->auth === self::AUTH_INTERNAL;
     }
 
     /**

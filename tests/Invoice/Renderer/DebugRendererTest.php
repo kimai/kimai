@@ -10,7 +10,10 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
+use App\Invoice\InvoiceItem;
+use App\Invoice\InvoiceItemHydrator;
 use App\Invoice\InvoiceModel;
+use App\Invoice\InvoiceModelHydrator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,6 +32,26 @@ class DebugRendererTest extends TestCase
      */
     public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject, $metaFields = [])
     {
+        $itemHydrator = new class() implements InvoiceItemHydrator {
+            public function setInvoiceModel(InvoiceModel $model)
+            {
+            }
+
+            public function hydrate(InvoiceItem $item): array
+            {
+                return ['testFromItemHydrator' => 'foo'];
+            }
+        };
+        $model->addItemHydrator($itemHydrator);
+
+        $modelHydrator = new class() implements InvoiceModelHydrator {
+            public function hydrate(InvoiceModel $model): array
+            {
+                return ['testFromModelHydrator' => 'foo'];
+            }
+        };
+        $model->addModelHydrator($modelHydrator);
+
         $document = new InvoiceDocument(new \SplFileInfo(__DIR__ . '/DebugRenderer.php'));
         $sut = new DebugRenderer();
         /** @var Response $response */
@@ -96,22 +119,10 @@ class DebugRendererTest extends TestCase
             'customer.number',
             'customer.homepage',
             'customer.comment',
-            'customer.fixed_rate',
-            'customer.fixed_rate_nc',
-            'customer.fixed_rate_plain',
-            'customer.hourly_rate',
-            'customer.hourly_rate_nc',
-            'customer.hourly_rate_plain',
             'customer.meta.foo-customer',
             'activity.id',
             'activity.name',
             'activity.comment',
-            'activity.fixed_rate',
-            'activity.fixed_rate_nc',
-            'activity.fixed_rate_plain',
-            'activity.hourly_rate',
-            'activity.hourly_rate_nc',
-            'activity.hourly_rate_plain',
             'activity.meta.foo-activity',
             'user.alias',
             'user.email',
@@ -119,6 +130,7 @@ class DebugRendererTest extends TestCase
             'user.title',
             'user.meta.hello',
             'user.meta.kitty',
+            'testFromModelHydrator'
         ];
 
         if ($hasProject) {
@@ -128,15 +140,15 @@ class DebugRendererTest extends TestCase
                 'project.comment',
                 'project.order_date',
                 'project.order_number',
-                'project.fixed_rate',
-                'project.fixed_rate_nc',
-                'project.fixed_rate_plain',
-                'project.hourly_rate',
-                'project.hourly_rate_nc',
-                'project.hourly_rate_plain',
                 'project.meta.foo-project',
                 'project.start_date',
                 'project.end_date',
+                'project.budget_money',
+                'project.budget_money_nc',
+                'project.budget_money_plain',
+                'project.budget_time',
+                'project.budget_time_decimal',
+                'project.budget_time_minutes',
             ]);
         }
 
@@ -185,6 +197,7 @@ class DebugRendererTest extends TestCase
             'entry.customer.meta.foo-customer',
             'entry.category',
             'entry.type',
+            'testFromItemHydrator'
         ];
 
         $keys = array_merge($keys, $metaFields);

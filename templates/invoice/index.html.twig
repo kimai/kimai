@@ -61,11 +61,12 @@
         {% if model.calculator is empty or model.calculator.entries is empty %}
             {{ widgets.callout('warning', 'error.no_entries_found') }}
         {% else %}
+            {% set isDecimal = model.template.decimalDuration|default(false) %}
             {% set entries = model.calculator.entries %}
-            {{ tables.data_table_header(tableName, columns) }}
+            {{ tables.datatable_header(tableName, columns, query, {}) }}
             {% for entry in entries %}
                 {% set amount = entry.amount %}
-                {% set duration = entry.duration|duration %}
+                {% set duration = entry.duration|duration(isDecimal) %}
                 {% set rate = 0 %}
                 {% if entry.fixedRate is not null %}
                     {% set rate = entry.fixedRate %}

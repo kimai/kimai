@@ -30,7 +30,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Project implements EntityWithMetaFields
 {
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -105,7 +105,6 @@ class Project implements EntityWithMetaFields
     private $visible = true;
 
     // keep the trait include exactly here, for placing the column at the correct position
-    use RatesTrait;
     use ColorTrait;
     use BudgetTrait;
 
@@ -382,5 +381,14 @@ class Project implements EntityWithMetaFields
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+            $this->teams = new ArrayCollection();
+            $this->meta = new ArrayCollection();
+        }
     }
 }

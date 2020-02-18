@@ -20,7 +20,6 @@ use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
 use App\Repository\TeamRepository;
 use App\Repository\TimesheetRepository;
-use App\Voter\UserVoter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -281,23 +280,23 @@ class ProfileController extends AbstractController
     ): Response {
         $forms = [];
 
-        if ($this->isGranted(UserVoter::EDIT, $user)) {
+        if ($this->isGranted('edit', $user)) {
             $editForm = $editForm ?: $this->createEditForm($user);
             $forms['settings'] = $editForm->createView();
         }
-        if ($this->isGranted(UserVoter::PASSWORD, $user)) {
+        if ($this->isGranted('password', $user)) {
             $pwdForm = $pwdForm ?: $this->createPasswordForm($user);
             $forms['password'] = $pwdForm->createView();
         }
-        if ($this->isGranted(UserVoter::API_TOKEN, $user)) {
+        if ($this->isGranted('api-token', $user)) {
             $apiTokenForm = $apiTokenForm ?: $this->createApiTokenForm($user);
             $forms['api-token'] = $apiTokenForm->createView();
         }
-        if ($this->isGranted(UserVoter::TEAMS, $user) && $this->teams->count([]) > 0) {
+        if ($this->isGranted('teams', $user) && $this->teams->count([]) > 0) {
             $teamsForm = $teamsForm ?: $this->createTeamsForm($user);
             $forms['teams'] = $teamsForm->createView();
         }
-        if ($this->isGranted(UserVoter::ROLES, $user)) {
+        if ($this->isGranted('roles', $user)) {
             $rolesForm = $rolesForm ?: $this->createRolesForm($user);
             $forms['roles'] = $rolesForm->createView();
         }
@@ -329,7 +328,8 @@ class ProfileController extends AbstractController
             [
                 'action' => $this->generateUrl('user_profile_edit', ['username' => $user->getUsername()]),
                 'method' => 'POST',
-                'include_active_flag' => ($user->getId() !== $this->getUser()->getId())
+                'include_active_flag' => ($user->getId() !== $this->getUser()->getId()),
+                'include_preferences' => false,
             ]
         );
     }
