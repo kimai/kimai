@@ -45,7 +45,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     public const CATEGORY_WORK = 'work';
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -536,5 +536,13 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         $current->merge($meta);
 
         return $this;
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+            $this->exported = false;
+        }
     }
 }
