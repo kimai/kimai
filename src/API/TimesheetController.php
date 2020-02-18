@@ -657,6 +657,47 @@ class TimesheetController extends BaseApiController
     }
 
     /**
+     * Duplicates an existing timesheet record
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Duplicates a timesheet record, resetting the export state only.",
+     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Timesheet record ID to duplicate",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function duplicateAction(int $id): Response
+    {
+        $timesheet = $this->repository->find($id);
+
+        if (null === $timesheet) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('duplicate', $timesheet)) {
+            throw new AccessDeniedHttpException('You are not allowed to duplicate this timesheet');
+        }
+
+        $copyTimesheet = clone $timesheet;
+
+        $this->service->saveNewTimesheet($copyTimesheet);
+
+        $view = new View($copyTimesheet, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
      * Switch the export state of a timesheet record to (un-)lock it
      *
      * @SWG\Response(
