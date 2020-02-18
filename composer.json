@@ -67,11 +67,14 @@
         "symfony/validator": "^4.4",
         "symfony/webpack-encore-bundle": "^1.5",
         "symfony/yaml": "^4.4",
+        "twig/extensions": "^1.5",
         "twig/cssinliner-extra": "^3.0",
         "twig/extra-bundle": "^3.0",
         "twig/inky-extra": "^3.0",
         "twig/intl-extra": "^3.0",
         "twig/string-extra": "^3.0"
+        "white-october/pagerfanta-bundle": "^1.1",
+        "zendframework/zend-ldap": "^2.10"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^6.0",
