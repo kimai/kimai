@@ -786,6 +786,39 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/42/restart', []);
     }
 
+    public function testDuplicateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'begin' => ($this->dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'end' => ($this->dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'description' => 'foo',
+            'fixedRate' => 2016,
+            'hourlyRate' => 127
+        ];
+        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertDefaultStructure($result);
+        $this->assertNotEmpty($result['id']);
+        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertEquals(2016, $result['rate']);
+
+        $this->request($client, '/api/timesheets/' . $result['id'] . '/duplicate', 'PATCH');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertDefaultStructure($result);
+        $this->assertNotEmpty($result['id']);
+        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertEquals(2016, $result['rate']);
+    }
+
     public function testExportAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);

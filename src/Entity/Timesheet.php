@@ -537,4 +537,12 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
 
         return $this;
     }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+            $this->exported = false;
+        }
+    }
 }
