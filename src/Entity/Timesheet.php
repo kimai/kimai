@@ -45,7 +45,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     public const CATEGORY_WORK = 'work';
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
