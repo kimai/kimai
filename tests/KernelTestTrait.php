@@ -15,7 +15,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * A trait to be used in all tests that extend the KernelTestCase.
@@ -24,8 +24,8 @@ trait KernelTestTrait
 {
     protected function importFixture($client, Fixture $fixture)
     {
-        if ($client instanceof Client) {
-            $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        if ($client instanceof HttpKernelBrowser) {
+            $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         } elseif ($client instanceof EntityManager) {
             $em = $client;
         } else {

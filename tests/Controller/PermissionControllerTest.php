@@ -122,7 +122,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
 
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
         $this->assertEquals(0, count($rolePermissions));
 

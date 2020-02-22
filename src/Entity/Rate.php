@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait Rate
 {
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -88,5 +88,12 @@ trait Rate
         $this->isFixed = $isFixed;
 
         return $this;
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
     }
 }
