@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "system-configuration/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'title'|trans({}, 'system-configuration') }}{% endblock %}
@@ -7,8 +7,10 @@
 
 {% block main %}
 
+    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+
     {% for section in sections %}
-        {{ include('default/_form.html.twig', {
+        {{ include(formEditTemplate, {
             'title': section.model.section|trans({}, 'system-configuration'),
             'form': section.form,
         }) }}
