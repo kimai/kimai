@@ -35,7 +35,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
     public const MIN_TIMESHEETS_PER_USER = 50;
     public const MAX_TIMESHEETS_PER_USER = 500;
     public const MAX_TIMESHEETS_TOTAL = 5000;
-    public const MAX_RUNNING_TIMESHEETS_PER_USER = 2;
+    public const MAX_RUNNING_TIMESHEETS_PER_USER = 1;
     public const TIMERANGE_DAYS = 1095; // 3 years
     public const TIMERANGE_RUNNING = 1047; // in minutes = 17:45 hours
     public const MIN_MINUTES_PER_ENTRY = 15;
