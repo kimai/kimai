@@ -71,6 +71,7 @@ class PluginManager
     {
         $plugin = new Plugin();
         $plugin
+            ->setId($bundle->getName())
             ->setName($bundle->getName())
             ->setPath($bundle->getPath())
             ->setMetadata(new PluginMetadata())
@@ -99,6 +100,10 @@ class PluginManager
         $description = $json['description'] ?? '';
 
         $homepage = $json['homepage'] ?? Constants::HOMEPAGE . '/store/';
+
+        if (array_key_exists('name', $json['extra']['kimai'])) {
+            $plugin->setName($json['extra']['kimai']['name']);
+        }
 
         $plugin
             ->getMetadata()
