@@ -45,6 +45,25 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         }
     }
 
+    public function testSectionAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/system-config/edit/timesheet');
+
+        $expectedForms = $this->getTestDataForms();
+
+        $result = $client->getCrawler()->filter('section.content div.box.box-primary');
+        $this->assertEquals(1, count($result));
+
+        $result = $client->getCrawler()->filter('section.content div.box.box-primary form');
+        $this->assertEquals(1, count($result));
+
+        $result = $client->getCrawler()->filter('form[name=system_configuration_form_timesheet]');
+        $this->assertEquals(1, count($result));
+        $form = $result->form();
+        $this->assertEquals('POST', $form->getMethod());
+    }
+
     public function getTestDataForms()
     {
         return [
