@@ -14,6 +14,10 @@ class Plugin
     /**
      * @var string
      */
+    private $id;
+    /**
+     * @var string
+     */
     private $name;
     /**
      * @var string
@@ -24,59 +28,50 @@ class Plugin
      */
     private $metadata;
 
-    /**
-     * @return PluginMetadata
-     */
     public function getMetadata(): ?PluginMetadata
     {
         return $this->metadata;
     }
 
-    /**
-     * @param PluginMetadata $metadata
-     * @return Plugin
-     */
-    public function setMetadata(PluginMetadata $metadata)
+    public function setMetadata(PluginMetadata $metadata): Plugin
     {
         $this->metadata = $metadata;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getPath(): ?string
     {
         return $this->path;
     }
 
-    /**
-     * @param string $path
-     * @return Plugin
-     */
-    public function setPath(string $path)
+    public function setPath(string $path): Plugin
     {
         $this->path = $path;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     * @return Plugin
-     */
-    public function setName(string $name)
+    public function setName(string $name): Plugin
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function setId(string $id): Plugin
+    {
+        $this->id = $id;
 
         return $this;
     }
