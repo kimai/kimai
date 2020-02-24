@@ -46,6 +46,18 @@ class PDFRenderer
         return 'export/renderer/pdf.html.twig';
     }
 
+    protected function getOptions(TimesheetQuery $query): array
+    {
+        $decimal = false;
+        if (null !== $query->getCurrentUser()) {
+            $decimal = (bool) $query->getCurrentUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+        } elseif (null !== $query->getUser()) {
+            $decimal = (bool) $query->getUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+        }
+
+        return ['decimal' => $decimal];
+    }
+
     /**
      * @param ExportItemInterface[] $timesheets
      * @param TimesheetQuery $query
@@ -56,12 +68,13 @@ class PDFRenderer
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
-        $content = $this->twig->render($this->getTemplate(), [
+        $content = $this->twig->render($this->getTemplate(), array_merge([
             'entries' => $timesheets,
             'query' => $query,
             'now' => $this->dateTime->createDateTime(),
             'summaries' => $this->calculateSummary($timesheets),
-        ]);
+            'decimal' => false,
+        ], $this->getOptions($query)));
 
         $content = $this->converter->convertToPdf($content);
 
