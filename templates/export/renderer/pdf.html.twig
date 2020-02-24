@@ -1,5 +1,6 @@
 {% set showUserColumn = true %}
 {% set showRateColumn = true %}
+{% set decimal = decimal|default(false) %}
 {% if query.user %}
     {# this is only triggered, if a user exports from his personal timesheet screen#}
     {% set showUserColumn = false %}
@@ -106,7 +107,7 @@ mpdf-->
         {% if customer is not same as(summary.customer) %}
                 <tr class="summary">
                     <td colspan="2"></td>
-                    <td class="totals duration">{{ customerDuration|duration }}</td>
+                    <td class="totals duration">{{ customerDuration|duration(decimal) }}</td>
                     {% if showRateColumn %}
                     <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
                     {% endif %}
@@ -120,7 +121,7 @@ mpdf-->
         <tr class="{{ cycle(['odd', 'even'], customerCount) }}">
             <td>{{ summary.customer }}</td>
             <td>{{ summary.project }}</td>
-            <td class="duration">{{ summary.duration|duration }}</td>
+            <td class="duration">{{ summary.duration|duration(decimal) }}</td>
             {% if showRateColumn %}
             <td class="cost">{{ summary.rate|money(summary.currency) }}</td>
             {% endif %}
@@ -132,7 +133,7 @@ mpdf-->
     {% if customer is not same as(null) %}
     <tr class="summary">
         <td colspan="2"></td>
-        <td class="totals duration">{{ customerDuration|duration }}</td>
+        <td class="totals duration">{{ customerDuration|duration(decimal) }}</td>
         {% if showRateColumn %}
         <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
         {% endif %}
@@ -189,7 +190,7 @@ mpdf-->
                     <i>{{ entry.description|escape|desc2html }}</i>
                 {% endif %}
             </td>
-            <td class="duration">{{ entry.duration|duration }}</td>
+            <td class="duration">{{ entry.duration|duration(decimal) }}</td>
             {% if showRateColumn %}
             <td class="cost">
                 {% if is_granted('view_rate', entry) %}
@@ -208,7 +209,7 @@ mpdf-->
         {% else %}
         <td colspan="2"></td>
         {% endif %}
-        <td class="totals duration">{{ duration|duration }}</td>
+        <td class="totals duration">{{ duration|duration(decimal) }}</td>
         {% if showRateColumn %}
         <td class="totals cost">{% if currency is not null %}{{ rate|money(currency) }}{% endif %}</td>
         {% endif %}
