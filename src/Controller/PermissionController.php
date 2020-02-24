@@ -80,23 +80,23 @@ final class PermissionController extends AbstractController
 
         // be careful, the order of the search keys is important!
         $permissionOrder = [
-            new PermissionSection('User', '_user'),
-            new PermissionSection('User profile (own)', '_own_profile'),
-            new PermissionSection('User profile (other)', '_other_profile'),
-            new PermissionSection('Customer (Teamlead)', '_teamlead_customer'),
-            new PermissionSection('Customer (Team member)', '_team_customer'),
-            new PermissionSection('Customer (Admin)', '_customer'),
-            new PermissionSection('Project (Teamlead)', '_teamlead_project'),
-            new PermissionSection('Project (Team member)', '_team_project'),
-            new PermissionSection('Project (Admin)', '_project'),
-            new PermissionSection('Activity', '_activity'),
-            new PermissionSection('Timesheet (own)', '_own_timesheet'),
-            new PermissionSection('Timesheet (other)', '_other_timesheet'),
-            new PermissionSection('Timesheet', '_timesheet'),
             new PermissionSection('Export', '_export'),
             new PermissionSection('Invoice', '_invoice'),
             new PermissionSection('Teams', '_team'),
             new PermissionSection('Tags', '_tag'),
+            new PermissionSection('User profile (other)', '_other_profile'),
+            new PermissionSection('User profile (own)', '_own_profile'),
+            new PermissionSection('User', '_user'),
+            new PermissionSection('Customer (Admin)', '_customer'),
+            new PermissionSection('Customer (Team member)', '_team_customer'),
+            new PermissionSection('Customer (Teamlead)', '_teamlead_customer'),
+            new PermissionSection('Project (Admin)', '_project'),
+            new PermissionSection('Project (Team member)', '_team_project'),
+            new PermissionSection('Project (Teamlead)', '_teamlead_project'),
+            new PermissionSection('Activity', '_activity'),
+            new PermissionSection('Timesheet', '_timesheet'),
+            new PermissionSection('Timesheet (other)', '_other_timesheet'),
+            new PermissionSection('Timesheet (own)', '_own_timesheet'),
         ];
 
         $event = new PermissionSectionsEvent();
@@ -115,7 +115,7 @@ final class PermissionController extends AbstractController
         foreach ($this->manager->getPermissions() as $permission) {
             $found = false;
 
-            foreach ($event->getSections() as $section) {
+            foreach (array_reverse($event->getSections()) as $section) {
                 if ($section->filter($permission)) {
                     $permissionSorted[$section->getTitle()][] = $permission;
                     $found = true;

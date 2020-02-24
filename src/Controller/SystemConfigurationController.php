@@ -29,6 +29,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
@@ -41,26 +42,21 @@ use Symfony\Component\Validator\Constraints\Regex;
  * @Route(path="/admin/system-config")
  * @Security("is_granted('system_configuration')")
  */
-class SystemConfigurationController extends AbstractController
+final class SystemConfigurationController extends AbstractController
 {
     /**
      * @var EventDispatcherInterface
      */
-    protected $eventDispatcher;
+    private $eventDispatcher;
     /**
      * @var SystemConfiguration
      */
-    protected $configurations;
+    private $configurations;
     /**
      * @var ConfigurationRepository
      */
-    protected $repository;
+    private $repository;
 
-    /**
-     * @param EventDispatcherInterface $dispatcher
-     * @param ConfigurationRepository $repository
-     * @param SystemConfiguration $config
-     */
     public function __construct(EventDispatcherInterface $dispatcher, ConfigurationRepository $repository, SystemConfiguration $config)
     {
         $this->eventDispatcher = $dispatcher;
@@ -70,15 +66,37 @@ class SystemConfigurationController extends AbstractController
 
     /**
      * @Route(path="/", name="system_configuration", methods={"GET"})
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(): Response
     {
         $configSettings = $this->getInitializedConfigurations();
 
         $configurations = [];
         foreach ($configSettings as $configModel) {
+            $configurations[] = [
+                'model' => $configModel,
+                'form' => $this->createConfigurationsForm($configModel)->createView(),
+            ];
+        }
+
+        return $this->render('system-configuration/index.html.twig', [
+            'sections' => $configurations,
+        ]);
+    }
+
+    /**
+     * @Route(path="/edit/{section}", name="system_configuration_section", methods={"GET"})
+     */
+    public function sectionAction(string $section): Response
+    {
+        $configSettings = $this->getInitializedConfigurations();
+
+        $configurations = [];
+        foreach ($configSettings as $configModel) {
+            if ($configModel->getSection() !== $section) {
+                continue;
+            }
+
             $configurations[] = [
                 'model' => $configModel,
                 'form' => $this->createConfigurationsForm($configModel)->createView(),

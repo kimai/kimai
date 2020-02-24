@@ -72,6 +72,8 @@ class PluginManagerTest extends TestCase
         $meta = $plugin->getMetadata();
         $this->assertEquals('0.9', $meta->getKimaiVersion());
         $this->assertEquals('1.0', $meta->getVersion());
+        $this->assertEquals('TestPlugin', $plugin->getId());
+        $this->assertEquals('TestPlugin from composer.json', $plugin->getName());
         $this->assertEquals('Just a test fixture for the PluginManager', $meta->getDescription());
         $this->assertEquals('https://github.com/kevinpapst/kimai2', $meta->getHomepage());
     }
