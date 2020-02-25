@@ -326,8 +326,10 @@ final class InvoiceController extends AbstractController
                 $uploadedFile = $form->get('document')->getData();
 
                 $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
-                    $originalFilename);
+                $safeFilename = transliterator_transliterate(
+                    'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
+                    $originalFilename
+                );
                 $newFilename = $safeFilename . '.' . $uploadedFile->guessExtension();
 
                 try {
