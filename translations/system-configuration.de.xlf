@@ -190,6 +190,10 @@
                 <source>Floor</source>
                 <target>Floor: Start, Ende und Dauer werden nach unten gerundet</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.default_begin">
+                <source>label.timesheet.default_begin</source>
+                <target>Standard Startzeit (wird nicht in jedem Zeiterfassungs Modus verwendet)</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
