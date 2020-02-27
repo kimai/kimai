@@ -9,7 +9,6 @@
 
 namespace App\Command;
 
-use App\Constants;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
