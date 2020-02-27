@@ -24,6 +24,9 @@
 
     {% if is_granted('manage_invoice_template') %}
         {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
+    {% endif %}
+
+    {% if is_granted('upload_invoice_template') %}
         {# File upload does not work in a modal right now #}
         {% set actions = actions|merge({'upload': {'url': path('admin_invoice_document_upload')}}) %}
     {% endif %}

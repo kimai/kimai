@@ -19,6 +19,7 @@ use App\Invoice\InvoiceFormatter;
 use App\Invoice\InvoiceItemInterface;
 use App\Invoice\InvoiceModel;
 use App\Invoice\ServiceInvoice;
+use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceTemplateRepository;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceQuery;
@@ -293,11 +294,12 @@ final class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/document_upload", name="admin_invoice_document_upload", methods={"GET", "POST"})
-     * @Security("is_granted('manage_invoice_template')")
+     * @Security("is_granted('upload_invoice_template')")
      */
-    public function uploadDocumentAction(Request $request, string $projectDirectory)
+    public function uploadDocumentAction(Request $request, string $projectDirectory, InvoiceDocumentRepository $documentRepository)
     {
-        $invoiceDir = $projectDirectory . DIRECTORY_SEPARATOR . 'var/invoices/';
+        $dir = $documentRepository->getCustomInvoiceDirectory();
+        $invoiceDir = $projectDirectory . DIRECTORY_SEPARATOR . $dir;
         $canUpload = true;
         $form = null;
 
@@ -305,11 +307,11 @@ final class InvoiceController extends AbstractController
             @mkdir($invoiceDir);
         }
         if (!file_exists($invoiceDir)) {
-            $this->flashError('Invoice directory at var/invoices/ is not existing and could not be created');
+            $this->flashError(sprintf('Invoice directory is not existing and could not be created: %s', $dir));
             $canUpload = false;
         }
         if (!is_writable($invoiceDir)) {
-            $this->flashError('Invoice directory at var/invoices/ cannot be written');
+            $this->flashError(sprintf('Invoice directory cannot be written: %s', $dir));
             $canUpload = false;
         }
 

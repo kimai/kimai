@@ -22,6 +22,7 @@ Permission changes:
 - `comments_create_teamlead_project` - NEW: permission that allows to add new comments for a teamlead of the current project 
 - `edit_teamlead_project` - removed default permission from ROLE_TEAMLEAD (if you use it: change it in the Role & Permission UI) 
 - `edit_teamlead_customer` - removed default permission from ROLE_TEAMLEAD (if you use it: change it in the Role & Permission UI) 
+- `upload_invoice_template` - NEW: permission that allows to upload invoice documents from the UI
 
 ## [1.7](https://github.com/kevinpapst/kimai2/releases/tag/1.7)
 
