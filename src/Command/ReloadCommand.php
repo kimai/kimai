@@ -92,7 +92,7 @@ final class ReloadCommand extends Command
         if ($cacheResult !== 0) {
             $io->warning(
                 [
-                    sprintf('Cache could not be rebuilt.', Constants::SOFTWARE, Constants::VERSION, Constants::STATUS),
+                    'Cache could not be rebuilt.',
                     'Please run the cache commands manually:',
                     'bin/console cache:clear --env=' . $environment . PHP_EOL .
                     'bin/console cache:warmup --env=' . $environment
