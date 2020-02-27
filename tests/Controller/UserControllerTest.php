@@ -211,7 +211,7 @@ class UserControllerTest extends ControllerBaseTest
             [
                 [
                     'user_create' => [
-                        'username' => 'xx',
+                        'username' => 'x',
                         'plainPassword' => ['first' => 'sdfsdf', 'second' => 'sdfxxx'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
