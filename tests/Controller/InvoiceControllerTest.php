@@ -227,7 +227,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
     public function testUploadDocumentAction()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
         $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new InvoiceFixtures();
