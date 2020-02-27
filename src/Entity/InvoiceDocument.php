@@ -42,4 +42,9 @@ final class InvoiceDocument
     {
         return $this->file->getExtension();
     }
+
+    public function getLastChange(): int
+    {
+        return $this->file->getMTime();
+    }
 }
