@@ -64,7 +64,7 @@ class CsvRendererTest extends TestCase
         $content = file_get_contents($file->getRealPath());
 
         $this->assertStringNotContainsString('${', $content);
-        $this->assertStringContainsString(',"' . $expectedRate . '"', $content);
+        $this->assertStringContainsString(',"' . $expectedRate, $content);
         $this->assertEquals($expectedRows, substr_count($content, PHP_EOL));
         $this->assertEquals($expectedDescriptions, substr_count($content, 'activity description'));
         $this->assertEquals($expectedUser1, substr_count($content, ',"kevin",'));
