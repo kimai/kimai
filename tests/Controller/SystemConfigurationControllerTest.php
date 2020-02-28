@@ -93,6 +93,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             'system_configuration_form_timesheet' => [
                 'configuration' => [
                     ['name' => 'timesheet.mode', 'value' => 'duration_only'],
+                    ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 99],
                     ['name' => 'timesheet.active_entries.soft_limit', 'value' => 77],
@@ -122,6 +123,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 'system_configuration_form_timesheet' => [
                     'configuration' => [
                         ['name' => 'timesheet.mode', 'value' => 'foo'],
+                        ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
                         ['name' => 'timesheet.rules.allow_future_times', 'value' => 1],
                         ['name' => 'timesheet.active_entries.hard_limit', 'value' => -1],
                         ['name' => 'timesheet.active_entries.soft_limit', 'value' => -1],
@@ -130,8 +132,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             ],
             [
                 '#system_configuration_form_timesheet_configuration_0_value', // mode
-                '#system_configuration_form_timesheet_configuration_2_value', // hard_limit
-                '#system_configuration_form_timesheet_configuration_3_value', // soft_limit
+                '#system_configuration_form_timesheet_configuration_3_value', // hard_limit
+                '#system_configuration_form_timesheet_configuration_4_value', // soft_limit
             ],
             true
         );
