@@ -33,7 +33,32 @@ export default class KimaiAlert extends KimaiPlugin {
         });
     }
 
+    warning(message) {
+        this._show('warning', message);
+    }
+
     success(message) {
+        this._toast('success', message);
+    }
+
+    info(message) {
+        this._show('info', message);
+    }
+
+    _show(type, message) {
+        const translation = this.getContainer().getTranslation();
+
+        if (translation.has(message)) {
+            message = translation.get(message);
+        }
+
+        Swal.fire({
+            icon: type,
+            title: message,
+        });
+    }
+
+    _toast(type, message) {
         const translation = this.getContainer().getTranslation();
 
         if (translation.has(message)) {
@@ -44,9 +69,9 @@ export default class KimaiAlert extends KimaiPlugin {
             timer: 2000,
             timerProgressBar: true,
             toast: true,
-            position: 'top-end',
+            position: 'top',
             showConfirmButton: false,
-            icon: 'success',
+            icon: type,
             title: message,
         });
     }

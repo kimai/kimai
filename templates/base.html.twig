@@ -13,6 +13,35 @@
     {% endembed %}
 {% endblock %}
 
+{% block page_content_start %}
+    {% if app.session and app.session.started and app.session.flashbag.peekAll|length > 0 %}
+        {% set close = adminlte_close_alert|default(true) %}
+        {% set domain = 'flashmessages' %}
+        <script type="text/javascript">
+            document.addEventListener('kimai.initialized', function(options) {
+                var ALERT = options.detail.kimai.getPlugin('alert');
+                {% for type, messages in app.session.flashbag.all %}
+                    {% for message in messages %}
+                        {% if type == 'fos_user_success' %}
+                            {% set type = 'success' %}
+                            {% set domain = 'FOSUserBundle' %}
+                        {% endif %}
+                        {% if type == constant('\\App\\Controller\\AbstractController::FLASH_ERROR') %}
+                            ALERT.error('{{ message|trans({}, domain) }}');
+                        {% elseif type == constant('\\App\\Controller\\AbstractController::FLASH_WARNING') %}
+                            ALERT.warning('{{ message|trans({}, domain) }}');
+                        {% elseif type == constant('\\App\\Controller\\AbstractController::FLASH_SUCCESS') %}
+                            ALERT.success('{{ message|trans({}, domain) }}');
+                        {% else %}
+                            ALERT.info('{{ message|trans({}, domain) }}');
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+
 {% block page_content_before %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_BEFORE')) %}
     {{ event.content|raw }}
