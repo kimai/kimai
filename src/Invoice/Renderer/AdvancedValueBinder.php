@@ -40,9 +40,14 @@ class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
             // Check for newline character "\n"
             if (strpos($value, "\n") !== false) {
                 $cell->setValueExplicit($value, DataType::TYPE_STRING);
-                // Set style
-                $cell->getWorksheet()->getStyle($cell->getCoordinate())
-                    ->getAlignment()->setWrapText(true);
+                $cell->getWorksheet()->getStyle($cell->getCoordinate())->getAlignment()->setWrapText(true);
+
+                $amount = substr_count($value, "\n");
+                $dimension = $cell->getWorksheet()->getRowDimension($cell->getRow());
+                if ($dimension->getRowHeight() !== -1) {
+                    $defaultHeight = $cell->getWorksheet()->getDefaultRowDimension()->getRowHeight();
+                    $dimension->setRowHeight($defaultHeight * ($amount + 1));
+                }
 
                 return true;
             }
