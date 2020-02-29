@@ -71,13 +71,14 @@ class TimesheetSubscriber implements EventSubscriber
         }
     }
 
-    /**
-     * @param Timesheet $entity
-     */
-    protected function calculateFields(Timesheet $entity)
+    protected function calculateFields(Timesheet $timesheet)
     {
+        if ($timesheet->getTimezone() !== $timesheet->getUser()->getTimezone()) {
+            $timesheet->setTimezone($timesheet->getUser()->getTimezone());
+        }
+
         foreach ($this->calculator as $calculator) {
-            $calculator->calculate($entity);
+            $calculator->calculate($timesheet);
         }
     }
 }
