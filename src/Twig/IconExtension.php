@@ -86,6 +86,7 @@ final class IconExtension extends AbstractExtension
         'timesheet-team' => 'fas fa-user-clock',
         'trash' => 'far fa-trash-alt',
         'unlocked' => 'fas fa-unlock-alt',
+        'upload' => 'fas fa-upload',
         'user' => 'fas fa-user-friends',
         'visibility' => 'far fa-eye',
         'warning' => 'fas fa-exclamation-triangle',

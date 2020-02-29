@@ -14,12 +14,14 @@ use App\Event\SystemConfigurationEvent;
 use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration as SystemConfigurationModel;
 use App\Form\SystemConfigurationForm;
+use App\Form\Type\DateTimeTextType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\RoundingModeType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TrackingModeType;
 use App\Form\Type\WeekDaysType;
 use App\Repository\ConfigurationRepository;
+use App\Validator\Constraints\DateTimeFormat;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -215,6 +217,11 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration())
                         ->setName('timesheet.mode')
                         ->setType(TrackingModeType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('timesheet.default_begin')
+                        ->setType(DateTimeTextType::class)
+                        ->setConstraints([new DateTimeFormat(), new NotNull()])
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
                         ->setName('timesheet.rules.allow_future_times')
