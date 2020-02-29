@@ -11,6 +11,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 ## [1.8](https://github.com/kevinpapst/kimai2/releases/tag/1.8)
 
 - New mailer library: check if emails are still working (eg. by using the "password forgotten" function) or if you need to adjust your configuration, [see docs at symfony.com](https://symfony.com/doc/current/components/mailer.html#transport)
+- Support for line breaks in multiline invoice fields for spreadsheets (check your invoice templates after the update) 
 
 Permission changes:
 

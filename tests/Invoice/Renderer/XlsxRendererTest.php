@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  * @covers \App\Invoice\Renderer\XlsxRenderer
  * @covers \App\Invoice\Renderer\AbstractRenderer
  * @covers \App\Invoice\Renderer\AbstractSpreadsheetRenderer
+ * @covers \App\Invoice\Renderer\AdvancedValueBinder
  * @group integration
  */
 class XlsxRendererTest extends TestCase
