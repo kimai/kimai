@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  * @covers \App\Invoice\Renderer\CsvRenderer
  * @covers \App\Invoice\Renderer\AbstractRenderer
  * @covers \App\Invoice\Renderer\AbstractSpreadsheetRenderer
+ * @covers \App\Invoice\Renderer\AdvancedValueBinder
  * @group integration
  */
 class CsvRendererTest extends TestCase
