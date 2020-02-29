@@ -109,7 +109,7 @@ trait RendererTestTrait
         $customer = new Customer();
         $customer->setName('customer,with/special#name');
         $customer->setCurrency('EUR');
-        $customer->setAddress('Foo' . PHP_EOL . 'Street' . PHP_EOL . '1111 City');
+        $customer->setComment('Foo' . PHP_EOL . 'Bar' . PHP_EOL . 'Bar');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
         $template = new InvoiceTemplate();
