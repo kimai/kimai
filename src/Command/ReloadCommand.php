@@ -29,17 +29,6 @@ final class ReloadCommand extends Command
     public const ERROR_LINT_TRANSLATIONS = 16;
 
     /**
-     * @var string
-     */
-    private $rootDir;
-
-    public function __construct(string $projectDirectory)
-    {
-        parent::__construct();
-        $this->rootDir = $projectDirectory;
-    }
-
-    /**
      * {@inheritdoc}
      */
     protected function configure()
