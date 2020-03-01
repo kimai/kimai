@@ -62,7 +62,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertStringContainsString('<input type="email"', $content);
         $this->assertStringContainsString('id="fos_user_registration_form_email" name="fos_user_registration_form[email]" required="required"', $content);
         $this->assertStringContainsString('<input type="text"', $content);
-        $this->assertStringContainsString('id="fos_user_registration_form_username" name="fos_user_registration_form[username]" required="required" maxlength="60" pattern=".{3,}"', $content);
+        $this->assertStringContainsString('id="fos_user_registration_form_username" name="fos_user_registration_form[username]" required="required" maxlength="60" pattern=".{2,}"', $content);
         $this->assertStringContainsString('<input type="password"', $content);
         $this->assertStringContainsString('id="fos_user_registration_form_plainPassword_first" name="fos_user_registration_form[plainPassword][first]" required="required"', $content);
         $this->assertStringContainsString('id="fos_user_registration_form_plainPassword_second" name="fos_user_registration_form[plainPassword][second]" required="required"', $content);
