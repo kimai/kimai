@@ -25,7 +25,7 @@ class UserValidationTest extends KernelTestCase
         return [
             ['', ''],
             [null, null],
-            ['xx', 'test@'], // too short username
+            ['x', 'test@'], // too short username
             [str_pad('#', 61, '-'), 'test@x.'], // too long username
             [str_pad('#', 61, '-'), 'test@x.', ['xxxxx']], // too short password and invalid role
         ];
