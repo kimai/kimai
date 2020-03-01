@@ -19,6 +19,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command used to update a Kimai installation.
+ *
+ * @codeCoverageIgnore
  */
 final class ReloadCommand extends Command
 {
