@@ -27,6 +27,7 @@ final class ReloadCommand extends Command
     public const ERROR_CACHE_CLEAN = 2;
     public const ERROR_CACHE_WARMUP = 4;
     public const ERROR_LINT_CONFIG = 8;
+    public const ERROR_LINT_TRANSLATIONS = 16;
 
     /**
      * @var string
@@ -52,7 +53,7 @@ final class ReloadCommand extends Command
         $this
             ->setName('kimai:reload')
             ->setDescription('Reload Kimai caches')
-            ->setHelp('This command will validate the current configurations and refresh the cache.')
+            ->setHelp('This command will validate the configurations and translations and then clear and rebuild the application cache.')
         ;
     }
 
@@ -80,6 +81,21 @@ final class ReloadCommand extends Command
             $io->error($ex->getMessage());
 
             return self::ERROR_LINT_CONFIG;
+        }
+
+        try {
+            $command = $this->getApplication()->find('lint:xliff');
+            $cmdInput = new StringInput('lint:xliff translations');
+            $cmdInput->setInteractive(false);
+            if (0 !== $command->run($cmdInput, $output)) {
+                throw new \RuntimeException('Translation files seem to be invalid');
+            }
+
+            $io->writeln('');
+        } catch (\Exception $ex) {
+            $io->error($ex->getMessage());
+
+            return self::ERROR_LINT_TRANSLATIONS;
         }
 
         $environment = getenv('APP_ENV');
