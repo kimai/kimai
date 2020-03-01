@@ -9,7 +9,6 @@
 
 namespace App\Command;
 
-use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,16 +32,11 @@ final class ReloadCommand extends Command
      * @var string
      */
     private $rootDir;
-    /**
-     * @var Connection
-     */
-    private $connection;
 
-    public function __construct(string $projectDirectory, Connection $connection)
+    public function __construct(string $projectDirectory)
     {
         parent::__construct();
         $this->rootDir = $projectDirectory;
-        $this->connection = $connection;
     }
 
     /**
