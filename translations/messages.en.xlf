@@ -52,6 +52,10 @@
                 <source>confirm</source>
                 <target>Confirm</target>
             </trans-unit>
+            <trans-unit id="upload">
+                <source>upload</source>
+                <target>Upload</target>
+            </trans-unit>
             <trans-unit id="search">
                 <source>search</source>
                 <target>Search</target>
