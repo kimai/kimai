@@ -43,7 +43,7 @@ export default class KimaiAlert extends KimaiPlugin {
         Swal.fire({
             timer: 2000,
             toast: true,
-            position: 'top-end',
+            position: 'top',
             showConfirmButton: false,
             type: 'success',
             title: message,
