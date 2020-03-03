@@ -43,6 +43,18 @@ final class XlsxRenderer extends AbstractSpreadsheetRenderer implements Renderer
             throw new \Exception('Could not open temporary file');
         }
 
+        // Enable auto filter
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setAutoFilter('A1:'.$sheet->getHighestColumn().'1');
+
+        // Freeze first row
+        $sheet->freezePane('B2');
+
+        // Auto size columns to fit at least the headers
+        foreach (range('A', $sheet->getHighestColumn()) as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save($filename);
 
