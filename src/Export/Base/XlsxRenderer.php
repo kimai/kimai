@@ -41,7 +41,7 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer
 
         // Enable auto filter
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setAutoFilter('A1:'.$sheet->getHighestColumn().'1');
+        $sheet->setAutoFilter('A1:' . $sheet->getHighestColumn() . '1');
 
         // Freeze first row
         $sheet->freezePane('B2');
