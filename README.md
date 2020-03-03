@@ -33,7 +33,7 @@ with most advanced features from Kimai 1 and many new ones, including but not li
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
 authentication via SAML/LDAP/Database, customizable role permissions, responsive and ready for your mobile device, 
-hourly and fixed rates, advanced filtering, money and time budgets with report, support for plugins and many more.
+user specific rates, advanced search & filtering, money and time budgets with report, support for plugins and many more.
 
 ## Installation
 
@@ -61,9 +61,10 @@ It is open for changes and input from the community, your [ideas and questions](
 > Kimai 2 uses a rolling release concept for delivering updates.
 > You can upgrade Kimai at any time , you don't need to wait for the next official release.
 
-Release versions will be created on a regular base (approx. one release per month) and you can should use these tags if you are not familiar with git.
+Release versions will be created on a regular base (approx. one release per month) and you should use these tags if you are not familiar with git.
 Every code change, whether it's a new feature or a bug fix, will be done on the master branch. 
-I have to do it this way, as I develop Kimai in my free time and want to put my effort into the software instead of backporting changes for old versions. 
+I develop Kimai in my free time and want to put my effort into the software instead of backporting changes for old versions.
+The only exception is a critical security issue, which I would fix in the last version as well. 
 
 ## Credits
 

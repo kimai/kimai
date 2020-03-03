@@ -17,6 +17,7 @@
         "ext-mbstring": "*",
         "ext-pdo": "*",
         "ext-zip": "*",
+        "ext-xsl": "*",
         "beberlei/doctrineextensions": "^1.2",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^2.1",
