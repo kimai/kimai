@@ -12,10 +12,12 @@ namespace App\Command;
 use App\Doctrine\TimesheetSubscriber;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
+use App\Entity\ActivityRate;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
+use App\Entity\ProjectRate;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -58,52 +60,53 @@ final class KimaiImporterCommand extends Command
      * Create the user default passwords
      * @var UserPasswordEncoderInterface
      */
-    protected $encoder;
+    private $encoder;
     /**
      * Validates the entities before they will be created
      * @var ValidatorInterface
      */
-    protected $validator;
+    private $validator;
     /**
      * Connection to the Kimai v2 database to write imported data to
      * @var ManagerRegistry
      */
-    protected $doctrine;
+    private $doctrine;
     /**
      * Connection to the old database to import data from
      * @var Connection
      */
-    protected $connection;
+    private $connection;
     /**
      * Prefix for the v1 database tables.
      * @var string
      */
-    protected $dbPrefix = '';
+    private $dbPrefix = '';
     /**
+     * Old UserID => new User()
      * @var User[]
      */
-    protected $users = [];
+    private $users = [];
     /**
      * @var Customer[]
      */
-    protected $customers = [];
+    private $customers = [];
     /**
      * @var Project[]
      */
-    protected $projects = [];
+    private $projects = [];
     /**
      * id => [projectId => Activity]
-     * @var Activity[]
+     * @var array<Activity[]>
      */
-    protected $activities = [];
+    private $activities = [];
     /**
      * @var bool
      */
-    protected $debug = false;
+    private $debug = false;
     /**
      * @var array
      */
-    protected $oldActivities = [];
+    private $oldActivities = [];
 
     public function __construct(UserPasswordEncoderInterface $encoder, ManagerRegistry $registry, ValidatorInterface $validator)
     {
@@ -710,31 +713,12 @@ final class KimaiImporterCommand extends Command
 
             $project->setMetaField($metaField);
 
-            foreach ($fixedRates as $fixedRow) {
-                if ($fixedRow['activityID'] !== null || $fixedRow['projectID'] === null) {
-                    continue;
-                }
-                if ($fixedRow['projectID'] == $oldProject['projectID']) {
-                    $project->setFixedRate($fixedRow['rate']);
-                }
-            }
-
-            foreach ($rates as $ratesRow) {
-                if ($ratesRow['userID'] !== null || $ratesRow['activityID'] !== null || $ratesRow['projectID'] === null) {
-                    continue;
-                }
-                if ($ratesRow['projectID'] == $oldProject['projectID']) {
-                    $project->setHourlyRate($ratesRow['rate']);
-                }
-            }
-
             if (!$this->validateImport($io, $project)) {
                 throw new Exception('Failed to validate project: ' . $project->getName());
             }
 
             try {
                 $entityManager->persist($project);
-                $entityManager->flush();
                 if ($this->debug) {
                     $io->success('Created project: ' . $project->getName() . ' for customer: ' . $customer->getName());
                 }
@@ -743,6 +727,54 @@ final class KimaiImporterCommand extends Command
                 $io->error('Failed to create project: ' . $project->getName());
                 $io->error('Reason: ' . $ex->getMessage());
             }
+
+            foreach ($fixedRates as $fixedRow) {
+                // activity rates a re assigned in createActivity()
+                if ($fixedRow['activityID'] !== null || $fixedRow['projectID'] === null) {
+                    continue;
+                }
+                if ($fixedRow['projectID'] == $oldProject['projectID']) {
+                    $projectRate = new ProjectRate();
+                    $projectRate->setProject($project);
+                    $projectRate->setRate($fixedRow['rate']);
+                    $projectRate->setIsFixed(true);
+
+                    try {
+                        $entityManager->persist($projectRate);
+                        if ($this->debug) {
+                            $io->success('Created fixed project rate: ' . $project->getName() . ' for customer: ' . $customer->getName());
+                        }
+                    } catch (Exception $ex) {
+                        $io->error(sprintf('Failed to create fixed project rate for %s: %s' . $project->getName(), $ex->getMessage()));
+                    }
+                }
+            }
+
+            foreach ($rates as $ratesRow) {
+                if ($ratesRow['activityID'] !== null || $ratesRow['projectID'] === null) {
+                    continue;
+                }
+                if ($ratesRow['projectID'] == $oldProject['projectID']) {
+                    $projectRate = new ProjectRate();
+                    $projectRate->setProject($project);
+                    $projectRate->setRate($ratesRow['rate']);
+
+                    if ($ratesRow['userID'] !== null) {
+                        $projectRate->setUser($this->users[$ratesRow['userID']]);
+                    }
+
+                    try {
+                        $entityManager->persist($projectRate);
+                        if ($this->debug) {
+                            $io->success('Created project rate: ' . $project->getName() . ' for customer: ' . $customer->getName());
+                        }
+                    } catch (Exception $ex) {
+                        $io->error(sprintf('Failed to create project rate for %s: %s' . $project->getName(), $ex->getMessage()));
+                    }
+                }
+            }
+
+            $entityManager->flush();
 
             $this->projects[$oldProject['projectID']] = $project;
         }
@@ -877,32 +909,6 @@ final class KimaiImporterCommand extends Command
 
         $activity->setMetaField($metaField);
 
-        foreach ($fixedRates as $fixedRow) {
-            if ($fixedRow['activityID'] === null) {
-                continue;
-            }
-            if ($fixedRow['projectID'] !== null && $fixedRow['projectID'] !== $projectId) {
-                continue;
-            }
-
-            if ($fixedRow['activityID'] == $oldActivity['activityID']) {
-                $activity->setFixedRate($fixedRow['rate']);
-            }
-        }
-
-        foreach ($rates as $ratesRow) {
-            if ($ratesRow['userID'] !== null || $ratesRow['activityID'] === null) {
-                continue;
-            }
-            if ($ratesRow['projectID'] !== null && $ratesRow['projectID'] !== $projectId) {
-                continue;
-            }
-
-            if ($ratesRow['activityID'] == $oldActivity['activityID']) {
-                $activity->setHourlyRate($ratesRow['rate']);
-            }
-        }
-
         if (!$this->validateImport($io, $activity)) {
             throw new Exception('Failed to validate activity: ' . $activity->getName());
         }
@@ -922,6 +928,60 @@ final class KimaiImporterCommand extends Command
             $this->activities[$activityId] = [];
         }
         $this->activities[$activityId][$projectId] = $activity;
+
+
+        foreach ($fixedRates as $fixedRow) {
+            if ($fixedRow['activityID'] === null) {
+                continue;
+            }
+            if ($fixedRow['projectID'] !== null && $fixedRow['projectID'] !== $projectId) {
+                continue;
+            }
+
+            if ($fixedRow['activityID'] == $oldActivity['activityID']) {
+                $activityRate = new ActivityRate();
+                $activityRate->setActivity($activity);
+                $activityRate->setRate($fixedRow['rate']);
+                $activityRate->setIsFixed(true);
+
+                try {
+                    $entityManager->persist($activityRate);
+                    if ($this->debug) {
+                        $io->success('Created fixed activity rate: ' . $activity->getName());
+                    }
+                } catch (Exception $ex) {
+                    $io->error(sprintf('Failed to create fixed activity rate for %s: %s' . $activity->getName(), $ex->getMessage()));
+                }
+            }
+        }
+
+        foreach ($rates as $ratesRow) {
+            if ($ratesRow['activityID'] === null) {
+                continue;
+            }
+            if ($ratesRow['projectID'] !== null && $ratesRow['projectID'] !== $projectId) {
+                continue;
+            }
+
+            if ($ratesRow['activityID'] == $oldActivity['activityID']) {
+                $activityRate = new ActivityRate();
+                $activityRate->setActivity($activity);
+                $activityRate->setRate($ratesRow['rate']);
+
+                if ($ratesRow['userID'] !== null) {
+                    $activityRate->setUser($this->users[$ratesRow['userID']]);
+                }
+
+                try {
+                    $entityManager->persist($activityRate);
+                    if ($this->debug) {
+                        $io->success('Created activity rate: ' . $activity->getName());
+                    }
+                } catch (Exception $ex) {
+                    $io->error(sprintf('Failed to create activity rate for %s: %s' . $activity->getName(), $ex->getMessage()));
+                }
+            }
+        }
 
         return $activity;
     }
