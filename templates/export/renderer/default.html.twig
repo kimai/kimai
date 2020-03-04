@@ -2,6 +2,7 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% extends 'export/layout.html.twig' %}
 
+{% set decimal = decimal|default(false) %}
 {% set columnTitles = {} %}
 {% set columns = {
     'date': true,
@@ -201,7 +202,7 @@
                     {% if customer is not same as(summary.customer) %}
                         <tr class="summary">
                             <td colspan="2"></td>
-                            <td class="totals duration summary-duration">{{ customerDuration|duration }}</td>
+                            <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
                             <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                         </tr>
                         {% set customerCurrency = summary.currency %}
@@ -212,7 +213,7 @@
                     <tr>
                         <td>{{ summary.customer }}</td>
                         <td>{{ summary.project }}</td>
-                        <td class="duration summary-duration">{{ summary.duration|duration }}</td>
+                        <td class="duration summary-duration">{{ summary.duration|duration(decimal) }}</td>
                         <td class="cost summary-rate">{{ summary.rate|money(summary.currency) }}</td>
                     </tr>
                     {% set customerDuration = customerDuration + summary.duration %}
@@ -221,7 +222,7 @@
                 {% if customer is not same as(null) %}
                     <tr class="summary">
                         <td colspan="2"></td>
-                        <td class="totals duration summary-duration">{{ customerDuration|duration }}</td>
+                        <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
                 {% endif %}
@@ -251,7 +252,7 @@
                 {% if customer is not same as(summary.customer) %}
                     <tr class="summary">
                         <td colspan="3"></td>
-                        <td class="totals duration summary-duration">{{ customerDuration|duration }}</td>
+                        <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
                     {% set customerCurrency = summary.currency %}
@@ -264,7 +265,7 @@
                     <td>{{ summary.customer }}</td>
                     <td>{{ summary.project }}</td>
                     <td>{{ activitySummary.activity }}</td>
-                    <td class="duration summary-duration">{{ activitySummary.duration|duration }}</td>
+                    <td class="duration summary-duration">{{ activitySummary.duration|duration(decimal) }}</td>
                     <td class="cost summary-rate">{{ activitySummary.rate|money(activitySummary.currency) }}</td>
                 </tr>
                 {% endfor %}
@@ -274,7 +275,7 @@
                 {% if customer is not same as(null) %}
                     <tr class="summary">
                         <td colspan="3"></td>
-                        <td class="totals duration summary-duration">{{ customerDuration|duration }}</td>
+                        <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
                 {% endif %}
@@ -384,7 +385,7 @@
                             {{ entry.fixedRate|money(entry.project.customer.currency) }}
                         </td>
                         <td class="column-duration text-nowrap" {% if not columns.duration %}style="display: none"{% endif %}>
-                            {{ entry.duration|duration }}
+                            {{ entry.duration|duration(decimal) }}
                         </td>
                         <td class="column-rate text-nowrap" {% if not columns.rate %}style="display: none"{% endif %}>
                             {{ entry.rate|money(entry.project.customer.currency) }}
@@ -399,7 +400,7 @@
                         {% endif %}
                     {% endfor %}
                     <th class="text-nowrap column-duration">
-                        {{- timeWorked|duration -}}
+                        {{- timeWorked|duration(decimal) -}}
                     </th>
                     <th class="text-nowrap column-rate">
                         {%- if currency is not null and currency is not same as(false) %}

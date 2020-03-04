@@ -49,7 +49,7 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
             const since = record.getAttribute('data-since');
             const format = record.getAttribute('data-format');
             const duration = this.formatDuration(since, format);
-            if (record.getAttribute('data-title') !== null) {
+            if (record.getAttribute('data-title') !== null && duration !== '?') {
                 durations.push(duration);
             }
             record.textContent = duration;
@@ -74,6 +74,10 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
         let hours = parseInt(duration.asHours()).toString();
         let minutes = duration.minutes();
         let seconds = duration.seconds();
+
+        if (hours < 0 || minutes < 0 || seconds < 0) {
+            return '?';
+        }
 
         // special case for hours, as they can overflow the 24h barrier - Kimai does not support days as duration unit
         if (hours.length === 1) {

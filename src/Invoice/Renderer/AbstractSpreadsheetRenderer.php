@@ -11,6 +11,7 @@ namespace App\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceModel;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -58,6 +59,8 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
         $worksheet->setTitle($title);
 
         $entryRow = 0;
+
+        Cell::setValueBinder(new AdvancedValueBinder());
 
         foreach ($worksheet->getRowIterator() as $row) {
             $sheetValues = false;
