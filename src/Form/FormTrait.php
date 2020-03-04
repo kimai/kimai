@@ -123,10 +123,6 @@ trait FormTrait
                 $event->getForm()->add('activity', ActivityType::class, [
                     'placeholder' => '',
                     'query_builder' => function (ActivityRepository $repo) use ($data, $activity) {
-                        if (!empty($activity) && is_string($activity)) {
-                            $activity = $repo->find($activity);
-                        }
-
                         return $repo->getQueryBuilderForFormType(new ActivityFormTypeQuery($activity, $data['project']));
                     },
                 ]);

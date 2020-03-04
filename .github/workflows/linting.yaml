@@ -23,6 +23,6 @@ jobs:
             -   run: composer install --no-progress
             -   run: composer validate --no-check-all --strict
             -   run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php_cs.dist --using-cache=no --show-progress=none --format=checkstyle | cs2pr
-            -   run: vendor/bin/phpstan analyse src -c phpstan.neon --level=3 --no-progress --error-format=checkstyle | cs2pr
+            -   run: vendor/bin/phpstan analyse src -c phpstan.neon --level=4 --no-progress --error-format=checkstyle | cs2pr
             -   run: vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=4 --no-progress --error-format=checkstyle | cs2pr
             -   run: composer kimai:code-lint
