@@ -91,6 +91,7 @@ final class KimaiImporterCommand extends Command
      */
     private $customers = [];
     /**
+     * Old Project ID => new Project()
      * @var Project[]
      */
     private $projects = [];
@@ -858,7 +859,7 @@ final class KimaiImporterCommand extends Command
      * @param array $oldActivity
      * @param array $fixedRates
      * @param array $rates
-     * @param int $projectId
+     * @param int $oldProjectId
      * @return Activity
      * @throws Exception
      */
@@ -868,12 +869,12 @@ final class KimaiImporterCommand extends Command
         array $oldActivity,
         array $fixedRates,
         array $rates,
-        $projectId
+        $oldProjectId
     ) {
-        $activityId = $oldActivity['activityID'];
+        $oldActivityId = $oldActivity['activityID'];
 
-        if (isset($this->activities[$activityId][$projectId])) {
-            return $this->activities[$activityId][$projectId];
+        if (isset($this->activities[$oldActivityId][$oldProjectId])) {
+            return $this->activities[$oldActivityId][$oldProjectId];
         }
 
         $isActive = (bool) $oldActivity['visible'] && !(bool) $oldActivity['trash'];
@@ -883,9 +884,9 @@ final class KimaiImporterCommand extends Command
             $io->warning('Found empty activity name, setting it to: ' . $name);
         }
 
-        if (null !== $projectId && !isset($this->projects[$projectId])) {
+        if (null !== $oldProjectId && !isset($this->projects[$oldProjectId])) {
             throw new Exception(
-                sprintf('Did not find project [%s], skipping activity creation [%s] %s', $projectId, $activityId, $name)
+                sprintf('Did not find project [%s], skipping activity creation [%s] %s', $oldProjectId, $oldActivityId, $name)
             );
         }
 
@@ -897,8 +898,8 @@ final class KimaiImporterCommand extends Command
             ->setBudget($oldActivity['budget'] ?? 0)
         ;
 
-        if (null !== $projectId) {
-            $project = $this->projects[$projectId];
+        if (null !== $oldProjectId) {
+            $project = $this->projects[$oldProjectId];
             $activity->setProject($project);
         }
 
@@ -915,7 +916,6 @@ final class KimaiImporterCommand extends Command
 
         try {
             $entityManager->persist($activity);
-            $entityManager->flush();
             if ($this->debug) {
                 $io->success('Created activity: ' . $activity->getName());
             }
@@ -924,20 +924,20 @@ final class KimaiImporterCommand extends Command
             $io->error('Reason: ' . $ex->getMessage());
         }
 
-        if (!isset($this->activities[$activityId])) {
-            $this->activities[$activityId] = [];
+        if (!isset($this->activities[$oldActivityId])) {
+            $this->activities[$oldActivityId] = [];
         }
-        $this->activities[$activityId][$projectId] = $activity;
+        $this->activities[$oldActivityId][$oldProjectId] = $activity;
 
         foreach ($fixedRates as $fixedRow) {
             if ($fixedRow['activityID'] === null) {
                 continue;
             }
-            if ($fixedRow['projectID'] !== null && $fixedRow['projectID'] !== $projectId) {
+            if ($fixedRow['projectID'] !== null && $fixedRow['projectID'] !== $oldProjectId) {
                 continue;
             }
 
-            if ($fixedRow['activityID'] == $oldActivity['activityID']) {
+            if ($fixedRow['activityID'] == $oldActivityId) {
                 $activityRate = new ActivityRate();
                 $activityRate->setActivity($activity);
                 $activityRate->setRate($fixedRow['rate']);
@@ -958,11 +958,11 @@ final class KimaiImporterCommand extends Command
             if ($ratesRow['activityID'] === null) {
                 continue;
             }
-            if ($ratesRow['projectID'] !== null && $ratesRow['projectID'] !== $projectId) {
+            if ($ratesRow['projectID'] !== null && $ratesRow['projectID'] !== $oldProjectId) {
                 continue;
             }
 
-            if ($ratesRow['activityID'] == $oldActivity['activityID']) {
+            if ($ratesRow['activityID'] == $oldActivityId) {
                 $activityRate = new ActivityRate();
                 $activityRate->setActivity($activity);
                 $activityRate->setRate($ratesRow['rate']);
@@ -981,6 +981,8 @@ final class KimaiImporterCommand extends Command
                 }
             }
         }
+
+        $entityManager->flush();
 
         return $activity;
     }
