@@ -929,7 +929,6 @@ final class KimaiImporterCommand extends Command
         }
         $this->activities[$activityId][$projectId] = $activity;
 
-
         foreach ($fixedRates as $fixedRow) {
             if ($fixedRow['activityID'] === null) {
                 continue;
