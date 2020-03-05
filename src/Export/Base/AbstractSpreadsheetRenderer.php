@@ -464,6 +464,12 @@ abstract class AbstractSpreadsheetRenderer
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
+        // Set default row height to automatic, so we can specify wrap text columns later on
+        // without bloating the output file as we would need to store stylesheet info for every cell.
+        // LibreOffice is still not considering this flag, @see https://github.com/PHPOffice/PHPExcel/issues/588
+        // with no solution implemented so nothing we can do about it there.
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+
         $recordsHeaderColumn = 1;
         $recordsHeaderRow = 1;
 

@@ -11,9 +11,12 @@ namespace App\Export\Base;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class XlsxRenderer extends AbstractSpreadsheetRenderer
 {
+    protected const COLUMN_DESCRIPTION = 'J';
+
     public function getFileExtension(): string
     {
         return '.xlsx';
@@ -39,17 +42,49 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer
             throw new \Exception('Could not open temporary file');
         }
 
-        // Enable auto filter
+        // Store expensive calculations for later
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setAutoFilter('A1:' . $sheet->getHighestColumn() . '1');
+        $highestRow = $sheet->getHighestRow();
+        $highestColumn = $sheet->getHighestColumn();
 
-        // Freeze first row
-        $sheet->freezePane('B2');
+        // Enable auto filter for header row
+        $sheet->setAutoFilter('A1:' . $highestColumn . '1');
 
-        // Auto size columns to fit at least the headers
-        foreach (range('A', $sheet->getHighestColumn()) as $column) {
-            $sheet->getColumnDimension($column)->setAutoSize(true);
+        // Freeze first row and date & time columns for easier navigation
+        $sheet->freezePane('D2');
+
+        foreach (range('A', $highestColumn) as $column) {
+            switch ($column) {
+                case self::COLUMN_DESCRIPTION:
+                    // Description column should be limited in width
+                    $sheet
+                        ->getColumnDimension($column)
+                        ->setWidth(40);
+                    break;
+
+                default:
+                    // We default to a reasonable auto-width decided by the client,
+                    // sadly ->getDefaultColumnDimension() is not supported so it needs
+                    // to be specific about what column should be auto sized.
+                    $sheet
+                        ->getColumnDimension($column)
+                        ->setAutoSize(true);
+                    break;
+            }
         }
+
+        // Text inside cells should be top left
+        $sheet
+            ->getStyle('A2:' . $highestColumn . $highestRow)
+            ->getAlignment()
+            ->setVertical(Alignment::VERTICAL_TOP)
+            ->setHorizontal(Alignment::HORIZONTAL_LEFT);
+
+        // The description column text should wrap
+        $sheet
+            ->getStyle(self::COLUMN_DESCRIPTION . '2:' . self::COLUMN_DESCRIPTION . $highestRow)
+            ->getAlignment()
+            ->setWrapText(true);
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save($filename);
