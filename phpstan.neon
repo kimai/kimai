@@ -7,8 +7,8 @@ parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
     autoload_directories:
         - %rootDir%/../../../src/Migrations
-#    symfony:
-#        container_xml_path: '%rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+    symfony:
+        container_xml_path: '%rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml'
     ignoreErrors:
         - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\).#'
         - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::integerNode\(\).#'
@@ -22,3 +22,5 @@ parameters:
         - '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required.#'
     excludes_analyse:
         - %rootDir%/../../../src/Ldap/LdapDriver.php
+    treatPhpDocTypesAsCertain: false
+    inferPrivatePropertyTypeFromConstructor: true
