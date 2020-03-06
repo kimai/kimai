@@ -356,11 +356,11 @@ class LdapManagerTest extends TestCase
                         'dn' => 'blub',
                         'uid' => ['Karl-Heinz'],
                         // just some rubbish data
-                        'blub' => ['dfsdfsdf'],
+                        'blub' => ['foo'],
                         'foo' => ['count' => 1, 'bar'],
                         'bar' => ['count' => 1, 'foo', 'xxx'],
                         'xxxxxxxx' => ['https://www.example.com'],
-                        'blub1' => ['dfsdfsdf'],
+                        'blub1' => ['foo(bar)'],
                     ],
                     'count' => 1,
                 ],
@@ -376,7 +376,7 @@ class LdapManagerTest extends TestCase
                         ['ldap_value' => 'group4', 'role' => 'ROLE_SUPER_ADMIN'],
                     ],
                 ],
-                '(&(memberuid=dfsdfsdf))'
+                '(&(memberuid=foo\28bar\29))'
             ],
         ];
     }
