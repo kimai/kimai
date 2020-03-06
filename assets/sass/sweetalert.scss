@@ -3,13 +3,10 @@
 }
 
 .swal2-container {
+    top: 95px !important;
+
     // never block the top two bars double-bars display (smaller displays)
     @media only screen and (max-width: 768px) {
-        top: 110px !important;
-    }
-
-    // never block the top bar on single-bar display (larger devices)
-    @media only screen and (min-width: 768px) {
-        top: 60px !important;
+        width: 80%;
     }
 }
