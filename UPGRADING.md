@@ -8,6 +8,12 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [1.9](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
+
+### Developer
+
+- BC break: `InvoiceItemInterface` has new methods `getType()` and `getCategory()`
+
 ## [1.8](https://github.com/kevinpapst/kimai2/releases/tag/1.8)
 
 - New mailer library: check if emails are still working (eg. by using the "password forgotten" function) or if you need to adjust your configuration, [see docs at symfony.com](https://symfony.com/doc/current/components/mailer.html#transport)
