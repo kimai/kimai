@@ -1240,12 +1240,11 @@ final class KimaiImporterCommand extends Command
         $skippedTrashed = 0;
         $skippedEmpty = 0;
         $failed = 0;
-        $entityManager = $this->getDoctrine()->getManager();
 
         $newTeams = [];
         // create teams just with names of groups
         foreach ($groups as $group) {
-            if($group['trash'] == 1) {
+            if ($group['trash'] == 1) {
                 $io->warning(sprintf('Didn\'t import team: "%s" because it is trashed.', $group['name']));
                 $skippedTrashed++;
                 continue;
@@ -1257,14 +1256,51 @@ final class KimaiImporterCommand extends Command
             $newTeams[$group['groupID']] = $team;
         }
 
-        // connect groups with customers
-        foreach ($groupToCustomer as $row) {
-            if(!isset($newTeams[$row['groupID']]))
+        // connect groups with users
+        foreach ($groupToUser as $row) {
+            if (!isset($newTeams[$row['groupID']])) {
                 continue;
+            }
             $team = $newTeams[$row['groupID']];
 
-            if(!isset($this->customers[$row['customerID']]))
+            if (!isset($this->users[$row['userID']])) {
                 continue;
+            }
+            $user = $this->users[$row['userID']];
+
+            $team->addUser($user);
+
+            // first user in the team will become team lead
+            if ($team->getTeamLead() == null) {
+                $team->setTeamLead($user);
+            }
+
+            // any other user with admin role in the team will become team lead
+            // should be the last added admin of the source group
+            if ($row['membershipRoleID'] == 1) {
+                $team->setTeamLead($user);
+            }
+        }
+
+        // if team has no users it will not be persisted
+        foreach ($newTeams as $oldId => $team) {
+            if ($team->getTeamLead() == null) {
+                $io->warning(sprintf('Didn\'t import team: %s because it has no users.', $team->getName()));
+                ++$skippedEmpty;
+                unset($newTeams[$oldId]);
+            }
+        }
+
+        // connect groups with customers
+        foreach ($groupToCustomer as $row) {
+            if (!isset($newTeams[$row['groupID']])) {
+                continue;
+            }
+            $team = $newTeams[$row['groupID']];
+
+            if (!isset($this->customers[$row['customerID']])) {
+                continue;
+            }
             $customer = $this->customers[$row['customerID']];
 
             $team->addCustomer($customer);
@@ -1272,61 +1308,37 @@ final class KimaiImporterCommand extends Command
 
         // connect groups with projects
         foreach ($groupToProject as $row) {
-            if(!isset($newTeams[$row['groupID']]))
+            if (!isset($newTeams[$row['groupID']])) {
                 continue;
+            }
             $team = $newTeams[$row['groupID']];
 
-            if(!isset($this->projects[$row['projectID']]))
+            if (!isset($this->projects[$row['projectID']])) {
                 continue;
+            }
             $project = $this->projects[$row['projectID']];
 
             $team->addProject($project);
+
+            if ($project->getCustomer() != null) {
+                $team->addCustomer($project->getCustomer());
+            }
         }
 
-        // connect groups with users
-        foreach ($groupToUser as $row) {
-            if(!isset($newTeams[$row['groupID']]))
-                continue;
-            $team = $newTeams[$row['groupID']];
-
-            if(!isset($this->users[$row['userID']]))
-                continue;
-            $user = $this->users[$row['userID']];
-
-            $team->addUser($user);
-
-            // first user in the team will become team lead
-            if($team->getTeamLead() == null)
-                $team->setTeamLead($user);
-
-            // any other user with admin role in the team will become team lead
-            // should be the last added admin of the source group
-            if($row['membershipRoleID'] == 1)
-                $team->setTeamLead($user);
-        }
+        $entityManager = $this->getDoctrine()->getManager();
 
         // validate and persist each team
         foreach ($newTeams as $oldId => $team) {
-
-            if(count($team->getUsers()) < 1 || $team->getTeamLead() == null) {
-                $io->warning('Didn\'t import team %s because it has no users.' . $team->getName());
-                ++$skippedEmpty;
-                continue;
-            }
-
-
             if (!$this->validateImport($io, $team)) {
                 throw new Exception('Failed to validate team: ' . $team->getName());
             }
 
             try {
-
                 $entityManager->persist($team);
-                $entityManager->flush();
                 if ($this->debug) {
                     $io->success(
                         sprintf(
-                            "Created team: %s with %s users, %s projects and %s customers.",
+                            'Created team: %s with %s users, %s projects and %s customers.',
                             $team->getName(),
                             count($team->getUsers()),
                             count($team->getProjects()),
@@ -1336,13 +1348,14 @@ final class KimaiImporterCommand extends Command
                 }
                 ++$counter;
                 $this->teams[$oldId] = $team;
-
             } catch (Exception $ex) {
                 $io->error('Failed to create team: ' . $team->getName());
                 $io->error('Reason: ' . $ex->getMessage());
                 ++$failed;
             }
         }
+
+        $entityManager->flush();
 
         if ($skippedTrashed > 0) {
             $io->warning('Didn\'t import teams because they are trashed: ' . $skippedTrashed);
@@ -1351,7 +1364,7 @@ final class KimaiImporterCommand extends Command
             $io->warning('Didn\'t import teams because they have no users: ' . $skippedEmpty);
         }
         if ($failed > 0) {
-            $io->error('Failed importing teams:' . $failed);
+            $io->error('Failed importing teams: ' . $failed);
         }
 
         return $counter;
