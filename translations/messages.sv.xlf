@@ -799,12 +799,6 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
                 <source>label.invoice_bank_account</source>
                 <target state="translated">Bankkonto</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target state="translated">Damer och herrar,
-
-                     Jag tackar för din beställning och tar betalt för mina tjänster:</target>
-            </trans-unit>
 
             <!--
               Export

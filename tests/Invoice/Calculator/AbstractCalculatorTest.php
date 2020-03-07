@@ -25,11 +25,13 @@ abstract class AbstractCalculatorTest extends TestCase
 {
     protected function assertEmptyModel(CalculatorInterface $sut)
     {
-        $sut->setModel($this->getEmptyModel());
+        $model = $this->getEmptyModel();
+        $this->assertEquals('EUR', $model->getCurrency());
+
+        $sut->setModel($model);
 
         $this->assertEquals(0, $sut->getTotal());
         $this->assertEquals(0, $sut->getVat());
-        $this->assertEquals('EUR', $sut->getCurrency());
         $this->assertEquals(0, $sut->getSubtotal());
         $this->assertEquals(0, $sut->getTimeWorked());
         $this->assertEquals(0, count($sut->getEntries()));
@@ -89,7 +91,7 @@ abstract class AbstractCalculatorTest extends TestCase
         $model = new InvoiceModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
-        $model->setEntries([$timesheet]);
+        $model->addEntries([$timesheet]);
         $model->setQuery($query);
 
         $sut->setModel($model);

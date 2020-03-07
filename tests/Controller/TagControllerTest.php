@@ -12,23 +12,21 @@ namespace App\Tests\Controller;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
  */
 class TagControllerTest extends ControllerBaseTest
 {
-    protected function setUp(): void
+    protected function importTags(HttpKernelBrowser $client): void
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-
         $tagList = ['Test', 'Administration', 'Support', '#2018-001', '#2018-002', '#2018-003', 'Development',
             'Marketing', 'First Level Support', 'Bug Fixing'];
 
         $fixture = new TagFixtures();
         $fixture->setTagArray($tagList);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
     }
 
     public function testDebugIsSecure()
@@ -39,6 +37,7 @@ class TagControllerTest extends ControllerBaseTest
     public function testIndexAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->importTags($client);
         $this->assertAccessIsGranted($client, '/admin/tags/');
 
         $this->assertHasDataTable($client);
@@ -48,6 +47,7 @@ class TagControllerTest extends ControllerBaseTest
     public function testIndexActionWithSearchTermQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->importTags($client);
 
         $this->request($client, '/admin/tags/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -76,7 +76,7 @@ class TagControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertHasDataTable($client);
 
-        $this->request($client, '/admin/tags/11/edit');
+        $this->request($client, '/admin/tags/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=tag_edit_form]')->form();
         $this->assertEquals('A tAG Name!', $editForm->get('tag_edit_form[name]')->getValue());
     }
@@ -84,6 +84,8 @@ class TagControllerTest extends ControllerBaseTest
     public function testEditAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importTags($client);
+
         $this->assertAccessIsGranted($client, '/admin/tags/1/edit');
         $form = $client->getCrawler()->filter('form[name=tag_edit_form]')->form();
         $client->submit($form, [
@@ -100,13 +102,15 @@ class TagControllerTest extends ControllerBaseTest
     public function testMultiDeleteAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->importTags($client);
+
         $this->assertAccessIsGranted($client, '/admin/tags/');
 
         $form = $client->getCrawler()->filter('form[name=multi_update_table]')->form();
         $node = $form->getFormNode();
         $node->setAttribute('action', $this->createUrl('/admin/tags/multi-delete'));
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /** @var Tag[] $tags */
         $tags = $em->getRepository(Tag::class)->findAll();
         self::assertCount(10, $tags);

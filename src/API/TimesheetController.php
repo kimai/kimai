@@ -302,7 +302,10 @@ class TimesheetController extends BaseApiController
      */
     public function postAction(Request $request): Response
     {
-        $timesheet = $this->service->createNewTimesheet($this->getUser(), $request);
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $timesheet = $this->service->createNewTimesheet($user, $request);
 
         $mode = $this->getTrackingMode();
 
@@ -520,7 +523,10 @@ class TimesheetController extends BaseApiController
      */
     public function activeAction(): Response
     {
-        $data = $this->repository->getActiveEntries($this->getUser());
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $data = $this->repository->getActiveEntries($user);
 
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Subresource', 'Timesheet']);
@@ -600,7 +606,10 @@ class TimesheetController extends BaseApiController
             throw new AccessDeniedHttpException('You are not allowed to re-start this timesheet');
         }
 
-        $copyTimesheet = $this->service->createNewTimesheet($this->getUser());
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $copyTimesheet = $this->service->createNewTimesheet($user);
 
         $copyTimesheet
             ->setBegin($this->dateTime->createDateTime())
@@ -638,6 +647,47 @@ class TimesheetController extends BaseApiController
         if (count($errors) > 0) {
             throw new BadRequestHttpException($errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage());
         }
+
+        $this->service->saveNewTimesheet($copyTimesheet);
+
+        $view = new View($copyTimesheet, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Duplicates an existing timesheet record
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Duplicates a timesheet record, resetting the export state only.",
+     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Timesheet record ID to duplicate",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function duplicateAction(int $id): Response
+    {
+        $timesheet = $this->repository->find($id);
+
+        if (null === $timesheet) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('duplicate', $timesheet)) {
+            throw new AccessDeniedHttpException('You are not allowed to duplicate this timesheet');
+        }
+
+        $copyTimesheet = clone $timesheet;
 
         $this->service->saveNewTimesheet($copyTimesheet);
 

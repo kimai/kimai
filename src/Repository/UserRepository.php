@@ -17,6 +17,7 @@ use App\Repository\Query\BaseQuery;
 use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -32,28 +33,35 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     }
 
     /**
-     * Used to fetch the currently logged-in user.
+     * @param User $user
+     * @throws ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveUser(User $user)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+    }
+
+    /**
+     * Used to fetch a user by its ID.
      *
      * @param int $id
      * @return null|User
      */
     public function getUserById($id): ?User
     {
-        try {
-            return $this->createQueryBuilder('u')
-                ->select('u', 'p', 't', 'tu', 'tl')
-                ->leftJoin('u.preferences', 'p')
-                ->leftJoin('u.teams', 't')
-                ->leftJoin('t.users', 'tu')
-                ->leftJoin('t.teamlead', 'tl')
-                ->where('u.id = :id')
-                ->setParameter('id', $id)
-                ->getQuery()
-                ->getSingleResult();
-        } catch (\Exception $ex) {
-        }
-
-        return null;
+        return $this->createQueryBuilder('u')
+            ->select('u', 'p', 't', 'tu', 'tl')
+            ->leftJoin('u.preferences', 'p')
+            ->leftJoin('u.teams', 't')
+            ->leftJoin('t.users', 'tu')
+            ->leftJoin('t.teamlead', 'tl')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
@@ -109,7 +117,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 
     /**
      * @param string $username
-     * @return mixed|null|\Symfony\Component\Security\Core\User\UserInterface
+     * @return null|User
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -125,7 +133,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->orWhere('u.email = :username')
             ->setParameter('username', $username)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
     public function getQueryBuilderForFormType(UserFormTypeQuery $query): QueryBuilder

@@ -39,7 +39,7 @@ class CalendarControllerTest extends ControllerBaseTest
         $config = new CalendarConfiguration($loader, $this->getDefaultSettings());
 
         $client = $this->getClientForAuthenticatedUser();
-        $client->getContainer()->set(CalendarConfiguration::class, $config);
+        static::$kernel->getContainer()->set(CalendarConfiguration::class, $config);
         $this->request($client, '/calendar/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 

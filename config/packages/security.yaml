@@ -5,11 +5,11 @@ security:
     providers:
         chain_provider:
             chain:
-                providers: [fos_userbundle]
+                providers: [kimai_internal]
         kimai_ldap:
             id: App\Ldap\LdapUserProvider
-        fos_userbundle:
-            id: fos_user.user_provider.username_email
+        kimai_internal:
+            id: App\Security\DoctrineUserProvider
 
     firewalls:
         dev:
@@ -54,7 +54,9 @@ security:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     access_control:
+        - { path: '^/auth', roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)$', role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/(%app_locales%)/auth', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/login', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/register', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/resetting', role: IS_AUTHENTICATED_ANONYMOUSLY }

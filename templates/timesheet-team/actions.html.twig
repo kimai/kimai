@@ -38,6 +38,10 @@
             {% set actions = actions|merge({'repeat': {'url': path('restart_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-payload': '{"copy": "all"}', 'data-event': 'kimai.timesheetStart kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'timesheet.start.error', 'data-msg-success': 'timesheet.start.success'}}}) %}
         {% endif %}
 
+        {% if is_granted('duplicate', timesheet) %}
+            {% set actions = actions|merge({'copy': {'url': path('duplicate_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-payload': '{"copy": "all"}', 'data-event': 'kimai.timesheetStart kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'action.update.error', 'data-msg-success': 'action.update.success'}}}) %}
+        {% endif %}
+
         {% if is_granted('edit', timesheet) %}
             {% set class = '' %}
             {% if view != 'edit' %}

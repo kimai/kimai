@@ -66,7 +66,15 @@
             </trans-unit>
             <trans-unit id="attachments">
                 <source>attachments</source>
-                <target>Dateien</target>
+                <target>Files</target>
+            </trans-unit>
+            <trans-unit id="rates.empty">
+                <source>rates.empty</source>
+                <target>No fees have been configured yet.</target>
+            </trans-unit>
+            <trans-unit id="rates.title">
+                <source>rates.title</source>
+                <target>Fees</target>
             </trans-unit>
 
             <!--
@@ -496,6 +504,10 @@
             <trans-unit id="label.timesheet.daily_stats">
                 <source>label.timesheet.daily_stats</source>
                 <target>Show daily stats in timesheet</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.export_decimal">
+                <source>label.timesheet.export_decimal</source>
+                <target>Use decimal duration in export</target>
             </trans-unit>
 
             <!--
@@ -928,13 +940,9 @@
                 <source>label.invoice_bank_account</source>
                 <target>Bank account</target>
             </trans-unit>
-            <trans-unit id="label.invoice_salutation">
-                <source>label.invoice_salutation</source>
-                <target>
-                    Ladies and gentlemen,
-
-                    I thank you for your order and charge for my services:
-                </target>
+            <trans-unit id="label.decimalDuration">
+                <source>label.decimalDuration</source>
+                <target>Display duration as decimal number</target>
             </trans-unit>
 
             <!--

@@ -25,20 +25,22 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
     }
 
     activateDateRangePicker(selector) {
-        let translator = this.getContainer().getTranslation();
+        const TRANSLATE = this.getContainer().getTranslation();
+        const DATE_UTILS = this.getContainer().getPlugin('date');
+
         jQuery(selector + ' ' + this.selector).each(function(index) {
             let localeFormat = jQuery(this).data('format');
             let separator = jQuery(this).data('separator');
             let rangesList = {};
 
-            rangesList[translator.get('today')] = [moment(), moment()];
-            rangesList[translator.get('yesterday')] = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];
-            rangesList[translator.get('thisWeek')] = [moment().startOf('week'), moment().endOf('week')];
-            rangesList[translator.get('lastWeek')] = [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')];
-            rangesList[translator.get('thisMonth')] = [moment().startOf('month'), moment().endOf('month')];
-            rangesList[translator.get('lastMonth')] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
-            rangesList[translator.get('thisYear')] = [moment().startOf('year'), moment().endOf('year')];
-            rangesList[translator.get('lastYear')] = [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')];
+            rangesList[TRANSLATE.get('today')] = [moment(), moment()];
+            rangesList[TRANSLATE.get('yesterday')] = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];
+            rangesList[TRANSLATE.get('thisWeek')] = [moment().startOf('week'), moment().endOf('week')];
+            rangesList[TRANSLATE.get('lastWeek')] = [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')];
+            rangesList[TRANSLATE.get('thisMonth')] = [moment().startOf('month'), moment().endOf('month')];
+            rangesList[TRANSLATE.get('lastMonth')] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
+            rangesList[TRANSLATE.get('thisYear')] = [moment().startOf('year'), moment().endOf('year')];
+            rangesList[TRANSLATE.get('lastYear')] = [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')];
 
             jQuery(this).daterangepicker({
                 showDropdowns: true,
@@ -49,11 +51,11 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
                     separator: separator,
                     format: localeFormat,
                     firstDay: 1,
-                    applyLabel: translator.get('confirm'),
-                    cancelLabel: translator.get('cancel'),
-                    customRangeLabel: translator.get('customRange'),
-                    daysOfWeek: moment.weekdaysShort(),
-                    monthNames: moment.months(),
+                    applyLabel: TRANSLATE.get('confirm'),
+                    cancelLabel: TRANSLATE.get('cancel'),
+                    customRangeLabel: TRANSLATE.get('customRange'),
+                    daysOfWeek: DATE_UTILS.getWeekDaysShort(),
+                    monthNames: DATE_UTILS.getMonthNames(),
                 },
                 ranges: rangesList,
                 alwaysShowCalendars: true

@@ -8,6 +8,21 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [1.8](https://github.com/kevinpapst/kimai2/releases/tag/1.8)
+
+- New mailer library: check if emails are still working (eg. by using the "password forgotten" function) or if you need to adjust your configuration, [see docs at symfony.com](https://symfony.com/doc/current/components/mailer.html#transport)
+
+Permission changes:
+
+- `comments_create_customer` - NEW: permission that allows to add new comments for customers  
+- `comments_create_team_customer` - NEW: permission that allows to add new comments for team members of the current customer 
+- `comments_create_teamlead_customer` - NEW: permission that allows to add new comments for a teamlead of the current customer 
+- `comments_create_project` - NEW: permission that allows to add new comments for project  
+- `comments_create_team_project` - NEW: permission that allows to add new comments for team members of the current project 
+- `comments_create_teamlead_project` - NEW: permission that allows to add new comments for a teamlead of the current project 
+- `edit_teamlead_project` - removed default permission from ROLE_TEAMLEAD (if you use it: change it in the Role & Permission UI) 
+- `edit_teamlead_customer` - removed default permission from ROLE_TEAMLEAD (if you use it: change it in the Role & Permission UI) 
+
 ## [1.7](https://github.com/kevinpapst/kimai2/releases/tag/1.7)
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
@@ -30,9 +45,7 @@ They are more strict, as they allow only access to team specific items, the olde
 ### ExpenseBundle
 
 **ATTENTION** due to incompatibilities in the underlying frameworks users of the ExpenseBundle need to do one more step:
-
 You need to delete the bundle before updating: `rm -r var/plugins/ExpenseBundle`, otherwise you will run into errors during the update.
-
 After the Kimai update was successful, you have to re-install the latest bundle version, which is compatible with Kimai 1.7 only. 
 
 ### Developer

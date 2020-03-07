@@ -33,12 +33,12 @@ class FormLoginLdapFactoryTest extends TestCase
         $result = $sut->create($container, 'test', ['foo' => 'bar'], 'fosuserbundle', 'secured_area');
 
         self::assertEquals([
-            'kimai_ldap.security.authentication.provider.test',
+            'security.authentication.provider.kimai_ldap.test',
             'security.authentication.listener.form.test',
             'secured_area'
         ], $result);
 
-        $definition = $container->getDefinition('kimai_ldap.security.authentication.provider.test');
+        $definition = $container->getDefinition('security.authentication.provider.kimai_ldap.test');
         self::assertInstanceOf(ChildDefinition::class, $definition);
         self::assertEquals('test', $definition->getArguments()['index_1']);
 

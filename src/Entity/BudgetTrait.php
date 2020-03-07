@@ -17,7 +17,7 @@ trait BudgetTrait
     /**
      * @var float
      *
-     * @ORM\Column(name="budget", type="float", precision=10, scale=2, nullable=false)
+     * @ORM\Column(name="budget", type="float", nullable=false)
      * @Assert\NotNull()
      */
     private $budget = 0.00;

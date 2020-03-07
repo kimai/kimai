@@ -62,6 +62,8 @@ class TwigRendererTest extends KernelTestCase
 
         $content = $response->getContent();
 
+        $filename = $model->getNumberGenerator()->getInvoiceNumber() . '-customer_with_special_name';
+        $this->assertStringContainsString('<title>' . $filename . '</title>', $content);
         $this->assertStringContainsString('<h2 class="page-header">
            <span contenteditable="true">a very *long* test invoice / template title with [special] character</span>
         </h2>', $content);

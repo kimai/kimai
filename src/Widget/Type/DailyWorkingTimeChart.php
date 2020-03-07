@@ -63,8 +63,17 @@ class DailyWorkingTimeChart extends SimpleWidget
         $options = $this->getOptions($options);
 
         $user = $options['user'];
-        $begin = new DateTime($options['begin'], $this->dateTimeFactory->getTimezone());
-        $end = new DateTime($options['end'], $this->dateTimeFactory->getTimezone());
+        if ($options['begin'] instanceof DateTime) {
+            $begin = $options['begin'];
+        } else {
+            $begin = new DateTime($options['begin'], $this->dateTimeFactory->getTimezone());
+        }
+
+        if ($options['end'] instanceof DateTime) {
+            $end = $options['end'];
+        } else {
+            $end = new DateTime($options['end'], $this->dateTimeFactory->getTimezone());
+        }
 
         return $this->repository->getDailyStats($user, $begin, $end);
     }

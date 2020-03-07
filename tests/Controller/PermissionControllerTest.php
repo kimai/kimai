@@ -29,7 +29,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/permissions');
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 101);
+        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 107);
         $this->assertPageActions($client, [
             'back' => $this->createUrl('/admin/user/'),
             'roles modal-ajax-form' => $this->createUrl('/admin/permissions/roles/create'),
@@ -122,7 +122,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
 
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
         $this->assertEquals(0, count($rolePermissions));
 

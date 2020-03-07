@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-md-12">
+        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+            {% block box_title %}
+                {% if not title is empty %}{{ title|trans }}{% endif %}
+            {% endblock %}
+            {% block box_attributes %}
+                id="PaginatedWorkingTimeChart" data-href="#" data-reload=""
+            {% endblock %}
+            {% block box_tools %}
+                    <ul class="pagination pagination-sm inline">
+                        {% set prevYear = options.year %}
+                        {% set prevWeek = options.week %}
+                        {% set nextYear = options.year %}
+                        {% set nextWeek = options.week %}
+                        {% if prevWeek == 1 %}
+                            {% set prevYear = prevYear - 1 %}
+                            {% set prevWeek = 52 %}
+                        {% else %}
+                            {% set prevWeek = prevWeek - 1 %}
+                        {% endif %}
+                        {% if nextWeek == 52 %}
+                            {% set nextYear = nextYear + 1 %}
+                            {% set nextWeek = 1 %}
+                        {% else %}
+                            {% set nextWeek = nextWeek + 1 %}
+                        {% endif %}
+                        <li class="prev"><a onclick="destroyChart()" href="{{ path('widgets_working_time_chart', {'year': prevYear, 'week': prevWeek}) }}" rel="prev"><i class="{{ 'left'|icon }}"></i></a></li>
+                        <li class="next"><a onclick="destroyChart()" href="{{ path('widgets_working_time_chart', {'year': nextYear, 'week': nextWeek}) }}" rel="next"><i class="{{ 'right'|icon }}"></i></a></li>
+                    </ul>
+            {% endblock %}
+            {% block box_body %}
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ render_widget('DailyWorkingTimeChart', options|merge({'begin': data.begin, 'end': data.end})) }}
+                    </div>
+                </div>
+            {% endblock %}
+            {% block box_footer %}
+                <div class="row">
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="description-block border-right">
+                            <h5 class="description-header">{{ data.day|duration }}</h5>
+                            <span class="description-text">{{ 'stats.durationToday'|trans }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="description-block border-right">
+                            <h5 class="description-header">{{ data.week|duration }}</h5>
+                            <span class="description-text">{{ 'stats.durationWeek'|trans }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="description-block border-right">
+                            <h5 class="description-header">{{ data.month|duration }}</h5>
+                            <span class="description-text">{{ 'stats.durationMonth'|trans }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="description-block border-right">
+                            <h5 class="description-header">{{ data.year|duration }}</h5>
+                            <span class="description-text">{{ 'stats.durationYear'|trans }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+        {% endembed %}
+    </div>
+</div>
+<script type="text/javascript">
+    document.addEventListener('kimai.initialized', function() {
+        KimaiPaginatedBoxWidget.create('#PaginatedWorkingTimeChart');
+    });
+</script>

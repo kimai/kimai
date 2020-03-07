@@ -57,7 +57,8 @@ class CsvRendererTest extends TestCase
 
         $file = $response->getFile();
         $this->assertEquals('text/csv', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=export.csv', $response->headers->get('Content-Disposition'));
+        $filename = $model->getNumberGenerator()->getInvoiceNumber() . '-customer_with_special_name.csv';
+        $this->assertEquals('attachment; filename=' . $filename, $response->headers->get('Content-Disposition'));
 
         $this->assertTrue(file_exists($file->getRealPath()));
         $content = file_get_contents($file->getRealPath());

@@ -23,10 +23,16 @@
 
         {% set tableName = 'plugins' %}
 
-        {{ tables.data_table_header(tableName, columns) }}
+        {{ tables.datatable_header(tableName, columns, null, {}) }}
         {% for plugin in plugins %}
             <tr>
-                <td>{{ plugin.name }}</td>
+                <td>
+                    {% if plugin.id != plugin.name %}
+                        <span data-toggle="tooltip" data-placement="top" title="{{ plugin.id }}">{{ plugin.name }}</span>
+                    {% else %}
+                        {{ plugin.name }}
+                    {% endif %}
+                </td>
                 <td>{{ widgets.label(plugin.metadata.version, 'primary') }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ plugin.metadata.description }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'required_version') }}">

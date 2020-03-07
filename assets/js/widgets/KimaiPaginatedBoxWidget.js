@@ -34,7 +34,7 @@ export default class KimaiPaginatedBoxWidget {
 
         this.widget.on('click', '.box-tools a', function (event) {
             event.preventDefault();
-            self.loadPage(jQuery(event.target).attr('href'));
+            self.loadPage(jQuery(event.currentTarget).attr('href'));
         });
     }
     

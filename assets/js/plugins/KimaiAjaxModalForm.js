@@ -13,9 +13,9 @@
  */
 
 import jQuery from 'jquery';
-import KimaiClickHandlerReducedInTableRow from "./KimaiClickHandlerReducedInTableRow";
+import KimaiReducedClickHandler from "./KimaiReducedClickHandler";
 
-export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableRow {
+export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
     constructor(selector) {
         super();
@@ -47,7 +47,7 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
             jQuery(self._getFormIdentifier()).find('input[type=text],textarea,select').filter(':not("[data-datetimepicker=on]")').filter(':visible:first').focus().delay(1000).focus();
         });
 
-        this._addClickHandlerReducedInTableRow(this.selector, function(href) {
+        this._addClickHandler(this.selector, function(href) {
             self.openUrlInModal(href);
         });
     }

@@ -57,6 +57,9 @@ class AppExtensionTest extends TestCase
                 'data_dir' => '/tmp/',
                 'plugin_dir' => '/tmp/',
                 'timesheet' => [],
+                'saml' => [
+                    'connection' => []
+                ]
             ]
         ];
     }
@@ -168,6 +171,7 @@ class AppExtensionTest extends TestCase
                 ],
                 'auto_reload_datatable' => false,
                 'autocomplete_chars' => 3,
+                'tags_create' => true,
             ],
             'kimai.theme.select_type' => 'selectpicker',
             'kimai.theme.show_about' => true,

@@ -10,6 +10,7 @@
 namespace App\Form\API;
 
 use App\Form\TimesheetEditForm;
+use App\Form\Type\TagsInputType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,6 +28,19 @@ class TimesheetApiEditForm extends TimesheetEditForm
         if ($builder->has('user')) {
             $builder->get('user')->setRequired(false);
         }
+    }
+
+    /**
+     * Method added to prevent API BC breaks.
+     *
+     * @param FormBuilderInterface $builder
+     */
+    protected function addTags(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add('tags', TagsInputType::class, [
+                'required' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -46,10 +46,22 @@
                     {{ form_row(form.vat) }}
                 </div>
             </div>
-
-            {{ form_row(form.renderer) }}
-            {{ form_row(form.calculator) }}
-            {{ form_row(form.numberGenerator) }}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.renderer) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.language) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.calculator) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.numberGenerator) }}
+                </div>
+            </div>
             {{ form_widget(form) }}
         {% endblock %}
     {% endembed %}    

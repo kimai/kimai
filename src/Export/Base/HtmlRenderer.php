@@ -53,6 +53,18 @@ class HtmlRenderer
         return $event->getFields();
     }
 
+    protected function getOptions(TimesheetQuery $query): array
+    {
+        $decimal = false;
+        if (null !== $query->getCurrentUser()) {
+            $decimal = (bool) $query->getCurrentUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+        } elseif (null !== $query->getUser()) {
+            $decimal = (bool) $query->getUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+        }
+
+        return ['decimal' => $decimal];
+    }
+
     /**
      * @param ExportItemInterface[] $timesheets
      * @param TimesheetQuery $query
@@ -75,7 +87,7 @@ class HtmlRenderer
         $this->dispatcher->dispatch($event);
         $userPreferences = $event->getPreferences();
 
-        $content = $this->twig->render('export/renderer/default.html.twig', [
+        $content = $this->twig->render('export/renderer/default.html.twig', array_merge([
             'entries' => $timesheets,
             'query' => $query,
             'summaries' => $this->calculateSummary($timesheets),
@@ -84,7 +96,7 @@ class HtmlRenderer
             'projectMetaFields' => $projectMetaFields,
             'activityMetaFields' => $activityMetaFields,
             'userPreferences' => $userPreferences,
-        ]);
+        ], $this->getOptions($query)));
 
         $response = new Response();
         $response->setContent($content);

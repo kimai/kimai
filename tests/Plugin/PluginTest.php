@@ -21,6 +21,7 @@ class PluginTest extends TestCase
     public function testEmptyObject()
     {
         $plugin = new Plugin();
+        $this->assertNull($plugin->getId());
         $this->assertNull($plugin->getName());
         $this->assertNull($plugin->getPath());
         $this->assertNull($plugin->getMetadata());
@@ -37,10 +38,12 @@ class PluginTest extends TestCase
         ;
 
         $plugin = new Plugin();
+        $this->assertInstanceOf(Plugin::class, $plugin->setId('foo2'));
         $this->assertInstanceOf(Plugin::class, $plugin->setName('foo'));
         $this->assertInstanceOf(Plugin::class, $plugin->setPath('bar'));
         $this->assertInstanceOf(Plugin::class, $plugin->setMetadata($metadata));
 
+        $this->assertEquals('foo2', $plugin->getId());
         $this->assertEquals('foo', $plugin->getName());
         $this->assertEquals('bar', $plugin->getPath());
         $this->assertSame($metadata, $plugin->getMetadata());

@@ -14,8 +14,8 @@ use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
-use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
@@ -48,14 +48,14 @@ class ProfileControllerTest extends ControllerBaseTest
             new \DateTime('-1 year'),
         ];
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         foreach ($dates as $start) {
             $fixture = new TimesheetFixtures();
             $fixture->setAmount(10);
             $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
             $fixture->setStartDate($start);
-            $this->importFixture($em, $fixture);
+            $this->importFixture($client, $fixture);
         }
 
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
@@ -72,7 +72,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertHasAboutMeBox($client, UserFixtures::USERNAME_USER);
     }
 
-    protected function assertHasProfileBox(Client $client, string $username)
+    protected function assertHasProfileBox(HttpKernelBrowser $client, string $username)
     {
         $profileBox = $client->getCrawler()->filter('div.box-body.box-profile');
         $this->assertEquals(1, $profileBox->count());
@@ -83,7 +83,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals($username, $alt);
     }
 
-    protected function assertHasAboutMeBox(Client $client, string $username)
+    protected function assertHasAboutMeBox(HttpKernelBrowser $client, string $username)
     {
         $content = $client->getResponse()->getContent();
 
@@ -133,7 +133,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /** @var User $user */
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
@@ -160,7 +160,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
@@ -193,7 +193,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
@@ -209,12 +209,12 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/password');
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /** @var User $user */
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         /** @var EncoderFactoryInterface $passwordEncoder */
-        $passwordEncoder = $client->getContainer()->get('test.PasswordEncoder');
+        $passwordEncoder = static::$kernel->getContainer()->get('test.PasswordEncoder');
 
         $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), UserFixtures::DEFAULT_PASSWORD, $user->getSalt()));
         $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), 'test123', $user->getSalt()));
@@ -236,7 +236,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), UserFixtures::DEFAULT_PASSWORD, $user->getSalt()));
@@ -248,11 +248,11 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/api-token');
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /** @var User $user */
         $user = $this->getUserByRole($em, User::ROLE_USER);
         /** @var EncoderFactoryInterface $passwordEncoder */
-        $passwordEncoder = $client->getContainer()->get('test.PasswordEncoder');
+        $passwordEncoder = static::$kernel->getContainer()->get('test.PasswordEncoder');
 
         $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN, $user->getSalt()));
         $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), 'test123', $user->getSalt()));
@@ -274,7 +274,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN, $user->getSalt()));
@@ -293,7 +293,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/roles');
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /** @var User $user */
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
@@ -313,7 +313,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $user->getRoles());
@@ -328,7 +328,7 @@ class ProfileControllerTest extends ControllerBaseTest
     public function testTeamsAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         /** @var User $user */
         $user = $this->getUserByRole($em, User::ROLE_USER);
@@ -338,7 +338,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $fixture->setAddCustomer(true);
         $fixture->setAddUser(false);
         $fixture->addUserToIgnore($user);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/teams');
 
@@ -359,7 +359,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $this->assertEquals(1, $user->getTeams()->count());
@@ -385,7 +385,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, '/profile/' . $username . '/prefs');
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /** @var User $user */
         $user = $this->getUserByName($em, $username);
 
@@ -417,7 +417,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $user = $this->getUserByName($em, $username);
 
         $this->assertEquals($hourlyRate, $user->getPreferenceValue(UserPreference::HOURLY_RATE));

@@ -315,7 +315,7 @@ class LdapManagerTest extends TestCase
 
         $userOrig = clone $user;
         $sut->updateUser($user);
-        self::assertEquals($userOrig->setEmail('foobar'), $user);
+        self::assertEquals($userOrig->setEmail('foobar')->setAuth(User::AUTH_LDAP), $user);
         self::assertEquals($user->getPreferenceValue('ldap.dn'), 'blub-updated');
     }
 
@@ -446,7 +446,7 @@ class LdapManagerTest extends TestCase
         $user = (new User())->setUsername('Karl-Heinz');
         $user->setPreferenceValue('ldap.dn', 'blub');
         $userOrig = clone $user;
-        $userOrig->setEmail('Karl-Heinz')->setRoles(['ROLE_TEAMLEAD', 'ROLE_ADMIN']);
+        $userOrig->setEmail('Karl-Heinz')->setRoles(['ROLE_TEAMLEAD', 'ROLE_ADMIN'])->setAuth(User::AUTH_LDAP);
 
         $sut->updateUser($user);
         self::assertEquals($userOrig, $user);

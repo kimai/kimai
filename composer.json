@@ -18,49 +18,63 @@
         "ext-pdo": "*",
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.2",
+        "doctrine/doctrine-bundle": "^2.0",
+        "doctrine/doctrine-migrations-bundle": "^2.1",
+        "doctrine/orm": "^2.7",
         "erusev/parsedown": "^1.6",
         "friendsofsymfony/rest-bundle": "^2.5",
         "friendsofsymfony/user-bundle": "dev-master",
         "gedmo/doctrine-extensions": "^2.4",
+        "hslavich/oneloginsaml-bundle": "^1.4",
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.2",
-        "kevinpapst/adminlte-bundle": "~3.0",
+        "kevinpapst/adminlte-bundle": "^3.0",
         "kimai/kimai2-composer": "^0.1",
         "laravolt/avatar": "^3.0",
         "league/csv": "^9.4",
+        "league/html-to-markdown": "^4.9",
         "mpdf/mpdf": "^8.0",
         "nelmio/api-doc-bundle": "^3.2",
         "nelmio/cors-bundle": "^1.5",
         "ocramius/proxy-manager": "^2.1.1",
+        "onelogin/php-saml": "^3.4",
+        "pagerfanta/pagerfanta": "^2.1",
         "phpoffice/phpspreadsheet": "^1.10",
         "phpoffice/phpword": "^0.17",
         "psr/log": "^1.1",
         "sensio/framework-extra-bundle": "^5.2",
-        "symfony/asset": "^4.0",
-        "symfony/console": "^4.0",
-        "symfony/debug-pack": "^1.0",
-        "symfony/dotenv": "^4.0",
-        "symfony/expression-language": "^4.0",
+        "symfony/amazon-mailer": "^4.4",
+        "symfony/asset": "^4.4",
+        "symfony/console": "^4.4",
+        "symfony/dotenv": "^4.4",
+        "symfony/expression-language": "^4.4",
         "symfony/flex": "^1.0",
-        "symfony/form": "^4.0",
-        "symfony/framework-bundle": "^4.0",
-        "symfony/intl": "^4.0",
+        "symfony/form": "^4.4",
+        "symfony/framework-bundle": "^4.4",
+        "symfony/google-mailer": "^4.4",
+        "symfony/intl": "^4.4",
+        "symfony/mailchimp-mailer": "^4.4",
+        "symfony/mailer": "^4.4",
+        "symfony/mailgun-mailer": "^4.4",
         "symfony/monolog-bundle": "^3.4",
-        "symfony/orm-pack": "^1.0",
-        "symfony/security-bundle": "^4.0",
-        "symfony/security-csrf": "^4.0",
-        "symfony/serializer": "^4.0",
-        "symfony/swiftmailer-bundle": "^3.2",
-        "symfony/translation": "^4.0",
-        "symfony/twig-bundle": "^4.0",
-        "symfony/validator": "^4.0",
+        "symfony/postmark-mailer": "^4.4",
+        "symfony/security-bundle": "^4.4",
+        "symfony/security-csrf": "^4.4",
+        "symfony/sendgrid-mailer": "^4.4",
+        "symfony/serializer": "^4.4",
+        "symfony/translation": "^4.4",
+        "symfony/twig-bundle": "^4.4",
+        "symfony/validator": "^4.4",
         "symfony/webpack-encore-bundle": "^1.5",
-        "symfony/yaml": "^4.0",
-        "twig/extensions": "^1.5",
-        "white-october/pagerfanta-bundle": "^1.1"
+        "symfony/yaml": "^4.4",
+        "twig/cssinliner-extra": "^3.0",
+        "twig/extra-bundle": "^3.0",
+        "twig/inky-extra": "^3.0",
+        "twig/intl-extra": "^3.0",
+        "twig/string-extra": "^3.0"
     },
     "require-dev": {
-        "dama/doctrine-test-bundle": "^5.0",
+        "dama/doctrine-test-bundle": "^6.0",
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "friendsofphp/php-cs-fixer": "^2.10",
         "fzaninotto/faker": "^1.8",
@@ -69,11 +83,13 @@
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan-symfony": "^0.12",
         "phpunit/phpunit": "^8.0",
-        "symfony/browser-kit": "^4.0",
-        "symfony/css-selector": "^4.0",
+        "symfony/browser-kit": "^4.4",
+        "symfony/css-selector": "^4.4",
+        "symfony/debug-bundle": "^4.4",
         "symfony/maker-bundle": "^1.12",
-        "symfony/phpunit-bridge": "^4.0",
-        "symfony/profiler-pack": "^1.0"
+        "symfony/phpunit-bridge": "^4.4",
+        "symfony/profiler-pack": "^1.0",
+        "symfony/var-dumper": "^4.4"
     },
     "repositories": [
         {
@@ -83,7 +99,7 @@
     ],    
     "config": {
         "platform": {
-            "php": "7.2"
+            "php": "7.2.9"
         },
         "preferred-install": {
             "*": "dist"
@@ -134,7 +150,7 @@
         ],
         "kimai:code-lint":  [
             "bin/console lint:yaml config --parse-tags",
-            "bin/console lint:twig templates",
+            "bin/console lint:twig templates --show-deprecations",
             "bin/console lint:xliff translations",
             "bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction"
         ],
@@ -155,7 +171,7 @@
         "symfony": {
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
             "allow-contrib": true,
-            "require": "4.3.*"
+            "require": "4.4.*"
         }
     }
 }

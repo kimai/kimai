@@ -16,6 +16,58 @@ class ParsedownExtension extends \Parsedown
 {
     private $ids = [];
 
+    /**
+     * Overwritten to add support for file:///
+     */
+    protected $safeLinksWhitelist = [
+        'file:///',
+        'http://',
+        'https://',
+        'ftp://',
+        'ftps://',
+        'mailto:',
+        'data:image/png;base64,',
+        'data:image/gif;base64,',
+        'data:image/jpeg;base64,',
+        'irc:',
+        'ircs:',
+        'git:',
+        'ssh:',
+        'news:',
+        'steam:',
+    ];
+
+    /**
+     * Overwritten:
+     * - added support for file:///
+     * - open links in new windows
+     */
+    protected function inlineUrl($Excerpt)
+    {
+        if ($this->urlsLinked !== true or !isset($Excerpt['text'][2]) or $Excerpt['text'][2] !== '/') {
+            return;
+        }
+
+        if (preg_match('/\b(https?:[\/]{2}|file:[\/]{3})[^\s<]+\b\/*/ui', $Excerpt['context'], $matches, PREG_OFFSET_CAPTURE)) {
+            $url = $matches[0][0];
+
+            $Inline = [
+                'extent' => strlen($matches[0][0]),
+                'position' => $matches[0][1],
+                'element' => [
+                    'name' => 'a',
+                    'text' => $url,
+                    'attributes' => [
+                        'href' => $url,
+                        'target' => '_blank'
+                    ],
+                ],
+            ];
+
+            return $Inline;
+        }
+    }
+
     protected function blockHeader($line)
     {
         $block = parent::blockHeader($line);

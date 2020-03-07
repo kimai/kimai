@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="it" datatype="plaintext" original="teams.en.xlf">
+        <body>
+            <trans-unit id="teams.title">
+                <source>teams.title</source>
+                <target>Gruppo</target>
+            </trans-unit>
+            <trans-unit id="teams.project_access">
+                <source>teams.project_access</source>
+                <target>Concedi accesso ai progetti</target>
+            </trans-unit>
+            <trans-unit id="teams.customer_access">
+                <source>teams.customer_access</source>
+                <target>Concedi accesso ai clienti</target>
+            </trans-unit>
+            <trans-unit id="team.visibility_global">
+                <source>team.visibility_global</source>
+                <target>Visibile a chiunque, in assenza del gruppo assegnato</target>
+            </trans-unit>
+            <trans-unit id="team.visibility_restricted">
+                <source>team.visibility_restricted</source>
+                <target>Visibile solo ai seguenti gruppi e a tutti gli amministratori.</target>
+            </trans-unit>
+            <trans-unit id="team.project_visibility_inherited">
+                <source>team.project_visibility_inherited</source>
+                <target>Progetto con accesso limitato perchè i permessi di gruppo sono impostati per i clienti.</target>
+            </trans-unit>
+            <trans-unit id="team.create_default">
+                <source>team.create_default</source>
+                <target>Crea un nuovo gruppo per limitare l'accesso</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

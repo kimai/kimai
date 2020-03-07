@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: ar|cs|de|de_CH|da|en|es|eu|fr|hu|it|ja|ko|nl|pt_BR|ru|sk|sv|tr|zh_CN
+    app_locales: ar|cs|de|de_CH|da|en|es|eu|fr|hu|it|ja|ko|nl|pl|pt_BR|ru|sk|sv|tr|zh_CN
 
 services:
     # default configuration for services in *this* file
@@ -146,8 +146,7 @@ services:
     # LDAP
     # ================================================================================
 
-    kimai_ldap.security.authentication.provider:
-        class: App\Ldap\LdapAuthenticationProvider
+    App\Ldap\LdapAuthenticationProvider:
         arguments: ['@App\Security\UserChecker', '', '', '', '@App\Configuration\LdapConfiguration', '%security.authentication.hide_user_not_found%']
 
     # ================================================================================
@@ -212,3 +211,18 @@ services:
     App\Repository\InvoiceDocumentRepository:
         class: App\Repository\InvoiceDocumentRepository
         arguments: ['%kimai.invoice.documents%']
+
+    App\Repository\CustomerRateRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\CustomerRate']
+
+    App\Repository\ActivityRateRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\ActivityRate']
+
+    App\Repository\ProjectRateRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\ProjectRate']

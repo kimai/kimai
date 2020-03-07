@@ -10,6 +10,7 @@
 namespace App\Tests\API;
 
 use App\Entity\User;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group integration
@@ -111,6 +112,106 @@ class UserControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertStructure($result);
+    }
+
+    public function testPostAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $data = [
+            'username' => 'foo',
+            'email' => 'foo@example.com',
+            'avatar' => 'test123',
+            'title' => 'asdfghjkl',
+            'plainPassword' => 'foo@example.com',
+            'enabled' => true,
+            'language' => 'ru',
+            'timezone' => 'Europe/Paris',
+            'roles' => [
+                'ROLE_TEAMLEAD',
+                'ROLE_ADMIN'
+            ],
+        ];
+        $this->request($client, '/api/users', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+        self::assertEquals('foo', $result['username']);
+        self::assertEquals('test123', $result['avatar']);
+        self::assertEquals('asdfghjkl', $result['title']);
+        self::assertTrue($result['enabled']);
+        self::assertEquals('ru', $result['language']);
+        self::assertEquals('Europe/Paris', $result['timezone']);
+        self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_ADMIN'], $result['roles']);
+    }
+
+    public function testPostActionWithInvalidUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'username' => 'foo',
+            'email' => 'foo@example.com',
+            'plainPassword' => 'foo@example.com',
+            'enabled' => true,
+            'language' => 'ru',
+            'timezone' => 'Europe/Paris',
+        ];
+        $this->request($client, '/api/users', 'POST', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals('Access denied.', $json['message']);
+    }
+
+    public function testPatchAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $data = [
+            'username' => 'foo',
+            'email' => 'foo@example.com',
+            'avatar' => 'test123',
+            'title' => 'asdfghjkl',
+            'plainPassword' => 'foo@example.com',
+            'enabled' => true,
+            'language' => 'ru',
+            'timezone' => 'Europe/Paris',
+            'roles' => [
+                'ROLE_TEAMLEAD',
+                'ROLE_ADMIN'
+            ],
+        ];
+        $this->request($client, '/api/users', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $data = [
+            'avatar' => 'test321',
+            'title' => 'qwertzui',
+            'enabled' => false,
+            'language' => 'it',
+            'timezone' => 'America/New_York',
+            'roles' => [
+                'ROLE_TEAMLEAD',
+            ],
+        ];
+        $this->request($client, '/api/users/' . $result['id'], 'PATCH', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+        self::assertEquals('foo', $result['username']);
+        self::assertEquals('test321', $result['avatar']);
+        self::assertEquals('qwertzui', $result['title']);
+        self::assertFalse($result['enabled']);
+        self::assertEquals('it', $result['language']);
+        self::assertEquals('America/New_York', $result['timezone']);
+        self::assertEquals(['ROLE_TEAMLEAD'], $result['roles']);
     }
 
     protected function assertStructure(array $result, $full = true)

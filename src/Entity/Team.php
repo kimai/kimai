@@ -144,6 +144,11 @@ class Team
         return $this->users;
     }
 
+    public function hasCustomer(Customer $customer): bool
+    {
+        return $this->customers->contains($customer);
+    }
+
     public function addCustomer(Customer $customer)
     {
         if ($this->customers->contains($customer)) {
@@ -170,6 +175,11 @@ class Team
     public function getCustomers(): iterable
     {
         return $this->customers;
+    }
+
+    public function hasProject(Project $project): bool
+    {
+        return $this->projects->contains($project);
     }
 
     public function addProject(Project $project)

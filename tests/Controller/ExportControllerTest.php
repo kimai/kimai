@@ -39,7 +39,7 @@ class ExportControllerTest extends ControllerBaseTest
     public function testIndexActionWithEntriesAndTeams()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
         $user = $this->getUserByRole($em, User::ROLE_USER);
@@ -66,7 +66,7 @@ class ExportControllerTest extends ControllerBaseTest
                 $em->persist($team);
             })
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
 
@@ -76,7 +76,7 @@ class ExportControllerTest extends ControllerBaseTest
             ->setAmount(2)
             ->setStartDate($begin)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
         $em->flush();
 
         $this->request($client, '/export/?preview=');
@@ -100,7 +100,7 @@ class ExportControllerTest extends ControllerBaseTest
     public function testIndexActionWithEntriesForTeamleadDoesNotShowUserWithoutTeam()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $begin = new \DateTime('first day of this month');
         $user = $this->getUserByRole($em, User::ROLE_USER);
@@ -112,7 +112,7 @@ class ExportControllerTest extends ControllerBaseTest
             ->setAmount(20)
             ->setStartDate($begin)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/export/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -128,7 +128,7 @@ class ExportControllerTest extends ControllerBaseTest
             ->setAmount(2)
             ->setStartDate($begin)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/export/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -185,7 +185,7 @@ class ExportControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $begin = new \DateTime('first day of this month');
         $fixture = new TimesheetFixtures();
@@ -194,7 +194,7 @@ class ExportControllerTest extends ControllerBaseTest
             ->setAmount(20)
             ->setStartDate($begin)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($client, $fixture);
 
         $this->request($client, '/export/');
         $this->assertTrue($client->getResponse()->isSuccessful());

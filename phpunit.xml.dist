@@ -9,26 +9,16 @@
 >
     <php>
         <ini name="error_reporting" value="-1" />
+        <ini name="max_execution_time" value="-1" />
         <ini name="intl.default_locale" value="en_US" />
         <env name="KERNEL_CLASS" value="App\Kernel" force="true"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
         <env name="APP_ENV" value="test" force="true"/>
         <env name="APP_DEBUG" value="1" force="true"/>
         <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>
-        <!-- define your env variables for the test env here -->
-
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
-
-        <!-- ###+ doctrine/doctrine-bundle ### -->
         <env name="DATABASE_URL" value="sqlite:///%kernel.project_dir%/var/data/kimai_test.sqlite" force="true"/>
-        <!-- ###- doctrine/doctrine-bundle ### -->
-
-        <!-- ###+ symfony/swiftmailer-bundle ### -->
-        <env name="MAILER_URL" value="null://localhost" force="true"/>
-        <!-- ###- symfony/swiftmailer-bundle ### -->
-
-        <!-- ###+ nelmio/cors-bundle ### -->
         <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost(:[0-9]+)?$"/>
-        <!-- ###- nelmio/cors-bundle ### -->
+        <env name="MAILER_URL" value="null://null"/>
     </php>
 
     <testsuites>
@@ -56,10 +46,16 @@
         </whitelist>
     </filter>
 
+    <!--
+        begins a database transaction before every testcase and rolls it back after the test finished, so
+        tests can manipulate the database without affecting other tests
+        @see https://github.com/dmaicher/doctrine-test-bundle
+    -->
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
+
     <listeners>
-        <!-- it begins a database transaction before every testcase and rolls it back after
-             the test finished, so tests can manipulate the database without affecting other tests -->
-        <listener class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitListener" />
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
 </phpunit>

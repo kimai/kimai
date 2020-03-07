@@ -45,7 +45,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     public const CATEGORY_WORK = 'work';
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -125,13 +125,26 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     /**
      * @var float
      *
-     * @ORM\Column(name="rate", type="float", precision=10, scale=2, nullable=false)
+     * @ORM\Column(name="rate", type="float", nullable=false)
      * @Assert\GreaterThanOrEqual(0)
      */
     private $rate = 0.00;
 
-    // keep the trait include exactly here, for placing the column at the correct position
-    use RatesTrait;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="fixed_rate", type="float", nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
+     */
+    private $fixedRate = null;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="hourly_rate", type="float", nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
+     */
+    private $hourlyRate = null;
 
     /**
      * @var bool
@@ -452,6 +465,30 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         return self::CATEGORY_WORK;
     }
 
+    public function getFixedRate(): ?float
+    {
+        return $this->fixedRate;
+    }
+
+    public function setFixedRate(?float $fixedRate): Timesheet
+    {
+        $this->fixedRate = $fixedRate;
+
+        return $this;
+    }
+
+    public function getHourlyRate(): ?float
+    {
+        return $this->hourlyRate;
+    }
+
+    public function setHourlyRate(?float $hourlyRate): Timesheet
+    {
+        $this->hourlyRate = $hourlyRate;
+
+        return $this;
+    }
+
     /**
      * @internal only here for symfony forms
      * @return Collection|MetaTableTypeInterface[]
@@ -499,5 +536,13 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         $current->merge($meta);
 
         return $this;
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+            $this->exported = false;
+        }
     }
 }
