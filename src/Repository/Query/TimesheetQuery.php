@@ -93,7 +93,7 @@ class TimesheetQuery extends ActivityQuery
     /**
      * Limit the data exclusively to the user (eg. users own timesheets).
      *
-     * @return User|null
+     * @return User|int|null
      */
     public function getUser()
     {

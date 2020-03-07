@@ -157,7 +157,7 @@ class LdapManager
 
         return $this->driver->search(
             $roleParameter['baseDn'],
-            sprintf('(&%s(%s=%s))', $filter, $roleParameter['userDnAttribute'], $dn),
+            sprintf('(&%s(%s=%s))', $filter, $roleParameter['userDnAttribute'], ldap_escape($dn, null, LDAP_ESCAPE_FILTER)),
             [$roleParameter['nameAttribute']]
         );
     }

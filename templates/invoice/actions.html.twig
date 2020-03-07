@@ -26,9 +26,28 @@
         {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
     {% endif %}
 
+    {% if is_granted('upload_invoice_template') %}
+        {# File upload does not work in a modal right now #}
+        {% set actions = actions|merge({'upload': {'url': path('admin_invoice_document_upload')}}) %}
+    {% endif %}
+
     {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
 
     {% set event = trigger('actions.invoice_templates', {'actions': actions, 'view': 'index'}) %}
+    {{ widgets.page_actions(actions) }}
+{% endmacro %}
+
+{% macro invoice_upload(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+    {% if view == 'index' and is_granted('manage_invoice_template') %}
+        {% set actions = actions|merge({'back': path('admin_invoice_template')}) %}
+    {% endif %}
+
+    {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.invoice_upload', {'actions': actions, 'view': 'index'}) %}
     {{ widgets.page_actions(actions) }}
 {% endmacro %}
 

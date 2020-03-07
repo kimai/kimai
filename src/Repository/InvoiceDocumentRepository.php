@@ -12,26 +12,24 @@ namespace App\Repository;
 use App\Entity\InvoiceDocument;
 use Symfony\Component\Finder\Finder;
 
-class InvoiceDocumentRepository
+final class InvoiceDocumentRepository
 {
     /**
      * @var array
      */
-    protected $documentDirs = [];
+    private $documentDirs = [];
 
-    /**
-     * @param array $directories
-     */
     public function __construct(array $directories)
     {
         $this->documentDirs = $directories;
     }
 
-    /**
-     * @param string $name
-     * @return InvoiceDocument|null
-     */
-    public function findByName(string $name)
+    public function getCustomInvoiceDirectory(): string
+    {
+        return $this->documentDirs[0];
+    }
+
+    public function findByName(string $name): ?InvoiceDocument
     {
         foreach ($this->findAll() as $document) {
             if ($document->getId() === $name) {

@@ -62,7 +62,8 @@ const Sortable = require('sortablejs/Sortable.min');
 global.Sortable = Sortable;
 
 // ------ AdminLTE framework ------
-require('./sass/admin-lte.scss');
+require('./sass/bootstrap.scss');
+require('./sass/fontawesome.scss');
 require('admin-lte/dist/css/AdminLTE.min.css');
 require('admin-lte/dist/css/skins/_all-skins.css');
 require('../vendor/kevinpapst/adminlte-bundle/Resources/assets/admin-lte-extensions.scss');

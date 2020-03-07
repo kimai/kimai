@@ -5,9 +5,31 @@
  * file that was distributed with this source code.
  */
 
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/normalize";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/print";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/type";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/grid";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/tables";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/list-group";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/panels";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/wells";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/utilities";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
+
 body.invoice_print {
     background-color: #eee;
-    
+
+    .table.no-border, .table.no-border td, .table.no-border th {
+        border: 0;
+    }
+
+    h1, h2, h3 {
+        font-family: 'Source Sans Pro', sans-serif;
+    }
+
     .invoice {
         margin: 105px auto 30px auto;
         padding: 50px 65px;
@@ -15,17 +37,33 @@ body.invoice_print {
         position: relative;
         max-width: 210mm;
         box-shadow: 0 0 20px rgba(80,80,80,0.7);
+        background: #fff;
+        border: 1px solid #f4f4f4;
     }
-    
-    .page-header h3 {
-        border-color: #ddd;
+
+    .page-header {
+        margin: 10px 0 20px 0;
+        font-size: 22px;
+        >small {
+            color: #666;
+            display: block;
+            margin-top: 5px;
+        }
+        h3 {
+            border-color: #ddd;
+        }
     }
-    
+    /*
+    .page-header {
+        margin: 10px 0 20px 0;
+        font-size: 22px;
+    }
+*/
     div.invoice-address {
         margin-top: 30px;
         margin-bottom: 30px;
     }
-    
+
     table.invoice-meta th {
         padding-right: 40px;
     }
@@ -35,11 +73,11 @@ body.invoice_print {
     table.invoice-sum th, table.invoice-sum td  {
         text-align: right;
     }
-    
+
     .invoice-items {
         margin-top: 2em;
         margin-bottom: 3em;
-    
+
         .table {
             thead th {
                 font-weight: bold;
@@ -48,7 +86,7 @@ body.invoice_print {
             }
             tfoot {
                 border-top: 1px solid #ddd;
-                
+
                 tr:first-child th,
                 tr:first-child td {
                     padding-top: 15px
@@ -61,7 +99,7 @@ body.invoice_print {
                 }
             }
         }
-    
+
     }
 
     .footer {
@@ -73,36 +111,36 @@ body.invoice_print {
     }
 
     /* ================================ FREELANCER INVOICE ================================ */
-    
+
     #freelancer-invoice {
-        
+
         box-sizing: border-box;
-    
+
         h1 {
             font: bold 100% sans-serif;
             letter-spacing: 0.5em;
             text-align: center;
             text-transform: uppercase;
         }
-    
+
         h2 {
             font: bold 1.5em sans-serif;
             margin-bottom: 1em;
         }
-    
+
         /* table */
-    
+
         table {
             width: 100%;
         }
-    
+
         table {
             border-collapse: separate;
             border-spacing: 0;
         }
-    
+
         /* header */
-    
+
         header {
             &:after {
                 clear: both;
@@ -110,7 +148,7 @@ body.invoice_print {
                 display: table;
                 font-size: 1em;
             }
-    
+
             address {
                 float: left;
                 font-style: normal;
@@ -119,7 +157,7 @@ body.invoice_print {
                 font-size: 0.7em;
             }
         }
-    
+
         article address {
             font-size: 1em;
             float: left;
@@ -136,44 +174,44 @@ body.invoice_print {
             content: "";
             display: table;
         }
-    
+
         article h1 {
             clip: rect(0 0 0 0);
             position: absolute;
         }
-    
+
         article p {
             margin-bottom: 20px;
         }
-    
+
         /* table meta & balance */
-    
+
         table.meta:after, table.balance:after {
             clear: both;
             content: "";
             display: table;
         }
-    
+
         /* table meta */
-    
+
         table.meta {
             float: right;
             width: 50%;
             font-size: 85%;
-    
+
             th {
                 text-align: right;
                 font-weight: normal;
             }
-    
+
             td {
                 width: 120px;
                 text-align: right;
             }
         }
-    
+
         /* table balance */
-    
+
         table.balance {
             float: right;
             margin-top: 1em;
@@ -181,43 +219,43 @@ body.invoice_print {
                 text-align: right;
                 font-weight: normal;
             }
-    
+
             td {
                 width: 140px;
                 text-align: right;
                 line-height: 22px;
             }
-    
+
             .total {
                 font-weight: bold;
             }
         }
-    
+
         /* table items */
-    
+
         table.inventory {
             clear: both;
             width: 100%;
             margin-top: 2em;
             border-bottom: 1px solid #000;
         }
-    
+
         table.inventory th,
         table.inventory td {
             padding: 5px;
         }
-    
+
         table.inventory thead th {
             font-weight: bold;
             border-width: 0 0 1px 0;
             border-bottom: 1px solid #000;
             padding-bottom: 15px
         }
-    
+
         table.inventory tbody tr:first-child td {
             padding-top: 15px
         }
-    
+
         table.inventory tbody tr:last-child td {
             padding-bottom: 15px
         }

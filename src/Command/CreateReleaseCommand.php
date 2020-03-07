@@ -103,13 +103,7 @@ class CreateReleaseCommand extends Command
         $io->success('Prepare new packages for Kimai ' . $version . ' in ' . $tmpDir);
 
         $gitCmd = sprintf(self::CLONE_CMD, $version);
-        $zip = 'kimai-release-' . $version;
-
-        if ($version === Constants::VERSION && Constants::STATUS !== 'stable') {
-            $zip .= '_' . Constants::STATUS;
-        }
-
-        $zip .= '.zip';
+        $zip = 'kimai-release-' . $version . '.zip';
 
         $prefix = 'APP_ENV=prod DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite';
 

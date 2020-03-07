@@ -81,7 +81,7 @@
                         {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
                     {% endif %}
                 </td>
-                <td>{{ entry.duration|duration(isDecimal) }}</td>
+                <td class="text-nowrap">{{ entry.duration|duration(isDecimal) }}</td>
             </tr>
             {% endfor %}
             </tbody>
@@ -92,7 +92,7 @@
                 <th></th>
                 {% endif %}
                 <th>{{ 'invoice.total_working_time'|trans({}, 'messages', language) }}</th>
-                <th>{{ model.calculator.timeWorked|duration(isDecimal) }}</th>
+                <th class="text-nowrap">{{ model.calculator.timeWorked|duration(isDecimal) }}</th>
             </tr>
             </tfoot>
         </table>

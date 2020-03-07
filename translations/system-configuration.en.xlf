@@ -190,6 +190,10 @@
                 <source>Floor</source>
                 <target>Floor: begin, end and duration will be rounded down</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.default_begin">
+                <source>label.timesheet.default_begin</source>
+                <target>Default start-time (not used in all timetracking modes)</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

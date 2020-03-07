@@ -27,7 +27,7 @@ interface InvoiceFormatter
     public function getFormattedTime(\DateTime $date);
 
     /**
-     * @param int $amount
+     * @param int|float $amount
      * @param string|null $currency
      * @return mixed
      */

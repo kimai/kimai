@@ -224,4 +224,20 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->assertEquals(0, $em->getRepository(InvoiceTemplate::class)->count([]));
     }
+
+    public function testUploadDocumentAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new InvoiceFixtures();
+        $this->importFixture($client, $fixture);
+
+        $this->request($client, '/invoice/document_upload');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $node = $client->getCrawler()->filter('div.box#invoice_document_list');
+        self::assertEquals(1, $node->count());
+        // we do not test the upload here, just make sure that the action can be rendered properly
+    }
 }
