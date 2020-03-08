@@ -50,7 +50,7 @@ class HtmlRendererTest extends AbstractRendererTest
 
         $content = $response->getContent();
 
-        $this->assertStringContainsString('<h2>List of expenses</h2>', $content);
+        $this->assertStringContainsString('<h2>', $content);
         $this->assertStringContainsString('<h3>Summary</h3>', $content);
         $this->assertEquals(1, substr_count($content, 'id="export-summary"'));
         $this->assertEquals(1, substr_count($content, 'id="export-records"'));
