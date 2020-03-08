@@ -67,7 +67,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
         return $this->formConfig->getUserDefaultTheme();
     }
 
-    private function getDefaultCurrency(): ?string
+    private function getDefaultCurrency(): string
     {
         return $this->formConfig->getUserDefaultCurrency();
     }

@@ -293,7 +293,7 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('Team not found');
         }
 
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $repository->find($userId);
 
         if (null === $user) {
@@ -356,7 +356,7 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('Team not found');
         }
 
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $repository->find($userId);
 
         if (null === $user) {
@@ -419,7 +419,7 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('Team not found');
         }
 
-        /** @var Customer $customer */
+        /** @var Customer|null $customer */
         $customer = $repository->find($customerId);
 
         if (null === $customer) {
@@ -482,7 +482,7 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('Team not found');
         }
 
-        /** @var Customer $customer */
+        /** @var Customer|null $customer */
         $customer = $repository->find($customerId);
 
         if (null === $customer) {
@@ -541,7 +541,7 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('Team not found');
         }
 
-        /** @var Project $project */
+        /** @var Project|null $project */
         $project = $repository->find($projectId);
 
         if (null === $project) {
@@ -604,7 +604,7 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('Team not found');
         }
 
-        /** @var Project $project */
+        /** @var Project|null $project */
         $project = $repository->find($projectId);
 
         if (null === $project) {

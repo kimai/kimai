@@ -11,6 +11,7 @@ namespace App\Tests\Command;
 
 use App\Command\CreateUserCommand;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -58,7 +59,9 @@ class CreateUserCommandTest extends KernelTestCase
         $this->assertStringContainsString('[OK] Success! Created user: MyTestUser', $output);
 
         $container = self::$kernel->getContainer();
-        $user = $container->get('doctrine')->getRepository(User::class)->loadUserByUsername('MyTestUser');
+        /** @var UserRepository $userRepository */
+        $userRepository = $container->get('doctrine')->getRepository(User::class);
+        $user = $userRepository->loadUserByUsername('MyTestUser');
         self::assertInstanceOf(User::class, $user);
         self::assertNotNull($user);
     }

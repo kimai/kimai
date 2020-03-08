@@ -10,20 +10,32 @@
 <html>
 <head>
     <style>
-        body {font-family: sans-serif;
+        body {
+            font-family: sans-serif;
             font-size: 10pt;
         }
-        p {	margin: 0pt; }
+        p {
+            margin: 0;
+        }
         table.items {
             border: 0.1mm solid #000000;
+            width: 100%;
+            font-size: 9pt;
+            border-collapse: collapse;
         }
-        td { vertical-align: top; }
+        td, th {
+            padding: 7px;
+        }
+        td {
+            vertical-align: top;
+        }
         .items td {
             border-left: 0.1mm solid #000000;
             border-right: 0.1mm solid #000000;
         }
         .items tr.even {
-            background-color: #e0ebff;
+            /*background-color: #e0ebff;*/
+            background-color: #f5f5f5;
         }
         .items tr.summary {
             background-color: #efefef;
@@ -33,21 +45,24 @@
             border-top: 0.1mm solid #000000;
             border-bottom: 0.1mm solid #000000;
         }
-        table thead td {
+        table thead th {
             background-color: #ececec;
-            text-align: center;
             border: 0.1mm solid #000000;
             font-weight: bold;
-            font-size: 11pt;
+            font-size: 10pt;
+            text-align: left;
         }
         .items td.totals {
             font-weight: bold;
-            text-align: right;
             border: 0.1mm solid #000000;
         }
+        .items .center,
         .items td.duration,
         .items td.cost {
             text-align: center;
+        }
+        .text-nowrap {
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -82,14 +97,14 @@ mpdf-->
 </p>
 
 <h3>{{ 'export.summary'|trans }}</h3>
-<table class="items" width="100%" style="font-size: 9pt; border-collapse: collapse; " cellpadding="8">
+<table class="items">
     <thead>
     <tr>
-        <td>{{ 'label.customer'|trans }}</td>
-        <td>{{ 'label.project'|trans }}</td>
-        <td>{{ 'label.duration'|trans }}</td>
+        <th>{{ 'label.customer'|trans }}</th>
+        <th>{{ 'label.project'|trans }}</th>
+        <th class="center">{{ 'label.duration'|trans }}</th>
         {% if showRateColumn %}
-        <td>{{ 'label.rate'|trans }}</td>
+        <th class="center">{{ 'label.rate'|trans }}</th>
         {% endif %}
     </tr>
     </thead>
@@ -149,17 +164,17 @@ mpdf-->
 {% set duration = 0 %}
 {% set rate = 0 %}
 {% set currency = false %}
-<table class="items" width="100%" style="font-size: 9pt; border-collapse: collapse; " cellpadding="8">
+<table class="items">
     <thead>
     <tr>
-        <td>{{ 'label.date'|trans }}</td>
+        <th>{{ 'label.date'|trans }}</th>
         {% if showUserColumn %}
-        <td>{{ 'label.user'|trans }}</td>
+        <th>{{ 'label.user'|trans }}</th>
         {% endif %}
-        <td width="">{{ 'label.description'|trans }}</td>
-        <td>{{ 'label.duration'|trans }}</td>
+        <th>{{ 'label.description'|trans }}</th>
+        <th class="center">{{ 'label.duration'|trans }}</th>
         {% if showRateColumn %}
-        <td>{{ 'label.rate'|trans }}</td>
+        <th class="center">{{ 'label.rate'|trans }}</th>
         {% endif %}
     </tr>
     </thead>
@@ -173,7 +188,7 @@ mpdf-->
             {% set currency = null %}
         {% endif %}
         <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-            <td>
+            <td class="text-nowrap">
                 {{ entry.begin|date_time }}
                 {% if entry.end %}
                     <br>

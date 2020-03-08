@@ -26,11 +26,6 @@ class ExportServiceCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        // always first check if the primary service is defined
-        if (!$container->has(ServiceExport::class)) {
-            return;
-        }
-
         $definition = $container->findDefinition(ServiceExport::class);
 
         $taggedRenderer = $container->findTaggedServiceIds(Kernel::TAG_EXPORT_RENDERER);

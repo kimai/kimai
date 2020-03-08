@@ -42,10 +42,6 @@ class TimezoneSubscriber implements EventSubscriberInterface
 
         $user = $this->storage->getToken()->getUser();
 
-        if (null === $user) {
-            return;
-        }
-
         if ($user instanceof User) {
             date_default_timezone_set($user->getTimezone());
         }
