@@ -226,6 +226,7 @@ class TimesheetController extends BaseApiController
 
         /** @var Pagerfanta $data */
         $data = $this->repository->getPagerfantaForQuery($query);
+        $hasNextPage = $data->hasNextPage();
         $data = (array) $data->getCurrentPageResults();
 
         $view = new View($data, 200);
@@ -233,6 +234,10 @@ class TimesheetController extends BaseApiController
             $view->getContext()->setGroups(['Default', 'Subresource', 'Timesheet']);
         } else {
             $view->getContext()->setGroups(['Default', 'Collection', 'Timesheet']);
+        }
+
+        if ($hasNextPage) {
+            $view->setHeader(self::NEXT_PAGE_HEADER, 'true');
         }
 
         return $this->viewHandler->handle($view);
