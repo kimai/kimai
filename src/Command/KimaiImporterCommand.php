@@ -1305,7 +1305,7 @@ final class KimaiImporterCommand extends Command
         $newTeams = [];
         // create teams just with names of groups
         foreach ($groups as $group) {
-            if ($group['trash'] == 1) {
+            if ($group['trash'] === 1) {
                 $io->warning(sprintf('Didn\'t import team: "%s" because it is trashed.', $group['name']));
                 $skippedTrashed++;
                 continue;
@@ -1338,14 +1338,14 @@ final class KimaiImporterCommand extends Command
 
             // any other user with admin role in the team will become team lead
             // should be the last added admin of the source group
-            if ($row['membershipRoleID'] == 1) {
+            if ($row['membershipRoleID'] === 1) {
                 $team->setTeamLead($user);
             }
         }
 
         // if team has no users it will not be persisted
         foreach ($newTeams as $oldId => $team) {
-            if ($team->getTeamLead() == null) {
+            if ($team->getTeamLead() === null) {
                 $io->warning(sprintf('Didn\'t import team: %s because it has no users.', $team->getName()));
                 ++$skippedEmpty;
                 unset($newTeams[$oldId]);
@@ -1381,7 +1381,7 @@ final class KimaiImporterCommand extends Command
 
             $team->addProject($project);
 
-            if ($project->getCustomer() != null) {
+            if ($project->getCustomer() !== null) {
                 $team->addCustomer($project->getCustomer());
             }
         }
