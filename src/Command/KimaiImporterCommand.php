@@ -18,6 +18,7 @@ use App\Entity\CustomerMeta;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
 use App\Entity\ProjectRate;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -100,6 +101,10 @@ final class KimaiImporterCommand extends Command
      * @var array<Activity[]>
      */
     private $activities = [];
+    /**
+     * @var Team[]
+     */
+    protected $teams = [];
     /**
      * @var bool
      */
@@ -252,6 +257,38 @@ final class KimaiImporterCommand extends Command
             return 1;
         }
 
+        try {
+            $groups = $this->fetchAllFromImport('groups');
+        } catch (Exception $ex) {
+            $io->error('Failed to load groups: ' . $ex->getMessage());
+
+            return 1;
+        }
+
+        try {
+            $groupToCustomer = $this->fetchAllFromImport('groups_customers');
+        } catch (Exception $ex) {
+            $io->error('Failed to load groups-customers mappings: ' . $ex->getMessage());
+
+            return 1;
+        }
+
+        try {
+            $groupToProject = $this->fetchAllFromImport('groups_projects');
+        } catch (Exception $ex) {
+            $io->error('Failed to load groups-projects mappings: ' . $ex->getMessage());
+
+            return 1;
+        }
+
+        try {
+            $groupToUser = $this->fetchAllFromImport('groups_users');
+        } catch (Exception $ex) {
+            $io->error('Failed to load groups-users mappings: ' . $ex->getMessage());
+
+            return 1;
+        }
+
         $bytesCached = memory_get_usage(true);
 
         $io->success('Fetched Kimai v1 data, trying to import now ...');
@@ -294,6 +331,16 @@ final class KimaiImporterCommand extends Command
             $io->success('Imported activities: ' . $counter);
         } catch (Exception $ex) {
             $io->error('Failed to import activities: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
+
+            return 1;
+        }
+
+        try {
+            $counter = $this->importGroups($io, $groups, $groupToCustomer, $groupToProject, $groupToUser);
+            $allImports += $counter;
+            $io->success('Imported groups/teams: ' . $counter);
+        } catch (Exception $ex) {
+            $io->error('Failed to import groups/teams: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
             return 1;
         }
@@ -1212,6 +1259,173 @@ final class KimaiImporterCommand extends Command
         }
         if ($failed > 0) {
             $io->error(sprintf('Failed importing %s timesheet records', $failed));
+        }
+
+        return $counter;
+    }
+
+    /** Imports Kimai v1 groups as teams and connects teams with users, customers and projects
+     *
+     * -- are currently unsupported fields that can't be mapped
+     *
+     * $groups
+     * ["groupID"] => int(10) "1"
+     * ["name"] => varchar(160) "a group name"
+     * -- ["trash"] => tinyint(1) 1/0
+     *
+     * $groups_customers
+     * ["groupID"] => int(10) "1"
+     * ["customerID"] => int(10) "1"
+     *
+     * $groups_projects
+     * ["groupID"] => int(10) "1"
+     * ["projectID"] => int(10) "1"
+     *
+     * $groups_users
+     * ["groupID"] => int(10) "1"
+     * ["customerID"] => int(10) "1"
+     * -- ["membershipRoleID"] => int(10) "1"
+     *
+     * @param SymfonyStyle $io
+     * @param array $groups
+     * @param array $groupToCustomer
+     * @param array $groupToProject
+     * @param array $groupToUser
+     *
+     * @return int
+     * @throws Exception
+     */
+    protected function importGroups(SymfonyStyle $io, array $groups, array $groupToCustomer, array $groupToProject, array $groupToUser)
+    {
+        $counter = 0;
+        $skippedTrashed = 0;
+        $skippedEmpty = 0;
+        $failed = 0;
+
+        $newTeams = [];
+        // create teams just with names of groups
+        foreach ($groups as $group) {
+            if ($group['trash'] === 1) {
+                $io->warning(sprintf('Didn\'t import team: "%s" because it is trashed.', $group['name']));
+                $skippedTrashed++;
+                continue;
+            }
+
+            $team = new Team();
+            $team->setName($group['name']);
+
+            $newTeams[$group['groupID']] = $team;
+        }
+
+        // connect groups with users
+        foreach ($groupToUser as $row) {
+            if (!isset($newTeams[$row['groupID']])) {
+                continue;
+            }
+            $team = $newTeams[$row['groupID']];
+
+            if (!isset($this->users[$row['userID']])) {
+                continue;
+            }
+            $user = $this->users[$row['userID']];
+
+            $team->addUser($user);
+
+            // first user in the team will become team lead
+            if ($team->getTeamLead() == null) {
+                $team->setTeamLead($user);
+            }
+
+            // any other user with admin role in the team will become team lead
+            // should be the last added admin of the source group
+            if ($row['membershipRoleID'] === 1) {
+                $team->setTeamLead($user);
+            }
+        }
+
+        // if team has no users it will not be persisted
+        foreach ($newTeams as $oldId => $team) {
+            if ($team->getTeamLead() === null) {
+                $io->warning(sprintf('Didn\'t import team: %s because it has no users.', $team->getName()));
+                ++$skippedEmpty;
+                unset($newTeams[$oldId]);
+            }
+        }
+
+        // connect groups with customers
+        foreach ($groupToCustomer as $row) {
+            if (!isset($newTeams[$row['groupID']])) {
+                continue;
+            }
+            $team = $newTeams[$row['groupID']];
+
+            if (!isset($this->customers[$row['customerID']])) {
+                continue;
+            }
+            $customer = $this->customers[$row['customerID']];
+
+            $team->addCustomer($customer);
+        }
+
+        // connect groups with projects
+        foreach ($groupToProject as $row) {
+            if (!isset($newTeams[$row['groupID']])) {
+                continue;
+            }
+            $team = $newTeams[$row['groupID']];
+
+            if (!isset($this->projects[$row['projectID']])) {
+                continue;
+            }
+            $project = $this->projects[$row['projectID']];
+
+            $team->addProject($project);
+
+            if ($project->getCustomer() !== null) {
+                $team->addCustomer($project->getCustomer());
+            }
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        // validate and persist each team
+        foreach ($newTeams as $oldId => $team) {
+            if (!$this->validateImport($io, $team)) {
+                throw new Exception('Failed to validate team: ' . $team->getName());
+            }
+
+            try {
+                $entityManager->persist($team);
+                if ($this->debug) {
+                    $io->success(
+                        sprintf(
+                            'Created team: %s with %s users, %s projects and %s customers.',
+                            $team->getName(),
+                            count($team->getUsers()),
+                            count($team->getProjects()),
+                            count($team->getCustomers())
+                        )
+                    );
+                }
+                ++$counter;
+                $this->teams[$oldId] = $team;
+            } catch (Exception $ex) {
+                $io->error('Failed to create team: ' . $team->getName());
+                $io->error('Reason: ' . $ex->getMessage());
+                ++$failed;
+            }
+        }
+
+        $entityManager->flush();
+
+        if ($skippedTrashed > 0) {
+            $io->warning('Didn\'t import teams because they are trashed: ' . $skippedTrashed);
+        }
+        if ($skippedEmpty > 0) {
+            $io->warning('Didn\'t import teams because they have no users: ' . $skippedEmpty);
+        }
+        if ($failed > 0) {
+            $io->error('Failed importing teams: ' . $failed);
         }
 
         return $counter;
