@@ -36,7 +36,7 @@ final class DoctrineUserProvider implements UserProviderInterface
         $user = null;
 
         try {
-            /** @var User $user */
+            /** @var User|null $user */
             $user = $this->repository->loadUserByUsername($username);
         } catch (\Exception $ex) {
         }
@@ -57,7 +57,7 @@ final class DoctrineUserProvider implements UserProviderInterface
             throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', User::class, get_class($user)));
         }
 
-        /** @var User $reloadedUser */
+        /** @var User|null $reloadedUser */
         $reloadedUser = $this->repository->getUserById($user->getId());
 
         if (null === $reloadedUser) {

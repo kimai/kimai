@@ -44,7 +44,7 @@ export default class KimaiAlert extends KimaiPlugin {
             timer: 2000,
             timerProgressBar: true,
             toast: true,
-            position: 'top-end',
+            position: 'top',
             showConfirmButton: false,
             icon: 'success',
             title: message,

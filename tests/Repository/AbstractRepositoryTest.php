@@ -10,7 +10,8 @@
 namespace App\Tests\Repository;
 
 use App\Tests\KernelTestTrait;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -21,7 +22,7 @@ abstract class AbstractRepositoryTest extends KernelTestCase
     use KernelTestTrait;
 
     /**
-     * @var EntityManager|null
+     * @var ObjectManager|null
      */
     private $entityManager;
 
@@ -38,7 +39,7 @@ abstract class AbstractRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @return EntityManager
+     * @return ObjectManager
      */
     protected function getEntityManager()
     {
@@ -52,7 +53,9 @@ abstract class AbstractRepositoryTest extends KernelTestCase
     {
         parent::tearDown();
 
-        $this->entityManager->close();
+        if ($this->entityManager instanceof EntityManagerInterface) {
+            $this->entityManager->close();
+        }
         $this->entityManager = null; // avoid memory leaks
     }
 }

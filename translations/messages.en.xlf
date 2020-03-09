@@ -970,7 +970,7 @@
             </trans-unit>
             <trans-unit id="export.document_title">
                 <source>export.document_title</source>
-                <target>List of expenses</target>
+                <target>Export of timesheets</target>
             </trans-unit>
             <trans-unit id="export.full_list">
                 <source>export.full_list</source>

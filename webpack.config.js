@@ -10,6 +10,7 @@ Encore
     .cleanupOutputBeforeBuild()
 
     .addEntry('app', './assets/app.js')
+    .addEntry('invoice', './assets/invoice.js')
     .addEntry('chart', './assets/chart.js')
     .addEntry('calendar', './assets/calendar.js')
     .copyFiles({ from: './assets/images', to: 'images/[path][name].[ext]' })

@@ -1,3 +1,12 @@
 .swal2-popup {
     font-size: unset;
 }
+
+.swal2-container {
+    top: 95px !important;
+
+    // never block the top two bars double-bars display (smaller displays)
+    @media only screen and (max-width: 768px) {
+        width: 80%;
+    }
+}
