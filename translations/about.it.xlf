@@ -2,9 +2,41 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="it" datatype="plaintext" original="about.en.xlf">
         <body>
+            <trans-unit id="about.title">
+                <source>about.title</source>
+                <target>Approposito di Kimai</target>
+            </trans-unit>
+            <trans-unit id="support">
+                <source>support</source>
+                <target>Supporto</target>
+            </trans-unit>
+            <trans-unit id="website">
+                <source>website</source>
+                <target>Sito web</target>
+            </trans-unit>
             <trans-unit id="help">
                 <source>help</source>
                 <target>Aiuto</target>
+            </trans-unit>
+            <trans-unit id="tab.thanks">
+                <source>tab.thanks</source>
+                <target>Ringraziamenti</target>
+            </trans-unit>
+            <trans-unit id="donate">
+                <source>donate</source>
+                <target>Donazione per lo sviluppo Kimai</target>
+            </trans-unit>
+            <trans-unit id="published_under">
+                <source>published_under</source>
+                <target>%kimai% è pubblicato su</target>
+            </trans-unit>
+            <trans-unit id="special_thanks">
+                <source>special_thanks</source>
+                <target>Ringraziamenti speciali vanno a …</target>
+            </trans-unit>
+            <trans-unit id="library_authors">
+                <source>library_authors</source>
+                <target>… gli autori delle seguenti librerie software, Kimai non esisterebbe senza loro 👍</target>
             </trans-unit>
         </body>
     </file>
