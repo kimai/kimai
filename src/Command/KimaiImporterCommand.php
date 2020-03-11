@@ -738,6 +738,14 @@ final class KimaiImporterCommand extends Command
 
         foreach ($projects as $oldProject) {
             $isActive = (bool) $oldProject['visible'] && !(bool) $oldProject['trash'];
+
+            if (!isset($this->customers[$oldProject['customerID']])) {
+                $io->error(
+                    sprintf('Found project with unknown customer. Project ID: "%s", Name: "%s", Customer ID: "%s"', $oldProject['projectID'], $oldProject['name'], $oldProject['customerID'])
+                );
+                continue;
+            }
+
             $customer = $this->customers[$oldProject['customerID']];
             $name = $oldProject['name'];
             if (empty($name)) {
