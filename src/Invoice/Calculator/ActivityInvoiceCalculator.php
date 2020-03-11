@@ -24,10 +24,6 @@ class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements 
             return '__NULL__';
         }
 
-        if (null === $invoiceItem->getActivity()->getId()) {
-            return '__NEW__';
-        }
-
         return (string) $invoiceItem->getActivity()->getId();
     }
 

@@ -9,8 +9,12 @@
 
 namespace App\Invoice;
 
+use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
+use App\Event\InvoicePostRenderEvent;
 use App\Repository\InvoiceDocumentRepository;
+use App\Utils\FileHelper;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Service to manage invoice dependencies.
@@ -37,10 +41,15 @@ final class ServiceInvoice
      * @var InvoiceDocumentRepository
      */
     private $documents;
+    /**
+     * @var FileHelper
+     */
+    private $fileHelper;
 
-    public function __construct(InvoiceDocumentRepository $repository)
+    public function __construct(InvoiceDocumentRepository $repository, FileHelper $fileHelper)
     {
         $this->documents = $repository;
+        $this->fileHelper = $fileHelper;
     }
 
     public function addNumberGenerator(NumberGeneratorInterface $generator): ServiceInvoice
@@ -140,5 +149,59 @@ final class ServiceInvoice
         $this->invoiceItemRepositories[] = $invoiceItemRepository;
 
         return $this;
+    }
+
+    private function getInvoicesDirectory(): string
+    {
+        return $this->fileHelper->getDataSubdirectory('invoices');
+    }
+
+    public function getInvoiceFile(Invoice $invoice): ?\SplFileInfo
+    {
+        $invoiceDirectory = $this->getInvoicesDirectory();
+        $filename = $invoice->getInvoiceFilename();
+        $full = $invoiceDirectory . $filename;
+
+        if (is_file($full) && is_readable($full)) {
+            return new \SplFileInfo($full);
+        }
+
+        return null;
+    }
+
+    public function saveGeneratedInvoice(InvoicePostRenderEvent $event): string
+    {
+        $invoiceDirectory = $this->getInvoicesDirectory();
+        $filename = (string) new InvoiceFilename($event->getModel());
+
+        $response = $event->getResponse();
+
+        if ($event->getResponse()->headers->has('Content-Disposition')) {
+            $disposition = $event->getResponse()->headers->get('Content-Disposition');
+            $parts = explode(';', $disposition);
+            foreach ($parts as $part) {
+                if (stripos($part, 'filename=') === false) {
+                    continue;
+                }
+                $filename = explode('filename=', $part);
+                if (count($filename) > 1) {
+                    $filename = $filename[1];
+                }
+            }
+        } else {
+            $disposition = $event->getResponse()->headers->get('Content-Type');
+            $parts = explode(';', $disposition);
+            $parts = explode('/', $parts[0]);
+            $filename .= '.' . $parts[1];
+        }
+
+        if ($response instanceof BinaryFileResponse) {
+            $file = $response->getFile();
+            $file->move($invoiceDirectory, $filename);
+        } else {
+            $this->fileHelper->saveFile($invoiceDirectory . $filename, $event->getResponse()->getContent());
+        }
+
+        return $filename;
     }
 }
