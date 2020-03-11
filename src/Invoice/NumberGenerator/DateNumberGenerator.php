@@ -28,7 +28,7 @@ class DateNumberGenerator implements NumberGeneratorInterface
      */
     public function getId(): string
     {
-        return 'default';
+        return 'date';
     }
 
     /**

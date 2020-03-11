@@ -25,6 +25,6 @@ class DateNumberGeneratorTest extends TestCase
         $sut->setModel(new InvoiceModel(new DebugFormatter()));
 
         $this->assertEquals(date('ymd'), $sut->getInvoiceNumber());
-        $this->assertEquals('default', $sut->getId());
+        $this->assertEquals('date', $sut->getId());
     }
 }
