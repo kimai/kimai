@@ -228,7 +228,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultTrue()
                 ->end()
                 ->scalarNode('number_format')
-                    ->defaultValue('ymd')
+                    ->defaultValue('{date}')
                 ->end()
             ->end()
         ;
