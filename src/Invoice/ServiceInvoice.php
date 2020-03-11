@@ -195,6 +195,10 @@ final class ServiceInvoice
             $filename .= '.' . $parts[1];
         }
 
+        if (is_file($invoiceDirectory . $filename)) {
+            throw new \Exception(sprintf('Invoice "%s" already exists', $filename));
+        }
+
         if ($response instanceof BinaryFileResponse) {
             $file = $response->getFile();
             $file->move($invoiceDirectory, $filename);

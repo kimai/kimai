@@ -190,12 +190,16 @@ final class InvoiceModel
         return new \DateTime('+' . $this->getTemplate()->getDueDays() . ' days');
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getInvoiceDate(): \DateTime
     {
         return $this->invoiceDate;
+    }
+
+    public function setInvoiceDate(\DateTime $date): InvoiceModel
+    {
+        $this->invoiceDate = $date;
+
+        return $this;
     }
 
     public function setNumberGenerator(NumberGeneratorInterface $generator): InvoiceModel

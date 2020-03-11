@@ -4,8 +4,16 @@
 
     {% set actions = {'visibility': '#modal_invoice'} %}
 
+    {% if is_granted('history_invoice') %}
+        {% set actions = actions|merge({'list': path('admin_invoice_list')}) %}
+    {% endif %}
+
     {% if is_granted('manage_invoice_template') %}
         {% set actions = actions|merge({'invoice-template': path('admin_invoice_template')}) %}
+    {% endif %}
+
+    {% if is_granted('system_configuration') %}
+        {% set actions = actions|merge({'settings': {'url': path('system_configuration_section', {'section': 'invoice'}), 'class': 'modal-ajax-form'}}) %}
     {% endif %}
 
     {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
@@ -34,6 +42,46 @@
     {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
 
     {% set event = trigger('actions.invoice_templates', {'actions': actions, 'view': 'index'}) %}
+    {{ widgets.page_actions(actions) }}
+{% endmacro %}
+
+{% macro invoice(invoice) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+
+    {% if is_granted('history_invoice') %}
+        {% if invoice.new %}
+            {% set actions = actions|merge({'invoice.pending': path('admin_invoice_status', {'id': invoice.id, 'status': 'pending'})}) %}
+        {% elseif invoice.pending %}
+            {% set actions = actions|merge({'invoice.paid': path('admin_invoice_status', {'id': invoice.id, 'status': 'paid'})}) %}
+        {% endif %}
+
+        {% if actions|length > 0 %}
+            {% set actions = actions|merge({'divider': null}) %}
+        {% endif %}
+
+        {% set actions = actions|merge({'download': {'url': path('admin_invoice_download', {'id': invoice.id}), 'target': '_blank'}}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.invoice', {'actions': actions, 'invoice': invoice}) %}
+    {{ widgets.table_actions(actions) }}
+{% endmacro %}
+
+{% macro invoice_listing(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+
+    {% if is_granted('view_invoice') %}
+        {% set actions = actions|merge({'back': path('invoice')}) %}
+    {% endif %}
+
+    {% set actions = actions|merge({'visibility': '#modal_invoices'}) %}
+
+    {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.invoice_details', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(actions) }}
 {% endmacro %}
 

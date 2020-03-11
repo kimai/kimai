@@ -11,10 +11,19 @@ namespace App\Entity;
 
 use App\Invoice\InvoiceModel;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_invoices")
+ * @ORM\Table(name="kimai2_invoices",
+ *      uniqueConstraints={
+ *          @ORM\UniqueConstraint(columns={"invoice_number"}),
+ *          @ORM\UniqueConstraint(columns={"invoice_filename"})
+ *      }
+ * )
+ * @UniqueEntity("invoiceNumber")
+ * @UniqueEntity("invoiceFilename")
+ *
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
  */
 class Invoice
@@ -31,6 +40,14 @@ class Invoice
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="invoice_number", type="string", length=50, nullable=false)
+     * @Assert\NotNull()
+     */
+    private $invoiceNumber;
 
     /**
      * @var Customer|null
@@ -66,6 +83,54 @@ class Invoice
     private $timezone;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="total", type="float", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $total = 0.00;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="tax", type="float", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $tax = 0.00;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="currency", type="string", length=3, nullable=false)
+     * @Assert\Length(max=3)
+     */
+    private $currency;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="due_days", type="integer", length=3, nullable=false)
+     * @Assert\Range(min = 0, max = 999)
+     */
+    private $dueDays = 30;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="vat", type="float", nullable=false)
+     * @Assert\Range(min = 0.0, max = 99.99)
+     */
+    private $vat = 0.00;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vat_id", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
+     */
+    private $vatId;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=20, nullable=false)
@@ -79,18 +144,10 @@ class Invoice
      */
     private $invoiceFilename;
 
-    // all fields are defined in the trait, as it is used for the "InvoiceTemplate" entity as well
-    use InvoiceSettingsTrait;
-
     /**
      * @var bool
      */
     private $localized = false;
-
-    public function __construct()
-    {
-        $this->setCreatedAt(new \DateTime());
-    }
 
     public function getId(): ?int
     {
@@ -107,11 +164,21 @@ class Invoice
         return $this->user;
     }
 
+    public function getInvoiceNumber(): ?string
+    {
+        return $this->invoiceNumber;
+    }
+
+    public function getTotal(): float
+    {
+        return $this->total;
+    }
+
     public function getCreatedAt(): ?\DateTime
     {
         if (!$this->localized) {
             if (null !== $this->createdAt && null !== $this->timezone) {
-                $this->createdAt->setTimeZone(new DateTimeZone($this->timezone));
+                $this->createdAt->setTimeZone(new \DateTimeZone($this->timezone));
             }
 
             $this->localized = true;
@@ -122,22 +189,15 @@ class Invoice
 
     public function getDueDate(): ?\DateTime
     {
-        $tz = $this->timezone;
-        if (null === $tz) {
-            $tz = date_default_timezone_get();
-        }
+        $dueDate = clone $this->getCreatedAt();
+        $dueDate->modify('+ ' . $this->dueDays . 'days');
 
-        return new \DateTime('+ ' . $this->dueDays . 'days', new DateTimeZone($tz));
+        return $dueDate;
     }
 
     public function isOverdue(): bool
     {
-        $tz = $this->timezone;
-        if (null === $tz) {
-            $tz = date_default_timezone_get();
-        }
-
-        return $this->getDueDate()->getTimestamp() < (new \DateTime('now', $tz))->getTimestamp();
+        return $this->getDueDate()->getTimestamp() < (new \DateTime('now', new \DateTimeZone($this->timezone)))->getTimestamp();
     }
 
     public function setFilename(string $filename): Invoice
@@ -147,43 +207,42 @@ class Invoice
         return $this;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): Invoice
-    {
-        $this->createdAt = $createdAt;
-        $this->timezone = $createdAt->getTimezone()->getName();
-
-        return $this;
-    }
-
     public function setModel(InvoiceModel $model): Invoice
     {
         $this->customer = $model->getCustomer();
+        $this->user = $model->getUser();
+        $this->total = $model->getCalculator()->getTotal();
+        $this->tax = $model->getCalculator()->getTax();
+        $this->invoiceNumber = $model->getNumberGenerator()->getInvoiceNumber();
+        $this->currency = $model->getCurrency();
+
+        $createdAt = $model->getInvoiceDate();
+        $this->createdAt = $createdAt;
+        $this->timezone = $createdAt->getTimezone()->getName();
 
         $template = $model->getTemplate();
-        $this->title = $template->getTitle();
-        $this->company = $template->getCompany();
-        $this->user = $model->getUser();
         $this->vatId = $template->getVatId();
-        $this->address = $template->getAddress();
-        $this->contact = $template->getContact();
         $this->dueDays = $template->getDueDays();
         $this->vat = $template->getVat();
-        $this->calculator = $template->getCalculator();
-        $this->numberGenerator = $template->getNumberGenerator();
-        $this->renderer = $template->getRenderer();
-        $this->paymentTerms = $template->getPaymentTerms();
-        $this->paymentDetails = $template->getPaymentDetails();
-        $this->decimalDuration = $template->isDecimalDuration();
-        $this->language = $template->getLanguage();
 
         return $this;
     }
 
-    public function setIsPaid(): Invoice
+    public function isNew(): bool
     {
-        $this->status = self::STATUS_PAID;
+        return $this->status === self::STATUS_NEW;
+    }
+
+    public function setIsNew(): Invoice
+    {
+        $this->status = self::STATUS_NEW;
 
         return $this;
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === self::STATUS_PENDING;
     }
 
     public function setIsPending(): Invoice
@@ -193,29 +252,16 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function isPaid(): bool
     {
-        return $this->getId();
+        return $this->status === self::STATUS_PAID;
     }
 
-    // ---- trait methods below ---
-
-    public function getTitle(): ?string
+    public function setIsPaid(): Invoice
     {
-        return $this->title;
-    }
+        $this->status = self::STATUS_PAID;
 
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function getNumberGenerator(): string
-    {
-        return $this->numberGenerator;
+        return $this;
     }
 
     public function getDueDays(): int
@@ -228,48 +274,23 @@ class Invoice
         return $this->vat;
     }
 
-    public function getCompany(): ?string
-    {
-        return $this->company;
-    }
-
-    public function getRenderer(): string
-    {
-        return $this->renderer;
-    }
-
-    public function getCalculator(): string
-    {
-        return $this->calculator;
-    }
-
-    public function getPaymentTerms(): ?string
-    {
-        return $this->paymentTerms;
-    }
-
     public function getVatId(): ?string
     {
         return $this->vatId;
     }
 
-    public function getContact(): ?string
+    public function getTax(): float
     {
-        return $this->contact;
+        return $this->tax;
     }
 
-    public function getPaymentDetails(): ?string
+    public function getCurrency(): ?string
     {
-        return $this->paymentDetails;
+        return $this->currency;
     }
 
-    public function isDecimalDuration(): bool
+    public function getInvoiceFilename(): ?string
     {
-        return $this->decimalDuration;
-    }
-
-    public function getLanguage(): ?string
-    {
-        return $this->language;
+        return $this->invoiceFilename;
     }
 }

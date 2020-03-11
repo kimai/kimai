@@ -76,7 +76,6 @@ class InvoiceControllerTest extends ControllerBaseTest
                 'company' => 'Company name',
                 'renderer' => 'default',
                 'calculator' => 'default',
-                'numberGenerator' => 'default',
             ]
         ]);
 
@@ -111,7 +110,6 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertEquals($template->getCompany(), $values['company']);
         $this->assertEquals($template->getAddress(), $values['address']);
         $this->assertEquals($template->getPaymentTerms(), $values['paymentTerms']);
-        $this->assertEquals($template->getNumberGenerator(), $values['numberGenerator']);
     }
 
     public function testPrintAction()
@@ -153,8 +151,8 @@ class InvoiceControllerTest extends ControllerBaseTest
         // no warning should be displayed
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
-        // but the datatable with all timesheets
-        $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
+        // but the datatable with all timesheets + 1 row for the total
+        $this->assertDataTableRowCount($client, 'datatable_invoice', 21);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
@@ -196,7 +194,6 @@ class InvoiceControllerTest extends ControllerBaseTest
                 'company' => 'Company name',
                 'renderer' => 'default',
                 'calculator' => 'default',
-                'numberGenerator' => 'default',
             ]
         ]);
 
