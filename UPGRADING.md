@@ -8,6 +8,17 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [1.9](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
+
+- The directory `var/data/invoices/` will be used to store archived invoice files (check file permissions)
+- **BC break**: HTML invoice templates are now treated like other files and offered as download. If you are using relative URLs for including 
+assets (CSS, images) you need to either inline them (see the default templates) or use absolute URLs.  
+
+Permission changes:
+- `history_invoice` - NEW: grants all features of the new invoice archive (by default for all admins)
+
+### Developer
+
 ## [1.8](https://github.com/kevinpapst/kimai2/releases/tag/1.8)
 
 - New mailer library: check if emails are still working (eg. by using the "password forgotten" function) or if you need to adjust your configuration, [see docs at symfony.com](https://symfony.com/doc/current/components/mailer.html#transport)
