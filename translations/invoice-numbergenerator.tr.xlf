@@ -6,9 +6,9 @@
                 <source>label.invoice_number_generator</source>
                 <target state="translated">Faturano-Oluşturucu</target>
             </trans-unit>
-            <trans-unit id="default">
-                <source>default</source>
-                <target state="translated">Tarih (varsayılan)</target>
+            <trans-unit id="date">
+                <source>date</source>
+                <target state="translated">Tarih</target>
             </trans-unit>
         </body>
     </file>
