@@ -752,10 +752,6 @@
                 <source>invoice.title</source>
                 <target>Facturen maken</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Zet uw prestaties om in een factuur</target>
-            </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
                 <target>Filter op factuurdatum</target>

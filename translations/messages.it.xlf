@@ -538,10 +538,6 @@
                 <source>invoice.title</source>
                 <target>Fatture</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Crea fattura dalle registrazioni.</target>
-            </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
                 <target>Stampa</target>

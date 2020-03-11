@@ -712,10 +712,6 @@
                 <source>invoice.title</source>
                 <target state="translated">인보이스</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target state="translated">기록된 시간기록표를 바탕으로 인보이스 생성</target>
-            </trans-unit>
             <trans-unit id="invoice.preview">
                 <source>invoice.preview</source>
                 <target state="translated">인보이스에 표시되는 정보의 미리보기</target>

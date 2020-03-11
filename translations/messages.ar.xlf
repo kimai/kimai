@@ -561,10 +561,6 @@
                 <source>invoice.title</source>
                 <target>الفواتير</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>م بإنشاء فواتير من بيانات ورقة التوقيت الخاصة بك.</target>
-            </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
                 <target>طباعة</target>
