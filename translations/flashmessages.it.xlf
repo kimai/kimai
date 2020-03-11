@@ -2,21 +2,33 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="it" datatype="plaintext" original="flashmessages.en.xlf">
         <body>
+            <trans-unit id="warning">
+                <source>warning</source>
+                <target>Avvertimento</target>
+            </trans-unit>
             <trans-unit id="timesheet.stop.success">
                 <source>timesheet.stop.success</source>
-                <target>Time-recording é stata fermata</target>
+                <target>La registrazione é stata fermata</target>
             </trans-unit>
             <trans-unit id="timesheet.stop.error">
                 <source>timesheet.stop.error</source>
-                <target>Time-recording non può essere fermata</target>
+                <target>La registrazione non può essere fermata</target>
             </trans-unit>
             <trans-unit id="timesheet.start.success">
                 <source>timesheet.start.success</source>
-                <target>Time-recording avviata</target>
+                <target>Registrazione avviata</target>
             </trans-unit>
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
-                <target>Time-recording non può essere avviata</target>
+                <target>La registrazione non può essere avviata</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.exceeded_limit">
+                <source>timesheet.start.exceeded_limit</source>
+                <target>Il limite delle registrazioni attivabili è stato raggiunto, cortesemente interrompere almeno una registrazione attiva.</target>
+            </trans-unit>
+            <trans-unit id="timesheet.locked.warning">
+                <source>timesheet.locked.warning</source>
+                <target>Stai modificando attività già esportate</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>
@@ -24,7 +36,7 @@
             </trans-unit>
             <trans-unit id="action.update.error">
                 <source>action.update.error</source>
-                <target>Changes could not be saved: %reason%</target>
+                <target>I cambiamenti non possono essere salvati: %reason%</target>
             </trans-unit>
             <trans-unit id="action.delete.success">
                 <source>action.delete.success</source>
@@ -36,7 +48,7 @@
             </trans-unit>
             <trans-unit id="invoice.first_template">
                 <source>invoice.first_template</source>
-                <target>Crea un template di fatturazione per continuare!</target>
+                <target>Crea un modello di fatturazione per continuare!</target>
             </trans-unit>
         </body>
     </file>
