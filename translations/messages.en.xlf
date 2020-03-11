@@ -820,10 +820,6 @@
                 <source>invoice.title</source>
                 <target>Invoices</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Create invoices from your recorded timesheet entries.</target>
-            </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
                 <target>Filter invoice data</target>
@@ -831,6 +827,10 @@
             <trans-unit id="button.preview">
                 <source>button.preview</source>
                 <target>Preview</target>
+            </trans-unit>
+            <trans-unit id="button.preview_print">
+                <source>button.preview_print</source>
+                <target>Print preview</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -947,6 +947,22 @@
             <trans-unit id="label.decimalDuration">
                 <source>label.decimalDuration</source>
                 <target>Display duration as decimal number</target>
+            </trans-unit>
+            <trans-unit id="label.status">
+                <source>label.status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="status.new">
+                <source>status.new</source>
+                <target>New</target>
+            </trans-unit>
+            <trans-unit id="status.pending">
+                <source>status.pending</source>
+                <target>Pending</target>
+            </trans-unit>
+            <trans-unit id="status.paid">
+                <source>status.paid</source>
+                <target>Paid</target>
             </trans-unit>
 
             <!--
