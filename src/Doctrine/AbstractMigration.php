@@ -45,7 +45,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     /**
      * @param string $name
      * @return string
-     * @deprecated since 0.9
+     * @deprecated since 0.9 - will be removed with 2.0
      */
     protected function getTableName($name)
     {
