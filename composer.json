@@ -125,7 +125,7 @@
     },
     "suggest": {
         "ext-mbstring": "If ext-mbstring is not available you MUST install symfony/polyfill-mbstring",
-        "zendframework/zend-ldap": "For LDAP authentication with Kimai"
+        "laminas/laminas-ldap": "For LDAP authentication with Kimai"
     },
     "scripts": {
         "auto-scripts": {
