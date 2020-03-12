@@ -290,7 +290,7 @@ class ConfigurationTest extends TestCase
                     1 => 'templates/invoice/renderer/',
                 ],
                 'simple_form' => true,
-                'number_format' => '{date}',
+                'number_format' => '{Y}/{cy,3}',
             ],
             'languages' => [],
             'calendar' => [
