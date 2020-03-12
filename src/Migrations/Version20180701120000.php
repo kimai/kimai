@@ -22,21 +22,15 @@ final class Version20180701120000 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
-        $platform = $this->getPlatform();
+        $users = 'kimai2_users';
+        $userPreferences = 'kimai2_user_preferences';
+        $customers = 'kimai2_customers';
+        $projects = 'kimai2_projects';
+        $activities = 'kimai2_activities';
+        $timesheets = 'kimai2_timesheet';
+        $invoiceTemplates = 'kimai2_invoice_templates';
 
-        if (!in_array($platform, ['sqlite', 'mysql'])) {
-            $this->abortIf(true, 'Unsupported database platform: ' . $platform);
-        }
-
-        $users = $this->getTableName('users');
-        $userPreferences = $this->getTableName('user_preferences');
-        $customers = $this->getTableName('customers');
-        $projects = $this->getTableName('projects');
-        $activities = $this->getTableName('activities');
-        $timesheets = $this->getTableName('timesheet');
-        $invoiceTemplates = $this->getTableName('invoice_templates');
-
-        if ($platform === 'sqlite') {
+        if ($this->isPlatformSqlite()) {
             $this->addSql('CREATE TABLE ' . $users . ' (id INTEGER NOT NULL, name VARCHAR(60) NOT NULL, mail VARCHAR(160) NOT NULL, password VARCHAR(254) DEFAULT NULL, alias VARCHAR(60) DEFAULT NULL, active BOOLEAN NOT NULL, registration_date DATETIME DEFAULT NULL, title VARCHAR(50) DEFAULT NULL, avatar VARCHAR(255) DEFAULT NULL, roles CLOB NOT NULL --(DC2Type:array)
         , PRIMARY KEY(id))');
             $this->addSql('CREATE UNIQUE INDEX UNIQ_B9AC5BCE5E237E06 ON ' . $users . ' (name)');
@@ -72,26 +66,12 @@ final class Version20180701120000 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $platform = $this->getPlatform();
-
-        if (!in_array($platform, ['sqlite', 'mysql'])) {
-            $this->abortIf(true, 'Unsupported database platform: ' . $platform);
-        }
-
-        $users = $this->getTableName('users');
-        $userPreferences = $this->getTableName('user_preferences');
-        $customers = $this->getTableName('customers');
-        $projects = $this->getTableName('projects');
-        $activities = $this->getTableName('activities');
-        $timesheets = $this->getTableName('timesheet');
-        $invoiceTemplates = $this->getTableName('invoice_templates');
-
-        $this->addSql('DROP TABLE ' . $invoiceTemplates);
-        $this->addSql('DROP TABLE ' . $timesheets);
-        $this->addSql('DROP TABLE ' . $userPreferences);
-        $this->addSql('DROP TABLE ' . $users);
-        $this->addSql('DROP TABLE ' . $activities);
-        $this->addSql('DROP TABLE ' . $projects);
-        $this->addSql('DROP TABLE ' . $customers);
+        $schema->dropTable('kimai2_invoice_templates');
+        $schema->dropTable('kimai2_timesheet');
+        $schema->dropTable('kimai2_user_preferences');
+        $schema->dropTable('kimai2_users');
+        $schema->dropTable('kimai2_activities');
+        $schema->dropTable('kimai2_projects');
+        $schema->dropTable('kimai2_customers');
     }
 }
