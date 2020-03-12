@@ -52,6 +52,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
     public function getTestData()
     {
         $timestamp = time();
+
         return [
             // simple tests for single calls
             ['{date}', date('ymd'), $timestamp],
