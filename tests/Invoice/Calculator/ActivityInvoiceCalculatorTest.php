@@ -101,7 +101,35 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setActivity($activity3)
             ->setProject((new Project())->setName('bar'));
 
-        $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
+        $timesheet6 = new Timesheet();
+        $timesheet6
+            ->setBegin(new \DateTime())
+            ->setEnd(new \DateTime())
+            ->setDuration(0)
+            ->setRate(0)
+            ->setUser(new User())
+            ->setProject((new Project())->setName('bar'));
+
+        $timesheet7 = new Timesheet();
+        $timesheet7
+            ->setBegin(new \DateTime())
+            ->setEnd(new \DateTime())
+            ->setDuration(0)
+            ->setRate(0)
+            ->setUser(new User())
+            ->setActivity(new Activity())
+            ->setProject((new Project())->setName('bar'));
+
+        $timesheet8 = new Timesheet();
+        $timesheet8
+            ->setBegin(new \DateTime())
+            ->setEnd(new \DateTime())
+            ->setDuration(0)
+            ->setRate(0)
+            ->setUser(new User())
+            ->setProject((new Project())->setName('bar'));
+
+        $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5, $timesheet6, $timesheet7, $timesheet8];
 
         $query = new InvoiceQuery();
         $query->setActivity($activity1);
@@ -121,7 +149,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals('EUR', $model->getCurrency());
         $this->assertEquals(2521.12, $sut->getSubtotal());
         $this->assertEquals(6600, $sut->getTimeWorked());
-        $this->assertEquals(3, count($sut->getEntries()));
+        $this->assertEquals(5, count($sut->getEntries()));
 
         $entries = $sut->getEntries();
         $this->assertEquals(404.38, $entries[0]->getRate());

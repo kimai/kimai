@@ -16,12 +16,45 @@ use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @group integration
  */
 class InvoiceControllerTest extends ControllerBaseTest
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $path = realpath(__DIR__ . '/../_data/invoices/') . '/';
+
+        if (is_dir($path)) {
+            $files = glob($path . '*');
+            foreach ($files as $file) {
+                unlink($file);
+            }
+        }
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->clearInvoiceFiles();
+    }
+
+    private function clearInvoiceFiles()
+    {
+        $path = realpath(__DIR__ . '/../_data/invoices/') . '/';
+
+        if (is_dir($path)) {
+            $files = glob($path . '*');
+            foreach ($files as $file) {
+                unlink($file);
+            }
+        }
+        clearstatcache(true);
+    }
+
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/invoice/');
@@ -176,6 +209,77 @@ class InvoiceControllerTest extends ControllerBaseTest
         foreach ($timesheets as $timesheet) {
             $this->assertTrue($timesheet->isExported());
         }
+    }
+
+    public function testPrintActionAsAdminWithDownload()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EntityManager $em */
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new InvoiceFixtures();
+        $this->importFixture($client, $fixture);
+
+        $begin = new \DateTime('first day of this month');
+        $end = new \DateTime('last day of this month');
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setAmount(20)
+            ->setStartDate($begin)
+        ;
+        $this->importFixture($client, $fixture);
+
+        $this->request($client, '/invoice/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
+
+        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/invoice/?preview='));
+        $node->setAttribute('method', 'GET');
+        $client->submit($form, [
+            'template' => 1,
+            'daterange' => $dateRange,
+            'customer' => 1,
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        // no warning should be displayed
+        $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
+        $this->assertEquals(0, $node->count());
+        // but the datatable with all timesheets + 1 row for the total
+        $this->assertDataTableRowCount($client, 'datatable_invoice', 21);
+
+        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/invoice/?create='));
+        $node->setAttribute('method', 'GET');
+        $client->submit($form, [
+            'template' => 1,
+            'daterange' => $dateRange,
+            'customer' => 1,
+            'project' => 1,
+            'markAsExported' => 1,
+        ]);
+
+        $this->assertIsRedirect($client, '/invoice/show?id=1');
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertHasFlashSuccess($client);
+
+        $this->assertHasDataTable($client);
+        $this->assertDataTableRowCount($client, 'datatable_invoices', 1);
+
+        // make sure the invoice is saved
+        $this->request($client, '/invoice/download/1');
+        $response = $client->getResponse();
+        $this->assertTrue($response->isSuccessful());
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
+        self::assertFileExists($response->getFile());
     }
 
     public function testEditTemplateAction()
