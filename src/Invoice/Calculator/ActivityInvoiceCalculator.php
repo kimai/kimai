@@ -27,7 +27,7 @@ class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements 
         return (string) $invoiceItem->getActivity()->getId();
     }
 
-    protected function mergeSumTimesheet(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
+    protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
     {
         if (null === $entry->getActivity()) {
             return;

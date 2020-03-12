@@ -15,20 +15,6 @@ use App\Invoice\InvoiceItemInterface;
 interface ExportItemInterface extends InvoiceItemInterface
 {
     /**
-     * A name representation for this type of export.
-     *
-     * @return string
-     */
-    public function getType(): string;
-
-    /**
-     * A name representation for the category of this type.
-     *
-     * @return string
-     */
-    public function getCategory(): string;
-
-    /**
      * Whether this item was already exported.
      *
      * @return bool

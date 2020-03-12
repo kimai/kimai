@@ -22,6 +22,8 @@ Permission changes:
 
 ### Developer
 
+- BC break: `InvoiceItemInterface` has new methods `getType()` and `getCategory()`
+
 ## [1.8](https://github.com/kevinpapst/kimai2/releases/tag/1.8)
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**

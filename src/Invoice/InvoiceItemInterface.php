@@ -14,9 +14,6 @@ use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\User;
 
-/**
- * @deprecated will be removed with 2.0 - use ExportItemInterface instead
- */
 interface InvoiceItemInterface
 {
     public function getActivity(): ?Activity;
@@ -43,4 +40,18 @@ interface InvoiceItemInterface
      * @return MetaTableTypeInterface[]
      */
     public function getVisibleMetaFields(): array;
+
+    /**
+     * A name representation for this type of item.
+     *
+     * @return string
+     */
+    public function getType(): string;
+
+    /**
+     * A name representation for the category of this item.
+     *
+     * @return string
+     */
+    public function getCategory(): string;
 }
