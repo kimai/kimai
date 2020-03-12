@@ -211,7 +211,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         }
     }
 
-    public function testPrintActionAsAdminWithDownload()
+    public function testPrintActionAsAdminWithDownloadAndStatusChange()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
@@ -280,6 +280,21 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertTrue($response->isSuccessful());
         self::assertInstanceOf(BinaryFileResponse::class, $response);
         self::assertFileExists($response->getFile());
+
+        $this->request($client, '/invoice/change-status/1/pending');
+        $this->assertIsRedirect($client, '/invoice/show');
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->request($client, '/invoice/change-status/1/paid');
+        $this->assertIsRedirect($client, '/invoice/show');
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->request($client, '/invoice/change-status/1/new');
+        $this->assertIsRedirect($client, '/invoice/show');
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testEditTemplateAction()
