@@ -10,6 +10,7 @@
 namespace App\Repository;
 
 use App\Entity\Invoice;
+use App\Entity\User;
 use App\Repository\Loader\InvoiceLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
@@ -25,21 +26,6 @@ class InvoiceRepository extends EntityRepository
         $entityManager = $this->getEntityManager();
         $entityManager->persist($invoice);
         $entityManager->flush();
-    }
-
-    public function getPendingInvoices(): array
-    {
-        return $this->findBy(['status' => Invoice::STATUS_PENDING]);
-    }
-
-    public function getNewInvoices(): array
-    {
-        return $this->findBy(['status' => Invoice::STATUS_NEW]);
-    }
-
-    public function getAllInvoices(): array
-    {
-        return $this->findBy([], 'createdAt');
     }
 
     private function getCounterFor(\DateTime $start, \DateTime $end): int
@@ -91,6 +77,41 @@ class InvoiceRepository extends EntityRepository
         return $this->count([]);
     }
 
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    {
+        // make sure that all queries without a user see all projects
+        if (null === $user && empty($teams)) {
+            return;
+        }
+
+        // make sure that admins see all projects
+        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+            return;
+        }
+
+        if (null !== $user) {
+            $teams = array_merge($teams, $user->getTeams()->toArray());
+        }
+
+        $qb
+            ->leftJoin('i.customer', 'c')
+            ->leftJoin('c.teams', 'c_teams');
+
+        if (empty($teams)) {
+            $qb->andWhere($qb->expr()->isNull('c_teams'));
+
+            return;
+        }
+
+        $orCustomer = $qb->expr()->orX(
+            $qb->expr()->isNull('c_teams'),
+            $qb->expr()->isMemberOf(':teams', 'c.teams')
+        );
+        $qb->andWhere($orCustomer);
+
+        $qb->setParameter('teams', $teams);
+    }
+
     private function getQueryBuilderForQuery(InvoiceQuery $query): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -98,7 +119,6 @@ class InvoiceRepository extends EntityRepository
         $qb
             ->select('i')
             ->from(Invoice::class, 'i')
-            ->leftJoin('i.customer', 'c')
         ;
 
         $orderBy = $query->getOrderBy();
@@ -106,21 +126,11 @@ class InvoiceRepository extends EntityRepository
             case 'date':
                 $orderBy = 'i.createdAt';
                 break;
-
-            case 'customer':
-                $orderBy = 'c.name';
-                break;
-
-            case 'status':
-                $orderBy = 'i.status';
-                break;
-
-            case 'total_rate':
-                $orderBy = 'i.total';
-                break;
         }
 
         $qb->addOrderBy($orderBy, $query->getOrder());
+
+        $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
         // this will make sure, that we do not accidentally create results with multiple rows
         //   => which would result in a wrong LIMIT / pagination results

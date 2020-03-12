@@ -279,6 +279,7 @@ final class InvoiceController extends AbstractController
         $query = new InvoiceQuery();
         $query->setOrderBy('date');
         $query->setPage($page);
+        $query->setCurrentUser($this->getUser());
 
         $invoices = $this->invoiceRepository->getPagerfantaForQuery($query);
 
