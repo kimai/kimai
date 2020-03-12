@@ -59,17 +59,23 @@
             {{ widgets.callout('warning', 'error.no_entries_found') }}
         {% else %}
             {{ tables.datatable_header(tableName, columns, query, {}) }}
+            {% set totalAmount = {} %}
+            {% set totalDuration = 0 %}
             {% for entry in entries %}
                 {% set currency = entry.project.customer.currency %}
                 {% set duration = entry.duration|duration %}
+                {% if totalAmount[currency] is not defined %}
+                    {% set totalAmount = totalAmount|merge({(currency): 0}) %}
+                {% endif %}
                 {% if entry.fixedRate is not null %}
                     {% set rate = entry.fixedRate %}
                     {% set duration = 1 %}
-                {% elseif entry.hourlyRate is not null %}
-                    {% set rate = entry.hourlyRate %}
+                    {% set totalDuration = totalDuration + 1 %}
                 {% else %}
-                    {% set rate = entry.user.preferenceValue('hourly_rate') %}
+                    {% set rate = entry.hourlyRate %}
+                    {% set totalDuration = totalDuration + entry.duration %}
                 {% endif %}
+                {% set totalAmount = totalAmount|merge({(currency): totalAmount[currency] + entry.rate}) %}
                 <tr>
                     <td class="text-nowrap">{{ entry.begin|date_short }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.label_user(entry.user) }}</td>
@@ -114,6 +120,17 @@
                     </td>
                 </tr>
             {% endfor %}
+            <tr>
+                <td colspan="6"></td>
+                <th>{{ totalDuration|duration }}</th>
+                <th>
+                    {% for currency, amount in totalAmount %}
+                        {{ amount|money(currency) }}
+                        {% if not loop.last %}<br>{% endif %}
+                    {% endfor %}
+                </th>
+                <td></td>
+            </tr>
             {{ tables.data_table_footer(entries) }}
         {% endif %}
     {% endif %}

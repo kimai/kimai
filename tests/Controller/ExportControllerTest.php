@@ -84,7 +84,8 @@ class ExportControllerTest extends ControllerBaseTest
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_export', 22);
+        // +1 row for summary
+        $this->assertDataTableRowCount($client, 'datatable_export', 23);
 
         // assert export type buttons are available
         $expected = ['csv', 'html', 'pdf', 'xlsx'];
@@ -135,7 +136,8 @@ class ExportControllerTest extends ControllerBaseTest
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_export', 2);
+        // +1 row for summary
+        $this->assertDataTableRowCount($client, 'datatable_export', 3);
 
         // assert export type buttons are available
         $expected = ['csv', 'html', 'pdf', 'xlsx'];
