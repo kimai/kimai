@@ -28,6 +28,7 @@ Permission changes:
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
+- New PHP requirement: `ext-xsl` - which should be pre-installed in most environments when `ext-xml` is loaded
 - New mailer library: check if emails are still working (eg. by using the "password forgotten" function) or if you need to adjust your configuration, [see docs at symfony.com](https://symfony.com/doc/current/components/mailer.html#transport)
 - Support for line breaks in multiline invoice fields for spreadsheets (check your invoice templates after the update) 
 

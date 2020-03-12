@@ -2,6 +2,9 @@
 .idea/
 .DS_Store
 
+# for symfony local webserver
+php.ini
+
 /bin/*
 !bin/console
 /config/packages/local.yaml

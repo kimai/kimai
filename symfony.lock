@@ -531,6 +531,12 @@
             "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
         }
     },
+    "symfony/http-client": {
+        "version": "v4.4.5"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.0.1"
+    },
     "symfony/http-foundation": {
         "version": "v4.0.3"
     },
@@ -797,6 +803,9 @@
     },
     "twig/twig": {
         "version": "v2.4.4"
+    },
+    "voku/portable-ascii": {
+        "version": "1.4.9"
     },
     "webmozart/assert": {
         "version": "1.2.0"
