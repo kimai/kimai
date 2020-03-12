@@ -125,14 +125,6 @@ class Invoice
     /**
      * @var string
      *
-     * @ORM\Column(name="vat_id", type="string", length=50, nullable=true)
-     * @Assert\Length(max=50)
-     */
-    private $vatId;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="status", type="string", length=20, nullable=false)
      */
     private $status = self::STATUS_NEW;
@@ -189,6 +181,10 @@ class Invoice
 
     public function getDueDate(): ?\DateTime
     {
+        if (null === $this->getCreatedAt()) {
+            return null;
+        }
+
         $dueDate = clone $this->getCreatedAt();
         $dueDate->modify('+ ' . $this->dueDays . 'days');
 
@@ -197,6 +193,10 @@ class Invoice
 
     public function isOverdue(): bool
     {
+        if (null === $this->getDueDate()) {
+            return false;
+        }
+
         return $this->getDueDate()->getTimestamp() < (new \DateTime('now', new \DateTimeZone($this->timezone)))->getTimestamp();
     }
 
@@ -221,7 +221,6 @@ class Invoice
         $this->timezone = $createdAt->getTimezone()->getName();
 
         $template = $model->getTemplate();
-        $this->vatId = $template->getVatId();
         $this->dueDays = $template->getDueDays();
         $this->vat = $template->getVat();
 
@@ -272,11 +271,6 @@ class Invoice
     public function getVat(): float
     {
         return $this->vat;
-    }
-
-    public function getVatId(): ?string
-    {
-        return $this->vatId;
     }
 
     public function getTax(): float

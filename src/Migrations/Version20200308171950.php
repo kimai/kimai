@@ -40,11 +40,9 @@ final class Version20200308171950 extends AbstractMigration
         $invoices->addColumn('status', 'string', ['length' => 20, 'notnull' => true]);
         $invoices->addColumn('due_days', 'integer', ['length' => 11, 'notnull' => true]);
         $invoices->addColumn('vat', 'float', ['notnull' => true]);
-        $invoices->addColumn('vat_id', 'string', ['length' => 50, 'notnull' => false, 'default' => null]);
         $invoices->addColumn('invoice_filename', 'string', ['length' => 100, 'notnull' => true]);
         $invoices->addUniqueIndex(['invoice_number'], 'UNIQ_76C38E372DA68207');
         $invoices->addUniqueIndex(['invoice_filename'], 'UNIQ_76C38E372323B33D');
-        // FIXME add unique entity
         $invoices->addForeignKeyConstraint('kimai2_users', ['user_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_76C38E37A76ED395');
         $invoices->addForeignKeyConstraint('kimai2_customers', ['customer_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_76C38E379395C3F3');
         $invoices->setPrimaryKey(['id']);
