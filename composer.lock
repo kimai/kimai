@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f8ac77102900224ea455efabf7c38da",
+    "content-hash": "ec53384ebd8bda462bb1ce7eab409918",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2561,7 +2561,7 @@
         },
         {
             "name": "illuminate/cache",
-            "version": "v7.1.0",
+            "version": "v7.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/cache.git",
@@ -2612,7 +2612,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v7.1.0",
+            "version": "v7.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -2656,16 +2656,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v7.1.0",
+            "version": "v7.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "fdbe1f88a9118ab26aa2e414640cd92f9e2aefdf"
+                "reference": "ca1af56ffbac9361da042e6ee0ad4ebcbbbae515"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/fdbe1f88a9118ab26aa2e414640cd92f9e2aefdf",
-                "reference": "fdbe1f88a9118ab26aa2e414640cd92f9e2aefdf",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/ca1af56ffbac9361da042e6ee0ad4ebcbbbae515",
+                "reference": "ca1af56ffbac9361da042e6ee0ad4ebcbbbae515",
                 "shasum": ""
             },
             "require": {
@@ -2714,7 +2714,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2020-03-10T13:45:36+00:00"
+            "time": "2020-03-12T12:48:26+00:00"
         },
         {
             "name": "intervention/image",
@@ -12664,6 +12664,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
+        "ext-xsl": "*",
         "ext-zip": "*"
     },
     "platform-dev": [],

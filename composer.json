@@ -16,6 +16,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
+        "ext-xsl": "*",
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.2",
         "doctrine/doctrine-bundle": "^2.0",
