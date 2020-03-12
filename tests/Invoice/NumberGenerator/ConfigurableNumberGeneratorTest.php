@@ -51,44 +51,47 @@ class ConfigurableNumberGeneratorTest extends TestCase
 
     public function getTestData()
     {
+        $timestamp = time();
         return [
             // simple tests for single calls
-            ['{date}', date('ymd')],
-            ['{Y}', date('Y')],
-            ['{y}', date('y')],
-            ['{M}', date('m')],
-            ['{m}', date('n')],
-            ['{D}', date('d')],
-            ['{d}', date('j')],
-            ['{c}', '2'],
-            ['{cy}', '2'],
-            ['{cm}', '2'],
-            ['{cd}', '2'],
+            ['{date}', date('ymd'), $timestamp],
+            ['{Y}', date('Y'), $timestamp],
+            ['{y}', date('y'), $timestamp],
+            ['{M}', date('m'), $timestamp],
+            ['{m}', date('n'), $timestamp],
+            ['{D}', date('d'), $timestamp],
+            ['{d}', date('j'), $timestamp],
+            ['{c}', '2', $timestamp],
+            ['{cy}', '2', $timestamp],
+            ['{cm}', '2', $timestamp],
+            ['{cd}', '2', $timestamp],
             // number formatting (not testing the lower case versions, as the tests might break depending on the date)
-            ['{date,10}', '0000' . date('ymd')],
-            ['{Y,6}', '00' . date('Y')],
-            ['{M,3}', '0' . date('m')],
-            ['{D,3}', '0' . date('d')],
-            ['{c,2}', '02'],
-            ['{cy,2}', '02'],
-            ['{cm,2}', '02'],
-            ['{cd,2}', '02'],
+            ['{date,10}', '0000' . date('ymd'), $timestamp],
+            ['{Y,6}', '00' . date('Y'), $timestamp],
+            ['{M,3}', '0' . date('m'), $timestamp],
+            ['{D,3}', '0' . date('d'), $timestamp],
+            ['{c,2}', '02', $timestamp],
+            ['{cy,2}', '02', $timestamp],
+            ['{cm,2}', '02', $timestamp],
+            ['{cd,2}', '02', $timestamp],
             // mixing identifiers
-            ['{Y}{cy}', date('Y') . '2'],
-            ['{Y}{cy}{m}', date('Y') . '2' . date('n')],
-            ['{Y}-{cy}/{m}', date('Y') . '-2/' . date('n')],
-            ['{Y}-{cy}/{m}', date('Y') . '-2/' . date('n')],
-            ['{Y,5}/{cy,5}', '0' . date('Y') . '/00002'],
+            ['{Y}{cy}', date('Y') . '2', $timestamp],
+            ['{Y}{cy}{m}', date('Y') . '2' . date('n'), $timestamp],
+            ['{Y}-{cy}/{m}', date('Y') . '-2/' . date('n'), $timestamp],
+            ['{Y}-{cy}/{m}', date('Y') . '-2/' . date('n'), $timestamp],
+            ['{Y,5}/{cy,5}', '0' . date('Y') . '/00002', $timestamp],
         ];
     }
 
     /**
      * @dataProvider getTestData
      */
-    public function testGetInvoiceNumber(string $format, string $expectedInvoiceNumber)
+    public function testGetInvoiceNumber(string $format, string $expectedInvoiceNumber, int $timestamp)
     {
         $sut = $this->getSut($format);
-        $sut->setModel(new InvoiceModel(new DebugFormatter()));
+        $model = new InvoiceModel(new DebugFormatter());
+        $model->setInvoiceDate((new \DateTime())->setTimestamp($timestamp));
+        $sut->setModel($model);
 
         $this->assertEquals($expectedInvoiceNumber, $sut->getInvoiceNumber());
         $this->assertEquals('default', $sut->getId());
