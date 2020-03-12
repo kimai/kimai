@@ -13,7 +13,8 @@ Perform EACH version specific task between your version and the new one, otherwi
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
 - The directory `var/data/invoices/` will be used to store archived invoice files (check file permissions)
-- **BC break**: HTML invoice templates are now treated like other files and offered as download. If you are using relative URLs for including 
+- The default invoice number format changed, if you want back the old one, use `{date}` as format - see [invoice documentation](https://www.kimai.org/documentation/invoices.html)
+- HTML invoice templates are now treated like other files and offered as download. If you are using relative URLs for including 
 assets (CSS, images) you need to either inline them (see the default templates) or use absolute URLs.  
 
 Permission changes:
