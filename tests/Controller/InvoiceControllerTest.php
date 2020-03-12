@@ -26,7 +26,7 @@ class InvoiceControllerTest extends ControllerBaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $path = realpath(__DIR__ . '/../_data/invoices/') . '/';
+        $path = __DIR__ . '/../_data/invoices/';
 
         if (is_dir($path)) {
             $files = glob($path . '*');
@@ -44,7 +44,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
     private function clearInvoiceFiles()
     {
-        $path = realpath(__DIR__ . '/../_data/invoices/') . '/';
+        $path = __DIR__ . '/../_data/invoices/';
 
         if (is_dir($path)) {
             $files = glob($path . '*');
@@ -52,7 +52,6 @@ class InvoiceControllerTest extends ControllerBaseTest
                 unlink($file);
             }
         }
-        clearstatcache(true);
     }
 
     public function testIsSecure()
