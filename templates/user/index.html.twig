@@ -10,7 +10,7 @@
     'email': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
     'lastLogin': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
     'roles': {'class': 'hidden-sm', 'orderBy': false},
-}) %}
+} %}
 {% for pref in preferences %}
     {% set columns = columns|merge({
         ('mf_' ~ pref.name): {'title': pref.label|trans, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
