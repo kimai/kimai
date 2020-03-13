@@ -492,6 +492,10 @@
                 <source>label.login.initial_view</source>
                 <target>Initial view after login</target>
             </trans-unit>
+            <trans-unit id="label.lastLogin">
+                <source>label.lastLogin</source>
+                <target>Last login</target>
+            </trans-unit>
             <!-- Options for user-preference label.calendar.initial_view -->
             <trans-unit id="month">
                 <source>month</source>
