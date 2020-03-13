@@ -26,10 +26,10 @@
     {% set columns = columns|merge({'rate': ''}) %}
 {% endif %}
 {% set columns = columns|merge({
-    'customer': 'hidden-xs hidden-sm hidden-md',
-    'project': 'hidden-xs hidden-sm hidden-md',
-    'activity': 'hidden-xs hidden-sm',
-    'description': 'hidden-xs hidden-sm',
+    'customer': {'class': 'hidden-xs hidden-sm hidden-md'},
+    'project': {'class': 'hidden-xs hidden-sm hidden-md'},
+    'activity': {'class': 'hidden-xs hidden-sm'},
+    'description': {'class': 'hidden-xs hidden-sm'},
 }) %}
 {% if canSeeUsername %}
     {% set columns = columns|merge({
@@ -45,7 +45,7 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'actions': 'actions alwaysVisible',
+    'actions': {'class': 'actions alwaysVisible'},
 }) %}
 
 {% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
