@@ -527,24 +527,37 @@ class TimesheetRepository extends EntityRepository
             return;
         }
 
-        if (empty($teams)) {
-            return;
-        }
-
         // make sure that admins see all timesheet records
         if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
             return;
+        }
+
+        if (null !== $user) {
+            $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
         $qb
             ->leftJoin('p.teams', 'teams')
             ->leftJoin('c.teams', 'c_teams');
 
-        $orTeam = $qb->expr()->orX(
-            $qb->expr()->isMemberOf(':teams', 'p.teams'),
+        if (empty($teams)) {
+            $qb->andWhere($qb->expr()->isNull('c_teams'));
+            $qb->andWhere($qb->expr()->isNull('teams'));
+
+            return;
+        }
+
+        $orProject = $qb->expr()->orX(
+            $qb->expr()->isNull('teams'),
+            $qb->expr()->isMemberOf(':teams', 'p.teams')
+        );
+        $qb->andWhere($orProject);
+
+        $orCustomer = $qb->expr()->orX(
+            $qb->expr()->isNull('c_teams'),
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
-        $qb->andWhere($orTeam);
+        $qb->andWhere($orCustomer);
 
         $qb->setParameter('teams', $teams);
     }
