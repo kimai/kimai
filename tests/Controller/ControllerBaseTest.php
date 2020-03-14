@@ -321,12 +321,12 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertIsRedirect(HttpKernelBrowser $client, $url = null)
     {
-        self::assertTrue($client->getResponse()->isRedirect());
+        self::assertTrue($client->getResponse()->isRedirect(), 'Response is not a redirect');
         if (null === $url) {
             return;
         }
 
-        self::assertTrue($client->getResponse()->headers->has('Location'));
-        self::assertStringEndsWith($url, $client->getResponse()->headers->get('Location'));
+        self::assertTrue($client->getResponse()->headers->has('Location'), 'Could not find "Location" header');
+        self::assertStringEndsWith($url, $client->getResponse()->headers->get('Location'), 'Redirect URL does not match');
     }
 }

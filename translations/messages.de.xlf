@@ -824,10 +824,6 @@
                 <source>invoice.title</source>
                 <target>Rechnungen</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Erstellen Sie Rechnungen für ihre aufgezeichneten Zeiten</target>
-            </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
                 <target>Rechnungsdaten filtern</target>
@@ -835,6 +831,10 @@
             <trans-unit id="button.preview">
                 <source>button.preview</source>
                 <target>Vorschau</target>
+            </trans-unit>
+            <trans-unit id="button.preview_print">
+                <source>button.preview_print</source>
+                <target>Druck Vorschau</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -951,6 +951,22 @@
             <trans-unit id="label.decimalDuration">
                 <source>label.decimalDuration</source>
                 <target>Dauer als Dezimalzahl anzeigen</target>
+            </trans-unit>
+            <trans-unit id="label.status">
+                <source>label.status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="status.new">
+                <source>status.new</source>
+                <target>Neu</target>
+            </trans-unit>
+            <trans-unit id="status.pending">
+                <source>status.pending</source>
+                <target>Ausstehend</target>
+            </trans-unit>
+            <trans-unit id="status.paid">
+                <source>status.paid</source>
+                <target>Bezahlt</target>
             </trans-unit>
 
             <!--

@@ -6,9 +6,9 @@
                 <source>label.invoice_number_generator</source>
                 <target>Generátor fakturačních čísel</target>
             </trans-unit>
-            <trans-unit id="default">
-                <source>default</source>
-                <target>Data (Výchozí)</target>
+            <trans-unit id="date">
+                <source>date</source>
+                <target>Data</target>
             </trans-unit>
         </body>
     </file>

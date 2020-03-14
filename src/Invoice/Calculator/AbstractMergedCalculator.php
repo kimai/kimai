@@ -10,7 +10,6 @@
 namespace App\Invoice\Calculator;
 
 use App\Entity\Timesheet;
-use App\Export\ExportItemInterface;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceItemInterface;
 use App\Invoice\InvoiceItemWithAmountInterface;
@@ -42,13 +41,8 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
             $amount = $entry->getAmount();
         }
 
-        $type = Timesheet::TYPE_TIMESHEET;
-        $category = Timesheet::CATEGORY_WORK;
-
-        if ($entry instanceof ExportItemInterface) {
-            $type = $entry->getType();
-            $category = $entry->getCategory();
-        }
+        $type = $entry->getType();
+        $category = $entry->getCategory();
 
         if (null !== $invoiceItem->getType() && $type !== $invoiceItem->getType()) {
             $type = self::TYPE_MIXED;

@@ -170,6 +170,8 @@ class InvoiceTemplate
         return $this->name;
     }
 
+    // ---- trait methods below ---
+
     public function getTitle(): ?string
     {
         return $this->title;

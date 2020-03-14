@@ -8,9 +8,27 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [1.9](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
+
+**New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+- The directory `var/data/invoices/` will be used to store archived invoice files (check file permissions)
+- The default invoice number format changed, if you want back the old one, use `{date}` as format - see [invoice documentation](https://www.kimai.org/documentation/invoices.html)
+- HTML invoice templates are now treated like other files and offered as download. If you are using relative URLs for including 
+assets (CSS, images) you need to either inline them (see the default templates) or use absolute URLs.  
+
+Permission changes:
+- `history_invoice` - NEW: grants all features of the new invoice archive (by default for all admins)
+
+### Developer
+
+- BC break: `InvoiceItemInterface` has new methods `getType()` and `getCategory()`
+
 ## [1.8](https://github.com/kevinpapst/kimai2/releases/tag/1.8)
 
-- New PHP requirement: `ext-xsl` should be pre-installed in most environments when `ext-xml` is loaded
+**New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+- New PHP requirement: `ext-xsl` - which should be pre-installed in most environments when `ext-xml` is loaded
 - New mailer library: check if emails are still working (eg. by using the "password forgotten" function) or if you need to adjust your configuration, [see docs at symfony.com](https://symfony.com/doc/current/components/mailer.html#transport)
 - Support for line breaks in multiline invoice fields for spreadsheets (check your invoice templates after the update) 
 

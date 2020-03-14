@@ -224,6 +224,12 @@ class Configuration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                     ->defaultValue([])
                 ->end()
+                ->booleanNode('simple_form')
+                    ->defaultTrue()
+                ->end()
+                ->scalarNode('number_format')
+                    ->defaultValue('{Y}/{cy,3}')
+                ->end()
             ->end()
         ;
 

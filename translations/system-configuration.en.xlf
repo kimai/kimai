@@ -14,6 +14,10 @@
                 <source>timesheet</source>
                 <target>Timesheet</target>
             </trans-unit>
+            <trans-unit id="invoice">
+                <source>invoice</source>
+                <target>Invoices</target>
+            </trans-unit>
             <trans-unit id="form_customer">
                 <source>form_customer</source>
                 <target>Create customer—default values</target>
@@ -193,6 +197,14 @@
             <trans-unit id="label.timesheet.default_begin">
                 <source>label.timesheet.default_begin</source>
                 <target>Default start-time (not used in all timetracking modes)</target>
+            </trans-unit>
+            <trans-unit id="label.simple_form">
+                <source>label.simple_form</source>
+                <target>Simple search</target>
+            </trans-unit>
+            <trans-unit id="label.invoice.number_format">
+                <source>label.invoice.number_format</source>
+                <target>Invoice number format</target>
             </trans-unit>
         </body>
     </file>

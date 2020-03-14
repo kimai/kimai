@@ -78,6 +78,18 @@
                 <source>details</source>
                 <target>Show</target>
             </trans-unit>
+            <trans-unit id="download">
+                <source>download</source>
+                <target>Download</target>
+            </trans-unit>
+            <trans-unit id="invoice.pending">
+                <source>invoice.pending</source>
+                <target>Waiting for payment</target>
+            </trans-unit>
+            <trans-unit id="invoice.paid">
+                <source>invoice.paid</source>
+                <target>Invoice paid</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

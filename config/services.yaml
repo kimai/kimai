@@ -83,6 +83,10 @@ services:
         arguments:
             $localDomains: '%kimai.i18n_domains%'
 
+    App\Utils\FileHelper:
+        arguments:
+            $dataDir: '%kimai.data_dir%'
+
     # ================================================================================
     # DATABASE
     # ================================================================================
@@ -226,3 +230,8 @@ services:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\ProjectRate']
+
+    App\Repository\InvoiceRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Invoice']

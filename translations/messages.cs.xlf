@@ -752,10 +752,6 @@
                 <source>invoice.title</source>
                 <target>Faktura</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Vytvářejte faktury z vašich zaznamenaných položek časového záznamu.</target>
-            </trans-unit>
             <trans-unit id="invoice.preview">
                 <source>invoice.preview</source>
                 <target>Toto je náhled dat, která se zobrazí ve vašem fakturačním dokladu.</target>

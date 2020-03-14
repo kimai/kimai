@@ -837,10 +837,6 @@
                 <source>invoice.title</source>
                 <target>Faktúry</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Vytvorte faktúry z vašich položiek časového rozvrhu.</target>
-            </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
                 <target>Filtrovať dáta faktúr</target>

@@ -289,6 +289,8 @@ class ConfigurationTest extends TestCase
                     0 => 'var/invoices/',
                     1 => 'templates/invoice/renderer/',
                 ],
+                'simple_form' => true,
+                'number_format' => '{Y}/{cy,3}',
             ],
             'languages' => [],
             'calendar' => [

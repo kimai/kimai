@@ -165,7 +165,9 @@
             "vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=4"
         ],
         "kimai:codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
-        "kimai:codestyle-fix": "vendor/bin/php-cs-fixer fix"
+        "codestyle": "@kimai:codestyle",
+        "kimai:codestyle-fix": "vendor/bin/php-cs-fixer fix",
+        "codestyle-fix": "@kimai:codestyle-fix"
     },
     "conflict": {
         "symfony/symfony": "*"

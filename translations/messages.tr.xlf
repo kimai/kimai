@@ -756,10 +756,6 @@
                 <source>invoice.title</source>
                 <target state="translated">Faturalar</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target state="translated">Çizelge kayıtlarınızdan fatura oluştur.</target>
-            </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
                 <target state="translated">Fatura verilerini filtrele</target>
