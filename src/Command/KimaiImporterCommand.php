@@ -316,7 +316,6 @@ final class KimaiImporterCommand extends Command
                     $validationMessages[] = sprintf('Project "%s" with ID %s has unknown customer with ID %s', $oldProject['name'], $oldProject['projectID'], $oldProject['customerID']);
                 }
             }
-
         } catch (Exception $ex) {
             $validationMessages[] = $ex->getMessage();
         }
@@ -325,6 +324,7 @@ final class KimaiImporterCommand extends Command
             foreach ($validationMessages as $errorMessage) {
                 $io->error($errorMessage);
             }
+
             return 1;
         }
 
