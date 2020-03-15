@@ -75,7 +75,7 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
      */
     public function addCustomer($customer)
     {
-        $this->customers = [$customer];
+        $this->customers[] = $customer;
 
         return $this;
     }

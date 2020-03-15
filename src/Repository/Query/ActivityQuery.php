@@ -105,7 +105,7 @@ class ActivityQuery extends ProjectQuery
      */
     public function addProject($project): self
     {
-        $this->projects = [$project];
+        $this->projects[] = $project;
 
         return $this;
     }
