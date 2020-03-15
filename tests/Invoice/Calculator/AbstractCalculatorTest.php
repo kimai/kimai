@@ -73,9 +73,9 @@ abstract class AbstractCalculatorTest extends TestCase
 
         $query = new InvoiceQuery();
         if ($addProject === true) {
-            $query->setProject($project);
+            $query->setProjects([$project]);
         } elseif ($addActivity === true) {
-            $query->setActivity($activity);
+            $query->setActivities([$activity]);
         }
 
         $timesheet = new Timesheet();

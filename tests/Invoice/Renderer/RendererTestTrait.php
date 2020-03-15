@@ -198,10 +198,10 @@ trait RendererTestTrait
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->setActivities([$activity]);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
-        $query->setProject($project);
+        $query->setProjects([$project]);
 
         $model = new InvoiceModel($this->getFormatter());
         $model->setCustomer($customer);

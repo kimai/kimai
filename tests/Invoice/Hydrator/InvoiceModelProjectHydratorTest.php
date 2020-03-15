@@ -29,7 +29,7 @@ class InvoiceModelProjectHydratorTest extends TestCase
         $result = $sut->hydrate($model);
         $this->assertModelStructure($result);
 
-        $model->getQuery()->setProject(null);
+        $model->getQuery()->setProjects([]);
         $result = $sut->hydrate($model);
         self::assertEmpty($result);
     }

@@ -167,10 +167,10 @@ abstract class AbstractRendererTest extends KernelTestCase
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
 
         $query = new TimesheetQuery();
-        $query->setActivity($activity);
+        $query->setActivities([$activity]);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
-        $query->setProject($project);
+        $query->setProjects([$project]);
 
         return $renderer->render($entries, $query);
     }
