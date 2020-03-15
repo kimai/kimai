@@ -27,7 +27,7 @@ class InvoiceToolbarForm extends InvoiceToolbarSimpleForm
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
         }
-        $this->addActivityChoice($builder);
+        $this->addActivityMultiChoice($builder, $options, true);
         $this->addTagInputField($builder);
         $this->addExportStateChoice($builder);
     }

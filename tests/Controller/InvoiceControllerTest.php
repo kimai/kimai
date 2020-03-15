@@ -194,7 +194,7 @@ class InvoiceControllerTest extends ControllerBaseTest
             'template' => 1,
             'daterange' => $dateRange,
             'customer' => 1,
-            'project' => 1,
+            'projects' => [1],
             'markAsExported' => 1,
         ]);
 
@@ -260,7 +260,7 @@ class InvoiceControllerTest extends ControllerBaseTest
             'template' => 1,
             'daterange' => $dateRange,
             'customer' => 1,
-            'project' => 1,
+            'projects' => [1],
             'markAsExported' => 1,
         ]);
 
