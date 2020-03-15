@@ -58,7 +58,7 @@ class DebugRendererTest extends TestCase
         $response = $sut->render($document, $model);
         $data = json_decode($response->getContent(), true);
 
-        $this->assertModelStructure($data['model'], $hasProject);
+        $this->assertModelStructure($data['model'], count($model->getQuery()->getProjects()), count($model->getQuery()->getActivities()));
         $rows = $data['entries'];
         $this->assertEquals($expectedRows, count($rows));
 
@@ -74,7 +74,7 @@ class DebugRendererTest extends TestCase
         // TODO check values or formats?
     }
 
-    protected function assertModelStructure(array $model, $hasProject = true)
+    protected function assertModelStructure(array $model, int $projectCounter = 0, int $activityCounter = 0)
     {
         $keys = [
             'invoice.due_date',
@@ -133,7 +133,16 @@ class DebugRendererTest extends TestCase
             'testFromModelHydrator'
         ];
 
-        if ($hasProject) {
+        if ($activityCounter > 1) {
+            $keys = array_merge($keys, [
+                'activity.1.id',
+                'activity.1.name',
+                'activity.1.comment',
+                'activity.1.meta.foo-activity',
+            ]);
+        }
+
+        if ($projectCounter > 0) {
             $keys = array_merge($keys, [
                 'project.id',
                 'project.name',
@@ -150,6 +159,24 @@ class DebugRendererTest extends TestCase
                 'project.budget_time_decimal',
                 'project.budget_time_minutes',
             ]);
+            if ($projectCounter > 1) {
+                $keys = array_merge($keys, [
+                    'project.1.id',
+                    'project.1.name',
+                    'project.1.comment',
+                    'project.1.order_date',
+                    'project.1.order_number',
+                    'project.1.meta.foo-project',
+                    'project.1.start_date',
+                    'project.1.end_date',
+                    'project.1.budget_money',
+                    'project.1.budget_money_nc',
+                    'project.1.budget_money_plain',
+                    'project.1.budget_time',
+                    'project.1.budget_time_decimal',
+                    'project.1.budget_time_minutes',
+                ]);
+            }
         }
 
         $givenKeys = array_keys($model);

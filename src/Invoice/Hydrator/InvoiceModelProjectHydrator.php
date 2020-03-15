@@ -9,6 +9,8 @@
 
 namespace App\Invoice\Hydrator;
 
+use App\Entity\Project;
+use App\Invoice\InvoiceFormatter;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 
@@ -16,34 +18,51 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
 {
     public function hydrate(InvoiceModel $model): array
     {
-        $project = $model->getQuery()->getProject();
-
-        if (null === $project) {
+        if (!$model->getQuery()->hasProjects()) {
             return [];
         }
 
         $formatter = $model->getFormatter();
         $currency = $model->getCurrency();
 
+        $values = [];
+        $i = 0;
+
+        foreach ($model->getQuery()->getProjects() as $project) {
+            $prefix = '';
+            if ($i > 0) {
+                $prefix = $i . '.';
+            }
+            $values = array_merge($values, $this->getValuesFromProject($project, $formatter, $currency, $prefix));
+            $i++;
+        }
+
+        return $values;
+    }
+
+    private function getValuesFromProject(Project $project, InvoiceFormatter $formatter, string $currency, string $prefix): array
+    {
+        $prefix = 'project.' . $prefix;
+
         $values = [
-            'project.id' => $project->getId(),
-            'project.name' => $project->getName(),
-            'project.comment' => $project->getComment(),
-            'project.order_number' => $project->getOrderNumber(),
-            'project.start_date' => null !== $project->getStart() ? $formatter->getFormattedDateTime($project->getStart()) : '',
-            'project.end_date' => null !== $project->getEnd() ? $formatter->getFormattedDateTime($project->getEnd()) : '',
-            'project.order_date' => null !== $project->getOrderDate() ? $formatter->getFormattedDateTime($project->getOrderDate()) : '',
-            'project.budget_money' => $formatter->getFormattedMoney($project->getBudget(), $currency),
-            'project.budget_money_nc' => $formatter->getFormattedMoney($project->getBudget(), null),
-            'project.budget_money_plain' => $project->getBudget(),
-            'project.budget_time' => $project->getTimeBudget(),
-            'project.budget_time_decimal' => $formatter->getFormattedDecimalDuration($project->getTimeBudget()),
-            'project.budget_time_minutes' => number_format($project->getTimeBudget() / 60),
+            $prefix . 'id' => $project->getId(),
+            $prefix . 'name' => $project->getName(),
+            $prefix . 'comment' => $project->getComment(),
+            $prefix . 'order_number' => $project->getOrderNumber(),
+            $prefix . 'start_date' => null !== $project->getStart() ? $formatter->getFormattedDateTime($project->getStart()) : '',
+            $prefix . 'end_date' => null !== $project->getEnd() ? $formatter->getFormattedDateTime($project->getEnd()) : '',
+            $prefix . 'order_date' => null !== $project->getOrderDate() ? $formatter->getFormattedDateTime($project->getOrderDate()) : '',
+            $prefix . 'budget_money' => $formatter->getFormattedMoney($project->getBudget(), $currency),
+            $prefix . 'budget_money_nc' => $formatter->getFormattedMoney($project->getBudget(), null),
+            $prefix . 'budget_money_plain' => $project->getBudget(),
+            $prefix . 'budget_time' => $project->getTimeBudget(),
+            $prefix . 'budget_time_decimal' => $formatter->getFormattedDecimalDuration($project->getTimeBudget()),
+            $prefix . 'budget_time_minutes' => number_format($project->getTimeBudget() / 60),
         ];
 
         foreach ($project->getVisibleMetaFields() as $metaField) {
             $values = array_merge($values, [
-                'project.meta.' . $metaField->getName() => $metaField->getValue(),
+                $prefix . 'meta.' . $metaField->getName() => $metaField->getValue(),
             ]);
         }
 

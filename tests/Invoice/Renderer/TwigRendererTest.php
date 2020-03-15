@@ -67,6 +67,6 @@ class TwigRendererTest extends KernelTestCase
         $this->assertStringContainsString('<h2 class="page-header">
            <span contenteditable="true">a very *long* test invoice / template title with [special] character</span>
         </h2>', $content);
-        $this->assertEquals(5, substr_count($content, 'activity description'));
+        $this->assertEquals(4, substr_count($content, 'activity description'));
     }
 }

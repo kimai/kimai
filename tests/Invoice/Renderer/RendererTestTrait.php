@@ -126,6 +126,16 @@ trait RendererTestTrait
         $activity->setProject($project);
         $activity->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity')->setIsVisible(true));
 
+        $project2 = new Project();
+        $project2->setName('project 2 name');
+        $project2->setCustomer($customer);
+        $project2->setMetaField((new ProjectMeta())->setName('foo-project')->setValue('bar-project2')->setIsVisible(true));
+
+        $activity2 = new Activity();
+        $activity2->setName('activity 1 description');
+        $activity2->setProject($project2);
+        $activity2->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity2')->setIsVisible(true));
+
         $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
         $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user1->method('getId')->willReturn(1);
@@ -165,8 +175,8 @@ trait RendererTestTrait
             ->setDuration(1800)
             ->setRate(111.11)
             ->setUser($user1)
-            ->setActivity($activity)
-            ->setProject($project)
+            ->setActivity($activity2)
+            ->setProject($project2)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
             ->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet1')->setIsVisible(true))
@@ -198,10 +208,10 @@ trait RendererTestTrait
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
 
         $query = new InvoiceQuery();
-        $query->setActivities([$activity]);
+        $query->setActivities([$activity, $activity2]);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
-        $query->setProjects([$project]);
+        $query->setProjects([$project, $project2]);
 
         $model = new InvoiceModel($this->getFormatter());
         $model->setCustomer($customer);
@@ -272,7 +282,7 @@ trait RendererTestTrait
         $entries = [$timesheet];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->addActivity($activity);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 
