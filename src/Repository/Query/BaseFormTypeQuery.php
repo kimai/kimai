@@ -137,7 +137,7 @@ abstract class BaseFormTypeQuery
     public function addProject($project): self
     {
         if (null !== $project) {
-            $this->projects = [$project];
+            $this->projects[] = $project;
         }
 
         return $this;
@@ -187,7 +187,11 @@ abstract class BaseFormTypeQuery
      */
     public function setCustomer($customer): self
     {
-        $this->customers = [$customer];
+        if (null === $customer) {
+            $this->customers = [];
+        } else {
+            $this->customers = [$customer];
+        }
 
         return $this;
     }

@@ -10,36 +10,23 @@
 namespace App\Tests\Repository\Query;
 
 use App\Entity\Customer;
-use App\Entity\Team;
-use App\Entity\User;
 use App\Repository\Query\CustomerFormTypeQuery;
 
 /**
  * @covers \App\Repository\Query\CustomerFormTypeQuery
+ * @covers \App\Repository\Query\BaseFormTypeQuery
  */
-class CustomerFormTypeQueryTest extends BaseQueryTest
+class CustomerFormTypeQueryTest extends BaseFormTypeQueryTest
 {
     public function testQuery()
     {
         $sut = new CustomerFormTypeQuery();
 
-        self::assertEmpty($sut->getTeams());
-        self::assertInstanceOf(CustomerFormTypeQuery::class, $sut->addTeam(new Team()));
-        self::assertCount(1, $sut->getTeams());
-
-        $customer = new Customer();
-        self::assertNull($sut->getCustomer());
-        self::assertInstanceOf(CustomerFormTypeQuery::class, $sut->setCustomer($customer));
-        self::assertSame($customer, $sut->getCustomer());
+        $this->assertBaseQuery($sut);
 
         $customer = new Customer();
         self::assertNull($sut->getCustomerToIgnore());
         self::assertInstanceOf(CustomerFormTypeQuery::class, $sut->setCustomerToIgnore($customer));
         self::assertSame($customer, $sut->getCustomerToIgnore());
-
-        $user = new User();
-        self::assertNull($sut->getUser());
-        self::assertInstanceOf(CustomerFormTypeQuery::class, $sut->setUser($user));
-        self::assertSame($user, $sut->getUser());
     }
 }

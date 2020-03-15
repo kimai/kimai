@@ -60,6 +60,8 @@ class ActivityControllerTest extends ControllerBaseTest
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
             'pageSize' => 50,
+            'customers' => [1],
+            'projects' => [1],
             'page' => 1,
         ]);
 

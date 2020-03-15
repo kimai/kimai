@@ -158,9 +158,12 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $end->setTime(23, 59, 59);
 
         $query = [
-            'customer' => 1,
-            'project' => 1,
-            'activity' => 1,
+            'customer' => '1',
+            'customers' => '1',
+            'project' => '1',
+            'projects' => '1',
+            'activity' => '1',
+            'activities' => '1',
             'page' => 2,
             'size' => 5,
             'order' => 'DESC',

@@ -104,8 +104,12 @@ class ProjectControllerTest extends APIControllerBaseTest
         // customer is invisible, so nothing should be returned
         yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_VISIBLE], []];
         yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', ['customer' => '2', 'customers' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', ['customer' => '2', 'customers' => '2,2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
         // customer is invisible, so nothing should be returned
         yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
+        yield ['/api/projects', ['customers' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
+        yield ['/api/projects', ['customers' => '2,2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
     }
 
     public function testGetEntity()
