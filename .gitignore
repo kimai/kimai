@@ -1,4 +1,7 @@
 # ========== KIMAI ==========
+# some hosters require a htaccess to change the PHP version
+.htaccess
+
 .idea/
 .DS_Store
 
