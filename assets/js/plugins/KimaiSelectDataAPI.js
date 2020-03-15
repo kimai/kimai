@@ -49,7 +49,9 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
             
             let newApiUrl = self._buildUrlWithFormFields(this.dataset['apiUrl'], formPrefix);
 
-            if (jQuery(this).val() === '') {
+            const selectValue = jQuery(this).val();
+
+            if (selectValue === '' || (Array.isArray(selectValue) && selectValue.length === 0)) {
                 if (this.dataset['emptyUrl'] === undefined) {
                     self._updateSelect(targetSelect, {});
                     jQuery(targetSelect).attr('disabled', 'disabled');
