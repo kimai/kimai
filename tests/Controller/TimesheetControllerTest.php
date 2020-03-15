@@ -69,7 +69,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             'state' => 1,
             'pageSize' => 25,
             'daterange' => $dateRange,
-            'customer' => null,
+            'customers' => [],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -141,7 +141,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             'state' => 1,
             'pageSize' => 25,
             'daterange' => $dateRange,
-            'customer' => null,
+            'customers' => [],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
