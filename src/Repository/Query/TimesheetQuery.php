@@ -32,9 +32,9 @@ class TimesheetQuery extends ActivityQuery
      */
     protected $timesheetUser;
     /**
-     * @var Activity|null
+     * @var array
      */
-    protected $activity;
+    private $activities = [];
     /**
      * @var int
      */
@@ -114,24 +114,64 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
-     * Activity overwrites: setProject() and setCustomer()
-     *
-     * @return Activity|null
+     * @return Activity|int|null
+     * @deprecated since 1.9 - use getProjects() instead - will be removed with 2.0
      */
     public function getActivity()
     {
-        return $this->activity;
+        if (count($this->activities) > 0) {
+            return $this->activities[0];
+        }
+
+        return null;
+    }
+
+    public function getActivities(): array
+    {
+        return $this->activities;
     }
 
     /**
      * @param Activity|int|null $activity
-     * @return TimesheetQuery
+     * @return $this
+     * @deprecated since 1.9 - use setActivities() or addActivity() instead - will be removed with 2.0
      */
-    public function setActivity($activity = null)
+    public function setActivity($activity)
     {
-        $this->activity = $activity;
+        if (null === $activity) {
+            $this->activities = [];
+        } else {
+            $this->activities = [$activity];
+        }
 
         return $this;
+    }
+
+    /**
+     * @param Activity|int $activity
+     * @return $this
+     */
+    public function addActivity($activity)
+    {
+        $this->activities[] = $activity;
+
+        return $this;
+    }
+
+    /**
+     * @param Activity[]|int[] $activities
+     * @return $this
+     */
+    public function setActivities(array $activities)
+    {
+        $this->activities = $activities;
+
+        return $this;
+    }
+
+    public function hasActivities(): bool
+    {
+        return !empty($this->activities);
     }
 
     /**

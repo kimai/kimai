@@ -249,7 +249,7 @@ final class ProjectController extends AbstractController
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
         $query->setPageSize(5);
-        $query->setProject($project);
+        $query->addProject($project);
         $query->setExcludeGlobals(true);
 
         /* @var $entries Pagerfanta */
@@ -405,7 +405,7 @@ final class ProjectController extends AbstractController
                 'label' => 'label.project',
                 'query_builder' => function (ProjectRepository $repo) use ($project) {
                     $query = new ProjectFormTypeQuery();
-                    $query->setCustomer($project->getCustomer());
+                    $query->addCustomer($project->getCustomer());
                     $query->setProjectToIgnore($project);
                     $query->setUser($this->getUser());
 
