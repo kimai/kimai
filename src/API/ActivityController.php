@@ -68,7 +68,8 @@ class ActivityController extends BaseApiController
      *          @SWG\Items(ref="#/definitions/ActivityCollection")
      *      )
      * )
-     * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities. If none is provided, all activities will be returned.")
+     * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities")
+     * @Rest\QueryParam(name="projects", requirements="[\d|,]+", strict=true, nullable=true, description="Comma separated list of project IDs to filter activities")
      * @Rest\QueryParam(name="visible", requirements="1|2|3", strict=true, nullable=true, description="Visibility status to filter activities. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)")
      * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Use if you want to fetch only global activities. Allowed values: true (default: false)")
      * @Rest\QueryParam(name="globalsFirst", requirements="true|false", strict=true, nullable=true, description="Deprecated parameter, value is not used any more")
@@ -99,8 +100,17 @@ class ActivityController extends BaseApiController
             @trigger_error('API parameter globalsFirst is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
         }
 
+        if (!empty($projects = $paramFetcher->get('projects'))) {
+            if (!is_array($projects)) {
+                $projects = explode(',', $projects);
+            }
+            if (!empty($projects)) {
+                $query->setProjects($projects);
+            }
+        }
+
         if (!empty($project = $paramFetcher->get('project'))) {
-            $query->setProject($project);
+            $query->addProject($project);
         }
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {

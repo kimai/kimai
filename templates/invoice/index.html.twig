@@ -38,9 +38,9 @@
                 {% endif %}
                 {{ form_row(form.daterange) }}
                 {{ form_row(form.customer) }}
-                {{ form_row(form.project) }}
-                {% if form.activity is defined %}
-                    {{ form_row(form.activity) }}
+                {{ form_row(form.projects) }}
+                {% if form.activities is defined %}
+                    {{ form_row(form.activities) }}
                 {% endif %}
                 {% if form.users is defined %}
                     {{ form_row(form.users) }}

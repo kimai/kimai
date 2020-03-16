@@ -77,6 +77,7 @@ class ProjectController extends BaseApiController
      *      )
      * )
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter projects")
+     * @Rest\QueryParam(name="customers", requirements="[\d|,]+", strict=true, nullable=true, description="Comma separated list of customer IDs to filter projects")
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter projects. Allowed values: 1=visible, 2=hidden, 3=both (default; 1)")
      * @Rest\QueryParam(name="start", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that started before this date will be included. Allowed format: HTML5 (default: now, if end is also empty)")
      * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that ended after this date will be included. Allowed format: HTML5 (default: now, if start is also empty)")
@@ -104,8 +105,17 @@ class ProjectController extends BaseApiController
             $query->setOrderBy($orderBy);
         }
 
+        if (!empty($customers = $paramFetcher->get('customers'))) {
+            if (!is_array($customers)) {
+                $customers = explode(',', $customers);
+            }
+            if (!empty($customers)) {
+                $query->setCustomers($customers);
+            }
+        }
+
         if (!empty($customer = $paramFetcher->get('customer'))) {
-            $query->setCustomer($customer);
+            $query->addCustomer($customer);
         }
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {

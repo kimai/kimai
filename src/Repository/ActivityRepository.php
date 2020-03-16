@@ -154,13 +154,13 @@ class ActivityRepository extends EntityRepository
     }
 
     /**
-     * @deprecated since 1.1
+     * @deprecated since 1.1 - use getQueryBuilderForFormType() instead - will be removed with 2.0
      */
     public function builderForEntityType($activity, $project)
     {
         $query = new ActivityFormTypeQuery();
-        $query->setActivity($activity);
-        $query->setProject($project);
+        $query->addActivity($activity);
+        $query->addProject($project);
 
         return $this->getQueryBuilderForFormType($query);
     }
@@ -212,14 +212,14 @@ class ActivityRepository extends EntityRepository
 
         if ($query->isGlobalsOnly()) {
             $where->add($qb->expr()->isNull('a.project'));
-        } elseif (null !== $query->getProject()) {
+        } elseif ($query->hasProjects()) {
             $where->add(
                 $qb->expr()->orX(
-                    $qb->expr()->eq('a.project', ':project'),
+                    $qb->expr()->in('a.project', ':project'),
                     $qb->expr()->isNull('a.project')
                 )
             );
-            $qb->setParameter('project', $query->getProject());
+            $qb->setParameter('project', $query->getProjects());
         }
 
         if (null !== $query->getActivityToIgnore()) {
@@ -233,10 +233,9 @@ class ActivityRepository extends EntityRepository
         $or->add($where);
 
         // this must always be the last part of the query
-        /* @var Activity $entity */
-        if (null !== $query->getActivity()) {
-            $or->add($qb->expr()->eq('a.id', ':activity'));
-            $qb->setParameter('activity', $query->getActivity());
+        if ($query->hasActivities()) {
+            $or->add($qb->expr()->in('a.id', ':activity'));
+            $qb->setParameter('activity', $query->getActivities());
         }
 
         if ($or->count() > 0) {
@@ -303,9 +302,9 @@ class ActivityRepository extends EntityRepository
 
         if ($query->isGlobalsOnly()) {
             $where->add($qb->expr()->isNull('a.project'));
-        } elseif (null !== $query->getProject()) {
+        } elseif ($query->hasProjects()) {
             $orX = $qb->expr()->orX(
-                $qb->expr()->eq('a.project', ':project')
+                $qb->expr()->in('a.project', ':project')
             );
 
             if (!$query->isExcludeGlobals()) {
@@ -313,7 +312,7 @@ class ActivityRepository extends EntityRepository
             }
 
             $where->add($orX);
-            $qb->setParameter('project', $query->getProject());
+            $qb->setParameter('project', $query->getProjects());
         } elseif (null !== $query->getCustomer()) {
             $where->add('p.customer = :customer');
             $qb->setParameter('customer', $query->getCustomer());

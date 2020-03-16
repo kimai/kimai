@@ -25,8 +25,8 @@ class ActivityToolbarForm extends AbstractToolbarForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addSearchTermInputField($builder);
-        $this->addCustomerChoice($builder);
-        $this->addProjectChoice($builder);
+        $this->addCustomerMultiChoice($builder, [], true);
+        $this->addProjectMultiChoice($builder, [], true, false);
         $builder->add('globalsOnly', ChoiceType::class, [
             'choices' => [
                 'yes' => 1,

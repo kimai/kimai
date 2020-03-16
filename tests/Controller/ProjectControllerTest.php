@@ -67,6 +67,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
+            'customers' => [1],
             'pageSize' => 50,
             'page' => 1,
         ]);

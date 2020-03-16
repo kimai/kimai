@@ -9,47 +9,9 @@
 
 namespace App\Repository\Query;
 
-use App\Entity\Team;
-use App\Entity\User;
-
 /**
  * Can be used for pre-filling form types with the: UserRepository
  */
-final class UserFormTypeQuery
+final class UserFormTypeQuery extends BaseFormTypeQuery
 {
-    /**
-     * @var User
-     */
-    private $user;
-    /**
-     * @var array<Team>
-     */
-    private $teams = [];
-
-    public function addTeam(Team $team): UserFormTypeQuery
-    {
-        $this->teams[$team->getId()] = $team;
-
-        return $this;
-    }
-
-    /**
-     * @return Team[]
-     */
-    public function getTeams(): array
-    {
-        return array_values($this->teams);
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(User $user): UserFormTypeQuery
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 }

@@ -9,6 +9,7 @@
 
 namespace App\Invoice\Hydrator;
 
+use App\Entity\Activity;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 
@@ -16,24 +17,38 @@ class InvoiceModelActivityHydrator implements InvoiceModelHydrator
 {
     public function hydrate(InvoiceModel $model): array
     {
-        $activity = $model->getQuery()->getActivity();
-
-        if (null === $activity) {
+        if (!$model->getQuery()->hasActivities()) {
             return [];
         }
 
-        $formatter = $model->getFormatter();
-        $currency = $model->getCurrency();
+        $values = [];
+        $i = 0;
+
+        foreach ($model->getQuery()->getActivities() as $activity) {
+            $prefix = '';
+            if ($i > 0) {
+                $prefix = $i . '.';
+            }
+            $values = array_merge($values, $this->getValuesFromActivity($activity, $prefix));
+            $i++;
+        }
+
+        return $values;
+    }
+
+    private function getValuesFromActivity(Activity $activity, string $prefix): array
+    {
+        $prefix = 'activity.' . $prefix;
 
         $values = [
-            'activity.id' => $activity->getId(),
-            'activity.name' => $activity->getName(),
-            'activity.comment' => $activity->getComment(),
+            $prefix . 'id' => $activity->getId(),
+            $prefix . 'name' => $activity->getName(),
+            $prefix . 'comment' => $activity->getComment(),
         ];
 
         foreach ($activity->getVisibleMetaFields() as $metaField) {
             $values = array_merge($values, [
-                'activity.meta.' . $metaField->getName() => $metaField->getValue(),
+                $prefix . 'meta.' . $metaField->getName() => $metaField->getValue(),
             ]);
         }
 

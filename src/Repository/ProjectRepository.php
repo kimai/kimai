@@ -152,13 +152,13 @@ class ProjectRepository extends EntityRepository
     }
 
     /**
-     * @deprecated since 1.1 - don't use this method, it ignores team permission checks
+     * @deprecated since 1.1 - use getQueryBuilderForFormType() istead - will be removed with 2.0
      */
     public function builderForEntityType($project, $customer)
     {
         $query = new ProjectFormTypeQuery();
-        $query->setProject($project);
-        $query->setCustomer($customer);
+        $query->addProject($project);
+        $query->addCustomer($customer);
 
         return $this->getQueryBuilderForFormType($query);
     }
@@ -216,13 +216,14 @@ class ProjectRepository extends EntityRepository
         $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
         $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
 
-        if (null !== $query->getProject()) {
-            $qb->orWhere('p.id = :project')->setParameter('project', $query->getProject());
+        if ($query->hasProjects()) {
+            $qb->orWhere($qb->expr()->in('p.id', ':project'))
+                ->setParameter('project', $query->getProjects());
         }
 
-        if (null !== $query->getCustomer()) {
-            $qb->andWhere('p.customer = :customer')
-                ->setParameter('customer', $query->getCustomer());
+        if ($query->hasCustomers()) {
+            $qb->andWhere($qb->expr()->in('p.customer', ':customer'))
+                ->setParameter('customer', $query->getCustomers());
         }
 
         if (null !== $query->getProjectToIgnore()) {
@@ -272,9 +273,9 @@ class ProjectRepository extends EntityRepository
             $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
         }
 
-        if (null !== $query->getCustomer()) {
-            $qb->andWhere('p.customer = :customer')
-                ->setParameter('customer', $query->getCustomer());
+        if ($query->hasCustomers()) {
+            $qb->andWhere($qb->expr()->in('p.customer', ':customer'))
+                ->setParameter('customer', $query->getCustomers());
         }
 
         // this is far from being perfect, possible enhancements:
