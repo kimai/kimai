@@ -126,9 +126,6 @@
             "ref": "258300d52be6ad59b32a888d5ddafbf9638540ff"
         }
     },
-    "friendsofsymfony/user-bundle": {
-        "version": "v2.1.2"
-    },
     "fzaninotto/faker": {
         "version": "v1.8.0"
     },
@@ -215,6 +212,9 @@
     },
     "kimai/kimai2-composer": {
         "version": "0.1"
+    },
+    "kimai/user-bundle": {
+        "version": "dev-master"
     },
     "laravolt/avatar": {
         "version": "3.0.0"
@@ -715,7 +715,7 @@
         "version": "v5.0.4"
     },
     "symfony/templating": {
-        "version": "v4.1.1"
+        "version": "v4.4.5"
     },
     "symfony/translation": {
         "version": "3.3",
