@@ -24,13 +24,13 @@
         "doctrine/orm": "^2.7",
         "erusev/parsedown": "^1.6",
         "friendsofsymfony/rest-bundle": "^2.5",
-        "friendsofsymfony/user-bundle": "dev-master",
         "gedmo/doctrine-extensions": "^2.4",
         "hslavich/oneloginsaml-bundle": "^1.4",
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.2",
         "kevinpapst/adminlte-bundle": "^3.0",
         "kimai/kimai2-composer": "^0.1",
+        "kimai/user-bundle": "^1.1",
         "laravolt/avatar": "^3.0",
         "league/csv": "^9.4",
         "league/html-to-markdown": "^4.9",
@@ -152,6 +152,7 @@
             "@kimai:tests-integration"
         ],
         "kimai:code-lint":  [
+            "composer validate --strict",
             "bin/console lint:yaml config --parse-tags",
             "bin/console lint:twig templates --show-deprecations",
             "bin/console lint:xliff translations",
