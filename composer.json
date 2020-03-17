@@ -152,6 +152,7 @@
             "@kimai:tests-integration"
         ],
         "kimai:code-lint":  [
+            "composer validate --strict",
             "bin/console lint:yaml config --parse-tags",
             "bin/console lint:twig templates --show-deprecations",
             "bin/console lint:xliff translations",
