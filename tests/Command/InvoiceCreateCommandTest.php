@@ -11,13 +11,18 @@ namespace App\Tests\Command;
 
 use App\Command\InvoiceCreateCommand;
 use App\DataFixtures\UserFixtures;
-use App\Entity\User;
+use App\Entity\Customer;
+use App\Entity\CustomerMeta;
+use App\Entity\Project;
 use App\Invoice\ServiceInvoice;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceTemplateRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
+use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\InvoiceFixtures;
+use App\Tests\DataFixtures\ProjectFixtures;
+use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\KernelTestTrait;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -160,5 +165,61 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('+----+----------+-------+-------------------------------------------------------------------------+', $output);
         $this->assertStringContainsString('| 1  | Test     | 0 EUR | /', $output);
         $this->assertStringContainsString('/tests/_data/invoices/2020-001-test.html |', $output);
+    }
+
+    protected function prepareFixtures(\DateTime $start)
+    {
+        $em = self::$container->get('doctrine.orm.entity_manager');
+
+        $fixture = new CustomerFixtures();
+        $fixture->setAmount(1);
+        $fixture->setCallback(function (Customer $customer) {
+            $meta = new CustomerMeta();
+            $meta->setName('template');
+            $meta->setValue('Invoice');
+            $customer->setMetaField($meta);
+        });
+        $this->importFixture($em, $fixture);
+
+        $fixture = new ProjectFixtures();
+        $fixture->setCustomers([$em->getRepository(Customer::class)->find(2)]);
+        $fixture->setAmount(1);
+        $this->importFixture($em, $fixture);
+
+        $fixture = new TimesheetFixtures();
+        $fixture->setUser($this->getUserByName($em, UserFixtures::USERNAME_SUPER_ADMIN));
+        $fixture->setAmount(20);
+        $fixture->setStartDate($start);
+        $fixture->setProjects([$em->getRepository(Project::class)->find(2)]);
+        $this->importFixture($em, $fixture);
+
+        $fixture = new InvoiceFixtures();
+        $this->importFixture($em, $fixture);
+    }
+
+    public function testCreateInvoiceByCustomer()
+    {
+        $start = new \DateTime('-2 months');
+        $end = new \DateTime();
+
+        $this->prepareFixtures($start);
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--by-customer' => null, '--template-meta' => 'template', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('Created 1 invoice(s) ', $output);
+    }
+
+    public function testCreateInvoiceByProject()
+    {
+        $start = new \DateTime('-2 months');
+        $end = new \DateTime();
+
+        $this->prepareFixtures($start);
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--by-project' => null, '--template-meta' => 'template', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('Created 1 invoice(s) ', $output);
     }
 }

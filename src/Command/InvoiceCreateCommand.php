@@ -273,6 +273,7 @@ class InvoiceCreateCommand extends Command
         foreach ($projects as $project) {
             $query = clone $defaultQuery;
             $query->addProject($project);
+            $query->addCustomer($project->getCustomer());
 
             $tpl = $this->getTemplateForProject($input, $project);
             if (null === $tpl) {
