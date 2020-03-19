@@ -83,3 +83,11 @@ global.KimaiReloadPageWidget = require('./js/widgets/KimaiReloadPageWidget').def
 
 // ------ Autocomplete for tags only ------
 require('jquery-ui/ui/widgets/autocomplete');
+
+// register service worker
+if ('serviceWorker' in navigator) {
+    // Use the window load event to keep the page load performant
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/build/sw.js', {scope: '/'});
+    });
+}
