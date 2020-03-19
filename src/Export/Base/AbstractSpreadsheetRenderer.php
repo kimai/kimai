@@ -288,7 +288,7 @@ abstract class AbstractSpreadsheetRenderer
                 if (!$isColumnFormatted) {
                     if (null !== $maxWidth) {
                         $sheet->getColumnDimensionByColumn($column)
-                            ->setWidth(40);
+                            ->setWidth($maxWidth);
                     }
                     $isColumnFormatted = true;
                 }
