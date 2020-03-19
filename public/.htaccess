@@ -59,3 +59,10 @@ DirectoryIndex index.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+# Add service worker scope header to allow the sw.js to reside in the public/build/ folder
+<IfModule mod_headers.c>
+    <Files "sw.js">
+        Header Set Service-Worker-allowed "/"
+    </Files>
+</IfModule>
