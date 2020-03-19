@@ -129,7 +129,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
     public function testCreateWithMissingGenerationMode()
     {
-        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN], 'Could not determine generation mode, you need to set one of: customer, by-customer, by-project');
+        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN], 'Could not determine generation mode');
     }
 
     public function testCreateWithMissingTemplate()
