@@ -28,13 +28,13 @@ final class PwaController extends AbstractController
             'start_url' => $router->generate('homeLocale'),
             'icons' => [
                 [
-                    'src' => 'favicon-32x32.png',
+                    'src' => '/favicon-32x32.png',
                     'sizes' => '32x32',
                     'type' => 'image/png',
                     'density' => '0.75',
                 ],
                 [
-                    'src' => 'touch-icon-192x192.png',
+                    'src' => '/touch-icon-192x192.png',
                     'sizes' => '192x192',
                     'type' => 'image/png',
                     'density' => '4',
