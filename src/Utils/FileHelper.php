@@ -9,51 +9,53 @@
 
 namespace App\Utils;
 
+use Symfony\Component\Filesystem\Filesystem;
+
 final class FileHelper
 {
     /**
      * @var string
      */
     private $dataDir;
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
 
     public function __construct(string $dataDir)
     {
         $this->dataDir = $dataDir;
+        $this->filesystem = new Filesystem();
     }
 
-    public function getDataSubdirectory(string $directory): string
+    public function getDataDirectory(string $subDirectory = null): string
     {
-        $subDirectory = $this->dataDir . '/' . rtrim(ltrim($directory, '/'), '/') . '/';
+        $directory = $this->dataDir . '/';
 
-        $this->makeDir($subDirectory);
-
-        if (!is_dir($subDirectory)) {
-            throw new \Exception(sprintf('Directory "%s" does not exist', $subDirectory));
+        if (!empty($subDirectory)) {
+            $directory .= rtrim(ltrim($subDirectory, '/'), '/') . '/';
         }
 
-        if (!is_writable($subDirectory)) {
-            throw new \Exception(sprintf('Directory "%s" is not writable', $subDirectory));
+        $this->makeDir($directory);
+
+        if (!is_dir($directory)) {
+            throw new \Exception(sprintf('Directory "%s" does not exist', $directory));
         }
 
-        return $subDirectory;
+        if (!is_writable($directory)) {
+            throw new \Exception(sprintf('Directory "%s" is not writable', $directory));
+        }
+
+        return $directory;
     }
 
     public function makeDir(string $directory)
     {
-        if (is_dir($directory)) {
-            return;
-        }
-
-        if (false === @mkdir($directory)) {
-            throw new \Exception(sprintf('Failed to create directory "%s", check file permissions', $directory));
-        }
+        $this->filesystem->mkdir($directory);
     }
 
     public function saveFile(string $filename, $data)
     {
-        $result = @file_put_contents($filename, $data);
-        if ($result === false) {
-            throw new \Exception('File "%s" could not be written');
-        }
+        $this->filesystem->dumpFile($filename, $data);
     }
 }
