@@ -6,7 +6,7 @@ var webpack = require('webpack');
 
 Encore
     .setOutputPath('public/build/')
-    .setPublicPath('build/')
+    .setPublicPath('/build')
     .setManifestKeyPrefix('build/')
     .cleanupOutputBeforeBuild()
 
