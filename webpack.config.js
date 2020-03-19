@@ -1,6 +1,7 @@
 // Hint: if something doesn't work as expected: yarn upgrade --latest
 
 var Encore = require('@symfony/webpack-encore');
+var WorkboxPlugin = require('workbox-webpack-plugin');
 var webpack = require('webpack');
 
 Encore
@@ -48,6 +49,18 @@ Encore
             }
         }
     })
+
+    .addPlugin(
+        new WorkboxPlugin.GenerateSW({
+            swDest: 'sw.js',
+            clientsClaim: true,
+            skipWaiting: true,
+            chunks: [
+                'app',
+                'runtime'
+            ]
+        })
+    )
 ;
 
 var config = Encore.getWebpackConfig();

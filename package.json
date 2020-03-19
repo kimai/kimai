@@ -42,5 +42,8 @@
     "sortablejs": "^1.10",
     "sweetalert2": "^9.3",
     "webpack-notifier": "^1.8"
+  },
+  "dependencies": {
+    "workbox-webpack-plugin": "^5.0.0"
   }
 }
