@@ -107,7 +107,9 @@ final class InvoiceModel
     }
 
     /**
-     * Do not use this method for rendering the invoice, use InvoiceModel::getCalculator()->getEntries() instead.
+     * Returns the raw data from the model.
+     *
+     * Do not use this method for rendering the invoice, use getItems() instead.
      *
      * @return InvoiceItemInterface[]
      */

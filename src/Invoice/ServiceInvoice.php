@@ -234,7 +234,7 @@ final class ServiceInvoice
     public function changeInvoiceStatus(Invoice $invoice, string $status)
     {
         if (!in_array($status, [Invoice::STATUS_NEW, Invoice::STATUS_PENDING, Invoice::STATUS_PAID])) {
-            throw new \InvalidArgumentException('Unknwon invoice status');
+            throw new \InvalidArgumentException('Unknown invoice status');
         }
 
         switch ($status) {

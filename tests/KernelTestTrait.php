@@ -15,6 +15,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\ORM\EntityManager;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
@@ -22,12 +23,18 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 trait KernelTestTrait
 {
+    /**
+     * @param $client HttpKernelBrowser|EntityManager|KernelTestCase
+     * @param Fixture $fixture
+     */
     protected function importFixture($client, Fixture $fixture)
     {
         if ($client instanceof HttpKernelBrowser) {
             $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         } elseif ($client instanceof EntityManager) {
             $em = $client;
+        } elseif ($client instanceof KernelTestCase) {
+            $em = $client::$container->get('doctrine.orm.entity_manager');
         } else {
             throw new \InvalidArgumentException('Fixtures need an EntityManager to be imported');
         }

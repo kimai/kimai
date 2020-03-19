@@ -26,14 +26,7 @@ class InvoiceControllerTest extends ControllerBaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $path = __DIR__ . '/../_data/invoices/';
-
-        if (is_dir($path)) {
-            $files = glob($path . '*');
-            foreach ($files as $file) {
-                unlink($file);
-            }
-        }
+        $this->clearInvoiceFiles();
     }
 
     protected function tearDown(): void

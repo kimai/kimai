@@ -106,6 +106,13 @@ class InvoiceCreateCommand extends Command
 
         // =============== VALIDATION START ===============
 
+        $username = $input->getOption('user');
+        if (empty($username)) {
+            $io->error('You must set a "user" to create invoices');
+
+            return 1;
+        }
+
         $exportedFilter = TimesheetQuery::STATE_NOT_EXPORTED;
         switch ($input->getOption('exported')) {
             case null:
@@ -120,16 +127,9 @@ class InvoiceCreateCommand extends Command
                 break;
 
             default:
-                $io->error('Unknown "export" filter given');
+                $io->error('Unknown "exported" filter given');
 
                 return 1;
-        }
-
-        $username = $input->getOption('user');
-        if (empty($username)) {
-            $io->error('You must set a "user" to create invoices');
-
-            return 1;
         }
 
         $user = $this->userRepository->loadUserByUsername($username);
@@ -159,6 +159,13 @@ class InvoiceCreateCommand extends Command
             return 1;
         }
 
+        $customersIDs = $input->getOption('customer');
+        if (!$byActiveCustomer && !$byActiveProject && empty($customersIDs)) {
+            $io->error('Could not determine generation mode, you need to set one of: customer, by-customer, by-project');
+
+            return 1;
+        }
+
         if (null === $input->getOption('template') && null === $input->getOption('template-meta')) {
             $io->error('You must either pass the "template" or "template-meta" option');
 
@@ -175,7 +182,6 @@ class InvoiceCreateCommand extends Command
                 return 1;
             }
         }
-
         if (!$start instanceof \DateTime) {
             $start = new \DateTime('first day of this month', $timezone);
         }
@@ -204,13 +210,6 @@ class InvoiceCreateCommand extends Command
         $markAsExported = false;
         if ($input->getOption('set-exported')) {
             $markAsExported = true;
-        }
-
-        $customersIDs = $input->getOption('customer');
-        if (!$byActiveCustomer && !$byActiveProject && empty($customersIDs)) {
-            $io->error('Could not determine generation mode, you need to set one of: customer, by-customer, by-project');
-
-            return 1;
         }
 
         // =============== VALIDATION END ===============

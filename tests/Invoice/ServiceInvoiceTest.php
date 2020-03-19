@@ -9,6 +9,7 @@
 
 namespace App\Tests\Invoice;
 
+use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
@@ -33,6 +34,14 @@ class ServiceInvoiceTest extends TestCase
         $userDateTime = (new UserDateTimeFactoryFactory($this))->create();
 
         return new ServiceInvoice($repo, new FileHelper(realpath(__DIR__ . '/../../var/data/')), $invoiceRepo, $userDateTime, new DebugFormatter());
+    }
+
+    public function testInvalidExceptionOnChangeState()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown invoice status');
+        $sut = $this->getSut([]);
+        $sut->changeInvoiceStatus(new Invoice(), 'foo');
     }
 
     public function testEmptyObject()
