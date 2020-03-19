@@ -74,7 +74,10 @@ abstract class AbstractSpreadsheetRenderer
         'customer' => [],
         'project' => [],
         'activity' => [],
-        'description' => [],
+        'description' => [
+            'maxWidth' => 50,
+            'wrapText' => false,
+        ],
         'exported' => [],
         'tags' => [],
         'hourlyRate' => [],
@@ -264,8 +267,31 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['description']) && !isset($columns['description']['render'])) {
-            $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
-                $sheet->setCellValueByColumnAndRow($column, $row, $entity->getDescription());
+            $maxWidth = array_key_exists('maxWidth', $columns['description']) ? intval($columns['description']['maxWidth']) : null;
+            $wrapText = array_key_exists('wrapText', $columns['description']) ? (bool) $columns['description']['wrapText'] : false;
+
+            // This column has a column-only formatter to set the maximum width of a column.
+            // It needs to be executed once, so we use this as a flag on when to skip it.
+            $isColumnFormatted = false;
+
+            $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use (&$isColumnFormatted, $maxWidth, $wrapText) {
+                $cell = $sheet->getCellByColumnAndRow($column, $row);
+
+                $cell->setValue($entity->getDescription());
+
+                // Apply wrap text if configured
+                if ($wrapText) {
+                    $cell->getStyle()->getAlignment()->setWrapText(true);
+                }
+
+                // Apply max width, only needs to be once per column
+                if (!$isColumnFormatted) {
+                    if (null !== $maxWidth) {
+                        $sheet->getColumnDimensionByColumn($column)
+                            ->setWidth(40);
+                    }
+                    $isColumnFormatted = true;
+                }
             };
         }
 

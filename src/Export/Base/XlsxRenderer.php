@@ -15,8 +15,6 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class XlsxRenderer extends AbstractSpreadsheetRenderer
 {
-    protected const COLUMN_DESCRIPTION = 'J';
-
     public function getFileExtension(): string
     {
         return '.xlsx';
@@ -54,22 +52,14 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer
         $sheet->freezePane('D2');
 
         foreach (range('A', $highestColumn) as $column) {
-            switch ($column) {
-                case self::COLUMN_DESCRIPTION:
-                    // Description column should be limited in width
-                    $sheet
-                        ->getColumnDimension($column)
-                        ->setWidth(40);
-                    break;
+            // We default to a reasonable auto-width decided by the client,
+            // sadly ->getDefaultColumnDimension() is not supported so it needs
+            // to be specific about what column should be auto sized.
+            $col = $sheet->getColumnDimension($column);
 
-                default:
-                    // We default to a reasonable auto-width decided by the client,
-                    // sadly ->getDefaultColumnDimension() is not supported so it needs
-                    // to be specific about what column should be auto sized.
-                    $sheet
-                        ->getColumnDimension($column)
-                        ->setAutoSize(true);
-                    break;
+            // If no other width is specified (which defaults to -1)
+            if ($col->getWidth() === -1) {
+                $col->setAutoSize(true);
             }
         }
 
@@ -79,12 +69,6 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer
             ->getAlignment()
             ->setVertical(Alignment::VERTICAL_TOP)
             ->setHorizontal(Alignment::HORIZONTAL_LEFT);
-
-        // The description column text should wrap
-        $sheet
-            ->getStyle(self::COLUMN_DESCRIPTION . '2:' . self::COLUMN_DESCRIPTION . $highestRow)
-            ->getAlignment()
-            ->setWrapText(true);
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save($filename);
