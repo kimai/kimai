@@ -387,7 +387,18 @@ class InvoiceCreateCommand extends Command
             return null;
         }
 
-        return $this->invoiceTemplateRepository->findTemplate($template);
+        return $this->findTemplate($template);
+    }
+
+    private function findTemplate(string $idOrName): ?InvoiceTemplate
+    {
+        $tpl = $this->invoiceTemplateRepository->find($idOrName);
+
+        if (null !== $tpl) {
+            return $tpl;
+        }
+
+        return $this->invoiceTemplateRepository->findOneBy(['name' => $idOrName]);
     }
 
     private function getTemplateForProject(InputInterface $input, Project $project): ?InvoiceTemplate
@@ -406,27 +417,7 @@ class InvoiceCreateCommand extends Command
             return null;
         }
 
-        return $this->invoiceTemplateRepository->findTemplate($template);
-    }
-
-    /**
-     * @param Customer[] $customers
-     * @param \DateTime $start
-     * @param \DateTime $end
-     * @return Invoice[]
-     */
-    private function invoiceForCustomers(array $customers, \DateTime $start, \DateTime $end): array
-    {
-        $invoices = [];
-
-        foreach ($customers as $customer) {
-            $query = new InvoiceQuery();
-            $query->setBegin($start);
-            $query->setEnd($end);
-            $query->addCustomer($customer);
-        }
-
-        return $invoices;
+        return $this->findTemplate($template);
     }
 
     /**

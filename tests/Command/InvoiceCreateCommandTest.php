@@ -122,6 +122,11 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertCommandErrors([], 'You must set a "user" to create invoices');
     }
 
+    public function testCreateWithInvalidUser()
+    {
+        $this->assertCommandErrors(['--user' => 'assdfd'], 'The given username "assdfd" could not be resolved');
+    }
+
     public function testCreateWithMissingEnd()
     {
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--start' => '2020-01-01'], 'You need to supply a end date if a start date was given');
@@ -144,7 +149,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
     public function testCreateWithInvalidStart()
     {
-        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'x', '--start' => 'öäüß', '--end' => '2020-01-01'], 'Invalid start date given');
+        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--exported' => 'exported', '--template' => 'x', '--start' => 'öäüß', '--end' => '2020-01-01'], 'Invalid start date given');
     }
 
     public function testCreateWithInvalidEnd()
@@ -152,12 +157,17 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'x', '--start' => '2020-01-01', '--end' => 'öäüß'], 'Invalid end date given');
     }
 
+    public function testCreateWithInvalidCustomer()
+    {
+        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 3, '--template' => 'x'], 'Unknown customer ID: 3');
+    }
+
     public function testCreateInvoice()
     {
         $fixture = new InvoiceFixtures();
         $this->importFixture($this, $fixture);
 
-        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'Invoice', '--start' => '2020-01-01', '--end' => '2020-03-01']);
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--set-exported' => null, '--customer' => 1, '--template' => 'Invoice', '--start' => '2020-01-01', '--end' => '2020-03-01']);
 
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('+----+----------+-------+------------- Created 1 invoice(s) --------------------------------------+', $output);
@@ -210,6 +220,19 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('Created 1 invoice(s) ', $output);
     }
 
+    public function testCreateInvoiceByCustomerId()
+    {
+        $start = new \DateTime('-2 months');
+        $end = new \DateTime();
+
+        $this->prepareFixtures($start);
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => '2,1', '--template-meta' => 'template', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('Created 1 invoice(s) ', $output);
+    }
+
     public function testCreateInvoiceByProject()
     {
         $start = new \DateTime('-2 months');
@@ -217,7 +240,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
         $this->prepareFixtures($start);
 
-        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--by-project' => null, '--template-meta' => 'template', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--by-project' => null, '--template-meta' => 'template', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('Created 1 invoice(s) ', $output);

@@ -18,16 +18,6 @@ use Pagerfanta\Pagerfanta;
 
 class InvoiceTemplateRepository extends EntityRepository
 {
-    public function findTemplate(string $idOrName): ?InvoiceTemplate
-    {
-        $tpl = $this->find($idOrName);
-        if (null !== $tpl) {
-            return $tpl;
-        }
-
-        return $this->findOneBy(['name' => $idOrName]);
-    }
-
     public function hasTemplate(): bool
     {
         return $this->count([]) > 0;
