@@ -70,6 +70,10 @@ final class InvoiceModel
      * @var InvoiceItemHydrator[]
      */
     private $itemHydrator = [];
+    /**
+     * @var string
+     */
+    private $invoiceNumber;
 
     public function __construct(InvoiceFormatter $formatter)
     {
@@ -202,6 +206,19 @@ final class InvoiceModel
         return $this;
     }
 
+    public function getInvoiceNumber(): string
+    {
+        if (null === $this->generator) {
+            throw new \Exception('InvoiceModel::getInvoiceNumber() cannot be called before calling setNumberGenerator()');
+        }
+
+        if (null === $this->invoiceNumber) {
+            $this->invoiceNumber = $this->generator->getInvoiceNumber();
+        }
+
+        return $this->invoiceNumber;
+    }
+
     public function setNumberGenerator(NumberGeneratorInterface $generator): InvoiceModel
     {
         $this->generator = $generator;
@@ -210,6 +227,9 @@ final class InvoiceModel
         return $this;
     }
 
+    /**
+     * @deprecated since 1.9 - will be removed with 2.0 - use getInvoiceNumber() instead
+     */
     public function getNumberGenerator(): ?NumberGeneratorInterface
     {
         return $this->generator;

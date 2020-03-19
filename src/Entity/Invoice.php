@@ -213,7 +213,7 @@ class Invoice
         $this->user = $model->getUser();
         $this->total = $model->getCalculator()->getTotal();
         $this->tax = $model->getCalculator()->getTax();
-        $this->invoiceNumber = $model->getNumberGenerator()->getInvoiceNumber();
+        $this->invoiceNumber = $model->getInvoiceNumber();
         $this->currency = $model->getCurrency();
 
         $createdAt = $model->getInvoiceDate();
