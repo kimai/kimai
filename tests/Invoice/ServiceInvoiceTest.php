@@ -15,6 +15,8 @@ use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\TwigRenderer;
 use App\Invoice\ServiceInvoice;
 use App\Repository\InvoiceDocumentRepository;
+use App\Repository\InvoiceRepository;
+use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Utils\FileHelper;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
@@ -27,8 +29,10 @@ class ServiceInvoiceTest extends TestCase
     private function getSut(array $paths): ServiceInvoice
     {
         $repo = new InvoiceDocumentRepository($paths);
+        $invoiceRepo = $this->createMock(InvoiceRepository::class);
+        $userDateTime = (new UserDateTimeFactoryFactory($this))->create();
 
-        return new ServiceInvoice($repo, new FileHelper(realpath(__DIR__ . '/../../var/data/')));
+        return new ServiceInvoice($repo, new FileHelper(realpath(__DIR__ . '/../../var/data/')), $invoiceRepo, $userDateTime, new DebugFormatter());
     }
 
     public function testEmptyObject()
