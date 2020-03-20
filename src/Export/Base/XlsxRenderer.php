@@ -58,7 +58,7 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer
             $col = $sheet->getColumnDimension($column);
 
             // If no other width is specified (which defaults to -1)
-            if ($col->getWidth() === -1) {
+            if ((int) $col->getWidth() === -1) {
                 $col->setAutoSize(true);
             }
         }

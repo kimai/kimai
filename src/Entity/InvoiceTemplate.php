@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class InvoiceTemplate
 {
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
