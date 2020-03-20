@@ -121,10 +121,15 @@
         }
     },
     "replace": {
+        "symfony/polyfill-mbstring": "*",
+        "symfony/polyfill-intl": "*",
         "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*",
         "symfony/polyfill-php71": "*",
         "symfony/polyfill-php70": "*",
-        "symfony/polyfill-php56": "*"
+        "symfony/polyfill-php56": "*",
+        "symfony/polyfill-php55": "*",
+        "symfony/polyfill-php54": "*"
     },
     "suggest": {
         "ext-mbstring": "If ext-mbstring is not available you MUST install symfony/polyfill-mbstring",

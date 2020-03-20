@@ -174,6 +174,25 @@ class UserTest extends TestCase
         self::assertTrue($sut->isTeamlead());
     }
 
+    /**
+     * This functionality was added, because these fields can be set via external providers (LDAP, SAML) and
+     * an invalid length should not result in errors.
+     *
+     * @see #1562
+     */
+    public function testMaxLength()
+    {
+        $sut = new User();
+        $sut->setAlias('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+        self::assertEquals(60, strlen($sut->getAlias()));
+        $sut->setAlias('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxAAAAA');
+        self::assertEquals(60, strlen($sut->getAlias()));
+        $sut->setTitle('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+        self::assertEquals(50, strlen($sut->getTitle()));
+        $sut->setTitle('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxAAAAAA');
+        self::assertEquals(50, strlen($sut->getTitle()));
+    }
+
     public function testPreferencesCollectionIsCreatedOnBrokenUser()
     {
         // this code is only used in some rare edge cases, maybe even only in development ...
