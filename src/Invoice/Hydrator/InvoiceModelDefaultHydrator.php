@@ -25,7 +25,7 @@ class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         $values = [
             'invoice.due_date' => $formatter->getFormattedDateTime($model->getDueDate()),
             'invoice.date' => $formatter->getFormattedDateTime($model->getInvoiceDate()),
-            'invoice.number' => $model->getNumberGenerator()->getInvoiceNumber(),
+            'invoice.number' => $model->getInvoiceNumber(),
             'invoice.currency' => $currency,
             'invoice.currency_symbol' => $formatter->getCurrencySymbol($currency),
             'invoice.vat' => $model->getCalculator()->getVat(),

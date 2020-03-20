@@ -1,6 +1,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% extends 'invoice/layout.html.twig' %}
-{% set language = model.template.language|default(app.request.locale) %}
+{% set fallback = app.request is not null ? app.request.locale : 'en' %}
+{% set language = model.template.language|default(fallback) %}
 {% set isDecimal = model.template.decimalDuration|default(false) %}
 
 {% block invoice %}
@@ -30,11 +31,11 @@
                 </tr>
                 <tr>
                     <th>{{ 'invoice.service_date'|trans({}, 'messages', language) }}:</th>
-                    <td><span contenteditable="true">{{ model.query.end|month_name|trans({}, 'messages', language) }} {{ model.query.end|date('Y') }}</td>
+                    <td><span contenteditable="true">{{ model.query.end|month_name|trans({}, 'messages', language) }} {{ model.query.end|date('Y') }}</span></td>
                 </tr>
                 <tr>
                     <th>{{ 'invoice.number'|trans({}, 'messages', language) }}:</th>
-                    <td><span contenteditable="true">{{ model.numberGenerator.invoiceNumber }}</td>
+                    <td>{{ model.invoiceNumber }}</td>
                 </tr>
                 {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
                     <tr>

@@ -1,5 +1,6 @@
 {% extends 'invoice/layout.html.twig' %}
-{% set language = model.template.language|default(app.request.locale) %}
+{% set fallback = app.request is not null ? app.request.locale : 'en' %}
+{% set language = model.template.language|default(fallback) %}
 {% set isDecimal = model.template.decimalDuration|default(false) %}
 
 {% block invoice %}
@@ -51,7 +52,7 @@
     <div class="col-sm-5">
         <p contenteditable="true">
             <strong>{{ 'invoice.number'|trans({}, 'messages', language) }}:</strong>
-            {{ model.numberGenerator.invoiceNumber }}
+            {{ model.invoiceNumber }}
             
             <br>
             <strong>{{ 'invoice.due_days'|trans({}, 'messages', language) }}:</strong>
