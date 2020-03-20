@@ -51,47 +51,47 @@ class ConfigurableNumberGeneratorTest extends TestCase
 
     public function getTestData()
     {
-        $timestamp = time();
+        $invoiceDate = new \DateTime();
 
         return [
             // simple tests for single calls
-            ['{date}', date('ymd'), $timestamp],
-            ['{Y}', date('Y'), $timestamp],
-            ['{y}', date('y'), $timestamp],
-            ['{M}', date('m'), $timestamp],
-            ['{m}', date('n'), $timestamp],
-            ['{D}', date('d'), $timestamp],
-            ['{d}', date('j'), $timestamp],
-            ['{c}', '2', $timestamp],
-            ['{cy}', '2', $timestamp],
-            ['{cm}', '2', $timestamp],
-            ['{cd}', '2', $timestamp],
+            ['{date}', $invoiceDate->format('ymd'), $invoiceDate],
+            ['{Y}', $invoiceDate->format('Y'), $invoiceDate],
+            ['{y}', $invoiceDate->format('y'), $invoiceDate],
+            ['{M}', $invoiceDate->format('m'), $invoiceDate],
+            ['{m}', $invoiceDate->format('n'), $invoiceDate],
+            ['{D}', $invoiceDate->format('d'), $invoiceDate],
+            ['{d}', $invoiceDate->format('j'), $invoiceDate],
+            ['{c}', '2', $invoiceDate],
+            ['{cy}', '2', $invoiceDate],
+            ['{cm}', '2', $invoiceDate],
+            ['{cd}', '2', $invoiceDate],
             // number formatting (not testing the lower case versions, as the tests might break depending on the date)
-            ['{date,10}', '0000' . date('ymd'), $timestamp],
-            ['{Y,6}', '00' . date('Y'), $timestamp],
-            ['{M,3}', '0' . date('m'), $timestamp],
-            ['{D,3}', '0' . date('d'), $timestamp],
-            ['{c,2}', '02', $timestamp],
-            ['{cy,2}', '02', $timestamp],
-            ['{cm,2}', '02', $timestamp],
-            ['{cd,2}', '02', $timestamp],
+            ['{date,10}', '0000' . $invoiceDate->format('ymd'), $invoiceDate],
+            ['{Y,6}', '00' . $invoiceDate->format('Y'), $invoiceDate],
+            ['{M,3}', '0' . $invoiceDate->format('m'), $invoiceDate],
+            ['{D,3}', '0' . $invoiceDate->format('d'), $invoiceDate],
+            ['{c,2}', '02', $invoiceDate],
+            ['{cy,2}', '02', $invoiceDate],
+            ['{cm,2}', '02', $invoiceDate],
+            ['{cd,2}', '02', $invoiceDate],
             // mixing identifiers
-            ['{Y}{cy}', date('Y') . '2', $timestamp],
-            ['{Y}{cy}{m}', date('Y') . '2' . date('n'), $timestamp],
-            ['{Y}-{cy}/{m}', date('Y') . '-2/' . date('n'), $timestamp],
-            ['{Y}-{cy}/{m}', date('Y') . '-2/' . date('n'), $timestamp],
-            ['{Y,5}/{cy,5}', '0' . date('Y') . '/00002', $timestamp],
+            ['{Y}{cy}', $invoiceDate->format('Y') . '2', $invoiceDate],
+            ['{Y}{cy}{m}', $invoiceDate->format('Y') . '2' . $invoiceDate->format('n'), $invoiceDate],
+            ['{Y}-{cy}/{m}', $invoiceDate->format('Y') . '-2/' . $invoiceDate->format('n'), $invoiceDate],
+            ['{Y}-{cy}/{m}', $invoiceDate->format('Y') . '-2/' . $invoiceDate->format('n'), $invoiceDate],
+            ['{Y,5}/{cy,5}', '0' . $invoiceDate->format('Y') . '/00002', $invoiceDate],
         ];
     }
 
     /**
      * @dataProvider getTestData
      */
-    public function testGetInvoiceNumber(string $format, string $expectedInvoiceNumber, int $timestamp)
+    public function testGetInvoiceNumber(string $format, string $expectedInvoiceNumber, \DateTime $invoiceDate)
     {
         $sut = $this->getSut($format);
         $model = new InvoiceModel(new DebugFormatter());
-        $model->setInvoiceDate((new \DateTime())->setTimestamp($timestamp));
+        $model->setInvoiceDate($invoiceDate);
         $sut->setModel($model);
 
         $this->assertEquals($expectedInvoiceNumber, $sut->getInvoiceNumber());

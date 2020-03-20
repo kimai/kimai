@@ -83,31 +83,31 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
 
             switch ($tmp) {
                 case 'Y':
-                    $partialResult = date('Y', $timestamp);
+                    $partialResult = $invoiceDate->format('Y');
                     break;
 
                 case 'y':
-                    $partialResult = date('y', $timestamp);
+                    $partialResult = $invoiceDate->format('y');
                     break;
 
                 case 'M':
-                    $partialResult = date('m', $timestamp);
+                    $partialResult = $invoiceDate->format('m');
                     break;
 
                 case 'm':
-                    $partialResult = date('n', $timestamp);
+                    $partialResult = $invoiceDate->format('n');
                     break;
 
                 case 'D':
-                    $partialResult = date('d', $timestamp);
+                    $partialResult = $invoiceDate->format('d');
                     break;
 
                 case 'd':
-                    $partialResult = date('j', $timestamp);
+                    $partialResult = $invoiceDate->format('j');
                     break;
 
                 case 'date':
-                    $partialResult = date('ymd', $timestamp);
+                    $partialResult = $invoiceDate->format('ymd');
                     break;
 
                 case 'c':
