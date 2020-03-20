@@ -101,7 +101,7 @@ class Extensions extends AbstractExtension
 
     public function multilineIndent(?string $string, string $indent): string
     {
-        if (empty($string)) {
+        if (null === $string || '' === $string) {
             return '';
         }
 

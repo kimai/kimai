@@ -311,6 +311,7 @@ class ExtensionsTest extends TestCase
         return [
             ['    ', null, ['']],
             ['    ', '', ['']],
+            ['    ', 0, ['    0']],
             ['    ', 'sdfsdf
 sdfsdf
 
