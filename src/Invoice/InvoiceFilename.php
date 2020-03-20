@@ -20,7 +20,7 @@ final class InvoiceFilename
 
     public function __construct(InvoiceModel $model)
     {
-        $filename = $model->getNumberGenerator()->getInvoiceNumber();
+        $filename = $model->getInvoiceNumber();
 
         $filename = str_replace(['/', '\\'], '-', $filename);
 

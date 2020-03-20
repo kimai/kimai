@@ -12,15 +12,10 @@ namespace App\Controller;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
-use App\Event\InvoicePostRenderEvent;
-use App\Event\InvoicePreRenderEvent;
-use App\Export\ExportItemInterface;
 use App\Form\InvoiceDocumentUploadForm;
 use App\Form\InvoiceTemplateForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
 use App\Form\Toolbar\InvoiceToolbarSimpleForm;
-use App\Invoice\InvoiceFormatter;
-use App\Invoice\InvoiceModel;
 use App\Invoice\ServiceInvoice;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
@@ -58,25 +53,20 @@ final class InvoiceController extends AbstractController
      */
     private $dateTimeFactory;
     /**
-     * @var InvoiceFormatter
+     * @var InvoiceRepository
      */
-    private $formatter;
+    private $invoiceRepository;
     /**
      * @var EventDispatcherInterface
      */
     private $dispatcher;
-    /**
-     * @var InvoiceRepository
-     */
-    private $invoiceRepository;
 
-    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $templateRepository, InvoiceRepository $invoiceRepository, UserDateTimeFactory $dateTimeFactory, InvoiceFormatter $formatter, EventDispatcherInterface $dispatcher)
+    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $templateRepository, InvoiceRepository $invoiceRepository, UserDateTimeFactory $dateTimeFactory, EventDispatcherInterface $dispatcher)
     {
         $this->service = $service;
         $this->templateRepository = $templateRepository;
         $this->invoiceRepository = $invoiceRepository;
         $this->dateTimeFactory = $dateTimeFactory;
-        $this->formatter = $formatter;
         $this->dispatcher = $dispatcher;
     }
 
@@ -94,44 +84,50 @@ final class InvoiceController extends AbstractController
         }
 
         $showPreview = false;
-        $entries = [];
+        $model = null;
 
         $query = $this->getDefaultQuery();
         $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
         $form->setData($query);
         $form->submit($request->query->all(), false);
 
-        if ($this->isGranted('create_invoice')) {
-            if ($form->isValid()) {
-                try {
-                    /** @var SubmitButton $createButton */
-                    $createButton = $form->get('create');
-                    if ($createButton->isClicked()) {
-                        return $this->renderInvoice($query, true);
-                    }
-
-                    /** @var SubmitButton $printButton */
-                    $printButton = $form->get('print');
-                    if ($printButton->isClicked()) {
-                        return $this->renderInvoice($query, false);
-                    }
-                } catch (\Exception $ex) {
-                    $this->logException($ex);
-                    $this->flashError('action.update.error', ['%reason%' => 'check doctor/logs']);
+        if ($this->isGranted('create_invoice') && $form->isValid()) {
+            try {
+                /** @var SubmitButton $createButton */
+                $createButton = $form->get('create');
+                if ($createButton->isClicked()) {
+                    return $this->renderInvoice($query);
                 }
 
-                /** @var SubmitButton $previewButton */
-                $previewButton = $form->get('preview');
-                if ($previewButton->isClicked()) {
-                    $showPreview = true;
-                    $entries = $this->getPreviewEntries($query);
+                /** @var SubmitButton $printButton */
+                $printButton = $form->get('print');
+                if ($printButton->isClicked()) {
+                    return $this->service->renderInvoice($query, $this->dispatcher);
                 }
+            } catch (\Exception $ex) {
+                $this->logException($ex);
+                $this->flashError('action.update.error', ['%reason%' => 'check doctor/logs']);
+            }
+
+            /** @var SubmitButton $previewButton */
+            $previewButton = $form->get('preview');
+            if ($previewButton->isClicked()) {
+                $showPreview = true;
             }
         }
 
-        $model = $this->prepareModel($query);
-        if (!empty($entries)) {
-            $model->addEntries($entries);
+        try {
+            $model = $this->service->createModel($query);
+            if ($showPreview) {
+                $entries = $this->service->findInvoiceItems($query);
+                if (!empty($entries)) {
+                    $model->addEntries($entries);
+                }
+            }
+        } catch (\Exception $ex) {
+            $this->logException($ex);
+            $this->flashError($ex->getMessage());
+            $showPreview = false;
         }
 
         return $this->render('invoice/index.html.twig', [
@@ -164,54 +160,23 @@ final class InvoiceController extends AbstractController
         return $query;
     }
 
-    protected function renderInvoice(InvoiceQuery $query, bool $saveInvoice = false)
+    protected function renderInvoice(InvoiceQuery $query)
     {
-        $entries = $this->getEntries($query);
-        $model = $this->prepareModel($query);
-        foreach ($entries as $repo => $items) {
-            $model->addEntries($items);
-        }
+        try {
+            $invoice = $this->service->createInvoice($query, $this->dispatcher);
 
-        $document = $this->service->getDocumentByName($model->getTemplate()->getRenderer());
-        if (null === $document) {
-            throw new \Exception('Unknown invoice document: ' . $model->getTemplate()->getRenderer());
-        }
+            $this->flashSuccess('action.update.success');
 
-        foreach ($this->service->getRenderer() as $renderer) {
-            if ($renderer->supports($document)) {
-                $this->dispatcher->dispatch(new InvoicePreRenderEvent($model, $document, $renderer));
-
-                $response = $renderer->render($document, $model);
-
-                if ($saveInvoice) {
-                    if ($query->isMarkAsExported()) {
-                        $this->markEntriesAsExported($entries);
-                    }
-
-                    $event = new InvoicePostRenderEvent($model, $document, $renderer, $response);
-                    $this->dispatcher->dispatch($event);
-
-                    $invoiceFilename = $this->service->saveGeneratedInvoice($event);
-
-                    $invoice = new Invoice();
-                    $invoice->setModel($model);
-                    $invoice->setFilename($invoiceFilename);
-                    $this->invoiceRepository->saveInvoice($invoice);
-
-                    $this->flashSuccess('action.update.success');
-
-                    if ($this->isGranted('history_invoice')) {
-                        return $this->redirectToRoute('admin_invoice_list', ['id' => $invoice->getId()]);
-                    }
-                }
-
-                return $response;
+            if ($this->isGranted('history_invoice')) {
+                return $this->redirectToRoute('admin_invoice_list', ['id' => $invoice->getId()]);
             }
-        }
 
-        $this->flashError(
-            sprintf('Cannot render invoice: %s (%s)', $model->getTemplate()->getRenderer(), $document->getName())
-        );
+            $file = $this->service->getInvoiceFile($invoice);
+
+            return $this->file($file->getRealPath(), $file->getBasename());
+        } catch (\Exception $ex) {
+            $this->flashError($ex->getMessage());
+        }
 
         return $this->redirectToRoute('invoice');
     }
@@ -222,25 +187,11 @@ final class InvoiceController extends AbstractController
      */
     public function changeStatusAction(Invoice $invoice, string $status): Response
     {
-        if (!in_array($status, [Invoice::STATUS_NEW, Invoice::STATUS_PENDING, Invoice::STATUS_PAID])) {
-            throw $this->createNotFoundException('Unknwon invoice status');
+        try {
+            $this->service->changeInvoiceStatus($invoice, $status);
+        } catch (\InvalidArgumentException $ex) {
+            throw $this->createNotFoundException($ex->getMessage());
         }
-
-        switch ($status) {
-            case Invoice::STATUS_NEW:
-                $invoice->setIsNew();
-                break;
-
-            case Invoice::STATUS_PENDING:
-                $invoice->setIsPending();
-                break;
-
-            case Invoice::STATUS_PAID:
-                $invoice->setIsPaid();
-                break;
-        }
-
-        $this->invoiceRepository->saveInvoice($invoice);
 
         $this->flashSuccess('action.update.success');
 
@@ -288,98 +239,6 @@ final class InvoiceController extends AbstractController
             'query' => $query,
             'download' => $invoice,
         ]);
-    }
-
-    /**
-     * @param ExportItemInterface[] $entries
-     */
-    private function markEntriesAsExported(iterable $entries)
-    {
-        $repositories = $this->service->getInvoiceItemRepositories();
-
-        foreach ($entries as $repo => $items) {
-            foreach ($repositories as $repository) {
-                if (get_class($repository) === $repo) {
-                    $repository->setExported($items);
-                }
-            }
-        }
-    }
-
-    /**
-     * @param InvoiceQuery $query
-     * @return ExportItemInterface[]
-     */
-    protected function getEntries(InvoiceQuery $query): array
-    {
-        // customer needs to be defined, as we need the currency for the invoice
-        if (!$query->hasCustomers()) {
-            return [];
-        }
-
-        if (null === $query->getBegin()) {
-            $query->setBegin($this->dateTimeFactory->createDateTime('first day of this month'));
-        }
-        if (null === $query->getEnd()) {
-            $query->setEnd($this->dateTimeFactory->createDateTime('last day of this month'));
-        }
-        $query->getBegin()->setTime(0, 0, 0);
-        $query->getEnd()->setTime(23, 59, 59);
-
-        $repositories = $this->service->getInvoiceItemRepositories();
-        $items = [];
-
-        foreach ($repositories as $repository) {
-            $items[get_class($repository)] = $repository->getInvoiceItemsForQuery($query);
-        }
-
-        return $items;
-    }
-
-    protected function getPreviewEntries(InvoiceQuery $query): array
-    {
-        $entries = [];
-        $temp = $this->getEntries($query);
-
-        foreach ($temp as $repo => $items) {
-            $entries = array_merge($entries, $items);
-        }
-
-        return $entries;
-    }
-
-    /**
-     * @param InvoiceQuery $query
-     * @return InvoiceModel
-     * @throws \Exception
-     */
-    protected function prepareModel(InvoiceQuery $query): InvoiceModel
-    {
-        $model = new InvoiceModel($this->formatter);
-        $model
-            ->setInvoiceDate($this->dateTimeFactory->createDateTime())
-            ->setQuery($query)
-            ->setUser($this->getUser())
-            ->setCustomer($query->getCustomer())
-        ;
-
-        if ($query->getTemplate() !== null) {
-            $generator = $this->service->getNumberGeneratorByName($query->getTemplate()->getNumberGenerator());
-            if (null === $generator) {
-                throw new \Exception('Unknown number generator: ' . $query->getTemplate()->getNumberGenerator());
-            }
-
-            $calculator = $this->service->getCalculatorByName($query->getTemplate()->getCalculator());
-            if (null === $calculator) {
-                throw new \Exception('Unknown invoice calculator: ' . $query->getTemplate()->getCalculator());
-            }
-
-            $model->setTemplate($query->getTemplate());
-            $model->setCalculator($calculator);
-            $model->setNumberGenerator($generator);
-        }
-
-        return $model;
     }
 
     /**
@@ -478,22 +337,10 @@ final class InvoiceController extends AbstractController
         }
 
         $template = new InvoiceTemplate();
+
         if (null !== $copyFrom) {
-            $template
-                ->setName('Copy of ' . $copyFrom->getName())
-                ->setTitle($copyFrom->getTitle())
-                ->setDueDays($copyFrom->getDueDays())
-                ->setCalculator($copyFrom->getCalculator())
-                ->setVat($copyFrom->getVat())
-                ->setRenderer($copyFrom->getRenderer())
-                ->setCompany($copyFrom->getCompany())
-                ->setPaymentTerms($copyFrom->getPaymentTerms())
-                ->setAddress($copyFrom->getAddress())
-                ->setNumberGenerator($copyFrom->getNumberGenerator())
-                ->setContact($copyFrom->getContact())
-                ->setPaymentDetails($copyFrom->getPaymentDetails())
-                ->setVatId($copyFrom->getVatId())
-            ;
+            $template = clone $copyFrom;
+            $template->setName('Copy of ' . $copyFrom->getName());
         }
 
         return $this->renderTemplateForm($template, $request);

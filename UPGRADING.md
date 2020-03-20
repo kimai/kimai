@@ -16,10 +16,10 @@ Perform EACH version specific task between your version and the new one, otherwi
 - The default invoice number format changed. If you want to use the old one: configure `{date}` as format - see [invoice documentation](https://www.kimai.org/documentation/invoices.html)
 - HTML invoice templates are now treated like other files and offered as download. If you are using relative URLs for including 
 assets (CSS, images) you need to either inline them (see the default templates) or use absolute URLs.
-- Invoice templates that use query values `activity.X` or `project.X` should be checked, as multi-select is now possible for filtering  
+- Invoice templates that use the templates variables `${activity.X}` or `${project.X}` should be checked and possibly adapted, as multi-select is now possible for filtering  
 
 Permission changes:
-- `history_invoice` - NEW: grants all features of the new invoice archive (by default for all admins)
+- `history_invoice` - NEW: grants all features for the new invoice archive (by default for all admins)
 
 ### Developer
 

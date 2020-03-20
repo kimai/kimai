@@ -28,10 +28,6 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
      * @var string
      */
     private $format;
-    /**
-     * @var string
-     */
-    private $number;
 
     public function __construct(InvoiceRepository $repository, SystemConfiguration $configuration)
     {
@@ -60,10 +56,6 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
      */
     public function getInvoiceNumber(): string
     {
-        if (null !== $this->number) {
-            return $this->number;
-        }
-
         $format = $this->format;
         $invoiceDate = $this->model->getInvoiceDate();
         $timestamp = $invoiceDate->getTimestamp();
@@ -137,6 +129,6 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
             $result = str_replace($part, $partialResult, $result);
         }
 
-        return $this->number = (string) $result;
+        return (string) $result;
     }
 }
