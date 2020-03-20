@@ -27,6 +27,9 @@ class InvoiceDocumentRepositoryTest extends TestCase
         'default.html.twig',
         'freelancer.html.twig',
         'timesheet.html.twig',
+        'text.txt.twig',
+        'javascript.json.twig',
+        'xml.xml.twig',
     ];
 
     public function testWithEmptyDirectory()
