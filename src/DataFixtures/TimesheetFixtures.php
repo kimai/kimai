@@ -41,7 +41,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
     public const MIN_MINUTES_PER_ENTRY = 15;
     public const MAX_MINUTES_PER_ENTRY = 840; // 14h
     public const MAX_TAG_PER_ENTRY = 3;
-    public const MAX_DESCRIPTION_LENGTH = 50;
+    public const MAX_DESCRIPTION_LENGTH = 500;
 
     public const BATCH_SIZE = 100;
 
