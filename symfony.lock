@@ -633,12 +633,6 @@
     "symfony/polyfill-intl-normalizer": {
         "version": "v1.13.1"
     },
-    "symfony/polyfill-mbstring": {
-        "version": "v1.6.0"
-    },
-    "symfony/polyfill-php72": {
-        "version": "v1.6.0"
-    },
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
     },
