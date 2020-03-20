@@ -77,20 +77,20 @@ class InvoiceCreateCommandTest extends KernelTestCase
     }
 
     /**
-        'user'
-        'start'
-        'end'
-        'timezone'
-        'customer'
-        'template'
-        'search'
-        'exported'
-        'by-customer'
-        'by-project'
-        'set-exported'
-        'template-meta'
-     * @param $user
-     * @param array $params
+     * Allowed option: user
+     * Allowed option: start
+     * Allowed option: end
+     * Allowed option: timezone
+     * Allowed option: customer
+     * Allowed option: template
+     * Allowed option: search
+     * Allowed option: exported
+     * Allowed option: by-customer
+     * Allowed option: by-project
+     * Allowed option: set-exported
+     * Allowed option: template-meta
+     *
+     * @param array $options
      * @return CommandTester
      */
     protected function createInvoice(array $options = [])
