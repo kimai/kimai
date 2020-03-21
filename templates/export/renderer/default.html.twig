@@ -2,6 +2,17 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% extends 'export/layout.html.twig' %}
 
+{% set showRateBudget = false %}
+{% set showTimeBudget = false %}
+{% for budget in budgets %}
+    {% if budget.money_left > 0 %}
+        {% set showRateBudget = true %}
+    {% endif %}
+    {% if budget.time_left > 0 %}
+        {% set showTimeBudget = true %}
+    {% endif %}
+{% endfor %}
+
 {% set decimal = decimal|default(false) %}
 {% set columnTitles = {} %}
 {% set columns = {
@@ -14,6 +25,15 @@
     'exported': false,
     'tags': false,
 } %}
+
+{% for budget in budgets %}
+    {% if budget.money_left > 0 %}
+        {% set showRateBudget = true %}
+    {% endif %}
+    {% if budget.time_left > 0 %}
+        {% set showTimeBudget = true %}
+    {% endif %}
+{% endfor %}
 
 {% for id, field in timesheetMetaFields %}
     {% set columns = columns|merge({ ('t_' ~ field.name): true}) %}
@@ -51,6 +71,18 @@
         });
         document.getElementById('summary-show').addEventListener('click', function(event) {
             document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
+        });
+        document.getElementById('summary-timeBudget').addEventListener('click', function(event) {
+            var cells = document.getElementsByClassName('export-timeBudget');
+            for (var columnCell of cells) {
+                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+            }
+        });
+        document.getElementById('summary-budget').addEventListener('click', function(event) {
+            var cells = document.getElementsByClassName('export-budget');
+            for (var columnCell of cells) {
+                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+            }
         });
         document.getElementById('summary-duration').addEventListener('click', function(event) {
             if (!document.getElementById('summary-rate').checked) {
@@ -131,6 +163,23 @@
                         {{ 'label.activity'|trans }}
                     </label>
                 </div>
+                {% if showTimeBudget %}
+                <div class="form-group">
+                    <label class="control-label" for="summary-timeBudget">
+                        <input type="checkbox" id="summary-timeBudget" name="summary-timeBudget" checked>
+                        {{ 'label.timeBudget'|trans }}
+                    </label>
+                </div>
+                {% endif %}
+                {% if showRateBudget %}
+                <div class="form-group">
+                    <label class="control-label" for="summary-budget">
+                        <input type="checkbox" id="summary-budget" name="summary-budget" checked>
+                        {{ 'label.budget'|trans }}
+                    </label>
+                </div>
+                {% endif %}
+
                 <div class="form-group">
                     <label class="control-label" for="summary-duration">
                         <input type="checkbox" id="summary-duration" name="summary-duration" checked>
@@ -185,6 +234,12 @@
                 <tr>
                     <th>{{ 'label.customer'|trans }}</th>
                     <th>{{ 'label.project'|trans }}</th>
+                    {% if showTimeBudget %}
+                        <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
+                    {% endif %}
+                    {% if showRateBudget %}
+                        <th class="center export-budget">{{ 'label.budget'|trans }}</th>
+                    {% endif %}
                     <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
                     <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
                 </tr>
@@ -194,7 +249,7 @@
                 {% set customerDuration = 0 %}
                 {% set customerRate = 0 %}
                 {% set customerCurrency = null %}
-                {% for summary in summaries %}
+                {% for id, summary in summaries %}
                     {% if customer is same as(null) %}
                         {% set customer = summary.customer %}
                         {% set customerCurrency = summary.currency %}
@@ -202,6 +257,12 @@
                     {% if customer is not same as(summary.customer) %}
                         <tr class="summary">
                             <td colspan="2"></td>
+                            {% if showTimeBudget %}
+                                <td class="export-timeBudget"></td>
+                            {% endif %}
+                            {% if showRateBudget %}
+                                <td class="export-budget"></td>
+                            {% endif %}
                             <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
                             <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                         </tr>
@@ -213,6 +274,20 @@
                     <tr>
                         <td>{{ summary.customer }}</td>
                         <td>{{ summary.project }}</td>
+                        {% if showTimeBudget %}
+                            <td class="center export-timeBudget">
+                                {% if budgets[id] is defined and budgets[id].time_left > 0 %}
+                                    {{ budgets[id].time_left|duration(decimal) }}
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                        {% if showRateBudget %}
+                            <td class="center export-budget">
+                                {% if budgets[id] is defined and budgets[id].money_left > 0 %}
+                                    {{ budgets[id].money_left|money(summary.currency) }}
+                                {% endif %}
+                            </td>
+                        {% endif %}
                         <td class="duration summary-duration">{{ summary.duration|duration(decimal) }}</td>
                         <td class="cost summary-rate">{{ summary.rate|money(summary.currency) }}</td>
                     </tr>
@@ -222,6 +297,12 @@
                 {% if customer is not same as(null) %}
                     <tr class="summary">
                         <td colspan="2"></td>
+                        {% if showTimeBudget %}
+                            <td class="export-timeBudget"></td>
+                        {% endif %}
+                        {% if showRateBudget %}
+                            <td class="export-budget"></td>
+                        {% endif %}
                         <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>

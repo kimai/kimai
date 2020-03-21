@@ -1,6 +1,8 @@
 {% set showUserColumn = true %}
 {% set showRateColumn = true %}
 {% set decimal = decimal|default(false) %}
+{% set showRateBudget = false %}
+{% set showTimeBudget = false %}
 {% if query.user %}
     {# this is only triggered, if a user exports from his personal timesheet screen#}
     {% set showUserColumn = false %}
@@ -95,13 +97,26 @@ mpdf-->
     {{ 'export.period'|trans }}:
     {{ query.begin|date_short }} - {{ query.end|date_short }}
 </p>
-
+{% for budget in budgets %}
+    {% if budget.money_left > 0 %}
+        {% set showRateBudget = true %}
+    {% endif %}
+    {% if budget.time_left > 0 %}
+        {% set showTimeBudget = true %}
+    {% endif %}
+{% endfor %}
 <h3>{{ 'export.summary'|trans }}</h3>
 <table class="items">
     <thead>
     <tr>
         <th>{{ 'label.customer'|trans }}</th>
         <th>{{ 'label.project'|trans }}</th>
+        {% if showTimeBudget %}
+        <th class="center">{{ 'label.timeBudget'|trans }}</th>
+        {% endif %}
+        {% if showRateBudget %}
+        <th class="center">{{ 'label.budget'|trans }}</th>
+        {% endif %}
         <th class="center">{{ 'label.duration'|trans }}</th>
         {% if showRateColumn %}
         <th class="center">{{ 'label.rate'|trans }}</th>
@@ -114,14 +129,21 @@ mpdf-->
     {% set customerRate = 0 %}
     {% set customerCurrency = null %}
     {% set customerCount = 0 %}
-    {% for summary in summaries %}
+    {% for id, summary in summaries %}
         {% if customer is same as(null) %}
             {% set customer = summary.customer %}
             {% set customerCurrency = summary.currency %}
         {% endif %}
         {% if customer is not same as(summary.customer) %}
                 <tr class="summary">
-                    <td colspan="2"></td>
+                    <td colspan="2">
+                    </td>
+                    {% if showTimeBudget %}
+                        <td></td>
+                    {% endif %}
+                    {% if showRateBudget %}
+                        <td></td>
+                    {% endif %}
                     <td class="totals duration">{{ customerDuration|duration(decimal) }}</td>
                     {% if showRateColumn %}
                     <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
@@ -136,6 +158,20 @@ mpdf-->
         <tr class="{{ cycle(['odd', 'even'], customerCount) }}">
             <td>{{ summary.customer }}</td>
             <td>{{ summary.project }}</td>
+            {% if showTimeBudget %}
+                <td class="center">
+                    {% if budgets[id] is defined and budgets[id].time_left > 0 %}
+                        {{ budgets[id].time_left|duration(decimal) }}
+                    {% endif %}
+                </td>
+            {% endif %}
+            {% if showRateBudget %}
+                <td class="center">
+                    {% if budgets[id] is defined and budgets[id].money_left > 0 %}
+                        {{ budgets[id].money_left|money(summary.currency) }}
+                    {% endif %}
+                </td>
+            {% endif %}
             <td class="duration">{{ summary.duration|duration(decimal) }}</td>
             {% if showRateColumn %}
             <td class="cost">{{ summary.rate|money(summary.currency) }}</td>
@@ -148,6 +184,12 @@ mpdf-->
     {% if customer is not same as(null) %}
     <tr class="summary">
         <td colspan="2"></td>
+        {% if showTimeBudget %}
+            <td></td>
+        {% endif %}
+        {% if showRateBudget %}
+            <td></td>
+        {% endif %}
         <td class="totals duration">{{ customerDuration|duration(decimal) }}</td>
         {% if showRateColumn %}
         <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>

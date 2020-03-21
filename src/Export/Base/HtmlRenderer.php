@@ -17,6 +17,7 @@ use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\ExportItemInterface;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -35,11 +36,16 @@ class HtmlRenderer
      * @var EventDispatcherInterface
      */
     protected $dispatcher;
+    /**
+     * @var ProjectRepository
+     */
+    private $projectRepository;
 
-    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher)
+    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectRepository $projectRepository)
     {
         $this->twig = $twig;
         $this->dispatcher = $dispatcher;
+        $this->projectRepository = $projectRepository;
     }
 
     /**
@@ -87,10 +93,13 @@ class HtmlRenderer
         $this->dispatcher->dispatch($event);
         $userPreferences = $event->getPreferences();
 
+        $summary = $this->calculateSummary($timesheets);
+
         $content = $this->twig->render('export/renderer/default.html.twig', array_merge([
             'entries' => $timesheets,
             'query' => $query,
-            'summaries' => $this->calculateSummary($timesheets),
+            'summaries' => $summary,
+            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectRepository),
             'timesheetMetaFields' => $timesheetMetaFields,
             'customerMetaFields' => $customerMetaFields,
             'projectMetaFields' => $projectMetaFields,

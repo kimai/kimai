@@ -10,6 +10,8 @@
 namespace App\Export\Base;
 
 use App\Export\ExportItemInterface;
+use App\Repository\ProjectRepository;
+use App\Repository\Query\TimesheetQuery;
 
 trait RendererTrait
 {
@@ -77,6 +79,54 @@ trait RendererTrait
         }
 
         asort($summary);
+
+        return $summary;
+    }
+
+    /**
+     * @param ExportItemInterface[] $exportItems
+     * @param TimesheetQuery $query
+     * @param ProjectRepository $projectRepository
+     * @return array
+     */
+    protected function calculateProjectBudget(array $exportItems, TimesheetQuery $query, ProjectRepository $projectRepository)
+    {
+        $summary = [];
+
+        foreach ($exportItems as $exportItem) {
+            $customer = null;
+            $customerId = 'none';
+            $project = null;
+            $projectId = 'none';
+
+            if (null !== ($project = $exportItem->getProject())) {
+                $customer = $project->getCustomer();
+                $customerId = $customer->getId();
+                $projectId = $project->getId();
+            }
+
+            $id = $customerId . '_' . $projectId;
+
+            if (!isset($summary[$id])) {
+                $summary[$id] = [
+                    'time' => $project->getTimeBudget(),
+                    'money' => $project->getBudget(),
+                    'time_left' => null,
+                    'money_left' => null,
+                ];
+
+                if (null !== $project && ($project->getTimeBudget() > 0 || $project->getBudget() > 0)) {
+                    $projectStats = $projectRepository->getProjectStatistics($project, null, $query->getEnd());
+
+                    if ($project->getTimeBudget() > 0) {
+                        $summary[$id]['time_left'] = $project->getTimeBudget() - $projectStats->getRecordDuration();
+                    }
+                    if ($project->getBudget() > 0) {
+                        $summary[$id]['money_left'] = $project->getBudget() - $projectStats->getRecordRate();
+                    }
+                }
+            }
+        }
 
         return $summary;
     }

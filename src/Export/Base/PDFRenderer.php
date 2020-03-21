@@ -10,6 +10,7 @@
 namespace App\Export\Base;
 
 use App\Export\ExportItemInterface;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Timesheet\UserDateTimeFactory;
 use App\Utils\HtmlToPdfConverter;
@@ -33,12 +34,17 @@ class PDFRenderer
      * @var HtmlToPdfConverter
      */
     private $converter;
+    /**
+     * @var ProjectRepository
+     */
+    private $projectRepository;
 
-    public function __construct(Environment $twig, UserDateTimeFactory $dateTime, HtmlToPdfConverter $converter)
+    public function __construct(Environment $twig, UserDateTimeFactory $dateTime, HtmlToPdfConverter $converter, ProjectRepository $projectRepository)
     {
         $this->twig = $twig;
         $this->dateTime = $dateTime;
         $this->converter = $converter;
+        $this->projectRepository = $projectRepository;
     }
 
     protected function getTemplate(): string
@@ -68,11 +74,13 @@ class PDFRenderer
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
+        $summary = $this->calculateSummary($timesheets);
         $content = $this->twig->render($this->getTemplate(), array_merge([
             'entries' => $timesheets,
             'query' => $query,
             'now' => $this->dateTime->createDateTime(),
-            'summaries' => $this->calculateSummary($timesheets),
+            'summaries' => $summary,
+            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectRepository),
             'decimal' => false,
         ], $this->getOptions($query)));
 
