@@ -87,6 +87,8 @@
                 {%- set logLineClass = '' -%}
                 {%- if '.CRITICAL' in logLine -%}
                     {%- set logLineClass = 'text-danger text-bold' -%}
+                {%- elseif '.WARNING' in logLine -%}
+                    {%- set logLineClass = 'text-warning text-bold' -%}
                 {%- elseif '.ERROR' in logLine -%}
                     {%- set logLineClass = 'text-warning text-bold' -%}
                 {%- elseif '.DEBUG' in logLine -%}

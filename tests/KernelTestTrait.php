@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 trait KernelTestTrait
 {
     /**
-     * @param $client HttpKernelBrowser|EntityManager|KernelTestCase
+     * @param HttpKernelBrowser|EntityManager|KernelTestCase $client
      * @param Fixture $fixture
      */
     protected function importFixture($client, Fixture $fixture)
