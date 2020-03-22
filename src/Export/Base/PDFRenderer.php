@@ -38,6 +38,14 @@ class PDFRenderer
      * @var ProjectRepository
      */
     private $projectRepository;
+    /**
+     * @var string
+     */
+    private $id = 'pdf';
+    /**
+     * @var string
+     */
+    private $template = 'default.pdf.twig';
 
     public function __construct(Environment $twig, UserDateTimeFactory $dateTime, HtmlToPdfConverter $converter, ProjectRepository $projectRepository)
     {
@@ -49,7 +57,7 @@ class PDFRenderer
 
     protected function getTemplate(): string
     {
-        return 'export/renderer/pdf.html.twig';
+        return '@export/' . $this->template;
     }
 
     protected function getOptions(TimesheetQuery $query): array
@@ -96,8 +104,22 @@ class PDFRenderer
         return $response;
     }
 
+    public function setTemplate(string $filename): PDFRenderer
+    {
+        $this->template = $filename;
+
+        return $this;
+    }
+
+    public function setId(string $id): PDFRenderer
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getId(): string
     {
-        return 'pdf';
+        return $this->id;
     }
 }

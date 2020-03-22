@@ -10,9 +10,9 @@
 namespace App\Export\Renderer;
 
 use App\Export\Base\HtmlRenderer as BaseHtmlRenderer;
-use App\Export\RendererInterface;
+use App\Export\ExportRendererInterface;
 
-final class HtmlRenderer extends BaseHtmlRenderer implements RendererInterface
+final class HtmlRenderer extends BaseHtmlRenderer implements ExportRendererInterface
 {
     public function getIcon(): string
     {

@@ -40,6 +40,14 @@ class HtmlRenderer
      * @var ProjectRepository
      */
     private $projectRepository;
+    /**
+     * @var string
+     */
+    private $id = 'html';
+    /**
+     * @var string
+     */
+    private $template = 'default.html.twig';
 
     public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectRepository $projectRepository)
     {
@@ -95,7 +103,7 @@ class HtmlRenderer
 
         $summary = $this->calculateSummary($timesheets);
 
-        $content = $this->twig->render('export/renderer/default.html.twig', array_merge([
+        $content = $this->twig->render($this->getTemplate(), array_merge([
             'entries' => $timesheets,
             'query' => $query,
             'summaries' => $summary,
@@ -113,8 +121,27 @@ class HtmlRenderer
         return $response;
     }
 
+    protected function getTemplate(): string
+    {
+        return '@export/' . $this->template;
+    }
+
+    public function setTemplate(string $filename): HtmlRenderer
+    {
+        $this->template = $filename;
+
+        return $this;
+    }
+
+    public function setId(string $id): HtmlRenderer
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getId(): string
     {
-        return 'html';
+        return $this->id;
     }
 }

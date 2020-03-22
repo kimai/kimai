@@ -92,19 +92,12 @@
 </htmlpagefooter>
 <sethtmlpagefooter name="myfooter" value="on" />
 mpdf-->
+{% block summary %}
 <h2 style="margin-bottom: 0; padding-bottom: 0">{{ 'export.document_title'|trans }}</h2>
 <p>
     {{ 'export.period'|trans }}:
     {{ query.begin|date_short }} - {{ query.end|date_short }}
 </p>
-{% for budget in budgets %}
-    {% if budget.money_left > 0 %}
-        {% set showRateBudget = true %}
-    {% endif %}
-    {% if budget.time_left > 0 %}
-        {% set showTimeBudget = true %}
-    {% endif %}
-{% endfor %}
 <h3>{{ 'export.summary'|trans }}</h3>
 <table class="items">
     <thead>
@@ -201,6 +194,9 @@ mpdf-->
 
 <pagebreak>
 
+{% endblock %}
+
+{% block summary %}
 <h3>{{ 'export.full_list'|trans }}</h3>
 
 {% set duration = 0 %}
@@ -273,5 +269,6 @@ mpdf-->
     </tr>
     </tbody>
 </table>
+{% endblock %}
 </body>
 </html>
