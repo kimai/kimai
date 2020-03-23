@@ -62,8 +62,8 @@ class ExportServiceCompilerPass implements CompilerPassInterface
                 $definition->addMethodCall('addRenderer', [new Reference($serviceId)]);
             }
 
-            foreach (glob($path . $exportPath . '/*.pdf.twig') as $htmlTpl) {
-                $tplName = basename($htmlTpl);
+            foreach (glob($path . $exportPath . '/*.pdf.twig') as $pdfHtml) {
+                $tplName = basename($pdfHtml);
 
                 $serviceId = 'exporter_renderer.' . str_replace('.', '_', $tplName);
 

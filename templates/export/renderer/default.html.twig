@@ -26,15 +26,6 @@
     'tags': false,
 } %}
 
-{% for budget in budgets %}
-    {% if budget.money_left > 0 %}
-        {% set showRateBudget = true %}
-    {% endif %}
-    {% if budget.time_left > 0 %}
-        {% set showTimeBudget = true %}
-    {% endif %}
-{% endfor %}
-
 {% for id, field in timesheetMetaFields %}
     {% set columns = columns|merge({ ('t_' ~ field.name): true}) %}
     {% set columnTitles = columnTitles|merge({ ('t_' ~ field.name): (field.label)}) %}
