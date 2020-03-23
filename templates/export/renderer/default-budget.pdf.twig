@@ -1,0 +1,12 @@
+{% extends 'export/renderer/default.pdf.twig' %}
+{% block summary %}
+    {% for budget in budgets %}
+        {% if budget.money_left > 0 %}
+            {% set showRateBudget = true %}
+        {% endif %}
+        {% if budget.time_left > 0 %}
+            {% set showTimeBudget = true %}
+        {% endif %}
+    {% endfor %}
+    {{ parent() }}
+{% endblock %}

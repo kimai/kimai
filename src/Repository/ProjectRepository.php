@@ -73,20 +73,31 @@ class ProjectRepository extends EntityRepository
         return $this->count([]);
     }
 
-    public function getProjectStatistics(Project $project): ProjectStatistic
+    public function getProjectStatistics(Project $project, ?\DateTime $begin = null, ?\DateTime $end = null): ProjectStatistic
     {
         $stats = new ProjectStatistic($project);
 
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb
+            ->from(Timesheet::class, 't')
             ->addSelect('COUNT(t.id) as recordAmount')
             ->addSelect('SUM(t.duration) as recordDuration')
             ->addSelect('SUM(t.rate) as recordRate')
-            ->from(Timesheet::class, 't')
             ->andWhere('t.project = :project')
+            ->setParameter('project', $project)
         ;
-        $timesheetResult = $qb->getQuery()->execute(['project' => $project], Query::HYDRATE_ARRAY);
+
+        if (null !== $begin) {
+            $qb->andWhere($qb->expr()->gte('t.begin', ':begin'))
+                ->setParameter('begin', $begin);
+        }
+        if (null !== $end) {
+            $qb->andWhere($qb->expr()->lte('t.end', ':end'))
+                ->setParameter('end', $end);
+        }
+
+        $timesheetResult = $qb->getQuery()->getArrayResult();
 
         if (isset($timesheetResult[0])) {
             $stats->setRecordAmount($timesheetResult[0]['recordAmount']);

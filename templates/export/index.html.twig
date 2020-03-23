@@ -42,11 +42,35 @@
             {{ form_row(form.markAsExported) }}
         {% endblock %}
         {% block box_footer%}
+            {% set buttons = {} %}
+            {% for button in renderer %}
+                {% set title = button.title %}
+                {% set group = [] %}
+                {% if buttons[(title)] is defined %}
+                    {% set group = buttons[(title)] %}
+                {% endif %}
+                {% set group = group|merge([button]) %}
+                {% set buttons = buttons|merge({(title): group}) %}
+            {% endfor %}
             <div class="btn-group" id="export-buttons" role="group">
-                {% for button in renderer %}
-                    <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
-                        {{ ('button.' ~ button.title)|trans }}
-                    </button>
+                {% for group in buttons %}
+                    {% set button = group.0 %}
+                    {% if group|length == 1 %}
+                        <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
+                            {{ ('button.' ~ button.title)|trans }}
+                        </button>
+                    {% elseif group|length > 1 %}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ ('button.' ~ button.title)|trans }} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                            {% for button in group %}
+                                <li><a href="#" class="startExportBtn" data-type="{{ button.id }}">{{ (button.id)|trans({}, 'export') }}</a></li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
             {{ form_widget(form.preview) }}

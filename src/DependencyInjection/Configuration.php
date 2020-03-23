@@ -57,6 +57,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getUserNode())
                 ->append($this->getTimesheetNode())
                 ->append($this->getInvoiceNode())
+                ->append($this->getExportNode())
                 ->append($this->getLanguagesNode())
                 ->append($this->getCalendarNode())
                 ->append($this->getThemeNode())
@@ -229,6 +230,33 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('number_format')
                     ->defaultValue('{Y}/{cy,3}')
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    protected function getExportNode()
+    {
+        $builder = new TreeBuilder('export');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('defaults')
+                    ->scalarPrototype()->end()
+                    ->defaultValue([
+                        'var/export/',
+                        'templates/export/renderer/'
+                    ])
+                ->end()
+                ->arrayNode('documents')
+                    ->requiresAtLeastOneElement()
+                    ->scalarPrototype()->end()
+                    ->defaultValue([])
                 ->end()
             ->end()
         ;
