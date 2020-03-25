@@ -12,16 +12,15 @@ namespace App\Tests\API;
 use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
  */
 class TagControllerTest extends APIControllerBaseTest
 {
-    protected function setUp(): void
+    protected function importTagFixtures(HttpKernelBrowser $client): void
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-
         $tagList = ['Test', 'Administration', 'Support', '#2018-001', '#2018-002', '#2018-003', 'Development',
             'Marketing', 'First Level Support', 'Bug Fixing'];
 
@@ -38,6 +37,7 @@ class TagControllerTest extends APIControllerBaseTest
     public function testGetCollection()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importTagFixtures($client);
         $this->assertAccessIsGranted($client, '/api/tags');
         $result = json_decode($client->getResponse()->getContent(), true);
 
@@ -50,6 +50,7 @@ class TagControllerTest extends APIControllerBaseTest
     public function testEmptyCollection()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importTagFixtures($client);
         $query = ['name' => 'nothing'];
         $this->assertAccessIsGranted($client, '/api/tags', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -62,6 +63,7 @@ class TagControllerTest extends APIControllerBaseTest
     public function testPostAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importTagFixtures($client);
         $data = [
             'name' => 'foo',
         ];
@@ -77,6 +79,7 @@ class TagControllerTest extends APIControllerBaseTest
     public function testPostActionWithInvalidUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importTagFixtures($client);
         $data = [
             'name' => 'foo',
         ];
@@ -91,6 +94,7 @@ class TagControllerTest extends APIControllerBaseTest
     public function testPartOfEntries()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importTagFixtures($client);
         $query = ['name' => 'in'];
         $this->assertAccessIsGranted($client, '/api/tags', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -107,6 +111,7 @@ class TagControllerTest extends APIControllerBaseTest
     public function testDeleteAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importTagFixtures($client);
 
         $this->request($client, '/api/tags/1', 'DELETE');
         $this->assertTrue($client->getResponse()->isSuccessful());

@@ -53,17 +53,11 @@ abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator imp
         return array_values($invoiceItems);
     }
 
-    /**
-     * @deprecated since 1.9 - use mergeSumInvoiceItem() instead
-     */
-    protected function mergeSumTimesheet(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
-    {
-    }
-
     protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
     {
-        @trigger_error('mergeSumTimesheet() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        $this->mergeSumTimesheet($invoiceItem, $entry);
+        if (method_exists($this, 'mergeSumTimesheet')) {
+            @trigger_error('mergeSumTimesheet() is deprecated and will be removed with 2.0 - use mergeSumInvoiceItem() instead', E_USER_DEPRECATED);
+            $this->mergeSumTimesheet($invoiceItem, $entry);
+        }
     }
 }

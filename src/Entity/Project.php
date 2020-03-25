@@ -52,7 +52,7 @@ class Project implements EntityWithMetaFields
      *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotNull()
-     * @Assert\Length(min=2, max=150)
+     * @Assert\Length(min=2, max=150, allowEmptyString=false)
      */
     private $name;
     /**

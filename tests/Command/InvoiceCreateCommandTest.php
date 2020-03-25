@@ -179,7 +179,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
     protected function prepareFixtures(\DateTime $start)
     {
-        $em = self::$container->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1);
@@ -197,7 +197,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->importFixture($em, $fixture);
 
         $fixture = new TimesheetFixtures();
-        $fixture->setUser($this->getUserByName($em, UserFixtures::USERNAME_SUPER_ADMIN));
+        $fixture->setUser($this->getUserByName(UserFixtures::USERNAME_SUPER_ADMIN));
         $fixture->setAmount(20);
         $fixture->setStartDate($start);
         $fixture->setProjects([$em->getRepository(Project::class)->find(2)]);

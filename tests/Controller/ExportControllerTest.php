@@ -23,6 +23,10 @@ class ExportControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/export/');
+    }
+
+    public function testIsSecureForrole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/');
     }
 
@@ -39,7 +43,7 @@ class ExportControllerTest extends ControllerBaseTest
     public function testIndexActionWithEntriesAndTeams()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
         $user = $this->getUserByRole($em, User::ROLE_USER);
@@ -101,7 +105,7 @@ class ExportControllerTest extends ControllerBaseTest
     public function testIndexActionWithEntriesForTeamleadDoesNotShowUserWithoutTeam()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $begin = new \DateTime('first day of this month');
         $user = $this->getUserByRole($em, User::ROLE_USER);
@@ -187,7 +191,7 @@ class ExportControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $begin = new \DateTime('first day of this month');
         $fixture = new TimesheetFixtures();

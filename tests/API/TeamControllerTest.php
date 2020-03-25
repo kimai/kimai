@@ -31,8 +31,22 @@ class TeamControllerTest extends APIControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/teams');
-        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/teams');
-        $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/api/teams');
+    }
+
+    public function getRoleTestData()
+    {
+        return [
+            [User::ROLE_USER],
+            [User::ROLE_TEAMLEAD],
+        ];
+    }
+
+    /**
+     * @dataProvider getRoleTestData
+     */
+    public function testIsSecureForRole(string $role)
+    {
+        $this->assertUrlIsSecuredForRole($role, '/api/teams');
     }
 
     public function testGetCollection()
@@ -142,8 +156,6 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
         $this->assertEmpty($client->getResponse()->getContent());
-
-        $this->assertEntityNotFound(User::ROLE_ADMIN, '/api/teams/' . $id);
     }
 
     public function testPostMemberAction()
@@ -334,7 +346,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $customer->setVisible(false);
         $customer->setCountry('DE');
         $customer->setTimezone('Europe/Berlin');
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $em->persist($customer);
         $em->flush();
 
@@ -472,7 +484,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $project->setName('foooo');
         $project->setVisible(false);
         $project->setCustomer($customer);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $em->persist($customer);
         $em->persist($project);
         $em->flush();

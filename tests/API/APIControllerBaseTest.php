@@ -157,11 +157,44 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         ]);
     }
 
+    protected function assertEntityNotFoundForPost(string $role, string $url, array $data, ?string $message = null)
+    {
+        return $this->assertExceptionForPostAction($role, $url, $data, [
+            'code' => 404,
+            'message' => $message ?? 'Not found'
+        ]);
+    }
+
     protected function assertExceptionForPatchAction(string $role, string $url, array $data, array $expectedErrors)
     {
-        $client = $this->getClientForAuthenticatedUser($role);
+        $this->assertExceptionForRole($role, $url, 'PATCH', $data, $expectedErrors);
+    }
 
-        $this->request($client, $url, 'PATCH', [], json_encode($data));
+    protected function assertExceptionForPostAction(string $role, string $url, array $data, array $expectedErrors)
+    {
+        $this->assertExceptionForRole($role, $url, 'POST', $data, $expectedErrors);
+    }
+
+    protected function assertExceptionForMethod(HttpKernelBrowser $client, string $url, string $method, array $data, array $expectedErrors)
+    {
+        $this->request($client, $url, $method, [], json_encode($data));
+        $response = $client->getResponse();
+        self::assertFalse($response->isSuccessful());
+
+        self::assertEquals($expectedErrors['code'], $client->getResponse()->getStatusCode());
+
+        self::assertEquals(
+            $expectedErrors,
+            json_decode($client->getResponse()->getContent(), true)
+        );
+    }
+
+    protected function assertExceptionForRole(string $role, string $url, string $method, array $data, array $expectedErrors)
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+        $this->assertExceptionForMethod($client, $url, $method, $data, $expectedErrors);
+
+        $this->request($client, $url, $method, [], json_encode($data));
         $response = $client->getResponse();
         self::assertFalse($response->isSuccessful());
 

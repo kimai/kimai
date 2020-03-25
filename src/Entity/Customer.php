@@ -44,7 +44,7 @@ class Customer implements EntityWithMetaFields
      *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=150)
+     * @Assert\Length(min=2, max=150, allowEmptyString=false)
      */
     private $name;
 
