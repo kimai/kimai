@@ -75,6 +75,7 @@
         {% else %}
             {% set isDecimal = model.template.decimalDuration|default(false) %}
             {% set entries = model.calculator.entries %}
+            {% set currency = model.currency %}
             {{ tables.datatable_header(tableName, columns, query, {}) }}
             {% for entry in entries %}
                 {% set amount = entry.amount %}
@@ -102,10 +103,10 @@
                             {{ entry.description|escape|desc2html }}
                         {% endif %}
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-center">{{ rate|money(model.calculator.currency) }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-center">{{ rate|money(currency) }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }} text-center text-nowrap">{{ amount }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-center text-nowrap" data-duration="{{ entry.duration }}">{{ duration }}</td>
-                    <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
+                    <td class="text-right text-nowrap">{{ entry.rate|money(currency) }}</td>
                 </tr>
             {% endfor %}
             <tr>
@@ -116,7 +117,7 @@
                 <th class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}"></th>
                 <th class="{{ tables.data_table_column_class(tableName, columns, 'amount') }}"></th>
                 <th class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-center text-nowrap">{{ model.calculator.timeWorked|duration(isDecimal) }}</th>
-                <th class="text-right text-nowrap">{{ model.calculator.total|money(model.calculator.currency) }}</th>
+                <th class="text-right text-nowrap">{{ model.calculator.total|money(currency) }}</th>
             </tr>
             {{ tables.data_table_footer(entries) }}
         {% endif %}

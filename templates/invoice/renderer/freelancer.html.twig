@@ -3,6 +3,7 @@
 {% set fallback = app.request is not null ? app.request.locale : 'en' %}
 {% set language = model.template.language|default(fallback) %}
 {% set isDecimal = model.template.decimalDuration|default(false) %}
+{% set currency = model.currency %}
 
 {% block invoice %}
 <div class="row" id="freelancer-invoice">
@@ -84,9 +85,9 @@
                                 {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
                             {% endif %}
                         </td>
-                        <td class="text-right text-nowrap">{{ rate|money(model.calculator.currency) }}</td>
+                        <td class="text-right text-nowrap">{{ rate|money(currency) }}</td>
                         <td class="text-right text-nowrap">{{ duration }}</td>
-                        <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
+                        <td class="text-right text-nowrap">{{ entry.rate|money(currency) }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -94,15 +95,15 @@
             <table class="balance">
                 <tr>
                     <th>{{ 'invoice.subtotal'|trans({}, 'messages', language) }}</th>
-                    <td>{{ model.calculator.subtotal|money(model.calculator.currency) }}</td>
+                    <td>{{ model.calculator.subtotal|money(currency) }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'invoice.tax'|trans({}, 'messages', language) }} ({{ model.calculator.vat }}%)</th>
-                    <td>{{ model.calculator.tax|money(model.calculator.currency) }}</td>
+                    <td>{{ model.calculator.tax|money(currency) }}</td>
                 </tr>
                 <tr>
                     <th class="total">{{ 'invoice.total'|trans({}, 'messages', language) }}</th>
-                    <td class="total">{{ model.calculator.total|money(model.calculator.currency) }}</td>
+                    <td class="total">{{ model.calculator.total|money(currency) }}</td>
                 </tr>
             </table>
         </article>
