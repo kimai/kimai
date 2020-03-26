@@ -10,8 +10,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Swagger\Annotations as SWG;
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait Rate
 {
