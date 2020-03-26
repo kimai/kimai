@@ -44,45 +44,65 @@ class RateCalculator implements CalculatorInterface
     {
         if (null === $record->getEnd()) {
             $record->setRate(0);
+            $record->setInternalRate(0);
 
             return;
         }
 
         $fixedRate = $record->getFixedRate();
         $hourlyRate = $record->getHourlyRate();
+        $fixedInternalRate = null;
+        $internalRate = null;
 
-        if (null === $fixedRate && null === $hourlyRate) {
-            $rate = $this->getBestFittingRate($record);
+        $rate = $this->getBestFittingRate($record);
 
-            if (null !== $rate) {
-                if ($rate->isFixed()) {
-                    $fixedRate = $rate->getRate();
-                } else {
-                    $hourlyRate = $rate->getRate();
+        if (null !== $rate) {
+            if ($rate->isFixed()) {
+                $fixedRate = $fixedRate ?? $rate->getRate();
+                $fixedInternalRate = $rate->getRate();
+                if (null !== $rate->getInternalRate()) {
+                    $fixedInternalRate = $rate->getInternalRate();
+                }
+            } else {
+                $hourlyRate = $hourlyRate ?? $rate->getRate();
+                $internalRate = $rate->getRate();
+                if (null !== $rate->getInternalRate()) {
+                    $internalRate = $rate->getInternalRate();
                 }
             }
         }
 
         if (null !== $fixedRate) {
-            $record->setRate($fixedRate);
             $record->setFixedRate($fixedRate);
+            $record->setRate($fixedRate);
+            if (null === $fixedInternalRate) {
+                $fixedInternalRate = (float) $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE, $fixedRate);
+            }
+            $record->setInternalRate($fixedInternalRate);
 
             return;
         }
 
+        // user preferences => fallback if nothing else was configured
         if (null === $hourlyRate) {
             $hourlyRate = (float) $record->getUser()->getPreferenceValue(UserPreference::HOURLY_RATE, 0.00);
+        }
+        if (null === $internalRate) {
+            $internalRate = (float) $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE, 0.00);
         }
 
         $factor = $this->getRateFactor($record);
 
-        $hourlyRate = (float) ($hourlyRate * $factor);
+        $factoredHourlyRate = (float) ($hourlyRate * $factor);
+        $factoredInternalRate = (float) ($internalRate * $factor);
         $totalRate = 0;
+        $totalInternalRate = 0;
         if (null !== $record->getDuration()) {
-            $totalRate = Util::calculateRate($hourlyRate, $record->getDuration());
+            $totalRate = Util::calculateRate($factoredHourlyRate, $record->getDuration());
+            $totalInternalRate = Util::calculateRate($factoredInternalRate, $record->getDuration());
         }
-
-        $record->setHourlyRate($hourlyRate);
+        $record->setHourlyRate($factoredHourlyRate);
+        $record->setInternalRate($totalInternalRate);
         $record->setRate($totalRate);
     }
 
