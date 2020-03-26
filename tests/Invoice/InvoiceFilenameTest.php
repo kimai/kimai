@@ -53,5 +53,9 @@ class InvoiceFilenameTest extends TestCase
         $customer->setCompany('까깨꺄꺠꺼께껴꼐꼬꽈sssss');
         $sut = new InvoiceFilename($model);
         self::assertEquals($datePrefix . '-kkakkaekkyakkyaekkeokkekkyeokkyekkokkwasssss', $sut->getFilename());
+
+        $customer->setCompany('\"#+.!§$%&/()=?\\n=/*-+´_<>@' . "\n");
+        $sut = new InvoiceFilename($model);
+        self::assertEquals($datePrefix . '-ssn', $sut->getFilename());
     }
 }
