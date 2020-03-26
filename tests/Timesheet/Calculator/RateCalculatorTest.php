@@ -70,9 +70,10 @@ class RateCalculatorTest extends TestCase
     public function getRateTestData()
     {   //             expected, expInt, durat, userH,  userIn, timeH,  timeF,  actH,   actIn,  actF,    proH,   proIn,  proFi,   custH,  custIn, custF
         yield 'a0' => [0.0,     0.0,    0,      0,      0,      null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
-        yield 'a1' => [0.0,     0.0,    1800,   0,      0,      null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
-        yield 'a2' => [0.5,     6.72,   1800,   1,      13.44,  null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
-        yield 'a3' => [0.0,     1,      0,      0,      0,      0,      0,      0,      1,      true,    0,      null,   true,    0,      null,   true];
+        yield 'a2' => [0.0,     0.0,    0,      0,      null,   null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
+        yield 'a4' => [0.0,     0.0,    1800,   0,      0,      null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
+        yield 'a6' => [0.5,     6.72,   1800,   1,      13.44,  null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
+        yield 'a8' => [0.0,     1,      0,      0,      0,      0,      0,      0,      1,      true,    0,      null,   true,    0,      null,   true];
         // rate: 1.5 => timesheet hourly rate , internal: 2.5 => activity hourly rate (30 min)
         yield 'b1' => [1.5,     2.5,    1800,   1,      1,      3,      null,   5,      null,   false,   7,      null,   false,   9,      null,   false];
         yield 'b2' => [2.5,     2.5,    1800,   1,      1,      null,   null,   5,      null,   false,   7,      null,   false,   9,      null,   false];
@@ -95,6 +96,9 @@ class RateCalculatorTest extends TestCase
         yield 'h0' => [30,      30,     1800,   100,    100,    null,   null,   null,   null,   false,   30,     null,   true,    null,   null,   false];
         yield 'i0' => [20,      13.5,   1800,   100,    100,    null,   null,   null,   null,   false,   null,   null,   false,   40,     27,     false];
         yield 'j0' => [40,      84,     1800,   100,    45,     null,   null,   null,   null,   false,   null,   null,   false,   40,     84,     true];
+        // make sure the last fallback for the internal rate is the users hourly rate
+        yield 'k0' => [8.82,    6,      1800,   17.64,  12,     null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   true];
+        yield 'k1' => [8.82,    8.82,   1800,   17.64,  null,   null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   true];
     }
 
     /**

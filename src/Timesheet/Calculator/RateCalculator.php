@@ -88,7 +88,12 @@ class RateCalculator implements CalculatorInterface
             $hourlyRate = (float) $record->getUser()->getPreferenceValue(UserPreference::HOURLY_RATE, 0.00);
         }
         if (null === $internalRate) {
-            $internalRate = (float) $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE, 0.00);
+            $internalRate = $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE, 0.00);
+            if (null === $internalRate) {
+                $internalRate = $hourlyRate;
+            } else {
+                $internalRate = (float) $internalRate;
+            }
         }
 
         $factor = $this->getRateFactor($record);

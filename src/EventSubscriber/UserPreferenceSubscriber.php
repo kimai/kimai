@@ -113,11 +113,11 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
 
             (new UserPreference())
                 ->setName(UserPreference::INTERNAL_RATE)
-                ->setValue(0)
+                ->setValue(null)
                 ->setOrder(101)
                 ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
-                ->setOptions(array_merge($hourlyRateOptions, ['label' => 'label.rate_internal']))
+                ->setOptions(array_merge($hourlyRateOptions, ['label' => 'label.rate_internal', 'required' => false]))
                 ->addConstraint(new Range(['min' => 0])),
 
             (new UserPreference())

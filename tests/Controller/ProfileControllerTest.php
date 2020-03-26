@@ -373,18 +373,18 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         return [
             // assert that the user doesn't have the "hourly-rate_own_profile" permission
-            [User::ROLE_USER, UserFixtures::USERNAME_USER, 82, 82, 'ar'],
+            [User::ROLE_USER, UserFixtures::USERNAME_USER, 82, 82, 'ar', null],
             // admins are allowed to update their own hourly rate
-            [User::ROLE_ADMIN, UserFixtures::USERNAME_ADMIN, 81, 37.5, 'ar'],
+            [User::ROLE_ADMIN, UserFixtures::USERNAME_ADMIN, 81, 37.5, 'ar', 19.54],
             // admins are allowed to update other peoples hourly rate
-            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_USER, 82, 37.5, 'en'],
+            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_USER, 82, 37.5, 'en', 19.54],
         ];
     }
 
     /**
      * @dataProvider getPreferencesTestData
      */
-    public function testPreferencesAction($role, $username, $hourlyRateOriginal, $hourlyRate, $expectedLocale)
+    public function testPreferencesAction($role, $username, $hourlyRateOriginal, $hourlyRate, $expectedLocale, $expectedInternalRate)
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, '/profile/' . $username . '/prefs');
@@ -393,6 +393,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $user = $this->getUserByName($username);
 
         $this->assertEquals($hourlyRateOriginal, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
+        $this->assertNull($user->getPreferenceValue(UserPreference::INTERNAL_RATE));
         $this->assertNull($user->getPreferenceValue(UserPreference::SKIN));
         $this->assertEquals(false, $user->getPreferenceValue('theme.collapsed_sidebar'));
         $this->assertEquals('month', $user->getPreferenceValue('calendar.initial_view'));
@@ -402,7 +403,7 @@ class ProfileControllerTest extends ControllerBaseTest
             'user_preferences_form' => [
                 'preferences' => [
                     ['name' => UserPreference::HOURLY_RATE, 'value' => 37.5],
-                    ['name' => UserPreference::INTERNAL_RATE, 'value' => 37.5], // FIXME
+                    ['name' => UserPreference::INTERNAL_RATE, 'value' => 19.54],
                     ['name' => 'timezone', 'value' => 'America/Creston'],
                     ['name' => 'language', 'value' => 'ar'],
                     ['name' => UserPreference::SKIN, 'value' => 'blue'],
@@ -424,6 +425,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $user = $this->getUserByName($username);
 
         $this->assertEquals($hourlyRate, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
+        $this->assertEquals($expectedInternalRate, $user->getPreferenceValue(UserPreference::INTERNAL_RATE));
         $this->assertEquals('', $user->getPreferenceValue('America/Creston'));
         $this->assertEquals('ar', $user->getPreferenceValue('language'));
         $this->assertEquals('blue', $user->getPreferenceValue(UserPreference::SKIN));
