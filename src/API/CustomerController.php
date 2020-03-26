@@ -342,7 +342,7 @@ class CustomerController extends BaseApiController
         }
 
         if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('Unauthorized');
+            throw new AccessDeniedHttpException('Access denied.');
         }
 
         $rates = $this->customerRateRepository->getRatesForCustomer($customer);
@@ -390,14 +390,14 @@ class CustomerController extends BaseApiController
         }
 
         if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('Unauthorized');
+            throw new AccessDeniedHttpException('Access denied.');
         }
 
         /** @var CustomerRate|null $rate */
         $rate = $this->customerRateRepository->find($rateId);
 
         if (null === $rate || $rate->getCustomer() !== $customer) {
-            throw new NotFoundException('Rate not found');
+            throw new NotFoundException();
         }
 
         $this->customerRateRepository->deleteRate($rate);
@@ -444,7 +444,7 @@ class CustomerController extends BaseApiController
         }
 
         if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('Unauthorized');
+            throw new AccessDeniedHttpException('Access denied.');
         }
 
         $rate = new CustomerRate();

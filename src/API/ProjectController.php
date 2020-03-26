@@ -393,7 +393,7 @@ class ProjectController extends BaseApiController
         }
 
         if (!$this->isGranted('edit', $project)) {
-            throw new AccessDeniedHttpException('Unauthorized');
+            throw new AccessDeniedHttpException('Access denied.');
         }
 
         $rates = $this->projectRateRepository->getRatesForProject($project);
@@ -441,14 +441,14 @@ class ProjectController extends BaseApiController
         }
 
         if (!$this->isGranted('edit', $project)) {
-            throw new AccessDeniedHttpException('Unauthorized');
+            throw new AccessDeniedHttpException('Access denied.');
         }
 
         /** @var ProjectRate|null $rate */
         $rate = $this->projectRateRepository->find($rateId);
 
         if (null === $rate || $rate->getProject() !== $project) {
-            throw new NotFoundException('Rate not found');
+            throw new NotFoundException();
         }
 
         $this->projectRateRepository->deleteRate($rate);
@@ -495,7 +495,7 @@ class ProjectController extends BaseApiController
         }
 
         if (!$this->isGranted('edit', $project)) {
-            throw new AccessDeniedHttpException('Unauthorized');
+            throw new AccessDeniedHttpException('Access denied.');
         }
 
         $rate = new ProjectRate();

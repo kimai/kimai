@@ -60,7 +60,7 @@ trait RateControllerTestTrait
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
-        $this->assertEquals('Unauthorized', $json['message']);
+        $this->assertEquals('Access denied.', $json['message']);
     }
 
     public function testAddRateAction()
@@ -112,16 +112,23 @@ trait RateControllerTestTrait
         $this->assertEntityNotFound(User::ROLE_ADMIN, $this->getRateUrl(99));
     }
 
-    // TODO get rates - with missing permissions
+    public function testGetRatesIsSecured()
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, $this->getRateUrl(1));
+    }
 
     // TODO delete rate
 
-    public function testGetRatesEntityNotFoundForDelete()
+    public function testDeleteRateEntityNotFound()
     {
         $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, $this->getRateUrl(99, 1));
     }
 
-    // TODO delete rate - rate not found
+    public function testDeleteRateRateNotFound()
+    {
+        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, $this->getRateUrl(1, 99));
+    }
+
     // TODO delete rate - with missing permissions
     // TODO delete rate - with wrong entity assignment
 

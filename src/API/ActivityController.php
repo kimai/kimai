@@ -369,7 +369,7 @@ class ActivityController extends BaseApiController
         }
 
         if (!$this->isGranted('edit', $activity)) {
-            throw new AccessDeniedHttpException('Unauthorized');
+            throw new AccessDeniedHttpException('Access denied.');
         }
 
         $rates = $this->activityRateRepository->getRatesForActivity($activity);
@@ -417,14 +417,14 @@ class ActivityController extends BaseApiController
         }
 
         if (!$this->isGranted('edit', $activity)) {
-            throw new AccessDeniedHttpException('Unauthorized');
+            throw new AccessDeniedHttpException('Access denied.');
         }
 
         /** @var ActivityRate|null $rate */
         $rate = $this->activityRateRepository->find($rateId);
 
         if (null === $rate || $rate->getActivity() !== $activity) {
-            throw new NotFoundException('Rate not found');
+            throw new NotFoundException();
         }
 
         $this->activityRateRepository->deleteRate($rate);
@@ -471,7 +471,7 @@ class ActivityController extends BaseApiController
         }
 
         if (!$this->isGranted('edit', $activity)) {
-            throw new AccessDeniedHttpException('Unauthorized');
+            throw new AccessDeniedHttpException('Access denied.');
         }
 
         $rate = new ActivityRate();
