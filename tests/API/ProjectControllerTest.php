@@ -43,7 +43,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $rateRepository = $this->getEntityManager()->getRepository(ProjectRate::class);
         /** @var ProjectRepository $repository */
         $repository = $this->getEntityManager()->getRepository(Project::class);
-        /** @var Project $project */
+        /** @var Project|null $project */
         $project = $repository->find($id);
 
         if (null === $project) {

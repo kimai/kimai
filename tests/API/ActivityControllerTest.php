@@ -43,7 +43,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $rateRepository = $this->getEntityManager()->getRepository(ActivityRate::class);
         /** @var ActivityRepository $repository */
         $repository = $this->getEntityManager()->getRepository(Activity::class);
-        /** @var Activity $activity */
+        /** @var Activity|null $activity */
         $activity = $repository->find($id);
 
         if (null === $activity) {

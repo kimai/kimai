@@ -40,7 +40,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $rateRepository = $this->getEntityManager()->getRepository(CustomerRate::class);
         /** @var CustomerRepository $repository */
         $repository = $this->getEntityManager()->getRepository(Customer::class);
-        /** @var Customer $customer */
+        /** @var Customer|null $customer */
         $customer = $repository->find($id);
 
         if (null === $customer) {
