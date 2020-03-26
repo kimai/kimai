@@ -126,7 +126,7 @@ class TagControllerTest extends APIControllerBaseTest
 
     public function testDeleteActionWithUnknownTimesheet()
     {
-        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/tags/255', []);
+        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/tags/255');
     }
 
     protected function assertStructure(array $result, $full = true)

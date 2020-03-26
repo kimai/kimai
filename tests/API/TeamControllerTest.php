@@ -80,7 +80,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
     public function testDeleteActionWithUnknownTeam()
     {
-        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/teams/255', []);
+        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/teams/255');
     }
 
     public function testPostAction()

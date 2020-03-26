@@ -492,7 +492,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testDeleteActionWithUnknownTimesheet()
     {
-        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/timesheets/255', []);
+        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/timesheets/255');
     }
 
     public function testDeleteActionForDifferentUser()
