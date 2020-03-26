@@ -9,9 +9,12 @@
 
 namespace App\Tests\API;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\ProjectRate;
 use App\Entity\User;
+use App\Repository\ProjectRateRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +34,32 @@ class ProjectControllerTest extends APIControllerBaseTest
         }
 
         return sprintf('/api/projects/%s/rates', $id);
+    }
+
+    protected function importTestRates(string $id): array
+    {
+        /** @var ProjectRateRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(ProjectRate::class);
+        /** @var Project $project */
+        $project = $this->getEntityManager()->getRepository(Project::class)->find($id);
+
+        $rate1 = new ProjectRate();
+        $rate1->setProject($project);
+        $rate1->setRate(17.45);
+        $rate1->setIsFixed(false);
+
+        $repository->saveRate($rate1);
+
+        $rate2 = new ProjectRate();
+        $rate2->setProject($project);
+        $rate2->setRate(99);
+        $rate2->setInternalRate(9);
+        $rate2->setIsFixed(true);
+        $rate2->setUser($this->getUserByName(UserFixtures::USERNAME_USER));
+
+        $repository->saveRate($rate2);
+
+        return [$rate1, $rate2];
     }
 
     public function testIsSecure()

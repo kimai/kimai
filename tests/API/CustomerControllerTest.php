@@ -9,8 +9,11 @@
 
 namespace App\Tests\API;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
+use App\Entity\CustomerRate;
 use App\Entity\User;
+use App\Repository\CustomerRateRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,6 +31,32 @@ class CustomerControllerTest extends APIControllerBaseTest
         }
 
         return sprintf('/api/customers/%s/rates', $id);
+    }
+
+    protected function importTestRates(string $id): array
+    {
+        /** @var CustomerRateRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(CustomerRate::class);
+        /** @var Customer $customer */
+        $customer = $this->getEntityManager()->getRepository(Customer::class)->find($id);
+
+        $rate1 = new CustomerRate();
+        $rate1->setCustomer($customer);
+        $rate1->setRate(17.45);
+        $rate1->setIsFixed(false);
+
+        $repository->saveRate($rate1);
+
+        $rate2 = new CustomerRate();
+        $rate2->setCustomer($customer);
+        $rate2->setRate(99);
+        $rate2->setInternalRate(9);
+        $rate2->setIsFixed(true);
+        $rate2->setUser($this->getUserByName(UserFixtures::USERNAME_USER));
+
+        $repository->saveRate($rate2);
+
+        return [$rate1, $rate2];
     }
 
     public function testIsSecure()

@@ -9,10 +9,13 @@
 
 namespace App\Tests\API;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\Activity;
+use App\Entity\ActivityRate;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
+use App\Repository\ActivityRateRepository;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
@@ -31,6 +34,32 @@ class ActivityControllerTest extends APIControllerBaseTest
         }
 
         return sprintf('/api/activities/%s/rates', $id);
+    }
+
+    protected function importTestRates(string $id): array
+    {
+        /** @var ActivityRateRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(ActivityRate::class);
+        /** @var Activity $activity */
+        $activity = $this->getEntityManager()->getRepository(Activity::class)->find($id);
+
+        $rate1 = new ActivityRate();
+        $rate1->setActivity($activity);
+        $rate1->setRate(17.45);
+        $rate1->setIsFixed(false);
+
+        $repository->saveRate($rate1);
+
+        $rate2 = new ActivityRate();
+        $rate2->setActivity($activity);
+        $rate2->setRate(99);
+        $rate2->setInternalRate(9);
+        $rate2->setIsFixed(true);
+        $rate2->setUser($this->getUserByName(UserFixtures::USERNAME_USER));
+
+        $repository->saveRate($rate2);
+
+        return [$rate1, $rate2];
     }
 
     public function testIsSecure()

@@ -19,6 +19,8 @@ trait RateControllerTestTrait
 {
     abstract protected function getRateUrl(string $id = '1', ?string $rateId = null): string;
 
+    abstract protected function importTestRates(string $id): array;
+
     public function testAddRateMissingEntityAction()
     {
         $data = [
@@ -105,7 +107,34 @@ trait RateControllerTestTrait
         $this->assertTrue($result['isFixed']);
     }
 
-    // TODO get rates
+    public function testGetRatesEmptyResult()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, $this->getRateUrl(1));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertEmpty($result);
+    }
+
+    public function testGetRates()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $expectedRates = $this->importTestRates(1);
+
+        $this->request($client, $this->getRateUrl(1));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(count($expectedRates), count($result));
+
+        foreach ($result as $rate) {
+            $this->assertRateStructure($rate, ($rate['user'] === null ? null : $rate['user']['id']));
+        }
+    }
 
     public function testGetRatesEntityNotFound()
     {
