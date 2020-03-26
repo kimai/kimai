@@ -22,6 +22,13 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 class ProjectControllerTest extends APIControllerBaseTest
 {
+    use RateControllerTestTrait;
+
+    protected function getRateUrl(string $id = '1'): string
+    {
+        return sprintf('/api/projects/%s/rates', $id);
+    }
+
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/projects');
@@ -41,7 +48,7 @@ class ProjectControllerTest extends APIControllerBaseTest
 
     protected function loadProjectTestData(HttpKernelBrowser $client)
     {
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $customer = $em->getRepository(Customer::class)->find(1);
 
@@ -278,7 +285,7 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
         $this->assertEquals('another,testing,bar', $project->getMetaField('metatestmock')->getValue());

@@ -11,10 +11,14 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\ProjectRate;
 use App\Entity\User;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\API\ProjectApiEditForm;
+use App\Form\API\ProjectRateApiForm;
+use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
 use App\Timesheet\UserDateTimeFactory;
@@ -31,10 +35,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints;
 
 /**
  * @RouteResource("Project")
+ * @SWG\Tag(name="Project")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -56,13 +62,18 @@ class ProjectController extends BaseApiController
      * @var UserDateTimeFactory
      */
     private $dateTime;
+    /**
+     * @var ProjectRateRepository
+     */
+    private $projectRateRepository;
 
-    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, UserDateTimeFactory $dateTime)
+    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, UserDateTimeFactory $dateTime, ProjectRateRepository $projectRateRepository)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
         $this->dateTime = $dateTime;
+        $this->projectRateRepository = $projectRateRepository;
     }
 
     /**
@@ -299,7 +310,7 @@ class ProjectController extends BaseApiController
     }
 
     /**
-     * Sets the value of a meta-field for an existing project.
+     * Sets the value of a meta-field for an existing project
      *
      * @SWG\Response(
      *      response=200,
@@ -347,6 +358,172 @@ class ProjectController extends BaseApiController
 
         $view = new View($project, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Returns a collection of all rates for one project
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Returns a collection of project rate entities",
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/ProjectRate")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The project whose rates will be returned",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function getRatesAction(int $id): Response
+    {
+        /** @var Project|null $project */
+        $project = $this->repository->find($id);
+
+        if (null === $project) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $project)) {
+            throw new AccessDeniedHttpException('Unauthorized');
+        }
+
+        $rates = $this->projectRateRepository->getRatesForProject($project);
+
+        $view = new View($rates, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'ProjectRate']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Deletes one rate for an project
+     *
+     * @SWG\Delete(
+     *      @SWG\Response(
+     *          response=204,
+     *          description="Returns no content: 204 on successful delete"
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The project whose rate will be removed",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="rateId",
+     *      in="path",
+     *      type="integer",
+     *      description="The rate to remove",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function deleteRateAction(string $id, string $rateId): Response
+    {
+        /** @var Project|null $project */
+        $project = $this->repository->find($id);
+
+        if (null === $project) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $project)) {
+            throw new AccessDeniedHttpException('Unauthorized');
+        }
+
+        /** @var ProjectRate|null $rate */
+        $rate = $this->projectRateRepository->find($rateId);
+
+        if (null === $rate || $rate->getProject() !== $project) {
+            throw new NotFoundException('Rate not found');
+        }
+
+        $this->projectRateRepository->deleteRate($rate);
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Adds a new rate to an project
+     *
+     * @SWG\Post(
+     *  @SWG\Response(
+     *      response=200,
+     *      description="Returns the new created rate",
+     *      @SWG\Schema(ref="#/definitions/ProjectRate")
+     *  )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The project to add the rate for",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/ProjectRateForm")
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function postRateAction(int $id, Request $request): Response
+    {
+        /** @var Project|null $project */
+        $project = $this->repository->find($id);
+
+        if (null === $project) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $project)) {
+            throw new AccessDeniedHttpException('Unauthorized');
+        }
+
+        if (!$project->isVisible()) {
+            throw new BadRequestHttpException('Cannot add rates to a hidden project');
+        }
+
+        $rate = new ProjectRate();
+        $rate->setProject($project);
+
+        $form = $this->createForm(ProjectRateApiForm::class, $rate, [
+            'method' => 'POST',
+        ]);
+
+        $form->setData($rate);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            $view = new View($form, Response::HTTP_OK);
+            $view->getContext()->setGroups(['Default', 'Entity', 'ProjectRate']);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        $this->projectRateRepository->saveRate($rate);
+
+        $view = new View($rate, Response::HTTP_OK);
+        $view->getContext()->setGroups(['Default', 'Entity', 'ProjectRate']);
 
         return $this->viewHandler->handle($view);
     }

@@ -12,8 +12,11 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\Activity;
+use App\Entity\ActivityRate;
 use App\Event\ActivityMetaDefinitionEvent;
 use App\Form\API\ActivityApiEditForm;
+use App\Form\API\ActivityRateApiForm;
+use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Utils\SearchTerm;
@@ -29,9 +32,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @RouteResource("Activity")
+ * @SWG\Tag(name="Activity")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -49,12 +54,17 @@ class ActivityController extends BaseApiController
      * @var EventDispatcherInterface
      */
     private $dispatcher;
+    /**
+     * @var ActivityRateRepository
+     */
+    private $activityRateRepository;
 
-    public function __construct(ViewHandlerInterface $viewHandler, ActivityRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(ViewHandlerInterface $viewHandler, ActivityRepository $repository, EventDispatcherInterface $dispatcher, ActivityRateRepository $activityRateRepository)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
+        $this->activityRateRepository = $activityRateRepository;
     }
 
     /**
@@ -276,7 +286,7 @@ class ActivityController extends BaseApiController
     }
 
     /**
-     * Sets the value of a meta-field for an existing activity.
+     * Sets the value of a meta-field for an existing activity
      *
      * @SWG\Response(
      *      response=200,
@@ -324,6 +334,172 @@ class ActivityController extends BaseApiController
 
         $view = new View($activity, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Returns a collection of all rates for one activity
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Returns a collection of activity rate entities",
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/ActivityRate")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The activity whose rates will be returned",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function getRatesAction(int $id): Response
+    {
+        /** @var Activity|null $activity */
+        $activity = $this->repository->find($id);
+
+        if (null === $activity) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $activity)) {
+            throw new AccessDeniedHttpException('Unauthorized');
+        }
+
+        $rates = $this->activityRateRepository->getRatesForActivity($activity);
+
+        $view = new View($rates, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'ActivityRate']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Deletes one rate for an activity
+     *
+     * @SWG\Delete(
+     *      @SWG\Response(
+     *          response=204,
+     *          description="Returns no content: 204 on successful delete"
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The activity whose rate will be removed",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="rateId",
+     *      in="path",
+     *      type="integer",
+     *      description="The rate to remove",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function deleteRateAction(string $id, string $rateId): Response
+    {
+        /** @var Activity|null $activity */
+        $activity = $this->repository->find($id);
+
+        if (null === $activity) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $activity)) {
+            throw new AccessDeniedHttpException('Unauthorized');
+        }
+
+        /** @var ActivityRate|null $rate */
+        $rate = $this->activityRateRepository->find($rateId);
+
+        if (null === $rate || $rate->getActivity() !== $activity) {
+            throw new NotFoundException('Rate not found');
+        }
+
+        $this->activityRateRepository->deleteRate($rate);
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Adds a new rate to an activity
+     *
+     * @SWG\Post(
+     *  @SWG\Response(
+     *      response=200,
+     *      description="Returns the new created rate",
+     *      @SWG\Schema(ref="#/definitions/ActivityRate")
+     *  )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The activity to add the rate for",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/ActivityRateForm")
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function postRateAction(int $id, Request $request): Response
+    {
+        /** @var Activity|null $activity */
+        $activity = $this->repository->find($id);
+
+        if (null === $activity) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $activity)) {
+            throw new AccessDeniedHttpException('Unauthorized');
+        }
+
+        if (!$activity->isVisible()) {
+            throw new BadRequestHttpException('Cannot add rates to a hidden entity');
+        }
+
+        $rate = new ActivityRate();
+        $rate->setActivity($activity);
+
+        $form = $this->createForm(ActivityRateApiForm::class, $rate, [
+            'method' => 'POST',
+        ]);
+
+        $form->setData($rate);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            $view = new View($form, Response::HTTP_OK);
+            $view->getContext()->setGroups(['Default', 'Entity', 'ActivityRate']);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        $this->activityRateRepository->saveRate($rate);
+
+        $view = new View($rate, Response::HTTP_OK);
+        $view->getContext()->setGroups(['Default', 'Entity', 'ActivityRate']);
 
         return $this->viewHandler->handle($view);
     }

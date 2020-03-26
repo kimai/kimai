@@ -19,6 +19,13 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CustomerControllerTest extends APIControllerBaseTest
 {
+    use RateControllerTestTrait;
+
+    protected function getRateUrl(string $id = '1'): string
+    {
+        return sprintf('/api/customers/%s/rates', $id);
+    }
+
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/customers');
@@ -221,7 +228,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
         $this->assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());

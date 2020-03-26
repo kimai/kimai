@@ -11,14 +11,10 @@ namespace App\Form;
 
 use App\Entity\ActivityRate;
 use App\Entity\Rate;
-use App\Form\Type\UserType;
-use App\Form\Type\YesNoType;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ActivityRateForm extends AbstractType
+class ActivityRateForm extends AbstractRateForm
 {
     /**
      * {@inheritdoc}
@@ -27,7 +23,7 @@ class ActivityRateForm extends AbstractType
     {
         $currency = null;
 
-        if ($options['data']) {
+        if (!empty($options['data'])) {
             /** @var ActivityRate $rate */
             $rate = $options['data'];
 
@@ -36,21 +32,7 @@ class ActivityRateForm extends AbstractType
             }
         }
 
-        $builder
-            ->add('user', UserType::class, [
-                'required' => false,
-            ])
-            ->add('rate', MoneyType::class, [
-                'label' => 'label.rate',
-                'attr' => [
-                    'autofocus' => 'autofocus'
-                ],
-                'currency' => $currency,
-            ])
-            ->add('isFixed', YesNoType::class, [
-                'label' => 'label.fixedRate'
-            ])
-        ;
+        $this->addFields($builder, $currency);
     }
 
     /**

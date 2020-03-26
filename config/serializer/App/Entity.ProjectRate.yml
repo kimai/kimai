@@ -1,0 +1,21 @@
+App\Entity\ProjectRate:
+    exclusion_policy: All
+    custom_accessor_order: [id, rate, internalRate, isFixed, user]
+    properties:
+        id:
+            include: true
+            groups: [Default]
+        project:
+            exclude: true
+        user:
+            include: true
+            groups: [Default]
+        rate:
+            include: true
+            groups: [Default]
+        internalRate:
+            include: true
+            groups: [Default]
+        isFixed:
+            include: true
+            groups: [Default]

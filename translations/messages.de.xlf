@@ -292,6 +292,18 @@
                 <source>label.rate</source>
                 <target>Lohn</target>
             </trans-unit>
+            <trans-unit id="help.rate">
+                <source>help.rate</source>
+                <target>Zu berechnender Stundensatz</target>
+            </trans-unit>
+            <trans-unit id="label.rate_internal">
+                <source>label.rate_internal</source>
+                <target>Interner Lohn</target>
+            </trans-unit>
+            <trans-unit id="help.rate_internal">
+                <source>help.rate_internal</source>
+                <target>Interner Verrechnungswert (wenn dieser nicht angegeben ist, wird der normale Satz verwendet)</target>
+            </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
                 <target>Sprache</target>
@@ -427,6 +439,10 @@
             <trans-unit id="label.fixedRate">
                 <source>label.fixedRate</source>
                 <target>Festbetrag</target>
+            </trans-unit>
+            <trans-unit id="help.fixedRate">
+                <source>help.fixedRate</source>
+                <target>Jeder Zeiteintrag bekommt den gleichen Wert, unabhängig von seiner Dauer</target>
             </trans-unit>
             <trans-unit id="label.color">
                 <source>label.color</source>

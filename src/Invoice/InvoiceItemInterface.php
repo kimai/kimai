@@ -14,6 +14,9 @@ use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\User;
 
+/**
+ * @method float|null getInternalRate()
+ */
 interface InvoiceItemInterface
 {
     public function getActivity(): ?Activity;
@@ -25,6 +28,11 @@ interface InvoiceItemInterface
     public function getHourlyRate(): ?float;
 
     public function getRate(): float;
+
+    // will be activated with 2.0
+    /*
+    public function getInternalRate(): ?float;
+    */
 
     public function getUser(): ?User;
 

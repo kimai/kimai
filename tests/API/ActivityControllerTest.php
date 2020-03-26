@@ -22,6 +22,13 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 class ActivityControllerTest extends APIControllerBaseTest
 {
+    use RateControllerTestTrait;
+
+    protected function getRateUrl(string $id = '1'): string
+    {
+        return sprintf('/api/activities/%s/rates', $id);
+    }
+
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/activities');
@@ -29,9 +36,11 @@ class ActivityControllerTest extends APIControllerBaseTest
 
     protected function loadActivityTestData(HttpKernelBrowser $client)
     {
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
+        /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
+        /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
 
         $project2 = new Project();
@@ -104,7 +113,6 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->loadActivityTestData($client);
 
         $query = ['order' => 'ASC', 'orderBy' => 'project'];
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/activities', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
 
@@ -277,7 +285,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Activity $activity */
         $activity = $em->getRepository(Activity::class)->find(1);
         $this->assertEquals('another,testing,bar', $activity->getMetaField('metatestmock')->getValue());

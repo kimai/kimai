@@ -12,9 +12,12 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\Customer;
+use App\Entity\CustomerRate;
 use App\Entity\User;
 use App\Event\CustomerMetaDefinitionEvent;
 use App\Form\API\CustomerApiEditForm;
+use App\Form\API\CustomerRateApiForm;
+use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerQuery;
 use App\Utils\SearchTerm;
@@ -30,9 +33,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @RouteResource("Customer")
+ * @SWG\Tag(name="Customer")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -50,12 +55,17 @@ class CustomerController extends BaseApiController
      * @var EventDispatcherInterface
      */
     private $dispatcher;
+    /**
+     * @var CustomerRateRepository
+     */
+    private $customerRateRepository;
 
-    public function __construct(ViewHandlerInterface $viewHandler, CustomerRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(ViewHandlerInterface $viewHandler, CustomerRepository $repository, EventDispatcherInterface $dispatcher, CustomerRateRepository $customerRateRepository)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
+        $this->customerRateRepository = $customerRateRepository;
     }
 
     /**
@@ -66,7 +76,7 @@ class CustomerController extends BaseApiController
      *      description="Returns a collection of customer entities",
      *      @SWG\Schema(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/CustomerCollection")
+     *          @SWG\Items(ref="#/definitions/CustomerEntity")
      *      )
      * )
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
@@ -249,7 +259,7 @@ class CustomerController extends BaseApiController
     }
 
     /**
-     * Sets the value of a meta-field for an existing customer.
+     * Sets the value of a meta-field for an existing customer
      *
      * @SWG\Response(
      *      response=200,
@@ -297,6 +307,172 @@ class CustomerController extends BaseApiController
 
         $view = new View($customer, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Customer']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Returns a collection of all rates for one customer
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Returns a collection of customer rate entities",
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/CustomerRate")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The customer whose rates will be returned",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function getRatesAction(int $id): Response
+    {
+        /** @var Customer|null $customer */
+        $customer = $this->repository->find($id);
+
+        if (null === $customer) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $customer)) {
+            throw new AccessDeniedHttpException('Unauthorized');
+        }
+
+        $rates = $this->customerRateRepository->getRatesForCustomer($customer);
+
+        $view = new View($rates, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'CustomerRate']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Deletes one rate for an customer
+     *
+     * @SWG\Delete(
+     *      @SWG\Response(
+     *          response=204,
+     *          description="Returns no content: 204 on successful delete"
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The customer whose rate will be removed",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="rateId",
+     *      in="path",
+     *      type="integer",
+     *      description="The rate to remove",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function deleteRateAction(string $id, string $rateId): Response
+    {
+        /** @var Customer|null $customer */
+        $customer = $this->repository->find($id);
+
+        if (null === $customer) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $customer)) {
+            throw new AccessDeniedHttpException('Unauthorized');
+        }
+
+        /** @var CustomerRate|null $rate */
+        $rate = $this->customerRateRepository->find($rateId);
+
+        if (null === $rate || $rate->getCustomer() !== $customer) {
+            throw new NotFoundException('Rate not found');
+        }
+
+        $this->customerRateRepository->deleteRate($rate);
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Adds a new rate to a customer
+     *
+     * @SWG\Post(
+     *  @SWG\Response(
+     *      response=200,
+     *      description="Returns the new created rate",
+     *      @SWG\Schema(ref="#/definitions/CustomerRate")
+     *  )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The customer to add the rate for",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/CustomerRateForm")
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function postRateAction(int $id, Request $request): Response
+    {
+        /** @var Customer|null $customer */
+        $customer = $this->repository->find($id);
+
+        if (null === $customer) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $customer)) {
+            throw new AccessDeniedHttpException('Unauthorized');
+        }
+
+        if (!$customer->isVisible()) {
+            throw new BadRequestHttpException('Cannot add rates to a hidden customer');
+        }
+
+        $rate = new CustomerRate();
+        $rate->setCustomer($customer);
+
+        $form = $this->createForm(CustomerRateApiForm::class, $rate, [
+            'method' => 'POST',
+        ]);
+
+        $form->setData($rate);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            $view = new View($form, Response::HTTP_OK);
+            $view->getContext()->setGroups(['Default', 'Entity', 'CustomerRate']);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        $this->customerRateRepository->saveRate($rate);
+
+        $view = new View($rate, Response::HTTP_OK);
+        $view->getContext()->setGroups(['Default', 'Entity', 'CustomerRate']);
 
         return $this->viewHandler->handle($view);
     }
