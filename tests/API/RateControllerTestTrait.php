@@ -146,7 +146,23 @@ trait RateControllerTestTrait
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, $this->getRateUrl(1));
     }
 
-    // TODO delete rate
+    public function testDeleteRate()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $expectedRates = $this->importTestRates(1);
+
+        $this->request($client, $this->getRateUrl(1, 1), 'DELETE');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertEmpty($client->getResponse()->getContent());
+
+        // fetch rates to validate that one was removed
+        $this->request($client, $this->getRateUrl(1));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertEquals(count($expectedRates) - 1, count($result));
+    }
 
     public function testDeleteRateEntityNotFound()
     {
@@ -158,8 +174,14 @@ trait RateControllerTestTrait
         $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, $this->getRateUrl(1, 99));
     }
 
-    // TODO delete rate - with missing permissions
-    // TODO delete rate - with wrong entity assignment
+    public function testDeleteRateWithInvalidAssignment()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importTestRates(1);
+        $this->importTestRates(2);
+
+        $this->assertNotFoundForDelete($client, $this->getRateUrl(2, 1));
+    }
 
     protected function assertRateStructure(array $result, $user = null)
     {

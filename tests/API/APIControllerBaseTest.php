@@ -149,6 +149,14 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         );
     }
 
+    protected function assertNotFoundForDelete(HttpKernelBrowser $client, string $url)
+    {
+        return $this->assertExceptionForMethod($client, $url, 'DELETE', [], [
+            'code' => 404,
+            'message' => 'Not found'
+        ]);
+    }
+
     protected function assertEntityNotFoundForDelete(string $role, string $url)
     {
         return $this->assertExceptionForDeleteAction($role, $url, [], [

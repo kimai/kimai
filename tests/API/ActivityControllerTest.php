@@ -16,6 +16,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\ActivityRateRepository;
+use App\Repository\ActivityRepository;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
@@ -38,17 +39,25 @@ class ActivityControllerTest extends APIControllerBaseTest
 
     protected function importTestRates(string $id): array
     {
-        /** @var ActivityRateRepository $repository */
-        $repository = $this->getEntityManager()->getRepository(ActivityRate::class);
+        /** @var ActivityRateRepository $rateRepository */
+        $rateRepository = $this->getEntityManager()->getRepository(ActivityRate::class);
+        /** @var ActivityRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Activity::class);
         /** @var Activity $activity */
-        $activity = $this->getEntityManager()->getRepository(Activity::class)->find($id);
+        $activity = $repository->find($id);
+
+        if (null === $activity) {
+            $activity = new Activity();
+            $activity->setName('foooo');
+            $repository->saveActivity($activity);
+        }
 
         $rate1 = new ActivityRate();
         $rate1->setActivity($activity);
         $rate1->setRate(17.45);
         $rate1->setIsFixed(false);
 
-        $repository->saveRate($rate1);
+        $rateRepository->saveRate($rate1);
 
         $rate2 = new ActivityRate();
         $rate2->setActivity($activity);
@@ -57,7 +66,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $rate2->setIsFixed(true);
         $rate2->setUser($this->getUserByName(UserFixtures::USERNAME_USER));
 
-        $repository->saveRate($rate2);
+        $rateRepository->saveRate($rate2);
 
         return [$rate1, $rate2];
     }

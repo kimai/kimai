@@ -15,6 +15,7 @@ use App\Entity\Project;
 use App\Entity\ProjectRate;
 use App\Entity\User;
 use App\Repository\ProjectRateRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,17 +39,26 @@ class ProjectControllerTest extends APIControllerBaseTest
 
     protected function importTestRates(string $id): array
     {
-        /** @var ProjectRateRepository $repository */
-        $repository = $this->getEntityManager()->getRepository(ProjectRate::class);
+        /** @var ProjectRateRepository $rateRepository */
+        $rateRepository = $this->getEntityManager()->getRepository(ProjectRate::class);
+        /** @var ProjectRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Project::class);
         /** @var Project $project */
-        $project = $this->getEntityManager()->getRepository(Project::class)->find($id);
+        $project = $repository->find($id);
+
+        if (null === $project) {
+            $project = new Project();
+            $project->setName('foooo');
+            $project->setCustomer($this->getEntityManager()->getRepository(Customer::class)->find(1));
+            $repository->saveProject($project);
+        }
 
         $rate1 = new ProjectRate();
         $rate1->setProject($project);
         $rate1->setRate(17.45);
         $rate1->setIsFixed(false);
 
-        $repository->saveRate($rate1);
+        $rateRepository->saveRate($rate1);
 
         $rate2 = new ProjectRate();
         $rate2->setProject($project);
@@ -57,7 +67,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $rate2->setIsFixed(true);
         $rate2->setUser($this->getUserByName(UserFixtures::USERNAME_USER));
 
-        $repository->saveRate($rate2);
+        $rateRepository->saveRate($rate2);
 
         return [$rate1, $rate2];
     }

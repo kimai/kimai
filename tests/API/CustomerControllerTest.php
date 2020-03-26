@@ -14,6 +14,7 @@ use App\Entity\Customer;
 use App\Entity\CustomerRate;
 use App\Entity\User;
 use App\Repository\CustomerRateRepository;
+use App\Repository\CustomerRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,17 +36,27 @@ class CustomerControllerTest extends APIControllerBaseTest
 
     protected function importTestRates(string $id): array
     {
-        /** @var CustomerRateRepository $repository */
-        $repository = $this->getEntityManager()->getRepository(CustomerRate::class);
+        /** @var CustomerRateRepository $rateRepository */
+        $rateRepository = $this->getEntityManager()->getRepository(CustomerRate::class);
+        /** @var CustomerRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Customer::class);
         /** @var Customer $customer */
-        $customer = $this->getEntityManager()->getRepository(Customer::class)->find($id);
+        $customer = $repository->find($id);
+
+        if (null === $customer) {
+            $customer = new Customer();
+            $customer->setCountry('DE');
+            $customer->setTimezone('Europre/Paris');
+            $customer->setName('foooo');
+            $repository->saveCustomer($customer);
+        }
 
         $rate1 = new CustomerRate();
         $rate1->setCustomer($customer);
         $rate1->setRate(17.45);
         $rate1->setIsFixed(false);
 
-        $repository->saveRate($rate1);
+        $rateRepository->saveRate($rate1);
 
         $rate2 = new CustomerRate();
         $rate2->setCustomer($customer);
@@ -54,7 +65,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $rate2->setIsFixed(true);
         $rate2->setUser($this->getUserByName(UserFixtures::USERNAME_USER));
 
-        $repository->saveRate($rate2);
+        $rateRepository->saveRate($rate2);
 
         return [$rate1, $rate2];
     }
