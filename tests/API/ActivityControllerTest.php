@@ -24,8 +24,12 @@ class ActivityControllerTest extends APIControllerBaseTest
 {
     use RateControllerTestTrait;
 
-    protected function getRateUrl(string $id = '1'): string
+    protected function getRateUrl(string $id = '1', ?string $rateId = null): string
     {
+        if (null !== $rateId) {
+            return sprintf('/api/activities/%s/rates/%s', $id, $rateId);
+        }
+
         return sprintf('/api/activities/%s/rates', $id);
     }
 

@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 trait RateControllerTestTrait
 {
-    abstract protected function getRateUrl(string $id = '1'): string;
+    abstract protected function getRateUrl(string $id = '1', ?string $rateId = null): string;
 
     public function testAddRateMissingEntityAction()
     {
@@ -106,12 +106,24 @@ trait RateControllerTestTrait
     }
 
     // TODO get rates
-    // TODO get rates - with invalid user
+
+    public function testGetRatesEntityNotFound()
+    {
+        $this->assertEntityNotFound(User::ROLE_ADMIN, $this->getRateUrl(99));
+    }
+
+    // TODO get rates - with missing permissions
 
     // TODO delete rate
+
+    public function testGetRatesEntityNotFoundForDelete()
+    {
+        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, $this->getRateUrl(99, 1));
+    }
+
     // TODO delete rate - rate not found
-    // TODO delete rate - entity not found
-    // TODO delete rate - with invalid user
+    // TODO delete rate - with missing permissions
+    // TODO delete rate - with wrong entity assignment
 
     protected function assertRateStructure(array $result, $user = null)
     {

@@ -35,7 +35,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints;
 
 /**
@@ -497,10 +496,6 @@ class ProjectController extends BaseApiController
 
         if (!$this->isGranted('edit', $project)) {
             throw new AccessDeniedHttpException('Unauthorized');
-        }
-
-        if (!$project->isVisible()) {
-            throw new BadRequestHttpException('Cannot add rates to a hidden project');
         }
 
         $rate = new ProjectRate();

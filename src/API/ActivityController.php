@@ -32,7 +32,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @RouteResource("Activity")
@@ -473,10 +472,6 @@ class ActivityController extends BaseApiController
 
         if (!$this->isGranted('edit', $activity)) {
             throw new AccessDeniedHttpException('Unauthorized');
-        }
-
-        if (!$activity->isVisible()) {
-            throw new BadRequestHttpException('Cannot add rates to a hidden entity');
         }
 
         $rate = new ActivityRate();

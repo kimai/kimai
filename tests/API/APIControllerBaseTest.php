@@ -149,6 +149,14 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         );
     }
 
+    protected function assertEntityNotFoundForDelete(string $role, string $url)
+    {
+        return $this->assertExceptionForDeleteAction($role, $url, [], [
+            'code' => 404,
+            'message' => 'Not found'
+        ]);
+    }
+
     protected function assertEntityNotFoundForPatch(string $role, string $url, array $data)
     {
         return $this->assertExceptionForPatchAction($role, $url, $data, [
@@ -163,6 +171,11 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             'code' => 404,
             'message' => $message ?? 'Not found'
         ]);
+    }
+
+    protected function assertExceptionForDeleteAction(string $role, string $url, array $data, array $expectedErrors)
+    {
+        $this->assertExceptionForRole($role, $url, 'DELETE', $data, $expectedErrors);
     }
 
     protected function assertExceptionForPatchAction(string $role, string $url, array $data, array $expectedErrors)
@@ -193,38 +206,6 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $this->assertExceptionForMethod($client, $url, $method, $data, $expectedErrors);
-
-        $this->request($client, $url, $method, [], json_encode($data));
-        $response = $client->getResponse();
-        self::assertFalse($response->isSuccessful());
-
-        self::assertEquals($expectedErrors['code'], $client->getResponse()->getStatusCode());
-
-        self::assertEquals(
-            $expectedErrors,
-            json_decode($client->getResponse()->getContent(), true)
-        );
-    }
-
-    protected function assertEntityNotFoundForDelete(string $role, string $url, array $data)
-    {
-        $client = $this->getClientForAuthenticatedUser($role);
-
-        $this->request($client, $url, 'DELETE', [], json_encode($data));
-        $response = $client->getResponse();
-        self::assertFalse($response->isSuccessful());
-
-        $expected = [
-            'code' => 404,
-            'message' => 'Not found'
-        ];
-
-        self::assertEquals(404, $client->getResponse()->getStatusCode());
-
-        self::assertEquals(
-            $expected,
-            json_decode($client->getResponse()->getContent(), true)
-        );
     }
 
     protected function assertApiException(Response $response, string $message)

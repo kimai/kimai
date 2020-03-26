@@ -21,8 +21,12 @@ class CustomerControllerTest extends APIControllerBaseTest
 {
     use RateControllerTestTrait;
 
-    protected function getRateUrl(string $id = '1'): string
+    protected function getRateUrl(string $id = '1', ?string $rateId = null): string
     {
+        if (null !== $rateId) {
+            return sprintf('/api/customers/%s/rates/%s', $id, $rateId);
+        }
+
         return sprintf('/api/customers/%s/rates', $id);
     }
 

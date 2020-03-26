@@ -33,7 +33,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @RouteResource("Customer")
@@ -446,10 +445,6 @@ class CustomerController extends BaseApiController
 
         if (!$this->isGranted('edit', $customer)) {
             throw new AccessDeniedHttpException('Unauthorized');
-        }
-
-        if (!$customer->isVisible()) {
-            throw new BadRequestHttpException('Cannot add rates to a hidden customer');
         }
 
         $rate = new CustomerRate();
