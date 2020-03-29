@@ -48,7 +48,7 @@
             </trans-unit>
             <trans-unit id="invoice.first_template">
                 <source>invoice.first_template</source>
-                <target>Sie müssen zunächst eine Rechnungsvorlage erstellen, bevor Sie fortfahren können</target>
+                <target>Bitte legen Sie zunächst eine Rechnungsvorlage an</target>
             </trans-unit>
         </body>
     </file>
