@@ -58,6 +58,15 @@ final class PermissionsEvent extends Event
         return $this;
     }
 
+    public function getSection(string $section): ?array
+    {
+        if (array_key_exists($section, $this->sections)) {
+            return $this->sections[$section];
+        }
+
+        return null;
+    }
+
     /**
      * @return array
      */
