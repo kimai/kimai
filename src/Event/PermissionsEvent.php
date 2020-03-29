@@ -67,9 +67,6 @@ final class PermissionsEvent extends Event
         return null;
     }
 
-    /**
-     * @return array
-     */
     public function getPermissions(): array
     {
         return $this->sections;
