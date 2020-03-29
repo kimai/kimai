@@ -14,6 +14,7 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Event\TimesheetMetaDisplayEvent;
+use App\Event\TimesheetUpdateEvent;
 use App\Export\ServiceExport;
 use App\Form\MultiUpdate\MultiUpdateTable;
 use App\Form\MultiUpdate\MultiUpdateTableDTO;
@@ -157,6 +158,9 @@ abstract class TimesheetAbstractController extends AbstractController
                 $this->repository->save($entry);
                 $this->flashSuccess('action.update.success');
 
+                $event = new TimesheetUpdateEvent($entry);
+                $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_UPDATE);
+
                 return $this->redirectToRoute($this->getTimesheetRoute(), ['page' => $request->get('page', 1)]);
             } catch (\Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
@@ -217,6 +221,9 @@ abstract class TimesheetAbstractController extends AbstractController
             try {
                 $this->service->saveNewTimesheet($entry);
                 $this->flashSuccess('action.update.success');
+
+                $event = new TimesheetUpdateEvent($entry);
+                $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_CREATE);
 
                 return $this->redirectToRoute($this->getTimesheetRoute());
             } catch (\Exception $ex) {
@@ -347,6 +354,9 @@ abstract class TimesheetAbstractController extends AbstractController
                     $this->repository->saveMultiple($dto->getEntities());
                     $this->flashSuccess('action.update.success');
 
+                    $event = new TimesheetUpdateEvent($dto->getEntities());
+                    $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_UPDATE);
+
                     return $this->redirectToRoute($this->getTimesheetRoute());
                 } catch (\Exception $ex) {
                     $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
@@ -380,6 +390,9 @@ abstract class TimesheetAbstractController extends AbstractController
             try {
                 $this->repository->deleteMultiple($dto->getEntities());
                 $this->flashSuccess('action.delete.success');
+
+                $event = new TimesheetUpdateEvent($dto->getEntities());
+                $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_DELETE);
             } catch (\Exception $ex) {
                 $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
             }
