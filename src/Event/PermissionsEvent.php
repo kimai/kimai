@@ -51,7 +51,7 @@ final class PermissionsEvent extends Event
 
     public function removeSection(string $section): PermissionsEvent
     {
-        if ($this->hasSection($section)) {
+        if (array_key_exists($section, $this->sections)) {
             unset($this->sections[$section]);
         }
 
