@@ -30,8 +30,8 @@ final class InvoiceFilename
         }
 
         if (!empty($company)) {
-            $company = new UnicodeString($company);
-            $filename .= '-' . $company->snake();
+            $uCompany = new UnicodeString($company);
+            $filename .= '-' . $uCompany->ascii()->snake();
         }
 
         $this->filename = $filename;

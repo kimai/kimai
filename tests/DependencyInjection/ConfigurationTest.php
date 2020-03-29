@@ -292,6 +292,14 @@ class ConfigurationTest extends TestCase
                 'simple_form' => true,
                 'number_format' => '{Y}/{cy,3}',
             ],
+            'export' => [
+                'documents' => [
+                ],
+                'defaults' => [
+                    0 => 'var/export/',
+                    1 => 'templates/export/renderer/',
+                ],
+            ],
             'languages' => [],
             'calendar' => [
                 'week_numbers' => true,
