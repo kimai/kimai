@@ -5,8 +5,6 @@ includes:
 
 parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
-    symfony:
-        container_xml_path: '%rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml'
     ignoreErrors:
         - '#Access to an undefined property Faker\\Generator::\$stateAbbr.#'
         - '#Access to an undefined property Faker\\Generator::\$catchPhrase.#'
