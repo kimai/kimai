@@ -84,7 +84,7 @@ class ActivityController extends BaseApiController
      * @Rest\QueryParam(name="globalsFirst", requirements="true|false", strict=true, nullable=true, description="Deprecated parameter, value is not used any more")
      * @Rest\QueryParam(name="orderBy", requirements="id|name|project", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, project (default: name)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
-     * @Rest\QueryParam(name="term", requirements="[a-zA-Z0-9 \-,:]+", strict=true, nullable=true, description="Free search term")
+     * @Rest\QueryParam(name="term", description="Free search term")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")

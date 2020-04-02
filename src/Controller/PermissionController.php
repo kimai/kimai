@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\Role;
 use App\Entity\RolePermission;
 use App\Event\PermissionSectionsEvent;
+use App\Event\PermissionsEvent;
 use App\Form\RoleType;
 use App\Model\PermissionSection;
 use App\Repository\RolePermissionRepository;
@@ -143,10 +144,16 @@ final class PermissionController extends AbstractController
             $roles[$role->getName()] = $role;
         }
 
+        $event = new PermissionsEvent();
+        foreach ($permissionSorted as $title => $permissions) {
+            $event->addPermissions($title, $permissions);
+        }
+
+        $dispatcher->dispatch($event);
+
         return $this->render('user/permissions.html.twig', [
             'roles' => array_values($roles),
-            'permissions' => $this->manager->getPermissions(),
-            'sorted' => $permissionSorted,
+            'sorted' => $event->getPermissions(),
             'manager' => $this->manager,
             'system_roles' => $this->roleService->getSystemRoles(),
         ]);
