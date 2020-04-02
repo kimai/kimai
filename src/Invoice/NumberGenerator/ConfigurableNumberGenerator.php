@@ -56,7 +56,7 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
      */
     public function getInvoiceNumber(): string
     {
-        $format = $this->configuration->find('invoice.number_format');;
+        $format = $this->configuration->find('invoice.number_format');
         $invoiceDate = $this->model->getInvoiceDate();
         $result = $format;
 
