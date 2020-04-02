@@ -100,12 +100,10 @@
                 {% endif %}
                 {% if entry.fixedRate is not null %}
                     {% set rate = entry.fixedRate %}
-                    {% set duration = 1 %}
-                    {% set totalDuration = totalDuration + 1 %}
                 {% else %}
                     {% set rate = entry.hourlyRate %}
-                    {% set totalDuration = totalDuration + entry.duration %}
                 {% endif %}
+                {% set totalDuration = totalDuration + entry.duration %}
                 {% set totalAmount = totalAmount|merge({(currency): totalAmount[currency] + entry.rate}) %}
                 {% set totalInternalAmount = totalInternalAmount|merge({(currency): totalInternalAmount[currency] + entry.internalRate}) %}
                 <tr>
