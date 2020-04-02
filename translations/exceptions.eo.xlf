@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eo" datatype="plaintext" original="exceptions.en.xlf">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target>Aliro malpermesita</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target>La problemo okazis ĉi tie</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target>Eraro</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Io estas malĝusta</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    Grava eraro okazis, bv. provi denove.
+                    Eble vi trovis programan problemon, bv. kontakti vian administranton se la problemo persistos.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>La paĝo ne estas trovita</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    Ni ne trovis la paĝon kiun vi serĉis.
+                    Bv. reveni al via panelo kaj komenci denove.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>La paĝo estas limigite alirebla</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
+                    Pardonon, sed vi ne havas sufiĉajn rajtojn por vidi tiun ĉi paĝon.
+                    Bv. paroli kun via administranto se vi pensas ke tio estas eraro.
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
