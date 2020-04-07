@@ -359,9 +359,6 @@ class TimesheetController extends BaseApiController
                 }
             }
 
-            $event = new TimesheetUpdateEvent($timesheet);
-            $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_CREATE);
-
             $view = new View($timesheet, 200);
             $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 

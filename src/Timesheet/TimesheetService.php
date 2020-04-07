@@ -12,6 +12,8 @@ namespace App\Timesheet;
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Event\TimesheetCreatePostEvent;
+use App\Event\TimesheetCreatePreEvent;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Repository\TimesheetRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -100,7 +102,11 @@ final class TimesheetService
             throw new AccessDeniedHttpException('You are not allowed to start this timesheet record');
         }
 
+        $this->dispatcher->dispatch(new TimesheetCreatePreEvent($timesheet));
+
         $this->repository->add($timesheet, $this->configuration->getActiveEntriesHardLimit());
+
+        $this->dispatcher->dispatch(new TimesheetCreatePostEvent($timesheet));
 
         return $timesheet;
     }

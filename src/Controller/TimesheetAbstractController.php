@@ -222,9 +222,6 @@ abstract class TimesheetAbstractController extends AbstractController
                 $this->service->saveNewTimesheet($entry);
                 $this->flashSuccess('action.update.success');
 
-                $event = new TimesheetUpdateEvent($entry);
-                $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_CREATE);
-
                 return $this->redirectToRoute($this->getTimesheetRoute());
             } catch (\Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);

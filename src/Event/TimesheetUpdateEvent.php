@@ -18,7 +18,6 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class TimesheetUpdateEvent extends Event
 {
     public const TIMESHEET_UPDATE = 'timesheet.update';
-    public const TIMESHEET_CREATE = 'timesheet.create';
     public const TIMESHEET_DELETE = 'timesheet.delete';
     public const TIMESHEET_STOP = 'timesheet.stop';
     public const TIMESHEET_RESTART = 'timesheet.restart';
