@@ -9,7 +9,6 @@
 
 namespace App\Tests\Export\Renderer;
 
-use App\Export\Renderer\HtmlRenderer;
 use App\Export\Renderer\PDFRenderer;
 use App\Export\Renderer\PdfRendererFactory;
 use App\Repository\ProjectRepository;
@@ -32,7 +31,6 @@ class PdfRendererFactoryTest extends TestCase
             $this->createMock(ProjectRepository::class)
         );
 
-        /** @var HtmlRenderer $renderer */
         $renderer = $sut->create('foo', 'bar.pdf.twig');
 
         self::assertInstanceOf(PDFRenderer::class, $renderer);

@@ -144,7 +144,7 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="exported", requirements="0|1", strict=true, nullable=true, description="Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)")
      * @Rest\QueryParam(name="active", requirements="0|1", strict=true, nullable=true, description="Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)")
      * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources (TimesheetSubCollection). Allowed values: true (default: false)")
-     * @Rest\QueryParam(name="term", requirements="[a-zA-Z0-9 \-,:]+", strict=true, nullable=true, description="Free search term")
+     * @Rest\QueryParam(name="term", description="Free search term")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
@@ -438,7 +438,7 @@ class TimesheetController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $this->repository->save($timesheet);
+        $this->service->updateTimesheet($timesheet);
 
         $event = new TimesheetUpdateEvent($timesheet);
         $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_UPDATE);
@@ -778,7 +778,7 @@ class TimesheetController extends BaseApiController
 
         $timesheet->setExported(!$timesheet->isExported());
 
-        $this->repository->save($timesheet);
+        $this->service->updateTimesheet($timesheet);
 
         $event = new TimesheetUpdateEvent($timesheet);
         $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_UPDATE);
@@ -834,7 +834,7 @@ class TimesheetController extends BaseApiController
 
         $meta->setValue($value);
 
-        $this->repository->save($timesheet);
+        $this->service->updateTimesheet($timesheet);
 
         $event = new TimesheetUpdateEvent($timesheet);
         $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_UPDATE);
