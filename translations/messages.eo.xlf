@@ -206,11 +206,11 @@
             </trans-unit>
             <trans-unit id="label.starttime">
                 <source>label.starttime</source>
-                <target>Komenci</target>
+                <target>Komenco</target>
             </trans-unit>
             <trans-unit id="label.endtime">
                 <source>label.endtime</source>
-                <target>Fini</target>
+                <target>Fino</target>
             </trans-unit>
             <trans-unit id="label.duration">
                 <source>label.duration</source>
