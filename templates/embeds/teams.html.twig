@@ -10,7 +10,7 @@
 {% embed '@AdminLTE/Widgets/box-widget.html.twig' with options %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_tools %}
-        {% if teams|length == 0 and team is null and route_create is not null and is_granted('create_team') %}
+        {% if route_create is not null and (teams|length == 0 or team is null) and is_granted('create_team') %}
             <a class="btn-box-tool" href="{{ route_create }}" data-toggle="tooltip" data-placement="top" title="{{ 'team.create_default'|trans({}, 'teams') }}"><i class="{{ 'create'|icon }}"></i></a>
         {% endif %}
         {% if route_edit is not null %}

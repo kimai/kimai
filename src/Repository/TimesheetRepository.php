@@ -91,6 +91,25 @@ class TimesheetRepository extends EntityRepository
         }
     }
 
+    public function add(Timesheet $timesheet, int $maxRunningEntries)
+    {
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
+
+        try {
+            if (null === $timesheet->getEnd()) {
+                $this->stopActiveEntries($timesheet->getUser(), $maxRunningEntries, false);
+            }
+
+            $em->persist($timesheet);
+            $em->flush();
+            $em->commit();
+        } catch (\Exception $ex) {
+            $em->rollback();
+            throw $ex;
+        }
+    }
+
     /**
      * @param Timesheet $timesheet
      * @throws \Doctrine\ORM\ORMException
@@ -126,12 +145,13 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param Timesheet $entry
+     * @param bool $flush
      * @return bool
      * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function stopRecording(Timesheet $entry)
+    public function stopRecording(Timesheet $entry, bool $flush = true)
     {
         if (null !== $entry->getEnd()) {
             throw new RepositoryException('Timesheet entry already stopped');
@@ -146,7 +166,9 @@ class TimesheetRepository extends EntityRepository
 
         $entityManager = $this->getEntityManager();
         $entityManager->persist($entry);
-        $entityManager->flush();
+        if ($flush) {
+            $entityManager->flush();
+        }
 
         return true;
     }
@@ -486,12 +508,13 @@ class TimesheetRepository extends EntityRepository
     /**
      * @param User $user
      * @param int $hardLimit
+     * @param bool $flush
      * @return int
      * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function stopActiveEntries(User $user, int $hardLimit)
+    public function stopActiveEntries(User $user, int $hardLimit, bool $flush = true)
     {
         $counter = 0;
         $activeEntries = $this->getActiveEntries($user);
@@ -509,7 +532,7 @@ class TimesheetRepository extends EntityRepository
                         throw new \Exception('timesheet.start.exceeded_limit');
                     }
 
-                    $this->stopRecording($activeEntry);
+                    $this->stopRecording($activeEntry, $flush);
                     $counter++;
                 }
                 $i++;
