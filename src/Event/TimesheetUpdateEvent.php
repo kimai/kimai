@@ -17,11 +17,13 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class TimesheetUpdateEvent extends Event
 {
+    // TODO used in multi update context, needs to be replaced
     public const TIMESHEET_UPDATE = 'timesheet.update';
     public const TIMESHEET_DELETE = 'timesheet.delete';
-    public const TIMESHEET_STOP = 'timesheet.stop';
-    public const TIMESHEET_RESTART = 'timesheet.restart';
-    public const TIMESHEET_DUPLICATE = 'timesheet.duplicate';
+
+    // TODO removed without replacement, all covered by update events
+    // public const TIMESHEET_RESTART = 'timesheet.restart';
+    // public const TIMESHEET_DUPLICATE = 'timesheet.duplicate';
 
     /**
      * @var Timesheet[]
@@ -48,9 +50,10 @@ final class TimesheetUpdateEvent extends Event
      */
     public function getEntity()
     {
-        if (count($this->entities)=== 1) {
+        if (count($this->entities) === 1) {
             return reset($this->entities);
         }
+
         return $this->entities;
     }
 }

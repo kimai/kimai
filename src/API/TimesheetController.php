@@ -15,7 +15,6 @@ use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\TimesheetMetaDefinitionEvent;
-use App\Event\TimesheetUpdateEvent;
 use App\Form\API\TimesheetApiEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
@@ -437,9 +436,6 @@ class TimesheetController extends BaseApiController
 
         $this->service->updateTimesheet($timesheet);
 
-        $event = new TimesheetUpdateEvent($timesheet);
-        $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_UPDATE);
-
         $view = new View($timesheet, Response::HTTP_OK);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
@@ -478,10 +474,7 @@ class TimesheetController extends BaseApiController
             throw $this->createAccessDeniedException('You are not allowed to delete this timesheet');
         }
 
-        $this->repository->delete($timesheet);
-
-        $event = new TimesheetUpdateEvent($timesheet);
-        $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_DELETE);
+        $this->service->deleteTimesheet($timesheet);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);
 
@@ -601,9 +594,6 @@ class TimesheetController extends BaseApiController
 
         $this->service->stopTimesheet($timesheet);
 
-        $event = new TimesheetUpdateEvent($timesheet);
-        $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_STOP);
-
         $view = new View($timesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
@@ -687,9 +677,6 @@ class TimesheetController extends BaseApiController
 
         $this->service->saveNewTimesheet($copyTimesheet);
 
-        $event = new TimesheetUpdateEvent($copyTimesheet);
-        $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_RESTART);
-
         $view = new View($copyTimesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
@@ -730,9 +717,6 @@ class TimesheetController extends BaseApiController
         $copyTimesheet = clone $timesheet;
 
         $this->service->saveNewTimesheet($copyTimesheet);
-
-        $event = new TimesheetUpdateEvent($copyTimesheet);
-        $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_DUPLICATE);
 
         $view = new View($copyTimesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
@@ -776,9 +760,6 @@ class TimesheetController extends BaseApiController
         $timesheet->setExported(!$timesheet->isExported());
 
         $this->service->updateTimesheet($timesheet);
-
-        $event = new TimesheetUpdateEvent($timesheet);
-        $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_UPDATE);
 
         $view = new View($timesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
@@ -832,9 +813,6 @@ class TimesheetController extends BaseApiController
         $meta->setValue($value);
 
         $this->service->updateTimesheet($timesheet);
-
-        $event = new TimesheetUpdateEvent($timesheet);
-        $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_UPDATE);
 
         $view = new View($timesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);

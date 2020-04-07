@@ -9,6 +9,6 @@
 
 namespace App\Event;
 
-final class TimesheetCreatePreEvent extends AbstractTimesheetEvent
+final class TimesheetUpdatePostEvent extends AbstractTimesheetEvent
 {
 }

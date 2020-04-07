@@ -9,9 +9,6 @@
 
 namespace App\Event;
 
-use App\Entity\Timesheet;
-use Symfony\Contracts\EventDispatcher\Event;
-
 final class TimesheetCreatePostEvent extends AbstractTimesheetEvent
 {
 }

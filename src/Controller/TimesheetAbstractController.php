@@ -155,11 +155,8 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->save($entry);
+                $this->service->updateTimesheet($entry);
                 $this->flashSuccess('action.update.success');
-
-                $event = new TimesheetUpdateEvent($entry);
-                $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_UPDATE);
 
                 return $this->redirectToRoute($this->getTimesheetRoute(), ['page' => $request->get('page', 1)]);
             } catch (\Exception $ex) {
