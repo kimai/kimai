@@ -29,7 +29,6 @@ class HtmlRendererFactoryTest extends TestCase
             $this->createMock(ProjectRepository::class)
         );
 
-        /** @var HtmlRenderer $renderer */
         $renderer = $sut->create('foo', 'bar.html.twig');
 
         self::assertInstanceOf(HtmlRenderer::class, $renderer);
