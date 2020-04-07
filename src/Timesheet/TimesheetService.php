@@ -57,7 +57,7 @@ final class TimesheetService
     }
 
     /**
-     * Calls prepareNewTimesheet() automatically.
+     * Calls prepareNewTimesheet() automatically if $request is not null.
      *
      * @param User $user
      * @param Request|null $request
@@ -96,19 +96,18 @@ final class TimesheetService
             throw new \InvalidArgumentException('Cannot create timesheet, already persisted');
         }
 
-        if (null === $timesheet->getEnd()) {
-            if (!$this->auth->isGranted('start', $timesheet)) {
-                throw new AccessDeniedHttpException('You are not allowed to start this timesheet record');
-            }
-            $this->repository->stopActiveEntries(
-                $timesheet->getUser(),
-                $this->configuration->getActiveEntriesHardLimit()
-            );
+        if (null === $timesheet->getEnd() && !$this->auth->isGranted('start', $timesheet)) {
+            throw new AccessDeniedHttpException('You are not allowed to start this timesheet record');
         }
 
-        $this->repository->save($timesheet);
+        $this->repository->add($timesheet, $this->configuration->getActiveEntriesHardLimit());
 
         return $timesheet;
+    }
+
+    public function updateTimesheet(Timesheet $timesheet)
+    {
+        return $this->repository->save($timesheet);
     }
 
     public function stopTimesheet(Timesheet $timesheet)
