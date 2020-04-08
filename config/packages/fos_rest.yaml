@@ -15,6 +15,8 @@ fos_rest:
 #        enabled:              false
 #        service:              null
     routing_loader:
+        # TODO activate once 2.8 is released
+        #parse_controller_name: false
         default_format: json
         include_format: true
 #        prefix_methods:       true
