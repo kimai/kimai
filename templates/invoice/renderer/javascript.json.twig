@@ -1,0 +1,7 @@
+{% set json = model.toArray %}
+{% set items = [] %}
+{% for entry in model.calculator.entries %}
+{% set items = items|merge([model.itemToArray(entry)]) %}
+{% endfor %}
+{% set json = json|merge({'items': items}) %}
+{{ json|json_encode|raw}}

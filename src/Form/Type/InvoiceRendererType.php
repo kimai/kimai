@@ -43,6 +43,7 @@ class InvoiceRendererType extends AbstractType
             foreach ($this->service->getRenderer() as $renderer) {
                 if ($renderer->supports($document)) {
                     $documents[$document->getId()] = $document->getName();
+                    break;
                 }
             }
         }
@@ -70,13 +71,13 @@ class InvoiceRendererType extends AbstractType
     {
         $renderer = $label;
 
-        return ucfirst(
-            substr(
-                $renderer,
-                1 + strrpos($renderer, '.'),
-                strrpos($renderer, '.')
-            )
-        );
+        $parts = explode('.', $renderer);
+
+        if (count($parts) > 2) {
+            array_pop($parts);
+        }
+
+        return ucfirst(array_pop($parts));
     }
 
     /**

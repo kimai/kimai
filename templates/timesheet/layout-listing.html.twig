@@ -26,10 +26,10 @@
     {% set columns = columns|merge({'rate': ''}) %}
 {% endif %}
 {% set columns = columns|merge({
-    'customer': 'hidden-xs hidden-sm hidden-md',
-    'project': 'hidden-xs hidden-sm hidden-md',
-    'activity': 'hidden-xs hidden-sm',
-    'description': 'hidden-xs hidden-sm',
+    'customer': {'class': 'hidden-xs hidden-sm hidden-md'},
+    'project': {'class': 'hidden-xs hidden-sm hidden-md'},
+    'activity': {'class': 'hidden-xs hidden-sm'},
+    'description': {'class': 'hidden-xs hidden-sm'},
 }) %}
 {% if canSeeUsername %}
     {% set columns = columns|merge({
@@ -45,7 +45,7 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'actions': 'actions alwaysVisible',
+    'actions': {'class': 'actions alwaysVisible'},
 }) %}
 
 {% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
@@ -66,9 +66,17 @@
     {% else %}
         {{ tables.datatable_header(tableName, columns, query, {'striped': not showSummary, 'reload': 'kimai.timesheetUpdate'}) }}
 
+        {% set checkOverlappingDesc = false %}
+        {% set checkOverlappingAsc = false %}
+        {% if  query.orderBy == 'begin' or query.orderBy == 'end' %}
+            {% set checkOverlappingDesc = (query.order == 'DESC') %}
+            {% set checkOverlappingAsc = not checkOverlappingDesc %}
+        {% endif %}
+
         {% set day = null %}
         {% set dayDuration = 0 %}
         {% set dayRate = {} %}
+        {% set lastEntry = null %}
         {% for entry in entries %}
             {%- set customerCurrency = entry.project.customer.currency -%}
             {%- if day is same as(null) -%}
@@ -80,7 +88,20 @@
                 {% set dayDuration = 0 %}
                 {% set dayRate = {} %}
             {%- endif -%}
-            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit{% if not entry.end %} recording{% endif %}" data-href="{{ path(editRoute, {'id': entry.id}) }}"{% endif %}>
+            {% set class = '' %}
+            {% if checkOverlappingDesc or checkOverlappingAsc %}
+                {% if lastEntry is not null and entry.end is not null and entry.user is same as (lastEntry.user) %}
+                    {% if checkOverlappingDesc and entry.end.timestamp > lastEntry.begin.timestamp %}
+                        {% set class = class ~ ' overlapping' %}
+                    {% elseif checkOverlappingAsc and entry.begin.timestamp < lastEntry.end.timestamp %}
+                        {% set class = class ~ ' overlapping' %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% if not entry.end %}
+                {% set class = class ~ ' recording' %}
+            {% endif %}
+            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit{{ class }}" data-href="{{ path(editRoute, {'id': entry.id}) }}"{% endif %}>
                 <td class="text-nowrap">
                     {% if is_granted('edit', entry) or is_granted('delete', entry) %}
                         {{ tables.datatable_multiupdate_row(entry.id) }}
@@ -157,6 +178,7 @@
                 {% set dayRate = dayRate|merge({(customerCurrency): dayRate[customerCurrency] + entry.rate}) %}
             {%- endif -%}
             {%- set dayDuration = dayDuration + entry.duration -%}
+            {% set lastEntry = entry %}
         {% endfor %}
 
         {% if showSummary %}

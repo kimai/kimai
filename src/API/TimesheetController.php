@@ -127,9 +127,12 @@ class TimesheetController extends BaseApiController
      * )
      *
      * @Rest\QueryParam(name="user", requirements="\d+|all", strict=true, nullable=true, description="User ID to filter timesheets. Needs permission 'view_other_timesheet', pass 'all' to fetch data for all user (default: current user)")
-     * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter timesheets")
-     * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter timesheets")
-     * @Rest\QueryParam(name="activity", requirements="\d+", strict=true, nullable=true, description="Activity ID to filter timesheets")
+     * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="DEPRECATED: Customer ID to filter timesheets (will be removed with 2.0)")
+     * @Rest\QueryParam(name="customers", requirements="[\d|,]+", strict=true, nullable=true, description="Comma separated list of customer IDs to filter timesheets")
+     * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="DEPRECATED: Project ID to filter timesheets (will be removed with 2.0)")
+     * @Rest\QueryParam(name="projects", requirements="[\d|,]+", strict=true, nullable=true, description="Comma separated list of project IDs to filter timesheets")
+     * @Rest\QueryParam(name="activity", requirements="\d+", strict=true, nullable=true, description="DEPRECATED: Activity ID to filter timesheets (will be removed with 2.0)")
+     * @Rest\QueryParam(name="activities", requirements="[\d|,]+", strict=true, nullable=true, description="Comma separated list of activity IDs to filter timesheets")
      * @Rest\QueryParam(name="page", requirements="\d+", strict=true, nullable=true, description="The page to display, renders a 404 if not found (default: 1)")
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page (default: 50)")
      * @Rest\QueryParam(name="tags", strict=true, nullable=true, description="The name of tags which are in the datasets")
@@ -140,7 +143,7 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="exported", requirements="0|1", strict=true, nullable=true, description="Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)")
      * @Rest\QueryParam(name="active", requirements="0|1", strict=true, nullable=true, description="Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)")
      * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources (TimesheetSubCollection). Allowed values: true (default: false)")
-     * @Rest\QueryParam(name="term", requirements="[a-zA-Z0-9 \-,:]+", strict=true, nullable=true, description="Free search term")
+     * @Rest\QueryParam(name="term", description="Free search term")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
@@ -159,16 +162,40 @@ class TimesheetController extends BaseApiController
             $query->setUser($user);
         }
 
-        if (!empty($customer = $paramFetcher->get('customer'))) {
-            $query->setCustomer($customer);
+        if (!empty($customers = $paramFetcher->get('customers'))) {
+            if (!is_array($customers)) {
+                $customers = explode(',', $customers);
+            }
+            if (!empty($customers)) {
+                $query->setCustomers($customers);
+            }
+        } elseif (!empty($customer = $paramFetcher->get('customer'))) {
+            @trigger_error('Timesheet API parameter "customer" is deprecated and will be removed with 2.0, use "customers" instead', E_USER_DEPRECATED);
+            $query->addCustomer($customer);
         }
 
-        if (!empty($project = $paramFetcher->get('project'))) {
-            $query->setProject($project);
+        if (!empty($projects = $paramFetcher->get('projects'))) {
+            if (!is_array($projects)) {
+                $projects = explode(',', $projects);
+            }
+            if (!empty($projects)) {
+                $query->setProjects($projects);
+            }
+        } elseif (!empty($project = $paramFetcher->get('project'))) {
+            @trigger_error('Timesheet API parameter "project" is deprecated and will be removed with 2.0, use "projects" instead', E_USER_DEPRECATED);
+            $query->addProject($project);
         }
 
-        if (!empty($activity = $paramFetcher->get('activity'))) {
-            $query->setActivity($activity);
+        if (!empty($activities = $paramFetcher->get('activities'))) {
+            if (!is_array($activities)) {
+                $activities = explode(',', $activities);
+            }
+            if (!empty($activities)) {
+                $query->setActivities($activities);
+            }
+        } elseif (!empty($activity = $paramFetcher->get('activity'))) {
+            @trigger_error('Timesheet API parameter "activity" is deprecated and will be removed with 2.0, use "activities" instead', E_USER_DEPRECATED);
+            $query->addActivity($activity);
         }
 
         if (null !== ($page = $paramFetcher->get('page'))) {

@@ -10,6 +10,7 @@
 namespace App\Tests\Export\Renderer;
 
 use App\Export\Renderer\PDFRenderer;
+use App\Repository\ProjectRepository;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Utils\HtmlToPdfConverter;
 use App\Utils\MPdfConverter;
@@ -34,7 +35,8 @@ class PdfRendererTest extends AbstractRendererTest
         $sut = new PDFRenderer(
             $this->createMock(Environment::class),
             $this->getDateTimeFactory(),
-            $this->createMock(HtmlToPdfConverter::class)
+            $this->createMock(HtmlToPdfConverter::class),
+            $this->createMock(ProjectRepository::class)
         );
 
         $this->assertEquals('pdf', $sut->getId());
@@ -54,7 +56,7 @@ class PdfRendererTest extends AbstractRendererTest
         $request->setLocale('en');
         $stack->push($request);
 
-        $sut = new PDFRenderer($twig, $this->getDateTimeFactory(), $converter);
+        $sut = new PDFRenderer($twig, $this->getDateTimeFactory(), $converter, $this->createMock(ProjectRepository::class));
 
         $response = $this->render($sut);
 

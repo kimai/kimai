@@ -9,7 +9,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Entity\CustomerRate;
 use App\Entity\ProjectRate;
@@ -527,24 +526,37 @@ class TimesheetRepository extends EntityRepository
             return;
         }
 
-        if (empty($teams)) {
-            return;
-        }
-
         // make sure that admins see all timesheet records
         if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
             return;
+        }
+
+        if (null !== $user) {
+            $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
         $qb
             ->leftJoin('p.teams', 'teams')
             ->leftJoin('c.teams', 'c_teams');
 
-        $orTeam = $qb->expr()->orX(
-            $qb->expr()->isMemberOf(':teams', 'p.teams'),
+        if (empty($teams)) {
+            $qb->andWhere($qb->expr()->isNull('c_teams'));
+            $qb->andWhere($qb->expr()->isNull('teams'));
+
+            return;
+        }
+
+        $orProject = $qb->expr()->orX(
+            $qb->expr()->isNull('teams'),
+            $qb->expr()->isMemberOf(':teams', 'p.teams')
+        );
+        $qb->andWhere($orProject);
+
+        $orCustomer = $qb->expr()->orX(
+            $qb->expr()->isNull('c_teams'),
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
-        $qb->andWhere($orTeam);
+        $qb->andWhere($orCustomer);
 
         $qb->setParameter('teams', $teams);
     }
@@ -699,19 +711,17 @@ class TimesheetRepository extends EntityRepository
             $qb->andWhere('t.exported = :exported')->setParameter('exported', false, \PDO::PARAM_BOOL);
         }
 
-        if (null !== $query->getActivity()) {
-            $qb->andWhere('t.activity = :activity')
-                ->setParameter('activity', $query->getActivity());
+        if ($query->hasActivities()) {
+            $qb->andWhere($qb->expr()->in('t.activity', ':activity'))
+                ->setParameter('activity', $query->getActivities());
         }
 
-        if (null === $query->getActivity() || ($query->getActivity() instanceof Activity && null === $query->getActivity()->getProject())) {
-            if (null !== $query->getProject()) {
-                $qb->andWhere('t.project = :project')
-                    ->setParameter('project', $query->getProject());
-            } elseif (null !== $query->getCustomer()) {
-                $qb->andWhere('p.customer = :customer')
-                    ->setParameter('customer', $query->getCustomer());
-            }
+        if ($query->hasProjects()) {
+            $qb->andWhere($qb->expr()->in('t.project', ':project'))
+                ->setParameter('project', $query->getProjects());
+        } elseif ($query->hasCustomers()) {
+            $qb->andWhere($qb->expr()->in('p.customer', ':customer'))
+                ->setParameter('customer', $query->getCustomers());
         }
 
         $tags = $query->getTags();

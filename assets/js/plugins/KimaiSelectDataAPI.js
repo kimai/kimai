@@ -49,7 +49,9 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
             
             let newApiUrl = self._buildUrlWithFormFields(this.dataset['apiUrl'], formPrefix);
 
-            if (jQuery(this).val() === '') {
+            const selectValue = jQuery(this).val();
+
+            if (selectValue === '' || (Array.isArray(selectValue) && selectValue.length === 0)) {
                 if (this.dataset['emptyUrl'] === undefined) {
                     self._updateSelect(targetSelect, {});
                     jQuery(targetSelect).attr('disabled', 'disabled');
@@ -82,7 +84,7 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
                 } else {
                     if (targetField.val() !== null) {
                         newValue = targetField.val();
-                        
+
                         if (newValue !== '') {
                             // having that special case here is far from being perfect... but for now it works ;-)
                             if (targetField.data('daterangepicker') !== undefined) {
@@ -95,10 +97,15 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
                                 if (moment(newValue, targetField.data('format')).isValid()) {
                                     newValue = moment(newValue, targetField.data('format')).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
                                 }
-                            } 
+                            }
                         }
                     }
                 }
+
+                if (Array.isArray(newValue)) {
+                    newValue = newValue.join(',');
+                }
+
                 newApiUrl = newApiUrl.replace(value, newValue);
             }
         });

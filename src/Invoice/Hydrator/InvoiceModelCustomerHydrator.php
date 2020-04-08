@@ -36,6 +36,14 @@ class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             'customer.country' => $customer->getCountry(),
             'customer.homepage' => $customer->getHomepage(),
             'customer.comment' => $customer->getComment(),
+            'customer.email' => $customer->getEmail(),
+            'customer.fax' => $customer->getFax(),
+            'customer.phone' => $customer->getPhone(),
+            'customer.mobile' => $customer->getMobile(),
+            // budget
+            // remaining budget?
+            // time-budget
+            // remaining time-budget?
         ];
 
         foreach ($customer->getVisibleMetaFields() as $metaField) {

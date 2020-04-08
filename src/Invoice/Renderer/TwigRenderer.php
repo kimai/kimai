@@ -40,6 +40,7 @@ final class TwigRenderer implements RendererInterface
 
         $response = new Response();
         $response->setContent($content);
+        $response->headers->set('Content-Type', 'text/html; charset=UTF-8');
 
         return $response;
     }

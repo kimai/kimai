@@ -9,9 +9,6 @@
 
 namespace App\Tests\Repository\Query;
 
-use App\Entity\Activity;
-use App\Entity\Customer;
-use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\Query\TimesheetQuery;
 
@@ -74,36 +71,6 @@ class TimesheetQueryTest extends BaseQueryTest
         $sut->removeUser($user);
 
         $this->assertCount(2, $sut->getUsers());
-    }
-
-    protected function assertCustomer(TimesheetQuery $sut)
-    {
-        $this->assertNull($sut->getCustomer());
-
-        $expected = new Customer();
-        $expected->setName('foo-bar');
-        $sut->setCustomer($expected);
-        $this->assertEquals($expected, $sut->getCustomer());
-    }
-
-    protected function assertProject(TimesheetQuery $sut)
-    {
-        $this->assertNull($sut->getProject());
-
-        $expected = new Project();
-        $expected->setName('foo-bar');
-        $sut->setProject($expected);
-        $this->assertEquals($expected, $sut->getProject());
-    }
-
-    protected function assertActivity(TimesheetQuery $sut)
-    {
-        $this->assertNull($sut->getActivity());
-
-        $expected = new Activity();
-        $expected->setName('foo-bar');
-        $sut->setActivity($expected);
-        $this->assertEquals($expected, $sut->getActivity());
     }
 
     protected function assertState(TimesheetQuery $sut)

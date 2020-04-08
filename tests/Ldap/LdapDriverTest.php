@@ -12,9 +12,9 @@ namespace App\Tests\Ldap;
 use App\Entity\User;
 use App\Ldap\LdapDriver;
 use App\Ldap\LdapDriverException;
+use Laminas\Ldap\Exception\LdapException;
+use Laminas\Ldap\Ldap;
 use PHPUnit\Framework\TestCase;
-use Zend\Ldap\Exception\LdapException;
-use Zend\Ldap\Ldap;
 
 /**
  * @covers \App\Ldap\LdapDriver
@@ -24,7 +24,7 @@ class LdapDriverTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        if (!class_exists('Zend\Ldap\Ldap')) {
+        if (!class_exists('Laminas\Ldap\Ldap')) {
             $this->markTestSkipped('LDAP is not installed');
         }
     }

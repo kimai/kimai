@@ -32,9 +32,9 @@
             {{ form_errors(form) }}
             {{ form_row(form.searchTerm) }}
             {{ form_row(form.daterange) }}
-            {{ form_row(form.customer) }}
-            {{ form_row(form.project) }}
-            {{ form_row(form.activity) }}
+            {{ form_row(form.customers) }}
+            {{ form_row(form.projects) }}
+            {{ form_row(form.activities) }}
             {{ form_row(form.users) }}
             {{ form_row(form.tags) }}
             {{ form_row(form.exported) }}
@@ -42,11 +42,35 @@
             {{ form_row(form.markAsExported) }}
         {% endblock %}
         {% block box_footer%}
+            {% set buttons = {} %}
+            {% for button in renderer %}
+                {% set title = button.title %}
+                {% set group = [] %}
+                {% if buttons[(title)] is defined %}
+                    {% set group = buttons[(title)] %}
+                {% endif %}
+                {% set group = group|merge([button]) %}
+                {% set buttons = buttons|merge({(title): group}) %}
+            {% endfor %}
             <div class="btn-group" id="export-buttons" role="group">
-                {% for button in renderer %}
-                    <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
-                        {{ ('button.' ~ button.title)|trans }}
-                    </button>
+                {% for group in buttons %}
+                    {% set button = group.0 %}
+                    {% if group|length == 1 %}
+                        <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
+                            {{ ('button.' ~ button.title)|trans }}
+                        </button>
+                    {% elseif group|length > 1 %}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ ('button.' ~ button.title)|trans }} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                            {% for button in group %}
+                                <li><a href="#" class="startExportBtn" data-type="{{ button.id }}">{{ (button.id)|trans({}, 'export') }}</a></li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
             {{ form_widget(form.preview) }}
@@ -59,17 +83,23 @@
             {{ widgets.callout('warning', 'error.no_entries_found') }}
         {% else %}
             {{ tables.datatable_header(tableName, columns, query, {}) }}
+            {% set totalAmount = {} %}
+            {% set totalDuration = 0 %}
             {% for entry in entries %}
                 {% set currency = entry.project.customer.currency %}
                 {% set duration = entry.duration|duration %}
+                {% if totalAmount[currency] is not defined %}
+                    {% set totalAmount = totalAmount|merge({(currency): 0}) %}
+                {% endif %}
                 {% if entry.fixedRate is not null %}
                     {% set rate = entry.fixedRate %}
                     {% set duration = 1 %}
-                {% elseif entry.hourlyRate is not null %}
-                    {% set rate = entry.hourlyRate %}
+                    {% set totalDuration = totalDuration + 1 %}
                 {% else %}
-                    {% set rate = entry.user.preferenceValue('hourly_rate') %}
+                    {% set rate = entry.hourlyRate %}
+                    {% set totalDuration = totalDuration + entry.duration %}
                 {% endif %}
+                {% set totalAmount = totalAmount|merge({(currency): totalAmount[currency] + entry.rate}) %}
                 <tr>
                     <td class="text-nowrap">{{ entry.begin|date_short }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.label_user(entry.user) }}</td>
@@ -114,6 +144,17 @@
                     </td>
                 </tr>
             {% endfor %}
+            <tr>
+                <td colspan="6"></td>
+                <th>{{ totalDuration|duration }}</th>
+                <th>
+                    {% for currency, amount in totalAmount %}
+                        {{ amount|money(currency) }}
+                        {% if not loop.last %}<br>{% endif %}
+                    {% endfor %}
+                </th>
+                <td></td>
+            </tr>
             {{ tables.data_table_footer(entries) }}
         {% endif %}
     {% endif %}

@@ -1,0 +1,25 @@
+
+{% macro invoice_status(invoice) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set overdue = invoice.overdue %}
+    {% if invoice.new and overdue %}
+        {{ widgets.label('status.new'|trans, 'danger') }}
+    {% elseif invoice.new %}
+        {{ widgets.label('status.new'|trans, 'primary') }}
+    {% elseif invoice.pending and overdue %}
+        {{ widgets.label('status.pending'|trans, 'danger') }}
+    {% elseif invoice.pending %}
+        {{ widgets.label('status.pending'|trans, 'warning') }}
+    {% elseif invoice.paid %}
+        {{ widgets.label('status.paid'|trans, 'success') }}
+    {% endif %}
+{% endmacro %}
+
+{% macro invoice_due_date(invoice) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% if invoice.overdue and not invoice.paid %}
+        {{ widgets.label(invoice.dueDate|date_short, 'danger') }}
+    {% else %}
+        {{ widgets.label(invoice.dueDate|date_short, 'primary') }}
+    {% endif %}
+{% endmacro %}

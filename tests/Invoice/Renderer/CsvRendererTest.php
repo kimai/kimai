@@ -41,7 +41,7 @@ class CsvRendererTest extends TestCase
 
     public function getTestModel()
     {
-        yield [$this->getInvoiceModel(), '€1,947.99', 6, 5, 1, 2, 2];
+        yield [$this->getInvoiceModel(), '€1,947.99', 6, 4, 1, 2, 2];
         yield [$this->getInvoiceModelOneEntry(), '$293.27', 2, 1, 0, 1, 0];
     }
 
@@ -58,7 +58,7 @@ class CsvRendererTest extends TestCase
 
         $file = $response->getFile();
         $this->assertEquals('text/csv', $response->headers->get('Content-Type'));
-        $filename = $model->getNumberGenerator()->getInvoiceNumber() . '-customer_with_special_name.csv';
+        $filename = $model->getInvoiceNumber() . '-customer_with_special_name.csv';
         $this->assertEquals('attachment; filename=' . $filename, $response->headers->get('Content-Disposition'));
 
         $this->assertTrue(file_exists($file->getRealPath()));

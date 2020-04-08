@@ -16,6 +16,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
+        "ext-xsl": "*",
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.2",
         "doctrine/doctrine-bundle": "^2.0",
@@ -23,13 +24,13 @@
         "doctrine/orm": "^2.7",
         "erusev/parsedown": "^1.6",
         "friendsofsymfony/rest-bundle": "^2.5",
-        "friendsofsymfony/user-bundle": "dev-master",
         "gedmo/doctrine-extensions": "^2.4",
         "hslavich/oneloginsaml-bundle": "^1.4",
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.2",
         "kevinpapst/adminlte-bundle": "^3.0",
         "kimai/kimai2-composer": "^0.1",
+        "kimai/user-bundle": "^1.1",
         "laravolt/avatar": "^3.0",
         "league/csv": "^9.4",
         "league/html-to-markdown": "^4.9",
@@ -52,6 +53,7 @@
         "symfony/form": "^4.4",
         "symfony/framework-bundle": "^4.4",
         "symfony/google-mailer": "^4.4",
+        "symfony/http-client": "^4.4",
         "symfony/intl": "^4.4",
         "symfony/mailchimp-mailer": "^4.4",
         "symfony/mailer": "^4.4",
@@ -86,6 +88,7 @@
         "symfony/browser-kit": "^4.4",
         "symfony/css-selector": "^4.4",
         "symfony/debug-bundle": "^4.4",
+        "symfony/dom-crawler": "4.4.4",
         "symfony/maker-bundle": "^1.12",
         "symfony/phpunit-bridge": "^4.4",
         "symfony/profiler-pack": "^1.0",
@@ -118,14 +121,19 @@
         }
     },
     "replace": {
+        "symfony/polyfill-mbstring": "*",
+        "symfony/polyfill-intl": "*",
         "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*",
         "symfony/polyfill-php71": "*",
         "symfony/polyfill-php70": "*",
-        "symfony/polyfill-php56": "*"
+        "symfony/polyfill-php56": "*",
+        "symfony/polyfill-php55": "*",
+        "symfony/polyfill-php54": "*"
     },
     "suggest": {
         "ext-mbstring": "If ext-mbstring is not available you MUST install symfony/polyfill-mbstring",
-        "zendframework/zend-ldap": "For LDAP authentication with Kimai"
+        "laminas/laminas-ldap": "For LDAP authentication with Kimai"
     },
     "scripts": {
         "auto-scripts": {
@@ -149,6 +157,7 @@
             "@kimai:tests-integration"
         ],
         "kimai:code-lint":  [
+            "composer validate --strict",
             "bin/console lint:yaml config --parse-tags",
             "bin/console lint:twig templates --show-deprecations",
             "bin/console lint:xliff translations",
@@ -162,7 +171,9 @@
             "vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=4"
         ],
         "kimai:codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
-        "kimai:codestyle-fix": "vendor/bin/php-cs-fixer fix"
+        "codestyle": "@kimai:codestyle",
+        "kimai:codestyle-fix": "vendor/bin/php-cs-fixer fix",
+        "codestyle-fix": "@kimai:codestyle-fix"
     },
     "conflict": {
         "symfony/symfony": "*"

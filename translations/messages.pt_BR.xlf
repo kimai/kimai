@@ -696,10 +696,6 @@
                 <source>invoice.title</source>
                 <target>Faturas</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Criar faturas a partir de suas entradas de quadro de horários registradas.</target>
-            </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
                 <target>Imprimir</target>

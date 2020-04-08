@@ -105,7 +105,7 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
 
         $query = new InvoiceQuery();
-        $query->setProject($project1);
+        $query->setProjects([$project1]);
 
         $model = new InvoiceModel(new DebugFormatter());
         $model->setCustomer($customer);

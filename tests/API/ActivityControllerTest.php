@@ -92,9 +92,10 @@ class ActivityControllerTest extends APIControllerBaseTest
         yield ['/api/activities', ['globals' => 'true', 'visible' => '2'], [[false]]];
         yield ['/api/activities', ['globals' => 'true', 'visible' => 1], [[false], [false]]];
         yield ['/api/activities', ['project' => '1'], [[false], [false], [true, 1]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => 1], [[false], [true, 2], [true, 2], [false]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => '3'], [[false], [true, 2], [true, 2], [true, 2], [false], [false]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => 2], [[true, 2], [false]]];
+        yield ['/api/activities', ['project' => '2', 'projects' => '2', 'visible' => 1], [[false], [true, 2], [true, 2], [false]]];
+        yield ['/api/activities', ['project' => '2', 'projects' => '2,2', 'visible' => '3'], [[false], [true, 2], [true, 2], [true, 2], [false], [false]]];
+        yield ['/api/activities', ['projects' => '2,2', 'visible' => 2], [[true, 2], [false]]];
+        yield ['/api/activities', ['projects' => '2', 'visible' => 2], [[true, 2], [false]]];
     }
 
     public function testGetCollectionWithQuery()

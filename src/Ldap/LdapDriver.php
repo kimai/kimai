@@ -10,10 +10,10 @@
 namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
+use Laminas\Ldap\Exception\LdapException;
+use Laminas\Ldap\Ldap;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Zend\Ldap\Exception\LdapException;
-use Zend\Ldap\Ldap;
 
 /**
  * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
@@ -57,9 +57,9 @@ class LdapDriver
     protected function getDriver()
     {
         if (null === $this->driver) {
-            if (!class_exists('Zend\Ldap\Ldap')) {
+            if (!class_exists('Laminas\Ldap\Ldap')) {
                 throw new \Exception(
-                    'Zend\Ldap\Ldap is missing, install it with "composer require zendframework/zend-ldap" ' .
+                    'Laminas\Ldap\Ldap is missing, install it with "composer require laminas/laminas-ldap" ' .
                     'or deactivate LDAP, see https://www.kimai.org/documentation/ldap.html'
                 );
             }

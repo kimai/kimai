@@ -83,10 +83,12 @@
             {% if logSize > 52428800 %}
                 <p>Your logfile is larger than 50 MB, consider deleting it (it will be re-created automatically).</p>
             {% endif %}
-            <pre>{% for logLine in logs -%}
+            <pre>{% for logLine in logs|reverse -%}
                 {%- set logLineClass = '' -%}
                 {%- if '.CRITICAL' in logLine -%}
                     {%- set logLineClass = 'text-danger text-bold' -%}
+                {%- elseif '.WARNING' in logLine -%}
+                    {%- set logLineClass = 'text-warning text-bold' -%}
                 {%- elseif '.ERROR' in logLine -%}
                     {%- set logLineClass = 'text-warning text-bold' -%}
                 {%- elseif '.DEBUG' in logLine -%}

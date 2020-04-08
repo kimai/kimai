@@ -783,10 +783,6 @@
                 <source>invoice.title</source>
                 <target>发票</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>从你的时间记录表条目中创建发票。</target>
-            </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
                 <target>筛选发票信息</target>

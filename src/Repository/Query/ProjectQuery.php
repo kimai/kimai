@@ -21,9 +21,9 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
     public const PROJECT_ORDER_ALLOWED = ['id', 'name', 'comment', 'customer', 'orderNumber', 'projectStart', 'projectEnd'];
 
     /**
-     * @var Customer|int|null
+     * @var array
      */
-    private $customer;
+    private $customers = [];
     /**
      * @var \DateTime
      */
@@ -42,21 +42,59 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
 
     /**
      * @return Customer|int|null
+     * @deprecated since 1.9 - use getCustomers() instead - will be removed with 2.0
      */
     public function getCustomer()
     {
-        return $this->customer;
+        if (count($this->customers) > 0) {
+            return $this->customers[0];
+        }
+
+        return null;
     }
 
     /**
      * @param Customer|int|null $customer
      * @return $this
+     * @deprecated since 1.9 - use setCustomers() or addCustomer() instead - will be removed with 2.0
      */
     public function setCustomer($customer = null)
     {
-        $this->customer = $customer;
+        if (null === $customer) {
+            $this->customers = [];
+        } else {
+            $this->customers = [$customer];
+        }
 
         return $this;
+    }
+
+    /**
+     * @param Customer|int $customer
+     * @return $this
+     */
+    public function addCustomer($customer)
+    {
+        $this->customers[] = $customer;
+
+        return $this;
+    }
+
+    public function setCustomers(array $customers): self
+    {
+        $this->customers = $customers;
+
+        return $this;
+    }
+
+    public function getCustomers(): array
+    {
+        return $this->customers;
+    }
+
+    public function hasCustomers(): bool
+    {
+        return !empty($this->customers);
     }
 
     public function getProjectStart(): ?\DateTime

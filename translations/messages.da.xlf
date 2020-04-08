@@ -784,10 +784,6 @@
                 <source>invoice.title</source>
                 <target>Fakturaer</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Opret faktura for dine tidsregistreringsindlæg.</target>
-            </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
                 <target>Filtrer fakturadata</target>

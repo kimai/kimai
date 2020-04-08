@@ -9,12 +9,12 @@
 
 namespace App\Tests\Repository\Query;
 
-use App\Entity\Customer;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\VisibilityInterface;
 
 /**
  * @covers \App\Repository\Query\ProjectQuery
+ * @covers \App\Repository\Query\BaseQuery
  */
 class ProjectQueryTest extends BaseQueryTest
 {
@@ -25,17 +25,7 @@ class ProjectQueryTest extends BaseQueryTest
         $this->assertBaseQuery($sut, 'name');
         $this->assertInstanceOf(VisibilityInterface::class, $sut);
 
-        $this->assertNull($sut->getCustomer());
-
-        $expected = new Customer();
-        $expected->setName('foo-bar');
-        $sut->setCustomer($expected);
-
-        $this->assertEquals($expected, $sut->getCustomer());
-
-        // make sure int is allowed as well
-        $sut->setCustomer(99);
-        $this->assertEquals(99, $sut->getCustomer());
+        $this->assertCustomer($sut);
 
         $this->assertResetByFormError(new ProjectQuery(), 'name');
 

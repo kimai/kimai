@@ -112,7 +112,7 @@
                 <source>login_required</source>
                 <target>Permessi insufficenti. Ridirezionare all'accesso?</target>
             </trans-unit>
-            
+
             <!--
               Menu / Navbar items
             -->
@@ -196,7 +196,7 @@
                 <source>error.no_comments_found</source>
                 <target>Non ci sono commenti fino'ora.</target>
             </trans-unit>
-            
+
             <!--
               General labels
             -->
@@ -440,7 +440,7 @@
                 <source>label.appendTags</source>
                 <target>Aggiungi tags</target>
             </trans-unit>
-            
+
             <!--
               User profile
             -->
@@ -513,7 +513,7 @@
                 <source>label.timesheet.export_decimal</source>
                 <target>Usa durata decimale nell'esportazione</target>
             </trans-unit>
-            
+
             <!--
               User timesheet calendar
             -->
@@ -820,9 +820,13 @@
                 <source>invoice.title</source>
                 <target>Fatture</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Crea fattura dalle registrazioni.</target>
+            <trans-unit id="invoice.filter">
+                <source>invoice.filter</source>
+                <target>Filtra per data fattura</target>
+            </trans-unit>
+            <trans-unit id="button.preview">
+                <source>button.preview</source>
+                <target>Anteprima</target>
             </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>

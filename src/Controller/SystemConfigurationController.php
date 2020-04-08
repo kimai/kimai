@@ -20,6 +20,7 @@ use App\Form\Type\RoundingModeType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TrackingModeType;
 use App\Form\Type\WeekDaysType;
+use App\Form\Type\YesNoType;
 use App\Repository\ConfigurationRepository;
 use App\Validator\Constraints\DateTimeFormat;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -273,6 +274,22 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration())
                         ->setName('timesheet.rounding.default.days')
                         ->setType(WeekDaysType::class)
+                        ->setTranslationDomain('system-configuration'),
+                ]),
+            (new SystemConfigurationModel())
+                ->setSection(SystemConfigurationModel::SECTION_FORM_INVOICE)
+                ->setConfiguration([
+                    (new Configuration())
+                        ->setName('invoice.number_format')
+                        ->setLabel('invoice.number_format')
+                        ->setRequired(true)
+                        ->setType(TextType::class) // TODO that should be a custom type with validation
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('invoice.simple_form')
+                        ->setLabel('simple_form')
+                        ->setRequired(false)
+                        ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel())

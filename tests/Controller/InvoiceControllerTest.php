@@ -16,12 +16,37 @@ use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @group integration
  */
 class InvoiceControllerTest extends ControllerBaseTest
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->clearInvoiceFiles();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->clearInvoiceFiles();
+    }
+
+    private function clearInvoiceFiles()
+    {
+        $path = __DIR__ . '/../_data/invoices/';
+
+        if (is_dir($path)) {
+            $files = glob($path . '*');
+            foreach ($files as $file) {
+                unlink($file);
+            }
+        }
+    }
+
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/invoice/');
@@ -76,7 +101,6 @@ class InvoiceControllerTest extends ControllerBaseTest
                 'company' => 'Company name',
                 'renderer' => 'default',
                 'calculator' => 'default',
-                'numberGenerator' => 'default',
             ]
         ]);
 
@@ -111,7 +135,72 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertEquals($template->getCompany(), $values['company']);
         $this->assertEquals($template->getAddress(), $values['address']);
         $this->assertEquals($template->getPaymentTerms(), $values['paymentTerms']);
-        $this->assertEquals($template->getNumberGenerator(), $values['numberGenerator']);
+    }
+
+    public function testCreateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        /** @var EntityManager $em */
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new InvoiceFixtures();
+        $this->importFixture($client, $fixture);
+
+        $begin = new \DateTime('first day of this month');
+        $end = new \DateTime('last day of this month');
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole($em, User::ROLE_TEAMLEAD))
+            ->setAmount(20)
+            ->setStartDate($begin)
+        ;
+        $this->importFixture($client, $fixture);
+
+        $this->request($client, '/invoice/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
+
+        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/invoice/?preview='));
+        $node->setAttribute('method', 'GET');
+        $client->submit($form, [
+            'template' => 1,
+            'daterange' => $dateRange,
+            'customer' => 1,
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        // no warning should be displayed
+        $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
+        $this->assertEquals(0, $node->count());
+        // but the datatable with all timesheets + 1 row for the total
+        $this->assertDataTableRowCount($client, 'datatable_invoice', 21);
+
+        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/invoice/?create='));
+        $node->setAttribute('method', 'GET');
+        $client->submit($form, [
+            'template' => 1,
+            'daterange' => $dateRange,
+            'customer' => 1,
+            'projects' => [1],
+            'markAsExported' => 1,
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $node = $client->getCrawler()->filter('body');
+        $this->assertEquals(1, $node->count());
+        $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
+
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        /** @var Timesheet $timesheet */
+        foreach ($timesheets as $timesheet) {
+            $this->assertTrue($timesheet->isExported());
+        }
     }
 
     public function testPrintAction()
@@ -153,8 +242,67 @@ class InvoiceControllerTest extends ControllerBaseTest
         // no warning should be displayed
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
-        // but the datatable with all timesheets
-        $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
+        // but the datatable with all timesheets + 1 row for the total
+        $this->assertDataTableRowCount($client, 'datatable_invoice', 21);
+
+        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/invoice/?print='));
+        $node->setAttribute('method', 'GET');
+        $client->submit($form, [
+            'template' => 1,
+            'daterange' => $dateRange,
+            'customer' => 1,
+            'projects' => [1],
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $node = $client->getCrawler()->filter('body');
+        $this->assertEquals(1, $node->count());
+        $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
+    }
+
+    public function testCreateActionAsAdminWithDownloadAndStatusChange()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EntityManager $em */
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new InvoiceFixtures();
+        $this->importFixture($client, $fixture);
+
+        $begin = new \DateTime('first day of this month');
+        $end = new \DateTime('last day of this month');
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setAmount(20)
+            ->setStartDate($begin)
+        ;
+        $this->importFixture($client, $fixture);
+
+        $this->request($client, '/invoice/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
+
+        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/invoice/?preview='));
+        $node->setAttribute('method', 'GET');
+        $client->submit($form, [
+            'template' => 1,
+            'daterange' => $dateRange,
+            'customer' => 1,
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        // no warning should be displayed
+        $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
+        $this->assertEquals(0, $node->count());
+        // but the datatable with all timesheets + 1 row for the total
+        $this->assertDataTableRowCount($client, 'datatable_invoice', 21);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
@@ -164,20 +312,40 @@ class InvoiceControllerTest extends ControllerBaseTest
             'template' => 1,
             'daterange' => $dateRange,
             'customer' => 1,
-            'project' => 1,
+            'projects' => [1],
             'markAsExported' => 1,
         ]);
 
+        $this->assertIsRedirect($client, '/invoice/show?id=1');
+        $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $node = $client->getCrawler()->filter('body');
-        $this->assertEquals(1, $node->count());
-        $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
 
-        $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        /** @var Timesheet $timesheet */
-        foreach ($timesheets as $timesheet) {
-            $this->assertTrue($timesheet->isExported());
-        }
+        $this->assertHasFlashSuccess($client);
+
+        $this->assertHasDataTable($client);
+        $this->assertDataTableRowCount($client, 'datatable_invoices', 1);
+
+        // make sure the invoice is saved
+        $this->request($client, '/invoice/download/1');
+        $response = $client->getResponse();
+        $this->assertTrue($response->isSuccessful());
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
+        self::assertFileExists($response->getFile());
+
+        $this->request($client, '/invoice/change-status/1/pending');
+        $this->assertIsRedirect($client, '/invoice/show');
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->request($client, '/invoice/change-status/1/paid');
+        $this->assertIsRedirect($client, '/invoice/show');
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->request($client, '/invoice/change-status/1/new');
+        $this->assertIsRedirect($client, '/invoice/show');
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testEditTemplateAction()
@@ -196,7 +364,6 @@ class InvoiceControllerTest extends ControllerBaseTest
                 'company' => 'Company name',
                 'renderer' => 'default',
                 'calculator' => 'default',
-                'numberGenerator' => 'default',
             ]
         ]);
 

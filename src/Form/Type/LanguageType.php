@@ -48,7 +48,8 @@ class LanguageType extends AbstractType
         }
 
         $resolver->setDefaults([
-            'choices' => $choices
+            'choices' => $choices,
+            'label' => 'label.language',
         ]);
     }
 

@@ -756,10 +756,6 @@
                 <source>invoice.title</source>
                 <target>Facturas</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Crear facturas a partir de registros de sus partes de horas.</target>
-            </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
                 <target>Filtrar datos de factura</target>

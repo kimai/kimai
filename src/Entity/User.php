@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Utils\StringHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -55,7 +56,7 @@ class User extends BaseUser implements UserInterface
      * @var string
      *
      * @ORM\Column(name="alias", type="string", length=60, nullable=true)
-     * @Assert\Length(max=160)
+     * @Assert\Length(max=60)
      */
     private $alias;
 
@@ -70,6 +71,7 @@ class User extends BaseUser implements UserInterface
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
     private $title;
 
@@ -77,6 +79,7 @@ class User extends BaseUser implements UserInterface
      * @var string
      *
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
     private $avatar;
 
@@ -119,6 +122,7 @@ class User extends BaseUser implements UserInterface
      * @var string
      *
      * @ORM\Column(name="auth", type="string", length=20, nullable=true)
+     * @Assert\Length(max=20)
      */
     private $auth = self::AUTH_INTERNAL;
 
@@ -152,7 +156,7 @@ class User extends BaseUser implements UserInterface
 
     public function setAlias(?string $alias): User
     {
-        $this->alias = $alias;
+        $this->alias = StringHelper::ensureMaxLength($alias, 60);
 
         return $this;
     }
@@ -169,7 +173,7 @@ class User extends BaseUser implements UserInterface
 
     public function setTitle(?string $title): User
     {
-        $this->title = $title;
+        $this->title = StringHelper::ensureMaxLength($title, 50);
 
         return $this;
     }

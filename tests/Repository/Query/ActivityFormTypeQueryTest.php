@@ -10,13 +10,13 @@
 namespace App\Tests\Repository\Query;
 
 use App\Entity\Activity;
-use App\Entity\Project;
 use App\Repository\Query\ActivityFormTypeQuery;
 
 /**
  * @covers \App\Repository\Query\ActivityFormTypeQuery
+ * @covers \App\Repository\Query\BaseFormTypeQuery
  */
-class ActivityFormTypeQueryTest extends BaseQueryTest
+class ActivityFormTypeQueryTest extends BaseFormTypeQueryTest
 {
     public function testQuery()
     {
@@ -24,15 +24,7 @@ class ActivityFormTypeQueryTest extends BaseQueryTest
 
         self::assertTrue($sut->isGlobalsOnly());
 
-        $project = new Project();
-        self::assertNull($sut->getProject());
-        self::assertInstanceOf(ActivityFormTypeQuery::class, $sut->setProject($project));
-        self::assertSame($project, $sut->getProject());
-
-        $activity = new Activity();
-        self::assertNull($sut->getActivity());
-        self::assertInstanceOf(ActivityFormTypeQuery::class, $sut->setActivity($activity));
-        self::assertSame($activity, $sut->getActivity());
+        $this->assertBaseQuery($sut);
 
         self::assertFalse($sut->isGlobalsOnly());
 

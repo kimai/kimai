@@ -84,11 +84,12 @@ class ExportControllerTest extends ControllerBaseTest
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_export', 22);
+        // +1 row for summary
+        $this->assertDataTableRowCount($client, 'datatable_export', 23);
 
         // assert export type buttons are available
-        $expected = ['csv', 'html', 'pdf', 'xlsx'];
-        $node = $client->getCrawler()->filter('#export-buttons button');
+        $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default.pdf.twig', 'xlsx'];
+        $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
         $this->assertEquals(count($expected), $node->count());
         /** @var \DOMElement $button */
         foreach ($node->getIterator() as $button) {
@@ -135,11 +136,12 @@ class ExportControllerTest extends ControllerBaseTest
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_export', 2);
+        // +1 row for summary
+        $this->assertDataTableRowCount($client, 'datatable_export', 3);
 
         // assert export type buttons are available
-        $expected = ['csv', 'html', 'pdf', 'xlsx'];
-        $node = $client->getCrawler()->filter('#export-buttons button');
+        $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default.pdf.twig', 'xlsx'];
+        $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
         $this->assertEquals(count($expected), $node->count());
         /** @var \DOMElement $button */
         foreach ($node->getIterator() as $button) {
@@ -206,7 +208,7 @@ class ExportControllerTest extends ControllerBaseTest
 
         // don't add daterange to make sure the current month is the default range
         $client->submit($form, [
-            'type' => 'html',
+            'type' => 'default.html.twig',
             'markAsExported' => 1
         ]);
 

@@ -241,7 +241,7 @@ final class ActivityController extends AbstractController
                 'label' => 'label.activity',
                 'query_builder' => function (ActivityRepository $repo) use ($activity) {
                     $query = new ActivityFormTypeQuery();
-                    $query->setProject($activity->getProject());
+                    $query->addProject($activity->getProject());
                     $query->setActivityToIgnore($activity);
 
                     return $repo->getQueryBuilderForFormType($query);
