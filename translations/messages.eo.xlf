@@ -1,0 +1,1137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eo" datatype="plaintext" original="messages.en.xlf">
+        <body>
+            <!--
+              Global template keys
+            -->
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Temporegistrado</target>
+            </trans-unit>
+            <trans-unit id="yes">
+                <source>yes</source>
+                <target>Jes</target>
+            </trans-unit>
+            <trans-unit id="no">
+                <source>no</source>
+                <target>Ne</target>
+            </trans-unit>
+            <trans-unit id="both">
+                <source>both</source>
+                <target>Ambaŭ</target>
+            </trans-unit>
+            <trans-unit id="This is a mandatory field">
+                <source>This is a mandatory field</source>
+                <target>Deviga</target>
+            </trans-unit>
+            <trans-unit id="create">
+                <source>create</source>
+                <target>Krei</target>
+            </trans-unit>
+            <trans-unit id="confirm.delete">
+                <source>confirm.delete</source>
+                <target>Ĉu vi vere volas forigi tion ĉi?</target>
+            </trans-unit>
+            <trans-unit id="admin_entity.delete_confirm">
+                <source>admin_entity.delete_confirm</source>
+                <target>
+                    Ankaŭ tiuj ĉi datumoj estos forigitaj!
+                    Alternative, vi povas elekti elementon al kiu ĉiuj datumoj estos translokigitaj:
+                </target>
+            </trans-unit>
+            <trans-unit id="delete.not_in_use">
+                <source>delete.not_in_use</source>
+                <target>Tiu ĉi ero povas esti sekure forigita.</target>
+            </trans-unit>
+            <trans-unit id="cancel">
+                <source>cancel</source>
+                <target>Nuligi</target>
+            </trans-unit>
+            <trans-unit id="confirm">
+                <source>confirm</source>
+                <target>Konfirmi</target>
+            </trans-unit>
+            <trans-unit id="upload">
+                <source>upload</source>
+                <target>Alŝuti</target>
+            </trans-unit>
+            <trans-unit id="search">
+                <source>search</source>
+                <target>Serĉi</target>
+            </trans-unit>
+            <trans-unit id="my.profile">
+                <source>my.profile</source>
+                <target>Mia profilo</target>
+            </trans-unit>
+            <trans-unit id="update_multiple">
+                <source>update_multiple</source>
+                <target>%action% %count% elementojn?</target>
+            </trans-unit>
+            <trans-unit id="attachments">
+                <source>attachments</source>
+                <target>Dosieroj</target>
+            </trans-unit>
+            <trans-unit id="rates.empty">
+                <source>rates.empty</source>
+                <target>Ankoraŭ neniuj kotizoj estas agorditaj.</target>
+            </trans-unit>
+            <trans-unit id="rates.title">
+                <source>rates.title</source>
+                <target>Kotizoj</target>
+            </trans-unit>
+
+            <!--
+              Login / Security
+            -->
+            <trans-unit id="label.password">
+                <source>label.password</source>
+                <target>Pasvorto</target>
+            </trans-unit>
+            <trans-unit id="label.password_repeat">
+                <source>label.password_repeat</source>
+                <target>Ripetu pasvorton</target>
+            </trans-unit>
+            <trans-unit id="label.logout">
+                <source>label.logout</source>
+                <target>Elsaluti</target>
+            </trans-unit>
+            <trans-unit id="label.user_profile">
+                <source>label.user_profile</source>
+                <target>Mia profilo</target>
+            </trans-unit>
+            <trans-unit id="label.api_token">
+                <source>label.api_token</source>
+                <target>API-pasvorto</target>
+            </trans-unit>
+            <trans-unit id="label.api_token_repeat">
+                <source>label.api_token_repeat</source>
+                <target>Ripetu API-pasvorton</target>
+            </trans-unit>
+            <trans-unit id="login_required">
+                <source>login_required</source>
+                <target>Mankas permeso. Redirekti al ensaluto?</target>
+            </trans-unit>
+
+            <!--
+              Menu / Navbar items
+            -->
+            <trans-unit id="menu.homepage">
+                <source>menu.homepage</source>
+                <target>Panelo</target>
+            </trans-unit>
+            <trans-unit id="menu.admin">
+                <source>menu.admin</source>
+                <target>Administrado</target>
+            </trans-unit>
+            <trans-unit id="menu.system">
+                <source>menu.system</source>
+                <target>Sistemo</target>
+            </trans-unit>
+            <trans-unit id="menu.logout">
+                <source>menu.logout</source>
+                <target>Elsaluti</target>
+            </trans-unit>
+            <trans-unit id="menu.timesheet">
+                <source>menu.timesheet</source>
+                <target>Miaj tempoj</target>
+            </trans-unit>
+            <trans-unit id="menu.invoice">
+                <source>menu.invoice</source>
+                <target>Fakturoj</target>
+            </trans-unit>
+            <trans-unit id="menu.export">
+                <source>menu.export</source>
+                <target>Eksporto</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_timesheet">
+                <source>menu.admin_timesheet</source>
+                <target>Temposlipoj</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_customer">
+                <source>menu.admin_customer</source>
+                <target>Klientoj</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_project">
+                <source>menu.admin_project</source>
+                <target>Projektoj</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_activity">
+                <source>menu.admin_activity</source>
+                <target>Aktivaĵoj</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_user">
+                <source>menu.admin_user</source>
+                <target>Uzantoj</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_team">
+                <source>menu.admin_team</source>
+                <target>Teamoj</target>
+            </trans-unit>
+            <trans-unit id="menu.plugin">
+                <source>menu.plugin</source>
+                <target>Kromprogramoj</target>
+            </trans-unit>
+            <trans-unit id="menu.system_configuration">
+                <source>menu.system_configuration</source>
+                <target>Agordoj</target>
+            </trans-unit>
+            <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>Etikedoj</target>
+            </trans-unit>
+            <trans-unit id="menu.doctor">
+                <source>menu.doctor</source>
+                <target>Sistem-sano</target>
+            </trans-unit>
+            
+            <!--
+              Error templates
+            -->
+            <trans-unit id="error.no_entries_found">
+                <source>error.no_entries_found</source>
+                <target>Neniuj elementoj estis trovitaj surbaze de elektitaj filtriloj.</target>
+            </trans-unit>
+            <trans-unit id="error.no_comments_found">
+                <source>error.no_comments_found</source>
+                <target>Ankoraŭ ne estas komentoj.</target>
+            </trans-unit>
+
+            <!--
+              General labels
+            -->
+            <trans-unit id="label.date">
+                <source>label.date</source>
+                <target>Dato</target>
+            </trans-unit>
+            <trans-unit id="label.starttime">
+                <source>label.starttime</source>
+                <target>Komenco</target>
+            </trans-unit>
+            <trans-unit id="label.endtime">
+                <source>label.endtime</source>
+                <target>Fino</target>
+            </trans-unit>
+            <trans-unit id="label.duration">
+                <source>label.duration</source>
+                <target>Daŭro</target>
+            </trans-unit>
+            <trans-unit id="label.user">
+                <source>label.user</source>
+                <target>Uzanto</target>
+            </trans-unit>
+            <trans-unit id="label.username">
+                <source>label.username</source>
+                <target>Uzanto</target>
+            </trans-unit>
+            <trans-unit id="label.description">
+                <source>label.description</source>
+                <target>Priskribo</target>
+            </trans-unit>
+            <trans-unit id="label.name">
+                <source>label.name</source>
+                <target>Nomo</target>
+            </trans-unit>
+            <trans-unit id="label.comment">
+                <source>label.comment</source>
+                <target>Komento</target>
+            </trans-unit>
+            <trans-unit id="label.id">
+                <source>label.id</source>
+                <target>ID</target>
+            </trans-unit>
+            <trans-unit id="label.visible">
+                <source>label.visible</source>
+                <target>Videbla</target>
+            </trans-unit>
+            <trans-unit id="label.budget">
+                <source>label.budget</source>
+                <target>Buĝeto</target>
+            </trans-unit>
+            <trans-unit id="label.timeBudget">
+                <source>label.timeBudget</source>
+                <target>Tempobuĝeto</target>
+            </trans-unit>
+            <trans-unit id="label.activity">
+                <source>label.activity</source>
+                <target>Aktivaĵo</target>
+            </trans-unit>
+            <trans-unit id="label.project">
+                <source>label.project</source>
+                <target>Projekto</target>
+            </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>Etikedoj</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>Etikedoj</target>
+            </trans-unit>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
+                <target>Hora kotizo</target>
+            </trans-unit>
+            <trans-unit id="label.hourly_rate">
+                <source>label.hourly_rate</source>
+                <target>Hora kotizo</target>
+            </trans-unit>
+            <trans-unit id="label.skin">
+                <source>label.skin</source>
+                <target>Montri: koloroj</target>
+            </trans-unit>
+            <trans-unit id="label.theme.layout">
+                <source>label.theme.layout</source>
+                <target>Montri: aspektigo</target>
+            </trans-unit>
+            <trans-unit id="label.hours">
+                <source>label.hours</source>
+                <target>Horoj</target>
+            </trans-unit>
+            <trans-unit id="label.rate">
+                <source>label.rate</source>
+                <target>Kotizo</target>
+            </trans-unit>
+            <trans-unit id="label.language">
+                <source>label.language</source>
+                <target>Lingvo</target>
+            </trans-unit>
+            <trans-unit id="label.customer">
+                <source>label.customer</source>
+                <target>Kliento</target>
+            </trans-unit>
+            <trans-unit id="label.email">
+                <source>label.email</source>
+                <target>Retadreso</target>
+            </trans-unit>
+            <trans-unit id="label.team">
+                <source>label.team</source>
+                <target>Teamo</target>
+            </trans-unit>
+            <trans-unit id="label.teamlead">
+                <source>label.teamlead</source>
+                <target>Teamgvidanto</target>
+            </trans-unit>
+            <trans-unit id="label.create_more">
+                <source>label.create_more</source>
+                <target>Krei pliajn elementojn</target>
+            </trans-unit>
+
+            <!--
+              Buttons & Actions
+            -->
+            <trans-unit id="label.actions">
+                <source>label.actions</source>
+                <target>Aktivaĵoj</target>
+            </trans-unit>
+            <trans-unit id="action.edit">
+                <source>action.edit</source>
+                <target>Redakti</target>
+            </trans-unit>
+            <trans-unit id="action.delete">
+                <source>action.delete</source>
+                <target>Forigi</target>
+            </trans-unit>
+            <trans-unit id="action.save">
+                <source>action.save</source>
+                <target>Konservi</target>
+            </trans-unit>
+            <trans-unit id="action.reset">
+                <source>action.reset</source>
+                <target>Restartigi</target>
+            </trans-unit>
+            <trans-unit id="action.back">
+                <source>action.back</source>
+                <target>Reen</target>
+            </trans-unit>
+            <trans-unit id="action.close">
+                <source>action.close</source>
+                <target>Fermi</target>
+            </trans-unit>
+
+            <!--
+              Dashboard
+            -->
+            <trans-unit id="dashboard.title">
+                <source>dashboard.title</source>
+                <target>Panelo</target>
+            </trans-unit>
+            <trans-unit id="dashboard.subtitle">
+                <source>dashboard.subtitle</source>
+                <target>Bonvenon!</target>
+            </trans-unit>
+            <trans-unit id="dashboard.all">
+                <source>dashboard.all</source>
+                <target>Ĉiuj uzantoj</target>
+            </trans-unit>
+
+            <!--
+              Widgets
+            -->
+            <trans-unit id="more.info.link">
+                <source>more.info.link</source>
+                <target>Pliaj informoj</target>
+            </trans-unit>
+            <trans-unit id="label.toggle_dropdown">
+                <source>label.toggle_dropdown</source>
+                <target>Montri menuon</target>
+            </trans-unit>
+            <trans-unit id="label.my_teams">
+                <source>label.my_teams</source>
+                <target>Miaj teamoj</target>
+            </trans-unit>
+            <trans-unit id="label.my_team_projects">
+                <source>label.my_team_projects</source>
+                <target>Teamaj projektoj &amp; buĝetoj</target>
+            </trans-unit>
+            <trans-unit id="label.progress">
+                <source>label.progress</source>
+                <target>Progreso</target>
+            </trans-unit>
+            <trans-unit id="label.plus_more">
+                <source>label.plus_more</source>
+                <target>+%count% pli</target>
+            </trans-unit>
+
+            <!--
+              Timesheet
+            -->
+            <trans-unit id="timesheet.title">
+                <source>timesheet.title</source>
+                <target>Miaj tempoj</target>
+            </trans-unit>
+            <trans-unit id="timesheet.edit">
+                <source>timesheet.edit</source>
+                <target>Redakti la registraĵon</target>
+            </trans-unit>
+            <trans-unit id="label.begin">
+                <source>label.begin</source>
+                <target>De</target>
+            </trans-unit>
+            <trans-unit id="label.end">
+                <source>label.end</source>
+                <target>Al</target>
+            </trans-unit>
+            <trans-unit id="label.daterange">
+                <source>label.daterange</source>
+                <target>Tempoperiodo</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.title">
+                <source>modal.columns.title</source>
+                <target>Ŝanĝi videblecon de kolumnoj</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.description">
+                <source>modal.columns.description</source>
+                <target>Post la koservado, la neelektitaj kolumnoj estos kaŝitaj kaj tiu ĉi agordo estos konservita en retumila kuketo. Se vi forigos viajn kuketojn, la agordoj estos restarigitaj.</target>
+            </trans-unit>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
+                <target>Fiksita kotizo</target>
+            </trans-unit>
+            <trans-unit id="label.color">
+                <source>label.color</source>
+                <target>Koloro</target>
+            </trans-unit>
+            <trans-unit id="label.replaceTags">
+                <source>label.replaceTags</source>
+                <target>Anstataŭigi etikedojn</target>
+            </trans-unit>
+            <trans-unit id="label.appendTags">
+                <source>label.appendTags</source>
+                <target>Postglui etikedojn</target>
+            </trans-unit>
+
+            <!--
+              User profile
+            -->
+            <trans-unit id="profile.title">
+                <source>profile.title</source>
+                <target>Profilo de uzanto</target>
+            </trans-unit>
+            <trans-unit id="profile.about_me">
+                <source>profile.about_me</source>
+                <target>Pri mi</target>
+            </trans-unit>
+            <trans-unit id="profile.first_entry">
+                <source>profile.first_entry</source>
+                <target>Laboras ekde</target>
+            </trans-unit>
+            <trans-unit id="profile.settings">
+                <source>profile.settings</source>
+                <target>Profilo</target>
+            </trans-unit>
+            <trans-unit id="profile.password">
+                <source>profile.password</source>
+                <target>Pasvorto</target>
+            </trans-unit>
+            <trans-unit id="profile.api-token">
+                <source>profile.api-token</source>
+                <target>API</target>
+            </trans-unit>
+            <trans-unit id="profile.roles">
+                <source>profile.roles</source>
+                <target>Roloj</target>
+            </trans-unit>
+            <trans-unit id="profile.teams">
+                <source>profile.teams</source>
+                <target>Teamoj</target>
+            </trans-unit>
+            <trans-unit id="profile.preferences">
+                <source>profile.preferences</source>
+                <target>Agordoj</target>
+            </trans-unit>
+            <trans-unit id="label.theme.collapsed_sidebar">
+                <source>label.theme.collapsed_sidebar</source>
+                <target>Minimumigi la maldekstran flankpanelon</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.initial_view">
+                <source>label.calendar.initial_view</source>
+                <target>Komenca kalendara vido</target>
+            </trans-unit>
+            <trans-unit id="label.login.initial_view">
+                <source>label.login.initial_view</source>
+                <target>Komenca vido post ensaluto</target>
+            </trans-unit>
+            <trans-unit id="label.lastLogin">
+                <source>label.lastLogin</source>
+                <target>Lasta ensaluto</target>
+            </trans-unit>
+            <!-- Options for user-preference label.calendar.initial_view -->
+            <trans-unit id="month">
+                <source>month</source>
+                <target>Monato</target>
+            </trans-unit>
+            <trans-unit id="agendaWeek">
+                <source>agendaWeek</source>
+                <target>Semajno</target>
+            </trans-unit>
+            <trans-unit id="agendaDay">
+                <source>agendaDay</source>
+                <target>Tago</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.daily_stats">
+                <source>label.timesheet.daily_stats</source>
+                <target>Montri tagan statistikon en la temposlipo</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.export_decimal">
+                <source>label.timesheet.export_decimal</source>
+                <target>Uzi dekuman daŭron en eksporto</target>
+            </trans-unit>
+
+            <!--
+              User timesheet calendar
+            -->
+            <trans-unit id="calendar.title">
+                <source>calendar.title</source>
+                <target>Kalendaro</target>
+            </trans-unit>
+
+            <!--
+              Admin: Timesheet
+            -->
+            <trans-unit id="admin_timesheet.title">
+                <source>admin_timesheet.title</source>
+                <target>Temposlipoj</target>
+            </trans-unit>
+
+            <!--
+              Admin: Projects
+            -->
+            <trans-unit id="admin_project.title">
+                <source>admin_project.title</source>
+                <target>Projektoj</target>
+            </trans-unit>
+            <trans-unit id="admin_project.short_stats">
+                <source>admin_project.short_stats</source>
+                <target>
+                    Nun la projekto %project% por la kliento %customer% havas %activities%
+                    aktivaĵojn kaj %records% temporegistraĵojn, kiuj sumiĝas al tuto de %duration%.
+                </target>
+            </trans-unit>
+            <trans-unit id="label.project_start">
+                <source>label.project_start</source>
+                <target>Komenco de projekto</target>
+            </trans-unit>
+            <trans-unit id="label.project_end">
+                <source>label.project_end</source>
+                <target>Fino de projekto</target>
+            </trans-unit>
+
+            <!--
+              Admin: Activity
+            -->
+            <trans-unit id="admin_activity.title">
+                <source>admin_activity.title</source>
+                <target>Aktivaĵoj</target>
+            </trans-unit>
+            <trans-unit id="admin_activity.short_stats">
+                <source>admin_activity.short_stats</source>
+                <target>
+                    Nun la aktivaĵo %activity% en la projekto %project% por la kliento %customer%
+                    havas %records% temporegistraĵojn, kiuj sumiĝas al tuto de %duration%.
+                </target>
+            </trans-unit>
+
+            <!--
+              Admin: Customer
+            -->
+            <trans-unit id="admin_customer.title">
+                <source>admin_customer.title</source>
+                <target>Kliento</target>
+            </trans-unit>
+            <trans-unit id="label.number">
+                <source>label.number</source>
+                <target>Konto</target>
+            </trans-unit>
+            <trans-unit id="label.company">
+                <source>label.company</source>
+                <target>Nomo de kompanio</target>
+            </trans-unit>
+            <trans-unit id="label.vat">
+                <source>label.vat</source>
+                <target>Imposto</target>
+            </trans-unit>
+            <trans-unit id="label.vat_id">
+                <source>label.vat_id</source>
+                <target>AVI-ID</target>
+            </trans-unit>
+            <trans-unit id="label.contact">
+                <source>label.contact</source>
+                <target>Kontakto</target>
+            </trans-unit>
+            <trans-unit id="label.address">
+                <source>label.address</source>
+                <target>Adreso</target>
+            </trans-unit>
+            <trans-unit id="label.country">
+                <source>label.country</source>
+                <target>Lando</target>
+            </trans-unit>
+            <trans-unit id="label.phone">
+                <source>label.phone</source>
+                <target>Telefono</target>
+            </trans-unit>
+            <trans-unit id="label.fax">
+                <source>label.fax</source>
+                <target>Fakso</target>
+            </trans-unit>
+            <trans-unit id="label.mobile">
+                <source>label.mobile</source>
+                <target>Poŝtelefono</target>
+            </trans-unit>
+            <trans-unit id="label.homepage">
+                <source>label.homepage</source>
+                <target>Hejmpaĝo</target>
+            </trans-unit>
+            <trans-unit id="label.timezone">
+                <source>label.timezone</source>
+                <target>Horzono</target>
+            </trans-unit>
+            <trans-unit id="label.currency">
+                <source>label.currency</source>
+                <target>Valuto</target>
+            </trans-unit>
+            <trans-unit id="admin_customer.short_stats">
+                <source>admin_customer.short_stats</source>
+                <target>
+                    Nun la kliento %customer% havas %project% projektojn kun %activity% aktivaĵojn, kiuj sumiĝas en
+                    %records% temporegistraĵoj al tuto de %duration%.
+                </target>
+            </trans-unit>
+
+            <!--
+              Admin: Users
+            -->
+            <trans-unit id="admin_user.title">
+                <source>admin_user.title</source>
+                <target>Uzanto</target>
+            </trans-unit>
+            <trans-unit id="label.alias">
+                <source>label.alias</source>
+                <target>Nomo</target>
+            </trans-unit>
+            <trans-unit id="label.title">
+                <source>label.title</source>
+                <target>Titolo</target>
+            </trans-unit>
+            <trans-unit id="label.avatar">
+                <source>label.avatar</source>
+                <target>Profilbildo</target>
+            </trans-unit>
+            <trans-unit id="label.active">
+                <source>label.active</source>
+                <target>Activa</target>
+            </trans-unit>
+            <trans-unit id="label.roles">
+                <source>label.roles</source>
+                <target>Rolo</target>
+            </trans-unit>
+            <trans-unit id="admin_user.short_stats">
+                <source>admin_user.short_stats</source>
+                <target>
+                    Nun la uzanto %user% havas %records% temporegistraĵojn kiuj sumiĝas al tuto de %duration%.
+                </target>
+            </trans-unit>
+            <trans-unit id="user_permissions.title">
+                <source>user_permissions.title</source>
+                <target>Uzantpermesoj</target>
+            </trans-unit>
+            <trans-unit id="user_role.title">
+                <source>user_role.title</source>
+                <target>Uzantrolo</target>
+            </trans-unit>
+            <trans-unit id="Allowed character: A-Z and _">
+                <source>Allowed character: A-Z and _</source>
+                <target>Permesitaj signoj: A-Z kaj _</target>
+            </trans-unit>
+
+            <!--
+              Admin: Plugins
+            -->
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target>Versio</target>
+            </trans-unit>
+            <trans-unit id="label.required_version">
+                <source>label.required_version</source>
+                <target>Kongrua kun</target>
+            </trans-unit>
+
+            <!--
+              ROLES
+            -->
+            <trans-unit id="ROLE_SUPER_ADMIN">
+                <source>ROLE_SUPER_ADMIN</source>
+                <target>Sistema administranto</target>
+            </trans-unit>
+            <trans-unit id="ROLE_ADMIN">
+                <source>ROLE_ADMIN</source>
+                <target>Administranto</target>
+            </trans-unit>
+            <trans-unit id="ROLE_TEAMLEAD">
+                <source>ROLE_TEAMLEAD</source>
+                <target>Teamgvidanto</target>
+            </trans-unit>
+            <trans-unit id="ROLE_USER">
+                <source>ROLE_USER</source>
+                <target>Uzanto</target>
+            </trans-unit>
+
+            <!--
+              Statistics data for Dashboard & Users profile
+            -->
+            <trans-unit id="stats.durationToday">
+                <source>stats.durationToday</source>
+                <target>Laborhoroj hodiaŭ</target>
+            </trans-unit>
+            <trans-unit id="stats.durationWeek">
+                <source>stats.durationWeek</source>
+                <target>Laborhoroj ĉi-semajne</target>
+            </trans-unit>
+            <trans-unit id="stats.durationMonth">
+                <source>stats.durationMonth</source>
+                <target>Laborhoroj ĉi-monate</target>
+            </trans-unit>
+            <trans-unit id="stats.durationYear">
+                <source>stats.durationYear</source>
+                <target>Laborhoroj ĉi-jare</target>
+            </trans-unit>
+            <trans-unit id="stats.durationTotal">
+                <source>stats.durationTotal</source>
+                <target>Laborhoroj entute</target>
+            </trans-unit>
+            <trans-unit id="stats.yourWorkingHours">
+                <source>stats.yourWorkingHours</source>
+                <target>Miaj laborhoroj</target>
+            </trans-unit>
+            <trans-unit id="stats.amountToday">
+                <source>stats.amountToday</source>
+                <target>Enspezoj hodiaŭ</target>
+            </trans-unit>
+            <trans-unit id="stats.amountWeek">
+                <source>stats.amountWeek</source>
+                <target>Enspezoj ĉi-semajne</target>
+            </trans-unit>
+            <trans-unit id="stats.amountMonth">
+                <source>stats.amountMonth</source>
+                <target>Enspezoj ĉi-monate</target>
+            </trans-unit>
+            <trans-unit id="stats.amountYear">
+                <source>stats.amountYear</source>
+                <target>Enspezoj ĉi-jare</target>
+            </trans-unit>
+            <trans-unit id="stats.amountTotal">
+                <source>stats.amountTotal</source>
+                <target>Enspezoj entute</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveToday">
+                <source>stats.userActiveToday</source>
+                <target>Aktivaj uzantoj hodiaŭ</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveWeek">
+                <source>stats.userActiveWeek</source>
+                <target>Aktivaj uzantoj ĉi-semajne</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveMonth">
+                <source>stats.userActiveMonth</source>
+                <target>Aktivaj uzantoj ĉi-monate</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveYear">
+                <source>stats.userActiveYear</source>
+                <target>Aktivaj uzantoj ĉi-jare</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveTotal">
+                <source>stats.userActiveTotal</source>
+                <target>Aktivaj uzantoj entute</target>
+            </trans-unit>
+            <trans-unit id="stats.activeRecordings">
+                <source>stats.activeRecordings</source>
+                <target>Aktivaj registraĵoj</target>
+            </trans-unit>
+            <trans-unit id="stats.userTotal">
+                <source>stats.userTotal</source>
+                <target>Uzantoj</target>
+            </trans-unit>
+            <trans-unit id="stats.activityTotal">
+                <source>stats.activityTotal</source>
+                <target>Aktivaĵoj</target>
+            </trans-unit>
+            <trans-unit id="stats.projectTotal">
+                <source>stats.projectTotal</source>
+                <target>Projektoj</target>
+            </trans-unit>
+            <trans-unit id="stats.customerTotal">
+                <source>stats.customerTotal</source>
+                <target>Klientoj</target>
+            </trans-unit>
+            <trans-unit id="stats.percentUsed">
+                <source>stats.percentUsed</source>
+                <target>%percent%% uzitaj</target>
+            </trans-unit>
+            <trans-unit id="stats.percentUsedLeft">
+                <source>stats.percentUsedLeft</source>
+                <target>%percent%% uzitaj (%left% estas daŭre malfermitaj)</target>
+            </trans-unit>
+
+            <!--
+              Invoice
+            -->
+            <trans-unit id="admin_invoice_template.title">
+                <source>admin_invoice_template.title</source>
+                <target>Fakturŝablono</target>
+            </trans-unit>
+            <trans-unit id="invoice.title">
+                <source>invoice.title</source>
+                <target>Fakturoj</target>
+            </trans-unit>
+            <trans-unit id="invoice.filter">
+                <source>invoice.filter</source>
+                <target>Filtri fakturajn datumojn</target>
+            </trans-unit>
+            <trans-unit id="button.preview">
+                <source>button.preview</source>
+                <target>Antaŭrigardo</target>
+            </trans-unit>
+            <trans-unit id="button.preview_print">
+                <source>button.preview_print</source>
+                <target>Antaŭrigardi printaĵon</target>
+            </trans-unit>
+            <trans-unit id="button.print">
+                <source>button.print</source>
+                <target>Printi</target>
+            </trans-unit>
+            <trans-unit id="button.csv">
+                <source>button.csv</source>
+                <target>CSV</target>
+            </trans-unit>
+            <trans-unit id="button.xlsx">
+                <source>button.xlsx</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="button.pdf">
+                <source>button.pdf</source>
+                <target>PDF</target>
+            </trans-unit>
+            <trans-unit id="button.ods">
+                <source>button.ods</source>
+                <target>ODS</target>
+            </trans-unit>
+            <trans-unit id="invoice_print">
+                <source>invoice_print</source>
+                <target>Fakturo</target>
+            </trans-unit>
+            <trans-unit id="label.mark_as_exported">
+                <source>label.mark_as_exported</source>
+                <target>Marki eksportita</target>
+            </trans-unit>
+            <trans-unit id="label.template">
+                <source>label.template</source>
+                <target>Ŝablono</target>
+            </trans-unit>
+            <trans-unit id="label.due_days">
+                <source>label.due_days</source>
+                <target>Limdato en tagoj por pagi</target>
+            </trans-unit>
+            <trans-unit id="invoice.due_days">
+                <source>invoice.due_days</source>
+                <target>Pagcelo</target>
+            </trans-unit>
+            <trans-unit id="invoice.from">
+                <source>invoice.from</source>
+                <target>De</target>
+            </trans-unit>
+            <trans-unit id="invoice.to">
+                <source>invoice.to</source>
+                <target>Al</target>
+            </trans-unit>
+            <trans-unit id="invoice.number">
+                <source>invoice.number</source>
+                <target>Fakturnumero</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtotal">
+                <source>invoice.subtotal</source>
+                <target>Subtotalo</target>
+            </trans-unit>
+            <trans-unit id="invoice.tax">
+                <source>invoice.tax</source>
+                <target>Imposto</target>
+            </trans-unit>
+            <trans-unit id="invoice.total">
+                <source>invoice.total</source>
+                <target>Entute</target>
+            </trans-unit>
+            <trans-unit id="invoice.service_date">
+                <source>invoice.service_date</source>
+                <target>Servo-dato</target>
+            </trans-unit>
+            <trans-unit id="label.amount">
+                <source>label.amount</source>
+                <target>Kvanto</target>
+            </trans-unit>
+            <trans-unit id="label.total_rate">
+                <source>label.total_rate</source>
+                <target>Tuta prezo</target>
+            </trans-unit>
+            <trans-unit id="label.unit_price">
+                <source>label.unit_price</source>
+                <target>Unuopa prezo</target>
+            </trans-unit>
+            <trans-unit id="label.payment_terms">
+                <source>label.payment_terms</source>
+                <target>Kondiĉoj de pago</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_user">
+                <source>invoice.signature_user</source>
+                <target>Konfirmo: Dato / Nomo de konsilisto / Subskribo</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_customer">
+                <source>invoice.signature_customer</source>
+                <target>Konfirmo: Dato / Nomo de kliento / Subskribo</target>
+            </trans-unit>
+            <trans-unit id="invoice.total_working_time">
+                <source>invoice.total_working_time</source>
+                <target>Tuta daŭro</target>
+            </trans-unit>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
+                <target>Mendonumero</target>
+            </trans-unit>
+            <trans-unit id="label.orderDate">
+                <source>label.orderDate</source>
+                <target>Mendodato</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_tax_number">
+                <source>label.invoice_tax_number</source>
+                <target>AVI-nr-o:</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_bank_account">
+                <source>label.invoice_bank_account</source>
+                <target>Bankokonto</target>
+            </trans-unit>
+            <trans-unit id="label.decimalDuration">
+                <source>label.decimalDuration</source>
+                <target>Montri daŭron kiel dekuman nombron</target>
+            </trans-unit>
+            <trans-unit id="label.status">
+                <source>label.status</source>
+                <target>Stato</target>
+            </trans-unit>
+            <trans-unit id="status.new">
+                <source>status.new</source>
+                <target>Nova</target>
+            </trans-unit>
+            <trans-unit id="status.pending">
+                <source>status.pending</source>
+                <target>Pritraktota</target>
+            </trans-unit>
+            <trans-unit id="status.paid">
+                <source>status.paid</source>
+                <target>Pagita</target>
+            </trans-unit>
+
+            <!--
+              Export
+            -->
+            <trans-unit id="export.title">
+                <source>export.title</source>
+                <target>Eksporti</target>
+            </trans-unit>
+            <trans-unit id="export.subtitle">
+                <source>export.subtitle</source>
+                <target>Eksporti temposlipajn datumojn al diversaj dosierformoj</target>
+            </trans-unit>
+            <trans-unit id="export.filter">
+                <source>export.filter</source>
+                <target>Filtri datumojn por eksporto</target>
+            </trans-unit>
+            <trans-unit id="export.period">
+                <source>export.period</source>
+                <target>Periodo</target>
+            </trans-unit>
+            <trans-unit id="export.document_title">
+                <source>export.document_title</source>
+                <target>Listo de temposlipoj</target>
+            </trans-unit>
+            <trans-unit id="export.full_list">
+                <source>export.full_list</source>
+                <target>Plena listo</target>
+            </trans-unit>
+            <trans-unit id="export.summary">
+                <source>export.summary</source>
+                <target>Resumo</target>
+            </trans-unit>
+            <trans-unit id="export.page_of">
+                <source>export.page_of</source>
+                <target>Paĝo %page% de %pages%</target>
+            </trans-unit>
+            <trans-unit id="export.date_copyright">
+                <source>export.date_copyright</source>
+                <target>Kreita je la %date% per %kimai%</target>
+            </trans-unit>
+
+            <!--
+              Month names
+            -->
+            <trans-unit id="month.1">
+                <source>month.1</source>
+                <target>Januaro</target>
+            </trans-unit>
+            <trans-unit id="month.2">
+                <source>month.2</source>
+                <target>Februaro</target>
+            </trans-unit>
+            <trans-unit id="month.3">
+                <source>month.3</source>
+                <target>Marto</target>
+            </trans-unit>
+            <trans-unit id="month.4">
+                <source>month.4</source>
+                <target>Aprilo</target>
+            </trans-unit>
+            <trans-unit id="month.5">
+                <source>month.5</source>
+                <target>Majo</target>
+            </trans-unit>
+            <trans-unit id="month.6">
+                <source>month.6</source>
+                <target>Junio</target>
+            </trans-unit>
+            <trans-unit id="month.7">
+                <source>month.7</source>
+                <target>Julio</target>
+            </trans-unit>
+            <trans-unit id="month.8">
+                <source>month.8</source>
+                <target>Aŭgusto</target>
+            </trans-unit>
+            <trans-unit id="month.9">
+                <source>month.9</source>
+                <target>Septembro</target>
+            </trans-unit>
+            <trans-unit id="month.10">
+                <source>month.10</source>
+                <target>Octobro</target>
+            </trans-unit>
+            <trans-unit id="month.11">
+                <source>month.11</source>
+                <target>Novembro</target>
+            </trans-unit>
+            <trans-unit id="month.12">
+                <source>month.12</source>
+                <target>Decembro</target>
+            </trans-unit>
+
+            <!--
+             Navbar - recent entries and activities
+            -->
+            <trans-unit id="active.entries">
+                <source>active.entries</source>
+                <target>Viaj aktivaj tempomezuroj</target>
+            </trans-unit>
+            <trans-unit id="timesheet.all">
+                <source>timesheet.all</source>
+                <target>Montri ĉiujn registraĵojn</target>
+            </trans-unit>
+            <trans-unit id="recent.activities">
+                <source>recent.activities</source>
+                <target>Restartigi unu de viaj lastaj aktivaĵoj</target>
+            </trans-unit>
+            <trans-unit id="recent.activities.format">
+                <source>recent.activities.format</source>
+                <target>%activity% en %project% por %customer%</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start">
+                <source>timesheet.start</source>
+                <target>Krei novan temporegistraĵon</target>
+            </trans-unit>
+
+            <!--
+              TOOLBARS
+            -->
+            <trans-unit id="label.pageSize">
+                <source>label.pageSize</source>
+                <target>Grandeco de la paĝo</target>
+            </trans-unit>
+            <trans-unit id="label.entryState">
+                <source>label.entryState</source>
+                <target>Registraĵoj</target>
+            </trans-unit>
+            <trans-unit id="label.exported">
+                <source>label.exported</source>
+                <target>Eksportita</target>
+            </trans-unit>
+            <trans-unit id="entryState.exported">
+                <source>entryState.exported</source>
+                <target>Malplenigita</target>
+            </trans-unit>
+            <trans-unit id="entryState.not_exported">
+                <source>entryState.not_exported</source>
+                <target>Malfermi</target>
+            </trans-unit>
+            <trans-unit id="entryState.all">
+                <source>entryState.all</source>
+                <target>Ĉiuj</target>
+            </trans-unit>
+            <trans-unit id="entryState.running">
+                <source>entryState.running</source>
+                <target>Aktiva</target>
+            </trans-unit>
+            <trans-unit id="entryState.stopped">
+                <source>entryState.stopped</source>
+                <target>Haltigita</target>
+            </trans-unit>
+            <trans-unit id="export.clear_all">
+                <source>export.clear_all</source>
+                <target>Ĉu marki ĉiujn montritajn registraĵojn kiel malfermitajn?</target>
+            </trans-unit>
+            <trans-unit id="export.mark_all">
+                <source>export.mark_all</source>
+                <target>Ĉu marki ĉiujn montritajn registraĵojn kiel malplenigitajn?</target>
+            </trans-unit>
+            <trans-unit id="label.globalsOnly">
+                <source>label.globalsOnly</source>
+                <target>Nur mallokaj</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

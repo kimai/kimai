@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eo" datatype="plaintext" original="daterangepicker.en.xlf">
+        <body>
+            <trans-unit id="daterangepicker.today">
+                <source>daterangepicker.today</source>
+                <target>Hodiaŭ</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.yesterday">
+                <source>daterangepicker.yesterday</source>
+                <target>Hieraŭ</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.lastWeek">
+                <source>daterangepicker.lastWeek</source>
+                <target>Pasintsemajne</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.thisWeek">
+                <source>daterangepicker.thisWeek</source>
+                <target>Ĉi-semajne</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.lastMonth">
+                <source>daterangepicker.lastMonth</source>
+                <target>Pasintmonate</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.thisMonth">
+                <source>daterangepicker.thisMonth</source>
+                <target>Ĉi-monate</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.lastYear">
+                <source>daterangepicker.lastYear</source>
+                <target>Pasintjare</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.thisYear">
+                <source>daterangepicker.thisYear</source>
+                <target>Ĉi-jare</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.customRange">
+                <source>daterangepicker.customRange</source>
+                <target>Propra periodo</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

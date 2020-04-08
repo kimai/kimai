@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eo" datatype="plaintext" original="actions.en.xlf">
+        <body>
+            <trans-unit id="stop">
+                <source>stop</source>
+                <target>Haltigi</target>
+            </trans-unit>
+            <trans-unit id="back">
+                <source>back</source>
+                <target>Reen</target>
+            </trans-unit>
+            <trans-unit id="edit">
+                <source>edit</source>
+                <target>Redakti</target>
+            </trans-unit>
+            <trans-unit id="trash">
+                <source>trash</source>
+                <target>Forigi</target>
+            </trans-unit>
+            <trans-unit id="report">
+                <source>report</source>
+                <target>Raporti</target>
+            </trans-unit>
+            <trans-unit id="repeat">
+                <source>repeat</source>
+                <target>Rekomenci</target>
+            </trans-unit>
+            <trans-unit id="profile-stats">
+                <source>profile-stats</source>
+                <target>Profilo</target>
+            </trans-unit>
+            <trans-unit id="settings">
+                <source>settings</source>
+                <target>Agordoj</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Temposlipoj</target>
+            </trans-unit>
+            <trans-unit id="customer">
+                <source>customer</source>
+                <target>Filtri klientojn</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>Filtri projektojn</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>Filtri aktivaĵojn</target>
+            </trans-unit>
+            <trans-unit id="copy">
+                <source>copy</source>
+                <target>Krei kopion</target>
+            </trans-unit>
+            <trans-unit id="home">
+                <source>home</source>
+                <target>Hejmpaĝo</target>
+            </trans-unit>
+            <trans-unit id="create-project">
+                <source>create-project</source>
+                <target>Krei projekton</target>
+            </trans-unit>
+            <trans-unit id="create-activity">
+                <source>create-activity</source>
+                <target>Krei aktivaĵon</target>
+            </trans-unit>
+            <trans-unit id="create-timesheet">
+                <source>create-timesheet</source>
+                <target>Krei temposlipon</target>
+            </trans-unit>
+            <trans-unit id="permissions">
+                <source>permissions</source>
+                <target>Teamaj permesoj</target>
+            </trans-unit>
+            <trans-unit id="details">
+                <source>details</source>
+                <target>Montri</target>
+            </trans-unit>
+            <trans-unit id="download">
+                <source>download</source>
+                <target>Elŝuti</target>
+            </trans-unit>
+            <trans-unit id="invoice.pending">
+                <source>invoice.pending</source>
+                <target>Atendado por pago</target>
+            </trans-unit>
+            <trans-unit id="invoice.paid">
+                <source>invoice.paid</source>
+                <target>Fakturo estas pagita</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

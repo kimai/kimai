@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eo" datatype="plaintext" original="teams.en.xlf">
+        <body>
+            <trans-unit id="teams.title">
+                <source>teams.title</source>
+                <target>Teamoj</target>
+            </trans-unit>
+            <trans-unit id="teams.project_access">
+                <source>teams.project_access</source>
+                <target>Doni aliron al projektoj</target>
+            </trans-unit>
+            <trans-unit id="teams.customer_access">
+                <source>teams.customer_access</source>
+                <target>Doni aliron al klientoj</target>
+            </trans-unit>
+            <trans-unit id="team.visibility_global">
+                <source>team.visibility_global</source>
+                <target>Videbla por ĉiuj, ĉar ankoraŭ neniu teamo estis asignita.</target>
+            </trans-unit>
+            <trans-unit id="team.visibility_restricted">
+                <source>team.visibility_restricted</source>
+                <target>Videbla nur por la jenaj teamoj kaj ĉiuj administrantoj.</target>
+            </trans-unit>
+            <trans-unit id="team.project_visibility_inherited">
+                <source>team.project_visibility_inherited</source>
+                <target>La projekto havas limigitan aliron ĉar teamaj permesoj estas agorditaj por la kliento.</target>
+            </trans-unit>
+            <trans-unit id="team.create_default">
+                <source>team.create_default</source>
+                <target>Krei novan teamon por limigi aliron</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
