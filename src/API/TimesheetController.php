@@ -438,7 +438,7 @@ class TimesheetController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $this->repository->save($timesheet);
+        $this->service->updateTimesheet($timesheet);
 
         $view = new View($timesheet, Response::HTTP_OK);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
@@ -763,7 +763,7 @@ class TimesheetController extends BaseApiController
 
         $timesheet->setExported(!$timesheet->isExported());
 
-        $this->repository->save($timesheet);
+        $this->service->updateTimesheet($timesheet);
 
         $view = new View($timesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
@@ -816,7 +816,7 @@ class TimesheetController extends BaseApiController
 
         $meta->setValue($value);
 
-        $this->repository->save($timesheet);
+        $this->service->updateTimesheet($timesheet);
 
         $view = new View($timesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);

@@ -31,7 +31,6 @@ class PdfRendererFactoryTest extends TestCase
             $this->createMock(ProjectRepository::class)
         );
 
-        /** @var PDFRenderer $renderer */
         $renderer = $sut->create('foo', 'bar.pdf.twig');
 
         self::assertInstanceOf(PDFRenderer::class, $renderer);
