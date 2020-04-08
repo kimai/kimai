@@ -33,6 +33,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @RouteResource("User")
+ * @SWG\Tag(name="User")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */

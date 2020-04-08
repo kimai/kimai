@@ -23,6 +23,10 @@ class ExportControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/export/');
+    }
+
+    public function testIsSecureForrole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/');
     }
 
@@ -39,7 +43,7 @@ class ExportControllerTest extends ControllerBaseTest
     public function testIndexActionWithEntriesAndTeams()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
         $user = $this->getUserByRole($em, User::ROLE_USER);
@@ -88,7 +92,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_export', 23);
 
         // assert export type buttons are available
-        $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default.pdf.twig', 'xlsx'];
+        $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default-internal.pdf.twig', 'default.pdf.twig', 'xlsx'];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
         $this->assertEquals(count($expected), $node->count());
         /** @var \DOMElement $button */
@@ -101,7 +105,7 @@ class ExportControllerTest extends ControllerBaseTest
     public function testIndexActionWithEntriesForTeamleadDoesNotShowUserWithoutTeam()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $begin = new \DateTime('first day of this month');
         $user = $this->getUserByRole($em, User::ROLE_USER);
@@ -140,7 +144,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_export', 3);
 
         // assert export type buttons are available
-        $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default.pdf.twig', 'xlsx'];
+        $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default-internal.pdf.twig', 'default.pdf.twig', 'xlsx'];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
         $this->assertEquals(count($expected), $node->count());
         /** @var \DOMElement $button */
@@ -187,7 +191,7 @@ class ExportControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $begin = new \DateTime('first day of this month');
         $fixture = new TimesheetFixtures();

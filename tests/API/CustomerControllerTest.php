@@ -9,8 +9,12 @@
 
 namespace App\Tests\API;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
+use App\Entity\CustomerRate;
 use App\Entity\User;
+use App\Repository\CustomerRateRepository;
+use App\Repository\CustomerRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,6 +23,53 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CustomerControllerTest extends APIControllerBaseTest
 {
+    use RateControllerTestTrait;
+
+    protected function getRateUrl(string $id = '1', ?string $rateId = null): string
+    {
+        if (null !== $rateId) {
+            return sprintf('/api/customers/%s/rates/%s', $id, $rateId);
+        }
+
+        return sprintf('/api/customers/%s/rates', $id);
+    }
+
+    protected function importTestRates(string $id): array
+    {
+        /** @var CustomerRateRepository $rateRepository */
+        $rateRepository = $this->getEntityManager()->getRepository(CustomerRate::class);
+        /** @var CustomerRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Customer::class);
+        /** @var Customer|null $customer */
+        $customer = $repository->find($id);
+
+        if (null === $customer) {
+            $customer = new Customer();
+            $customer->setCountry('DE');
+            $customer->setTimezone('Europre/Paris');
+            $customer->setName('foooo');
+            $repository->saveCustomer($customer);
+        }
+
+        $rate1 = new CustomerRate();
+        $rate1->setCustomer($customer);
+        $rate1->setRate(17.45);
+        $rate1->setIsFixed(false);
+
+        $rateRepository->saveRate($rate1);
+
+        $rate2 = new CustomerRate();
+        $rate2->setCustomer($customer);
+        $rate2->setRate(99);
+        $rate2->setInternalRate(9);
+        $rate2->setIsFixed(true);
+        $rate2->setUser($this->getUserByName(UserFixtures::USERNAME_USER));
+
+        $rateRepository->saveRate($rate2);
+
+        return [$rate1, $rate2];
+    }
+
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/customers');
@@ -221,7 +272,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
         $this->assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());

@@ -316,25 +316,6 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/rate_delete/{rate}", name="admin_customer_rate_delete", methods={"GET"})
-     * @Security("is_granted('edit', customer)")
-     */
-    public function deleteRateAction(Customer $customer, CustomerRate $rate, CustomerRateRepository $repository)
-    {
-        if ($rate->getCustomer() !== $customer) {
-            $this->flashError('action.delete.error', ['%reason%' => 'Invalid customer']);
-        } else {
-            try {
-                $repository->deleteRate($rate);
-            } catch (\Exception $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
-            }
-        }
-
-        return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
-    }
-
-    /**
      * @Route(path="/{id}/rate", name="admin_customer_rate_add", methods={"GET", "POST"})
      * @Security("is_granted('edit', customer)")
      */

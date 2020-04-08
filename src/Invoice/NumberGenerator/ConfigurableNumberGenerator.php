@@ -25,14 +25,14 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
      */
     private $repository;
     /**
-     * @var string
+     * @var SystemConfiguration
      */
-    private $format;
+    private $configuration;
 
     public function __construct(InvoiceRepository $repository, SystemConfiguration $configuration)
     {
         $this->repository = $repository;
-        $this->format = $configuration->find('invoice.number_format');
+        $this->configuration = $configuration;
     }
 
     /**
@@ -56,9 +56,8 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
      */
     public function getInvoiceNumber(): string
     {
-        $format = $this->format;
+        $format = $this->configuration->find('invoice.number_format');
         $invoiceDate = $this->model->getInvoiceDate();
-        $timestamp = $invoiceDate->getTimestamp();
         $result = $format;
 
         preg_match_all('/{[^}]*?}/', $format, $matches);

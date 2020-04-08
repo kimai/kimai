@@ -1,0 +1,60 @@
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'id': id, 'entity': entity, 'create_url': create_url, 'delete_route': delete_route, 'currency': currency} %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% block box_attributes %}id="{{ id }}"{% endblock %}
+    {% block box_title %}
+        {{ 'rates.title'|trans }}
+    {% endblock %}
+    {% block box_tools %}
+        <a class="modal-ajax-form open-edit btn btn-box-tool" data-href="{{ create_url }}" data-toggle="tooltip" data-placement="top" title="{{ 'create'|trans }}"><i class="{{ 'create'|icon }}"></i></a>
+    {% endblock %}
+    {% block box_body %}
+        {% if rates is empty %}
+            {{ 'rates.empty'|trans }}
+        {% else %}
+            <table class="table dataTable" >
+                <thead>
+                <tr>
+                    <th>
+                        {{ 'label.user'|trans }}
+                    </th>
+                    <th>
+                        {{ 'label.hourlyRate'|trans }}
+                    </th>
+                    <th>
+                        {{ 'label.rate_internal'|trans }}
+                    </th>
+                    <th>
+                        {{ 'label.fixedRate'|trans }}
+                    </th>
+                    <th class="actions"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for rate in rates %}
+                    <tr>
+                        <td>
+                            {% if rate.user is not null %}
+                                {{ widgets.user_avatar(rate.user) }}
+                            {% else %}
+                                &ndash;
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ rate.rate|money(currency) }}
+                        </td>
+                        <td>
+                            {{ rate.internalRate|money(currency) }}
+                        </td>
+                        <td>
+                            {{ widgets.label_boolean(rate.fixed) }}
+                        </td>
+                        <td class="actions">
+                            <a href="{{ path(delete_route, {'id': entity.id, 'rateId': rate.id}) }}" class="btn btn-default btn-xs api-link" data-question="confirm.delete" data-event="kimai.rateUpdate kimai.rateDelete" data-method="DELETE" data-msg-error="action.delete.error" data-msg-success="action.delete.success"><i class="{{ 'delete'|icon }}"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endblock %}
+{% endembed %}

@@ -27,8 +27,8 @@ class DashboardSubscriberTest extends TestCase
     public function testGetSubscribedEvents()
     {
         $events = DashboardSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(DashboardEvent::DASHBOARD, $events);
-        $methodName = $events[DashboardEvent::DASHBOARD][0];
+        $this->assertArrayHasKey(DashboardEvent::class, $events);
+        $methodName = $events[DashboardEvent::class][0];
         $this->assertTrue(method_exists(DashboardSubscriber::class, $methodName));
     }
 

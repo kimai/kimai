@@ -25,6 +25,7 @@ class CustomerRateTest extends TestCase
         $sut = new CustomerRate();
         self::assertNull($sut->getId());
         self::assertEquals(0.00, $sut->getRate());
+        self::assertNull($sut->getInternalRate());
         self::assertNull($sut->getCustomer());
         self::assertNull($sut->getUser());
         self::assertEquals(1, $sut->getScore());
@@ -41,11 +42,18 @@ class CustomerRateTest extends TestCase
         self::assertInstanceOf(CustomerRate::class, $sut->setRate(12.34));
         self::assertEquals(12.34, $sut->getRate());
 
+        self::assertInstanceOf(CustomerRate::class, $sut->setInternalRate(7.12));
+        self::assertEquals(7.12, $sut->getInternalRate());
+        $sut->setInternalRate(null);
+        self::assertNull($sut->getInternalRate());
+
         $user = new User();
         $user->setAlias('foo');
         $user->setUsername('bar');
         self::assertInstanceOf(CustomerRate::class, $sut->setUser($user));
         self::assertSame($user, $sut->getUser());
+        $sut->setUser(null);
+        self::assertNull($sut->getUser());
 
         $entity = new Customer();
         $entity->setName('foo');
