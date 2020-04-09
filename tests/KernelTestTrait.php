@@ -15,6 +15,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
@@ -23,20 +24,27 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 trait KernelTestTrait
 {
+    public function getEntityManager(): EntityManagerInterface
+    {
+        if (!$this instanceof KernelTestCase) {
+            throw new \Exception('KernelTestTrait can only be used in a KernelTestCase');
+        }
+
+        return $this::$container->get('doctrine.orm.entity_manager');
+    }
+
     /**
      * @param HttpKernelBrowser|EntityManager|KernelTestCase $client
      * @param Fixture $fixture
      */
     protected function importFixture($client, Fixture $fixture)
     {
-        if ($client instanceof HttpKernelBrowser) {
-            $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
-        } elseif ($client instanceof EntityManager) {
+        if ($client instanceof EntityManager) {
             $em = $client;
-        } elseif ($client instanceof KernelTestCase) {
-            $em = $client::$container->get('doctrine.orm.entity_manager');
+        } elseif ($this instanceof KernelTestCase) {
+            $em = $this::$container->get('doctrine.orm.entity_manager');
         } else {
-            throw new \InvalidArgumentException('Fixtures need an EntityManager to be imported');
+            throw new \InvalidArgumentException('Need an EntityManager to import fixtures');
         }
 
         $loader = new Loader();
@@ -46,9 +54,9 @@ trait KernelTestTrait
         $executor->execute($loader->getFixtures(), true);
     }
 
-    protected function getUserByName(EntityManager $em, string $username): ?User
+    protected function getUserByName(string $username): ?User
     {
-        return $em->getRepository(User::class)->findOneBy(['username' => $username]);
+        return $this->getEntityManager()->getRepository(User::class)->findOneBy(['username' => $username]);
     }
 
     /**
@@ -81,6 +89,6 @@ trait KernelTestTrait
                 return null;
         }
 
-        return $this->getUserByName($em, $name);
+        return $this->getUserByName($name);
     }
 }

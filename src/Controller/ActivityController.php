@@ -135,25 +135,6 @@ final class ActivityController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/rate_delete/{rate}", name="admin_activity_rate_delete", methods={"GET"})
-     * @Security("is_granted('edit', activity)")
-     */
-    public function deleteRateAction(Activity $activity, ActivityRate $rate, ActivityRateRepository $repository)
-    {
-        if ($rate->getActivity() !== $activity) {
-            $this->flashError('action.delete.error', ['%reason%' => 'Invalid activity']);
-        } else {
-            try {
-                $repository->deleteRate($rate);
-            } catch (\Exception $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
-            }
-        }
-
-        return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
-    }
-
-    /**
      * @Route(path="/{id}/rate", name="admin_activity_rate_add", methods={"GET", "POST"})
      * @Security("is_granted('edit', activity)")
      */

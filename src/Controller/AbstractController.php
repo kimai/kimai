@@ -18,6 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * The abstract base controller.
+ * @method null|User getUser()
  */
 abstract class AbstractController extends BaseAbstractController implements ServiceSubscriberInterface
 {
@@ -40,14 +41,6 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     private function getLogger()
     {
         return $this->container->get('logger');
-    }
-
-    /**
-     * @return User|null
-     */
-    protected function getUser()
-    {
-        return parent::getUser();
     }
 
     /**

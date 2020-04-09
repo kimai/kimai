@@ -29,6 +29,10 @@ class CustomerControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/customer/');
+    }
+
+    public function testIsSecureForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/customer/');
     }
 
@@ -53,7 +57,6 @@ class CustomerControllerTest extends ControllerBaseTest
         });
         $this->importFixture($client, $fixture);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/');
 
         $form = $client->getCrawler()->filter('form.header-search')->form();
@@ -111,34 +114,6 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertStringContainsString('123.45', $node->text(null, true));
     }
 
-    public function testDeleteRateAction()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/customer/1/rate');
-        $form = $client->getCrawler()->filter('form[name=customer_rate_form]')->form();
-        $client->submit($form, [
-            'customer_rate_form' => [
-                'user' => null,
-                'rate' => 123.45,
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#customer_rates_box');
-        self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#customer_rates_box table.dataTable tbody tr:not(.summary)');
-        self::assertEquals(1, $node->count());
-        self::assertStringContainsString('123.45', $node->text(null, true));
-
-        $node = $client->getCrawler()->filter('div.box#customer_rates_box table.dataTable tbody tr td.actions a');
-        self::assertEquals(1, $node->count());
-        $url = $node->attr('href');
-        $client->request('GET', $url);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $node = $client->getCrawler()->filter('div.box#customer_rates_box table.dataTable tbody tr:not(.summary)');
-        self::assertEquals(0, $node->count());
-    }
-
     public function testAddCommentAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -172,7 +147,6 @@ class CustomerControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.confirmation-link');
         self::assertEquals($this->createUrl('/admin/customer/1/comment_delete'), $node->attr('href'));
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/admin/customer/1/comment_delete');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
@@ -197,7 +171,6 @@ class CustomerControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.btn.active');
         self::assertEquals(0, $node->count());
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/admin/customer/1/comment_pin');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
@@ -213,7 +186,6 @@ class CustomerControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
         self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/admin/customer/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
@@ -231,7 +203,7 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
 
         /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $customer = $em->getRepository(Customer::class)->find(1);
 
         $fixture = new ProjectFixtures();
@@ -239,7 +211,6 @@ class CustomerControllerTest extends ControllerBaseTest
         $fixture->setCustomers([$customer]);
         $this->importFixture($client, $fixture);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/projects/1');
 
         $node = $client->getCrawler()->filter('div.box#project_list_box .box-tools ul.pagination li');
@@ -309,7 +280,7 @@ class CustomerControllerTest extends ControllerBaseTest
     public function testTeamPermissionAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
@@ -368,7 +339,7 @@ class CustomerControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
         $fixture->setAmount(10);
@@ -407,7 +378,7 @@ class CustomerControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
         $fixture->setAmount(10);

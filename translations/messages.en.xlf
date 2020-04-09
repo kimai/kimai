@@ -292,6 +292,18 @@
                 <source>label.rate</source>
                 <target>Rate</target>
             </trans-unit>
+            <trans-unit id="help.rate">
+                <source>help.rate</source>
+                <target>Hourly rate to be charged</target>
+            </trans-unit>
+            <trans-unit id="label.rate_internal">
+                <source>label.rate_internal</source>
+                <target>Internal rate</target>
+            </trans-unit>
+            <trans-unit id="help.rate_internal">
+                <source>help.rate_internal</source>
+                <target>Internal costs (if this is not specified, the normal rate is used)</target>
+            </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
                 <target>Language</target>
@@ -427,6 +439,10 @@
             <trans-unit id="label.fixedRate">
                 <source>label.fixedRate</source>
                 <target>Fixed rate</target>
+            </trans-unit>
+            <trans-unit id="help.fixedRate">
+                <source>help.fixedRate</source>
+                <target>Each time record gets the same value, regardless of its duration</target>
             </trans-unit>
             <trans-unit id="label.color">
                 <source>label.color</source>

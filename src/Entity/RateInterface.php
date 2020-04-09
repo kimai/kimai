@@ -9,11 +9,16 @@
 
 namespace App\Entity;
 
+/**
+ * @internal
+ */
 interface RateInterface
 {
     public function getUser(): ?User;
 
     public function getRate(): float;
+
+    public function getInternalRate(): ?float;
 
     public function isFixed(): bool;
 

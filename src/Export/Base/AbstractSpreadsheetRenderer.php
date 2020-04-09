@@ -70,6 +70,7 @@ abstract class AbstractSpreadsheetRenderer
         'end' => [],
         'duration' => [],
         'rate' => [],
+        'rate_internal' => [],
         'user' => [],
         'customer' => [],
         'project' => [],
@@ -223,6 +224,20 @@ abstract class AbstractSpreadsheetRenderer
                     $currency = $entity->getProject()->getCustomer()->getCurrency();
                 }
                 $this->setRate($sheet, $column, $row, $entity->getRate(), $currency);
+            };
+        }
+
+        if ($showRates && isset($columns['rate_internal']) && !isset($columns['rate_internal']['render'])) {
+            $columns['rate_internal']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $currency = '';
+                if (null !== $entity->getProject()) {
+                    $currency = $entity->getProject()->getCustomer()->getCurrency();
+                }
+                $rate = $entity->getRate();
+                if (method_exists($entity, 'getInternalRate')) {
+                    $rate = $entity->getInternalRate();
+                }
+                $this->setRate($sheet, $column, $row, $rate, $currency);
             };
         }
 
@@ -468,7 +483,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (!$showRates) {
-            $removes = ['rate', 'fixedRate', 'hourlyRate'];
+            $removes = ['rate', 'fixedRate', 'hourlyRate', 'rate_internal'];
             foreach ($removes as $removeMe) {
                 if (array_key_exists($removeMe, $columns)) {
                     unset($columns[$removeMe]);
@@ -514,6 +529,7 @@ abstract class AbstractSpreadsheetRenderer
 
         $durationColumn = null;
         $rateColumn = null;
+        $internalRateColumn = null;
 
         foreach ($exportItems as $exportItem) {
             $entryHeaderColumn = 1;
@@ -523,6 +539,8 @@ abstract class AbstractSpreadsheetRenderer
                     $durationColumn = $entryHeaderColumn;
                 } elseif ($label === 'rate') {
                     $rateColumn = $entryHeaderColumn;
+                } elseif ($label === 'rate_internal') {
+                    $internalRateColumn = $entryHeaderColumn;
                 }
 
                 if (!array_key_exists('render', $settings) || !is_callable($settings['render'])) {
@@ -550,6 +568,15 @@ abstract class AbstractSpreadsheetRenderer
             $endCoordinate = $sheet->getCellByColumnAndRow($rateColumn, $entryHeaderRow - 1)->getCoordinate();
             $this->setRateTotal($sheet, $rateColumn, $entryHeaderRow, $startCoordinate, $endCoordinate);
             $style = $sheet->getStyleByColumnAndRow($rateColumn, $entryHeaderRow);
+            $style->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
+            $style->getFont()->setBold(true);
+        }
+
+        if (null !== $internalRateColumn) {
+            $startCoordinate = $sheet->getCellByColumnAndRow($internalRateColumn, 2)->getCoordinate();
+            $endCoordinate = $sheet->getCellByColumnAndRow($internalRateColumn, $entryHeaderRow - 1)->getCoordinate();
+            $this->setRateTotal($sheet, $internalRateColumn, $entryHeaderRow, $startCoordinate, $endCoordinate);
+            $style = $sheet->getStyleByColumnAndRow($internalRateColumn, $entryHeaderRow);
             $style->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
             $style->getFont()->setBold(true);
         }

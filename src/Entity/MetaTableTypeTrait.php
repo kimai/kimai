@@ -31,7 +31,8 @@ trait MetaTableTypeTrait
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
-     * @Assert\Length(min=2, max=50)
+     * @Assert\NotNull()
+     * @Assert\Length(min=2, max=50, allowEmptyString=false)
      */
     private $name;
 

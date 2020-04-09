@@ -97,6 +97,7 @@ class ActivityRepository extends EntityRepository
             ->addSelect('COUNT(t.id) as recordAmount')
             ->addSelect('SUM(t.duration) as recordDuration')
             ->addSelect('SUM(t.rate) as recordRate')
+            ->addSelect('SUM(t.internalRate) as recordInternalRate')
             ->from(Timesheet::class, 't')
             ->where('t.activity = :activity')
         ;
@@ -107,6 +108,7 @@ class ActivityRepository extends EntityRepository
             $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
             $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
             $stats->setRecordRate($timesheetResult[0]['recordRate']);
+            $stats->setRecordInternalRate($timesheetResult[0]['recordInternalRate']);
         }
 
         return $stats;
