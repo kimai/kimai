@@ -38,7 +38,6 @@ class Activity implements EntityWithMetaFields
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
     /**
      * @var Project|null
      *
@@ -46,25 +45,20 @@ class Activity implements EntityWithMetaFields
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $project;
-
     /**
      * @var string
      *
-     * Do not increase length to more than 190 chars, otherwise "Index column size too large." will be triggered.
-     *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=150)
+     * @Assert\Length(min=2, max=150, allowEmptyString=false)
      */
     private $name;
-
     /**
      * @var string
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
-
     /**
      * @var bool
      *

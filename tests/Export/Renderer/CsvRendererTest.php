@@ -83,26 +83,27 @@ class CsvRendererTest extends AbstractRendererTest
             2 => '12:06',
             3 => '400',
             4 => '0',
-            5 => 'kevin',
-            6 => 'Customer Name',
-            7 => 'project name',
-            8 => 'activity description',
-            9 => '',
+            5 => '',
+            6 => 'kevin',
+            7 => 'Customer Name',
+            8 => 'project name',
+            9 => 'activity description',
             10 => '',
-            11 => 'foo,bar',
-            12 => '',
-            13 => ' EUR 84.00 ',
-            14 => 'meta-bar',
-            15 => 'meta-bar2',
-            16 => 'customer-bar',
-            17 => '',
-            18 => 'project-foo2',
-            19 => 'activity-bar',
+            11 => '',
+            12 => 'foo,bar',
+            13 => '',
+            14 => ' EUR 84.00 ',
+            15 => 'meta-bar',
+            16 => 'meta-bar2',
+            17 => 'customer-bar',
+            18 => '',
+            19 => 'project-foo2',
+            20 => 'activity-bar',
         ];
 
         self::assertEquals(7, count($all));
         self::assertEquals($expected, $all[5]);
         self::assertEquals(count($expected), count($all[0]));
-        self::assertEquals('foo', $all[4][11]);
+        self::assertEquals('foo', $all[4][12]);
     }
 }

@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Swagger\Annotations as SWG;
 use Symfony\Component\Validator\Constraints as Assert;
 
 trait Rate
@@ -27,6 +28,7 @@ trait Rate
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
+     * @SWG\Property(ref="#/definitions/User")
      */
     private $user;
     /**
@@ -36,6 +38,12 @@ trait Rate
      * @Assert\GreaterThanOrEqual(0)
      */
     private $rate = 0.00;
+    /**
+     * @var float|null
+     *
+     * @ORM\Column(name="internal_rate", type="float", nullable=true)
+     */
+    private $internalRate;
     /**
      * @var bool
      *
@@ -76,6 +84,18 @@ trait Rate
     public function getRate(): float
     {
         return $this->rate;
+    }
+
+    public function setInternalRate(?float $rate): self
+    {
+        $this->internalRate = $rate;
+
+        return $this;
+    }
+
+    public function getInternalRate(): ?float
+    {
+        return $this->internalRate;
     }
 
     public function isFixed(): bool

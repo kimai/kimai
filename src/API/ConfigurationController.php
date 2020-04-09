@@ -25,6 +25,8 @@ use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * @SWG\Tag(name="Default")
+ *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 final class ConfigurationController extends BaseApiController

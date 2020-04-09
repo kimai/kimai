@@ -112,6 +112,15 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->addConstraint(new Range(['min' => 0])),
 
             (new UserPreference())
+                ->setName(UserPreference::INTERNAL_RATE)
+                ->setValue(null)
+                ->setOrder(101)
+                ->setType(MoneyType::class)
+                ->setEnabled($enableHourlyRate)
+                ->setOptions(array_merge($hourlyRateOptions, ['label' => 'label.rate_internal', 'required' => false]))
+                ->addConstraint(new Range(['min' => 0])),
+
+            (new UserPreference())
                 ->setName(UserPreference::TIMEZONE)
                 ->setValue($this->getDefaultTimezone())
                 ->setOrder(200)

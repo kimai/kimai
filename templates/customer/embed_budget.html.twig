@@ -12,11 +12,14 @@
             '%rate%': '<strong>' ~ stats.recordRate|money ~ '</strong>'
         } %}
 
+        {% set currency = customer.currency %}
+
         <p>
             {{ 'admin_customer.short_stats'|trans(params)|raw }}
+            {{ 'label.rate_internal'|trans }}: {{ stats.recordInternalRate|money(currency) }}.
         </p>
 
-        {{ progress.progressbar(customer.budget, stats.recordRate, 'label.budget'|trans, stats.recordRate|money(customer.currency) ~ ' / ' ~ customer.budget|money(customer.currency) ) }}
+        {{ progress.progressbar(customer.budget, stats.recordRate, 'label.budget'|trans, stats.recordRate|money(currency) ~ ' / ' ~ customer.budget|money(currency) ) }}
         {{ progress.progressbar(customer.timeBudget, stats.recordDuration, 'label.timeBudget'|trans, stats.recordDuration|duration ~ ' / ' ~ customer.timeBudget|duration ) }}
     {% endblock %}
 {% endembed %}

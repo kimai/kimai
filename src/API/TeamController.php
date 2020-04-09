@@ -33,6 +33,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @RouteResource("Team")
+ * @SWG\Tag(name="Team")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */

@@ -54,6 +54,7 @@ trait RendererTrait
                     'activities' => [],
                     'currency' => $currency,
                     'rate' => 0,
+                    'rate_internal' => 0,
                     'duration' => 0,
                 ];
             }
@@ -63,6 +64,7 @@ trait RendererTrait
                     'activity' => $activityName,
                     'currency' => $currency,
                     'rate' => 0,
+                    'rate_internal' => 0,
                     'duration' => 0,
                 ];
             }
@@ -73,6 +75,11 @@ trait RendererTrait
             }
 
             $summary[$id]['rate'] += $exportItem->getRate();
+            if (method_exists($exportItem, 'getInternalRate')) {
+                $summary[$id]['rate_internal'] += $exportItem->getInternalRate();
+            } else {
+                $summary[$id]['rate_internal'] += $exportItem->getRate();
+            }
             $summary[$id]['duration'] += $duration;
             $summary[$id]['activities'][$activityId]['rate'] += $exportItem->getRate();
             $summary[$id]['activities'][$activityId]['duration'] += $duration;

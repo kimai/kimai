@@ -17,9 +17,13 @@ use App\Entity\User;
  */
 class StatusControllerTest extends APIControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecurePing()
     {
         $this->assertUrlIsSecured('/api/ping');
+    }
+
+    public function testIsSecureVersion()
+    {
         $this->assertUrlIsSecured('/api/version');
     }
 

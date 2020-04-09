@@ -11,14 +11,10 @@ namespace App\Form;
 
 use App\Entity\ProjectRate;
 use App\Entity\Rate;
-use App\Form\Type\UserType;
-use App\Form\Type\YesNoType;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjectRateForm extends AbstractType
+class ProjectRateForm extends AbstractRateForm
 {
     /**
      * {@inheritdoc}
@@ -26,7 +22,8 @@ class ProjectRateForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $currency = null;
-        if ($options['data']) {
+
+        if (!empty($options['data'])) {
             /** @var ProjectRate $rate */
             $rate = $options['data'];
 
@@ -35,21 +32,7 @@ class ProjectRateForm extends AbstractType
             }
         }
 
-        $builder
-            ->add('user', UserType::class, [
-                'required' => false,
-            ])
-            ->add('rate', MoneyType::class, [
-                'label' => 'label.rate',
-                'attr' => [
-                    'autofocus' => 'autofocus'
-                ],
-                'currency' => $currency,
-            ])
-            ->add('isFixed', YesNoType::class, [
-                'label' => 'label.fixedRate'
-            ])
-        ;
+        $this->addFields($builder, $currency);
     }
 
     /**

@@ -4,14 +4,20 @@ nelmio_api_doc:
         names:
             - { alias: CustomerEditForm,          type: App\Form\API\CustomerApiEditForm,         groups: [Default, Entity, Customer] }
             - { alias: CustomerEntity,            type: App\Entity\Customer,                      groups: [Default, Entity, Customer] }
+            - { alias: CustomerRate,              type: App\Entity\CustomerRate,                  groups: [Default, Entity, CustomerRate] }
+            - { alias: CustomerRateForm,          type: App\Form\API\CustomerRateApiForm,         groups: [Default, Entity, CustomerRate] }
             - { alias: CustomerMetaField,         type: App\Entity\CustomerMeta,                  groups: [Default, Customer] }
             - { alias: CustomerCollection,        type: App\Entity\Customer,                      groups: [Default, Collection, Customer] }
             - { alias: ProjectEditForm,           type: App\Form\API\ProjectApiEditForm,          groups: [Default, Entity, Project] }
             - { alias: ProjectEntity,             type: App\Entity\Project,                       groups: [Default, Entity, Project] }
+            - { alias: ProjectRate,               type: App\Entity\ProjectRate,                   groups: [Default, Entity, ProjectRate] }
+            - { alias: ProjectRateForm,           type: App\Form\API\ProjectRateApiForm,          groups: [Default, Entity, ProjectRate] }
             - { alias: ProjectMetaField,          type: App\Entity\ProjectMeta,                   groups: [Default, Project] }
             - { alias: ProjectCollection,         type: App\Entity\Project,                       groups: [Default, Collection, Project] }
             - { alias: ActivityEditForm,          type: App\Form\API\ActivityApiEditForm,         groups: [Default, Entity, Activity] }
             - { alias: ActivityEntity,            type: App\Entity\Activity,                      groups: [Default, Entity, Activity] }
+            - { alias: ActivityRate,              type: App\Entity\ActivityRate,                  groups: [Default, Entity, ActivityRate] }
+            - { alias: ActivityRateForm,          type: App\Form\API\ActivityRateApiForm,         groups: [Default, Entity, ActivityRate] }
             - { alias: ActivityMetaField,         type: App\Entity\ActivityMeta,                  groups: [Default, Activity] }
             - { alias: ActivityCollection,        type: App\Entity\Activity,                      groups: [Default, Collection, Activity] }
             - { alias: TagEditForm,               type: App\Form\API\TagApiEditForm,              groups: [Default, Entity, Tag] }
@@ -23,6 +29,7 @@ nelmio_api_doc:
             - { alias: TimesheetSubCollection,    type: App\Entity\Timesheet,                     groups: [Default, Subresource, Timesheet] }
             - { alias: UserCreateForm,            type: App\Form\API\UserApiCreateForm,           groups: [Default, Entity, User, User_Entity] }
             - { alias: UserEditForm,              type: App\Form\API\UserApiEditForm,             groups: [Default, Entity, User, User_Entity] }
+            - { alias: User,                      type: App\Entity\User,                          groups: [Default, Entity, User] }
             - { alias: UserEntity,                type: App\Entity\User,                          groups: [Default, Entity, User, User_Entity] }
             - { alias: UserCollection,            type: App\Entity\User,                          groups: [Default, Collection, User] }
             - { alias: TeamEditForm,              type: App\Form\API\TeamApiEditForm,             groups: [Default, Entity, Team] }
@@ -42,8 +49,8 @@ nelmio_api_doc:
             title: Kimai 2 - API Docs
             description: |
                 JSON API for the Kimai 2 time-tracking software. Read more about its usage in the [API documentation](https://www.kimai.org/documentation/rest-api.html) and then download a [Swagger file](doc.json) for import e.g. in Postman.
-                Be aware: it is not yet considered stable and BC breaks might happen, but we try to avoid them.
-            version: '0.4'
+                Be aware: it is not yet considered stable and BC breaks might happen.
+            version: '0.5'
         securityDefinitions:
             apiUser:
                 type: apiKey

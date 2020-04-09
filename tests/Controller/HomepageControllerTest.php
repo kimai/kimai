@@ -35,7 +35,7 @@ class HomepageControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $pref = (new UserPreference())

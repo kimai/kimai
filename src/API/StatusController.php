@@ -20,6 +20,9 @@ use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @SWG\Tag(name="Default")
+ */
 class StatusController extends BaseApiController
 {
     /**

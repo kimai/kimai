@@ -131,7 +131,14 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     private $rate = 0.00;
 
     /**
-     * @var float
+     * @var float|null
+     *
+     * @ORM\Column(name="internal_rate", type="float", nullable=true)
+     */
+    private $internalRate;
+
+    /**
+     * @var float|null
      *
      * @ORM\Column(name="fixed_rate", type="float", nullable=true)
      * @Assert\GreaterThanOrEqual(0)
@@ -361,6 +368,18 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     public function getRate(): float
     {
         return $this->rate;
+    }
+
+    public function setInternalRate(?float $rate): Timesheet
+    {
+        $this->internalRate = $rate;
+
+        return $this;
+    }
+
+    public function getInternalRate(): ?float
+    {
+        return $this->internalRate;
     }
 
     /**

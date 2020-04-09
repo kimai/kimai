@@ -57,6 +57,11 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
         $invoiceItem->setAmount($invoiceItem->getAmount() + $amount);
         $invoiceItem->setUser($entry->getUser());
         $invoiceItem->setRate($invoiceItem->getRate() + $entry->getRate());
+        if (method_exists($entry, 'getInternalRate')) {
+            $invoiceItem->setInternalRate($invoiceItem->getInternalRate() + $entry->getInternalRate());
+        } else {
+            $invoiceItem->setInternalRate($invoiceItem->getInternalRate() + $entry->getRate());
+        }
         $invoiceItem->setDuration($duration);
 
         if (null !== $entry->getFixedRate()) {

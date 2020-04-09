@@ -28,6 +28,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @RouteResource("Tag")
+ * @SWG\Tag(name="Tag")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */

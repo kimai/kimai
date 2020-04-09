@@ -44,6 +44,7 @@ class RateCalculatorTest extends TestCase
         $record->setDuration(1800);
         $record->setHourlyRate(100);
         $record->setActivity(new Activity());
+        $record->setUser($this->getTestUser());
 
         $sut = new RateCalculator([], $this->getRateRepositoryMock());
         $sut->calculate($record);
@@ -59,6 +60,7 @@ class RateCalculatorTest extends TestCase
         // make sure that fixed rate is always applied, even if hourly rate is set
         $record->setHourlyRate(99);
         $record->setActivity(new Activity());
+        $record->setUser($this->getTestUser());
 
         $sut = new RateCalculator([], $this->getRateRepositoryMock());
         $sut->calculate($record);
@@ -66,45 +68,59 @@ class RateCalculatorTest extends TestCase
     }
 
     public function getRateTestData()
-    {
-        yield 'a0' => [0.0, 0,      0,      null,   null,   null,   null,   null,   null,   null,   null];
-        yield 'a1' => [0.0, 1800,   0,      null,   null,   null,   null,   null,   null,   null,   null];
-        yield 'a2' => [0.5, 1800,   1,      null,   null,   null,   null,   null,   null,   null,   null];
-        yield 'a3' => [0.0, 0,      0,      0,      0,      0,      0,      0,      0,      0,      0];
-        yield 'b1' => [1.5, 1800,   1,      3,      null,   5,      null,   7,      null,   9,      null];
-        yield 'b2' => [2.5, 1800,   1,      null,   null,   5,      null,   7,      null,   9,      null];
-        yield 'b3' => [3.5, 1800,   1,      null,   null,   null,   null,   7,      null,   9,      null];
-        yield 'b4' => [4.5, 1800,   1,      null,   null,   null,   null,   null,   null,   9,      null];
-        yield 'b5' => [2.0, 1800,   1,      null,   2,      null,   3,      null,   4,      null,   5];
-        yield 'b6' => [3.0, 1800,   1,      null,   null,   null,   3,      null,   4,      null,   5];
-        yield 'b7' => [4.0, 1800,   1,      null,   null,   null,   null,   null,   4,      null,   5];
-        yield 'b8' => [3.0, 1800,   1,      null,   null,   null,   3,      null,   null,   null,   5];
-        yield 'b9' => [2.0, 1800,   1,      null,   2,      null,   null,   null,   null,   null,   5];
-        yield 'c0' => [5.0, 1800,   100,    10,     null,   null,   null,   null,   null,   null,   null];
-        yield 'd0' => [10,  1800,   100,    null,   10,     null,   null,   null,   null,   null,   null];
-        yield 'e0' => [10,  1800,   100,    null,   null,   20,     null,   null,   null,   null,   null];
-        yield 'f0' => [20,  1800,   100,    null,   null,   null,   20,     null,   null,   null,   null];
-        yield 'g0' => [15,  1800,   100,    null,   null,   null,   null,   30,     null,   null,   null];
-        yield 'h0' => [30,  1800,   100,    null,   null,   null,   null,   null,   30,     null,   null];
-        yield 'i0' => [20,  1800,   100,    null,   null,   null,   null,   null,   null,   40,     null];
-        yield 'j0' => [40,  1800,   100,    null,   null,   null,   null,   null,   null,   null,   40];
+    {   //             expected, expInt, durat, userH,  userIn, timeH,  timeF,  actH,   actIn,  actF,    proH,   proIn,  proFi,   custH,  custIn, custF
+        yield 'a0' => [0.0,     0.0,    0,      0,      0,      null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
+        yield 'a2' => [0.0,     0.0,    0,      0,      null,   null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
+        yield 'a4' => [0.0,     0.0,    1800,   0,      0,      null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
+        yield 'a6' => [0.5,     6.72,   1800,   1,      13.44,  null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
+        yield 'a8' => [0.0,     1,      0,      0,      0,      0,      0,      0,      1,      true,    0,      null,   true,    0,      null,   true];
+        // rate: 1.5 => timesheet hourly rate , internal: 2.5 => activity hourly rate (30 min)
+        yield 'b1' => [1.5,     2.5,    1800,   1,      1,      3,      null,   5,      null,   false,   7,      null,   false,   9,      null,   false];
+        yield 'b2' => [2.5,     2.5,    1800,   1,      1,      null,   null,   5,      null,   false,   7,      null,   false,   9,      null,   false];
+        yield 'b3' => [3.5,     6.5,    1800,   1,      1,      null,   null,   null,   null,   false,   7,      13,     false,   9,      9,      false];
+        yield 'b4' => [4.5,     6.5,    1800,   1,      15,     null,   null,   null,   null,   false,   null,   null,   false,   9,      13,     false];
+        // rate: 2.0 => timesheet fixed rate , internal: 3.0 => activity fixed rate
+        yield 'b5' => [2.0,     3.0,    1800,   1,      1,      null,   2,      3,      null,   true,    4,      null,   true,    5,      null,   true];
+        yield 'b6' => [3.0,     3.0,    1800,   1,      1,      null,   null,   3,      null,   true,    4,      null,   true,    5,      null,   true];
+        yield 'b7' => [4.0,     4.0,    1800,   1,      1,      null,   null,   null,   null,   false,   4,      null,   true,    5,      null,   true];
+        yield 'b8' => [3.0,     3.0,    1800,   1,      1,      null,   null,   3,      null,   true,    null,   null,   false,   5,      null,   true];
+        // rate: 2.0 => timesheet fixed rate , internal: 5.0 => customer hourly rate
+        yield 'b9' => [2.0,     5.0,    1800,   1,      1,      null,   2,      null,   null,   false,   null,   null,   false,   5,      null,   true];
+        // rate: 5.0 => timesheet hourly rate , internal: 7.5 => user internal rate (30 min)
+        yield 'c0' => [5.0,     7.5,    1800,   100,    15,     10,     null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
+        // internal: 10 because no rule applies and as fallback the users internal rate is used
+        yield 'd0' => [10,      100,    1800,   100,    100,    null,   10,     null,   null,   false,   null,   null,   false,   null,   null,   false];
+        yield 'e0' => [10,      10,     1800,   100,    100,    null,   null,   20,     null,   false,   null,   null,   false,   null,   null,   false];
+        yield 'f0' => [20,      78,     1800,   100,    100,    null,   null,   20,     78,     true,    null,   null,   false,   null,   null,   false];
+        yield 'g0' => [15,      11.5,   1800,   100,    100,    null,   null,   null,   null,   false,   30,     23,     false,   null,   null,   false];
+        yield 'h0' => [30,      30,     1800,   100,    100,    null,   null,   null,   null,   false,   30,     null,   true,    null,   null,   false];
+        yield 'i0' => [20,      13.5,   1800,   100,    100,    null,   null,   null,   null,   false,   null,   null,   false,   40,     27,     false];
+        yield 'j0' => [40,      84,     1800,   100,    45,     null,   null,   null,   null,   false,   null,   null,   false,   40,     84,     true];
+        // make sure the last fallback for the internal rate is the users hourly rate
+        yield 'k0' => [8.82,    6,      1800,   17.64,  12,     null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   true];
+        yield 'k1' => [8.82,    8.82,   1800,   17.64,  null,   null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   true];
     }
 
     /**
      * @dataProvider getRateTestData
      */
     public function testRates(
-        $exptectedRate,
+        $expectedRate,
+        $expectedInternalRate,
         $duration,
         $userRate,
+        $userInternalRate,
         $timesheetHourly,
         $timesheetFixed,
-        $activityHourly,
-        $activityFixed,
-        $projectHourly,
-        $projectFixed,
-        $customerHourly,
-        $customerFixed
+        $activityRate,
+        $activityInternal,
+        $activityIsFixed,
+        $projectRate,
+        $projectInternal,
+        $projectIsFixed,
+        $customerRate,
+        $customerInternal,
+        $customerIsFixed
     ) {
         $customer = new Customer();
 
@@ -122,42 +138,60 @@ class RateCalculatorTest extends TestCase
             ->setActivity($activity)
             ->setProject($project)
             ->setDuration($duration)
-            ->setUser($this->getTestUser($userRate))
+            ->setUser($this->getTestUser($userRate, $userInternalRate))
         ;
 
         $rates = [];
 
-        if (null !== $customerFixed) {
-            $rates[] = (new CustomerRate())->setRate($customerFixed)->setIsFixed(true);
-        } elseif (null !== $customerHourly) {
-            $rates[] = (new CustomerRate())->setRate($customerHourly);
+        if (null !== $customerRate) {
+            $rate = new CustomerRate();
+            $rate->setRate($customerRate);
+            $rate->setIsFixed($customerIsFixed);
+            if (null !== $customerInternal) {
+                $rate->setInternalRate($customerInternal);
+            }
+            $rates[] = $rate;
         }
 
-        if (null !== $projectFixed) {
-            $rates[] = (new ProjectRate())->setRate($projectFixed)->setIsFixed(true);
-        } elseif (null !== $projectHourly) {
-            $rates[] = (new ProjectRate())->setRate($projectHourly);
+        if (null !== $projectRate) {
+            $rate = new ProjectRate();
+            $rate->setRate($projectRate);
+            $rate->setIsFixed($projectIsFixed);
+            if (null !== $projectInternal) {
+                $rate->setInternalRate($projectInternal);
+            }
+            $rates[] = $rate;
         }
 
-        if (null !== $activityFixed) {
-            $rates[] = (new ActivityRate())->setRate($activityFixed)->setIsFixed(true);
-        } elseif (null !== $activityHourly) {
-            $rates[] = (new ActivityRate())->setRate($activityHourly);
+        if (null !== $activityRate) {
+            $rate = new ActivityRate();
+            $rate->setRate($activityRate);
+            $rate->setIsFixed($activityIsFixed);
+            if (null !== $activityInternal) {
+                $rate->setInternalRate($activityInternal);
+            }
+            $rates[] = $rate;
         }
 
         $sut = new RateCalculator([], $this->getRateRepositoryMock($rates));
         $sut->calculate($timesheet);
-        $this->assertEquals($exptectedRate, $timesheet->getRate());
+        $this->assertEquals($expectedRate, $timesheet->getRate());
+        $this->assertEquals($expectedInternalRate, $timesheet->getInternalRate());
     }
 
-    protected function getTestUser($rate = 75)
+    protected function getTestUser($rate = 75, $internalRate = 75)
     {
+        $user = new User();
+
         $pref = new UserPreference();
         $pref->setName(UserPreference::HOURLY_RATE);
         $pref->setValue($rate);
 
-        $user = new User();
-        $user->setPreferences([$pref]);
+        $prefInt = new UserPreference();
+        $prefInt->setName(UserPreference::INTERNAL_RATE);
+        $prefInt->setValue($internalRate);
+
+        $user->setPreferences([$pref, $prefInt]);
 
         return $user;
     }

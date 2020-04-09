@@ -20,9 +20,23 @@ class UserControllerTest extends APIControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/users');
-        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/users');
-        $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/api/users');
-        $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/api/users');
+    }
+
+    public function getRoleTestData()
+    {
+        return [
+            [User::ROLE_USER],
+            [User::ROLE_TEAMLEAD],
+            [User::ROLE_ADMIN],
+        ];
+    }
+
+    /**
+     * @dataProvider getRoleTestData
+     */
+    public function testIsSecureForRole(string $role)
+    {
+        $this->assertUrlIsSecuredForRole($role, '/api/users');
     }
 
     public function testGetCollection()
@@ -187,7 +201,6 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $data = [
             'avatar' => 'test321',
             'title' => 'qwertzui',

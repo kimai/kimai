@@ -36,18 +36,14 @@ class Customer implements EntityWithMetaFields
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
     /**
      * @var string
      *
-     * Do not increase length to more than 190 chars, otherwise "Index column size too large." will be triggered.
-     *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=150)
+     * @Assert\Length(min=2, max=150, allowEmptyString=false)
      */
     private $name;
-
     /**
      * @var string
      *
@@ -55,14 +51,12 @@ class Customer implements EntityWithMetaFields
      * @Assert\Length(max=50)
      */
     private $number;
-
     /**
      * @var string
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
-
     /**
      * @var bool
      *
@@ -70,7 +64,6 @@ class Customer implements EntityWithMetaFields
      * @Assert\NotNull()
      */
     private $visible = true;
-
     /**
      * @var string
      *
@@ -78,7 +71,6 @@ class Customer implements EntityWithMetaFields
      * @Assert\Length(max=255)
      */
     private $company;
-
     /**
      * @var string
      *
@@ -86,7 +78,6 @@ class Customer implements EntityWithMetaFields
      * @Assert\Length(max=50)
      */
     private $vatId;
-
     /**
      * @var string
      *
@@ -94,14 +85,12 @@ class Customer implements EntityWithMetaFields
      * @Assert\Length(max=255)
      */
     private $contact;
-
     /**
      * @var string
      *
      * @ORM\Column(name="address", type="text", nullable=true)
      */
     private $address;
-
     /**
      * @var string
      *
@@ -110,7 +99,6 @@ class Customer implements EntityWithMetaFields
      * @Assert\Length(max=2)
      */
     private $country;
-
     /**
      * @var string
      *
@@ -119,7 +107,6 @@ class Customer implements EntityWithMetaFields
      * @Assert\Length(max=3)
      */
     private $currency = self::DEFAULT_CURRENCY;
-
     /**
      * @var string
      *
@@ -127,7 +114,6 @@ class Customer implements EntityWithMetaFields
      * @Assert\Length(max=255)
      */
     private $phone;
-
     /**
      * @var string
      *
@@ -135,7 +121,6 @@ class Customer implements EntityWithMetaFields
      * @Assert\Length(max=255)
      */
     private $fax;
-
     /**
      * @var string
      *
@@ -143,7 +128,6 @@ class Customer implements EntityWithMetaFields
      * @Assert\Length(max=255)
      */
     private $mobile;
-
     /**
      * @var string
      *
@@ -153,7 +137,6 @@ class Customer implements EntityWithMetaFields
      * @Assert\Length(max=254)
      */
     private $email;
-
     /**
      * @var string
      *
@@ -161,7 +144,6 @@ class Customer implements EntityWithMetaFields
      * @Assert\Length(max=255)
      */
     private $homepage;
-
     /**
      * @var string
      *
@@ -183,7 +165,6 @@ class Customer implements EntityWithMetaFields
      * @ORM\OneToMany(targetEntity="App\Entity\CustomerMeta", mappedBy="customer", cascade={"persist"})
      */
     private $meta;
-
     /**
      * @var Team[]|ArrayCollection
      *

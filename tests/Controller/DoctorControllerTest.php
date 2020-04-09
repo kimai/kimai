@@ -19,6 +19,10 @@ class DoctorControllerTest extends ControllerBaseTest
     public function testDoctorIsSecure()
     {
         $this->assertUrlIsSecured('/doctor');
+    }
+
+    public function testDoctorIsSecureForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/doctor');
     }
 

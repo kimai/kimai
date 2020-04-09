@@ -11,16 +11,19 @@ namespace App\Tests\Controller;
 
 use App\Entity\RolePermission;
 use App\Entity\User;
-use Doctrine\ORM\EntityManager;
 
 /**
  * @group integration
  */
 class PermissionControllerTest extends ControllerBaseTest
 {
-    public function testPermissionsIsSecure()
+    public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/permissions');
+    }
+
+    public function testIsSecureForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
     }
 
@@ -47,6 +50,10 @@ class PermissionControllerTest extends ControllerBaseTest
     public function testCreateRoleIsSecured()
     {
         $this->assertUrlIsSecured('/admin/permissions/roles/create');
+    }
+
+    public function testCreateRoleIsSecuredForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
     }
 
@@ -75,6 +82,10 @@ class PermissionControllerTest extends ControllerBaseTest
     public function testDeleteRoleIsSecured()
     {
         $this->assertUrlIsSecured('/admin/permissions/roles/1/delete');
+    }
+
+    public function testDeleteRoleIsSecuredForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
     }
 
@@ -106,6 +117,10 @@ class PermissionControllerTest extends ControllerBaseTest
     public function testSavePermissionIsSecured()
     {
         $this->assertUrlIsSecured('/admin/permissions/roles/1/view_user/1');
+    }
+
+    public function testSavePermissionIsSecuredForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
     }
 
@@ -121,8 +136,7 @@ class PermissionControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
 
-        /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
         $this->assertEquals(0, count($rolePermissions));
 
