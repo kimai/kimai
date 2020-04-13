@@ -160,7 +160,7 @@
 
 {% macro badge(title, color) %}
     {# black, green, blue, yellow #}
-    <span class="badge bg-{{ color|default('red') }}">{{ title|trans }}</span>
+    <span class="badge" style="background-color:{{ color }}">{{ title|trans }}</span>
 {% endmacro %}
 
 {% macro alert(type, description, title, icon) %}
@@ -369,7 +369,7 @@
 {% macro tag_list(taglist) %}
     {% import _self as macro %}
     {% for tag in taglist %}
-        {{ macro.badge(tag.name , 'green') }}
+        {{ macro.badge(tag.name , tag.color ?? 'red') }}
     {% endfor %}
 {% endmacro %}
 

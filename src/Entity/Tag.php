@@ -44,6 +44,8 @@ class Tag
      */
     private $name;
 
+    use ColorTrait;
+
     /**
      * @var Timesheet[]|ArrayCollection
      *
