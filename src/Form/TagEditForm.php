@@ -18,8 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TagEditForm extends AbstractType
 {
-    use EntityFormTrait;
-
     /**
      * {@inheritdoc}
      */
