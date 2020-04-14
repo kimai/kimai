@@ -368,7 +368,7 @@
 {% macro tag_list(taglist) %}
     {% import _self as macro %}
     {% for tag in taglist %}
-        {{ macro.badge(tag.name , tag.color ?? '#00a65a') }}
+        {{ macro.badge(tag.name, tag.color|default('#00a65a')) }}
     {% endfor %}
 {% endmacro %}
 
