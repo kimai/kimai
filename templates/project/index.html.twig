@@ -19,8 +19,8 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'team': {'class': 'text-center', 'orderBy': false},
-    'visible': {'class': 'text-center hidden', 'orderBy': false},
+    'team': {'class': 'text-center w-min', 'orderBy': false},
+    'visible': {'class': 'text-center hidden w-min', 'orderBy': false},
     'actions': {'class': 'actions alwaysVisible'},
 }) %}
 
