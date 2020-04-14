@@ -132,7 +132,7 @@ class TagControllerTest extends APIControllerBaseTest
     protected function assertStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'name', 'timesheets'
+            'id', 'name', 'color', 'timesheets'
         ];
 
         if ($full) {

@@ -108,10 +108,11 @@ class TagRepository extends EntityRepository
         $qb = $this->createQueryBuilder('tag');
 
         $qb
-            ->select('tag.id, tag.name, count(timesheets.id) as amount')
+            ->select('tag.id, tag.name, tag.color, count(timesheets.id) as amount')
             ->leftJoin('tag.timesheets', 'timesheets')
             ->addGroupBy('tag.id')
             ->addGroupBy('tag.name')
+            ->addGroupBy('tag.color')
         ;
 
         $orderBy = $query->getOrderBy();

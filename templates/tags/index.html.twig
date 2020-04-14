@@ -38,7 +38,10 @@
 
             <tr{% if manageAllowed %} class="modal-ajax-form open-edit" data-href="{{ path('tags_edit', {'id': tag.id}) }}"{% endif %}>
                 <td class="text-nowrap">{{ tables.datatable_multiupdate_row(tag.id) }}</td>
-                <td>{{ tag.name }}</td>
+                <td>
+                    {{ widgets.color_dot(tag.color|default('#00a65a')) }}
+                    {{ tag.name }}
+                </td>
                 <td>{{ widgets.label(tag.amount, type) }}</td>
                 <td class="actions">
                     {{ actions.tag(tag, 'index') }}
