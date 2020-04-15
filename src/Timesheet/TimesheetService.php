@@ -12,7 +12,17 @@ namespace App\Timesheet;
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Event\TimesheetCreatePostEvent;
+use App\Event\TimesheetCreatePreEvent;
+use App\Event\TimesheetDeleteMultiplePreEvent;
+use App\Event\TimesheetDeletePreEvent;
 use App\Event\TimesheetMetaDefinitionEvent;
+use App\Event\TimesheetStopPostEvent;
+use App\Event\TimesheetStopPreEvent;
+use App\Event\TimesheetUpdateMultiplePostEvent;
+use App\Event\TimesheetUpdateMultiplePreEvent;
+use App\Event\TimesheetUpdatePostEvent;
+use App\Event\TimesheetUpdatePreEvent;
 use App\Repository\TimesheetRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,7 +85,7 @@ final class TimesheetService
         return $timesheet;
     }
 
-    public function prepareNewTimesheet(Timesheet $timesheet, ?Request $request = null)
+    public function prepareNewTimesheet(Timesheet $timesheet, ?Request $request = null): Timesheet
     {
         if (null !== $timesheet->getId()) {
             throw new \InvalidArgumentException('Cannot prepare timesheet, already persisted');
@@ -90,7 +100,7 @@ final class TimesheetService
         return $timesheet;
     }
 
-    public function saveNewTimesheet(Timesheet $timesheet)
+    public function saveNewTimesheet(Timesheet $timesheet): Timesheet
     {
         if (null !== $timesheet->getId()) {
             throw new \InvalidArgumentException('Cannot create timesheet, already persisted');
@@ -100,18 +110,47 @@ final class TimesheetService
             throw new AccessDeniedHttpException('You are not allowed to start this timesheet record');
         }
 
+        $this->dispatcher->dispatch(new TimesheetCreatePreEvent($timesheet));
         $this->repository->add($timesheet, $this->configuration->getActiveEntriesHardLimit());
+        $this->dispatcher->dispatch(new TimesheetCreatePostEvent($timesheet));
 
         return $timesheet;
     }
 
-    public function updateTimesheet(Timesheet $timesheet)
+    public function updateTimesheet(Timesheet $timesheet): Timesheet
     {
-        return $this->repository->save($timesheet);
+        $this->dispatcher->dispatch(new TimesheetUpdatePreEvent($timesheet));
+        $this->repository->save($timesheet);
+        $this->dispatcher->dispatch(new TimesheetUpdatePostEvent($timesheet));
+
+        return $timesheet;
     }
 
-    public function stopTimesheet(Timesheet $timesheet)
+    public function updateMultipleTimesheets(array $timesheets): array
     {
-        return $this->repository->stopRecording($timesheet);
+        $this->dispatcher->dispatch(new TimesheetUpdateMultiplePreEvent($timesheets));
+        $this->repository->saveMultiple($timesheets);
+        $this->dispatcher->dispatch(new TimesheetUpdateMultiplePostEvent($timesheets));
+
+        return $timesheets;
+    }
+
+    public function stopTimesheet(Timesheet $timesheet): void
+    {
+        $this->dispatcher->dispatch(new TimesheetStopPreEvent($timesheet));
+        $this->repository->stopRecording($timesheet);
+        $this->dispatcher->dispatch(new TimesheetStopPostEvent($timesheet));
+    }
+
+    public function deleteTimesheet(Timesheet $timesheet): void
+    {
+        $this->dispatcher->dispatch(new TimesheetDeletePreEvent($timesheet));
+        $this->repository->delete($timesheet);
+    }
+
+    public function deleteMultipleTimesheets(array $timesheets): void
+    {
+        $this->dispatcher->dispatch(new TimesheetDeleteMultiplePreEvent($timesheets));
+        $this->repository->deleteMultiple($timesheets);
     }
 }

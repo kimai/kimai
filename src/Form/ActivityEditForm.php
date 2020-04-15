@@ -86,7 +86,6 @@ class ActivityEditForm extends AbstractType
                 'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer) {
                     $query = new ProjectFormTypeQuery($project, $customer);
                     $query->setUser($builder->getOption('user'));
-                    // TODO this should only allow creation of projects which did not yet end (see below)
                     $query->setIgnoreDate(true);
 
                     return $repo->getQueryBuilderForFormType($query);
@@ -107,7 +106,6 @@ class ActivityEditForm extends AbstractType
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $data, $project) {
                         $query = new ProjectFormTypeQuery($project, $data['customer']);
                         $query->setUser($builder->getOption('user'));
-                        // TODO this should only allow creation of projects which did not yet end (see above)
                         $query->setIgnoreDate(true);
 
                         return $repo->getQueryBuilderForFormType($query);
