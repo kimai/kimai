@@ -14,10 +14,13 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\TimesheetCreatePostEvent;
 use App\Event\TimesheetCreatePreEvent;
+use App\Event\TimesheetDeleteMultiplePreEvent;
 use App\Event\TimesheetDeletePreEvent;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Event\TimesheetStopPostEvent;
 use App\Event\TimesheetStopPreEvent;
+use App\Event\TimesheetUpdateMultiplePostEvent;
+use App\Event\TimesheetUpdateMultiplePreEvent;
 use App\Event\TimesheetUpdatePostEvent;
 use App\Event\TimesheetUpdatePreEvent;
 use App\Repository\TimesheetRepository;
@@ -123,6 +126,15 @@ final class TimesheetService
         return $timesheet;
     }
 
+    public function updateMultipleTimesheets(array $timesheets): array
+    {
+        $this->dispatcher->dispatch(new TimesheetUpdateMultiplePreEvent($timesheets));
+        $this->repository->saveMultiple($timesheets);
+        $this->dispatcher->dispatch(new TimesheetUpdateMultiplePostEvent($timesheets));
+
+        return $timesheets;
+    }
+
     public function stopTimesheet(Timesheet $timesheet): void
     {
         $this->dispatcher->dispatch(new TimesheetStopPreEvent($timesheet));
@@ -134,5 +146,11 @@ final class TimesheetService
     {
         $this->dispatcher->dispatch(new TimesheetDeletePreEvent($timesheet));
         $this->repository->delete($timesheet);
+    }
+
+    public function deleteMultipleTimesheets(array $timesheets): void
+    {
+        $this->dispatcher->dispatch(new TimesheetDeleteMultiplePreEvent($timesheets));
+        $this->repository->deleteMultiple($timesheets);
     }
 }

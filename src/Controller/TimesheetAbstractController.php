@@ -14,7 +14,6 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Event\TimesheetMetaDisplayEvent;
-use App\Event\TimesheetUpdateEvent;
 use App\Export\ServiceExport;
 use App\Form\MultiUpdate\MultiUpdateTable;
 use App\Form\MultiUpdate\MultiUpdateTableDTO;
@@ -345,11 +344,8 @@ abstract class TimesheetAbstractController extends AbstractController
 
             if ($execute) {
                 try {
-                    $this->repository->saveMultiple($dto->getEntities());
+                    $this->service->updateMultipleTimesheets($dto->getEntities());
                     $this->flashSuccess('action.update.success');
-
-                    $event = new TimesheetUpdateEvent($dto->getEntities());
-                    $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_UPDATE);
 
                     return $this->redirectToRoute($this->getTimesheetRoute());
                 } catch (\Exception $ex) {
@@ -382,11 +378,8 @@ abstract class TimesheetAbstractController extends AbstractController
             $dto->setEntities($timesheets);
 
             try {
-                $this->repository->deleteMultiple($dto->getEntities());
+                $this->service->deleteMultipleTimesheets($dto->getEntities());
                 $this->flashSuccess('action.delete.success');
-
-                $event = new TimesheetUpdateEvent($dto->getEntities());
-                $this->dispatcher->dispatch($event, TimesheetUpdateEvent::TIMESHEET_DELETE);
             } catch (\Exception $ex) {
                 $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
             }

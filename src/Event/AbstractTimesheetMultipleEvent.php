@@ -15,20 +15,20 @@ use Symfony\Contracts\EventDispatcher\Event;
 /**
  * Base event class to used with timesheet manipulations.
  */
-abstract class AbstractTimesheetEvent extends Event
+abstract class AbstractTimesheetMultipleEvent extends Event
 {
     /**
-     * @var Timesheet
+     * @var Timesheet[]
      */
-    private $timesheet;
+    private $timesheets;
 
-    public function __construct(Timesheet $timesheet)
+    public function __construct(array $timesheets)
     {
-        $this->timesheet = $timesheet;
+        $this->timesheets = $timesheets;
     }
 
-    public function getTimesheet(): Timesheet
+    public function getTimesheets(): array
     {
-        return $this->timesheet;
+        return $this->timesheets;
     }
 }
