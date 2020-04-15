@@ -46,17 +46,12 @@ final class PermissionController extends AbstractController
      * @var RoleRepository
      */
     private $roleRepository;
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
 
-    public function __construct(RoleService $roleService, RolePermissionManager $manager, RoleRepository $roleRepository, UserRepository $userRepository)
+    public function __construct(RoleService $roleService, RolePermissionManager $manager, RoleRepository $roleRepository)
     {
         $this->roleService = $roleService;
         $this->manager = $manager;
         $this->roleRepository = $roleRepository;
-        $this->userRepository = $userRepository;
     }
 
     /**
@@ -201,15 +196,15 @@ final class PermissionController extends AbstractController
      * @Route(path="/roles/{id}/delete", name="admin_user_role_delete", methods={"GET", "POST"})
      * @Security("is_granted('role_permissions')")
      */
-    public function deleteRole(Role $role): Response
+    public function deleteRole(Role $role, UserRepository $userRepository): Response
     {
         try {
             // workaround, as roles is still a string array on users table
             // until this is fixed, the users must be manually updated
-            $users = $this->userRepository->findUsersWithRole($role);
+            $users = $userRepository->findUsersWithRole($role->getName());
             foreach ($users as $user) {
                 $user->removeRole($role->getName());
-                $this->userRepository->saveUser($user);
+                $userRepository->saveUser($user);
             }
             $this->roleRepository->deleteRole($role);
             $this->flashSuccess('action.delete.success');

@@ -172,12 +172,12 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     }
 
     /**
-     * @param Role $role
+     * @param string $role
      * @return User[]
+     * @internal
      */
-    public function findUsersWithRole(Role $role): array
+    public function findUsersWithRole(string $role): array
     {
-        $role = $role->getName();
         if ($role === User::ROLE_USER) {
             return $this->findAll();
         }
