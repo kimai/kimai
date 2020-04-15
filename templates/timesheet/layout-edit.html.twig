@@ -71,16 +71,17 @@
         {% endblock %}
         {% block form_after %}
             {% if form.begin is defined and form.end is defined and form.duration is defined %}
+                {% set blockPrefix = form.vars.id %}
                 <script type="text/javascript">
-                    $('body').on('blur change', '#timesheet_edit_form_begin', function(ev) {
+                    $('body').on('blur change', '#{{ blockPrefix }}_begin', function(ev) {
                         changedBegin($(this).val());
                     });
 
-                    $('body').on('blur change', '#timesheet_edit_form_end', function(ev) {
+                    $('body').on('blur change', '#{{ blockPrefix }}_end', function(ev) {
                         changedEnd($(this).val());
                     });
 
-                    $('body').on('blur change', '#timesheet_edit_form_duration', function(ev) {
+                    $('body').on('blur change', '#{{ blockPrefix }}_duration', function(ev) {
                         changedDuration($(this).val());
                     });
                     
@@ -91,10 +92,11 @@
                         - invalid end => skip
                         - calculate duration 
                     #}
+
                     function changedBegin(value)
                     {
-                        var endField = document.getElementById('timesheet_edit_form_end');
-                        var durationField = document.getElementById('timesheet_edit_form_duration');
+                        var endField = document.getElementById('{{ blockPrefix }}_end');
+                        var durationField = document.getElementById('{{ blockPrefix }}_duration');
                         var format = endField.dataset.format;
                         var momentDuration = moment.duration(durationField.value);
 
@@ -135,10 +137,11 @@
                         - invalid begin => skip
                         - calculate duration 
                     #}
+
                     function changedEnd(value)
                     {
-                        var beginField = document.getElementById('timesheet_edit_form_begin');
-                        var durationField = document.getElementById('timesheet_edit_form_duration');
+                        var beginField = document.getElementById('{{ blockPrefix }}_begin');
+                        var durationField = document.getElementById('{{ blockPrefix }}_duration');
                         var format = beginField.dataset.format;
                         var momentDuration = moment.duration(durationField.value);
 
@@ -179,6 +182,7 @@
                         - if begin is empty and end is not empty: set begin to end minus duration
                         - if begin is not empty and end is empty and duration is > 0 (running records = 0): set end to begin plus duration
                     #}
+
                     function changedDuration(value)
                     {
                         var momentDuration = moment.duration(value);
@@ -186,8 +190,8 @@
                             return;
                         }
                         
-                        var beginField = document.getElementById('timesheet_edit_form_begin');
-                        var endField = document.getElementById('timesheet_edit_form_end');
+                        var beginField = document.getElementById('{{ blockPrefix }}_begin');
+                        var endField = document.getElementById('{{ blockPrefix }}_end');
                         var format = endField.dataset.format;
                         var begin = beginField.value;
                         var end = endField.value;

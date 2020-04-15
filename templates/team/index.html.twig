@@ -15,10 +15,10 @@
     {% else %}
 
         {% set columns = {
-            'name': '',
-            'teamlead': '',
+            'name': {'class': ''},
+            'teamlead': {'class': ''},
             'user': {'class': 'hidden-xs', 'orderBy': false},
-            'actions': 'actions alwaysVisible',
+            'actions': {'class': 'actions alwaysVisible'},
         } %}
 
         {% set tableName = 'admin_teams' %}
@@ -33,7 +33,7 @@
                         {{ widgets.label_user(user) }}&nbsp;
                     {% endfor %}
                 </td>
-                <td class="actions">
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                     {{ actions.team(team, 'index') }}
                 </td>
             </tr>
