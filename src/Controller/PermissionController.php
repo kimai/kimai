@@ -17,6 +17,7 @@ use App\Form\RoleType;
 use App\Model\PermissionSection;
 use App\Repository\RolePermissionRepository;
 use App\Repository\RoleRepository;
+use App\Repository\UserRepository;
 use App\Security\RolePermissionManager;
 use App\Security\RoleService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -45,12 +46,17 @@ final class PermissionController extends AbstractController
      * @var RoleRepository
      */
     private $roleRepository;
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
 
-    public function __construct(RoleService $roleService, RolePermissionManager $manager, RoleRepository $roleRepository)
+    public function __construct(RoleService $roleService, RolePermissionManager $manager, RoleRepository $roleRepository, UserRepository $userRepository)
     {
         $this->roleService = $roleService;
         $this->manager = $manager;
         $this->roleRepository = $roleRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -198,6 +204,13 @@ final class PermissionController extends AbstractController
     public function deleteRole(Role $role): Response
     {
         try {
+            // workaround, as roles is still a string array on users table
+            // until this is fixed, the users must be manually updated
+            $users = $this->userRepository->findUsersWithRole($role);
+            foreach ($users as $user) {
+                $user->removeRole($role->getName());
+                $this->userRepository->saveUser($user);
+            }
             $this->roleRepository->deleteRole($role);
             $this->flashSuccess('action.delete.success');
         } catch (\Exception $ex) {
