@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\RolePermission;
 use App\Entity\User;
 
@@ -105,6 +106,23 @@ class PermissionControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
         self::assertStringContainsString('<th data-field="TEST_ROLE" class="alwaysVisible text-center">', $content);
 
+        // add user to role
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/roles');
+        $form = $client->getCrawler()->filter('form[name=user_roles]')->form();
+        $client->submit($form, [
+            'user_roles[roles]' => [
+                0 => 'ROLE_TEAMLEAD',
+                2 => 'ROLE_SUPER_ADMIN',
+                3 => 'TEST_ROLE'
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/roles'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
+        $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'TEST_ROLE', 'ROLE_USER'], $user->getRoles());
+
         $this->request($client, '/admin/permissions/roles/1/delete');
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
         $client->followRedirect();
@@ -112,6 +130,10 @@ class PermissionControllerTest extends ControllerBaseTest
         self::assertHasFlashDeleteSuccess($client);
         $content = $client->getResponse()->getContent();
         self::assertStringNotContainsString('<th data-field="TEST_ROLE" class="alwaysVisible text-center">', $content);
+
+        // verify that role was removed from user
+        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
+        $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $user->getRoles());
     }
 
     public function testSavePermissionIsSecured()
