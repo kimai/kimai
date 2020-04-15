@@ -478,7 +478,7 @@ class TimesheetController extends BaseApiController
             throw $this->createAccessDeniedException('You are not allowed to delete this timesheet');
         }
 
-        $this->repository->delete($timesheet);
+        $this->service->deleteTimesheet($timesheet);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);
 
