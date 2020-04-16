@@ -45,7 +45,7 @@ class DocxRendererTest extends TestCase
         /** @var BinaryFileResponse $response */
         $response = $sut->render($document, $model);
 
-        $filename = $model->getNumberGenerator()->getInvoiceNumber() . '-customer_with_special_name.docx';
+        $filename = $model->getInvoiceNumber() . '-customer_with_special_name.docx';
         $file = $response->getFile();
         $this->assertEquals('application/vnd.openxmlformats-officedocument.wordprocessingml.document', $response->headers->get('Content-Type'));
         $this->assertEquals('attachment; filename=' . $filename, $response->headers->get('Content-Disposition'));

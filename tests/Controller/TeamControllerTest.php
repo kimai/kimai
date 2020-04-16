@@ -24,18 +24,21 @@ class TeamControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/teams/');
+    }
+
+    public function testIsSecureForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/admin/teams/');
     }
 
     public function testIndexAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(5);
         $this->importFixture($em, $fixture);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/teams/');
         $this->assertPageActions($client, [
             'search search-toggle visible-xs-inline' => '#',
@@ -49,7 +52,7 @@ class TeamControllerTest extends ControllerBaseTest
     public function testIndexActionWithSearchTermQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(5);
         $fixture->setCallback(function (Team $team) {
@@ -57,7 +60,6 @@ class TeamControllerTest extends ControllerBaseTest
         });
         $this->importFixture($em, $fixture);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/teams/');
 
         $form = $client->getCrawler()->filter('form.header-search')->form();
@@ -104,7 +106,7 @@ class TeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $this->importFixture($em, $fixture);
@@ -127,7 +129,7 @@ class TeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $this->importFixture($em, $fixture);
@@ -151,7 +153,7 @@ class TeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
@@ -180,7 +182,7 @@ class TeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);

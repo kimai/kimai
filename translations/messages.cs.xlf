@@ -166,11 +166,11 @@
             </trans-unit>
             <trans-unit id="label.starttime">
                 <source>label.starttime</source>
-                <target>Začít</target>
+                <target>Začátek</target>
             </trans-unit>
             <trans-unit id="label.endtime">
                 <source>label.endtime</source>
-                <target>Ukončit</target>
+                <target>Konec</target>
             </trans-unit>
             <trans-unit id="label.duration">
                 <source>label.duration</source>
@@ -246,7 +246,7 @@
             </trans-unit>
             <trans-unit id="label.rate">
                 <source>label.rate</source>
-                <target>Hodnotit</target>
+                <target>Sazba</target>
             </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
@@ -418,7 +418,7 @@
             </trans-unit>
             <trans-unit id="profile.preferences">
                 <source>profile.preferences</source>
-                <target>Priorita</target>
+                <target>Předvolby</target>
             </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
@@ -751,10 +751,6 @@
             <trans-unit id="invoice.title">
                 <source>invoice.title</source>
                 <target>Faktura</target>
-            </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Vytvářejte faktury z vašich zaznamenaných položek časového záznamu.</target>
             </trans-unit>
             <trans-unit id="invoice.preview">
                 <source>invoice.preview</source>

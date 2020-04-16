@@ -11,6 +11,11 @@
             '%duration%': '<strong>' ~ stats.recordDuration|duration ~ '</strong>'
         } %}
 
+        {% set currency = null %}
+        {% if activity.project is not null %}
+            {% set currency = activity.project.customer.currency %}
+        {% endif %}
+
         {% if activity.project is not null %}
             {% set params = params|merge({
                 '%project%': '<strong>' ~ activity.project.name ~ '</strong>',
@@ -20,12 +25,9 @@
 
         <p>
             {{ 'admin_activity.short_stats'|trans(params)|raw }}
+            {{ 'label.rate_internal'|trans }}: {{ stats.recordInternalRate|money(currency) }}.
         </p>
 
-        {% set currency = null %}
-        {% if activity.project is not null %}
-            {% set currency = activity.project.customer.currency %}
-        {% endif %}
 
         {{ progress.progressbar(activity.budget, stats.recordRate, 'label.budget'|trans, stats.recordRate|money(currency) ~ ' / ' ~ activity.budget|money(currency) ) }}
         {{ progress.progressbar(activity.timeBudget, stats.recordDuration, 'label.timeBudget'|trans, stats.recordDuration|duration ~ ' / ' ~ activity.timeBudget|duration ) }}

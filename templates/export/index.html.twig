@@ -5,15 +5,16 @@
 {% import "export/actions.html.twig" as actions %}
 
 {% set columns = {
-    'date': 'alwaysVisible',
-    'user': 'hidden-xs hidden-sm',
-    'project': 'hidden-xs hidden-sm',
-    'activity': 'hidden-xs hidden-sm',
-    'description': 'hidden-xs hidden-sm',
-    'unit_price': 'hidden-xs',
-    'duration': '',
-    'total_rate': '',
-    'exported': 'alwaysVisible',
+    'date': {'class': 'alwaysVisible text-nowrap', 'orderBy': false},
+    'user': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
+    'project': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
+    'activity': {'class': 'hidden-xs hidden-sm hidden-md', 'orderBy': false},
+    'description': {'class': 'hidden-xs hidden-sm hidden-md timesheet-description', 'orderBy': false},
+    'unit_price': {'class': 'hidden hidden-xs text-nowrap', 'orderBy': false},
+    'duration': {'class': 'text-nowrap', 'orderBy': false},
+    'rate_internal': {'class': 'hidden-xs text-nowrap', 'orderBy': false},
+    'total_rate': {'class': 'text-nowrap', 'orderBy': false},
+    'exported': {'class': 'alwaysVisible', 'orderBy': false},
 } %}
 
 {% set tableName = 'export' %}
@@ -21,6 +22,10 @@
 {% block page_title %}{{ 'export.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'export.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.export((preview_show ? 'preview' : 'index')) }}{% endblock %}
+
+{% block main_before %}
+    {{ tables.data_table_column_modal(tableName, columns) }}
+{% endblock %}
 
 {% block main %}
 
@@ -32,9 +37,9 @@
             {{ form_errors(form) }}
             {{ form_row(form.searchTerm) }}
             {{ form_row(form.daterange) }}
-            {{ form_row(form.customer) }}
-            {{ form_row(form.project) }}
-            {{ form_row(form.activity) }}
+            {{ form_row(form.customers) }}
+            {{ form_row(form.projects) }}
+            {{ form_row(form.activities) }}
             {{ form_row(form.users) }}
             {{ form_row(form.tags) }}
             {{ form_row(form.exported) }}
@@ -42,11 +47,35 @@
             {{ form_row(form.markAsExported) }}
         {% endblock %}
         {% block box_footer%}
+            {% set buttons = {} %}
+            {% for button in renderer %}
+                {% set title = button.title %}
+                {% set group = [] %}
+                {% if buttons[(title)] is defined %}
+                    {% set group = buttons[(title)] %}
+                {% endif %}
+                {% set group = group|merge([button]) %}
+                {% set buttons = buttons|merge({(title): group}) %}
+            {% endfor %}
             <div class="btn-group" id="export-buttons" role="group">
-                {% for button in renderer %}
-                    <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
-                        {{ ('button.' ~ button.title)|trans }}
-                    </button>
+                {% for group in buttons %}
+                    {% set button = group.0 %}
+                    {% if group|length == 1 %}
+                        <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
+                            {{ ('button.' ~ button.title)|trans }}
+                        </button>
+                    {% elseif group|length > 1 %}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ ('button.' ~ button.title)|trans }} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                            {% for button in group %}
+                                <li><a href="#" class="startExportBtn" data-type="{{ button.id }}">{{ (button.id)|trans({}, 'export') }}</a></li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
             {{ form_widget(form.preview) }}
@@ -59,19 +88,26 @@
             {{ widgets.callout('warning', 'error.no_entries_found') }}
         {% else %}
             {{ tables.datatable_header(tableName, columns, query, {}) }}
+            {% set totalAmount = {} %}
+            {% set totalInternalAmount = {} %}
+            {% set totalDuration = 0 %}
             {% for entry in entries %}
                 {% set currency = entry.project.customer.currency %}
                 {% set duration = entry.duration|duration %}
+                {% if totalAmount[currency] is not defined %}
+                    {% set totalAmount = totalAmount|merge({(currency): 0}) %}
+                    {% set totalInternalAmount = totalInternalAmount|merge({(currency): 0}) %}
+                {% endif %}
                 {% if entry.fixedRate is not null %}
                     {% set rate = entry.fixedRate %}
-                    {% set duration = 1 %}
-                {% elseif entry.hourlyRate is not null %}
-                    {% set rate = entry.hourlyRate %}
                 {% else %}
-                    {% set rate = entry.user.preferenceValue('hourly_rate') %}
+                    {% set rate = entry.hourlyRate %}
                 {% endif %}
+                {% set totalDuration = totalDuration + entry.duration %}
+                {% set totalAmount = totalAmount|merge({(currency): totalAmount[currency] + entry.rate}) %}
+                {% set totalInternalAmount = totalInternalAmount|merge({(currency): totalInternalAmount[currency] + entry.internalRate}) %}
                 <tr>
-                    <td class="text-nowrap">{{ entry.begin|date_short }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.label_user(entry.user) }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                         {{ widgets.label_project(entry.project) }}
@@ -79,19 +115,22 @@
                         <small>{{ widgets.label_customer(entry.project.customer) }}</small>
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">
                         {{ entry.description|escape|desc2html }}
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-nowrap">
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}">
                         {{ rate|money(currency) }}
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-nowrap" data-duration="{{ entry.duration }}">
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}" data-duration="{{ entry.duration }}">
                         {{ duration }}
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }} text-nowrap">
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'rate_internal') }}">
+                        {{ entry.internalRate|money(currency) }}
+                    </td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">
                         {{ entry.rate|money(currency) }}
                     </td>
-                    <td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}">
                     {% if is_granted('edit_export', entry) %}
                         {% if entry.exported %}
                             <button type="button" class="btn btn-default exportBtn active" data-toggle="button" aria-pressed="true" autocomplete="off"
@@ -114,6 +153,30 @@
                     </td>
                 </tr>
             {% endfor %}
+            <tr>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'date') }}"></th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'user') }}"></th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'project') }}"></th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}"></th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'description') }}"></th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}"></th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}">
+                    {{ totalDuration|duration }}
+                </th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'rate_internal') }}">
+                    {% for currency, amount in totalInternalAmount %}
+                        {{ amount|money(currency) }}
+                        {% if not loop.last %}<br>{% endif %}
+                    {% endfor %}
+                </th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">
+                    {% for currency, amount in totalAmount %}
+                        {{ amount|money(currency) }}
+                        {% if not loop.last %}<br>{% endif %}
+                    {% endfor %}
+                </th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}"></th>
+            </tr>
             {{ tables.data_table_footer(entries) }}
         {% endif %}
     {% endif %}

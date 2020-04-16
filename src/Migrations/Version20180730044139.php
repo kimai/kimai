@@ -33,17 +33,11 @@ final class Version20180730044139 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $platform = $this->getPlatform();
+        $timesheet = 'kimai2_timesheet';
+        $user = 'kimai2_users';
+        $activity = 'kimai2_activities';
 
-        if (!in_array($platform, ['sqlite', 'mysql'])) {
-            $this->abortIf(true, 'Unsupported database platform: ' . $platform);
-        }
-
-        $timesheet = $this->getTableName('timesheet');
-        $user = $this->getTableName('users');
-        $activity = $this->getTableName('activities');
-
-        if ($platform === 'sqlite') {
+        if ($this->isPlatformSqlite()) {
             $this->addSql('DROP INDEX IDX_4F60C6B181C06096');
             $this->addSql('DROP INDEX IDX_4F60C6B18D93D649');
             $this->addSql('CREATE TEMPORARY TABLE __temp__' . $timesheet . ' AS SELECT id, user, activity_id, start_time, end_time, duration, description, rate FROM ' . $timesheet);
@@ -65,16 +59,10 @@ final class Version20180730044139 extends AbstractMigration
      */
     public function down(Schema $schema): void
     {
-        $platform = $this->getPlatform();
+        $timesheet = 'kimai2_timesheet';
+        $user = 'kimai2_users';
 
-        if (!in_array($platform, ['sqlite', 'mysql'])) {
-            $this->abortIf(true, 'Unsupported database platform: ' . $platform);
-        }
-
-        $timesheet = $this->getTableName('timesheet');
-        $user = $this->getTableName('users');
-
-        if ($platform === 'sqlite') {
+        if ($this->isPlatformSqlite()) {
             $this->addSql('DROP INDEX IDX_4F60C6B18D93D649');
             $this->addSql('DROP INDEX IDX_4F60C6B181C06096');
             $this->addSql('CREATE TEMPORARY TABLE __temp__' . $timesheet . ' AS SELECT id, user, activity_id, start_time, end_time, duration, description, rate FROM ' . $timesheet);

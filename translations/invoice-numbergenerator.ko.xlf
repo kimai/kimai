@@ -6,9 +6,9 @@
                 <source>label.invoice_number_generator</source>
                 <target state="translated">인보이스번호-생성기</target>
             </trans-unit>
-            <trans-unit id="default">
-                <source>default</source>
-                <target state="translated">날짜 (초기가)</target>
+            <trans-unit id="date">
+                <source>date</source>
+                <target state="translated">날짜</target>
             </trans-unit>
         </body>
     </file>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="export.en.xlf">
+        <body>
+            <trans-unit id="default.pdf.twig">
+                <source>default.pdf.twig</source>
+                <target>Standard</target>
+            </trans-unit>
+            <trans-unit id="default-budget.pdf.twig">
+                <source>default-budget.pdf.twig</source>
+                <target>With remaining budget</target>
+            </trans-unit>
+            <trans-unit id="default-internal.pdf.twig">
+                <source>default-internal.pdf.twig</source>
+                <target>With internal rates</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

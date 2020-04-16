@@ -78,6 +78,18 @@
                 <source>details</source>
                 <target>Anzeigen</target>
             </trans-unit>
+            <trans-unit id="download">
+                <source>download</source>
+                <target>Herunterladen</target>
+            </trans-unit>
+            <trans-unit id="invoice.pending">
+                <source>invoice.pending</source>
+                <target>Warten auf Zahlungseingang</target>
+            </trans-unit>
+            <trans-unit id="invoice.paid">
+                <source>invoice.paid</source>
+                <target>Rechnung bezahlt</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

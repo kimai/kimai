@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: ar|cs|de|de_CH|da|en|es|eu|fr|hu|it|ja|ko|nl|pl|pt_BR|ru|sk|sv|tr|zh_CN
+    app_locales: ar|cs|de|de_CH|da|en|eo|es|eu|fr|hu|it|ja|ko|nl|pl|pt_BR|ru|sk|sv|tr|zh_CN
 
 services:
     # default configuration for services in *this* file
@@ -82,6 +82,10 @@ services:
         decorates: translator
         arguments:
             $localDomains: '%kimai.i18n_domains%'
+
+    App\Utils\FileHelper:
+        arguments:
+            $dataDir: '%kimai.data_dir%'
 
     # ================================================================================
     # DATABASE
@@ -226,3 +230,8 @@ services:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\ProjectRate']
+
+    App\Repository\InvoiceRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Invoice']

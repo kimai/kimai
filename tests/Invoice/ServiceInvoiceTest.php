@@ -9,12 +9,16 @@
 
 namespace App\Tests\Invoice;
 
+use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\TwigRenderer;
 use App\Invoice\ServiceInvoice;
 use App\Repository\InvoiceDocumentRepository;
+use App\Repository\InvoiceRepository;
+use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
+use App\Utils\FileHelper;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 
@@ -23,10 +27,26 @@ use Twig\Environment;
  */
 class ServiceInvoiceTest extends TestCase
 {
+    private function getSut(array $paths): ServiceInvoice
+    {
+        $repo = new InvoiceDocumentRepository($paths);
+        $invoiceRepo = $this->createMock(InvoiceRepository::class);
+        $userDateTime = (new UserDateTimeFactoryFactory($this))->create();
+
+        return new ServiceInvoice($repo, new FileHelper(realpath(__DIR__ . '/../../var/data/')), $invoiceRepo, $userDateTime, new DebugFormatter());
+    }
+
+    public function testInvalidExceptionOnChangeState()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown invoice status');
+        $sut = $this->getSut([]);
+        $sut->changeInvoiceStatus(new Invoice(), 'foo');
+    }
+
     public function testEmptyObject()
     {
-        $repo = new InvoiceDocumentRepository([]);
-        $sut = new ServiceInvoice($repo);
+        $sut = $this->getSut([]);
 
         $this->assertEmpty($sut->getCalculator());
         $this->assertIsArray($sut->getCalculator());
@@ -44,8 +64,7 @@ class ServiceInvoiceTest extends TestCase
 
     public function testWithDocumentDirectory()
     {
-        $repo = new InvoiceDocumentRepository(['templates/invoice/renderer/']);
-        $sut = new ServiceInvoice($repo);
+        $sut = $this->getSut(['templates/invoice/renderer/']);
 
         $actual = $sut->getDocuments();
         $this->assertNotEmpty($actual);
@@ -59,8 +78,7 @@ class ServiceInvoiceTest extends TestCase
 
     public function testAdd()
     {
-        $repo = new InvoiceDocumentRepository([]);
-        $sut = new ServiceInvoice($repo);
+        $sut = $this->getSut([]);
 
         $sut->addCalculator(new DefaultCalculator());
         $sut->addNumberGenerator(new DateNumberGenerator());
@@ -74,7 +92,7 @@ class ServiceInvoiceTest extends TestCase
         $this->assertInstanceOf(DefaultCalculator::class, $sut->getCalculatorByName('default'));
 
         $this->assertEquals(1, count($sut->getNumberGenerator()));
-        $this->assertInstanceOf(DateNumberGenerator::class, $sut->getNumberGeneratorByName('default'));
+        $this->assertInstanceOf(DateNumberGenerator::class, $sut->getNumberGeneratorByName('date'));
 
         $this->assertEquals(1, count($sut->getRenderer()));
     }

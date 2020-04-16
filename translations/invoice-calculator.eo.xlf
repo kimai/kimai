@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eo" datatype="plaintext" original="invoice-calculator.en.xlf">
+        <body>
+            <trans-unit id="label.invoice_calculator">
+                <source>label.invoice_calculator</source>
+                <target>Kalkulado de sumo</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Defaŭlto: unu elemento per temporegistraĵo</target>
+            </trans-unit>
+            <trans-unit id="short">
+                <source>short</source>
+                <target>Horoj: sumitaj, unu elemento entute</target>
+            </trans-unit>
+            <trans-unit id="user">
+                <source>user</source>
+                <target>Uzanto: unu elemento per uzanto</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>Ago: unu elemento per aktivaĵo</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>Projekto: unu elemento per projekto</target>
+            </trans-unit>
+            <trans-unit id="date">
+                <source>date</source>
+                <target>Dato: unu elemento per tago (uzas komencan daton)</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

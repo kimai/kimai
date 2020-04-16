@@ -4,10 +4,9 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "activity/actions.html.twig" as actions %}
 
-{% set showVisibility = query.visibility != 1 %}
 {% set columns = {
-    'name': 'alwaysVisible',
-    'project': 'hidden-xs',
+    'name': {'class': 'alwaysVisible'},
+    'project': {'class': 'hidden-xs'},
     'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
 } %}
 {% for field in metaColumns %}
@@ -15,13 +14,9 @@
         ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
     }) %}
 {% endfor %}
-{% if showVisibility %}
-    {% set columns = columns|merge({
-        'visible': {'class': 'text-center', 'orderBy': false},
-    }) %}
-{% endif %}
 {% set columns = columns|merge({
-    'actions': 'actions alwaysVisible',
+    'visible': {'class': 'text-center hidden w-min', 'orderBy': false},
+    'actions': {'class': 'actions alwaysVisible'},
 }) %}
 
 {% set tableName = 'activity_admin' %}
@@ -43,7 +38,7 @@
 
         {% for entry in entries %}
             <tr{% if is_granted('view', entry) %} class="alternative-link open-edit" data-href="{{ path('activity_details', {'id': entry.id}) }}"{% endif %}>
-                <td>{{ widgets.label_color_dot('activity', true, entry.name, null, entry.color) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_color_dot('activity', true, entry.name, null, entry.color) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                     {# only none-global activities have a project and customer assigned #}
                     {% if entry.project %}
@@ -62,12 +57,8 @@
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}
-                {% if showVisibility %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-                {% endif %}
-                <td class="actions">
-                    {{ actions.activity(entry, 'index') }}
-                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.activity(entry, 'index') }}</td>
             </tr>
         {% endfor %}
 

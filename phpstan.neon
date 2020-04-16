@@ -7,8 +7,6 @@ parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
     autoload_directories:
         - %rootDir%/../../../src/Migrations
-    symfony:
-        container_xml_path: '%rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml'
     ignoreErrors:
         - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\).#'
         - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::integerNode\(\).#'

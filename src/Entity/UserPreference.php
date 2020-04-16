@@ -27,6 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class UserPreference
 {
     public const HOURLY_RATE = 'hourly_rate';
+    public const INTERNAL_RATE = 'internal_rate';
     public const SKIN = 'skin';
     public const LOCALE = 'language';
     public const TIMEZONE = 'timezone';
@@ -51,7 +52,8 @@ class UserPreference
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
-     * @Assert\Length(min=2, max=50)
+     * @Assert\NotNull()
+     * @Assert\Length(min=2, max=50, allowEmptyString=false)
      */
     private $name;
     /**

@@ -4,29 +4,22 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "user/actions.html.twig" as actions %}
 
-{% set showVisibility = query.visibility != 1 %}
 {% set columns = {
-    'alias': 'alwaysVisible',
-    'title': 'hidden-xs hidden-sm',
+    'alias': {'class': 'alwaysVisible'},
+    'title': {'class': 'hidden-xs hidden-sm'},
+    'email': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'lastLogin': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'roles': {'class': 'hidden-sm', 'orderBy': false},
 } %}
-{% set columns = columns|merge({
-    'roles': {'class': 'hidden-xs  hidden-sm', 'orderBy': false},
-}) %}
 {% for pref in preferences %}
     {% set columns = columns|merge({
         ('mf_' ~ pref.name): {'title': pref.label|trans, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'team': {'class': 'text-center hidden-xs', 'orderBy': false},
-}) %}
-{% if showVisibility %}
-    {% set columns = columns|merge({
-        'active': {'class': '', 'orderBy': false},
-    }) %}
-{% endif %}
-{% set columns = columns|merge({
-    'actions': 'actions alwaysVisible',
+    'team': {'class': 'text-center hidden-xs w-min', 'orderBy': false},
+    'active': {'class': 'hidden-xs hidden w-min', 'orderBy': false},
+    'actions': {'class': 'actions alwaysVisible'},
 }) %}
 
 {% set tableName = 'user_admin' %}
@@ -48,8 +41,10 @@
 
         {% for entry in entries %}
             <tr{% if is_granted('view', entry) %} class="open-edit alternative-link" data-href="{{ path('user_profile', {'username': entry.username}) }}"{% endif %}>
-                <td>{{ widgets.user_avatar(entry) }} {{ widgets.username(entry) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'alias') }}">{{ widgets.user_avatar(entry) }} {{ widgets.username(entry) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">{{ entry.email }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'lastLogin') }}">{% if entry.lastLogin is not null %}{{ entry.lastLogin|date_full }}{% endif %}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'roles') }}">
                     {% set showUserRole = entry.roles|length == 1 %}
                     {% for role in entry.roles %}
@@ -71,12 +66,8 @@
                         {{ widgets.badge_counter(entry.teams|length) }}
                     {% endif %}
                 </td>
-                {% if showVisibility %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'active') }}">{{ widgets.label_visible(entry.enabled) }}</td>
-                {% endif %}
-                <td class="actions">
-                    {{ actions.user(entry, 'index') }}
-                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'active') }}">{{ widgets.label_visible(entry.enabled) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.user(entry, 'index') }}</td>
             </tr>
         {% endfor %}
 

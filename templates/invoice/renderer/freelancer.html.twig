@@ -1,7 +1,9 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% extends 'invoice/layout.html.twig' %}
-{% set language = model.template.language|default(app.request.locale) %}
+{% set fallback = app.request is not null ? app.request.locale : 'en' %}
+{% set language = model.template.language|default(fallback) %}
 {% set isDecimal = model.template.decimalDuration|default(false) %}
+{% set currency = model.currency %}
 
 {% block invoice %}
 <div class="row" id="freelancer-invoice">
@@ -30,11 +32,11 @@
                 </tr>
                 <tr>
                     <th>{{ 'invoice.service_date'|trans({}, 'messages', language) }}:</th>
-                    <td><span contenteditable="true">{{ model.query.end|month_name|trans({}, 'messages', language) }} {{ model.query.end|date('Y') }}</td>
+                    <td><span contenteditable="true">{{ model.query.end|month_name|trans({}, 'messages', language) }} {{ model.query.end|date('Y') }}</span></td>
                 </tr>
                 <tr>
                     <th>{{ 'invoice.number'|trans({}, 'messages', language) }}:</th>
-                    <td><span contenteditable="true">{{ model.numberGenerator.invoiceNumber }}</td>
+                    <td>{{ model.invoiceNumber }}</td>
                 </tr>
                 {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
                     <tr>
@@ -83,9 +85,9 @@
                                 {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
                             {% endif %}
                         </td>
-                        <td class="text-right text-nowrap">{{ rate|money(model.calculator.currency) }}</td>
+                        <td class="text-right text-nowrap">{{ rate|money(currency) }}</td>
                         <td class="text-right text-nowrap">{{ duration }}</td>
-                        <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
+                        <td class="text-right text-nowrap">{{ entry.rate|money(currency) }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -93,15 +95,15 @@
             <table class="balance">
                 <tr>
                     <th>{{ 'invoice.subtotal'|trans({}, 'messages', language) }}</th>
-                    <td>{{ model.calculator.subtotal|money(model.calculator.currency) }}</td>
+                    <td>{{ model.calculator.subtotal|money(currency) }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'invoice.tax'|trans({}, 'messages', language) }} ({{ model.calculator.vat }}%)</th>
-                    <td>{{ model.calculator.tax|money(model.calculator.currency) }}</td>
+                    <td>{{ model.calculator.tax|money(currency) }}</td>
                 </tr>
                 <tr>
                     <th class="total">{{ 'invoice.total'|trans({}, 'messages', language) }}</th>
-                    <td class="total">{{ model.calculator.total|money(model.calculator.currency) }}</td>
+                    <td class="total">{{ model.calculator.total|money(currency) }}</td>
                 </tr>
             </table>
         </article>

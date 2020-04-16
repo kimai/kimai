@@ -20,6 +20,7 @@ class TeamToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addUsersChoice($builder);
         $this->addSearchTermInputField($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);

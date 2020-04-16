@@ -804,10 +804,6 @@
                 <source>invoice.title</source>
                 <target>Faktury</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Utwórz fakturę z twoich wpisów do ewidencji.</target>
-            </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
                 <target>Filtruj po dacie faktury</target>

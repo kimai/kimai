@@ -38,11 +38,14 @@ class TimesheetTest extends TestCase
         self::assertNull($sut->getDescription());
         self::assertSame(0.00, $sut->getRate());
         self::assertNull($sut->getFixedRate());
+        self::assertNull($sut->getInternalRate());
         self::assertNull($sut->getHourlyRate());
         self::assertEquals(new ArrayCollection(), $sut->getTags());
         self::assertEquals([], $sut->getTagsAsArray());
         self::assertInstanceOf(Timesheet::class, $sut->setFixedRate(13.47));
         self::assertEquals(13.47, $sut->getFixedRate());
+        self::assertInstanceOf(Timesheet::class, $sut->setInternalRate(999.99));
+        self::assertEquals(999.99, $sut->getInternalRate());
         self::assertInstanceOf(Timesheet::class, $sut->setHourlyRate(99));
         self::assertEquals(99, $sut->getHourlyRate());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
@@ -50,7 +53,7 @@ class TimesheetTest extends TestCase
         self::assertNull($sut->getMetaField('foo'));
     }
 
-    public function testDurationCanBeNull()
+    public function testValueCanBeNull()
     {
         $sut = new Timesheet();
         self::assertEquals(0, $sut->getDuration());
@@ -58,6 +61,11 @@ class TimesheetTest extends TestCase
         self::assertNull($sut->getDuration());
         $sut->setDuration(-1);
         self::assertEquals(-1, $sut->getDuration());
+
+        $sut->setInternalRate(1);
+        self::assertEquals(1, $sut->getInternalRate());
+        $sut->setInternalRate(null);
+        self::assertNull($sut->getInternalRate());
     }
 
     protected function getEntity()

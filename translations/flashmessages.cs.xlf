@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>
-                <target>Uložit změny</target>
+                <target>Změny uložené</target>
             </trans-unit>
             <trans-unit id="action.update.error">
                 <source>action.update.error</source>

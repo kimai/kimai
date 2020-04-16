@@ -40,6 +40,7 @@ require('moment/locale/cs');
 require('moment/locale/da');
 require('moment/locale/de');
 require('moment/locale/de-ch');
+require('moment/locale/eo');
 require('moment/locale/es');
 require('moment/locale/eu');
 require('moment/locale/fr');

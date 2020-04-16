@@ -125,7 +125,8 @@ class CreateReleaseCommand extends Command
             'Dockerfile',
             'phpunit.xml.dist',
             'webpack.config.js',
-            'assets/',
+            // this seems to be required, see https://github.com/kevinpapst/kimai2/issues/1586
+            //'assets/',
             'tests/',
             'var/cache/*',
             'var/data/kimai_test.sqlite',

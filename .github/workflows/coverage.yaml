@@ -9,7 +9,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                php: ['7.4']
+                php: ['7.3']
 
         name: Coverage - PHP ${{ matrix.php }}
         steps:

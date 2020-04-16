@@ -96,7 +96,7 @@ kimai:
             CUSTOMERS_ALL_TEAM: ['view_team_customer','edit_team_customer','budget_team_customer','comments_team_customer','comments_create_team_customer','details_team_customer']
             CUSTOMERS_TEAMLEAD: ['view_teamlead_customer','budget_teamlead_customer','comments_teamlead_customer','comments_create_teamlead_customer','details_teamlead_customer']
             INVOICE: ['view_invoice','create_invoice']
-            INVOICE_TEMPLATE: ['manage_invoice_template']
+            INVOICE_ADMIN: ['manage_invoice_template','history_invoice']
             TIMESHEET: ['view_own_timesheet','start_own_timesheet','stop_own_timesheet','create_own_timesheet','edit_own_timesheet','export_own_timesheet','delete_own_timesheet']
             TIMESHEET_OTHER: ['view_other_timesheet','start_other_timesheet','stop_other_timesheet','create_other_timesheet','edit_other_timesheet','export_other_timesheet','delete_other_timesheet']
             PROFILE: ['view_own_profile','edit_own_profile','password_own_profile','preferences_own_profile','api-token_own_profile']
@@ -115,8 +115,8 @@ kimai:
             # link above sets to one complete set for each user role
             ROLE_USER: ['@TIMESHEET','@PROFILE','@SINGLE_USER']
             ROLE_TEAMLEAD: ['@ACTIVITIES_TEAMLEAD','@PROJECTS_TEAMLEAD','@CUSTOMERS_TEAMLEAD','@TIMESHEET_OTHER','@INVOICE','@TIMESHEET','@PROFILE','@EXPORT','@TAGS','@SINGLE_TEAMLEAD']
-            ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_TEMPLATE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_ADMIN']
-            ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_TEMPLATE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_SUPER_ADMIN']
+            ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_ADMIN']
+            ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_SUPER_ADMIN']
         # mapping "sets" or permissions to user roles ("role name" = [array of "set names"])
         maps:
             ROLE_USER: ['ROLE_USER']
@@ -247,12 +247,6 @@ kimai:
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
-        eu:
-            date_time_type: 'yyyy-MM-dd HH:mm'
-            date_type: 'yyyy-MM-dd'
-            date: 'Y-m-d'
-            date_time: 'm-d H:i'
-            duration: '%%h:%%m h'
         fr:
             date_time_type: 'dd/MM/yyyy HH:mm'
             date_type: 'dd/MM/yyyy'

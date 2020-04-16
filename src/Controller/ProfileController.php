@@ -58,7 +58,6 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route(path="/", name="fos_user_profile_show", methods={"GET"})
      * @Route(path="/", name="my_profile", methods={"GET"})
      */
     public function profileAction()

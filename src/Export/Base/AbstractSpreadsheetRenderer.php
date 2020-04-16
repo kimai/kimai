@@ -70,11 +70,15 @@ abstract class AbstractSpreadsheetRenderer
         'end' => [],
         'duration' => [],
         'rate' => [],
+        'rate_internal' => [],
         'user' => [],
         'customer' => [],
         'project' => [],
         'activity' => [],
-        'description' => [],
+        'description' => [
+            'maxWidth' => 50,
+            'wrapText' => false,
+        ],
         'exported' => [],
         'tags' => [],
         'hourlyRate' => [],
@@ -223,6 +227,20 @@ abstract class AbstractSpreadsheetRenderer
             };
         }
 
+        if ($showRates && isset($columns['rate_internal']) && !isset($columns['rate_internal']['render'])) {
+            $columns['rate_internal']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $currency = '';
+                if (null !== $entity->getProject()) {
+                    $currency = $entity->getProject()->getCustomer()->getCurrency();
+                }
+                $rate = $entity->getRate();
+                if (method_exists($entity, 'getInternalRate')) {
+                    $rate = $entity->getInternalRate();
+                }
+                $this->setRate($sheet, $column, $row, $rate, $currency);
+            };
+        }
+
         if (isset($columns['user']) && !isset($columns['user']['render'])) {
             $columns['user']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
                 $user = '';
@@ -264,8 +282,31 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['description']) && !isset($columns['description']['render'])) {
-            $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
-                $sheet->setCellValueByColumnAndRow($column, $row, $entity->getDescription());
+            $maxWidth = array_key_exists('maxWidth', $columns['description']) ? intval($columns['description']['maxWidth']) : null;
+            $wrapText = array_key_exists('wrapText', $columns['description']) ? (bool) $columns['description']['wrapText'] : false;
+
+            // This column has a column-only formatter to set the maximum width of a column.
+            // It needs to be executed once, so we use this as a flag on when to skip it.
+            $isColumnFormatted = false;
+
+            $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use (&$isColumnFormatted, $maxWidth, $wrapText) {
+                $cell = $sheet->getCellByColumnAndRow($column, $row);
+
+                $cell->setValue($entity->getDescription());
+
+                // Apply wrap text if configured
+                if ($wrapText) {
+                    $cell->getStyle()->getAlignment()->setWrapText(true);
+                }
+
+                // Apply max width, only needs to be once per column
+                if (!$isColumnFormatted) {
+                    if (null !== $maxWidth) {
+                        $sheet->getColumnDimensionByColumn($column)
+                            ->setWidth($maxWidth);
+                    }
+                    $isColumnFormatted = true;
+                }
             };
         }
 
@@ -442,7 +483,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (!$showRates) {
-            $removes = ['rate', 'fixedRate', 'hourlyRate'];
+            $removes = ['rate', 'fixedRate', 'hourlyRate', 'rate_internal'];
             foreach ($removes as $removeMe) {
                 if (array_key_exists($removeMe, $columns)) {
                     unset($columns[$removeMe]);
@@ -464,6 +505,12 @@ abstract class AbstractSpreadsheetRenderer
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
+        // Set default row height to automatic, so we can specify wrap text columns later on
+        // without bloating the output file as we would need to store stylesheet info for every cell.
+        // LibreOffice is still not considering this flag, @see https://github.com/PHPOffice/PHPExcel/issues/588
+        // with no solution implemented so nothing we can do about it there.
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+
         $recordsHeaderColumn = 1;
         $recordsHeaderRow = 1;
 
@@ -482,6 +529,7 @@ abstract class AbstractSpreadsheetRenderer
 
         $durationColumn = null;
         $rateColumn = null;
+        $internalRateColumn = null;
 
         foreach ($exportItems as $exportItem) {
             $entryHeaderColumn = 1;
@@ -491,6 +539,8 @@ abstract class AbstractSpreadsheetRenderer
                     $durationColumn = $entryHeaderColumn;
                 } elseif ($label === 'rate') {
                     $rateColumn = $entryHeaderColumn;
+                } elseif ($label === 'rate_internal') {
+                    $internalRateColumn = $entryHeaderColumn;
                 }
 
                 if (!array_key_exists('render', $settings) || !is_callable($settings['render'])) {
@@ -518,6 +568,15 @@ abstract class AbstractSpreadsheetRenderer
             $endCoordinate = $sheet->getCellByColumnAndRow($rateColumn, $entryHeaderRow - 1)->getCoordinate();
             $this->setRateTotal($sheet, $rateColumn, $entryHeaderRow, $startCoordinate, $endCoordinate);
             $style = $sheet->getStyleByColumnAndRow($rateColumn, $entryHeaderRow);
+            $style->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
+            $style->getFont()->setBold(true);
+        }
+
+        if (null !== $internalRateColumn) {
+            $startCoordinate = $sheet->getCellByColumnAndRow($internalRateColumn, 2)->getCoordinate();
+            $endCoordinate = $sheet->getCellByColumnAndRow($internalRateColumn, $entryHeaderRow - 1)->getCoordinate();
+            $this->setRateTotal($sheet, $internalRateColumn, $entryHeaderRow, $startCoordinate, $endCoordinate);
+            $style = $sheet->getStyleByColumnAndRow($internalRateColumn, $entryHeaderRow);
             $style->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
             $style->getFont()->setBold(true);
         }

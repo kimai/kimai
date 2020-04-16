@@ -1,6 +1,8 @@
 {% extends 'invoice/layout.html.twig' %}
-{% set language = model.template.language|default(app.request.locale) %}
+{% set fallback = app.request is not null ? app.request.locale : 'en' %}
+{% set language = model.template.language|default(fallback) %}
 {% set isDecimal = model.template.decimalDuration|default(false) %}
+{% set currency = model.currency %}
 
 {% block invoice %}
 <div class="row">
@@ -51,7 +53,7 @@
     <div class="col-sm-5">
         <p contenteditable="true">
             <strong>{{ 'invoice.number'|trans({}, 'messages', language) }}:</strong>
-            {{ model.numberGenerator.invoiceNumber }}
+            {{ model.invoiceNumber }}
             
             <br>
             <strong>{{ 'invoice.due_days'|trans({}, 'messages', language) }}:</strong>
@@ -91,9 +93,9 @@
                             {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
                         {% endif %}
                     </td>
-                    <td nowrap class="text-nowrap text-right">{{ rate|money(model.calculator.currency) }}</td>
+                    <td nowrap class="text-nowrap text-right">{{ rate|money(currency) }}</td>
                     <td nowrap class="text-nowrap text-right">{{ duration }}</td>
-                    <td nowrap class="text-nowrap text-right">{{ entry.rate|money(model.calculator.currency) }}</td>
+                    <td nowrap class="text-nowrap text-right">{{ entry.rate|money(currency) }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -102,20 +104,20 @@
                     <td colspan="4" class="text-right">
                         {{ 'invoice.subtotal'|trans({}, 'messages', language) }}
                     </td>
-                    <td class="text-right">{{ model.calculator.subtotal|money(model.calculator.currency) }}</td>
+                    <td class="text-right">{{ model.calculator.subtotal|money(currency) }}</td>
                 </tr>
                 <tr>
                     <td colspan="4" class="text-right">
                         {{ 'invoice.tax'|trans({}, 'messages', language) }} ({{ model.calculator.vat }}%)
                     </td>
-                    <td class="text-right">{{ model.calculator.tax|money(model.calculator.currency) }}</td>
+                    <td class="text-right">{{ model.calculator.tax|money(currency) }}</td>
                 </tr>
                 <tr>
                     <td colspan="4" class="text-right text-nowrap">
                         <strong>{{ 'invoice.total'|trans({}, 'messages', language) }}</strong>
                     </td>
                     <td class="text-right">
-                        <strong>{{ model.calculator.total|money(model.calculator.currency) }}</strong>
+                        <strong>{{ model.calculator.total|money(currency) }}</strong>
                     </td>
                 </tr>
             </tfoot>

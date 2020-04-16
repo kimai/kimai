@@ -21,9 +21,9 @@
 
         {% set columns = {
             'id': {'class': 'alwaysVisible multiCheckbox', 'orderBy': false, 'title': false, 'html_before': tables.datatable_multiupdate_all()},
-            'name': '',
-            'amount': '',
-            'actions': 'actions alwaysVisible',
+            'name': {'class': 'alwaysVisible'},
+            'amount': {'class': 'text-center w-min'},
+            'actions': {'class': 'actions alwaysVisible'},
         } %}
 
         {% set tableName = 'admin_tags' %}
@@ -38,9 +38,12 @@
 
             <tr{% if manageAllowed %} class="modal-ajax-form open-edit" data-href="{{ path('tags_edit', {'id': tag.id}) }}"{% endif %}>
                 <td class="text-nowrap">{{ tables.datatable_multiupdate_row(tag.id) }}</td>
-                <td>{{ tag.name }}</td>
-                <td>{{ widgets.label(tag.amount, type) }}</td>
-                <td class="actions">
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
+                    {{ widgets.color_dot(tag.color|default('#00a65a')) }}
+                    {{ tag.name }}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }}">{{ widgets.label(tag.amount, type) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                     {{ actions.tag(tag, 'index') }}
                 </td>
             </tr>

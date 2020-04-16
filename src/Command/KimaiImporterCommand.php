@@ -291,7 +291,44 @@ final class KimaiImporterCommand extends Command
 
         $bytesCached = memory_get_usage(true);
 
-        $io->success('Fetched Kimai v1 data, trying to import now ...');
+        $io->success('Fetched Kimai v1 data, validating now ...');
+        $validationMessages = [];
+        try {
+            $usedEmails = [];
+            foreach ($users as $oldUser) {
+                if (empty($oldUser['mail'])) {
+                    $validationMessages[] = sprintf('User "%s" with ID %s has no email', $oldUser['name'], $oldUser['userID']);
+                    continue;
+                }
+                if (in_array($oldUser['mail'], $usedEmails)) {
+                    $validationMessages[] = sprintf('Email "%s" for user "%s" with ID %s is already used', $oldUser['mail'], $oldUser['name'], $oldUser['userID']);
+                }
+                $usedEmails[] = $oldUser['mail'];
+            }
+
+            $customerIds = [];
+            foreach ($customer as $oldCustomer) {
+                $customerIds[] = $oldCustomer['customerID'];
+            }
+
+            foreach ($projects as $oldProject) {
+                if (!in_array($oldProject['customerID'], $customerIds)) {
+                    $validationMessages[] = sprintf('Project "%s" with ID %s has unknown customer with ID %s', $oldProject['name'], $oldProject['projectID'], $oldProject['customerID']);
+                }
+            }
+        } catch (Exception $ex) {
+            $validationMessages[] = $ex->getMessage();
+        }
+
+        if (!empty($validationMessages)) {
+            foreach ($validationMessages as $errorMessage) {
+                $io->error($errorMessage);
+            }
+
+            return 1;
+        }
+
+        $io->success('Pre-validated data, trying to import now ...');
 
         $allImports = 0;
 
@@ -738,6 +775,14 @@ final class KimaiImporterCommand extends Command
 
         foreach ($projects as $oldProject) {
             $isActive = (bool) $oldProject['visible'] && !(bool) $oldProject['trash'];
+
+            if (!isset($this->customers[$oldProject['customerID']])) {
+                $io->error(
+                    sprintf('Found project with unknown customer. Project ID: "%s", Name: "%s", Customer ID: "%s"', $oldProject['projectID'], $oldProject['name'], $oldProject['customerID'])
+                );
+                continue;
+            }
+
             $customer = $this->customers[$oldProject['customerID']];
             $name = $oldProject['name'];
             if (empty($name)) {

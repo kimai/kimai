@@ -17,11 +17,11 @@ class Constants
     /**
      * The current release version
      */
-    public const VERSION = '1.8';
+    public const VERSION = '1.9';
     /**
      * The current release status, either "stable" or "dev"
      */
-    public const STATUS = 'stable';
+    public const STATUS = 'dev';
     /**
      * The software name
      */

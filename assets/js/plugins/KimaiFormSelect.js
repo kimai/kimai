@@ -63,7 +63,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
             });
 
             // If the option element contains all terms, return it
-            if(foundAll) {
+            if (foundAll) {
                 return data;
             }
 
@@ -157,10 +157,10 @@ export default class KimaiFormSelect extends KimaiPlugin {
         // if available, re-select the previous selected option (mostly usable for global activities)
         select.val(selectedValue);
 
-        // if we don't trigger the change, the other selects won't be resetted
+        // if we don't trigger the change, the other selects won't reset
         select.trigger('change');
 
-        // if the beta test kimai.theme.select_type is active, this will tell the selects to refresh
+        // if select2 is active, this will tell the select to refresh
         if (select.hasClass('selectpicker')) {
             select.trigger('change.select2');
         }

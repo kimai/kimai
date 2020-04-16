@@ -137,6 +137,14 @@ class TeamRepository extends EntityRepository
                 break;
         }
 
+        if ($query->hasUsers()) {
+            $qb->orWhere(
+                $qb->expr()->in('t.teamlead', ':user'),
+                $qb->expr()->isMemberOf(':user', 't.users')
+            )
+            ->setParameter('user', $query->getUsers());
+        }
+
         $qb->addOrderBy($orderBy, $query->getOrder());
 
         if (!empty($query->getSearchTerm())) {

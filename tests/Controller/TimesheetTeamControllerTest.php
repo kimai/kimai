@@ -24,6 +24,10 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/team/timesheet/');
+    }
+
+    public function testIsSecureForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/team/timesheet/');
     }
 
@@ -54,7 +58,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $start = new \DateTime('first day of this month');
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $user = $this->getUserByRole($em, User::ROLE_USER);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
@@ -74,7 +78,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             'users' => [$user->getId()],
             'pageSize' => 25,
             'daterange' => $dateRange,
-            'customer' => null,
+            'customers' => [],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -91,7 +95,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $start = new \DateTime('first day of this month');
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
@@ -128,7 +132,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(7);
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
@@ -151,7 +155,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             'state' => 1,
             'pageSize' => 25,
             'daterange' => $dateRange,
-            'customer' => null,
+            'customers' => [],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -185,7 +189,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSuccess($client);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->find(1);
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
@@ -198,9 +202,9 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
     public function testEditAction()
     {
-        $client = $this->getClientForAuthenticatedUser();
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $user = $this->getUserByRole($em, User::ROLE_USER);
         $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
         $fixture = new TimesheetFixtures();
@@ -209,7 +213,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture->setStartDate('2017-05-01');
         $this->importFixture($em, $fixture);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/team/timesheet/1/edit');
 
         $response = $client->getResponse();
@@ -235,7 +238,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->find(1);
         $this->assertEquals('foo-bar', $timesheet->getDescription());
@@ -246,7 +249,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $user = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
@@ -259,7 +262,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $node = $form->getFormNode();
         $node->setAttribute('action', $this->createUrl('/team/timesheet/multi-delete'));
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Timesheet[] $timesheets */
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         self::assertCount(10, $timesheets);
@@ -285,7 +288,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $user = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
@@ -298,7 +301,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $node = $form->getFormNode();
         $node->setAttribute('action', $this->createUrl('/team/timesheet/multi-update'));
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Timesheet[] $timesheets */
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         self::assertCount(10, $timesheets);

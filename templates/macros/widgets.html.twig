@@ -136,6 +136,15 @@
     </span>
 {% endmacro %}
 
+{% macro badge_team_access(teams) %}
+    {% import _self as macro %}
+    {% if teams|length > 0 %}
+        {{ macro.badge_counter(teams|length) }}
+    {% else %}
+        {{ macro.icon('unlocked') }}
+    {% endif %}
+{% endmacro %}
+
 {% macro badge_counter(count, url) %}
     {% if url %}
         <a href="{{ url }}"><span class="badge bg-blue">{{ count }}</span></a>
@@ -150,8 +159,7 @@
 {% endmacro %}
 
 {% macro badge(title, color) %}
-    {# black, green, blue, yellow #}
-    <span class="badge bg-{{ color|default('red') }}">{{ title|trans }}</span>
+    <span class="badge" style="background-color:{{ color|default('#dd4b39') }}">{{ title|trans }}</span>
 {% endmacro %}
 
 {% macro alert(type, description, title, icon) %}
@@ -360,7 +368,7 @@
 {% macro tag_list(taglist) %}
     {% import _self as macro %}
     {% for tag in taglist %}
-        {{ macro.badge(tag.name , 'green') }}
+        {{ macro.badge(tag.name, tag.color|default('#00a65a')) }}
     {% endfor %}
 {% endmacro %}
 

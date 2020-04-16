@@ -6,9 +6,9 @@
                 <source>label.invoice_number_generator</source>
                 <target>Faktura zenbaki sortzailea</target>
             </trans-unit>
-            <trans-unit id="default">
-                <source>default</source>
-                <target>Data (defektuz)</target>
+            <trans-unit id="date">
+                <source>date</source>
+                <target>Data</target>
             </trans-unit>
         </body>
     </file>

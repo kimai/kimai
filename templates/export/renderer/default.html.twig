@@ -2,6 +2,17 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% extends 'export/layout.html.twig' %}
 
+{% set showRateBudget = false %}
+{% set showTimeBudget = false %}
+{% for budget in budgets %}
+    {% if budget.money_left > 0 %}
+        {% set showRateBudget = true %}
+    {% endif %}
+    {% if budget.time_left > 0 %}
+        {% set showTimeBudget = true %}
+    {% endif %}
+{% endfor %}
+
 {% set decimal = decimal|default(false) %}
 {% set columnTitles = {} %}
 {% set columns = {
@@ -40,6 +51,7 @@
     'hourlyRate': false,
     'fixedRate': false,
     'duration': 'label.duration',
+    'rate_internal': 'label.rate_internal',
     'rate': 'label.rate',
 }) %}
 
@@ -52,22 +64,36 @@
         document.getElementById('summary-show').addEventListener('click', function(event) {
             document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
         });
-        document.getElementById('summary-duration').addEventListener('click', function(event) {
-            if (!document.getElementById('summary-rate').checked) {
-                return;
+        {% if showTimeBudget %}
+        document.getElementById('summary-timeBudget').addEventListener('click', function(event) {
+            var cells = document.getElementsByClassName('export-timeBudget');
+            for (var columnCell of cells) {
+                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
             }
-            document.getElementById('summary-rate').disabled = !event.target.checked;
+        });
+        {% endif %}
+        {% if showRateBudget %}
+        document.getElementById('summary-budget').addEventListener('click', function(event) {
+            var cells = document.getElementsByClassName('export-budget');
+            for (var columnCell of cells) {
+                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+            }
+        });
+        {% endif %}
+        document.getElementById('summary-duration').addEventListener('click', function(event) {
             var cells = document.getElementsByClassName('summary-duration');
             for (var columnCell of cells) {
                 columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
             }
         });
         document.getElementById('summary-rate').addEventListener('click', function(event) {
-            if (!document.getElementById('summary-duration').checked) {
-                return;
-            }
-            document.getElementById('summary-duration').disabled = !event.target.checked;
             var cells = document.getElementsByClassName('summary-rate');
+            for (var columnCell of cells) {
+                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+            }
+        });
+        document.getElementById('summary-rate-internal').addEventListener('click', function(event) {
+            var cells = document.getElementsByClassName('summary-rate-internal');
             for (var columnCell of cells) {
                 columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
             }
@@ -131,10 +157,33 @@
                         {{ 'label.activity'|trans }}
                     </label>
                 </div>
+                {% if showTimeBudget %}
+                <div class="form-group">
+                    <label class="control-label" for="summary-timeBudget">
+                        <input type="checkbox" id="summary-timeBudget" name="summary-timeBudget" checked>
+                        {{ 'label.timeBudget'|trans }}
+                    </label>
+                </div>
+                {% endif %}
+                {% if showRateBudget %}
+                <div class="form-group">
+                    <label class="control-label" for="summary-budget">
+                        <input type="checkbox" id="summary-budget" name="summary-budget" checked>
+                        {{ 'label.budget'|trans }}
+                    </label>
+                </div>
+                {% endif %}
+
                 <div class="form-group">
                     <label class="control-label" for="summary-duration">
                         <input type="checkbox" id="summary-duration" name="summary-duration" checked>
                         {{ 'label.duration'|trans }}
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="summary-rate-internal">
+                        <input type="checkbox" id="summary-rate-internal" name="summary-rate-internal" checked>
+                        {{ 'label.rate_internal'|trans }}
                     </label>
                 </div>
                 <div class="form-group">
@@ -185,7 +234,14 @@
                 <tr>
                     <th>{{ 'label.customer'|trans }}</th>
                     <th>{{ 'label.project'|trans }}</th>
+                    {% if showTimeBudget %}
+                        <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
+                    {% endif %}
+                    {% if showRateBudget %}
+                        <th class="center export-budget">{{ 'label.budget'|trans }}</th>
+                    {% endif %}
                     <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
+                    <th class="cost summary-rate-internal">{{ 'label.rate_internal'|trans }}</th>
                     <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
                 </tr>
                 </thead>
@@ -193,41 +249,79 @@
                 {% set customer = null %}
                 {% set customerDuration = 0 %}
                 {% set customerRate = 0 %}
+                {% set customerInternalRate = 0 %}
                 {% set customerCurrency = null %}
-                {% for summary in summaries %}
+                {% for id, summary in summaries %}
                     {% if customer is same as(null) %}
                         {% set customer = summary.customer %}
                         {% set customerCurrency = summary.currency %}
                     {% endif %}
                     {% if customer is not same as(summary.customer) %}
                         <tr class="summary">
-                            <td colspan="2"></td>
+                            <td colspan="2">&nbsp;</td>
+                            {% if showTimeBudget %}
+                                <td class="export-timeBudget"></td>
+                            {% endif %}
+                            {% if showRateBudget %}
+                                <td class="export-budget"></td>
+                            {% endif %}
                             <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
+                            <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
                             <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                         </tr>
                         {% set customerCurrency = summary.currency %}
                         {% set customer = summary.customer %}
                         {% set customerDuration = 0 %}
                         {% set customerRate = 0 %}
+                        {% set customerInternalRate = 0 %}
                     {% endif %}
                     <tr>
                         <td>{{ summary.customer }}</td>
                         <td>{{ summary.project }}</td>
+                        {% if showTimeBudget %}
+                            <td class="center export-timeBudget">
+                                {% if budgets[id] is defined and budgets[id].time_left > 0 %}
+                                    {{ budgets[id].time_left|duration(decimal) }}
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                        {% if showRateBudget %}
+                            <td class="center export-budget">
+                                {% if budgets[id] is defined and budgets[id].money_left > 0 %}
+                                    {{ budgets[id].money_left|money(summary.currency) }}
+                                {% endif %}
+                            </td>
+                        {% endif %}
                         <td class="duration summary-duration">{{ summary.duration|duration(decimal) }}</td>
+                        <td class="cost summary-rate-internal">{{ summary.rate_internal|money(summary.currency) }}</td>
                         <td class="cost summary-rate">{{ summary.rate|money(summary.currency) }}</td>
                     </tr>
                     {% set customerDuration = customerDuration + summary.duration %}
                     {% set customerRate = customerRate + summary.rate %}
+                    {% set customerInternalRate = customerInternalRate + summary.rate_internal %}
                 {% endfor %}
                 {% if customer is not same as(null) %}
                     <tr class="summary">
-                        <td colspan="2"></td>
+                        <td colspan="2">&nbsp;</td>
+                        {% if showTimeBudget %}
+                            <td class="export-timeBudget"></td>
+                        {% endif %}
+                        {% if showRateBudget %}
+                            <td class="export-budget"></td>
+                        {% endif %}
                         <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
+                        <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
                 {% endif %}
                 </tbody>
             </table>
+
+            {#
+            ============================================
+            SUMMARY: BY ACTIVITY
+            ============================================
+            #}
 
             <table class="items table table-condensed table-bordered dataTable" id="summary-activity" style="display:none">
                 <thead>
@@ -236,6 +330,7 @@
                     <th>{{ 'label.project'|trans }}</th>
                     <th>{{ 'label.activity'|trans }}</th>
                     <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
+                    <th class="cost summary-rate-internal">{{ 'label.rate_internal'|trans }}</th>
                     <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
                 </tr>
                 </thead>
@@ -243,39 +338,45 @@
                 {% set customer = null %}
                 {% set customerDuration = 0 %}
                 {% set customerRate = 0 %}
+                {% set customerInternalRate = 0 %}
                 {% set customerCurrency = null %}
                 {% for summary in summaries %}
-                {% if customer is same as(null) %}
-                    {% set customer = summary.customer %}
-                    {% set customerCurrency = summary.currency %}
-                {% endif %}
-                {% if customer is not same as(summary.customer) %}
-                    <tr class="summary">
-                        <td colspan="3"></td>
-                        <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
-                        <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
-                    </tr>
-                    {% set customerCurrency = summary.currency %}
-                    {% set customer = summary.customer %}
-                    {% set customerDuration = 0 %}
-                    {% set customerRate = 0 %}
-                {% endif %}
-                {% for activitySummary in summary.activities %}
-                <tr>
-                    <td>{{ summary.customer }}</td>
-                    <td>{{ summary.project }}</td>
-                    <td>{{ activitySummary.activity }}</td>
-                    <td class="duration summary-duration">{{ activitySummary.duration|duration(decimal) }}</td>
-                    <td class="cost summary-rate">{{ activitySummary.rate|money(activitySummary.currency) }}</td>
-                </tr>
-                {% endfor %}
-                {% set customerDuration = customerDuration + summary.duration %}
-                {% set customerRate = customerRate + summary.rate %}
+                    {% if customer is same as(null) %}
+                        {% set customer = summary.customer %}
+                        {% set customerCurrency = summary.currency %}
+                    {% endif %}
+                    {% if customer is not same as(summary.customer) %}
+                        <tr class="summary">
+                            <td colspan="3"></td>
+                            <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
+                            <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
+                            <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
+                        </tr>
+                        {% set customerCurrency = summary.currency %}
+                        {% set customer = summary.customer %}
+                        {% set customerDuration = 0 %}
+                        {% set customerRate = 0 %}
+                        {% set customerInternalRate = 0 %}
+                    {% endif %}
+                    {% for activitySummary in summary.activities %}
+                        <tr>
+                            <td>{{ summary.customer }}</td>
+                            <td>{{ summary.project }}</td>
+                            <td>{{ activitySummary.activity }}</td>
+                            <td class="duration summary-duration">{{ activitySummary.duration|duration(decimal) }}</td>
+                            <td class="cost summary-rate-internal">{{ activitySummary.rate_internal|money(activitySummary.currency) }}</td>
+                            <td class="cost summary-rate">{{ activitySummary.rate|money(activitySummary.currency) }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% set customerDuration = customerDuration + summary.duration %}
+                    {% set customerRate = customerRate + summary.rate %}
+                    {% set customerInternalRate = customerInternalRate + summary.rate_internal %}
                 {% endfor %}
                 {% if customer is not same as(null) %}
                     <tr class="summary">
                         <td colspan="3"></td>
                         <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
+                        <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
                 {% endif %}
@@ -300,10 +401,16 @@
                 <tbody>
                 {% set timeWorked = 0 %}
                 {% set rateTotal = 0 %}
+                {% set rateInternalTotal = 0 %}
                 {% set currency = false %}
                 {% for entry in entries %}
                     {% set timeWorked = timeWorked + entry.duration %}
                     {% set rateTotal = rateTotal + entry.rate %}
+                    {% if entry.internalRate is defined %}
+                        {% set rateInternalTotal = rateInternalTotal + entry.internalRate %}
+                    {% else %}
+                        {% set rateInternalTotal = rateInternalTotal + entry.rate %}
+                    {% endif %}
                     {% if currency is same as(false) %}
                         {% set currency = entry.project.customer.currency %}
                     {% endif %}
@@ -387,6 +494,13 @@
                         <td class="column-duration text-nowrap" {% if not columns.duration %}style="display: none"{% endif %}>
                             {{ entry.duration|duration(decimal) }}
                         </td>
+                        <td class="column-rate_internal text-nowrap" {% if not columns.rate_internal %}style="display: none"{% endif %}>
+                            {% if entry.internalRate is defined %}
+                                {{ entry.internalRate|money(entry.project.customer.currency) }}
+                            {% else %}
+                                {{ entry.rate|money(entry.project.customer.currency) }}
+                            {% endif %}
+                        </td>
                         <td class="column-rate text-nowrap" {% if not columns.rate %}style="display: none"{% endif %}>
                             {{ entry.rate|money(entry.project.customer.currency) }}
                         </td>
@@ -395,12 +509,19 @@
                 {# leave in tbody instead of adding it to tfoot, as tfoot will be repeated on each page when printing #}
                 <tr>
                     {% for id, visibility in columns %}
-                        {% if id != 'duration' and id != 'rate' %}
+                        {% if id not in ['duration', 'rate', 'rate_internal'] %}
                             <th class="column-{{ id }}" {% if not visibility %}style="display: none"{% endif %}></th>
                         {% endif %}
                     {% endfor %}
                     <th class="text-nowrap column-duration">
                         {{- timeWorked|duration(decimal) -}}
+                    </th>
+                    <th class="text-nowrap column-rate_internal">
+                        {%- if currency is not null and currency is not same as(false) %}
+                            {{ rateInternalTotal|money(currency) }}
+                        {% else %}
+                            {{ rateInternalTotal|money }}
+                        {% endif -%}
                     </th>
                     <th class="text-nowrap column-rate">
                         {%- if currency is not null and currency is not same as(false) %}

@@ -292,6 +292,18 @@
                 <source>label.rate</source>
                 <target>Lohn</target>
             </trans-unit>
+            <trans-unit id="help.rate">
+                <source>help.rate</source>
+                <target>Zu berechnender Stundensatz</target>
+            </trans-unit>
+            <trans-unit id="label.rate_internal">
+                <source>label.rate_internal</source>
+                <target>Interner Lohn</target>
+            </trans-unit>
+            <trans-unit id="help.rate_internal">
+                <source>help.rate_internal</source>
+                <target>Interner Verrechnungswert (wenn dieser nicht angegeben ist, wird der normale Satz verwendet)</target>
+            </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
                 <target>Sprache</target>
@@ -428,6 +440,10 @@
                 <source>label.fixedRate</source>
                 <target>Festbetrag</target>
             </trans-unit>
+            <trans-unit id="help.fixedRate">
+                <source>help.fixedRate</source>
+                <target>Jeder Zeiteintrag bekommt den gleichen Wert, unabhängig von seiner Dauer</target>
+            </trans-unit>
             <trans-unit id="label.color">
                 <source>label.color</source>
                 <target>Farbe</target>
@@ -491,6 +507,10 @@
             <trans-unit id="label.login.initial_view">
                 <source>label.login.initial_view</source>
                 <target>Initiale Ansicht nach Anmeldung</target>
+            </trans-unit>
+            <trans-unit id="label.lastLogin">
+                <source>label.lastLogin</source>
+                <target>Letzte Anmeldung</target>
             </trans-unit>
             <!-- Options for user-preference label.calendar.initial_view -->
             <trans-unit id="month">
@@ -820,10 +840,6 @@
                 <source>invoice.title</source>
                 <target>Rechnungen</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Erstellen Sie Rechnungen für ihre aufgezeichneten Zeiten</target>
-            </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
                 <target>Rechnungsdaten filtern</target>
@@ -831,6 +847,10 @@
             <trans-unit id="button.preview">
                 <source>button.preview</source>
                 <target>Vorschau</target>
+            </trans-unit>
+            <trans-unit id="button.preview_print">
+                <source>button.preview_print</source>
+                <target>Druck Vorschau</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -947,6 +967,22 @@
             <trans-unit id="label.decimalDuration">
                 <source>label.decimalDuration</source>
                 <target>Dauer als Dezimalzahl anzeigen</target>
+            </trans-unit>
+            <trans-unit id="label.status">
+                <source>label.status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="status.new">
+                <source>status.new</source>
+                <target>Neu</target>
+            </trans-unit>
+            <trans-unit id="status.pending">
+                <source>status.pending</source>
+                <target>Ausstehend</target>
+            </trans-unit>
+            <trans-unit id="status.paid">
+                <source>status.paid</source>
+                <target>Bezahlt</target>
             </trans-unit>
 
             <!--

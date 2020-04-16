@@ -89,6 +89,7 @@ class CustomerRepository extends EntityRepository
             ->addSelect('COUNT(t.id) as recordAmount')
             ->addSelect('SUM(t.duration) as recordDuration')
             ->addSelect('SUM(t.rate) as recordRate')
+            ->addSelect('SUM(t.internalRate) as recordInternalRate')
             ->from(Timesheet::class, 't')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
             ->andWhere('p.customer = :customer')
@@ -99,6 +100,7 @@ class CustomerRepository extends EntityRepository
             $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
             $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
             $stats->setRecordRate($timesheetResult[0]['recordRate']);
+            $stats->setRecordInternalRate($timesheetResult[0]['recordInternalRate']);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -163,12 +165,12 @@ class CustomerRepository extends EntityRepository
     }
 
     /**
-     * @deprecated since 1.1 - don't use this method, it ignores team permission checks
+     * @deprecated since 1.1 - use getQueryBuilderForFormType() istead - will be removed with 2.0
      */
     public function builderForEntityType($customer)
     {
         $query = new CustomerFormTypeQuery();
-        $query->setCustomer($customer);
+        $query->addCustomer($customer);
 
         return $this->getQueryBuilderForFormType($query);
     }
@@ -190,9 +192,9 @@ class CustomerRepository extends EntityRepository
         $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
         $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
 
-        $customer = $query->getCustomer();
-        if (null !== $customer) {
-            $qb->orWhere('c.id = :customer')->setParameter('customer', $customer);
+        if ($query->hasCustomers()) {
+            $qb->orWhere($qb->expr()->in('c.id', ':customer'))
+                ->setParameter('customer', $query->getCustomers());
         }
 
         if (null !== $query->getCustomerToIgnore()) {

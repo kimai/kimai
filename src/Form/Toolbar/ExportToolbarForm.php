@@ -31,9 +31,9 @@ class ExportToolbarForm extends AbstractToolbarForm
         $this->addTimesheetStateChoice($builder);
         $this->addUsersChoice($builder);
         $this->addDateRangeChoice($builder);
-        $this->addCustomerChoice($builder, ['start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true]);
-        $this->addProjectChoice($builder, ['ignore_date' => true]);
-        $this->addActivityChoice($builder);
+        $this->addCustomerMultiChoice($builder, ['start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true], true);
+        $this->addProjectMultiChoice($builder, ['ignore_date' => true], true, true);
+        $this->addActivityMultiChoice($builder, [], true);
         $this->addExportType($builder);
         $this->addTagInputField($builder);
         $builder->add('markAsExported', CheckboxType::class, [

@@ -5,20 +5,19 @@
 {% import "invoice/actions.html.twig" as actions %}
 
 {% set columns = {
-    'date': 'alwaysVisible',
-    'user': 'hidden-xs hidden-sm',
-    'project': 'hidden-xs hidden-sm',
-    'description': 'hidden-xs hidden-sm',
-    'unit_price': 'hidden-xs text-center',
-    'amount': 'text-center',
-    'duration': 'hidden-xs text-center',
-    'total_rate': 'text-right alwaysVisible',
+    'date': {'class': 'alwaysVisible', 'orderBy': false},
+    'user': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
+    'project': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
+    'description': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
+    'unit_price': {'class': 'hidden-xs text-center', 'orderBy': false},
+    'amount': {'class': 'text-center', 'orderBy': false},
+    'duration': {'class': 'hidden-xs text-center', 'orderBy': false},
+    'total_rate': {'class': 'text-right alwaysVisible', 'orderBy': false},
 } %}
 
 {% set tableName = 'invoice' %}
 
 {% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.invoices('index') }}{% endblock %}
 
 {% block main_before %}
@@ -34,21 +33,34 @@
             {% block box_before %}{{ form_start(form) }}{% endblock %}
             {% block box_body %}
                 {{ form_errors(form) }}
-                {{ form_row(form.searchTerm) }}
+                {% if form.searchTerm is defined %}
+                    {{ form_row(form.searchTerm) }}
+                {% endif %}
                 {{ form_row(form.daterange) }}
                 {{ form_row(form.customer) }}
-                {{ form_row(form.project) }}
-                {{ form_row(form.activity) }}
+                {{ form_row(form.projects) }}
+                {% if form.activities is defined %}
+                    {{ form_row(form.activities) }}
+                {% endif %}
                 {% if form.users is defined %}
                     {{ form_row(form.users) }}
                 {% endif %}
-                {{ form_row(form.tags) }}
-                {{ form_row(form.exported) }}
+                {% if form.tags is defined %}
+                    {{ form_row(form.tags) }}
+                {% endif %}
+                {% if form.exported is defined %}
+                    {{ form_row(form.exported) }}
+                {% endif %}
                 {{ form_row(form.template) }}
                 {{ form_row(form.markAsExported) }}
             {% endblock %}
             {% block box_footer%}
-                {{ form_widget(form.create, {'attr': {'class': 'btn btn-success'}}) }}
+                {% set createAttr = {'class': 'btn btn-success'} %}
+                {% if not is_granted('history_invoice') %}
+                    {% set createAttr = createAttr|merge({'formtarget': '_blank'}) %}
+                {% endif %}
+                {{ form_widget(form.create, {'attr': createAttr}) }}
+                {{ form_widget(form.print) }}
                 {{ form_widget(form.preview) }}
             {% endblock %}
             {% block box_after %}{{ form_end(form) }}{% endblock %}
@@ -63,6 +75,7 @@
         {% else %}
             {% set isDecimal = model.template.decimalDuration|default(false) %}
             {% set entries = model.calculator.entries %}
+            {% set currency = model.currency %}
             {{ tables.datatable_header(tableName, columns, query, {}) }}
             {% for entry in entries %}
                 {% set amount = entry.amount %}
@@ -90,14 +103,32 @@
                             {{ entry.description|escape|desc2html }}
                         {% endif %}
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-center">{{ rate|money(model.calculator.currency) }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-center">{{ rate|money(currency) }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }} text-center text-nowrap">{{ amount }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-center text-nowrap" data-duration="{{ entry.duration }}">{{ duration }}</td>
-                    <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
+                    <td class="text-right text-nowrap">{{ entry.rate|money(currency) }}</td>
                 </tr>
             {% endfor %}
+            <tr>
+                <th></th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'user') }}"></th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'project') }}"></th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'description') }}"></th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}"></th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'amount') }}"></th>
+                <th class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-center text-nowrap">{{ model.calculator.timeWorked|duration(isDecimal) }}</th>
+                <th class="text-right text-nowrap">{{ model.calculator.total|money(currency) }}</th>
+            </tr>
             {{ tables.data_table_footer(entries) }}
         {% endif %}
     {% endif %}
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('kimai.systemConfigUpdate', true);
+        });
+    </script>
 {% endblock %}

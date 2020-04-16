@@ -1,6 +1,12 @@
 # ========== KIMAI ==========
+# some hosters require a htaccess to change the PHP version
+.htaccess
+
 .idea/
 .DS_Store
+
+# for symfony local webserver
+php.ini
 
 /bin/*
 !bin/console
@@ -21,6 +27,7 @@ templates/invoice/renderer/.~lock*
 !var/cache/.gitkeep
 
 /var/invoices/*
+/var/export/*
 
 /var/packages/*
 !var/packages/.gitkeep
@@ -60,3 +67,4 @@ templates/invoice/renderer/.~lock*
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+/nbproject/*

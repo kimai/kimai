@@ -14,11 +14,11 @@
     {% else %}
 
         {% set columns = {
-            'name': '',
-            'version': '',
-            'description': 'hidden-xs',
-            'required_version': 'hidden-xs hidden-sm',
-            'actions': 'actions alwaysVisible',
+            'name': {'class': 'alwaysVisible'},
+            'version': {'class': ' w-min'},
+            'description': {'class': 'hidden-xs'},
+            'required_version': {'class': 'hidden-xs hidden-sm w-min'},
+            'actions': {'class': 'actions alwaysVisible'},
         } %}
 
         {% set tableName = 'plugins' %}
@@ -26,14 +26,14 @@
         {{ tables.datatable_header(tableName, columns, null, {}) }}
         {% for plugin in plugins %}
             <tr>
-                <td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
                     {% if plugin.id != plugin.name %}
                         <span data-toggle="tooltip" data-placement="top" title="{{ plugin.id }}">{{ plugin.name }}</span>
                     {% else %}
                         {{ plugin.name }}
                     {% endif %}
                 </td>
-                <td>{{ widgets.label(plugin.metadata.version, 'primary') }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'version') }}">{{ widgets.label(plugin.metadata.version, 'primary') }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ plugin.metadata.description }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'required_version') }}">
                     {% if plugin.metadata.kimaiVersion > constant('App\\Constants::VERSION') %}
@@ -44,7 +44,7 @@
                         {{ widgets.label(plugin.metadata.kimaiVersion, 'success') }}
                     {% endif %}
                 </td>
-                <td class="actions">
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                     {{ actions.plugin(plugin, 'index') }}
                 </td>
             </tr>

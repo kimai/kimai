@@ -134,7 +134,6 @@ class AvatarService
             }
             $avatar = new Avatar(self::AVATAR_CONFIG);
             $avatar->create($profile->getDisplayName())->save($filePath, 90);
-            $avatar->create($profile->getDisplayName())->save($filePath, 90);
         }
 
         return true;

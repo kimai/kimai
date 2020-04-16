@@ -1,6 +1,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% extends 'invoice/layout.html.twig' %}
-{% set language = model.template.language|default(app.request.locale) %}
+{% set fallback = app.request is not null ? app.request.locale : 'en' %}
+{% set language = model.template.language|default(fallback) %}
 {% set isDecimal = model.template.decimalDuration|default(false) %}
 
 {% block invoice %}

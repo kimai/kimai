@@ -792,10 +792,6 @@
                 <source>invoice.title</source>
                 <target>Fakturak</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Faktura sortu ordu sarrerak erabiliaz.</target>
-            </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
                 <target>Faktura datuak filtratu</target>

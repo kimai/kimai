@@ -35,6 +35,9 @@ table.dataTable {
         th.multiCheckbox {
             width: 15px;
         }
+        &.overlapping {
+            border-top: 2px dotted red;
+        }
     }
     td {
         /*

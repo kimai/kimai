@@ -24,9 +24,14 @@ class ActivityToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $newOptions = [];
+        if ($options['ignore_date'] === true) {
+            $newOptions['ignore_date'] = true;
+        }
+
         $this->addSearchTermInputField($builder);
-        $this->addCustomerChoice($builder);
-        $this->addProjectChoice($builder);
+        $this->addCustomerMultiChoice($builder, $newOptions, true);
+        $this->addProjectMultiChoice($builder, $newOptions, true, false);
         $builder->add('globalsOnly', ChoiceType::class, [
             'choices' => [
                 'yes' => 1,
@@ -51,6 +56,7 @@ class ActivityToolbarForm extends AbstractToolbarForm
         $resolver->setDefaults([
             'data_class' => ActivityQuery::class,
             'csrf_protection' => false,
+            'ignore_date' => true,
         ]);
     }
 }

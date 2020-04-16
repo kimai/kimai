@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class InvoiceTemplate
 {
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -36,7 +36,7 @@ class InvoiceTemplate
      *
      * @ORM\Column(name="name", type="string", length=60, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=1, max=60)
+     * @Assert\Length(min=1, max=60, allowEmptyString=false)
      */
     private $name;
 
@@ -169,6 +169,8 @@ class InvoiceTemplate
     {
         return $this->name;
     }
+
+    // ---- trait methods below ---
 
     public function getTitle(): ?string
     {
@@ -344,5 +346,12 @@ class InvoiceTemplate
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
     }
 }

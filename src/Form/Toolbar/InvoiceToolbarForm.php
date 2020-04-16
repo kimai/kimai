@@ -9,53 +9,27 @@
 
 namespace App\Form\Toolbar;
 
-use App\Form\Type\InvoiceTemplateType;
-use App\Repository\Query\InvoiceQuery;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used for filtering timesheet entries for invoices.
  */
-class InvoiceToolbarForm extends AbstractToolbarForm
+class InvoiceToolbarForm extends InvoiceToolbarSimpleForm
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
         $this->addSearchTermInputField($builder);
-        $this->addTemplateChoice($builder);
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
         }
-        $this->addDateRangeChoice($builder);
-        $this->addCustomerChoice($builder, ['required' => true, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => '']);
-        $this->addProjectChoice($builder, ['ignore_date' => true]);
-        $this->addActivityChoice($builder);
+        $this->addActivityMultiChoice($builder, $options, true);
         $this->addTagInputField($builder);
         $this->addExportStateChoice($builder);
-        $builder->add('markAsExported', CheckboxType::class, [
-            'label' => 'label.mark_as_exported',
-            'required' => false,
-        ]);
-        $builder->add('create', SubmitType::class, [
-            'label' => 'button.print',
-            'attr' => ['formtarget' => '_blank'],
-        ]);
-        $builder->add('preview', SubmitType::class, [
-            'label' => 'button.preview',
-        ]);
-    }
-
-    protected function addTemplateChoice(FormBuilderInterface $builder)
-    {
-        $builder->add('template', InvoiceTemplateType::class, [
-            'required' => true,
-            'placeholder' => null,
-        ]);
     }
 
     /**
@@ -63,10 +37,7 @@ class InvoiceToolbarForm extends AbstractToolbarForm
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => InvoiceQuery::class,
-            'csrf_protection' => false,
-            'include_user' => true,
-        ]);
+        parent::configureOptions($resolver);
+        $resolver->setDefault('include_user', true);
     }
 }

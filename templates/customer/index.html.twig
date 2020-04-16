@@ -4,10 +4,21 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "customer/actions.html.twig" as actions %}
 
-{% set showVisibility = query.visibility != 1 %}
 {% set columns = {
-    'name': 'alwaysVisible',
+    'name': {'class': 'alwaysVisible'},
     'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
+    'number': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'company': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'vat_id': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'contact': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'address': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'country': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'currency': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'phone': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'fax': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'mobile': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'email': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'homepage': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
@@ -15,15 +26,9 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'team': {'class': 'text-center', 'orderBy': false},
-}) %}
-{% if showVisibility %}
-    {% set columns = columns|merge({
-        'visible': {'class': 'text-center', 'orderBy': false},
-    }) %}
-{% endif %}
-{% set columns = columns|merge({
-    'actions': 'actions alwaysVisible',
+    'team': {'class': 'text-center w-min', 'orderBy': false},
+    'visible': {'class': 'text-center hidden w-min', 'orderBy': false},
+    'actions': {'class': 'actions alwaysVisible'},
 }) %}
 
 {% set tableName = 'customer_admin' %}
@@ -45,30 +50,28 @@
 
         {% for entry in entries %}
             <tr{% if is_granted('view', entry) %} class="alternative-link open-edit" data-href="{{ path('customer_details', {'id': entry.id}) }}"{% endif %}>
-                <td>
-                    {{ widgets.label_color_dot('customer', true, entry.name, null, entry.color) }}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">
-                    {{ entry.comment|comment2html }}
-                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_color_dot('customer', true, entry.name, null, entry.color) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'number') }}">{{ entry.number }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'company') }}">{{ entry.company }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'vat_id') }}">{{ entry.vatId }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'contact') }}">{{ entry.contact }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'address') }}">{{ entry.address }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'country') }}">{{ entry.country|country }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'currency') }}">{{ entry.currency|currency }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'phone') }}">{{ entry.phone }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'fax') }}">{{ entry.fax }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'mobile') }}">{{ entry.mobile }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">{{ entry.email }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'homepage') }}">{{ entry.homepage }}</td>
                 {% for field in metaColumns %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">
-                    {% if entry.teams|length > 0 %}
-                        {{ widgets.badge_counter(entry.teams|length) }}
-                    {% else %}
-                        {{ widgets.icon('unlocked') }}
-                    {% endif %}
-                </td>
-                {% if showVisibility %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-                {% endif %}
-                <td class="actions">
-                    {{ actions.customer(entry, 'index') }}
-                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">{{ widgets.badge_team_access(entry.teams) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.customer(entry, 'index') }}</td>
             </tr>
         {% endfor %}
 

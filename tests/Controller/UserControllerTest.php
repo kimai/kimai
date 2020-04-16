@@ -21,6 +21,10 @@ class UserControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/user/');
+    }
+
+    public function testIsSecureForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/user/');
     }
 
@@ -141,7 +145,7 @@ class UserControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $fixture = new TimesheetFixtures();

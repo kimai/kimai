@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
 use Symfony\Component\Translation\DataCollectorTranslator;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
@@ -17,16 +18,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * The abstract base controller.
+ * @method null|User getUser()
  */
 abstract class AbstractController extends BaseAbstractController implements ServiceSubscriberInterface
 {
-    public const FLASH_SUCCESS = 'success';
-    public const FLASH_WARNING = 'warning';
-    public const FLASH_ERROR = 'error';
-
-    public const DOMAIN_FLASH = 'flashmessages';
-    public const DOMAIN_ERROR = 'exceptions';
-
     /**
      * @deprecated since 1.6, will be removed with 2.0
      */
@@ -41,11 +36,11 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     }
 
     /**
-     * @return User|null
+     * @return LoggerInterface $logger
      */
-    protected function getUser()
+    private function getLogger()
     {
-        return parent::getUser();
+        return $this->container->get('logger');
     }
 
     /**
@@ -56,7 +51,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      */
     protected function flashSuccess($translationKey, $parameter = [])
     {
-        $this->addFlashTranslated(self::FLASH_SUCCESS, $translationKey, $parameter);
+        $this->addFlashTranslated('success', $translationKey, $parameter);
     }
 
     /**
@@ -67,7 +62,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      */
     protected function flashWarning($translationKey, $parameter = [])
     {
-        $this->addFlashTranslated(self::FLASH_WARNING, $translationKey, $parameter);
+        $this->addFlashTranslated('warning', $translationKey, $parameter);
     }
 
     /**
@@ -78,7 +73,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      */
     protected function flashError($translationKey, $parameter = [])
     {
-        $this->addFlashTranslated(self::FLASH_ERROR, $translationKey, $parameter);
+        $this->addFlashTranslated('error', $translationKey, $parameter);
     }
 
     /**
@@ -92,22 +87,28 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     {
         if (!empty($parameter)) {
             foreach ($parameter as $key => $value) {
-                $parameter[$key] = $this->getTranslator()->trans($value, [], self::DOMAIN_FLASH);
+                $parameter[$key] = $this->getTranslator()->trans($value, [], 'flashmessages');
             }
             $message = $this->getTranslator()->trans(
                 $message,
                 $parameter,
-                self::DOMAIN_FLASH
+                'flashmessages'
             );
         }
 
         $this->addFlash($type, $message);
     }
 
+    protected function logException(\Exception $ex)
+    {
+        $this->getLogger()->critical($ex->getMessage());
+    }
+
     public static function getSubscribedServices()
     {
         return array_merge(parent::getSubscribedServices(), [
-            'translator' => TranslatorInterface::class
+            'translator' => TranslatorInterface::class,
+            'logger' => LoggerInterface::class
         ]);
     }
 }

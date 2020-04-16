@@ -49,6 +49,9 @@ class AppExtension extends Extension
         $config['invoice']['documents'] = array_merge($config['invoice']['documents'], $config['invoice']['defaults']);
         unset($config['invoice']['defaults']);
 
+        $config['export']['documents'] = array_merge($config['export']['documents'], $config['export']['defaults']);
+        unset($config['export']['defaults']);
+
         // safe alternatives to %kernel.project_dir%
         $container->setParameter('kimai.data_dir', $config['data_dir']);
         $container->setParameter('kimai.plugin_dir', $config['plugin_dir']);
@@ -60,6 +63,7 @@ class AppExtension extends Extension
         $container->setParameter('kimai.dashboard', $config['dashboard']);
         $container->setParameter('kimai.widgets', $config['widgets']);
         $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
+        $container->setParameter('kimai.export.documents', $config['export']['documents']);
         $container->setParameter('kimai.defaults', $config['defaults']);
 
         $this->createPermissionParameter($config['permissions'], $container);

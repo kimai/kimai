@@ -249,7 +249,7 @@ final class ProjectController extends AbstractController
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
         $query->setPageSize(5);
-        $query->setProject($project);
+        $query->addProject($project);
         $query->setExcludeGlobals(true);
 
         /* @var $entries Pagerfanta */
@@ -312,25 +312,6 @@ final class ProjectController extends AbstractController
             'teams' => $teams,
             'rates' => $rates
         ]);
-    }
-
-    /**
-     * @Route(path="/{id}/rate_delete/{rate}", name="admin_project_rate_delete", methods={"GET"})
-     * @Security("is_granted('edit', project)")
-     */
-    public function deleteRateAction(Project $project, ProjectRate $rate, ProjectRateRepository $repository)
-    {
-        if ($rate->getProject() !== $project) {
-            $this->flashError('action.delete.error', ['%reason%' => 'Invalid project']);
-        } else {
-            try {
-                $repository->deleteRate($rate);
-            } catch (\Exception $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
-            }
-        }
-
-        return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
     }
 
     /**
@@ -405,7 +386,7 @@ final class ProjectController extends AbstractController
                 'label' => 'label.project',
                 'query_builder' => function (ProjectRepository $repo) use ($project) {
                     $query = new ProjectFormTypeQuery();
-                    $query->setCustomer($project->getCustomer());
+                    $query->addCustomer($project->getCustomer());
                     $query->setProjectToIgnore($project);
                     $query->setUser($this->getUser());
 

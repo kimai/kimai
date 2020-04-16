@@ -4,11 +4,14 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "project/actions.html.twig" as actions %}
 
-{% set showVisibility = query.visibility != 1 %}
 {% set columns = {
-    'name': 'alwaysVisible',
-    'customer': 'hidden-xs',
+    'name': {'class': 'alwaysVisible'},
+    'customer': {'class': 'hidden-xs'},
     'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
+    'orderNumber': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'orderDate': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'start': {'class': 'hidden-xs hidden-sm hidden', 'title': 'label.project_start'|trans, 'orderBy': false},
+    'end': {'class': 'hidden-xs hidden-sm hidden', 'title': 'label.project_end'|trans, 'orderBy': false},
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
@@ -16,15 +19,9 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'team': {'class': 'text-center', 'orderBy': false},
-}) %}
-{% if showVisibility %}
-    {% set columns = columns|merge({
-        'visible': {'class': 'text-center', 'orderBy': false},
-    }) %}
-{% endif %}
-{% set columns = columns|merge({
-    'actions': 'actions alwaysVisible',
+    'team': {'class': 'text-center w-min', 'orderBy': false},
+    'visible': {'class': 'text-center hidden w-min', 'orderBy': false},
+    'actions': {'class': 'actions alwaysVisible'},
 }) %}
 
 {% set tableName = 'project_admin' %}
@@ -46,29 +43,21 @@
 
         {% for entry in entries %}
             <tr{% if is_granted('view', entry) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': entry.id}) }}"{% endif %}>
-                <td>{{ widgets.label_color_dot('project', true, entry.name, null, entry.color) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
-                    {{ widgets.label_customer(entry.customer) }}
-                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_color_dot('project', true, entry.name, null, entry.color) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.customer) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html() }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'orderNumber') }}">{{ entry.orderNumber }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'orderDate') }}">{% if entry.orderDate is not null %}{{ entry.orderDate|date_full }}{% endif %}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'start') }}">{% if entry.start is not null %}{{ entry.start|date_full }}{% endif %}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'end') }}">{% if entry.end is not null %}{{ entry.end|date_full }}{% endif %}</td>
                 {% for field in metaColumns %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">
-                    {% if entry.teams|length > 0 %}
-                        {{ widgets.badge_counter(entry.teams|length) }}
-                    {% else %}
-                        {{ widgets.icon('unlocked') }}
-                    {% endif %}
-                </td>
-                {% if showVisibility %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-                {% endif %}
-                <td class="actions">
-                    {{ actions.project(entry, 'index') }}
-                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">{{ widgets.badge_team_access(entry.teams) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.project(entry, 'index') }}</td>
             </tr>
         {% endfor %}
 

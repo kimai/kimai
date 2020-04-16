@@ -14,6 +14,10 @@
                 <source>timesheet</source>
                 <target>Zeiterfassung</target>
             </trans-unit>
+            <trans-unit id="invoice">
+                <source>invoice</source>
+                <target>Rechnungen</target>
+            </trans-unit>
             <trans-unit id="form_customer">
                 <source>form_customer</source>
                 <target>Kunden anlegen - Standard Werte</target>
@@ -193,6 +197,14 @@
             <trans-unit id="label.timesheet.default_begin">
                 <source>label.timesheet.default_begin</source>
                 <target>Standard Startzeit (wird nicht in jedem Zeiterfassungs Modus verwendet)</target>
+            </trans-unit>
+            <trans-unit id="label.simple_form">
+                <source>label.simple_form</source>
+                <target>Einfache Suche</target>
+            </trans-unit>
+            <trans-unit id="label.invoice.number_format">
+                <source>label.invoice.number_format</source>
+                <target>Rechnungsnummer Format</target>
             </trans-unit>
         </body>
     </file>

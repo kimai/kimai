@@ -9,10 +9,14 @@
 
 namespace App\Tests\API;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\Activity;
+use App\Entity\ActivityRate;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
+use App\Repository\ActivityRateRepository;
+use App\Repository\ActivityRepository;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
@@ -22,6 +26,51 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 class ActivityControllerTest extends APIControllerBaseTest
 {
+    use RateControllerTestTrait;
+
+    protected function getRateUrl(string $id = '1', ?string $rateId = null): string
+    {
+        if (null !== $rateId) {
+            return sprintf('/api/activities/%s/rates/%s', $id, $rateId);
+        }
+
+        return sprintf('/api/activities/%s/rates', $id);
+    }
+
+    protected function importTestRates(string $id): array
+    {
+        /** @var ActivityRateRepository $rateRepository */
+        $rateRepository = $this->getEntityManager()->getRepository(ActivityRate::class);
+        /** @var ActivityRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Activity::class);
+        /** @var Activity|null $activity */
+        $activity = $repository->find($id);
+
+        if (null === $activity) {
+            $activity = new Activity();
+            $activity->setName('foooo');
+            $repository->saveActivity($activity);
+        }
+
+        $rate1 = new ActivityRate();
+        $rate1->setActivity($activity);
+        $rate1->setRate(17.45);
+        $rate1->setIsFixed(false);
+
+        $rateRepository->saveRate($rate1);
+
+        $rate2 = new ActivityRate();
+        $rate2->setActivity($activity);
+        $rate2->setRate(99);
+        $rate2->setInternalRate(9);
+        $rate2->setIsFixed(true);
+        $rate2->setUser($this->getUserByName(UserFixtures::USERNAME_USER));
+
+        $rateRepository->saveRate($rate2);
+
+        return [$rate1, $rate2];
+    }
+
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/activities');
@@ -29,9 +78,11 @@ class ActivityControllerTest extends APIControllerBaseTest
 
     protected function loadActivityTestData(HttpKernelBrowser $client)
     {
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
+        /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
+        /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
 
         $project2 = new Project();
@@ -92,9 +143,10 @@ class ActivityControllerTest extends APIControllerBaseTest
         yield ['/api/activities', ['globals' => 'true', 'visible' => '2'], [[false]]];
         yield ['/api/activities', ['globals' => 'true', 'visible' => 1], [[false], [false]]];
         yield ['/api/activities', ['project' => '1'], [[false], [false], [true, 1]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => 1], [[false], [true, 2], [true, 2], [false]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => '3'], [[false], [true, 2], [true, 2], [true, 2], [false], [false]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => 2], [[true, 2], [false]]];
+        yield ['/api/activities', ['project' => '2', 'projects' => '2', 'visible' => 1], [[false], [true, 2], [true, 2], [false]]];
+        yield ['/api/activities', ['project' => '2', 'projects' => '2,2', 'visible' => '3'], [[false], [true, 2], [true, 2], [true, 2], [false], [false]]];
+        yield ['/api/activities', ['projects' => '2,2', 'visible' => 2], [[true, 2], [false]]];
+        yield ['/api/activities', ['projects' => '2', 'visible' => 2], [[true, 2], [false]]];
     }
 
     public function testGetCollectionWithQuery()
@@ -103,7 +155,6 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->loadActivityTestData($client);
 
         $query = ['order' => 'ASC', 'orderBy' => 'project'];
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/activities', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
 
@@ -276,7 +327,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Activity $activity */
         $activity = $em->getRepository(Activity::class)->find(1);
         $this->assertEquals('another,testing,bar', $activity->getMetaField('metatestmock')->getValue());

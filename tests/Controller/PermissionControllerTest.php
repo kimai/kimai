@@ -9,18 +9,22 @@
 
 namespace App\Tests\Controller;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\RolePermission;
 use App\Entity\User;
-use Doctrine\ORM\EntityManager;
 
 /**
  * @group integration
  */
 class PermissionControllerTest extends ControllerBaseTest
 {
-    public function testPermissionsIsSecure()
+    public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/permissions');
+    }
+
+    public function testIsSecureForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
     }
 
@@ -29,7 +33,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/permissions');
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 108);
+        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 109);
         $this->assertPageActions($client, [
             'back' => $this->createUrl('/admin/user/'),
             'roles modal-ajax-form' => $this->createUrl('/admin/permissions/roles/create'),
@@ -47,6 +51,10 @@ class PermissionControllerTest extends ControllerBaseTest
     public function testCreateRoleIsSecured()
     {
         $this->assertUrlIsSecured('/admin/permissions/roles/create');
+    }
+
+    public function testCreateRoleIsSecuredForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
     }
 
@@ -75,6 +83,10 @@ class PermissionControllerTest extends ControllerBaseTest
     public function testDeleteRoleIsSecured()
     {
         $this->assertUrlIsSecured('/admin/permissions/roles/1/delete');
+    }
+
+    public function testDeleteRoleIsSecuredForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
     }
 
@@ -94,6 +106,23 @@ class PermissionControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
         self::assertStringContainsString('<th data-field="TEST_ROLE" class="alwaysVisible text-center">', $content);
 
+        // add user to role
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/roles');
+        $form = $client->getCrawler()->filter('form[name=user_roles]')->form();
+        $client->submit($form, [
+            'user_roles[roles]' => [
+                0 => 'ROLE_TEAMLEAD',
+                2 => 'ROLE_SUPER_ADMIN',
+                3 => 'TEST_ROLE'
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/roles'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
+        $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'TEST_ROLE', 'ROLE_USER'], $user->getRoles());
+
         $this->request($client, '/admin/permissions/roles/1/delete');
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
         $client->followRedirect();
@@ -101,11 +130,19 @@ class PermissionControllerTest extends ControllerBaseTest
         self::assertHasFlashDeleteSuccess($client);
         $content = $client->getResponse()->getContent();
         self::assertStringNotContainsString('<th data-field="TEST_ROLE" class="alwaysVisible text-center">', $content);
+
+        // verify that role was removed from user
+        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
+        $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $user->getRoles());
     }
 
     public function testSavePermissionIsSecured()
     {
         $this->assertUrlIsSecured('/admin/permissions/roles/1/view_user/1');
+    }
+
+    public function testSavePermissionIsSecuredForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
     }
 
@@ -121,8 +158,7 @@ class PermissionControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
 
-        /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
         $this->assertEquals(0, count($rolePermissions));
 

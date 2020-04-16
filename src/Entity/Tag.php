@@ -39,10 +39,12 @@ class Tag
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=100)
+     * @Assert\Length(min=2, max=100, allowEmptyString=false)
      * @Assert\Regex(pattern="/,/",match=false,message="Tag name cannot contain comma")
      */
     private $name;
+
+    use ColorTrait;
 
     /**
      * @var Timesheet[]|ArrayCollection

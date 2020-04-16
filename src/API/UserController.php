@@ -33,6 +33,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @RouteResource("User")
+ * @SWG\Tag(name="User")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -82,7 +83,7 @@ final class UserController extends BaseApiController
      * @Rest\QueryParam(name="visible", requirements="1|2|3", strict=true, nullable=true, description="Visibility status to filter users. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)")
      * @Rest\QueryParam(name="orderBy", requirements="id|username|alias|email", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, username, alias, email (default: username)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
-     * @Rest\QueryParam(name="term", requirements="[a-zA-Z0-9 \-,:]+", strict=true, nullable=true, description="Free search term")
+     * @Rest\QueryParam(name="term", description="Free search term")
      *
      * @Security("is_granted('view_user')")
      *
