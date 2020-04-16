@@ -229,6 +229,18 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
+                        ->setName('timesheet.rules.lockdown_period_start')
+                        ->setType(TextType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('timesheet.rules.lockdown_period_end')
+                        ->setType(TextType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('timesheet.rules.lockdown_grace_period')
+                        ->setType(TextType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
                         ->setName('timesheet.active_entries.hard_limit')
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
