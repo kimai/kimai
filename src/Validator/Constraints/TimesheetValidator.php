@@ -62,6 +62,7 @@ class TimesheetValidator extends ConstraintValidator
         $this->validateBeginAndEnd($value, $this->context);
         $this->validateActivityAndProject($value, $this->context);
         $this->validatePermissions($value, $this->context);
+        $this->validateTimesheetLock($value, $this->context);
     }
 
     /**
@@ -229,6 +230,56 @@ class TimesheetValidator extends ConstraintValidator
                         ->setCode(TimesheetConstraint::PROJECT_NOT_STARTED)
                         ->addViolation();
                 }
+            }
+        }
+    }
+
+    /**
+     * @param TimesheetEntity $timesheet
+     * @param ExecutionContextInterface $context
+     */
+    protected function validateTimesheetLock(TimesheetEntity $timesheet, ExecutionContextInterface $context)
+    {
+        $timesheetStart = $timesheet->getBegin();
+
+        try {
+            $now = new \DateTime();
+            $lockedStart = $this->configuration->getLockdownPeriodStart();
+            $lockedEnd = $this->configuration->getLockdownPeriodEnd();
+            $gracePeriod = $this->configuration->getLockdownGracePeriod();
+        } catch (\Exception $ex) {
+            //parsing of datetimes failed, skip validation
+            return;
+        }
+
+        if (null !== $timesheetStart && null !== $lockedStart && null !== $lockedEnd) {
+            //lockdown never takes effect for users with special permission
+            if ($this->auth->isGranted('lockdown_complete_override_timesheet')) {
+                return;
+            }
+
+            // validate only entries added before the end of lockdown period
+            if ($timesheetStart < $lockedEnd) {
+                // further validate entries inside of the most recent lockdown
+                if ($timesheetStart > $lockedStart && $timesheetStart < $lockedEnd) {
+                    //if grace period is still in effect, validation succeeds
+                    if (null !== $gracePeriod && $now < $gracePeriod) {
+                        return;
+                    }
+
+                    //if user has special role, validation succeeds
+                    if ($this->auth->isGranted('lockdown_grace_override_timesheet')) {
+                        return;
+                    }
+                }
+
+                // otherwise raise a violation
+                // this includes all entries before the start of lockdown period
+                $context->buildViolation('You cannot create/edit entries in locked period.')
+                    ->atPath('begin')
+                    ->setTranslationDomain('validators')
+                    ->setCode(TimesheetConstraint::PERIOD_LOCKED)
+                    ->addViolation();
             }
         }
     }
