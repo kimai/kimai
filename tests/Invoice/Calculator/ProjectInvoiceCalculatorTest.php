@@ -122,7 +122,7 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals('EUR', $model->getCurrency());
         $this->assertEquals(2521.12, $sut->getSubtotal());
         $this->assertEquals(6600, $sut->getTimeWorked());
-        $this->assertEquals(3, count($sut->getEntries()));
+        $this->assertEquals(3, \count($sut->getEntries()));
 
         $entries = $sut->getEntries();
         self::assertCount(3, $entries);

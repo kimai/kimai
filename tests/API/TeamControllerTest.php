@@ -58,7 +58,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        self::assertEquals(2, count($result));
+        self::assertEquals(2, \count($result));
         $this->assertStructure($result[0], false);
     }
 

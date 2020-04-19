@@ -27,11 +27,11 @@ trait EntityValidationTestTrait
 
         $violations = $validator->validate($entity);
 
-        if (!is_array($fieldNames)) {
+        if (!\is_array($fieldNames)) {
             $fieldNames = [$fieldNames];
         }
 
-        $expected = count($fieldNames);
+        $expected = \count($fieldNames);
         $actual = $violations->count();
 
         $violatedFields = [];
@@ -39,11 +39,11 @@ trait EntityValidationTestTrait
         foreach ($violations as $validation) {
             $violatedFields[$validation->getPropertyPath()] = $validation->getPropertyPath();
         }
-        $countViolations = count($violatedFields);
+        $countViolations = \count($violatedFields);
 
         foreach ($fieldNames as $id => $propertyPath) {
             $foundField = false;
-            if (in_array($propertyPath, $violatedFields)) {
+            if (\in_array($propertyPath, $violatedFields)) {
                 $foundField = true;
                 unset($violatedFields[$propertyPath]);
             }

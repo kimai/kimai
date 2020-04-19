@@ -267,7 +267,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->importFixture($client, $fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
@@ -311,7 +311,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->importFixture($client, $fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
@@ -335,7 +335,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {

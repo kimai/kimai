@@ -188,7 +188,7 @@ abstract class AbstractToolbarForm extends AbstractType
 
                         $name = $multiCustomer ? 'customers' : 'customer';
                         if (isset($data[$name]) && !empty($data[$name])) {
-                            if (is_array($data[$name])) {
+                            if (\is_array($data[$name])) {
                                 $query->setCustomers($data[$name]);
                             } else {
                                 $query->addCustomer($data[$name]);
@@ -197,7 +197,7 @@ abstract class AbstractToolbarForm extends AbstractType
 
                         $name = $multiProject ? 'projects' : 'project';
                         if (isset($data[$name]) && !empty($data[$name])) {
-                            if (is_array($data[$name])) {
+                            if (\is_array($data[$name])) {
                                 $query->setProjects($data[$name]);
                             } else {
                                 $query->addProject($data[$name]);
@@ -249,7 +249,7 @@ abstract class AbstractToolbarForm extends AbstractType
                         if (isset($data[$name]) && !empty($data[$name])) {
                             // we need to pre-fetch the activities to see if they are global, see ActivityFormTypeQuery::isGlobalsOnly()
                             $activities = $data[$name];
-                            if (!is_array($activities)) {
+                            if (!\is_array($activities)) {
                                 $activities = [$activities];
                             }
                             foreach ($activities as $activity) {

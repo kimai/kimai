@@ -83,7 +83,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, \count($result));
         $this->assertStructure($result[0], false);
     }
 
@@ -96,7 +96,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, \count($result));
         $this->assertStructure($result[0], false);
     }
 

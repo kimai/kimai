@@ -50,7 +50,7 @@ class DoctrineCompilerPass implements CompilerPassInterface
             );
         }
 
-        if (!in_array($engine, $this->allowedEngines)) {
+        if (!\in_array($engine, $this->allowedEngines)) {
             throw new \Exception(
                 'Unsupported database engine: ' . $engine . '. Kimai only supports one of: ' .
                 implode(', ', $this->allowedEngines)

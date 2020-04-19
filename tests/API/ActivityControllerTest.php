@@ -123,8 +123,8 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(count($expected), count($result));
-        for ($i = 0; $i < count($result); $i++) {
+        $this->assertEquals(\count($expected), \count($result));
+        for ($i = 0; $i < \count($result); $i++) {
             $activity = $result[$i];
             $hasProject = $expected[$i][0];
             $this->assertStructure($activity, false);
@@ -160,7 +160,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(5, count($result));
+        $this->assertEquals(5, \count($result));
         $this->assertStructure($result[0], false);
         $this->assertEquals(1, $result[4]['project']);
         $this->assertEquals(2, $result[3]['project']);

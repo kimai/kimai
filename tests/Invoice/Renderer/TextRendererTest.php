@@ -74,6 +74,6 @@ class TextRendererTest extends KernelTestCase
                 self::assertStringContainsString(sprintf("%s:\n    %s", $key, explode("\n", $value)[0]), $content);
             }
         }
-        self::assertEquals(count($model->getCalculator()->getEntries()), substr_count($content, PHP_EOL . '---' . PHP_EOL));
+        self::assertEquals(\count($model->getCalculator()->getEntries()), substr_count($content, PHP_EOL . '---' . PHP_EOL));
     }
 }

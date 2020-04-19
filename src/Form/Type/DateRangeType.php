@@ -167,7 +167,7 @@ class DateRangeType extends AbstractType
 
                 $values = explode($separator, $dates);
 
-                if (count($values) !== 2) {
+                if (\count($values) !== 2) {
                     throw new TransformationFailedException('Invalid date range given');
                 }
 

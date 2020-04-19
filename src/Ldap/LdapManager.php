@@ -141,7 +141,7 @@ class LdapManager
         }
 
         $roleValue = $entries[0][$param];
-        if (is_array($roleValue)) {
+        if (\is_array($roleValue)) {
             $roleValue = $roleValue[0];
         }
         $roles = $this->getRoles($roleValue, $roleParameter);

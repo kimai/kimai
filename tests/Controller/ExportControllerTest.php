@@ -94,7 +94,7 @@ class ExportControllerTest extends ControllerBaseTest
         // assert export type buttons are available
         $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default-internal.pdf.twig', 'default.pdf.twig', 'xlsx'];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
-        $this->assertEquals(count($expected), $node->count());
+        $this->assertEquals(\count($expected), $node->count());
         /** @var \DOMElement $button */
         foreach ($node->getIterator() as $button) {
             $type = $button->getAttribute('data-type');
@@ -146,7 +146,7 @@ class ExportControllerTest extends ControllerBaseTest
         // assert export type buttons are available
         $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default-internal.pdf.twig', 'default.pdf.twig', 'xlsx'];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
-        $this->assertEquals(count($expected), $node->count());
+        $this->assertEquals(\count($expected), $node->count());
         /** @var \DOMElement $button */
         foreach ($node->getIterator() as $button) {
             $type = $button->getAttribute('data-type');

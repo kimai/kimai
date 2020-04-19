@@ -185,7 +185,7 @@ class TimesheetRepository extends EntityRepository
     {
         switch ($type) {
             case self::STATS_QUERY_ACTIVE:
-                return count($this->getActiveEntries($user));
+                return \count($this->getActiveEntries($user));
 
             case self::STATS_QUERY_MONTHLY:
                 return $this->getMonthlyStats($user, $begin, $end);
@@ -524,7 +524,7 @@ class TimesheetRepository extends EntityRepository
         // -> all entries, including the new one must not exceed the $limit
         $limit = $hardLimit - 1;
 
-        if (count($activeEntries) > $limit) {
+        if (\count($activeEntries) > $limit) {
             $i = 1;
             foreach ($activeEntries as $activeEntry) {
                 if ($i > $limit) {

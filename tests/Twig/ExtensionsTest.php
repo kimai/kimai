@@ -53,7 +53,7 @@ class ExtensionsTest extends TestCase
         $filters = ['duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount', 'docu_link', 'multiline_indent'];
         $sut = $this->getSut($this->localeDe);
         $twigFilters = $sut->getFilters();
-        $this->assertCount(count($filters), $twigFilters);
+        $this->assertCount(\count($filters), $twigFilters);
         $i = 0;
         /** @var TwigFilter $filter */
         foreach ($twigFilters as $filter) {
@@ -67,7 +67,7 @@ class ExtensionsTest extends TestCase
         $functions = ['locales', 'class_name'];
         $sut = $this->getSut($this->localeDe);
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(count($functions), $twigFunctions);
+        $this->assertCount(\count($functions), $twigFunctions);
         $i = 0;
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {

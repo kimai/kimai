@@ -42,7 +42,7 @@ class EncoreExtensionTest extends TestCase
         $functions = ['encore_entry_css_source'];
         $sut = $this->getSut();
         $twigFunctions = $sut->getFunctions();
-        self::assertCount(count($functions), $twigFunctions);
+        self::assertCount(\count($functions), $twigFunctions);
         $i = 0;
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {

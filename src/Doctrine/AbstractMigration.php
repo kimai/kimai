@@ -124,7 +124,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     protected function abortIfPlatformNotSupported()
     {
         $platform = $this->getPlatform();
-        if (!in_array($platform, ['sqlite', 'mysql'])) {
+        if (!\in_array($platform, ['sqlite', 'mysql'])) {
             $this->abortIf(true, 'Unsupported database platform: ' . $platform);
         }
     }

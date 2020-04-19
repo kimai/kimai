@@ -129,7 +129,7 @@ trait RateControllerTestTrait
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(count($expectedRates), count($result));
+        $this->assertEquals(\count($expectedRates), \count($result));
 
         foreach ($result as $rate) {
             $this->assertRateStructure($rate, ($rate['user'] === null ? null : $rate['user']['id']));
@@ -161,7 +161,7 @@ trait RateControllerTestTrait
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertEquals(count($expectedRates) - 1, count($result));
+        $this->assertEquals(\count($expectedRates) - 1, \count($result));
     }
 
     public function testDeleteRateEntityNotFound()

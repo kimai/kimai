@@ -111,7 +111,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
-        $this->assertEquals(count($expectedTabs), $tabs->count());
+        $this->assertEquals(\count($expectedTabs), $tabs->count());
         $foundTabs = [];
 
         /** @var \DOMElement $tab */

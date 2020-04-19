@@ -161,7 +161,7 @@ class TeamControllerTest extends ControllerBaseTest
         $this->importFixture($em, $fixture);
 
         $team = $em->getRepository(Team::class)->find(1);
-        self::assertEquals(0, count($team->getCustomers()));
+        self::assertEquals(0, \count($team->getCustomers()));
 
         $this->assertAccessIsGranted($client, '/admin/teams/1/edit');
         $form = $client->getCrawler()->filter('form[name=team_customer_form]')->form();
@@ -174,7 +174,7 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
 
         $team = $em->getRepository(Team::class)->find(1);
-        self::assertEquals(1, count($team->getCustomers()));
+        self::assertEquals(1, \count($team->getCustomers()));
     }
 
     public function testEditProjectAccessAction()
@@ -190,7 +190,7 @@ class TeamControllerTest extends ControllerBaseTest
         $this->importFixture($em, $fixture);
 
         $team = $em->getRepository(Team::class)->find(1);
-        self::assertEquals(0, count($team->getProjects()));
+        self::assertEquals(0, \count($team->getProjects()));
 
         $this->assertAccessIsGranted($client, '/admin/teams/1/edit');
         $form = $client->getCrawler()->filter('form[name=team_project_form]')->form();
@@ -203,6 +203,6 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
 
         $team = $em->getRepository(Team::class)->find(1);
-        self::assertEquals(1, count($team->getProjects()));
+        self::assertEquals(1, \count($team->getProjects()));
     }
 }

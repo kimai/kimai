@@ -346,7 +346,7 @@ class InvoiceCreateCommand extends Command
         $columns = ['ID', 'Customer', 'Total', 'Filename'];
 
         $table = new Table($output);
-        $table->setHeaderTitle(sprintf('Created %s invoice(s)', count($invoices)));
+        $table->setHeaderTitle(sprintf('Created %s invoice(s)', \count($invoices)));
         $table->setHeaders($columns);
 
         foreach ($invoices as $invoice) {

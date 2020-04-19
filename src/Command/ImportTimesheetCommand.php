@@ -202,7 +202,7 @@ class ImportTimesheetCommand extends Command
 
         $activityType = $input->getOption('activity');
         $allowedActivityTypes = ['project', 'global'];
-        if (!in_array($activityType, $allowedActivityTypes)) {
+        if (!\in_array($activityType, $allowedActivityTypes)) {
             $io->error(sprintf('Invalid activity type "%s" given, allowed values are: %s', $activityType, implode(', ', $allowedActivityTypes)));
 
             return 4;
@@ -274,7 +274,7 @@ class ImportTimesheetCommand extends Command
                 $duration = 0;
 
                 if (!empty($record['Duration'])) {
-                    if (is_int($record['Duration'])) {
+                    if (\is_int($record['Duration'])) {
                         $duration = $record['Duration'];
                     } else {
                         $duration = $durationParser->parseDurationString($record['Duration']);
@@ -342,7 +342,7 @@ class ImportTimesheetCommand extends Command
 
     private function getUser($user): User
     {
-        if (!array_key_exists($user, $this->userCache)) {
+        if (!\array_key_exists($user, $this->userCache)) {
             $tmpUser = $this->users->findOneBy(['username' => $user]);
             if (null === $tmpUser) {
                 $tmpUser = $this->users->findOneBy(['email' => $user]);
@@ -362,9 +362,9 @@ class ImportTimesheetCommand extends Command
 
         $tmpActivities = $this->activities->findBy(['project' => $project, 'name' => $activity]);
 
-        if (count($tmpActivities) === 0) {
+        if (\count($tmpActivities) === 0) {
             $tmpActivity = $this->activities->findOneBy(['project' => null, 'name' => $activity]);
-        } elseif (count($tmpActivities) === 1) {
+        } elseif (\count($tmpActivities) === 1) {
             $tmpActivity = $tmpActivities[0];
         }
 
@@ -390,7 +390,7 @@ class ImportTimesheetCommand extends Command
         /** @var Project[] $tmpProjects */
         $tmpProjects = $this->projects->findBy(['name' => $project]);
 
-        if (count($tmpProjects) > 1) {
+        if (\count($tmpProjects) > 1) {
             /** @var Project $prj */
             foreach ($tmpProjects as $prj) {
                 if ($prj->getCustomer()->getName() !== $tmpCustomer->getName()) {
@@ -399,7 +399,7 @@ class ImportTimesheetCommand extends Command
                 $tmpProject = $prj;
                 break;
             }
-        } elseif (count($tmpProjects) === 1) {
+        } elseif (\count($tmpProjects) === 1) {
             $tmpProject = $tmpProjects[0];
         }
 
@@ -423,11 +423,11 @@ class ImportTimesheetCommand extends Command
     private function getCustomer($customer, $fallback): Customer
     {
         if (!empty($customer)) {
-            if (!array_key_exists($customer, $this->customerCache)) {
+            if (!\array_key_exists($customer, $this->customerCache)) {
                 $tmpCustomer = $this->customers->findBy(['name' => $customer]);
-                if (count($tmpCustomer) > 1) {
+                if (\count($tmpCustomer) > 1) {
                     throw new \Exception(sprintf('Found multiple customers with the name: %s', $customer));
-                } elseif (count($tmpCustomer) === 1) {
+                } elseif (\count($tmpCustomer) === 1) {
                     $tmpCustomer = $tmpCustomer[0];
                 }
 
@@ -436,7 +436,7 @@ class ImportTimesheetCommand extends Command
                 }
             }
 
-            if (array_key_exists($customer, $this->customerCache)) {
+            if (\array_key_exists($customer, $this->customerCache)) {
                 return $this->customerCache[$customer];
             }
         }
@@ -445,7 +445,7 @@ class ImportTimesheetCommand extends Command
             $tmpFallback = null;
 
             if (!empty($fallback)) {
-                if (is_int($customer)) {
+                if (\is_int($customer)) {
                     $tmpFallback = $this->customers->find($fallback);
                 } else {
                     /** @var Customer|null $tmpFallback */
@@ -455,7 +455,7 @@ class ImportTimesheetCommand extends Command
 
             if (null === $tmpFallback) {
                 $newName = self::DEFAULT_CUSTOMER;
-                if (!empty($fallback) && is_string($fallback)) {
+                if (!empty($fallback) && \is_string($fallback)) {
                     $newName = $fallback;
                 }
                 $tmpFallback = new Customer();

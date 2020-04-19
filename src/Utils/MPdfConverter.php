@@ -43,9 +43,9 @@ class MPdfConverter implements HtmlToPdfConverter
         // reduce the size of content parts that are passed to MPDF, to prevent
         // https://mpdf.github.io/troubleshooting/known-issues.html#blank-pages-or-some-sections-missing
         $parts = explode('<pagebreak>', $html);
-        for ($i = 0; $i < count($parts); $i++) {
+        for ($i = 0; $i < \count($parts); $i++) {
             $mpdf->WriteHTML($parts[$i]);
-            if ($i < count($parts) - 1) {
+            if ($i < \count($parts) - 1) {
                 $mpdf->WriteHTML('<pagebreak>');
             }
         }

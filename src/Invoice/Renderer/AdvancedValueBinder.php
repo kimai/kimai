@@ -30,7 +30,7 @@ class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
      */
     public function bindValue(Cell $cell, $value = null)
     {
-        if (is_string($value)) {
+        if (\is_string($value)) {
             $value = StringHelper::sanitizeUTF8($value);
         }
 

@@ -166,7 +166,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals('invoice_print', $body->getAttribute('class'));
 
         $result = $node->filter('section.invoice table.table tbody tr');
-        $this->assertEquals(10, count($result));
+        $this->assertEquals(10, \count($result));
     }
 
     public function testCreateAction()

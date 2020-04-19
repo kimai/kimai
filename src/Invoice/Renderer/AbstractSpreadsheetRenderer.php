@@ -45,7 +45,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
         $worksheet = $spreadsheet->getActiveSheet();
         $entries = $model->getCalculator()->getEntries();
         $sheetReplacer = $model->toArray();
-        $invoiceItemCount = count($entries);
+        $invoiceItemCount = \count($entries);
         if ($invoiceItemCount > 1) {
             $this->addTemplateRows($worksheet, $invoiceItemCount);
         }

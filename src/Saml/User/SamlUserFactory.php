@@ -60,7 +60,7 @@ final class SamlUserFactory implements SamlUserFactoryInterface
             $roles = [];
             $samlGroups = $token->getAttribute($this->groupAttribute);
             foreach ($samlGroups as $groupName) {
-                if (array_key_exists($groupName, $groupMap)) {
+                if (\array_key_exists($groupName, $groupMap)) {
                     $roles[] = $groupMap[$groupName];
                 }
             }

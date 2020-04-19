@@ -95,7 +95,7 @@ abstract class AbstractWidgetType implements WidgetInterface
      */
     public function getOption(string $name, $default = null)
     {
-        if (array_key_exists($name, $this->options)) {
+        if (\array_key_exists($name, $this->options)) {
             return $this->options[$name];
         }
 

@@ -85,7 +85,7 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, \count($result));
         $this->assertStructure($result[0], false);
     }
 
@@ -133,9 +133,9 @@ class ProjectControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertEquals(count($expected), count($result), 'Found wrong amount of projects');
+        $this->assertEquals(\count($expected), \count($result), 'Found wrong amount of projects');
 
-        for ($i = 0; $i < count($expected); $i++) {
+        for ($i = 0; $i < \count($expected); $i++) {
             $project = $result[$i];
             $compare = $expected[$i];
             $this->assertStructure($project, false);

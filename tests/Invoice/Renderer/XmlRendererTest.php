@@ -78,6 +78,6 @@ class XmlRendererTest extends KernelTestCase
             }
             self::assertEquals((string) $expected[$name], (string) $element);
         }
-        self::assertEquals(count($model->getCalculator()->getEntries()), count($xml->items->item));
+        self::assertEquals(\count($model->getCalculator()->getEntries()), \count($xml->items->item));
     }
 }

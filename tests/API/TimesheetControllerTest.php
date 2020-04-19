@@ -60,7 +60,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(10, count($result));
+        $this->assertEquals(10, \count($result));
         $this->assertDefaultStructure($result[0], false);
     }
 
@@ -73,7 +73,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(10, count($result));
+        $this->assertEquals(10, \count($result));
         $this->assertDefaultStructure($result[0], false);
         $this->assertHasSubresources($result[0]);
     }
@@ -100,7 +100,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(10, count($result));
+        $this->assertEquals(10, \count($result));
         $this->assertDefaultStructure($result[0], false);
     }
 
@@ -126,7 +126,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(17, count($result));
+        $this->assertEquals(17, \count($result));
         $this->assertDefaultStructure($result[0], false);
     }
 
@@ -169,7 +169,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(5, count($result));
+        $this->assertEquals(5, \count($result));
         $this->assertDefaultStructure($result[0], false);
     }
 
@@ -201,7 +201,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(5, count($result));
+        $this->assertEquals(5, \count($result));
         $this->assertDefaultStructure($result[0], false);
     }
 
@@ -239,7 +239,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(7, count($result));
+        $this->assertEquals(7, \count($result));
         $this->assertDefaultStructure($result[0], false);
 
         $query = [
@@ -255,7 +255,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(10, count($result));
+        $this->assertEquals(10, \count($result));
         $this->assertDefaultStructure($result[0], false);
 
         $query = [
@@ -269,7 +269,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(17, count($result));
+        $this->assertEquals(17, \count($result));
         $this->assertDefaultStructure($result[0], false);
     }
 
@@ -583,7 +583,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, \count($result));
         $this->assertDefaultStructure($result[0], false);
         $this->assertHasSubresources($result[0]);
     }
@@ -610,7 +610,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $results = json_decode($client->getResponse()->getContent(), true);
-        $this->assertEquals(3, count($results));
+        $this->assertEquals(3, \count($results));
         foreach ($results as $timesheet) {
             $this->assertDefaultStructure($timesheet, false);
         }
@@ -705,7 +705,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(5, count($result));
+        $this->assertEquals(5, \count($result));
         $this->assertDefaultStructure($result[0], false);
 
         $query = ['tags' => 'Test,Admin'];
@@ -714,7 +714,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(10, count($result));
+        $this->assertEquals(10, \count($result));
         $this->assertDefaultStructure($result[0], false);
 
         $query = ['tags' => 'Nothing-2-see,here'];
@@ -723,7 +723,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(20, count($result));
+        $this->assertEquals(20, \count($result));
         $this->assertDefaultStructure($result[0], false);
     }
 
