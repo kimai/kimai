@@ -166,21 +166,21 @@ final class KimaiImporterCommand extends Command
         $this->dbPrefix = $input->getArgument('prefix');
 
         $password = $input->getArgument('password');
-        if (null === $password || \strlen($password = \trim($password)) < 8) {
+        if (null === $password || \strlen($password = trim($password)) < 8) {
             $io->error('Password length is not sufficient, at least 8 character are required');
 
             return 1;
         }
 
         $country = $input->getArgument('country');
-        if (null === $country || 2 != \strlen($country = \trim($country))) {
+        if (null === $country || 2 != \strlen($country = trim($country))) {
             $io->error('Country code needs to be exactly 2 character');
 
             return 1;
         }
 
         $currency = $input->getArgument('currency');
-        if (null === $currency || 3 != \strlen($currency = \trim($currency))) {
+        if (null === $currency || 3 != \strlen($currency = trim($currency))) {
             $io->error('Currency code needs to be exactly 3 character');
 
             return 1;
