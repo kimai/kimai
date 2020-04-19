@@ -23,7 +23,7 @@ class IconExtensionTest extends TestCase
         $filters = ['icon'];
         $sut = new IconExtension();
         $twigFilters = $sut->getFilters();
-        $this->assertCount(count($filters), $twigFilters);
+        $this->assertCount(\count($filters), $twigFilters);
         $i = 0;
         /** @var TwigFilter $filter */
         foreach ($twigFilters as $filter) {

@@ -55,7 +55,7 @@ class CustomerControllerTest extends ControllerBaseTest
             $customer->setMetaField((new CustomerMeta())->setName('location')->setValue('homeoffice'));
             $customer->setMetaField((new CustomerMeta())->setName('feature')->setValue('timetracking'));
         });
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/customer/');
 
@@ -209,7 +209,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $fixture = new ProjectFixtures();
         $fixture->setAmount(9); // to trigger a second page (every third activity is hidden)
         $fixture->setCustomers([$customer]);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/customer/1/projects/1');
 
@@ -289,7 +289,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $fixture->setAddCustomer(false);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/customer/1/permissions');
         $form = $client->getCrawler()->filter('form[name=customer_team_permission_form]')->form();
@@ -316,7 +316,7 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/admin/customer/2/edit');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -341,12 +341,12 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
@@ -380,15 +380,15 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1)->setIsVisible(true);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
@@ -412,7 +412,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {

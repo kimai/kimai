@@ -59,7 +59,7 @@ class RedirectToLocaleSubscriber implements EventSubscriberInterface
         }
         $this->defaultLocale = $defaultLocale ?: $this->locales[0];
 
-        if (!in_array($this->defaultLocale, $this->locales)) {
+        if (!\in_array($this->defaultLocale, $this->locales)) {
             throw new \UnexpectedValueException(
                 sprintf('The default locale ("%s") must be one of "%s".', $this->defaultLocale, $locales)
             );

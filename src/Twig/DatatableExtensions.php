@@ -86,7 +86,7 @@ class DatatableExtensions extends AbstractExtension
         }
         $values = $this->cookies[$cookie];
 
-        if (empty($values) || !is_array($values)) {
+        if (empty($values) || !\is_array($values)) {
             return $this->checkInColumDefinition($columns, $column);
         }
 
@@ -103,9 +103,9 @@ class DatatableExtensions extends AbstractExtension
 
     private function checkInColumDefinition(array $columns, string $column)
     {
-        if (array_key_exists($column, $columns)) {
+        if (\array_key_exists($column, $columns)) {
             $tmp = $columns[$column];
-            if (is_array($tmp)) {
+            if (\is_array($tmp)) {
                 $tmp = $tmp['class'];
             }
             foreach (explode(' ', $tmp) as $class) {

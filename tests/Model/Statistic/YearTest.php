@@ -34,11 +34,11 @@ class YearTest extends TestCase
         $sut->setMonth(new Month('01'));
         $sut->setMonth(new Month('02'));
         $sut->setMonth(new Month('03'));
-        $this->assertEquals(3, count($sut->getMonths()));
+        $this->assertEquals(3, \count($sut->getMonths()));
 
         $sut->setMonth(new Month('01'));
 
-        $this->assertEquals(3, count($sut->getMonths()));
+        $this->assertEquals(3, \count($sut->getMonths()));
 
         $this->assertInstanceOf(Month::class, $sut->getMonth(1));
         $this->assertInstanceOf(Month::class, $sut->getMonth(2));

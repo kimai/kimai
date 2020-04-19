@@ -92,7 +92,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($input, $constraint);
 
-        $expectedFormat = is_string($input) ? '"' . $input . '"' : $input;
+        $expectedFormat = \is_string($input) ? '"' . $input . '"' : $input;
 
         $this->buildViolation('myMessage')
             ->setParameter('{{ value }}', $expectedFormat)

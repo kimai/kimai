@@ -44,11 +44,11 @@ abstract class BaseFormTypeQueryTest extends TestCase
         self::assertEmpty($sut->getTeams());
 
         self::assertInstanceOf(BaseFormTypeQuery::class, $sut->addTeam(new Team()));
-        self::assertEquals(1, count($sut->getTeams()));
+        self::assertEquals(1, \count($sut->getTeams()));
 
         $team = new Team();
         self::assertInstanceOf(BaseFormTypeQuery::class, $sut->addTeam($team));
-        self::assertEquals(1, count($sut->getTeams()));
+        self::assertEquals(1, \count($sut->getTeams()));
         self::assertSame($team, $sut->getTeams()[0]);
     }
 

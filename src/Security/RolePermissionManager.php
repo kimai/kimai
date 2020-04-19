@@ -39,18 +39,18 @@ final class RolePermissionManager
             $isAllowed = $item['allowed'];
 
             // see permissions.html.twig for this special case
-            if ($role === User::ROLE_SUPER_ADMIN && in_array($perm, ['role_permissions', 'view_user'])) {
+            if ($role === User::ROLE_SUPER_ADMIN && \in_array($perm, ['role_permissions', 'view_user'])) {
                 continue;
             }
 
             if (!$isAllowed) {
-                if (array_key_exists($role, $this->permissions)) {
+                if (\array_key_exists($role, $this->permissions)) {
                     if (($key = array_search($perm, $this->permissions[$role])) !== false) {
                         unset($this->permissions[$role][$key]);
                     }
                 }
             } else {
-                if (!array_key_exists($role, $this->permissions)) {
+                if (!\array_key_exists($role, $this->permissions)) {
                     $this->permissions[$role] = [];
                 }
                 $this->permissions[$role][] = $perm;
@@ -66,7 +66,7 @@ final class RolePermissionManager
      */
     public function isRegisteredPermission(string $permission): bool
     {
-        return in_array($permission, $this->knownPermissions);
+        return \in_array($permission, $this->knownPermissions);
     }
 
     public function hasPermission(string $role, string $permission): bool
@@ -77,7 +77,7 @@ final class RolePermissionManager
             return false;
         }
 
-        return in_array($permission, $this->permissions[$role]);
+        return \in_array($permission, $this->permissions[$role]);
     }
 
     /**

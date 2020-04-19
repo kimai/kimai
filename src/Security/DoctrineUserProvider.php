@@ -54,7 +54,7 @@ final class DoctrineUserProvider implements UserProviderInterface
     public function refreshUser(SecurityUserInterface $user)
     {
         if (!$user instanceof User) {
-            throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', User::class, get_class($user)));
+            throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', User::class, \get_class($user)));
         }
 
         /** @var User|null $reloadedUser */

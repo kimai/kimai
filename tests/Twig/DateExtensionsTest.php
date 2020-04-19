@@ -45,7 +45,7 @@ class DateExtensionsTest extends TestCase
         $filters = ['month_name', 'date_short', 'date_time', 'date_full', 'date_format', 'time', 'hour24'];
         $sut = $this->getSut('de', []);
         $twigFilters = $sut->getFilters();
-        $this->assertCount(count($filters), $twigFilters);
+        $this->assertCount(\count($filters), $twigFilters);
         $i = 0;
         foreach ($twigFilters as $filter) {
             $this->assertInstanceOf(TwigFilter::class, $filter);
@@ -58,7 +58,7 @@ class DateExtensionsTest extends TestCase
         $functions = ['get_format_duration'];
         $sut = $this->getSut('de', []);
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(count($functions), $twigFunctions);
+        $this->assertCount(\count($functions), $twigFunctions);
         $i = 0;
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {

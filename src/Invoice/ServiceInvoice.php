@@ -206,7 +206,7 @@ final class ServiceInvoice
                     continue;
                 }
                 $filename = explode('filename=', $part);
-                if (count($filename) > 1) {
+                if (\count($filename) > 1) {
                     $filename = $filename[1];
                 }
             }
@@ -233,7 +233,7 @@ final class ServiceInvoice
 
     public function changeInvoiceStatus(Invoice $invoice, string $status)
     {
-        if (!in_array($status, [Invoice::STATUS_NEW, Invoice::STATUS_PENDING, Invoice::STATUS_PAID])) {
+        if (!\in_array($status, [Invoice::STATUS_NEW, Invoice::STATUS_PENDING, Invoice::STATUS_PAID])) {
             throw new \InvalidArgumentException('Unknown invoice status');
         }
 
@@ -256,7 +256,7 @@ final class ServiceInvoice
 
     /**
      * @param InvoiceQuery $query
-     * @return InvoiceItemInterface[]
+     * @return array<string, InvoiceItemInterface[]>
      */
     private function findInvoiceItemsWithRepository(InvoiceQuery $query): array
     {
@@ -278,7 +278,7 @@ final class ServiceInvoice
         $items = [];
 
         foreach ($repositories as $repository) {
-            $items[get_class($repository)] = $repository->getInvoiceItemsForQuery($query);
+            $items[\get_class($repository)] = $repository->getInvoiceItemsForQuery($query);
         }
 
         return $items;
@@ -301,7 +301,7 @@ final class ServiceInvoice
     }
 
     /**
-     * @param InvoiceItemInterface[] $entries
+     * @param array<string, InvoiceItemInterface[]> $entries
      */
     private function markEntriesAsExported(iterable $entries)
     {
@@ -309,7 +309,7 @@ final class ServiceInvoice
 
         foreach ($entries as $repo => $items) {
             foreach ($repositories as $repository) {
-                if (get_class($repository) === $repo) {
+                if (\get_class($repository) === $repo) {
                     $repository->setExported($items);
                 }
             }

@@ -70,7 +70,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $fixture = new InvoiceFixtures();
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/invoice/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -83,7 +83,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $fixture = new InvoiceFixtures();
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/invoice/template');
 
@@ -120,7 +120,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
 
         $fixture = new InvoiceFixtures();
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         /** @var InvoiceTemplate $template */
         $template = $em->getRepository(InvoiceTemplate::class)->find(1);
@@ -148,17 +148,17 @@ class InvoiceControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
 
         $fixture = new InvoiceFixtures();
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $begin = new \DateTime('first day of this month');
         $end = new \DateTime('last day of this month');
         $fixture = new TimesheetFixtures();
         $fixture
-            ->setUser($this->getUserByRole($em, User::ROLE_TEAMLEAD))
+            ->setUser($this->getUserByRole(User::ROLE_TEAMLEAD))
             ->setAmount(20)
             ->setStartDate($begin)
         ;
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -214,17 +214,17 @@ class InvoiceControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
 
         $fixture = new InvoiceFixtures();
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $begin = new \DateTime('first day of this month');
         $end = new \DateTime('last day of this month');
         $fixture = new TimesheetFixtures();
         $fixture
-            ->setUser($this->getUserByRole($em, User::ROLE_TEAMLEAD))
+            ->setUser($this->getUserByRole(User::ROLE_TEAMLEAD))
             ->setAmount(20)
             ->setStartDate($begin)
         ;
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -273,17 +273,17 @@ class InvoiceControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
 
         $fixture = new InvoiceFixtures();
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $begin = new \DateTime('first day of this month');
         $end = new \DateTime('last day of this month');
         $fixture = new TimesheetFixtures();
         $fixture
-            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setUser($this->getUserByRole(User::ROLE_ADMIN))
             ->setAmount(20)
             ->setStartDate($begin)
         ;
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -357,7 +357,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $fixture = new InvoiceFixtures();
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/invoice/template/1/edit?page=1');
         $form = $client->getCrawler()->filter('form[name=invoice_template_form]')->form();
@@ -384,7 +384,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         $fixture = new InvoiceFixtures();
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/invoice/template/1/delete');
         $this->assertIsRedirect($client, '/invoice/template');
@@ -402,7 +402,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         $fixture = new InvoiceFixtures();
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/invoice/document_upload');
         $this->assertTrue($client->getResponse()->isSuccessful());

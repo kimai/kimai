@@ -28,7 +28,7 @@ final class TimesheetMultiUpdateValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\TimesheetMultiUpdate');
         }
 
-        if (!is_object($value) || !($value instanceof TimesheetMultiUpdateDTO)) {
+        if (!\is_object($value) || !($value instanceof TimesheetMultiUpdateDTO)) {
             return;
         }
 

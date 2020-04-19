@@ -62,7 +62,7 @@ class ProjectControllerTest extends ControllerBaseTest
             $project->setMetaField((new ProjectMeta())->setName('location')->setValue('homeoffice'));
             $project->setMetaField((new ProjectMeta())->setName('feature')->setValue('timetracking'));
         });
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/project/');
 
@@ -91,14 +91,14 @@ class ProjectControllerTest extends ControllerBaseTest
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setProjects([$project]);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_ADMIN));
-        $this->importFixture($client, $fixture);
+        $fixture->setUser($this->getUserByRole(User::ROLE_ADMIN));
+        $this->importFixture($fixture);
 
         $project = $em->getRepository(Project::class)->find(1);
         $fixture = new ActivityFixtures();
         $fixture->setAmount(6); // to trigger a second page
         $fixture->setProjects([$project]);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
         self::assertHasProgressbar($client);
@@ -154,7 +154,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $project->setEnd(new \DateTime());
         $em->persist($project);
         $team = new Team();
-        $team->setTeamLead($this->getUserByRole($em, User::ROLE_ADMIN));
+        $team->setTeamLead($this->getUserByRole(User::ROLE_ADMIN));
         $team->addProject($project);
         $team->setName('project 1');
         $em->persist($team);
@@ -275,7 +275,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $fixture = new ActivityFixtures();
         $fixture->setAmount(9); // to trigger a second page (every third activity is hidden)
         $fixture->setProjects([$project]);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/project/1/activities/1');
 
@@ -321,7 +321,7 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $fixture = new CustomerFixtures();
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/project/create');
         $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
@@ -377,7 +377,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $fixture->setAddCustomer(false);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/project/1/permissions');
         $form = $client->getCrawler()->filter('form[name=project_team_permission_form]')->form();
@@ -404,7 +404,7 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $fixture = new ProjectFixtures();
         $fixture->setAmount(1);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/admin/project/2/edit');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -429,12 +429,12 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
@@ -468,15 +468,15 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
         $fixture = new ProjectFixtures();
         $fixture->setAmount(1)->setIsVisible(true);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
@@ -500,7 +500,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {

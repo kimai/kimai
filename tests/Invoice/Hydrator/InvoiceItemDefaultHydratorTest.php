@@ -91,6 +91,6 @@ class InvoiceItemDefaultHydratorTest extends TestCase
         sort($givenKeys);
 
         $this->assertEquals($expectedKeys, $givenKeys);
-        $this->assertEquals(count($keys), count($givenKeys));
+        $this->assertEquals(\count($keys), \count($givenKeys));
     }
 }

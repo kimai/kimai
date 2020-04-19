@@ -26,14 +26,14 @@ final class ActivityFormTypeQuery extends BaseFormTypeQuery
     public function __construct($activity = null, $project = null)
     {
         if (null !== $activity) {
-            if (!is_array($activity)) {
+            if (!\is_array($activity)) {
                 $activity = [$activity];
             }
             $this->setActivities($activity);
         }
 
         if (null !== $project) {
-            if (!is_array($project)) {
+            if (!\is_array($project)) {
                 $project = [$project];
             }
             $this->setProjects($project);

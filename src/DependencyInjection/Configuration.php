@@ -690,7 +690,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->validate()
                 ->ifTrue(static function ($v) {
-                    return null !== $v['connection']['host'] && !extension_loaded('ldap');
+                    return null !== $v['connection']['host'] && !\extension_loaded('ldap');
                 })
                 ->thenInvalid('LDAP is activated, but the LDAP PHP extension is not loaded.')
             ->end()
@@ -833,7 +833,7 @@ class Configuration implements ConfigurationInterface
                                 ->variableNode('requestedAuthnContext')
                                     ->validate()
                                         ->ifTrue(function ($v) {
-                                            return !is_bool($v) && !is_array($v);
+                                            return !\is_bool($v) && !\is_array($v);
                                         })
                                         ->thenInvalid('Must be an array or a bool.')
                                     ->end()

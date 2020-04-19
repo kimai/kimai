@@ -110,14 +110,14 @@ class DoctorController extends AbstractController
 
         foreach (self::REQUIRED_EXTENSIONS as $extName) {
             $results[$extName] = false;
-            if (extension_loaded($extName)) {
+            if (\extension_loaded($extName)) {
                 $results[$extName] = true;
             }
         }
 
         $results['Freetype Support'] = true;
         // @see AvatarService::hasDependencies()
-        if (!function_exists('imagettfbbox')) {
+        if (!\function_exists('imagettfbbox')) {
             $results['Freetype Support'] = false;
         }
 
@@ -135,7 +135,7 @@ class DoctorController extends AbstractController
     private function getLogFilename(): string
     {
         // why is this check here ???
-        if (!in_array(getenv('APP_ENV'), ['test', 'dev', 'prod'])) {
+        if (!\in_array(getenv('APP_ENV'), ['test', 'dev', 'prod'])) {
             throw new \RuntimeException('Unsupported log environment');
         }
 
