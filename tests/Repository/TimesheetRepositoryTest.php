@@ -46,7 +46,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
     public function testStoppedEntriesCannotBeStoppedAgain()
     {
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
         /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
 
@@ -54,7 +54,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $fixtures->setUser($user);
         $fixtures->setAmount(1);
 
-        $this->importFixture($em, $fixtures);
+        $this->importFixture($fixtures);
 
         $query = new TimesheetQuery();
         $query->setUser($user);
@@ -75,14 +75,14 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
     public function testStopRecording()
     {
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
         /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
 
-        $fixtures = new TimesheetFixtures();
-        $fixtures->setUser($user);
-        $fixtures->setAmountRunning(1);
-        $this->importFixture($em, $fixtures);
+        $fixture = new TimesheetFixtures();
+        $fixture->setUser($user);
+        $fixture->setAmountRunning(1);
+        $this->importFixture($fixture);
 
         $timesheet = $repository->find(1);
         $this->assertInstanceOf(Timesheet::class, $timesheet);
@@ -103,7 +103,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $projectRepository = $em->getRepository(Project::class);
         $project = $projectRepository->find(1);
 
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
         /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
         $timesheet = new Timesheet();
@@ -130,7 +130,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $projectRepository = $em->getRepository(Project::class);
         $project = $projectRepository->find(1);
 
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
         /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
         $tagOne = new Tag();

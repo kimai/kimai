@@ -26,7 +26,7 @@ class TagControllerTest extends APIControllerBaseTest
 
         $fixture = new TagFixtures();
         $fixture->setTagArray($tagList);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
     }
 
     public function testIsSecure()

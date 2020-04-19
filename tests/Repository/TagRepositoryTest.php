@@ -25,7 +25,7 @@ class TagRepositoryTest extends AbstractRepositoryTest
         $em = $this->getEntityManager();
         $data = new TagFixtures();
         $data->setTagArray(['Test', 'Travel', '#2018-001', '#2018-002', '#2018-003', '#2018-004', '#2018-005', 'Administration', 'Support', 'PR', '#2018-012']);
-        $this->importFixture($em, $data);
+        $this->importFixture($data);
     }
 
     public function testFindIds()

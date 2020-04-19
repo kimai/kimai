@@ -28,7 +28,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 {
     use RateControllerTestTrait;
 
-    protected function getRateUrl(string $id = '1', ?string $rateId = null): string
+    protected function getRateUrl($id = '1', $rateId = null): string
     {
         if (null !== $rateId) {
             return sprintf('/api/activities/%s/rates/%s', $id, $rateId);
@@ -37,7 +37,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         return sprintf('/api/activities/%s/rates', $id);
     }
 
-    protected function importTestRates(string $id): array
+    protected function importTestRates($id): array
     {
         /** @var ActivityRateRepository $rateRepository */
         $rateRepository = $this->getEntityManager()->getRepository(ActivityRate::class);

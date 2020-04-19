@@ -55,9 +55,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setAmountRunning(2);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -91,20 +91,20 @@ class TimesheetControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
         $fixture->setCallback(function (Timesheet $timesheet) {
             $timesheet->setDescription('I am a foobar with tralalalala some more content');
             $timesheet->setMetaField((new TimesheetMeta())->setName('location')->setValue('homeoffice'));
             $timesheet->setMetaField((new TimesheetMeta())->setName('feature')->setValue('timetracking'));
         });
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setAmountRunning(5);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -128,9 +128,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate(new \DateTime('-10 days'));
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -293,9 +293,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate('2017-05-01');
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/timesheet/1/edit');
 
@@ -332,11 +332,11 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/timesheet/');
 
@@ -371,11 +371,11 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/timesheet/');
 

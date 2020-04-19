@@ -32,18 +32,16 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     protected function importFixtureForUser(string $role)
     {
-        $em = $this->getEntityManager();
-
         $fixture = new TimesheetFixtures();
         $fixture
             ->setFixedRate(true)
             ->setHourlyRate(true)
             ->setAmount(10)
-            ->setUser($this->getUserByRole($em, $role))
+            ->setUser($this->getUserByRole($role))
             ->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1))
             ->setAllowEmptyDescriptions(false)
         ;
-        $this->importFixture($this, $fixture);
+        $this->importFixture($fixture);
     }
 
     public function testIsSecure()
@@ -89,10 +87,10 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setFixedRate(true)
             ->setHourlyRate(true)
             ->setAmount(7)
-            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setUser($this->getUserByRole(User::ROLE_ADMIN))
             ->setStartDate(new \DateTime('-10 days'))
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $query = ['user' => 2];
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
@@ -115,10 +113,10 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setFixedRate(true)
             ->setHourlyRate(true)
             ->setAmount(7)
-            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setUser($this->getUserByRole(User::ROLE_ADMIN))
             ->setStartDate(new \DateTime('-10 days'))
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $query = ['user' => 'all'];
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
@@ -215,11 +213,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $fixture
             ->setExported(true)
             ->setAmount(7)
-            ->setUser($this->getUserByRole($em, User::ROLE_USER))
+            ->setUser($this->getUserByRole(User::ROLE_USER))
             ->setStartDate(new \DateTime('first day of this month'))
             ->setAllowEmptyDescriptions(false)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $begin = new \DateTime('first day of this month');
         $begin->setTime(0, 0, 0);
@@ -424,11 +422,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setFixedRate(true)
             ->setHourlyRate(true)
             ->setAmount(10)
-            ->setUser($this->getUserByRole($em, User::ROLE_TEAMLEAD))
+            ->setUser($this->getUserByRole(User::ROLE_TEAMLEAD))
             ->setStartDate(new \DateTime('-10 days'))
             ->setAllowEmptyDescriptions(false)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $data = [
             'activity' => 1,
@@ -567,10 +565,10 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setFixedRate(true)
             ->setHourlyRate(true)
             ->setAmount(10)
-            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setUser($this->getUserByRole(User::ROLE_ADMIN))
             ->setStartDate($start)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $query = [
             'user' => 'all',
@@ -600,11 +598,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setFixedRate(true)
             ->setHourlyRate(true)
             ->setAmount(0)
-            ->setUser($this->getUserByRole($em, User::ROLE_USER))
+            ->setUser($this->getUserByRole(User::ROLE_USER))
             ->setStartDate($start)
             ->setAmountRunning(3)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/api/timesheets/active');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -629,11 +627,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setFixedRate(true)
             ->setHourlyRate(true)
             ->setAmount(0)
-            ->setUser($this->getUserByRole($em, User::ROLE_USER))
+            ->setUser($this->getUserByRole(User::ROLE_USER))
             ->setStartDate($start)
             ->setAmountRunning(1)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/api/timesheets/11/stop', 'PATCH');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -671,11 +669,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setFixedRate(true)
             ->setHourlyRate(true)
             ->setAmount(2)
-            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setUser($this->getUserByRole(User::ROLE_ADMIN))
             ->setStartDate($start)
             ->setAmountRunning(3)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/api/timesheets/12/stop', 'PATCH');
         $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to stop this timesheet');
@@ -692,12 +690,12 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setFixedRate(true)
             ->setHourlyRate(true)
             ->setAmount(10)
-            ->setUser($this->getUserByRole($em, User::ROLE_USER))
+            ->setUser($this->getUserByRole(User::ROLE_USER))
             ->setStartDate(new \DateTime('-10 days'))
             ->setAllowEmptyDescriptions(false)
             ->setUseTags(true)
             ->setTags(['Test', 'Administration']);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $query = ['tags' => 'Test'];
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
@@ -811,11 +809,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setFixedRate(true)
             ->setHourlyRate(true)
             ->setAmount(2)
-            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setUser($this->getUserByRole(User::ROLE_ADMIN))
             ->setStartDate($start)
             ->setAmountRunning(3)
         ;
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/api/timesheets/2/restart', 'PATCH');
         $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to re-start this timesheet');

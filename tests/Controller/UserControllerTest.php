@@ -146,12 +146,12 @@ class UserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $fixture = new TimesheetFixtures();
         $fixture->setUser($user);
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         $this->assertEquals(10, \count($timesheets));

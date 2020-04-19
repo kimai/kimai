@@ -37,7 +37,7 @@ class TeamControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(5);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/teams/');
         $this->assertPageActions($client, [
@@ -58,7 +58,7 @@ class TeamControllerTest extends ControllerBaseTest
         $fixture->setCallback(function (Team $team) {
             $team->setName($team->getName() . '- fantastic team with foooo bar magic');
         });
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/teams/');
 
@@ -109,7 +109,7 @@ class TeamControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/teams/1/edit');
         $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
@@ -132,7 +132,7 @@ class TeamControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/teams/1/edit_member');
         $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
@@ -158,7 +158,7 @@ class TeamControllerTest extends ControllerBaseTest
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $fixture->setAddCustomer(false);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $team = $em->getRepository(Team::class)->find(1);
         self::assertEquals(0, \count($team->getCustomers()));
@@ -187,7 +187,7 @@ class TeamControllerTest extends ControllerBaseTest
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $fixture->setAddCustomer(false);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $team = $em->getRepository(Team::class)->find(1);
         self::assertEquals(0, \count($team->getProjects()));

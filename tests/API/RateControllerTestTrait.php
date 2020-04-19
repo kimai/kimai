@@ -17,9 +17,18 @@ use Symfony\Component\HttpFoundation\Response;
  */
 trait RateControllerTestTrait
 {
-    abstract protected function getRateUrl(string $id = '1', ?string $rateId = null): string;
+    /**
+     * @param string|int $id
+     * @param string|int|null $rateId
+     * @return string
+     */
+    abstract protected function getRateUrl($id = '1', $rateId = null): string;
 
-    abstract protected function importTestRates(string $id): array;
+    /**
+     * @param string|int $id
+     * @return array
+     */
+    abstract protected function importTestRates($id): array;
 
     public function testAddRateMissingEntityAction()
     {
