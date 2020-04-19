@@ -141,6 +141,18 @@ return PhpCsFixer\Config::create()
             'method',
             'property',
         ]],
+        'native_function_invocation' => [
+            'include' => [
+                '@compiler_optimized'
+            ],
+            'scope' => 'namespaced'
+        ],
+        'native_function_type_declaration_casing' => true,
+        'no_alias_functions' => [
+            'sets' => [
+                '@internal'
+            ]
+        ],
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()

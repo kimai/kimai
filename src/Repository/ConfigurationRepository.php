@@ -36,7 +36,7 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
         static::$cacheByPrefix = [];
         foreach ($configs as $config) {
             $key = substr($config->getName(), 0, strpos($config->getName(), '.'));
-            if (!array_key_exists($key, static::$cacheByPrefix)) {
+            if (!\array_key_exists($key, static::$cacheByPrefix)) {
                 static::$cacheByPrefix[$key] = [];
             }
             static::$cacheByPrefix[$key][] = $config;
@@ -56,7 +56,7 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
             return static::$cacheAll;
         }
 
-        if (!array_key_exists($prefix, static::$cacheByPrefix)) {
+        if (!\array_key_exists($prefix, static::$cacheByPrefix)) {
             return [];
         }
 
@@ -84,7 +84,7 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
                 }
 
                 // allow to use entity types
-                if (is_object($value) && method_exists($value, 'getId')) {
+                if (\is_object($value) && method_exists($value, 'getId')) {
                     $value = $value->getId();
                 }
 

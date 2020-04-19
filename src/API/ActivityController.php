@@ -110,7 +110,7 @@ class ActivityController extends BaseApiController
         }
 
         if (!empty($projects = $paramFetcher->get('projects'))) {
-            if (!is_array($projects)) {
+            if (!\is_array($projects)) {
                 $projects = explode(',', $projects);
             }
             if (!empty($projects)) {

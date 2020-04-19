@@ -47,7 +47,7 @@ final class InvoiceDocumentRepository
      */
     public function findAll()
     {
-        $base = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR;
+        $base = \dirname(\dirname(__DIR__)) . DIRECTORY_SEPARATOR;
 
         $documents = [];
 

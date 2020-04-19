@@ -39,7 +39,7 @@ class TimesheetMeta implements MetaTableTypeInterface
     {
         if (!($entity instanceof Timesheet)) {
             throw new \InvalidArgumentException(
-                sprintf('Expected instanceof Timesheet, received "%s"', get_class($entity))
+                sprintf('Expected instanceof Timesheet, received "%s"', \get_class($entity))
             );
         }
         $this->timesheet = $entity;

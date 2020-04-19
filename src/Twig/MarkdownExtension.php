@@ -62,7 +62,7 @@ final class MarkdownExtension extends AbstractExtension
             return '';
         }
 
-        if (!$fullLength && strlen($content) > 101) {
+        if (!$fullLength && \strlen($content) > 101) {
             $content = trim(substr($content, 0, 100)) . ' &hellip;';
         }
 

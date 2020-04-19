@@ -53,9 +53,9 @@ class ProfileControllerTest extends ControllerBaseTest
         foreach ($dates as $start) {
             $fixture = new TimesheetFixtures();
             $fixture->setAmount(10);
-            $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+            $fixture->setUser($this->getUserByRole(User::ROLE_USER));
             $fixture->setStartDate($start);
-            $this->importFixture($client, $fixture);
+            $this->importFixture($fixture);
         }
 
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
@@ -111,7 +111,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
-        $this->assertEquals(count($expectedTabs), $tabs->count());
+        $this->assertEquals(\count($expectedTabs), $tabs->count());
         $foundTabs = [];
 
         /** @var \DOMElement $tab */
@@ -135,7 +135,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var User $user */
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
         $this->assertEquals('John Doe', $user->getAlias());
@@ -161,7 +161,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
         $this->assertEquals('Johnny', $user->getAlias());
@@ -194,7 +194,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
         $this->assertEquals('Johnny', $user->getAlias());
@@ -211,7 +211,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var User $user */
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         /** @var EncoderFactoryInterface $passwordEncoder */
         $passwordEncoder = static::$kernel->getContainer()->get('test.PasswordEncoder');
@@ -237,7 +237,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), UserFixtures::DEFAULT_PASSWORD, $user->getSalt()));
         $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), 'test1234', $user->getSalt()));
@@ -250,7 +250,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var User $user */
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
         /** @var EncoderFactoryInterface $passwordEncoder */
         $passwordEncoder = static::$kernel->getContainer()->get('test.PasswordEncoder');
 
@@ -275,7 +275,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN, $user->getSalt()));
         $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), 'test123', $user->getSalt()));
@@ -295,7 +295,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var User $user */
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
 
@@ -314,7 +314,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $user->getRoles());
     }
@@ -335,19 +335,19 @@ class ProfileControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
 
         /** @var User $user */
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $fixture = new TeamFixtures();
         $fixture->setAmount(3);
         $fixture->setAddCustomer(true);
         $fixture->setAddUser(false);
         $fixture->addUserToIgnore($user);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/teams');
 
         /** @var User $user */
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
         $this->assertEquals([], $user->getTeams()->toArray());
 
         $form = $client->getCrawler()->filter('form[name=user_teams]')->form();
@@ -364,7 +364,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertEquals(1, $user->getTeams()->count());
     }

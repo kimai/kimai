@@ -85,7 +85,7 @@ class ProjectType extends AbstractType
 
         $resolver->setDefault('api_data', function (Options $options) {
             if (false !== $options['activity_enabled']) {
-                $name = is_string($options['activity_enabled']) ? $options['activity_enabled'] : 'project';
+                $name = \is_string($options['activity_enabled']) ? $options['activity_enabled'] : 'project';
 
                 return [
                     'select' => $options['activity_select'],

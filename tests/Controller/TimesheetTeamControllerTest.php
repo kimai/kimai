@@ -59,13 +59,13 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $start = new \DateTime('first day of this month');
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setAmountRunning(3);
         $fixture->setUser($user);
         $fixture->setStartDate($start);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/team/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -98,20 +98,20 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
         $fixture->setCallback(function (Timesheet $timesheet) {
             $timesheet->setDescription('I am a foobar with tralalalala some more content');
             $timesheet->setMetaField((new TimesheetMeta())->setName('location')->setValue('homeoffice'));
             $timesheet->setMetaField((new TimesheetMeta())->setName('feature')->setValue('timetracking'));
         });
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setAmountRunning(5);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/team/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -135,14 +135,14 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(7);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate(new \DateTime('-10 days'));
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(3);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_TEAMLEAD));
+        $fixture->setUser($this->getUserByRole(User::ROLE_TEAMLEAD));
         $fixture->setStartDate(new \DateTime('-10 days'));
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/team/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -166,7 +166,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals('invoice_print', $body->getAttribute('class'));
 
         $result = $node->filter('section.invoice table.table tbody tr');
-        $this->assertEquals(10, count($result));
+        $this->assertEquals(10, \count($result));
     }
 
     public function testCreateAction()
@@ -205,13 +205,13 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
-        $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
         $fixture->setStartDate('2017-05-01');
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/team/timesheet/1/edit');
 
@@ -250,11 +250,11 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
+        $user = $this->getUserByRole(User::ROLE_TEAMLEAD);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/team/timesheet/');
 
@@ -289,11 +289,11 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
+        $user = $this->getUserByRole(User::ROLE_TEAMLEAD);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/team/timesheet/');
 
@@ -320,7 +320,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         ]);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $newUser = $this->getUserByRole($em, User::ROLE_USER);
+        $newUser = $this->getUserByRole(User::ROLE_USER);
         $form = $client->getCrawler()->filter('form[name=timesheet_multi_update]')->form();
         $client->submit($form, [
             'timesheet_multi_update' => [

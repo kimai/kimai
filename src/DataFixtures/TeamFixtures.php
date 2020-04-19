@@ -88,13 +88,13 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create();
 
         for ($i = 1; $i <= self::AMOUNT_TEAMS; $i++) {
-            $maxUsers = count($allUsers) - 1;
+            $maxUsers = \count($allUsers) - 1;
             if (self::MAX_USERS_PER_TEAM < $maxUsers) {
                 $maxUsers = self::MAX_USERS_PER_TEAM;
             }
             $userCount = mt_rand(0, $maxUsers);
 
-            $maxProjects = count($allProjects) - 1;
+            $maxProjects = \count($allProjects) - 1;
             if (self::MAX_PROJECTS_PER_TEAM < $maxProjects) {
                 $maxProjects = self::MAX_PROJECTS_PER_TEAM;
             }
@@ -108,7 +108,7 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
 
             if ($userCount > 0) {
                 $userKeys = array_rand($allUsers, $userCount);
-                if (!is_array($userKeys)) {
+                if (!\is_array($userKeys)) {
                     $userKeys = [$userKeys];
                 }
                 foreach ($userKeys as $userKey) {
@@ -118,7 +118,7 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
 
             if ($projectCount > 0) {
                 $projectKeys = array_rand($allProjects, $projectCount);
-                if (!is_array($projectKeys)) {
+                if (!\is_array($projectKeys)) {
                     $projectKeys = [$projectKeys];
                 }
                 foreach ($projectKeys as $projectKey) {

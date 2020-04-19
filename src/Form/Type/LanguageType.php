@@ -29,7 +29,7 @@ class LanguageType extends AbstractType
      */
     public function __construct($locales)
     {
-        if (!is_array($locales)) {
+        if (!\is_array($locales)) {
             $locales = explode('|', $locales);
         }
 

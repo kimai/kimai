@@ -266,12 +266,12 @@ class ImportCustomerCommand extends Command
 
     private function getCustomer(string $customerName): Customer
     {
-        if (!array_key_exists($customerName, $this->customerCache)) {
+        if (!\array_key_exists($customerName, $this->customerCache)) {
             $tmpCustomer = $this->customers->findBy(['name' => $customerName]);
 
-            if (count($tmpCustomer) > 1) {
+            if (\count($tmpCustomer) > 1) {
                 throw new \Exception(sprintf('Found multiple customers with the name: %s', $customerName));
-            } elseif (count($tmpCustomer) === 1) {
+            } elseif (\count($tmpCustomer) === 1) {
                 $tmpCustomer = $tmpCustomer[0];
             }
 
@@ -280,7 +280,7 @@ class ImportCustomerCommand extends Command
             }
         }
 
-        if (array_key_exists($customerName, $this->customerCache)) {
+        if (\array_key_exists($customerName, $this->customerCache)) {
             return $this->customerCache[$customerName];
         }
 
@@ -328,7 +328,7 @@ class ImportCustomerCommand extends Command
         $fields = [];
 
         foreach (self::$requiredHeader as $headerName) {
-            if (!in_array($headerName, $header)) {
+            if (!\in_array($headerName, $header)) {
                 $fields[] = $headerName;
             }
         }

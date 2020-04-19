@@ -73,7 +73,7 @@ class InvoiceRendererType extends AbstractType
 
         $parts = explode('.', $renderer);
 
-        if (count($parts) > 2) {
+        if (\count($parts) > 2) {
             array_pop($parts);
         }
 

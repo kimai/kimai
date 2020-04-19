@@ -40,7 +40,7 @@ class ServiceExportTest extends TestCase
         $renderer = new HtmlRenderer($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectRepository::class));
         $sut->addRenderer($renderer);
 
-        self::assertEquals(1, count($sut->getRenderer()));
+        self::assertEquals(1, \count($sut->getRenderer()));
         self::assertSame($renderer, $sut->getRendererById('html'));
     }
 
@@ -51,7 +51,7 @@ class ServiceExportTest extends TestCase
         $exporter = new HtmlExporter($this->createMock(Environment::class), new EventDispatcher());
         $sut->addTimesheetExporter($exporter);
 
-        self::assertEquals(1, count($sut->getTimesheetExporter()));
+        self::assertEquals(1, \count($sut->getTimesheetExporter()));
         self::assertSame($exporter, $sut->getTimesheetExporterById('print'));
     }
 }

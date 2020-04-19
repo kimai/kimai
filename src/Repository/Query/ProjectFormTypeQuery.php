@@ -30,14 +30,14 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
     public function __construct($project = null, $customer = null)
     {
         if (null !== $project) {
-            if (!is_array($project)) {
+            if (!\is_array($project)) {
                 $project = [$project];
             }
             $this->setProjects($project);
         }
 
         if (null !== $customer) {
-            if (!is_array($customer)) {
+            if (!\is_array($customer)) {
                 $customer = [$customer];
             }
             $this->setCustomers($customer);

@@ -58,16 +58,16 @@ class InvoiceRepository extends EntityRepository
 
     public function getCounterForMonth(\DateTime $date): int
     {
-        $start = (clone $date)->setDate($date->format('Y'), $date->format('n'), 1)->setTime(0, 0, 0);
-        $end = (clone $date)->setDate($date->format('Y'), $date->format('n'), $date->format('t'))->setTime(23, 59, 59);
+        $start = (clone $date)->setDate((int) $date->format('Y'), (int) $date->format('n'), 1)->setTime(0, 0, 0);
+        $end = (clone $date)->setDate((int) $date->format('Y'), (int) $date->format('n'), (int) $date->format('t'))->setTime(23, 59, 59);
 
         return $this->getCounterFor($start, $end);
     }
 
     public function getCounterForYear(\DateTime $date): int
     {
-        $start = (clone $date)->setDate($date->format('Y'), 1, 1)->setTime(0, 0, 0);
-        $end = (clone $date)->setDate($date->format('Y'), 12, 31)->setTime(23, 59, 59);
+        $start = (clone $date)->setDate((int) $date->format('Y'), 1, 1)->setTime(0, 0, 0);
+        $end = (clone $date)->setDate((int) $date->format('Y'), 12, 31)->setTime(23, 59, 59);
 
         return $this->getCounterFor($start, $end);
     }

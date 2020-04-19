@@ -61,7 +61,7 @@ class TagFixtures extends Fixture
                 $tagName = $faker->text(rand(5, 10));
             }
 
-            if (in_array($tagName, $existing)) {
+            if (\in_array($tagName, $existing)) {
                 continue;
             }
 

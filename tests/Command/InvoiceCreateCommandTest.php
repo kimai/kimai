@@ -165,7 +165,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
     public function testCreateInvoice()
     {
         $fixture = new InvoiceFixtures();
-        $this->importFixture($this, $fixture);
+        $this->importFixture($fixture);
 
         $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--set-exported' => null, '--customer' => 1, '--template' => 'Invoice', '--start' => '2020-01-01', '--end' => '2020-03-01']);
 
@@ -189,22 +189,22 @@ class InvoiceCreateCommandTest extends KernelTestCase
             $meta->setValue('Invoice');
             $customer->setMetaField($meta);
         });
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $fixture = new ProjectFixtures();
         $fixture->setCustomers([$em->getRepository(Customer::class)->find(2)]);
         $fixture->setAmount(1);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByName(UserFixtures::USERNAME_SUPER_ADMIN));
         $fixture->setAmount(20);
         $fixture->setStartDate($start);
         $fixture->setProjects([$em->getRepository(Project::class)->find(2)]);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $fixture = new InvoiceFixtures();
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
     }
 
     public function testCreateInvoiceByCustomer()

@@ -39,7 +39,7 @@ class ProjectMeta implements MetaTableTypeInterface
     {
         if (!($entity instanceof Project)) {
             throw new \InvalidArgumentException(
-                sprintf('Expected instanceof Project, received "%s"', get_class($entity))
+                sprintf('Expected instanceof Project, received "%s"', \get_class($entity))
             );
         }
         $this->project = $entity;

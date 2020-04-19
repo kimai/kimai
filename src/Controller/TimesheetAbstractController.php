@@ -172,7 +172,7 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function getTags(TagRepository $tagRepository, $tagNames)
     {
         $tags = [];
-        if (!is_array($tagNames)) {
+        if (!\is_array($tagNames)) {
             $tagNames = explode(',', $tagNames);
         }
         foreach ($tagNames as $tagName) {
@@ -296,7 +296,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $dto->setEntities($timesheets);
 
-        if (count($dto->getEntities()) === 0) {
+        if (\count($dto->getEntities()) === 0) {
             return $this->redirectToRoute($this->getTimesheetRoute());
         }
 

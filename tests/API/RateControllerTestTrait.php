@@ -17,9 +17,18 @@ use Symfony\Component\HttpFoundation\Response;
  */
 trait RateControllerTestTrait
 {
-    abstract protected function getRateUrl(string $id = '1', ?string $rateId = null): string;
+    /**
+     * @param string|int $id
+     * @param string|int|null $rateId
+     * @return string
+     */
+    abstract protected function getRateUrl($id = '1', $rateId = null): string;
 
-    abstract protected function importTestRates(string $id): array;
+    /**
+     * @param string|int $id
+     * @return array
+     */
+    abstract protected function importTestRates($id): array;
 
     public function testAddRateMissingEntityAction()
     {
@@ -129,7 +138,7 @@ trait RateControllerTestTrait
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(count($expectedRates), count($result));
+        $this->assertEquals(\count($expectedRates), \count($result));
 
         foreach ($result as $rate) {
             $this->assertRateStructure($rate, ($rate['user'] === null ? null : $rate['user']['id']));
@@ -161,7 +170,7 @@ trait RateControllerTestTrait
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertEquals(count($expectedRates) - 1, count($result));
+        $this->assertEquals(\count($expectedRates) - 1, \count($result));
     }
 
     public function testDeleteRateEntityNotFound()

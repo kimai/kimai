@@ -120,7 +120,7 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals('EUR', $model->getCurrency());
         $this->assertEquals(2521.12, $sut->getSubtotal());
         $this->assertEquals(6600, $sut->getTimeWorked());
-        $this->assertEquals(3, count($sut->getEntries()));
+        $this->assertEquals(3, \count($sut->getEntries()));
 
         $entries = $sut->getEntries();
         $this->assertEquals(404.38, $entries[0]->getRate());

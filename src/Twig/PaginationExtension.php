@@ -53,7 +53,7 @@ class PaginationExtension extends AbstractExtension
     {
         @trigger_error('Twig function pagerfanta() is deprecated and will be removed with 2.0, use pagination() instead', E_USER_DEPRECATED);
 
-        if (is_array($viewName)) {
+        if (\is_array($viewName)) {
             $options = $viewName;
         }
 

@@ -25,7 +25,7 @@ class TeamControllerTest extends APIControllerBaseTest
     {
         $fixture = new TeamFixtures();
         $fixture->setAmount(1);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
     }
 
     public function testIsSecure()
@@ -58,7 +58,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        self::assertEquals(2, count($result));
+        self::assertEquals(2, \count($result));
         $this->assertStructure($result[0], false);
     }
 

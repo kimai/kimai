@@ -63,7 +63,7 @@ final class UserIdLoader implements LoaderInterface
             }
         }
 
-        if (count($teamIds) > 0) {
+        if (\count($teamIds) > 0) {
             $qb = $em->createQueryBuilder();
             $qb->select('PARTIAL t.{id}', 'teamlead')
                 ->from(Team::class, 't')

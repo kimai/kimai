@@ -22,10 +22,10 @@ class AboutControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/about');
 
         $result = $client->getCrawler()->filter('ul.nav.nav-stacked li a');
-        $this->assertEquals(4, count($result));
+        $this->assertEquals(4, \count($result));
 
         $result = $client->getCrawler()->filter('div.box-body pre');
-        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, \count($result));
         $this->assertStringContainsString('MIT License', $result->text(null, true));
     }
 }
