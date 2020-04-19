@@ -37,7 +37,7 @@ class MPdfConverter implements HtmlToPdfConverter
 
         // some OS do not follow the PHP default settings
         if ((int) ini_get('pcre.backtrack_limit') < 1000000) {
-            @ini_set('pcre.backtrack_limit', 1000000);
+            @ini_set('pcre.backtrack_limit', '1000000');
         }
 
         // reduce the size of content parts that are passed to MPDF, to prevent

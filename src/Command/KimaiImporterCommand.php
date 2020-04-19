@@ -166,21 +166,21 @@ final class KimaiImporterCommand extends Command
         $this->dbPrefix = $input->getArgument('prefix');
 
         $password = $input->getArgument('password');
-        if (trim(\strlen($password)) < 6) {
-            $io->error('Password length is not sufficient, at least 6 character are required');
+        if (null === $password || \strlen($password = \trim($password)) < 8) {
+            $io->error('Password length is not sufficient, at least 8 character are required');
 
             return 1;
         }
 
         $country = $input->getArgument('country');
-        if (2 != trim(\strlen($country))) {
+        if (null === $country || 2 != \strlen($country = \trim($country))) {
             $io->error('Country code needs to be exactly 2 character');
 
             return 1;
         }
 
         $currency = $input->getArgument('currency');
-        if (3 != trim(\strlen($currency))) {
+        if (null === $currency || 3 != \strlen($currency = \trim($currency))) {
             $io->error('Currency code needs to be exactly 3 character');
 
             return 1;
@@ -465,12 +465,10 @@ final class KimaiImporterCommand extends Command
     protected function deactivateLifecycleCallbacks(Connection $connection)
     {
         $allListener = $connection->getEventManager()->getListeners();
-        foreach ($allListener as $name => $listener) {
-            if (\in_array($name, ['prePersist', 'preUpdate'])) {
-                foreach ($listener as $service => $class) {
-                    if (TimesheetSubscriber::class === $class) {
-                        $connection->getEventManager()->removeEventListener(['prePersist', 'preUpdate'], $class);
-                    }
+        foreach ($allListener as $event => $listeners) {
+            foreach ($listeners as $hash => $object) {
+                if ($object instanceof TimesheetSubscriber) {
+                    $connection->getEventManager()->removeEventListener([$event], $object);
                 }
             }
         }
@@ -951,7 +949,7 @@ final class KimaiImporterCommand extends Command
      * @param array $oldActivity
      * @param array $fixedRates
      * @param array $rates
-     * @param int $oldProjectId
+     * @param int|null $oldProjectId
      * @return Activity
      * @throws Exception
      */
@@ -961,7 +959,7 @@ final class KimaiImporterCommand extends Command
         array $oldActivity,
         array $fixedRates,
         array $rates,
-        $oldProjectId
+        $oldProjectId = null
     ) {
         $oldActivityId = $oldActivity['activityID'];
 

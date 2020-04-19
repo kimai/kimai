@@ -35,6 +35,10 @@ final class SamlUserFactory implements SamlUserFactoryInterface
         $this->groupMapping = $attributes['roles']['mapping'];
     }
 
+    /**
+     * @param SamlTokenInterface $token
+     * @return User
+     */
     public function createUser(SamlTokenInterface $token)
     {
         $user = new User();

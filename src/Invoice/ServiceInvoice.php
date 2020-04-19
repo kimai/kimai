@@ -256,7 +256,7 @@ final class ServiceInvoice
 
     /**
      * @param InvoiceQuery $query
-     * @return InvoiceItemInterface[]
+     * @return array<string, InvoiceItemInterface[]>
      */
     private function findInvoiceItemsWithRepository(InvoiceQuery $query): array
     {
@@ -301,7 +301,7 @@ final class ServiceInvoice
     }
 
     /**
-     * @param InvoiceItemInterface[] $entries
+     * @param array<string, InvoiceItemInterface[]> $entries
      */
     private function markEntriesAsExported(iterable $entries)
     {
