@@ -31,6 +31,7 @@
         "kevinpapst/adminlte-bundle": "^3.0",
         "kimai/kimai2-composer": "^0.1",
         "kimai/user-bundle": "^1.1",
+        "laminas/laminas-ldap": "^2.10",
         "laravolt/avatar": "^3.0",
         "league/csv": "^9.4",
         "league/html-to-markdown": "^4.9",

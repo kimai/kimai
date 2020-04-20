@@ -216,6 +216,12 @@
     "kimai/user-bundle": {
         "version": "dev-master"
     },
+    "laminas/laminas-ldap": {
+        "version": "2.10.3"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.0.3"
+    },
     "laravolt/avatar": {
         "version": "3.0.0"
     },
