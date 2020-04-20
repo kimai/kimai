@@ -828,14 +828,6 @@
                 <source>button.preview</source>
                 <target>Anteprima</target>
             </trans-unit>
-            <trans-unit id="invoice.filter">
-                <source>invoice.filter</source>
-                <target>Filtra per data fattura</target>
-            </trans-unit>
-            <trans-unit id="button.preview">
-                <source>button.preview</source>
-                <target>Anteprima</target>
-            </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
                 <target>Stampa</target>
