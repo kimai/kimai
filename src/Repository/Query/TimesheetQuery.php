@@ -119,7 +119,7 @@ class TimesheetQuery extends ActivityQuery
      */
     public function getActivity()
     {
-        if (count($this->activities) > 0) {
+        if (\count($this->activities) > 0) {
             return $this->activities[0];
         }
 
@@ -189,7 +189,7 @@ class TimesheetQuery extends ActivityQuery
     public function setState($state)
     {
         $state = (int) $state;
-        if (in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED], true)) {
+        if (\in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED], true)) {
             $this->state = $state;
         }
 
@@ -211,7 +211,7 @@ class TimesheetQuery extends ActivityQuery
     public function setExported($exported)
     {
         $exported = (int) $exported;
-        if (in_array($exported, [self::STATE_ALL, self::STATE_EXPORTED, self::STATE_NOT_EXPORTED], true)) {
+        if (\in_array($exported, [self::STATE_ALL, self::STATE_EXPORTED, self::STATE_NOT_EXPORTED], true)) {
             $this->exported = $exported;
         }
 

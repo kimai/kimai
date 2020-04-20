@@ -9,6 +9,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Role;
 use App\Entity\User;
 use App\Repository\Loader\UserLoader;
 use App\Repository\Paginator\LoaderPaginator;
@@ -70,7 +71,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
      */
     public function findOneBy(array $criteria, array $orderBy = null)
     {
-        if (count($criteria) == 1 && isset($criteria['username'])) {
+        if (\count($criteria) == 1 && isset($criteria['username'])) {
             return $this->loadUserByUsername($criteria['username']);
         }
 
@@ -168,6 +169,28 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                 ->andWhere('teams.teamlead = :id')
                 ->setParameter('id', $user);
         }
+    }
+
+    /**
+     * @param string $role
+     * @return User[]
+     * @internal
+     */
+    public function findUsersWithRole(string $role): array
+    {
+        if ($role === User::ROLE_USER) {
+            return $this->findAll();
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb
+            ->select('u')
+            ->from(User::class, 'u')
+            ->andWhere('u.roles LIKE :role');
+        $qb->setParameter('role', '%' . $role . '%');
+
+        return $qb->getQuery()->getResult();
     }
 
     private function getQueryBuilderForQuery(UserQuery $query): QueryBuilder

@@ -118,11 +118,7 @@ class CreateReleaseCommand extends Command
             '.codecov.yml',
             '.editorconfig',
             '.php_cs.dist',
-            '.travis.yml',
-            '*.lock',
-            'package.json',
             'phpstan.neon',
-            'Dockerfile',
             'phpunit.xml.dist',
             'webpack.config.js',
             // this seems to be required, see https://github.com/kevinpapst/kimai2/issues/1586

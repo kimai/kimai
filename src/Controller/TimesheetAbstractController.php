@@ -154,7 +154,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->save($entry);
+                $this->service->updateTimesheet($entry);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute($this->getTimesheetRoute(), ['page' => $request->get('page', 1)]);
@@ -172,7 +172,7 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function getTags(TagRepository $tagRepository, $tagNames)
     {
         $tags = [];
-        if (!is_array($tagNames)) {
+        if (!\is_array($tagNames)) {
             $tagNames = explode(',', $tagNames);
         }
         foreach ($tagNames as $tagName) {
@@ -296,7 +296,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $dto->setEntities($timesheets);
 
-        if (count($dto->getEntities()) === 0) {
+        if (\count($dto->getEntities()) === 0) {
             return $this->redirectToRoute($this->getTimesheetRoute());
         }
 
@@ -344,7 +344,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
             if ($execute) {
                 try {
-                    $this->repository->saveMultiple($dto->getEntities());
+                    $this->service->updateMultipleTimesheets($dto->getEntities());
                     $this->flashSuccess('action.update.success');
 
                     return $this->redirectToRoute($this->getTimesheetRoute());
@@ -378,7 +378,7 @@ abstract class TimesheetAbstractController extends AbstractController
             $dto->setEntities($timesheets);
 
             try {
-                $this->repository->deleteMultiple($dto->getEntities());
+                $this->service->deleteMultipleTimesheets($dto->getEntities());
                 $this->flashSuccess('action.delete.success');
             } catch (\Exception $ex) {
                 $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);

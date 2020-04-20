@@ -38,7 +38,7 @@ final class SearchTerm
 
         foreach ($terms as $term) {
             $tmp = explode(':', $term);
-            if (count($tmp) === 2) {
+            if (\count($tmp) === 2) {
                 $fields[$tmp[0]] = $tmp[1];
             } else {
                 $finalTerm[] = $term;
@@ -51,7 +51,7 @@ final class SearchTerm
 
     public function hasSearchField(string $name): bool
     {
-        return array_key_exists($name, $this->fields);
+        return \array_key_exists($name, $this->fields);
     }
 
     public function getSearchField(string $name): ?string

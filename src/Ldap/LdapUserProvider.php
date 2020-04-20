@@ -69,8 +69,8 @@ class LdapUserProvider implements UserProviderInterface
 
     public function refreshUser(UserInterface $user)
     {
-        if (!($user instanceof User) || !$this->supportsClass(get_class($user))) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+        if (!($user instanceof User) || !$this->supportsClass(\get_class($user))) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
 
         if (!$user->isLdapUser() && null === $user->getPreferenceValue('ldap.dn')) {

@@ -45,7 +45,7 @@ class ActivityVoter extends AbstractVoter
             return false;
         }
 
-        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
+        if (!\in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
             return false;
         }
 

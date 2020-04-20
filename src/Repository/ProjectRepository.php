@@ -271,7 +271,7 @@ class ProjectRepository extends EntityRepository
 
         $qb->addOrderBy($orderBy, $query->getOrder());
 
-        if (in_array($query->getVisibility(), [ProjectQuery::SHOW_VISIBLE, ProjectQuery::SHOW_HIDDEN])) {
+        if (\in_array($query->getVisibility(), [ProjectQuery::SHOW_VISIBLE, ProjectQuery::SHOW_HIDDEN])) {
             $qb
                 ->andWhere($qb->expr()->eq('p.visible', ':visible'))
                 ->andWhere($qb->expr()->eq('c.visible', ':customer_visible'))

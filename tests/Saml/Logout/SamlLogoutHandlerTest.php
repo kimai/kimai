@@ -43,7 +43,7 @@ class SamlLogoutHandlerTest extends TestCase
         $auth->expects($this->once())->method('processSLO')->willThrowException(new Error('blub'));
         $auth->expects($this->once())->method('getSLOurl')->willReturn('/logout');
         $auth->expects($this->once())->method('logout')->willReturnCallback(function () {
-            $args = func_get_args();
+            $args = \func_get_args();
             self::assertEquals(null, $args[0]);
             self::assertEquals([], $args[1]);
             self::assertEquals('tony', $args[2]);

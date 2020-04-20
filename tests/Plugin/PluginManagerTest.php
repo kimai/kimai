@@ -50,7 +50,7 @@ class PluginManagerTest extends TestCase
         $sut->addPlugin(new TestPlugin());
 
         // make sure a plugin with the same name is not added twice, the first one wins!
-        $this->assertEquals(2, count($sut->getPlugins()));
+        $this->assertEquals(2, \count($sut->getPlugins()));
 
         $foo = $sut->getPlugin('foo');
         $this->assertInstanceOf(Plugin::class, $foo);

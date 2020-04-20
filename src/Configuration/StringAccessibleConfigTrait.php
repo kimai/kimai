@@ -53,18 +53,18 @@ trait StringAccessibleConfigTrait
             $temp = explode('.', $configuration->getName());
             $array = &$this->settings;
             if ($temp[0] === $this->getPrefix()) {
-                $temp = array_slice($temp, 1);
+                $temp = \array_slice($temp, 1);
             }
             foreach ($temp as $key2) {
-                if (!array_key_exists($key2, $array)) {
+                if (!\array_key_exists($key2, $array)) {
                     // unknown values will silently be skipped
                     continue 2;
                 }
-                if (is_array($array[$key2])) {
+                if (\is_array($array[$key2])) {
                     $array = &$array[$key2];
-                } elseif (is_bool($array[$key2])) {
+                } elseif (\is_bool($array[$key2])) {
                     $array[$key2] = (bool) $configuration->getValue();
-                } elseif (is_int($array[$key2])) {
+                } elseif (\is_int($array[$key2])) {
                     $array[$key2] = (int) $configuration->getValue();
                 } else {
                     $array[$key2] = $configuration->getValue();
@@ -88,7 +88,7 @@ trait StringAccessibleConfigTrait
     {
         $this->prepare();
         $prefix = $this->getPrefix() . '.';
-        $length = strlen($prefix);
+        $length = \strlen($prefix);
 
         if (substr($key, 0, $length) === $prefix) {
             $key = substr($key, $length);
@@ -107,11 +107,11 @@ trait StringAccessibleConfigTrait
         $keys = explode('.', $key);
         $search = array_shift($keys);
 
-        if (!array_key_exists($search, $config)) {
+        if (!\array_key_exists($search, $config)) {
             throw new \InvalidArgumentException('Unknown config: ' . $key);
         }
 
-        if (is_array($config[$search]) && !empty($keys)) {
+        if (\is_array($config[$search]) && !empty($keys)) {
             return $this->get(implode('.', $keys), $config[$search]);
         }
 

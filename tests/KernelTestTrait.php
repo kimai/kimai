@@ -14,10 +14,8 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * A trait to be used in all tests that extend the KernelTestCase.
@@ -33,19 +31,9 @@ trait KernelTestTrait
         return $this::$container->get('doctrine.orm.entity_manager');
     }
 
-    /**
-     * @param HttpKernelBrowser|EntityManager|KernelTestCase $client
-     * @param Fixture $fixture
-     */
-    protected function importFixture($client, Fixture $fixture)
+    protected function importFixture(Fixture $fixture)
     {
-        if ($client instanceof EntityManager) {
-            $em = $client;
-        } elseif ($this instanceof KernelTestCase) {
-            $em = $this::$container->get('doctrine.orm.entity_manager');
-        } else {
-            throw new \InvalidArgumentException('Need an EntityManager to import fixtures');
-        }
+        $em = $this::$container->get('doctrine.orm.entity_manager');
 
         $loader = new Loader();
         $loader->addFixture($fixture);
@@ -60,11 +48,10 @@ trait KernelTestTrait
     }
 
     /**
-     * @param EntityManager $em
      * @param string $role
      * @return User|null
      */
-    protected function getUserByRole(EntityManager $em, string $role = User::ROLE_USER)
+    protected function getUserByRole(string $role = User::ROLE_USER)
     {
         $name = null;
 

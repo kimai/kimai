@@ -92,11 +92,11 @@ class Extensions extends AbstractExtension
      */
     public function getClassName($object)
     {
-        if (!is_object($object)) {
+        if (!\is_object($object)) {
             return null;
         }
 
-        return get_class($object);
+        return \get_class($object);
     }
 
     public function multilineIndent(?string $string, string $indent): string
@@ -106,7 +106,7 @@ class Extensions extends AbstractExtension
         }
 
         $parts = explode("\r\n", $string);
-        if (count($parts) === 1) {
+        if (\count($parts) === 1) {
             $parts = explode("\n", $string);
         }
 

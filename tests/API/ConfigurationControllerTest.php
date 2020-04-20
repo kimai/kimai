@@ -29,7 +29,7 @@ class ConfigurationControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(7, count($result));
+        $this->assertEquals(7, \count($result));
         $this->assertI18nStructure($result);
     }
 
@@ -56,7 +56,7 @@ class ConfigurationControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(5, count($result));
+        $this->assertEquals(5, \count($result));
         $this->assertTimesheetStructure($result);
     }
 

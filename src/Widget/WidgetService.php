@@ -68,7 +68,7 @@ class WidgetService
             }
         }
 
-        throw new WidgetException(sprintf('No renderer available for widget "%s"', get_class($widget)));
+        throw new WidgetException(sprintf('No renderer available for widget "%s"', \get_class($widget)));
     }
 
     /**

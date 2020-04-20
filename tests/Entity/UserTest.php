@@ -184,13 +184,13 @@ class UserTest extends TestCase
     {
         $sut = new User();
         $sut->setAlias('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-        self::assertEquals(60, strlen($sut->getAlias()));
+        self::assertEquals(60, \strlen($sut->getAlias()));
         $sut->setAlias('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxAAAAA');
-        self::assertEquals(60, strlen($sut->getAlias()));
+        self::assertEquals(60, \strlen($sut->getAlias()));
         $sut->setTitle('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-        self::assertEquals(50, strlen($sut->getTitle()));
+        self::assertEquals(50, \strlen($sut->getTitle()));
         $sut->setTitle('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxAAAAAA');
-        self::assertEquals(50, strlen($sut->getTitle()));
+        self::assertEquals(50, \strlen($sut->getTitle()));
     }
 
     public function testPreferencesCollectionIsCreatedOnBrokenUser()

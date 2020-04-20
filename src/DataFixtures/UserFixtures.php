@@ -140,11 +140,11 @@ class UserFixtures extends Fixture
             $username = $faker->userName;
             $email = $faker->email;
 
-            if (in_array($username, $existingName)) {
+            if (\in_array($username, $existingName)) {
                 continue;
             }
 
-            if (in_array($email, $existingEmail)) {
+            if (\in_array($email, $existingEmail)) {
                 continue;
             }
 

@@ -26,7 +26,7 @@ class TagControllerTest extends APIControllerBaseTest
 
         $fixture = new TagFixtures();
         $fixture->setTagArray($tagList);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
     }
 
     public function testIsSecure()
@@ -43,7 +43,7 @@ class TagControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(10, count($result));
+        $this->assertEquals(10, \count($result));
         $this->assertEquals('Test', $result[9]);
     }
 
@@ -57,7 +57,7 @@ class TagControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertEmpty($result);
-        $this->assertEquals(0, count($result));
+        $this->assertEquals(0, \count($result));
     }
 
     public function testPostAction()
@@ -101,7 +101,7 @@ class TagControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(3, count($result));
+        $this->assertEquals(3, \count($result));
 
         $this->assertEquals('Administration', $result[0]);
         $this->assertEquals('Bug Fixing', $result[1]);
@@ -121,7 +121,7 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/tags');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertEquals(9, count($result));
+        $this->assertEquals(9, \count($result));
     }
 
     public function testDeleteActionWithUnknownTimesheet()
@@ -132,7 +132,7 @@ class TagControllerTest extends APIControllerBaseTest
     protected function assertStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'name', 'timesheets'
+            'id', 'name', 'color', 'timesheets'
         ];
 
         if ($full) {

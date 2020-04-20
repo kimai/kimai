@@ -47,7 +47,7 @@ class DailyWorkingTimeChart extends SimpleWidget
     {
         $options = parent::getOptions($options);
 
-        if (!in_array($options['type'], ['bar', 'line'])) {
+        if (!\in_array($options['type'], ['bar', 'line'])) {
             $options['type'] = self::DEFAULT_CHART;
         }
 

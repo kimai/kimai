@@ -58,9 +58,9 @@ class DebugRendererTest extends TestCase
         $response = $sut->render($document, $model);
         $data = json_decode($response->getContent(), true);
 
-        $this->assertModelStructure($data['model'], count($model->getQuery()->getProjects()), count($model->getQuery()->getActivities()));
+        $this->assertModelStructure($data['model'], \count($model->getQuery()->getProjects()), \count($model->getQuery()->getActivities()));
         $rows = $data['entries'];
-        $this->assertEquals($expectedRows, count($rows));
+        $this->assertEquals($expectedRows, \count($rows));
 
         $i = 0;
         foreach ($rows as $row) {
@@ -246,6 +246,6 @@ class DebugRendererTest extends TestCase
         sort($givenKeys);
 
         $this->assertEquals($expectedKeys, $givenKeys);
-        $this->assertEquals(count($keys), count($givenKeys));
+        $this->assertEquals(\count($keys), \count($givenKeys));
     }
 }

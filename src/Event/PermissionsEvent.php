@@ -35,8 +35,8 @@ final class PermissionsEvent extends Event
 
     public function removePermission(string $section, string $permission): PermissionsEvent
     {
-        if (array_key_exists($section, $this->sections)) {
-            if (array_key_exists($permission, $this->sections[$section])) {
+        if (\array_key_exists($section, $this->sections)) {
+            if (\array_key_exists($permission, $this->sections[$section])) {
                 unset($this->sections[$section][$permission]);
             }
         }
@@ -46,12 +46,12 @@ final class PermissionsEvent extends Event
 
     public function hasSection(string $section): bool
     {
-        return array_key_exists($section, $this->sections);
+        return \array_key_exists($section, $this->sections);
     }
 
     public function removeSection(string $section): PermissionsEvent
     {
-        if (array_key_exists($section, $this->sections)) {
+        if (\array_key_exists($section, $this->sections)) {
             unset($this->sections[$section]);
         }
 
@@ -60,7 +60,7 @@ final class PermissionsEvent extends Event
 
     public function getSection(string $section): ?array
     {
-        if (array_key_exists($section, $this->sections)) {
+        if (\array_key_exists($section, $this->sections)) {
             return $this->sections[$section];
         }
 

@@ -41,7 +41,7 @@ class SimpleWidgetRendererTest extends TestCase
 
         $sut = new SimpleWidgetRenderer($twig);
 
-        $data = uniqid(get_class($widget));
+        $data = uniqid(\get_class($widget));
         $widget->setData($data);
         $result = $sut->render($widget, ['color' => $color]);
         $result = json_decode($result, true);

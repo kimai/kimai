@@ -41,10 +41,10 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
         }
 
         try {
-            $template->cloneRow('entry.description', count($model->getCalculator()->getEntries()));
+            $template->cloneRow('entry.description', \count($model->getCalculator()->getEntries()));
         } catch (OfficeException $ex) {
             try {
-                $template->cloneRow('entry.row', count($model->getCalculator()->getEntries()));
+                $template->cloneRow('entry.row', \count($model->getCalculator()->getEntries()));
             } catch (OfficeException $ex) {
                 @trigger_error(
                     sprintf('Invoice document (%s) did not contain a clone row, was that on purpose?', $document->getFilename())

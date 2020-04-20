@@ -55,7 +55,7 @@ class TimesheetValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Timesheet');
         }
 
-        if (!is_object($value) || !($value instanceof TimesheetEntity)) {
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
             return;
         }
 

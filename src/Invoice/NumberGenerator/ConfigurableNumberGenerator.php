@@ -67,9 +67,12 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
 
             // number format
             if (substr_count($tmp, ',') !== 0) {
-                $formatter = explode(',', $tmp);
-                $tmp = $formatter[0];
-                $formatter = $formatter[1];
+                $parts = explode(',', $tmp);
+                $tmp = $parts[0];
+                $formatter = \intval($parts[1]);
+                if ((string) $formatter !== $parts[1]) {
+                    $formatter = null;
+                }
             }
 
             switch ($tmp) {

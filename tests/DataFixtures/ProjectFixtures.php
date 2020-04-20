@@ -106,7 +106,7 @@ final class ProjectFixtures extends Fixture
             ;
 
             if (null !== $this->callback) {
-                call_user_func($this->callback, $project);
+                \call_user_func($this->callback, $project);
             }
             $manager->persist($project);
         }

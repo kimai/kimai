@@ -37,9 +37,9 @@ class DashboardSubscriberTest extends TestCase
         $sut = $this->getSubscriber(false, 13, 28, 37, 5);
         $event = new DashboardEvent(new User());
 
-        $this->assertEquals(0, count($event->getSections()));
+        $this->assertEquals(0, \count($event->getSections()));
         $sut->onDashboardEvent($event);
-        $this->assertEquals(0, count($event->getSections()));
+        $this->assertEquals(0, \count($event->getSections()));
     }
 
     public function testWithAdminUser()
@@ -47,14 +47,14 @@ class DashboardSubscriberTest extends TestCase
         $sut = $this->getSubscriber(true, 13, 28, 37, 5);
         $event = new DashboardEvent(new User());
 
-        $this->assertEquals(0, count($event->getSections()));
+        $this->assertEquals(0, \count($event->getSections()));
         $sut->onDashboardEvent($event);
 
         $sections = $event->getSections();
         $widgets = $sections[0]->getWidgets();
 
-        $this->assertEquals(1, count($sections));
-        $this->assertEquals(4, count($widgets));
+        $this->assertEquals(1, \count($sections));
+        $this->assertEquals(4, \count($widgets));
 
         $this->assertEquals('stats.userTotal', $widgets[0]->getTitle());
         $this->assertEquals(13, $widgets[0]->getData());
