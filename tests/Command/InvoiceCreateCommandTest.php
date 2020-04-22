@@ -245,4 +245,17 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('Created 1 invoice(s) ', $output);
     }
+
+    public function testCreateInvoiceByProjectWithPreview()
+    {
+        $start = new \DateTime('-2 months');
+        $end = new \DateTime();
+
+        $this->prepareFixtures($start);
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--preview' => sys_get_temp_dir(), '--by-project' => null, '--template-meta' => 'template', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('Created 1 invoice(s) ', $output);
+    }
 }
