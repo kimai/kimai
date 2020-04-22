@@ -199,6 +199,23 @@ final class InvoiceController extends AbstractController
     }
 
     /**
+     * @Route(path="/delete/{id}", name="admin_invoice_delete", methods={"GET"})
+     * @Security("is_granted('history_invoice')")
+     */
+    public function deleteInvoiceAction(Invoice $invoice): Response
+    {
+        try {
+            $this->service->deleteInvoice($invoice);
+        } catch (\Exception $ex) {
+            throw $this->createNotFoundException($ex->getMessage());
+        }
+
+        $this->flashSuccess('action.delete.success');
+
+        return $this->redirectToRoute('admin_invoice_list');
+    }
+
+    /**
      * @Route(path="/download/{id}", name="admin_invoice_download", methods={"GET"})
      * @Security("is_granted('history_invoice')")
      */

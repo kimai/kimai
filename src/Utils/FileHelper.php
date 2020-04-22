@@ -58,4 +58,9 @@ final class FileHelper
     {
         $this->filesystem->dumpFile($filename, $data);
     }
+
+    public function removeFile(string $filename)
+    {
+        $this->filesystem->remove($filename);
+    }
 }

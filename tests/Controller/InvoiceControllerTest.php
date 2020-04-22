@@ -266,7 +266,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
     }
 
-    public function testCreateActionAsAdminWithDownloadAndStatusChange()
+    public function testCreateActionAsAdminWithDownloadAndStatusChangeAndDelete()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
@@ -347,6 +347,11 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->request($client, '/invoice/change-status/1/new');
+        $this->assertIsRedirect($client, '/invoice/show');
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->request($client, '/invoice/delete/1');
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
