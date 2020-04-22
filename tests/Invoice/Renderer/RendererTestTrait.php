@@ -115,6 +115,7 @@ trait RendererTestTrait
         $template = new InvoiceTemplate();
         $template->setTitle('a very *long* test invoice / template title with [special] character');
         $template->setVat(19);
+        $template->setLanguage('en');
 
         $project = new Project();
         $project->setName('project name');
