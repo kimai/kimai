@@ -27,6 +27,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class InvoiceCreateCommand extends Command
@@ -55,6 +58,10 @@ class InvoiceCreateCommand extends Command
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
+    /**
+     * @var string|null
+     */
+    private $previewDirectory;
 
     public function __construct(
         ServiceInvoice $serviceInvoice,
@@ -94,6 +101,7 @@ class InvoiceCreateCommand extends Command
             ->addOption('template-meta', null, InputOption::VALUE_OPTIONAL, 'Fetch invoice template from a meta-field', null)
             ->addOption('search', null, InputOption::VALUE_OPTIONAL, 'Search term to filter invoice entries', null)
             ->addOption('exported', null, InputOption::VALUE_OPTIONAL, 'Exported filter for invoice entries (possible values: exported, all), by default only "not exported" items are fetched', null)
+            ->addOption('preview', null, InputOption::VALUE_OPTIONAL, 'Absolute path for a rendered preview of the invoice, which will neither be saved nor the items be marked as exported.', null)
         ;
     }
 
@@ -208,7 +216,14 @@ class InvoiceCreateCommand extends Command
         }
 
         $markAsExported = false;
-        if ($input->getOption('set-exported')) {
+        if ($input->getOption('preview') !== null) {
+            $this->previewDirectory = rtrim($input->getOption('preview'), '/') . '/';
+            if (!is_dir($this->previewDirectory) || !is_writable($this->previewDirectory)) {
+                $io->error('Invalid preview directory given');
+
+                return 1;
+            }
+        } elseif ($input->getOption('set-exported')) {
             $markAsExported = true;
         }
 
@@ -283,13 +298,45 @@ class InvoiceCreateCommand extends Command
             $query->setTemplate($tpl);
 
             try {
-                $invoices[] = $this->serviceInvoice->createInvoice($query, $this->eventDispatcher);
+                if (null !== $this->previewDirectory) {
+                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($query, $this->eventDispatcher));
+                } else {
+                    $invoices[] = $this->serviceInvoice->createInvoice($query, $this->eventDispatcher);
+                }
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed to create invoice for project "%s" with: %s', $project->getName(), $ex->getMessage()));
             }
         }
 
         return $invoices;
+    }
+
+    private function saveInvoicePreview(Response $response)
+    {
+        $filename = uniqid('invoice_');
+
+        if ($response->headers->has('Content-Disposition')) {
+            $disposition = $response->headers->get('Content-Disposition');
+            $parts = explode(';', $disposition);
+            foreach ($parts as $part) {
+                if (stripos($part, 'filename=') === false) {
+                    continue;
+                }
+                $filename = explode('filename=', $part);
+                if (\count($filename) > 1) {
+                    $filename = $filename[1];
+                }
+            }
+        }
+
+        if ($response instanceof BinaryFileResponse) {
+            $file = $response->getFile();
+            $file->move($this->previewDirectory, $filename);
+        } else {
+            (new Filesystem())->dumpFile($this->previewDirectory . $filename, $response->getContent());
+        }
+
+        return $this->previewDirectory . $filename;
     }
 
     /**
@@ -318,7 +365,11 @@ class InvoiceCreateCommand extends Command
             $query->setTemplate($tpl);
 
             try {
-                $invoices[] = $this->serviceInvoice->createInvoice($query, $this->eventDispatcher);
+                if (null !== $this->previewDirectory) {
+                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($query, $this->eventDispatcher));
+                } else {
+                    $invoices[] = $this->serviceInvoice->createInvoice($query, $this->eventDispatcher);
+                }
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed to create invoice for customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
             }
@@ -339,6 +390,22 @@ class InvoiceCreateCommand extends Command
 
         if (empty($invoices)) {
             $io->warning('No invoice was generated');
+
+            return 0;
+        }
+
+        if (null !== $this->previewDirectory) {
+            $columns = ['Filename'];
+
+            $table = new Table($output);
+            $table->setHeaderTitle(sprintf('Created %s invoice(s)', \count($invoices)));
+            $table->setHeaders($columns);
+
+            foreach ($invoices as $invoiceFile) {
+                $table->addRow([$invoiceFile]);
+            }
+
+            $table->render();
 
             return 0;
         }
