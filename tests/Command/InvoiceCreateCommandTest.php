@@ -157,6 +157,11 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'x', '--start' => '2020-01-01', '--end' => 'öäüß'], 'Invalid end date given');
     }
 
+    public function testCreateWithInvalidPreviewDirectory()
+    {
+        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'x', '--start' => '2020-01-01', '--end' => '2020-01-02', '--preview' => '/kjhg/'], 'Invalid preview directory given');
+    }
+
     public function testCreateWithInvalidCustomer()
     {
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 3, '--template' => 'x'], 'Unknown customer ID: 3');
@@ -241,6 +246,19 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->prepareFixtures($start);
 
         $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--by-project' => null, '--template-meta' => 'template', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('Created 1 invoice(s) ', $output);
+    }
+
+    public function testCreateInvoiceByProjectWithPreview()
+    {
+        $start = new \DateTime('-2 months');
+        $end = new \DateTime();
+
+        $this->prepareFixtures($start);
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--preview' => sys_get_temp_dir(), '--by-project' => null, '--template-meta' => 'template', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('Created 1 invoice(s) ', $output);

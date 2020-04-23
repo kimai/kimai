@@ -184,13 +184,15 @@ class UserTest extends TestCase
     {
         $sut = new User();
         $sut->setAlias('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-        self::assertEquals(60, \strlen($sut->getAlias()));
+        self::assertEquals(60, mb_strlen($sut->getAlias()));
         $sut->setAlias('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxAAAAA');
-        self::assertEquals(60, \strlen($sut->getAlias()));
+        self::assertEquals(60, mb_strlen($sut->getAlias()));
+        $sut->setAlias('万政提質打録施熟活者韓症写気当。規談表有部確暑将回優隊見竜能南事。竹阪板府入違護究兵厚能提。済伸知題熱正写場京誉事週在複今徳際供。審利世連手阿量携泉指済像更映刊政病世。熱楽時予資方賀月改洋者職原桜提増脚職。気公誌荒原輝文治察専及唱戦白廃模書。着授健出山力集出止員捉害実載措明国無今。棋出陶供供知機使協物確講最新両。');
+        self::assertEquals(60, mb_strlen($sut->getAlias()));
         $sut->setTitle('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-        self::assertEquals(50, \strlen($sut->getTitle()));
+        self::assertEquals(50, mb_strlen($sut->getTitle()));
         $sut->setTitle('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxAAAAAA');
-        self::assertEquals(50, \strlen($sut->getTitle()));
+        self::assertEquals(50, mb_strlen($sut->getTitle()));
     }
 
     public function testPreferencesCollectionIsCreatedOnBrokenUser()

@@ -27,6 +27,7 @@ class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'invoice.date' => $formatter->getFormattedDateTime($model->getInvoiceDate()),
             'invoice.number' => $model->getInvoiceNumber(),
             'invoice.currency' => $currency,
+            'invoice.language' => $model->getTemplate()->getLanguage(),                            // since 1.9
             'invoice.currency_symbol' => $formatter->getCurrencySymbol($currency),
             'invoice.vat' => $model->getCalculator()->getVat(),
             'invoice.tax' => $formatter->getFormattedMoney($tax, $currency),
@@ -52,11 +53,19 @@ class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'template.payment_details' => $model->getTemplate()->getPaymentDetails(),
 
             'query.begin' => $formatter->getFormattedDateTime($model->getQuery()->getBegin()),
-            'query.day' => $model->getQuery()->getBegin()->format('d'),
-            'query.end' => $formatter->getFormattedDateTime($model->getQuery()->getEnd()),
-            'query.month' => $formatter->getFormattedMonthName($model->getQuery()->getBegin()),
-            'query.month_number' => $model->getQuery()->getBegin()->format('m'),
-            'query.year' => $model->getQuery()->getBegin()->format('Y'),
+            'query.day' => $model->getQuery()->getBegin()->format('d'),                             // @deprecated
+            'query.month' => $formatter->getFormattedMonthName($model->getQuery()->getBegin()),     // @deprecated
+            'query.month_number' => $model->getQuery()->getBegin()->format('m'),                    // @deprecated
+            'query.year' => $model->getQuery()->getBegin()->format('Y'),                            // @deprecated
+            'query.begin_day' => $model->getQuery()->getBegin()->format('d'),
+            'query.begin_month' => $formatter->getFormattedMonthName($model->getQuery()->getBegin()),
+            'query.begin_month_number' => $model->getQuery()->getBegin()->format('m'),
+            'query.begin_year' => $model->getQuery()->getBegin()->format('Y'),
+            'query.end' => $formatter->getFormattedDateTime($model->getQuery()->getEnd()),          // since 1.9
+            'query.end_day' => $model->getQuery()->getEnd()->format('d'),                           // since 1.9
+            'query.end_month' => $formatter->getFormattedMonthName($model->getQuery()->getEnd()),   // since 1.9
+            'query.end_month_number' => $model->getQuery()->getEnd()->format('m'),                  // since 1.9
+            'query.end_year' => $model->getQuery()->getEnd()->format('Y'),                          // since 1.9
         ];
 
         return $values;
