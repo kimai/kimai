@@ -175,7 +175,9 @@ class CustomerController extends BaseApiController
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->createForm(CustomerApiEditForm::class, $customer);
+        $form = $this->createForm(CustomerApiEditForm::class, $customer, [
+            'include_budget' => $this->isGranted('budget', $customer),
+        ]);
 
         $form->submit($request->request->all());
 
@@ -237,7 +239,9 @@ class CustomerController extends BaseApiController
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->createForm(CustomerApiEditForm::class, $customer);
+        $form = $this->createForm(CustomerApiEditForm::class, $customer, [
+            'include_budget' => $this->isGranted('budget', $customer),
+        ]);
 
         $form->setData($customer);
         $form->submit($request->request->all(), false);

@@ -124,6 +124,8 @@ class CustomerControllerTest extends APIControllerBaseTest
             'country' => 'DE',
             'currency' => 'EUR',
             'timezone' => 'Europe/Berlin',
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -178,6 +180,8 @@ class CustomerControllerTest extends APIControllerBaseTest
             'country' => 'DE',
             'currency' => 'EUR',
             'timezone' => 'Europe/Berlin',
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/customers/1', 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());

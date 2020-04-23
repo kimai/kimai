@@ -202,7 +202,9 @@ class ActivityController extends BaseApiController
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->createForm(ActivityApiEditForm::class, $activity);
+        $form = $this->createForm(ActivityApiEditForm::class, $activity, [
+            'include_budget' => $this->isGranted('budget', $activity),
+        ]);
 
         $form->submit($request->request->all());
 
@@ -264,7 +266,9 @@ class ActivityController extends BaseApiController
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->createForm(ActivityApiEditForm::class, $activity);
+        $form = $this->createForm(ActivityApiEditForm::class, $activity, [
+            'include_budget' => $this->isGranted('budget', $activity),
+        ]);
 
         $form->setData($activity);
         $form->submit($request->request->all(), false);

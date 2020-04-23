@@ -187,6 +187,8 @@ class ProjectControllerTest extends APIControllerBaseTest
             'orderDate' => '2018-02-08T13:02:54',
             'start' => '2019-02-01T19:32:17',
             'end' => '2020-02-08T21:11:42',
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -237,7 +239,9 @@ class ProjectControllerTest extends APIControllerBaseTest
             'name' => 'foo',
             'comment' => '',
             'customer' => 1,
-            'visible' => true
+            'visible' => true,
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/projects/1', 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
