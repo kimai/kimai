@@ -189,11 +189,10 @@ final class InvoiceController extends AbstractController
     {
         try {
             $this->service->changeInvoiceStatus($invoice, $status);
-        } catch (\InvalidArgumentException $ex) {
-            throw $this->createNotFoundException($ex->getMessage());
+            $this->flashSuccess('action.update.success');
+        } catch (\Exception $ex) {
+            $this->flashError('action.update.error');
         }
-
-        $this->flashSuccess('action.update.success');
 
         return $this->redirectToRoute('admin_invoice_list');
     }
@@ -206,11 +205,10 @@ final class InvoiceController extends AbstractController
     {
         try {
             $this->service->deleteInvoice($invoice);
+            $this->flashSuccess('action.delete.success');
         } catch (\Exception $ex) {
-            throw $this->createNotFoundException($ex->getMessage());
+            $this->flashError('action.delete.error');
         }
-
-        $this->flashSuccess('action.delete.success');
 
         return $this->redirectToRoute('admin_invoice_list');
     }
