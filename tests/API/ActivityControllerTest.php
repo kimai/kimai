@@ -188,7 +188,9 @@ class ActivityControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'project' => 1,
-            'visible' => true
+            'visible' => true,
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/activities', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -236,7 +238,9 @@ class ActivityControllerTest extends APIControllerBaseTest
             'name' => 'foo',
             'comment' => '',
             'project' => 1,
-            'visible' => true
+            'visible' => true,
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
