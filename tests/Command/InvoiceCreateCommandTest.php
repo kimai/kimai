@@ -156,6 +156,10 @@ class InvoiceCreateCommandTest extends KernelTestCase
     {
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'x', '--start' => '2020-01-01', '--end' => 'öäüß'], 'Invalid end date given');
     }
+    public function testCreateWithInvalidPreviewDirectory()
+    {
+        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'x', '--start' => '2020-01-01', '--end' => '2020-01-02', '--preview' => '/kjhg/'], 'Invalid preview directory given');
+    }
 
     public function testCreateWithInvalidCustomer()
     {
