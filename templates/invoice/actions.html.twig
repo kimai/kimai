@@ -30,6 +30,8 @@
         {% set actions = actions|merge({'back': path('invoice')}) %}
     {% endif %}
 
+    {% set actions = actions|merge({'visibility': '#modal_invoice_template'}) %}
+
     {% if is_granted('manage_invoice_template') %}
         {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
     {% endif %}
