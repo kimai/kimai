@@ -1,6 +1,6 @@
 # Contributing
 
-Kimai is an open source project, contributions made by the community are welcome. 
+Kimai is an open source project, contributions made by the community are welcome.
 Send your ideas, code reviews, pull requests and feature requests to help improving this project.
 
 ## Pull request rules
@@ -14,8 +14,9 @@ Send your ideas, code reviews, pull requests and feature requests to help improv
 
 Further documentation can be found in the [developer documentation](https://www.kimai.org/documentation/developers.html).
 
-### File-header template 
-```
+### File-header template
+
+```php
 /*
  * This file is part of the Kimai time-tracking app.
  *
@@ -23,4 +24,3 @@ Further documentation can be found in the [developer documentation](https://www.
  * file that was distributed with this source code.
  */
 ```
-
