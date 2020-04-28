@@ -194,12 +194,12 @@ trait RendererTestTrait
             ->setEnd(new \DateTime())
             ->setMetaField((new TimesheetMeta())->setName('foo-timesheet3')->setValue('bluuuub')->setIsVisible(true))
             ->setDescription(
-                "foo\n".
-                "foo\r\n".
-                "foo".PHP_EOL.
-                "bar\n".
-                "bar\r\n".
-                "Hello"
+                "foo\n" .
+                "foo\r\n" .
+                'foo' . PHP_EOL .
+                "bar\n" .
+                "bar\r\n" .
+                'Hello'
             )
         ;
 
@@ -213,12 +213,12 @@ trait RendererTestTrait
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
             ->setDescription(
-                "foo\n".
-                "foo\r\n".
-                "foo".PHP_EOL.
-                "bar\n".
-                "bar\r\n".
-                "Hello"
+                "foo\n" .
+                "foo\r\n" .
+                'foo' . PHP_EOL .
+                "bar\n" .
+                "bar\r\n" .
+                'Hello'
             )
         ;
 

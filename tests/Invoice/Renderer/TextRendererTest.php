@@ -86,13 +86,14 @@ class TextRendererTest extends KernelTestCase
         }
         self::assertEquals(\count($model->getCalculator()->getEntries()), substr_count($content, PHP_EOL . '---' . PHP_EOL));
         $this->assertStringContainsString(
-            "entry.description".PHP_EOL.
-            "	foo".PHP_EOL.
-            "	foo".PHP_EOL.
-            "	foo".PHP_EOL.
-            "	bar".PHP_EOL.
-            "	bar".PHP_EOL.
-            "	Hello", $content);
-
+            'entry.description' . PHP_EOL .
+            '	foo' . PHP_EOL .
+            '	foo' . PHP_EOL .
+            '	foo' . PHP_EOL .
+            '	bar' . PHP_EOL .
+            '	bar' . PHP_EOL .
+            '	Hello',
+            $content
+        );
     }
 }

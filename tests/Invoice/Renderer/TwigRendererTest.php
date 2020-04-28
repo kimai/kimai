@@ -68,11 +68,11 @@ class TwigRendererTest extends KernelTestCase
            <span contenteditable="true">a very *long* test invoice / template title with [ßpecial] chäracter</span>
         </h2>', $content);
         $this->assertEquals(2, substr_count($content, 'activity description'));
-        $this->assertStringContainsString(nl2br("foo\n".
-    "foo\r\n".
-    "foo".PHP_EOL.
-    "bar\n".
-    "bar\r\n".
-    "Hello"), $content);
+        $this->assertStringContainsString(nl2br("foo\n" .
+    "foo\r\n" .
+    'foo' . PHP_EOL .
+    "bar\n" .
+    "bar\r\n" .
+    'Hello'), $content);
     }
 }

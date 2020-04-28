@@ -313,8 +313,8 @@ class ExtensionsTest extends TestCase
             ['    ', '', ['']],
             ['    ', 0, ['    0']],
             ['    ', '1dfsdf
-sdfsdf'.PHP_EOL."\n".
-' aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh'."\n".
+sdfsdf' . PHP_EOL . "\n" .
+' aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh' . "\n" .
 'dfsdfsdfsdfsdf',
                 ['    1dfsdf', '    sdfsdf', '    ', '     aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '    dfsdfsdfsdfsdf']
             ],
