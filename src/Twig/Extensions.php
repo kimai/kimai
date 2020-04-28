@@ -105,16 +105,19 @@ class Extensions extends AbstractExtension
             return '';
         }
 
-        $parts = explode("\r\n", $string);
-        if (\count($parts) === 1) {
-            $parts = explode("\n", $string);
+        $parts = [];
+
+        foreach (explode("\r\n", $string) as $part) {
+            foreach (explode("\n", $part) as $tmp) {
+                $parts[] = $tmp;
+            }
         }
 
         $parts = array_map(function ($part) use ($indent) {
             return $indent . $part;
         }, $parts);
 
-        return implode("\n", $parts);
+        return implode(PHP_EOL, $parts);
     }
 
     /**
