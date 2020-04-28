@@ -113,7 +113,7 @@ trait RendererTestTrait
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
         $template = new InvoiceTemplate();
-        $template->setTitle('a very *long* test invoice / template title with [special] character');
+        $template->setTitle('a very *long* test invoice / template title with [ßpecial] chäracter');
         $template->setVat(19);
         $template->setLanguage('en');
 
@@ -193,6 +193,14 @@ trait RendererTestTrait
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
             ->setMetaField((new TimesheetMeta())->setName('foo-timesheet3')->setValue('bluuuub')->setIsVisible(true))
+            ->setDescription(
+                "foo\n".
+                "foo\r\n".
+                "foo".PHP_EOL.
+                "bar\n".
+                "bar\r\n".
+                "Hello"
+            )
         ;
 
         $timesheet5 = new Timesheet();
@@ -204,6 +212,14 @@ trait RendererTestTrait
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
+            ->setDescription(
+                "foo\n".
+                "foo\r\n".
+                "foo".PHP_EOL.
+                "bar\n".
+                "bar\r\n".
+                "Hello"
+            )
         ;
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];

@@ -312,26 +312,25 @@ class ExtensionsTest extends TestCase
             ['    ', null, ['']],
             ['    ', '', ['']],
             ['    ', 0, ['    0']],
-            ['    ', 'sdfsdf
-sdfsdf
-
- aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh
-dfsdfsdfsdfsdf',
-                ['    sdfsdf', '    sdfsdf', '    ', '     aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '    dfsdfsdfsdfsdf']
+            ['    ', '1dfsdf
+sdfsdf'.PHP_EOL."\n".
+' aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh'."\n".
+'dfsdfsdfsdfsdf',
+                ['    1dfsdf', '    sdfsdf', '    ', '     aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '    dfsdfsdfsdfsdf']
             ],
-            ['###', 'sdfsdf' . PHP_EOL .
+            ['###', '2dfsdf' . PHP_EOL .
 'sdfsdf' . PHP_EOL .
-'' . PHP_EOL .
+'' . "\r\n" .
 ' aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh' . PHP_EOL .
 'dfsdfsdfsdfsdf',
-                ['###sdfsdf', '###sdfsdf', '###', '### aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '###dfsdfsdfsdfsdf']
+                ['###2dfsdf', '###sdfsdf', '###', '### aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '###dfsdfsdfsdfsdf']
             ],
-            ['  ', 'sdfsdf' . "\r\n" .
+            ['  ', '3dfsdf' . "\n" .
 'sdfsdf' . "\r\n" .
-'' . "\r\n" .
+'' . "\n" .
 ' aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh' . "\r\n" .
 'dfsdfsdfsdfsdf',
-                ['  sdfsdf', '  sdfsdf', '  ', '   aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '  dfsdfsdfsdfsdf']
+                ['  3dfsdf', '  sdfsdf', '  ', '   aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '  dfsdfsdfsdfsdf']
             ],
         ];
     }
