@@ -192,7 +192,6 @@ trait RendererTestTrait
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
-            ->setMetaField((new TimesheetMeta())->setName('foo-timesheet3')->setValue('bluuuub')->setIsVisible(true))
             ->setDescription(
                 "foo\n" .
                 "foo\r\n" .
@@ -201,6 +200,7 @@ trait RendererTestTrait
                 "bar\r\n" .
                 'Hello'
             )
+            ->setMetaField((new TimesheetMeta())->setName('foo-timesheet3')->setValue('bluuuub')->setIsVisible(true))
         ;
 
         $timesheet5 = new Timesheet();
