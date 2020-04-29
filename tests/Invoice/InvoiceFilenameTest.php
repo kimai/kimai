@@ -11,9 +11,11 @@ namespace App\Tests\Invoice;
 
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
+use App\Entity\Project;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
+use App\Repository\Query\InvoiceQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -57,5 +59,16 @@ class InvoiceFilenameTest extends TestCase
         $customer->setCompany('\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n");
         $sut = new InvoiceFilename($model);
         self::assertEquals($datePrefix . '-ss_n', $sut->getFilename());
+
+        $project = new Project();
+        $project->setName('Demo ProjecT1');
+
+        $query = new InvoiceQuery();
+        $query->addProject($project);
+        $model->setQuery($query);
+
+        $customer->setCompany('\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n");
+        $sut = new InvoiceFilename($model);
+        self::assertEquals($datePrefix . '-ss_n-demo_projec_t1', $sut->getFilename());
     }
 }
