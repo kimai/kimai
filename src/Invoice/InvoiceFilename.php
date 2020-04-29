@@ -9,6 +9,7 @@
 
 namespace App\Invoice;
 
+use App\Entity\Project;
 use Symfony\Component\String\UnicodeString;
 
 final class InvoiceFilename
@@ -32,6 +33,17 @@ final class InvoiceFilename
         if (!empty($company)) {
             $uCompany = new UnicodeString($company);
             $filename .= '-' . $uCompany->ascii()->snake();
+        }
+
+        if (null !== $model->getQuery()) {
+            $projects = $model->getQuery()->getProjects();
+            if (\count($projects) === 1) {
+                $pName = $projects[0];
+                if ($pName instanceof Project) {
+                    $uProject = new UnicodeString($pName->getName());
+                    $filename .= '-' . $uProject->ascii()->snake();
+                }
+            }
         }
 
         $this->filename = $filename;
