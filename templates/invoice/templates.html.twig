@@ -3,33 +3,50 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "invoice/actions.html.twig" as actions %}
 
+{% set columns = {
+    'name': {'class': 'alwaysVisible text-nowrap', 'orderBy': false},
+    'title': {'class': 'hidden-xs text-nowrap', 'orderBy': false},
+    'company': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'vat_id': {'class': 'hidden-xs hidden-sm text-nowrap', 'orderBy': false},
+    'vat': {'class': 'hidden-xs hidden-sm hidden-md text-nowrap', 'orderBy': false},
+    'due_days': {'class': 'hidden-xs hidden-sm hidden-md text-nowrap', 'orderBy': false},
+    'address': {'class': 'hidden', 'orderBy': false},
+    'contact': {'class': 'hidden', 'orderBy': false},
+    'calculator': {'title': 'label.invoice_calculator'|trans({}, 'invoice-calculator'), 'class': 'hidden', 'orderBy': false},
+    'renderer': {'title': 'label.invoice_renderer'|trans({}, 'invoice-renderer'), 'class': 'hidden', 'orderBy': false},
+    'language': {'class': 'text-nowrap', 'orderBy': false},
+    'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
+} %}
+
+{% set tableName = 'invoice_template' %}
+
 {% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.invoice_templates('index') }}{% endblock %}
+
+{% block main_before %}
+    {{ tables.data_table_column_modal(tableName, columns) }}
+{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
 
-    {% set columns = {
-        'name': 'alwaysVisible',
-        'title': 'hidden-xs',
-        'due_days': 'hidden-xs hidden-sm',
-        'vat': 'hidden-xs hidden-sm',
-        'actions': 'actions alwaysVisible',
-    } %}
-
-    {% set tableName = 'invoice_template' %}
-
     {{ tables.datatable_header(tableName, columns, null, {'reload': 'kimai.invoiceTemplateUpdate'}) }}
-
     {% for entry in entries %}
         <tr class="modal-ajax-form open-edit" data-href="{{ path('admin_invoice_template_edit', {'id' : entry.id}) }}">
-            <td>{{ entry.name }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ entry.name }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
-            <td class="{{ tables.data_table_column_class(tableName, columns, 'due_days') }}">{{ entry.dueDays }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'company') }}">{{ entry.company }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'vat_id') }}">{{ entry.vatId }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'vat') }}">{{ entry.vat }}</td>
-            <td class="actions">
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'due_days') }}">{{ entry.dueDays }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'address') }}">{{ entry.address|nl2br }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'contact') }}">{{ entry.contact|nl2br }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'calculator') }}">{{ entry.calculator|trans({}, 'invoice-calculator') }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'renderer') }}">{{ entry.renderer|trans({}, 'invoice-renderer') }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'language') }}">{% if entry.language is not empty %}{{ entry.language|language }}{% endif %}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                 {{- actions.invoice_template(entry, 'index') -}}
             </td>
         </tr>

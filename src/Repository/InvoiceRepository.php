@@ -28,6 +28,13 @@ class InvoiceRepository extends EntityRepository
         $entityManager->flush();
     }
 
+    public function deleteInvoice(Invoice $invoice)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($invoice);
+        $entityManager->flush();
+    }
+
     private function getCounterFor(\DateTime $start, \DateTime $end): int
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

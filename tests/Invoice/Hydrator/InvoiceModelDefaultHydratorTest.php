@@ -39,6 +39,7 @@ class InvoiceModelDefaultHydratorTest extends TestCase
             'invoice.currency',
             'invoice.currency_symbol',
             'invoice.vat',
+            'invoice.language',
             'invoice.tax',
             'invoice.tax_nc',
             'invoice.tax_plain',
@@ -60,11 +61,19 @@ class InvoiceModelDefaultHydratorTest extends TestCase
             'template.contact',
             'template.payment_details',
             'query.begin',
-            'query.day',
             'query.end',
+            'query.day',
             'query.month',
             'query.month_number',
             'query.year',
+            'query.begin_day',
+            'query.begin_month',
+            'query.begin_month_number',
+            'query.begin_year',
+            'query.end_day',
+            'query.end_month',
+            'query.end_month_number',
+            'query.end_year',
         ];
 
         $givenKeys = array_keys($model);

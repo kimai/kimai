@@ -396,6 +396,15 @@ final class ServiceInvoice
         );
     }
 
+    public function deleteInvoice(Invoice $invoice)
+    {
+        $invoiceDirectory = $this->getInvoicesDirectory();
+        if (is_file($invoiceDirectory . $invoice->getInvoiceFilename())) {
+            $this->fileHelper->removeFile($invoiceDirectory . $invoice->getInvoiceFilename());
+        }
+        $this->invoiceRepository->deleteInvoice($invoice);
+    }
+
     /**
      * @param InvoiceQuery $query
      * @return InvoiceModel

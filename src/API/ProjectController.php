@@ -224,6 +224,7 @@ class ProjectController extends BaseApiController
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'date_format' => self::DATE_FORMAT,
+            'include_budget' => $this->isGranted('budget', $project),
         ]);
 
         $form->submit($request->request->all());
@@ -288,6 +289,7 @@ class ProjectController extends BaseApiController
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'date_format' => self::DATE_FORMAT,
+            'include_budget' => $this->isGranted('budget', $project),
         ]);
 
         $form->setData($project);

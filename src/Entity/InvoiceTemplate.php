@@ -145,7 +145,7 @@ class InvoiceTemplate
     private $decimalDuration = false;
 
     /**
-     * Used when rendering HTML templates.
+     * Used for translations and locale dependent number and date formats.
      *
      * @var string
      *

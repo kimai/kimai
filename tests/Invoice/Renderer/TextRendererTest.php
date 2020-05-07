@@ -69,9 +69,19 @@ class TextRendererTest extends KernelTestCase
 
         foreach ($model->toArray() as $key => $value) {
             if (null === $value || '' === $value) {
-                self::assertStringContainsString(sprintf("%s:\n\n", $key), $content);
+                self::assertStringContainsString(sprintf("%s\n", $key), $content);
             } else {
-                self::assertStringContainsString(sprintf("%s:\n    %s", $key, explode("\n", $value)[0]), $content);
+                self::assertStringContainsString(sprintf("%s\n	%s", $key, explode("\n", $value)[0]), $content);
+            }
+        }
+
+        foreach ($model->getCalculator()->getEntries() as $entry) {
+            foreach ($model->itemToArray($entry) as $key => $value) {
+                if (null === $value || '' === $value) {
+                    self::assertStringContainsString(sprintf("%s\n", $key), $content);
+                } else {
+                    self::assertStringContainsString(sprintf("%s\n	%s", $key, explode("\n", $value)[0]), $content);
+                }
             }
         }
         self::assertEquals(\count($model->getCalculator()->getEntries()), substr_count($content, PHP_EOL . '---' . PHP_EOL));
