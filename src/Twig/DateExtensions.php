@@ -175,7 +175,7 @@ class DateExtensions extends AbstractExtension
             } catch (\Exception $ex) {
                 return $date;
             }
-           }
+        }
 
         return date_format($date, $format);
     }

@@ -208,7 +208,7 @@ class Extensions extends AbstractExtension
     public function language($language)
     {
         try {
-            return Languages::getName(strtoupper($language), $this->locale);
+            return Languages::getName(strtolower($language), $this->locale);
         } catch (\Exception $ex) {
         }
 
