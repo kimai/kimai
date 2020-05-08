@@ -91,7 +91,11 @@ class DateExtensions extends AbstractExtension
         }
 
         if (!$date instanceof DateTime) {
-            $date = new DateTime($date);
+            try {
+                $date = new DateTime($date);
+            } catch (\Exception $ex) {
+                return $date;
+            }
         }
 
         return date_format($date, $this->dateFormat);
@@ -109,7 +113,11 @@ class DateExtensions extends AbstractExtension
         }
 
         if (!$date instanceof DateTime) {
-            $date = new DateTime($date);
+            try {
+                $date = new DateTime($date);
+            } catch (\Exception $ex) {
+                return $date;
+            }
         }
 
         return $date->format($this->dateTimeFormat);
@@ -128,7 +136,11 @@ class DateExtensions extends AbstractExtension
         }
 
         if (!$date instanceof DateTime) {
-            $date = new DateTime($date);
+            try {
+                $date = new DateTime($date);
+            } catch (\Exception $ex) {
+                return $date;
+            }
         }
 
         $timezone = date_default_timezone_get();
@@ -158,8 +170,12 @@ class DateExtensions extends AbstractExtension
     public function dateFormat($date, string $format)
     {
         if (!$date instanceof DateTime) {
-            $date = new DateTime($date);
-        }
+            try {
+                $date = new DateTime($date);
+            } catch (\Exception $ex) {
+                return $date;
+            }
+           }
 
         return date_format($date, $format);
     }
