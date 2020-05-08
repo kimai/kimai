@@ -17,6 +17,7 @@ use App\Entity\Project;
 use App\Invoice\ServiceInvoice;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceTemplateRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Tests\DataFixtures\CustomerFixtures;
@@ -70,6 +71,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
             $container->get(ServiceInvoice::class),
             $container->get(TimesheetRepository::class),
             $container->get(CustomerRepository::class),
+            $container->get(ProjectRepository::class),
             $container->get(InvoiceTemplateRepository::class),
             $container->get(UserRepository::class),
             $container->get('event_dispatcher')
