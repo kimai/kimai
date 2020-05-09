@@ -244,7 +244,7 @@ class InvoiceCreateCommand extends Command
         $defaultQuery->setCurrentUser($user);
         $defaultQuery->setSearchTerm($searchTerm);
         $defaultQuery->setMarkAsExported($markAsExported);
-        $defaultQuery->setState($exportedFilter);
+        $defaultQuery->setExported($exportedFilter);
 
         /** @var Invoice[] $invoices */
         $invoices = [];

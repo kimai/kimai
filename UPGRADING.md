@@ -22,6 +22,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 assets (CSS, images) you need to either inline them (see the default templates) or use absolute URLs.
 - Invoice templates that use the templates variables `${activity.X}` or `${project.X}` should be checked and possibly adapted, as multi-select is now possible for filtering  
 - Invoice templates have access to all meta-fields as variables, not only the ones marked as visible
+- Rates configuration/structure changed for customer, project and activity - **API BC breaks**: see new `/rates` endpoints
 
 Permission changes:
 - `history_invoice` - NEW: grants all features for the new invoice archive (by default for all admins)
