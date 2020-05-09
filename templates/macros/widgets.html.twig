@@ -458,3 +458,14 @@
         </tbody>
     </table>
 {% endmacro %}
+
+{% macro nothing_found(events) %}
+    {{ _self.callout('warning', 'error.no_entries_found') }}
+    {% if events is not empty %}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('{{ events }}');
+        });
+    </script>
+    {% endif %}
+{% endmacro %}

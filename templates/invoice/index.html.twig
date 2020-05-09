@@ -71,7 +71,7 @@
 
     {% if preview %}
         {% if model.calculator is empty or model.calculator.entries is empty %}
-            {{ widgets.callout('warning', 'error.no_entries_found') }}
+            {{ widgets.nothing_found() }}
         {% else %}
             {% set isDecimal = model.template.decimalDuration|default(false) %}
             {% set entries = model.calculator.entries %}
