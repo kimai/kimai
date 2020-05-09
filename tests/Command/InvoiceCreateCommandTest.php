@@ -169,6 +169,11 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 3, '--template' => 'x'], 'Unknown customer ID: 3');
     }
 
+    public function testCreateWithInvalidProject()
+    {
+        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--project' => 3, '--template' => 'x'], 'Unknown project ID: 3');
+    }
+
     public function testCreateInvoice()
     {
         $fixture = new InvoiceFixtures();
