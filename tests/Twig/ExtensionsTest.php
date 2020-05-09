@@ -95,6 +95,8 @@ class ExtensionsTest extends TestCase
             'EUR' => '€',
             'USD' => '$',
             'RUB' => 'RUB',
+            'rub' => 'RUB',
+            123 => 123,
         ];
 
         $sut = $this->getSut($this->localeEn);
@@ -109,6 +111,8 @@ class ExtensionsTest extends TestCase
             'DE' => 'Germany',
             'RU' => 'Russia',
             'ES' => 'Spain',
+            'es' => 'Spain',
+            '12' => '12',
         ];
 
         $sut = $this->getSut($this->localeEn);
@@ -123,6 +127,8 @@ class ExtensionsTest extends TestCase
             'de' => 'German',
             'ru' => 'Russian',
             'es' => 'Spanish',
+            'ES' => 'Spanish',
+            '12' => '12',
         ];
 
         $sut = $this->getSut($this->localeEn);

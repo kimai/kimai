@@ -91,6 +91,7 @@ class DateExtensionsTest extends TestCase
             ['de', new \DateTime('1980-12-14'), '14.12.1980'],
             ['ru', new \DateTime('1980-12-14'), '14.12.1980'],
             ['ru', '1980-12-14', '14.12.1980'],
+            ['ru', 1.2345, 1.2345],
         ];
     }
 
@@ -115,6 +116,7 @@ class DateExtensionsTest extends TestCase
             ['en', new \DateTime('7 January 2010'), '2010-01-07 12:01 AM'],
             ['de', (new \DateTime('1980-12-14'))->setTime(13, 27, 55), '14.12.1980 13:27:55'],
             ['de', '1980-12-14 13:27:55', '14.12.1980 13:27:55'],
+            ['de', 1.2345, 1.2345],
         ];
     }
 
@@ -144,6 +146,7 @@ class DateExtensionsTest extends TestCase
         $sut = $this->getSut('en', []);
         $this->assertEquals('2010-01-07T17:43:21+01:00', $sut->dateFormat($date, 'c'));
         $this->assertStringStartsWith('2010-01-07T17:43:21', $sut->dateFormat('7 January 2010 17:43:21', 'c'));
+        $this->assertEquals(2010.0107, $sut->dateFormat(2010.0107, 'c'));
     }
 
     public function testTime()
