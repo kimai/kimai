@@ -33,7 +33,7 @@
     {% else %}
         {{ tables.datatable_header(tableName, columns, query, {}) }}
         {% for entry in entries %}
-            <tr>
+            <tr class="alternative-link open-edit" data-href="{{ path('admin_invoice_download', {'id': entry.id}) }}">
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.createdAt|date_short }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.user_avatar(entry.user) }} {{ widgets.username(entry.user) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.customer) }}</td>
