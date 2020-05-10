@@ -27,12 +27,14 @@ class MPdfConverter implements HtmlToPdfConverter
 
     /**
      * @param string $html
+     * @param array $options
      * @return mixed|string
      * @throws \Mpdf\MpdfException
      */
-    public function convertToPdf(string $html)
+    public function convertToPdf(string $html, array $options = [])
     {
-        $mpdf = new Mpdf(['tempDir' => $this->cacheDirectory]);
+        $options = array_merge($options, ['tempDir' => $this->cacheDirectory]);
+        $mpdf = new Mpdf($options);
         $mpdf->creator = Constants::SOFTWARE;
 
         // some OS do not follow the PHP default settings

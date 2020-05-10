@@ -11,12 +11,7 @@
 {% block main %}
 
     {% if tags|length == 0 %}
-        {{ widgets.callout('warning', 'error.no_entries_found') }}
-        <script type="text/javascript">
-            document.addEventListener('kimai.initialized', function() {
-                KimaiReloadPageWidget.create('kimai.tagUpdate');
-            });
-        </script>
+        {{ widgets.nothing_found('kimai.tagUpdate') }}
     {% else %}
 
         {% set columns = {

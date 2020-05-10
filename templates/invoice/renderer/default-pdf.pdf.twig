@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+{% set fallback = app.request is not null ? app.request.locale : 'en' %}
+{% set language = model.template.language|default(fallback) %}
+{% set isDecimal = model.template.decimalDuration|default(false) %}
+{% set currency = model.currency %}
+<html lang="{{ language }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>{% block title %}{{ model.invoiceNumber }}-{{ model.customer.company|default(model.customer.name)|u.snake }}{% endblock %}</title>
+    <style type="text/css">
+        {{ encore_entry_css_source('invoice-pdf')|raw }}
+    </style>
+</head>
+<body>
+<!--mpdf
+<htmlpageheader name="header">
+    <table class="header">
+        <tr>
+            <td class="title">
+                {{ model.template.title }}
+            </td>
+            <td class="date">
+                {{ 'label.date'|trans({}, 'messages', language) }}: {{ model.invoiceDate|date_short }}
+            </td>
+        </tr>
+    </table>
+</htmlpageheader>
+<sethtmlpageheader name="header" page="ALL" value="on" show-this-page="1" />
+<htmlpagefooter name="footer">
+    <table class="footer">
+        <tr>
+            <td>
+                <strong>{{ 'label.contact'|trans({}, 'messages', language) }}</strong>:
+                {{ model.template.contact|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+                <br>
+                <strong>{{ 'label.invoice_bank_account'|trans({}, 'messages', language) }}</strong>:
+                {{ model.template.paymentDetails|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+            </td>
+            <td align="right">
+                {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
+            </td>
+        </tr>
+    </table>
+</htmlpagefooter>
+<sethtmlpagefooter page="ALL" value="on" name="footer" show-this-page="1" />
+mpdf-->
+<div class="wrapper">
+    <table class="addresses">
+        <tr>
+            <td width="60%">
+                {{ 'invoice.to'|trans({}, 'messages', language) }}
+                <br>
+                <strong>{{ model.customer.company|default(model.customer.name) }}</strong>
+                <br>
+                {{ model.customer.address|nl2br }}
+                {% if model.customer.vatId is not empty %}
+                    <br>
+                    {{ 'label.vat_id'|trans({}, 'messages', language) }}: {{ model.customer.vatId }}
+                {% endif %}
+                {% if model.customer.number is not empty %}
+                    <br>
+                    {{ 'label.number'|trans({}, 'messages', language) }}: {{ model.customer.number }}
+                {% endif %}
+                {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
+                    <br>
+                    {{ 'label.orderNumber'|trans({}, 'messages', language) }}: {{ model.query.project.orderNumber }}
+                {% endif %}
+            </td>
+            <td>
+                {{ 'invoice.from'|trans({}, 'messages', language) }}
+                <br>
+                <strong>{{ model.template.company }}</strong>
+                <br>
+                {{ model.template.address|trim|nl2br }}
+                {% if model.template.vatId is not empty %}
+                    <br>
+                    {{ 'label.vat_id'|trans({}, 'messages', language) }}:
+                    {{ model.template.vatId }}
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+    <p>
+        <strong>{{ 'invoice.number'|trans({}, 'messages', language) }}:</strong>
+        {{ model.invoiceNumber }}
+
+        <br>
+        <strong>{{ 'invoice.due_days'|trans({}, 'messages', language) }}:</strong>
+        {{ model.dueDate|date_short }}
+    </p>
+
+    <table class="items">
+        <thead>
+            <tr>
+                <th class="first">{{ 'label.date'|trans({}, 'messages', language) }}</th>
+                <th>{{ 'label.description'|trans({}, 'messages', language) }}</th>
+                <th class="text-right">{{ 'label.unit_price'|trans({}, 'messages', language) }}</th>
+                <th class="text-right">{{ 'label.amount'|trans({}, 'messages', language) }}</th>
+                <th class="last text-right">{{ 'label.total_rate'|trans({}, 'messages', language) }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for id, entry in model.calculator.entries %}
+            {% set duration = entry.duration|duration(isDecimal) %}
+            {% if entry.fixedRate %}
+                {% set rate = entry.fixedRate %}
+                {% set duration = entry.amount|amount %}
+            {% else %}
+                {% set rate = entry.hourlyRate %}
+            {% endif %}
+            <tr{# class="{{ cycle(['odd', 'even'], id) }}"#}>
+                <td nowrap class="first text-nowrap">{{ entry.begin|date_short }}</td>
+                <td contenteditable="true">
+                    {% if entry.description is not empty %}
+                        {{ entry.description|nl2br }}
+                    {% else %}
+                        {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
+                    {% endif %}
+                </td>
+                <td nowrap class="text-nowrap text-right">{{ rate|money(currency) }}</td>
+                <td nowrap class="text-nowrap text-right">{{ duration }}</td>
+                <td nowrap class="last text-nowrap text-right">{{ entry.rate|money(currency) }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-right">
+                    {{ 'invoice.subtotal'|trans({}, 'messages', language) }}
+                </td>
+                <td class="last text-right">{{ model.calculator.subtotal|money(currency) }}</td>
+            </tr>
+            <tr>
+                <td colspan="4" class="text-right">
+                    {{ 'invoice.tax'|trans({}, 'messages', language) }} ({{ model.calculator.vat }}%)
+                </td>
+                <td class="last text-right">{{ model.calculator.tax|money(currency) }}</td>
+            </tr>
+            <tr>
+                <td colspan="4" class="text-right text-nowrap">
+                    <strong>{{ 'invoice.total'|trans({}, 'messages', language) }}</strong>
+                </td>
+                <td class="last text-right">
+                    <strong>{{ model.calculator.total|money(currency) }}</strong>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    {% if model.template.paymentTerms is not empty %}
+    <p>
+        {{ model.template.paymentTerms|md2html }}
+    </p>
+    {% endif %}
+</div>
+</body>
+</html>

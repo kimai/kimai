@@ -193,7 +193,12 @@ class Extensions extends AbstractExtension
      */
     public function currency($currency)
     {
-        return Currencies::getSymbol($currency);
+        try {
+            return Currencies::getSymbol(strtoupper($currency));
+        } catch (\Exception $ex) {
+        }
+
+        return $currency;
     }
 
     /**
@@ -202,7 +207,12 @@ class Extensions extends AbstractExtension
      */
     public function language($language)
     {
-        return Languages::getName($language, $this->locale);
+        try {
+            return Languages::getName(strtolower($language), $this->locale);
+        } catch (\Exception $ex) {
+        }
+
+        return $language;
     }
 
     /**
@@ -211,9 +221,9 @@ class Extensions extends AbstractExtension
      */
     public function country($country)
     {
-        $country = strtoupper($country);
-        if (Countries::exists($country)) {
-            return Countries::getName($country);
+        try {
+            return Countries::getName(strtoupper($country));
+        } catch (\Exception $ex) {
         }
 
         return $country;

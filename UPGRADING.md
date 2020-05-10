@@ -12,23 +12,29 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 - Invoice renderer `CSV` was removed
 
+### Developer
+
+- **BC break**: interface method signature `HtmlToPdfConverter::convertToPdf` changed
+
 ## [1.9](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
 - The directory `var/data/invoices/` will be used to store archived invoice files (check file permissions)
 - The default invoice number format changed. If you want to use the old one: configure `{date}` as format - see [invoice documentation](https://www.kimai.org/documentation/invoices.html)
-- HTML invoice templates are now treated like other files and offered as download. If you are using relative URLs for including 
-assets (CSS, images) you need to either inline them (see the default templates) or use absolute URLs.
-- Invoice templates that use the templates variables `${activity.X}` or `${project.X}` should be checked and possibly adapted, as multi-select is now possible for filtering  
+- HTML invoice templates are now treated like other files and offered as download. If you are using relative URLs for including assets (CSS, images) you need to either inline them (see the default templates) or use absolute URLs
+- Invoice templates that use the templates variables `${activity.X}` or `${project.X}` should be checked and possibly adapted, as multi-select is now possible for filtering
 - Invoice templates have access to all meta-fields as variables, not only the ones marked as visible
+- Rates configuration/structure changed for customer, project and activity 
+  - **Invoice templates**: rates variables were removed
 
 Permission changes:
 - `history_invoice` - NEW: grants all features for the new invoice archive (by default for all admins)
 
 ### Developer
 
-- BC break: `InvoiceItemInterface` has new methods `getType()` and `getCategory()`
+- **BC break**: `InvoiceItemInterface` has new methods `getType()` and `getCategory()`
+- **BC break**: API fields changed - see new `/rates` endpoints
 
 ## [1.8](https://github.com/kevinpapst/kimai2/releases/tag/1.8)
 
