@@ -45,7 +45,14 @@ final class PdfRenderer implements RendererInterface
         $content = $this->twig->render('@invoice/' . basename($document->getFilename()), [
             'model' => $model
         ]);
-        $content = $this->converter->convertToPdf($content);
+
+        $content = $this->converter->convertToPdf($content, [
+            'setAutoTopMargin' => 'pad',
+            'setAutoBottomMargin' => 'pad',
+            'margin_top' => 12,
+            'margin_bottom' => 8,
+        ]);
+
         $filename = (string) new InvoiceFilename($model);
 
         $response = new Response($content);
