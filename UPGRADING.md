@@ -12,6 +12,10 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 - Invoice renderer `CSV` was removed
 
+### Developer
+
+- BC break: interface method signature `HtmlToPdfConverter::convertToPdf` changed
+
 ## [1.9](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
