@@ -213,7 +213,8 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
                 'description' => 'Testing is more fun!',
                 'project' => 1,
                 'activity' => 1,
-                'teams' => '1'
+                'teams' => '1',
+                'tags' => 'test,1234,foo-bar',
             ]
         ]);
 
@@ -233,6 +234,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             $this->assertEquals(0, $timesheet->getRate());
             $this->assertNull($timesheet->getHourlyRate());
             $this->assertNull($timesheet->getFixedRate());
+            $this->assertEquals(['test', '1234', 'foo-bar'], $timesheet->getTagsAsArray());
         }
     }
 
