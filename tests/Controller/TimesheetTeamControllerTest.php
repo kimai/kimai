@@ -245,10 +245,19 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
                 'description' => 'Testing is more fun!',
                 'project' => 1,
                 'activity' => 1,
+                // make sure the default validation for timesheets is applied as well
+                'begin' => (new \DateTime())->format('Y-m-d H:i'),
+                'end' => (new \DateTime('-1 hour'))->format('Y-m-d H:i'),
             ]
         ];
 
-        $this->assertFormHasValidationError(User::ROLE_ADMIN, '/team/timesheet/create_mu', 'form[name=timesheet_multi_user_edit_form]', $data, ['#timesheet_multi_user_edit_form_users', '#timesheet_multi_user_edit_form_teams']);
+        $this->assertFormHasValidationError(
+            User::ROLE_ADMIN,
+            '/team/timesheet/create_mu',
+            'form[name=timesheet_multi_user_edit_form]',
+            $data,
+            ['#timesheet_multi_user_edit_form_users', '#timesheet_multi_user_edit_form_teams', '#timesheet_multi_user_edit_form_end']
+        );
     }
 
     public function testEditAction()
