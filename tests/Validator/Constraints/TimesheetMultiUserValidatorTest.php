@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimesheetValidator
  */
-class TimesheetValidatorTest extends ConstraintValidatorTestCase
+class TimesheetMultiUserValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator($isGranted = true)
     {
