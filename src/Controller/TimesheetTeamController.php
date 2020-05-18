@@ -9,14 +9,22 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDisplayEvent;
+use App\Form\Model\MultiUserTimesheet;
 use App\Form\TimesheetAdminEditForm;
+use App\Form\TimesheetMultiUserEditForm;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
+use App\Timesheet\TrackingMode\TrackingModeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,7 +67,7 @@ class TimesheetTeamController extends TimesheetAbstractController
      *
      * @param Timesheet $entry
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function editAction(Timesheet $entry, Request $request)
     {
@@ -73,11 +81,87 @@ class TimesheetTeamController extends TimesheetAbstractController
      * @param Request $request
      * @param ProjectRepository $projectRepository
      * @param ActivityRepository $activityRepository
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TagRepository $tagRepository)
     {
         return $this->create($request, 'timesheet-team/edit.html.twig', $projectRepository, $activityRepository, $tagRepository);
+    }
+
+    /**
+     * @Route(path="/create_mu", name="admin_timesheet_create_multiuser", methods={"GET", "POST"})
+     * @Security("is_granted('create_other_timesheet')")
+     *
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function createForMultiUserAction(Request $request)
+    {
+        $entry = new MultiUserTimesheet();
+        $entry->setUser($this->getUser());
+        $this->service->prepareNewTimesheet($entry, $request);
+
+        $mode = $this->getTrackingMode();
+        $createForm = $this->getMultiUserCreateForm($entry, $mode);
+        $createForm->handleRequest($request);
+
+        if ($createForm->isSubmitted() && $createForm->isValid()) {
+            try {
+                /** @var ArrayCollection $users */
+                $users = $createForm->get('users')->getData();
+                /** @var ArrayCollection $teams */
+                $teams = $createForm->get('teams')->getData();
+
+                $allUsers = $users->toArray();
+                foreach ($teams as $team) {
+                    $allUsers = array_merge($allUsers, $team->getUsers()->toArray());
+                }
+                $allUsers = array_unique($allUsers);
+
+                /** @var Tag[] $tags */
+                $tags = [];
+                /** @var Tag $tag */
+                foreach ($entry->getTags() as $tag) {
+                    $tag->removeTimesheet($entry);
+                    $tags[] = $tag;
+                }
+
+                foreach ($allUsers as $user) {
+                    $newTimesheet = $entry->createCopy();
+                    $newTimesheet->setUser($user);
+                    foreach ($tags as $tag) {
+                        $newTimesheet->addTag($tag);
+                    }
+                    $this->service->prepareNewTimesheet($newTimesheet, $request);
+                    $this->service->saveNewTimesheet($newTimesheet);
+                }
+
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute($this->getTimesheetRoute());
+            } catch (\Exception $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->render('timesheet-team/edit.html.twig', [
+            'timesheet' => $entry,
+            'form' => $createForm->createView(),
+        ]);
+    }
+
+    protected function getMultiUserCreateForm(MultiUserTimesheet $entry, TrackingModeInterface $mode): FormInterface
+    {
+        return $this->createForm(TimesheetMultiUserEditForm::class, $entry, [
+            'action' => $this->generateUrl('admin_timesheet_create_multiuser'),
+            'include_rate' => $this->isGranted('edit_rate', $entry),
+            'include_exported' => $this->isGranted('edit_export', $entry),
+            'include_user' => $this->includeUserInForms('create'),
+            'allow_begin_datetime' => $mode->canEditBegin(),
+            'allow_end_datetime' => $mode->canEditEnd(),
+            'allow_duration' => $mode->canEditDuration(),
+            'customer' => true,
+        ]);
     }
 
     /**

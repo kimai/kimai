@@ -10,7 +10,6 @@
 namespace App\Form\Type;
 
 use App\Entity\User;
-use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -18,9 +17,9 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Custom form field type to select a user.
+ * Select a user that
  */
-class UserType extends AbstractType
+class TeamMemberType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -33,15 +32,28 @@ class UserType extends AbstractType
             'choice_label' => function (User $user) {
                 return $user->getDisplayName();
             },
-            'choice_translation_domain' => false,
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {
             return function (UserRepository $repo) use ($options) {
-                $query = new UserFormTypeQuery();
-                $query->setUser($options['user']);
+                $qb = $repo->createQueryBuilder('u');
+                $qb
+                    ->andWhere($qb->expr()->eq('u.enabled', ':enabled'))
+                    ->setParameter('enabled', true, \PDO::PARAM_BOOL)
+                    ->orderBy('u.username', 'ASC');
 
-                return $repo->getQueryBuilderForFormType($query);
+                /** @var User $user */
+                $user = $options['user'];
+
+                if (null !== $user && !$user->getTeams()->isEmpty() && !$user->isSuperAdmin() && !$user->isAdmin()) {
+                    $qb
+                        ->leftJoin('u.teams', 'teams')
+                        ->leftJoin('teams.users', 'users')
+                        ->andWhere($qb->expr()->isMemberOf(':teams', 'u.teams'))
+                        ->setParameter('teams', $user->getTeams());
+                }
+
+                return $qb;
             };
         });
     }

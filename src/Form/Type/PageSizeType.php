@@ -37,6 +37,7 @@ class PageSizeType extends AbstractType
                 500 => 500
             ],
             'placeholder' => null,
+            'choice_translation_domain' => false,
         ]);
     }
 
