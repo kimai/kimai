@@ -4,7 +4,7 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 
-{% block page_title %}{{ 'tags.title'|trans({}, 'tags') }}{% endblock %}
+{% block page_title %}{{ 'menu.tags'|trans }}{% endblock %}
 {% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.tags('index') }}{% endblock %}
 
