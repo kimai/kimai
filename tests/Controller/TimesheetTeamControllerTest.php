@@ -201,6 +201,41 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertNull($timesheet->getFixedRate());
     }
 
+    public function testCreateForMultipleUsersAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/team/timesheet/create_mu');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_multi_user_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_multi_user_edit_form' => [
+                'description' => 'Testing is more fun!',
+                'project' => 1,
+                'activity' => 1,
+                'teams' => '1'
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $em = $this->getEntityManager();
+        /** @var Timesheet[] $timesheets */
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertCount(2, $timesheets);
+        foreach ($timesheets as $timesheet) {
+            $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+            $this->assertNull($timesheet->getEnd());
+            $this->assertEquals('Testing is more fun!', $timesheet->getDescription());
+            $this->assertEquals(0, $timesheet->getRate());
+            $this->assertNull($timesheet->getHourlyRate());
+            $this->assertNull($timesheet->getFixedRate());
+        }
+    }
+
     public function testEditAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
