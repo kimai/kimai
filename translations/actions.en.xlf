@@ -70,6 +70,10 @@
                 <source>create-timesheet</source>
                 <target>Create timesheet</target>
             </trans-unit>
+            <trans-unit id="create-timesheet-multiuser">
+                <source>create-timesheet-multiuser</source>
+                <target>For multiple users</target>
+            </trans-unit>
             <trans-unit id="permissions">
                 <source>permissions</source>
                 <target>Team permissions</target>
