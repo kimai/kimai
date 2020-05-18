@@ -15,6 +15,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 ### Developer
 
 - **BC break**: interface method signature `HtmlToPdfConverter::convertToPdf` changed
+- **BC break**: the macros `badge` and `label`  do not apply the `|trans` filter any more
 
 ## [1.9](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
 
