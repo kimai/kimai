@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetValidator
+ * @covers \App\Validator\Constraints\TimesheetMultiUserValidator
  */
 class TimesheetMultiUserValidatorTest extends ConstraintValidatorTestCase
 {
