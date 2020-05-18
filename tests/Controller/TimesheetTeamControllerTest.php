@@ -236,6 +236,19 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         }
     }
 
+    public function testCreateForMultipleUsersActionWithoutUserOrTeam()
+    {
+        $data = [
+            'timesheet_multi_user_edit_form' => [
+                'description' => 'Testing is more fun!',
+                'project' => 1,
+                'activity' => 1,
+            ]
+        ];
+
+        $this->assertFormHasValidationError(User::ROLE_ADMIN, '/team/timesheet/create_mu', 'form[name=timesheet_multi_user_edit_form]', $data, ['#timesheet_multi_user_edit_form_users', '#timesheet_multi_user_edit_form_teams']);
+    }
+
     public function testEditAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
