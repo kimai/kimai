@@ -16,7 +16,7 @@
     {% endif %}
     {% set actions = actions|merge({'visibility': '#modal_timesheet_admin'}) %}
     {% if is_granted('create_other_timesheet') %}
-        {% set actions = actions|merge({'create': {'url': path('admin_timesheet_create'), 'class': 'modal-ajax-form'}}) %}
+        {% set actions = actions|merge({'create': {'children': {'single': {'title': 'create'|trans,'url': path('admin_timesheet_create'), 'class': 'modal-ajax-form'}, 'multi-user': {'title': 'create-timesheet-multiuser'|trans({}, 'actions'),'url': path('admin_timesheet_create_multiuser'), 'class': 'modal-ajax-form'}}}}) %}
     {% endif %}
 
     {% set actions = actions|merge({'help': {'url': 'timesheet.html'|docu_link, 'target': '_blank'}}) %}

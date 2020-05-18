@@ -61,7 +61,7 @@ abstract class TimesheetAbstractController extends AbstractController
     /**
      * @var TimesheetService
      */
-    private $service;
+    protected $service;
 
     public function __construct(
         UserDateTimeFactory $dateTime,
