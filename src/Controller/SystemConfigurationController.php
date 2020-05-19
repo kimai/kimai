@@ -229,6 +229,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
+                        ->setName('timesheet.rules.allow_overlapping_records')
+                        ->setType(CheckboxType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
                         ->setName('timesheet.active_entries.hard_limit')
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')

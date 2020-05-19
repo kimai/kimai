@@ -23,6 +23,11 @@ class TimesheetConfiguration implements SystemBundleConfiguration
         return (bool) $this->find('rules.allow_future_times');
     }
 
+    public function isAllowOverlappingRecords(): bool
+    {
+        return (bool) $this->find('rules.allow_overlapping_records');
+    }
+
     public function getTrackingMode(): string
     {
         return (string) $this->find('mode');

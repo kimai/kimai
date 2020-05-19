@@ -198,6 +198,7 @@ class AppExtensionTest extends TestCase
                 ],
                 'rules' => [
                     'allow_future_times' => true,
+                    'allow_overlapping_records' => true,
                 ],
                 'default_begin' => 'now',
             ],
