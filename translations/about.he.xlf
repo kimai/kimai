@@ -39,7 +39,7 @@
       </trans-unit>
       <trans-unit id="L7cff3Q" resname="library_authors">
         <source>library_authors</source>
-        <target>… the authors of the following software-libraries, Kimai wouldn't be possible without you 👍</target>
+        <target>… המפתחים של רכיבי התכנה האלה, Kimai לא הייתה אפשרית בלעדיכם 👍</target>
       </trans-unit>
     </body>
   </file>
