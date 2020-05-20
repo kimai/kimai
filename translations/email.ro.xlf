@@ -1,55 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-    <file source-language="en" target-language="ro" datatype="plaintext" original="file.ext">
-        <header>
-            <tool tool-id="symfony" tool-name="Symfony"/>
-        </header>
-        <body>
-            <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-                <source>button_copy_url_to_browser</source>
-                <target>
-                    <![CDATA[Daca butonul nu functioneaza, copiaza & si lipeste aceasta adresa in browser: %url%]]></target>
-            </trans-unit>
-            <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
-                <source>automated_email_dont_answer</source>
-                <target>Acesta este un email generat automat. Te rog sa nu raspunzi pentru ca nu va fi citit de
-                    nimeni.
-                </target>
-            </trans-unit>
-            <trans-unit id="pjr3FDv" resname="registration.subject">
-                <source>registration.subject</source>
-                <target>Activeaza-ti contul</target>
-            </trans-unit>
-            <trans-unit id="QtcznHC" resname="registration.title">
-                <source>registration.title</source>
-                <target>Bine ai venit %username%</target>
-            </trans-unit>
-            <trans-unit id="YMLel3P" resname="registration.button">
-                <source>registration.button</source>
-                <target>Activeaza-ti contul</target>
-            </trans-unit>
-            <trans-unit id="IkjnHoP" resname="registration.intro">
-                <source>registration.intro</source>
-                <target>Te-ai inregistrat in sistemul de pontaj Kimai cu adresa de mail %email%. Acum trebuie sa iti
-                    activezi contul in urmatoarele ore, inainte ca adresa sa exoire.
-                </target>
-            </trans-unit>
-            <trans-unit id="1ZLD_Y0" resname="reset.subject">
-                <source>reset.subject</source>
-                <target>Reseteaza-ti parola</target>
-            </trans-unit>
-            <trans-unit id="G2mhn_2" resname="reset.title">
-                <source>reset.title</source>
-                <target>Asta se poate intampla ...</target>
-            </trans-unit>
-            <trans-unit id="qbt.84Y" resname="reset.button">
-                <source>reset.button</source>
-                <target>Reseteaza-ti parola</target>
-            </trans-unit>
-            <trans-unit id="rhkMAep" resname="reset.intro">
-                <source>reset.intro</source>
-                <target>... ti-ai uitat parola? Nu te ingrijora. Kimai te va ajuta sa iti creezi o parola noua:</target>
-            </trans-unit>
-        </body>
-    </file>
+  <file source-language="en" target-language="ro" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
+        <source>button_copy_url_to_browser</source>
+        <target><![CDATA[Dacă butonul nu funcționează, copiază & și lipește această adresî în browser: %url%]]></target>
+      </trans-unit>
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+        <source>automated_email_dont_answer</source>
+        <target>Acesta este un email generat automat. Te rog să nu răspunzi pentru că nu va fi citit de nimeni.</target>
+      </trans-unit>
+      <trans-unit id="pjr3FDv" resname="registration.subject">
+        <source>registration.subject</source>
+        <target>Activează-ți contul</target>
+      </trans-unit>
+      <trans-unit id="QtcznHC" resname="registration.title">
+        <source>registration.title</source>
+        <target>Bine ai venit %username%</target>
+      </trans-unit>
+      <trans-unit id="YMLel3P" resname="registration.button">
+        <source>registration.button</source>
+        <target>Activează-ți contul</target>
+      </trans-unit>
+      <trans-unit id="IkjnHoP" resname="registration.intro">
+        <source>registration.intro</source>
+        <target>Te-ai înregistrat în sistemul de pontaj Kimai cu adresa de mail %email%. Trebuie să îți activezi contul în urmatoarele ore, înainte ca adresa să expire.</target>
+      </trans-unit>
+      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+        <source>reset.subject</source>
+        <target>Resetează-ți parola</target>
+      </trans-unit>
+      <trans-unit id="G2mhn_2" resname="reset.title">
+        <source>reset.title</source>
+        <target>Asta se poate întâmpla ...</target>
+      </trans-unit>
+      <trans-unit id="qbt.84Y" resname="reset.button">
+        <source>reset.button</source>
+        <target>Resetează-ți parola</target>
+      </trans-unit>
+      <trans-unit id="rhkMAep" resname="reset.intro">
+        <source>reset.intro</source>
+        <target>... ți-ai uitat parola? Nu te îngrijora. Kimai te va ajuta să îți creezi o parolă nouă:</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

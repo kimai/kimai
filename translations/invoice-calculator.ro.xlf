@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target>DataȘ câte o intrare pe zi (se folosește data de pornire)</target>
+        <target>Data: câte o intrare pe zi (se folosește data de pornire)</target>
       </trans-unit>
     </body>
   </file>
