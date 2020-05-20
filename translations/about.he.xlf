@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="DwbowBh" resname="published_under">
         <source>published_under</source>
-        <target>%kimai% is published under</target>
+        <target>%kimai% מופץ תחת</target>
       </trans-unit>
       <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
