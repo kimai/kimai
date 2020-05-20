@@ -10,6 +10,7 @@ require('fullcalendar/dist/locale/de-ch');
 require('fullcalendar/dist/locale/es');
 require('fullcalendar/dist/locale/eu');
 require('fullcalendar/dist/locale/fr');
+require('fullcalendar/dist/locale/he');
 require('fullcalendar/dist/locale/hu');
 require('fullcalendar/dist/locale/it');
 require('fullcalendar/dist/locale/ja');

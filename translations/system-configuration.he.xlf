@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="he" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="qvIyBkY" resname="title">
+        <source>title</source>
+        <target>הגדרות</target>
+      </trans-unit>
+      <trans-unit id="oCw4fof" resname="subtitle">
+        <source>subtitle</source>
+        <target>שנה הגדרות גלובליות</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet">
+        <source>timesheet</source>
+        <target>גיליון שעות</target>
+      </trans-unit>
+      <trans-unit id="Utbj3k_" resname="invoice">
+        <source>invoice</source>
+        <target>חשבוניות</target>
+      </trans-unit>
+      <trans-unit id="ywqJUDy" resname="form_customer">
+        <source>form_customer</source>
+        <target>צור ערכי ברירת מחדל ללקוח</target>
+      </trans-unit>
+      <trans-unit id="HIq6kM7" resname="form_user">
+        <source>form_user</source>
+        <target>ערכי ברירת מחדל למשתמש</target>
+      </trans-unit>
+      <trans-unit id="PLggHn." resname="theme">
+        <source>theme</source>
+        <target>ערכת עיצוב</target>
+      </trans-unit>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
+        <target>לוח שנה</target>
+      </trans-unit>
+      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
+        <source>label.theme.markdown_content</source>
+        <target>אפשר עיצוב בתיאורים ובהערות</target>
+      </trans-unit>
+      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target>השתמש בהשלמה אוטומטית בחיפוש ואפשר יצירת תגיות</target>
+      </trans-unit>
+      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
+        <source>label.timesheet.mode</source>
+        <target>שיטת דיווח שעות</target>
+      </trans-unit>
+      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
+        <source>label.timesheet.mode_default</source>
+        <target>[ברירת מחדל] ניתן לערוך התחלה וסיום</target>
+      </trans-unit>
+      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
+        <source>label.timesheet.mode_duration_only</source>
+        <target>[התחלה ומשך זמן עבודה] מחליף את שעת הסיום במשך זמן העבודה</target>
+      </trans-unit>
+      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
+        <source>label.timesheet.mode_duration_fixed_begin</source>
+        <target>[רק משך זמן עבודה] זמן התחלה קבוע ניתן להגדרה, רק משך זמן העבודה ניתן לשינוי</target>
+      </trans-unit>
+      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
+        <source>label.timesheet.mode_punch</source>
+        <target>[שעון] המשתמש יכול לבחור התחלה וסיום, אבל לא את משך זמן העבודה</target>
+      </trans-unit>
+      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
+        <source>label.timesheet.rules.allow_future_times</source>
+        <target>אפשר רשומות זמן עתידיות</target>
+      </trans-unit>
+      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
+        <source>label.timesheet.active_entries.hard_limit</source>
+        <target>כמות מותרת לרשומות זמן פעילות במקביל</target>
+      </trans-unit>
+      <trans-unit id="ebLK9d2" resname="label.timesheet.active_entries.soft_limit">
+        <source>label.timesheet.active_entries.soft_limit</source>
+        <target>מספר רשומות זמן פעילות במקביל להצגת אזהרה</target>
+      </trans-unit>
+      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target>מספר תווים מינימלי כדי להתחיל השלמה אוטומטית</target>
+      </trans-unit>
+      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
+        <source>label.calendar.week_numbers</source>
+        <target>הצג מספרי שבוע</target>
+      </trans-unit>
+      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
+        <source>label.calendar.weekends</source>
+        <target>הצג סופי שבוע</target>
+      </trans-unit>
+      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target>תחילת שעות עבודה רגילות (יודגשו)</target>
+      </trans-unit>
+      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target>סיום שעות עבודה רגילות (יודגשו)</target>
+      </trans-unit>
+      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target>תחילת טווח זמן</target>
+      </trans-unit>
+      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target>סיום טווח זמן</target>
+      </trans-unit>
+      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>משך זמן העבודה בתצוגת שבוע ויום (פורמט: hh:mm:ss)</target>
+      </trans-unit>
+      <trans-unit id="nwuLBP4" resname="branding">
+        <source>branding</source>
+        <target>מיתוג</target>
+      </trans-unit>
+      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target>לוגו (לינק לתמונה, מחליף את שם החברה בדף הכניסה)</target>
+      </trans-unit>
+      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
+        <source>label.theme.branding.company</source>
+        <target>חברה</target>
+      </trans-unit>
+      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target>מיני לוגו (תפריט צידי ממוזער)</target>
+      </trans-unit>
+      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target>כותרת הדפדפן</target>
+      </trans-unit>
+      <trans-unit id="Gdb5M4w" resname="rounding">
+        <source>rounding</source>
+        <target>עיגול זמנים</target>
+      </trans-unit>
+      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target>עיגול זמן ההתחלה בדקות (0 = לא מופעל)</target>
+      </trans-unit>
+      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>עיגול זמן הסיום בדקות (0 = לא מופעל)</target>
+      </trans-unit>
+      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target>עיגול משך זמן העבודה בדקות (0 = לא מופעל)</target>
+      </trans-unit>
+      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target>שיטת עיגול ערכים</target>
+      </trans-unit>
+      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target>ימי השבוע כאשר עיגול מופעל</target>
+      </trans-unit>
+      <trans-unit id="agDfwdy" resname="Monday">
+        <source>Monday</source>
+        <target>שני</target>
+      </trans-unit>
+      <trans-unit id="fYrx3hJ" resname="Tuesday">
+        <source>Tuesday</source>
+        <target>שלישי</target>
+      </trans-unit>
+      <trans-unit id="wKbMgpz" resname="Wednesday">
+        <source>Wednesday</source>
+        <target>רביעי</target>
+      </trans-unit>
+      <trans-unit id=".CZiBi." resname="Thursday">
+        <source>Thursday</source>
+        <target>חמישי</target>
+      </trans-unit>
+      <trans-unit id="4h8.Nyp" resname="Friday">
+        <source>Friday</source>
+        <target>שישי</target>
+      </trans-unit>
+      <trans-unit id="2_Ncc2P" resname="Saturday">
+        <source>Saturday</source>
+        <target>שבת</target>
+      </trans-unit>
+      <trans-unit id="hz.vdg5" resname="Sunday">
+        <source>Sunday</source>
+        <target>ראשון</target>
+      </trans-unit>
+      <trans-unit id="jmsE4EY" resname="Ceil">
+        <source>Ceil</source>
+        <target>עיגול מעלה: התחלה, סיום ומשך זמן העבודה יעוגלו כלפי מעלה</target>
+      </trans-unit>
+      <trans-unit id="Y_qmsDz" resname="Closest">
+        <source>Closest</source>
+        <target>הכי קרוב: עיגול מתמטי לערך הכי קרוב</target>
+      </trans-unit>
+      <trans-unit id="IbERy.5" resname="Default">
+        <source>Default</source>
+        <target>סטנדרטי: זמן התחלה יעוגל מטה, סיום ומשך זמן העבודה יעוגלו מעלה</target>
+      </trans-unit>
+      <trans-unit id="0mjJxEk" resname="Floor">
+        <source>Floor</source>
+        <target>עיגול מטה: התחלה, סיום ומשך זמן העבודה יעוגלו כלפי מטה</target>
+      </trans-unit>
+      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>זמן התחלה ברירת מחדל (לא בשימוש בכל מצבי הפעולה)</target>
+      </trans-unit>
+      <trans-unit id="cRbnwyP" resname="label.simple_form">
+        <source>label.simple_form</source>
+        <target>חיפוש פשוט</target>
+      </trans-unit>
+      <trans-unit id="HrEBLUr" resname="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target>פורמט מספר חשבונית</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
