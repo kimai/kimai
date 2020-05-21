@@ -51,7 +51,7 @@
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target>Filtrează activitîțile</target>
+        <target>Filtrează activitățile</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -71,7 +71,7 @@
       </trans-unit>
       <trans-unit id="QR1nvcR" resname="create-timesheet">
         <source>create-timesheet</source>
-        <target>Creeaza un pontaj</target>
+        <target>Creează un pontaj</target>
       </trans-unit>
       <trans-unit id="T_PN1AT" resname="permissions">
         <source>permissions</source>

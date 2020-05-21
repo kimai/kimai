@@ -54,7 +54,7 @@
       </trans-unit>
       <trans-unit id=".0CFrRV" resname="upload">
         <source>upload</source>
-        <target>Upload</target>
+        <target>Încarcă</target>
       </trans-unit>
       <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
@@ -106,7 +106,7 @@
       </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
-        <target>Permisiuni insuficiente. Te redirecționez la pagina de login?</target>
+        <target>Permisiuni insuficiente. Să te redirecționez la pagina de login?</target>
       </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
@@ -166,7 +166,7 @@
       </trans-unit>
       <trans-unit id="IXtkHRw" resname="menu.system_configuration">
         <source>menu.system_configuration</source>
-        <target>Setari</target>
+        <target>Setări</target>
       </trans-unit>
       <trans-unit id="yo4f8Kh" resname="menu.tags">
         <source>menu.tags</source>
@@ -306,7 +306,7 @@
       </trans-unit>
       <trans-unit id="ovKkXwU" resname="action.edit">
         <source>action.edit</source>
-        <target>Editare</target>
+        <target>Editează</target>
       </trans-unit>
       <trans-unit id="hTKWQ6g" resname="action.delete">
         <source>action.delete</source>
@@ -390,7 +390,7 @@
       </trans-unit>
       <trans-unit id="EbfIoLp" resname="modal.columns.description">
         <source>modal.columns.description</source>
-        <target>După salvare, coloanele ne-selectate vor fi ascunse. Setîrile vor fi stocate într-un cookie de browser. Daca ștergi cookie-urile, setările vor fi pierdute.</target>
+        <target>După salvare, coloanele ne-selectate vor fi ascunse. Setările vor fi stocate într-un cookie de browser. Daca ștergi cookie-urile, setările vor fi pierdute.</target>
       </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
@@ -677,7 +677,7 @@
       </trans-unit>
       <trans-unit id="ulr3reE" resname="stats.amountMonth">
         <source>stats.amountMonth</source>
-        <target>Incasari în aceasta luna</target>
+        <target>Încasări în aceasta lună</target>
       </trans-unit>
       <trans-unit id="bQZyZaO" resname="stats.amountYear">
         <source>stats.amountYear</source>
@@ -725,7 +725,7 @@
       </trans-unit>
       <trans-unit id="tnD6aPj" resname="stats.customerTotal">
         <source>stats.customerTotal</source>
-        <target>Clienti</target>
+        <target>Clienți</target>
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
@@ -733,11 +733,11 @@
       </trans-unit>
       <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
-        <target>%percent%% utilizat (%left% sunt inca deschise)</target>
+        <target>%percent%% utilizat (%left% sunt încă deschise)</target>
       </trans-unit>
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
-        <target>Template factura</target>
+        <target>Macheta factură</target>
       </trans-unit>
       <trans-unit id="iERywrp" resname="invoice.title">
         <source>invoice.title</source>
@@ -745,11 +745,11 @@
       </trans-unit>
       <trans-unit id="ZWbHl1I" resname="invoice.subtitle">
         <source>invoice.subtitle</source>
-        <target>Creaza facturi din inregistrarile de pontaj.</target>
+        <target>Crează facturi din înregistrările de pontaj.</target>
       </trans-unit>
       <trans-unit id="ov4OQOh" resname="invoice.filter">
         <source>invoice.filter</source>
-        <target>Filtreaza datele de facturare</target>
+        <target>Filtrează datele de facturare</target>
       </trans-unit>
       <trans-unit id="7H7P1mE" resname="button.preview">
         <source>button.preview</source>

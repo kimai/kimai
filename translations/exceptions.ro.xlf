@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="ro" datatype="plaintext" original="file.ext">
-    <header>
-      <tool tool-id="symfony" tool-name="Symfony"/>
-    </header>
-    <body>
-      <trans-unit id="DhMUS5c" resname="access.denied">
-        <source>access.denied</source>
-        <target>Acces interzis</target>
-      </trans-unit>
-      <trans-unit id="wSGnVM4" resname="stacktrace">
-        <source>stacktrace</source>
-        <target>Problema a aăarut aici</target>
-      </trans-unit>
-      <trans-unit id="rtYKRSj" resname="http_error.title">
-        <source>http_error.title</source>
-        <target>Eroare</target>
-      </trans-unit>
-      <trans-unit id="e3w.2Rf" resname="http_error.description">
-        <source>http_error.description</source>
-        <target>Există o problemă</target>
-      </trans-unit>
-      <trans-unit id="ru5FEGk" resname="http_error.suggestion">
-        <source>http_error.suggestion</source>
-        <target>
+    <file source-language="en" target-language="ro" datatype="plaintext" original="file.ext">
+        <header>
+            <tool tool-id="symfony" tool-name="Symfony"/>
+        </header>
+        <body>
+            <trans-unit id="DhMUS5c" resname="access.denied">
+                <source>access.denied</source>
+                <target>Acces interzis</target>
+            </trans-unit>
+            <trans-unit id="wSGnVM4" resname="stacktrace">
+                <source>stacktrace</source>
+                <target>Problema a aăarut aici</target>
+            </trans-unit>
+            <trans-unit id="rtYKRSj" resname="http_error.title">
+                <source>http_error.title</source>
+                <target>Eroare</target>
+            </trans-unit>
+            <trans-unit id="e3w.2Rf" resname="http_error.description">
+                <source>http_error.description</source>
+                <target>Există o problemă</target>
+            </trans-unit>
+            <trans-unit id="ru5FEGk" resname="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
                     A apărut o eroare critică, te rog să încerci din nou.
                     Te rog contactează administratorul dacă problema persistă.
                 </target>
-      </trans-unit>
-      <trans-unit id="_W1eNz2" resname="http_error_404.description">
-        <source>http_error_404.description</source>
-        <target>Nu am gasit pagina</target>
-      </trans-unit>
-      <trans-unit id="MWNS5dg" resname="http_error_404.suggestion">
-        <source>http_error_404.suggestion</source>
-        <target>
+            </trans-unit>
+            <trans-unit id="_W1eNz2" resname="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Nu am găsit pagina</target>
+            </trans-unit>
+            <trans-unit id="MWNS5dg" resname="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
                     Nu am putut găsi pagina pe care o cauți.
                     Te rog să te întorci la panoul de control și să încerci din nou.
                 </target>
-      </trans-unit>
-      <trans-unit id="Qn5rwdU" resname="http_error_403.description">
-        <source>http_error_403.description</source>
-        <target>Pagina este restricționată</target>
-      </trans-unit>
-      <trans-unit id="zDeeh7L" resname="http_error_403.suggestion">
-        <source>http_error_403.suggestion</source>
-        <target>
+            </trans-unit>
+            <trans-unit id="Qn5rwdU" resname="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>Accesul la pagina aceasta este restricționat</target>
+            </trans-unit>
+            <trans-unit id="zDeeh7L" resname="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
                     Îmi pare rău, dar nu ai suficiente permisiuni ca să vezi această pagină.
                     Te rog să vorbești cu administratorul dacă crezi că e o greșeală.
                 </target>
-      </trans-unit>
-    </body>
-  </file>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>
