@@ -18,6 +18,7 @@ require('fullcalendar/dist/locale/ko');
 require('fullcalendar/dist/locale/nl');
 require('fullcalendar/dist/locale/pl');
 require('fullcalendar/dist/locale/pt-br');
+require('fullcalendar/dist/locale/ro');
 require('fullcalendar/dist/locale/ru');
 require('fullcalendar/dist/locale/sk');
 require('fullcalendar/dist/locale/sv');
