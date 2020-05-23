@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ro" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="2YAbVz6" resname="plugins.title">
+        <source>plugins.title</source>
+        <target>Plugin-uri</target>
+      </trans-unit>
+      <trans-unit id="vjcllSx" resname="plugins.subtitle">
+        <source>plugins.subtitle</source>
+        <target>Poți îmbunătăți funcționalitatea Kimai folosind plugin-uri</target>
+      </trans-unit>
+      <trans-unit id="vFSLi54" resname="plugin.none_installed">
+        <source>plugin.none_installed</source>
+        <target>Nu există nici un plugin instalat.</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>plugin.marketplace</source>
+        <target>Magazinul Kimai</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
