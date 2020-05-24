@@ -5,7 +5,7 @@
         "build/runtime.664a9501.js",
         "build/0.f7fae2b9.js",
         "build/1.c24a9c6f.js",
-        "build/app.6811f247.js"
+        "build/app.cfe6b394.js"
       ],
       "css": [
         "build/app.a2628675.css"
@@ -53,7 +53,7 @@
     "build/runtime.664a9501.js": "sha384-xNNrNinl64G3nCUrIskgSjU0mUXXCB9lj6XCSInBTwxSKXk8uTMafnLHtdWdIGtd",
     "build/0.f7fae2b9.js": "sha384-DR5A41RIECdWBd6xODR0b1hvGqcEYUyn9vNPreqK9VOCQWTF6bgxB4RVmqlOKilT",
     "build/1.c24a9c6f.js": "sha384-JPoKdrVtBemSiVBoAnmSxLML7xXM9zYeuwOPYQv/kLzt/P4cmLY5r9gH8oaGRPFG",
-    "build/app.6811f247.js": "sha384-RbDR8GBP7WQ6JB+xokizEYdkRTXpbgCAH5fCza/XQ3n/rBoBbBepbUh1EXBZbXL1",
+    "build/app.cfe6b394.js": "sha384-AaxJ85+hiKzIWDcbidWdo5g89hCQ3ld0k5Q3W9JCBY99fiHPYYIjHYGfNEJL4S3Y",
     "build/app.a2628675.css": "sha384-0MsxtEEys+bTKR6Qi9LvMRg21TPh2x7JxTdVFTmySyjct4BpB9xuffwyk1BDsZDe",
     "build/invoice.50473330.js": "sha384-2BXic5Sgorf2tXai6zSAN4wLY2dbg06L03/xMKW6itMcszvtnRArKzfBh6DNcF3f",
     "build/invoice.13d8ef4e.css": "sha384-B6RN/wZJToSBCZk2JeLokIqWEhbh+Eb9arYbt9dM+YoC2Z6PnCeTwTqSGyexWWJh",

@@ -50,7 +50,7 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
                 locale: {
                     separator: separator,
                     format: localeFormat,
-                    firstDay: 1,
+                    firstDay: moment().startOf('week').format('d'),
                     applyLabel: TRANSLATE.get('confirm'),
                     cancelLabel: TRANSLATE.get('cancel'),
                     customRangeLabel: TRANSLATE.get('customRange'),
