@@ -25,7 +25,6 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 class ProjectRepository extends EntityRepository
 {
@@ -493,6 +492,7 @@ class ProjectRepository extends EntityRepository
         $today = new \DateTime();
         $firstDayOfWeek = $today->modify('this week')->format('Y-m-d');
         $lastDayOfWeek = $today->modify('this week +6 days')->format('Y-m-d');
+
         return "
         (
             SELECT SUM(t2.duration)
