@@ -469,6 +469,7 @@ class ProjectRepository extends EntityRepository
             ->addSelect('p.end AS expected_delivery')
             ->from(Project::class, 'p')
             ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
+            ->andWhere($qb->expr()->eq('p.visible', true))
             ->addGroupBy('p.id')
         ;
 
