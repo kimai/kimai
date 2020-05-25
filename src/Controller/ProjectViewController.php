@@ -10,13 +10,13 @@
 namespace App\Controller;
 
 use App\Entity\Project;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Event\ProjectMetaDisplayEvent;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
-use App\Event\ProjectMetaDisplayEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(path="/project_view")
@@ -56,7 +56,7 @@ final class ProjectViewController extends AbstractController
 
     /**
      * @param ProjectQuery $query
-     * @return MetaTableTypeInterface[]
+     * @return array
      */
     protected function findMetaColumns(ProjectQuery $query): array
     {

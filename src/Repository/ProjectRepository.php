@@ -25,7 +25,6 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 class ProjectRepository extends EntityRepository
 {
