@@ -188,7 +188,11 @@
                 <source>menu.doctor</source>
                 <target>Doctor</target>
             </trans-unit>
-            
+            <trans-unit id="menu.project_view">
+                <source>menu.project_view</source>
+                <target>Project View</target>
+            </trans-unit>
+
             <!--
               Error templates
             -->
@@ -340,6 +344,26 @@
                 <source>placeholder.type_message</source>
                 <target>Type your message...</target>
             </trans-unit>
+            <trans-unit id="label.today">
+                <source>label.today</source>
+                <target>Today</target>
+            </trans-unit>
+            <trans-unit id="label.week">
+                <source>label.week</source>
+                <target>Week</target>
+            </trans-unit>
+            <trans-unit id="label.total">
+                <source>label.total</source>
+                <target>Total</target>
+            </trans-unit>
+            <trans-unit id="label.expected_duration">
+                <source>label.expected_duration</source>
+                <target>Expected Duration</target>
+            </trans-unit>
+            <trans-unit id="label.expected_delivery">
+                <source>label.expected_delivery</source>
+                <target>Expected Delivery</target>
+            </trans-unit>
 
             <!--
               Buttons & Actions
@@ -467,6 +491,14 @@
             <trans-unit id="label.appendTags">
                 <source>label.appendTags</source>
                 <target>Append tags</target>
+            </trans-unit>
+
+            <!--
+              Project View
+            -->
+            <trans-unit id="project_view.title">
+                <source>project_view.title</source>
+                <target>Project View</target>
             </trans-unit>
 
             <!--

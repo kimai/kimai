@@ -25,6 +25,7 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 class ProjectRepository extends EntityRepository
 {
@@ -454,6 +455,52 @@ class ProjectRepository extends EntityRepository
             $em->rollback();
             throw $ex;
         }
+    }
+
+    public function getProjectView(): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->addSelect('p.name')
+            ->addSelect($this->todayProjectViewSubQuery())
+            ->addSelect($this->weekProjectViewSubQuery())
+            ->addSelect('p.comment')
+            ->addSelect('SUM(t.duration) AS total')
+            ->addSelect('p.timeBudget AS expected_duration')
+            ->addSelect('p.end AS expected_delivery')
+            ->from(Project::class, 'p')
+            ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
+            ->addGroupBy('p.id')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    private function todayProjectViewSubQuery(): string
+    {
+        return '
+            (
+                SELECT SUM(t1.duration)
+                FROM App\Entity\Timesheet AS t1
+                WHERE t1.project = t.project
+                    AND DATE(t1.begin) = CURRENT_DATE()
+            ) AS today
+        ';
+    }
+
+    private function weekProjectViewSubQuery(): string
+    {
+        $today = new \DateTime();
+        $firstDayOfWeek = $today->modify('this week')->format('Y-m-d');
+        $lastDayOfWeek = $today->modify('this week +6 days')->format('Y-m-d');
+        return "
+        (
+            SELECT SUM(t2.duration)
+            FROM App\Entity\Timesheet AS t2
+            WHERE t2.project = t.project
+                AND DATE(t2.begin) BETWEEN '$firstDayOfWeek' AND '$lastDayOfWeek'
+        ) AS week
+        ";
     }
 
     public function getComments(Project $project): array
