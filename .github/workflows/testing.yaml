@@ -28,7 +28,7 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: none
-                    extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql
+                    extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql, zip
             -   run: |
                     composer install --no-progress
                     composer require zendframework/zend-ldap
