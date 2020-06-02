@@ -1,5 +1,5 @@
 unreleased=true
-future-release=1.8
+future-release=1.9
 exclude-labels=duplicate,question,invalid,wontfix,release
 enhancement_labels=>enhancement,Enhancement,feature request,translation i18n,technical debt
 issues-wo-labels=false

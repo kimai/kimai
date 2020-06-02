@@ -46,7 +46,7 @@ class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             // remaining time-budget?
         ];
 
-        foreach ($customer->getVisibleMetaFields() as $metaField) {
+        foreach ($customer->getMetaFields() as $metaField) {
             $values = array_merge($values, [
                 'customer.meta.' . $metaField->getName() => $metaField->getValue(),
             ]);

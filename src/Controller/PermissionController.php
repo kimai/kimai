@@ -72,7 +72,7 @@ final class PermissionController extends AbstractController
         // automatically import all hard coded (default) roles into the database table
         foreach ($this->roleService->getAvailableNames() as $roleName) {
             $roleName = strtoupper($roleName);
-            if (!in_array($roleName, $existing)) {
+            if (!\in_array($roleName, $existing)) {
                 $role = new Role();
                 $role->setName($roleName);
                 $this->roleRepository->saveRole($role);

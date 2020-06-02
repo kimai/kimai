@@ -57,6 +57,27 @@
             {% if form.tags is defined %}
                 {{ form_row(form.tags) }}
             {% endif %}
+            {% if form.user is defined %}
+                {{ form_row(form.user) }}
+            {% endif %}
+            {% if form.users is defined or form.teams is defined %}
+                {% set uLength = 12 %}
+                {% if form.users is defined and form.teams is defined %}
+                    {% set uLength = 6 %}
+                {% endif %}
+                <div class="row">
+                {% if form.users is defined %}
+                    <div class="col-md-{{ uLength }}">
+                        {{ form_row(form.users) }}
+                    </div>
+                {% endif %}
+                {% if form.teams is defined %}
+                    <div class="col-md-{{ uLength }}">
+                        {{ form_row(form.teams) }}
+                    </div>
+                {% endif %}
+                </div>
+            {% endif %}
             {% if form.fixedRate is defined and form.hourlyRate is defined %}
             <div class="row">
                 <div class="col-md-6">

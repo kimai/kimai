@@ -110,7 +110,7 @@ class ActivityController extends BaseApiController
         }
 
         if (!empty($projects = $paramFetcher->get('projects'))) {
-            if (!is_array($projects)) {
+            if (!\is_array($projects)) {
                 $projects = explode(',', $projects);
             }
             if (!empty($projects)) {
@@ -202,7 +202,9 @@ class ActivityController extends BaseApiController
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->createForm(ActivityApiEditForm::class, $activity);
+        $form = $this->createForm(ActivityApiEditForm::class, $activity, [
+            'include_budget' => $this->isGranted('budget', $activity),
+        ]);
 
         $form->submit($request->request->all());
 
@@ -264,7 +266,9 @@ class ActivityController extends BaseApiController
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->createForm(ActivityApiEditForm::class, $activity);
+        $form = $this->createForm(ActivityApiEditForm::class, $activity, [
+            'include_budget' => $this->isGranted('budget', $activity),
+        ]);
 
         $form->setData($activity);
         $form->submit($request->request->all(), false);
@@ -332,7 +336,7 @@ class ActivityController extends BaseApiController
         $this->repository->saveActivity($activity);
 
         $view = new View($activity, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
 
         return $this->viewHandler->handle($view);
     }

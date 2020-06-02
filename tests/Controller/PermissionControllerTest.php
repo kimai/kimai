@@ -160,7 +160,7 @@ class PermissionControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
-        $this->assertEquals(0, count($rolePermissions));
+        $this->assertEquals(0, \count($rolePermissions));
 
         // create the permission
         $this->request($client, '/admin/permissions/roles/1/view_user/1');
@@ -168,7 +168,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $client->followRedirect();
 
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
-        $this->assertEquals(1, count($rolePermissions));
+        $this->assertEquals(1, \count($rolePermissions));
         $permission = $rolePermissions[0];
         self::assertInstanceOf(RolePermission::class, $permission);
         self::assertEquals('view_user', $permission->getPermission());
@@ -185,7 +185,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $client->followRedirect();
 
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
-        $this->assertEquals(1, count($rolePermissions));
+        $this->assertEquals(1, \count($rolePermissions));
         $permission = $rolePermissions[0];
         self::assertInstanceOf(RolePermission::class, $permission);
         self::assertEquals('view_user', $permission->getPermission());

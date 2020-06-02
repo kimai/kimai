@@ -73,11 +73,17 @@ class InvoiceRendererType extends AbstractType
 
         $parts = explode('.', $renderer);
 
-        if (count($parts) > 2) {
+        if (\count($parts) > 2) {
             array_pop($parts);
         }
 
-        return ucfirst(array_pop($parts));
+        $type = array_pop($parts);
+
+        if (\in_array(strtolower($type), ['json', 'txt', 'xml'])) {
+            return 'programmatic';
+        }
+
+        return ucfirst($type);
     }
 
     /**

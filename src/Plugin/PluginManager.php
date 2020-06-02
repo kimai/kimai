@@ -101,7 +101,7 @@ class PluginManager
 
         $homepage = $json['homepage'] ?? Constants::HOMEPAGE . '/store/';
 
-        if (array_key_exists('name', $json['extra']['kimai'])) {
+        if (\array_key_exists('name', $json['extra']['kimai'])) {
             $plugin->setName($json['extra']['kimai']['name']);
         }
 

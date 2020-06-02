@@ -275,7 +275,7 @@ class ActivityRepository extends EntityRepository
 
         $where = $qb->expr()->andX();
 
-        if (in_array($query->getVisibility(), [ActivityQuery::SHOW_VISIBLE, ActivityQuery::SHOW_HIDDEN])) {
+        if (\in_array($query->getVisibility(), [ActivityQuery::SHOW_VISIBLE, ActivityQuery::SHOW_HIDDEN])) {
             if (!$query->isGlobalsOnly()) {
                 $where->add(
                     $qb->expr()->orX(

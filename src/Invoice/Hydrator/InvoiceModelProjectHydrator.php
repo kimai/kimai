@@ -57,7 +57,7 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
             $prefix . 'budget_money_plain' => $project->getBudget(),
             $prefix . 'budget_time' => $project->getTimeBudget(),
             $prefix . 'budget_time_decimal' => $formatter->getFormattedDecimalDuration($project->getTimeBudget()),
-            $prefix . 'budget_time_minutes' => number_format($project->getTimeBudget() / 60),
+            $prefix . 'budget_time_minutes' => (int) ($project->getTimeBudget() / 60),
         ];
 
         foreach ($project->getVisibleMetaFields() as $metaField) {

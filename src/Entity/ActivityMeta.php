@@ -39,7 +39,7 @@ class ActivityMeta implements MetaTableTypeInterface
     {
         if (!($entity instanceof Activity)) {
             throw new \InvalidArgumentException(
-                sprintf('Expected instanceof Activity, received "%s"', get_class($entity))
+                sprintf('Expected instanceof Activity, received "%s"', \get_class($entity))
             );
         }
         $this->activity = $entity;

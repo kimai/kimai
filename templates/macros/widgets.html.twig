@@ -37,9 +37,9 @@
 {% macro label_boolean(visible) %}
     {% import _self as macro %}
     {% if visible %}
-        {{ macro.label('yes', 'success') }}
+        {{ macro.label('yes'|trans, 'success') }}
     {% else %}
-        {{ macro.label('no', 'default') }}
+        {{ macro.label('no'|trans, 'default') }}
     {% endif %}
 {% endmacro %}
 
@@ -50,17 +50,17 @@
 
 {% macro label_role(role) %}
     {% import _self as macro %}
+    {% set color = 'primary' %}
     {% if role == 'ROLE_SUPER_ADMIN' %}
-        {{ macro.label(role, 'danger') }}
+        {% set color = 'danger' %}
     {% elseif role == 'ROLE_ADMIN' %}
-        {{ macro.label(role, 'warning') }}
+        {% set color = 'warning' %}
     {% elseif role == 'ROLE_TEAMLEAD' %}
-        {{ macro.label(role, 'success') }}
+        {% set color = 'success' %}
     {% elseif role == 'ROLE_USER' %}
-        {{ macro.label(role, 'gray') }}
-    {% else %}
-        {{ macro.label(role, 'primary') }}
+        {% set color = 'gray' %}
     {% endif %}
+    {{ macro.label(role|trans, color) }}
 {% endmacro %}
 
 {% macro username(user) %}
@@ -119,20 +119,20 @@
 
 {% macro label_color_dot(type, isVisible, name, url, color) %}
     <span class="label-{{ type }}{{ isVisible ? '' : ' label-invisible' }}">
-        <span class="dot"{% if color is not empty %} style="background-color:{{ color }}"{% endif %}></span>
         <span class="name">
-            {% if url is not empty %}
+            <i class="dot {{ 'dot'|icon }} fa-fw"{% if color is not empty %} style="color:{{ color }}"{% endif %}></i>
+            {%- if url is not empty -%}
                 <a href="{{ url }}">{{ name }}</a>
-            {% else %}
+            {%- else -%}
                 {{ name }}
-            {% endif %}
+            {%- endif -%}
         </span>
     </span>
 {% endmacro %}
 
 {% macro color_dot(color, tooltip) %}
     <span class="label-color" data-toggle="tooltip" data-placement="top" title="{{ tooltip }}">
-        <span class="dot" style="background-color:{{ color }}"></span>
+        <i class="dot {{ 'dot'|icon }} fa-fw"{% if color is not empty %} style="color:{{ color }}"{% endif %}></i>
     </span>
 {% endmacro %}
 
@@ -155,11 +155,11 @@
 
 {% macro label(title, type, tooltip) %}
     {# success, warning, danger, primary #}
-    <span {% if tooltip %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="label label-{{ type|default('success') }}">{{ title|trans }}</span>
+    <span {% if tooltip %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="label label-{{ type|default('success') }}">{{ title }}</span>
 {% endmacro %}
 
 {% macro badge(title, color) %}
-    <span class="badge" style="background-color:{{ color|default('#dd4b39') }}">{{ title|trans }}</span>
+    <span class="badge" style="background-color:{{ color }}">{{ title }}</span>
 {% endmacro %}
 
 {% macro alert(type, description, title, icon) %}
@@ -345,7 +345,7 @@
                         <span class="caret"></span>
                         <span class="sr-only">{{ 'label.toggle_dropdown'|trans }}</span>
                     </button>
-                    <ul class="dropdown-menu" role="menu">
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
                         {% for childIcon,childValues in values.children %}
                             <li>{{ macro.action_button(childIcon, childValues, false) }}</li>
                         {% endfor %}
@@ -457,4 +457,15 @@
         {% endfor %}
         </tbody>
     </table>
+{% endmacro %}
+
+{% macro nothing_found(events) %}
+    {{ _self.callout('warning', 'error.no_entries_found') }}
+    {% if events is not empty %}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('{{ events }}');
+        });
+    </script>
+    {% endif %}
 {% endmacro %}

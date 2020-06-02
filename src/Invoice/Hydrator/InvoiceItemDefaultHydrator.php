@@ -75,7 +75,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.currency' => $currency,
             'entry.duration' => $item->getDuration(),
             'entry.duration_decimal' => $formatter->getFormattedDecimalDuration($item->getDuration()),
-            'entry.duration_minutes' => number_format($item->getDuration() / 60),
+            'entry.duration_minutes' => (int) ($item->getDuration() / 60),
             'entry.begin' => $formatter->getFormattedDateTime($begin),
             'entry.begin_time' => $formatter->getFormattedTime($begin),
             'entry.begin_timestamp' => $begin->getTimestamp(),
@@ -95,7 +95,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.activity_id' => $activity->getId(),
             ]);
 
-            foreach ($activity->getVisibleMetaFields() as $metaField) {
+            foreach ($activity->getMetaFields() as $metaField) {
                 $values = array_merge($values, [
                     'entry.activity.meta.' . $metaField->getName() => $metaField->getValue(),
                 ]);
@@ -108,7 +108,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.project_id' => $project->getId(),
             ]);
 
-            foreach ($project->getVisibleMetaFields() as $metaField) {
+            foreach ($project->getMetaFields() as $metaField) {
                 $values = array_merge($values, [
                     'entry.project.meta.' . $metaField->getName() => $metaField->getValue(),
                 ]);
@@ -121,7 +121,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.customer_id' => $customer->getId(),
             ]);
 
-            foreach ($customer->getVisibleMetaFields() as $metaField) {
+            foreach ($customer->getMetaFields() as $metaField) {
                 $values = array_merge($values, [
                     'entry.customer.meta.' . $metaField->getName() => $metaField->getValue(),
                 ]);

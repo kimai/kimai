@@ -88,12 +88,12 @@ class ServiceInvoiceTest extends TestCase
             )
         );
 
-        $this->assertEquals(1, count($sut->getCalculator()));
+        $this->assertEquals(1, \count($sut->getCalculator()));
         $this->assertInstanceOf(DefaultCalculator::class, $sut->getCalculatorByName('default'));
 
-        $this->assertEquals(1, count($sut->getNumberGenerator()));
+        $this->assertEquals(1, \count($sut->getNumberGenerator()));
         $this->assertInstanceOf(DateNumberGenerator::class, $sut->getNumberGeneratorByName('date'));
 
-        $this->assertEquals(1, count($sut->getRenderer()));
+        $this->assertEquals(1, \count($sut->getRenderer()));
     }
 }

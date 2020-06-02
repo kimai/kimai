@@ -3012,16 +3012,16 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "3.2.1",
+            "version": "3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "6b6bf9fd46301c7fb7375bd0bdb1f6b6725b276f"
+                "reference": "e79543f789ce4b1560c2d113eb40de12d390c74a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/6b6bf9fd46301c7fb7375bd0bdb1f6b6725b276f",
-                "reference": "6b6bf9fd46301c7fb7375bd0bdb1f6b6725b276f",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/e79543f789ce4b1560c2d113eb40de12d390c74a",
+                "reference": "e79543f789ce4b1560c2d113eb40de12d390c74a",
                 "shasum": ""
             },
             "require": {
@@ -3072,8 +3072,18 @@
                     "homepage": "https://shakaran.net/blog"
                 }
             ],
-            "description": "Admin theme bundle for Symfony 4 based on AdminLTE 2.4.8 with FOSUserBundle support",
-            "time": "2020-04-03T08:45:07+00:00"
+            "description": "Admin theme bundle for Symfony 4+ based on AdminLTE 2.4 with FOSUserBundle support",
+            "funding": [
+                {
+                    "url": "https://paypal.me/kevinpapst",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/kevinpapst",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-05-20T15:37:54+00:00"
         },
         {
             "name": "kimai/kimai2-composer",
@@ -3129,16 +3139,16 @@
         },
         {
             "name": "kimai/user-bundle",
-            "version": "1.2",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kimai/user-bundle.git",
-                "reference": "96de1dfb65cc535292c72f0ca31c3e3a0dcf8c93"
+                "reference": "5ef89d36b3d5aedfa823cbbd9ffeaec7a6b8764a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kimai/user-bundle/zipball/96de1dfb65cc535292c72f0ca31c3e3a0dcf8c93",
-                "reference": "96de1dfb65cc535292c72f0ca31c3e3a0dcf8c93",
+                "url": "https://api.github.com/repos/kimai/user-bundle/zipball/5ef89d36b3d5aedfa823cbbd9ffeaec7a6b8764a",
+                "reference": "5ef89d36b3d5aedfa823cbbd9ffeaec7a6b8764a",
                 "shasum": ""
             },
             "require": {
@@ -3191,7 +3201,7 @@
             ],
             "description": "Kimai UserBundle",
             "homepage": "https://www.kimai.org",
-            "time": "2020-04-07T23:16:45+00:00"
+            "time": "2020-05-24T10:20:46+00:00"
         },
         {
             "name": "laravolt/avatar",

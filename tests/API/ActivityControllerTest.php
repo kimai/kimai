@@ -28,7 +28,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 {
     use RateControllerTestTrait;
 
-    protected function getRateUrl(string $id = '1', ?string $rateId = null): string
+    protected function getRateUrl($id = '1', $rateId = null): string
     {
         if (null !== $rateId) {
             return sprintf('/api/activities/%s/rates/%s', $id, $rateId);
@@ -37,7 +37,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         return sprintf('/api/activities/%s/rates', $id);
     }
 
-    protected function importTestRates(string $id): array
+    protected function importTestRates($id): array
     {
         /** @var ActivityRateRepository $rateRepository */
         $rateRepository = $this->getEntityManager()->getRepository(ActivityRate::class);
@@ -123,8 +123,8 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(count($expected), count($result));
-        for ($i = 0; $i < count($result); $i++) {
+        $this->assertEquals(\count($expected), \count($result));
+        for ($i = 0; $i < \count($result); $i++) {
             $activity = $result[$i];
             $hasProject = $expected[$i][0];
             $this->assertStructure($activity, false);
@@ -160,7 +160,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(5, count($result));
+        $this->assertEquals(5, \count($result));
         $this->assertStructure($result[0], false);
         $this->assertEquals(1, $result[4]['project']);
         $this->assertEquals(2, $result[3]['project']);
@@ -188,7 +188,24 @@ class ActivityControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'project' => 1,
-            'visible' => true
+            'visible' => true,
+            'budget' => '999',
+            'timeBudget' => '7200',
+        ];
+        $this->request($client, '/api/activities', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+    }
+
+    public function testPostActionWithLeastFields()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
         ];
         $this->request($client, '/api/activities', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -236,7 +253,9 @@ class ActivityControllerTest extends APIControllerBaseTest
             'name' => 'foo',
             'comment' => '',
             'project' => 1,
-            'visible' => true
+            'visible' => true,
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());

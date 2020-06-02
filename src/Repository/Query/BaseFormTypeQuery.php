@@ -44,7 +44,7 @@ abstract class BaseFormTypeQuery
      */
     public function getActivity()
     {
-        if (count($this->activities) > 0) {
+        if (\count($this->activities) > 0) {
             return $this->activities[0];
         }
 
@@ -107,7 +107,7 @@ abstract class BaseFormTypeQuery
      */
     public function getProject()
     {
-        if (count($this->projects) > 0) {
+        if (\count($this->projects) > 0) {
             return $this->projects[0];
         }
 
@@ -173,7 +173,7 @@ abstract class BaseFormTypeQuery
      */
     public function getCustomer()
     {
-        if (count($this->customers) > 0) {
+        if (\count($this->customers) > 0) {
             return $this->customers[0];
         }
 

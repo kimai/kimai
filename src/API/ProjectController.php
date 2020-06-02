@@ -116,7 +116,7 @@ class ProjectController extends BaseApiController
         }
 
         if (!empty($customers = $paramFetcher->get('customers'))) {
-            if (!is_array($customers)) {
+            if (!\is_array($customers)) {
                 $customers = explode(',', $customers);
             }
             if (!empty($customers)) {
@@ -134,7 +134,7 @@ class ProjectController extends BaseApiController
 
         $ignoreDates = false;
         if (null !== $paramFetcher->get('ignoreDates')) {
-            $ignoreDates = intval($paramFetcher->get('ignoreDates')) === 1;
+            $ignoreDates = \intval($paramFetcher->get('ignoreDates')) === 1;
         }
 
         if (!$ignoreDates) {
@@ -224,6 +224,7 @@ class ProjectController extends BaseApiController
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'date_format' => self::DATE_FORMAT,
+            'include_budget' => $this->isGranted('budget', $project),
         ]);
 
         $form->submit($request->request->all());
@@ -288,6 +289,7 @@ class ProjectController extends BaseApiController
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'date_format' => self::DATE_FORMAT,
+            'include_budget' => $this->isGranted('budget', $project),
         ]);
 
         $form->setData($project);

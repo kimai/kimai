@@ -53,7 +53,7 @@ class ExtensionsTest extends TestCase
         $filters = ['duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount', 'docu_link', 'multiline_indent'];
         $sut = $this->getSut($this->localeDe);
         $twigFilters = $sut->getFilters();
-        $this->assertCount(count($filters), $twigFilters);
+        $this->assertCount(\count($filters), $twigFilters);
         $i = 0;
         /** @var TwigFilter $filter */
         foreach ($twigFilters as $filter) {
@@ -67,7 +67,7 @@ class ExtensionsTest extends TestCase
         $functions = ['locales', 'class_name'];
         $sut = $this->getSut($this->localeDe);
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(count($functions), $twigFunctions);
+        $this->assertCount(\count($functions), $twigFunctions);
         $i = 0;
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {
@@ -95,6 +95,8 @@ class ExtensionsTest extends TestCase
             'EUR' => '€',
             'USD' => '$',
             'RUB' => 'RUB',
+            'rub' => 'RUB',
+            123 => 123,
         ];
 
         $sut = $this->getSut($this->localeEn);
@@ -109,6 +111,8 @@ class ExtensionsTest extends TestCase
             'DE' => 'Germany',
             'RU' => 'Russia',
             'ES' => 'Spain',
+            'es' => 'Spain',
+            '12' => '12',
         ];
 
         $sut = $this->getSut($this->localeEn);
@@ -123,6 +127,8 @@ class ExtensionsTest extends TestCase
             'de' => 'German',
             'ru' => 'Russian',
             'es' => 'Spanish',
+            'ES' => 'Spanish',
+            '12' => '12',
         ];
 
         $sut = $this->getSut($this->localeEn);
@@ -312,26 +318,25 @@ class ExtensionsTest extends TestCase
             ['    ', null, ['']],
             ['    ', '', ['']],
             ['    ', 0, ['    0']],
-            ['    ', 'sdfsdf
-sdfsdf
-
- aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh
-dfsdfsdfsdfsdf',
-                ['    sdfsdf', '    sdfsdf', '    ', '     aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '    dfsdfsdfsdfsdf']
+            ['    ', '1dfsdf
+sdfsdf' . PHP_EOL . "\n" .
+' aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh' . "\n" .
+'dfsdfsdfsdfsdf',
+                ['    1dfsdf', '    sdfsdf', '    ', '     aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '    dfsdfsdfsdfsdf']
             ],
-            ['###', 'sdfsdf' . PHP_EOL .
+            ['###', '2dfsdf' . PHP_EOL .
 'sdfsdf' . PHP_EOL .
-'' . PHP_EOL .
+'' . "\r\n" .
 ' aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh' . PHP_EOL .
 'dfsdfsdfsdfsdf',
-                ['###sdfsdf', '###sdfsdf', '###', '### aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '###dfsdfsdfsdfsdf']
+                ['###2dfsdf', '###sdfsdf', '###', '### aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '###dfsdfsdfsdfsdf']
             ],
-            ['  ', 'sdfsdf' . "\r\n" .
+            ['  ', '3dfsdf' . "\n" .
 'sdfsdf' . "\r\n" .
-'' . "\r\n" .
+'' . "\n" .
 ' aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh' . "\r\n" .
 'dfsdfsdfsdfsdf',
-                ['  sdfsdf', '  sdfsdf', '  ', '   aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '  dfsdfsdfsdfsdf']
+                ['  3dfsdf', '  sdfsdf', '  ', '   aksljdfh laksjd hflka sjhdf lakjhsdflak jsdfh', '  dfsdfsdfsdfsdf']
             ],
         ];
     }

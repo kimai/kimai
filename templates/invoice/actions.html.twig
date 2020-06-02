@@ -30,8 +30,10 @@
         {% set actions = actions|merge({'back': path('invoice')}) %}
     {% endif %}
 
+    {% set actions = actions|merge({'visibility': '#modal_invoice_template'}) %}
+
     {% if is_granted('manage_invoice_template') %}
-        {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
+        {% set actions = actions|merge({'create': {'url': path('admin_invoice_template_create'), 'class': 'modal-ajax-form'}}) %}
     {% endif %}
 
     {% if is_granted('upload_invoice_template') %}
@@ -57,11 +59,8 @@
             {% set actions = actions|merge({'invoice.paid': path('admin_invoice_status', {'id': invoice.id, 'status': 'paid'})}) %}
         {% endif %}
 
-        {% if actions|length > 0 %}
-            {% set actions = actions|merge({'divider': null}) %}
-        {% endif %}
-
         {% set actions = actions|merge({'download': {'url': path('admin_invoice_download', {'id': invoice.id}), 'target': '_blank'}}) %}
+        {% set actions = actions|merge({'trash': {'url': path('admin_invoice_delete', {'id' : invoice.id}), 'class': 'confirmation-link', 'attr': {'data-question': 'confirm.delete'}}}) %}
     {% endif %}
 
     {% set event = trigger('actions.invoice', {'actions': actions, 'invoice': invoice}) %}
@@ -107,7 +106,7 @@
     {% if is_granted('manage_invoice_template') %}
         {% set actions = actions|merge({'edit': {'url': path('admin_invoice_template_edit', {'id' : template.id}), 'class': 'modal-ajax-form'}}) %}
         {% set actions = actions|merge({'copy': path('admin_invoice_template_copy', {'id' : template.id})}) %}
-        {% set actions = actions|merge({'trash': path('admin_invoice_template_delete', {'id' : template.id})}) %}
+        {% set actions = actions|merge({'trash': {'url': path('admin_invoice_template_delete', {'id' : template.id}), 'class': 'confirmation-link', 'attr': {'data-question': 'confirm.delete'}}}) %}
     {% endif %}
 
     {% set event = trigger('actions.invoice_template', {'actions': actions, 'view': view, 'template': template}) %}

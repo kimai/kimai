@@ -27,25 +27,27 @@ class MPdfConverter implements HtmlToPdfConverter
 
     /**
      * @param string $html
+     * @param array $options
      * @return mixed|string
      * @throws \Mpdf\MpdfException
      */
-    public function convertToPdf(string $html)
+    public function convertToPdf(string $html, array $options = [])
     {
-        $mpdf = new Mpdf(['tempDir' => $this->cacheDirectory]);
+        $options = array_merge($options, ['tempDir' => $this->cacheDirectory]);
+        $mpdf = new Mpdf($options);
         $mpdf->creator = Constants::SOFTWARE;
 
         // some OS do not follow the PHP default settings
         if ((int) ini_get('pcre.backtrack_limit') < 1000000) {
-            @ini_set('pcre.backtrack_limit', 1000000);
+            @ini_set('pcre.backtrack_limit', '1000000');
         }
 
         // reduce the size of content parts that are passed to MPDF, to prevent
         // https://mpdf.github.io/troubleshooting/known-issues.html#blank-pages-or-some-sections-missing
         $parts = explode('<pagebreak>', $html);
-        for ($i = 0; $i < count($parts); $i++) {
+        for ($i = 0; $i < \count($parts); $i++) {
             $mpdf->WriteHTML($parts[$i]);
-            if ($i < count($parts) - 1) {
+            if ($i < \count($parts) - 1) {
                 $mpdf->WriteHTML('<pagebreak>');
             }
         }

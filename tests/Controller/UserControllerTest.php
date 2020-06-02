@@ -87,7 +87,7 @@ class UserControllerTest extends ControllerBaseTest
         $expectedTabs = ['#settings', '#password', '#api-token', '#teams', '#roles'];
 
         $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
-        $this->assertEquals(count($expectedTabs), $tabs->count());
+        $this->assertEquals(\count($expectedTabs), $tabs->count());
         $foundTabs = [];
         /** @var \DOMElement $tab */
         foreach ($tabs->filter('a') as $tab) {
@@ -146,15 +146,15 @@ class UserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
         $em = $this->getEntityManager();
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $fixture = new TimesheetFixtures();
         $fixture->setUser($user);
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         $this->request($client, '/admin/user/' . $user->getId() . '/delete');
         $this->assertTrue($client->getResponse()->isSuccessful());

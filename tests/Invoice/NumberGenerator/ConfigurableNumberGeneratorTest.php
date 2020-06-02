@@ -68,8 +68,10 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{cd}', '2', $invoiceDate],
             // number formatting (not testing the lower case versions, as the tests might break depending on the date)
             ['{date,10}', '0000' . $invoiceDate->format('ymd'), $invoiceDate],
+            ['{date,a}', $invoiceDate->format('ymd'), $invoiceDate], // invalid formatter length
             ['{Y,6}', '00' . $invoiceDate->format('Y'), $invoiceDate],
             ['{M,3}', '0' . $invoiceDate->format('m'), $invoiceDate],
+            ['{M,#}', $invoiceDate->format('m'), $invoiceDate], // invalid formatter length
             ['{D,3}', '0' . $invoiceDate->format('d'), $invoiceDate],
             ['{c,2}', '02', $invoiceDate],
             ['{cy,2}', '02', $invoiceDate],
@@ -81,6 +83,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{Y}-{cy}/{m}', $invoiceDate->format('Y') . '-2/' . $invoiceDate->format('n'), $invoiceDate],
             ['{Y}-{cy}/{m}', $invoiceDate->format('Y') . '-2/' . $invoiceDate->format('n'), $invoiceDate],
             ['{Y,5}/{cy,5}', '0' . $invoiceDate->format('Y') . '/00002', $invoiceDate],
+            ['{Y,!}/{cy,o}', $invoiceDate->format('Y') . '/2', $invoiceDate], // invalid formatter length
         ];
     }
 

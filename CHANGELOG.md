@@ -1,4 +1,9 @@
-# Change Log
+# Changelog
+
+## [1.9](https://github.com/kevinpapst/kimai2/tree/1.9)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.8...1.9)
+
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
 
 ## [1.8](https://github.com/kevinpapst/kimai2/tree/1.8)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.7...1.8)

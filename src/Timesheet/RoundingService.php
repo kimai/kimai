@@ -48,7 +48,7 @@ final class RoundingService
     {
         if (empty($this->rulesCache)) {
             $this->rulesCache = $this->rules;
-            if (empty($this->rulesCache) || array_key_exists('default', $this->rulesCache)) {
+            if (empty($this->rulesCache) || \array_key_exists('default', $this->rulesCache)) {
                 $this->rulesCache['default']['days'] = $this->configuration->getDefaultRoundingDays();
                 $this->rulesCache['default']['begin'] = $this->configuration->getDefaultRoundingBegin();
                 $this->rulesCache['default']['end'] = $this->configuration->getDefaultRoundingEnd();
@@ -73,7 +73,7 @@ final class RoundingService
         foreach ($this->getRoundingRules() as $rounding) {
             $weekday = $record->getBegin()->format('l');
 
-            if (in_array(strtolower($weekday), $rounding['days'])) {
+            if (\in_array(strtolower($weekday), $rounding['days'])) {
                 $rounder = $this->getRoundingMode($rounding['mode']);
                 $rounder->roundBegin($record, $rounding['begin']);
             }
@@ -85,7 +85,7 @@ final class RoundingService
         foreach ($this->getRoundingRules() as $rounding) {
             $weekday = $record->getEnd()->format('l');
 
-            if (in_array(strtolower($weekday), $rounding['days'])) {
+            if (\in_array(strtolower($weekday), $rounding['days'])) {
                 $rounder = $this->getRoundingMode($rounding['mode']);
                 $rounder->roundEnd($record, $rounding['end']);
             }
@@ -97,7 +97,7 @@ final class RoundingService
         foreach ($this->getRoundingRules() as $rounding) {
             $weekday = $record->getEnd()->format('l');
 
-            if (in_array(strtolower($weekday), $rounding['days'])) {
+            if (\in_array(strtolower($weekday), $rounding['days'])) {
                 $rounder = $this->getRoundingMode($rounding['mode']);
                 $rounder->roundDuration($record, $rounding['duration']);
             }
@@ -113,7 +113,7 @@ final class RoundingService
         foreach ($this->getRoundingRules() as $rounding) {
             $weekday = $record->getEnd()->format('l');
 
-            if (in_array(strtolower($weekday), $rounding['days'])) {
+            if (\in_array(strtolower($weekday), $rounding['days'])) {
                 $rounder = $this->getRoundingMode($rounding['mode']);
                 $rounder->roundBegin($record, $rounding['begin']);
                 $rounder->roundEnd($record, $rounding['end']);

@@ -166,21 +166,21 @@ final class KimaiImporterCommand extends Command
         $this->dbPrefix = $input->getArgument('prefix');
 
         $password = $input->getArgument('password');
-        if (trim(strlen($password)) < 6) {
-            $io->error('Password length is not sufficient, at least 6 character are required');
+        if (null === $password || \strlen($password = trim($password)) < 8) {
+            $io->error('Password length is not sufficient, at least 8 character are required');
 
             return 1;
         }
 
         $country = $input->getArgument('country');
-        if (2 != trim(strlen($country))) {
+        if (null === $country || 2 != \strlen($country = trim($country))) {
             $io->error('Country code needs to be exactly 2 character');
 
             return 1;
         }
 
         $currency = $input->getArgument('currency');
-        if (3 != trim(strlen($currency))) {
+        if (null === $currency || 3 != \strlen($currency = trim($currency))) {
             $io->error('Currency code needs to be exactly 3 character');
 
             return 1;
@@ -300,7 +300,7 @@ final class KimaiImporterCommand extends Command
                     $validationMessages[] = sprintf('User "%s" with ID %s has no email', $oldUser['name'], $oldUser['userID']);
                     continue;
                 }
-                if (in_array($oldUser['mail'], $usedEmails)) {
+                if (\in_array($oldUser['mail'], $usedEmails)) {
                     $validationMessages[] = sprintf('Email "%s" for user "%s" with ID %s is already used', $oldUser['mail'], $oldUser['name'], $oldUser['userID']);
                 }
                 $usedEmails[] = $oldUser['mail'];
@@ -312,7 +312,7 @@ final class KimaiImporterCommand extends Command
             }
 
             foreach ($projects as $oldProject) {
-                if (!in_array($oldProject['customerID'], $customerIds)) {
+                if (!\in_array($oldProject['customerID'], $customerIds)) {
                     $validationMessages[] = sprintf('Project "%s" with ID %s has unknown customer with ID %s', $oldProject['name'], $oldProject['projectID'], $oldProject['customerID']);
                 }
             }
@@ -465,12 +465,10 @@ final class KimaiImporterCommand extends Command
     protected function deactivateLifecycleCallbacks(Connection $connection)
     {
         $allListener = $connection->getEventManager()->getListeners();
-        foreach ($allListener as $name => $listener) {
-            if (in_array($name, ['prePersist', 'preUpdate'])) {
-                foreach ($listener as $service => $class) {
-                    if (TimesheetSubscriber::class === $class) {
-                        $connection->getEventManager()->removeEventListener(['prePersist', 'preUpdate'], $class);
-                    }
+        foreach ($allListener as $event => $listeners) {
+            foreach ($listeners as $hash => $object) {
+                if ($object instanceof TimesheetSubscriber) {
+                    $connection->getEventManager()->removeEventListener([$event], $object);
                 }
             }
         }
@@ -602,7 +600,7 @@ final class KimaiImporterCommand extends Command
             foreach ($preferences as $pref) {
                 $key = $pref['option'];
 
-                if (!array_key_exists($key, $prefsToImport)) {
+                if (!\array_key_exists($key, $prefsToImport)) {
                     continue;
                 }
 
@@ -951,7 +949,7 @@ final class KimaiImporterCommand extends Command
      * @param array $oldActivity
      * @param array $fixedRates
      * @param array $rates
-     * @param int $oldProjectId
+     * @param int|null $oldProjectId
      * @return Activity
      * @throws Exception
      */
@@ -961,7 +959,7 @@ final class KimaiImporterCommand extends Command
         array $oldActivity,
         array $fixedRates,
         array $rates,
-        $oldProjectId
+        $oldProjectId = null
     ) {
         $oldActivityId = $oldActivity['activityID'];
 
@@ -1119,7 +1117,7 @@ final class KimaiImporterCommand extends Command
         $activityCounter = 0;
         $userCounter = 0;
         $entityManager = $this->getDoctrine()->getManager();
-        $total = count($records);
+        $total = \count($records);
 
         $io->writeln('Importing timesheets, please wait');
 
@@ -1256,7 +1254,7 @@ final class KimaiImporterCommand extends Command
                 ->setDuration($duration)
                 ->setActivity($activity)
                 ->setProject($project)
-                ->setExported(intval($oldRecord['cleared']) !== 0)
+                ->setExported(\intval($oldRecord['cleared']) !== 0)
                 ->setTimezone($timezone)
             ;
 
@@ -1299,7 +1297,7 @@ final class KimaiImporterCommand extends Command
         if ($activityCounter > 0) {
             $io->success('Created new activities during timesheet import: ' . $activityCounter);
         }
-        if (count($errors['projectActivityMismatch']) > 0) {
+        if (\count($errors['projectActivityMismatch']) > 0) {
             $io->error('Found invalid mapped project - activity combinations in these old timesheet recors: ' . implode(',', $errors['projectActivityMismatch']));
         }
         if ($failed > 0) {
@@ -1446,9 +1444,9 @@ final class KimaiImporterCommand extends Command
                         sprintf(
                             'Created team: %s with %s users, %s projects and %s customers.',
                             $team->getName(),
-                            count($team->getUsers()),
-                            count($team->getProjects()),
-                            count($team->getCustomers())
+                            \count($team->getUsers()),
+                            \count($team->getProjects()),
+                            \count($team->getCustomers())
                         )
                     );
                 }

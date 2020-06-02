@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -19,6 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\UniqueConstraint(columns={"name"})
  *      }
  * )
+ * @UniqueEntity("name")
  */
 class InvoiceTemplate
 {
@@ -145,7 +147,7 @@ class InvoiceTemplate
     private $decimalDuration = false;
 
     /**
-     * Used when rendering HTML templates.
+     * Used for translations and locale dependent number and date formats.
      *
      * @var string
      *

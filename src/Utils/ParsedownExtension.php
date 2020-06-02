@@ -52,7 +52,7 @@ class ParsedownExtension extends \Parsedown
             $url = $matches[0][0];
 
             $Inline = [
-                'extent' => strlen($matches[0][0]),
+                'extent' => \strlen($matches[0][0]),
                 'position' => $matches[0][1],
                 'element' => [
                     'name' => 'a',

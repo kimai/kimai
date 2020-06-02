@@ -37,7 +37,7 @@
 {% block main %}
 
     {% if entries.count == 0 %}
-        {{ widgets.callout('warning', 'error.no_entries_found') }}
+        {{ widgets.nothing_found('kimai.projectUpdate kimai.projectTeamUpdate') }}
     {% else %}
         {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.projectUpdate kimai.projectTeamUpdate'}) }}
 

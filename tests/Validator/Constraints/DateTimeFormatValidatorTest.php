@@ -76,7 +76,7 @@ class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($input, $constraint);
 
-        $expectedFormat = is_string($input) ? '"' . $input . '"' : $input;
+        $expectedFormat = \is_string($input) ? '"' . $input . '"' : $input;
 
         $this->buildViolation('The given value is not a valid datetime format.')
             ->setCode(DateTimeFormat::INVALID_FORMAT)

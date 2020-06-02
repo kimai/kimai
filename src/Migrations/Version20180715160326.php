@@ -42,7 +42,7 @@ final class Version20180715160326 extends AbstractMigration
         // delete all existing indexes
         $indexesOld = $schema->getTable($users)->getIndexes();
         foreach ($indexesOld as $index) {
-            if (in_array('name', $index->getColumns()) || in_array('mail', $index->getColumns())) {
+            if (\in_array('name', $index->getColumns()) || \in_array('mail', $index->getColumns())) {
                 $this->indexesOld[] = $index;
                 $this->addSqlDropIndex($index->getName(), $users);
             }

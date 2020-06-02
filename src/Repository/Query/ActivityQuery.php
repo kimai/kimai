@@ -76,7 +76,7 @@ class ActivityQuery extends ProjectQuery
      */
     public function getProject()
     {
-        if (count($this->projects) > 0) {
+        if (\count($this->projects) > 0) {
             return $this->projects[0];
         }
 
