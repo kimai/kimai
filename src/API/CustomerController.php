@@ -75,7 +75,7 @@ class CustomerController extends BaseApiController
      *      description="Returns a collection of customer entities",
      *      @SWG\Schema(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/CustomerEntity")
+     *          @SWG\Items(ref="#/definitions/CustomerCollection")
      *      )
      * )
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
@@ -175,7 +175,9 @@ class CustomerController extends BaseApiController
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->createForm(CustomerApiEditForm::class, $customer);
+        $form = $this->createForm(CustomerApiEditForm::class, $customer, [
+            'include_budget' => $this->isGranted('budget', $customer),
+        ]);
 
         $form->submit($request->request->all());
 
@@ -237,7 +239,9 @@ class CustomerController extends BaseApiController
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->createForm(CustomerApiEditForm::class, $customer);
+        $form = $this->createForm(CustomerApiEditForm::class, $customer, [
+            'include_budget' => $this->isGranted('budget', $customer),
+        ]);
 
         $form->setData($customer);
         $form->submit($request->request->all(), false);

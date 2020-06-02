@@ -79,6 +79,6 @@ class CalendarConfigurationTest extends TestCase
 
         $this->assertEquals('wertwertwegsdfbdf243w567fg8ihuon', $sut->getGoogleApiKey());
         $sources = $sut->getGoogleSources();
-        $this->assertEquals(2, count($sources));
+        $this->assertEquals(2, \count($sources));
     }
 }

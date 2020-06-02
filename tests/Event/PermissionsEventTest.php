@@ -36,15 +36,22 @@ class PermissionsEventTest extends TestCase
         self::assertFalse($sut->hasSection('foo'));
         self::assertNull($sut->getSection('foo'));
 
-        $sut->addPermissions('bar', ['foo' => 123, 'hello' => 'world', 'test' => false]);
-        self::assertEquals(['bar' => ['foo' => 123, 'hello' => 'world', 'test' => false]], $sut->getPermissions());
+        $sut->addPermissions('bar', ['foo', 'hello', 'world', 'test']);
+        self::assertEquals(['bar' => ['foo', 'hello', 'world', 'test']], $sut->getPermissions());
+
         self::assertInstanceOf(PermissionsEvent::class, $sut->removePermission('bar', 'xxx'));
-        self::assertEquals(['bar' => ['foo' => 123, 'hello' => 'world', 'test' => false]], $sut->getPermissions());
+        self::assertEquals(['foo', 'hello', 'world', 'test'], array_values($sut->getSection('bar')));
+
         self::assertInstanceOf(PermissionsEvent::class, $sut->removePermission('bar', 'foo'));
-        self::assertEquals(['bar' => ['hello' => 'world', 'test' => false]], $sut->getPermissions());
+        self::assertEquals(['hello', 'world', 'test'], array_values($sut->getSection('bar')));
+
         self::assertInstanceOf(PermissionsEvent::class, $sut->removePermission('bar', 'test'));
-        self::assertEquals(['bar' => ['hello' => 'world']], $sut->getPermissions());
+        self::assertEquals(['hello', 'world'], array_values($sut->getSection('bar')));
+
         self::assertInstanceOf(PermissionsEvent::class, $sut->removePermission('bar', 'hello'));
-        self::assertEquals(['bar' => []], $sut->getPermissions());
+        self::assertEquals(['world'], array_values($sut->getSection('bar')));
+
+        self::assertInstanceOf(PermissionsEvent::class, $sut->removePermission('bar', 'world'));
+        self::assertEquals([], array_values($sut->getSection('bar')));
     }
 }

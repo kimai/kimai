@@ -59,7 +59,7 @@ class CustomerType extends AbstractType
 
         $resolver->setDefault('api_data', function (Options $options) {
             if (false !== $options['project_enabled']) {
-                $name = is_string($options['project_enabled']) ? $options['project_enabled'] : 'customer';
+                $name = \is_string($options['project_enabled']) ? $options['project_enabled'] : 'customer';
                 $routeParams = [$name => '%' . $name . '%', 'visible' => $options['project_visibility']];
                 $emptyRouteParams = ['visible' => $options['project_visibility']];
 

@@ -9,6 +9,7 @@
 
 namespace App\Saml\Provider;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Saml\SamlTokenFactory;
 use App\Saml\User\SamlUserFactory;
@@ -46,11 +47,16 @@ final class SamlProvider implements AuthenticationProviderInterface
         $this->userFactory = $userFactory;
     }
 
+    /**
+     * @param SamlTokenInterface $token
+     * @return SamlTokenInterface
+     */
     public function authenticate(TokenInterface $token)
     {
         $user = null;
 
         try {
+            /** @var User $user */
             $user = $this->userProvider->loadUserByUsername($token->getUsername());
         } catch (UsernameNotFoundException $e) {
         }

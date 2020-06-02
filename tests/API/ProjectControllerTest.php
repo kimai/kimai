@@ -28,7 +28,7 @@ class ProjectControllerTest extends APIControllerBaseTest
 {
     use RateControllerTestTrait;
 
-    protected function getRateUrl(string $id = '1', ?string $rateId = null): string
+    protected function getRateUrl($id = '1', $rateId = null): string
     {
         if (null !== $rateId) {
             return sprintf('/api/projects/%s/rates/%s', $id, $rateId);
@@ -37,7 +37,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         return sprintf('/api/projects/%s/rates', $id);
     }
 
-    protected function importTestRates(string $id): array
+    protected function importTestRates($id): array
     {
         /** @var ProjectRateRepository $rateRepository */
         $rateRepository = $this->getEntityManager()->getRepository(ProjectRate::class);
@@ -85,7 +85,7 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, \count($result));
         $this->assertStructure($result[0], false);
     }
 
@@ -133,9 +133,9 @@ class ProjectControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertEquals(count($expected), count($result), 'Found wrong amount of projects');
+        $this->assertEquals(\count($expected), \count($result), 'Found wrong amount of projects');
 
-        for ($i = 0; $i < count($expected); $i++) {
+        for ($i = 0; $i < \count($expected); $i++) {
             $project = $result[$i];
             $compare = $expected[$i];
             $this->assertStructure($project, false);
@@ -187,6 +187,8 @@ class ProjectControllerTest extends APIControllerBaseTest
             'orderDate' => '2018-02-08T13:02:54',
             'start' => '2019-02-01T19:32:17',
             'end' => '2020-02-08T21:11:42',
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -198,6 +200,23 @@ class ProjectControllerTest extends APIControllerBaseTest
         self::assertEquals('2018-02-08T13:02:54+0000', $result['orderDate']);
         self::assertEquals('2019-02-01T19:32:17+0000', $result['start']);
         self::assertEquals('2020-02-08T21:11:42+0000', $result['end']);
+    }
+
+    public function testPostActionWithLeastFields()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'customer' => 1
+        ];
+        $this->request($client, '/api/projects', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+        self::assertEquals('foo', $result['name']);
     }
 
     public function testPostActionWithInvalidUser()
@@ -237,7 +256,9 @@ class ProjectControllerTest extends APIControllerBaseTest
             'name' => 'foo',
             'comment' => '',
             'customer' => 1,
-            'visible' => true
+            'visible' => true,
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/projects/1', 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());

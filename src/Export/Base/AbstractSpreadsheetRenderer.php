@@ -282,8 +282,8 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['description']) && !isset($columns['description']['render'])) {
-            $maxWidth = array_key_exists('maxWidth', $columns['description']) ? intval($columns['description']['maxWidth']) : null;
-            $wrapText = array_key_exists('wrapText', $columns['description']) ? (bool) $columns['description']['wrapText'] : false;
+            $maxWidth = \array_key_exists('maxWidth', $columns['description']) ? \intval($columns['description']['maxWidth']) : null;
+            $wrapText = \array_key_exists('wrapText', $columns['description']) ? (bool) $columns['description']['wrapText'] : false;
 
             // This column has a column-only formatter to set the maximum width of a column.
             // It needs to be executed once, so we use this as a flag on when to skip it.
@@ -352,7 +352,7 @@ abstract class AbstractSpreadsheetRenderer
                         $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
                     }
 
-                    return count($timesheetMetaFields);
+                    return \count($timesheetMetaFields);
                 },
                 'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($timesheetMetaFields) {
                     foreach ($timesheetMetaFields as $metaField) {
@@ -364,7 +364,7 @@ abstract class AbstractSpreadsheetRenderer
                         $sheet->setCellValueByColumnAndRow($column++, $row, $metaFieldValue);
                     }
 
-                    return count($timesheetMetaFields);
+                    return \count($timesheetMetaFields);
                 }
             ];
         }
@@ -380,7 +380,7 @@ abstract class AbstractSpreadsheetRenderer
                         $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
                     }
 
-                    return count($customerMetaFields);
+                    return \count($customerMetaFields);
                 },
                 'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($customerMetaFields) {
                     foreach ($customerMetaFields as $metaField) {
@@ -394,7 +394,7 @@ abstract class AbstractSpreadsheetRenderer
                         $sheet->setCellValueByColumnAndRow($column++, $row, $metaFieldValue);
                     }
 
-                    return count($customerMetaFields);
+                    return \count($customerMetaFields);
                 }
             ];
         }
@@ -407,7 +407,7 @@ abstract class AbstractSpreadsheetRenderer
                         $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
                     }
 
-                    return count($projectMetaFields);
+                    return \count($projectMetaFields);
                 },
                 'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($projectMetaFields) {
                     foreach ($projectMetaFields as $metaField) {
@@ -421,7 +421,7 @@ abstract class AbstractSpreadsheetRenderer
                         $sheet->setCellValueByColumnAndRow($column++, $row, $metaFieldValue);
                     }
 
-                    return count($projectMetaFields);
+                    return \count($projectMetaFields);
                 }
             ];
         }
@@ -434,7 +434,7 @@ abstract class AbstractSpreadsheetRenderer
                         $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
                     }
 
-                    return count($activityMetaFields);
+                    return \count($activityMetaFields);
                 },
                 'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($activityMetaFields) {
                     foreach ($activityMetaFields as $metaField) {
@@ -448,7 +448,7 @@ abstract class AbstractSpreadsheetRenderer
                         $sheet->setCellValueByColumnAndRow($column++, $row, $metaFieldValue);
                     }
 
-                    return count($activityMetaFields);
+                    return \count($activityMetaFields);
                 }
             ];
         }
@@ -463,7 +463,7 @@ abstract class AbstractSpreadsheetRenderer
                         $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
                     }
 
-                    return count($userPreferences);
+                    return \count($userPreferences);
                 },
                 'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($userPreferences) {
                     foreach ($userPreferences as $preference) {
@@ -477,7 +477,7 @@ abstract class AbstractSpreadsheetRenderer
                         $sheet->setCellValueByColumnAndRow($column++, $row, $metaFieldValue);
                     }
 
-                    return count($userPreferences);
+                    return \count($userPreferences);
                 }
             ];
         }
@@ -485,7 +485,7 @@ abstract class AbstractSpreadsheetRenderer
         if (!$showRates) {
             $removes = ['rate', 'fixedRate', 'hourlyRate', 'rate_internal'];
             foreach ($removes as $removeMe) {
-                if (array_key_exists($removeMe, $columns)) {
+                if (\array_key_exists($removeMe, $columns)) {
                     unset($columns[$removeMe]);
                 }
             }
@@ -543,7 +543,7 @@ abstract class AbstractSpreadsheetRenderer
                     $internalRateColumn = $entryHeaderColumn;
                 }
 
-                if (!array_key_exists('render', $settings) || !is_callable($settings['render'])) {
+                if (!\array_key_exists('render', $settings) || !\is_callable($settings['render'])) {
                     throw new \RuntimeException(sprintf('Missing renderer for export column %s', $label));
                 }
 

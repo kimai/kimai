@@ -25,6 +25,7 @@ class InvoiceDocumentRepositoryTest extends TestCase
     protected static $defaultDocuments = [
         'company.docx',
         'default.html.twig',
+        'default-pdf.pdf.twig',
         'freelancer.html.twig',
         'timesheet.html.twig',
         'text.txt.twig',
@@ -44,10 +45,10 @@ class InvoiceDocumentRepositoryTest extends TestCase
     {
         $sut = new InvoiceDocumentRepository(self::$defaultDirectories);
         $all = $sut->findAll();
-        $this->assertEquals(count(self::$defaultDocuments), count($all));
+        $this->assertEquals(\count(self::$defaultDocuments), \count($all));
 
         foreach ($all as $document) {
-            $this->assertTrue(in_array($document->getName(), self::$defaultDocuments));
+            $this->assertTrue(\in_array($document->getName(), self::$defaultDocuments));
         }
 
         foreach (self::$defaultDocuments as $filename) {

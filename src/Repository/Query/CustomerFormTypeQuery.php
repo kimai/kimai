@@ -27,7 +27,7 @@ final class CustomerFormTypeQuery extends BaseFormTypeQuery
     public function __construct($customer = null)
     {
         if (null !== $customer) {
-            if (!is_array($customer)) {
+            if (!\is_array($customer)) {
                 $customer = [$customer];
             }
             $this->setCustomers($customer);

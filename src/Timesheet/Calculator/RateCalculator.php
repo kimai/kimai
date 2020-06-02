@@ -144,7 +144,7 @@ class RateCalculator implements CalculatorInterface
         foreach ($this->rates as $rateFactor) {
             $weekday = $record->getEnd()->format('l');
             $days = array_map('strtolower', $rateFactor['days']);
-            if (in_array(strtolower($weekday), $days)) {
+            if (\in_array(strtolower($weekday), $days)) {
                 $factor += $rateFactor['factor'];
             }
         }

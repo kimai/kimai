@@ -143,7 +143,7 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only records before this date will be included (format: HTML5)")
      * @Rest\QueryParam(name="exported", requirements="0|1", strict=true, nullable=true, description="Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)")
      * @Rest\QueryParam(name="active", requirements="0|1", strict=true, nullable=true, description="Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)")
-     * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources (TimesheetSubCollection). Allowed values: true (default: false)")
+     * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources. Allowed values: true (default: false)")
      * @Rest\QueryParam(name="term", description="Free search term")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
@@ -164,7 +164,7 @@ class TimesheetController extends BaseApiController
         }
 
         if (!empty($customers = $paramFetcher->get('customers'))) {
-            if (!is_array($customers)) {
+            if (!\is_array($customers)) {
                 $customers = explode(',', $customers);
             }
             if (!empty($customers)) {
@@ -177,7 +177,7 @@ class TimesheetController extends BaseApiController
         }
 
         if (!empty($projects = $paramFetcher->get('projects'))) {
-            if (!is_array($projects)) {
+            if (!\is_array($projects)) {
                 $projects = explode(',', $projects);
             }
             if (!empty($projects)) {
@@ -190,7 +190,7 @@ class TimesheetController extends BaseApiController
         }
 
         if (!empty($activities = $paramFetcher->get('activities'))) {
-            if (!is_array($activities)) {
+            if (!\is_array($activities)) {
                 $activities = explode(',', $activities);
             }
             if (!empty($activities)) {
@@ -212,7 +212,7 @@ class TimesheetController extends BaseApiController
 
         if (null !== ($tags = $paramFetcher->get('tags'))) {
             $ids = $this->tagRepository->findIdsByTagNameList($tags);
-            if ($ids !== null && sizeof($ids) > 0) {
+            if ($ids !== null && \count($ids) > 0) {
                 $query->setTags(new ArrayCollection($ids));
             }
         }
@@ -650,22 +650,22 @@ class TimesheetController extends BaseApiController
         $this->roundingService->roundBegin($copyTimesheet);
 
         if (null !== ($copy = $paramFetcher->get('copy'))) {
-            if (in_array($copy, ['rates', 'all'])) {
+            if (\in_array($copy, ['rates', 'all'])) {
                 $copyTimesheet->setHourlyRate($timesheet->getHourlyRate());
                 $copyTimesheet->setFixedRate($timesheet->getFixedRate());
             }
 
-            if (in_array($copy, ['description', 'all'])) {
+            if (\in_array($copy, ['description', 'all'])) {
                 $copyTimesheet->setDescription($timesheet->getDescription());
             }
 
-            if (in_array($copy, ['tags', 'all'])) {
+            if (\in_array($copy, ['tags', 'all'])) {
                 foreach ($timesheet->getTags() as $tag) {
                     $copyTimesheet->addTag($tag);
                 }
             }
 
-            if (in_array($copy, ['meta', 'all'])) {
+            if (\in_array($copy, ['meta', 'all'])) {
                 foreach ($timesheet->getMetaFields() as $metaField) {
                     $metaNew = clone $metaField;
                     $copyTimesheet->setMetaField($metaNew);
@@ -675,7 +675,7 @@ class TimesheetController extends BaseApiController
 
         $errors = $validator->validate($copyTimesheet);
 
-        if (count($errors) > 0) {
+        if (\count($errors) > 0) {
             throw new BadRequestHttpException($errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage());
         }
 

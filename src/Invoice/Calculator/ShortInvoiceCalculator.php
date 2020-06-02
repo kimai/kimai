@@ -36,13 +36,13 @@ class ShortInvoiceCalculator extends AbstractMergedCalculator implements Calcula
             if (null !== $entry->getFixedRate()) {
                 $key = 'fixed_' . (string) $entry->getFixedRate();
             }
-            if (!in_array($key, $keys)) {
+            if (!\in_array($key, $keys)) {
                 $keys[] = $key;
             }
             $this->mergeInvoiceItems($invoiceItem, $entry);
         }
 
-        if (count($keys) > 1) {
+        if (\count($keys) > 1) {
             $invoiceItem->setAmount(1);
             $invoiceItem->setFixedRate($invoiceItem->getRate());
             $invoiceItem->setHourlyRate($invoiceItem->getRate());

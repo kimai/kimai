@@ -46,11 +46,11 @@ class WidgetExtension extends AbstractExtension
      */
     public function renderWidget($widget, array $options = [])
     {
-        if (!($widget instanceof WidgetInterface) && !is_string($widget)) {
+        if (!($widget instanceof WidgetInterface) && !\is_string($widget)) {
             throw new InvalidArgumentException('Widget must either implement WidgetInterface or be a string');
         }
 
-        if (is_string($widget)) {
+        if (\is_string($widget)) {
             if (!$this->service->hasWidget($widget)) {
                 throw new InvalidArgumentException(sprintf('Unknown widget "%s" requested', $widget));
             }

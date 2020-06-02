@@ -19,7 +19,7 @@
 {% block main %}
 
     {% if widgets is empty %}
-        {{ widgets.callout('warning', 'error.no_entries_found') }}
+        {{ widgets.nothing_found() }}
     {% else %}
         {% for row in widgets %}
             {{ render_widget(row) }}

@@ -71,7 +71,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
      */
     public function findOneBy(array $criteria, array $orderBy = null)
     {
-        if (count($criteria) == 1 && isset($criteria['username'])) {
+        if (\count($criteria) == 1 && isset($criteria['username'])) {
             return $this->loadUserByUsername($criteria['username']);
         }
 

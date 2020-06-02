@@ -43,7 +43,7 @@ class TitleExtensionTest extends TestCase
         $functions = ['get_title'];
         $sut = $this->getSut();
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(count($functions), $twigFunctions);
+        $this->assertCount(\count($functions), $twigFunctions);
         $i = 0;
         /** @var TwigFunction $function */
         foreach ($twigFunctions as $function) {

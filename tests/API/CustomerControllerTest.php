@@ -25,7 +25,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 {
     use RateControllerTestTrait;
 
-    protected function getRateUrl(string $id = '1', ?string $rateId = null): string
+    protected function getRateUrl($id = '1', $rateId = null): string
     {
         if (null !== $rateId) {
             return sprintf('/api/customers/%s/rates/%s', $id, $rateId);
@@ -34,7 +34,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         return sprintf('/api/customers/%s/rates', $id);
     }
 
-    protected function importTestRates(string $id): array
+    protected function importTestRates($id): array
     {
         /** @var CustomerRateRepository $rateRepository */
         $rateRepository = $this->getEntityManager()->getRepository(CustomerRate::class);
@@ -83,7 +83,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, \count($result));
         $this->assertStructure($result[0], false);
     }
 
@@ -96,7 +96,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, \count($result));
         $this->assertStructure($result[0], false);
     }
 
@@ -121,6 +121,26 @@ class CustomerControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'visible' => true,
+            'country' => 'DE',
+            'currency' => 'EUR',
+            'timezone' => 'Europe/Berlin',
+            'budget' => '999',
+            'timeBudget' => '7200',
+        ];
+        $this->request($client, '/api/customers', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+    }
+
+    public function testPostActionWithLeastFields()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
             'country' => 'DE',
             'currency' => 'EUR',
             'timezone' => 'Europe/Berlin',
@@ -178,6 +198,8 @@ class CustomerControllerTest extends APIControllerBaseTest
             'country' => 'DE',
             'currency' => 'EUR',
             'timezone' => 'Europe/Berlin',
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/customers/1', 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());

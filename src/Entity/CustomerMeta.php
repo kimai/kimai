@@ -39,7 +39,7 @@ class CustomerMeta implements MetaTableTypeInterface
     {
         if (!($entity instanceof Customer)) {
             throw new \InvalidArgumentException(
-                sprintf('Expected instanceof Customer, received "%s"', get_class($entity))
+                sprintf('Expected instanceof Customer, received "%s"', \get_class($entity))
             );
         }
         $this->customer = $entity;

@@ -46,7 +46,7 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
      */
     public function getCustomer()
     {
-        if (count($this->customers) > 0) {
+        if (\count($this->customers) > 0) {
             return $this->customers[0];
         }
 

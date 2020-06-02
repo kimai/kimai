@@ -35,7 +35,7 @@
 {% block main %}
 
     {% if entries.count == 0 %}
-        {{ widgets.callout('warning', 'error.no_entries_found') }}
+        {{ widgets.nothing_found('kimai.userUpdate') }}
     {% else %}
         {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.userUpdate'}) }}
 

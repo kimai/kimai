@@ -31,7 +31,7 @@ class SqliteSessionInitSubscriber implements EventSubscriber
      */
     public function postConnect(ConnectionEventArgs $args)
     {
-        if ('sqlite' !== strtolower($args->getDatabasePlatform()->getName())) {
+        if ('sqlite' !== strtolower($args->getConnection()->getDatabasePlatform()->getName())) {
             return;
         }
 

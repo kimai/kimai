@@ -58,9 +58,9 @@ class DebugRendererTest extends TestCase
         $response = $sut->render($document, $model);
         $data = json_decode($response->getContent(), true);
 
-        $this->assertModelStructure($data['model'], count($model->getQuery()->getProjects()), count($model->getQuery()->getActivities()));
+        $this->assertModelStructure($data['model'], \count($model->getQuery()->getProjects()), \count($model->getQuery()->getActivities()));
         $rows = $data['entries'];
-        $this->assertEquals($expectedRows, count($rows));
+        $this->assertEquals($expectedRows, \count($rows));
 
         $i = 0;
         foreach ($rows as $row) {
@@ -84,6 +84,7 @@ class DebugRendererTest extends TestCase
             'invoice.currency_symbol',
             'invoice.vat',
             'invoice.tax',
+            'invoice.language',
             'invoice.tax_nc',
             'invoice.tax_plain',
             'invoice.total_time',
@@ -109,6 +110,14 @@ class DebugRendererTest extends TestCase
             'query.month',
             'query.month_number',
             'query.year',
+            'query.begin_day',
+            'query.begin_month',
+            'query.begin_month_number',
+            'query.begin_year',
+            'query.end_day',
+            'query.end_month',
+            'query.end_month_number',
+            'query.end_year',
             'customer.id',
             'customer.address',
             'customer.name',
@@ -246,6 +255,6 @@ class DebugRendererTest extends TestCase
         sort($givenKeys);
 
         $this->assertEquals($expectedKeys, $givenKeys);
-        $this->assertEquals(count($keys), count($givenKeys));
+        $this->assertEquals(\count($keys), \count($givenKeys));
     }
 }
