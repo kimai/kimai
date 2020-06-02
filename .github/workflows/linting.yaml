@@ -18,7 +18,7 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: none
-                    extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql, zip, gd
+                    extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql, zip, gd, ldap
                     tools: cs2pr:1.1.0
             -   run: composer install --no-progress
             -   run: composer validate --no-check-all --strict
