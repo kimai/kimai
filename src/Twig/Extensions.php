@@ -149,7 +149,7 @@ class Extensions extends AbstractExtension
     {
         $duration = $this->getSecondsForDuration($duration);
 
-        return $this->getNumberFormatter()->format(number_format($duration / 3600, 2));
+        return number_format($this->getNumberFormatter()->format($duration / 3600),2);
     }
 
     /**
@@ -158,7 +158,7 @@ class Extensions extends AbstractExtension
      */
     public function amount($amount)
     {
-        return $this->getNumberFormatter()->format($amount);
+        return number_format($this->getNumberFormatter()->format($amount),2);
     }
 
     private function getSecondsForDuration($duration): int
@@ -247,8 +247,11 @@ class Extensions extends AbstractExtension
         }
 
         $this->locale = $locale;
-        $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::DECIMAL);
-        $this->moneyFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+        $this->numberFormatter = new \NumberFormatter($locale, NumberFormatter::DECIMAL);
+        $this->moneyFormatter = new \NumberFormatter($locale, NumberFormatter::CURRENCY);
+
+        $this->numberFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
+        $this->moneyFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
     }
 
     private function getNumberFormatter(): NumberFormatter
