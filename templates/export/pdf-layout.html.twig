@@ -278,9 +278,9 @@ mpdf-->
                         {% set entryRateInternal = '&ndash;' %}
                     {% endif %}
                     {% if showInternalRate %}
-                        <td class="cost">{{ entryRate }}</td>
+                        <td class="cost">{{ entryRateInternal }}</td>
                     {% endif %}
-                    <td class="cost">{{ entryRateInternal }}</td>
+                    <td class="cost">{{ entryRate }}</td>
                 {% endif %}
             </tr>
         {% endfor %}
