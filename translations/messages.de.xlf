@@ -304,6 +304,10 @@
                 <source>help.rate_internal</source>
                 <target>Interner Verrechnungswert (wenn dieser nicht angegeben ist, wird der normale Satz verwendet)</target>
             </trans-unit>
+            <trans-unit id="label.recalculate_rates">
+                <source>label.recalculate_rates</source>
+                <target>Preise neu berechnen</target>
+            </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
                 <target>Sprache</target>
