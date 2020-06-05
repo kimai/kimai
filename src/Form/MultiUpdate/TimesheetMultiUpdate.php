@@ -199,7 +199,7 @@ class TimesheetMultiUpdate extends AbstractType
         if ($options['include_rate']) {
             $builder
                 ->add('recalculateRates', YesNoType::class, [
-                    'label' => 'Recalculate rates', // FIXME translate me
+                    'label' => 'label.recalculate_rates',
                 ])
                 ->add('fixedRate', FixedRateType::class, [
                     'currency' => $currency,
