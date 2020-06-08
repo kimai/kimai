@@ -471,6 +471,7 @@ class ProjectRepository extends EntityRepository
             ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
             ->andWhere($qb->expr()->eq('p.visible', true))
             ->addGroupBy('p.id')
+            ->addOrderBy('p.name')
         ;
 
         return $qb->getQuery()->getResult();
@@ -478,22 +479,29 @@ class ProjectRepository extends EntityRepository
 
     private function todayProjectViewSubQuery(): string
     {
-        return '
+        $today = \DateTime::createFromFormat('U', time())->format('Y-m-d');
+        return "
             (
                 SELECT SUM(t1.duration)
                 FROM App\Entity\Timesheet AS t1
                 WHERE t1.project = t.project
-                    AND DATE(t1.begin) = CURRENT_DATE()
+                    AND DATE(t1.begin) = '$today'
             ) AS today
-        ';
+        ";
     }
 
     private function weekProjectViewSubQuery(): string
     {
-        $today = new \DateTime();
-        $firstDayOfWeek = $today->modify('this week')->format('Y-m-d');
-        $lastDayOfWeek = $today->modify('this week +6 days')->format('Y-m-d');
-
+        $today = \DateTime::createFromFormat('U', time());
+        $firstDayOfWeek = (clone $today)
+            ->modify('this week')
+            ->format('Y-m-d')
+        ;
+        $lastDayOfWeek = (clone $today)
+            ->modify('this week')
+            ->modify('+6 days')
+            ->format('Y-m-d')
+        ;
         return "
         (
             SELECT SUM(t2.duration)
