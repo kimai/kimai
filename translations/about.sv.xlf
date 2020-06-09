@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="special_thanks">
                 <source>special_thanks</source>
-                <target state="translated">Särskilt tack gå till …</target>
+                <target state="translated">Särskilt tack går till …</target>
             </trans-unit>
             <trans-unit id="library_authors">
                 <source>library_authors</source>
