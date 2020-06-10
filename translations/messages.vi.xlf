@@ -1,56 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="sv" datatype="plaintext" original="messages.en.xlf">
+    <file source-language="en" target-language="vi" datatype="plaintext" original="messages.en.xlf">
         <body>
             <!--
               Global template keys
             -->
             <trans-unit id="time_tracking">
                 <source>time_tracking</source>
-                <target state="translated">Tidsredovisning</target>
+                <target>Theo dõi thời gian</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
-                <target state="translated">Ja</target>
+                <target>Đúng</target>
             </trans-unit>
             <trans-unit id="no">
                 <source>no</source>
-                <target state="translated">Nej</target>
+                <target>Không</target>
             </trans-unit>
             <trans-unit id="both">
                 <source>both</source>
-                <target state="translated">båda</target>
+                <target>Cả hai</target>
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
-                <target state="translated">Detta är ett obligatoriskt fält</target>
+                <target>Bắt buộc</target>
             </trans-unit>
             <trans-unit id="create">
                 <source>create</source>
-                <target state="translated">Skapa</target>
+                <target>Tạo</target>
             </trans-unit>
             <trans-unit id="confirm.delete">
                 <source>confirm.delete</source>
-                <target state="translated">Vill du verkligen ta bort detta?</target>
+                <target>Bạn có thực sự muốn xóa nó?</target>
             </trans-unit>
             <trans-unit id="admin_entity.delete_confirm">
                 <source>admin_entity.delete_confirm</source>
-                <target state="translated">
-                    Denna data kommer också att raderas!
-                    Alternativt kan du välja en post som alla data ska överföras till:
+                <target>
+                    Dữ liệu này cũng sẽ bị xóa!
+                    Ngoài ra, bạn có thể chọn một mục nhập mà tất cả dữ liệu sẽ được chuyển đến:
                 </target>
             </trans-unit>
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
-                <target state="translated">Det här objektet kan raderas säkert.</target>
+                <target>Mục này có thể được xóa một cách an toàn.</target>
             </trans-unit>
             <trans-unit id="cancel">
                 <source>cancel</source>
-                <target state="translated">Avbryt</target>
+                <target>Hủy bỏ</target>
             </trans-unit>
             <trans-unit id="confirm">
                 <source>confirm</source>
-                <target state="translated">Bekräfta</target>
+                <target>Xác nhận</target>
+            </trans-unit>
+            <trans-unit id="upload">
+                <source>upload</source>
+                <target>Tải lên</target>
+            </trans-unit>
+            <trans-unit id="search">
+                <source>search</source>
+                <target>Tìm kiếm</target>
+            </trans-unit>
+            <trans-unit id="my.profile">
+                <source>my.profile</source>
+                <target>Thông tin của tôi</target>
+            </trans-unit>
+            <trans-unit id="update_multiple">
+                <source>update_multiple</source>
+                <target>%action% %count% entries?</target>
+            </trans-unit>
+            <trans-unit id="attachments">
+                <source>attachments</source>
+                <target>Các tập tin</target>
+            </trans-unit>
+            <trans-unit id="rates.empty">
+                <source>rates.empty</source>
+                <target>Không có phí đã được cấu hình.</target>
+            </trans-unit>
+            <trans-unit id="rates.title">
+                <source>rates.title</source>
+                <target>Lệ phí</target>
             </trans-unit>
 
             <!--
@@ -58,27 +86,31 @@
             -->
             <trans-unit id="label.password">
                 <source>label.password</source>
-                <target state="translated">Lösenord</target>
+                <target>Mật khẩu</target>
             </trans-unit>
             <trans-unit id="label.password_repeat">
                 <source>label.password_repeat</source>
-                <target state="translated">Upprepa lösenord</target>
+                <target>Lặp lại mật khẩu</target>
             </trans-unit>
             <trans-unit id="label.logout">
                 <source>label.logout</source>
-                <target state="translated">Logga ut</target>
+                <target>Đăng xuất</target>
             </trans-unit>
             <trans-unit id="label.user_profile">
                 <source>label.user_profile</source>
-                <target state="translated">Min profil</target>
+                <target>Thông tin của tôi</target>
             </trans-unit>
             <trans-unit id="label.api_token">
                 <source>label.api_token</source>
-                <target state="translated">API lösenord</target>
+                <target>Mật khẩu API</target>
             </trans-unit>
             <trans-unit id="label.api_token_repeat">
                 <source>label.api_token_repeat</source>
-                <target state="translated">Upprepa API lösenord</target>
+                <target>Lặp lại mật khẩu API</target>
+            </trans-unit>
+            <trans-unit id="login_required">
+                <source>login_required</source>
+                <target>Thiếu sự cho phép. Chuyển hướng để đăng nhập?</target>
             </trans-unit>
 
             <!--
@@ -86,67 +118,83 @@
             -->
             <trans-unit id="menu.homepage">
                 <source>menu.homepage</source>
-                <target>Dashboard</target>
+                <target>Bảng điều khiển</target>
             </trans-unit>
             <trans-unit id="menu.admin">
                 <source>menu.admin</source>
-                <target>Administration</target>
+                <target>Quản trị</target>
             </trans-unit>
             <trans-unit id="menu.system">
                 <source>menu.system</source>
-                <target>System</target>
+                <target>Hệ thống</target>
             </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
-                <target state="translated">Logga ut</target>
+                <target>Đăng xuất</target>
             </trans-unit>
             <trans-unit id="menu.timesheet">
                 <source>menu.timesheet</source>
-                <target state="translated">Min tidsredovisning</target>
+                <target>Bảng chấm công</target>
             </trans-unit>
             <trans-unit id="menu.invoice">
                 <source>menu.invoice</source>
-                <target state="translated">Fakturor</target>
+                <target>Hóa đơn</target>
             </trans-unit>
             <trans-unit id="menu.export">
                 <source>menu.export</source>
-                <target state="translated">Exportera</target>
+                <target>Xuất</target>
             </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
-                <target state="translated">Tidsschema</target>
+                <target>Bảng chấm công</target>
             </trans-unit>
             <trans-unit id="menu.admin_customer">
                 <source>menu.admin_customer</source>
-                <target state="translated">Kund</target>
+                <target>Khách hàng</target>
             </trans-unit>
             <trans-unit id="menu.admin_project">
                 <source>menu.admin_project</source>
-                <target state="translated">Projekt</target>
+                <target>Dự án</target>
             </trans-unit>
             <trans-unit id="menu.admin_activity">
                 <source>menu.admin_activity</source>
-                <target state="translated">Aktiviteter</target>
+                <target>Hoạt động</target>
             </trans-unit>
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
-                <target state="translated">Användare</target>
+                <target>Người dùng</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_team">
+                <source>menu.admin_team</source>
+                <target>Đội</target>
             </trans-unit>
             <trans-unit id="menu.plugin">
                 <source>menu.plugin</source>
-                <target>Plugins</target>
+                <target>Ứng dụng bổ sung</target>
             </trans-unit>
             <trans-unit id="menu.system_configuration">
                 <source>menu.system_configuration</source>
-                <target state="translated">Systeminställningar</target>
+                <target>Cài đặt</target>
             </trans-unit>
-
+            <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>Thẻ</target>
+            </trans-unit>
+            <trans-unit id="menu.doctor">
+                <source>menu.doctor</source>
+                <target>Bác sĩ</target>
+            </trans-unit>
+            
             <!--
               Error templates
             -->
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
-                <target state="translated">Inga poster hittades baserat på dina valda filter.</target>
+                <target>Không có mục nào được tìm thấy dựa trên các bộ lọc đã chọn của bạn.</target>
+            </trans-unit>
+            <trans-unit id="error.no_comments_found">
+                <source>error.no_comments_found</source>
+                <target>Chưa có bình luận nào được đăng.</target>
             </trans-unit>
 
             <!--
@@ -154,39 +202,39 @@
             -->
             <trans-unit id="label.date">
                 <source>label.date</source>
-                <target state="translated">Datum</target>
+                <target>Ngày</target>
             </trans-unit>
             <trans-unit id="label.starttime">
                 <source>label.starttime</source>
-                <target state="translated">Början</target>
+                <target>Bắt đầu</target>
             </trans-unit>
             <trans-unit id="label.endtime">
                 <source>label.endtime</source>
-                <target state="translated">Slutet</target>
+                <target>Kết thúc</target>
             </trans-unit>
             <trans-unit id="label.duration">
                 <source>label.duration</source>
-                <target state="translated">Varaktighet</target>
+                <target>Thời lượng</target>
             </trans-unit>
             <trans-unit id="label.user">
                 <source>label.user</source>
-                <target state="translated">Användare</target>
+                <target>Người dùng</target>
             </trans-unit>
             <trans-unit id="label.username">
                 <source>label.username</source>
-                <target>Username</target>
+                <target>Người dùng</target>
             </trans-unit>
             <trans-unit id="label.description">
                 <source>label.description</source>
-                <target state="translated">Beskrivning</target>
+                <target>Sự miêu tả</target>
             </trans-unit>
             <trans-unit id="label.name">
                 <source>label.name</source>
-                <target state="translated">Namn</target>
+                <target>Tên</target>
             </trans-unit>
             <trans-unit id="label.comment">
                 <source>label.comment</source>
-                <target state="translated">Kommentar</target>
+                <target>Bình luận</target>
             </trans-unit>
             <trans-unit id="label.id">
                 <source>label.id</source>
@@ -194,67 +242,91 @@
             </trans-unit>
             <trans-unit id="label.visible">
                 <source>label.visible</source>
-                <target state="translated">Synlig</target>
+                <target>Có thể nhìn thấy</target>
             </trans-unit>
             <trans-unit id="label.budget">
                 <source>label.budget</source>
-                <target>Budget</target>
+                <target>Ngân sách</target>
             </trans-unit>
             <trans-unit id="label.timeBudget">
                 <source>label.timeBudget</source>
-                <target>Time budget</target>
+                <target>Ngân sách thời gian</target>
             </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
-                <target state="translated">Aktivitet</target>
+                <target>Hoạt động</target>
             </trans-unit>
             <trans-unit id="label.project">
                 <source>label.project</source>
-                <target state="translated">Projekt</target>
+                <target>Dự án</target>
             </trans-unit>
             <trans-unit id="label.tag">
                 <source>label.tag</source>
-                <target state="translated">Taggar</target>
+                <target>Thẻ</target>
             </trans-unit>
             <trans-unit id="label.tags">
                 <source>label.tags</source>
-                <target state="translated">Taggar</target>
+                <target>Thẻ</target>
             </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
-                <target state="translated">Timpris</target>
+                <target>Tỷ lệ hàng giờ</target>
             </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
-                <target>Hourly rate</target>
+                <target>Tỷ lệ hàng giờ</target>
             </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
-                <target state="translated">Kimai-Tema</target>
+                <target>Hiển thị: màu sắc</target>
+            </trans-unit>
+            <trans-unit id="label.theme.layout">
+                <source>label.theme.layout</source>
+                <target>Hiển thị: bố cục</target>
             </trans-unit>
             <trans-unit id="label.hours">
                 <source>label.hours</source>
-                <target state="translated">Timmar</target>
+                <target>Giờ</target>
             </trans-unit>
             <trans-unit id="label.rate">
                 <source>label.rate</source>
-                <target state="translated">Pris</target>
+                <target>Tỷ lệ</target>
+            </trans-unit>
+            <trans-unit id="help.rate">
+                <source>help.rate</source>
+                <target>Tỷ lệ hàng giờ được tính phí</target>
+            </trans-unit>
+            <trans-unit id="label.rate_internal">
+                <source>label.rate_internal</source>
+                <target>Tỷ lệ nội bộ</target>
+            </trans-unit>
+            <trans-unit id="help.rate_internal">
+                <source>help.rate_internal</source>
+                <target>Chi phí nội bộ (nếu không được chỉ định, tỷ lệ thông thường được sử dụng)</target>
             </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
-                <target state="translated">Språk</target>
+                <target>Ngôn ngữ</target>
             </trans-unit>
             <trans-unit id="label.customer">
                 <source>label.customer</source>
-                <target state="translated">Kund</target>
+                <target>khách hàng</target>
             </trans-unit>
             <trans-unit id="label.email">
                 <source>label.email</source>
-                <target state="translated">E-post</target>
+                <target>E-mail</target>
+            </trans-unit>
+            <trans-unit id="label.team">
+                <source>label.team</source>
+                <target>Nhóm</target>
+            </trans-unit>
+            <trans-unit id="label.teamlead">
+                <source>label.teamlead</source>
+                <target>Đồng đội</target>
             </trans-unit>
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
-                <target state="translated">Skapa ytterligare poster</target>
+                <target>Tạo các mục tiếp theo</target>
             </trans-unit>
 
             <!--
@@ -262,27 +334,31 @@
             -->
             <trans-unit id="label.actions">
                 <source>label.actions</source>
-                <target state="translated">Åtgärd</target>
+                <target>Hành động</target>
             </trans-unit>
             <trans-unit id="action.edit">
                 <source>action.edit</source>
-                <target state="translated">Ändra</target>
+                <target>Biên tập</target>
             </trans-unit>
             <trans-unit id="action.delete">
                 <source>action.delete</source>
-                <target state="translated">Ta bort</target>
+                <target>Xóa bỏ</target>
             </trans-unit>
             <trans-unit id="action.save">
                 <source>action.save</source>
-                <target state="translated">Spara</target>
+                <target>Lưu</target>
+            </trans-unit>
+            <trans-unit id="action.reset">
+                <source>action.reset</source>
+                <target>Cài lại</target>
             </trans-unit>
             <trans-unit id="action.back">
                 <source>action.back</source>
-                <target state="translated">Tillbaka</target>
+                <target>Trở lại</target>
             </trans-unit>
             <trans-unit id="action.close">
                 <source>action.close</source>
-                <target state="translated">Stäng</target>
+                <target>Đóng</target>
             </trans-unit>
 
             <!--
@@ -290,15 +366,15 @@
             -->
             <trans-unit id="dashboard.title">
                 <source>dashboard.title</source>
-                <target>Dashboard</target>
+                <target>Bảng điều khiển</target>
             </trans-unit>
             <trans-unit id="dashboard.subtitle">
                 <source>dashboard.subtitle</source>
-                <target state="translated">Välkommen!</target>
+                <target>Chào mừng bạn!</target>
             </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
-                <target state="translated">Alla användare</target>
+                <target>Tất cả người dùng</target>
             </trans-unit>
 
             <!--
@@ -306,11 +382,27 @@
             -->
             <trans-unit id="more.info.link">
                 <source>more.info.link</source>
-                <target state="translated">Mer info</target>
+                <target>Thêm thông tin</target>
             </trans-unit>
             <trans-unit id="label.toggle_dropdown">
                 <source>label.toggle_dropdown</source>
-                <target state="translated">Visa meny</target>
+                <target>Hiển thị menu</target>
+            </trans-unit>
+            <trans-unit id="label.my_teams">
+                <source>label.my_teams</source>
+                <target>Nhóm của tôi</target>
+            </trans-unit>
+            <trans-unit id="label.my_team_projects">
+                <source>label.my_team_projects</source>
+                <target>Dự án nhóm &amp; ngân sách</target>
+            </trans-unit>
+            <trans-unit id="label.progress">
+                <source>label.progress</source>
+                <target>Phát triển</target>
+            </trans-unit>
+            <trans-unit id="label.plus_more">
+                <source>label.plus_more</source>
+                <target>+%count% hơn</target>
             </trans-unit>
 
             <!--
@@ -318,35 +410,51 @@
             -->
             <trans-unit id="timesheet.title">
                 <source>timesheet.title</source>
-                <target state="translated">Mina tidsredovisningar</target>
+                <target>Bảng chấm công</target>
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
-                <target state="translated">Ändra post</target>
+                <target>Chỉnh sửa hồ sơ</target>
             </trans-unit>
             <trans-unit id="label.begin">
                 <source>label.begin</source>
-                <target state="translated">Från</target>
+                <target>Từ</target>
             </trans-unit>
             <trans-unit id="label.end">
                 <source>label.end</source>
-                <target state="translated">till</target>
+                <target>Đến</target>
             </trans-unit>
             <trans-unit id="label.daterange">
                 <source>label.daterange</source>
-                <target state="translated">Tidsintervall</target>
+                <target>Phạm vi thời gian</target>
             </trans-unit>
             <trans-unit id="modal.columns.title">
                 <source>modal.columns.title</source>
-                <target state="translated">Ändra kolumnns synlighet</target>
+                <target>Thay đổi mức độ hiển thị của cột</target>
             </trans-unit>
             <trans-unit id="modal.columns.description">
                 <source>modal.columns.description</source>
-                <target state="translated">När du sparar de kolumner som inte är markerade kommer de att döljas och den här inställningen lagras i en webbläsarkaka. Om du tar bort dina cookies kommer inställningarna att återställas.</target>
+                <target>Khi lưu các cột chưa được kiểm tra sẽ bị ẩn và cài đặt này sẽ được lưu trong cookie trình duyệt. Nếu bạn xóa cookie, các cài đặt sẽ trở về mặc định.</target>
             </trans-unit>
             <trans-unit id="label.fixedRate">
                 <source>label.fixedRate</source>
-                <target state="translated">Fast pris</target>
+                <target>Tỷ lệ cố định</target>
+            </trans-unit>
+            <trans-unit id="help.fixedRate">
+                <source>help.fixedRate</source>
+                <target>Mỗi bản ghi thời gian có cùng giá trị, bất kể thời lượng của nó</target>
+            </trans-unit>
+            <trans-unit id="label.color">
+                <source>label.color</source>
+                <target>Màu sắc</target>
+            </trans-unit>
+            <trans-unit id="label.replaceTags">
+                <source>label.replaceTags</source>
+                <target>Thay thế thẻ</target>
+            </trans-unit>
+            <trans-unit id="label.appendTags">
+                <source>label.appendTags</source>
+                <target>Nối các thẻ</target>
             </trans-unit>
 
             <!--
@@ -354,27 +462,23 @@
             -->
             <trans-unit id="profile.title">
                 <source>profile.title</source>
-                <target state="translated">Användarprofil</target>
+                <target>Thông tin người dùng</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
-                <target state="translated">Om mig</target>
+                <target>Về tôi</target>
             </trans-unit>
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
-                <target state="translated">Arbetat sedan</target>
-            </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target state="translated">Årlig statistik</target>
+                <target>Làm việc từ</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
-                <target>Profile</target>
+                <target>Hồ sơ</target>
             </trans-unit>
             <trans-unit id="profile.password">
                 <source>profile.password</source>
-                <target state="translated">Lösenord</target>
+                <target>Mật khẩu</target>
             </trans-unit>
             <trans-unit id="profile.api-token">
                 <source>profile.api-token</source>
@@ -382,44 +486,52 @@
             </trans-unit>
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>
-                <target state="translated">Roller</target>
+                <target>Vai trò</target>
+            </trans-unit>
+            <trans-unit id="profile.teams">
+                <source>profile.teams</source>
+                <target>Nhóm</target>
             </trans-unit>
             <trans-unit id="profile.preferences">
                 <source>profile.preferences</source>
-                <target state="translated">Inställningar</target>
+                <target>Sở thích</target>
             </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
-                <target state="translated">Minimera vänster sidofält</target>
+                <target>Thu nhỏ thanh bên trái</target>
             </trans-unit>
             <trans-unit id="label.calendar.initial_view">
                 <source>label.calendar.initial_view</source>
-                <target state="translated">Initial kalendervy</target>
+                <target>Cấu hình xem lịch</target>
             </trans-unit>
             <trans-unit id="label.login.initial_view">
                 <source>label.login.initial_view</source>
-                <target state="translated">Initial vy efter inloggning</target>
+                <target>Chế độ xem ban đầu sau khi đăng nhập</target>
+            </trans-unit>
+            <trans-unit id="label.lastLogin">
+                <source>label.lastLogin</source>
+                <target>Lần đăng nhập cuôi</target>
             </trans-unit>
             <!-- Options for user-preference label.calendar.initial_view -->
             <trans-unit id="month">
                 <source>month</source>
-                <target state="translated">Månad</target>
+                <target>Tháng</target>
             </trans-unit>
             <trans-unit id="agendaWeek">
                 <source>agendaWeek</source>
-                <target state="translated">Vecka</target>
+                <target>Tuần</target>
             </trans-unit>
             <trans-unit id="agendaDay">
                 <source>agendaDay</source>
-                <target state="translated">Dag</target>
+                <target>Ngày</target>
             </trans-unit>
             <trans-unit id="label.timesheet.daily_stats">
                 <source>label.timesheet.daily_stats</source>
-                <target state="translated">Visa daglig statistik i tidtabell</target>
+                <target>Hiển thị số liệu thống kê hàng ngày trong bảng chấm công</target>
             </trans-unit>
-            <trans-unit id="label.now">
-                <source>label.now</source>
-                <target state="translated">aktuell tid</target>
+            <trans-unit id="label.timesheet.export_decimal">
+                <source>label.timesheet.export_decimal</source>
+                <target>Sử dụng thời lượng thập phân khi xuất</target>
             </trans-unit>
 
             <!--
@@ -427,7 +539,7 @@
             -->
             <trans-unit id="calendar.title">
                 <source>calendar.title</source>
-                <target state="translated">Kalender</target>
+                <target>Lịch</target>
             </trans-unit>
 
             <!--
@@ -435,7 +547,7 @@
             -->
             <trans-unit id="admin_timesheet.title">
                 <source>admin_timesheet.title</source>
-                <target state="translated">Tidrapporter</target>
+                <target>Bảng chấm công</target>
             </trans-unit>
 
             <!--
@@ -443,13 +555,22 @@
             -->
             <trans-unit id="admin_project.title">
                 <source>admin_project.title</source>
-                <target state="translated">Projekt</target>
+                <target>Dự án</target>
             </trans-unit>
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
-                <target state="translated">Projektet %project% för kunden %customer% har för närvarande %activities% 
-                     aktiviteter och %records% tidrapporter, som summeras till %duration%.
+                <target>
+                    Hiện tại dự án  %project% cho khách hàng %customer% với %activities%
+                    hành động và %records% thời gian lưu, tổng cộng lên đến tổng số %duration%.
                 </target>
+            </trans-unit>
+            <trans-unit id="label.project_start">
+                <source>label.project_start</source>
+                <target>Dự án bắt đầu</target>
+            </trans-unit>
+            <trans-unit id="label.project_end">
+                <source>label.project_end</source>
+                <target>Kết thúc dự án</target>
             </trans-unit>
 
             <!--
@@ -457,14 +578,14 @@
             -->
             <trans-unit id="admin_activity.title">
                 <source>admin_activity.title</source>
-                <target state="translated">Aktiviteter</target>
+                <target>Hoạt động</target>
             </trans-unit>
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
-                <target state="translated">
-                     För närvarande har aktiviteten %activity% i projektet %project% för kunden %customer%
-                     har %records% tidrapporter, vilket summeras till %duration%.
-                     </target>
+                <target>
+                    Hiện đang hoạt động %activity% trong dự án %project% với khách hàng %customer%
+                    có %records% thời gian lưu, tổng cộng lên đến tổng số %duration%.
+                </target>
             </trans-unit>
 
             <!--
@@ -472,35 +593,39 @@
             -->
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
-                <target state="translated">Kunder</target>
+                <target>Khách hàng</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
-                <target state="translated">Konto</target>
+                <target>Tài khoản</target>
             </trans-unit>
             <trans-unit id="label.company">
                 <source>label.company</source>
-                <target state="translated">Företagsnamn</target>
+                <target>Tên công ty</target>
             </trans-unit>
             <trans-unit id="label.vat">
                 <source>label.vat</source>
-                <target state="translated">Moms</target>
+                <target>Thuế</target>
+            </trans-unit>
+            <trans-unit id="label.vat_id">
+                <source>label.vat_id</source>
+                <target>VAT-ID</target>
             </trans-unit>
             <trans-unit id="label.contact">
                 <source>label.contact</source>
-                <target state="translated">Kontakt</target>
+                <target>Liên hệ</target>
             </trans-unit>
             <trans-unit id="label.address">
                 <source>label.address</source>
-                <target state="translated">Adress</target>
+                <target>Địa chỉ</target>
             </trans-unit>
             <trans-unit id="label.country">
                 <source>label.country</source>
-                <target state="translated">Land</target>
+                <target>Quốc gia</target>
             </trans-unit>
             <trans-unit id="label.phone">
                 <source>label.phone</source>
-                <target state="translated">Telefon</target>
+                <target>Số điện thoại</target>
             </trans-unit>
             <trans-unit id="label.fax">
                 <source>label.fax</source>
@@ -508,60 +633,72 @@
             </trans-unit>
             <trans-unit id="label.mobile">
                 <source>label.mobile</source>
-                <target state="translated">Mobil</target>
+                <target>Di động</target>
             </trans-unit>
             <trans-unit id="label.homepage">
                 <source>label.homepage</source>
-                <target state="translated">Hemsida</target>
+                <target>Trang chủ</target>
             </trans-unit>
             <trans-unit id="label.timezone">
                 <source>label.timezone</source>
-                <target state="translated">Timezon</target>
+                <target>Múi giờ</target>
             </trans-unit>
             <trans-unit id="label.currency">
                 <source>label.currency</source>
-                <target state="translated">Valuta</target>
+                <target>Tiền tệ</target>
             </trans-unit>
             <trans-unit id="admin_customer.short_stats">
                 <source>admin_customer.short_stats</source>
-                <target state="translated">
-                    För närvarande har kunden %customer% %project% projekt med %activities% aktiviteter,
-                    med %records% tidrapporter som summeras till %duration%.
+                <target>
+                    Currently the customer %customer% has %project% projects with %activity% activities, which sum up
+                    in %records% time-records to a total of %duration%.
                 </target>
             </trans-unit>
 
             <!--
-              Admin: User
+              Admin: Users
             -->
             <trans-unit id="admin_user.title">
                 <source>admin_user.title</source>
-                <target state="translated">Användare</target>
+                <target>Người dùng</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
-                <target state="translated">Namn</target>
+                <target>Tên</target>
             </trans-unit>
             <trans-unit id="label.title">
                 <source>label.title</source>
-                <target state="translated">Titel</target>
+                <target>Tiêu đề</target>
             </trans-unit>
             <trans-unit id="label.avatar">
                 <source>label.avatar</source>
-                <target state="translated">Profilbild</target>
+                <target>Hình ảnh hồ sơ cá nhân</target>
             </trans-unit>
             <trans-unit id="label.active">
                 <source>label.active</source>
-                <target state="translated">Aktiv</target>
+                <target>Kích hoạt</target>
             </trans-unit>
             <trans-unit id="label.roles">
                 <source>label.roles</source>
-                <target state="translated">Roll</target>
+                <target>Vai trò</target>
             </trans-unit>
             <trans-unit id="admin_user.short_stats">
                 <source>admin_user.short_stats</source>
-                <target state="translated">
-                    För närvarande har användaren %user% %records% tidrapporter som summeras till %duration%.
+                <target>
+                    Currently the user %user% has %records% time-records which sum up to a total of %duration%.
                 </target>
+            </trans-unit>
+            <trans-unit id="user_permissions.title">
+                <source>user_permissions.title</source>
+                <target>Quyền Người dùng</target>
+            </trans-unit>
+            <trans-unit id="user_role.title">
+                <source>user_role.title</source>
+                <target>Vai trò người dùng</target>
+            </trans-unit>
+            <trans-unit id="Allowed character: A-Z and _">
+                <source>Allowed character: A-Z and _</source>
+                <target>Cho phép ký tự: A-Z và _</target>
             </trans-unit>
 
             <!--
@@ -569,11 +706,11 @@
             -->
             <trans-unit id="label.version">
                 <source>label.version</source>
-                <target>Version</target>
+                <target>Phiên bản</target>
             </trans-unit>
             <trans-unit id="label.required_version">
                 <source>label.required_version</source>
-                <target state="translated">Kompatibel med</target>
+                <target>Tương thích với</target>
             </trans-unit>
 
             <!--
@@ -581,19 +718,19 @@
             -->
             <trans-unit id="ROLE_SUPER_ADMIN">
                 <source>ROLE_SUPER_ADMIN</source>
-                <target>System-Admin</target>
+                <target>Quản trị hệ thống</target>
             </trans-unit>
             <trans-unit id="ROLE_ADMIN">
                 <source>ROLE_ADMIN</source>
-                <target state="translated">Administratör</target>
+                <target>Người quản lý</target>
             </trans-unit>
             <trans-unit id="ROLE_TEAMLEAD">
                 <source>ROLE_TEAMLEAD</source>
-                <target state="translated">Teamledare</target>
+                <target>Quản lý nhóm</target>
             </trans-unit>
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
-                <target state="translated">Användare</target>
+                <target>Người dùng</target>
             </trans-unit>
 
             <!--
@@ -601,83 +738,95 @@
             -->
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
-                <target state="translated">Arbetstimmar idag</target>
+                <target>Giờ làm việc hôm nay</target>
             </trans-unit>
             <trans-unit id="stats.durationWeek">
                 <source>stats.durationWeek</source>
-                <target state="translated">Arbetstimmar denna veckan</target>
+                <target>Giờ làm việc trong tuần này</target>
             </trans-unit>
             <trans-unit id="stats.durationMonth">
                 <source>stats.durationMonth</source>
-                <target state="translated">Arbetstimmar denna månaden</target>
+                <target>Giờ làm việc trong tháng này</target>
             </trans-unit>
             <trans-unit id="stats.durationYear">
                 <source>stats.durationYear</source>
-                <target state="translated">Arbetstimmar detta  året</target>
+                <target>Giờ làm việc năm nay</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
-                <target state="translated">Arbetstid totalt</target>
+                <target>Tổng số giờ làm việc</target>
+            </trans-unit>
+            <trans-unit id="stats.yourWorkingHours">
+                <source>stats.yourWorkingHours</source>
+                <target>Giờ làm việc của tôi</target>
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>
-                <target state="translated">Intäkter idag</target>
+                <target>Doanh thu hôm nay</target>
             </trans-unit>
             <trans-unit id="stats.amountWeek">
                 <source>stats.amountWeek</source>
-                <target state="translated">Intäkter denna vecka</target>
+                <target>Doanh thu tuần này</target>
             </trans-unit>
             <trans-unit id="stats.amountMonth">
                 <source>stats.amountMonth</source>
-                <target state="translated">Intäkter denna månad</target>
+                <target>Doanh thu tháng này</target>
             </trans-unit>
             <trans-unit id="stats.amountYear">
                 <source>stats.amountYear</source>
-                <target state="translated">Intäkter i år</target>
+                <target>Doanh thu năm nay</target>
             </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
-                <target state="translated">Inkomster totalt</target>
+                <target>Tổng doanh thu</target>
             </trans-unit>
             <trans-unit id="stats.userActiveToday">
                 <source>stats.userActiveToday</source>
-                <target state="translated">Aktiva användare idag</target>
+                <target>Người dùng tích cực ngày hôm nays</target>
             </trans-unit>
             <trans-unit id="stats.userActiveWeek">
                 <source>stats.userActiveWeek</source>
-                <target state="translated">Aktiva användare den här veckan</target>
+                <target>Người dùng tích cực trong tuần này</target>
             </trans-unit>
             <trans-unit id="stats.userActiveMonth">
                 <source>stats.userActiveMonth</source>
-                <target state="translated">Aktiva användare den här månaden</target>
+                <target>Người dùng tích cực trong tháng này</target>
             </trans-unit>
             <trans-unit id="stats.userActiveYear">
                 <source>stats.userActiveYear</source>
-                <target state="translated">Aktiva användare i år</target>
+                <target>Người dùng tích cực trong năm nay</target>
             </trans-unit>
             <trans-unit id="stats.userActiveTotal">
                 <source>stats.userActiveTotal</source>
-                <target state="translated">Aktiva användare någonsin</target>
+                <target>Người dùng tích cực</target>
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
-                <target state="translated">Aktiva poster</target>
+                <target>Hồ sơ hoạt động</target>
             </trans-unit>
             <trans-unit id="stats.userTotal">
                 <source>stats.userTotal</source>
-                <target state="translated">Antal användare</target>
+                <target>Người dùng</target>
             </trans-unit>
             <trans-unit id="stats.activityTotal">
                 <source>stats.activityTotal</source>
-                <target state="translated">Antal aktiviter</target>
+                <target>Hoạt động</target>
             </trans-unit>
             <trans-unit id="stats.projectTotal">
                 <source>stats.projectTotal</source>
-                <target state="translated">Antal projekt</target>
+                <target>Dự án</target>
             </trans-unit>
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
-                <target state="translated">Antal kunder</target>
+                <target>Khách hàng</target>
+            </trans-unit>
+            <trans-unit id="stats.percentUsed">
+                <source>stats.percentUsed</source>
+                <target>%percent%% đã sử dụng</target>
+            </trans-unit>
+            <trans-unit id="stats.percentUsedLeft">
+                <source>stats.percentUsedLeft</source>
+                <target>%percent%% đã sử dụng (%left% vẫn đang mở)</target>
             </trans-unit>
 
             <!--
@@ -685,15 +834,27 @@
             -->
             <trans-unit id="admin_invoice_template.title">
                 <source>admin_invoice_template.title</source>
-                <target state="translated">Fakturamall</target>
+                <target>Mẫu hóa đơn</target>
             </trans-unit>
             <trans-unit id="invoice.title">
                 <source>invoice.title</source>
-                <target state="translated">Fakturor</target>
+                <target>Hóa đơn</target>
+            </trans-unit>
+            <trans-unit id="invoice.filter">
+                <source>invoice.filter</source>
+                <target>Lọc dữ liệu hóa đơn</target>
+            </trans-unit>
+            <trans-unit id="button.preview">
+                <source>button.preview</source>
+                <target>Xem trước</target>
+            </trans-unit>
+            <trans-unit id="button.preview_print">
+                <source>button.preview_print</source>
+                <target>Xem thử bản in</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
-                <target state="translated">Skriv ut</target>
+                <target>In</target>
             </trans-unit>
             <trans-unit id="button.csv">
                 <source>button.csv</source>
@@ -713,87 +874,115 @@
             </trans-unit>
             <trans-unit id="invoice_print">
                 <source>invoice_print</source>
-                <target state="translated">Faktura</target>
+                <target>Hóa đơn</target>
+            </trans-unit>
+            <trans-unit id="label.mark_as_exported">
+                <source>label.mark_as_exported</source>
+                <target>Đánh dấu là đã xuất</target>
             </trans-unit>
             <trans-unit id="label.template">
                 <source>label.template</source>
-                <target state="translated">Mail</target>
+                <target>Bản mẫu</target>
             </trans-unit>
             <trans-unit id="label.due_days">
                 <source>label.due_days</source>
-                <target state="translated">Betalningsperiod i dagar</target>
+                <target>Thời hạn thanh toán tính bằng ngày</target>
             </trans-unit>
             <trans-unit id="invoice.due_days">
                 <source>invoice.due_days</source>
-                <target state="translated">Förfallodatum</target>
+                <target>Mục tiêu thanh toán</target>
             </trans-unit>
             <trans-unit id="invoice.from">
                 <source>invoice.from</source>
-                <target state="translated">Från</target>
+                <target>Từ</target>
             </trans-unit>
             <trans-unit id="invoice.to">
                 <source>invoice.to</source>
-                <target state="translated">Till</target>
+                <target>Đến</target>
             </trans-unit>
             <trans-unit id="invoice.number">
                 <source>invoice.number</source>
-                <target state="translated">Fakturanummer</target>
+                <target>Số hóa đơn</target>
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
-                <target>Nettobelopp</target>
+                <target>Tổng phụ</target>
             </trans-unit>
             <trans-unit id="invoice.tax">
                 <source>invoice.tax</source>
-                <target state="translated">Moms</target>
+                <target>Thuế</target>
             </trans-unit>
             <trans-unit id="invoice.total">
                 <source>invoice.total</source>
-                <target state="translated">Totalt</target>
+                <target>Tổng</target>
             </trans-unit>
             <trans-unit id="invoice.service_date">
                 <source>invoice.service_date</source>
-                <target state="translated">Arbetstillfälle</target>
+                <target>Ngày phục vụ</target>
             </trans-unit>
             <trans-unit id="label.amount">
                 <source>label.amount</source>
-                <target state="translated">Antal</target>
+                <target>Số lượng</target>
             </trans-unit>
             <trans-unit id="label.total_rate">
                 <source>label.total_rate</source>
-                <target state="translated">Belopp</target>
+                <target>Tổng giá</target>
             </trans-unit>
             <trans-unit id="label.unit_price">
                 <source>label.unit_price</source>
-                <target state="translated">Enhetspris</target>
+                <target>Đơn giá</target>
             </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
-                <target state="translated">Betalningsvillkor</target>
+                <target>Điều khoản thanh toán</target>
             </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
-                <target state="translated">Bekräftelse: Datum / Säljarens namn / Signatur</target>
+                <target>Xác nhận: Ngày / Tên Người Tư vấn / Chữ ký</target>
             </trans-unit>
             <trans-unit id="invoice.signature_customer">
                 <source>invoice.signature_customer</source>
-                <target state="translated">Bekräftelse: Datum / Kundens namn / Signatur</target>
+                <target>Xác nhận: Ngày / Tên khách hàng / Chữ ký</target>
             </trans-unit>
             <trans-unit id="invoice.total_working_time">
-                <source>invoice.total_working_time</source>            
-                <target state="translated">Total arbetstid</target>
+                <source>invoice.total_working_time</source>
+                <target>Tổng thời gian</target>
             </trans-unit>
             <trans-unit id="label.orderNumber">
                 <source>label.orderNumber</source>
-                <target state="translated">Ordernummer</target>
+                <target>Số thứ tự</target>
+            </trans-unit>
+            <trans-unit id="label.orderDate">
+                <source>label.orderDate</source>
+                <target>Ngày đặt hàng</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">
                 <source>label.invoice_tax_number</source>
-                <target state="translated">VAT nr.:</target>
+                <target>VAT no.:</target>
             </trans-unit>
             <trans-unit id="label.invoice_bank_account">
                 <source>label.invoice_bank_account</source>
-                <target state="translated">Bankkonto</target>
+                <target>Ngày đặt hàng...</target>
+            </trans-unit>
+            <trans-unit id="label.decimalDuration">
+                <source>label.decimalDuration</source>
+                <target>Thời lượng hiển thị dưới dạng số thập phân</target>
+            </trans-unit>
+            <trans-unit id="label.status">
+                <source>label.status</source>
+                <target>Trạng thái</target>
+            </trans-unit>
+            <trans-unit id="status.new">
+                <source>status.new</source>
+                <target>Mới</target>
+            </trans-unit>
+            <trans-unit id="status.pending">
+                <source>status.pending</source>
+                <target>Đang chờ xử lý</target>
+            </trans-unit>
+            <trans-unit id="status.paid">
+                <source>status.paid</source>
+                <target>Đã thanh toán</target>
             </trans-unit>
 
             <!--
@@ -801,35 +990,39 @@
             -->
             <trans-unit id="export.title">
                 <source>export.title</source>
-                <target state="translated">Exportera</target>
+                <target>Xuất</target>
             </trans-unit>
             <trans-unit id="export.subtitle">
                 <source>export.subtitle</source>
-                <target state="translated">Exportera tidrapport till olika format</target>
+                <target>Xuất dữ liệu bảng chấm công sang các định dạng khác nhau</target>
+            </trans-unit>
+            <trans-unit id="export.filter">
+                <source>export.filter</source>
+                <target>Lọc dữ liệu để xuất</target>
             </trans-unit>
             <trans-unit id="export.period">
                 <source>export.period</source>
-                <target>Period</target>
+                <target>Giai đoạn</target>
             </trans-unit>
             <trans-unit id="export.document_title">
                 <source>export.document_title</source>
-                <target state="translated">Export av tidrapporter</target>
+                <target>Xuất bảng chấm công</target>
             </trans-unit>
             <trans-unit id="export.full_list">
                 <source>export.full_list</source>
-                <target state="translated">Full lista</target>
+                <target>Danh sách đầy đủ</target>
             </trans-unit>
             <trans-unit id="export.summary">
                 <source>export.summary</source>
-                <target state="translated">Sammanfattning</target>
+                <target>Tóm lược</target>
             </trans-unit>
             <trans-unit id="export.page_of">
                 <source>export.page_of</source>
-                <target state="translated">Sida %page% av %pages%</target>
+                <target>Trang %page% của %pages%</target>
             </trans-unit>
             <trans-unit id="export.date_copyright">
                 <source>export.date_copyright</source>
-                <target state="translated">Skapad %date% med %kimai%</target>
+                <target>Tạo %date% với %kimai%</target>
             </trans-unit>
 
             <!--
@@ -837,51 +1030,51 @@
             -->
             <trans-unit id="month.1">
                 <source>month.1</source>
-                <target state="translated">Januari</target>
+                <target>Tháng 1</target>
             </trans-unit>
             <trans-unit id="month.2">
                 <source>month.2</source>
-                <target state="translated">Februari</target>
+                <target>Tháng 2</target>
             </trans-unit>
             <trans-unit id="month.3">
                 <source>month.3</source>
-                <target state="translated">Mars</target>
+                <target>Tháng 3</target>
             </trans-unit>
             <trans-unit id="month.4">
                 <source>month.4</source>
-                <target state="translated">April</target>
+                <target>Tháng 4</target>
             </trans-unit>
             <trans-unit id="month.5">
                 <source>month.5</source>
-                <target state="translated">Maj</target>
+                <target>Tháng 5</target>
             </trans-unit>
             <trans-unit id="month.6">
                 <source>month.6</source>
-                <target state="translated">Juni</target>
+                <target>Tháng 6</target>
             </trans-unit>
             <trans-unit id="month.7">
                 <source>month.7</source>
-                <target state="translated">Juli</target>
+                <target>Tháng 7</target>
             </trans-unit>
             <trans-unit id="month.8">
                 <source>month.8</source>
-                <target state="translated">Augusti</target>
+                <target>Tháng 8</target>
             </trans-unit>
             <trans-unit id="month.9">
                 <source>month.9</source>
-                <target>September</target>
+                <target>Tháng 9</target>
             </trans-unit>
             <trans-unit id="month.10">
                 <source>month.10</source>
-                <target state="translated">Oktober</target>
+                <target>Tháng 10</target>
             </trans-unit>
             <trans-unit id="month.11">
                 <source>month.11</source>
-                <target>November</target>
+                <target>Tháng 11</target>
             </trans-unit>
             <trans-unit id="month.12">
                 <source>month.12</source>
-                <target>December</target>
+                <target>Tháng 12</target>
             </trans-unit>
 
             <!--
@@ -889,23 +1082,23 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target state="translated">Dina aktiva tidsmätningar</target>
+                <target>Đo thời gian hoạt động của bạn</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
-                <target state="translated">Visa alla Poster</target>
+                <target>Hiển thị tất cả các hồ sơ</target>
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target state="translated">Starta om en av dina senaste aktiviteter</target>
+                <target>Khởi động lại một trong những hoạt động cuối cùng của bạn</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
-                <target state="translated">%activity% i %project% för %customer%</target>
+                <target>%activity% trong %project% của %customer%</target>
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target state="translated">Skapa ny tidrapport</target>
+                <target>Tạo bản ghi thời gian mới</target>
             </trans-unit>
 
             <!--
@@ -913,47 +1106,47 @@
             -->
             <trans-unit id="label.pageSize">
                 <source>label.pageSize</source>
-                <target state="translated">Pappersstorlek</target>
+                <target>Kích thước trang</target>
             </trans-unit>
             <trans-unit id="label.entryState">
                 <source>label.entryState</source>
-                <target state="translated">Post</target>
+                <target>Hồ sơ</target>
             </trans-unit>
             <trans-unit id="label.exported">
                 <source>label.exported</source>
-                <target state="translated">Exporterad</target>
+                <target>Xuất khẩu</target>
             </trans-unit>
             <trans-unit id="entryState.exported">
                 <source>entryState.exported</source>
-                <target state="translated">Rensad</target>
+                <target>Dọn dẹp</target>
             </trans-unit>
             <trans-unit id="entryState.not_exported">
                 <source>entryState.not_exported</source>
-                <target state="translated">Öppen</target>
+                <target>Mở</target>
             </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
-                <target state="translated">Alla</target>
+                <target>Tất cả</target>
             </trans-unit>
             <trans-unit id="entryState.running">
                 <source>entryState.running</source>
-                <target state="translated">Aktiv</target>
+                <target>Hoạt động</target>
             </trans-unit>
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
-                <target state="translated">Stoppad</target>
+                <target>Ngừng</target>
             </trans-unit>
             <trans-unit id="export.clear_all">
                 <source>export.clear_all</source>
-                <target state="translated">Markera alla visade poster som öppna?</target>
+                <target>Đánh dấu tất cả các hồ sơ được hiển thị là mở?</target>
             </trans-unit>
             <trans-unit id="export.mark_all">
                 <source>export.mark_all</source>
-                <target state="translated">Markera alla visade poster som rensade?</target>
+                <target>Đánh dấu tất cả các hồ sơ được hiển thị là đã xóa?</target>
             </trans-unit>
             <trans-unit id="label.globalsOnly">
                 <source>label.globalsOnly</source>
-                <target state="translated">Endast globalt</target>
+                <target>Chỉ toàn cầu</target>
             </trans-unit>
         </body>
     </file>

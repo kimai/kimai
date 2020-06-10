@@ -1,52 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="sv" datatype="plaintext" original="exceptions.en.xlf">
+    <file source-language="en" target-language="vi" datatype="plaintext" original="exceptions.en.xlf">
         <body>
             <trans-unit id="access.denied">
                 <source>access.denied</source>
-                <target state="translated">Åtkomst nekad</target>
+                <target>Truy cập đã bị từ chối</target>
             </trans-unit>
             <trans-unit id="stacktrace">
                 <source>stacktrace</source>
-                <target state="translated">Ett problem uppstod här</target>
+                <target>Vấn đề xảy ra ở đây</target>
             </trans-unit>
             <trans-unit id="http_error.title">
                 <source>http_error.title</source>
-                <target state="translated">Fel</target>
+                <target>Lỗi</target>
             </trans-unit>
             <trans-unit id="http_error.description">
                 <source>http_error.description</source>
-                <target state="translated">Oj! Ett fel uppstod.</target>
+                <target>Có cái gì đó không đúng</target>
             </trans-unit>
             <trans-unit id="http_error.suggestion">
                 <source>http_error.suggestion</source>
-                <target state="translated">
-                    Ett oväntat fel inträffade, försök igen.
-                    Om problemet kvarstår efter att du försökt igen, kontakta din administratör.
-                    Du kan ha hittat en bugg.</target>
+                <target>
+                    Xảy ra lỗi nghiêm trọng, vui lòng thử lại.
+                    Bạn có thể đã tìm thấy sự cố phần mềm, vui lòng liên hệ với quản trị viên của bạn nếu sự cố vẫn còn.
+                </target>
             </trans-unit>
             <trans-unit id="http_error_404.description">
                 <source>http_error_404.description</source>
-                <target state="translated">Oj! Sidan hittades inte</target>
+                <target>Không tìm thấy trang</target>
             </trans-unit>
             <trans-unit id="http_error_404.suggestion">
                 <source>http_error_404.suggestion</source>
-                <target state="translated">
-                    Vi kunde inte hitta sidan du letade efter.
-                    Under tiden kan du återvända till din dashboard och börja om.
+                <target>
+                    Chúng tôi không thể tìm thấy trang bạn đang tìm kiếm.
+                    Vui lòng quay lại bảng điều khiển của bạn và bắt đầu lại.
                 </target>
             </trans-unit>
             <trans-unit id="http_error_403.description">
                 <source>http_error_403.description</source>
-                <target state="translated">
-                    Den här sidan är begränsad.
-                </target>
+                <target>Trang bị hạn chế</target>
             </trans-unit>
             <trans-unit id="http_error_403.suggestion">
                 <source>http_error_403.suggestion</source>
-                <target state="translated">
-                    Tyvärr har du inte tillräckligt med behörigheter för att se den här sidan.
-                    Var vänlig och kontakta din administratör om du tycker att det här är ett fel.</target>
+                <target>
+                    Xin lỗi, nhưng bạn không có đủ quyền để xem trang này.
+                    Vui lòng nói chuyện với quản trị viên của bạn nếu bạn nghĩ rằng đây là một lỗi.
+                </target>
             </trans-unit>
         </body>
     </file>

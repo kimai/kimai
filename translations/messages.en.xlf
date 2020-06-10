@@ -304,6 +304,10 @@
                 <source>help.rate_internal</source>
                 <target>Internal costs (if this is not specified, the normal rate is used)</target>
             </trans-unit>
+            <trans-unit id="label.recalculate_rates">
+                <source>label.recalculate_rates</source>
+                <target>Recalculate rates</target>
+            </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
                 <target>Language</target>

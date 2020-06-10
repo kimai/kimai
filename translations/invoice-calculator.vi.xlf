@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="sv" datatype="plaintext" original="invoice-calculator.en.xlf">
+    <file source-language="en" target-language="vi" datatype="plaintext" original="invoice-calculator.en.xlf">
         <body>
             <trans-unit id="label.invoice_calculator">
                 <source>label.invoice_calculator</source>
-                <target state="translated">Kalkylerad summa</target>
+                <target>Tính tổng</target>
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                <target state="translated">Ingångsbaserad - en mätning per gång (standard)</target>
+                <target>Mặc định: một mục cho mỗi bản</target>
             </trans-unit>
             <trans-unit id="short">
                 <source>short</source>
-                <target state="translated">Timmar summerade - endast en post</target>
+                <target>Giờ: tổng hợp bản ghi, một mục nhập cho mỗi giờ</target>
             </trans-unit>
             <trans-unit id="user">
                 <source>user</source>
-                <target state="translated">Användargrupp - En post per användare</target>
+                <target>Người dùng: một mục nhập cho mỗi người dùng</target>
             </trans-unit>
             <trans-unit id="activity">
                 <source>activity</source>
-                <target state="translated">Aktivitet grupperad - en post per aktivitet</target>
+                <target>Hoạt động: một mục nhập cho mỗi hoạt động</target>
             </trans-unit>
             <trans-unit id="project">
                 <source>project</source>
-                <target state="translated">Projekt grupperad - en post per projekt</target>
+                <target>Dự án: một mục nhập cho mỗi dự án</target>
             </trans-unit>
             <trans-unit id="date">
                 <source>date</source>
-                <target state="translated">Datum grupperad - en post per dag (använder start datum)</target>
+                <target>Ngày: một mục nhập mỗi ngày (sử dụng ngày bắt đầu)</target>
             </trans-unit>
         </body>
     </file>

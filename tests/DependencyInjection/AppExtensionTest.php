@@ -37,6 +37,7 @@ class AppExtensionTest extends TestCase
     {
         $container = new ContainerBuilder();
         $container->setParameter('app_locales', 'de|en|tr|zh_CN');
+        $container->setParameter('kernel.project_dir', realpath(__DIR__ . '/../../'));
 
         return $container;
     }
@@ -55,7 +56,7 @@ class AppExtensionTest extends TestCase
                     ],
                 ],
                 'data_dir' => '/tmp/',
-                'plugin_dir' => '/tmp/',
+                'plugin_dir' => '/tmp/', // still here, to make sure that this value is NOT applied!
                 'timesheet' => [],
                 'saml' => [
                     'connection' => []
@@ -72,7 +73,7 @@ class AppExtensionTest extends TestCase
 
         $expected = [
             'kimai.data_dir' => '/tmp/',
-            'kimai.plugin_dir' => '/tmp/',
+            'kimai.plugin_dir' => realpath(__DIR__ . '/../../') . '/var/plugins',
             'kimai.languages' => [
                 'en' => [
                     'date_time_type' => 'yyyy-MM-dd HH:mm',

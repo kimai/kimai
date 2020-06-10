@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="sv" datatype="plaintext" original="about.en.xlf">
+    <file source-language="en" target-language="vi" datatype="plaintext" original="about.en.xlf">
         <body>
             <trans-unit id="about.title">
                 <source>about.title</source>
-                <target>Om Kimai</target>
+                <target>Thông tin về Kimai</target>
             </trans-unit>
             <trans-unit id="support">
                 <source>support</source>
-                <target>Support</target>
+                <target>Hỗ trợ</target>
             </trans-unit>
             <trans-unit id="website">
                 <source>website</source>
-                <target>Hemsida</target>
+                <target>Trang chủ</target>
             </trans-unit>
             <trans-unit id="help">
                 <source>help</source>
-                <target>Dokumentation</target>
+                <target>Tài liệu</target>
             </trans-unit>
             <trans-unit id="tab.thanks">
                 <source>tab.thanks</source>
-                <target state="translated">Speciellt tack</target>
+                <target>Cảm ơn</target>
             </trans-unit>
             <trans-unit id="donate">
                 <source>donate</source>
-                <target state="translated">Donera för framtiden för Kimai</target>
+                <target>Quyên góp cho tính năng của Kimai</target>
             </trans-unit>
             <trans-unit id="published_under">
                 <source>published_under</source>
-                <target state="translated">%kimai% är publicerad under</target>
+                <target>%kimai% được xuất bản dựa trên</target>
             </trans-unit>
             <trans-unit id="special_thanks">
                 <source>special_thanks</source>
-                <target state="translated">Särskilt tack går till …</target>
+                <target>Đặc biệt cảm ơn …</target>
             </trans-unit>
             <trans-unit id="library_authors">
                 <source>library_authors</source>
-                <target state="translated">… författarna till följande mjukvarubibliotek, Kimai skulle inte vara möjliga utan dig 👍</target>
+                <target>… các tác giả của các thư viện phần mềm sau đây, Kimai sẽ không thể có được nếu không có bạn 👍</target>
             </trans-unit>
         </body>
     </file>
