@@ -54,7 +54,7 @@ class AppExtension extends Extension
 
         // safe alternatives to %kernel.project_dir%
         $container->setParameter('kimai.data_dir', $config['data_dir']);
-        $container->setParameter('kimai.plugin_dir', $config['plugin_dir']);
+        $container->setParameter('kimai.plugin_dir', $container->getParameter('kernel.project_dir') . '/var/plugins');
 
         $this->setLanguageFormats($config['languages'], $container);
         unset($config['languages']);
