@@ -11,6 +11,7 @@ namespace App\Command;
 
 use App\Constants;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -18,6 +19,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Command used to do the basic installation steps for Kimai.
@@ -69,7 +71,11 @@ final class InstallCommand extends Command
 
         $io->title('Kimai installation running ...');
 
-        $environment = getenv('APP_ENV');
+        /** @var Application $application */
+        $application = $this->getApplication();
+        /** @var KernelInterface $kernel */
+        $kernel = $application->getKernel();
+        $environment = $kernel->getEnvironment();
 
         // create the database, in case it is not yet existing
         try {

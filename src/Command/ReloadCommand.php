@@ -9,12 +9,14 @@
 
 namespace App\Command;
 
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Command used to update a Kimai installation.
@@ -81,10 +83,11 @@ final class ReloadCommand extends Command
             return self::ERROR_LINT_TRANSLATIONS;
         }
 
-        $environment = getenv('APP_ENV');
-        if ($input->hasArgument('env')) {
-            $environment = $input->getArgument('env');
-        }
+        /** @var Application $application */
+        $application = $this->getApplication();
+        /** @var KernelInterface $kernel */
+        $kernel = $application->getKernel();
+        $environment = $kernel->getEnvironment();
 
         // flush the cache, in case values from the database are cached
         $cacheResult = $this->rebuildCaches($environment, $io, $input, $output);
