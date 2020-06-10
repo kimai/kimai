@@ -11,7 +11,7 @@ namespace App\Command;
 
 use App\Constants;
 use Doctrine\DBAL\Connection;
-use Symfony\Component\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
