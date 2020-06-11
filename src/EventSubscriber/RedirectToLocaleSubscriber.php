@@ -54,9 +54,6 @@ class RedirectToLocaleSubscriber implements EventSubscriberInterface
         $this->urlGenerator = $urlGenerator;
 
         $this->locales = explode('|', trim($locales));
-        if (empty($this->locales)) {
-            throw new \UnexpectedValueException('The list of supported locales must not be empty.');
-        }
         $this->defaultLocale = $defaultLocale ?: $this->locales[0];
 
         if (!\in_array($this->defaultLocale, $this->locales)) {

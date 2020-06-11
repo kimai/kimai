@@ -20,7 +20,6 @@ class PluginManager
 
     /**
      * @param PluginInterface[] $plugins
-     * @throws \Exception
      */
     public function __construct(iterable $plugins)
     {
@@ -31,7 +30,6 @@ class PluginManager
 
     /**
      * @param PluginInterface $plugin
-     * @throws \Exception
      */
     public function addPlugin(PluginInterface $plugin)
     {
