@@ -40,7 +40,7 @@
             </trans-unit>
             <trans-unit id="reset.intro">
                 <source>reset.intro</source>
-                <target>... sPassword dimenticata ? Non preoccuparti: Kimai ti aiuterà a crearne una nuova:</target>
+                <target>... Password dimenticata ? Non preoccuparti: Kimai ti aiuterà a crearne una nuova:</target>
             </trans-unit>
         </body>
     </file>

@@ -22,7 +22,7 @@
                 <source>http_error.suggestion</source>
                 <target>
                     Errore imprevisto, riprova per favore.
-                    Se il problema é persistente, contatta per favore l'amministatore.
+                    Se il problema persiste, contatta per favore l'amministratore.
                 </target>
             </trans-unit>
             <trans-unit id="http_error_404.description">
@@ -44,7 +44,7 @@
                 <source>http_error_403.suggestion</source>
                 <target>
                     Non hai i permessi per vedere questa pagina.
-                    Contatta l'amministratore se pensi che questo é un problema.
+                    Contatta l'amministratore se pensi che questo sia un problema.
                 </target>
             </trans-unit>
         </body>
