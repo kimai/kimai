@@ -336,7 +336,7 @@ class ActivityController extends BaseApiController
         $this->repository->saveActivity($activity);
 
         $view = new View($activity, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
 
         return $this->viewHandler->handle($view);
     }

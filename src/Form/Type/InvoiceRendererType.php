@@ -77,7 +77,13 @@ class InvoiceRendererType extends AbstractType
             array_pop($parts);
         }
 
-        return ucfirst(array_pop($parts));
+        $type = array_pop($parts);
+
+        if (\in_array(strtolower($type), ['json', 'txt', 'xml'])) {
+            return 'programmatic';
+        }
+
+        return ucfirst($type);
     }
 
     /**

@@ -557,6 +557,27 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         return $this;
     }
 
+    public function createCopy(?Timesheet $timesheet = null): Timesheet
+    {
+        if (null === $timesheet) {
+            $timesheet = new Timesheet();
+        }
+
+        $values = get_object_vars($this);
+        foreach ($values as $k => $v) {
+            $timesheet->$k = $v;
+        }
+
+        $timesheet->meta = new ArrayCollection();
+
+        /** @var TimesheetMeta $meta */
+        foreach ($this->meta as $meta) {
+            $timesheet->setMetaField(clone $meta);
+        }
+
+        return $timesheet;
+    }
+
     public function __clone()
     {
         if ($this->id) {

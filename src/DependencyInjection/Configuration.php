@@ -46,13 +46,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->scalarNode('plugin_dir')
-                    ->isRequired()
-                    ->validate()
-                        ->ifTrue(function ($value) {
-                            return !file_exists($value);
-                        })
-                        ->thenInvalid('Plugin directory does not exist')
-                    ->end()
+                    ->setDeprecated('Changing the plugin directory via "kimai.plugin_dir" is not supported since 1.9')
                 ->end()
                 ->append($this->getUserNode())
                 ->append($this->getTimesheetNode())

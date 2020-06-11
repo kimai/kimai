@@ -2,7 +2,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "tags/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'tags.title'|trans({}, 'tags') }}{% endblock %}
+{% block page_title %}{{ 'menu.tags'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.tag(tag, 'edit') }}{% endblock %}
 
 {% block main %}

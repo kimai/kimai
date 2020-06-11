@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ro" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="s9Hdo7E" resname="daterangepicker.today">
+        <source>daterangepicker.today</source>
+        <target>Astăzi</target>
+      </trans-unit>
+      <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday">
+        <source>daterangepicker.yesterday</source>
+        <target>Ieri</target>
+      </trans-unit>
+      <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek">
+        <source>daterangepicker.lastWeek</source>
+        <target>Săptămâna trecută</target>
+      </trans-unit>
+      <trans-unit id="HfcD1_y" resname="daterangepicker.thisWeek">
+        <source>daterangepicker.thisWeek</source>
+        <target>Săptămâna aceasta</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth">
+        <source>daterangepicker.lastMonth</source>
+        <target>Luna trecută</target>
+      </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth">
+        <source>daterangepicker.thisMonth</source>
+        <target>Luna aceasta</target>
+      </trans-unit>
+      <trans-unit id="_9rEFED" resname="daterangepicker.lastYear">
+        <source>daterangepicker.lastYear</source>
+        <target>Anul trecut</target>
+      </trans-unit>
+      <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear">
+        <source>daterangepicker.thisYear</source>
+        <target>Anul acesta</target>
+      </trans-unit>
+      <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
+        <source>daterangepicker.customRange</source>
+        <target>Perioadă personalizată</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

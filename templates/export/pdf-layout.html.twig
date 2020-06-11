@@ -1,9 +1,9 @@
-{% set showUserColumn = showUserColumn|default(true) %}
-{% set showInternalRate = showInternalRate|default(false) %}
-{% set showRateColumn = showRateColumn|default(true) %}
-{% set showRateBudget = showRateBudget|default(false) %}
-{% set showTimeBudget = showTimeBudget|default(false) %}
-{% set decimal = decimal|default(false) %}
+{% set showUserColumn = showUserColumn ?? true %}
+{% set showInternalRate = showInternalRate ?? false %}
+{% set showRateColumn = showRateColumn ?? true %}
+{% set showRateBudget = showRateBudget ?? false %}
+{% set showTimeBudget = showTimeBudget ?? false %}
+{% set decimal = decimal ?? false %}
 {% if query.user %}
     {# this is only triggered, if a user exports from his personal timesheet screen #}
     {% set showUserColumn = false %}
@@ -80,7 +80,7 @@
 <tr>
     <td align="left">
     {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
-    {% if not showUserColumn %}
+    {% if not showUserColumn and query.user %}
         &ndash;
         {{ 'label.user'|trans }}: {{ query.user.displayName }} 
     {% endif %}
@@ -278,9 +278,9 @@ mpdf-->
                         {% set entryRateInternal = '&ndash;' %}
                     {% endif %}
                     {% if showInternalRate %}
-                        <td class="cost">{{ entryRate }}</td>
+                        <td class="cost">{{ entryRateInternal }}</td>
                     {% endif %}
-                    <td class="cost">{{ entryRateInternal }}</td>
+                    <td class="cost">{{ entryRate }}</td>
                 {% endif %}
             </tr>
         {% endfor %}

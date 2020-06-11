@@ -1,31 +1,23 @@
 #!/usr/bin/env php
 <?php
 
-set_time_limit(0);
-
-if (!file_exists(__DIR__.'/../vendor/autoload.php')) {
-    echo 'Warning: You need to run "composer install" before you can use the console.' . \PHP_EOL;
-    die(1);
-}
-
-require __DIR__.'/../vendor/autoload.php';
-
 use App\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 
+set_time_limit(0);
+
+require __DIR__.'/../vendor/autoload.php';
+
 if (!isset($_SERVER['APP_ENV'])) {
-    if (!class_exists(Dotenv::class)) {
-        throw new \RuntimeException('APP_ENV environment variable is not defined. You need to define environment variables or change the variables in your .env file.');
-    }
     (new Dotenv(true))->load(__DIR__.'/../.env');
 }
 
 $input = new ArgvInput();
-$env = $input->getParameterOption(['--env', '-e'], $_SERVER['APP_ENV'] ?? 'dev');
-$debug = ($_SERVER['APP_DEBUG'] ?? ('prod' !== $env)) && !$input->hasParameterOption(['--no-debug', '']);
+$env = $input->getParameterOption(['--env', '-e'], $_SERVER['APP_ENV'] ?? 'prod');
+$debug = (bool) ($_SERVER['APP_DEBUG'] ?? (in_array($env, ['dev', 'test']))) && !$input->hasParameterOption(['--no-debug', '']);
 
 if ($debug) {
     umask(0000);

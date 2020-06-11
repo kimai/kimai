@@ -85,7 +85,7 @@
 
     {% if preview_show %}
         {% if entries is empty %}
-            {{ widgets.callout('warning', 'error.no_entries_found') }}
+            {{ widgets.nothing_found() }}
         {% else %}
             {{ tables.datatable_header(tableName, columns, query, {}) }}
             {% set totalAmount = {} %}

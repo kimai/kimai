@@ -16,6 +16,7 @@ use App\Entity\Project;
 use App\Invoice\ServiceInvoice;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceTemplateRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
@@ -47,6 +48,10 @@ class InvoiceCreateCommand extends Command
      */
     private $customerRepository;
     /**
+     * @var ProjectRepository
+     */
+    private $projectRepository;
+    /**
      * @var InvoiceTemplateRepository
      */
     private $invoiceTemplateRepository;
@@ -67,6 +72,7 @@ class InvoiceCreateCommand extends Command
         ServiceInvoice $serviceInvoice,
         TimesheetRepository $timesheetRepository,
         CustomerRepository $customerRepository,
+        ProjectRepository $projectRepository,
         InvoiceTemplateRepository $invoiceTemplateRepository,
         UserRepository $userRepository,
         EventDispatcherInterface $eventDispatcher
@@ -74,6 +80,7 @@ class InvoiceCreateCommand extends Command
         $this->serviceInvoice = $serviceInvoice;
         $this->timesheetRepository = $timesheetRepository;
         $this->customerRepository = $customerRepository;
+        $this->projectRepository = $projectRepository;
         $this->invoiceTemplateRepository = $invoiceTemplateRepository;
         $this->userRepository = $userRepository;
         $this->eventDispatcher = $eventDispatcher;
@@ -94,6 +101,7 @@ class InvoiceCreateCommand extends Command
             ->addOption('end', null, InputOption::VALUE_OPTIONAL, 'End date (format: 2020-01-31, default: end of the month)', null)
             ->addOption('timezone', null, InputOption::VALUE_OPTIONAL, 'Timezone for start and end date query', date_default_timezone_get())
             ->addOption('customer', null, InputOption::VALUE_OPTIONAL, 'Comma separated list of customer IDs', null)
+            ->addOption('project', null, InputOption::VALUE_OPTIONAL, 'Comma separated list of project IDs', null)
             ->addOption('by-customer', null, InputOption::VALUE_NONE, 'If set, one invoice for each active customer in the given timerange is created')
             ->addOption('by-project', null, InputOption::VALUE_NONE, 'If set, one invoice for each active project in the given timerange is created')
             ->addOption('set-exported', null, InputOption::VALUE_NONE, 'Whether the invoice items should be marked as exported')
@@ -121,6 +129,15 @@ class InvoiceCreateCommand extends Command
             return 1;
         }
 
+        $user = $this->userRepository->loadUserByUsername($username);
+        if (null === $user) {
+            $io->error(
+                sprintf('The given username "%s" could not be resolved', $username)
+            );
+
+            return 1;
+        }
+
         $exportedFilter = TimesheetQuery::STATE_NOT_EXPORTED;
         switch ($input->getOption('exported')) {
             case null:
@@ -140,17 +157,7 @@ class InvoiceCreateCommand extends Command
                 return 1;
         }
 
-        $user = $this->userRepository->loadUserByUsername($username);
-        if (null === $user) {
-            $io->error(
-                sprintf('The given username "%s" could not be resolved', $username)
-            );
-
-            return 1;
-        }
-
-        $timezone = $input->getOption('timezone');
-        $timezone = new \DateTimeZone($timezone);
+        $timezone = new \DateTimeZone($input->getOption('timezone'));
 
         if (!empty($input->getOption('start')) && empty($input->getOption('end'))) {
             $io->error('You need to supply a end date if a start date was given');
@@ -168,8 +175,9 @@ class InvoiceCreateCommand extends Command
         }
 
         $customersIDs = $input->getOption('customer');
-        if (!$byActiveCustomer && !$byActiveProject && empty($customersIDs)) {
-            $io->error('Could not determine generation mode, you need to set one of: customer, by-customer, by-project');
+        $projectIDs = $input->getOption('project');
+        if (!$byActiveCustomer && !$byActiveProject && empty($customersIDs) && empty($projectIDs)) {
+            $io->error('Could not determine generation mode, you need to set one of: customer, project, by-customer, by-project');
 
             return 1;
         }
@@ -235,15 +243,15 @@ class InvoiceCreateCommand extends Command
         $defaultQuery->setCurrentUser($user);
         $defaultQuery->setSearchTerm($searchTerm);
         $defaultQuery->setMarkAsExported($markAsExported);
-        $defaultQuery->setState($exportedFilter);
+        $defaultQuery->setExported($exportedFilter);
 
         /** @var Invoice[] $invoices */
         $invoices = [];
 
-        /** @var Customer[] $customers */
-        $customers = [];
-
         if (!empty($customersIDs)) {
+            /** @var Customer[] $customers */
+            $customers = [];
+
             $customersIDs = explode(',', $customersIDs);
             foreach ($customersIDs as $id) {
                 $tmp = $this->customerRepository->find($id);
@@ -255,11 +263,26 @@ class InvoiceCreateCommand extends Command
                 $customers[] = $tmp;
             }
             $invoices = $this->createInvoicesForCustomer($customers, $defaultQuery, $input, $output);
+        } elseif (!empty($projectIDs)) {
+            /** @var Project[] $projects */
+            $projects = [];
+
+            $projectIDs = explode(',', $projectIDs);
+            foreach ($projectIDs as $id) {
+                $tmp = $this->projectRepository->find($id);
+                if (null === $tmp) {
+                    $io->error('Unknown project ID: ' . $id);
+
+                    return 1;
+                }
+                $projects[] = $tmp;
+            }
+            $invoices = $this->createInvoicesForProjects($projects, $defaultQuery, $input, $output);
         } elseif ($byActiveCustomer) {
-            $customers = $this->getActiveCustomers($start, $end);
+            $customers = $this->getActiveCustomers($defaultQuery);
             $invoices = $this->createInvoicesForCustomer($customers, $defaultQuery, $input, $output);
         } elseif ($byActiveProject) {
-            $projects = $this->getActiveProjects($start, $end);
+            $projects = $this->getActiveProjects($defaultQuery);
             $invoices = $this->createInvoicesForProjects($projects, $defaultQuery, $input, $output);
         } else {
             $io->error('Could not determine generation mode'); //-///9==8=//99/96//////-*/-*//96* <= by Ayumi
@@ -327,6 +350,8 @@ class InvoiceCreateCommand extends Command
                     $filename = $filename[1];
                 }
             }
+            // depending on your setup, this might be a good idea
+            // $filename = uniqid() . $filename;
         }
 
         if ($response instanceof BinaryFileResponse) {
@@ -488,17 +513,12 @@ class InvoiceCreateCommand extends Command
     }
 
     /**
-     * @param \DateTime $start
-     * @param \DateTime $end
+     * @param InvoiceQuery $invoiceQuery
      * @return Customer[]
      */
-    private function getActiveCustomers(\DateTime $start, \DateTime $end): array
+    private function getActiveCustomers(InvoiceQuery $invoiceQuery): array
     {
-        $query = new TimesheetQuery();
-        $query->setBegin($start);
-        $query->setEnd($end);
-
-        $results = $this->timesheetRepository->getTimesheetsForQuery($query);
+        $results = $this->timesheetRepository->getTimesheetsForQuery($invoiceQuery);
 
         $customers = [];
 
@@ -511,17 +531,12 @@ class InvoiceCreateCommand extends Command
     }
 
     /**
-     * @param \DateTime $start
-     * @param \DateTime $end
+     * @param InvoiceQuery $invoiceQuery
      * @return Project[]
      */
-    private function getActiveProjects(\DateTime $start, \DateTime $end): array
+    private function getActiveProjects(InvoiceQuery $invoiceQuery): array
     {
-        $query = new TimesheetQuery();
-        $query->setBegin($start);
-        $query->setEnd($end);
-
-        $results = $this->timesheetRepository->getTimesheetsForQuery($query);
+        $results = $this->timesheetRepository->getTimesheetsForQuery($invoiceQuery);
 
         $projects = [];
 

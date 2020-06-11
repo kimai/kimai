@@ -25,6 +25,7 @@ class InvoiceDocumentRepositoryTest extends TestCase
     protected static $defaultDocuments = [
         'company.docx',
         'default.html.twig',
+        'default-pdf.pdf.twig',
         'freelancer.html.twig',
         'timesheet.html.twig',
         'text.txt.twig',

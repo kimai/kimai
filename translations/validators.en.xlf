@@ -14,6 +14,10 @@
                 <source>The begin date cannot be in the future.</source>
                 <target>The begin date cannot be in the future.</target>
             </trans-unit>
+            <trans-unit id="You must select at least one user or team.">
+                <source>You must select at least one user or team.</source>
+                <target>You must select at least one user or team.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
