@@ -19,10 +19,6 @@ class WeeklyInvoiceCalculator extends AbstractSumInvoiceCalculator implements Ca
 {
     protected function calculateSumIdentifier(InvoiceItemInterface $invoiceItem): string
     {
-        if (null === $invoiceItem->getUser()->getId()) {
-            throw new \Exception('Cannot handle un-persisted user');
-        }
-
         return $invoiceItem->getBegin()->format('W');
     }
 
