@@ -37,9 +37,12 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->scalarNode('data_dir')
-                    ->isRequired()
+                    ->defaultNull()
                     ->validate()
                         ->ifTrue(function ($value) {
+                            if (null === $value) {
+                                return false;
+                            }
                             return !file_exists($value);
                         })
                         ->thenInvalid('Data directory does not exist')
