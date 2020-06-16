@@ -105,7 +105,7 @@ class AvatarService
 
     public function __construct(string $projectDirectory)
     {
-        $this->setStorageDirectory($projectDirectory  . '/public/avatars/');
+        $this->setStorageDirectory($projectDirectory . '/public/avatars/');
     }
 
     public function getStorageDirectory(): string

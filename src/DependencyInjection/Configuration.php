@@ -43,6 +43,7 @@ class Configuration implements ConfigurationInterface
                             if (null === $value) {
                                 return false;
                             }
+
                             return !file_exists($value);
                         })
                         ->thenInvalid('Data directory does not exist')

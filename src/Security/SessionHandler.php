@@ -18,10 +18,8 @@ class SessionHandler extends PdoSessionHandler
     {
         $lockMode = PdoSessionHandler::LOCK_NONE;
 
-        if ($pdoOrDsn instanceof PDOConnection) {
-            if ($pdoOrDsn->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'mysql') {
-                $lockMode = PdoSessionHandler::LOCK_ADVISORY;
-            }
+        if ($pdoOrDsn instanceof PDOConnection && $pdoOrDsn->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'mysql') {
+            $lockMode = PdoSessionHandler::LOCK_ADVISORY;
         }
 
         parent::__construct($pdoOrDsn, [
