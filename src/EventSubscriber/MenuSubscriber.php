@@ -81,10 +81,6 @@ final class MenuSubscriber implements EventSubscriberInterface
                 new MenuItemModel('export', 'menu.export', 'export', [], $this->getIcon('export'))
             );
         }
-
-        $menu->addItem(
-            new MenuItemModel('project_view', 'menu.project_view', 'project_view', [], $this->getIcon('project'))
-        );
     }
 
     private function configureAdminMenu(MenuItemInterface $menu)

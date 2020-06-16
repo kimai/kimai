@@ -102,7 +102,7 @@
                         {{ tables.datatable_multiupdate_row(entry.id) }}
                     {% endif %}
                 </td>
-                <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
+
 
                 {% if showStartEndTime %}
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'starttime') }}">{{ entry.begin|time }}</td>

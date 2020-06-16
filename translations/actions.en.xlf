@@ -82,6 +82,10 @@
                 <source>details</source>
                 <target>Show</target>
             </trans-unit>
+            <trans-unit id="project_view">
+                <source>project_view</source>
+                <target>Project View</target>
+            </trans-unit>
             <trans-unit id="download">
                 <source>download</source>
                 <target>Download</target>

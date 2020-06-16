@@ -188,10 +188,6 @@
                 <source>menu.doctor</source>
                 <target>Doctor</target>
             </trans-unit>
-            <trans-unit id="menu.project_view">
-                <source>menu.project_view</source>
-                <target>Project View</target>
-            </trans-unit>
 
             <!--
               Error templates
