@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route(path="/project_view")
+ * @Route(path="/admin/project/project_view")
  */
 final class ProjectViewController extends AbstractController
 {

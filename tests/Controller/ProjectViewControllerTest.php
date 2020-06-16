@@ -31,7 +31,7 @@ class ProjectViewControllerTest extends ControllerBaseTest
 
         $this->prepareFixtures();
 
-        $this->assertAccessIsGranted($client, '/project_view', 'GET');
+        $this->assertAccessIsGranted($client, '/admin/project/project_view', 'GET');
 
         $firstRow = $client->getCrawler()->filterXpath("//table[@id='dt_project_view']/tbody/tr[1]");
         $this->assertEquals('Project #1', $firstRow->filterXpath('//td[1]')->text());
