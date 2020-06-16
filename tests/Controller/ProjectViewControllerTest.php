@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Repository\ProjectRepository;
 use Symfony\Bridge\PhpUnit\ClockMock;
 
@@ -24,12 +25,14 @@ class ProjectViewControllerTest extends ControllerBaseTest
 {
     public function testIndexAction()
     {
-        $client = $this->getClientForAuthenticatedUser();
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         ClockMock::register(ProjectRepository::class);
         ClockMock::withClockMock((new \Datetime('2020-06-02'))->getTimestamp());
 
         $this->prepareFixtures();
+
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/project/project_view');
 
         $this->assertAccessIsGranted($client, '/admin/project/project_view', 'GET');
 
@@ -65,7 +68,7 @@ class ProjectViewControllerTest extends ControllerBaseTest
         $em->persist($activity2);
         $em->flush();
 
-        $user = $this->getUserByRole();
+        $user = $this->getUserByRole(User::ROLE_ADMIN);
         $timesheet = (new Timesheet())
             ->setBegin(\DateTime::createFromFormat('U', time())->modify('-7 days'))
             ->setEnd(\DateTime::createFromFormat('U', time())->modify('-7 days')->modify('+5 minutes'))
