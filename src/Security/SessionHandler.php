@@ -9,19 +9,26 @@
 
 namespace App\Security;
 
+use Doctrine\DBAL\Driver\PDOConnection;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
 class SessionHandler extends PdoSessionHandler
 {
     public function __construct($pdoOrDsn = null)
     {
+        $lockMode = PdoSessionHandler::LOCK_NONE;
+
+        if ($pdoOrDsn instanceof PDOConnection && $pdoOrDsn->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'mysql') {
+            $lockMode = PdoSessionHandler::LOCK_ADVISORY;
+        }
+
         parent::__construct($pdoOrDsn, [
             'db_table' => 'kimai2_sessions',
             'db_id_col' => 'id',
             'db_data_col' => 'data',
             'db_lifetime_col' => 'lifetime',
             'db_time_col' => 'time',
-            'lock_mode' => PdoSessionHandler::LOCK_ADVISORY,
+            'lock_mode' => $lockMode,
         ]);
     }
 }

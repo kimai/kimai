@@ -421,14 +421,6 @@ class AppExtensionTest extends TestCase
         $this->assertEquals(['yyyy', 'xxxx'], $config);
     }
 
-    public function testInvalidConfiguration()
-    {
-        $this->expectException(Notice::class);
-        $this->expectExceptionMessage('Found invalid "kimai" configuration: The child node "data_dir" at path "kimai" must be configured.');
-
-        $this->extension->load([], $container = $this->getContainer());
-    }
-
     public function testWithBundleConfiguration()
     {
         $bundleConfig = [

@@ -16,6 +16,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -57,6 +58,7 @@ final class InstallCommand extends Command
             ->setName('kimai:install')
             ->setDescription('Basic installation for Kimai')
             ->setHelp('This command will perform the basic installation steps to get Kimai up and running.')
+            ->addOption('no-cache', null, InputOption::VALUE_NONE, 'Skip cache re-generation')
         ;
     }
 
@@ -95,8 +97,10 @@ final class InstallCommand extends Command
             return self::ERROR_MIGRATIONS;
         }
 
-        // flush the cache, just to make sure ... and ignore result
-        $this->rebuildCaches($environment, $io, $input, $output);
+        if (!$input->getOption('no-cache')) {
+            // flush the cache, just to make sure ... and ignore result
+            $this->rebuildCaches($environment, $io, $input, $output);
+        }
 
         $io->success(
             sprintf('Congratulations! Successfully installed %s version %s (%s)', Constants::SOFTWARE, Constants::VERSION, Constants::STATUS)
