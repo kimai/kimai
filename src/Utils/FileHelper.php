@@ -28,6 +28,11 @@ final class FileHelper
         $this->filesystem = new Filesystem();
     }
 
+    public function setDataDirectory(string $directory)
+    {
+        $this->dataDir = $directory;
+    }
+
     public function getDataDirectory(string $subDirectory = null): string
     {
         $directory = $this->dataDir . '/';
