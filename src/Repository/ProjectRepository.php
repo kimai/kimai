@@ -479,7 +479,8 @@ class ProjectRepository extends EntityRepository
 
     private function todayProjectViewSubQuery(): string
     {
-        $today = \DateTime::createFromFormat('U', time())->format('Y-m-d');
+        $today = \DateTime::createFromFormat('U', (string) time())->format('Y-m-d');
+
         return "
             (
                 SELECT SUM(t1.duration)
@@ -492,7 +493,7 @@ class ProjectRepository extends EntityRepository
 
     private function weekProjectViewSubQuery(): string
     {
-        $today = \DateTime::createFromFormat('U', time());
+        $today = \DateTime::createFromFormat('U', (string) time());
         $firstDayOfWeek = (clone $today)
             ->modify('this week')
             ->format('Y-m-d')
@@ -502,6 +503,7 @@ class ProjectRepository extends EntityRepository
             ->modify('+6 days')
             ->format('Y-m-d')
         ;
+
         return "
         (
             SELECT SUM(t2.duration)
