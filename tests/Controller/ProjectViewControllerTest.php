@@ -45,7 +45,8 @@ class ProjectViewControllerTest extends ControllerBaseTest
         $this->assertEquals('2020/06/02', $firstRow->filterXpath('//td[6]')->text());
     }
 
-    private function prepareFixtures() {
+    private function prepareFixtures()
+    {
         $em = $this->getEntityManager();
 
         $customer = (new Customer())->setName('Customer #1')->setVisible(true)->setCountry('BR')->setTimezone('America/Sao_Paulo');
