@@ -33,10 +33,10 @@
 
 {% block main %}
 
-    {% if entries is null %}
-        {{ widgets.nothing_found('kimai.activityUpdate') }}
+    {% if entries is empty %}
+        {{ widgets.nothing_found(entries) }}
     {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.activityUpdate'}) }}
+        {{ tables.datatable_header(tableName, columns, query) }}
 
         {% for entry in entries %}
             <tr>
