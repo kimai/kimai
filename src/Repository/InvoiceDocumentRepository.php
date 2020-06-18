@@ -77,7 +77,7 @@ final class InvoiceDocumentRepository
     }
 
     /**
-     * Returns an array of invoice documents.
+     * Returns an array of all custom invoice documents.
      *
      * @return InvoiceDocument[]
      */
@@ -92,6 +92,22 @@ final class InvoiceDocumentRepository
         }
 
         return $this->findByPaths($paths);
+    }
+
+    /**
+     * Returns an array of all original Kimai documents.
+     *
+     * @return InvoiceDocument[]
+     */
+    public function findBuiltIn()
+    {
+        foreach ($this->documentDirs as $dir) {
+            if ($dir === self::DEFAULT_DIRECTORY) {
+                return $this->findByPaths([$dir]);
+            }
+        }
+
+        return [];
     }
 
     /**
