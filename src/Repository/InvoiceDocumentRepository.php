@@ -14,6 +14,8 @@ use Symfony\Component\Finder\Finder;
 
 final class InvoiceDocumentRepository
 {
+    public const DEFAULT_DIRECTORY = 'templates/invoice/renderer/';
+
     /**
      * @var array
      */
@@ -21,12 +23,46 @@ final class InvoiceDocumentRepository
 
     public function __construct(array $directories)
     {
-        $this->documentDirs = $directories;
+        foreach ($directories as $directory) {
+            $this->addDirectory($directory);
+        }
     }
 
+    public function addDirectory(string $directory)
+    {
+        $this->documentDirs[] = $directory;
+
+        return $this;
+    }
+
+    public function removeDirectory(string $directory)
+    {
+        if (($key = array_search($directory, $this->documentDirs)) !== false) {
+            unset($this->documentDirs[$key]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @deprecated since 1.10 - will be removed with 2.0 - use getCustomInvoiceDirectory() instead
+     */
     public function getCustomInvoiceDirectory(): string
     {
-        return $this->documentDirs[0];
+        return $this->getUploadDirectory();
+    }
+
+    public function getUploadDirectory(): string
+    {
+        foreach ($this->documentDirs as $dir) {
+            if ($dir === self::DEFAULT_DIRECTORY) {
+                continue;
+            }
+
+            return $dir;
+        }
+
+        throw new \Exception('Unknown upload directory');
     }
 
     public function findByName(string $name): ?InvoiceDocument
@@ -41,21 +77,55 @@ final class InvoiceDocumentRepository
     }
 
     /**
-     * Returns an array of invoice renderer, which will consist of a unique name and a controller action.
+     * Returns an array of invoice documents.
+     *
+     * @return InvoiceDocument[]
+     */
+    public function findCustom()
+    {
+        $paths = [];
+        foreach ($this->documentDirs as $dir) {
+            if ($dir === self::DEFAULT_DIRECTORY) {
+                continue;
+            }
+            $paths[] = $dir;
+        }
+
+        return $this->findByPaths($paths);
+    }
+
+    /**
+     * Returns an array of invoice documents.
      *
      * @return InvoiceDocument[]
      */
     public function findAll()
     {
+        return $this->findByPaths($this->documentDirs);
+    }
+
+    /**
+     * Returns an array of invoice documents.
+     *
+     * @return InvoiceDocument[]
+     */
+    private function findByPaths(array $paths)
+    {
         $base = \dirname(\dirname(__DIR__)) . DIRECTORY_SEPARATOR;
 
         $documents = [];
 
-        foreach ($this->documentDirs as $searchPath) {
-            if (!is_dir($base . $searchPath)) {
+        foreach ($paths as $searchPath) {
+            $searchDir = $searchPath;
+            if ($searchDir[0] !== '/') {
+                $searchDir = $base . $searchPath;
+            }
+
+            if (!is_dir($searchDir)) {
                 continue;
             }
-            $finder = Finder::create()->ignoreDotFiles(true)->files()->in($base . $searchPath)->name('*.*');
+
+            $finder = Finder::create()->ignoreDotFiles(true)->files()->in($searchDir)->name('*.*');
             foreach ($finder->getIterator() as $file) {
                 $doc = new InvoiceDocument($file);
                 // the first found invoice document wins

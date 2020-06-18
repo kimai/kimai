@@ -284,18 +284,27 @@ final class InvoiceController extends AbstractController
      */
     public function uploadDocumentAction(Request $request, string $projectDirectory, InvoiceDocumentRepository $documentRepository)
     {
-        $dir = $documentRepository->getCustomInvoiceDirectory();
-        $invoiceDir = $projectDirectory . DIRECTORY_SEPARATOR . $dir;
+        $dir = $documentRepository->getUploadDirectory();
+        $invoiceDir = $dir;
+
+        if ($dir[0] !== '/') {
+            $invoiceDir = $projectDirectory . DIRECTORY_SEPARATOR . $dir;
+        }
+
+        $invoiceDir = realpath($invoiceDir);
+
         $canUpload = true;
         $form = null;
 
         if (!file_exists($invoiceDir)) {
-            @mkdir($invoiceDir);
+            @mkdir($invoiceDir, 0777);
         }
-        if (!file_exists($invoiceDir)) {
-            $this->flashError(sprintf('Invoice directory is not existing and could not be created: %s', $dir));
+
+        if (!is_dir($invoiceDir)) {
+            $this->flashError(sprintf('Invoice directory is not existing and could not be created: "%s"', $dir));
             $canUpload = false;
         }
+
         if (!is_writable($invoiceDir)) {
             $this->flashError(sprintf('Invoice directory cannot be written: %s', $dir));
             $canUpload = false;
@@ -335,7 +344,7 @@ final class InvoiceController extends AbstractController
 
         return $this->render('invoice/document_upload.html.twig', [
             'form' => (null !== $form) ? $form->createView() : null,
-            'documents' => $this->service->getDocuments(),
+            'documents' => $this->service->getDocuments(true),
             'baseDirectory' => $projectDirectory . DIRECTORY_SEPARATOR,
         ]);
     }
