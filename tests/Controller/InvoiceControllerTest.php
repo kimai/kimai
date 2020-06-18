@@ -412,7 +412,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->request($client, '/invoice/document_upload');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $node = $client->getCrawler()->filter('div.box#invoice_document_list');
+        $node = $client->getCrawler()->filter('form[name=invoice_document_upload_form]');
         self::assertEquals(1, $node->count());
         // we do not test the upload here, just make sure that the action can be rendered properly
     }
