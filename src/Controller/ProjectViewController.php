@@ -45,9 +45,9 @@ final class ProjectViewController extends AbstractController
      */
     public function indexAction(Request $request): Response
     {
+        $today = \DateTime::createFromFormat('U', (string) time());
+        $entries = $this->repository->getProjectView($today);
         $query = new ProjectQuery();
-
-        $entries = $this->repository->getProjectView();
 
         return $this->render('project_view/index.html.twig', [
             'entries' => $entries,

@@ -456,28 +456,28 @@ class ProjectRepository extends EntityRepository
         }
     }
 
-    public function getProjectView(): array
+    public function getProjectView(\DateTime $startingDate): array
     {
         $entityManager = $this->getEntityManager();
-        $todayQb = $entityManager->createQueryBuilder();
-        $todayQb
+        $startingDateQueryBuilder = $entityManager->createQueryBuilder();
+        $startingDateQueryBuilder
             ->addSelect('SUM(t1.duration)')
             ->from(Timesheet::class, 't1')
             ->andWhere('t1.project = t.project')
-            ->andWhere('DATE(t1.begin) = :today')
+            ->andWhere('DATE(t1.begin) = :starting_date')
         ;
-        $weekQb = $entityManager->createQueryBuilder();
-        $weekQb
+        $weekQueryBuilder = $entityManager->createQueryBuilder();
+        $weekQueryBuilder
             ->addSelect('SUM(t2.duration)')
             ->from(Timesheet::class, 't2')
             ->andWhere('t2.project = t.project')
-            ->andWhere('DATE(t2.begin) BETWEEN :first_day_of_week AND :last_day_of_week')
+            ->andWhere('DATE(t2.begin) BETWEEN :first_day_of_starting_date_week AND :last_day_of_starting_date_week')
         ;
         $qb = $entityManager->createQueryBuilder();
         $qb
             ->addSelect('p.name')
-            ->addSelect("({$todayQb}) AS today")
-            ->addSelect("({$weekQb}) AS week")
+            ->addSelect("({$startingDateQueryBuilder}) AS today")
+            ->addSelect("({$weekQueryBuilder}) AS week")
             ->addSelect('p.comment')
             ->addSelect('SUM(t.duration) AS total')
             ->addSelect('p.timeBudget AS expected_duration')
@@ -488,18 +488,12 @@ class ProjectRepository extends EntityRepository
             ->addGroupBy('p.id')
             ->addOrderBy('p.name')
         ;
-        $today = \DateTime::createFromFormat('U', (string) time());
-        $firstDayOfWeek = (clone $today)
-            ->modify('this week')
-        ;
-        $lastDayOfWeek = (clone $today)
-            ->modify('this week')
-            ->modify('+6 days')
-        ;
+        $firstDayOfStartingDateWeek = (clone $startingDate)->modify('this week');
+        $lastDayOfStartingDateWeek = (clone $startingDate)->modify('this week')->modify('+6 days');
         $qb
-            ->setParameter('today', $today->format('Y-m-d'))
-            ->setParameter('first_day_of_week', $firstDayOfWeek->format('Y-m-d'))
-            ->setParameter('last_day_of_week', $lastDayOfWeek->format('Y-m-d'))
+            ->setParameter('starting_date', $startingDate->format('Y-m-d'))
+            ->setParameter('first_day_of_starting_date_week', $firstDayOfStartingDateWeek->format('Y-m-d'))
+            ->setParameter('last_day_of_starting_date_week', $lastDayOfStartingDateWeek->format('Y-m-d'))
         ;
 
         return $qb->getQuery()->getResult();
