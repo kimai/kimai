@@ -458,11 +458,26 @@ class ProjectRepository extends EntityRepository
 
     public function getProjectView(): array
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $entityManager = $this->getEntityManager();
+        $todayQb = $entityManager->createQueryBuilder();
+        $todayQb
+            ->addSelect('SUM(t1.duration)')
+            ->from(Timesheet::class, 't1')
+            ->andWhere('t1.project = t.project')
+            ->andWhere('DATE(t1.begin) = :today')
+        ;
+        $weekQb = $entityManager->createQueryBuilder();
+        $weekQb
+            ->addSelect('SUM(t2.duration)')
+            ->from(Timesheet::class, 't2')
+            ->andWhere('t2.project = t.project')
+            ->andWhere('DATE(t2.begin) BETWEEN :first_day_of_week AND :last_day_of_week')
+        ;
+        $qb = $entityManager->createQueryBuilder();
         $qb
             ->addSelect('p.name')
-            ->addSelect($this->todayProjectViewSubQuery())
-            ->addSelect($this->weekProjectViewSubQuery())
+            ->addSelect("({$todayQb}) AS today")
+            ->addSelect("({$weekQb}) AS week")
             ->addSelect('p.comment')
             ->addSelect('SUM(t.duration) AS total')
             ->addSelect('p.timeBudget AS expected_duration')
@@ -473,45 +488,21 @@ class ProjectRepository extends EntityRepository
             ->addGroupBy('p.id')
             ->addOrderBy('p.name')
         ;
-
-        return $qb->getQuery()->getResult();
-    }
-
-    private function todayProjectViewSubQuery(): string
-    {
-        $today = \DateTime::createFromFormat('U', (string) time())->format('Y-m-d');
-
-        return "
-            (
-                SELECT SUM(t1.duration)
-                FROM App\Entity\Timesheet AS t1
-                WHERE t1.project = t.project
-                    AND DATE(t1.begin) = '$today'
-            ) AS today
-        ";
-    }
-
-    private function weekProjectViewSubQuery(): string
-    {
         $today = \DateTime::createFromFormat('U', (string) time());
         $firstDayOfWeek = (clone $today)
             ->modify('this week')
-            ->format('Y-m-d')
         ;
         $lastDayOfWeek = (clone $today)
             ->modify('this week')
             ->modify('+6 days')
-            ->format('Y-m-d')
+        ;
+        $qb
+            ->setParameter('today', $today->format('Y-m-d'))
+            ->setParameter('first_day_of_week', $firstDayOfWeek->format('Y-m-d'))
+            ->setParameter('last_day_of_week', $lastDayOfWeek->format('Y-m-d'))
         ;
 
-        return "
-        (
-            SELECT SUM(t2.duration)
-            FROM App\Entity\Timesheet AS t2
-            WHERE t2.project = t.project
-                AND DATE(t2.begin) BETWEEN '$firstDayOfWeek' AND '$lastDayOfWeek'
-        ) AS week
-        ";
+        return $qb->getQuery()->getResult();
     }
 
     public function getComments(Project $project): array
