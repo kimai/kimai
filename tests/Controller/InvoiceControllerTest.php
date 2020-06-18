@@ -413,7 +413,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $node = $client->getCrawler()->filter('form[name=invoice_document_upload_form]');
-        self::assertEquals(1, $node->count());
+        self::assertEquals(1, $node->count(), 'Could not find upload form');
         // we do not test the upload here, just make sure that the action can be rendered properly
     }
 }
