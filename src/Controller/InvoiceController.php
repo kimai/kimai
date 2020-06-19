@@ -339,7 +339,7 @@ final class InvoiceController extends AbstractController
         }
 
         return $this->render('invoice/document_upload.html.twig', [
-            'form' => (null !== $form) ? $form->createView() : null,
+            'form' => $form->createView(),
             'documents' => $this->service->getDocuments(true),
             'baseDirectory' => $projectDirectory . DIRECTORY_SEPARATOR,
         ]);
