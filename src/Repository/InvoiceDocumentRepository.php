@@ -54,7 +54,9 @@ final class InvoiceDocumentRepository
 
     public function getUploadDirectory(): string
     {
-        foreach ($this->documentDirs as $dir) {
+        // reverse the array, as bundles can register invoice directories a well (as prepend extensions)
+        // and then the first entries are the directories from the bundles and not the default ones registered in Kimai
+        foreach (array_reverse($this->documentDirs) as $dir) {
             if ($dir === self::DEFAULT_DIRECTORY) {
                 continue;
             }
