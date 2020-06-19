@@ -11,6 +11,7 @@ namespace App\DependencyInjection;
 
 use App\Entity\Customer;
 use App\Entity\User;
+use App\Repository\InvoiceDocumentRepository;
 use App\Timesheet\Rounding\RoundingInterface;
 use App\Widget\Type\CompoundRow;
 use App\Widget\Type\Counter;
@@ -215,7 +216,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                     ->defaultValue([
                         'var/invoices/',
-                        'templates/invoice/renderer/'
+                        InvoiceDocumentRepository::DEFAULT_DIRECTORY
                     ])
                 ->end()
                 ->arrayNode('documents')

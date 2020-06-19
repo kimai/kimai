@@ -134,10 +134,15 @@ final class ServiceInvoice
     /**
      * Returns an array of invoice renderer, which will consist of a unique name and a controller action.
      *
+     * @param bool $customOnly
      * @return InvoiceDocument[]
      */
-    public function getDocuments(): array
+    public function getDocuments(bool $customOnly = false): array
     {
+        if ($customOnly) {
+            return $this->documents->findCustom();
+        }
+
         return $this->documents->findAll();
     }
 
