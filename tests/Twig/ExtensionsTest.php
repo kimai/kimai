@@ -243,7 +243,7 @@ class ExtensionsTest extends TestCase
         $sut = $this->getSut($this->localeEn, 'en');
 
         $this->assertEquals('00:00 h', $sut->duration(null));
-        $this->assertEquals('0.00', $sut->duration(null, true));
+        $this->assertEquals('0', $sut->duration(null, true));
     }
 
     public function testDurationDecimal()

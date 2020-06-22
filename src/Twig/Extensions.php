@@ -149,7 +149,7 @@ class Extensions extends AbstractExtension
     {
         $duration = $this->getSecondsForDuration($duration);
 
-        return number_format($this->getNumberFormatter()->format($duration / 3600),2);
+        return $this->getNumberFormatter()->format($duration / 3600);
     }
 
     /**
@@ -158,7 +158,7 @@ class Extensions extends AbstractExtension
      */
     public function amount($amount)
     {
-        return number_format($this->getNumberFormatter()->format($amount),2);
+        return $this->getNumberFormatter()->format($amount);
     }
 
     private function getSecondsForDuration($duration): int
