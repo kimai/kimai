@@ -98,6 +98,23 @@ class Kernel extends BaseKernel
             }
         }
 
+        if ($this->environment === 'test' && getenv('TEST_WITH_BUNDLES') === false) {
+            return;
+        }
+
+        // we can either define all kimai bundles hardcoded ...
+        if (is_file($this->getProjectDir() . '/config/bundles-local.php')) {
+            $contents = require $this->getProjectDir() . '/config/bundles-local.php';
+            foreach ($contents as $class => $envs) {
+                if (isset($envs['all']) || isset($envs[$this->environment])) {
+                    yield new $class();
+                }
+            }
+
+            return;
+        }
+
+        // ... or we load them dynamically from the plugins directory
         foreach ($this->getBundleDirectories() as $bundleDir) {
             $bundleName = $bundleDir->getRelativePathname();
             $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
@@ -109,10 +126,6 @@ class Kernel extends BaseKernel
     {
         $pluginsDir = $this->getProjectDir() . '/var/plugins';
         if (!file_exists($pluginsDir)) {
-            return [];
-        }
-
-        if ($this->environment === 'test' && getenv('TEST_WITH_BUNDLES') === false) {
             return [];
         }
 
@@ -207,9 +220,10 @@ class Kernel extends BaseKernel
         // load application routes
         $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');
 
-        /** @var SplFileInfo $bundleDir */
-        foreach ($this->getBundleDirectories() as $bundleDir) {
-            $routes->import($bundleDir->getRealPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
+        foreach ($this->bundles as $bundle) {
+            if (strpos(\get_class($bundle), 'KimaiPlugin\\') !== false) {
+                $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
+            }
         }
     }
 

@@ -104,6 +104,11 @@ services:
         tags:
             - { name: doctrine.event_listener, event: postConnect }
 
+    # store and retrieve sessions in and from database
+    App\Security\SessionHandler:
+        arguments:
+            - !service { class: PDO, factory: ['@database_connection', 'getWrappedConnection'] }
+
     # ================================================================================
     # FORMS
     # ================================================================================

@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Plugin\Fixtures;
+namespace App\Tests\Plugin\Fixtures\TestPlugin2;
 
 use App\Plugin\PluginInterface;
 
-class TestPlugin implements PluginInterface
+class TestPlugin2 implements PluginInterface
 {
     /**
      * @return string
