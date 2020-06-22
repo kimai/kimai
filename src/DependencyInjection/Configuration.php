@@ -11,6 +11,7 @@ namespace App\DependencyInjection;
 
 use App\Entity\Customer;
 use App\Entity\User;
+use App\Repository\InvoiceDocumentRepository;
 use App\Timesheet\Rounding\RoundingInterface;
 use App\Widget\Type\CompoundRow;
 use App\Widget\Type\Counter;
@@ -37,22 +38,20 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->scalarNode('data_dir')
-                    ->isRequired()
+                    ->defaultNull()
                     ->validate()
                         ->ifTrue(function ($value) {
+                            if (null === $value) {
+                                return false;
+                            }
+
                             return !file_exists($value);
                         })
                         ->thenInvalid('Data directory does not exist')
                     ->end()
                 ->end()
                 ->scalarNode('plugin_dir')
-                    ->isRequired()
-                    ->validate()
-                        ->ifTrue(function ($value) {
-                            return !file_exists($value);
-                        })
-                        ->thenInvalid('Plugin directory does not exist')
-                    ->end()
+                    ->setDeprecated('Changing the plugin directory via "kimai.plugin_dir" is not supported since 1.9')
                 ->end()
                 ->append($this->getUserNode())
                 ->append($this->getTimesheetNode())
@@ -217,7 +216,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                     ->defaultValue([
                         'var/invoices/',
-                        'templates/invoice/renderer/'
+                        InvoiceDocumentRepository::DEFAULT_DIRECTORY
                     ])
                 ->end()
                 ->arrayNode('documents')

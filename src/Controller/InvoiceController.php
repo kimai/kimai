@@ -284,29 +284,34 @@ final class InvoiceController extends AbstractController
      */
     public function uploadDocumentAction(Request $request, string $projectDirectory, InvoiceDocumentRepository $documentRepository)
     {
-        $dir = $documentRepository->getCustomInvoiceDirectory();
-        $invoiceDir = $projectDirectory . DIRECTORY_SEPARATOR . $dir;
+        $dir = $documentRepository->getUploadDirectory();
+        $invoiceDir = $dir;
+
+        // do not execute realpath, as it will return an empty string if the invoice directory is NOT existing!
+        if ($invoiceDir[0] !== '/') {
+            $invoiceDir = $projectDirectory . DIRECTORY_SEPARATOR . $dir;
+        }
+
         $canUpload = true;
-        $form = null;
 
         if (!file_exists($invoiceDir)) {
-            @mkdir($invoiceDir);
+            @mkdir($invoiceDir, 0777);
         }
-        if (!file_exists($invoiceDir)) {
-            $this->flashError(sprintf('Invoice directory is not existing and could not be created: %s', $dir));
+
+        if (!is_dir($invoiceDir)) {
+            $this->flashError(sprintf('Invoice directory "%s" is not existing and could not be created.', $dir));
+            $canUpload = false;
+        } elseif (!is_writable($invoiceDir)) {
+            $this->flashError(sprintf('Invoice directory "%s" cannot be written.', $dir));
             $canUpload = false;
         }
-        if (!is_writable($invoiceDir)) {
-            $this->flashError(sprintf('Invoice directory cannot be written: %s', $dir));
-            $canUpload = false;
-        }
+
+        $form = $this->createForm(InvoiceDocumentUploadForm::class, null, [
+            'action' => $this->generateUrl('admin_invoice_document_upload', []),
+            'method' => 'POST'
+        ]);
 
         if ($canUpload) {
-            $form = $this->createForm(InvoiceDocumentUploadForm::class, null, [
-                'action' => $this->generateUrl('admin_invoice_document_upload', []),
-                'method' => 'POST'
-            ]);
-
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -334,8 +339,8 @@ final class InvoiceController extends AbstractController
         }
 
         return $this->render('invoice/document_upload.html.twig', [
-            'form' => (null !== $form) ? $form->createView() : null,
-            'documents' => $this->service->getDocuments(),
+            'form' => $form->createView(),
+            'documents' => $this->service->getDocuments(true),
             'baseDirectory' => $projectDirectory . DIRECTORY_SEPARATOR,
         ]);
     }

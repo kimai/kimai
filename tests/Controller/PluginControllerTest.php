@@ -11,7 +11,7 @@ namespace App\Tests\Controller;
 
 use App\Entity\User;
 use App\Plugin\PluginManager;
-use App\Tests\Plugin\Fixtures\TestPlugin;
+use App\Tests\Plugin\Fixtures\TestPlugin\TestPlugin;
 
 /**
  * @group integration

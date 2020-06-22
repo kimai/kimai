@@ -11,6 +11,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 ## [1.10](https://github.com/kevinpapst/kimai2/releases/tag/1.10)
 
 - Invoice renderer `CSV` was removed
+- Sessions are now stored in the database (all users have to re-login after upgrade)
 
 ### Developer
 

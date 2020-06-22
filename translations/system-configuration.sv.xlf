@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="subtitle">
                 <source>subtitle</source>
-                <target state="translated">Ändra globala konfigurationer av din tidsredovisning</target>
+                <target state="translated">Ändra globala konfigurationer för din tidsredovisning</target>
             </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
@@ -40,7 +40,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.mode_duration_only">
                 <source>label.timesheet.mode_duration_only</source>
-                <target state="translated">Endast varaktighet: ersätter slutdatumsfältet med en ingång för varaktighet</target>
+                <target state="translated">Endast varaktighet: ersätter slutdatumsfältet med ett fält för varaktighet</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_duration_fixed_begin">
                 <source>label.timesheet.mode_duration_fixed_begin</source>
@@ -48,7 +48,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.mode_punch">
                 <source>label.timesheet.mode_punch</source>
-                <target state="translated">[Tidsklocka] -användaren kan starta och stoppa poster, men inte redigera tiderna eller varaktigheten</target>
+                <target state="translated">[Tidsklocka] -användaren kan starta och stoppa tidsinspelningar, men inte redigera tiderna eller varaktigheten</target>
             </trans-unit>
             <trans-unit id="label.timesheet.rules.allow_future_times">
                 <source>label.timesheet.rules.allow_future_times</source>
@@ -56,11 +56,11 @@
             </trans-unit>
             <trans-unit id="label.timesheet.active_entries.hard_limit">
                 <source>label.timesheet.active_entries.hard_limit</source>
-                <target state="translated">Tillåtet antal samtidiga körtidsposter</target>
+                <target state="translated">Tillåtet antal aktiva tidsinspelningar</target>
             </trans-unit>
             <trans-unit id="label.timesheet.active_entries.soft_limit">
                 <source>label.timesheet.active_entries.soft_limit</source>
-                <target state="translated">Antal körtidsposter från vilka en varning visas</target>
+                <target state="translated">Antal aktiva tidsinspelningar då en varning ska visas</target>
             </trans-unit>
             <trans-unit id="label.calendar.week_numbers">
                 <source>label.calendar.week_numbers</source>
@@ -85,6 +85,34 @@
             <trans-unit id="label.calendar.visibleHours.end">
                 <source>label.calendar.visibleHours.end</source>
                 <target state="translated">Slut på synligt tidsintervall</target>
+            </trans-unit>
+            <trans-unit id="Monday">
+                <source>Monday</source>
+                <target state="translated">Måndag</target>
+            </trans-unit>
+            <trans-unit id="Tuesday">
+                <source>Tuesday</source>
+                <target state="translated">Tisdag</target>
+            </trans-unit>
+            <trans-unit id="Wednesday">
+                <source>Wednesday</source>
+                <target state="translated">Onsdag</target>
+            </trans-unit>
+            <trans-unit id="Thursday">
+                <source>Thursday</source>
+                <target state="translated">Torsdag</target>
+            </trans-unit>
+            <trans-unit id="Friday">
+                <source>Friday</source>
+                <target state="translated">Fredag</target>
+            </trans-unit>
+            <trans-unit id="Saturday">
+                <source>Saturday</source>
+                <target state="translated">Lördag</target>
+            </trans-unit>
+            <trans-unit id="Sunday">
+                <source>Sunday</source>
+                <target state="translated">Söndag</target>
             </trans-unit>
 
         </body>
