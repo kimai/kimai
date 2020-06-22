@@ -143,7 +143,7 @@ class ExtensionsTest extends TestCase
         $this->assertEquals('123.75', $sut->money(123.75));
 
         $sut = $this->getSut($this->localeEn, 'de');
-        $this->assertEquals('123.234,755', $sut->money(123234.7554));
+        $this->assertEquals('123.234,76', $sut->money(123234.7554));
     }
 
     /**
@@ -166,8 +166,8 @@ class ExtensionsTest extends TestCase
             ['$13.75', 13.75, 'USD', 'en'],
             ['13,75 $', 13.75, 'USD', 'de'],
             ['13,75 RUB', 13.75, 'RUB', 'de'],
-            ['14 ¥', 13.75, 'JPY', 'de'],
-            ['13 933 ¥', 13933.49, 'JPY', 'ru'],
+            ['13,75 ¥', 13.75, 'JPY', 'de'],
+            ['13 933,49 ¥', 13933.49, 'JPY', 'ru'],
             ['1.234.567,89 $', 1234567.891234567890000, 'USD', 'de'],
         ];
     }
@@ -184,16 +184,16 @@ class ExtensionsTest extends TestCase
     public function getAmountData()
     {
         return [
-            ['0', null, 'de'],
+            ['0,00', null, 'de'],
             ['2.345,01', 2345.01, 'de'],
-            ['2.345', 2345, 'de'],
-            ['2,345', 2345, 'en'],
-            ['2,345.009', 2345.009, 'en'],
-            ['2.345,009', 2345.009, 'de'],
+            ['2.345,00', 2345, 'de'],
+            ['2,345.00', 2345, 'en'],
+            ['2,345.01', 2345.009, 'en'],
+            ['2.345,01', 2345.009, 'de'],
             ['13.75', 13.75, 'en'],
             ['13,75', 13.75, 'de'],
             ['13 933,49', 13933.49, 'ru'],
-            ['1.234.567,891', 1234567.891234567890000, 'de'],
+            ['1.234.567,89', 1234567.891234567890000, 'de'],
         ];
     }
 
@@ -243,7 +243,7 @@ class ExtensionsTest extends TestCase
         $sut = $this->getSut($this->localeEn, 'en');
 
         $this->assertEquals('00:00 h', $sut->duration(null));
-        $this->assertEquals('0', $sut->duration(null, true));
+        $this->assertEquals('0.00', $sut->duration(null, true));
     }
 
     public function testDurationDecimal()
@@ -262,15 +262,15 @@ class ExtensionsTest extends TestCase
 
         // test negative duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('0', $sut->durationDecimal('-1'));
+        $this->assertEquals('0.00', $sut->durationDecimal('-1'));
 
         // test zero duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('0', $sut->durationDecimal('0'));
+        $this->assertEquals('0.00', $sut->durationDecimal('0'));
 
         $sut = $this->getSut($this->localeEn, 'en');
 
-        $this->assertEquals('0', $sut->durationDecimal(null));
+        $this->assertEquals('0.00', $sut->durationDecimal(null));
     }
 
     protected function getTimesheet($seconds)

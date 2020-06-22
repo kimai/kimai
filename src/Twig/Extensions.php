@@ -249,6 +249,10 @@ class Extensions extends AbstractExtension
         $this->locale = $locale;
         $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::DECIMAL);
         $this->moneyFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+
+        // returns always two decimal digits
+        $this->numberFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
+        $this->moneyFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
     }
 
     private function getNumberFormatter(): NumberFormatter
