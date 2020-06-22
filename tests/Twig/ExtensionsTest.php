@@ -243,7 +243,7 @@ class ExtensionsTest extends TestCase
         $sut = $this->getSut($this->localeEn, 'en');
 
         $this->assertEquals('00:00 h', $sut->duration(null));
-        $this->assertEquals('0', $sut->duration(null, true));
+        $this->assertEquals('0.00', $sut->duration(null, true));
     }
 
     public function testDurationDecimal()
@@ -262,15 +262,15 @@ class ExtensionsTest extends TestCase
 
         // test negative duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('0', $sut->durationDecimal('-1'));
+        $this->assertEquals('-0.00', $sut->durationDecimal('-1'));
 
         // test zero duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('0', $sut->durationDecimal('0'));
+        $this->assertEquals('0.00', $sut->durationDecimal('0'));
 
         $sut = $this->getSut($this->localeEn, 'en');
 
-        $this->assertEquals('0', $sut->durationDecimal(null));
+        $this->assertEquals('0.00', $sut->durationDecimal(null));
     }
 
     protected function getTimesheet($seconds)
