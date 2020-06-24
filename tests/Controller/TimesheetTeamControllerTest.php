@@ -47,7 +47,8 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             'toolbar-action exporter-pdf' => $this->createUrl('/team/timesheet/export/pdf'),
             'toolbar-action exporter-xlsx' => $this->createUrl('/team/timesheet/export/xlsx'),
             'visibility' => '#',
-            'create modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
+            'create-ts modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
+            'create-ts-mu modal-ajax-form' => $this->createUrl('/team/timesheet/create_mu'),
             'help' => 'https://www.kimai.org/documentation/timesheet.html'
         ]);
     }
@@ -198,6 +199,65 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals(0, $timesheet->getRate());
         $this->assertNull($timesheet->getHourlyRate());
         $this->assertNull($timesheet->getFixedRate());
+    }
+
+    public function testCreateForMultipleUsersAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/team/timesheet/create_mu');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_multi_user_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_multi_user_edit_form' => [
+                'description' => 'Testing is more fun!',
+                'project' => 1,
+                'activity' => 1,
+                'teams' => '1',
+                'tags' => 'test,1234,foo-bar',
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $em = $this->getEntityManager();
+        /** @var Timesheet[] $timesheets */
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertCount(2, $timesheets);
+        foreach ($timesheets as $timesheet) {
+            $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+            $this->assertNull($timesheet->getEnd());
+            $this->assertEquals('Testing is more fun!', $timesheet->getDescription());
+            $this->assertEquals(0, $timesheet->getRate());
+            $this->assertNull($timesheet->getHourlyRate());
+            $this->assertNull($timesheet->getFixedRate());
+            $this->assertEquals(['test', '1234', 'foo-bar'], $timesheet->getTagsAsArray());
+        }
+    }
+
+    public function testCreateForMultipleUsersActionWithoutUserOrTeam()
+    {
+        $data = [
+            'timesheet_multi_user_edit_form' => [
+                'description' => 'Testing is more fun!',
+                'project' => 1,
+                'activity' => 1,
+                // make sure the default validation for timesheets is applied as well
+                'begin' => (new \DateTime())->format('Y-m-d H:i'),
+                'end' => (new \DateTime('-1 hour'))->format('Y-m-d H:i'),
+            ]
+        ];
+
+        $this->assertFormHasValidationError(
+            User::ROLE_ADMIN,
+            '/team/timesheet/create_mu',
+            'form[name=timesheet_multi_user_edit_form]',
+            $data,
+            ['#timesheet_multi_user_edit_form_users', '#timesheet_multi_user_edit_form_teams', '#timesheet_multi_user_edit_form_end']
+        );
     }
 
     public function testEditAction()

@@ -33,7 +33,7 @@
     {% set actions = actions|merge({'visibility': '#modal_invoice_template'}) %}
 
     {% if is_granted('manage_invoice_template') %}
-        {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
+        {% set actions = actions|merge({'create': {'url': path('admin_invoice_template_create'), 'class': 'modal-ajax-form'}}) %}
     {% endif %}
 
     {% if is_granted('upload_invoice_template') %}

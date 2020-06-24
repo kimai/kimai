@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ro" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="qvIyBkY" resname="title">
+        <source>title</source>
+        <target>Setari</target>
+      </trans-unit>
+      <trans-unit id="oCw4fof" resname="subtitle">
+        <source>subtitle</source>
+        <target>Schimba configurarile globale ale sistemului de pontaj</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet">
+        <source>timesheet</source>
+        <target>Pontaj</target>
+      </trans-unit>
+      <trans-unit id="ywqJUDy" resname="form_customer">
+        <source>form_customer</source>
+        <target>Creaza valorile implicite pentru client</target>
+      </trans-unit>
+      <trans-unit id="HIq6kM7" resname="form_user">
+        <source>form_user</source>
+        <target>Valori implicite pentru utilizator</target>
+      </trans-unit>
+      <trans-unit id="PLggHn." resname="theme">
+        <source>theme</source>
+        <target>Tema</target>
+      </trans-unit>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
+        <target>Calendar</target>
+      </trans-unit>
+      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
+        <source>label.theme.markdown_content</source>
+        <target>Permite formatarea marcajelor în descrieri și comentarii</target>
+      </trans-unit>
+      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target>Etichete: permite auto-completarea in campul de cautare si crearea etichetelor</target>
+      </trans-unit>
+      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
+        <source>label.timesheet.mode</source>
+        <target>Mod de contorizare a timpului</target>
+      </trans-unit>
+      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
+        <source>label.timesheet.mode_default</source>
+        <target>[Default] permite editarea timpilor de pornire si de oprire</target>
+      </trans-unit>
+      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
+        <source>label.timesheet.mode_duration_only</source>
+        <target>[Duration] înlocuiește ora de sfârșit cu un câmp de intrare de durată</target>
+      </trans-unit>
+      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
+        <source>label.timesheet.mode_duration_fixed_begin</source>
+        <target>[Duration] ora de pornire fixă este configurabilă. Doar durata poate fi modificată</target>
+      </trans-unit>
+      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
+        <source>label.timesheet.mode_punch</source>
+        <target>[Time-clock] utilizatorul poate porni și opri înregistrările, dar nu poate modifica orele sau durata</target>
+      </trans-unit>
+      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
+        <source>label.timesheet.rules.allow_future_times</source>
+        <target>Permite inredistrarile de timp in viitor</target>
+      </trans-unit>
+      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
+        <source>label.timesheet.active_entries.hard_limit</source>
+        <target>Numarul permis de inregistrari care ruleaza simultan</target>
+      </trans-unit>
+      <trans-unit id="ebLK9d2" resname="label.timesheet.active_entries.soft_limit">
+        <source>label.timesheet.active_entries.soft_limit</source>
+        <target>Numarul inregistrarilor active simultan pentru care este afisat un avertisment</target>
+      </trans-unit>
+      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target>Numarul minim de litere pentru care incepe auto-completarea</target>
+      </trans-unit>
+      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
+        <source>label.calendar.week_numbers</source>
+        <target>Afiseaza numarul saptamanii</target>
+      </trans-unit>
+      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
+        <source>label.calendar.weekends</source>
+        <target>Afiseaza sfarsitul de saptamana</target>
+      </trans-unit>
+      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target>Începutul programului normal de lucru (va fi evidențiat)</target>
+      </trans-unit>
+      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target>Sfârșitul programului normal de lucru (va fi evidențiat)</target>
+      </trans-unit>
+      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target>Începutul intervalului de timp vizibil</target>
+      </trans-unit>
+      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target>Sfârșitul intervalului de timp vizibil</target>
+      </trans-unit>
+      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>Durata slotului pentru vizualizarea săptămânii și a zilei (format: hh:mm:ss)</target>
+      </trans-unit>
+      <trans-unit id="nwuLBP4" resname="branding">
+        <source>branding</source>
+        <target>Branding</target>
+      </trans-unit>
+      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target>Logo (URL-ul imaginii, înlocuiește compania în ecranul de conectare)</target>
+      </trans-unit>
+      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
+        <source>label.theme.branding.company</source>
+        <target>Firma</target>
+      </trans-unit>
+      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target>Mini Logo (sidebar restrâns)</target>
+      </trans-unit>
+      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target>Titlu browser</target>
+      </trans-unit>
+      <trans-unit id="Gdb5M4w" resname="rounding">
+        <source>rounding</source>
+        <target>Rotunjirea timpului</target>
+      </trans-unit>
+      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target>Rotunjirea timpului de pornire în minute (0 = dezactivat)</target>
+      </trans-unit>
+      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>Rotunjirea timpului final în minute (0 = dezactivat)</target>
+      </trans-unit>
+      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target>Rotunjirea duratei în minute (0 = dezactivată)</target>
+      </trans-unit>
+      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target>Mod de rotunjire</target>
+      </trans-unit>
+      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target>Zilele săptămânii când se va aplica rotunjirea</target>
+      </trans-unit>
+      <trans-unit id="agDfwdy" resname="Monday">
+        <source>Monday</source>
+        <target>Luni</target>
+      </trans-unit>
+      <trans-unit id="fYrx3hJ" resname="Tuesday">
+        <source>Tuesday</source>
+        <target>Marți</target>
+      </trans-unit>
+      <trans-unit id="wKbMgpz" resname="Wednesday">
+        <source>Wednesday</source>
+        <target>Miercuri</target>
+      </trans-unit>
+      <trans-unit id=".CZiBi." resname="Thursday">
+        <source>Thursday</source>
+        <target>Joi</target>
+      </trans-unit>
+      <trans-unit id="4h8.Nyp" resname="Friday">
+        <source>Friday</source>
+        <target>Vineri</target>
+      </trans-unit>
+      <trans-unit id="2_Ncc2P" resname="Saturday">
+        <source>Saturday</source>
+        <target>Sâmbătă</target>
+      </trans-unit>
+      <trans-unit id="hz.vdg5" resname="Sunday">
+        <source>Sunday</source>
+        <target>Duminică</target>
+      </trans-unit>
+      <trans-unit id="jmsE4EY" resname="Ceil">
+        <source>Ceil</source>
+        <target>Plafon: începutul, sfârșitul și durata vor fi rotunjite în sus</target>
+      </trans-unit>
+      <trans-unit id="Y_qmsDz" resname="Closest">
+        <source>Closest</source>
+        <target>Cel mai apropiat: rotunjirea matematică la cea mai apropiată valoare</target>
+      </trans-unit>
+      <trans-unit id="IbERy.5" resname="Default">
+        <source>Default</source>
+        <target>Standard: începutul va fi rotunjit în jos, sfârșitul și durata vor fi rotunjite în sus</target>
+      </trans-unit>
+      <trans-unit id="0mjJxEk" resname="Floor">
+        <source>Floor</source>
+        <target>Nivel: începutul, sfârșitul și durata vor fi rotunjite în jos</target>
+      </trans-unit>
+      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>Ora de pornire implicită (nu este utilizată în toate modurile de cronometrare)</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

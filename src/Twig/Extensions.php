@@ -105,16 +105,19 @@ class Extensions extends AbstractExtension
             return '';
         }
 
-        $parts = explode("\r\n", $string);
-        if (\count($parts) === 1) {
-            $parts = explode("\n", $string);
+        $parts = [];
+
+        foreach (explode("\r\n", $string) as $part) {
+            foreach (explode("\n", $part) as $tmp) {
+                $parts[] = $tmp;
+            }
         }
 
         $parts = array_map(function ($part) use ($indent) {
             return $indent . $part;
         }, $parts);
 
-        return implode("\n", $parts);
+        return implode(PHP_EOL, $parts);
     }
 
     /**
@@ -190,7 +193,12 @@ class Extensions extends AbstractExtension
      */
     public function currency($currency)
     {
-        return Currencies::getSymbol($currency);
+        try {
+            return Currencies::getSymbol(strtoupper($currency));
+        } catch (\Exception $ex) {
+        }
+
+        return $currency;
     }
 
     /**
@@ -199,7 +207,12 @@ class Extensions extends AbstractExtension
      */
     public function language($language)
     {
-        return Languages::getName($language, $this->locale);
+        try {
+            return Languages::getName(strtolower($language), $this->locale);
+        } catch (\Exception $ex) {
+        }
+
+        return $language;
     }
 
     /**
@@ -208,9 +221,9 @@ class Extensions extends AbstractExtension
      */
     public function country($country)
     {
-        $country = strtoupper($country);
-        if (Countries::exists($country)) {
-            return Countries::getName($country);
+        try {
+            return Countries::getName(strtoupper($country));
+        } catch (\Exception $ex) {
         }
 
         return $country;

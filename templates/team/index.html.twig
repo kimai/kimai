@@ -11,7 +11,7 @@
 {% block main %}
 
     {% if teams|length == 0 %}
-        {{ widgets.callout('warning', 'error.no_entries_found') }}
+        {{ widgets.nothing_found('kimai.teamUpdate') }}
     {% else %}
 
         {% set columns = {

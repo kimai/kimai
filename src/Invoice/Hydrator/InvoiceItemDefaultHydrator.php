@@ -75,7 +75,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.currency' => $currency,
             'entry.duration' => $item->getDuration(),
             'entry.duration_decimal' => $formatter->getFormattedDecimalDuration($item->getDuration()),
-            'entry.duration_minutes' => number_format($item->getDuration() / 60),
+            'entry.duration_minutes' => (int) ($item->getDuration() / 60),
             'entry.begin' => $formatter->getFormattedDateTime($begin),
             'entry.begin_time' => $formatter->getFormattedTime($begin),
             'entry.begin_timestamp' => $begin->getTimestamp(),

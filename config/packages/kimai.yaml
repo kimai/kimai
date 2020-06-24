@@ -253,6 +253,12 @@ kimai:
             date: 'd/m/Y'
             date_time: 'd/m H:i'
             duration: '%%h h %%m'
+        he:
+            date_time_type: 'dd/MM/yyyy HH:mm'
+            date_type: 'dd/MM/yyyy'
+            date: 'd/m/Y'
+            date_time: 'd/m H:i'
+            duration: '%%h:%%m'
         hu:
             date_time_type: 'yyyy.MM.dd. HH:mm'
             date_type: 'yyyy.MM.dd.'
@@ -291,13 +297,4 @@ kimai:
             date_type: 'dd. MM. yyyy'
             date: 'd. m. Y'
             date_time: 'd. m.  H:i'
-# --------------------------------------------------------------------------------
-
-
-# --------------------------------------------------------------------------------
-# STORAGE
-# If you want to use directories outside the Kimai directory, change these
-# --------------------------------------------------------------------------------
-    data_dir: '%kernel.project_dir%/var/data'
-    plugin_dir: '%kernel.project_dir%/var/plugins'
 # --------------------------------------------------------------------------------

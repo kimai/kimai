@@ -61,7 +61,7 @@ abstract class TimesheetAbstractController extends AbstractController
     /**
      * @var TimesheetService
      */
-    private $service;
+    protected $service;
 
     public function __construct(
         UserDateTimeFactory $dateTime,
@@ -330,14 +330,21 @@ abstract class TimesheetAbstractController extends AbstractController
                     $timesheet->setExported($dto->isExported());
                     $execute = true;
                 }
-                // setting both values allows to erase wrong
-                if (null !== $dto->getHourlyRate()) {
+
+                if ($dto->isRecalculateRates()) {
                     $timesheet->setFixedRate(null);
-                    $timesheet->setHourlyRate($dto->getHourlyRate());
+                    $timesheet->setHourlyRate(null);
+                    $timesheet->setInternalRate(null);
                     $execute = true;
                 } elseif (null !== $dto->getFixedRate()) {
                     $timesheet->setFixedRate($dto->getFixedRate());
                     $timesheet->setHourlyRate(null);
+                    $timesheet->setInternalRate(null);
+                    $execute = true;
+                } elseif (null !== $dto->getHourlyRate()) {
+                    $timesheet->setFixedRate(null);
+                    $timesheet->setInternalRate(null);
+                    $timesheet->setHourlyRate($dto->getHourlyRate());
                     $execute = true;
                 }
             }

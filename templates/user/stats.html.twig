@@ -14,7 +14,7 @@
 {% block profile_content %}
 
     {% if years is empty %}
-        {{ widgets.callout('warning', 'error.no_entries_found') }}
+        {{ widgets.nothing_found() }}
     {% endif %}
 
     <script type="text/javascript">

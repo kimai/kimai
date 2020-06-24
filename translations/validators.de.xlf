@@ -14,6 +14,14 @@
                 <source>The begin date cannot be in the future.</source>
                 <target>Das Startdatum darf nicht in der Zukunft liegen.</target>
             </trans-unit>
+            <trans-unit id="You must select at least one user or team.">
+                <source>You must select at least one user or team.</source>
+                <target>Sie müssen mindestens einen Benutzer oder ein Team auswählen.</target>
+            </trans-unit>
+            <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+                <source>This invoice document cannot be used, please rename the file and upload it again.</source>
+                <target>Dieses Rechnungsdokument kann nicht verwendet werden, bitte benennen Sie die Datei um und laden Sie diese erneut hoch.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

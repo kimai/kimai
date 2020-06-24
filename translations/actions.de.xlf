@@ -70,6 +70,10 @@
                 <source>create-timesheet</source>
                 <target>Zeit erfassen</target>
             </trans-unit>
+            <trans-unit id="create-timesheet-multiuser">
+                <source>create-timesheet-multiuser</source>
+                <target>Für mehrere Benutzer</target>
+            </trans-unit>
             <trans-unit id="permissions">
                 <source>permissions</source>
                 <target>Team Berechtigungen</target>

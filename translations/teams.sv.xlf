@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="sv" datatype="plaintext" original="teams.en.xlf">
+        <body>
+            <trans-unit id="teams.title">
+                <source>teams.title</source>
+                <target state="translated">Arbetslag</target>
+            </trans-unit>
+            <trans-unit id="teams.project_access">
+                <source>teams.project_access</source>
+                <target state="translated">Tillåt åtkomst till projekt</target>
+            </trans-unit>
+            <trans-unit id="teams.customer_access">
+                <source>teams.customer_access</source>
+                <target state="translated">Tillåt åtkomst till kunder</target>
+            </trans-unit>
+            <trans-unit id="team.visibility_global">
+                <source>team.visibility_global</source>
+                <target state="translated">Synlig för alla, efter som inget arbetslag är tilldelat än.</target>
+            </trans-unit>
+            <trans-unit id="team.visibility_restricted">
+                <source>team.visibility_restricted</source>
+                <target state="translated">Bara synlig för följande arbetslag och alla administratörer.</target>
+            </trans-unit>
+            <trans-unit id="team.project_visibility_inherited">
+                <source>team.project_visibility_inherited</source>
+                <target state="translated">Projektet har begränsad tillgång, eftersom arbetslags behörigheter är inställda för kunden.</target>
+            </trans-unit>
+            <trans-unit id="team.create_default">
+                <source>team.create_default</source>
+                <target state="translated">Skapa ett nytt arbetslag för att begränsa tillgång</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

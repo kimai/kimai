@@ -202,6 +202,23 @@ class ProjectControllerTest extends APIControllerBaseTest
         self::assertEquals('2020-02-08T21:11:42+0000', $result['end']);
     }
 
+    public function testPostActionWithLeastFields()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'customer' => 1
+        ];
+        $this->request($client, '/api/projects', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+        self::assertEquals('foo', $result['name']);
+    }
+
     public function testPostActionWithInvalidUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
