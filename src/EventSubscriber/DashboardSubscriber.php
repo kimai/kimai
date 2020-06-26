@@ -9,7 +9,6 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\User;
 use App\Event\DashboardEvent;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
