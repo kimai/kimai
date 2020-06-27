@@ -38,7 +38,6 @@
         "mpdf/mpdf": "^8.0",
         "nelmio/api-doc-bundle": "^3.2",
         "nelmio/cors-bundle": "^1.5",
-        "ocramius/proxy-manager": "^2.1.1",
         "onelogin/php-saml": "^3.4",
         "pagerfanta/pagerfanta": "^2.1",
         "phpoffice/phpspreadsheet": "^1.10",
