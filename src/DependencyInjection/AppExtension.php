@@ -52,9 +52,11 @@ class AppExtension extends Extension
         $config['export']['documents'] = array_merge($config['export']['documents'], $config['export']['defaults']);
         unset($config['export']['defaults']);
 
-        // safe alternatives to %kernel.project_dir%
+        if (empty($config['data_dir'])) {
+            $config['data_dir'] = $container->getParameter('kernel.project_dir') . '/var/data';
+        }
         $container->setParameter('kimai.data_dir', $config['data_dir']);
-        $container->setParameter('kimai.plugin_dir', $config['plugin_dir']);
+        $container->setParameter('kimai.plugin_dir', $container->getParameter('kernel.project_dir') . '/var/plugins');
 
         $this->setLanguageFormats($config['languages'], $container);
         unset($config['languages']);

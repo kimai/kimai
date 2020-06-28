@@ -66,6 +66,10 @@
                 <source>label.timesheet.rules.allow_future_times</source>
                 <target>Allow time entries in the future</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+                <source>label.timesheet.rules.allow_overlapping_records</source>
+                <target>Allow overlapping time entries</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.rules.lockdown_period_start">
                 <source>label.timesheet.rules.lockdown_period_start</source>
                 <target>Lockdown period start (PHP relative date to now)</target>

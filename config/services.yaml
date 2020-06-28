@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: ar|cs|de|de_CH|da|en|eo|es|eu|fr|he|hu|it|ja|ko|nl|pl|pt_BR|ro|ru|sk|sv|tr|zh_CN
+    app_locales: ar|cs|de|de_CH|da|en|eo|es|eu|fr|he|hu|it|ja|ko|nl|pl|pt_BR|ro|ru|sk|sv|tr|vi|zh_CN
 
 services:
     # default configuration for services in *this* file
@@ -103,6 +103,11 @@ services:
         class: App\Doctrine\SqliteSessionInitSubscriber
         tags:
             - { name: doctrine.event_listener, event: postConnect }
+
+    # store and retrieve sessions in and from database
+    App\Security\SessionHandler:
+        arguments:
+            - !service { class: PDO, factory: ['@database_connection', 'getWrappedConnection'] }
 
     # ================================================================================
     # FORMS

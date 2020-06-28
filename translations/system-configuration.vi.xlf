@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="vi" datatype="plaintext" original="system-configuration.en.xlf">
+        <body>
+            <trans-unit id="title">
+                <source>title</source>
+                <target>Cài đặt</target>
+            </trans-unit>
+            <trans-unit id="subtitle">
+                <source>subtitle</source>
+                <target>phụ đề</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Bảng chấm công</target>
+            </trans-unit>
+            <trans-unit id="invoice">
+                <source>invoice</source>
+                <target>Hóa đơn</target>
+            </trans-unit>
+            <trans-unit id="form_customer">
+                <source>form_customer</source>
+                <target>Tạo giá trị mặc định của khách hàng</target>
+            </trans-unit>
+            <trans-unit id="form_user">
+                <source>form_user</source>
+                <target>Giá trị mặc định của người dùng</target>
+            </trans-unit>
+            <trans-unit id="theme">
+                <source>theme</source>
+                <target>Chủ đề</target>
+            </trans-unit>
+            <trans-unit id="calendar">
+                <source>calendar</source>
+                <target>Lịch</target>
+            </trans-unit>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target>Cho phép đánh dấu định dạng trong mô tả và nhận xét</target>
+            </trans-unit>
+            <trans-unit id="label.theme.tags_create">
+                <source>label.theme.tags_create</source>
+                <target>Thẻ: sử dụng tìm kiếm tự động hoàn thành và cho phép tạo thẻ</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode">
+                <source>label.timesheet.mode</source>
+                <target>Chế độ theo dõi thời gian</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_default">
+                <source>label.timesheet.mode_default</source>
+                <target>[Mặc định] thời gian bắt đầu và kết thúc có thể được chỉnh sửa</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_only">
+                <source>label.timesheet.mode_duration_only</source>
+                <target>[Thời lượng] thay thế thời gian kết thúc dựa vào thời lượng</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+                <source>label.timesheet.mode_duration_fixed_begin</source>
+                <target>[Thời lượng] thời gian bắt đầu cố định có thể định cấu hình, chỉ có thể thay đổi thời lượng</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_punch">
+                <source>label.timesheet.mode_punch</source>
+                <target>[Đồng hồ thời gian] Người dùng có thể bắt đầu và dừng các bản ghi, nhưng không thể chỉnh sửa thời gian hoặc thời lượng</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_future_times">
+                <source>label.timesheet.rules.allow_future_times</source>
+                <target>Cho phép thời gian trong tương lai</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.hard_limit">
+                <source>label.timesheet.active_entries.hard_limit</source>
+                <target>Số lượng cho phép của các mục thời gian chạy đồng thời</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.soft_limit">
+                <source>label.timesheet.active_entries.soft_limit</source>
+                <target>Số mục thời gian chạy mà cảnh báo được hiển thị</target>
+            </trans-unit>
+            <trans-unit id="label.theme.autocomplete_chars">
+                <source>label.theme.autocomplete_chars</source>
+                <target>Số lượng chữ cái tối thiểu để bắt đầu tự động hoàn thành</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.week_numbers">
+                <source>label.calendar.week_numbers</source>
+                <target>Hiển thị số tuần</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.weekends">
+                <source>label.calendar.weekends</source>
+                <target>Hiển thị cuối tuần</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.begin">
+                <source>label.calendar.businessHours.begin</source>
+                <target>Bắt đầu giờ làm việc bình thường (sẽ được tô sáng)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.end">
+                <source>label.calendar.businessHours.end</source>
+                <target>Kết thúc giờ làm việc bình thường (sẽ được tô sáng)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.begin">
+                <source>label.calendar.visibleHours.begin</source>
+                <target>Bắt đầu phạm vi thời gian có thể nhìn thấy</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.end">
+                <source>label.calendar.visibleHours.end</source>
+                <target>Kết thúc phạm vi thời gian có thể nhìn thấy</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.slot_duration">
+                <source>label.calendar.slot_duration</source>
+                <target>Thời lượng thời gian cho chế độ xem theo tuần và ngày (định dạng: hh: mm: ss)</target>
+            </trans-unit>
+            <trans-unit id="branding">
+                <source>branding</source>
+                <target>Thương hiệu</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.logo">
+                <source>label.theme.branding.logo</source>
+                <target>Logo (URL hình ảnh, thay thế công ty trong màn hình đăng nhập</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.company">
+                <source>label.theme.branding.company</source>
+                <target>Công ty</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.mini">
+                <source>label.theme.branding.mini</source>
+                <target>Logo nhỏ (thanh bên bị sập)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.title">
+                <source>label.theme.branding.title</source>
+                <target>Tiêu đề trình duyệt</target>
+            </trans-unit>
+            <trans-unit id="rounding">
+                <source>rounding</source>
+                <target>Thời gian làm tròn</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.begin">
+                <source>label.timesheet.rounding.default.begin</source>
+                <target>Làm tròn thời gian bắt đầu tính bằng phút (0 = đã hủy kích hoạt)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.end">
+                <source>label.timesheet.rounding.default.end</source>
+                <target>Làm tròn thời gian kết thúc tính bằng phút (0 = đã hủy kích hoạt)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.duration">
+                <source>label.timesheet.rounding.default.duration</source>
+                <target>Làm tròn thời lượng tính bằng phút (0 = đã hủy kích hoạt)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.mode">
+                <source>label.timesheet.rounding.default.mode</source>
+                <target>Chế độ làm tròn</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.days">
+                <source>label.timesheet.rounding.default.days</source>
+                <target>Các ngày trong tuần khi làm tròn sẽ được áp dụng</target>
+            </trans-unit>
+            <trans-unit id="Monday">
+                <source>Monday</source>
+                <target>Thứ hai</target>
+            </trans-unit>
+            <trans-unit id="Tuesday">
+                <source>Tuesday</source>
+                <target>Thứ 3</target>
+            </trans-unit>
+            <trans-unit id="Wednesday">
+                <source>Wednesday</source>
+                <target>Thứ 4</target>
+            </trans-unit>
+            <trans-unit id="Thursday">
+                <source>Thursday</source>
+                <target>Thứ 5</target>
+            </trans-unit>
+            <trans-unit id="Friday">
+                <source>Friday</source>
+                <target>Thứ 6</target>
+            </trans-unit>
+            <trans-unit id="Saturday">
+                <source>Saturday</source>
+                <target>Thứ 7</target>
+            </trans-unit>
+            <trans-unit id="Sunday">
+                <source>Sunday</source>
+                <target>Chủ nhật</target>
+            </trans-unit>
+            <trans-unit id="Ceil">
+                <source>Ceil</source>
+                <target>Ceil: bắt đầu, kết thúc và thời lượng sẽ được làm tròn lên</target>
+            </trans-unit>
+            <trans-unit id="Closest">
+                <source>Closest</source>
+                <target>Gần nhất: làm tròn toán học đến giá trị gần nhất</target>
+            </trans-unit>
+            <trans-unit id="Default">
+                <source>Default</source>
+                <target>Tiêu chuẩn: bắt đầu sẽ được làm tròn xuống, kết thúc và thời gian lên</target>
+            </trans-unit>
+            <trans-unit id="Floor">
+                <source>Floor</source>
+                <target>Tầng: bắt đầu, kết thúc và thời lượng sẽ được làm tròn xuống</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.default_begin">
+                <source>label.timesheet.default_begin</source>
+                <target>Thời gian bắt đầu mặc định (không được sử dụng trong tất cả các chế độ định thời gian)</target>
+            </trans-unit>
+            <trans-unit id="label.simple_form">
+                <source>label.simple_form</source>
+                <target>Tìm kiếm đơn giản</target>
+            </trans-unit>
+            <trans-unit id="label.invoice.number_format">
+                <source>label.invoice.number_format</source>
+                <target>Định dạng số hóa đơn</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

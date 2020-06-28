@@ -50,7 +50,7 @@
             </trans-unit>
             <trans-unit id="confirm">
                 <source>confirm</source>
-                <target state="translated">Utför</target>
+                <target state="translated">Bekräfta</target>
             </trans-unit>
 
             <!--
@@ -342,7 +342,7 @@
             </trans-unit>
             <trans-unit id="modal.columns.description">
                 <source>modal.columns.description</source>
-                <target state="translated">När du sparar de kolonner som inte är markerade kommer de att döljas och den här inställningen lagras i en webbläsarkaka. Om du tar bort dina cookies kommer inställningarna att återställas.</target>
+                <target state="translated">När du sparar de kolumner som inte är markerade kommer de att döljas och den här inställningen lagras i en webbläsarkaka. Om du tar bort dina cookies kommer inställningarna att återställas.</target>
             </trans-unit>
             <trans-unit id="label.fixedRate">
                 <source>label.fixedRate</source>
@@ -447,8 +447,8 @@
             </trans-unit>
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
-                <target state="translated">Projektet %project% för kunden %customer% har %activities% för närvarande %activities% 
-                     aktiviteter och %records% time-records, som räknas upp till totalt %duration%.
+                <target state="translated">Projektet %project% för kunden %customer% har för närvarande %activities% 
+                     aktiviteter och %records% tidrapporter, som summeras till %duration%.
                 </target>
             </trans-unit>
 
@@ -462,8 +462,8 @@
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target state="translated">
-                     För närvarande aktiviteten %activity% i projektet %project% för kunden %customer%
-                     har %records% tidsrekord, vilket räknas upp till totalt %duration%.
+                     För närvarande har aktiviteten %activity% i projektet %project% för kunden %customer%
+                     har %records% tidrapporter, vilket summeras till %duration%.
                      </target>
             </trans-unit>
 
@@ -525,8 +525,8 @@
             <trans-unit id="admin_customer.short_stats">
                 <source>admin_customer.short_stats</source>
                 <target state="translated">
-För närvarande kunden %customer% har %project% projekt med% aktivitet% aktiviteter, som räknas upp
-                     i %activity% tidposter till totalt %duration%.
+                    För närvarande har kunden %customer% %project% projekt med %activities% aktiviteter,
+                    med %records% tidrapporter som summeras till %duration%.
                 </target>
             </trans-unit>
 
@@ -560,8 +560,8 @@ För närvarande kunden %customer% har %project% projekt med% aktivitet% aktivit
             <trans-unit id="admin_user.short_stats">
                 <source>admin_user.short_stats</source>
                 <target state="translated">
-För närvarande har %user% användare %records% tidsrekord som räknas upp till totalt %duration%.
-                     </target>
+                    För närvarande har användaren %user% %records% tidrapporter som summeras till %duration%.
+                </target>
             </trans-unit>
 
             <!--
@@ -601,19 +601,19 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             -->
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
-                <target state="translated">Arbetstider idag</target>
+                <target state="translated">Arbetstimmar idag</target>
             </trans-unit>
             <trans-unit id="stats.durationWeek">
                 <source>stats.durationWeek</source>
-                <target state="translated">Arbetstid i veckan</target>
+                <target state="translated">Arbetstimmar denna veckan</target>
             </trans-unit>
             <trans-unit id="stats.durationMonth">
                 <source>stats.durationMonth</source>
-                <target state="translated">Arbetstid i den här månaden</target>
+                <target state="translated">Arbetstimmar denna månaden</target>
             </trans-unit>
             <trans-unit id="stats.durationYear">
                 <source>stats.durationYear</source>
-                <target state="translated">Arbetstid i det här året</target>
+                <target state="translated">Arbetstimmar detta  året</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
@@ -741,7 +741,7 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
-                <target>Subtotal</target>
+                <target>Nettobelopp</target>
             </trans-unit>
             <trans-unit id="invoice.tax">
                 <source>invoice.tax</source>
@@ -753,7 +753,7 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             </trans-unit>
             <trans-unit id="invoice.service_date">
                 <source>invoice.service_date</source>
-                <target state="translated">Inventaredatum</target>
+                <target state="translated">Arbetstillfälle</target>
             </trans-unit>
             <trans-unit id="label.amount">
                 <source>label.amount</source>
@@ -761,7 +761,7 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             </trans-unit>
             <trans-unit id="label.total_rate">
                 <source>label.total_rate</source>
-                <target state="translated">Totaleres</target>
+                <target state="translated">Belopp</target>
             </trans-unit>
             <trans-unit id="label.unit_price">
                 <source>label.unit_price</source>
@@ -777,11 +777,11 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             </trans-unit>
             <trans-unit id="invoice.signature_customer">
                 <source>invoice.signature_customer</source>
-                <target state="translated">Bekräftelse: Datum / Kunden namn / Signatur</target>
+                <target state="translated">Bekräftelse: Datum / Kundens namn / Signatur</target>
             </trans-unit>
             <trans-unit id="invoice.total_working_time">
                 <source>invoice.total_working_time</source>            
-                <target state="translated">Total varaktighet</target>
+                <target state="translated">Total arbetstid</target>
             </trans-unit>
             <trans-unit id="label.orderNumber">
                 <source>label.orderNumber</source>
@@ -805,7 +805,7 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             </trans-unit>
             <trans-unit id="export.subtitle">
                 <source>export.subtitle</source>
-                <target state="translated">Exportera tidsrapport till olika format</target>
+                <target state="translated">Exportera tidrapport till olika format</target>
             </trans-unit>
             <trans-unit id="export.period">
                 <source>export.period</source>
@@ -813,7 +813,7 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             </trans-unit>
             <trans-unit id="export.document_title">
                 <source>export.document_title</source>
-                <target state="translated">Förteckning över utgifter</target>
+                <target state="translated">Export av tidrapporter</target>
             </trans-unit>
             <trans-unit id="export.full_list">
                 <source>export.full_list</source>
@@ -905,7 +905,7 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target state="translated">Skapa ny tidpost</target>
+                <target state="translated">Skapa ny tidrapport</target>
             </trans-unit>
 
             <!--
@@ -925,7 +925,7 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             </trans-unit>
             <trans-unit id="entryState.exported">
                 <source>entryState.exported</source>
-                <target state="translated">Rennrad</target>
+                <target state="translated">Rensad</target>
             </trans-unit>
             <trans-unit id="entryState.not_exported">
                 <source>entryState.not_exported</source>

@@ -20,15 +20,15 @@
             </trans-unit>
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
-                <target state="translated">Tidinspelning kunde inte startas</target>
+                <target state="translated">Tidsinspelning kunde inte startas</target>
             </trans-unit>
             <trans-unit id="timesheet.start.exceeded_limit">
                 <source>timesheet.start.exceeded_limit</source>
-                <target state="translated">Gränsen för aktiva tidsposter har uppnåtts, var god stoppa minst en körtidsmätning först.</target>
+                <target state="translated">Gränsen för aktiva tidsinspelningar har uppnåtts, var god stoppa minst en tidsinspelning först.</target>
             </trans-unit>
             <trans-unit id="timesheet.locked.warning">
                 <source>timesheet.locked.warning</source>
-                <target state="translated">Du håller på att ändra en exponerad post</target>
+                <target state="translated">Du håller på att ändra en exporterad post</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>

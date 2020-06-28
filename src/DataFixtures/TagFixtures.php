@@ -11,7 +11,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Tag;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**

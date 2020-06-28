@@ -19,6 +19,7 @@
         "ext-xsl": "*",
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.2",
+        "composer/package-versions-deprecated": "^1.8",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^2.1",
         "doctrine/orm": "^2.7",
@@ -37,7 +38,6 @@
         "mpdf/mpdf": "^8.0",
         "nelmio/api-doc-bundle": "^3.2",
         "nelmio/cors-bundle": "^1.5",
-        "ocramius/proxy-manager": "^2.1.1",
         "onelogin/php-saml": "^3.4",
         "pagerfanta/pagerfanta": "^2.1",
         "phpoffice/phpspreadsheet": "^1.10",
@@ -152,7 +152,8 @@
             "@kimai:code-lint",
             "@kimai:tests-unit"
         ],
-        "kimai:code-check":  [
+        "kimai:code-check": "@code-check",
+        "code-check":  [
             "@kimai:pre-commit",
             "@kimai:tests-integration"
         ],
@@ -166,14 +167,15 @@
         "kimai:tests": "vendor/bin/phpunit tests/",
         "kimai:tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
         "kimai:tests-integration": "vendor/bin/phpunit --group integration tests/",
-        "kimai:phpstan": [
+        "kimai:phpstan": "@phpstan",
+        "phpstan": [
             "vendor/bin/phpstan analyse src -c phpstan.neon --level=5",
             "vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=4"
         ],
-        "kimai:codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
-        "codestyle": "@kimai:codestyle",
-        "kimai:codestyle-fix": "vendor/bin/php-cs-fixer fix",
-        "codestyle-fix": "@kimai:codestyle-fix"
+        "kimai:codestyle": "@codestyle",
+        "codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
+        "kimai:codestyle-fix": "@codestyle-fix",
+        "codestyle-fix": "vendor/bin/php-cs-fixer fix"
     },
     "conflict": {
         "symfony/symfony": "*"

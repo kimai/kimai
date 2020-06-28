@@ -37,6 +37,7 @@ class AppExtensionTest extends TestCase
     {
         $container = new ContainerBuilder();
         $container->setParameter('app_locales', 'de|en|tr|zh_CN');
+        $container->setParameter('kernel.project_dir', realpath(__DIR__ . '/../../'));
 
         return $container;
     }
@@ -55,7 +56,7 @@ class AppExtensionTest extends TestCase
                     ],
                 ],
                 'data_dir' => '/tmp/',
-                'plugin_dir' => '/tmp/',
+                'plugin_dir' => '/tmp/', // still here, to make sure that this value is NOT applied!
                 'timesheet' => [],
                 'saml' => [
                     'connection' => []
@@ -72,7 +73,7 @@ class AppExtensionTest extends TestCase
 
         $expected = [
             'kimai.data_dir' => '/tmp/',
-            'kimai.plugin_dir' => '/tmp/',
+            'kimai.plugin_dir' => realpath(__DIR__ . '/../../') . '/var/plugins',
             'kimai.languages' => [
                 'en' => [
                     'date_time_type' => 'yyyy-MM-dd HH:mm',
@@ -198,6 +199,7 @@ class AppExtensionTest extends TestCase
                 ],
                 'rules' => [
                     'allow_future_times' => true,
+                    'allow_overlapping_records' => true,
                     'lockdown_period_start' => null,
                     'lockdown_period_end' => null,
                     'lockdown_grace_period' => null,
@@ -421,14 +423,6 @@ class AppExtensionTest extends TestCase
         $config = $container->getParameter('kimai.i18n_domains');
         // oder is important, theme/installation specific translations win
         $this->assertEquals(['yyyy', 'xxxx'], $config);
-    }
-
-    public function testInvalidConfiguration()
-    {
-        $this->expectException(Notice::class);
-        $this->expectExceptionMessage('Found invalid "kimai" configuration: The child node "data_dir" at path "kimai" must be configured.');
-
-        $this->extension->load([], $container = $this->getContainer());
     }
 
     public function testWithBundleConfiguration()

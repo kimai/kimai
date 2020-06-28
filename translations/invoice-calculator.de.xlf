@@ -30,6 +30,10 @@
                 <source>date</source>
                 <target>Datum: ein Eintrag pro Tag (verwendet Startdatum)</target>
             </trans-unit>
+            <trans-unit id="weekly">
+                <source>weekly</source>
+                <target>Wöchentlich: ein Eintrag pro Woche (verwendet Startdatum)</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
