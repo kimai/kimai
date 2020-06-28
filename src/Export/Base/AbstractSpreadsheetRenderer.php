@@ -656,7 +656,7 @@ abstract class AbstractSpreadsheetRenderer
     abstract protected function saveSpreadsheet(Spreadsheet $spreadsheet): string;
 
     /**
-     * Get the value of durationDecFormat
+     * Get the value of durationFormat
      *
      * @return bool
      */
@@ -666,9 +666,9 @@ abstract class AbstractSpreadsheetRenderer
     }
 
     /**
-     * Set the value of durationDecFormat
+     * Set the value of durationFormat
      *
-     * @param bool $durationDecFormat
+     * @param bool $durationFormat
      *
      * @return self
      */
