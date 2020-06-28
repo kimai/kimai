@@ -39,7 +39,7 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
         $config = new TimesheetConfiguration($loader, [
             'rules' => [
                 'allow_future_times' => false,
-                'allow_overlapping_records' => true, // TODO add test for rule
+                'allow_overlapping_records' => true,
             ],
             'rounding' => [
                 'default' => [
