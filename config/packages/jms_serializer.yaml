@@ -3,6 +3,10 @@ jms_serializer:
         datetime:
             default_format: 'Y-m-d\TH:i:sO' # DATE_ISO8601
     visitors:
+        json_serialization:
+            options:
+                - JSON_UNESCAPED_SLASHES
+                - JSON_PRESERVE_ZERO_FRACTION
         xml_serialization:
             format_output: '%kernel.debug%'
     metadata:

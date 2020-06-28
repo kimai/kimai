@@ -83,6 +83,8 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.end_time' => $formatter->getFormattedTime($end),
             'entry.end_timestamp' => $end->getTimestamp(),
             'entry.date' => $formatter->getFormattedDateTime($begin),
+            'entry.week' => \intval($begin->format('W')),
+            'entry.weekyear' => $begin->format('o'),
             'entry.user_id' => $user->getId(),
             'entry.user_name' => $user->getUsername(),
             'entry.user_title' => $user->getTitle(),

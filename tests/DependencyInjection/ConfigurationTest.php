@@ -54,10 +54,12 @@ class ConfigurationTest extends TestCase
 
     public function testValidatePluginDir()
     {
-        $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('Invalid configuration for path "kimai.plugin_dir": Plugin directory does not exist');
+        $finalizedConfig = $this->getCompiledConfig($this->getMinConfig());
+        $finalizedConfig['plugin_dir'] = 'sdfsdfs';
 
-        $this->assertConfig($this->getMinConfig('/tmp/', 'sdfsdfs'), []);
+        $config = $this->getMinConfig('/tmp/', 'sdfsdfs');
+
+        $this->assertConfig($config, $finalizedConfig);
     }
 
     public function testValidateLdapConfigUserBaseDn()

@@ -16,19 +16,6 @@
 
 <div class="row">
     <div class="col-sm-5">
-        {{ 'invoice.from'|trans({}, 'messages', language) }}
-        <address contenteditable="true">
-            <strong>{{ model.template.company }}</strong><br>
-            {{ model.template.address|trim|nl2br }}
-            {% if model.template.vatId is not empty %}
-            <br>
-            {{ 'label.vat_id'|trans({}, 'messages', language) }}:
-            {{ model.template.vatId }}
-            {% endif %}
-        </address>
-    </div>
-    <div class="col-sm-2"></div>
-    <div class="col-sm-5">
         {{ 'invoice.to'|trans({}, 'messages', language) }}
         <address contenteditable="true">
             <strong>{{ model.customer.company|default(model.customer.name) }}</strong><br>
@@ -44,6 +31,19 @@
             {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
                 <br>
                 {{ 'label.orderNumber'|trans({}, 'messages', language) }}: {{ model.query.project.orderNumber }}
+            {% endif %}
+        </address>
+    </div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-5">
+        {{ 'invoice.from'|trans({}, 'messages', language) }}
+        <address contenteditable="true">
+            <strong>{{ model.template.company }}</strong><br>
+            {{ model.template.address|trim|nl2br }}
+            {% if model.template.vatId is not empty %}
+            <br>
+            {{ 'label.vat_id'|trans({}, 'messages', language) }}:
+            {{ model.template.vatId }}
             {% endif %}
         </address>
     </div>

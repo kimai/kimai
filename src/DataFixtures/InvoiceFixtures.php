@@ -11,7 +11,7 @@ namespace App\DataFixtures;
 
 use App\Entity\InvoiceTemplate;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
@@ -86,6 +86,7 @@ class InvoiceFixtures extends Fixture
 
         // name, title, renderer, calculator, numberGenerator, company, vat, dueDays, address, paymentTerms
         return [
+            ['Invoice (PDF)',             'Invoice',         'default-pdf',      'default',  'default', $faker->company, 16, 10, $paymentTerms],
             ['Invoice (HTML)',            'Company name',    'default',          'default',  'default', $faker->company, 19, 30, $paymentTerms],
             ['Freelancer (HTML, short)',  'Invoice',         'freelancer',       'short',    'default', $faker->company, 19, 14, $paymentTerms_de],
             ['Timesheet (HTML)',          'Timesheet',       'timesheet',        'default',  'default', $faker->company, 19, 7,  $paymentTerms_alt],

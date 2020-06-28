@@ -136,6 +136,24 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
     }
 
+    public function testPostActionWithLeastFields()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'country' => 'DE',
+            'currency' => 'EUR',
+            'timezone' => 'Europe/Berlin',
+        ];
+        $this->request($client, '/api/customers', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+    }
+
     public function testPostActionWithInvalidUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);

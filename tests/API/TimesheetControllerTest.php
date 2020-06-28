@@ -331,9 +331,39 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals(2016, $result['rate']);
     }
 
+    public function testPostActionForDifferentUser()
+    {
+        $dateTime = (new UserDateTimeFactoryFactory($this))->create(self::TEST_TIMEZONE);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $admin = $this->getUserByRole(User::ROLE_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        self::assertNotEquals($admin->getId(), $user->getId());
+
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'user' => $user->getId(),
+            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'description' => 'foo',
+            'fixedRate' => 2016,
+            'hourlyRate' => 127
+        ];
+        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertDefaultStructure($result);
+        $this->assertNotEmpty($result['id']);
+        $this->assertEquals($user->getId(), $result['user']);
+        $this->assertNotEquals($admin->getId(), $result['user']);
+    }
+
     // check for project, as this is a required field. It will not be included in the select, as it is
     // already filtered within the repository due to the hidden customer
-    public function testPostActionWithInvisibleProjectIsAccepted()
+    public function testPostActionWithInvisibleProject()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
