@@ -10,7 +10,6 @@
 namespace App\Form;
 
 use App\Entity\ProjectRate;
-use App\Entity\Rate;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

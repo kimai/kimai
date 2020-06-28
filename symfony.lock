@@ -636,6 +636,9 @@
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
     },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.1"
+    },
     "symfony/postmark-mailer": {
         "version": "4.4",
         "recipe": {
