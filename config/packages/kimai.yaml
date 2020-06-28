@@ -107,9 +107,8 @@ kimai:
             RATE_OTHER: ['view_rate_other_timesheet','edit_rate_other_timesheet']
             EXPORT: ['create_export','edit_export_own_timesheet','edit_export_other_timesheet']
             TEAMS: ['view_team','create_team','edit_team','delete_team']
-            LOCKDOWN_OVERRIDE: ['lockdown_complete_override_timesheet']
-            LOCKDOWN_GRACE_OVERRIDE: ['lockdown_grace_override_timesheet']
-            # some single default definitions for roles 
+            LOCKDOWN: ['lockdown_grace_override_timesheet','lockdown_complete_override_timesheet']
+            # some single default definitions for roles
             SINGLE_USER: ['view_team_member','budget_team_project']
             SINGLE_TEAMLEAD: ['view_rate_own_timesheet','view_rate_other_timesheet','hourly-rate_own_profile','view_team_member']
             SINGLE_ADMIN: ['hourly-rate_own_profile','edit_exported_timesheet','teams_own_profile','view_team_member']
@@ -117,8 +116,8 @@ kimai:
             # link above sets to one complete set for each user role
             ROLE_USER: ['@TIMESHEET','@PROFILE','@SINGLE_USER']
             ROLE_TEAMLEAD: ['@ACTIVITIES_TEAMLEAD','@PROJECTS_TEAMLEAD','@CUSTOMERS_TEAMLEAD','@TIMESHEET_OTHER','@INVOICE','@TIMESHEET','@PROFILE','@EXPORT','@TAGS','@SINGLE_TEAMLEAD']
-            ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_ADMIN','@LOCKDOWN_OVERRIDE', '@LOCKDOWN_GRACE_OVERRIDE']
-            ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_SUPER_ADMIN','@LOCKDOWN_OVERRIDE', '@LOCKDOWN_GRACE_OVERRIDE']
+            ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@LOCKDOWN','@SINGLE_ADMIN']
+            ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@LOCKDOWN','@SINGLE_SUPER_ADMIN']
         # mapping "sets" or permissions to user roles ("role name" = [array of "set names"])
         maps:
             ROLE_USER: ['ROLE_USER']

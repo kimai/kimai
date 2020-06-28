@@ -307,7 +307,7 @@ class TimesheetValidator extends ConstraintValidator
 
                 // otherwise raise a violation
                 // this includes all entries before the start of lockdown period
-                $context->buildViolation('You cannot create/edit entries in locked period.')
+                $context->buildViolation('Please change begin/end, as this timesheet is in a locked period.')
                     ->atPath('begin')
                     ->setTranslationDomain('validators')
                     ->setCode(TimesheetConstraint::PERIOD_LOCKED)

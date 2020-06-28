@@ -31,7 +31,7 @@ class Timesheet extends Constraint
     public const PROJECT_NOT_STARTED = 'kimai-timesheet-91';
     public const PROJECT_ALREADY_ENDED = 'kimai-timesheet-92';
     public const RECORD_OVERLAPPING = 'kimai-timesheet-93';
-    public const PERIOD_LOCKED = 'kimai-timesheet-93'; // FIXME
+    public const PERIOD_LOCKED = 'kimai-timesheet-94';
 
     protected static $errorNames = [
         self::MISSING_BEGIN_ERROR => 'You must submit a begin date.',
@@ -47,7 +47,7 @@ class Timesheet extends Constraint
         self::PROJECT_NOT_STARTED => 'The project has not started at that time.',
         self::PROJECT_ALREADY_ENDED => 'The project is finished at that time.',
         self::RECORD_OVERLAPPING => 'You already have an entry for this time.',
-        self::PERIOD_LOCKED => '', // FIXME
+        self::PERIOD_LOCKED => 'Please change begin/end, as this timesheet is in a locked period.',
     ];
 
     public $message = 'This timesheet has invalid settings.';
