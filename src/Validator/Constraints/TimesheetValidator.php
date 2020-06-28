@@ -11,6 +11,7 @@ namespace App\Validator\Constraints;
 
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
+use App\Repository\TimesheetRepository;
 use App\Timesheet\TrackingModeService;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -33,16 +34,17 @@ class TimesheetValidator extends ConstraintValidator
      * @var TrackingModeService
      */
     protected $trackingModeService;
-
     /**
-     * @param AuthorizationCheckerInterface $auth
-     * @param TimesheetConfiguration $configuration
+     * @var TimesheetRepository
      */
-    public function __construct(AuthorizationCheckerInterface $auth, TimesheetConfiguration $configuration, TrackingModeService $service)
+    private $repository;
+
+    public function __construct(AuthorizationCheckerInterface $auth, TimesheetConfiguration $configuration, TrackingModeService $service, TimesheetRepository $repository)
     {
         $this->auth = $auth;
         $this->configuration = $configuration;
         $this->trackingModeService = $service;
+        $this->repository = $repository;
     }
 
     /**
@@ -62,6 +64,38 @@ class TimesheetValidator extends ConstraintValidator
         $this->validateBeginAndEnd($value, $this->context);
         $this->validateActivityAndProject($value, $this->context);
         $this->validatePermissions($value, $this->context);
+        $this->validateActiveLimit($value, $this->context);
+        $this->validateOverlapping($value, $this->context);
+    }
+
+    /**
+     * @param TimesheetEntity $timesheet
+     * @param ExecutionContextInterface $context
+     */
+    protected function validateOverlapping(TimesheetEntity $timesheet, ExecutionContextInterface $context)
+    {
+        if ($this->configuration->isAllowOverlappingRecords()) {
+            return;
+        }
+
+        if (!$this->repository->hasRecordForTime($timesheet)) {
+            return;
+        }
+
+        $context->buildViolation('You already have an entry for this time.')
+            ->atPath('begin')
+            ->setTranslationDomain('validators')
+            ->setCode(TimesheetConstraint::RECORD_OVERLAPPING)
+            ->addViolation();
+    }
+
+    /**
+     * @param TimesheetEntity $timesheet
+     * @param ExecutionContextInterface $context
+     */
+    protected function validateActiveLimit(TimesheetEntity $timesheet, ExecutionContextInterface $context)
+    {
+        // TODO check active entries against hard_limit
     }
 
     /**
@@ -91,8 +125,6 @@ class TimesheetValidator extends ConstraintValidator
                 return;
             }
         }
-
-        // TODO check active entries against hard_limit
     }
 
     /**

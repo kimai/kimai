@@ -9,10 +9,12 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Configuration;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
+use App\Repository\ConfigurationRepository;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 
@@ -248,6 +250,115 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $expected = new \DateTime('2018-08-02T20:30:00');
         $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
+    }
+
+    public function testCreateActionWithFromAndToValuesTwice()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/timesheet/create?from=2018-08-02T20%3A00%3A00&to=2018-08-02T20%3A30%3A00');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'hourlyRate' => 100,
+                'project' => 1,
+                'activity' => 1,
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $em = $this->getEntityManager();
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
+        $this->assertEquals(50, $timesheet->getRate());
+
+        $expected = new \DateTime('2018-08-02T20:00:00');
+        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getBegin()->format(\DateTime::ATOM));
+
+        $expected = new \DateTime('2018-08-02T20:30:00');
+        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
+
+        // create a second entry that is overlapping
+        $this->request($client, '/timesheet/create?from=2018-08-02T20%3A02%3A00&to=2018-08-02T20%3A20%3A00');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'hourlyRate' => 100,
+                'project' => 1,
+                'activity' => 1,
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+    }
+
+    public function testCreateActionWithFromAndToValuesTwiceFailsOnOverlappingRecord()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/timesheet/create?from=2018-08-02T20%3A00%3A00&to=2018-08-02T20%3A30%3A00');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'hourlyRate' => 100,
+                'project' => 1,
+                'activity' => 1,
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $em = $this->getEntityManager();
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
+        $this->assertEquals(50, $timesheet->getRate());
+
+        $expected = new \DateTime('2018-08-02T20:00:00');
+        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getBegin()->format(\DateTime::ATOM));
+
+        $expected = new \DateTime('2018-08-02T20:30:00');
+        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
+
+        /** @var ConfigurationRepository $configurations */
+        $configurations = $em->getRepository(Configuration::class);
+        $config = new Configuration();
+        $config->setName('timesheet.rules.allow_overlapping_records');
+        $config->setValue(false);
+        $configurations->saveConfiguration($config);
+
+        // create a second entry that is overlapping fails due to the changed config above
+        $this->assertHasValidationError(
+            $client,
+            '/timesheet/create?from=2018-08-02T20%3A02%3A00&to=2018-08-02T20%3A20%3A00',
+            'form[name=timesheet_edit_form]',
+            [
+                'timesheet_edit_form' => [
+                    'hourlyRate' => 100,
+                    'project' => 1,
+                    'activity' => 1,
+                ]
+            ],
+            ['#timesheet_edit_form_begin']
+        );
+
+        $configurations->clearCache();
     }
 
     public function testCreateActionWithBeginAndEndAndTagValues()

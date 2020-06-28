@@ -939,4 +939,33 @@ class TimesheetRepository extends EntityRepository
 
         return $results;
     }
+
+    public function hasRecordForTime(Timesheet $timesheet): bool
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $or = $qb->expr()->orX(
+            $qb->expr()->between(':begin', 't.begin', 't.end')
+        );
+
+        if (null !== $timesheet->getEnd()) {
+            $or->add($qb->expr()->between(':end', 't.begin', 't.end'));
+            $or->add($qb->expr()->between('t.begin', ':begin', ':end'));
+            $or->add($qb->expr()->between('t.end', ':begin', ':end'));
+            $qb->setParameter('end', $timesheet->getEnd());
+        }
+
+        $qb->select('t')
+            ->from(Timesheet::class, 't')
+            ->andWhere($qb->expr()->eq('t.user', ':user'))
+            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->andWhere($or)
+            ->setParameter('begin', $timesheet->getBegin())
+            ->setParameter('user', $timesheet->getUser())
+        ;
+
+        $result = $qb->getQuery()->getResult();
+
+        return !empty($result);
+    }
 }

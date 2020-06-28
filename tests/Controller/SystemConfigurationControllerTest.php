@@ -100,6 +100,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                     ['name' => 'timesheet.mode', 'value' => 'duration_only'],
                     ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
+                    ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 99],
                     ['name' => 'timesheet.active_entries.soft_limit', 'value' => 77],
                 ]
@@ -114,6 +115,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals('duration_only', $configService->find('timesheet.mode'));
         $this->assertEquals(false, $configService->find('timesheet.rules.allow_future_times'));
+        $this->assertEquals(false, $configService->find('timesheet.rules.allow_overlapping_records'));
         $this->assertEquals(99, $configService->find('timesheet.active_entries.hard_limit'));
         $this->assertEquals(77, $configService->find('timesheet.active_entries.soft_limit'));
     }
@@ -130,6 +132,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                         ['name' => 'timesheet.mode', 'value' => 'foo'],
                         ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
                         ['name' => 'timesheet.rules.allow_future_times', 'value' => 1],
+                        ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => 1],
                         ['name' => 'timesheet.active_entries.hard_limit', 'value' => -1],
                         ['name' => 'timesheet.active_entries.soft_limit', 'value' => -1],
                     ]
@@ -137,8 +140,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             ],
             [
                 '#system_configuration_form_timesheet_configuration_0_value', // mode
-                '#system_configuration_form_timesheet_configuration_3_value', // hard_limit
-                '#system_configuration_form_timesheet_configuration_4_value', // soft_limit
+                '#system_configuration_form_timesheet_configuration_4_value', // hard_limit
+                '#system_configuration_form_timesheet_configuration_5_value', // soft_limit
             ],
             true
         );

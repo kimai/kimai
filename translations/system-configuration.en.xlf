@@ -66,6 +66,10 @@
                 <source>label.timesheet.rules.allow_future_times</source>
                 <target>Allow time entries in the future</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+                <source>label.timesheet.rules.allow_overlapping_records</source>
+                <target>Allow overlapping time entries</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.active_entries.hard_limit">
                 <source>label.timesheet.active_entries.hard_limit</source>
                 <target>Permitted number of simultaneously running time entries</target>

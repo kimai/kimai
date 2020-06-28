@@ -15,6 +15,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\TrackingModeServiceFactory;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use App\Validator\Constraints\TimesheetValidator;
@@ -38,6 +39,7 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
         $config = new TimesheetConfiguration($loader, [
             'rules' => [
                 'allow_future_times' => false,
+                'allow_overlapping_records' => true,
             ],
             'rounding' => [
                 'default' => [
@@ -46,8 +48,9 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
             ]
         ]);
         $service = (new TrackingModeServiceFactory($this))->create('default');
+        $repository = $this->createMock(TimesheetRepository::class);
 
-        return new TimesheetValidator($authMock, $config, $service);
+        return new TimesheetValidator($authMock, $config, $service, $repository);
     }
 
     public function testConstraintIsInvalid()

@@ -278,6 +278,7 @@ class ConfigurationTest extends TestCase
                 ],
                 'rules' => [
                     'allow_future_times' => true,
+                    'allow_overlapping_records' => true,
                 ],
             ],
             'user' => [
