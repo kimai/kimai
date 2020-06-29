@@ -9,85 +9,52 @@
 
 namespace App\Validator\Constraints;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
-use App\Repository\TimesheetRepository;
-use App\Timesheet\TrackingModeService;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class TimesheetValidator extends ConstraintValidator
+final class TimesheetValidator extends ConstraintValidator
 {
     /**
-     * @var AuthorizationCheckerInterface
+     * @var TimesheetConstraint[]
      */
-    protected $auth;
-    /**
-     * @var TimesheetConfiguration
-     */
-    protected $configuration;
-    /**
-     * @var TrackingModeService
-     */
-    protected $trackingModeService;
-    /**
-     * @var TimesheetRepository
-     */
-    private $repository;
+    private $constraints;
 
-    public function __construct(AuthorizationCheckerInterface $auth, TimesheetConfiguration $configuration, TrackingModeService $service, TimesheetRepository $repository)
+    /**
+     * @param TimesheetConstraint[] $constraints
+     */
+    public function __construct(iterable $constraints)
     {
-        $this->auth = $auth;
-        $this->configuration = $configuration;
-        $this->trackingModeService = $service;
-        $this->repository = $repository;
-    }
-
-    /**
-     * @param TimesheetEntity|mixed $value
-     * @param Constraint $constraint
-     */
-    public function validate($value, Constraint $constraint)
-    {
-        if (!($constraint instanceof TimesheetConstraint)) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Timesheet');
-        }
-
-        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
-            return;
-        }
-
-        $this->validateBeginAndEnd($value, $this->context);
-        $this->validateActivityAndProject($value, $this->context);
-        $this->validatePermissions($value, $this->context);
-        $this->validateActiveLimit($value, $this->context);
-        $this->validateOverlapping($value, $this->context);
-        $this->validateTimesheetLock($value, $this->context);
+        $this->constraints = $constraints;
     }
 
     /**
      * @param TimesheetEntity $timesheet
-     * @param ExecutionContextInterface $context
+     * @param Constraint $constraint
      */
-    protected function validateOverlapping(TimesheetEntity $timesheet, ExecutionContextInterface $context)
+    public function validate($timesheet, Constraint $constraint)
     {
-        if ($this->configuration->isAllowOverlappingRecords()) {
+        if (!($constraint instanceof TimesheetConstraint)) {
+            throw new UnexpectedTypeException($constraint, Timesheet::class);
+        }
+
+        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
             return;
         }
 
-        if (!$this->repository->hasRecordForTime($timesheet)) {
-            return;
-        }
+        $this->validateBeginAndEnd($timesheet, $this->context);
+        $this->validateActivityAndProject($timesheet, $this->context);
+        $this->validateActiveLimit($timesheet, $this->context);
 
-        $context->buildViolation('You already have an entry for this time.')
-            ->atPath('begin')
-            ->setTranslationDomain('validators')
-            ->setCode(TimesheetConstraint::RECORD_OVERLAPPING)
-            ->addViolation();
+        foreach ($this->constraints as $constraint) {
+            $this->context
+                ->getValidator()
+                ->inContext($this->context)
+                ->validate($timesheet, $constraint, [Constraint::DEFAULT_GROUP]);
+        }
     }
 
     /**
@@ -97,35 +64,6 @@ class TimesheetValidator extends ConstraintValidator
     protected function validateActiveLimit(TimesheetEntity $timesheet, ExecutionContextInterface $context)
     {
         // TODO check active entries against hard_limit
-    }
-
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param ExecutionContextInterface $context
-     */
-    protected function validatePermissions(TimesheetEntity $timesheet, ExecutionContextInterface $context)
-    {
-        // special case that would otherwise need to be validated in several controllers:
-        // an entry is edited and the end date is removed (or duration deleted) would restart the record,
-        // which might be disallowed for the current user
-        if ($context->getViolations()->count() == 0 && null === $timesheet->getEnd()) {
-            $mode = $this->trackingModeService->getActiveMode();
-            $path = 'start';
-            if ($mode->canEditEnd()) {
-                $path = 'end';
-            } elseif ($mode->canEditDuration()) {
-                $path = 'duration';
-            }
-            if (!$this->auth->isGranted('start', $timesheet)) {
-                $context->buildViolation('You are not allowed to start this timesheet record.')
-                    ->atPath($path)
-                    ->setTranslationDomain('validators')
-                    ->setCode(TimesheetConstraint::START_DISALLOWED)
-                    ->addViolation();
-
-                return;
-            }
-        }
     }
 
     /**
@@ -150,18 +88,6 @@ class TimesheetValidator extends ConstraintValidator
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetConstraint::END_BEFORE_BEGIN_ERROR)
                 ->addViolation();
-        }
-
-        if (false === $this->configuration->isAllowFutureTimes()) {
-            // allow configured default rounding time + 1 minute - see #1295
-            $allowedDiff = ($this->configuration->getDefaultRoundingBegin() * 60) + 60;
-            if ((time() + $allowedDiff) < $timesheet->getBegin()->getTimestamp()) {
-                $context->buildViolation('The begin date cannot be in the future.')
-                    ->atPath('begin')
-                    ->setTranslationDomain('validators')
-                    ->setCode(TimesheetConstraint::BEGIN_IN_FUTURE_ERROR)
-                    ->addViolation();
-            }
         }
     }
 
@@ -262,56 +188,6 @@ class TimesheetValidator extends ConstraintValidator
                         ->setCode(TimesheetConstraint::PROJECT_NOT_STARTED)
                         ->addViolation();
                 }
-            }
-        }
-    }
-
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param ExecutionContextInterface $context
-     */
-    protected function validateTimesheetLock(TimesheetEntity $timesheet, ExecutionContextInterface $context)
-    {
-        $timesheetStart = $timesheet->getBegin();
-
-        try {
-            $now = new \DateTime();
-            $lockedStart = $this->configuration->getLockdownPeriodStart();
-            $lockedEnd = $this->configuration->getLockdownPeriodEnd();
-            $gracePeriod = $this->configuration->getLockdownGracePeriod();
-        } catch (\Exception $ex) {
-            //parsing of datetimes failed, skip validation
-            return;
-        }
-
-        if (null !== $timesheetStart && null !== $lockedStart && null !== $lockedEnd) {
-            //lockdown never takes effect for users with special permission
-            if ($this->auth->isGranted('lockdown_complete_override_timesheet')) {
-                return;
-            }
-
-            // validate only entries added before the end of lockdown period
-            if ($timesheetStart < $lockedEnd) {
-                // further validate entries inside of the most recent lockdown
-                if ($timesheetStart > $lockedStart && $timesheetStart < $lockedEnd) {
-                    //if grace period is still in effect, validation succeeds
-                    if (null !== $gracePeriod && $now < $gracePeriod) {
-                        return;
-                    }
-
-                    //if user has special role, validation succeeds
-                    if ($this->auth->isGranted('lockdown_grace_override_timesheet')) {
-                        return;
-                    }
-                }
-
-                // otherwise raise a violation
-                // this includes all entries before the start of lockdown period
-                $context->buildViolation('Please change begin/end, as this timesheet is in a locked period.')
-                    ->atPath('begin')
-                    ->setTranslationDomain('validators')
-                    ->setCode(TimesheetConstraint::PERIOD_LOCKED)
-                    ->addViolation();
             }
         }
     }
