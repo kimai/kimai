@@ -26,6 +26,10 @@
                 <source>This period is locked, please choose a later date.</source>
                 <target>Dieser Zeitraum ist gesperrt, bitte wählen Sie ein späteres Datum.</target>
             </trans-unit>
+            <trans-unit id="You already have an entry for this time.">
+                <source>You already have an entry for this time.</source>
+                <target>Es existiert bereits ein Eintrag für diesen Zeitpunkt.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

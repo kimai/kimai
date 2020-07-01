@@ -77,7 +77,7 @@ final class TimesheetLockdownValidator extends ConstraintValidator
             return;
         }
 
-        // misconfiguration
+        // misconfiguration detected, skip validation
         if ($lockdownEnd < $lockdownStart) {
             return;
         }
@@ -95,7 +95,7 @@ final class TimesheetLockdownValidator extends ConstraintValidator
         if (!empty($constraint->now)) {
             if ($constraint->now instanceof \DateTime) {
                 $now = $constraint->now;
-            } else {
+            } elseif (\is_string($constraint->now)) {
                 try {
                     $now = new \DateTime($constraint->now, $timesheetStart->getTimezone());
                 } catch (\Exception $ex) {

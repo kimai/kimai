@@ -12,7 +12,7 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Extends this class if you want to add dynamic timesheet validation via your bundle.
+ * Extend this class if you want to add dynamic timesheet validation (eg. via a bundle).
  */
 abstract class TimesheetConstraint extends Constraint
 {
