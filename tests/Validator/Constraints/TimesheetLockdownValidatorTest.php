@@ -130,6 +130,22 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         self::assertEmpty($this->context->getViolations());
     }
 
+    public function testValidatorWithEndBeforeStartPeriod()
+    {
+        $this->validator = $this->createMyValidator(false, false, 'first day of this month', 'last day of last month', '+10 days');
+        $this->validator->initialize($this->context);
+
+        $begin = new \DateTime('first day of last month');
+        $begin->modify('+5 days');
+        $timesheet = new Timesheet();
+        $timesheet->setBegin($begin);
+
+        $constraint = new TimesheetLockdown(['message' => 'myMessage', 'now' => 'first day of this month']);
+
+        $this->validator->validate($timesheet, $constraint);
+        self::assertEmpty($this->context->getViolations());
+    }
+
     public function getTestData()
     {
         // changing before last dockdown period is not allowed

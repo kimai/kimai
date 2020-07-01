@@ -77,6 +77,11 @@ final class TimesheetLockdownValidator extends ConstraintValidator
             return;
         }
 
+        // misconfiguration
+        if ($lockdownEnd < $lockdownStart) {
+            return;
+        }
+
         // validate only entries added before the end of lockdown period
         if ($timesheetStart > $lockdownEnd) {
             return;
