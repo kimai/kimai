@@ -53,17 +53,32 @@ final class TimesheetLockdownValidator extends ConstraintValidator
             return;
         }
 
-        try {
-            $now = new \DateTime();
-            $lockedStart = $this->configuration->getLockdownPeriodStart();
-            $lockedEnd = $this->configuration->getLockdownPeriodEnd();
-            $gracePeriod = $this->configuration->getLockdownGracePeriod();
-        } catch (\Exception $ex) {
-            // parsing of datetimes failed, skip validation
+        $lockedStart = $this->configuration->getLockdownPeriodStart();
+        if (empty($lockedStart)) {
             return;
         }
 
-        if (null === $lockedStart || null === $lockedEnd) {
+        $lockedEnd = $this->configuration->getLockdownPeriodEnd();
+        if (empty($lockedEnd)) {
+            return;
+        }
+
+        $gracePeriod = $this->configuration->getLockdownGracePeriod();
+        if (!empty($gracePeriod)) {
+            $gracePeriod = $gracePeriod . ' ';
+        }
+
+        try {
+            $lockdownStart = new \DateTime($lockedStart, $timesheetStart->getTimezone());
+            $lockdownEnd = new \DateTime($lockedEnd, $timesheetStart->getTimezone());
+            $lockdownGrace = new \DateTime($gracePeriod . $lockdownEnd->format('Y-m-d'), $timesheetStart->getTimezone());
+        } catch (\Exception $ex) {
+            // should not happen, but ... if parsing of datetimes fails: skip validation
+            return;
+        }
+
+        // validate only entries added before the end of lockdown period
+        if ($timesheetStart > $lockdownEnd) {
             return;
         }
 
@@ -72,28 +87,39 @@ final class TimesheetLockdownValidator extends ConstraintValidator
             return;
         }
 
-        // validate only entries added before the end of lockdown period
-        if ($timesheetStart < $lockedEnd) {
-            // further validate entries inside of the most recent lockdown
-            if ($timesheetStart > $lockedStart && $timesheetStart < $lockedEnd) {
-                //if grace period is still in effect, validation succeeds
-                if (null !== $gracePeriod && $now < $gracePeriod) {
-                    return;
-                }
-
-                //if user has special role, validation succeeds
-                if ($this->auth->isGranted('lockdown_grace_override_timesheet')) {
-                    return;
+        if (!empty($constraint->now)) {
+            if ($constraint->now instanceof \DateTime) {
+                $now = $constraint->now;
+            } else {
+                try {
+                    $now = new \DateTime($constraint->now, $timesheetStart->getTimezone());
+                } catch (\Exception $ex) {
                 }
             }
-
-            // otherwise raise a violation
-            // this includes all entries before the start of lockdown period
-            $this->context->buildViolation('Please change begin/end, as this timesheet is in a locked period.')
-                ->atPath('begin')
-                ->setTranslationDomain('validators')
-                ->setCode(TimesheetLockdown::PERIOD_LOCKED)
-                ->addViolation();
         }
+
+        if (empty($now)) {
+            $now = new \DateTime('now', $timesheetStart->getTimezone());
+        }
+
+        // further validate entries inside of the most recent lockdown
+        if ($timesheetStart > $lockdownStart && $timesheetStart < $lockdownEnd) {
+            // if grace period is still in effect, validation succeeds
+            if ($now < $lockdownGrace) {
+                return;
+            }
+
+            // if user has special role, validation succeeds
+            if ($this->auth->isGranted('lockdown_grace_override_timesheet')) {
+                return;
+            }
+        }
+
+        // raise a violation for all entries before the start of lockdown period
+        $this->context->buildViolation('Please change begin/end, as this timesheet is in a locked period.')
+            ->atPath('begin')
+            ->setTranslationDomain('validators')
+            ->setCode(TimesheetLockdown::PERIOD_LOCKED)
+            ->addViolation();
     }
 }

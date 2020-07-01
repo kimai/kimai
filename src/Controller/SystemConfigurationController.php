@@ -235,14 +235,20 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration())
                         ->setName('timesheet.rules.lockdown_period_start')
                         ->setType(TextType::class)
+                        ->setRequired(false)
+                        ->setConstraints([new DateTimeFormat()])
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
                         ->setName('timesheet.rules.lockdown_period_end')
                         ->setType(TextType::class)
+                        ->setRequired(false)
+                        ->setConstraints([new DateTimeFormat()])
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
                         ->setName('timesheet.rules.lockdown_grace_period')
                         ->setType(TextType::class)
+                        ->setRequired(false)
+                        ->setConstraints([new DateTimeFormat()])
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
                         ->setName('timesheet.active_entries.hard_limit')

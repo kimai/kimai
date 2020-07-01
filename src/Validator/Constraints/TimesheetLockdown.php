@@ -18,6 +18,10 @@ final class TimesheetLockdown extends TimesheetConstraint
     ];
 
     public $message = 'This period is locked.';
+    /**
+     * @var \DateTime|string|null
+     */
+    public $now;
 
     public function getTargets()
     {
