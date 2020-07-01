@@ -83,7 +83,7 @@ final class TimesheetLockdownValidator extends ConstraintValidator
         }
 
         // lockdown never takes effect for users with special permission
-        if ($this->auth->isGranted('lockdown_complete_override_timesheet')) {
+        if ($this->auth->isGranted('lockdown_override_timesheet')) {
             return;
         }
 
@@ -110,7 +110,7 @@ final class TimesheetLockdownValidator extends ConstraintValidator
             }
 
             // if user has special role, validation succeeds
-            if ($this->auth->isGranted('lockdown_grace_override_timesheet')) {
+            if ($this->auth->isGranted('lockdown_grace_timesheet')) {
                 return;
             }
         }

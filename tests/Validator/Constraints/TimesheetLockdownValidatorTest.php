@@ -35,9 +35,9 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $auth->method('isGranted')->willReturnCallback(
             function ($attributes, $subject = null) use ($allowOverwriteFull, $allowOverwriteGrace) {
                 switch ($attributes) {
-                    case 'lockdown_complete_override_timesheet':
+                    case 'lockdown_override_timesheet':
                         return $allowOverwriteFull;
-                    case 'lockdown_grace_override_timesheet':
+                    case 'lockdown_grace_timesheet':
                         return $allowOverwriteGrace;
                 }
 
