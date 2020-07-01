@@ -14,10 +14,10 @@ final class TimesheetLockdown extends TimesheetConstraint
     public const PERIOD_LOCKED = 'kimai-timesheet-lockdown-01';
 
     protected static $errorNames = [
-        self::PERIOD_LOCKED => 'Please change begin/end, as this timesheet is in a locked period.',
+        self::PERIOD_LOCKED => 'This period is locked, please choose a later date.',
     ];
 
-    public $message = 'This period is locked.';
+    public $message = 'This period is locked, please choose a later date.';
     /**
      * @var \DateTime|string|null
      */

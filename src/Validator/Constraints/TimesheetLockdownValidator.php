@@ -121,7 +121,7 @@ final class TimesheetLockdownValidator extends ConstraintValidator
         }
 
         // raise a violation for all entries before the start of lockdown period
-        $this->context->buildViolation('Please change begin/end, as this timesheet is in a locked period.')
+        $this->context->buildViolation('This period is locked, please choose a later date.')
             ->atPath('begin')
             ->setTranslationDomain('validators')
             ->setCode(TimesheetLockdown::PERIOD_LOCKED)

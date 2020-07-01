@@ -70,6 +70,18 @@
                 <source>label.timesheet.rules.allow_overlapping_records</source>
                 <target>Erlaube überlappende Zeiteinträge</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.rules.lockdown_period_start">
+                <source>label.timesheet.rules.lockdown_period_start</source>
+                <target>Start des gesperrten Zeitraums (relatives PHP Datumsformat)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.lockdown_period_end">
+                <source>label.timesheet.rules.lockdown_period_end</source>
+                <target>Ende des gesperrten Zeitraums (relatives PHP Datumsformat)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+                <source>label.timesheet.rules.lockdown_grace_period</source>
+                <target>Übergangsfrist für gesperrten Zeitraum (relatives PHP Datumsformat ab Enddatum)</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.active_entries.hard_limit">
                 <source>label.timesheet.active_entries.hard_limit</source>
                 <target>Erlaubte Anzahl an gleichzeitig laufenden Zeiteinträgen</target>
