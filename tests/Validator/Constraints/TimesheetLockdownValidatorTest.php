@@ -85,7 +85,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($timesheet, $constraint);
 
         if ($isViolation) {
-            $this->buildViolation('Please change begin/end, as this timesheet is in a locked period.')
+            $this->buildViolation('This period is locked, please choose a later date.')
                 ->atPath('property.path.begin')
                 ->setCode(TimesheetLockdown::PERIOD_LOCKED)
                 ->assertRaised();
@@ -108,7 +108,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($timesheet, $constraint);
 
-        $this->buildViolation('Please change begin/end, as this timesheet is in a locked period.')
+        $this->buildViolation('This period is locked, please choose a later date.')
             ->atPath('property.path.begin')
             ->setCode(TimesheetLockdown::PERIOD_LOCKED)
             ->assertRaised();
