@@ -90,6 +90,11 @@ class TimesheetConfiguration implements SystemBundleConfiguration
 
     public function getLockdownGracePeriod(): string
     {
-        return $this->find('rules.lockdown_grace_period');
+        return (string) $this->find('rules.lockdown_grace_period');
+    }
+
+    public function isLockdownActive(): bool
+    {
+        return !empty($this->find('rules.lockdown_period_start')) && !empty($this->find('rules.lockdown_period_end'));
     }
 }

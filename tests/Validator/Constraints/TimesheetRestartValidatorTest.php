@@ -14,6 +14,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Tests\Mocks\TrackingModeServiceFactory;
+use App\Validator\Constraints\TimesheetOverlapping;
 use App\Validator\Constraints\TimesheetRestart;
 use App\Validator\Constraints\TimesheetRestartValidator;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -46,6 +47,13 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
+    }
+
+    public function testInvalidValueThrowsException()
+    {
+        $this->expectException(UnexpectedTypeException::class);
+
+        $this->validator->validate(new NotBlank(), new TimesheetOverlapping(['message' => 'myMessage']));
     }
 
     /**

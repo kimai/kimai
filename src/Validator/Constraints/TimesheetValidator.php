@@ -42,7 +42,7 @@ final class TimesheetValidator extends ConstraintValidator
         }
 
         if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            return;
+            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
         }
 
         $this->validateBeginAndEnd($timesheet, $this->context);

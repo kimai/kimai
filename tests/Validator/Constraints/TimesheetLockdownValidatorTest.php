@@ -64,34 +64,11 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    /**
-     * @dataProvider getTestData
-     */
-    public function testLockdown(bool $allowOverwriteFull, bool $allowOverwriteGrace, string $beginModifier, string $nowModifier, bool $isViolation)
+    public function testInvalidValueThrowsException()
     {
-        $this->validator = $this->createMyValidator($allowOverwriteFull, $allowOverwriteGrace, 'first day of last month', 'last day of last month', '+10 days');
-        $this->validator->initialize($this->context);
+        $this->expectException(UnexpectedTypeException::class);
 
-        $begin = new \DateTime('first day of last month');
-        $begin->modify($beginModifier);
-        $timesheet = new Timesheet();
-        $timesheet->setBegin($begin);
-
-        $now = new \DateTime('first day of this month');
-        $now->modify($nowModifier);
-
-        $constraint = new TimesheetLockdown(['message' => 'myMessage', 'now' => $now]);
-
-        $this->validator->validate($timesheet, $constraint);
-
-        if ($isViolation) {
-            $this->buildViolation('This period is locked, please choose a later date.')
-                ->atPath('property.path.begin')
-                ->setCode(TimesheetLockdown::PERIOD_LOCKED)
-                ->assertRaised();
-        } else {
-            self::assertEmpty($this->context->getViolations());
-        }
+        $this->validator->validate(new NotBlank(), new TimesheetLockdown(['message' => 'myMessage']));
     }
 
     public function testValidatorWithoutNowConstraint()
@@ -112,6 +89,17 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
             ->atPath('property.path.begin')
             ->setCode(TimesheetLockdown::PERIOD_LOCKED)
             ->assertRaised();
+    }
+
+    public function testValidatorWithEmptyTimesheet()
+    {
+        $this->validator = $this->createMyValidator(false, false, 'first day of last month', 'last day of last month', '+10 days');
+        $this->validator->initialize($this->context);
+
+        $constraint = new TimesheetLockdown(['message' => 'myMessage']);
+
+        $this->validator->validate(new Timesheet(), $constraint);
+        self::assertEmpty($this->context->getViolations());
     }
 
     public function testValidatorWithoutNowStringConstraint()
@@ -146,6 +134,36 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         self::assertEmpty($this->context->getViolations());
     }
 
+    /**
+     * @dataProvider getTestData
+     */
+    public function testLockdown(bool $allowOverwriteFull, bool $allowOverwriteGrace, string $beginModifier, string $nowModifier, bool $isViolation)
+    {
+        $this->validator = $this->createMyValidator($allowOverwriteFull, $allowOverwriteGrace, 'first day of last month', 'last day of last month', '+10 days');
+        $this->validator->initialize($this->context);
+
+        $begin = new \DateTime('first day of last month');
+        $begin->modify($beginModifier);
+        $timesheet = new Timesheet();
+        $timesheet->setBegin($begin);
+
+        $now = new \DateTime('first day of this month');
+        $now->modify($nowModifier);
+
+        $constraint = new TimesheetLockdown(['message' => 'myMessage', 'now' => $now]);
+
+        $this->validator->validate($timesheet, $constraint);
+
+        if ($isViolation) {
+            $this->buildViolation('This period is locked, please choose a later date.')
+                ->atPath('property.path.begin')
+                ->setCode(TimesheetLockdown::PERIOD_LOCKED)
+                ->assertRaised();
+        } else {
+            self::assertEmpty($this->context->getViolations());
+        }
+    }
+
     public function getTestData()
     {
         // changing before last dockdown period is not allowed
@@ -163,5 +181,44 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         yield [false, true, '+5 days', '+11 days', false];
         yield [true, false, '+5 days', '+11 days', false];
         yield [true, true, '+5 days', '+11 days', false];
+    }
+
+    /**
+     * @dataProvider getConfigTestData
+     */
+    public function testLockdownConfig(bool $allowOverwriteFull, bool $allowOverwriteGrace, ?string $lockdownBegin, ?string $lockdownEnd, ?string $grace, bool $isViolation)
+    {
+        $this->validator = $this->createMyValidator($allowOverwriteFull, $allowOverwriteGrace, $lockdownBegin, $lockdownEnd, $grace);
+        $this->validator->initialize($this->context);
+
+        $begin = new \DateTime('first day of last month');
+        $begin->modify('+5 days');
+        $timesheet = new Timesheet();
+        $timesheet->setBegin($begin);
+
+        $now = new \DateTime('first day of this month');
+
+        $constraint = new TimesheetLockdown(['message' => 'myMessage', 'now' => $now]);
+
+        $this->validator->validate($timesheet, $constraint);
+
+        if ($isViolation) {
+            $this->buildViolation('This period is locked, please choose a later date.')
+                ->atPath('property.path.begin')
+                ->setCode(TimesheetLockdown::PERIOD_LOCKED)
+                ->assertRaised();
+        } else {
+            self::assertEmpty($this->context->getViolations());
+        }
+    }
+
+    public function getConfigTestData()
+    {
+        yield [false, false, null, null, null, false];
+        yield [false, false, '+5 days', null, null, false];
+        yield [false, false, null, '+5 days', null, false];
+
+        yield [false, true, 'öööö', '+11 days', null, false];
+        yield [false, true, '+5 days', '+5 of !!!!', null, false];
     }
 }

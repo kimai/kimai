@@ -44,7 +44,7 @@ final class TimesheetLockdownValidator extends ConstraintValidator
         }
 
         if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            return;
+            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
         }
 
         $timesheetStart = $timesheet->getBegin();
@@ -53,15 +53,12 @@ final class TimesheetLockdownValidator extends ConstraintValidator
             return;
         }
 
-        $lockedStart = $this->configuration->getLockdownPeriodStart();
-        if (empty($lockedStart)) {
+        if (!$this->configuration->isLockdownActive()) {
             return;
         }
 
+        $lockedStart = $this->configuration->getLockdownPeriodStart();
         $lockedEnd = $this->configuration->getLockdownPeriodEnd();
-        if (empty($lockedEnd)) {
-            return;
-        }
 
         $gracePeriod = $this->configuration->getLockdownGracePeriod();
         if (!empty($gracePeriod)) {

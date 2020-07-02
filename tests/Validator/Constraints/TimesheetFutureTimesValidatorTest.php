@@ -52,6 +52,13 @@ class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
+    public function testInvalidValueThrowsException()
+    {
+        $this->expectException(UnexpectedTypeException::class);
+
+        $this->validator->validate(new NotBlank(), new TimesheetFutureTimes(['message' => 'myMessage']));
+    }
+
     public function testFutureBeginIsDisallowed()
     {
         $begin = new \DateTime('+10 hour');

@@ -76,6 +76,13 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
+    public function testInvalidValueThrowsException()
+    {
+        $this->expectException(UnexpectedTypeException::class);
+
+        $this->validator->validate(new NotBlank(), new TimesheetConstraint(['message' => 'myMessage']));
+    }
+
     public function testEmptyTimesheet()
     {
         $timesheet = new Timesheet();

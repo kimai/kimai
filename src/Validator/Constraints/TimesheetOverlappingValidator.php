@@ -44,7 +44,7 @@ final class TimesheetOverlappingValidator extends ConstraintValidator
         }
 
         if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            return;
+            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
         }
 
         if ($this->configuration->isAllowOverlappingRecords()) {

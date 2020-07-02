@@ -50,6 +50,13 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
+    public function testInvalidValueThrowsException()
+    {
+        $this->expectException(UnexpectedTypeException::class);
+
+        $this->validator->validate(new NotBlank(), new TimesheetOverlapping(['message' => 'myMessage']));
+    }
+
     public function testOverlappingDisallowedWithRecords()
     {
         $begin = new \DateTime();
