@@ -51,11 +51,6 @@ final class TimesheetOverlappingValidator extends ConstraintValidator
             return;
         }
 
-        // updating existing entries is always possible
-        if (null !== $timesheet->getId()) {
-            return;
-        }
-
         if (!$this->repository->hasRecordForTime($timesheet)) {
             return;
         }
