@@ -27,6 +27,7 @@ use App\Saml\Security\SamlFactory;
 use App\Timesheet\CalculatorInterface as TimesheetCalculator;
 use App\Timesheet\Rounding\RoundingInterface;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
+use App\Validator\Constraints\TimesheetConstraint;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetRendererInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -54,6 +55,7 @@ class Kernel extends BaseKernel
     public const TAG_INVOICE_CALCULATOR = 'invoice.calculator';
     public const TAG_INVOICE_REPOSITORY = 'invoice.repository';
     public const TAG_TIMESHEET_CALCULATOR = 'timesheet.calculator';
+    public const TAG_TIMESHEET_VALIDATOR = 'timesheet.validator';
     public const TAG_TIMESHEET_EXPORTER = 'timesheet.exporter';
     public const TAG_TIMESHEET_TRACKING_MODE = 'timesheet.tracking_mode';
     public const TAG_TIMESHEET_ROUNDING_MODE = 'timesheet.rounding_mode';
@@ -82,6 +84,7 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(TimesheetExportInterface::class)->addTag(self::TAG_TIMESHEET_EXPORTER);
         $container->registerForAutoconfiguration(TrackingModeInterface::class)->addTag(self::TAG_TIMESHEET_TRACKING_MODE);
         $container->registerForAutoconfiguration(RoundingInterface::class)->addTag(self::TAG_TIMESHEET_ROUNDING_MODE);
+        $container->registerForAutoconfiguration(TimesheetConstraint::class)->addTag(self::TAG_TIMESHEET_VALIDATOR);
 
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');

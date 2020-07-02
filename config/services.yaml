@@ -74,6 +74,9 @@ services:
     App\Plugin\PluginManager:
         arguments: [!tagged kimai.plugin]
 
+    App\Validator\Constraints\TimesheetValidator:
+        arguments: [!tagged timesheet.validator]
+
     App\Widget\WidgetService:
         arguments:
             $renderer: !tagged widget.renderer

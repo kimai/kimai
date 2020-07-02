@@ -77,4 +77,24 @@ class TimesheetConfiguration implements SystemBundleConfiguration
     {
         return (int) $this->find('rounding.default.duration');
     }
+
+    public function getLockdownPeriodStart(): string
+    {
+        return (string) $this->find('rules.lockdown_period_start');
+    }
+
+    public function getLockdownPeriodEnd(): string
+    {
+        return (string) $this->find('rules.lockdown_period_end');
+    }
+
+    public function getLockdownGracePeriod(): string
+    {
+        return (string) $this->find('rules.lockdown_grace_period');
+    }
+
+    public function isLockdownActive(): bool
+    {
+        return !empty($this->find('rules.lockdown_period_start')) && !empty($this->find('rules.lockdown_period_end'));
+    }
 }
