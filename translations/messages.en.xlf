@@ -740,6 +740,22 @@
             <!--
               Statistics data for Dashboard & Users profile
             -->
+            <trans-unit id="stats.workingTimeToday">
+                <source>stats.workingTimeToday</source>
+                <target>Today, %day%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeWeek">
+                <source>stats.workingTimeWeek</source>
+                <target>Calendar week %week%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeMonth">
+                <source>stats.workingTimeMonth</source>
+                <target>%month% %year%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeYear">
+                <source>stats.workingTimeYear</source>
+                <target>Full year %year%</target>
+            </trans-unit>
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
                 <target>Working hours today</target>
