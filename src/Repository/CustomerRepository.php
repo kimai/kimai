@@ -139,7 +139,7 @@ class CustomerRepository extends EntityRepository
         }
 
         // make sure that admins see all customers
-        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+        if (null !== $user && $user->canSeeAllData()) {
             return;
         }
 

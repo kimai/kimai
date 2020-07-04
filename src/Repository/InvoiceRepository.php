@@ -92,7 +92,7 @@ class InvoiceRepository extends EntityRepository
         }
 
         // make sure that admins see all projects
-        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+        if (null !== $user && $user->canSeeAllData()) {
             return;
         }
 
