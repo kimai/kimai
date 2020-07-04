@@ -32,6 +32,8 @@ class UserTest extends TestCase
         self::assertNull($user->getApiToken());
         self::assertNull($user->getPlainApiToken());
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
+        self::assertFalse($user->hasTeamAssignment());
+        self::assertFalse($user->canSeeAllData());
 
         $user->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
         self::assertEquals('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', $user->getAvatar());
@@ -145,6 +147,7 @@ class UserTest extends TestCase
         self::assertCount(1, $sut->getTeams());
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getUsers()[0]);
+        self::assertTrue($sut->hasTeamAssignment());
 
         self::assertFalse($sut->isTeamleadOf($team));
         self::assertTrue($sut->isInTeam($team));
@@ -160,18 +163,35 @@ class UserTest extends TestCase
         self::assertCount(2, $sut->getTeams());
         $sut->removeTeam($team);
         self::assertCount(1, $sut->getTeams());
+        self::assertTrue($sut->hasTeamAssignment());
         $sut->removeTeam($team2);
         self::assertCount(0, $sut->getTeams());
+        self::assertFalse($sut->hasTeamAssignment());
     }
 
     public function testRoles()
     {
         $sut = new User();
+        self::assertFalse($sut->canSeeAllData());
+        self::assertFalse($sut->isAdmin());
         self::assertFalse($sut->isTeamlead());
+
         $sut->addRole(User::ROLE_ADMIN);
+        self::assertTrue($sut->canSeeAllData());
+        self::assertTrue($sut->isAdmin());
         self::assertFalse($sut->isTeamlead());
+
         $sut->addRole(User::ROLE_TEAMLEAD);
         self::assertTrue($sut->isTeamlead());
+
+        $sut->removeRole(User::ROLE_ADMIN);
+        self::assertFalse($sut->canSeeAllData());
+        self::assertFalse($sut->isAdmin());
+
+        $sut->addRole(User::ROLE_SUPER_ADMIN);
+        self::assertTrue($sut->canSeeAllData());
+        self::assertFalse($sut->isAdmin());
+        self::assertTrue($sut->isSuperAdmin());
     }
 
     /**
