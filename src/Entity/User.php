@@ -354,6 +354,11 @@ class User extends BaseUser implements UserInterface
         $team->removeUser($this);
     }
 
+    public function hasTeamAssignment(): bool
+    {
+        return !$this->getTeams()->isEmpty();
+    }
+
     /**
      * @return Collection<Team>
      */
@@ -370,6 +375,11 @@ class User extends BaseUser implements UserInterface
     public function isTeamleadOf(Team $team): bool
     {
         return $team->getTeamLead() === $this;
+    }
+
+    public function canSeeAllData(): bool
+    {
+        return $this->isSuperAdmin() || $this->isAdmin();
     }
 
     public function isTeamlead(): bool

@@ -122,7 +122,7 @@ class ActivityRepository extends EntityRepository
         }
 
         // make sure that admins see all activities
-        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+        if (null !== $user && $user->canSeeAllData()) {
             return;
         }
 

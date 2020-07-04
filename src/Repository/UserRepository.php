@@ -159,7 +159,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         }
 
         // make sure that admins see all user
-        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+        if (null !== $user && $user->canSeeAllData()) {
             return;
         }
 

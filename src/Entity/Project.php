@@ -298,7 +298,6 @@ class Project implements EntityWithMetaFields
     }
 
     /**
-     * @internal only here for symfony forms
      * @return Collection|MetaTableTypeInterface[]
      */
     public function getMetaFields(): Collection
