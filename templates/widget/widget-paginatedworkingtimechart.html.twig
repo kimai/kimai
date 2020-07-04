@@ -41,25 +41,25 @@
                     <div class="col-sm-3 col-xs-6">
                         <div class="description-block border-right">
                             <h5 class="description-header">{{ data.day|duration }}</h5>
-                            <span class="description-text">{{ 'stats.durationToday'|trans }}</span>
+                            <span class="description-text">{{ 'stats.workingTimeToday'|trans({'%day%': 'now'|date_short}) }}</span>
                         </div>
                     </div>
                     <div class="col-sm-3 col-xs-6">
                         <div class="description-block border-right">
                             <h5 class="description-header">{{ data.week|duration }}</h5>
-                            <span class="description-text">{{ 'stats.durationWeek'|trans }}</span>
+                            <span class="description-text">{{ 'stats.workingTimeWeek'|trans({'%week%': data.begin|date_format('W')}) }}</span>
                         </div>
                     </div>
                     <div class="col-sm-3 col-xs-6">
                         <div class="description-block border-right">
                             <h5 class="description-header">{{ data.month|duration }}</h5>
-                            <span class="description-text">{{ 'stats.durationMonth'|trans }}</span>
+                            <span class="description-text">{{ 'stats.workingTimeMonth'|trans({'%month%': data.begin|month_name|trans, '%year%': data.begin|date_format('Y')}) }}</span>
                         </div>
                     </div>
                     <div class="col-sm-3 col-xs-6">
                         <div class="description-block border-right">
                             <h5 class="description-header">{{ data.year|duration }}</h5>
-                            <span class="description-text">{{ 'stats.durationYear'|trans }}</span>
+                            <span class="description-text">{{ 'stats.workingTimeYear'|trans({'%year%': data.begin|date_format('Y')}) }}</span>
                         </div>
                     </div>
                 </div>
