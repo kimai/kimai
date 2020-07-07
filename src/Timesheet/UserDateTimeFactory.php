@@ -17,22 +17,30 @@ class UserDateTimeFactory
     /**
      * @var \DateTimeZone
      */
-    protected $timezone;
+    private $timezone;
+    /**
+     * @var CurrentUser
+     */
+    private $user;
 
     public function __construct(CurrentUser $user)
     {
-        $timezone = date_default_timezone_get();
-
-        $user = $user->getUser();
-        if ($user instanceof User) {
-            $timezone = $user->getTimezone();
-        }
-
-        $this->timezone = new \DateTimeZone($timezone);
+        $this->user = $user;
     }
 
     public function getTimezone(): \DateTimeZone
     {
+        if (null === $this->timezone) {
+            $timezone = date_default_timezone_get();
+
+            $user = $this->user->getUser();
+            if ($user instanceof User) {
+                $timezone = $user->getTimezone();
+            }
+
+            $this->timezone = new \DateTimeZone($timezone);
+        }
+
         return $this->timezone;
     }
 
@@ -54,7 +62,7 @@ class UserDateTimeFactory
 
     public function createDateTime(string $datetime = 'now'): \DateTime
     {
-        $date = new \DateTime($datetime, $this->timezone);
+        $date = new \DateTime($datetime, $this->getTimezone());
 
         return $date;
     }
@@ -66,7 +74,7 @@ class UserDateTimeFactory
      */
     public function createDateTimeFromFormat(string $format, ?string $datetime = 'now')
     {
-        $date = \DateTime::createFromFormat($format, $datetime, $this->timezone);
+        $date = \DateTime::createFromFormat($format, $datetime, $this->getTimezone());
 
         return $date;
     }
