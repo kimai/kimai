@@ -45,3 +45,29 @@
         {{ block('form_widget_simple') }}
     {% endif %}
 {%- endblock text_widget %}
+
+{% block monthpicker_widget -%}
+    <div class="btn-group">
+        <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{previousMonth|date_short}}').change()">
+            <i class="{{ 'left'|icon }}"></i>
+        </a>
+        <a class="btn btn-default" href="#" onclick="return false;">
+            <span id="{{ form.vars.id }}_month_name">{{ data|month_name|trans ~ ' '  ~ data|date_format('Y') }}</span>
+        </a>
+        <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{nextMonth|date_short}}').change()">
+            <i class="{{ 'right'|icon }}"></i>
+        </a>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            $('#{{ form.vars.id }}').on('change', function(ev) {
+                var newDate = moment($(this).val(), '{{ momentFormat }}').format('MMMM YYYY');
+                $('#{{ form.vars.id }}_month_name').html(
+                    newDate[0].toUpperCase() + newDate.slice(1)
+                );
+            });
+        });
+    </script>
+    {% set type = 'hidden' %}
+    {{ block('form_widget_simple') }}
+{%- endblock monthpicker_widget %}
