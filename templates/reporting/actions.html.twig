@@ -1,0 +1,11 @@
+{% macro reporting() %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {} %}
+    {% set children = {} %}
+    {% for id, report in available_reports(app.user) %}
+        {% set children = children|merge({(report.id): {'title': report.label|trans({}, 'reporting'), 'url': path(report.route), 'class': 'toolbar-action report-' ~ report.id}}) %}
+    {% endfor %}
+    {% set actions = actions|merge({'reporting': {'children': children}}) %}
+    {% set event = trigger('actions.reporting', {'actions': actions}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}

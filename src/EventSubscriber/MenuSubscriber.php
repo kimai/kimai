@@ -93,6 +93,12 @@ final class MenuSubscriber implements EventSubscriberInterface
             $menu->addChild($timesheets);
         }
 
+        if ($auth->isGranted('view_reporting')) {
+            $reporting = new MenuItemModel('reporting', 'menu.reporting', 'reporting', [], $this->getIcon('reporting'));
+            $reporting->setChildRoutes(['report_user_month', 'report_monthly_users']);
+            $menu->addChild($reporting);
+        }
+
         if ($auth->isGranted('view_customer') || $auth->isGranted('view_teamlead_customer') || $auth->isGranted('view_team_customer')) {
             $customers = new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], $this->getIcon('customer'));
             $customers->setChildRoutes(['admin_customer_create', 'admin_customer_permissions', 'customer_details', 'admin_customer_edit', 'admin_customer_delete']);

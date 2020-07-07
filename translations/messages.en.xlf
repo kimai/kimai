@@ -144,6 +144,10 @@
                 <source>menu.export</source>
                 <target>Export</target>
             </trans-unit>
+            <trans-unit id="menu.reporting">
+                <source>menu.reporting</source>
+                <target>Reporting</target>
+            </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
                 <target>Timesheets</target>
