@@ -57,6 +57,6 @@ class ReportingExtensionTest extends TestCase
         $sut = $this->getSut(true);
         $reports = $sut->getAvailableReports(new User());
         self::assertIsArray($reports);
-        self::assertCount(4, $reports);
+        self::assertCount(2, $reports);
     }
 }
