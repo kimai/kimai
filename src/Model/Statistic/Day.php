@@ -25,6 +25,10 @@ class Day
      * @var DateTime
      */
     protected $day;
+    /**
+     * @var array
+     */
+    protected $details = [];
 
     public function __construct(DateTime $day, int $duration, float $rate)
     {
@@ -60,5 +64,17 @@ class Day
         $this->totalRate = $totalRate;
 
         return $this;
+    }
+
+    public function setDetails(array $details): Day
+    {
+        $this->details = $details;
+
+        return $this;
+    }
+
+    public function getDetails(): array
+    {
+        return $this->details;
     }
 }

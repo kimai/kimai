@@ -24,6 +24,7 @@ class DayTest extends TestCase
         $sut = new Day($date, 12340, 197.25956);
 
         $this->assertSame($date, $sut->getDay());
+        $this->assertEquals([], $sut->getDetails());
         $this->assertEquals(12340, $sut->getTotalDuration());
         $this->assertEquals(197.25956, $sut->getTotalRate());
     }
@@ -38,5 +39,14 @@ class DayTest extends TestCase
 
         $this->assertEquals(999, $sut->getTotalDuration());
         $this->assertEquals(0.123456789, $sut->getTotalRate());
+    }
+
+    public function testSetDetails()
+    {
+        $sut = new Day(new DateTime(), 12340, 197.25956);
+
+        $sut->setDetails(['foo' => ['bar' => '1212e'], 'hello' => 'world']);
+
+        $this->assertEquals(['foo' => ['bar' => '1212e'], 'hello' => 'world'], $sut->getDetails());
     }
 }
