@@ -35,6 +35,12 @@ final class TimesheetConfig
      * @var bool
      */
     private $isAllowFutureTimes = true;
+    /**
+     * Whether overlapping entries are allowed
+     *
+     * @var bool
+     */
+    private $isAllowOverlapping = true;
 
     /**
      * @return string
@@ -95,6 +101,18 @@ final class TimesheetConfig
     public function setIsAllowFutureTimes(bool $isAllowFutureTimes): TimesheetConfig
     {
         $this->isAllowFutureTimes = $isAllowFutureTimes;
+
+        return $this;
+    }
+
+    public function isAllowOverlapping(): bool
+    {
+        return $this->isAllowOverlapping;
+    }
+
+    public function setIsAllowOverlapping(bool $isAllowOverlapping): TimesheetConfig
+    {
+        $this->isAllowOverlapping = $isAllowOverlapping;
 
         return $this;
     }
