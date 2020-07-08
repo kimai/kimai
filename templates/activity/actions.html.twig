@@ -32,7 +32,7 @@
             {% set actions = actions|merge({'divider': null}) %}
         {% endif %}
         {% if is_granted('view_other_timesheet') %}
-            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': activity.project ? activity.project.customer.id : null, 'project': activity.project ? activity.project.id : null, 'activity': activity.id})}) %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customers[]': activity.project ? activity.project.customer.id : null, 'projects[]': activity.project ? activity.project.id : null, 'activities[]': activity.id})}) %}
         {% endif %}
         {% if is_granted('create_other_timesheet') %}
             {% set actions = actions|merge({'create-timesheet': {'url': path('admin_timesheet_create', {'project': activity.project ? activity.project.id : null, 'activity': activity.id}), 'class': 'modal-ajax-form'}}) %}
