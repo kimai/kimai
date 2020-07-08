@@ -376,7 +376,6 @@ class ProfileController extends AbstractController
             UserApiTokenType::class,
             $user,
             [
-                'validation_groups' => ['apiTokenUpdate'],
                 'action' => $this->generateUrl('user_profile_api_token', ['username' => $user->getUsername()]),
                 'method' => 'POST'
             ]
