@@ -20,18 +20,26 @@ final class TimesheetConfig
      */
     private $trackingMode = 'default';
     /**
+     * Default begin datetime in PHP format
+     *
      * @var string
      */
     private $defaultBeginTime = 'now';
     /**
+     * How many running timesheets a user is allowed to have at the same time
+     *
      * @var int
      */
     private $activeEntriesHardLimit = 1;
     /**
+     * How many running timesheets a user is allowed before a warning is shown
+     *
      * @var int
      */
     private $activeEntriesSoftLimit = 1;
     /**
+     * Whether entries for future times are allowed
+     *
      * @var bool
      */
     private $isAllowFutureTimes = true;
