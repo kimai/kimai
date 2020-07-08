@@ -11,3 +11,6 @@ App\Entity\User:
         plainPassword:
             - NotBlank: { groups: [Registration, PasswordUpdate] }
             - Length: { min: 8, max: 60, groups: [Registration, PasswordUpdate] }
+        plainApiToken:
+            - NotBlank: { groups: [ApiTokenUpdate] }
+            - Length: { min: 8, max: 60, groups: [ApiTokenUpdate] }
