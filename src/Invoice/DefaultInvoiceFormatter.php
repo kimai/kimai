@@ -61,13 +61,14 @@ final class DefaultInvoiceFormatter implements InvoiceFormatter
     }
 
     /**
-     * @param int $amount
-     * @param string $currency
+     * @param float|int $amount
+     * @param string|null $currency
+     * @param bool $withCurrency
      * @return string
      */
-    public function getFormattedMoney($amount, $currency)
+    public function getFormattedMoney($amount, ?string $currency, bool $withCurrency = true)
     {
-        return $this->extension->money($amount, $currency);
+        return $this->extension->money($amount, $currency, $withCurrency);
     }
 
     /**

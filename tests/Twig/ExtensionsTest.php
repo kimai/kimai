@@ -137,13 +137,46 @@ class ExtensionsTest extends TestCase
         }
     }
 
-    public function testMoneyNull()
+    public function testMoneyWithoutCurrency()
     {
         $sut = $this->getSut($this->localeEn, 'en');
         $this->assertEquals('123.75', $sut->money(123.75));
 
         $sut = $this->getSut($this->localeEn, 'de');
-        $this->assertEquals('123.234,755', $sut->money(123234.7554));
+        $this->assertEquals('123.234,76', $sut->money(123234.7554, null, true));
+        $this->assertEquals('123.234,76', $sut->money(123234.7554, null, false));
+        $this->assertEquals('123.234,76', $sut->money(123234.7554, 'EUR', false));
+    }
+
+    /**
+     * @dataProvider getMoneyNoCurrencyData
+     */
+    public function testMoneyNoCurrency($result, $amount, $currency, $locale)
+    {
+        $sut = $this->getSut($this->localeEn, $locale);
+        $this->assertEquals($result, $sut->money($amount, $currency, false));
+    }
+
+    public function getMoneyNoCurrencyData()
+    {
+        return [
+            ['0,00', null, 'EUR', 'de'],
+            ['2.345,00', 2345, 'EUR', 'de'],
+            ['2,345.00', 2345, 'EUR', 'en'],
+            ['2,345.01', 2345.009, 'EUR', 'en'],
+            ['2.345,01', 2345.009, 'EUR', 'de'],
+            ['13.75', 13.75, 'USD', 'en'],
+            ['13,75', 13.75, 'USD', 'de'],
+            ['13,75', 13.75, 'RUB', 'de'],
+            ['13,75', 13.75, 'JPY', 'de'],
+            ['13 933,49', 13933.49, 'JPY', 'ru'],
+            ['13,75', 13.75, 'CNY', 'de'],
+            ['13.933,00', 13933, 'CNY', 'de'],
+            ['13 933,00', 13933, 'CNY', 'ru'],
+            ['13,933.00', 13933, 'CNY', 'en'],
+            ['13,933.00', 13933, 'CNY', 'zh_CN'],
+            ['1.234.567,89', 1234567.891234567890000, 'USD', 'de'],
+        ];
     }
 
     /**
@@ -168,6 +201,11 @@ class ExtensionsTest extends TestCase
             ['13,75 RUB', 13.75, 'RUB', 'de'],
             ['14 ¥', 13.75, 'JPY', 'de'],
             ['13 933 ¥', 13933.49, 'JPY', 'ru'],
+            ['13,75 CN¥', 13.75, 'CNY', 'de'],
+            ['13.933,00 CN¥', 13933, 'CNY', 'de'],
+            ['13 933,00 CN¥', 13933, 'CNY', 'ru'],
+            ['CN¥13,933.00', 13933, 'CNY', 'en'],
+            ['￥13,933.00', 13933, 'CNY', 'zh_CN'],
             ['1.234.567,89 $', 1234567.891234567890000, 'USD', 'de'],
         ];
     }

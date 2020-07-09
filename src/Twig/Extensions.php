@@ -47,6 +47,10 @@ class Extensions extends AbstractExtension
      * @var NumberFormatter
      */
     protected $moneyFormatter;
+    /**
+     * @var NumberFormatter
+     */
+    protected $moneyFormatterNoCurrency;
 
     /**
      * @param LocaleSettings $localeSettings
@@ -249,6 +253,16 @@ class Extensions extends AbstractExtension
         $this->locale = $locale;
         $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::DECIMAL);
         $this->moneyFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+
+        // if anyone knows a better way of achieving this, please let me know!
+        $this->moneyFormatterNoCurrency = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+        $pattern = $this->moneyFormatterNoCurrency->getPattern();
+        $pattern = str_replace('¤ ', '¤', $pattern);
+        $pattern = str_replace(' ¤', '¤', $pattern);
+        $this->moneyFormatterNoCurrency->setPattern($pattern);
+        $this->moneyFormatterNoCurrency->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
+        $this->moneyFormatterNoCurrency->setSymbol(NumberFormatter::CURRENCY_CODE, '');
+        $this->moneyFormatterNoCurrency->setSymbol(NumberFormatter::INTL_CURRENCY_SYMBOL, '');
     }
 
     private function getNumberFormatter(): NumberFormatter
@@ -258,25 +272,30 @@ class Extensions extends AbstractExtension
         return $this->numberFormatter;
     }
 
-    private function getMoneyFormatter(): NumberFormatter
+    private function getMoneyFormatter(bool $withCurrency = true): NumberFormatter
     {
         $this->initLocale();
 
-        return $this->moneyFormatter;
+        if ($withCurrency) {
+            return $this->moneyFormatter;
+        }
+
+        return $this->moneyFormatterNoCurrency;
     }
 
     /**
      * @param float $amount
-     * @param string $currency
+     * @param string|null $currency
+     * @param bool $withCurrency
      * @return string
      */
-    public function money($amount, $currency = null)
+    public function money($amount, ?string $currency = null, bool $withCurrency = true)
     {
-        if (null !== $currency) {
-            return $this->getMoneyFormatter()->formatCurrency($amount, $currency);
+        if (null === $currency) {
+            $withCurrency = false;
         }
 
-        return $this->getNumberFormatter()->format($amount);
+        return $this->getMoneyFormatter($withCurrency)->formatCurrency($amount, $currency);
     }
 
     /**

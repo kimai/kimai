@@ -32,17 +32,22 @@ class DebugFormatter implements InvoiceFormatter
     }
 
     /**
-     * @param mixed $amount
+     * @param int|float $amount
      * @param string|null $currency
-     * @return mixed
+     * @param bool $withCurrency
+     * @return string
      */
-    public function getFormattedMoney($amount, $currency)
+    public function getFormattedMoney($amount, ?string $currency, bool $withCurrency = true)
     {
-        if (null !== $currency) {
+        if (null === $currency) {
+            $withCurrency = false;
+        }
+
+        if ($withCurrency) {
             return $amount . ' ' . $currency;
         }
 
-        return $amount;
+        return (string) $amount;
     }
 
     /**
