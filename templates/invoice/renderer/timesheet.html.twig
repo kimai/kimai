@@ -1,10 +1,8 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% extends 'invoice/layout.html.twig' %}
-{% set fallback = app.request is not null ? app.request.locale : 'en' %}
-{% set language = model.template.language|default(fallback) %}
-{% set isDecimal = model.template.decimalDuration|default(false) %}
 
 {% block invoice %}
+{% set isDecimal = model.template.decimalDuration|default(false) %}
 <div class="row">
     <div class="col-xs-12">
         <h2 class="page-header">
@@ -17,7 +15,7 @@
     <div class="col-xs-12">
         <table class="table no-border table-condensed">
             <tr>
-                <th>{{ 'invoice.from'|trans({}, 'messages', language) }}</th>
+                <th>{{ 'invoice.from'|trans }}</th>
                 <td contenteditable="true">
                     {% if model.query.user is not empty %}
                         {{ widgets.username(model.query.user) }}
@@ -27,17 +25,17 @@
                 </td>
             </tr>
             <tr>
-                <th>{{ 'label.date'|trans({}, 'messages', language) }}</th>
+                <th>{{ 'label.date'|trans }}</th>
                 <td contenteditable="true">
                     {% if model.query.begin|date('m') != model.query.end|date('m') or model.query.begin|date('Y') != model.query.end|date('Y') %}
                         {{ model.query.begin|date_short }} - {{ model.query.end|date_short }}
                     {% else %}
-                        {{ model.query.end|month_name|trans({}, 'messages', language) }} {{ model.query.end|date('Y') }}
+                        {{ model.query.end|month_name }} {{ model.query.end|date('Y') }}
                     {% endif %}
                 </td>
             </tr>
             <tr>
-                <th>{{ 'label.customer'|trans({}, 'messages', language) }}</th>
+                <th>{{ 'label.customer'|trans }}</th>
                 <td contenteditable="true">
                     {% if model.customer.number is not empty %}[{{ model.customer.number }}]{% endif %}
                     {{ model.customer.name }}{% if model.customer.contact is not empty %} / {{ model.customer.contact }}{% endif %}
@@ -45,7 +43,7 @@
             </tr>
             {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
                 <tr>
-                    <th>{{ 'label.orderNumber'|trans({}, 'messages', language) }}</th>
+                    <th>{{ 'label.orderNumber'|trans }}</th>
                     <td contenteditable="true">
                         {{ model.query.project.orderNumber }}
                     </td>
@@ -60,12 +58,12 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ 'label.date'|trans({}, 'messages', language) }}</th>
+                <th>{{ 'label.date'|trans }}</th>
                 {% if model.query.user is empty %}
-                <th>{{ 'label.user'|trans({}, 'messages', language) }}</th>
+                <th>{{ 'label.user'|trans }}</th>
                 {% endif %}
-                <th>{{ 'label.activity'|trans({}, 'messages', language) }}</th>
-                <th>{{ 'label.hours'|trans({}, 'messages', language) }}</th>
+                <th>{{ 'label.activity'|trans }}</th>
+                <th>{{ 'label.hours'|trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -92,7 +90,7 @@
                 {% if model.query.user is empty %}
                 <th></th>
                 {% endif %}
-                <th>{{ 'invoice.total_working_time'|trans({}, 'messages', language) }}</th>
+                <th>{{ 'invoice.total_working_time'|trans }}</th>
                 <th class="text-nowrap">{{ model.calculator.timeWorked|duration(isDecimal) }}</th>
             </tr>
             </tfoot>
@@ -103,7 +101,7 @@
 <div class="row">
     <div class="col-xs-12">
         {% if model.template.paymentTerms is not empty %}
-            <p class="lead">{{ 'label.payment_terms'|trans({}, 'messages', language) }}</p>
+            <p class="lead">{{ 'label.payment_terms'|trans }}</p>
 
             <p class="text-muted well well-sm no-shadow" contenteditable="true" style="margin-bottom: 100px">
                 {{ model.template.paymentTerms|trim|nl2br }}
@@ -114,10 +112,10 @@
             <table class="table">
                 <tbody>
                 <tr>
-                    <th style="padding-bottom: 60px">{{ 'invoice.signature_user'|trans({}, 'messages', language) }}</th>
+                    <th style="padding-bottom: 60px">{{ 'invoice.signature_user'|trans }}</th>
                 </tr>
                 <tr>
-                    <th>{{ 'invoice.signature_customer'|trans({}, 'messages', language) }}</th>
+                    <th>{{ 'invoice.signature_customer'|trans }}</th>
                 </tr>
                 </tbody>
             </table>

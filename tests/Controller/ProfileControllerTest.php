@@ -243,6 +243,24 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), 'test1234', $user->getSalt()));
     }
 
+    public function testPasswordActionFailsIfPasswordLengthToShort()
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_USER,
+            '/profile/' . UserFixtures::USERNAME_USER . '/password',
+            'form[name=user_password]',
+            [
+                'user_password' => [
+                    'plainPassword' => [
+                        'first' => 'abcdef1',
+                        'second' => 'abcdef1',
+                    ]
+                ]
+            ],
+            ['#user_password_plainPassword_first']
+        );
+    }
+
     public function testApiTokenAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -255,15 +273,15 @@ class ProfileControllerTest extends ControllerBaseTest
         $passwordEncoder = static::$kernel->getContainer()->get('test.PasswordEncoder');
 
         $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN, $user->getSalt()));
-        $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), 'test123', $user->getSalt()));
+        $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), 'test1234', $user->getSalt()));
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
 
         $form = $client->getCrawler()->filter('form[name=user_api_token]')->form();
         $client->submit($form, [
             'user_api_token' => [
                 'plainApiToken' => [
-                    'first' => 'test123',
-                    'second' => 'test123',
+                    'first' => 'test1234',
+                    'second' => 'test1234',
                 ]
             ]
         ]);
@@ -278,7 +296,25 @@ class ProfileControllerTest extends ControllerBaseTest
         $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN, $user->getSalt()));
-        $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), 'test123', $user->getSalt()));
+        $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), 'test1234', $user->getSalt()));
+    }
+
+    public function testApiTokenActionFailsIfPasswordLengthToShort()
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_USER,
+            '/profile/' . UserFixtures::USERNAME_USER . '/api-token',
+            'form[name=user_api_token]',
+            [
+                'user_api_token' => [
+                    'plainApiToken' => [
+                        'first' => 'abcdef1',
+                        'second' => 'abcdef1',
+                    ]
+                ]
+            ],
+            ['#user_api_token_plainApiToken_first']
+        );
     }
 
     public function testRolesActionIsSecured()

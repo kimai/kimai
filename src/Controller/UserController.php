@@ -70,6 +70,7 @@ final class UserController extends AbstractController
     public function indexAction($page, Request $request): Response
     {
         $query = new UserQuery();
+        $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);

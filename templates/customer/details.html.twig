@@ -85,7 +85,7 @@
                 {% if customer.timezone is not empty %}
                     <tr>
                         <th>{{ 'label.timezone'|trans }}</th>
-                        <td><span data-toggle="tooltip" data-placement="top" title="{{ customer.timezone }}">{{ now|date_full(false) }}</span></td>
+                        <td><span data-toggle="tooltip" data-placement="top" title="{{ customer.timezone }}">{{ now|date_time }}</span></td>
                     </tr>
                 {% endif %}
                 {% if customer.currency is not empty %}

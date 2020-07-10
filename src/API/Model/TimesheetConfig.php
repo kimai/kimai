@@ -20,21 +20,35 @@ final class TimesheetConfig
      */
     private $trackingMode = 'default';
     /**
+     * Default begin datetime in PHP format
+     *
      * @var string
      */
     private $defaultBeginTime = 'now';
     /**
+     * How many running timesheets a user is allowed to have at the same time
+     *
      * @var int
      */
     private $activeEntriesHardLimit = 1;
     /**
+     * How many running timesheets a user is allowed before a warning is shown
+     *
      * @var int
      */
     private $activeEntriesSoftLimit = 1;
     /**
+     * Whether entries for future times are allowed
+     *
      * @var bool
      */
     private $isAllowFutureTimes = true;
+    /**
+     * Whether overlapping entries are allowed
+     *
+     * @var bool
+     */
+    private $isAllowOverlapping = true;
 
     /**
      * @return string
@@ -95,6 +109,18 @@ final class TimesheetConfig
     public function setIsAllowFutureTimes(bool $isAllowFutureTimes): TimesheetConfig
     {
         $this->isAllowFutureTimes = $isAllowFutureTimes;
+
+        return $this;
+    }
+
+    public function isAllowOverlapping(): bool
+    {
+        return $this->isAllowOverlapping;
+    }
+
+    public function setIsAllowOverlapping(bool $isAllowOverlapping): TimesheetConfig
+    {
+        $this->isAllowOverlapping = $isAllowOverlapping;
 
         return $this;
     }

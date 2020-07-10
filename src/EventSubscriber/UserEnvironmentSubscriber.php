@@ -15,12 +15,12 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class TimezoneSubscriber implements EventSubscriberInterface
+class UserEnvironmentSubscriber implements EventSubscriberInterface
 {
     /**
      * @var TokenStorageInterface
      */
-    protected $storage;
+    private $storage;
 
     public function __construct(TokenStorageInterface $tokenStorage)
     {
@@ -30,11 +30,11 @@ class TimezoneSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => ['setTimezone', 100],
+            KernelEvents::REQUEST => ['prepareEnvironment', 100],
         ];
     }
 
-    public function setTimezone(RequestEvent $event)
+    public function prepareEnvironment(RequestEvent $event)
     {
         if (null === $this->storage->getToken()) {
             return;
@@ -44,6 +44,7 @@ class TimezoneSubscriber implements EventSubscriberInterface
 
         if ($user instanceof User) {
             date_default_timezone_set($user->getTimezone());
+            \Locale::setDefault($user->getLocale());
         }
     }
 }

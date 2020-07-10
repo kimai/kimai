@@ -22,7 +22,7 @@
                 {{ model.template.title }}
             </td>
             <td class="date">
-                {{ 'label.date'|trans({}, 'messages', language) }}: {{ model.invoiceDate|date_short }}
+                {{ 'label.date'|trans }}: {{ model.invoiceDate|date_short }}
             </td>
         </tr>
     </table>
@@ -32,10 +32,10 @@
     <table class="footer">
         <tr>
             <td>
-                <strong>{{ 'label.contact'|trans({}, 'messages', language) }}</strong>:
+                <strong>{{ 'label.contact'|trans }}</strong>:
                 {{ model.template.contact|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
                 <br>
-                <strong>{{ 'label.invoice_bank_account'|trans({}, 'messages', language) }}</strong>:
+                <strong>{{ 'label.invoice_bank_account'|trans }}</strong>:
                 {{ model.template.paymentDetails|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
             </td>
             <td align="right">
@@ -50,33 +50,33 @@ mpdf-->
     <table class="addresses">
         <tr>
             <td width="60%">
-                {{ 'invoice.to'|trans({}, 'messages', language) }}
+                {{ 'invoice.to'|trans }}
                 <br>
                 <strong>{{ model.customer.company|default(model.customer.name) }}</strong>
                 <br>
                 {{ model.customer.address|nl2br }}
                 {% if model.customer.vatId is not empty %}
                     <br>
-                    {{ 'label.vat_id'|trans({}, 'messages', language) }}: {{ model.customer.vatId }}
+                    {{ 'label.vat_id'|trans }}: {{ model.customer.vatId }}
                 {% endif %}
                 {% if model.customer.number is not empty %}
                     <br>
-                    {{ 'label.number'|trans({}, 'messages', language) }}: {{ model.customer.number }}
+                    {{ 'label.number'|trans }}: {{ model.customer.number }}
                 {% endif %}
                 {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
                     <br>
-                    {{ 'label.orderNumber'|trans({}, 'messages', language) }}: {{ model.query.project.orderNumber }}
+                    {{ 'label.orderNumber'|trans }}: {{ model.query.project.orderNumber }}
                 {% endif %}
             </td>
             <td>
-                {{ 'invoice.from'|trans({}, 'messages', language) }}
+                {{ 'invoice.from'|trans }}
                 <br>
                 <strong>{{ model.template.company }}</strong>
                 <br>
                 {{ model.template.address|trim|nl2br }}
                 {% if model.template.vatId is not empty %}
                     <br>
-                    {{ 'label.vat_id'|trans({}, 'messages', language) }}:
+                    {{ 'label.vat_id'|trans }}:
                     {{ model.template.vatId }}
                 {% endif %}
             </td>
@@ -84,22 +84,22 @@ mpdf-->
     </table>
 
     <p>
-        <strong>{{ 'invoice.number'|trans({}, 'messages', language) }}:</strong>
+        <strong>{{ 'invoice.number'|trans }}:</strong>
         {{ model.invoiceNumber }}
 
         <br>
-        <strong>{{ 'invoice.due_days'|trans({}, 'messages', language) }}:</strong>
+        <strong>{{ 'invoice.due_days'|trans }}:</strong>
         {{ model.dueDate|date_short }}
     </p>
 
     <table class="items">
         <thead>
             <tr>
-                <th class="first">{{ 'label.date'|trans({}, 'messages', language) }}</th>
-                <th>{{ 'label.description'|trans({}, 'messages', language) }}</th>
-                <th class="text-right">{{ 'label.unit_price'|trans({}, 'messages', language) }}</th>
-                <th class="text-right">{{ 'label.amount'|trans({}, 'messages', language) }}</th>
-                <th class="last text-right">{{ 'label.total_rate'|trans({}, 'messages', language) }}</th>
+                <th class="first">{{ 'label.date'|trans }}</th>
+                <th>{{ 'label.description'|trans }}</th>
+                <th class="text-right">{{ 'label.unit_price'|trans }}</th>
+                <th class="text-right">{{ 'label.amount'|trans }}</th>
+                <th class="last text-right">{{ 'label.total_rate'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -129,19 +129,19 @@ mpdf-->
         <tfoot>
             <tr>
                 <td colspan="4" class="text-right">
-                    {{ 'invoice.subtotal'|trans({}, 'messages', language) }}
+                    {{ 'invoice.subtotal'|trans }}
                 </td>
                 <td class="last text-right">{{ model.calculator.subtotal|money(currency) }}</td>
             </tr>
             <tr>
                 <td colspan="4" class="text-right">
-                    {{ 'invoice.tax'|trans({}, 'messages', language) }} ({{ model.calculator.vat }}%)
+                    {{ 'invoice.tax'|trans }} ({{ model.calculator.vat }}%)
                 </td>
                 <td class="last text-right">{{ model.calculator.tax|money(currency) }}</td>
             </tr>
             <tr>
                 <td colspan="4" class="text-right text-nowrap">
-                    <strong>{{ 'invoice.total'|trans({}, 'messages', language) }}</strong>
+                    <strong>{{ 'invoice.total'|trans }}</strong>
                 </td>
                 <td class="last text-right">
                     <strong>{{ model.calculator.total|money(currency) }}</strong>

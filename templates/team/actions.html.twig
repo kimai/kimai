@@ -21,6 +21,9 @@
         {% if is_granted('edit', team) %}
             {% set class = '' %}
             {% set actions = actions|merge({'edit': {'url': path('admin_team_edit', {'id': team.id}), 'class': class}}) %}
+            {% if is_granted('create_team') %}
+                {% set actions = actions|merge({'copy': {'url': path('team_duplicate', {'id': team.id})}}) %}
+            {% endif %}
         {% endif %}
     {% endif %}
 

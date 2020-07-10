@@ -29,7 +29,6 @@ use App\Export\ExportRendererInterface;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
-use App\Utils\LocaleSettings;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -60,10 +59,8 @@ abstract class AbstractRendererTest extends KernelTestCase
         $request->setLocale('en');
         $requestStack->push($request);
 
-        $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($languages));
-
         $translator = $this->createMock(TranslatorInterface::class);
-        $dateExtension = new DateExtensions($localeSettings);
+        $dateExtension = new DateExtensions($requestStack, new LanguageFormattings($languages));
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());

@@ -39,13 +39,13 @@
             {% set actions = actions|merge({'divider': null}) %}
         {% endif %}
         {% if is_granted('view_project') or is_granted('view_teamlead_project') or is_granted('view_team_project') %}
-            {% set actions = actions|merge({'project': path('admin_project', {'customer': customer.id})}) %}
+            {% set actions = actions|merge({'project': path('admin_project', {'customers[]': customer.id})}) %}
         {% endif %}
         {% if is_granted('view_activity') %}
-            {% set actions = actions|merge({'activity': path('admin_activity', {'customer': customer.id})}) %}
+            {% set actions = actions|merge({'activity': path('admin_activity', {'customers[]': customer.id})}) %}
         {% endif %}
         {% if is_granted('view_other_timesheet') %}
-            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': customer.id})}) %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customers[]': customer.id})}) %}
         {% endif %}
         {% if customer.visible and is_granted('create_project') %}
             {% set actions = actions|merge({'create-project': path('admin_project_create_with_customer', {'customer': customer.id})}) %}
