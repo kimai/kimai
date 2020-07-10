@@ -10,14 +10,6 @@
 namespace App\Twig;
 
 use App\Constants;
-use App\Entity\Timesheet;
-use App\Utils\Duration;
-use App\Utils\LocaleSettings;
-use NumberFormatter;
-use Symfony\Component\Intl\Countries;
-use Symfony\Component\Intl\Currencies;
-use Symfony\Component\Intl\Languages;
-use Symfony\Component\Intl\Locales;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -28,52 +20,11 @@ use Twig\TwigFunction;
 class Extensions extends AbstractExtension
 {
     /**
-     * @var LocaleSettings
-     */
-    protected $localeSettings;
-    /**
-     * @var string
-     */
-    protected $locale;
-    /**
-     * @var Duration
-     */
-    protected $durationFormatter;
-    /**
-     * @var NumberFormatter
-     */
-    protected $numberFormatter;
-    /**
-     * @var NumberFormatter
-     */
-    protected $moneyFormatter;
-    /**
-     * @var NumberFormatter
-     */
-    protected $moneyFormatterNoCurrency;
-
-    /**
-     * @param LocaleSettings $localeSettings
-     */
-    public function __construct(LocaleSettings $localeSettings)
-    {
-        $this->localeSettings = $localeSettings;
-        $this->durationFormatter = new Duration();
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getFilters()
     {
         return [
-            new TwigFilter('duration', [$this, 'duration']),
-            new TwigFilter('duration_decimal', [$this, 'durationDecimal']),
-            new TwigFilter('money', [$this, 'money']),
-            new TwigFilter('currency', [$this, 'currency']),
-            new TwigFilter('country', [$this, 'country']),
-            new TwigFilter('language', [$this, 'language']),
-            new TwigFilter('amount', [$this, 'amount']),
             new TwigFilter('docu_link', [$this, 'documentationLink']),
             new TwigFilter('multiline_indent', [$this, 'multilineIndent']),
         ];
@@ -85,7 +36,6 @@ class Extensions extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('locales', [$this, 'getLocales']),
             new TwigFunction('class_name', [$this, 'getClassName']),
         ];
     }
@@ -125,193 +75,11 @@ class Extensions extends AbstractExtension
     }
 
     /**
-     * Transforms seconds into a duration string.
-     *
-     * @param int|Timesheet $duration
-     * @param bool $decimal
-     * @return string
-     */
-    public function duration($duration, $decimal = false)
-    {
-        if ($decimal) {
-            return $this->durationDecimal($duration);
-        }
-
-        $duration = $this->getSecondsForDuration($duration);
-        $format = $this->localeSettings->getDurationFormat();
-
-        return $this->formatDuration($duration, $format);
-    }
-
-    /**
-     * Transforms seconds into a decimal formatted duration string.
-     *
-     * @param int|Timesheet $duration
-     * @return string
-     */
-    public function durationDecimal($duration)
-    {
-        $duration = $this->getSecondsForDuration($duration);
-
-        return $this->getNumberFormatter()->format(number_format($duration / 3600, 2));
-    }
-
-    /**
-     * @param string|float $amount
-     * @return bool|false|string
-     */
-    public function amount($amount)
-    {
-        return $this->getNumberFormatter()->format($amount);
-    }
-
-    private function getSecondsForDuration($duration): int
-    {
-        if (null === $duration) {
-            $duration = 0;
-        }
-
-        if ($duration instanceof Timesheet) {
-            if (null === $duration->getEnd()) {
-                $duration = time() - $duration->getBegin()->getTimestamp();
-            } else {
-                $duration = $duration->getDuration();
-            }
-        }
-
-        return (int) $duration;
-    }
-
-    protected function formatDuration(int $seconds, string $format): string
-    {
-        if ($seconds < 0) {
-            return '?';
-        }
-
-        return $this->durationFormatter->format($seconds, $format);
-    }
-
-    /**
-     * @param string $currency
-     * @return string
-     */
-    public function currency($currency)
-    {
-        try {
-            return Currencies::getSymbol(strtoupper($currency));
-        } catch (\Exception $ex) {
-        }
-
-        return $currency;
-    }
-
-    /**
-     * @param string $language
-     * @return string
-     */
-    public function language($language)
-    {
-        try {
-            return Languages::getName(strtolower($language), $this->locale);
-        } catch (\Exception $ex) {
-        }
-
-        return $language;
-    }
-
-    /**
-     * @param string $country
-     * @return string
-     */
-    public function country($country)
-    {
-        try {
-            return Countries::getName(strtoupper($country));
-        } catch (\Exception $ex) {
-        }
-
-        return $country;
-    }
-
-    /**
      * @param string $url
      * @return string
      */
     public function documentationLink($url = '')
     {
         return Constants::HOMEPAGE . '/documentation/' . $url;
-    }
-
-    private function initLocale()
-    {
-        $locale = $this->localeSettings->getLocale();
-
-        if ($this->locale === $locale) {
-            return;
-        }
-
-        $this->locale = $locale;
-        $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::DECIMAL);
-        $this->moneyFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
-
-        // if anyone knows a better way of achieving this, please let me know!
-        $this->moneyFormatterNoCurrency = new NumberFormatter($locale, NumberFormatter::CURRENCY);
-        $pattern = $this->moneyFormatterNoCurrency->getPattern();
-        $pattern = str_replace('¤ ', '¤', $pattern);
-        $pattern = str_replace(' ¤', '¤', $pattern);
-        $this->moneyFormatterNoCurrency->setPattern($pattern);
-        $this->moneyFormatterNoCurrency->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-        $this->moneyFormatterNoCurrency->setSymbol(NumberFormatter::CURRENCY_CODE, '');
-        $this->moneyFormatterNoCurrency->setSymbol(NumberFormatter::INTL_CURRENCY_SYMBOL, '');
-    }
-
-    private function getNumberFormatter(): NumberFormatter
-    {
-        $this->initLocale();
-
-        return $this->numberFormatter;
-    }
-
-    private function getMoneyFormatter(bool $withCurrency = true): NumberFormatter
-    {
-        $this->initLocale();
-
-        if ($withCurrency) {
-            return $this->moneyFormatter;
-        }
-
-        return $this->moneyFormatterNoCurrency;
-    }
-
-    /**
-     * @param float $amount
-     * @param string|null $currency
-     * @param bool $withCurrency
-     * @return string
-     */
-    public function money($amount, ?string $currency = null, bool $withCurrency = true)
-    {
-        if (null === $currency) {
-            $withCurrency = false;
-        }
-
-        return $this->getMoneyFormatter($withCurrency)->formatCurrency($amount, $currency);
-    }
-
-    /**
-     * Takes the list of codes of the locales (languages) enabled in the
-     * application and returns an array with the name of each locale written
-     * in its own language (e.g. English, Français, Español, etc.)
-     *
-     * @return array
-     */
-    public function getLocales()
-    {
-        $locales = [];
-        foreach ($this->localeSettings->getAvailableLanguages() as $locale) {
-            $locales[] = ['code' => $locale, 'name' => Locales::getName($locale, $locale)];
-        }
-
-        return $locales;
     }
 }

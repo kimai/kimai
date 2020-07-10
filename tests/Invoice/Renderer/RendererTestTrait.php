@@ -30,11 +30,9 @@ use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\AbstractRenderer;
 use App\Repository\Query\InvoiceQuery;
 use App\Twig\DateExtensions;
-use App\Twig\Extensions;
-use App\Utils\LocaleSettings;
+use App\Twig\LocaleExtensions;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 trait RendererTestTrait
 {
@@ -87,13 +85,12 @@ trait RendererTestTrait
         $request->setLocale('en');
         $requestStack->push($request);
 
-        $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($languages));
+        $formattings = new LanguageFormattings($languages);
 
-        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dateExtension = new DateExtensions($localeSettings);
-        $extensions = new Extensions($localeSettings);
+        $dateExtension = new DateExtensions($requestStack, $formattings);
+        $extensions = new LocaleExtensions($requestStack, $formattings);
 
-        return new DefaultInvoiceFormatter($translator, $dateExtension, $extensions);
+        return new DefaultInvoiceFormatter($dateExtension, $extensions);
     }
 
     protected function getInvoiceModel(): InvoiceModel
