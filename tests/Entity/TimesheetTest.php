@@ -28,6 +28,8 @@ class TimesheetTest extends TestCase
     public function testDefaultValues()
     {
         $sut = new Timesheet();
+        self::assertEquals('timesheet', $sut->getType());
+        self::assertEquals('work', $sut->getCategory());
         self::assertNull($sut->getId());
         self::assertNull($sut->getBegin());
         self::assertNull($sut->getEnd());

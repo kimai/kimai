@@ -10,13 +10,15 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.10](https://github.com/kevinpapst/kimai2/releases/tag/1.10)
 
+**New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
 - Invoice renderer `CSV` was removed
 - Sessions are now stored in the database (all users have to re-login after upgrade)
 
 ### Developer
 
 - **BC break**: interface method signature `HtmlToPdfConverter::convertToPdf` changed
-- **BC break**: the macros `badge` and `label`  do not apply the `|trans` filter any more
+- **BC break**: the macros `badge` and `label` do not apply the `|trans` filter any more
 
 ## [1.9](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
 
