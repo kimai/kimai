@@ -94,7 +94,7 @@ final class ConfigurationController extends BaseApiController
     }
 
     /**
-     * Returns the instance specific timesheet configuration
+     * Returns the timesheet configuration
      *
      * @SWG\Response(
      *      response=200,
@@ -116,6 +116,7 @@ final class ConfigurationController extends BaseApiController
             ->setActiveEntriesHardLimit($this->timesheetConfiguration->getActiveEntriesHardLimit())
             ->setActiveEntriesSoftLimit($this->timesheetConfiguration->getActiveEntriesSoftLimit())
             ->setIsAllowFutureTimes($this->timesheetConfiguration->isAllowFutureTimes())
+            ->setIsAllowOverlapping($this->timesheetConfiguration->isAllowOverlappingRecords())
         ;
 
         $view = new View($model, 200);

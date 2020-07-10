@@ -21,6 +21,7 @@ class TimesheetConfigTest extends TestCase
     {
         $sut = new TimesheetConfig();
         $this->assertTrue($sut->isAllowFutureTimes());
+        $this->assertTrue($sut->isAllowOverlapping());
         $this->assertEquals('now', $sut->getDefaultBeginTime());
         $this->assertEquals('default', $sut->getTrackingMode());
         $this->assertEquals(1, $sut->getActiveEntriesSoftLimit());
@@ -32,12 +33,14 @@ class TimesheetConfigTest extends TestCase
         $sut = new TimesheetConfig();
 
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setIsAllowFutureTimes(false));
+        $this->assertInstanceOf(TimesheetConfig::class, $sut->setIsAllowOverlapping(false));
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setDefaultBeginTime('08:00'));
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setTrackingMode('punch'));
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setActiveEntriesSoftLimit(2));
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setActiveEntriesHardLimit(3));
 
         $this->assertFalse($sut->isAllowFutureTimes());
+        $this->assertFalse($sut->isAllowOverlapping());
         $this->assertEquals('08:00', $sut->getDefaultBeginTime());
         $this->assertEquals('punch', $sut->getTrackingMode());
         $this->assertEquals(2, $sut->getActiveEntriesSoftLimit());

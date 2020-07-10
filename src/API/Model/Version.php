@@ -16,22 +16,32 @@ use App\Constants;
 class Version
 {
     /**
+     * Kimai Version, eg. "1.9"
+     *
      * @var string
      */
     protected $version = Constants::VERSION;
     /**
+     * Candidate: either "prod" or "dev"
+     *
      * @var string
      */
     protected $candidate = Constants::STATUS;
     /**
+     * Full version including status, eg: "1.9-prod"
+     *
      * @var string
      */
     protected $semver = Constants::VERSION . '-' . Constants::STATUS;
     /**
+     * The version name
+     *
      * @var string
      */
     protected $name = Constants::NAME;
     /**
+     * A full copyright notice
+     *
      * @var string
      */
     protected $copyright = Constants::SOFTWARE . ' - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.';
