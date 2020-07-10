@@ -32,6 +32,7 @@
                         {% if seeOwnRate %}
                         <tr>
                             <th>{{ 'stats.amountMonth'|trans }}</th>
+                            {# TODO which currency shall we use here? #}
                             <td class="text-nowrap pull-right">{{ stats.amountThisMonth|money }}</td>
                         </tr>
                         {% endif %}
@@ -42,6 +43,7 @@
                         {% if seeOwnRate %}
                         <tr>
                             <th>{{ 'stats.amountTotal'|trans }}</th>
+                            {# TODO which currency shall we use here? #}
                             <td class="text-nowrap pull-right">{{ stats.amountTotal|money }}</td>
                         </tr>
                         {% endif %}
@@ -103,73 +105,3 @@
         });
     </script>
 {% endblock %}
-
-
-{# -------------------------------- UNUSED FOR NOW -------------------------------- #}
-{% macro profile_list_unused(user, items) %}
-    {% import "@AdminLTE/Macros/default.html.twig" as macro %}
-    {% import "macros/widgets.html.twig" as widgets %}
-
-    <div class="box box-widget widget-user-2">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-green">
-            <div class="widget-user-image">
-                {{ macro.avatar(user.avatar, user.username) }}
-            </div>
-            <!-- /.widget-user-image -->
-            <h3 class="widget-user-username">{{ widgets.username(user) }}</h3>
-            <h5 class="widget-user-desc">{{ user.title }}</h5>
-        </div>
-        <div class="box-footer no-padding">
-            <ul class="nav nav-stacked">
-                {% for entry in items %}
-                    <li><a href="{{ entry.url }}">{{ entry.title|trans }} <span class="pull-right badge bg-{{ entry.color }}">{{ entry.value }}</span></a></li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-{% endmacro %}
-
-{# -------------------------------- UNUSED FOR NOW -------------------------------- #}
-{% macro profile_box_unused(user, stats) %}
-    {% import "@AdminLTE/Macros/default.html.twig" as macro %}
-    {% import "macros/widgets.html.twig" as widgets %}
-
-    <div class="box box-widget widget-user">
-        <div class="widget-user-header bg-green">
-            <h3 class="widget-user-username">{{ widgets.username(user) }}</h3>
-            <h5 class="widget-user-desc">{{ user.title }}</h5>
-        </div>
-        <div class="widget-user-image">
-            {{ macro.avatar(user.avatar, user.username) }}
-        </div>
-        <div class="box-footer">
-            <div class="row">
-                <div class="col-sm-6 border-right">
-                    <div class="description-block">
-                        <h5 class="description-header">{{ stats.durationTotal|duration }}</h5>
-                        <span class="description-text">{{ 'stats.durationTotal'|trans }}</span>
-                    </div>
-                </div>
-                <div class="col-sm-6 border-right">
-                    <div class="description-block">
-                        <h5 class="description-header">{{ stats.amountTotal|money }}</h5>
-                        <span class="description-text">{{ 'stats.amountTotal'|trans }}</span>
-                    </div>
-                </div>
-                <div class="col-sm-6 border-right">
-                    <div class="description-block">
-                        <h5 class="description-header">{{ stats.durationThisMonth|duration }}</h5>
-                        <span class="description-text">{{ 'stats.durationMonth'|trans }}</span>
-                    </div>
-                </div>
-                <div class="col-sm-6 border-right">
-                    <div class="description-block">
-                        <h5 class="description-header">{{ stats.amountThisMonth|money }}</h5>
-                        <span class="description-text">{{ 'stats.amountMonth'|trans }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endmacro %}

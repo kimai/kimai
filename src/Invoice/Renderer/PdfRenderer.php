@@ -12,18 +12,13 @@ namespace App\Invoice\Renderer;
 use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
-use App\Invoice\RendererInterface;
 use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
 
-final class PdfRenderer implements RendererInterface
+final class PdfRenderer extends AbstractTwigRenderer
 {
-    /**
-     * @var Environment
-     */
-    private $twig;
     /**
      * @var HtmlToPdfConverter
      */
@@ -31,7 +26,7 @@ final class PdfRenderer implements RendererInterface
 
     public function __construct(Environment $twig, HtmlToPdfConverter $converter)
     {
-        $this->twig = $twig;
+        parent::__construct($twig);
         $this->converter = $converter;
     }
 
@@ -42,9 +37,7 @@ final class PdfRenderer implements RendererInterface
 
     public function render(InvoiceDocument $document, InvoiceModel $model): Response
     {
-        $content = $this->twig->render('@invoice/' . basename($document->getFilename()), [
-            'model' => $model
-        ]);
+        $content = $this->renderTwigTemplate($document, $model);
 
         $content = $this->converter->convertToPdf($content, [
             'setAutoTopMargin' => 'pad',
