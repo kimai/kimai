@@ -148,18 +148,4 @@ final class LocaleHelper
 
         return $this->moneyFormatterNoCurrency;
     }
-
-    public function monthName(\DateTime $dateTime, ?string $locale = null): string
-    {
-        $formatter = new \IntlDateFormatter(
-            $locale ?? $this->locale,
-            \IntlDateFormatter::FULL,
-            \IntlDateFormatter::FULL,
-            $dateTime->getTimezone()->getName(),
-            \IntlDateFormatter::GREGORIAN,
-            'LLLL'
-        );
-
-        return $formatter->format($dateTime);
-    }
 }

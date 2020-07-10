@@ -56,6 +56,7 @@ class TwigRendererTest extends KernelTestCase
         $sut = new TwigRenderer($twig);
 
         $model = $this->getInvoiceModel();
+        $model->getTemplate()->setLanguage('de');
 
         $document = $this->getInvoiceDocument('timesheet.html.twig');
         $response = $sut->render($document, $model);
