@@ -30,4 +30,19 @@ trait VisibilityTrait
 
         return $this;
     }
+
+    public function isShowHidden(): bool
+    {
+        return $this->visibility === VisibilityInterface::SHOW_HIDDEN;
+    }
+
+    public function isShowVisible(): bool
+    {
+        return $this->visibility === VisibilityInterface::SHOW_VISIBLE;
+    }
+
+    public function isShowBoth(): bool
+    {
+        return $this->visibility === VisibilityInterface::SHOW_BOTH;
+    }
 }
