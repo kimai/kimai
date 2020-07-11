@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Role;
 use App\Entity\RolePermission;
+use App\Entity\User;
 use App\Event\PermissionSectionsEvent;
 use App\Event\PermissionsEvent;
 use App\Form\RoleType;
@@ -157,6 +158,7 @@ final class PermissionController extends AbstractController
             'sorted' => $event->getPermissions(),
             'manager' => $this->manager,
             'system_roles' => $this->roleService->getSystemRoles(),
+            'always_apply_superadmin' => RolePermissionManager::SUPER_ADMIN_PERMISSIONS,
         ]);
     }
 
@@ -219,10 +221,14 @@ final class PermissionController extends AbstractController
      * @Route(path="/roles/{id}/{name}/{value}", name="admin_user_permission_save", methods={"GET"})
      * @Security("is_granted('role_permissions')")
      */
-    public function savePermission(Role $role, string $name, string $value, RolePermissionRepository $rolePermissionRepository): Response
+    public function savePermission(Role $role, string $name, bool $value, RolePermissionRepository $rolePermissionRepository): Response
     {
         if (!$this->manager->isRegisteredPermission($name)) {
             throw $this->createNotFoundException('Unknown permission: ' . $name);
+        }
+
+        if (false === $value && $role->getName() === User::ROLE_SUPER_ADMIN && \in_array($name, RolePermissionManager::SUPER_ADMIN_PERMISSIONS)) {
+            throw $this->createAccessDeniedException(sprintf('Permission "%s" cannot be deactivated for role "%s"', $name, $role->getName()));
         }
 
         try {

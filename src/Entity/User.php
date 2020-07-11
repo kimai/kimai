@@ -386,7 +386,7 @@ class User extends BaseUser implements UserInterface
 
     public function canSeeAllData(): bool
     {
-        return ($this->isSuperAdmin() || $this->isAdmin()) || (true === $this->isAllowedToSeeAllData);
+        return $this->isSuperAdmin() || true === $this->isAllowedToSeeAllData;
     }
 
     /**
