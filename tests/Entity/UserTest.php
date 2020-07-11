@@ -177,12 +177,13 @@ class UserTest extends TestCase
         self::assertFalse($sut->isTeamlead());
 
         $sut->addRole(User::ROLE_ADMIN);
-        self::assertTrue($sut->canSeeAllData());
+        self::assertFalse($sut->canSeeAllData());
         self::assertTrue($sut->isAdmin());
         self::assertFalse($sut->isTeamlead());
 
         $sut->addRole(User::ROLE_TEAMLEAD);
         self::assertTrue($sut->isTeamlead());
+        self::assertFalse($sut->canSeeAllData());
 
         $sut->removeRole(User::ROLE_ADMIN);
         self::assertFalse($sut->canSeeAllData());
@@ -192,6 +193,11 @@ class UserTest extends TestCase
         self::assertTrue($sut->canSeeAllData());
         self::assertFalse($sut->isAdmin());
         self::assertTrue($sut->isSuperAdmin());
+
+        $sut->removeRole(User::ROLE_SUPER_ADMIN);
+        self::assertFalse($sut->canSeeAllData());
+        self::assertFalse($sut->isSuperAdmin());
+        self::assertTrue($sut->isTeamlead());
     }
 
     /**
@@ -234,5 +240,15 @@ class UserTest extends TestCase
         $sut->addPreference($preference);
 
         self::assertEquals('foobar', $sut->getPreferenceValue('test'));
+    }
+
+    public function testCanSeeAllData()
+    {
+        $sut = new User();
+        $sut->addRole(User::ROLE_USER);
+        self::assertFalse($sut->canSeeAllData());
+        self::assertTrue($sut->initCanSeeAllData(true));
+        self::assertTrue($sut->canSeeAllData());
+        self::assertFalse($sut->initCanSeeAllData(true));
     }
 }

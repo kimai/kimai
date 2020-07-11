@@ -14,6 +14,8 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 - Invoice renderer `CSV` was removed
 - Sessions are now stored in the database (all users have to re-login after upgrade)
+- New permissions: `lockdown_grace_timesheet`, `lockdown_override_timesheet`, `view_all_data`
+- Fixed team permissions on user queries: depending on your previous team & permission setup your users might see less data (SUPER_ADMINS see all data, but new: ADMINS only see all data if they own the `view_all_data` permission)
 
 ### Developer
 
