@@ -127,6 +127,13 @@ class User extends BaseUser implements UserInterface
     private $auth = self::AUTH_INTERNAL;
 
     /**
+     * This flag will be initialized in UserEnvironmentSubscriber.
+     *
+     * @var bool|null
+     */
+    private $isAllowedToSeeAllData = null;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -379,7 +386,27 @@ class User extends BaseUser implements UserInterface
 
     public function canSeeAllData(): bool
     {
-        return $this->isSuperAdmin() || $this->isAdmin();
+        return $this->isSuperAdmin() || true === $this->isAllowedToSeeAllData;
+    }
+
+    /**
+     * This method should not be called by plugins and returns true on success or false on a failure.
+     *
+     * @internal immutable property that cannot be set by plugins
+     * @param bool $canSeeAllData
+     * @return bool
+     * @throws \Exception
+     */
+    public function initCanSeeAllData(bool $canSeeAllData): bool
+    {
+        // prevent manipulation from plugins
+        if (null !== $this->isAllowedToSeeAllData) {
+            return false;
+        }
+
+        $this->isAllowedToSeeAllData = $canSeeAllData;
+
+        return true;
     }
 
     public function isTeamlead(): bool

@@ -163,11 +163,30 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             return;
         }
 
+        $or = $qb->expr()->orX();
+
+        // if no explicit team was requested and the user is part of some teams
+        // then find all members of teams where he is teamlead
+        if (null !== $user && $user->hasTeamAssignment()) {
+            $qb->leftJoin('u.teams', 't');
+            $or->add($qb->expr()->eq('t.teamlead', ':teamlead'));
+            $qb->setParameter('teamlead', $user);
+        }
+
+        // if teams where requested, then select all team members
+        if (\count($teams) > 0) {
+            $or->add($qb->expr()->isMemberOf(':teams', 'u.teams'));
+            $qb->setParameter('teams', $teams);
+        }
+
+        // and make sure, that the user himself is always returned
         if (null !== $user) {
-            $qb->leftJoin('u.teams', 'teams')
-                ->leftJoin('teams.users', 'users')
-                ->andWhere('teams.teamlead = :id')
-                ->setParameter('id', $user);
+            $or->add($qb->expr()->eq('u.id', ':user'));
+            $qb->setParameter('user', $user);
+        }
+
+        if ($or->count() > 0) {
+            $qb->andWhere($or);
         }
     }
 
@@ -203,10 +222,12 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->orderBy('u.' . $query->getOrderBy(), $query->getOrder())
         ;
 
-        if (UserQuery::SHOW_VISIBLE == $query->getVisibility()) {
+        $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
+
+        if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
             $qb->setParameter('enabled', true, \PDO::PARAM_BOOL);
-        } elseif (UserQuery::SHOW_HIDDEN == $query->getVisibility()) {
+        } elseif ($query->isShowHidden()) {
             $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
             $qb->setParameter('enabled', false, \PDO::PARAM_BOOL);
         }

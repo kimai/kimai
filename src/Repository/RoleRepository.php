@@ -13,16 +13,11 @@ use App\Entity\Role;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 
+/**
+ * @method Role[] findAll()
+ */
 class RoleRepository extends EntityRepository
 {
-    /**
-     * @return Role[]
-     */
-    public function findAll()
-    {
-        return parent::findAll();
-    }
-
     public function saveRole(Role $role)
     {
         $entityManager = $this->getEntityManager();
