@@ -120,17 +120,19 @@ class DateExtensionsTest extends TestCase
     /**
      * @dataProvider getDayNameTestData
      */
-    public function testDayName(string $locale, string $date, string $expectedName)
+    public function testDayName(string $locale, string $date, string $expectedName, bool $short)
     {
         $sut = $this->getSut($locale, []);
-        self::assertEquals($expectedName, $sut->dayName(new \DateTime($date)));
+        self::assertEquals($expectedName, $sut->dayName(new \DateTime($date), $short));
     }
 
     public function getDayNameTestData()
     {
         return [
-            ['de', '2020-07-09 12:00:00', 'Donnerstag'],
-            ['en', '2020-07-09 12:00:00', 'Thursday']
+            ['de', '2020-07-09 12:00:00', 'Donnerstag', false],
+            ['en', '2020-07-09 12:00:00', 'Thursday', false],
+            ['de', '2020-07-09 12:00:00', 'Do.', true],
+            ['en', '2020-07-09 12:00:00', 'Thu', true],
         ];
     }
 

@@ -115,7 +115,7 @@ kimai:
             SINGLE_ADMIN: ['hourly-rate_own_profile','edit_exported_timesheet','teams_own_profile','view_team_member','view_all_data']
             SINGLE_SUPER_ADMIN: ['hourly-rate_own_profile','hourly-rate_other_profile','roles_own_profile','system_information','system_configuration','plugins','edit_exported_timesheet','teams_own_profile','view_team_member','upload_invoice_template','view_all_data']
             # link above sets to one complete set for each user role
-            ROLE_USER: ['@TIMESHEET','@PROFILE','@SINGLE_USER']
+            ROLE_USER: ['@TIMESHEET','@PROFILE','@REPORTING','@SINGLE_USER']
             ROLE_TEAMLEAD: ['@ACTIVITIES_TEAMLEAD','@PROJECTS_TEAMLEAD','@CUSTOMERS_TEAMLEAD','@TIMESHEET_OTHER','@INVOICE','@TIMESHEET','@PROFILE','@EXPORT','@TAGS','@REPORTING','@SINGLE_TEAMLEAD']
             ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@LOCKDOWN','@REPORTING','@SINGLE_ADMIN']
             ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@LOCKDOWN','@REPORTING','@SINGLE_SUPER_ADMIN']

@@ -21,24 +21,19 @@ class ReportingControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecured('/reporting');
     }
 
-    public function testIsSecureForRole()
+    public function testMonthlyListIsSecure()
     {
-        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/reporting/');
+        $this->assertUrlIsSecured('/reporting/monthly_users_list');
     }
 
-    public function testMonthByUserIsSecureForRole()
-    {
-        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/reporting/month_by_user');
-    }
-
-    public function testMonthlyUsersListIsSecureForRole()
+    public function testMonthlyUsersListIsSecureForUserRole()
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/reporting/monthly_users_list');
     }
 
     public function testDefaultUsersMonthReport()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/reporting/');
         self::assertStringContainsString('<div class="box-body user-month-reporting-box', $client->getResponse()->getContent());
     }

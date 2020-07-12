@@ -22,11 +22,14 @@
         {% endblock %}
         {% block box_body_class %}user-month-reporting-box no-padding table-responsive{% endblock %}
         {% block box_body %}
-            <table class="table table-striped table-hover dataTable">
+            <table class="table table-bordered table-hover dataTable">
                 <tr>
                     <th></th>
                     {% for day in days %}
-                    <th class="text-nowrap">{{ day.day|date_format('d.m') }}</th>
+                    <th class="text-center text-nowrap{% if day.day is weekend %} weekend{% endif %}">
+                        {{ day.day|day_name(true) }}<br>
+                        {{ day.day|date_format('d.m') }}
+                    </th>
                     {% endfor %}
                     <th></th>
                 </tr>
@@ -36,9 +39,9 @@
                             <strong>{{ widgets.label_project(project.project) }}</strong>
                         </td>
                         {% for day in project.days %}
-                            <td class="text-nowrap">
-                                {% if day > 0 %}
-                                    {{ day|duration }}
+                            <td class="text-nowrap{% if day.date is weekend %} weekend{% endif %}">
+                                {% if day.duration > 0 %}
+                                    {{ day.duration|duration }}
                                 {% endif %}
                             </td>
                         {% endfor %}
@@ -50,9 +53,9 @@
                             {{ widgets.label_activity(activity.activity) }}
                         </td>
                         {% for day in activity.days %}
-                            <td class="text-nowrap">
-                                {% if day > 0 %}
-                                    {{ day|duration }}
+                            <td class="text-nowrap{% if day.date is weekend %} weekend{% endif %}">
+                                {% if day.duration > 0 %}
+                                    {{ day.duration|duration }}
                                 {% endif %}
                             </td>
                         {% endfor %}
@@ -64,7 +67,7 @@
                 <tr>
                     <th></th>
                     {% for day in days %}
-                        <th class="text-nowrap">
+                        <th class="text-nowrap{% if day.day is weekend %} weekend{% endif %}">
                             {% if day.totalDuration > 0 %}
                                 {{ day.totalDuration|duration }}
                                 {% set total = total + day.totalDuration %}

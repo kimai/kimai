@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Model\Statistic\Day;
 use App\Reporting\MonthByUser;
 use App\Reporting\MonthByUserForm;
 use App\Reporting\MonthlyUserList;
@@ -108,6 +109,7 @@ final class ReportingController extends AbstractController
 
     /**
      * @Route(path="/monthly_users_list", name="report_monthly_users", methods={"GET","POST"})
+     * @Security("is_granted('view_other_timesheet')")
      */
     public function montlyhUsersList(Request $request)
     {
@@ -154,6 +156,7 @@ final class ReportingController extends AbstractController
         $days = [];
 
         if (isset($rows[0])) {
+            /** @var Day $day */
             foreach ($rows[0]['days'] as $day) {
                 $days[$day->getDay()->format('Ymd')] = $day->getDay();
             }
@@ -174,11 +177,12 @@ final class ReportingController extends AbstractController
         $days = [];
 
         foreach ($data as $day) {
-            $days[$day->getDay()->format('Ymd')] = 0;
+            $days[$day->getDay()->format('Ymd')] = ['date' => $day->getDay(), 'duration' => 0];
         }
 
         $rows = [];
 
+        /** @var Day $day */
         foreach ($data as $day) {
             $dayId = $day->getDay()->format('Ymd');
             foreach ($day->getDetails() as $id => $detail) {
@@ -193,7 +197,7 @@ final class ReportingController extends AbstractController
                 }
 
                 $rows[$projectId]['duration'] += $detail['duration'];
-                $rows[$projectId]['days'][$dayId] += $detail['duration'];
+                $rows[$projectId]['days'][$dayId]['duration'] += $detail['duration'];
 
                 $activityId = $detail['activity']->getId();
                 if (!\array_key_exists($activityId, $rows[$projectId]['activities'])) {
@@ -205,7 +209,7 @@ final class ReportingController extends AbstractController
                 }
 
                 $rows[$projectId]['activities'][$activityId]['duration'] += $detail['duration'];
-                $rows[$projectId]['activities'][$activityId]['days'][$dayId] += $detail['duration'];
+                $rows[$projectId]['activities'][$activityId]['days'][$dayId]['duration'] += $detail['duration'];
             }
         }
 
