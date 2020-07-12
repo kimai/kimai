@@ -88,7 +88,7 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#comments_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn-box-tool');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn.btn-default');
         self::assertEquals(2, $node->count());
         $node = $client->getCrawler()->filter('div.box#customer_rates_box');
         self::assertEquals(1, $node->count());
@@ -189,7 +189,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/customer/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-title');
         self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
         self::assertEquals(1, $node->count());

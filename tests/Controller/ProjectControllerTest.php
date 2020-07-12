@@ -113,7 +113,7 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#comments_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn-box-tool');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn.btn-default');
         self::assertEquals(2, $node->count());
         $node = $client->getCrawler()->filter('div.box#project_rates_box');
         self::assertEquals(1, $node->count());
@@ -257,7 +257,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/project/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-title');
         self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
         self::assertEquals(1, $node->count());
@@ -267,7 +267,10 @@ class ProjectControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/activities/1');
-        self::assertEquals('', $client->getResponse()->getContent());
+        $node = $client->getCrawler()->filter('div.box#activity_list_box .box-tools ul.pagination li');
+        self::assertEquals(0, $node->count());
+        $node = $client->getCrawler()->filter('div.box#activity_list_box .box-tools a.modal-ajax-form.open-edit');
+        self::assertEquals(1, $node->count());
 
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
