@@ -5,10 +5,10 @@
         "build/runtime.664a9501.js",
         "build/0.f7fae2b9.js",
         "build/1.c24a9c6f.js",
-        "build/app.6c4a170e.js"
+        "build/app.5238bb11.js"
       ],
       "css": [
-        "build/app.f587e075.css"
+        "build/app.287d7740.css"
       ]
     },
     "invoice": {
@@ -53,8 +53,8 @@
     "build/runtime.664a9501.js": "sha384-xNNrNinl64G3nCUrIskgSjU0mUXXCB9lj6XCSInBTwxSKXk8uTMafnLHtdWdIGtd",
     "build/0.f7fae2b9.js": "sha384-DR5A41RIECdWBd6xODR0b1hvGqcEYUyn9vNPreqK9VOCQWTF6bgxB4RVmqlOKilT",
     "build/1.c24a9c6f.js": "sha384-JPoKdrVtBemSiVBoAnmSxLML7xXM9zYeuwOPYQv/kLzt/P4cmLY5r9gH8oaGRPFG",
-    "build/app.6c4a170e.js": "sha384-ufY9u+2gN4IWz+QdbXxvILeX77+QL466MoGB0dM8wfXx7rK8j6epLN6Kmfi9I618",
-    "build/app.f587e075.css": "sha384-0mHNUhjotTlRm9f3UTcbnM7KOB9m7f6Gl8Afio8/sr+bv5DLXD8dxPAXkQ0JJB02",
+    "build/app.5238bb11.js": "sha384-P8pmrHS0GMjRmJ8I+zuYTZJH9C4liZKJmgWYJQVqkqEp7MPQYCgJ1G9a8nd9WUxq",
+    "build/app.287d7740.css": "sha384-r7SOhIZSkqdb+XsvdoZwMfXsnxooiPRyIeUYd5j9cEFOFExI0JjJ5/z1AIaqVFcA",
     "build/invoice.50473330.js": "sha384-2BXic5Sgorf2tXai6zSAN4wLY2dbg06L03/xMKW6itMcszvtnRArKzfBh6DNcF3f",
     "build/invoice.13d8ef4e.css": "sha384-B6RN/wZJToSBCZk2JeLokIqWEhbh+Eb9arYbt9dM+YoC2Z6PnCeTwTqSGyexWWJh",
     "build/invoice-pdf.1db2b744.js": "sha384-bSdIeRCtEJiYYuc2reb0e5CpJ1Kbd1lQNEkElMTiq1SX0IINzdwJJYf6WnCcHrNC",

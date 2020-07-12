@@ -26,6 +26,7 @@ final class IconExtension extends AbstractExtension
         'back' => 'fas fa-long-arrow-alt-left',
         'calendar' => 'far fa-calendar-alt',
         'clock' => 'far fa-clock',
+        'comment' => 'far fa-comment',
         'configuration' => 'fas fa-cogs',
         'copy' => 'far fa-copy',
         'create' => 'far fa-plus-square',

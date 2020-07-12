@@ -27,7 +27,7 @@ class CustomerTest extends TestCase
         self::assertNull($sut->getName());
         self::assertNull($sut->getNumber());
         self::assertNull($sut->getComment());
-        self::assertTrue($sut->getVisible());
+        self::assertTrue($sut->isVisible());
 
         self::assertNull($sut->getCompany());
         self::assertNull($sut->getVatId());
@@ -61,7 +61,7 @@ class CustomerTest extends TestCase
         self::assertEquals('foo-bar', (string) $sut);
 
         self::assertInstanceOf(Customer::class, $sut->setVisible(false));
-        self::assertFalse($sut->getVisible());
+        self::assertFalse($sut->isVisible());
 
         self::assertInstanceOf(Customer::class, $sut->setComment('hello world'));
         self::assertEquals('hello world', $sut->getComment());

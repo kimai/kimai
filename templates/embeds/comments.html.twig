@@ -26,7 +26,7 @@
                             {% if route_delete is not null %}
                                 <a href="{{ path(route_delete, {'id': comment.id}) }}" class="confirmation-link btn btn-default btn-xs" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
                             {% endif %}
-                            {{ comment.createdAt|date_full }}
+                            <span class="hidden-xs">{{ comment.createdAt|date_full }}</span>
                         </span>
                     </span>
                     {{ comment.message|replace(replacer)|md2html }}
@@ -40,11 +40,11 @@
             <div class="input-group">
                 {{ widgets.user_avatar(app.user, false, 'img-responsive img-sm') }}
                 <div class="img-push">
-                    {{ form_widget(form.message) }}
+                    {{ form_widget(form.message, {'attr': {'rows': '1', 'placeholder': 'placeholder.type_message'|trans}}) }}
                 </div>
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">
-                        {{ 'action.save'|trans }} 
+                        <i class="{{ 'comment'|icon }}"></i>
                     </button>
                 </span>
             </div>

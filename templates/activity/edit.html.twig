@@ -1,5 +1,4 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
-{% import "macros/widgets.html.twig" as widgets %}
 {% import "activity/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
@@ -39,7 +38,12 @@
             {% if form.metaFields is defined and form.metaFields is not empty %}
                 {{ form_row(form.metaFields) }}
             {% endif %}
+            {% if form.create_more is defined and app.request.xmlHttpRequest %}
+                <div class="hidden">
+                {{ form_row(form.create_more) }}
+                </div>
+            {% endif %}
             {{ form_widget(form) }}
         {% endblock %}
-    {% endembed %}    
+    {% endembed %}
 {% endblock %}

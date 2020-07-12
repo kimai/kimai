@@ -142,14 +142,6 @@ class Activity implements EntityWithMetaFields
     }
 
     /**
-     * @deprecated since 1.4
-     */
-    public function getVisible(): bool
-    {
-        return $this->visible;
-    }
-
-    /**
      * @return Collection|MetaTableTypeInterface[]
      */
     public function getMetaFields(): Collection

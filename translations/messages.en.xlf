@@ -336,6 +336,10 @@
                 <source>label.create_more</source>
                 <target>Create further entries</target>
             </trans-unit>
+            <trans-unit id="placeholder.type_message">
+                <source>placeholder.type_message</source>
+                <target>Type your message...</target>
+            </trans-unit>
 
             <!--
               Buttons & Actions

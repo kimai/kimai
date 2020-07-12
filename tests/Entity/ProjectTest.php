@@ -32,7 +32,6 @@ class ProjectTest extends TestCase
         self::assertNull($sut->getStart());
         self::assertNull($sut->getEnd());
         self::assertNull($sut->getComment());
-        self::assertTrue($sut->getVisible());
         self::assertTrue($sut->isVisible());
         self::assertNull($sut->getColor());
         self::assertEquals(0.0, $sut->getBudget());
@@ -81,7 +80,7 @@ class ProjectTest extends TestCase
         self::assertEquals('#fffccc', $sut->getColor());
 
         self::assertInstanceOf(Project::class, $sut->setVisible(false));
-        self::assertFalse($sut->getVisible());
+        self::assertFalse($sut->isVisible());
 
         self::assertInstanceOf(Project::class, $sut->setBudget(12345.67));
         self::assertEquals(12345.67, $sut->getBudget());
