@@ -356,6 +356,9 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * In case this method is called with one timezone and the results are from another timezone,
+     * it might return rows outside the time-range.
+     *
      * @param DateTime $begin
      * @param DateTime $end
      * @param User|null $user
@@ -363,73 +366,101 @@ class TimesheetRepository extends EntityRepository
      */
     protected function getDailyData(DateTime $begin, DateTime $end, ?User $user = null)
     {
-        $query = new TimesheetQuery();
-        $query
-            ->setBegin($begin)
-            ->setEnd($end)
-            ->setUser($user)
-            ->setState(TimesheetQuery::STATE_STOPPED)
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $or = $qb->expr()->orX();
+        $or->add($qb->expr()->between(':begin', 't.begin', 't.end'));
+        $or->add($qb->expr()->between(':end', 't.begin', 't.end'));
+        $or->add($qb->expr()->between('t.begin', ':begin', ':end'));
+        $or->add($qb->expr()->between('t.end', ':begin', ':end'));
+
+        $qb->select('t, p, a, c')
+            ->from(Timesheet::class, 't')
+            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->andWhere($or)
+            ->orderBy('t.begin', 'DESC')
+            ->setParameter('begin', $begin)
+            ->setParameter('end', $end)
+            ->leftJoin('t.activity', 'a')
+            ->leftJoin('t.project', 'p')
+            ->leftJoin('p.customer', 'c')
         ;
-        $timesheets = $this->getTimesheetsForQuery($query);
+
+        if (null !== $user) {
+            $qb
+                ->andWhere($qb->expr()->eq('t.user', ':user'))
+                ->setParameter('user', $user)
+            ;
+        }
+
+        $timesheets = $qb->getQuery()->getResult();
 
         $results = [];
         /** @var Timesheet $result */
         foreach ($timesheets as $result) {
-            $timezone = new \DateTimeZone($result->getTimezone());
             /** @var \DateTime $beginTmp */
             $beginTmp = $result->getBegin();
-            $beginTmp->setTimezone($timezone);
             /** @var DateTime $endTmp */
             $endTmp = $result->getEnd();
-            $endTmp->setTimezone($timezone);
             $dateKeyEnd = $endTmp->format('Ymd');
 
             do {
                 $dateKey = $beginTmp->format('Ymd');
 
-                if (!isset($results[$dateKey])) {
-                    $results[$dateKey] = [
-                        'rate' => 0,
-                        'duration' => 0,
-                        'month' => $beginTmp->format('n'),
-                        'year' => $beginTmp->format('Y'),
-                        'day' => $beginTmp->format('j'),
-                        'details' => []
-                    ];
-                }
-
                 if ($dateKey !== $dateKeyEnd) {
                     $newDateBegin = clone $beginTmp;
                     $newDateBegin->add(new \DateInterval('P1D'));
+                    // overlapping records should always start at midnight
                     $newDateBegin->setTime(0, 0, 0);
                 } else {
                     $newDateBegin = clone $endTmp;
                 }
 
-                $duration = $newDateBegin->getTimestamp() - $beginTmp->getTimestamp();
-                $durationPercent = 0;
-                if ($result->getDuration() !== null && $result->getDuration() > 0) {
-                    $durationPercent = $duration / $result->getDuration();
-                }
-                $rate = $result->getRate() * $durationPercent;
+                // make sure to exclude entries that are outside the requested timerange:
+                // these entries can exist if you have long running entries that started before $begin
+                // for statistical reasons we have to include everything between $begin and $end while
+                // excluding everything that is outside of that range
+                // --------------------------------------------------------------------------------------
+                // Be aware that this will NOT filter every record, in case there is a timezone mismatch between the
+                // begin/end dates and the ones from the database (eg. recorded in UTC) - which might actually be
+                // before $begin (which happens thanks to the timezone conversion when querying the database)
+                if ($newDateBegin > $begin && $beginTmp < $end) {
+                    if (!isset($results[$dateKey])) {
+                        $results[$dateKey] = [
+                            'rate' => 0,
+                            'duration' => 0,
+                            'month' => $beginTmp->format('n'),
+                            'year' => $beginTmp->format('Y'),
+                            'day' => $beginTmp->format('j'),
+                            'details' => []
+                        ];
+                    }
+                    $duration = $newDateBegin->getTimestamp() - $beginTmp->getTimestamp();
+                    $durationPercent = 0;
+                    if ($result->getDuration() !== null && $result->getDuration() > 0) {
+                        $durationPercent = $duration / $result->getDuration();
+                    }
+                    $rate = $result->getRate() * $durationPercent;
 
-                $results[$dateKey]['rate'] += $rate;
-                $results[$dateKey]['duration'] += $duration;
-                $detailsId = $result->getProject()->getCustomer()->getId() . '_' . $result->getProject()->getId();
-                if (!isset($results[$dateKey]['details'][$detailsId])) {
-                    $results[$dateKey]['details'][$detailsId] = [
-                        'project' => $result->getProject(),
-                        'activity' => $result->getActivity(),
-                        'duration' => 0,
-                        'rate' => 0,
-                    ];
+                    $results[$dateKey]['rate'] += $rate;
+                    $results[$dateKey]['duration'] += $duration;
+                    $detailsId = $result->getProject()->getCustomer()->getId() . '_' . $result->getProject()->getId();
+                    if (!isset($results[$dateKey]['details'][$detailsId])) {
+                        $results[$dateKey]['details'][$detailsId] = [
+                            'project' => $result->getProject(),
+                            'activity' => $result->getActivity(),
+                            'duration' => 0,
+                            'rate' => 0,
+                        ];
 
-                    $results[$dateKey]['details'][$detailsId]['duration'] += $duration;
-                    $results[$dateKey]['details'][$detailsId]['rate'] += $rate;
+                        $results[$dateKey]['details'][$detailsId]['duration'] += $duration;
+                        $results[$dateKey]['details'][$detailsId]['rate'] += $rate;
+                    }
                 }
 
                 $beginTmp = $newDateBegin;
 
+                // yes, we only want to compare the day, not the time
                 if ((int) $end->format('Ymd') < (int) $newDateBegin->format('Ymd')) {
                     break 1;
                 }
@@ -447,13 +478,13 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
+     * @param User|null $user
      * @param DateTime $begin
      * @param DateTime $end
      * @return Day[]
      * @throws \Exception
      */
-    public function getDailyStats(User $user, DateTime $begin, DateTime $end): array
+    public function getDailyStats(?User $user, DateTime $begin, DateTime $end): array
     {
         /** @var Day[] $days */
         $days = [];
@@ -474,7 +505,13 @@ class TimesheetRepository extends EntityRepository
             $dateTime->setDate($statRow['year'], $statRow['month'], $statRow['day']);
             $dateTime->setTime(0, 0, 0);
             $day = new Day($dateTime, (int) $statRow['duration'], (float) $statRow['rate']);
-            $days[$dateTime->format('Ymd')] = $day;
+            $day->setDetails($statRow['details']);
+            $dateKey = $dateTime->format('Ymd');
+            // make sure entries from other timezones are filtered
+            if (!\array_key_exists($dateKey, $days)) {
+                continue;
+            }
+            $days[$dateKey] = $day;
         }
 
         ksort($days);
@@ -677,7 +714,7 @@ class TimesheetRepository extends EntityRepository
         if (empty($user) && null !== $query->getCurrentUser()) {
             $currentUser = $query->getCurrentUser();
 
-            if (!$currentUser->isSuperAdmin() && !$currentUser->isAdmin()) {
+            if (!$currentUser->canSeeAllData()) {
                 // make sure that the user himself is in the list of users, if he is part of a team
                 // if teams are used and the user is not a teamlead, the list of users would be empty and then leading to NOT limit the select by user IDs
                 $user[] = $currentUser;
@@ -955,7 +992,7 @@ class TimesheetRepository extends EntityRepository
             $qb->setParameter('end', $timesheet->getEnd());
         }
 
-        $qb->select('t')
+        $qb->select($qb->expr()->count('t.id'))
             ->from(Timesheet::class, 't')
             ->andWhere($qb->expr()->eq('t.user', ':user'))
             ->andWhere($qb->expr()->isNotNull('t.end'))
@@ -964,8 +1001,12 @@ class TimesheetRepository extends EntityRepository
             ->setParameter('user', $timesheet->getUser())
         ;
 
-        $result = $qb->getQuery()->getResult();
+        try {
+            $result = (int) $qb->getQuery()->getSingleScalarResult();
+        } catch (\Exception $ex) {
+            return true;
+        }
 
-        return !empty($result);
+        return $result > 0;
     }
 }

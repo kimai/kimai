@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use Twig\TwigTest;
 
 /**
  * Date specific twig extensions
@@ -83,6 +84,20 @@ class DateExtensions extends AbstractExtension
             new TwigFilter('date_format', [$this, 'dateFormat']),
             new TwigFilter('time', [$this, 'time']),
             new TwigFilter('hour24', [$this, 'hour24']),
+        ];
+    }
+
+    public function getTests()
+    {
+        return [
+            new TwigTest('weekend', function ($dateTime) {
+                if (!$dateTime instanceof \DateTime) {
+                    return false;
+                }
+                $day = (int) $dateTime->format('w');
+
+                return ($day === 0 || $day === 6);
+            }),
         ];
     }
 
@@ -217,6 +232,7 @@ class DateExtensions extends AbstractExtension
 
     public function monthName(\DateTime $dateTime): string
     {
+        // @see http://userguide.icu-project.org/formatparse/datetime
         $formatter = new \IntlDateFormatter(
             $this->locale,
             \IntlDateFormatter::FULL,
@@ -229,15 +245,16 @@ class DateExtensions extends AbstractExtension
         return $formatter->format($dateTime);
     }
 
-    public function dayName(\DateTime $dateTime): string
+    public function dayName(\DateTime $dateTime, bool $short = false): string
     {
+        // @see http://userguide.icu-project.org/formatparse/datetime
         $formatter = new \IntlDateFormatter(
             $this->locale,
             \IntlDateFormatter::FULL,
             \IntlDateFormatter::FULL,
             $dateTime->getTimezone()->getName(),
             \IntlDateFormatter::GREGORIAN,
-            'EEEE'
+            $short ? 'EE' : 'EEEE'
         );
 
         return $formatter->format($dateTime);
