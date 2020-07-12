@@ -17,12 +17,15 @@
         {% endblock %}
         {% block box_tools %}
             {% if can_edit %}
-                <a class="modal-ajax-form open-edit btn btn-box-tool" data-href="{{ path('admin_customer_edit', {'id': customer.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
+                <a class="modal-ajax-form open-edit btn btn-default btn-sm" data-href="{{ path('admin_customer_edit', {'id': customer.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
             {% endif %}
         {% endblock %}
+        {% block box_body_class %}no-padding{% endblock %}
         {% block box_body %}
             {% if customer.comment is not empty %}
-                {{ customer.comment|comment2html(true) }}
+                <div class="comment">
+                    {{ customer.comment|comment2html(true) }}
+                </div>
             {% endif %}
             <table class="table table-hover">
                 {% if not customer.visible %}

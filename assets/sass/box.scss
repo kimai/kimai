@@ -1,0 +1,14 @@
+.box {
+    /* used on detail pages for: customer, project and activity */
+    .box-body.no-padding div.comment {
+        padding: 10px;
+    }
+
+    .box-tools {
+        /* a button that is directly connected with a pagination element inside the box tools (eg. project list on customer detail page) */
+        .btn-pager {
+            float: left;
+            margin-right: 5px;
+        }
+    }
+}

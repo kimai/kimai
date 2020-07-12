@@ -45,7 +45,7 @@
         {% if is_granted('view_other_timesheet') %}
             {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customers[]': project.customer.id, 'projects[]': project.id})}) %}
         {% endif %}
-        {% if is_granted('create_activity') and project.visible and project.customer.visible %}
+        {% if project.visible and project.customer.visible and is_granted('create_activity') %}
             {% set actions = actions|merge({'create-activity': path('admin_activity_create_with_project', {'project': project.id})}) %}
         {% endif %}
         {% if (view == 'index' or view == 'custom') and is_granted('delete', project) %}
