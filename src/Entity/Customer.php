@@ -240,14 +240,6 @@ class Customer implements EntityWithMetaFields
         return $this->visible;
     }
 
-    /**
-     * @deprecated since 1.4
-     */
-    public function getVisible(): bool
-    {
-        return $this->visible;
-    }
-
     public function setCompany(?string $company): Customer
     {
         $this->company = $company;

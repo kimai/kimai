@@ -192,14 +192,6 @@ class Project implements EntityWithMetaFields
         return $this->visible;
     }
 
-    /**
-     * @deprecated since 1.4, use isVisible() instead
-     */
-    public function getVisible(): bool
-    {
-        return $this->visible;
-    }
-
     public function getOrderNumber(): ?string
     {
         return $this->orderNumber;

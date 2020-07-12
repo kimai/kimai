@@ -27,7 +27,7 @@ class ActivityTest extends TestCase
         $this->assertNull($sut->getProject());
         $this->assertNull($sut->getName());
         $this->assertNull($sut->getComment());
-        $this->assertTrue($sut->getVisible());
+        $this->assertTrue($sut->isVisible());
         $this->assertTrue($sut->isGlobal());
         $this->assertNull($sut->getColor());
         $this->assertEquals(0.0, $sut->getBudget());
@@ -45,7 +45,7 @@ class ActivityTest extends TestCase
         $this->assertEquals('foo-bar', (string) $sut);
 
         $this->assertInstanceOf(Activity::class, $sut->setVisible(false));
-        $this->assertFalse($sut->getVisible());
+        $this->assertFalse($sut->isVisible());
 
         $this->assertInstanceOf(Activity::class, $sut->setComment('hello world'));
         $this->assertEquals('hello world', $sut->getComment());
