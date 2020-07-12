@@ -25,7 +25,7 @@ class MonthByUserForm extends AbstractType
         $builder->add('date', MonthPickerType::class);
 
         if ($options['include_user']) {
-            $builder->add('user', UserType::class, ['search' => false, 'selectpicker' => false]);
+            $builder->add('user', UserType::class, ['width' => false]);
         }
     }
 
