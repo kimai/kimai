@@ -15,6 +15,7 @@ use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -31,18 +32,29 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\TimesheetRepository")
  * @ORM\HasLifecycleCallbacks()
  * @App\Validator\Constraints\Timesheet
- *
- * columns={"user"}                         => IDX_4F60C6B18D93D649                 => count results for user timesheets
- * columns={"activity_id"}                  => IDX_4F60C6B181C06096                 => ???
- * columns={"user","start_time"}            => IDX_4F60C6B18D93D649502DF587         => recent activities, user timesheet with date filzer
- * columns={"start_time"}                   => IDX_4F60C6B1502DF587                 => team timesheets with timerange filter only
- * columns={"start_time","end_time"}        => IDX_4F60C6B1502DF58741561401         => ???
- * columns={"start_time","end_time","user"} => IDX_4F60C6B1502DF587415614018D93D649 => ???
  */
 class Timesheet implements EntityWithMetaFields, ExportItemInterface
 {
-    public const TYPE_TIMESHEET = 'timesheet';
-    public const CATEGORY_WORK = 'work';
+    /**
+     * Category: Normal work-time (default category)
+     */
+    public const WORK = 'work';
+    /**
+     * Category: Holiday
+     */
+    public const HOLIDAY = 'holiday';
+    /**
+     * Category: Sickness
+     */
+    public const SICKNESS = 'sickness';
+    /**
+     * Category: Parental leave
+     */
+    public const PARENTAL = 'parental';
+    /**
+     * Category: Overtime reduction
+     */
+    public const OVERTIME = 'overtime';
 
     /**
      * @var int|null
@@ -162,6 +174,30 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     private $exported = false;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
+     * @Assert\NotNull()
+     */
+    private $billable = true;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category", type="string", length=10, nullable=false, options={"default": "work"})
+     * @Assert\NotNull()
+     */
+    private $category = self::WORK;
+
+    /**
+     * @var DateTime|null
+     *
+     * @Gedmo\Timestampable
+     * @ORM\Column(name="modified_at", type="datetime", nullable=true)
+     */
+    private $modifiedAt;
+
+    /**
      * @var Tag[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="timesheets", cascade={"persist"})
@@ -185,9 +221,6 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     private $meta;
 
-    /**
-     * Default constructor, initializes collections
-     */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -472,16 +505,44 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         return $this;
     }
 
+    /**
+     * This method returns ALWAYS: "timesheet"
+     *
+     * @return string
+     */
     public function getType(): string
     {
-        // this will be improved in a future version
-        return self::TYPE_TIMESHEET;
+        return 'timesheet';
     }
 
     public function getCategory(): string
     {
-        // this will be improved in a future version
-        return self::CATEGORY_WORK;
+        return $this->category;
+    }
+
+    public function setCategory(string $category): Timesheet
+    {
+        $allowed = [self::WORK, self::HOLIDAY, self::SICKNESS, self::PARENTAL, self::OVERTIME];
+
+        if (!\in_array($category, $allowed)) {
+            throw new \InvalidArgumentException(sprintf('Invalid timesheet category "%s" given, expected one of: %s', $category, implode(', ', $allowed)));
+        }
+
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function isBillable(): bool
+    {
+        return $this->billable;
+    }
+
+    public function setBillable(bool $billable): Timesheet
+    {
+        $this->billable = $billable;
+
+        return $this;
     }
 
     public function getFixedRate(): ?float
@@ -506,6 +567,11 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         $this->hourlyRate = $hourlyRate;
 
         return $this;
+    }
+
+    public function getModifiedAt(): ?DateTime
+    {
+        return $this->modifiedAt;
     }
 
     /**

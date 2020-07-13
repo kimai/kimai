@@ -16,7 +16,6 @@ use App\Utils\Duration;
 use App\Utils\LocaleFormats;
 use App\Utils\LocaleHelper;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Intl\Languages;
 use Symfony\Component\Intl\Locales;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -163,6 +162,8 @@ final class LocaleExtensions extends AbstractExtension
     }
 
     /**
+     * Returns the currency symbol.
+     *
      * @param string $currency
      * @return string
      */

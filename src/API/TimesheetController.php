@@ -145,6 +145,7 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="active", requirements="0|1", strict=true, nullable=true, description="Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)")
      * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources. Allowed values: true (default: false)")
      * @Rest\QueryParam(name="term", description="Free search term")
+     * @Rest\QueryParam(name="modified_after", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only records changed after this date will be included (format: HTML5). Available since Kimai 1.10 and works only for records that were created/updated since then.")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
@@ -253,6 +254,10 @@ class TimesheetController extends BaseApiController
 
         if (!empty($term = $paramFetcher->get('term'))) {
             $query->setSearchTerm(new SearchTerm($term));
+        }
+
+        if (!empty($modifiedAfter = $paramFetcher->get('modified_after'))) {
+            $query->setModifiedAfter($this->dateTime->createDateTime($modifiedAfter));
         }
 
         /** @var Pagerfanta $data */

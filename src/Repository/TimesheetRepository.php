@@ -753,9 +753,9 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('begin', $query->getBegin());
         }
 
-        if (TimesheetQuery::STATE_RUNNING == $query->getState()) {
+        if ($query->isRunning()) {
             $qb->andWhere($qb->expr()->isNull('t.end'));
-        } elseif (TimesheetQuery::STATE_STOPPED == $query->getState()) {
+        } elseif ($query->isStopped()) {
             $qb->andWhere($qb->expr()->isNotNull('t.end'));
         }
 
@@ -764,10 +764,21 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('end', $query->getEnd());
         }
 
-        if ($query->getExported() === TimesheetQuery::STATE_EXPORTED) {
+        if ($query->isExported()) {
             $qb->andWhere('t.exported = :exported')->setParameter('exported', true, \PDO::PARAM_BOOL);
-        } elseif ($query->getExported() === TimesheetQuery::STATE_NOT_EXPORTED) {
+        } elseif ($query->isNotExported()) {
             $qb->andWhere('t.exported = :exported')->setParameter('exported', false, \PDO::PARAM_BOOL);
+        }
+
+        if ($query->isBillable()) {
+            $qb->andWhere('t.billable = :billable')->setParameter('billable', true, \PDO::PARAM_BOOL);
+        } elseif ($query->isNotBillable()) {
+            $qb->andWhere('t.billable = :billable')->setParameter('billable', false, \PDO::PARAM_BOOL);
+        }
+
+        if (null !== $query->getModifiedAfter()) {
+            $qb->andWhere($qb->expr()->gte($this->getDatetimeFieldSql('t.modifiedAt'), ':modified_at'))
+                ->setParameter('modified_at', $query->getModifiedAfter());
         }
 
         if ($query->hasActivities()) {

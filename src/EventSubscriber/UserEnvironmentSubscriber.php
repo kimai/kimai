@@ -52,9 +52,11 @@ class UserEnvironmentSubscriber implements EventSubscriberInterface
 
         $user = $this->storage->getToken()->getUser();
 
+        // the locale depends on the request, not on the user configuration
+        \Locale::setDefault($event->getRequest()->getLocale());
+
         if ($user instanceof User) {
             date_default_timezone_set($user->getTimezone());
-            \Locale::setDefault($user->getLocale());
             $user->initCanSeeAllData($this->auth->isGranted('view_all_data'));
         }
     }

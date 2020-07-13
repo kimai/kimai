@@ -102,6 +102,7 @@ class Invoice
      * @var string
      *
      * @ORM\Column(name="currency", type="string", length=3, nullable=false)
+     * @Assert\NotNull()
      * @Assert\Length(max=3)
      */
     private $currency;
@@ -110,6 +111,7 @@ class Invoice
      * @var int
      *
      * @ORM\Column(name="due_days", type="integer", length=3, nullable=false)
+     * @Assert\NotNull()
      * @Assert\Range(min = 0, max = 999)
      */
     private $dueDays = 30;
@@ -118,6 +120,7 @@ class Invoice
      * @var float
      *
      * @ORM\Column(name="vat", type="float", nullable=false)
+     * @Assert\NotNull()
      * @Assert\Range(min = 0.0, max = 99.99)
      */
     private $vat = 0.00;
@@ -126,13 +129,16 @@ class Invoice
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=20, nullable=false)
+     * @Assert\NotNull()
      */
     private $status = self::STATUS_NEW;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="invoice_filename", type="string", length=100, nullable=false)
+     * @ORM\Column(name="invoice_filename", type="string", length=150, nullable=false)
+     * @Assert\NotNull()
+     * @Assert\Length(min=1, max=150)
      */
     private $invoiceFilename;
 
