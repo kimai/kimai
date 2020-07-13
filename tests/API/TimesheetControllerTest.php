@@ -141,6 +141,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetCollectionWithQuery()
     {
+        $modifiedAfter = new \DateTime('-1 hour');
         $begin = new \DateTime('first day of this month');
         $begin->setTime(0, 0, 0);
         $end = new \DateTime('last day of this month');
@@ -155,6 +156,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'order' => 'DESC',
             'orderBy' => 'rate',
             'active' => 0,
+            'modified_after' => $modifiedAfter->format(self::DATE_FORMAT_HTML5),
             'begin' => $begin->format(self::DATE_FORMAT_HTML5),
             'end' => $end->format(self::DATE_FORMAT_HTML5),
             'exported' => 0,
