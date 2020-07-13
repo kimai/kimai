@@ -101,6 +101,14 @@ services:
         tags:
             - { name: doctrine.event_subscriber, priority: 50 }
 
+    # updates timestampable columns (higher priority, so the TimesheetSubscriber will be executed later)
+    Gedmo\Timestampable\TimestampableListener:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, priority: 60 }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
     # make sure, that sqlite supports foreign keys and cascade deletes
     App\Doctrine\SqliteSessionInitSubscriber:
         class: App\Doctrine\SqliteSessionInitSubscriber
