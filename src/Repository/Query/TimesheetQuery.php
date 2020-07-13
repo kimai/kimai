@@ -48,11 +48,11 @@ class TimesheetQuery extends ActivityQuery
     /**
      * @var int
      */
-    protected $billable = self::STATE_ALL;
+    private $billable = self::STATE_ALL;
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
-    protected $modifiedAfter;
+    private $modifiedAfter;
     /**
      * @var DateRange
      */
