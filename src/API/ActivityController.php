@@ -41,6 +41,10 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class ActivityController extends BaseApiController
 {
+    public const GROUPS_ENTITY = ['Default', 'Entity', 'Activity'];
+    public const GROUPS_FORM = ['Default', 'Entity', 'Activity'];
+    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
+
     /**
      * @var ActivityRepository
      */
@@ -132,7 +136,7 @@ class ActivityController extends BaseApiController
 
         $data = $this->repository->getActivitiesForQuery($query);
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Collection', 'Activity']);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
@@ -165,7 +169,7 @@ class ActivityController extends BaseApiController
         }
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -212,13 +216,13 @@ class ActivityController extends BaseApiController
             $this->repository->saveActivity($activity);
 
             $view = new View($activity, 200);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }
@@ -275,7 +279,7 @@ class ActivityController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+            $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
         }
@@ -283,7 +287,7 @@ class ActivityController extends BaseApiController
         $this->repository->saveActivity($activity);
 
         $view = new View($activity, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -336,7 +340,7 @@ class ActivityController extends BaseApiController
         $this->repository->saveActivity($activity);
 
         $view = new View($activity, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
