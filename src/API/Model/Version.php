@@ -12,37 +12,62 @@ declare(strict_types=1);
 namespace App\API\Model;
 
 use App\Constants;
+use JMS\Serializer\Annotation as Serializer;
 
+/**
+ * @Serializer\ExclusionPolicy("all")
+ * @Serializer\AccessorOrder("custom", custom = {"version", "candidate", "semver", "name", "copyright"})
+ */
 class Version
 {
     /**
      * Kimai Version, eg. "1.9"
      *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="string")
      */
     protected $version = Constants::VERSION;
     /**
      * Candidate: either "prod" or "dev"
      *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="string")
      */
     protected $candidate = Constants::STATUS;
     /**
      * Full version including status, eg: "1.9-prod"
      *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="string")
      */
     protected $semver = Constants::VERSION . '-' . Constants::STATUS;
     /**
      * The version name
      *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="string")
      */
     protected $name = Constants::NAME;
     /**
      * A full copyright notice
      *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="string")
      */
     protected $copyright = Constants::SOFTWARE . ' - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.';
 }
