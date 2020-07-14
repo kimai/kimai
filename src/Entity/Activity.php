@@ -12,26 +12,47 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="kimai2_activities",
- *     indexes={
+ *      indexes={
  *          @ORM\Index(columns={"visible","project_id"}),
  *          @ORM\Index(columns={"visible","project_id","name"}),
  *          @ORM\Index(columns={"visible","name"})
- *     }
+ *      }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
  *
- * columns={"visible","name"}               => IDX_8811FE1C7AB0E8595E237E06         => activity administration without filter
- * columns={"visible","project_id"}         => IDX_8811FE1C7AB0E859166D1F9C         => activity administration with customer or project filter
- * columns={"visible","project_id","name"}  => IDX_8811FE1C7AB0E859166D1F9C5E237E06 => activity drop-down for global activities in toolbar or globalsOnly filter in activity administration
+ * @Serializer\ExclusionPolicy("all")
+ * @Serializer\AccessorOrder("custom", custom = {"id", "name", "comment", "visible", "project", "color", "budget", "timeBudget", "metaFields", "parentTitle"})
+ * @Serializer\VirtualProperty(
+ *      "parentTitle",
+ *      exp="object.getProject() === null ? null : object.getProject().getName()",
+ *      options={
+ *          @Serializer\SerializedName("parentTitle"),
+ *          @Serializer\Type(name="string"),
+ *          @Serializer\Groups({"Default"})
+ *      }
+ * )
+ * @Serializer\VirtualProperty(
+ *      "project",
+ *      exp="object.getProject() === null ? null : object.getProject().getId()",
+ *      options={
+ *          @Serializer\SerializedName("project"),
+ *          @Serializer\Type(name="integer"),
+ *          @Serializer\Groups({"Default"})
+ *      }
+ * )
  */
 class Activity implements EntityWithMetaFields
 {
     /**
      * @var int|null
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -48,6 +69,9 @@ class Activity implements EntityWithMetaFields
     /**
      * @var string
      *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Length(min=2, max=150, allowEmptyString=false)
@@ -56,23 +80,39 @@ class Activity implements EntityWithMetaFields
     /**
      * @var string
      *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Entity"})
+     *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
     /**
      * @var bool
      *
-     * @ORM\Column(name="visible", type="boolean", nullable=false)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
+     * @ORM\Column(name="visible", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
     private $visible = true;
 
-    // keep the trait include exactly here, for placing the column at the correct position
+    // keep the traits here, for placing the column at the "correct" position
     use ColorTrait;
     use BudgetTrait;
 
     /**
+     * Custom fields
+     *
+     * All visible fields registered with this entity
+     *
      * @var ActivityMeta[]|Collection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="array<App\Entity\ActivityMeta>")
+     * @Serializer\SerializedName("metaFields")
+     * @Serializer\Accessor(getter="getVisibleMetaFields")
      *
      * @ORM\OneToMany(targetEntity="App\Entity\ActivityMeta", mappedBy="activity", cascade={"persist"})
      */
