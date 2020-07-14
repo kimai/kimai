@@ -90,49 +90,49 @@ final class I18nConfig
      */
     private $is24hours = true;
 
-    public function setFormDateTime(string $formDateTime): I18NConfig
+    public function setFormDateTime(string $formDateTime): I18nConfig
     {
         $this->formDateTime = $formDateTime;
 
         return $this;
     }
 
-    public function setFormDate(string $formDate): I18NConfig
+    public function setFormDate(string $formDate): I18nConfig
     {
         $this->formDate = $formDate;
 
         return $this;
     }
 
-    public function setDateTime(string $dateTime): I18NConfig
+    public function setDateTime(string $dateTime): I18nConfig
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    public function setDate(string $date): I18NConfig
+    public function setDate(string $date): I18nConfig
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function setDuration(string $duration): I18NConfig
+    public function setDuration(string $duration): I18nConfig
     {
         $this->duration = $duration;
 
         return $this;
     }
 
-    public function setTime(string $time): I18NConfig
+    public function setTime(string $time): I18nConfig
     {
         $this->time = $time;
 
         return $this;
     }
 
-    public function setIs24hours(bool $is24hours): I18NConfig
+    public function setIs24hours(bool $is24hours): I18nConfig
     {
         $this->is24hours = $is24hours;
 
