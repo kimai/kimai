@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,6 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\UniqueConstraint(columns={"timesheet_id", "name"})
  *      }
  * )
+ * @Serializer\ExclusionPolicy("all")
+ * @Serializer\AccessorOrder("custom", custom = {"name", "value"})
  */
 class TimesheetMeta implements MetaTableTypeInterface
 {
