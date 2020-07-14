@@ -11,177 +11,128 @@ declare(strict_types=1);
 
 namespace App\API\Model;
 
-final class I18n
+use JMS\Serializer\Annotation as Serializer;
+
+/**
+ * @Serializer\ExclusionPolicy("all")
+ * @Serializer\AccessorOrder("custom", custom = {"formDateTime", "formDate", "dateTime", "date", "time", "duration", "is24hours"})
+ */
+final class I18nConfig
 {
     /**
      * Format used for 'begin' and 'end'
      *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="string")
      */
     private $formDateTime = '';
     /**
      * Format used for toolbar queries
      *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="string")
      */
     private $formDate = '';
     /**
      * Format used to display date-time values (see PHP function date_format)
      *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="string")
      */
     private $dateTime = '';
     /**
      * Format used to display date values (see PHP function date_format)
      *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="string")
      */
     private $date = '';
     /**
      * Format used to display times (see PHP function date_format)
      *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="string")
      */
     private $time = '';
     /**
      * Format used to display durations (replace: %h with hours, %m with minutes, %s with seconds)
      *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="string")
      */
     private $duration = '';
     /**
      * Whether a twenty-four hour format is used (true) or 12-hours AM/PM format (false)
+     *
      * @var bool
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="boolean")
      */
     private $is24hours = true;
 
-    /**
-     * @return string
-     */
-    public function getFormDateTime(): string
-    {
-        return $this->formDateTime;
-    }
-
-    /**
-     * @param string $formDateTime
-     * @return I18n
-     */
-    public function setFormDateTime(string $formDateTime)
+    public function setFormDateTime(string $formDateTime): I18NConfig
     {
         $this->formDateTime = $formDateTime;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormDate(): string
-    {
-        return $this->formDate;
-    }
-
-    /**
-     * @param string $formDate
-     * @return I18n
-     */
-    public function setFormDate(string $formDate)
+    public function setFormDate(string $formDate): I18NConfig
     {
         $this->formDate = $formDate;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDateTime(): string
-    {
-        return $this->dateTime;
-    }
-
-    /**
-     * @param string $dateTime
-     * @return I18n
-     */
-    public function setDateTime(string $dateTime)
+    public function setDateTime(string $dateTime): I18NConfig
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDate(): string
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param string $date
-     * @return I18n
-     */
-    public function setDate(string $date)
+    public function setDate(string $date): I18NConfig
     {
         $this->date = $date;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDuration(): string
-    {
-        return $this->duration;
-    }
-
-    /**
-     * @param string $duration
-     * @return I18n
-     */
-    public function setDuration(string $duration)
+    public function setDuration(string $duration): I18NConfig
     {
         $this->duration = $duration;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTime(): string
-    {
-        return $this->time;
-    }
-
-    /**
-     * @param string $time
-     * @return I18n
-     */
-    public function setTime(string $time)
+    public function setTime(string $time): I18NConfig
     {
         $this->time = $time;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isIs24hours(): bool
-    {
-        return $this->is24hours;
-    }
-
-    /**
-     * @param bool $is24hours
-     * @return I18n
-     */
-    public function setIs24hours(bool $is24hours)
+    public function setIs24hours(bool $is24hours): I18NConfig
     {
         $this->is24hours = $is24hours;
 
