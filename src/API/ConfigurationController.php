@@ -95,7 +95,7 @@ final class ConfigurationController extends BaseApiController
      * @SWG\Response(
      *      response=200,
      *      description="Returns the instance specific timesheet configuration",
-     *      @SWG\Schema(ref="#/definitions/TimesheetConfig")
+     *      @SWG\Schema(ref=@Model(type=TimesheetConfig::class))
      * )
      *
      * @Rest\Get(path="/config/timesheet")

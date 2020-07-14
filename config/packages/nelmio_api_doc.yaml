@@ -30,7 +30,6 @@ nelmio_api_doc:
             - { alias: TeamEditForm,              type: App\Form\API\TeamApiEditForm,             groups: [Default, Entity, Team, Team_Entity] }
             - { alias: TeamEntity,                type: App\Entity\Team,                          groups: [Default, Entity, Team, Team_Entity] }
             - { alias: TeamCollection,            type: App\Entity\Team,                          groups: [Default, Collection, Team] }
-            - { alias: TimesheetConfig,           type: App\API\Model\TimesheetConfig,            groups: [Default] }
     areas:
         path_patterns:
             - ^/api(?!/doc)
@@ -44,6 +43,7 @@ nelmio_api_doc:
             description: |
                 JSON API for the Kimai 2 time-tracking software. Read more about its usage in the [API documentation](https://www.kimai.org/documentation/rest-api.html) and then download a [Swagger file](doc.json) for import e.g. in Postman.
                 Be aware: it is not yet considered stable and BC breaks might happen, especially when using code generation.
+                The order of JSON attributes is not guaranteed.
             version: '0.6'
         securityDefinitions:
             apiUser:
