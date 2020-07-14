@@ -42,7 +42,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      options={
  *          @Serializer\SerializedName("project"),
  *          @Serializer\Type(name="integer"),
- *          @Serializer\Groups({"Activity"})
+ *          @Serializer\Groups({"Default"})
  *      }
  * )
  */
