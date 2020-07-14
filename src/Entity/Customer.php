@@ -21,15 +21,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
- *
- * columns={"visible"}  => IDX_5A9760447AB0E859 => used in customer dropdown
  */
 class Customer implements EntityWithMetaFields
 {
     public const DEFAULT_CURRENCY = 'EUR';
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id

@@ -33,7 +33,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      options={
  *          @Serializer\SerializedName("parentTitle"),
  *          @Serializer\Type(name="string"),
- *          @Serializer\Groups({"Default"})
+ *          @Serializer\Groups({"Activity"})
  *      }
  * )
  * @Serializer\VirtualProperty(
@@ -42,7 +42,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      options={
  *          @Serializer\SerializedName("project"),
  *          @Serializer\Type(name="integer"),
- *          @Serializer\Groups({"Default"})
+ *          @Serializer\Groups({"Activity"})
  *      }
  * )
  */

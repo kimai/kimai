@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Export\ExportItemInterface;
+use App\Validator\Constraints as Constraints;
 use DateTime;
 use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -31,7 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TimesheetRepository")
  * @ORM\HasLifecycleCallbacks()
- * @App\Validator\Constraints\Timesheet
+ * @Constraints\Timesheet
  */
 class Timesheet implements EntityWithMetaFields, ExportItemInterface
 {

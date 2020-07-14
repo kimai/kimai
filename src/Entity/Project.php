@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,10 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
- * @App\Validator\Constraints\Project
- *
- * columns={"customer_id","visible","name"} => IDX_407F12069395C3F37AB0E8595E237E06 => project administration without filter
- * columns={"customer_id","visible","id"}   => IDX_407F12069395C3F37AB0E859BF396750 => used in joins between project and customer, eg. dropdowns and activity administration page
+ * @Constraints\Project
  */
 class Project implements EntityWithMetaFields
 {
@@ -164,11 +162,7 @@ class Project implements EntityWithMetaFields
         return $this->name;
     }
 
-    /**
-     * @param string $comment
-     * @return Project
-     */
-    public function setComment($comment): Project
+    public function setComment(?string $comment): Project
     {
         $this->comment = $comment;
 

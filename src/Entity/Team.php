@@ -60,11 +60,10 @@ class Team
      *
      * The teamlead for this team
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Team_Entity"})
-     *
      * @var User
      *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Team_Entity"})
      * @SWG\Property(ref="#/definitions/User")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
@@ -81,7 +80,6 @@ class Team
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity"})
-     *
      * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/User"))
      *
      * @ORM\ManyToMany(targetEntity="User", mappedBy="teams", fetch="EXTRA_LAZY")
@@ -96,7 +94,6 @@ class Team
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity"})
-     *
      * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Customer"))
      *
      * @ORM\ManyToMany(targetEntity="Customer", mappedBy="teams", fetch="EXTRA_LAZY")
@@ -111,7 +108,6 @@ class Team
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity"})
-     *
      * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Project"))
      *
      * @ORM\ManyToMany(targetEntity="Project", mappedBy="teams", fetch="EXTRA_LAZY")
