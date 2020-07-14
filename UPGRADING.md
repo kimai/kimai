@@ -22,6 +22,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 - **BC break**: interface method signature `HtmlToPdfConverter::convertToPdf` changed
 - **BC break**: the macros `badge` and `label` do not apply the `|trans` filter any more
 - **BC Break**: removed `getVisible()` (deprecated since 1.4) method on Customer, Project and Activity (use `isVisible()` instead, templates are still working)
+- **BC Break**: some API representation names changed (eg. from `ActivityMetaField` to `ActivityMeta`), you could use `class_alias()` if you use auto-generated code from Swagger-Gen or alike 
 
 ## [1.9](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
 
