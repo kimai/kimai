@@ -11,6 +11,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -22,20 +23,30 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
  * @UniqueEntity("name")
+ *
+ * @Serializer\ExclusionPolicy("all")
+ * @Serializer\AccessorOrder("custom", custom = {"id", "name", "color"})
  */
 class Tag
 {
     /**
      * @var int
      *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
     /**
+     * The tag name
+     *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      * @Assert\NotBlank()
@@ -49,9 +60,11 @@ class Tag
     /**
      * @var Timesheet[]|ArrayCollection
      *
+     * @Serializer\Exclude()
+     *
      * @ORM\ManyToMany(targetEntity="Timesheet", mappedBy="tags", fetch="EXTRA_LAZY")
      */
-    protected $timesheets;
+    private $timesheets;
 
     public function __construct()
     {
