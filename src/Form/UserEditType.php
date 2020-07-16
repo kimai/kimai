@@ -72,6 +72,7 @@ class UserEditType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'validation_groups' => ['Profile'],
             'data_class' => User::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
