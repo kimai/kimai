@@ -56,7 +56,7 @@ class UserControllerTest extends APIControllerBaseTest
     public function testGetCollectionWithQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['visible' => 2, 'orderBy' => 'email', 'order' => 'DESC']);
+        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['visible' => 2, 'orderBy' => 'email', 'order' => 'DESC', 'term' => 'chris']);
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
@@ -269,6 +269,18 @@ class UserControllerTest extends APIControllerBaseTest
         self::assertEquals('it', $result['language']);
         self::assertEquals('America/New_York', $result['timezone']);
         self::assertEquals(['ROLE_TEAMLEAD'], $result['roles']);
+    }
+
+    public function testPatchActionWithUnknownUser()
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_SUPER_ADMIN, '/api/users/255', []);
+    }
+
+    public function testPatchActionWithInvalidUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/api/users/1', 'PATCH', [], json_encode(['avatar' => 'asdasd']));
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Not allowed to edit user');
     }
 
     public function testPatchActionWithValidationErrors()

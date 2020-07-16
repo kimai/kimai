@@ -66,6 +66,7 @@ class TagControllerTest extends APIControllerBaseTest
         $this->importTagFixtures($client);
         $data = [
             'name' => 'foo',
+            'color' => '#000FFF'
         ];
         $this->request($client, '/api/tags', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -74,6 +75,21 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TagEntity', $result);
         $this->assertNotEmpty($result['id']);
+        self::assertEquals('#000FFF', $result['color']);
+    }
+
+    public function testPostActionWithValidationErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importTagFixtures($client);
+        $data = [
+            'name' => '1',
+            'color' => '11231231231',
+        ];
+        $this->request($client, '/api/tags', 'POST', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['name', 'color']);
     }
 
     public function testPostActionWithInvalidUser()

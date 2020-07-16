@@ -11,6 +11,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait ColorTrait
 {
@@ -23,6 +24,7 @@ trait ColorTrait
      * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="color", type="string", length=7, nullable=true)
+     * @Assert\Length(min=4, max=7)
      */
     private $color = null;
 

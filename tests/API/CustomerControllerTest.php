@@ -93,7 +93,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
     public function testGetCollectionWithQuery()
     {
-        $query = ['order' => 'ASC', 'orderBy' => 'name', 'visible' => 3];
+        $query = ['order' => 'ASC', 'orderBy' => 'name', 'visible' => 3, 'term' => 'test'];
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/customers', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -298,6 +298,13 @@ class CustomerControllerTest extends APIControllerBaseTest
         $response = $client->getResponse();
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['currency']);
+    }
+
+    public function testMetaActionNotAllowed()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/api/customers/1/meta', 'PATCH', [], json_encode(['name' => 'asdasd']));
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to update this customer');
     }
 
     public function testMetaActionThrowsNotFound()
