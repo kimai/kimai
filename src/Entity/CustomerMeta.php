@@ -23,7 +23,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  * @Serializer\ExclusionPolicy("all")
- * @Serializer\AccessorOrder("custom", custom = {"name", "value"})
  */
 class CustomerMeta implements MetaTableTypeInterface
 {
