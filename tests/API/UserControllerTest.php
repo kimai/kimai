@@ -161,6 +161,50 @@ class UserControllerTest extends APIControllerBaseTest
         self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_ADMIN'], $result['roles']);
     }
 
+    public function testPostActionWithShortPassword()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $data = [
+            'username' => 'foo',
+            'email' => 'foo@example.com',
+            'avatar' => 'test123',
+            'title' => 'asdfghjkl',
+            'plainPassword' => '1234567',
+            'enabled' => true,
+            'language' => 'ru',
+            'timezone' => 'Europe/Paris',
+            'roles' => [
+                'ROLE_TEAMLEAD',
+                'ROLE_ADMIN'
+            ],
+        ];
+        $this->request($client, '/api/users', 'POST', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['plainPassword']);
+    }
+
+    public function testPostActionWithValidationErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $data = [
+            'username' => '',
+            'email' => '',
+            'plainPassword' => '123456',
+            'language' => 'xx',
+            'timezone' => 'XXX/YYY',
+            'roles' => [
+                'ABC',
+            ],
+        ];
+        $this->request($client, '/api/users', 'POST', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['username', 'email', 'plainPassword', 'language', 'timezone', 'roles']);
+    }
+
     public function testPostActionWithInvalidUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -225,5 +269,26 @@ class UserControllerTest extends APIControllerBaseTest
         self::assertEquals('it', $result['language']);
         self::assertEquals('America/New_York', $result['timezone']);
         self::assertEquals(['ROLE_TEAMLEAD'], $result['roles']);
+    }
+
+    public function testPatchActionWithValidationErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $data = [
+            'username' => '1',  // not existing in form
+            'email' => '',
+            'plainPassword' => '123456', // not existing in form
+            'plainApiToken' => '123456', // not existing in form
+            'language' => 'xx',
+            'timezone' => 'XXX/YYY',
+            'roles' => [
+                'ABC',
+            ],
+        ];
+        $this->request($client, '/api/users/1', 'PATCH', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['email', 'language', 'timezone', 'roles'], true);
     }
 }

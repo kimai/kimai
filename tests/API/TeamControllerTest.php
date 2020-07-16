@@ -114,6 +114,20 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals('Access denied.', $json['message']);
     }
 
+    public function testPostActionWithValidationErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => '',
+            'teamlead' => 9999,
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['name', 'teamlead']);
+    }
+
     public function testPatchAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -138,6 +152,29 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('TeamEntity', $result);
         $this->assertNotEmpty($result['id']);
         self::assertCount(4, $result['users']);
+    }
+
+    public function testPatchActionWithValidationErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 1,
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $data = [
+            'name' => '1',
+            'teamlead' => 9999,
+            'users' => [9999]
+        ];
+        $this->request($client, '/api/teams/' . $result['id'], 'PATCH', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['name', 'teamlead', 'users']);
     }
 
     public function testDeleteAction()

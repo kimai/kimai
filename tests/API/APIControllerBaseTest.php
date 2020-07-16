@@ -241,7 +241,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     /**
      * @param Response $response
      * @param string[] $failedFields
-     * @param bool $extraFields
+     * @param bool $extraFields test for the error "This form should not contain extra fields"
      */
     protected function assertApiCallValidationError(Response $response, array $failedFields, bool $extraFields = false)
     {
@@ -259,9 +259,18 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         $data = $result['errors']['children'];
 
         foreach ($failedFields as $fieldName) {
-            self::assertArrayHasKey($fieldName, $data);
-            self::assertArrayHasKey('errors', $data[$fieldName]);
+            self::assertArrayHasKey($fieldName, $data, sprintf('Could not find validation error for field: %s', $fieldName));
+            self::assertArrayHasKey('errors', $data[$fieldName], sprintf('Field %s has no validation problem', $fieldName));
         }
+
+        $foundErrors = [];
+        foreach ($data as $fieldName => $field) {
+            if (\array_key_exists('errors', $field) && \count($field['errors']) > 0) {
+                $foundErrors[$fieldName] = \count($field['errors']);
+            }
+        }
+
+        self::assertEquals(\count($failedFields), \count($foundErrors), 'Expected and actual validation error amount differs');
     }
 
     protected static function getExpectedResponseStructure(string $type): array
