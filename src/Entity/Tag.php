@@ -25,11 +25,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("name")
  *
  * @Serializer\ExclusionPolicy("all")
- * @Serializer\AccessorOrder("custom", custom = {"id", "name", "color"})
  */
 class Tag
 {
     /**
+     * The internal ID
+     *
      * @var int
      *
      * @Serializer\Expose()

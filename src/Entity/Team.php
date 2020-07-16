@@ -27,11 +27,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("name")
  *
  * @Serializer\ExclusionPolicy("all")
- * @Serializer\AccessorOrder("custom", custom = {"id", "name", "teamlead", "users", "customers", "projects"})
  */
 class Team
 {
     /**
+     * The internal ID
+     *
      * @var int
      *
      * @Serializer\Expose()
@@ -107,7 +108,7 @@ class Team
      * @var Project[]|ArrayCollection
      *
      * @Serializer\Expose()
-     * @Serializer\Groups({"Team_Entity"})
+     * @Serializer\Groups({"Team_Entity", "Expanded"})
      * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Project"))
      *
      * @ORM\ManyToMany(targetEntity="Project", mappedBy="teams", fetch="EXTRA_LAZY")
