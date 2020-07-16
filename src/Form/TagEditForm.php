@@ -31,7 +31,7 @@ class TagEditForm extends AbstractType
                 ],
                 'documentation' => [
                     'type' => 'string',
-                    'description' => 'The tag name',
+                    'description' => 'The tag name (forbidden character: comma)',
                 ],
             ])
             ->add('color', ColorPickerType::class);

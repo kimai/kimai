@@ -40,7 +40,7 @@ abstract class AbstractRateForm extends AbstractType
                 // documentation is for NelmioApiDocBundle
                 'documentation' => [
                     'type' => 'number',
-                    'description' => 'The internal rate (eg. 10)',
+                    'description' => 'The internal rate (eg. 10.0 or 10)',
                 ],
                 'label' => 'label.rate_internal',
                 'currency' => $currency,

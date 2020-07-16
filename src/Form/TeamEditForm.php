@@ -53,7 +53,7 @@ class TeamEditForm extends AbstractType
                     'type' => 'array',
                     'items' => ['type' => 'integer', 'description' => 'User IDs'],
                     'title' => 'Team member',
-                    'description' => 'Array of team member',
+                    'description' => 'Array of team member IDs',
                 ],
             ])
         ;
