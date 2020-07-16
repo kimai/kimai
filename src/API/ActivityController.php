@@ -41,9 +41,10 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class ActivityController extends BaseApiController
 {
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Activity'];
+    public const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
     public const GROUPS_FORM = ['Default', 'Entity', 'Activity'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
+    public const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
 
     /**
      * @var ActivityRepository
@@ -383,7 +384,7 @@ class ActivityController extends BaseApiController
         $rates = $this->activityRateRepository->getRatesForActivity($activity);
 
         $view = new View($rates, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'ActivityRate']);
+        $view->getContext()->setGroups(self::GROUPS_RATE);
 
         return $this->viewHandler->handle($view);
     }
@@ -494,7 +495,7 @@ class ActivityController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'ActivityRate']);
+            $view->getContext()->setGroups(self::GROUPS_RATE);
 
             return $this->viewHandler->handle($view);
         }
@@ -502,7 +503,7 @@ class ActivityController extends BaseApiController
         $this->activityRateRepository->saveRate($rate);
 
         $view = new View($rate, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'ActivityRate']);
+        $view->getContext()->setGroups(self::GROUPS_RATE);
 
         return $this->viewHandler->handle($view);
     }

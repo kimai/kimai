@@ -49,7 +49,7 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(7, \count($result));
         foreach ($result as $user) {
-            $this->assertStructure($user, false);
+            self::assertApiResponseTypeStructure('UserCollection', $user);
         }
     }
 
@@ -63,7 +63,7 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(1, \count($result));
         foreach ($result as $user) {
-            $this->assertStructure($user, false);
+            self::assertApiResponseTypeStructure('UserCollection', $user);
         }
     }
 
@@ -77,7 +77,7 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(8, \count($result));
         foreach ($result as $user) {
-            $this->assertStructure($user, false);
+            self::assertApiResponseTypeStructure('UserCollection', $user);
         }
     }
 
@@ -88,7 +88,7 @@ class UserControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
         self::assertEquals('1', $result['id']);
         self::assertEquals('CFO', $result['title']);
         self::assertEquals('Clara Haynes', $result['alias']);
@@ -101,7 +101,7 @@ class UserControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
         self::assertEquals('6', $result['id']);
         self::assertEquals('Super Administrator', $result['title']);
         self::assertEquals('', $result['alias']);
@@ -125,7 +125,7 @@ class UserControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
     }
 
     public function testPostAction()
@@ -150,7 +150,7 @@ class UserControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
         $this->assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['username']);
         self::assertEquals('test123', $result['avatar']);
@@ -216,7 +216,7 @@ class UserControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
         $this->assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['username']);
         self::assertEquals('test321', $result['avatar']);
@@ -225,23 +225,5 @@ class UserControllerTest extends APIControllerBaseTest
         self::assertEquals('it', $result['language']);
         self::assertEquals('America/New_York', $result['timezone']);
         self::assertEquals(['ROLE_TEAMLEAD'], $result['roles']);
-    }
-
-    protected function assertStructure(array $result, $full = true)
-    {
-        $expectedKeys = ['id', 'username', 'enabled', 'alias'];
-
-        if ($full) {
-            $expectedKeys = array_merge(
-                $expectedKeys,
-                ['title', 'avatar', 'teams', 'roles', 'language', 'timezone']
-            );
-        }
-
-        $actual = array_keys($result);
-        sort($actual);
-        sort($expectedKeys);
-
-        $this->assertEquals($expectedKeys, $actual, 'User structure does not match');
     }
 }

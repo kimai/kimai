@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -28,6 +29,26 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @UniqueEntity("username")
  * @UniqueEntity("email")
+ *
+ * @Serializer\ExclusionPolicy("all")
+ * @Serializer\VirtualProperty(
+ *      "LanguageAsString",
+ *      exp="object.getLocale()",
+ *      options={
+ *          @Serializer\SerializedName("language"),
+ *          @Serializer\Type(name="string"),
+ *          @Serializer\Groups({"User_Entity"})
+ *      }
+ * )
+ * @Serializer\VirtualProperty(
+ *      "TimezoneAsString",
+ *      exp="object.getTimezone()",
+ *      options={
+ *          @Serializer\SerializedName("timezone"),
+ *          @Serializer\Type(name="string"),
+ *          @Serializer\Groups({"User_Entity"})
+ *      }
+ * )
  */
 class User extends BaseUser implements UserInterface
 {
@@ -44,66 +65,93 @@ class User extends BaseUser implements UserInterface
     public const AUTH_SAML = 'saml';
 
     /**
+     * Internal ID
+     *
      * @var int
+     * @internal must be protected because of parent class
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer")
      */
     protected $id;
-
     /**
+     * The user alias will be displayed in the frontend instead of the username
+     *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="alias", type="string", length=60, nullable=true)
      * @Assert\Length(max=60)
      */
     private $alias;
-
     /**
+     * Registration date for the user
+     *
      * @var \DateTime
      *
      * @ORM\Column(name="registration_date", type="datetime", nullable=true)
      */
     private $registeredAt;
-
     /**
+     * An additional title for the user, like the Job position or Department
+     *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"User_Entity"})
      *
      * @ORM\Column(name="title", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
      */
     private $title;
-
     /**
+     * URL to the users avatar, will be auto-generated if empty
+     *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"User_Entity"})
      *
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
      * @Assert\Length(max=255)
      */
     private $avatar;
-
     /**
+     * API token (password) for this user
+     *
      * @var string
      *
      * @ORM\Column(name="api_token", type="string", length=255, nullable=true)
      */
-    protected $apiToken;
-
+    private $apiToken;
     /**
      * @var string
+     * @internal to be set via form, must not be persisted
      */
-    protected $plainApiToken;
-
+    private $plainApiToken;
     /**
+     * User preferences
+     *
+     * List of preferences for this user, required ones have dedicated fields/methods
+     *
      * @var UserPreference[]|Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user", cascade={"persist"})
      */
     private $preferences;
-
     /**
+     * All teams of the user
+     *
      * @var Team[]|ArrayCollection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"User_Entity"})
      *
      * @ORM\ManyToMany(targetEntity="Team", inversedBy="users", cascade={"persist"})
      * @ORM\JoinTable(
@@ -117,25 +165,24 @@ class User extends BaseUser implements UserInterface
      * )
      */
     private $teams;
-
     /**
+     * The type of authentication used by the user (eg. "kimai", "ldap", "saml")
+     *
      * @var string
+     * @internal for internal usage only
      *
      * @ORM\Column(name="auth", type="string", length=20, nullable=true)
      * @Assert\Length(max=20)
      */
     private $auth = self::AUTH_INTERNAL;
-
     /**
      * This flag will be initialized in UserEnvironmentSubscriber.
      *
      * @var bool|null
+     * @internal has no database mapping. as the value is calculated from a permission
      */
     private $isAllowedToSeeAllData = null;
 
-    /**
-     * User constructor.
-     */
     public function __construct()
     {
         parent::__construct();

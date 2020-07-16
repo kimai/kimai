@@ -23,9 +23,9 @@ Perform EACH version specific task between your version and the new one, otherwi
 - **BC break**: the macros `badge` and `label` do not apply the `|trans` filter any more
 - **BC Break**: removed `getVisible()` (deprecated since 1.4) method on Customer, Project and Activity (use `isVisible()` instead, templates are still working)
 - **BC Break**: API changes
-    - some representation names changed (eg. from `ActivityMetaField` to `ActivityMeta`), you could use `class_alias()` if you use auto-generated code from Swagger-Gen or alike
+    - some representation names changed (eg. from `ActivityMetaField` to `ActivityMeta`, `TimesheetSubCollection` vs `TimesheetCollectionExpanded`), you could use `class_alias()` if you use auto-generated code from Swagger-Gen or alike
     - new result types were introduced
-    - result data changed in some areas to smooth out inconsistencies (eg. TeamEntity results)
+    - result data changed in some areas to smooth out inconsistencies (eg. TeamEntity fields changed in nested results)
 
 ## [1.9](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
 

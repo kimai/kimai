@@ -72,7 +72,7 @@ class TagControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TagEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
@@ -127,22 +127,5 @@ class TagControllerTest extends APIControllerBaseTest
     public function testDeleteActionWithUnknownTimesheet()
     {
         $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/tags/255');
-    }
-
-    protected function assertStructure(array $result, $full = true)
-    {
-        $expectedKeys = [
-            'id', 'name', 'color'
-        ];
-
-        if ($full) {
-            $expectedKeys = array_merge($expectedKeys, []);
-        }
-
-        $actual = array_keys($result);
-        sort($actual);
-        sort($expectedKeys);
-
-        $this->assertEquals($expectedKeys, $actual, 'Tag structure does not match');
     }
 }
