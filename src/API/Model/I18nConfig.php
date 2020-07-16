@@ -15,7 +15,6 @@ use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @Serializer\ExclusionPolicy("all")
- * @Serializer\AccessorOrder("custom", custom = {"formDateTime", "formDate", "dateTime", "date", "time", "duration", "is24hours"})
  */
 final class I18nConfig
 {

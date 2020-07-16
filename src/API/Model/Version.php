@@ -16,7 +16,6 @@ use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @Serializer\ExclusionPolicy("all")
- * @Serializer\AccessorOrder("custom", custom = {"version", "candidate", "semver", "name", "copyright"})
  */
 class Version
 {

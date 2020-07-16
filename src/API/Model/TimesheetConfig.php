@@ -15,7 +15,6 @@ use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @Serializer\ExclusionPolicy("none")
- * @Serializer\AccessorOrder("custom", custom = {"trackingMode", "defaultBeginTime", "activeEntriesHardLimit", "activeEntriesSoftLimit", "isAllowFutureTimes", "isAllowOverlapping"})
  */
 final class TimesheetConfig
 {
