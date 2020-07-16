@@ -32,7 +32,7 @@ class TeamEditForm extends AbstractType
                 // documentation is for NelmioApiDocBundle
                 'documentation' => [
                     'type' => 'string',
-                    'description' => 'Name of the new team',
+                    'description' => 'Name of the team',
                 ],
             ])
             ->add('teamlead', UserType::class, [
