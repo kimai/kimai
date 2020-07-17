@@ -72,6 +72,7 @@ abstract class AbstractSpreadsheetRenderer
         'rate' => [],
         'rate_internal' => [],
         'user' => [],
+        'username' => [],
         'customer' => [],
         'project' => [],
         'activity' => [],
@@ -249,6 +250,25 @@ abstract class AbstractSpreadsheetRenderer
                 }
                 $sheet->setCellValueByColumnAndRow($column, $row, $user);
             };
+        }
+
+        if (isset($columns['username'])) {
+            if (!isset($columns['username']['render'])) {
+                $columns['username']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                    $username = '';
+                    if (null !== $entity->getUser()) {
+                        $username = $entity->getUser()->getUsername();
+                    }
+                    $sheet->setCellValueByColumnAndRow($column, $row, $username);
+                };
+            }
+            if (!isset($columns['username']['header'])) {
+                $columns['username']['header'] = function (Worksheet $sheet, $row, $column) {
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.name'));
+
+                    return 1;
+                };
+            }
         }
 
         if (isset($columns['customer']) && !isset($columns['customer']['render'])) {
