@@ -299,6 +299,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'project_edit_form' => [
                 'name' => 'Test 2',
+                'customer' => 1,
             ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/2/details'));
