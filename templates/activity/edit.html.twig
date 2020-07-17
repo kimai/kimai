@@ -7,7 +7,7 @@
 {% block main %}
     {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
-        'title': activity.name|default('create'|trans),
+        'title': activity.name|default('create-activity'|trans({}, 'actions')),
         'form': form,
         'back': path('admin_activity')
     } %}
