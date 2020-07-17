@@ -275,29 +275,19 @@ class ActivityRepository extends EntityRepository
 
         $where = $qb->expr()->andX();
 
-        if (\in_array($query->getVisibility(), [ActivityQuery::SHOW_VISIBLE, ActivityQuery::SHOW_HIDDEN])) {
+        if (!$query->isShowBoth()) {
             if (!$query->isGlobalsOnly()) {
-                $where->add(
-                    $qb->expr()->orX(
-                        $qb->expr()->eq('c.visible', ':customer_visible'),
-                        $qb->expr()->isNull('c.visible')
-                    )
-                );
-                $where->add(
-                    $qb->expr()->orX(
-                        $qb->expr()->eq('p.visible', ':project_visible'),
-                        $qb->expr()->isNull('p.visible')
-                    )
-                );
+                $where->add($qb->expr()->eq('c.visible', ':customer_visible'));
+                $where->add($qb->expr()->eq('p.visible', ':project_visible'));
                 $qb->setParameter('project_visible', true, \PDO::PARAM_BOOL);
                 $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
             }
 
-            $where->add('a.visible = :visible');
+            $where->add($qb->expr()->eq('a.visible', ':visible'));
 
-            if (ActivityQuery::SHOW_VISIBLE === $query->getVisibility()) {
+            if ($query->isShowVisible()) {
                 $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
-            } elseif (ActivityQuery::SHOW_HIDDEN === $query->getVisibility()) {
+            } elseif ($query->isShowHidden()) {
                 $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
             }
         }
@@ -359,8 +349,10 @@ class ActivityRepository extends EntityRepository
 
         // this will make sure, that we do not accidentally create results with multiple rows
         //   => which would result in a wrong LIMIT / pagination results
+        // $qb->addGroupBy('a.id');
+
         // the second group by is needed due to SQL standard (even though logically not really required for this query)
-        $qb->addGroupBy('a.id')->addGroupBy($orderBy);
+        // $qb->addGroupBy($orderBy);
 
         return $qb;
     }

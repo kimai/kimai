@@ -189,6 +189,7 @@ class CustomerRepository extends EntityRepository
             ->from(Customer::class, 'c')
             ->orderBy('c.name', 'ASC');
 
+        // TODO this where and the next if($query->hasCustomers()) should go into their own $qb->expr()->orX()
         $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
         $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
 
@@ -219,10 +220,10 @@ class CustomerRepository extends EntityRepository
         $orderBy = 'c.' . $query->getOrderBy();
         $qb->orderBy($orderBy, $query->getOrder());
 
-        if (CustomerQuery::SHOW_VISIBLE == $query->getVisibility()) {
+        if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
             $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
-        } elseif (CustomerQuery::SHOW_HIDDEN == $query->getVisibility()) {
+        } elseif ($query->isShowHidden()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
             $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
         }
@@ -269,8 +270,10 @@ class CustomerRepository extends EntityRepository
 
         // this will make sure, that we do not accidentally create results with multiple rows
         //   => which would result in a wrong LIMIT / pagination results
+        // $qb->addGroupBy('c.id');
+
         // the second group by is needed due to SQL standard (even though logically not really required for this query)
-        $qb->addGroupBy('c.id')->addGroupBy($orderBy);
+        // $qb->addGroupBy($orderBy);
 
         return $qb;
     }
