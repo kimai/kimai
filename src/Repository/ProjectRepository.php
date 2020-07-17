@@ -292,7 +292,7 @@ class ProjectRepository extends EntityRepository
         }
 
         // this is far from being perfect, possible enhancements:
-        // there could also be a range      to be able to select all projects that were active between from and to
+        // there could also be a range selection to be able to select all projects that were active between from and to
         // begin = null and end = null
         // begin = null and end <= to
         // begin < to and end = null
