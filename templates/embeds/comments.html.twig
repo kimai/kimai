@@ -13,7 +13,7 @@
         {% endif %}
         {% for comment in comments %}
             <div class="box-comment">
-                {{ widgets.user_avatar(comment.createdBy, false, 'img-sm') }}
+                {{ widgets.user_avatar(comment.createdBy, comment.createdAt|date_full, 'img-sm') }}
                 <div class="comment-text">
                     <span class="username">
                         {{ widgets.username(comment.createdBy) }}
@@ -26,7 +26,6 @@
                             {% if route_delete is not null %}
                                 <a href="{{ path(route_delete, {'id': comment.id}) }}" class="confirmation-link btn btn-default btn-xs" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
                             {% endif %}
-                            <span class="hidden-xs">{{ comment.createdAt|date_full }}</span>
                         </span>
                     </span>
                     {{ comment.message|replace(replacer)|md2html }}
