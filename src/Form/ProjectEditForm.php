@@ -78,6 +78,7 @@ class ProjectEditForm extends AbstractType
                 'required' => false,
             ]))
             ->add('customer', CustomerType::class, [
+                'placeholder' => (null === $id && null === $customer) ? '' : false,
                 'query_builder' => function (CustomerRepository $repo) use ($builder, $customer) {
                     $query = new CustomerFormTypeQuery($customer);
                     $query->setUser($builder->getOption('user'));
