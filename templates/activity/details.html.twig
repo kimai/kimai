@@ -32,11 +32,11 @@
                     {{ activity.comment|comment2html(true) }}
                 </div>
             {% endif %}
-            <table class="table table-hover">
+            <table class="table table-hover dataTable">
                 {% if not activity.visible %}
                     <tr>
                         <th>{{ 'label.visible'|trans }}</th>
-                        <td>
+                        <td colspan="3">
                             {{ widgets.label_boolean(activity.visible) }}
                         </td>
                     </tr>
@@ -46,10 +46,11 @@
                         <th>{{ 'label.customer'|trans }}</th>
                         <td>
                             {{ widgets.label_customer(activity.project.customer) }}
-                            {% if activity.project.customer.teams|length == 0 %}
-                                {{ widgets.icon('unlocked') }}
-                            {% endif %}
-                            &nbsp;
+                        </td>
+                        <td class="w-min">
+                            {{ widgets.badge_team_access(activity.project.customer.teams) }}
+                        </td>
+                        <td class="actions">
                             {{ customerActions.customer(activity.project.customer, 'custom') }}
                         </td>
                     </tr>
@@ -57,10 +58,11 @@
                         <th>{{ 'label.project'|trans }}</th>
                         <td>
                             {{ widgets.label_project(activity.project) }}
-                            {% if activity.project.teams|length == 0 %}
-                                {{ widgets.icon('unlocked') }}
-                            {% endif %}
-                            &nbsp;
+                        </td>
+                        <td class="w-min">
+                            {{ widgets.badge_team_access(activity.project.teams) }}
+                        </td>
+                        <td class="actions">
                             {{ projectActions.project(activity.project, 'custom') }}
                         </td>
                     </tr>
@@ -68,7 +70,7 @@
                 {% for metaField in activity.visibleMetaFields %}
                     <tr>
                         <th>{{ metaField.label|trans }}</th>
-                        <td>{{ widgets.form_type_value(metaField.type, metaField.value, activity) }}</td>
+                        <td colspan="3">{{ widgets.form_type_value(metaField.type, metaField.value, activity) }}</td>
                     </tr>
                 {% endfor %}
             </table>
