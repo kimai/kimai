@@ -9,9 +9,12 @@
 
 namespace App\Entity;
 
+use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Swagger\Annotations as SWG;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -22,15 +25,37 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
- * @App\Validator\Constraints\Project
+ * @Constraints\Project
  *
- * columns={"customer_id","visible","name"} => IDX_407F12069395C3F37AB0E8595E237E06 => project administration without filter
- * columns={"customer_id","visible","id"}   => IDX_407F12069395C3F37AB0E859BF396750 => used in joins between project and customer, eg. dropdowns and activity administration page
+ * @Serializer\ExclusionPolicy("all")
+ * @Serializer\VirtualProperty(
+ *      "CustomerName",
+ *      exp="object.getCustomer() === null ? null : object.getCustomer().getName()",
+ *      options={
+ *          @Serializer\SerializedName("parentTitle"),
+ *          @Serializer\Type(name="string"),
+ *          @Serializer\Groups({"Project"})
+ *      }
+ * )
+ * @Serializer\VirtualProperty(
+ *      "CustomerAsId",
+ *      exp="object.getCustomer() === null ? null : object.getCustomer().getId()",
+ *      options={
+ *          @Serializer\SerializedName("customer"),
+ *          @Serializer\Type(name="integer"),
+ *          @Serializer\Groups({"Project", "Team", "Not_Expanded"})
+ *      }
+ * )
  */
 class Project implements EntityWithMetaFields
 {
     /**
+     * Internal ID
+     *
      * @var int|null
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -38,7 +63,13 @@ class Project implements EntityWithMetaFields
      */
     private $id;
     /**
+     * Customer for this project
+     *
      * @var Customer
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Subresource", "Expanded"})
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Customer"))
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
@@ -46,7 +77,12 @@ class Project implements EntityWithMetaFields
      */
     private $customer;
     /**
+     * Project name
+     *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotNull()
@@ -54,7 +90,12 @@ class Project implements EntityWithMetaFields
      */
     private $name;
     /**
+     * Project order number
+     *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Project_Entity"})
      *
      * @ORM\Column(name="order_number", type="text", length=20, nullable=true)
      * @Assert\Length(max=20)
@@ -63,11 +104,19 @@ class Project implements EntityWithMetaFields
     /**
      * @var \DateTime
      *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Project_Entity"})
+     * @Serializer\Type(name="DateTime")
+     *
      * @ORM\Column(name="order_date", type="datetime", nullable=true)
      */
     private $orderDate;
     /**
      * @var \DateTime
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Project"})
+     * @Serializer\Type(name="DateTime")
      *
      * @ORM\Column(name="start", type="datetime", nullable=true)
      */
@@ -75,27 +124,39 @@ class Project implements EntityWithMetaFields
     /**
      * @var \DateTime
      *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Project"})
+     * @Serializer\Type(name="DateTime")
+     *
      * @ORM\Column(name="end", type="datetime", nullable=true)
      */
     private $end;
     /**
      * @var string
+     * @internal used for storing the timezone for "order", "start" and "end" date
      *
      * @ORM\Column(name="timezone", type="string", length=64, nullable=true)
      */
     private $timezone;
     /**
      * @var bool
+     * @internal used for having the localization state of the dates (see $timezone)
      */
     private $localized = false;
     /**
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Project_Entity"})
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
     /**
      * @var bool
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -104,17 +165,57 @@ class Project implements EntityWithMetaFields
 
     // keep the trait include exactly here, for placing the column at the correct position
     use ColorTrait;
-    use BudgetTrait;
 
     /**
+     * The total monetary budget, will be zero if unconfigured.
+     *
+     * @var float
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Project_Entity"})
+     *
+     * @ORM\Column(name="budget", type="float", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $budget = 0.00;
+    /**
+     * The time budget in seconds, will be be zero if unconfigured.
+     *
+     * @var int
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Project_Entity"})
+     *
+     * @ORM\Column(name="time_budget", type="integer", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $timeBudget = 0;
+    /**
+     * Meta fields
+     *
+     * All visible meta (custom) fields registered with this project
+     *
      * @var ProjectMeta[]|Collection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Project"})
+     * @Serializer\Type(name="array<App\Entity\ProjectMeta>")
+     * @Serializer\SerializedName("metaFields")
+     * @Serializer\Accessor(getter="getVisibleMetaFields")
      *
      * @ORM\OneToMany(targetEntity="App\Entity\ProjectMeta", mappedBy="project", cascade={"persist"})
      */
     private $meta;
-
     /**
+     * Teams
+     *
+     * If no team is assigned, everyone can access the project (also depends on the teams of the customer)
+     *
      * @var Team[]|ArrayCollection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Project"})
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Team"))
      *
      * @ORM\ManyToMany(targetEntity="Team", cascade={"persist"}, inversedBy="projects")
      * @ORM\JoinTable(
@@ -164,11 +265,7 @@ class Project implements EntityWithMetaFields
         return $this->name;
     }
 
-    /**
-     * @param string $comment
-     * @return Project
-     */
-    public function setComment($comment): Project
+    public function setComment(?string $comment): Project
     {
         $this->comment = $comment;
 
@@ -287,6 +384,30 @@ class Project implements EntityWithMetaFields
         }
 
         return $this;
+    }
+
+    public function setBudget(float $budget): Project
+    {
+        $this->budget = $budget;
+
+        return $this;
+    }
+
+    public function getBudget(): float
+    {
+        return $this->budget;
+    }
+
+    public function setTimeBudget(int $seconds): Project
+    {
+        $this->timeBudget = $seconds;
+
+        return $this;
+    }
+
+    public function getTimeBudget(): int
+    {
+        return $this->timeBudget;
     }
 
     /**

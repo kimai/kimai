@@ -1,16 +1,16 @@
 App\Entity\User:
     properties:
         roles:
-            - App\Validator\Constraints\Role: ~
+            - App\Validator\Constraints\Role: { groups: [RolesUpdate] }
         username:
-            - NotBlank: ~
-            - Length: { min: 2, max: 60 }
+            - NotBlank: { groups: [Registration, UserCreate, Profile] }
+            - Length: { min: 2, max: 60, groups: [Registration, UserCreate, Profile] }
         email:
-            - NotBlank: ~
-            - Email: ~
+            - NotBlank: { groups: [Registration, UserCreate, Profile] }
+            - Email: { groups: [Registration, UserCreate, Profile] }
         plainPassword:
-            - NotBlank: { groups: [Registration, PasswordUpdate] }
-            - Length: { min: 8, max: 60, groups: [Registration, PasswordUpdate] }
+            - NotBlank: { groups: [Registration, PasswordUpdate, UserCreate] }
+            - Length: { min: 8, max: 60, groups: [Registration, PasswordUpdate, UserCreate] }
         plainApiToken:
             - NotBlank: { groups: [ApiTokenUpdate] }
             - Length: { min: 8, max: 60, groups: [ApiTokenUpdate] }

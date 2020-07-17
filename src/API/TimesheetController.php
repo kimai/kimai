@@ -51,6 +51,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class TimesheetController extends BaseApiController
 {
+    public const GROUPS_ENTITY = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Not_Expanded'];
+    public const GROUPS_FORM = ['Default', 'Entity', 'Timesheet', 'Not_Expanded'];
+    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Timesheet', 'Not_Expanded'];
+    public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Timesheet', 'Expanded'];
+
     /**
      * @var TimesheetRepository
      */
@@ -266,9 +271,9 @@ class TimesheetController extends BaseApiController
 
         $view = new View($data, 200);
         if ('true' === $paramFetcher->get('full')) {
-            $view->getContext()->setGroups(['Default', 'Subresource', 'Timesheet']);
+            $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
         } else {
-            $view->getContext()->setGroups(['Default', 'Collection', 'Timesheet']);
+            $view->getContext()->setGroups(self::GROUPS_COLLECTION);
         }
 
         return $this->viewHandler->handle($view);
@@ -308,7 +313,7 @@ class TimesheetController extends BaseApiController
         }
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -368,13 +373,13 @@ class TimesheetController extends BaseApiController
             }
 
             $view = new View($timesheet, 200);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }
@@ -438,7 +443,7 @@ class TimesheetController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+            $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
         }
@@ -446,7 +451,7 @@ class TimesheetController extends BaseApiController
         $this->service->updateTimesheet($timesheet);
 
         $view = new View($timesheet, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -498,7 +503,7 @@ class TimesheetController extends BaseApiController
      *      description="Returns the collection of recent user activities (always the latest entry of a unique working set grouped by customer, project and activity)",
      *      @SWG\Schema(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/TimesheetSubCollection")
+     *          @SWG\Items(ref="#/definitions/TimesheetCollectionExpanded")
      *      )
      * )
      *
@@ -535,7 +540,7 @@ class TimesheetController extends BaseApiController
         $data = $this->repository->getRecentActivities($user, $begin, $limit);
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Subresource', 'Timesheet']);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
 
         return $this->viewHandler->handle($view);
     }
@@ -548,7 +553,7 @@ class TimesheetController extends BaseApiController
      *      description="Returns the collection of active timesheet records for the current user",
      *      @SWG\Schema(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/TimesheetSubCollection")
+     *          @SWG\Items(ref="#/definitions/TimesheetCollectionExpanded")
      *      )
      * )
      *
@@ -565,7 +570,7 @@ class TimesheetController extends BaseApiController
         $data = $this->repository->getActiveEntries($user);
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Subresource', 'Timesheet']);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
 
         return $this->viewHandler->handle($view);
     }
@@ -604,7 +609,7 @@ class TimesheetController extends BaseApiController
         $this->service->stopTimesheet($timesheet);
 
         $view = new View($timesheet, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -687,7 +692,7 @@ class TimesheetController extends BaseApiController
         $this->service->saveNewTimesheet($copyTimesheet);
 
         $view = new View($copyTimesheet, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -728,7 +733,7 @@ class TimesheetController extends BaseApiController
         $this->service->saveNewTimesheet($copyTimesheet);
 
         $view = new View($copyTimesheet, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -771,7 +776,7 @@ class TimesheetController extends BaseApiController
         $this->service->updateTimesheet($timesheet);
 
         $view = new View($timesheet, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -824,7 +829,7 @@ class TimesheetController extends BaseApiController
         $this->service->updateTimesheet($timesheet);
 
         $view = new View($timesheet, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }

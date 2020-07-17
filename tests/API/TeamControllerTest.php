@@ -59,7 +59,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         self::assertEquals(2, \count($result));
-        $this->assertStructure($result[0], false);
+        self::assertApiResponseTypeStructure('TeamCollection', $result[0]);
     }
 
     public function testGetEntity()
@@ -70,7 +70,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result, true);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
     }
 
     public function testNotFound()
@@ -95,7 +95,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
@@ -112,6 +112,20 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
         self::assertEquals('Access denied.', $json['message']);
+    }
+
+    public function testPostActionWithValidationErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => '',
+            'teamlead' => 9999,
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['name', 'teamlead']);
     }
 
     public function testPatchAction()
@@ -135,9 +149,32 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         $this->assertNotEmpty($result['id']);
         self::assertCount(4, $result['users']);
+    }
+
+    public function testPatchActionWithValidationErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 1,
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $data = [
+            'name' => '1',
+            'teamlead' => 9999,
+            'users' => [9999]
+        ];
+        $this->request($client, '/api/teams/' . $result['id'], 'PATCH', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['name', 'teamlead', 'users']);
     }
 
     public function testDeleteAction()
@@ -148,7 +185,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         $this->assertNotEmpty($result['id']);
         $id = $result['id'];
 
@@ -175,7 +212,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(2, $result['users']);
     }
 
@@ -238,7 +275,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(3, $result['users']);
     }
 
@@ -300,7 +337,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(1, $result['customers']);
         self::assertEquals(1, $result['customers'][0]['id']);
     }
@@ -381,7 +418,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(0, $result['customers']);
     }
 
@@ -427,13 +464,12 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertCount(0, $result['projects']);
-
         $this->request($client, '/api/teams/' . $result['id'] . '/projects/1', 'POST');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(1, $result['projects']);
         self::assertEquals(1, $result['projects'][0]['id']);
     }
@@ -520,7 +556,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(0, $result['projects']);
     }
 
@@ -553,24 +589,5 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
         $json = json_decode($client->getResponse()->getContent(), true);
         self::assertEquals('Project is not assigned to the team', $json['message']);
-    }
-
-    protected function assertStructure(array $result, $full = true)
-    {
-        $expectedKeys = [
-            'id', 'name'
-        ];
-
-        if ($full) {
-            $expectedKeys = array_merge($expectedKeys, [
-                'teamlead', 'users', 'customers', 'projects'
-            ]);
-        }
-
-        $actual = array_keys($result);
-        sort($actual);
-        sort($expectedKeys);
-
-        self::assertEquals($expectedKeys, $actual, 'Team structure does not match');
     }
 }

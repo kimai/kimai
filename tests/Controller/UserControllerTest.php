@@ -76,7 +76,7 @@ class UserControllerTest extends ControllerBaseTest
             'user_create' => [
                 'username' => $username,
                 'alias' => $username,
-                'plainPassword' => ['first' => 'abcdef', 'second' => 'abcdef'],
+                'plainPassword' => ['first' => '12345678', 'second' => '12345678'],
                 'email' => 'foobar@example.com',
                 'enabled' => 1,
             ]
@@ -198,7 +198,7 @@ class UserControllerTest extends ControllerBaseTest
                 [
                     'user_create' => [
                         'username' => '',
-                        'plainPassword' => ['first' => 'sdfsdf'],
+                        'plainPassword' => ['first' => 'sdfsdf123'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
                         'avatar' => 'asdfawer',
@@ -216,7 +216,7 @@ class UserControllerTest extends ControllerBaseTest
                 [
                     'user_create' => [
                         'username' => 'x',
-                        'plainPassword' => ['first' => 'sdfsdf', 'second' => 'sdfxxx'],
+                        'plainPassword' => ['first' => 'sdfsdf123', 'second' => 'sdfxxxxxxx'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
                         'avatar' => 'asdfawer',
@@ -227,6 +227,22 @@ class UserControllerTest extends ControllerBaseTest
                     '#user_create_username',
                     '#user_create_plainPassword_first',
                     '#user_create_email',
+                ]
+            ],
+            // invalid fields: password (too short)
+            [
+                [
+                    'user_create' => [
+                        'username' => 'test123',
+                        'plainPassword' => ['first' => 'test123', 'second' => 'test123'],
+                        'alias' => 'ycvyxcb',
+                        'title' => '34rtwrtewrt',
+                        'avatar' => 'asdfawer',
+                        'email' => 'ydfbvsdfgs@example.com',
+                    ]
+                ],
+                [
+                    '#user_create_plainPassword_first',
                 ]
             ],
         ];

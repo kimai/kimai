@@ -12,26 +12,48 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="kimai2_activities",
- *     indexes={
+ *      indexes={
  *          @ORM\Index(columns={"visible","project_id"}),
  *          @ORM\Index(columns={"visible","project_id","name"}),
  *          @ORM\Index(columns={"visible","name"})
- *     }
+ *      }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
  *
- * columns={"visible","name"}               => IDX_8811FE1C7AB0E8595E237E06         => activity administration without filter
- * columns={"visible","project_id"}         => IDX_8811FE1C7AB0E859166D1F9C         => activity administration with customer or project filter
- * columns={"visible","project_id","name"}  => IDX_8811FE1C7AB0E859166D1F9C5E237E06 => activity drop-down for global activities in toolbar or globalsOnly filter in activity administration
+ * @Serializer\ExclusionPolicy("all")
+ * @Serializer\VirtualProperty(
+ *      "ProjectName",
+ *      exp="object.getProject() === null ? null : object.getProject().getName()",
+ *      options={
+ *          @Serializer\SerializedName("parentTitle"),
+ *          @Serializer\Type(name="string"),
+ *          @Serializer\Groups({"Activity"})
+ *      }
+ * )
+ * @Serializer\VirtualProperty(
+ *      "ProjectAsId",
+ *      exp="object.getProject() === null ? null : object.getProject().getId()",
+ *      options={
+ *          @Serializer\SerializedName("project"),
+ *          @Serializer\Type(name="integer"),
+ *          @Serializer\Groups({"Default"})
+ *      }
+ * )
  */
 class Activity implements EntityWithMetaFields
 {
     /**
+     * Internal ID
+     *
      * @var int|null
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -46,7 +68,12 @@ class Activity implements EntityWithMetaFields
      */
     private $project;
     /**
+     * Name of this activity
+     *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
@@ -54,25 +81,68 @@ class Activity implements EntityWithMetaFields
      */
     private $name;
     /**
+     * Description of this activity
+     *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Activity_Entity"})
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
     /**
+     * Whether this activity is visible and can be used for timesheets
+     *
      * @var bool
      *
-     * @ORM\Column(name="visible", type="boolean", nullable=false)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
+     * @ORM\Column(name="visible", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
     private $visible = true;
 
-    // keep the trait include exactly here, for placing the column at the correct position
+    // keep the traits here, for placing the column at the "correct" position
     use ColorTrait;
-    use BudgetTrait;
 
     /**
+     * The total monetary budget, will be zero if unconfigured.
+     *
+     * @var float
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Activity_Entity"})
+     *
+     * @ORM\Column(name="budget", type="float", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $budget = 0.00;
+    /**
+     * The time budget in seconds, will be be zero if unconfigured.
+     *
+     * @var int
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Activity_Entity"})
+     *
+     * @ORM\Column(name="time_budget", type="integer", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $timeBudget = 0;
+    /**
+     * Meta fields
+     *
+     * All visible meta (custom) fields registered with this activity
+     *
      * @var ActivityMeta[]|Collection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Activity"})
+     * @Serializer\Type(name="array<App\Entity\ActivityMeta>")
+     * @Serializer\SerializedName("metaFields")
+     * @Serializer\Accessor(getter="getVisibleMetaFields")
      *
      * @ORM\OneToMany(targetEntity="App\Entity\ActivityMeta", mappedBy="activity", cascade={"persist"})
      */
@@ -139,6 +209,30 @@ class Activity implements EntityWithMetaFields
     public function isVisible(): bool
     {
         return $this->visible;
+    }
+
+    public function setBudget(float $budget): Activity
+    {
+        $this->budget = $budget;
+
+        return $this;
+    }
+
+    public function getBudget(): float
+    {
+        return $this->budget;
+    }
+
+    public function setTimeBudget(int $seconds): Activity
+    {
+        $this->timeBudget = $seconds;
+
+        return $this;
+    }
+
+    public function getTimeBudget(): int
+    {
+        return $this->timeBudget;
     }
 
     /**

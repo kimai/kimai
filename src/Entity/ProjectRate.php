@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,6 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRateRepository")
  * @UniqueEntity({"user", "project"}, ignoreNull=false)
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class ProjectRate implements RateInterface
 {
@@ -28,6 +31,8 @@ class ProjectRate implements RateInterface
 
     /**
      * @var Project
+     *
+     * @Serializer\Exclude()
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)

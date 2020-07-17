@@ -39,6 +39,10 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 final class TeamController extends BaseApiController
 {
+    public const GROUPS_ENTITY = ['Default', 'Entity', 'Team', 'Team_Entity'];
+    public const GROUPS_FORM = ['Default', 'Entity', 'Team', 'Team_Entity'];
+    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Team'];
+
     /**
      * @var TeamRepository
      */
@@ -76,7 +80,7 @@ final class TeamController extends BaseApiController
         $data = $this->repository->findAll();
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Collection', 'Team']);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
@@ -104,7 +108,7 @@ final class TeamController extends BaseApiController
         }
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -154,7 +158,7 @@ final class TeamController extends BaseApiController
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the new created team",
-     *          @SWG\Schema(ref="#/definitions/TeamEntity",),
+     *          @SWG\Schema(ref="#/definitions/TeamEntity"),
      *      )
      * )
      * @SWG\Parameter(
@@ -186,13 +190,13 @@ final class TeamController extends BaseApiController
             $this->repository->saveTeam($team);
 
             $view = new View($team, 200);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }
@@ -243,7 +247,7 @@ final class TeamController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+            $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
         }
@@ -251,7 +255,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -314,7 +318,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -377,7 +381,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -440,7 +444,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -499,7 +503,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -562,7 +566,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -621,7 +625,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
