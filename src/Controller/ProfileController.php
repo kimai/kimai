@@ -261,10 +261,20 @@ class ProfileController extends AbstractController
             ]);
         }
 
+        $sections = [];
+
+        /** @var UserPreference $pref */
+        foreach ($profile->getPreferences() as $pref) {
+            if ($pref->isEnabled()) {
+                $sections[$pref->getSection()] = $pref->getSection();
+            }
+        }
+
         return $this->render('user/form.html.twig', [
             'tab' => 'preferences',
             'user' => $profile,
             'form' => $form->createView(),
+            'sections' => $sections
         ]);
     }
 
