@@ -48,7 +48,7 @@
             {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customers[]': customer.id})}) %}
         {% endif %}
         {% if customer.visible and is_granted('create_project') %}
-            {% set actions = actions|merge({'create-project': path('admin_project_create_with_customer', {'customer': customer.id})}) %}
+            {% set actions = actions|merge({'create-project': {'url': path('admin_project_create_with_customer', {'customer': customer.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
         {% if view == 'index' and is_granted('delete', customer) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_customer_delete', {'id': customer.id}), 'class': 'modal-ajax-form'}}) %}
