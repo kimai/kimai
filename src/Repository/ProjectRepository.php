@@ -271,15 +271,15 @@ class ProjectRepository extends EntityRepository
 
         $qb->addOrderBy($orderBy, $query->getOrder());
 
-        if (\in_array($query->getVisibility(), [ProjectQuery::SHOW_VISIBLE, ProjectQuery::SHOW_HIDDEN])) {
+        if (!$query->isShowBoth()) {
             $qb
                 ->andWhere($qb->expr()->eq('p.visible', ':visible'))
                 ->andWhere($qb->expr()->eq('c.visible', ':customer_visible'))
             ;
 
-            if (ProjectQuery::SHOW_VISIBLE === $query->getVisibility()) {
+            if ($query->isShowVisible()) {
                 $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
-            } elseif (ProjectQuery::SHOW_HIDDEN === $query->getVisibility()) {
+            } elseif ($query->isShowHidden()) {
                 $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
             }
 
@@ -368,8 +368,10 @@ class ProjectRepository extends EntityRepository
 
         // this will make sure, that we do not accidentally create results with multiple rows
         //   => which would result in a wrong LIMIT / pagination results
+        // $qb->addGroupBy('p.id');
+
         // the second group by is needed due to SQL standard (even though logically not really required for this query)
-        $qb->addGroupBy('p.id')->addGroupBy($orderBy);
+        // $qb->addGroupBy($orderBy);
 
         return $qb;
     }
