@@ -277,10 +277,16 @@ class ActivityRepository extends EntityRepository
 
         if (!$query->isShowBoth()) {
             if (!$query->isGlobalsOnly()) {
-                $where->add($qb->expr()->eq('c.visible', ':customer_visible'));
-                $where->add($qb->expr()->eq('p.visible', ':project_visible'));
-                $qb->setParameter('project_visible', true, \PDO::PARAM_BOOL);
-                $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
+                $where->add(
+                    $qb->expr()->orX(
+                        $qb->expr()->isNull('a.project'),
+                        $qb->expr()->andX(
+                            $qb->expr()->eq('c.visible', ':is_visible'),
+                            $qb->expr()->eq('p.visible', ':is_visible')
+                        )
+                    )
+                );
+                $qb->setParameter('is_visible', true, \PDO::PARAM_BOOL);
             }
 
             $where->add($qb->expr()->eq('a.visible', ':visible'));
