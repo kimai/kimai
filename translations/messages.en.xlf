@@ -484,6 +484,10 @@
                 <source>profile.first_entry</source>
                 <target>Working since</target>
             </trans-unit>
+            <trans-unit id="profile.registration_date">
+                <source>profile.registration_date</source>
+                <target>Registered at</target>
+            </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
                 <target>Profile</target>

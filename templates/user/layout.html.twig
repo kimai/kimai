@@ -68,6 +68,10 @@
                             <th>{{ 'profile.first_entry'|trans }}</th>
                             <td class="text-nowrap pull-right">{{ stats.firstEntry|date_short }}</td>
                         </tr>
+                        <tr>
+                            <th>{{ 'profile.registration_date'|trans }}</th>
+                            <td class="text-nowrap pull-right">{{ user.registeredAt|date_short }}</td>
+                        </tr>
                         {% if is_granted('hourly-rate', user) %}
                         <tr>
                             <th>{{ 'label.hourlyRate'|trans }}</th>
