@@ -12,6 +12,8 @@ namespace App\Controller;
 use App\Configuration\FormConfiguration;
 use App\Entity\User;
 use App\Event\UserPreferenceDisplayEvent;
+use App\Export\GenericSpreadsheetExporter;
+use App\Export\Writer\XlsxWriter;
 use App\Form\Toolbar\UserToolbarForm;
 use App\Form\UserCreateType;
 use App\Repository\Query\UserQuery;
@@ -65,7 +67,6 @@ final class UserController extends AbstractController
     /**
      * @Route(path="/", defaults={"page": 1}, name="admin_user", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated", methods={"GET"})
-     * @Security("is_granted('view_user')")
      */
     public function indexAction($page, Request $request): Response
     {
@@ -189,6 +190,36 @@ final class UserController extends AbstractController
                 'form' => $deleteForm->createView(),
             ]
         );
+    }
+
+    /**
+     * @Route(path="/export", name="admin_user_export", methods={"GET"})
+     * @Security("is_granted('view_user')")
+     */
+    public function exportAction(Request $request, GenericSpreadsheetExporter $exporter)
+    {
+        $query = new UserQuery();
+        $query->setCurrentUser($this->getUser());
+
+        $form = $this->getToolbarForm($query);
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
+
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
+
+        $entries = $this->getRepository()->getUsersForQuery($query);
+
+        $spreadsheet = $exporter->export(User::class, $entries);
+        $writer = new XlsxWriter();
+        $file = $writer->save($spreadsheet);
+        $now = new \DateTime();
+
+        $response = $this->file($file, 'kimai-users_' . $now->format('Y-m-d_H-i-m') . $writer->getFileExtension());
+        $response->deleteFileAfterSend(true);
+
+        return $response;
     }
 
     protected function getToolbarForm(UserQuery $query): FormInterface

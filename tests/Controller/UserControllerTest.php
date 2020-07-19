@@ -37,6 +37,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertPageActions($client, [
             'search search-toggle visible-xs-inline' => '#',
             'visibility' => '#',
+            'download toolbar-action' => $this->createUrl('/admin/user/export'),
             'permissions' => $this->createUrl('/admin/permissions'),
             'create' => $this->createUrl('/admin/user/create'),
             'help' => 'https://www.kimai.org/documentation/users.html'
