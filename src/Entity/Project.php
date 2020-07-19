@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Export\Annotation as Exporter;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -46,6 +47,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @Serializer\Groups({"Project", "Team", "Not_Expanded"})
  *      }
  * )
+ *
+ * @Exporter\Order({"id", "name", "customer", "orderNumber", "orderDate", "start", "end", "budget", "timeBudget", "color", "visible", "teams", "comment"})
+ * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer().getName()")
+ * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
  */
 class Project implements EntityWithMetaFields
 {
@@ -56,6 +61,8 @@ class Project implements EntityWithMetaFields
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
+     *
+     * @Exporter\Expose(label="label.id", type="integer")
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -84,6 +91,8 @@ class Project implements EntityWithMetaFields
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
+     * @Exporter\Expose(label="label.name")
+     *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotNull()
      * @Assert\Length(min=2, max=150, allowEmptyString=false)
@@ -97,6 +106,8 @@ class Project implements EntityWithMetaFields
      * @Serializer\Expose()
      * @Serializer\Groups({"Project_Entity"})
      *
+     * @Exporter\Expose(label="label.orderNumber")
+     *
      * @ORM\Column(name="order_number", type="text", length=20, nullable=true)
      * @Assert\Length(max=20)
      */
@@ -108,6 +119,8 @@ class Project implements EntityWithMetaFields
      * @Serializer\Groups({"Project_Entity"})
      * @Serializer\Type(name="DateTime")
      *
+     * @Exporter\Expose(label="label.orderDate", type="datetime")
+     *
      * @ORM\Column(name="order_date", type="datetime", nullable=true)
      */
     private $orderDate;
@@ -118,6 +131,8 @@ class Project implements EntityWithMetaFields
      * @Serializer\Groups({"Project"})
      * @Serializer\Type(name="DateTime")
      *
+     * @Exporter\Expose(label="label.project_start", type="datetime")
+     *
      * @ORM\Column(name="start", type="datetime", nullable=true)
      */
     private $start;
@@ -127,6 +142,8 @@ class Project implements EntityWithMetaFields
      * @Serializer\Expose()
      * @Serializer\Groups({"Project"})
      * @Serializer\Type(name="DateTime")
+     *
+     * @Exporter\Expose(label="label.project_end", type="datetime")
      *
      * @ORM\Column(name="end", type="datetime", nullable=true)
      */
@@ -149,6 +166,8 @@ class Project implements EntityWithMetaFields
      * @Serializer\Expose()
      * @Serializer\Groups({"Project_Entity"})
      *
+     * @Exporter\Expose(label="label.comment")
+     *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
@@ -157,6 +176,8 @@ class Project implements EntityWithMetaFields
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
+     *
+     * @Exporter\Expose(label="label.visible", type="boolean")
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -174,6 +195,8 @@ class Project implements EntityWithMetaFields
      * @Serializer\Expose()
      * @Serializer\Groups({"Project_Entity"})
      *
+     * @ Exporter\Expose(label="label.budget")
+     *
      * @ORM\Column(name="budget", type="float", nullable=false)
      * @Assert\NotNull()
      */
@@ -185,6 +208,8 @@ class Project implements EntityWithMetaFields
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project_Entity"})
+     *
+     * @ Exporter\Expose(label="label.timeBudget", type="duration")
      *
      * @ORM\Column(name="time_budget", type="integer", nullable=false)
      * @Assert\NotNull()
