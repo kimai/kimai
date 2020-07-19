@@ -11,6 +11,7 @@ namespace App\Export;
 
 use App\Export\Annotation\Expose;
 use App\Export\Annotation\Order;
+use App\Export\CellFormatter\BooleanFormatter;
 use App\Export\CellFormatter\CellFormatterInterface;
 use App\Export\CellFormatter\DateFormatter;
 use App\Export\CellFormatter\DateTimeFormatter;
@@ -52,6 +53,7 @@ class GenericSpreadsheetExporter
         $this->registerCellFormatter('date', new DateFormatter());
         $this->registerCellFormatter('time', new TimeFormatter());
         $this->registerCellFormatter('duration', new DurationFormatter());
+        $this->registerCellFormatter('boolean', new BooleanFormatter($translator));
         $this->expressionLanguage = $this->initExpressionLanguage();
     }
 

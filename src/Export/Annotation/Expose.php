@@ -32,7 +32,7 @@ final class Expose
      */
     public $name;
     /**
-     * @Enum({"string", "datetime", "date", "time", "int", "float", "duration"})
+     * @Enum({"string", "datetime", "date", "time", "integer", "float", "duration", "boolean"})
      */
     public $type = 'string';
     /**
