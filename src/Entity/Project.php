@@ -188,7 +188,7 @@ class Project implements EntityWithMetaFields
     use ColorTrait;
 
     /**
-     * The total monetary budget, will be zero if unconfigured.
+     * The total monetary budget, will be zero if not configured.
      *
      * @var float
      *
@@ -202,7 +202,7 @@ class Project implements EntityWithMetaFields
      */
     private $budget = 0.00;
     /**
-     * The time budget in seconds, will be be zero if unconfigured.
+     * The time budget in seconds, will be be zero if not configured.
      *
      * @var int
      *

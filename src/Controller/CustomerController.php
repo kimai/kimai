@@ -18,6 +18,8 @@ use App\Entity\Rate;
 use App\Entity\Team;
 use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\CustomerMetaDisplayEvent;
+use App\Export\GenericSpreadsheetExporter;
+use App\Export\Writer\XlsxWriter;
 use App\Form\CustomerCommentForm;
 use App\Form\CustomerEditForm;
 use App\Form\CustomerRateForm;
@@ -405,6 +407,35 @@ final class CustomerController extends AbstractController
             'stats' => $stats,
             'form' => $deleteForm->createView(),
         ]);
+    }
+
+    /**
+     * @Route(path="/export", name="admin_customer_export", methods={"GET"})
+     */
+    public function exportAction(Request $request, GenericSpreadsheetExporter $exporter)
+    {
+        $query = new CustomerQuery();
+        $query->setCurrentUser($this->getUser());
+
+        $form = $this->getToolbarForm($query);
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
+
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
+
+        $entries = $this->repository->getCustomersForQuery($query);
+
+        $spreadsheet = $exporter->export(Customer::class, $entries);
+        $writer = new XlsxWriter();
+        $file = $writer->save($spreadsheet);
+        $now = new \DateTime();
+
+        $response = $this->file($file, 'kimai-customers_' . $now->format('Y-m-d_H-i-m') . $writer->getFileExtension());
+        $response->deleteFileAfterSend(true);
+
+        return $response;
     }
 
     /**
