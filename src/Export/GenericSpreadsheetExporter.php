@@ -97,6 +97,44 @@ class GenericSpreadsheetExporter
         $recordsHeaderColumn = 1;
         $recordsHeaderRow = 1;
 
+        $columns = $this->calculateColumns($class, $entries);
+
+        foreach ($columns as $settings) {
+            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($settings->getLabel()));
+        }
+
+        $entryHeaderRow = $recordsHeaderRow + 1;
+
+        foreach ($entries as $entry) {
+            $entryHeaderColumn = 1;
+
+            foreach ($columns as $settings) {
+                $value = \call_user_func($settings->getAccessor(), $entry);
+
+                if (!\array_key_exists($settings->getType(), $this->formatter)) {
+                    $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $value);
+                } else {
+                    $formatter = $this->formatter[$settings->getType()];
+                    $formatter->setFormattedValue($sheet, $entryHeaderColumn, $entryHeaderRow, $value);
+                }
+
+                $entryHeaderColumn++;
+            }
+
+            $entryHeaderRow++;
+        }
+
+        return $spreadsheet;
+    }
+
+    /**
+     * @param string $class
+     * @param array $entries
+     * @return ColumnDefinition[]
+     * @throws \ReflectionException
+     */
+    protected function calculateColumns(string $class, array $entries): array
+    {
         $reflectionClass = new \ReflectionClass($class);
         $columns = [];
 
@@ -104,7 +142,7 @@ class GenericSpreadsheetExporter
             foreach ($definitions as $definition) {
                 if ($definition instanceof Order) {
                     foreach ($definition->order as $columnName) {
-                        $columns[$columnName] = [];
+                        $columns[$columnName] = null;
                     }
                 }
             }
@@ -119,13 +157,13 @@ class GenericSpreadsheetExporter
 
                     $parsed = $this->expressionLanguage->parse($definition->exp, ['object']);
 
-                    $columns[$definition->name] = [
-                        'accessor' => function ($obj) use ($parsed) {
+                    $columns[$definition->name] = new ColumnDefinition(
+                        $definition->label,
+                        $definition->type,
+                        function ($obj) use ($parsed) {
                             return $parsed->getNodes()->evaluate([], ['object' => $obj]);
-                        },
-                        'label' => $definition->label,
-                        'type' => $definition->type,
-                    ];
+                        }
+                    );
                 }
             }
         }
@@ -140,17 +178,17 @@ class GenericSpreadsheetExporter
 
                         $name = empty($definition->name) ? $property->getName() : $definition->name;
 
-                        $columns[$name] = [
-                            'accessor' => function ($obj) use ($property) {
+                        $columns[$name] = new ColumnDefinition(
+                            $definition->label,
+                            $definition->type,
+                            function ($obj) use ($property) {
                                 if (!$property->isPublic()) {
                                     $property->setAccessible(true);
                                 }
 
                                 return $property->getValue($obj);
-                            },
-                            'label' => $definition->label,
-                            'type' => $definition->type,
-                        ];
+                            }
+                        );
                     }
                 }
             }
@@ -169,55 +207,28 @@ class GenericSpreadsheetExporter
                             throw new \Exception(sprintf('@Expose does not support method %s::%s(...) as it needs parameter', $class, $method->getName()));
                         }
 
-                        $columns[$name] = [
-                            'accessor' => function ($obj) use ($method) {
+                        $columns[$name] = new ColumnDefinition(
+                            $definition->label,
+                            $definition->type,
+                            function ($obj) use ($method) {
                                 if (!$method->isPublic()) {
                                     $method->setAccessible(true);
                                 }
 
                                 return $method->invoke($obj);
-                            },
-                            'label' => $definition->label,
-                            'type' => $definition->type,
-                        ];
+                            }
+                        );
                     }
                 }
             }
         }
 
-        foreach ($columns as $name => $settings) {
-            if (empty($settings)) {
+        foreach ($columns as $name => $defintion) {
+            if (null === $defintion) {
                 unset($columns[$name]);
             }
         }
 
-        $columns = array_values($columns);
-
-        foreach ($columns as $settings) {
-            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($settings['label']));
-        }
-
-        $entryHeaderRow = $recordsHeaderRow + 1;
-
-        foreach ($entries as $entry) {
-            $entryHeaderColumn = 1;
-
-            foreach ($columns as $settings) {
-                $value = \call_user_func($settings['accessor'], $entry);
-
-                if (!\array_key_exists($settings['type'], $this->formatter)) {
-                    $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $value);
-                } else {
-                    $formatter = $this->formatter[$settings['type']];
-                    $formatter->setFormattedValue($sheet, $entryHeaderColumn, $entryHeaderRow, $value);
-                }
-
-                $entryHeaderColumn++;
-            }
-
-            $entryHeaderRow++;
-        }
-
-        return $spreadsheet;
+        return array_values($columns);
     }
 }

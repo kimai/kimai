@@ -430,9 +430,8 @@ final class CustomerController extends AbstractController
         $spreadsheet = $exporter->export(Customer::class, $entries);
         $writer = new XlsxWriter();
         $file = $writer->save($spreadsheet);
-        $now = new \DateTime();
 
-        $response = $this->file($file, 'kimai-customers_' . $now->format('Y-m-d_H-i-m') . $writer->getFileExtension());
+        $response = $this->file($file, 'kimai-customers_' . (new \DateTime())->format('Y-m-d_H-i-m') . $writer->getFileExtension());
         $response->deleteFileAfterSend(true);
 
         return $response;

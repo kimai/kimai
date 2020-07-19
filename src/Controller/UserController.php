@@ -214,9 +214,8 @@ final class UserController extends AbstractController
         $spreadsheet = $exporter->export(User::class, $entries);
         $writer = new XlsxWriter();
         $file = $writer->save($spreadsheet);
-        $now = new \DateTime();
 
-        $response = $this->file($file, 'kimai-users_' . $now->format('Y-m-d_H-i-m') . $writer->getFileExtension());
+        $response = $this->file($file, 'kimai-users_' . (new \DateTime())->format('Y-m-d_H-i-m') . $writer->getFileExtension());
         $response->deleteFileAfterSend(true);
 
         return $response;

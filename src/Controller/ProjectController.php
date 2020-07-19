@@ -441,9 +441,8 @@ final class ProjectController extends AbstractController
         $spreadsheet = $exporter->export(Project::class, $entries);
         $writer = new XlsxWriter();
         $file = $writer->save($spreadsheet);
-        $now = new \DateTime();
 
-        $response = $this->file($file, 'kimai-projects_' . $now->format('Y-m-d_H-i-m') . $writer->getFileExtension());
+        $response = $this->file($file, 'kimai-projects_' . (new \DateTime())->format('Y-m-d_H-i-m') . $writer->getFileExtension());
         $response->deleteFileAfterSend(true);
 
         return $response;
