@@ -11,6 +11,7 @@ namespace App\Export;
 
 use App\Export\Annotation\Expose;
 use App\Export\Annotation\Order;
+use App\Export\CellFormatter\ArrayFormatter;
 use App\Export\CellFormatter\BooleanFormatter;
 use App\Export\CellFormatter\CellFormatterInterface;
 use App\Export\CellFormatter\DateFormatter;
@@ -19,7 +20,6 @@ use App\Export\CellFormatter\DurationFormatter;
 use App\Export\CellFormatter\TimeFormatter;
 use Doctrine\Common\Annotations\Reader;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -49,12 +49,14 @@ class GenericSpreadsheetExporter
     {
         $this->translator = $translator;
         $this->annotationReader = $annotationReader;
+        $this->expressionLanguage = $this->initExpressionLanguage();
+
         $this->registerCellFormatter('datetime', new DateTimeFormatter());
         $this->registerCellFormatter('date', new DateFormatter());
         $this->registerCellFormatter('time', new TimeFormatter());
         $this->registerCellFormatter('duration', new DurationFormatter());
         $this->registerCellFormatter('boolean', new BooleanFormatter());
-        $this->expressionLanguage = $this->initExpressionLanguage();
+        $this->registerCellFormatter('array', new ArrayFormatter());
     }
 
     public function registerCellFormatter(string $type, CellFormatterInterface $formatter)
@@ -70,7 +72,7 @@ class GenericSpreadsheetExporter
     private function initExpressionLanguage(): ExpressionLanguage
     {
         $expressionLanguage = new ExpressionLanguage();
-        $expressionLanguage->addFunction(ExpressionFunction::fromPhp('implode'));
+        // $expressionLanguage->addFunction(ExpressionFunction::fromPhp('implode'));
 
         return $expressionLanguage;
     }
@@ -115,9 +117,11 @@ class GenericSpreadsheetExporter
                         throw new \Exception('@Expose needs an expression attribute on class level hierarchy');
                     }
 
+                    $parsed = $this->expressionLanguage->parse($definition->exp, ['object']);
+
                     $columns[$definition->name] = [
-                        'accessor' => function ($obj) use ($definition) {
-                            return $this->expressionLanguage->evaluate($definition->exp, ['object' => $obj]);
+                        'accessor' => function ($obj) use ($parsed) {
+                            return $parsed->getNodes()->evaluate([], ['object' => $obj]);
                         },
                         'label' => $definition->label,
                         'type' => $definition->type,
@@ -130,6 +134,10 @@ class GenericSpreadsheetExporter
             if (null !== ($definitions = $this->annotationReader->getPropertyAnnotations($property))) {
                 foreach ($definitions as $definition) {
                     if ($definition instanceof Expose) {
+                        if (null !== $definition->exp) {
+                            throw new \Exception('@Expose only supports the expression attribute on class level hierarchy');
+                        }
+
                         $name = empty($definition->name) ? $property->getName() : $definition->name;
 
                         $columns[$name] = [
@@ -152,6 +160,9 @@ class GenericSpreadsheetExporter
             if (null !== ($definitions = $this->annotationReader->getMethodAnnotations($method))) {
                 foreach ($definitions as $definition) {
                     if ($definition instanceof Expose) {
+                        if (null !== $definition->exp) {
+                            throw new \Exception('@Expose only supports the expression attribute on class level hierarchy');
+                        }
                         $name = empty($definition->name) ? $method->getName() : $definition->name;
 
                         if (\count($method->getParameters()) > 0) {
@@ -192,7 +203,7 @@ class GenericSpreadsheetExporter
             $entryHeaderColumn = 1;
 
             foreach ($columns as $settings) {
-                $value = $settings['accessor']($entry);
+                $value = \call_user_func($settings['accessor'], $entry);
 
                 if (!\array_key_exists($settings['type'], $this->formatter)) {
                     $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $value);

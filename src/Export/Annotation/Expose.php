@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace App\Export\Annotation;
 
+use Doctrine\Common\Annotations\Annotation\Enum;
 use Doctrine\Common\Annotations\Annotation\Required;
 use JMS\Serializer\Exception\InvalidArgumentException;
 
@@ -32,7 +33,7 @@ final class Expose
      */
     public $name;
     /**
-     * @Enum({"string", "datetime", "date", "time", "integer", "float", "duration", "boolean"})
+     * @Enum({"string", "datetime", "date", "time", "integer", "float", "duration", "boolean", "array"})
      */
     public $type = 'string';
     /**
