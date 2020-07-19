@@ -57,8 +57,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Exporter\Expose("timezone", label="label.timezone", exp="object.getTimezone()")
  * @Exporter\Expose("language", label="label.language", exp="object.getLanguage()")
  * @Exporter\Expose("last_login", label="label.lastLogin", exp="object.getLastLogin()")
- * @Exporter\Expose("roles", label="label.roles", exp="implode(';', object.getRoles())")
- * @Exporter\Expose("teams", label="label.team", exp="implode(';', object.getTeams().toArray())")
+ * @Exporter\Expose("roles", label="label.roles", exp="object.getRoles()", type="array")
+ * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
  * @Exporter\Expose("active", label="label.active", exp="object.isEnabled()", type="boolean")
  */
 class User extends BaseUser implements UserInterface
