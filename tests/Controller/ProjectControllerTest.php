@@ -80,6 +80,47 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_project_admin', 5);
     }
 
+    public function testExportIsSecureForRole()
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/project/export');
+    }
+
+    public function testExportAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->assertAccessIsGranted($client, '/admin/project/export');
+        $this->assertExcelExportResponse($client, 'kimai-projects_');
+    }
+
+    public function testExportActionWithSearchTermQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new ProjectFixtures();
+        $fixture->setAmount(5);
+        $fixture->setCallback(function (Project $project) {
+            $project->setVisible(true);
+            $project->setComment('I am a foobar with tralalalala some more content');
+            $project->setMetaField((new ProjectMeta())->setName('location')->setValue('homeoffice'));
+            $project->setMetaField((new ProjectMeta())->setName('feature')->setValue('timetracking'));
+        });
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/admin/project/');
+
+        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/project/export'));
+        $client->submit($form, [
+            'searchTerm' => 'feature:timetracking foo',
+            'visibility' => 1,
+            'customers' => [1],
+            'pageSize' => 50,
+            'page' => 1,
+        ]);
+
+        $this->assertExcelExportResponse($client, 'kimai-projects_');
+    }
+
     public function testDetailsAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);

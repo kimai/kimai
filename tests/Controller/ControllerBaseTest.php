@@ -13,6 +13,7 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Tests\KernelTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
@@ -340,5 +341,16 @@ abstract class ControllerBaseTest extends WebTestCase
 
         self::assertTrue($client->getResponse()->headers->has('Location'), 'Could not find "Location" header');
         self::assertStringEndsWith($url, $client->getResponse()->headers->get('Location'), 'Redirect URL does not match');
+    }
+
+    protected function assertExcelExportResponse(HttpKernelBrowser $client, string $prefix)
+    {
+        /** @var BinaryFileResponse $response */
+        $response = $client->getResponse();
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
+
+        self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
+        self::assertStringContainsString('attachment; filename=' . $prefix, $response->headers->get('Content-Disposition'));
+        self::assertStringContainsString('.xlsx', $response->headers->get('Content-Disposition'));
     }
 }
