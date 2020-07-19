@@ -10,20 +10,9 @@
 namespace App\Export\CellFormatter;
 
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BooleanFormatter implements CellFormatterInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
-
     public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value)
     {
         if (null === $value) {
@@ -36,11 +25,13 @@ class BooleanFormatter implements CellFormatterInterface
             throw new \InvalidArgumentException('Unsupported value given, only boolean is supported');
         }
 
+        /*
         if (true === $value) {
-            $value = $this->translator->trans('yes');
+            $value = '=TRUE()';
         } else {
-            $value = $this->translator->trans('no');
+            $value = '=FALSE()';
         }
+        */
 
         $sheet->setCellValueByColumnAndRow($column, $row, $value);
     }

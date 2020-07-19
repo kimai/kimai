@@ -53,7 +53,7 @@ class GenericSpreadsheetExporter
         $this->registerCellFormatter('date', new DateFormatter());
         $this->registerCellFormatter('time', new TimeFormatter());
         $this->registerCellFormatter('duration', new DurationFormatter());
-        $this->registerCellFormatter('boolean', new BooleanFormatter($translator));
+        $this->registerCellFormatter('boolean', new BooleanFormatter());
         $this->expressionLanguage = $this->initExpressionLanguage();
     }
 
