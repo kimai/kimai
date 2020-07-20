@@ -13,7 +13,6 @@ namespace App\Export\Annotation;
 
 use Doctrine\Common\Annotations\Annotation\Enum;
 use Doctrine\Common\Annotations\Annotation\Required;
-use JMS\Serializer\Exception\InvalidArgumentException;
 
 /**
  * Annotation class for @Expose().
@@ -50,7 +49,7 @@ final class Expose
 
         foreach ($data as $key => $value) {
             if (!property_exists(self::class, $key)) {
-                throw new InvalidArgumentException(sprintf('Unknown property "%s" on annotation "%s".', $key, self::class));
+                throw new \InvalidArgumentException(sprintf('Unknown property "%s" on annotation "%s".', $key, self::class));
             }
             $this->{$key} = $value;
         }

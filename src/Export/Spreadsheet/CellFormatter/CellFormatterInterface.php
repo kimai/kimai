@@ -13,5 +13,12 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 interface CellFormatterInterface
 {
-    public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value);
+    /**
+     * @param Worksheet $sheet
+     * @param int $column
+     * @param int $row
+     * @param mixed $value
+     * @throws \InvalidArgumentException
+     */
+    public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void;
 }

@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace App\Export\Annotation;
 
-use JMS\Serializer\Exception\InvalidArgumentException;
-
 /**
  * @Annotation
  * @Target({"CLASS"})
@@ -29,13 +27,6 @@ final class Order
         if (isset($data['value'])) {
             $this->order = $data['value'];
             unset($data['value']);
-        }
-
-        foreach ($data as $key => $value) {
-            if (!property_exists(self::class, $key)) {
-                throw new InvalidArgumentException(sprintf('Unknown property "%s" on annotation "%s".', $key, self::class));
-            }
-            $this->{$key} = $value;
         }
     }
 }

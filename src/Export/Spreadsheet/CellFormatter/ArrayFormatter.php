@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ArrayFormatter implements CellFormatterInterface
 {
-    public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value)
+    public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
     {
         if (null === $value) {
             $sheet->setCellValueByColumnAndRow($column, $row, '');

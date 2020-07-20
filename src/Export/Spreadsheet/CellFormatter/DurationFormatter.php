@@ -15,7 +15,7 @@ class DurationFormatter implements CellFormatterInterface
 {
     public const DURATION_FORMAT = '[hh]:mm';
 
-    public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value)
+    public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
     {
         if (null === $value) {
             $value = 0;

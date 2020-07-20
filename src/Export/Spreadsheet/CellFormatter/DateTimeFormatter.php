@@ -16,7 +16,7 @@ class DateTimeFormatter implements CellFormatterInterface
 {
     public const DATETIME_FORMAT = 'yyyy-mm-dd hh:mm';
 
-    public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value)
+    public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
     {
         if (null === $value) {
             $sheet->setCellValueByColumnAndRow($column, $row, '');

@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class BooleanFormatter implements CellFormatterInterface
 {
-    public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value)
+    public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
     {
         if (null === $value) {
             $sheet->setCellValueByColumnAndRow($column, $row, '');
@@ -24,14 +24,6 @@ class BooleanFormatter implements CellFormatterInterface
         if (!\is_bool($value)) {
             throw new \InvalidArgumentException('Unsupported value given, only boolean is supported');
         }
-
-        /*
-        if (true === $value) {
-            $value = '=TRUE()';
-        } else {
-            $value = '=FALSE()';
-        }
-        */
 
         $sheet->setCellValueByColumnAndRow($column, $row, $value);
     }
