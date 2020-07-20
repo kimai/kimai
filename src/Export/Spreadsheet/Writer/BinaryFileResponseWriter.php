@@ -21,18 +21,18 @@ class BinaryFileResponseWriter implements WriterInterface
      */
     private $writer;
     /**
-     * @var \SplFileInfo
-     */
-    private $file;
-    /**
      * @var string
      */
     private $prefix;
 
+    /**
+     * @param WriterInterface $writer
+     * @param string $prefix is only urlencoded but not validated and can break the response if you pass in invalid character
+     */
     public function __construct(WriterInterface $writer, string $prefix)
     {
         $this->writer = $writer;
-        $this->prefix = $prefix;
+        $this->prefix = urlencode($prefix);
     }
 
     public function getFileExtension(): string
@@ -50,16 +50,14 @@ class BinaryFileResponseWriter implements WriterInterface
      */
     public function save(Spreadsheet $spreadsheet, array $options = []): \SplFileInfo
     {
-        $this->file = $this->writer->save($spreadsheet, $options);
-
-        return $this->file;
+        return $this->writer->save($spreadsheet, $options);
     }
 
-    public function getFileResponse(Spreadsheet $spreadsheet, array $options = []): Response
+    public function getFileResponse(Spreadsheet $spreadsheet, array $options = []): BinaryFileResponse
     {
         $file = $this->save($spreadsheet, $options);
 
-        $filename = $this->prefix . '_' . (new \DateTime())->format('Y-m-d_H-i-m') . $this->writer->getFileExtension();
+        $filename = $this->prefix . '_' . (new \DateTime())->format('YmdHim') . '.' . $this->writer->getFileExtension();
 
         $response = new BinaryFileResponse($file);
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);

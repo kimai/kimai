@@ -17,7 +17,7 @@ class XlsxWriter implements WriterInterface
 {
     public function getFileExtension(): string
     {
-        return '.xlsx';
+        return 'xlsx';
     }
 
     /**

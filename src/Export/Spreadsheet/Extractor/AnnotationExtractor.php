@@ -65,10 +65,10 @@ final class AnnotationExtractor implements ExtractorInterface
             foreach ($definitions as $definition) {
                 if ($definition instanceof Expose) {
                     if (null === $definition->name) {
-                        throw new ExtractorException('@Expose needs a name attribute on class level hierarchy');
+                        throw new ExtractorException(sprintf('@Expose needs a name attribute on class level hierarchy, check %s::class', $value));
                     }
                     if (null === $definition->exp) {
-                        throw new ExtractorException('@Expose needs an expression attribute on class level hierarchy');
+                        throw new ExtractorException(sprintf('@Expose needs an expression attribute on class level hierarchy, check %s::class', $value));
                     }
 
                     $parsed = $this->expressionLanguage->parse($definition->exp, ['object']);
@@ -89,7 +89,7 @@ final class AnnotationExtractor implements ExtractorInterface
                 foreach ($definitions as $definition) {
                     if ($definition instanceof Expose) {
                         if (null !== $definition->exp) {
-                            throw new ExtractorException('@Expose only supports the expression attribute on class level hierarchy');
+                            throw new ExtractorException(sprintf('@Expose only supports the expression attribute on class level hierarchy, check %s::$%s', $value, $property->getName()));
                         }
 
                         $name = empty($definition->name) ? $property->getName() : $definition->name;
@@ -115,12 +115,12 @@ final class AnnotationExtractor implements ExtractorInterface
                 foreach ($definitions as $definition) {
                     if ($definition instanceof Expose) {
                         if (null !== $definition->exp) {
-                            throw new ExtractorException('@Expose only supports the expression attribute on class level hierarchy');
+                            throw new ExtractorException(sprintf('@Expose only supports the expression attribute on class level hierarchy, check %s::%s()', $value, $method->getName()));
                         }
                         $name = empty($definition->name) ? $method->getName() : $definition->name;
 
                         if (\count($method->getParameters()) > 0) {
-                            throw new ExtractorException(sprintf('@Expose does not support method %s::%s(...) as it needs parameter', $value, $method->getName()));
+                            throw new ExtractorException(sprintf('@Expose does not support method %s::%s(...), it has required parameters.', $value, $method->getName()));
                         }
 
                         $columns[$name] = new ColumnDefinition(
@@ -139,8 +139,8 @@ final class AnnotationExtractor implements ExtractorInterface
             }
         }
 
-        foreach ($columns as $name => $defintion) {
-            if (null === $defintion) {
+        foreach ($columns as $name => $definition) {
+            if (null === $definition) {
                 unset($columns[$name]);
             }
         }
