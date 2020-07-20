@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Export\Annotation as Exporter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -44,6 +45,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @Serializer\Groups({"Default"})
  *      }
  * )
+ *
+ * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "color", "visible", "comment"})
+ * @Exporter\Expose("project", label="label.project", exp="object.getProject() === null ? null : object.getProject().getName()")
+ * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
  */
 class Activity implements EntityWithMetaFields
 {
@@ -54,6 +59,8 @@ class Activity implements EntityWithMetaFields
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
+     *
+     * @Exporter\Expose(label="label.id", type="integer")
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -75,6 +82,8 @@ class Activity implements EntityWithMetaFields
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
+     * @Exporter\Expose(label="label.name")
+     *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Length(min=2, max=150, allowEmptyString=false)
@@ -88,6 +97,8 @@ class Activity implements EntityWithMetaFields
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity"})
      *
+     * @Exporter\Expose(label="label.comment")
+     *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
@@ -98,6 +109,8 @@ class Activity implements EntityWithMetaFields
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
+     *
+     * @Exporter\Expose(label="label.visible", type="boolean")
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
@@ -115,6 +128,8 @@ class Activity implements EntityWithMetaFields
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity"})
      *
+     * @ Exporter\Expose(label="label.budget")
+     *
      * @ORM\Column(name="budget", type="float", nullable=false)
      * @Assert\NotNull()
      */
@@ -126,6 +141,8 @@ class Activity implements EntityWithMetaFields
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity"})
+     *
+     * @ Exporter\Expose(label="label.timeBudget", type="duration")
      *
      * @ORM\Column(name="time_budget", type="integer", nullable=false)
      * @Assert\NotNull()

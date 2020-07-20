@@ -16,6 +16,9 @@ use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Event\ActivityMetaDefinitionEvent;
 use App\Event\ActivityMetaDisplayEvent;
+use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\ActivityEditForm;
 use App\Form\ActivityRateForm;
 use App\Form\Toolbar\ActivityToolbarForm;
@@ -254,6 +257,34 @@ final class ActivityController extends AbstractController
                 'form' => $deleteForm->createView(),
             ]
         );
+    }
+
+    /**
+     * @Route(path="/export", name="activity_export", methods={"GET"})
+     */
+    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
+    {
+        $query = new ActivityQuery();
+        $query->setCurrentUser($this->getUser());
+
+        $form = $this->getToolbarForm($query);
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
+
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
+
+        $entries = $this->repository->getActivitiesForQuery($query);
+
+        $spreadsheet = $exporter->export(
+            Activity::class,
+            $entries,
+            new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT)
+        );
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-activities');
+
+        return $writer->getFileResponse($spreadsheet);
     }
 
     /**

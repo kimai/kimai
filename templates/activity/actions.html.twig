@@ -3,6 +3,8 @@
 
     {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}, 'visibility': '#modal_activity_admin'} %}
 
+    {% set actions = actions|merge({'download': {'url': path('activity_export'), 'class': 'toolbar-action'}}) %}
+
     {% if is_granted('create_activity') %}
         {% set actions = actions|merge({'create': path('admin_activity_create')}) %}
     {% endif %}
