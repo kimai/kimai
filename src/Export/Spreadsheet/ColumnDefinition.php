@@ -7,24 +7,12 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Export;
+namespace App\Export\Spreadsheet;
 
-/**
- * @internal
- */
 final class ColumnDefinition
 {
-    /**
-     * @var string
-     */
     private $label;
-    /**
-     * @var string
-     */
     private $type;
-    /**
-     * @var callable
-     */
     private $accessor;
 
     public function __construct(string $label, string $type, callable $accessor)

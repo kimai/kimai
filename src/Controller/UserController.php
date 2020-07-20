@@ -12,8 +12,9 @@ namespace App\Controller;
 use App\Configuration\FormConfiguration;
 use App\Entity\User;
 use App\Event\UserPreferenceDisplayEvent;
-use App\Export\GenericSpreadsheetExporter;
-use App\Export\Writer\XlsxWriter;
+use App\Export\Spreadsheet\UserExporter;
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\Toolbar\UserToolbarForm;
 use App\Form\UserCreateType;
 use App\Repository\Query\UserQuery;
@@ -193,10 +194,10 @@ final class UserController extends AbstractController
     }
 
     /**
-     * @Route(path="/export", name="admin_user_export", methods={"GET"})
+     * @Route(path="/export", name="user_export", methods={"GET"})
      * @Security("is_granted('view_user')")
      */
-    public function exportAction(Request $request, GenericSpreadsheetExporter $exporter)
+    public function exportAction(Request $request, UserExporter $exporter)
     {
         $query = new UserQuery();
         $query->setCurrentUser($this->getUser());
@@ -211,14 +212,14 @@ final class UserController extends AbstractController
 
         $entries = $this->getRepository()->getUsersForQuery($query);
 
-        $spreadsheet = $exporter->export(User::class, $entries);
-        $writer = new XlsxWriter();
-        $file = $writer->save($spreadsheet);
+        $spreadsheet = $exporter->export(
+            User::class,
+            $entries,
+            new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT)
+        );
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-users');
 
-        $response = $this->file($file, 'kimai-users_' . (new \DateTime())->format('Y-m-d_H-i-m') . $writer->getFileExtension());
-        $response->deleteFileAfterSend(true);
-
-        return $response;
+        return $writer->getFileResponse($spreadsheet);
     }
 
     protected function getToolbarForm(UserQuery $query): FormInterface

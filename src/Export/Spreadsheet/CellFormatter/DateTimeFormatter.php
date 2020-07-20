@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Export\CellFormatter;
+namespace App\Export\Spreadsheet\CellFormatter;
 
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Export\Writer;
+namespace App\Export\Spreadsheet\Writer;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;

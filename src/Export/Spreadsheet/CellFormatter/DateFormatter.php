@@ -7,15 +7,14 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Export\CellFormatter;
+namespace App\Export\Spreadsheet\CellFormatter;
 
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class TimeFormatter implements CellFormatterInterface
+class DateFormatter implements CellFormatterInterface
 {
-    public const TIME_FORMAT = 'hh:mm';
-
     public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value)
     {
         if (null === $value) {
@@ -29,6 +28,6 @@ class TimeFormatter implements CellFormatterInterface
         }
 
         $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($value));
-        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::TIME_FORMAT);
+        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_YYYYMMDD2);
     }
 }

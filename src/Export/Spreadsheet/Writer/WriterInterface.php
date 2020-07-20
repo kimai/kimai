@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Export\Writer;
+namespace App\Export\Spreadsheet\Writer;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
@@ -17,5 +17,12 @@ interface WriterInterface
 
     public function getContentType(): string;
 
+    /**
+     * Save the given spreadsheet
+     *
+     * @param Spreadsheet $spreadsheet
+     * @param array $options
+     * @return \SplFileInfo
+     */
     public function save(Spreadsheet $spreadsheet, array $options = []): \SplFileInfo;
 }

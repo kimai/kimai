@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Export\CellFormatter;
+namespace App\Export\Spreadsheet\CellFormatter;
 
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ArrayFormatter implements CellFormatterInterface
+class BooleanFormatter implements CellFormatterInterface
 {
     public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value)
     {
@@ -21,10 +21,18 @@ class ArrayFormatter implements CellFormatterInterface
             return;
         }
 
-        if (!\is_array($value)) {
-            throw new \InvalidArgumentException('Unsupported value given, only array is supported');
+        if (!\is_bool($value)) {
+            throw new \InvalidArgumentException('Unsupported value given, only boolean is supported');
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, implode(';', $value));
+        /*
+        if (true === $value) {
+            $value = '=TRUE()';
+        } else {
+            $value = '=FALSE()';
+        }
+        */
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $value);
     }
 }

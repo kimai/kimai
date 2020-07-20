@@ -9,7 +9,7 @@
         {% set actions = actions|merge({'back': path('admin_user')}) %}
     {% endif %}
 
-    {% set actions = actions|merge({'download': {'url': path('admin_user_export'), 'class': 'toolbar-action'}}) %}
+    {% set actions = actions|merge({'download': {'url': path('user_export'), 'class': 'toolbar-action'}}) %}
 
     {% if is_granted('role_permissions') %}
         {% set actions = actions|merge({'permissions': path('admin_user_permissions')}) %}

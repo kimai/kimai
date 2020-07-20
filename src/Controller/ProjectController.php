@@ -19,8 +19,9 @@ use App\Entity\Rate;
 use App\Entity\Team;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Event\ProjectMetaDisplayEvent;
-use App\Export\GenericSpreadsheetExporter;
-use App\Export\Writer\XlsxWriter;
+use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\ProjectCommentForm;
 use App\Form\ProjectEditForm;
 use App\Form\ProjectRateForm;
@@ -421,9 +422,9 @@ final class ProjectController extends AbstractController
     }
 
     /**
-     * @Route(path="/export", name="admin_project_export", methods={"GET"})
+     * @Route(path="/export", name="project_export", methods={"GET"})
      */
-    public function exportAction(Request $request, GenericSpreadsheetExporter $exporter)
+    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
     {
         $query = new ProjectQuery();
         $query->setCurrentUser($this->getUser());
@@ -438,14 +439,14 @@ final class ProjectController extends AbstractController
 
         $entries = $this->repository->getProjectsForQuery($query);
 
-        $spreadsheet = $exporter->export(Project::class, $entries);
-        $writer = new XlsxWriter();
-        $file = $writer->save($spreadsheet);
+        $spreadsheet = $exporter->export(
+            Project::class,
+            $entries,
+            new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT)
+        );
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-projects');
 
-        $response = $this->file($file, 'kimai-projects_' . (new \DateTime())->format('Y-m-d_H-i-m') . $writer->getFileExtension());
-        $response->deleteFileAfterSend(true);
-
-        return $response;
+        return $writer->getFileResponse($spreadsheet);
     }
 
     /**
