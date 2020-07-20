@@ -12,6 +12,9 @@ namespace App\Tests\Entity;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Export\Spreadsheet\ColumnDefinition;
+use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
@@ -250,5 +253,42 @@ class UserTest extends TestCase
         self::assertTrue($sut->initCanSeeAllData(true));
         self::assertTrue($sut->canSeeAllData());
         self::assertFalse($sut->initCanSeeAllData(true));
+    }
+
+    public function testExportAnnotations()
+    {
+        $sut = new AnnotationExtractor(new AnnotationReader());
+
+        $columns = $sut->extract(User::class);
+
+        self::assertIsArray($columns);
+
+        $expected = [
+            ['label.id', 'integer'],
+            ['label.username', 'string'],
+            ['label.alias', 'string'],
+            ['label.title', 'string'],
+            ['label.email', 'string'],
+            ['label.lastLogin', 'datetime'],
+            ['label.language', 'string'],
+            ['label.timezone', 'string'],
+            ['label.active', 'boolean'],
+            ['profile.registration_date', 'datetime'],
+            ['label.roles', 'array'],
+        ];
+
+        self::assertCount(\count($expected), $columns);
+
+        foreach ($columns as $column) {
+            self::assertInstanceOf(ColumnDefinition::class, $column);
+        }
+
+        $i = 0;
+
+        foreach ($expected as $item) {
+            $column = $columns[$i++];
+            self::assertEquals($item[0], $column->getLabel());
+            self::assertEquals($item[1], $column->getType());
+        }
     }
 }
