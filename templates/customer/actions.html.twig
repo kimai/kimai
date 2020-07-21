@@ -3,6 +3,8 @@
 
     {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}, 'visibility': '#modal_customer_admin'} %}
 
+    {% set actions = actions|merge({'download': {'url': path('customer_export'), 'class': 'toolbar-action'}}) %}
+
     {% if is_granted('create_customer') %}
         {% set actions = actions|merge({'create': path('admin_customer_create')}) %}
     {% endif %}

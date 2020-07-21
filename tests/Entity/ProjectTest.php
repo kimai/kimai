@@ -13,6 +13,9 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
 use App\Entity\Team;
+use App\Export\Spreadsheet\ColumnDefinition;
+use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
@@ -132,5 +135,41 @@ class ProjectTest extends TestCase
         $sut->removeTeam($team);
         self::assertCount(0, $sut->getTeams());
         self::assertCount(0, $team->getProjects());
+    }
+
+    public function testExportAnnotations()
+    {
+        $sut = new AnnotationExtractor(new AnnotationReader());
+
+        $columns = $sut->extract(Project::class);
+
+        self::assertIsArray($columns);
+
+        $expected = [
+            ['label.id', 'integer'],
+            ['label.name', 'string'],
+            ['label.customer', 'string'],
+            ['label.orderNumber', 'string'],
+            ['label.orderDate', 'datetime'],
+            ['label.project_start', 'datetime'],
+            ['label.project_end', 'datetime'],
+            ['label.color', 'string'],
+            ['label.visible', 'boolean'],
+            ['label.comment', 'string'],
+        ];
+
+        self::assertCount(\count($expected), $columns);
+
+        foreach ($columns as $column) {
+            self::assertInstanceOf(ColumnDefinition::class, $column);
+        }
+
+        $i = 0;
+
+        foreach ($expected as $item) {
+            $column = $columns[$i++];
+            self::assertEquals($item[0], $column->getLabel());
+            self::assertEquals($item[1], $column->getType());
+        }
     }
 }

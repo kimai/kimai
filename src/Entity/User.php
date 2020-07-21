@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Export\Annotation as Exporter;
 use App\Utils\StringHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -49,6 +50,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @Serializer\Groups({"User_Entity"})
  *      }
  * )
+ *
+ * @Exporter\Order({"id", "username", "alias", "title", "email", "last_login", "language", "timezone", "active", "registeredAt", "roles", "teams"})
+ * @Exporter\Expose("email", label="label.email", exp="object.getEmail()")
+ * @Exporter\Expose("username", label="label.username", exp="object.getUsername()")
+ * @Exporter\Expose("timezone", label="label.timezone", exp="object.getTimezone()")
+ * @Exporter\Expose("language", label="label.language", exp="object.getLanguage()")
+ * @Exporter\Expose("last_login", label="label.lastLogin", exp="object.getLastLogin()", type="datetime")
+ * @Exporter\Expose("roles", label="label.roles", exp="object.getRoles()", type="array")
+ * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
+ * @Exporter\Expose("active", label="label.active", exp="object.isEnabled()", type="boolean")
  */
 class User extends BaseUser implements UserInterface
 {
@@ -73,6 +84,8 @@ class User extends BaseUser implements UserInterface
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
+     * @Exporter\Expose(label="label.id", type="integer")
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer")
@@ -86,6 +99,8 @@ class User extends BaseUser implements UserInterface
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
+     * @Exporter\Expose(label="label.alias")
+     *
      * @ORM\Column(name="alias", type="string", length=60, nullable=true)
      * @Assert\Length(max=60)
      */
@@ -94,6 +109,8 @@ class User extends BaseUser implements UserInterface
      * Registration date for the user
      *
      * @var \DateTime
+     *
+     * @Exporter\Expose(label="profile.registration_date", type="datetime")
      *
      * @ORM\Column(name="registration_date", type="datetime", nullable=true)
      */
@@ -105,6 +122,8 @@ class User extends BaseUser implements UserInterface
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"User_Entity"})
+     *
+     * @Exporter\Expose(label="label.title")
      *
      * @ORM\Column(name="title", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
@@ -179,7 +198,7 @@ class User extends BaseUser implements UserInterface
      * This flag will be initialized in UserEnvironmentSubscriber.
      *
      * @var bool|null
-     * @internal has no database mapping. as the value is calculated from a permission
+     * @internal has no database mapping as the value is calculated from a permission
      */
     private $isAllowedToSeeAllData = null;
 

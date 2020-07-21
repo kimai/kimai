@@ -14,10 +14,12 @@ use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
 use App\Entity\MetaTableTypeInterface;
-use App\Entity\Rate;
 use App\Entity\Team;
 use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\CustomerMetaDisplayEvent;
+use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\CustomerCommentForm;
 use App\Form\CustomerEditForm;
 use App\Form\CustomerRateForm;
@@ -405,6 +407,34 @@ final class CustomerController extends AbstractController
             'stats' => $stats,
             'form' => $deleteForm->createView(),
         ]);
+    }
+
+    /**
+     * @Route(path="/export", name="customer_export", methods={"GET"})
+     */
+    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
+    {
+        $query = new CustomerQuery();
+        $query->setCurrentUser($this->getUser());
+
+        $form = $this->getToolbarForm($query);
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
+
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
+
+        $entries = $this->repository->getCustomersForQuery($query);
+
+        $spreadsheet = $exporter->export(
+            Customer::class,
+            $entries,
+            new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::EXPORT)
+        );
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-customers');
+
+        return $writer->getFileResponse($spreadsheet);
     }
 
     /**

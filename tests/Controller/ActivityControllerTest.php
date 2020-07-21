@@ -73,6 +73,48 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_activity_admin', 5);
     }
 
+    public function testExportIsSecureForRole()
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/activity/export');
+    }
+
+    public function testExportAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->assertAccessIsGranted($client, '/admin/activity/export');
+        $this->assertExcelExportResponse($client, 'kimai-activities_');
+    }
+
+    public function testExportActionWithSearchTermQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new ActivityFixtures();
+        $fixture->setAmount(5);
+        $fixture->setCallback(function (Activity $activity) {
+            $activity->setVisible(true);
+            $activity->setComment('I am a foobar with tralalalala some more content');
+            $activity->setMetaField((new ActivityMeta())->setName('location')->setValue('homeoffice'));
+            $activity->setMetaField((new ActivityMeta())->setName('feature')->setValue('timetracking'));
+        });
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/admin/activity/');
+
+        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/activity/export'));
+        $client->submit($form, [
+            'searchTerm' => 'feature:timetracking foo',
+            'visibility' => 1,
+            'pageSize' => 50,
+            'customers' => [1],
+            'projects' => [1],
+            'page' => 1,
+        ]);
+
+        $this->assertExcelExportResponse($client, 'kimai-activities_');
+    }
+
     public function testDetailsAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
