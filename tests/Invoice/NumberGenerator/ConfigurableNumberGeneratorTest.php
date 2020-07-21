@@ -55,6 +55,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
 
         return [
             // simple tests for single calls
+            ['my-{date} is+cool,really', 'my-' . $invoiceDate->format('ymd') . ' is+cool,really', $invoiceDate],
             ['{date}', $invoiceDate->format('ymd'), $invoiceDate],
             ['{Y}', $invoiceDate->format('Y'), $invoiceDate],
             ['{y}', $invoiceDate->format('y'), $invoiceDate],
@@ -77,6 +78,16 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{cy,2}', '02', $invoiceDate],
             ['{cm,2}', '02', $invoiceDate],
             ['{cd,2}', '02', $invoiceDate],
+            ['{c+13,2}', '14', $invoiceDate],
+            ['{cy+1,2}', '02', $invoiceDate],
+            ['{cm+-1,2}', '02', $invoiceDate], // negative is not allowed and set to 1
+            ['{cm+0,2}', '02', $invoiceDate], // zero is not allowed and set to 1
+            ['{cd+111,2}', '112', $invoiceDate],
+            ['{c+13}', '14', $invoiceDate],
+            ['{cy+1}', '2', $invoiceDate],
+            ['{cm+-1}', '2', $invoiceDate], // negative is not allowed and set to 1
+            ['{cm+0}', '2', $invoiceDate], // zero is not allowed and set to 1
+            ['{cd+111}', '112', $invoiceDate],
             // mixing identifiers
             ['{Y}{cy}', $invoiceDate->format('Y') . '2', $invoiceDate],
             ['{Y}{cy}{m}', $invoiceDate->format('Y') . '2' . $invoiceDate->format('n'), $invoiceDate],
