@@ -12,6 +12,7 @@ namespace App\Tests\Export\Spreadsheet\CellFormatter;
 use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
 use App\Export\Spreadsheet\CellFormatter\DurationFormatter;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 
 /**
@@ -34,10 +35,16 @@ class DurationFormatterTest extends AbstractFormatterTest
         return '=3600/86400';
     }
 
-    public function setFormattedValueWithInvalidValue()
+    public function testFormattedValueWithInvalidValue()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unsupported value given, only DateTime is supported');
+        $this->expectExceptionMessage('Unsupported value given, only int is supported');
+
+        $spreadsheet = new Spreadsheet();
+        $worksheet = $spreadsheet->getActiveSheet();
+
+        $sut = $this->getFormatter();
+        $sut->setFormattedValue($worksheet, 1, 1, 'sdfsdf');
     }
 
     protected function assertNullValue(Cell $cell)

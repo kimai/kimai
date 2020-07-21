@@ -12,6 +12,7 @@ namespace App\Tests\Export\Spreadsheet\CellFormatter;
 use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
 use App\Export\Spreadsheet\CellFormatter\DateTimeFormatter;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 
 /**
@@ -36,10 +37,16 @@ class DateTimeFormatterTest extends AbstractFormatterTest
         return Date::PHPToExcel($this->date);
     }
 
-    public function setFormattedValueWithInvalidValue()
+    public function testFormattedValueWithInvalidValue()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unsupported value given, only DateTime is supported');
+
+        $spreadsheet = new Spreadsheet();
+        $worksheet = $spreadsheet->getActiveSheet();
+
+        $sut = $this->getFormatter();
+        $sut->setFormattedValue($worksheet, 1, 1, 'sdfsdf');
     }
 
     protected function assertCellStyle(Style $style)

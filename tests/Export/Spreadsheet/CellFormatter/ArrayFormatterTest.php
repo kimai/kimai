@@ -11,6 +11,7 @@ namespace App\Tests\Export\Spreadsheet\CellFormatter;
 
 use App\Export\Spreadsheet\CellFormatter\ArrayFormatter;
 use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 /**
  * @covers \App\Export\Spreadsheet\CellFormatter\ArrayFormatter
@@ -32,9 +33,15 @@ class ArrayFormatterTest extends AbstractFormatterTest
         return 'test;foo;bar';
     }
 
-    public function setFormattedValueWithInvalidValue()
+    public function testFormattedValueWithInvalidValue()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unsupported value given, only array is supported');
+
+        $spreadsheet = new Spreadsheet();
+        $worksheet = $spreadsheet->getActiveSheet();
+
+        $sut = $this->getFormatter();
+        $sut->setFormattedValue($worksheet, 1, 1, 'sdfsdf');
     }
 }
