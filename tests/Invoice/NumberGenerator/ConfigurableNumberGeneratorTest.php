@@ -10,6 +10,7 @@
 namespace App\Tests\Invoice\NumberGenerator;
 
 use App\Configuration\SystemConfiguration;
+use App\Entity\Customer;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\ConfigurableNumberGenerator;
 use App\Repository\InvoiceRepository;
@@ -74,12 +75,19 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{M,3}', '0' . $invoiceDate->format('m'), $invoiceDate],
             ['{M,#}', $invoiceDate->format('m'), $invoiceDate], // invalid formatter length
             ['{D,3}', '0' . $invoiceDate->format('d'), $invoiceDate],
+            // counter across all invoices
             ['{c,2}', '02', $invoiceDate],
             ['{cy,2}', '02', $invoiceDate],
             ['{cm,2}', '02', $invoiceDate],
             ['{cd,2}', '02', $invoiceDate],
+            // customer specific
+            ['{cc,2}', '02', $invoiceDate],
+            ['{ccy,2}', '02', $invoiceDate],
+            ['{ccm,2}', '02', $invoiceDate],
+            ['{ccd,2}', '02', $invoiceDate],
+            // with incrementing counter
             ['{c+13,2}', '14', $invoiceDate],
-            ['{cy+1,2}', '02', $invoiceDate],
+            ['{ccy+1,2}', '02', $invoiceDate],
             ['{cm+-1,2}', '02', $invoiceDate], // negative is not allowed and set to 1
             ['{cm+0,2}', '02', $invoiceDate], // zero is not allowed and set to 1
             ['{cd+111,2}', '112', $invoiceDate],
@@ -106,6 +114,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $sut = $this->getSut($format);
         $model = new InvoiceModel(new DebugFormatter());
         $model->setInvoiceDate($invoiceDate);
+        $model->setCustomer(new Customer());
         $sut->setModel($model);
 
         $this->assertEquals($expectedInvoiceNumber, $sut->getInvoiceNumber());

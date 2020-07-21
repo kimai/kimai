@@ -85,23 +85,6 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 }
             }
 
-            /*
-            // number format
-            if (substr_count($tmp, '+') !== 0) {
-                $parts = explode('+', $tmp);
-                $tmp = $parts[0];
-                $increaseBy = \intval($parts[1]);
-                if ((string) $formatterLength !== $parts[1]) {
-                    $formatterLength = null;
-                }
-            }
-
-            if (substr_count($tmp, ',') !== 0) {
-                $parts = explode(',', $tmp);
-                $tmp = $parts[0];
-                $formatterLength = \intval($parts[1]);
-            }
-*/
             switch ($tmp) {
                 case 'Y':
                     $partialResult = $invoiceDate->format('Y');
@@ -131,6 +114,24 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                     $partialResult = $invoiceDate->format('ymd');
                     break;
 
+                // for customer
+                case 'cc':
+                    $partialResult = $this->repository->getCounterForAllTime($invoiceDate, $this->model->getCustomer()) + 1;
+                    break;
+
+                case 'ccy':
+                    $partialResult = $this->repository->getCounterForYear($invoiceDate, $this->model->getCustomer()) + 1;
+                    break;
+
+                case 'ccm':
+                    $partialResult = $this->repository->getCounterForMonth($invoiceDate, $this->model->getCustomer()) + 1;
+                    break;
+
+                case 'ccd':
+                    $partialResult = $this->repository->getCounterForDay($invoiceDate, $this->model->getCustomer()) + 1;
+                    break;
+
+                // across all invoices
                 case 'c':
                     $partialResult = $this->repository->getCounterForAllTime($invoiceDate) + $increaseBy;
                     break;
