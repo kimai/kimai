@@ -63,9 +63,9 @@ It is open for changes and input from the community, your [ideas and questions](
 > The master branch is always deployable, release tags are only snapshots of the current development version.
 
 Release versions will be created on a regular base (approx. one release every 4-8 weeks).
-Every code change, whether it's a new feature or a fixed bug, will be done on the master branch. 
-I develop Kimai in my free time and put my effort into the software instead of backporting changes for old versions.
-The only exception is a critical security issue, which I would fix in the last stable version as well. 
+Every code change, whether it's a new feature or a bug fix, will be done on the master branch. 
+Kimai is actively developed in my spare time and I put my effort into the software instead of backporting changes for old versions.
+The only exception is a critical security issue, which I would fix in the latest stable version as well. 
 
 ## Credits
 
