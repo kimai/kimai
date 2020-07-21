@@ -49,7 +49,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  *
  * @Exporter\Order({"id", "name", "customer", "orderNumber", "orderDate", "start", "end", "budget", "timeBudget", "color", "visible", "teams", "comment"})
- * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer().getName()")
+ * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
  */
 class Project implements EntityWithMetaFields
