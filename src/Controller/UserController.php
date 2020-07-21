@@ -213,7 +213,6 @@ final class UserController extends AbstractController
         $entries = $this->getRepository()->getUsersForQuery($query);
 
         $spreadsheet = $exporter->export(
-            User::class,
             $entries,
             new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT)
         );

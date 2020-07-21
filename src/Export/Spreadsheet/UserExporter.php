@@ -9,6 +9,7 @@
 
 namespace App\Export\Spreadsheet;
 
+use App\Entity\User;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\Extractor\UserPreferenceExtractor;
@@ -27,9 +28,19 @@ final class UserExporter
         $this->userPreferenceExtractor = $userPreferenceExtractor;
     }
 
-    public function export(string $class, array $entries, UserPreferenceDisplayEvent $event): Spreadsheet
+    /**
+     * @param User[] $entries
+     * @param UserPreferenceDisplayEvent $event
+     * @return Spreadsheet
+     * @throws Extractor\ExtractorException
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     */
+    public function export(array $entries, UserPreferenceDisplayEvent $event): Spreadsheet
     {
-        $columns = array_merge($this->annotationExtractor->extract($class), $this->userPreferenceExtractor->extract($event));
+        $columns = array_merge(
+            $this->annotationExtractor->extract(User::class),
+            $this->userPreferenceExtractor->extract($event)
+        );
 
         return $this->exporter->export($columns, $entries);
     }
