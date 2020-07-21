@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.10](https://github.com/kevinpapst/kimai2/tree/1.10)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.9...1.10)
+
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.10)
+
 ## [1.9](https://github.com/kevinpapst/kimai2/tree/1.9)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.8...1.9)
 
