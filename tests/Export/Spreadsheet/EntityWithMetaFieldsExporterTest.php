@@ -11,6 +11,7 @@ namespace App\Tests\Export\Spreadsheet;
 
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\ProjectMeta;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
@@ -29,9 +30,16 @@ class EntityWithMetaFieldsExporterTest extends TestCase
 {
     public function testExport()
     {
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $dispatcher->expects(self::once())->method('dispatch')->willReturnCallback(function (ProjectMetaDisplayEvent $event) {
+            $event->addField((new ProjectMeta())->setName('foo meta')->setIsVisible(true));
+            $event->addField((new ProjectMeta())->setName('hidden meta')->setIsVisible(false));
+            $event->addField((new ProjectMeta())->setName('bar meta')->setIsVisible(true));
+        });
+
         $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
         $annotationExtractor = new AnnotationExtractor(new AnnotationReader());
-        $metaFieldExtractor = new MetaFieldExtractor($this->createMock(EventDispatcherInterface::class));
+        $metaFieldExtractor = new MetaFieldExtractor($dispatcher);
 
         $project = new Project();
         $project->setName('test project');
@@ -42,6 +50,9 @@ class EntityWithMetaFieldsExporterTest extends TestCase
         $project->setTimeBudget(1234567890);
         $project->setColor('#ababab');
         $project->setVisible(false);
+        $project->setMetaField((new ProjectMeta())->setName('foo meta')->setValue('some magic')->setIsVisible(true));
+        $project->setMetaField((new ProjectMeta())->setName('hidden meta')->setValue('will not be seen')->setIsVisible(false));
+        $project->setMetaField((new ProjectMeta())->setName('bar meta')->setValue('is happening')->setIsVisible(true));
 
         $sut = new EntityWithMetaFieldsExporter($spreadsheetExporter, $annotationExtractor, $metaFieldExtractor);
         $spreadsheet = $sut->export(Project::class, [$project], new ProjectMetaDisplayEvent(new ProjectQuery(), ProjectMetaDisplayEvent::EXPORT));
@@ -57,5 +68,7 @@ class EntityWithMetaFieldsExporterTest extends TestCase
         self::assertEquals('#ababab', $worksheet->getCellByColumnAndRow(8, 2, false)->getValue());
         self::assertFalse($worksheet->getCellByColumnAndRow(9, 2, false)->getValue());
         self::assertEquals('Lorem Ipsum', $worksheet->getCellByColumnAndRow(10, 2, false)->getValue());
+        self::assertEquals('some magic', $worksheet->getCellByColumnAndRow(11, 2, false)->getValue());
+        self::assertEquals('is happening', $worksheet->getCellByColumnAndRow(12, 2, false)->getValue());
     }
 }
