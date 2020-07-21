@@ -62,16 +62,26 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
 
         preg_match_all('/{[^}]*?}/', $format, $matches);
         foreach ($matches[0] as $part) {
-            $formatter = null;
+            $formatterLength = null;
+            $increaseBy = 1;
+
             $tmp = str_replace(['{', '}'], '', $part);
 
-            // number format
-            if (substr_count($tmp, ',') !== 0) {
-                $parts = explode(',', $tmp);
-                $tmp = $parts[0];
-                $formatter = \intval($parts[1]);
-                if ((string) $formatter !== $parts[1]) {
-                    $formatter = null;
+            $parts = preg_split('/[,]+/', $tmp);
+            $tmp = $parts[0];
+            if (\count($parts) === 2) {
+                $formatterLength = \intval($parts[1]);
+                if ((string) $formatterLength !== $parts[1]) {
+                    $formatterLength = null;
+                }
+            }
+
+            $parts = preg_split("/[\+]+/", $tmp);
+            $tmp = $parts[0];
+            if (\count($parts) === 2) {
+                $increaseBy = \intval($parts[1]);
+                if ($increaseBy <= 0) {
+                    $increaseBy = 1;
                 }
             }
 
@@ -104,28 +114,46 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                     $partialResult = $invoiceDate->format('ymd');
                     break;
 
+                // for customer
+                case 'cc':
+                    $partialResult = $this->repository->getCounterForAllTime($invoiceDate, $this->model->getCustomer()) + 1;
+                    break;
+
+                case 'ccy':
+                    $partialResult = $this->repository->getCounterForYear($invoiceDate, $this->model->getCustomer()) + 1;
+                    break;
+
+                case 'ccm':
+                    $partialResult = $this->repository->getCounterForMonth($invoiceDate, $this->model->getCustomer()) + 1;
+                    break;
+
+                case 'ccd':
+                    $partialResult = $this->repository->getCounterForDay($invoiceDate, $this->model->getCustomer()) + 1;
+                    break;
+
+                // across all invoices
                 case 'c':
-                    $partialResult = $this->repository->getCounterForAllTime($invoiceDate) + 1;
+                    $partialResult = $this->repository->getCounterForAllTime($invoiceDate) + $increaseBy;
                     break;
 
                 case 'cy':
-                    $partialResult = $this->repository->getCounterForYear($invoiceDate) + 1;
+                    $partialResult = $this->repository->getCounterForYear($invoiceDate) + $increaseBy;
                     break;
 
                 case 'cm':
-                    $partialResult = $this->repository->getCounterForMonth($invoiceDate) + 1;
+                    $partialResult = $this->repository->getCounterForMonth($invoiceDate) + $increaseBy;
                     break;
 
                 case 'cd':
-                    $partialResult = $this->repository->getCounterForDay($invoiceDate) + 1;
+                    $partialResult = $this->repository->getCounterForDay($invoiceDate) + $increaseBy;
                     break;
 
                 default:
                     $partialResult = $part;
             }
 
-            if (null !== $formatter) {
-                $partialResult = str_pad($partialResult, $formatter, '0', STR_PAD_LEFT);
+            if (null !== $formatterLength) {
+                $partialResult = str_pad($partialResult, $formatterLength, '0', STR_PAD_LEFT);
             }
 
             $result = str_replace($part, $partialResult, $result);

@@ -9,6 +9,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\User;
 use App\Repository\Loader\InvoiceLoader;
@@ -35,7 +36,7 @@ class InvoiceRepository extends EntityRepository
         $entityManager->flush();
     }
 
-    private function getCounterFor(\DateTime $start, \DateTime $end): int
+    private function getCounterFor(\DateTime $start, \DateTime $end, ?Customer $customer = null): int
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('count(i.createdAt) as counter')
@@ -46,6 +47,13 @@ class InvoiceRepository extends EntityRepository
             ->setParameter('end', $end)
         ;
 
+        if (null !== $customer) {
+            $qb
+                ->andWhere($qb->expr()->eq('i.customer', ':customer'))
+                ->setParameter('customer', $customer)
+            ;
+        }
+
         $result = $qb->getQuery()->getOneOrNullResult();
 
         if ($result === null) {
@@ -55,32 +63,36 @@ class InvoiceRepository extends EntityRepository
         return $result['counter'];
     }
 
-    public function getCounterForDay(\DateTime $date): int
+    public function getCounterForDay(\DateTime $date, ?Customer $customer = null): int
     {
         $start = (clone $date)->setTime(0, 0, 0);
         $end = (clone $date)->setTime(23, 59, 59);
 
-        return $this->getCounterFor($start, $end);
+        return $this->getCounterFor($start, $end, $customer);
     }
 
-    public function getCounterForMonth(\DateTime $date): int
+    public function getCounterForMonth(\DateTime $date, ?Customer $customer = null): int
     {
         $start = (clone $date)->setDate((int) $date->format('Y'), (int) $date->format('n'), 1)->setTime(0, 0, 0);
         $end = (clone $date)->setDate((int) $date->format('Y'), (int) $date->format('n'), (int) $date->format('t'))->setTime(23, 59, 59);
 
-        return $this->getCounterFor($start, $end);
+        return $this->getCounterFor($start, $end, $customer);
     }
 
-    public function getCounterForYear(\DateTime $date): int
+    public function getCounterForYear(\DateTime $date, ?Customer $customer = null): int
     {
         $start = (clone $date)->setDate((int) $date->format('Y'), 1, 1)->setTime(0, 0, 0);
         $end = (clone $date)->setDate((int) $date->format('Y'), 12, 31)->setTime(23, 59, 59);
 
-        return $this->getCounterFor($start, $end);
+        return $this->getCounterFor($start, $end, $customer);
     }
 
-    public function getCounterForAllTime(\DateTime $date): int
+    public function getCounterForAllTime(\DateTime $date, ?Customer $customer = null): int
     {
+        if (null !== $customer) {
+            return $this->count(['customer' => $customer]);
+        }
+
         return $this->count([]);
     }
 
