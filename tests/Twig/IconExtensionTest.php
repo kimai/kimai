@@ -42,6 +42,8 @@ class IconExtensionTest extends TestCase
             'profile', 'warning', 'permissions', 'back', 'tag', 'avatar', 'timesheet-team', 'plugin', 'configuration', 'reporting'
         ];
 
+        IconExtension::registerIcon('foo2', 'hello');
+
         // test pre-defined icons
         $sut = new IconExtension();
 

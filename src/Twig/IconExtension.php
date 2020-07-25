@@ -17,84 +17,12 @@ final class IconExtension extends AbstractExtension
     /**
      * @var string[]
      */
-    private static $icons = [
-        'about' => 'fas fa-info-circle',
-        'activity' => 'fas fa-tasks',
-        'admin' => 'fas fa-wrench',
-        'audit' => 'fas fa-history',
-        'avatar' => 'fas fa-user',
-        'back' => 'fas fa-long-arrow-alt-left',
-        'calendar' => 'far fa-calendar-alt',
-        'clock' => 'far fa-clock',
-        'comment' => 'far fa-comment',
-        'configuration' => 'fas fa-cogs',
-        'copy' => 'far fa-copy',
-        'create' => 'far fa-plus-square',
-        'csv' => 'fas fa-table',
-        'customer' => 'fas fa-user-tie',
-        'dashboard' => 'fas fa-tachometer-alt',
-        'debug' => 'far fa-file-alt',
-        'delete' => 'far fa-trash-alt',
-        'doctor' => 'fas fa-medkit',
-        'dot' => 'fas fa-circle',
-        'download' => 'fas fa-download',
-        'duration' => 'far fa-hourglass',
-        'edit' => 'far fa-edit',
-        'end' => 'fas fa-stopwatch',
-        'export' => 'fas fa-file-export',
-        'fax' => 'fas fa-fax',
-        'filter' => 'fas fa-filter',
-        'help' => 'far fa-question-circle',
-        'home' => 'fas fa-home',
-        'invoice' => 'fas fa-file-invoice-dollar',
-        'invoice-template' => 'fas fa-file-signature',
-        'left' => 'fas fa-chevron-left',
-        'list' => 'fas fa-list',
-        'locked' => 'fas fa-lock',
-        'logout' => 'fas fa-sign-out-alt',
-        'mail' => 'fas fa-envelope-open',
-        'mail-sent' => 'fas fa-paper-plane',
-        'manual' => 'fas fa-book',
-        'mobile' => 'fas fa-mobile',
-        'money' => 'far fa-money-bill-alt',
-        'ods' => 'fas fa-table',
-        'off' => 'fas fa-toggle-off',
-        'on' => 'fas fa-toggle-on',
-        'pin' => 'fas fa-thumbtack',
-        'pdf' => 'fas fa-file-pdf',
-        'pause' => 'fas fa-pause',
-        'pause-small' => 'far fa-pause-circle',
-        'permissions' => 'fas fa-user-lock',
-        'phone' => 'fas fa-phone',
-        'plugin' => 'fas fa-plug',
-        'print' => 'fas fa-print',
-        'profile' => 'fas fa-user-edit',
-        'profile-stats' => 'far fa-chart-bar',
-        'project' => 'fas fa-briefcase',
-        'repeat' => 'fas fa-redo-alt',
-        'reporting' => 'far fa-chart-bar',
-        'right' => 'fas fa-chevron-right',
-        'roles' => 'fas fa-user-shield',
-        'search' => 'fas fa-search',
-        'settings' => 'fas fa-cog',
-        'shop' => 'fas fa-shopping-cart',
-        'start' => 'fas fa-play',
-        'start-small' => 'far fa-play-circle',
-        'stop' => 'fas fa-stop',
-        'stop-small' => 'far fa-stop-circle',
-        'success' => 'fas fa-check',
-        'tag' => 'fas fa-tags',
-        'team' => 'fas fa-users',
-        'timesheet' => 'fas fa-clock',
-        'timesheet-team' => 'fas fa-user-clock',
-        'trash' => 'far fa-trash-alt',
-        'unlocked' => 'fas fa-unlock-alt',
-        'upload' => 'fas fa-upload',
-        'user' => 'fas fa-user-friends',
-        'visibility' => 'far fa-eye',
-        'warning' => 'fas fa-exclamation-triangle',
-        'xlsx' => 'fas fa-file-excel',
-    ];
+    private static $icons = [];
+
+    public function __construct()
+    {
+        self::load();
+    }
 
     /**
      * {@inheritdoc}
@@ -106,8 +34,38 @@ final class IconExtension extends AbstractExtension
         ];
     }
 
+    private static function load()
+    {
+        if (empty(self::$icons)) {
+            self::$icons = include \dirname(\dirname(__DIR__)) . '/config/icons.php';
+        }
+    }
+
+    /**
+     * Returns the icon class by its alias.
+     *
+     * @param string $name name of the icon alias
+     * @param string $default the class to use (or default if not found)
+     * @return string
+     */
     public function icon(string $name, string $default = ''): string
     {
         return self::$icons[$name] ?? $default;
+    }
+
+    /**
+     * Allows to register new named icons.
+     * Once registered icons cannot be
+     *
+     * @param string $name
+     * @param string $icon
+     */
+    public static function registerIcon(string $name, string $icon)
+    {
+        self::load();
+
+        if (!\array_key_exists($name, self::$icons)) {
+            self::$icons[$name] = $icon;
+        }
     }
 }
