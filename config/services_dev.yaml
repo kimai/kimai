@@ -1,0 +1,13 @@
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\Profiler\IconCollector:
+        tags:
+            -
+                name:     'data_collector'
+                template: 'profiler/icons.html.twig'
+                id:       'kimai.icon-collector'

@@ -1,0 +1,62 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <i class="fas fa-icons" style="font-size: 15px"></i>
+        <span class="sf-toolbar-value">Icons</span>
+    {% endset %}
+
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Amount</b>
+            <span>{{ collector.amount }}</span>
+        </div>
+    {% endset %}
+
+    {# the 'link' value set to 'false' means that this panel doesn't
+       show a section in the web profiler #}
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig') }}
+{% endblock %}
+
+
+{% block head %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('profiler') }}
+    <style>
+        table.icon-table td {
+            padding: 20px 0 20px 0;
+            color: #000;
+            background-color: #fff;
+        }
+        table.icon-table td i {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon"><i class="fas fa-icons fa-2x"></i></span>
+        <strong>Icons</strong>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>All available icons</h2>
+    <p>Can be rendered with: <pre>&lt;i class="{{ '{{ \'alias\'|icon }}' }}"&gt;&lt;/i&gt;</pre></p>
+    <table class="icon-table text-center">
+        {% for alias, icon in collector.icons %}
+            {% if loop.index0 % 6 == 0 %}
+                <tr>
+            {% endif %}
+                <td>
+                    <i class="{{ icon }} fa-3x"></i>
+                    {{ alias }}
+                </td>
+            {% if loop.last or loop.index % 6 == 0 %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endblock %}

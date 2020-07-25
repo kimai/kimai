@@ -1,0 +1,1 @@
+require('./sass/fontawesome.scss');

@@ -56,5 +56,12 @@ class IconExtensionTest extends TestCase
         // test fallback will be returned
         $this->assertEquals('', $sut->icon('foo'));
         $this->assertEquals('bar', $sut->icon('foo', 'bar'));
+
+        // test register works
+        $this->assertEquals('hello', $sut->icon('foo2', 'bar'));
+
+        // test register works cannot overwrite existing icons
+        IconExtension::registerIcon('foo2', 'world');
+        $this->assertEquals('hello', $sut->icon('foo2', 'bar'));
     }
 }
