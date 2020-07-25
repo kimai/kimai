@@ -125,7 +125,6 @@ final class FontAwesomeCommand extends Command
 
     /**
      * Make sure that this command CANNOT be executed in production.
-     * It can't work, as the fixtures bundle is not available in production.
      *
      * @return bool
      */
