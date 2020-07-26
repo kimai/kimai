@@ -52,7 +52,7 @@
             <i class="{{ 'left'|icon }}"></i>
         </a>
         <a class="btn btn-default" href="#" onclick="return false;">
-            <span id="{{ form.vars.id }}_month_name">{{ data|month_name|trans ~ ' '  ~ data|date_format('Y') }}</span>
+            <span id="{{ form.vars.id }}_month_name">{{ month|month_name|trans ~ ' '  ~ month|date_format('Y') }}</span>
         </a>
         <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{nextMonth|date_short}}').change()">
             <i class="{{ 'right'|icon }}"></i>
