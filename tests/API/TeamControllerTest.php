@@ -249,12 +249,6 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
         $json = json_decode($client->getResponse()->getContent(), true);
         self::assertEquals('User is already member of the team', $json['message']);
-
-        // cannot add disabled user
-        $this->request($client, '/api/teams/' . $result['id'] . '/members/3', 'POST');
-        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
-        $json = json_decode($client->getResponse()->getContent(), true);
-        self::assertEquals('Cannot add disabled user to team', $json['message']);
     }
 
     public function testDeleteMemberAction()

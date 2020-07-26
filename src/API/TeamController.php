@@ -305,10 +305,6 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('User not found');
         }
 
-        if (!$user->isEnabled()) {
-            throw new BadRequestHttpException('Cannot add disabled user to team');
-        }
-
         if ($user->isInTeam($team)) {
             throw new BadRequestHttpException('User is already member of the team');
         }
