@@ -35,7 +35,13 @@ class UserType extends AbstractType
                 return $user->getDisplayName();
             },
             'choice_translation_domain' => false,
-            'include_hidden' => false,
+            // whether disabled users should be included in the result list
+            'include_disabled' => false,
+            // an array of users, which will always be included in the result list
+            // why? if the base entity could include disabled users, which should not be hidden in/removed from the list
+            // eg. when editing a team that has disabled users, these users would be removed silently
+            // see https://github.com/kevinpapst/kimai2/pull/1841
+            'include_users' => [],
             'documentation' => [
                 'type' => 'integer',
                 'description' => 'User ID',
@@ -47,8 +53,12 @@ class UserType extends AbstractType
                 $query = new UserFormTypeQuery();
                 $query->setUser($options['user']);
 
-                if ($options['include_hidden'] === true) {
+                if ($options['include_disabled'] === true) {
                     $query->setVisibility(VisibilityInterface::SHOW_BOTH);
+                }
+
+                if (!empty($options['include_users'])) {
+                    $query->setUsersAlwaysIncluded($options['include_users']);
                 }
 
                 return $repo->getQueryBuilderForFormType($query);

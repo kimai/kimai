@@ -141,9 +141,21 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     {
         $qb = $this->createQueryBuilder('u');
 
+        $or = $qb->expr()->orX();
+
         if ($query->isShowVisible()) {
-            $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
+            $or->add($qb->expr()->eq('u.enabled', ':enabled'));
             $qb->setParameter('enabled', true, \PDO::PARAM_BOOL);
+        }
+
+        $includeAlways = $query->getUsersAlwaysIncluded();
+        if (!empty($includeAlways)) {
+            $or->add($qb->expr()->in('u', ':users'));
+            $qb->setParameter('users', $includeAlways);
+        }
+
+        if ($or->count() > 0) {
+            $qb->andWhere($or);
         }
 
         $qb->orderBy('u.username', 'ASC');
