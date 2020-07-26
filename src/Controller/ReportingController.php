@@ -64,19 +64,21 @@ final class ReportingController extends AbstractController
         $values->setDate($this->dateTimeFactory->getStartOfMonth());
 
         $form = $this->createForm(MonthByUserForm::class, $values, [
-            'method' => 'POST',
             'include_user' => $this->isGranted('view_other_timesheet') && $user->hasTeamAssignment(),
         ]);
 
-        $form->handleRequest($request);
+        $form->submit($request->query->all(), false);
 
-        if ($form->isSubmitted() && !$form->isValid()) {
+        if ($values->getUser() === null) {
             $values->setUser($user);
-            $values->setDate($this->dateTimeFactory->getStartOfMonth());
         }
 
         if ($user !== $values->getUser() && !$this->isGranted('view_other_timesheet')) {
             throw new AccessDeniedException('User is not allowed to see other users timesheet');
+        }
+
+        if ($values->getDate() === null) {
+            $values->setDate($this->dateTimeFactory->getStartOfMonth());
         }
 
         $start = $values->getDate();
@@ -124,13 +126,15 @@ final class ReportingController extends AbstractController
         $values = new MonthlyUserList();
         $values->setDate($this->dateTimeFactory->getStartOfMonth());
 
-        $form = $this->createForm(MonthlyUserListForm::class, $values, [
-            'method' => 'POST',
-        ]);
+        $form = $this->createForm(MonthlyUserListForm::class, $values, []);
 
-        $form->handleRequest($request);
+        $form->submit($request->query->all(), false);
 
         if ($form->isSubmitted() && !$form->isValid()) {
+            $values->setDate($this->dateTimeFactory->getStartOfMonth());
+        }
+
+        if ($values->getDate() === null) {
             $values->setDate($this->dateTimeFactory->getStartOfMonth());
         }
 

@@ -18,6 +18,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class MonthByUserForm extends AbstractType
 {
     /**
+     * Simplify cross linking between pages by removing the block prefix.
+     *
+     * @return null|string
+     */
+    public function getBlockPrefix()
+    {
+        return null;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -37,6 +47,8 @@ class MonthByUserForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => MonthByUser::class,
             'include_user' => false,
+            'csrf_protection' => false,
+            'method' => 'GET',
         ]);
     }
 }

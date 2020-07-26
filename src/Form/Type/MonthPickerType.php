@@ -20,6 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to select a month via picker and select previous and next month.
+ *
+ * Always falls back to the current month if none or an invalid date is given.
  */
 final class MonthPickerType extends AbstractType
 {
@@ -67,6 +69,7 @@ final class MonthPickerType extends AbstractType
             $date = $this->dateTime->getStartOfMonth();
         }
 
+        $view->vars['month'] = $date;
         $view->vars['previousMonth'] = (clone $date)->modify('-1 month');
         $view->vars['nextMonth'] = (clone $date)->modify('+1 month');
         $view->vars['momentFormat'] = (new MomentFormatConverter())->convert($this->localeSettings->getDateTypeFormat());
