@@ -23,6 +23,9 @@ class TeamEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var Team|null $team */
+        $team = $options['data'] ?? null;
+
         $builder
             ->add('name', TextType::class, [
                 'label' => 'label.name',
@@ -55,6 +58,8 @@ class TeamEditForm extends AbstractType
                     'title' => 'Team member',
                     'description' => 'Array of team member IDs',
                 ],
+                // make sure that disabled users show up in the result list
+                'include_users' => (null !== $team && $team->getUsers()->count() > 0 ? $team->getUsers()->toArray() : [])
             ])
         ;
     }
