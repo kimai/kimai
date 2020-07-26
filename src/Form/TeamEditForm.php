@@ -24,7 +24,7 @@ class TeamEditForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         /** @var Team|null $team */
-        $team = $options['data'];
+        $team = $options['data'] ?? null;
 
         $builder
             ->add('name', TextType::class, [
