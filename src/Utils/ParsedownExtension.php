@@ -20,8 +20,6 @@ class ParsedownExtension extends \Parsedown
      * Overwritten to prevent # to show up as headings for two reasons:
      * - Hashes are often used to cross link issues in other systems
      * - Headings should not occur in time record listings
-     *
-     * @var \string[][]
      */
     protected $BlockTypes = [
         '*' => ['Rule', 'List'],
@@ -50,8 +48,6 @@ class ParsedownExtension extends \Parsedown
 
     /**
      * Overwritten to add support for file:///
-     *
-     * @var string[]
      */
     protected $safeLinksWhitelist = [
         'file:///',
