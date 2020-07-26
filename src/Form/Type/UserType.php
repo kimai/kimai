@@ -11,6 +11,7 @@ namespace App\Form\Type;
 
 use App\Entity\User;
 use App\Repository\Query\UserFormTypeQuery;
+use App\Repository\Query\VisibilityInterface;
 use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -34,6 +35,7 @@ class UserType extends AbstractType
                 return $user->getDisplayName();
             },
             'choice_translation_domain' => false,
+            'include_hidden' => false,
             'documentation' => [
                 'type' => 'integer',
                 'description' => 'User ID',
@@ -44,6 +46,10 @@ class UserType extends AbstractType
             return function (UserRepository $repo) use ($options) {
                 $query = new UserFormTypeQuery();
                 $query->setUser($options['user']);
+
+                if ($options['include_hidden'] === true) {
+                    $query->setVisibility(VisibilityInterface::SHOW_BOTH);
+                }
 
                 return $repo->getQueryBuilderForFormType($query);
             };

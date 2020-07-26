@@ -49,6 +49,7 @@ class TeamEditForm extends AbstractType
                 'multiple' => true,
                 'expanded' => $options['expand_users'],
                 'by_reference' => false,
+                'include_hidden' => true,
                 'documentation' => [
                     'type' => 'array',
                     'items' => ['type' => 'integer', 'description' => 'User IDs'],
