@@ -14,4 +14,5 @@ namespace App\Repository\Query;
  */
 final class UserFormTypeQuery extends BaseFormTypeQuery
 {
+    use VisibilityTrait;
 }
