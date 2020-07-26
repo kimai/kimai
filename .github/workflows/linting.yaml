@@ -20,6 +20,7 @@ jobs:
                     coverage: none
                     extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql, zip, gd, ldap
                     tools: cs2pr:1.1.0
+            -   run: locale -a
             -   run: composer install --no-progress
             -   run: composer validate --no-check-all --strict
             -   run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php_cs.dist --using-cache=no --show-progress=none --format=checkstyle | cs2pr
