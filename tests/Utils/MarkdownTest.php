@@ -36,7 +36,7 @@ class MarkdownTest extends TestCase
 <a href="file:///home/kimai/images/beautiful-flower.png" target="_blank">file:///home/kimai/images/beautiful-flower.png</a></p>
 <p>sdfsdf <a href="#test-1">asdfasdf</a> asdfasdf</p>
 <h1 id="test-1">test</h1>
-<p>aasdfasdf<br />
+ <p>aasdfasdf<br />
 1111<br />
 222</p>
 EOT;
