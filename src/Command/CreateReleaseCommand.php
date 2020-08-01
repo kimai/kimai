@@ -28,14 +28,16 @@ class CreateReleaseCommand extends Command
     /**
      * @var string
      */
-    protected $rootDir = '';
-
+    private $rootDir = '';
     /**
-     * @param string $projectDirectory
+     * @var string
      */
-    public function __construct(string $projectDirectory)
+    private $environment;
+
+    public function __construct(string $projectDirectory, string $kernelEnvironment)
     {
         $this->rootDir = realpath($projectDirectory);
+        $this->environment = $kernelEnvironment;
         parent::__construct();
     }
 
@@ -51,14 +53,16 @@ class CreateReleaseCommand extends Command
             ->addOption('directory', null, InputOption::VALUE_OPTIONAL, 'Directory where the release package will be stored', '/tmp/')
             ->addOption('release', null, InputOption::VALUE_OPTIONAL, 'The version that should be zipped', Constants::VERSION)
         ;
+    }
 
-        /*
-         * Hide this command in production.
-         * Maybe it should be de-activated completely?!
-         */
-        if (getenv('APP_ENV') === 'prod') {
-            $this->setHidden(true);
-        }
+    /**
+     * Make sure that this command CANNOT be executed in production.
+     *
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->environment !== 'prod';
     }
 
     /**
@@ -69,12 +73,6 @@ class CreateReleaseCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-
-        if (getenv('APP_ENV') === 'prod') {
-            $io->error('kimai:create-release is not allowed in production');
-
-            return -2;
-        }
 
         $directory = $input->getOption('directory');
 

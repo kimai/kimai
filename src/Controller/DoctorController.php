@@ -49,10 +49,15 @@ class DoctorController extends AbstractController
      * @var string
      */
     private $projectDirectory;
+    /**
+     * @var string
+     */
+    private $environment;
 
-    public function __construct(string $projectDirectory)
+    public function __construct(string $projectDirectory, string $kernelEnvironment)
     {
         $this->projectDirectory = $projectDirectory;
+        $this->environment = $kernelEnvironment;
     }
 
     /**
@@ -90,7 +95,7 @@ class DoctorController extends AbstractController
         return $this->render('doctor/index.html.twig', array_merge(
             [
                 'modules' => get_loaded_extensions(),
-                'dotenv' => $this->getEnvVars(),
+                'environment' => $this->environment,
                 'info' => $this->getPhpInfo(),
                 'settings' => $this->getIniSettings(),
                 'extensions' => $this->getLoadedExtensions(),
@@ -124,36 +129,26 @@ class DoctorController extends AbstractController
         return $results;
     }
 
-    private function getLogSize()
+    private function getLogSize(): int
     {
-        $logfileName = 'var/log/' . getenv('APP_ENV') . '.log';
-        $logfile = $this->projectDirectory . '/' . $logfileName;
+        $logfile = $this->getLogFilename();
 
-        return filesize($logfile);
+        return file_exists($logfile) ? filesize($logfile) : 0;
     }
 
     private function getLogFilename(): string
     {
-        // why is this check here ???
-        if (!\in_array(getenv('APP_ENV'), ['test', 'dev', 'prod'])) {
-            throw new \RuntimeException('Unsupported log environment');
-        }
-
-        $logfileName = 'var/log/' . getenv('APP_ENV') . '.log';
+        $logfileName = 'var/log/' . $this->environment . '.log';
 
         return $this->projectDirectory . '/' . $logfileName;
     }
 
-    private function getLog(int $lines = 100)
+    private function getLog(int $lines = 100): array
     {
-        try {
-            $logfile = $this->getLogFilename();
-        } catch (\Exception $ex) {
-            return ['ATTENTION: ' . $ex->getMessage()];
-        }
+        $logfile = $this->getLogFilename();
 
         if (!file_exists($logfile)) {
-            return ['ATTENTION: Missing logfile'];
+            return ['Missing logfile'];
         }
 
         if (!is_readable($logfile)) {
@@ -163,7 +158,7 @@ class DoctorController extends AbstractController
         $file = new \SplFileObject($logfile, 'r');
 
         if ($file->getSize() === 0) {
-            return ['Empty log'];
+            return ['Empty logfile'];
         }
 
         $file->seek($file->getSize());
@@ -173,8 +168,6 @@ class DoctorController extends AbstractController
         }
         $iterator = new \LimitIterator($file, $last_line - $lines, $last_line);
 
-        $result = [];
-
         try {
             $result = iterator_to_array($iterator);
         } catch (\Exception $ex) {
@@ -182,7 +175,7 @@ class DoctorController extends AbstractController
         }
 
         if (!is_writable($logfile)) {
-            $result[] = 'ATTENTION: Cannot write log file';
+            $result[] = 'ATTENTION: Logfile is not writable';
         }
 
         return $result;
@@ -208,14 +201,6 @@ class DoctorController extends AbstractController
         }
 
         return $results;
-    }
-
-    private function getEnvVars()
-    {
-        return [
-            'APP_ENV' => getenv('APP_ENV'),
-            'CORS_ALLOW_ORIGIN' => getenv('CORS_ALLOW_ORIGIN'),
-        ];
     }
 
     private function getIniSettings()
