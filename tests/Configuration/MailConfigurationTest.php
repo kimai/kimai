@@ -19,15 +19,7 @@ class MailConfigurationTest extends TestCase
 {
     public function testGetFromAddress()
     {
-        $previous = getenv('MAILER_FROM');
-        putenv('MAILER_FROM=foo-bar123@example.com');
-
-        $sut = new MailConfiguration();
+        $sut = new MailConfiguration('foo-bar123@example.com');
         self::assertEquals('foo-bar123@example.com', $sut->getFromAddress());
-
-        putenv('MAILER_FROM=');
-        self::assertNull($sut->getFromAddress());
-
-        putenv('MAILER_FROM=' . $previous);
     }
 }

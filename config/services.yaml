@@ -14,6 +14,7 @@ services:
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
             $projectDirectory: '%kernel.project_dir%'
+            $kernelEnvironment: '%kernel.environment%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -41,6 +42,9 @@ services:
     App\Controller\DashboardController:
         arguments:
             $dashboard: '%kimai.dashboard%'
+
+    App\Configuration\MailConfiguration:
+        arguments: ['%env(MAILER_FROM)%']
 
     App\Configuration\LanguageFormattings:
         arguments: ['%kimai.languages%']

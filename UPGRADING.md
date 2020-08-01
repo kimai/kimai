@@ -20,6 +20,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ### Developer
 
+- **BC break**: removed registration of `.env` with `putenv()` - do not rely on `getenv()` as it is not thread-safe
 - **BC break**: interface method signature `HtmlToPdfConverter::convertToPdf()` changed
 - **BC break**: the macros `badge` and `label` do not apply the `|trans` filter any more
 - **BC Break**: removed `getVisible()` (deprecated since 1.4) method on Customer, Project and Activity (use `isVisible()` instead, templates are still working)

@@ -19,21 +19,19 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class ResetCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    protected $application;
-
-    protected function setUp(): void
-    {
-        $kernel = self::bootKernel();
-        $this->application = new Application($kernel);
-        $this->application->add(new ResetCommand());
-    }
-
     public function testCommandName()
     {
-        $command = $this->application->find('kimai:reset-dev');
+        $kernel = self::bootKernel();
+        $application = new Application($kernel);
+        $application->add(new ResetCommand('test'));
+
+        $command = $application->find('kimai:reset-dev');
         self::assertInstanceOf(ResetCommand::class, $command);
+    }
+
+    public function testCommandNameIsNotEnabledInProd()
+    {
+        $command = new ResetCommand('prod');
+        self::assertFalse($command->isEnabled());
     }
 }

@@ -49,10 +49,15 @@ class DoctorController extends AbstractController
      * @var string
      */
     private $projectDirectory;
+    /**
+     * @var string
+     */
+    private $environment;
 
-    public function __construct(string $projectDirectory)
+    public function __construct(string $projectDirectory, string $kernelEnvironment)
     {
         $this->projectDirectory = $projectDirectory;
+        $this->environment = $kernelEnvironment;
     }
 
     /**
@@ -90,7 +95,7 @@ class DoctorController extends AbstractController
         return $this->render('doctor/index.html.twig', array_merge(
             [
                 'modules' => get_loaded_extensions(),
-                'dotenv' => $this->getEnvVars(),
+                'environment' => $this->environment,
                 'info' => $this->getPhpInfo(),
                 'settings' => $this->getIniSettings(),
                 'extensions' => $this->getLoadedExtensions(),
@@ -126,7 +131,7 @@ class DoctorController extends AbstractController
 
     private function getLogSize()
     {
-        $logfileName = 'var/log/' . getenv('APP_ENV') . '.log';
+        $logfileName = 'var/log/' . $this->environment . '.log';
         $logfile = $this->projectDirectory . '/' . $logfileName;
 
         return filesize($logfile);
@@ -135,11 +140,11 @@ class DoctorController extends AbstractController
     private function getLogFilename(): string
     {
         // why is this check here ???
-        if (!\in_array(getenv('APP_ENV'), ['test', 'dev', 'prod'])) {
+        if (!\in_array($this->environment, ['test', 'dev', 'prod'])) {
             throw new \RuntimeException('Unsupported log environment');
         }
 
-        $logfileName = 'var/log/' . getenv('APP_ENV') . '.log';
+        $logfileName = 'var/log/' . $this->environment . '.log';
 
         return $this->projectDirectory . '/' . $logfileName;
     }
@@ -208,14 +213,6 @@ class DoctorController extends AbstractController
         }
 
         return $results;
-    }
-
-    private function getEnvVars()
-    {
-        return [
-            'APP_ENV' => getenv('APP_ENV'),
-            'CORS_ALLOW_ORIGIN' => getenv('CORS_ALLOW_ORIGIN'),
-        ];
     }
 
     private function getIniSettings()

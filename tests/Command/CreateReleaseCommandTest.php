@@ -19,21 +19,20 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class CreateReleaseCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    protected $application;
-
-    protected function setUp(): void
-    {
-        $kernel = self::bootKernel();
-        $this->application = new Application($kernel);
-        $this->application->add(new CreateReleaseCommand(realpath(__DIR__ . '/../../')));
-    }
-
     public function testCommandName()
     {
-        $command = $this->application->find('kimai:create-release');
+        $kernel = self::bootKernel(['environment' => 'test']);
+        $application = new Application($kernel);
+        $application->add(new CreateReleaseCommand(realpath(__DIR__ . '/../../'), 'test'));
+
+        $command = $application->find('kimai:create-release');
+        self::assertTrue($command->isEnabled());
         self::assertInstanceOf(CreateReleaseCommand::class, $command);
+    }
+
+    public function testCommandNameIsNotAvailableInProd()
+    {
+        $command = new CreateReleaseCommand(realpath(__DIR__ . '/../../'), 'prod');
+        self::assertFalse($command->isEnabled());
     }
 }
