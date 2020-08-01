@@ -131,19 +131,13 @@ class DoctorController extends AbstractController
 
     private function getLogSize()
     {
-        $logfileName = 'var/log/' . $this->environment . '.log';
-        $logfile = $this->projectDirectory . '/' . $logfileName;
+        $logfile = $this->getLogFilename();
 
-        return filesize($logfile);
+        return file_exists($logfile) ? filesize($logfile) : 0;
     }
 
-    private function getLogFilename(): string
+    private function getLogFilename(): ?string
     {
-        // why is this check here ???
-        if (!\in_array($this->environment, ['test', 'dev', 'prod'])) {
-            throw new \RuntimeException('Unsupported log environment');
-        }
-
         $logfileName = 'var/log/' . $this->environment . '.log';
 
         return $this->projectDirectory . '/' . $logfileName;
@@ -151,14 +145,10 @@ class DoctorController extends AbstractController
 
     private function getLog(int $lines = 100)
     {
-        try {
-            $logfile = $this->getLogFilename();
-        } catch (\Exception $ex) {
-            return ['ATTENTION: ' . $ex->getMessage()];
-        }
+        $logfile = $this->getLogFilename();
 
         if (!file_exists($logfile)) {
-            return ['ATTENTION: Missing logfile'];
+            return ['Missing logfile'];
         }
 
         if (!is_readable($logfile)) {
@@ -168,7 +158,7 @@ class DoctorController extends AbstractController
         $file = new \SplFileObject($logfile, 'r');
 
         if ($file->getSize() === 0) {
-            return ['Empty log'];
+            return ['Empty logfile'];
         }
 
         $file->seek($file->getSize());
@@ -187,7 +177,7 @@ class DoctorController extends AbstractController
         }
 
         if (!is_writable($logfile)) {
-            $result[] = 'ATTENTION: Cannot write log file';
+            $result[] = 'ATTENTION: Logfile is not writable';
         }
 
         return $result;

@@ -22,4 +22,10 @@ class MailConfigurationTest extends TestCase
         $sut = new MailConfiguration('foo-bar123@example.com');
         self::assertEquals('foo-bar123@example.com', $sut->getFromAddress());
     }
+
+    public function testGetFromAddressWithEmptyAddressReturnsNull()
+    {
+        $sut = new MailConfiguration('');
+        self::assertNull($sut->getFromAddress());
+    }
 }
