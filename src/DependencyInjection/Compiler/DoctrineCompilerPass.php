@@ -56,7 +56,7 @@ class DoctrineCompilerPass implements CompilerPassInterface
             $engine = getenv('DATABASE_ENGINE');
         }
 
-        if (false === $engine) {
+        if (empty($engine)) {
             throw new \Exception(
                 'Could not detect database engine, make sure DATABASE_URL is available from $_SERVER or $_ENV. Check your .env file.'
             );
