@@ -129,21 +129,21 @@ class DoctorController extends AbstractController
         return $results;
     }
 
-    private function getLogSize()
+    private function getLogSize(): int
     {
         $logfile = $this->getLogFilename();
 
         return file_exists($logfile) ? filesize($logfile) : 0;
     }
 
-    private function getLogFilename(): ?string
+    private function getLogFilename(): string
     {
         $logfileName = 'var/log/' . $this->environment . '.log';
 
         return $this->projectDirectory . '/' . $logfileName;
     }
 
-    private function getLog(int $lines = 100)
+    private function getLog(int $lines = 100): array
     {
         $logfile = $this->getLogFilename();
 
@@ -167,8 +167,6 @@ class DoctorController extends AbstractController
             $lines--;
         }
         $iterator = new \LimitIterator($file, $last_line - $lines, $last_line);
-
-        $result = [];
 
         try {
             $result = iterator_to_array($iterator);
