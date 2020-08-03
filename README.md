@@ -48,6 +48,7 @@ user specific rates, advanced search & filtering, money and time budgets with re
 - [Development](https://www.kimai.org/documentation/installation.html#development-installation) - on your local machine 
 - [1-click installer](https://www.kimai.org/documentation/installation.html#hosting-and-1-click-installations) - hosted environments 
 - [FTP](https://www.kimai.org/documentation/installation.html#ftp-installation) - unfortunately still widely used ;-)
+- [Kimai-On-Cloud](https://cloudjiffy.com/blog/solutions/one-click-solutions/kimai-time-tracking-on-cloudjiffy/)
 
 ### Updating Kimai
 
