@@ -3004,27 +3004,27 @@
         },
         {
             "name": "jms/serializer-bundle",
-            "version": "3.5.0",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
-                "reference": "5793ec59b2243365a625c0fd78415732097c11e8"
+                "reference": "9986fff4d6c0ab099af0a7149376651e15c9a763"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/5793ec59b2243365a625c0fd78415732097c11e8",
-                "reference": "5793ec59b2243365a625c0fd78415732097c11e8",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/9986fff4d6c0ab099af0a7149376651e15c9a763",
+                "reference": "9986fff4d6c0ab099af0a7149376651e15c9a763",
                 "shasum": ""
             },
             "require": {
-                "jms/serializer": "^2.3|^3.0",
+                "jms/serializer": "^3.0",
                 "php": "^7.2",
                 "symfony/dependency-injection": "^3.3 || ^4.0 || ^5.0",
                 "symfony/framework-bundle": "^3.0 || ^4.0 || ^5.0"
             },
             "require-dev": {
                 "doctrine/orm": "^2.4",
-                "phpunit/phpunit": "^6.0",
+                "phpunit/phpunit": "^6.0|^7.0",
                 "symfony/expression-language": "^3.0 || ^4.0 || ^5.0",
                 "symfony/finder": "^3.0 || ^4.0 || ^5.0",
                 "symfony/form": "^3.0 || ^4.0 || ^5.0",
@@ -3040,7 +3040,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.5-dev"
+                    "dev-master": "3.6-dev"
                 }
             },
             "autoload": {
@@ -3073,7 +3073,13 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2019-11-29T13:03:07+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/goetas",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-05-23T06:13:14+00:00"
         },
         {
             "name": "kevinpapst/adminlte-bundle",
