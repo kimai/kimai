@@ -191,8 +191,13 @@ class TimesheetMultiUpdate extends AbstractType
         }
 
         if ($options['include_exported']) {
-            $builder->add('exported', YesNoType::class, [
-                'label' => 'label.exported'
+            $builder->add('exported', ChoiceType::class, [
+                'label' => 'label.mark_as_exported',
+                'required' => false,
+                'choices' => [
+                    'entryState.exported' => true,
+                    'entryState.not_exported' => false
+                ]
             ]);
         }
 
