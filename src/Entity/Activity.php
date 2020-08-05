@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Swagger\Annotations as SWG;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -164,10 +165,34 @@ class Activity implements EntityWithMetaFields
      * @ORM\OneToMany(targetEntity="App\Entity\ActivityMeta", mappedBy="activity", cascade={"persist"})
      */
     private $meta;
+    /**
+     * Teams
+     *
+     * If no team is assigned, everyone can access the activity
+     *
+     * @var Team[]|ArrayCollection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Activity"})
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Activity"))
+     *
+     * @ORM\ManyToMany(targetEntity="Team", cascade={"persist"}, inversedBy="activities")
+     * @ORM\JoinTable(
+     *  name="kimai2_activities_teams",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="activity_id", referencedColumnName="id", onDelete="CASCADE")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="team_id", referencedColumnName="id", onDelete="CASCADE")
+     *  }
+     * )
+     */
+    private $teams;
 
     public function __construct()
     {
         $this->meta = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -298,6 +323,33 @@ class Activity implements EntityWithMetaFields
         $current->merge($meta);
 
         return $this;
+    }
+
+    public function addTeam(Team $team)
+    {
+        if ($this->teams->contains($team)) {
+            return $this;
+        }
+
+        $this->teams->add($team);
+        $team->addActivity($this);
+    }
+
+    public function removeTeam(Team $team)
+    {
+        if (!$this->teams->contains($team)) {
+            return;
+        }
+        $this->teams->removeElement($team);
+        $team->removeActivity($this);
+    }
+
+    /**
+     * @return Collection<Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
     }
 
     /**
