@@ -43,7 +43,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      options={
  *          @Serializer\SerializedName("project"),
  *          @Serializer\Type(name="integer"),
- *          @Serializer\Groups({"Default"})
+ *          @Serializer\Groups({"Activity", "Team", "Not_Expanded"})
  *      }
  * )
  *
@@ -70,6 +70,10 @@ class Activity implements EntityWithMetaFields
     private $id;
     /**
      * @var Project|null
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Subresource", "Expanded"})
+     * @SWG\Property(ref="#/definitions/Project")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project")
      * @ORM\JoinColumn(onDelete="CASCADE")
@@ -174,7 +178,7 @@ class Activity implements EntityWithMetaFields
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Activity"))
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Team"))
      *
      * @ORM\ManyToMany(targetEntity="Team", cascade={"persist"}, inversedBy="activities")
      * @ORM\JoinTable(
