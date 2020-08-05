@@ -30,6 +30,13 @@
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_activity_edit', {'id': activity.id}), 'class': class}}) %}
         {% endif %}
+        {% if is_granted('permissions', activity) %}
+            {% set class = '' %}
+            {% if view != 'permissions' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'permissions': {'url': path('admin_activity_permissions', {'id': activity.id}), 'class': class}}) %}
+        {% endif %}
         {% if actions|length > 0 %}
             {% set actions = actions|merge({'divider': null}) %}
         {% endif %}
