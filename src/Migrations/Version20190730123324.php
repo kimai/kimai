@@ -15,7 +15,7 @@ use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Fixes foreign keys on tag table.
+ * Creates user team and permission tables.
  *
  * @version 1.2
  */
