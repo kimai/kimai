@@ -337,6 +337,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'users' => ['result' => 'array', 'type' => 'User'],
                     'customers' => ['result' => 'array', 'type' => '@Customer'],
                     'projects' => ['result' => 'array', 'type' => '@Project'],
+                    'activities' => ['result' => 'array', 'type' => '@Activity'],
                 ];
 
             // if a customer is embedded in other objects
@@ -462,6 +463,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => '@string',
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
                 ];
 
             // if a activity is explicitly loaded
@@ -477,6 +479,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'comment' => '@string',
                     'budget' => 'float',
                     'timeBudget' => 'int',
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
                 ];
 
             case 'TimesheetEntity':
