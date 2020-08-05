@@ -85,8 +85,10 @@ kimai:
     permissions:
         # mapping complex rule sets of single permissions to named "sets" ("set name" = [array of "permissions and sets"])
         sets:
-            ACTIVITIES: ['view_activity','create_activity','edit_activity','budget_activity','delete_activity']
-            ACTIVITIES_TEAMLEAD: ['view_activity','create_activity','edit_teamlead_activity','budget_teamlead_activity']
+            ACTIVITIES: ['view_activity','create_activity','edit_activity','budget_activity','delete_activity','permissions_activity']
+            ACTIVITIES_ALL_TEAMLEAD: ['view_teamlead_activity','edit_teamlead_activity','budget_teamlead_activity','permissions_teamlead_activity']
+            ACTIVITIES_ALL_TEAM: ['view_team_activity','edit_team_activity','budget_team_activity']
+            ACTIVITIES_TEAMLEAD: ['view_activity','create_activity','edit_teamlead_activity','budget_teamlead_activity','permissions_teamlead_activity']
             PROJECTS: ['view_project','create_project','edit_project','budget_project','delete_project','permissions_project','comments_project','comments_create_project','details_project']
             PROJECTS_ALL_TEAMLEAD: ['view_teamlead_project','edit_teamlead_project','budget_teamlead_project','permissions_teamlead_project','comments_teamlead_project','comments_create_teamlead_project','details_teamlead_project']
             PROJECTS_ALL_TEAM: ['view_team_project','edit_team_project','budget_team_project','comments_team_project','comments_create_team_project','details_team_project']
@@ -126,7 +128,7 @@ kimai:
             ROLE_ADMIN: ['ROLE_ADMIN']
             ROLE_SUPER_ADMIN: ['ROLE_SUPER_ADMIN']
             # only here to register the (partially) unused permissions in the UI
-            ROLE_FAKE: ['CUSTOMERS_ALL_TEAMLEAD','CUSTOMERS_ALL_TEAM','PROJECTS_ALL_TEAMLEAD','PROJECTS_ALL_TEAM']
+            ROLE_FAKE: ['CUSTOMERS_ALL_TEAMLEAD','CUSTOMERS_ALL_TEAM','PROJECTS_ALL_TEAMLEAD','PROJECTS_ALL_TEAM','ACTIVITIES_ALL_TEAMLEAD','ACTIVITIES_ALL_TEAM']
         # add or remove single permissions
         roles:
             ROLE_USER: []
