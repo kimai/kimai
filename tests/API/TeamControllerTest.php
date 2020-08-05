@@ -9,9 +9,6 @@
 
 namespace App\Tests\API;
 
-use App\Entity\Activity;
-use App\Entity\Customer;
-use App\Entity\Project;
 use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
 use Symfony\Component\HttpFoundation\Response;
@@ -549,8 +546,6 @@ class TeamControllerTest extends APIControllerBaseTest
         $json = json_decode($client->getResponse()->getContent(), true);
         self::assertEquals('Project is not assigned to the team', $json['message']);
     }
-
-    // =====================================================================
 
     public function testPostActivityAction()
     {

@@ -143,6 +143,11 @@ class CustomerTest extends TestCase
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getCustomers()[0]);
 
+        // test remove unknown team doesn't do anything
+        $sut->removeTeam(new Team());
+        self::assertCount(1, $sut->getTeams());
+        self::assertCount(1, $team->getCustomers());
+
         $sut->removeTeam(new Team());
         $sut->removeTeam($team);
         self::assertCount(0, $sut->getTeams());
