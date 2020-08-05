@@ -24,6 +24,7 @@
                         <tr>
                             <th>{{ 'label.name'|trans }}</th>
                             <th class="hidden-xs">{{ 'label.comment'|trans }}</th>
+                            <th class="w-min text-center">{{ 'label.team'|trans }}</th>
                             <th class="actions"></th>
                         </tr>
                     </thead>
@@ -32,6 +33,7 @@
                         <tr>
                             <td>{{ widgets.label_activity(activity) }}</td>
                             <td class="hidden-xs">{{ activity.comment|comment2html }}</td>
+                            <td class="w-min text-center">{{ widgets.badge_team_access(activity.teams) }}</td>
                             <td class="actions">{{ actions.activity(activity, 'custom') }}</td>
                         </tr>
                     {% endfor %}

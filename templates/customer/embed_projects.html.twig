@@ -33,13 +33,7 @@
                     <tr>
                         <td>{{ widgets.label_project(project) }}</td>
                         <td class="hidden-xs">{{ project.comment|comment2html }}</td>
-                        <td class="w-min text-center">
-                            {% if project.teams|length > 0 %}
-                                {{ widgets.badge_counter(project.teams|length) }}
-                            {% else %}
-                                {{ widgets.icon('unlocked') }}
-                            {% endif %}
-                        </td>
+                        <td class="w-min text-center">{{ widgets.badge_team_access(project.teams) }}</td>
                         <td class="actions">{{ actions.project(project, 'custom') }}</td>
                     </tr>
                 {% endfor %}
