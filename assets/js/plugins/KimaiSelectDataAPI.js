@@ -50,8 +50,13 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
             let newApiUrl = self._buildUrlWithFormFields(this.dataset['apiUrl'], formPrefix);
 
             const selectValue = jQuery(this).val();
+// FIXME
+//console.log(selectValue);
+//console.log(this.dataset);
 
-            if (selectValue === '' || (Array.isArray(selectValue) && selectValue.length === 0)) {
+            // Problem: select a project with activities and then select a customer that has no project
+            // the resulting URL is wrong, it triggers "activities?project=" instead of using the "emptyUrl"
+            if (selectValue === '' || selectValue === null || (Array.isArray(selectValue) && selectValue.length === 0)) {
                 if (this.dataset['emptyUrl'] === undefined) {
                     self._updateSelect(targetSelect, {});
                     jQuery(targetSelect).attr('disabled', 'disabled');
@@ -80,7 +85,8 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
                 let newValue = '';
                 if (targetField.length === 0) {
                     // debug: this case for example happens in duration only mode, when the end field is not found
-                    //console.log('ERROR: Cannot find field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
+// FIXME
+//                    console.log('ERROR: Cannot find field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
                 } else {
                     if (targetField.val() !== null) {
                         newValue = targetField.val();
@@ -98,7 +104,16 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
                                     newValue = moment(newValue, targetField.data('format')).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
                                 }
                             }
+                        } else {
+                            // this case happens for example:
+                            // - when a customer without projects is selected
+                            // - when the end date is not set on a timesheet record and the project list is loaded (as the URL contains the %end% replacer)
+// FIXME
+//                            console.log('ERROR: Should that be allowed? Empty value found for field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
                         }
+                    } else {
+                        // debug: this case for example happens when a customer without projects is selected
+                        console.log('ERROR: Empty field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
                     }
                 }
 
@@ -117,9 +132,13 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
         const options = {};
         for (const apiData of data) {
             let title = '__empty__';
+            // projects should always have a parentTitle
+            // activities have a parentTitle only if they are not global
             if (apiData.hasOwnProperty('parentTitle') && apiData.parentTitle !== null) {
                 title = apiData.parentTitle;
             }
+            // group by parentTitle
+            // TODO this might fail in case of duplicate names, switch to using the parent id
             if (!options.hasOwnProperty(title)) {
                 options[title] = [];
             }
