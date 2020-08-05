@@ -255,6 +255,7 @@ class ProjectRepository extends EntityRepository
 
         $qb
             ->select('p')
+            ->distinct()
             ->from(Project::class, 'p')
             ->leftJoin('p.customer', 'c')
         ;
@@ -365,13 +366,6 @@ class ProjectRepository extends EntityRepository
                 $qb->andWhere($searchAnd);
             }
         }
-
-        // this will make sure, that we do not accidentally create results with multiple rows
-        //   => which would result in a wrong LIMIT / pagination results
-        // $qb->addGroupBy('p.id');
-
-        // the second group by is needed due to SQL standard (even though logically not really required for this query)
-        // $qb->addGroupBy($orderBy);
 
         return $qb;
     }
