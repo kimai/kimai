@@ -324,6 +324,12 @@ class ActivityControllerTest extends ControllerBaseTest
         self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
         self::assertEquals(1, $node->count());
+
+        // creating the default team a second time fails, as the name already exists
+        $this->request($client, '/admin/activity/1/create_team');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
+        $client->followRedirect();
+        $this->assertHasFlashError($client, 'Changes could not be saved: Team already existing');
     }
 
     public function testDeleteAction()
