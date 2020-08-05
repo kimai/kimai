@@ -16,9 +16,11 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
+use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 
 /**
  * @group integration
@@ -273,6 +275,55 @@ class ActivityControllerTest extends ControllerBaseTest
         // make sure no customer or project is pre-selected for global activities
         $this->assertEquals('', $editForm->get('activity_edit_form[customer]')->getValue());
         $this->assertEquals('', $editForm->get('activity_edit_form[project]')->getValue());
+    }
+
+    public function testTeamPermissionAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        /** @var Activity $activity */
+        $activity = $em->getRepository(Activity::class)->find(1);
+        self::assertEquals(0, $activity->getTeams()->count());
+
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(2);
+        $fixture->setAddCustomer(false);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/admin/activity/1/permissions');
+        $form = $client->getCrawler()->filter('form[name=activity_team_permission_form]')->form();
+        /** @var ChoiceFormField $team1 */
+        $team1 = $form->get('activity_team_permission_form[teams][0]');
+        $team1->tick();
+        /** @var ChoiceFormField $team2 */
+        $team2 = $form->get('activity_team_permission_form[teams][1]');
+        $team2->tick();
+
+        $client->submit($form);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
+        $client->followRedirect();
+        $this->assertHasDataTable($client);
+
+        /** @var Activity $activity */
+        $activity = $em->getRepository(Activity::class)->find(1);
+        self::assertEquals(2, $activity->getTeams()->count());
+    }
+
+    public function testCreateDefaultTeamAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/activity/1/details');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
+
+        $this->request($client, '/admin/activity/1/create_team');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-title');
+        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
+        self::assertEquals(1, $node->count());
     }
 
     public function testDeleteAction()
