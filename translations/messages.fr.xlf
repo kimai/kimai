@@ -421,6 +421,10 @@
                 <source>label.timesheet.daily_stats</source>
                 <target>Voir les statistiques journalières dans la fiche des temps</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Afficher le résumé dans la feuille de temps</target>
+            </trans-unit>
 
             <!--
               User timesheet calendar
@@ -448,8 +452,8 @@
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
                 <target>
-                    Actuellement, le projet %project% pour le client %customer% comprend %activités% 
-                    et %enregistrements% de durées, pour un total de %duration%. 
+                    Actuellement, le projet %project% pour le client %customer% comprend %activités%
+                    et %enregistrements% de durées, pour un total de %duration%.
                 </target>
             </trans-unit>
 
@@ -526,7 +530,7 @@
             <trans-unit id="admin_customer.short_stats">
                 <source>admin_customer.short_stats</source>
                 <target>
-                    Actuellement le client %customer% est associé à %project% projets avec %activity% activités, 
+                    Actuellement le client %customer% est associé à %project% projets avec %activity% activités,
                     qui regroupent %records% fiches de temps pour un total de %duration%.
                 </target>
             </trans-unit>
@@ -561,7 +565,7 @@
             <trans-unit id="admin_user.short_stats">
                 <source>admin_user.short_stats</source>
                 <target>
-                    Actuellement l'usager %user% a %records% fiches de temps pour une durée totale de %duration%. 
+                    Actuellement l'usager %user% a %records% fiches de temps pour une durée totale de %duration%.
                 </target>
             </trans-unit>
 

@@ -421,6 +421,10 @@
                 <source>label.timesheet.daily_stats</source>
                 <target>Napi statisztika megjelenítése a rögzített óráknál</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Összegzés megjelenítése az időrendben</target>
+            </trans-unit>
 
             <!--
               User timesheet calendar
@@ -448,7 +452,7 @@
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
                 <target>
-                    A %customer% ügyfélhez tartozó %project% projekthez kapcsolódik %activities% tevékenység 
+                    A %customer% ügyfélhez tartozó %project% projekthez kapcsolódik %activities% tevékenység
                     és %records% időbejegyzés, ami összesen %duration%.
                 </target>
             </trans-unit>
@@ -526,7 +530,7 @@
             <trans-unit id="admin_customer.short_stats">
                 <source>admin_customer.short_stats</source>
                 <target>
-                    A %customer% ügyfélhez kapcsolódik %project% projekt, %activities% tevékenység 
+                    A %customer% ügyfélhez kapcsolódik %project% projekt, %activities% tevékenység
                     és %records% időbejegyzés, ami összesen %duration%.
                 </target>
             </trans-unit>

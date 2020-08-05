@@ -473,6 +473,10 @@
                 <source>label.timesheet.daily_stats</source>
                 <target>Mostrar estadísticas diarias en los partes de horas</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Mostrar resumen en la hoja de tiempo</target>
+            </trans-unit>
 
             <!--
               User timesheet calendar

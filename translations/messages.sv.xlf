@@ -342,7 +342,7 @@
             </trans-unit>
             <trans-unit id="modal.columns.description">
                 <source>modal.columns.description</source>
-                <target state="translated">När du sparar de kolumner som inte är markerade kommer de att döljas och den här inställningen lagras i en webbläsarkaka. Om du tar bort dina cookies kommer inställningarna att återställas.</target>
+                <target state="translated">När du sparar de kolonner som inte är markerade kommer de att döljas och den här inställningen lagras i en webbläsarkaka. Om du tar bort dina cookies kommer inställningarna att återställas.</target>
             </trans-unit>
             <trans-unit id="label.fixedRate">
                 <source>label.fixedRate</source>
@@ -447,8 +447,8 @@
             </trans-unit>
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
-                <target state="translated">Projektet %project% för kunden %customer% har för närvarande %activities% 
-                     aktiviteter och %records% tidrapporter, som summeras till %duration%.
+                <target state="translated">Projektet %project% för kunden %customer% har %activities% för närvarande %activities%
+                     aktiviteter och %records% time-records, som räknas upp till totalt %duration%.
                 </target>
             </trans-unit>
 
@@ -462,8 +462,8 @@
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target state="translated">
-                     För närvarande har aktiviteten %activity% i projektet %project% för kunden %customer%
-                     har %records% tidrapporter, vilket summeras till %duration%.
+                     För närvarande aktiviteten %activity% i projektet %project% för kunden %customer%
+                     har %records% tidsrekord, vilket räknas upp till totalt %duration%.
                      </target>
             </trans-unit>
 
@@ -525,8 +525,8 @@
             <trans-unit id="admin_customer.short_stats">
                 <source>admin_customer.short_stats</source>
                 <target state="translated">
-                    För närvarande har kunden %customer% %project% projekt med %activities% aktiviteter,
-                    med %records% tidrapporter som summeras till %duration%.
+För närvarande kunden %customer% har %project% projekt med% aktivitet% aktiviteter, som räknas upp
+                     i %activity% tidposter till totalt %duration%.
                 </target>
             </trans-unit>
 
@@ -560,8 +560,8 @@
             <trans-unit id="admin_user.short_stats">
                 <source>admin_user.short_stats</source>
                 <target state="translated">
-                    För närvarande har användaren %user% %records% tidrapporter som summeras till %duration%.
-                </target>
+För närvarande har %user% användare %records% tidsrekord som räknas upp till totalt %duration%.
+                     </target>
             </trans-unit>
 
             <!--
@@ -601,19 +601,19 @@
             -->
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
-                <target state="translated">Arbetstimmar idag</target>
+                <target state="translated">Arbetstider idag</target>
             </trans-unit>
             <trans-unit id="stats.durationWeek">
                 <source>stats.durationWeek</source>
-                <target state="translated">Arbetstimmar denna veckan</target>
+                <target state="translated">Arbetstid i veckan</target>
             </trans-unit>
             <trans-unit id="stats.durationMonth">
                 <source>stats.durationMonth</source>
-                <target state="translated">Arbetstimmar denna månaden</target>
+                <target state="translated">Arbetstid i den här månaden</target>
             </trans-unit>
             <trans-unit id="stats.durationYear">
                 <source>stats.durationYear</source>
-                <target state="translated">Arbetstimmar detta  året</target>
+                <target state="translated">Arbetstid i det här året</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
@@ -741,7 +741,7 @@
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
-                <target>Nettobelopp</target>
+                <target>Subtotal</target>
             </trans-unit>
             <trans-unit id="invoice.tax">
                 <source>invoice.tax</source>
@@ -753,7 +753,7 @@
             </trans-unit>
             <trans-unit id="invoice.service_date">
                 <source>invoice.service_date</source>
-                <target state="translated">Arbetstillfälle</target>
+                <target state="translated">Inventaredatum</target>
             </trans-unit>
             <trans-unit id="label.amount">
                 <source>label.amount</source>
@@ -761,7 +761,7 @@
             </trans-unit>
             <trans-unit id="label.total_rate">
                 <source>label.total_rate</source>
-                <target state="translated">Belopp</target>
+                <target state="translated">Totaleres</target>
             </trans-unit>
             <trans-unit id="label.unit_price">
                 <source>label.unit_price</source>
@@ -777,11 +777,11 @@
             </trans-unit>
             <trans-unit id="invoice.signature_customer">
                 <source>invoice.signature_customer</source>
-                <target state="translated">Bekräftelse: Datum / Kundens namn / Signatur</target>
+                <target state="translated">Bekräftelse: Datum / Kunden namn / Signatur</target>
             </trans-unit>
             <trans-unit id="invoice.total_working_time">
-                <source>invoice.total_working_time</source>            
-                <target state="translated">Total arbetstid</target>
+                <source>invoice.total_working_time</source>
+                <target state="translated">Total varaktighet</target>
             </trans-unit>
             <trans-unit id="label.orderNumber">
                 <source>label.orderNumber</source>
@@ -805,7 +805,7 @@
             </trans-unit>
             <trans-unit id="export.subtitle">
                 <source>export.subtitle</source>
-                <target state="translated">Exportera tidrapport till olika format</target>
+                <target state="translated">Exportera tidsrapport till olika format</target>
             </trans-unit>
             <trans-unit id="export.period">
                 <source>export.period</source>
@@ -813,7 +813,7 @@
             </trans-unit>
             <trans-unit id="export.document_title">
                 <source>export.document_title</source>
-                <target state="translated">Export av tidrapporter</target>
+                <target state="translated">Förteckning över utgifter</target>
             </trans-unit>
             <trans-unit id="export.full_list">
                 <source>export.full_list</source>
@@ -830,6 +830,58 @@
             <trans-unit id="export.date_copyright">
                 <source>export.date_copyright</source>
                 <target state="translated">Skapad %date% med %kimai%</target>
+            </trans-unit>
+
+            <!--
+              Month names
+            -->
+            <trans-unit id="month.1">
+                <source>month.1</source>
+                <target state="translated">Januari</target>
+            </trans-unit>
+            <trans-unit id="month.2">
+                <source>month.2</source>
+                <target state="translated">Februari</target>
+            </trans-unit>
+            <trans-unit id="month.3">
+                <source>month.3</source>
+                <target state="translated">Mars</target>
+            </trans-unit>
+            <trans-unit id="month.4">
+                <source>month.4</source>
+                <target state="translated">April</target>
+            </trans-unit>
+            <trans-unit id="month.5">
+                <source>month.5</source>
+                <target state="translated">Maj</target>
+            </trans-unit>
+            <trans-unit id="month.6">
+                <source>month.6</source>
+                <target state="translated">Juni</target>
+            </trans-unit>
+            <trans-unit id="month.7">
+                <source>month.7</source>
+                <target state="translated">Juli</target>
+            </trans-unit>
+            <trans-unit id="month.8">
+                <source>month.8</source>
+                <target state="translated">Augusti</target>
+            </trans-unit>
+            <trans-unit id="month.9">
+                <source>month.9</source>
+                <target>September</target>
+            </trans-unit>
+            <trans-unit id="month.10">
+                <source>month.10</source>
+                <target state="translated">Oktober</target>
+            </trans-unit>
+            <trans-unit id="month.11">
+                <source>month.11</source>
+                <target>November</target>
+            </trans-unit>
+            <trans-unit id="month.12">
+                <source>month.12</source>
+                <target>December</target>
             </trans-unit>
 
             <!--
@@ -853,7 +905,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target state="translated">Skapa ny tidrapport</target>
+                <target state="translated">Skapa ny tidpost</target>
             </trans-unit>
 
             <!--
@@ -873,7 +925,7 @@
             </trans-unit>
             <trans-unit id="entryState.exported">
                 <source>entryState.exported</source>
-                <target state="translated">Rensad</target>
+                <target state="translated">Rennrad</target>
             </trans-unit>
             <trans-unit id="entryState.not_exported">
                 <source>entryState.not_exported</source>

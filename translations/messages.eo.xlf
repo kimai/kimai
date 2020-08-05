@@ -184,7 +184,7 @@
                 <source>menu.doctor</source>
                 <target>Sistem-sano</target>
             </trans-unit>
-            
+
             <!--
               Error templates
             -->
@@ -512,6 +512,10 @@
             <trans-unit id="label.timesheet.daily_stats">
                 <source>label.timesheet.daily_stats</source>
                 <target>Montri tagan statistikon en la temposlipo</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Montri resumon en horloĝo</target>
             </trans-unit>
             <trans-unit id="label.timesheet.export_decimal">
                 <source>label.timesheet.export_decimal</source>

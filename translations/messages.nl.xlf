@@ -472,6 +472,11 @@
                 <source>label.timesheet.daily_stats</source>
                 <target>Geef het dagtotaal weer in "Mijn prestaties"</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Toon samenvatting in urenstaat</target>
+            </trans-unit>
+
 
             <!--
               User timesheet calendar

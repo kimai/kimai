@@ -545,6 +545,10 @@
                 <source>label.timesheet.daily_stats</source>
                 <target>Tägliche Statistiken im Timesheet anzeigen</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Zusammenfassung in Arbeitszeittabelle anzeigen</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.export_decimal">
                 <source>label.timesheet.export_decimal</source>
                 <target>Dezimal Format für Export nutzen</target>
@@ -716,7 +720,7 @@
                 <source>Allowed character: A-Z and _</source>
                 <target>Erlaubte Zeichen: A-Z und _</target>
             </trans-unit>
-            
+
             <!--
               Admin: Plugins
             -->

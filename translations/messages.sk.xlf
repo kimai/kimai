@@ -502,6 +502,10 @@
                 <source>label.timesheet.daily_stats</source>
                 <target>Zobraziť denné štatistiky v prehľade</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Zobraziť zhrnutie v časovom rozvrhu</target>
+            </trans-unit>
 
             <!--
               User timesheet calendar

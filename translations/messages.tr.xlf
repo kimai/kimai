@@ -164,7 +164,7 @@
                 <source>menu.doctor</source>
                 <target state="translated">Doktor</target>
             </trans-unit>
-            
+
             <!--
               Error templates
             -->
@@ -222,7 +222,7 @@
             </trans-unit>
             <trans-unit id="label.budget">
                 <source>label.budget</source><target state="translated">Bütçe</target>
-                
+
             </trans-unit>
             <trans-unit id="label.timeBudget">
                 <source>label.timeBudget</source>
@@ -473,6 +473,10 @@
                 <source>label.timesheet.daily_stats</source>
                 <target state="translated">Çizelgede günlük istatistikleri göster</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Özeti zaman çizelgesinde göster</target>
+            </trans-unit>
 
             <!--
               User timesheet calendar
@@ -515,7 +519,7 @@
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target state="translated">
-                    Şu anda %project% projesindeki %activity% aktivitesi %customer% 
+                    Şu anda %project% projesindeki %activity% aktivitesi %customer%
                     müşterisi için %records% kayda sahip, toplamı %duration%.
                 </target>
             </trans-unit>

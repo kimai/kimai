@@ -485,6 +485,10 @@
                 <source>label.timesheet.daily_stats</source>
                 <target>Eguneroko estatistikak erakutsi ordu taulan</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Erakutsi laburpena ordutegian</target>
+            </trans-unit>
 
             <!--
               User timesheet calendar

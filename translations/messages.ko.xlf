@@ -437,6 +437,10 @@
                 <source>label.timesheet.daily_stats</source>
                 <target state="translated">일일통계 보기</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>작업 표에 요약 표시</target>
+            </trans-unit>
 
             <!--
               User timesheet calendar
@@ -464,7 +468,7 @@
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
                 <target state="translated">
-                    현재의 %project%프로젝트 %customer%고객을 위한 %activities%활동과 
+                    현재의 %project%프로젝트 %customer%고객을 위한 %activities%활동과
                     %records% 시간기록에 의해 책정된 총합 %duration%.
                 </target>
             </trans-unit>

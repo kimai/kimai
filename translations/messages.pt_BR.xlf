@@ -421,6 +421,10 @@
                 <source>label.timesheet.daily_stats</source>
                 <target>Mostrar estatísticas diárias no quadro de horários</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Mostrar resumo na planilha de horas</target>
+            </trans-unit>
 
             <!--
               User timesheet calendar

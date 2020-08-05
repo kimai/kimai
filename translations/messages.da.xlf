@@ -168,7 +168,7 @@
                 <source>menu.doctor</source>
                 <target>Fejlsøgning</target>
             </trans-unit>
-            
+
             <!--
               Error templates
             -->
@@ -484,6 +484,10 @@
             <trans-unit id="label.timesheet.daily_stats">
                 <source>label.timesheet.daily_stats</source>
                 <target>Vis daglig statistik i timeseddel</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Vis resumé i timeseddel</target>
             </trans-unit>
 
             <!--

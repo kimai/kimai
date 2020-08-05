@@ -513,6 +513,10 @@
                 <source>label.timesheet.export_decimal</source>
                 <target>Usa durata decimale nell'esportazione</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                 <source>label.timesheet.timesheet_summary</source>
+                 <target>Mostra il riepilogo nella scheda attività</target>
+            </trans-unit>
 
             <!--
               User timesheet calendar

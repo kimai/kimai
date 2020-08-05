@@ -449,6 +449,10 @@
                 <source>label.timesheet.daily_stats</source>
                 <target>Zobrazit denní statistiky v pracovním výkaze</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Zobrazit shrnutí v časovém rozvrhu</target>
+            </trans-unit>
 
             <!--
               User timesheet calendar

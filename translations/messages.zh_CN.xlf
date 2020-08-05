@@ -168,7 +168,7 @@
                 <source>menu.doctor</source>
                 <target>医生</target>
             </trans-unit>
-            
+
             <!--
               Error templates
             -->
@@ -484,6 +484,10 @@
             <trans-unit id="label.timesheet.daily_stats">
                 <source>label.timesheet.daily_stats</source>
                 <target>在时间表中展示每日状态</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>在时间表中显示摘要</target>
             </trans-unit>
 
             <!--

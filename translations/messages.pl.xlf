@@ -172,7 +172,7 @@
                 <source>menu.doctor</source>
                 <target>Diagnostyka</target>
             </trans-unit>
-            
+
             <!--
               Error templates
             -->
@@ -497,7 +497,10 @@
                 <source>label.timesheet.daily_stats</source>
                 <target>Pokaż dzienne statystyki w ewidencji</target>
             </trans-unit>
-
+           <trans-unit id="label.timesheet.timesheet_summary">
+                <source>label.timesheet.timesheet_summary</source>
+                <target>Pokaż podsumowanie w ewidencji</target>
+            </trans-unit>
             <!--
               User timesheet calendar
             -->
@@ -548,7 +551,7 @@
                 <source>admin_activity.short_stats</source>
                 <target>
                     Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activities% czynności
-                    oraz  %records% wpisów czasu, które sumują się do łącznej długości %duration% .		
+                    oraz  %records% wpisów czasu, które sumują się do łącznej długości %duration% .
 		 </target>
             </trans-unit>
 
