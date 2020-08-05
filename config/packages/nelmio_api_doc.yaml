@@ -3,21 +3,21 @@ nelmio_api_doc:
         use_jms: true
         names:
             - { alias: CustomerEditForm,            type: App\Form\API\CustomerApiEditForm,         groups: [Default, Entity, Customer] }
-            - { alias: CustomerEntity,              type: App\Entity\Customer,                      groups: [Default, Entity, Customer, Customer_Entity] }
-            - { alias: Customer,                    type: App\Entity\Customer,                      groups: [Default] }
+            - { alias: CustomerEntity,              type: App\Entity\Customer,                      groups: [Default, Entity, Customer, Customer_Entity, Not_Expanded] }
+            - { alias: Customer,                    type: App\Entity\Customer,                      groups: [Default, Not_Expanded] }
             - { alias: CustomerRate,                type: App\Entity\CustomerRate,                  groups: [Default, Entity, Customer_Rate] }
             - { alias: CustomerRateForm,            type: App\Form\API\CustomerRateApiForm,         groups: [Default, Entity, Customer_Rate] }
             - { alias: CustomerCollection,          type: App\Entity\Customer,                      groups: [Default, Collection, Customer] }
             - { alias: ProjectEditForm,             type: App\Form\API\ProjectApiEditForm,          groups: [Default, Entity, Project] }
-            - { alias: ProjectEntity,               type: App\Entity\Project,                       groups: [Default, Entity, Project, Project_Entity] }
-            - { alias: Project,                     type: App\Entity\Project,                       groups: [Default] }
+            - { alias: ProjectEntity,               type: App\Entity\Project,                       groups: [Default, Entity, Project, Project_Entity, Not_Expanded] }
+            - { alias: Project,                     type: App\Entity\Project,                       groups: [Default, Not_Expanded] }
             - { alias: ProjectExpanded,             type: App\Entity\Project,                       groups: [Default, Expanded] }
             - { alias: ProjectRate,                 type: App\Entity\ProjectRate,                   groups: [Default, Entity, Project_Rate] }
             - { alias: ProjectRateForm,             type: App\Form\API\ProjectRateApiForm,          groups: [Default, Entity, Project_Rate] }
             - { alias: ProjectCollection,           type: App\Entity\Project,                       groups: [Default, Collection, Project] }
             - { alias: ActivityEditForm,            type: App\Form\API\ActivityApiEditForm,         groups: [Default, Entity, Activity] }
-            - { alias: ActivityEntity,              type: App\Entity\Activity,                      groups: [Default, Entity, Activity, Activity_Entity] }
-            - { alias: Activity,                    type: App\Entity\Activity,                      groups: [Default] }
+            - { alias: ActivityEntity,              type: App\Entity\Activity,                      groups: [Default, Entity, Activity, Activity_Entity, Not_Expanded] }
+            - { alias: Activity,                    type: App\Entity\Activity,                      groups: [Default, Not_Expanded] }
             - { alias: ActivityExpanded,            type: App\Entity\Activity,                      groups: [Default, Expanded] }
             - { alias: ActivityRate,                type: App\Entity\ActivityRate,                  groups: [Default, Entity, Activity_Rate] }
             - { alias: ActivityRateForm,            type: App\Form\API\ActivityRateApiForm,         groups: [Default, Entity, Activity_Rate] }

@@ -165,8 +165,8 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @var Activity
      *
      * @Serializer\Expose()
-     * @Serializer\Groups({"Expanded"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/ActivityExpanded"))
+     * @Serializer\Groups({"Subresource", "Expanded"})
+     * @SWG\Property(ref="#/definitions/ActivityExpanded")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Activity")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
@@ -180,7 +180,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Subresource", "Expanded"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/ProjectExpanded"))
+     * @SWG\Property(ref="#/definitions/ProjectExpanded")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
