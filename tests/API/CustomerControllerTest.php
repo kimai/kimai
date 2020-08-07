@@ -10,8 +10,12 @@
 namespace App\Tests\API;
 
 use App\DataFixtures\UserFixtures;
+use App\Entity\Activity;
 use App\Entity\Customer;
+use App\Entity\CustomerMeta;
 use App\Entity\CustomerRate;
+use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
@@ -84,12 +88,12 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(1, \count($result));
-        $this->assertStructure($result[0], false);
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
     public function testGetCollectionWithQuery()
     {
-        $query = ['order' => 'ASC', 'orderBy' => 'name', 'visible' => 3];
+        $query = ['order' => 'ASC', 'orderBy' => 'name', 'visible' => 3, 'term' => 'test'];
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/customers', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -97,7 +101,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(1, \count($result));
-        $this->assertStructure($result[0], false);
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
     public function testGetEntity()
@@ -107,7 +111,51 @@ class CustomerControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result, true);
+        self::assertApiResponseTypeStructure('CustomerEntity', $result);
+    }
+
+    public function testGetEntityWithFullResponse()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $this->getEntityManager();
+
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+
+        // add meta fields
+        $meta = new CustomerMeta();
+        $meta->setName('bar')->setValue('foo')->setIsVisible(false);
+        $customer->setMetaField($meta);
+        $meta = new CustomerMeta();
+        $meta->setName('foo')->setValue('bar')->setIsVisible(true);
+        $customer->setMetaField($meta);
+        $em->persist($customer);
+
+        // add a new project ...
+        $project = new Project();
+        $project->setName('Activity Test');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        // ... with activity
+        $activity = (new Activity())->setName('first one')->setComment('1')->setProject($project);
+        $em->persist($activity);
+
+        // and finally a team
+        $team = new Team();
+        $team->setName('Testing customer 1 team');
+        $team->setTeamLead($this->getUserByRole(User::ROLE_USER));
+        $team->addCustomer($customer);
+        $team->addProject($project);
+        $team->addUser($this->getUserByRole(User::ROLE_TEAMLEAD));
+        $em->persist($team);
+
+        $this->assertAccessIsGranted($client, '/api/customers/1');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('CustomerEntity', $result);
     }
 
     public function testNotFound()
@@ -132,7 +180,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('CustomerEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
@@ -150,7 +198,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('CustomerEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
@@ -206,7 +254,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('CustomerEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
@@ -250,6 +298,13 @@ class CustomerControllerTest extends APIControllerBaseTest
         $response = $client->getResponse();
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['currency']);
+    }
+
+    public function testMetaActionNotAllowed()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/api/customers/1/meta', 'PATCH', [], json_encode(['name' => 'asdasd']));
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to update this customer');
     }
 
     public function testMetaActionThrowsNotFound()
@@ -298,25 +353,5 @@ class CustomerControllerTest extends APIControllerBaseTest
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
         $this->assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());
-    }
-
-    protected function assertStructure(array $result, $full = true)
-    {
-        $expectedKeys = [
-            'id', 'name', 'visible', 'color', 'metaFields', 'teams'
-        ];
-
-        if ($full) {
-            $expectedKeys = array_merge($expectedKeys, [
-                'homepage', 'number', 'comment', 'company', 'contact', 'address', 'country', 'currency',
-                'phone', 'fax', 'mobile', 'email', 'timezone', 'budget', 'timeBudget'
-            ]);
-        }
-
-        $actual = array_keys($result);
-        sort($actual);
-        sort($expectedKeys);
-
-        $this->assertEquals($expectedKeys, $actual, 'Customer structure does not match');
     }
 }

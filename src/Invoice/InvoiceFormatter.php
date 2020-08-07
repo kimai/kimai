@@ -29,9 +29,10 @@ interface InvoiceFormatter
     /**
      * @param int|float $amount
      * @param string|null $currency
-     * @return mixed
+     * @param bool $withCurrency
+     * @return string
      */
-    public function getFormattedMoney($amount, $currency);
+    public function getFormattedMoney($amount, ?string $currency, bool $withCurrency = true);
 
     /**
      * @param \DateTime $date

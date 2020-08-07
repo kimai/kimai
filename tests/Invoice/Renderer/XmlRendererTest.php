@@ -16,6 +16,7 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 /**
+ * @covers \App\Invoice\Renderer\AbstractTwigRenderer
  * @covers \App\Invoice\Renderer\XmlRenderer
  * @group integration
  */

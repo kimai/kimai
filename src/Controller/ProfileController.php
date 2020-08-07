@@ -20,6 +20,7 @@ use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
 use App\Repository\TeamRepository;
 use App\Repository\TimesheetRepository;
+use App\Utils\LocaleSettings;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -69,7 +70,7 @@ class ProfileController extends AbstractController
      * @Route(path="/{username}", name="user_profile", methods={"GET"})
      * @Security("is_granted('view', profile)")
      */
-    public function indexAction(User $profile, TimesheetRepository $repository)
+    public function indexAction(User $profile, TimesheetRepository $repository, LocaleSettings $localeSettings)
     {
         $userStats = $repository->getUserStatistics($profile);
         $monthlyStats = $repository->getMonthlyStats($profile);
@@ -79,6 +80,7 @@ class ProfileController extends AbstractController
             'user' => $profile,
             'stats' => $userStats,
             'years' => $monthlyStats,
+            'stat_date_format' => $localeSettings->getDatePickerFormat(),
         ];
 
         return $this->render('user/stats.html.twig', $viewVars);
@@ -261,10 +263,20 @@ class ProfileController extends AbstractController
             ]);
         }
 
+        $sections = [];
+
+        /** @var UserPreference $pref */
+        foreach ($profile->getPreferences() as $pref) {
+            if ($pref->isEnabled()) {
+                $sections[$pref->getSection()] = $pref->getSection();
+            }
+        }
+
         return $this->render('user/form.html.twig', [
             'tab' => 'preferences',
             'user' => $profile,
             'form' => $form->createView(),
+            'sections' => $sections
         ]);
     }
 
@@ -363,7 +375,6 @@ class ProfileController extends AbstractController
             UserPasswordType::class,
             $user,
             [
-                'validation_groups' => ['PasswordUpdate'],
                 'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUsername()]),
                 'method' => 'POST'
             ]
@@ -376,7 +387,6 @@ class ProfileController extends AbstractController
             UserApiTokenType::class,
             $user,
             [
-                'validation_groups' => ['apiTokenUpdate'],
                 'action' => $this->generateUrl('user_profile_api_token', ['username' => $user->getUsername()]),
                 'method' => 'POST'
             ]

@@ -83,11 +83,12 @@ class UserPreference
      * @var int
      */
     private $order = 1000;
-
     /**
-     * @return int
+     * @var string
      */
-    public function getId()
+    private $section = 'default';
+
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -263,5 +264,17 @@ class UserPreference
         $this->order = $order;
 
         return $this;
+    }
+
+    public function setSection(string $section): UserPreference
+    {
+        $this->section = $section;
+
+        return $this;
+    }
+
+    public function getSection(): string
+    {
+        return $this->section;
     }
 }

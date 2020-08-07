@@ -12,6 +12,9 @@ namespace App\Controller;
 use App\Configuration\FormConfiguration;
 use App\Entity\User;
 use App\Event\UserPreferenceDisplayEvent;
+use App\Export\Spreadsheet\UserExporter;
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\Toolbar\UserToolbarForm;
 use App\Form\UserCreateType;
 use App\Repository\Query\UserQuery;
@@ -65,11 +68,11 @@ final class UserController extends AbstractController
     /**
      * @Route(path="/", defaults={"page": 1}, name="admin_user", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated", methods={"GET"})
-     * @Security("is_granted('view_user')")
      */
     public function indexAction($page, Request $request): Response
     {
         $query = new UserQuery();
+        $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
@@ -188,6 +191,34 @@ final class UserController extends AbstractController
                 'form' => $deleteForm->createView(),
             ]
         );
+    }
+
+    /**
+     * @Route(path="/export", name="user_export", methods={"GET"})
+     * @Security("is_granted('view_user')")
+     */
+    public function exportAction(Request $request, UserExporter $exporter)
+    {
+        $query = new UserQuery();
+        $query->setCurrentUser($this->getUser());
+
+        $form = $this->getToolbarForm($query);
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
+
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
+
+        $entries = $this->getRepository()->getUsersForQuery($query);
+
+        $spreadsheet = $exporter->export(
+            $entries,
+            new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT)
+        );
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-users');
+
+        return $writer->getFileResponse($spreadsheet);
     }
 
     protected function getToolbarForm(UserQuery $query): FormInterface

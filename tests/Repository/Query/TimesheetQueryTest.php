@@ -35,23 +35,29 @@ class TimesheetQueryTest extends BaseQueryTest
         $this->assertState($sut);
         $this->assertExported($sut);
         $this->assertSearchTerm($sut);
+        $this->assertModifiedAfter($sut);
+
+        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getBillable());
+        self::assertFalse($sut->isBillable());
+        self::assertFalse($sut->isNotBillable());
+        $this->assertBillable($sut);
 
         $this->assertResetByFormError(new TimesheetQuery(), 'begin', 'DESC');
     }
 
     protected function assertUser(TimesheetQuery $sut)
     {
-        $this->assertNull($sut->getUser());
+        self::assertNull($sut->getUser());
 
         $expected = new User();
         $expected->setUsername('foo-bar');
-        $sut->setUser($expected);
-        $this->assertEquals($expected, $sut->getUser());
+        self::assertInstanceOf(TimesheetQuery::class, $sut->setUser($expected));
+        self::assertEquals($expected, $sut->getUser());
     }
 
     protected function assertUsers(TimesheetQuery $sut)
     {
-        $this->assertEmpty($sut->getUsers());
+        self::assertEmpty($sut->getUsers());
 
         $user = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
         $user->method('getId')->willReturn(1);
@@ -70,43 +76,86 @@ class TimesheetQueryTest extends BaseQueryTest
         $sut->addUser($user);
         $sut->removeUser($user);
 
-        $this->assertCount(2, $sut->getUsers());
+        self::assertCount(2, $sut->getUsers());
     }
 
     protected function assertState(TimesheetQuery $sut)
     {
-        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
+        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
+        self::assertFalse($sut->isRunning());
+        self::assertFalse($sut->isStopped());
 
-        $sut->setState(PHP_INT_MAX);
-        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
+        self::assertInstanceOf(TimesheetQuery::class, $sut->setState(PHP_INT_MAX));
+        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
 
         $sut->setState(TimesheetQuery::STATE_STOPPED);
-        $this->assertEquals(TimesheetQuery::STATE_STOPPED, $sut->getState());
+        self::assertEquals(TimesheetQuery::STATE_STOPPED, $sut->getState());
+        self::assertFalse($sut->isRunning());
+        self::assertTrue($sut->isStopped());
 
         $sut->setState(TimesheetQuery::STATE_RUNNING);
-        $this->assertEquals(TimesheetQuery::STATE_RUNNING, $sut->getState());
+        self::assertEquals(TimesheetQuery::STATE_RUNNING, $sut->getState());
+        self::assertTrue($sut->isRunning());
+        self::assertFalse($sut->isStopped());
 
         $sut->setState(TimesheetQuery::STATE_ALL);
-        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
+        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
     }
 
     protected function assertExported(TimesheetQuery $sut)
     {
-        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
+        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
+        self::assertFalse($sut->isExported());
+        self::assertFalse($sut->isNotExported());
 
-        $sut->setExported(PHP_INT_MAX);
-        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
+        self::assertInstanceOf(TimesheetQuery::class, $sut->setExported(PHP_INT_MAX));
+        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
 
         $sut->setExported(TimesheetQuery::STATE_EXPORTED);
-        $this->assertEquals(TimesheetQuery::STATE_EXPORTED, $sut->getExported());
+        self::assertEquals(TimesheetQuery::STATE_EXPORTED, $sut->getExported());
+        self::assertTrue($sut->isExported());
+        self::assertFalse($sut->isNotExported());
 
         $sut->setExported(TimesheetQuery::STATE_NOT_EXPORTED);
-        $this->assertEquals(TimesheetQuery::STATE_NOT_EXPORTED, $sut->getExported());
+        self::assertEquals(TimesheetQuery::STATE_NOT_EXPORTED, $sut->getExported());
+        self::assertFalse($sut->isExported());
+        self::assertTrue($sut->isNotExported());
 
         $sut->setExported(TimesheetQuery::STATE_ALL);
-        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
+        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
 
         $sut->setExported('02');
-        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
+        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
+    }
+
+    protected function assertModifiedAfter(TimesheetQuery $sut)
+    {
+        self::assertNull($sut->getModifiedAfter());
+        $date = new \DateTime('-3 hours');
+
+        self::assertInstanceOf(TimesheetQuery::class, $sut->setModifiedAfter($date));
+        self::assertNotNull($sut->getModifiedAfter()); // just here to fix a PHPStan issue
+        self::assertSame($date, $sut->getModifiedAfter());
+    }
+
+    protected function assertBillable(TimesheetQuery $sut)
+    {
+        self::assertInstanceOf(TimesheetQuery::class, $sut->setBillable(TimesheetQuery::STATE_ALL));
+        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getBillable());
+        self::assertFalse($sut->isBillable());
+        self::assertFalse($sut->isNotBillable());
+
+        $sut->setBillable(PHP_INT_MAX);
+        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getBillable());
+
+        $sut->setBillable(TimesheetQuery::STATE_BILLABLE);
+        self::assertEquals(TimesheetQuery::STATE_BILLABLE, $sut->getBillable());
+        self::assertTrue($sut->isBillable());
+        self::assertFalse($sut->isNotBillable());
+
+        $sut->setBillable(TimesheetQuery::STATE_NOT_BILLABLE);
+        self::assertEquals(TimesheetQuery::STATE_NOT_BILLABLE, $sut->getBillable());
+        self::assertFalse($sut->isBillable());
+        self::assertTrue($sut->isNotBillable());
     }
 }

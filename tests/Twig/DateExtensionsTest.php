@@ -11,7 +11,6 @@ namespace App\Tests\Twig;
 
 use App\Configuration\LanguageFormattings;
 use App\Twig\DateExtensions;
-use App\Utils\LocaleSettings;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -35,14 +34,12 @@ class DateExtensionsTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($dateSettings));
-
-        return new DateExtensions($localeSettings);
+        return new DateExtensions($requestStack, new LanguageFormattings($dateSettings));
     }
 
     public function testGetFilters()
     {
-        $filters = ['month_name', 'date_short', 'date_time', 'date_full', 'date_format', 'time', 'hour24'];
+        $filters = ['month_name', 'day_name', 'date_short', 'date_time', 'date_full', 'date_format', 'time', 'hour24'];
         $sut = $this->getSut('de', []);
         $twigFilters = $sut->getFilters();
         $this->assertCount(\count($filters), $twigFilters);
@@ -121,22 +118,41 @@ class DateExtensionsTest extends TestCase
     }
 
     /**
-     * @param \DateTime $date
-     * @param string $result
-     * @dataProvider getMonthData
+     * @dataProvider getDayNameTestData
      */
-    public function testMonthName(\DateTime $date, $result)
+    public function testDayName(string $locale, string $date, string $expectedName, bool $short)
     {
-        $sut = $this->getSut('en', []);
-        $this->assertEquals($result, $sut->monthName($date));
+        $sut = $this->getSut($locale, []);
+        self::assertEquals($expectedName, $sut->dayName(new \DateTime($date), $short));
     }
 
-    public function getMonthData()
+    public function getDayNameTestData()
     {
         return [
-            [new \DateTime('January 2016'), 'month.1'],
-            [new \DateTime('2016-06-23'), 'month.6'],
-            [new \DateTime('2016-12-23'), 'month.12'],
+            ['de', '2020-07-09 12:00:00', 'Donnerstag', false],
+            ['en', '2020-07-09 12:00:00', 'Thursday', false],
+            ['de', '2020-07-09 12:00:00', 'Do.', true],
+            ['en', '2020-07-09 12:00:00', 'Thu', true],
+        ];
+    }
+
+    /**
+     * @dataProvider getMonthNameTestData
+     */
+    public function testMonthName(string $locale, string $date, string $expectedName)
+    {
+        $sut = $this->getSut($locale, []);
+        self::assertEquals($expectedName, $sut->monthName(new \DateTime($date)));
+    }
+
+    public function getMonthNameTestData()
+    {
+        return [
+            ['de', '2020-07-09 23:59:59', 'Juli'],
+            ['en', '2020-07-09 23:59:59', 'July'],
+            ['de', 'January 2016', 'Januar'],
+            ['en', 'January 2016', 'January'],
+            ['en', '2016-12-23', 'December'],
         ];
     }
 

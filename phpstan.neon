@@ -5,8 +5,6 @@ includes:
 
 parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
-    autoload_directories:
-        - %rootDir%/../../../src/Migrations
     ignoreErrors:
         - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\).#'
         - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::integerNode\(\).#'

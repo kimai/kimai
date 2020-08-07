@@ -45,6 +45,11 @@ use Symfony\Component\Validator\Constraints;
  */
 class ProjectController extends BaseApiController
 {
+    public const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
+    public const GROUPS_FORM = ['Default', 'Entity', 'Project'];
+    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
+    public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
+
     /**
      * @var ProjectRepository
      */
@@ -159,7 +164,7 @@ class ProjectController extends BaseApiController
 
         $data = $this->repository->getProjectsForQuery($query);
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Collection', 'Project']);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
@@ -185,7 +190,7 @@ class ProjectController extends BaseApiController
         }
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -233,13 +238,13 @@ class ProjectController extends BaseApiController
             $this->repository->saveProject($project);
 
             $view = new View($project, 200);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }
@@ -297,7 +302,7 @@ class ProjectController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+            $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
         }
@@ -305,7 +310,7 @@ class ProjectController extends BaseApiController
         $this->repository->saveProject($project);
 
         $view = new View($project, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -358,7 +363,7 @@ class ProjectController extends BaseApiController
         $this->repository->saveProject($project);
 
         $view = new View($project, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -401,7 +406,7 @@ class ProjectController extends BaseApiController
         $rates = $this->projectRateRepository->getRatesForProject($project);
 
         $view = new View($rates, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'ProjectRate']);
+        $view->getContext()->setGroups(self::GROUPS_RATE);
 
         return $this->viewHandler->handle($view);
     }
@@ -512,7 +517,7 @@ class ProjectController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'ProjectRate']);
+            $view->getContext()->setGroups(self::GROUPS_RATE);
 
             return $this->viewHandler->handle($view);
         }
@@ -520,7 +525,7 @@ class ProjectController extends BaseApiController
         $this->projectRateRepository->saveRate($rate);
 
         $view = new View($rate, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'ProjectRate']);
+        $view->getContext()->setGroups(self::GROUPS_RATE);
 
         return $this->viewHandler->handle($view);
     }

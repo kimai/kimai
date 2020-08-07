@@ -16,6 +16,7 @@ use App\Repository\Query\CustomerQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * @covers \App\Event\AbstractMetaDisplayEvent
  * @covers \App\Event\CustomerMetaDisplayEvent
  */
 class CustomerMetaDisplayEventTest extends TestCase

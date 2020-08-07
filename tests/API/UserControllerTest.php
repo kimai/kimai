@@ -49,21 +49,21 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(7, \count($result));
         foreach ($result as $user) {
-            $this->assertStructure($user, false);
+            self::assertApiResponseTypeStructure('UserCollection', $user);
         }
     }
 
     public function testGetCollectionWithQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['visible' => 2, 'orderBy' => 'email', 'order' => 'DESC']);
+        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['visible' => 2, 'orderBy' => 'email', 'order' => 'DESC', 'term' => 'chris']);
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(1, \count($result));
         foreach ($result as $user) {
-            $this->assertStructure($user, false);
+            self::assertApiResponseTypeStructure('UserCollection', $user);
         }
     }
 
@@ -77,7 +77,7 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(8, \count($result));
         foreach ($result as $user) {
-            $this->assertStructure($user, false);
+            self::assertApiResponseTypeStructure('UserCollection', $user);
         }
     }
 
@@ -88,7 +88,7 @@ class UserControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
         self::assertEquals('1', $result['id']);
         self::assertEquals('CFO', $result['title']);
         self::assertEquals('Clara Haynes', $result['alias']);
@@ -101,7 +101,7 @@ class UserControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
         self::assertEquals('6', $result['id']);
         self::assertEquals('Super Administrator', $result['title']);
         self::assertEquals('', $result['alias']);
@@ -125,7 +125,7 @@ class UserControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
     }
 
     public function testPostAction()
@@ -150,7 +150,7 @@ class UserControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
         $this->assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['username']);
         self::assertEquals('test123', $result['avatar']);
@@ -159,6 +159,50 @@ class UserControllerTest extends APIControllerBaseTest
         self::assertEquals('ru', $result['language']);
         self::assertEquals('Europe/Paris', $result['timezone']);
         self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_ADMIN'], $result['roles']);
+    }
+
+    public function testPostActionWithShortPassword()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $data = [
+            'username' => 'foo',
+            'email' => 'foo@example.com',
+            'avatar' => 'test123',
+            'title' => 'asdfghjkl',
+            'plainPassword' => '1234567',
+            'enabled' => true,
+            'language' => 'ru',
+            'timezone' => 'Europe/Paris',
+            'roles' => [
+                'ROLE_TEAMLEAD',
+                'ROLE_ADMIN'
+            ],
+        ];
+        $this->request($client, '/api/users', 'POST', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['plainPassword']);
+    }
+
+    public function testPostActionWithValidationErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $data = [
+            'username' => '',
+            'email' => '',
+            'plainPassword' => '123456',
+            'language' => 'xx',
+            'timezone' => 'XXX/YYY',
+            'roles' => [
+                'ABC',
+            ],
+        ];
+        $this->request($client, '/api/users', 'POST', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['username', 'email', 'plainPassword', 'language', 'timezone', 'roles']);
     }
 
     public function testPostActionWithInvalidUser()
@@ -216,7 +260,7 @@ class UserControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
         $this->assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['username']);
         self::assertEquals('test321', $result['avatar']);
@@ -227,21 +271,36 @@ class UserControllerTest extends APIControllerBaseTest
         self::assertEquals(['ROLE_TEAMLEAD'], $result['roles']);
     }
 
-    protected function assertStructure(array $result, $full = true)
+    public function testPatchActionWithUnknownUser()
     {
-        $expectedKeys = ['id', 'username', 'enabled', 'alias'];
+        $this->assertEntityNotFoundForPatch(User::ROLE_SUPER_ADMIN, '/api/users/255', []);
+    }
 
-        if ($full) {
-            $expectedKeys = array_merge(
-                $expectedKeys,
-                ['title', 'avatar', 'teams', 'roles', 'language', 'timezone']
-            );
-        }
+    public function testPatchActionWithInvalidUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/api/users/1', 'PATCH', [], json_encode(['avatar' => 'asdasd']));
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Not allowed to edit user');
+    }
 
-        $actual = array_keys($result);
-        sort($actual);
-        sort($expectedKeys);
+    public function testPatchActionWithValidationErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $data = [
+            'username' => '1',  // not existing in form
+            'email' => '',
+            'plainPassword' => '123456', // not existing in form
+            'plainApiToken' => '123456', // not existing in form
+            'language' => 'xx',
+            'timezone' => 'XXX/YYY',
+            'roles' => [
+                'ABC',
+            ],
+        ];
+        $this->request($client, '/api/users/1', 'PATCH', [], json_encode($data));
 
-        $this->assertEquals($expectedKeys, $actual, 'User structure does not match');
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['email', 'language', 'timezone', 'roles'], true);
     }
 }

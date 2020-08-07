@@ -12,8 +12,8 @@ namespace App\Tests\Controller;
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Tests\KernelTestTrait;
-use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
@@ -218,16 +218,15 @@ abstract class ControllerBaseTest extends WebTestCase
     }
 
     /**
-     * @param string $role the USER role to use for the request
+     * @param HttpKernelBrowser $client the client to use
      * @param string $url the URL of the page displaying the initial form to submit
      * @param string $formSelector a selector to find the form to test
      * @param array $formData values to fill in the form
      * @param array $fieldNames array of form-fields that should fail
      * @param bool $disableValidation whether the form should validate before submitting or not
      */
-    protected function assertFormHasValidationError($role, $url, $formSelector, array $formData, array $fieldNames, $disableValidation = true)
+    protected function assertHasValidationError(HttpKernelBrowser $client, $url, $formSelector, array $formData, array $fieldNames, $disableValidation = true)
     {
-        $client = $this->getClientForAuthenticatedUser($role);
         $crawler = $client->request('GET', $this->createUrl($url));
         $form = $crawler->filter($formSelector)->form();
         if ($disableValidation) {
@@ -259,6 +258,20 @@ abstract class ControllerBaseTest extends WebTestCase
                 self::assertStringContainsString('has-error', $classes, 'Form field has no validation message: ' . $name);
             }
         }
+    }
+
+    /**
+     * @param string $role the USER role to use for the request
+     * @param string $url the URL of the page displaying the initial form to submit
+     * @param string $formSelector a selector to find the form to test
+     * @param array $formData values to fill in the form
+     * @param array $fieldNames array of form-fields that should fail
+     * @param bool $disableValidation whether the form should validate before submitting or not
+     */
+    protected function assertFormHasValidationError($role, $url, $formSelector, array $formData, array $fieldNames, $disableValidation = true)
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+        $this->assertHasValidationError($client, $url, $formSelector, $formData, $fieldNames, $disableValidation);
     }
 
     /**
@@ -328,5 +341,16 @@ abstract class ControllerBaseTest extends WebTestCase
 
         self::assertTrue($client->getResponse()->headers->has('Location'), 'Could not find "Location" header');
         self::assertStringEndsWith($url, $client->getResponse()->headers->get('Location'), 'Redirect URL does not match');
+    }
+
+    protected function assertExcelExportResponse(HttpKernelBrowser $client, string $prefix)
+    {
+        /** @var BinaryFileResponse $response */
+        $response = $client->getResponse();
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
+
+        self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
+        self::assertStringContainsString('attachment; filename=' . $prefix, $response->headers->get('Content-Disposition'));
+        self::assertStringContainsString('.xlsx', $response->headers->get('Content-Disposition'));
     }
 }

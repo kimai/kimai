@@ -199,6 +199,10 @@ class AppExtensionTest extends TestCase
                 ],
                 'rules' => [
                     'allow_future_times' => true,
+                    'allow_overlapping_records' => true,
+                    'lockdown_period_start' => null,
+                    'lockdown_period_end' => null,
+                    'lockdown_grace_period' => null,
                 ],
                 'default_begin' => 'now',
             ],
@@ -419,14 +423,6 @@ class AppExtensionTest extends TestCase
         $config = $container->getParameter('kimai.i18n_domains');
         // oder is important, theme/installation specific translations win
         $this->assertEquals(['yyyy', 'xxxx'], $config);
-    }
-
-    public function testInvalidConfiguration()
-    {
-        $this->expectException(Notice::class);
-        $this->expectExceptionMessage('Found invalid "kimai" configuration: The child node "data_dir" at path "kimai" must be configured.');
-
-        $this->extension->load([], $container = $this->getContainer());
     }
 
     public function testWithBundleConfiguration()

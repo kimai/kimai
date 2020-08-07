@@ -192,6 +192,15 @@ trait RateControllerTestTrait
         $this->assertNotFoundForDelete($client, $this->getRateUrl(2, 1));
     }
 
+    public function testDeleteNotAllowed()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importTestRates(1);
+
+        $this->request($client, $this->getRateUrl(1, 1), 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
+    }
+
     protected function assertRateStructure(array $result, $user = null)
     {
         $expectedKeys = [

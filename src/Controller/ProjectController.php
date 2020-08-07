@@ -19,6 +19,9 @@ use App\Entity\Rate;
 use App\Entity\Team;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Event\ProjectMetaDisplayEvent;
+use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\ProjectCommentForm;
 use App\Form\ProjectEditForm;
 use App\Form\ProjectRateForm;
@@ -416,6 +419,34 @@ final class ProjectController extends AbstractController
             'stats' => $stats,
             'form' => $deleteForm->createView(),
         ]);
+    }
+
+    /**
+     * @Route(path="/export", name="project_export", methods={"GET"})
+     */
+    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
+    {
+        $query = new ProjectQuery();
+        $query->setCurrentUser($this->getUser());
+
+        $form = $this->getToolbarForm($query);
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
+
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
+
+        $entries = $this->repository->getProjectsForQuery($query);
+
+        $spreadsheet = $exporter->export(
+            Project::class,
+            $entries,
+            new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT)
+        );
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-projects');
+
+        return $writer->getFileResponse($spreadsheet);
     }
 
     /**

@@ -14,21 +14,24 @@
         {% block box_attributes %}id="project_details_box"{% endblock %}
         {% block box_tools %}
             {% if can_edit %}
-                <a class="modal-ajax-form open-edit btn btn-box-tool" data-href="{{ path('admin_project_edit', {'id': project.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
+                <a class="modal-ajax-form open-edit btn btn-default btn-sm" data-href="{{ path('admin_project_edit', {'id': project.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
             {% endif %}
         {% endblock %}
         {% block box_title %}
             {{ widgets.label_project(project) }}
         {% endblock %}
+        {% block box_body_class %}no-padding{% endblock %}
         {% block box_body %}
             {% if project.comment is not empty %}
-                {{ project.comment|comment2html(true) }}
+                <div class="comment">
+                    {{ project.comment|comment2html(true) }}
+                </div>
             {% endif %}
-            <table class="table table-hover">
+            <table class="table table-hover dataTable">
                 {% if not project.visible %}
                     <tr>
                         <th>{{ 'label.visible'|trans }}</th>
-                        <td>
+                        <td colspan="3">
                             {{ widgets.label_boolean(project.visible) }}
                         </td>
                     </tr>
@@ -37,23 +40,24 @@
                     <th>{{ 'label.customer'|trans }}</th>
                     <td>
                         {{ widgets.label_customer(project.customer) }}
-                        {% if project.customer.teams|length == 0 %}
-                            {{ widgets.icon('unlocked') }}
-                        {% endif %}
-                        &nbsp;
+                    </td>
+                    <td class="w-min">
+                        {{ widgets.badge_team_access(project.customer.teams) }}
+                    </td>
+                    <td class="actions">
                         {{ customerActions.customer(project.customer, 'custom') }}
                     </td>
                 </tr>
                 {% if is_granted('details', project) %}
                     <tr>
                         <th>{{ 'label.orderNumber'|trans }}</th>
-                        <td>
+                        <td colspan="3">
                             {{ project.orderNumber }}
                         </td>
                     </tr>
                     <tr>
                         <th>{{ 'label.orderDate'|trans }}</th>
-                        <td>
+                        <td colspan="3">
                             {% if project.orderDate is not empty %}
                                 {{ project.orderDate|date_full }}
                             {% else %}
@@ -63,7 +67,7 @@
                     </tr>
                     <tr>
                         <th>{{ 'label.project_start'|trans }}</th>
-                        <td>
+                        <td colspan="3">
                             {% if project.start is not empty %}
                                 {{ project.start|date_full }}
                             {% else %}
@@ -73,7 +77,7 @@
                     </tr>
                     <tr>
                         <th>{{ 'label.project_end'|trans }}</th>
-                        <td>
+                        <td colspan="3">
                             {% if project.end is not empty %}
                                 {{ project.end|date_full }}
                             {% else %}
@@ -85,7 +89,7 @@
                 {% for metaField in project.visibleMetaFields %}
                     <tr>
                         <th>{{ metaField.label|trans }}</th>
-                        <td>{{ widgets.form_type_value(metaField.type, metaField.value, project) }}</td>
+                        <td colspan="3">{{ widgets.form_type_value(metaField.type, metaField.value, project) }}</td>
                     </tr>
                 {% endfor %}
             </table>
@@ -127,7 +131,7 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.projectTeamUpdate kimai.projectUpdate kimai.teamUpdate kimai.customerUpdate kimai.rateUpdate');
+            KimaiReloadPageWidget.create('kimai.projectTeamUpdate kimai.projectUpdate kimai.activityTeamUpdate kimai.teamUpdate kimai.customerUpdate kimai.rateUpdate');
         });
     </script>
 {% endblock %}

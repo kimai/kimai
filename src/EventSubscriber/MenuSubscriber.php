@@ -72,7 +72,7 @@ final class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('view_invoice')) {
             $invoice = new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], $this->getIcon('invoice'));
-            $invoice->setChildRoutes(['admin_invoice_template', 'admin_invoice_template_edit', 'admin_invoice_template_create', 'admin_invoice_template_copy']);
+            $invoice->setChildRoutes(['admin_invoice_template', 'admin_invoice_template_edit', 'admin_invoice_template_create', 'admin_invoice_template_copy', 'admin_invoice_list', 'admin_invoice_document_upload']);
             $menu->addItem($invoice);
         }
 
@@ -93,6 +93,12 @@ final class MenuSubscriber implements EventSubscriberInterface
             $menu->addChild($timesheets);
         }
 
+        if ($auth->isGranted('view_reporting')) {
+            $reporting = new MenuItemModel('reporting', 'menu.reporting', 'reporting', [], $this->getIcon('reporting'));
+            $reporting->setChildRoutes(['report_user_month', 'report_monthly_users']);
+            $menu->addChild($reporting);
+        }
+
         if ($auth->isGranted('view_customer') || $auth->isGranted('view_teamlead_customer') || $auth->isGranted('view_team_customer')) {
             $customers = new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], $this->getIcon('customer'));
             $customers->setChildRoutes(['admin_customer_create', 'admin_customer_permissions', 'customer_details', 'admin_customer_edit', 'admin_customer_delete']);
@@ -105,7 +111,7 @@ final class MenuSubscriber implements EventSubscriberInterface
             $menu->addChild($projects);
         }
 
-        if ($auth->isGranted('view_activity')) {
+        if ($auth->isGranted('view_activity') || $auth->isGranted('view_teamlead_activity') || $auth->isGranted('view_team_activity')) {
             $activities = new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], $this->getIcon('activity'));
             $activities->setChildRoutes(['admin_activity_create', 'activity_details', 'admin_activity_edit', 'admin_activity_delete']);
             $menu->addChild($activities);

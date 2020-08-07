@@ -20,9 +20,10 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
     private static $cacheByPrefix = null;
     private static $cacheAll = [];
 
-    private function clearCache()
+    public function clearCache()
     {
         static::$cacheByPrefix = null;
+        static::$cacheAll = null;
     }
 
     private function prefillCache()
@@ -42,6 +43,14 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
             static::$cacheByPrefix[$key][] = $config;
             static::$cacheAll[] = $config;
         }
+    }
+
+    public function saveConfiguration(Configuration $configuration)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($configuration);
+        $entityManager->flush();
+        $this->clearCache();
     }
 
     /**

@@ -27,6 +27,24 @@ class ApiDocControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/doc');
         $this->assertStringContainsString('<title>Kimai 2 - API Docs</title>', $client->getResponse()->getContent());
+        $result = $client->getCrawler()->filter('script#swagger-data');
+        $swaggerJson = json_decode($result->text(), true);
+        $tags = [];
+        foreach ($swaggerJson['spec']['paths'] as $path) {
+            foreach ($path as $method) {
+                foreach ($method['tags'] as $tag) {
+                    $tags[$tag] = $tag;
+                }
+            }
+        }
+
+        $expectedKeys = ['Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User'];
+        $actual = array_keys($tags);
+
+        sort($actual);
+        sort($expectedKeys);
+
+        self::assertEquals($expectedKeys, $actual, sprintf('Expected %s sections in API docs, but found %s.', \count($actual), \count($expectedKeys)));
     }
 
     public function testGetJsonDocs()

@@ -10,13 +10,23 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.10](https://github.com/kevinpapst/kimai2/releases/tag/1.10)
 
+**New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
 - Invoice renderer `CSV` was removed
 - Sessions are now stored in the database (all users have to re-login after upgrade)
+- New permissions: `lockdown_grace_timesheet`, `lockdown_override_timesheet`, `view_all_data`
+- Fixed team permissions on user queries: depending on your previous team & permission setup your users might see less data (SUPER_ADMINS see all data, but new: ADMINS only see all data if they own the `view_all_data` permission)
+- Markdown does not support headings any more, text like `# foo` is not converted to `<h1 id="foo">foo</h1>` anymore
 
 ### Developer
 
-- **BC break**: interface method signature `HtmlToPdfConverter::convertToPdf` changed
-- **BC break**: the macros `badge` and `label`  do not apply the `|trans` filter any more
+- **BC break**: interface method signature `HtmlToPdfConverter::convertToPdf()` changed
+- **BC break**: the macros `badge` and `label` do not apply the `|trans` filter any more
+- **BC Break**: removed `getVisible()` (deprecated since 1.4) method on Customer, Project and Activity (use `isVisible()` instead, templates are still working)
+- **BC Break**: API changes
+    - some representation names changed (eg. from `ActivityMetaField` to `ActivityMeta`, `TimesheetSubCollection` vs `TimesheetCollectionExpanded`), you could use `class_alias()` if you use auto-generated code from Swagger-Gen or alike
+    - new result types were introduced
+    - result data changed in some areas to smooth out inconsistencies (eg. TeamEntity fields changed in nested results)
 
 ## [1.9](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
 

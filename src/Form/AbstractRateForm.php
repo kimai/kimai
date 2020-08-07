@@ -27,7 +27,7 @@ abstract class AbstractRateForm extends AbstractType
                 // documentation is for NelmioApiDocBundle
                 'documentation' => [
                     'type' => 'number',
-                    'description' => 'Rate',
+                    'description' => 'The rate (eg. 10.5)',
                 ],
                 'label' => 'label.rate',
                 'attr' => [
@@ -40,7 +40,7 @@ abstract class AbstractRateForm extends AbstractType
                 // documentation is for NelmioApiDocBundle
                 'documentation' => [
                     'type' => 'number',
-                    'description' => 'Internal rate',
+                    'description' => 'The internal rate (eg. 10.0 or 10)',
                 ],
                 'label' => 'label.rate_internal',
                 'currency' => $currency,
@@ -50,6 +50,10 @@ abstract class AbstractRateForm extends AbstractType
             ->add('isFixed', YesNoType::class, [
                 'label' => 'label.fixedRate',
                 'help' => 'help.fixedRate',
+                'documentation' => [
+                    'type' => 'boolean',
+                    'description' => 'If "true" each time record gets the same rate, regardless of its duration',
+                ],
             ])
         ;
     }

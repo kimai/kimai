@@ -3,6 +3,8 @@
 
     {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}, 'visibility': '#modal_customer_admin'} %}
 
+    {% set actions = actions|merge({'download': {'url': path('customer_export'), 'class': 'toolbar-action'}}) %}
+
     {% if is_granted('create_customer') %}
         {% set actions = actions|merge({'create': path('admin_customer_create')}) %}
     {% endif %}
@@ -39,16 +41,16 @@
             {% set actions = actions|merge({'divider': null}) %}
         {% endif %}
         {% if is_granted('view_project') or is_granted('view_teamlead_project') or is_granted('view_team_project') %}
-            {% set actions = actions|merge({'project': path('admin_project', {'customer': customer.id})}) %}
+            {% set actions = actions|merge({'project': path('admin_project', {'customers[]': customer.id})}) %}
         {% endif %}
         {% if is_granted('view_activity') %}
-            {% set actions = actions|merge({'activity': path('admin_activity', {'customer': customer.id})}) %}
+            {% set actions = actions|merge({'activity': path('admin_activity', {'customers[]': customer.id})}) %}
         {% endif %}
         {% if is_granted('view_other_timesheet') %}
-            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': customer.id})}) %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customers[]': customer.id})}) %}
         {% endif %}
         {% if customer.visible and is_granted('create_project') %}
-            {% set actions = actions|merge({'create-project': path('admin_project_create_with_customer', {'customer': customer.id})}) %}
+            {% set actions = actions|merge({'create-project': {'url': path('admin_project_create_with_customer', {'customer': customer.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
         {% if view == 'index' and is_granted('delete', customer) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_customer_delete', {'id': customer.id}), 'class': 'modal-ajax-form'}}) %}

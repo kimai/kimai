@@ -33,6 +33,10 @@ class ColorPickerType extends AbstractType implements DataTransformerInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'documentation' => [
+                'type' => 'string',
+                'description' => sprintf('The color code as hex (default: %s)', self::DEFAULT_COLOR),
+            ],
             'label' => 'label.color',
         ]);
     }

@@ -3,6 +3,8 @@
 
     {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}, 'visibility': '#modal_activity_admin'} %}
 
+    {% set actions = actions|merge({'download': {'url': path('activity_export'), 'class': 'toolbar-action'}}) %}
+
     {% if is_granted('create_activity') %}
         {% set actions = actions|merge({'create': path('admin_activity_create')}) %}
     {% endif %}
@@ -28,11 +30,18 @@
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_activity_edit', {'id': activity.id}), 'class': class}}) %}
         {% endif %}
+        {% if is_granted('permissions', activity) %}
+            {% set class = '' %}
+            {% if view != 'permissions' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'permissions': {'url': path('admin_activity_permissions', {'id': activity.id}), 'class': class}}) %}
+        {% endif %}
         {% if actions|length > 0 %}
             {% set actions = actions|merge({'divider': null}) %}
         {% endif %}
         {% if is_granted('view_other_timesheet') %}
-            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': activity.project ? activity.project.customer.id : null, 'project': activity.project ? activity.project.id : null, 'activity': activity.id})}) %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customers[]': activity.project ? activity.project.customer.id : null, 'projects[]': activity.project ? activity.project.id : null, 'activities[]': activity.id})}) %}
         {% endif %}
         {% if is_granted('create_other_timesheet') %}
             {% set actions = actions|merge({'create-timesheet': {'url': path('admin_timesheet_create', {'project': activity.project ? activity.project.id : null, 'activity': activity.id}), 'class': 'modal-ajax-form'}}) %}

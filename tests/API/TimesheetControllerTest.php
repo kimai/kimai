@@ -59,7 +59,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(10, \count($result));
-        $this->assertDefaultStructure($result[0], false);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
     public function testGetCollectionFull()
@@ -72,8 +72,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(10, \count($result));
-        $this->assertDefaultStructure($result[0], false);
-        $this->assertHasSubresources($result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollectionFull', $result[0]);
     }
 
     public function testGetCollectionForOtherUser()
@@ -99,14 +98,13 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(10, \count($result));
-        $this->assertDefaultStructure($result[0], false);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
     public function testGetCollectionForAllUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importFixtureForUser(User::ROLE_USER);
-        $em = $this->getEntityManager();
 
         $fixture = new TimesheetFixtures();
         $fixture
@@ -125,7 +123,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(17, \count($result));
-        $this->assertDefaultStructure($result[0], false);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
     public function testGetCollectionForEmptyResult()
@@ -141,6 +139,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetCollectionWithQuery()
     {
+        $modifiedAfter = new \DateTime('-1 hour');
         $begin = new \DateTime('first day of this month');
         $begin->setTime(0, 0, 0);
         $end = new \DateTime('last day of this month');
@@ -155,6 +154,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'order' => 'DESC',
             'orderBy' => 'rate',
             'active' => 0,
+            'modified_after' => $modifiedAfter->format(self::DATE_FORMAT_HTML5),
             'begin' => $begin->format(self::DATE_FORMAT_HTML5),
             'end' => $end->format(self::DATE_FORMAT_HTML5),
             'exported' => 0,
@@ -168,7 +168,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(5, \count($result));
-        $this->assertDefaultStructure($result[0], false);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
     public function testGetCollectionWithSingleParamsQuery()
@@ -200,14 +200,13 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(5, \count($result));
-        $this->assertDefaultStructure($result[0], false);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
     public function testExportedFilter()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
-        $em = $this->getEntityManager();
 
         $fixture = new TimesheetFixtures();
         $fixture
@@ -238,7 +237,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(7, \count($result));
-        $this->assertDefaultStructure($result[0], false);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
 
         $query = [
             'page' => 1,
@@ -254,7 +253,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(10, \count($result));
-        $this->assertDefaultStructure($result[0], false);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
 
         $query = [
             'page' => 1,
@@ -268,7 +267,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(17, \count($result));
-        $this->assertDefaultStructure($result[0], false);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
     public function testGetEntity()
@@ -279,7 +278,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertDefaultStructure($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
     }
 
     public function testGetEntityAccessDenied()
@@ -299,7 +298,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertDefaultStructure($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
     }
 
     public function testGetEntityNotFound()
@@ -325,15 +324,45 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertDefaultStructure($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
         $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
     }
 
+    public function testPostActionForDifferentUser()
+    {
+        $dateTime = (new UserDateTimeFactoryFactory($this))->create(self::TEST_TIMEZONE);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $admin = $this->getUserByRole(User::ROLE_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        self::assertNotEquals($admin->getId(), $user->getId());
+
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'user' => $user->getId(),
+            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'description' => 'foo',
+            'fixedRate' => 2016,
+            'hourlyRate' => 127
+        ];
+        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        $this->assertNotEmpty($result['id']);
+        $this->assertEquals($user->getId(), $result['user']);
+        $this->assertNotEquals($admin->getId(), $result['user']);
+    }
+
     // check for project, as this is a required field. It will not be included in the select, as it is
     // already filtered within the repository due to the hidden customer
-    public function testPostActionWithInvisibleProjectIsAccepted()
+    public function testPostActionWithInvisibleProject()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -405,7 +434,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertDefaultStructure($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
         $this->assertEquals(25200, $result['duration']);
         $this->assertEquals(1, $result['exported']);
@@ -415,7 +444,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
-        $em = $this->getEntityManager();
 
         $fixture = new TimesheetFixtures();
         $fixture
@@ -478,7 +506,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertDefaultStructure($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
         $id = $result['id'];
 
@@ -553,10 +581,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testGetRecentCollectionWithSubresources()
+    public function testGetRecentAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = $this->getEntityManager();
 
         $start = new \DateTime('-10 days');
 
@@ -582,14 +609,12 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(1, \count($result));
-        $this->assertDefaultStructure($result[0], false);
-        $this->assertHasSubresources($result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollectionFull', $result[0]);
     }
 
     public function testActiveAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $em = $this->getEntityManager();
 
         $start = new \DateTime('-10 days');
 
@@ -610,7 +635,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $results = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals(3, \count($results));
         foreach ($results as $timesheet) {
-            $this->assertDefaultStructure($timesheet, false);
+            self::assertApiResponseTypeStructure('TimesheetCollectionFull', $timesheet);
         }
     }
 
@@ -618,7 +643,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
-        $em = $this->getEntityManager();
 
         $start = new \DateTime('-10 days');
 
@@ -635,6 +659,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->request($client, '/api/timesheets/11/stop', 'PATCH');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
@@ -660,7 +689,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
-        $em = $this->getEntityManager();
 
         $start = new \DateTime('-10 days');
 
@@ -683,7 +711,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
-        $em = $this->getEntityManager();
 
         $fixture = new TimesheetFixtures();
         $fixture
@@ -704,7 +731,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(5, \count($result));
-        $this->assertDefaultStructure($result[0], false);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
 
         $query = ['tags' => 'Test,Admin'];
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
@@ -713,7 +740,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(10, \count($result));
-        $this->assertDefaultStructure($result[0], false);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
 
         $query = ['tags' => 'Nothing-2-see,here'];
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
@@ -722,7 +749,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(20, \count($result));
-        $this->assertDefaultStructure($result[0], false);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
     public function testRestartAction()
@@ -740,7 +767,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertDefaultStructure($result, true);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertEmpty($result['description']);
         $this->assertEmpty($result['tags']);
 
@@ -780,7 +807,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertDefaultStructure($result, true);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertEquals('foo', $result['description']);
         $this->assertEquals([['name' => 'sdfsdf', 'value' => 'nnnnn'], ['name' => '1234567890', 'value' => '1234567890']], $result['metaFields']);
         $this->assertEquals(['another', 'testing', 'bar'], $result['tags']);
@@ -799,8 +826,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public function testRestartNotAllowedForUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-
-        $em = $this->getEntityManager();
 
         $start = new \DateTime('-10 days');
 
@@ -842,7 +867,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertDefaultStructure($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
         $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
@@ -852,7 +877,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertDefaultStructure($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
         $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
@@ -875,7 +900,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->request($client, '/api/timesheets/1/export', 'PATCH');
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertDefaultStructure(json_decode($client->getResponse()->getContent(), true), true);
+        $result = json_decode($client->getResponse()->getContent(), true);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
 
         $em->clear();
         /** @var Timesheet $timesheet */
@@ -956,46 +982,13 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
+        $result = json_decode($client->getResponse()->getContent(), true);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        $this->assertEquals(['name' => 'metatestmock', 'value' => 'another,testing,bar'], $result['metaFields'][0]);
+
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->find(1);
         $this->assertEquals('another,testing,bar', $timesheet->getMetaField('metatestmock')->getValue());
-    }
-
-    protected function assertDefaultStructure(array $result, $full = true)
-    {
-        $expectedKeys = [
-            'id', 'begin', 'end', 'duration', 'description', 'rate', 'activity', 'project', 'tags', 'user', 'metaFields', 'internalRate'
-        ];
-
-        if ($full) {
-            $expectedKeys = array_merge($expectedKeys, [
-                'exported', 'fixedRate', 'hourlyRate'
-            ]);
-        }
-
-        $actual = array_keys($result);
-        sort($actual);
-        sort($expectedKeys);
-
-        $this->assertEquals($expectedKeys, $actual, 'Timesheet structure does not match');
-    }
-
-    protected function assertHasSubresources(array $result)
-    {
-        $this->assertArrayHasKey('activity', $result);
-        $this->assertArrayHasKey('id', $result['activity']);
-        $this->assertArrayHasKey('name', $result['activity']);
-        $this->assertArrayHasKey('visible', $result['activity']);
-        $this->assertArrayHasKey('project', $result['activity']);
-
-        $this->assertArrayHasKey('project', $result);
-        $this->assertArrayHasKey('id', $result['project']);
-        $this->assertArrayHasKey('name', $result['project']);
-        $this->assertArrayHasKey('visible', $result['project']);
-        $this->assertArrayHasKey('customer', $result['project']);
-        $this->assertArrayHasKey('id', $result['project']['customer']);
-        $this->assertArrayHasKey('name', $result['project']['customer']);
-        $this->assertArrayHasKey('visible', $result['project']['customer']);
     }
 }

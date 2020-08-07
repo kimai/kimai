@@ -858,58 +858,6 @@
             </trans-unit>
 
             <!--
-              Month names
-            -->
-            <trans-unit id="month.1">
-                <source>month.1</source>
-                <target state="translated">1월</target>
-            </trans-unit>
-            <trans-unit id="month.2">
-                <source>month.2</source>
-                <target state="translated">2월</target>
-            </trans-unit>
-            <trans-unit id="month.3">
-                <source>month.3</source>
-                <target state="translated">3월</target>
-            </trans-unit>
-            <trans-unit id="month.4">
-                <source>month.4</source>
-                <target state="translated">4월</target>
-            </trans-unit>
-            <trans-unit id="month.5">
-                <source>month.5</source>
-                <target state="translated">5월</target>
-            </trans-unit>
-            <trans-unit id="month.6">
-                <source>month.6</source>
-                <target state="translated">6월</target>
-            </trans-unit>
-            <trans-unit id="month.7">
-                <source>month.7</source>
-                <target state="translated">7월</target>
-            </trans-unit>
-            <trans-unit id="month.8">
-                <source>month.8</source>
-                <target state="translated">8월</target>
-            </trans-unit>
-            <trans-unit id="month.9">
-                <source>month.9</source>
-                <target state="translated">9월</target>
-            </trans-unit>
-            <trans-unit id="month.10">
-                <source>month.10</source>
-                <target state="translated">10월</target>
-            </trans-unit>
-            <trans-unit id="month.11">
-                <source>month.11</source>
-                <target state="translated">11월</target>
-            </trans-unit>
-            <trans-unit id="month.12">
-                <source>month.12</source>
-                <target state="translated">12월</target>
-            </trans-unit>
-
-            <!--
              Navbar - recent entries and activities
             -->
             <trans-unit id="active.entries">

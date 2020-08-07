@@ -3,6 +3,8 @@
     
     {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}, 'visibility': '#modal_project_admin'} %}
 
+    {% set actions = actions|merge({'download': {'url': path('project_export'), 'class': 'toolbar-action'}}) %}
+
     {% if is_granted('create_project') %}
         {% set actions = actions|merge({'create': path('admin_project_create')}) %}
     {% endif %}
@@ -40,13 +42,13 @@
             {% set actions = actions|merge({'divider': null}) %}
         {% endif %}
         {% if is_granted('view_activity') %}
-            {% set actions = actions|merge({'activity': path('admin_activity', {'customer': project.customer.id, 'project': project.id})}) %}
+            {% set actions = actions|merge({'activity': path('admin_activity', {'customers[]': project.customer.id, 'projects[]': project.id})}) %}
         {% endif %}
         {% if is_granted('view_other_timesheet') %}
-            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': project.customer.id, 'project': project.id})}) %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customers[]': project.customer.id, 'projects[]': project.id})}) %}
         {% endif %}
-        {% if is_granted('create_activity') and project.visible and project.customer.visible %}
-            {% set actions = actions|merge({'create-activity': path('admin_activity_create_with_project', {'project': project.id})}) %}
+        {% if project.visible and project.customer.visible and is_granted('create_activity') %}
+            {% set actions = actions|merge({'create-activity': {'url': path('admin_activity_create_with_project', {'project': project.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
         {% if (view == 'index' or view == 'custom') and is_granted('delete', project) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_project_delete', {'id': project.id}), 'class': 'modal-ajax-form'}}) %}

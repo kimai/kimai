@@ -18,6 +18,18 @@
                 <source>You must select at least one user or team.</source>
                 <target>You must select at least one user or team.</target>
             </trans-unit>
+            <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+                <source>This invoice document cannot be used, please rename the file and upload it again.</source>
+                <target>This invoice document cannot be used, please rename the file and upload it again.</target>
+            </trans-unit>
+            <trans-unit id="This period is locked, please choose a later date.">
+                <source>This period is locked, please choose a later date.</source>
+                <target>This period is locked, please choose a later date.</target>
+            </trans-unit>
+            <trans-unit id="You already have an entry for this time.">
+                <source>You already have an entry for this time.</source>
+                <target>You already have an entry for this time.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

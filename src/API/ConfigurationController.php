@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\API\Model\I18n;
+use App\API\Model\I18nConfig;
 use App\API\Model\TimesheetConfig;
 use App\Configuration\LanguageFormattings;
 use App\Configuration\TimesheetConfiguration;
@@ -19,6 +19,7 @@ use App\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
@@ -44,11 +45,6 @@ final class ConfigurationController extends BaseApiController
      */
     private $timesheetConfiguration;
 
-    /**
-     * @param ViewHandlerInterface $viewHandler
-     * @param LanguageFormattings $formats
-     * @param TimesheetConfiguration $timesheetConfiguration
-     */
     public function __construct(ViewHandlerInterface $viewHandler, LanguageFormattings $formats, TimesheetConfiguration $timesheetConfiguration)
     {
         $this->viewHandler = $viewHandler;
@@ -62,7 +58,7 @@ final class ConfigurationController extends BaseApiController
      * @SWG\Response(
      *      response=200,
      *      description="Returns the locale specific configurations for this user",
-     *      @SWG\Schema(ref="#/definitions/I18nConfig")
+     *      @SWG\Schema(ref=@Model(type=I18nConfig::class))
      * )
      *
      * @Rest\Get(path="/config/i18n")
@@ -76,7 +72,7 @@ final class ConfigurationController extends BaseApiController
         $user = $this->getUser();
         $locale = $user->getLocale();
 
-        $model = new I18n();
+        $model = new I18nConfig();
         $model
             ->setFormDateTime($this->formats->getDateTimeTypeFormat($locale))
             ->setFormDate($this->formats->getDateTypeFormat($locale))
@@ -94,12 +90,12 @@ final class ConfigurationController extends BaseApiController
     }
 
     /**
-     * Returns the instance specific timesheet configuration
+     * Returns the timesheet configuration
      *
      * @SWG\Response(
      *      response=200,
      *      description="Returns the instance specific timesheet configuration",
-     *      @SWG\Schema(ref="#/definitions/TimesheetConfig")
+     *      @SWG\Schema(ref=@Model(type=TimesheetConfig::class))
      * )
      *
      * @Rest\Get(path="/config/timesheet")
@@ -116,6 +112,7 @@ final class ConfigurationController extends BaseApiController
             ->setActiveEntriesHardLimit($this->timesheetConfiguration->getActiveEntriesHardLimit())
             ->setActiveEntriesSoftLimit($this->timesheetConfiguration->getActiveEntriesSoftLimit())
             ->setIsAllowFutureTimes($this->timesheetConfiguration->isAllowFutureTimes())
+            ->setIsAllowOverlapping($this->timesheetConfiguration->isAllowOverlappingRecords())
         ;
 
         $view = new View($model, 200);

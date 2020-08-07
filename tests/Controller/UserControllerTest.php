@@ -37,6 +37,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertPageActions($client, [
             'search search-toggle visible-xs-inline' => '#',
             'visibility' => '#',
+            'download toolbar-action' => $this->createUrl('/admin/user/export'),
             'permissions' => $this->createUrl('/admin/permissions'),
             'create' => $this->createUrl('/admin/user/create'),
             'help' => 'https://www.kimai.org/documentation/users.html'
@@ -64,6 +65,38 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_user_admin', 1);
     }
 
+    public function testExportIsSecureForRole()
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/user/export');
+    }
+
+    public function testExportAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/user/export');
+        $this->assertExcelExportResponse($client, 'kimai-users_');
+    }
+
+    public function testExportActionWithSearchTermQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $this->request($client, '/admin/user/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/user/export'));
+        $client->submit($form, [
+            'searchTerm' => 'hourly_rate:35 tony',
+            'role' => 'ROLE_TEAMLEAD',
+            'visibility' => 1,
+            'pageSize' => 50,
+            'page' => 1,
+        ]);
+
+        $this->assertExcelExportResponse($client, 'kimai-users_');
+    }
+
     public function testCreateAction()
     {
         $username = '亚历山德拉';
@@ -76,7 +109,7 @@ class UserControllerTest extends ControllerBaseTest
             'user_create' => [
                 'username' => $username,
                 'alias' => $username,
-                'plainPassword' => ['first' => 'abcdef', 'second' => 'abcdef'],
+                'plainPassword' => ['first' => '12345678', 'second' => '12345678'],
                 'email' => 'foobar@example.com',
                 'enabled' => 1,
             ]
@@ -198,7 +231,7 @@ class UserControllerTest extends ControllerBaseTest
                 [
                     'user_create' => [
                         'username' => '',
-                        'plainPassword' => ['first' => 'sdfsdf'],
+                        'plainPassword' => ['first' => 'sdfsdf123'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
                         'avatar' => 'asdfawer',
@@ -216,7 +249,7 @@ class UserControllerTest extends ControllerBaseTest
                 [
                     'user_create' => [
                         'username' => 'x',
-                        'plainPassword' => ['first' => 'sdfsdf', 'second' => 'sdfxxx'],
+                        'plainPassword' => ['first' => 'sdfsdf123', 'second' => 'sdfxxxxxxx'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
                         'avatar' => 'asdfawer',
@@ -227,6 +260,22 @@ class UserControllerTest extends ControllerBaseTest
                     '#user_create_username',
                     '#user_create_plainPassword_first',
                     '#user_create_email',
+                ]
+            ],
+            // invalid fields: password (too short)
+            [
+                [
+                    'user_create' => [
+                        'username' => 'test123',
+                        'plainPassword' => ['first' => 'test123', 'second' => 'test123'],
+                        'alias' => 'ycvyxcb',
+                        'title' => '34rtwrtewrt',
+                        'avatar' => 'asdfawer',
+                        'email' => 'ydfbvsdfgs@example.com',
+                    ]
+                ],
+                [
+                    '#user_create_plainPassword_first',
                 ]
             ],
         ];

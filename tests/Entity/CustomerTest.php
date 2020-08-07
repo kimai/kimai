@@ -12,6 +12,9 @@ namespace App\Tests\Entity;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\Team;
+use App\Export\Spreadsheet\ColumnDefinition;
+use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
@@ -27,7 +30,7 @@ class CustomerTest extends TestCase
         self::assertNull($sut->getName());
         self::assertNull($sut->getNumber());
         self::assertNull($sut->getComment());
-        self::assertTrue($sut->getVisible());
+        self::assertTrue($sut->isVisible());
 
         self::assertNull($sut->getCompany());
         self::assertNull($sut->getVatId());
@@ -61,7 +64,7 @@ class CustomerTest extends TestCase
         self::assertEquals('foo-bar', (string) $sut);
 
         self::assertInstanceOf(Customer::class, $sut->setVisible(false));
-        self::assertFalse($sut->getVisible());
+        self::assertFalse($sut->isVisible());
 
         self::assertInstanceOf(Customer::class, $sut->setComment('hello world'));
         self::assertEquals('hello world', $sut->getComment());
@@ -140,9 +143,58 @@ class CustomerTest extends TestCase
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getCustomers()[0]);
 
+        // test remove unknown team doesn't do anything
+        $sut->removeTeam(new Team());
+        self::assertCount(1, $sut->getTeams());
+        self::assertCount(1, $team->getCustomers());
+
         $sut->removeTeam(new Team());
         $sut->removeTeam($team);
         self::assertCount(0, $sut->getTeams());
         self::assertCount(0, $team->getCustomers());
+    }
+
+    public function testExportAnnotations()
+    {
+        $sut = new AnnotationExtractor(new AnnotationReader());
+
+        $columns = $sut->extract(Customer::class);
+
+        self::assertIsArray($columns);
+
+        $expected = [
+            ['label.id', 'integer'],
+            ['label.name', 'string'],
+            ['label.company', 'string'],
+            ['label.number', 'string'],
+            ['label.vat_id', 'string'],
+            ['label.address', 'string'],
+            ['label.contact', 'string'],
+            ['label.email', 'string'],
+            ['label.phone', 'string'],
+            ['label.mobile', 'string'],
+            ['label.fax', 'string'],
+            ['label.homepage', 'string'],
+            ['label.country', 'string'],
+            ['label.currency', 'string'],
+            ['label.timezone', 'string'],
+            ['label.color', 'string'],
+            ['label.visible', 'boolean'],
+            ['label.comment', 'string'],
+        ];
+
+        self::assertCount(\count($expected), $columns);
+
+        foreach ($columns as $column) {
+            self::assertInstanceOf(ColumnDefinition::class, $column);
+        }
+
+        $i = 0;
+
+        foreach ($expected as $item) {
+            $column = $columns[$i++];
+            self::assertEquals($item[0], $column->getLabel());
+            self::assertEquals($item[1], $column->getType());
+        }
     }
 }

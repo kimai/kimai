@@ -72,6 +72,37 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_customer_admin', 5);
     }
 
+    public function testExportIsSecureForRole()
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/customer/export');
+    }
+
+    public function testExportAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->assertAccessIsGranted($client, '/admin/customer/export');
+        $this->assertExcelExportResponse($client, 'kimai-customers_');
+    }
+
+    public function testExportActionWithSearchTermQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->request($client, '/admin/customer/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/customer/export'));
+        $client->submit($form, [
+            'searchTerm' => 'feature:timetracking foo',
+            'visibility' => 1,
+            'pageSize' => 50,
+            'page' => 1,
+        ]);
+
+        $this->assertExcelExportResponse($client, 'kimai-customers_');
+    }
+
     public function testDetailsAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -88,7 +119,7 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#comments_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn-box-tool');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn.btn-default');
         self::assertEquals(2, $node->count());
         $node = $client->getCrawler()->filter('div.box#customer_rates_box');
         self::assertEquals(1, $node->count());
@@ -189,10 +220,16 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/customer/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-title');
         self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
         self::assertEquals(1, $node->count());
+
+        // creating the default team a second time fails, as the name already exists
+        $this->request($client, '/admin/customer/1/create_team');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $this->assertHasFlashError($client, 'Changes could not be saved: Team already existing');
     }
 
     public function testProjectsAction()

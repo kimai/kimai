@@ -22,18 +22,21 @@
         {% endblock %}
         {% block box_tools %}
             {% if can_edit %}
-                <a class="modal-ajax-form open-edit btn btn-box-tool" data-href="{{ path('admin_activity_edit', {'id': activity.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
+                <a class="modal-ajax-form open-edit btn btn-default btn-sm" data-href="{{ path('admin_activity_edit', {'id': activity.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
             {% endif %}
         {% endblock %}
+        {% block box_body_class %}no-padding{% endblock %}
         {% block box_body %}
             {% if activity.comment is not empty %}
-                {{ activity.comment|comment2html(true) }}
+                <div class="comment">
+                    {{ activity.comment|comment2html(true) }}
+                </div>
             {% endif %}
-            <table class="table table-hover">
+            <table class="table table-hover dataTable">
                 {% if not activity.visible %}
                     <tr>
                         <th>{{ 'label.visible'|trans }}</th>
-                        <td>
+                        <td colspan="3">
                             {{ widgets.label_boolean(activity.visible) }}
                         </td>
                     </tr>
@@ -43,10 +46,11 @@
                         <th>{{ 'label.customer'|trans }}</th>
                         <td>
                             {{ widgets.label_customer(activity.project.customer) }}
-                            {% if activity.project.customer.teams|length == 0 %}
-                                {{ widgets.icon('unlocked') }}
-                            {% endif %}
-                            &nbsp;
+                        </td>
+                        <td class="w-min">
+                            {{ widgets.badge_team_access(activity.project.customer.teams) }}
+                        </td>
+                        <td class="actions">
                             {{ customerActions.customer(activity.project.customer, 'custom') }}
                         </td>
                     </tr>
@@ -54,10 +58,11 @@
                         <th>{{ 'label.project'|trans }}</th>
                         <td>
                             {{ widgets.label_project(activity.project) }}
-                            {% if activity.project.teams|length == 0 %}
-                                {{ widgets.icon('unlocked') }}
-                            {% endif %}
-                            &nbsp;
+                        </td>
+                        <td class="w-min">
+                            {{ widgets.badge_team_access(activity.project.teams) }}
+                        </td>
+                        <td class="actions">
                             {{ projectActions.project(activity.project, 'custom') }}
                         </td>
                     </tr>
@@ -65,7 +70,7 @@
                 {% for metaField in activity.visibleMetaFields %}
                     <tr>
                         <th>{{ metaField.label|trans }}</th>
-                        <td>{{ widgets.form_type_value(metaField.type, metaField.value, activity) }}</td>
+                        <td colspan="3">{{ widgets.form_type_value(metaField.type, metaField.value, activity) }}</td>
                     </tr>
                 {% endfor %}
             </table>
@@ -78,6 +83,14 @@
 
     {% if can_edit %}
         {{ include('embeds/rates-table.html.twig', {'id': 'activity_rates_box', 'entity': activity, 'create_url': path('admin_activity_rate_add', {'id': activity.id}), 'delete_route': 'delete_activity_rate', 'currency': currency}) }}
+    {% endif %}
+
+    {% if teams is not null %}
+        {% set options = {'teams': teams, 'team': team} %}
+        {% if is_granted('permissions', activity) %}
+            {% set options = options|merge({'route_create': path('activity_team_create', {'id': activity.id}), 'route_edit': path('admin_activity_permissions', {'id': activity.id})}) %}
+        {% endif %}
+        {{ include('embeds/teams.html.twig', options) }}
     {% endif %}
 
 {% endblock %}

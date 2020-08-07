@@ -85,8 +85,10 @@ kimai:
     permissions:
         # mapping complex rule sets of single permissions to named "sets" ("set name" = [array of "permissions and sets"])
         sets:
-            ACTIVITIES: ['view_activity','create_activity','edit_activity','budget_activity','delete_activity']
-            ACTIVITIES_TEAMLEAD: ['view_activity','create_activity','edit_teamlead_activity','budget_teamlead_activity']
+            ACTIVITIES: ['view_activity','create_activity','edit_activity','budget_activity','delete_activity','permissions_activity']
+            ACTIVITIES_ALL_TEAMLEAD: ['view_teamlead_activity','edit_teamlead_activity','budget_teamlead_activity','permissions_teamlead_activity']
+            ACTIVITIES_ALL_TEAM: ['view_team_activity','edit_team_activity','budget_team_activity']
+            ACTIVITIES_TEAMLEAD: ['view_teamlead_activity','create_activity','edit_teamlead_activity','budget_teamlead_activity']
             PROJECTS: ['view_project','create_project','edit_project','budget_project','delete_project','permissions_project','comments_project','comments_create_project','details_project']
             PROJECTS_ALL_TEAMLEAD: ['view_teamlead_project','edit_teamlead_project','budget_teamlead_project','permissions_teamlead_project','comments_teamlead_project','comments_create_teamlead_project','details_teamlead_project']
             PROJECTS_ALL_TEAM: ['view_team_project','edit_team_project','budget_team_project','comments_team_project','comments_create_team_project','details_team_project']
@@ -107,16 +109,18 @@ kimai:
             RATE_OTHER: ['view_rate_other_timesheet','edit_rate_other_timesheet']
             EXPORT: ['create_export','edit_export_own_timesheet','edit_export_other_timesheet']
             TEAMS: ['view_team','create_team','edit_team','delete_team']
-            # some single default definitions for roles 
+            LOCKDOWN: ['lockdown_grace_timesheet','lockdown_override_timesheet']
+            REPORTING: ['view_reporting']
+            # some single default definitions for roles
             SINGLE_USER: ['view_team_member','budget_team_project']
             SINGLE_TEAMLEAD: ['view_rate_own_timesheet','view_rate_other_timesheet','hourly-rate_own_profile','view_team_member']
-            SINGLE_ADMIN: ['hourly-rate_own_profile','edit_exported_timesheet','teams_own_profile','view_team_member']
-            SINGLE_SUPER_ADMIN: ['hourly-rate_own_profile','hourly-rate_other_profile','roles_own_profile','system_information','system_configuration','plugins','edit_exported_timesheet','teams_own_profile','view_team_member','upload_invoice_template']
+            SINGLE_ADMIN: ['hourly-rate_own_profile','edit_exported_timesheet','teams_own_profile','view_team_member','view_all_data']
+            SINGLE_SUPER_ADMIN: ['hourly-rate_own_profile','hourly-rate_other_profile','roles_own_profile','system_information','system_configuration','plugins','edit_exported_timesheet','teams_own_profile','view_team_member','upload_invoice_template','view_all_data']
             # link above sets to one complete set for each user role
-            ROLE_USER: ['@TIMESHEET','@PROFILE','@SINGLE_USER']
-            ROLE_TEAMLEAD: ['@ACTIVITIES_TEAMLEAD','@PROJECTS_TEAMLEAD','@CUSTOMERS_TEAMLEAD','@TIMESHEET_OTHER','@INVOICE','@TIMESHEET','@PROFILE','@EXPORT','@TAGS','@SINGLE_TEAMLEAD']
-            ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_ADMIN']
-            ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_SUPER_ADMIN']
+            ROLE_USER: ['@TIMESHEET','@PROFILE','@REPORTING','@SINGLE_USER']
+            ROLE_TEAMLEAD: ['@ACTIVITIES_TEAMLEAD','@PROJECTS_TEAMLEAD','@CUSTOMERS_TEAMLEAD','@TIMESHEET_OTHER','@INVOICE','@TIMESHEET','@PROFILE','@EXPORT','@TAGS','@REPORTING','@SINGLE_TEAMLEAD']
+            ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@LOCKDOWN','@REPORTING','@SINGLE_ADMIN']
+            ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@LOCKDOWN','@REPORTING','@SINGLE_SUPER_ADMIN']
         # mapping "sets" or permissions to user roles ("role name" = [array of "set names"])
         maps:
             ROLE_USER: ['ROLE_USER']
@@ -124,7 +128,7 @@ kimai:
             ROLE_ADMIN: ['ROLE_ADMIN']
             ROLE_SUPER_ADMIN: ['ROLE_SUPER_ADMIN']
             # only here to register the (partially) unused permissions in the UI
-            ROLE_FAKE: ['CUSTOMERS_ALL_TEAMLEAD','CUSTOMERS_ALL_TEAM','PROJECTS_ALL_TEAMLEAD','PROJECTS_ALL_TEAM']
+            ROLE_FAKE: ['CUSTOMERS_ALL_TEAMLEAD','CUSTOMERS_ALL_TEAM','PROJECTS_ALL_TEAMLEAD','PROJECTS_ALL_TEAM','ACTIVITIES_ALL_TEAMLEAD','ACTIVITIES_ALL_TEAM']
         # add or remove single permissions
         roles:
             ROLE_USER: []
@@ -292,17 +296,10 @@ kimai:
             date_time: 'd. m.  H:i'
         sv:
             duration: '%%h:%%m tim'
+            date_time: 'd/m H:i'
         pl:
             date_time_type: 'dd. MM. yyyy HH:mm'
             date_type: 'dd. MM. yyyy'
             date: 'd. m. Y'
             date_time: 'd. m.  H:i'
-# --------------------------------------------------------------------------------
-
-
-# --------------------------------------------------------------------------------
-# STORAGE
-# That's the place where plugins can store static content
-# --------------------------------------------------------------------------------
-    data_dir: '%kernel.project_dir%/var/data'
 # --------------------------------------------------------------------------------

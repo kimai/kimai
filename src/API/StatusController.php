@@ -28,11 +28,8 @@ class StatusController extends BaseApiController
     /**
      * @var ViewHandlerInterface
      */
-    protected $viewHandler;
+    private $viewHandler;
 
-    /**
-     * @param ViewHandlerInterface $viewHandler
-     */
     public function __construct(ViewHandlerInterface $viewHandler)
     {
         $this->viewHandler = $viewHandler;

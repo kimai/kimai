@@ -15,6 +15,7 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
+    'team': {'class': 'text-center w-min', 'orderBy': false},
     'visible': {'class': 'text-center hidden w-min', 'orderBy': false},
     'actions': {'class': 'actions alwaysVisible'},
 }) %}
@@ -34,7 +35,7 @@
     {% if entries.count == 0 %}
         {{ widgets.nothing_found('kimai.activityUpdate') }}
     {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.activityUpdate'}) }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.activityUpdate kimai.activityTeamUpdate'}) }}
 
         {% for entry in entries %}
             <tr{% if is_granted('view', entry) %} class="alternative-link open-edit" data-href="{{ path('activity_details', {'id': entry.id}) }}"{% endif %}>
@@ -57,6 +58,7 @@
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">{{ widgets.badge_team_access(entry.teams) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.activity(entry, 'index') }}</td>
             </tr>
