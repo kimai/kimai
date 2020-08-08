@@ -76,7 +76,7 @@ class Project implements EntityWithMetaFields
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Subresource", "Expanded"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Customer"))
+     * @SWG\Property(ref="#/definitions/Customer")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)

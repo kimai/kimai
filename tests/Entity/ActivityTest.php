@@ -12,6 +12,7 @@ namespace App\Tests\Entity;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\Project;
+use App\Entity\Team;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Annotations\AnnotationReader;
@@ -38,6 +39,7 @@ class ActivityTest extends TestCase
         $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
         $this->assertEquals(0, $sut->getMetaFields()->count());
         $this->assertNull($sut->getMetaField('foo'));
+        $this->assertInstanceOf(Collection::class, $sut->getTeams());
     }
 
     public function testSetterAndGetter()
@@ -92,6 +94,29 @@ class ActivityTest extends TestCase
         $sut->setMetaField((new ActivityMeta())->setName('blab')->setIsVisible(true));
         self::assertEquals(3, $sut->getMetaFields()->count());
         self::assertCount(2, $sut->getVisibleMetaFields());
+    }
+
+    public function testTeams()
+    {
+        $sut = new Activity();
+        $team = new Team();
+        self::assertEmpty($sut->getTeams());
+        self::assertEmpty($team->getActivities());
+
+        $sut->addTeam($team);
+        self::assertCount(1, $sut->getTeams());
+        self::assertCount(1, $team->getActivities());
+        self::assertSame($team, $sut->getTeams()[0]);
+        self::assertSame($sut, $team->getActivities()[0]);
+
+        // test remove unknown team doesn't do anything
+        $sut->removeTeam(new Team());
+        self::assertCount(1, $sut->getTeams());
+        self::assertCount(1, $team->getActivities());
+
+        $sut->removeTeam($team);
+        self::assertCount(0, $sut->getTeams());
+        self::assertCount(0, $team->getActivities());
     }
 
     public function testExportAnnotations()

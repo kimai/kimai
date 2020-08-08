@@ -111,7 +111,7 @@ final class MenuSubscriber implements EventSubscriberInterface
             $menu->addChild($projects);
         }
 
-        if ($auth->isGranted('view_activity')) {
+        if ($auth->isGranted('view_activity') || $auth->isGranted('view_teamlead_activity') || $auth->isGranted('view_team_activity')) {
             $activities = new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], $this->getIcon('activity'));
             $activities->setChildRoutes(['admin_activity_create', 'activity_details', 'admin_activity_edit', 'admin_activity_delete']);
             $menu->addChild($activities);

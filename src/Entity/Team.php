@@ -114,12 +114,27 @@ class Team
      * @ORM\ManyToMany(targetEntity="Project", mappedBy="teams", fetch="EXTRA_LAZY")
      */
     private $projects;
+    /**
+     * Activities
+     *
+     * All activities assigned to the team
+     *
+     * @var Activity[]|ArrayCollection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Team_Entity", "Expanded"})
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Activity"))
+     *
+     * @ORM\ManyToMany(targetEntity="Activity", mappedBy="teams", fetch="EXTRA_LAZY")
+     */
+    private $activities;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->projects = new ArrayCollection();
+        $this->activities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -254,6 +269,39 @@ class Team
     public function getProjects(): iterable
     {
         return $this->projects;
+    }
+
+    public function hasActivity(Activity $activity): bool
+    {
+        return $this->activities->contains($activity);
+    }
+
+    public function addActivity(Activity $activity)
+    {
+        if ($this->activities->contains($activity)) {
+            return;
+        }
+
+        $this->activities->add($activity);
+        $activity->addTeam($this);
+    }
+
+    public function removeActivity(Activity $activity)
+    {
+        if (!$this->activities->contains($activity)) {
+            return;
+        }
+
+        $this->activities->removeElement($activity);
+        $activity->removeTeam($this);
+    }
+
+    /**
+     * @return Collection<Activity>
+     */
+    public function getActivities(): iterable
+    {
+        return $this->activities;
     }
 
     /**

@@ -13,6 +13,7 @@ namespace App\API;
 
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
+use App\Entity\User;
 use App\Event\ActivityMetaDefinitionEvent;
 use App\Form\API\ActivityApiEditForm;
 use App\Form\API\ActivityRateApiForm;
@@ -96,7 +97,11 @@ class ActivityController extends BaseApiController
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         $query = new ActivityQuery();
+        $query->setCurrentUser($user);
 
         if (null !== ($order = $paramFetcher->get('order'))) {
             $query->setOrder($order);

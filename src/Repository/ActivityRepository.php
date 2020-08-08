@@ -130,18 +130,26 @@ class ActivityRepository extends EntityRepository
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
-        $qb->leftJoin('p.teams', 'teams')
+        $qb->leftJoin('a.teams', 'teams')
+            ->leftJoin('p.teams', 'p_teams')
             ->leftJoin('c.teams', 'c_teams');
 
         if (empty($teams)) {
-            $qb->andWhere($qb->expr()->isNull('c_teams'));
             $qb->andWhere($qb->expr()->isNull('teams'));
+            $qb->andWhere($qb->expr()->isNull('p_teams'));
+            $qb->andWhere($qb->expr()->isNull('c_teams'));
 
             return;
         }
 
-        $orProject = $qb->expr()->orX(
+        $orActivity = $qb->expr()->orX(
             $qb->expr()->isNull('teams'),
+            $qb->expr()->isMemberOf(':teams', 'a.teams')
+        );
+        $qb->andWhere($orActivity);
+
+        $orProject = $qb->expr()->orX(
+            $qb->expr()->isNull('p_teams'),
             $qb->expr()->isMemberOf(':teams', 'p.teams')
         );
         $qb->andWhere($orProject);
@@ -253,6 +261,7 @@ class ActivityRepository extends EntityRepository
 
         $qb
             ->select('a')
+            ->distinct()
             ->from(Activity::class, 'a')
             ->leftJoin('a.project', 'p')
             ->leftJoin('p.customer', 'c')
@@ -320,7 +329,7 @@ class ActivityRepository extends EntityRepository
             $qb->andWhere($where);
         }
 
-        $this->addPermissionCriteria($qb, $query->getCurrentUser());
+        $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
         if ($query->hasSearchTerm()) {
             $searchAnd = $qb->expr()->andX();
@@ -352,13 +361,6 @@ class ActivityRepository extends EntityRepository
                 $qb->andWhere($searchAnd);
             }
         }
-
-        // this will make sure, that we do not accidentally create results with multiple rows
-        //   => which would result in a wrong LIMIT / pagination results
-        // $qb->addGroupBy('a.id');
-
-        // the second group by is needed due to SQL standard (even though logically not really required for this query)
-        // $qb->addGroupBy($orderBy);
 
         return $qb;
     }
