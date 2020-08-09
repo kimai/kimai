@@ -78,12 +78,14 @@
                                             color = record.project.customer.color;
                                         }
                                     }
+                                    var begin = new Date(record.begin);
+                                    var end = new Date(record.end);
                                     apiEvents.push({
                                         id: record.id,
                                         title: record.activity.name,
                                         description: record.description,
-                                        start: record.begin,
-                                        end: record.end,
+                                        start: begin,
+                                        end: end,
                                         activity: record.activity.name,
                                         project: record.project.name,
                                         customer: record.project.customer.name,
