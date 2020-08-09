@@ -95,7 +95,7 @@ abstract class AbstractSpreadsheetRenderer
     /**
      * @var bool
      */
-    protected $durationFormatDec;
+    protected $durationDecFormat;
 
     public function __construct(TranslatorInterface $translator, DateExtensions $dateExtension, EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter)
     {
@@ -155,7 +155,7 @@ abstract class AbstractSpreadsheetRenderer
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s)', $startCoordinate, $endCoordinate));
         $style = $sheet->getStyleByColumnAndRow($column, $row);
 
-        if ($this->getDurationFormatDec()) {
+        if ($this->getDurationDecFormat()) {
             $style->getNumberFormat()->setFormatCode(self::DURATION_DEC_FORMAT);
         } else {
             $style->getNumberFormat()->setFormatCode(self::DURATION_FORMAT);
@@ -168,7 +168,7 @@ abstract class AbstractSpreadsheetRenderer
             $duration = 0;
         }
 
-        if ($this->getDurationFormatDec()) {
+        if ($this->getDurationDecFormat()) {
             $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=%s/3600', $duration));
             $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::DURATION_DEC_FORMAT);
         } else {
@@ -211,9 +211,9 @@ abstract class AbstractSpreadsheetRenderer
     {
         $decFormat = true;
         if (null !== $query->getCurrentUser()) {
-            $this->setDurationFormatDec((bool) $query->getCurrentUser()->getPreferenceValue('timesheet.export_decimal', $decFormat));
+            $this->setDurationDecFormat((bool) $query->getCurrentUser()->getPreferenceValue('timesheet.export_decimal', $decFormat));
         } elseif (null !== $query->getUser()) {
-            $this->setDurationFormatDec((bool) $query->getUser()->getPreferenceValue('timesheet.export_decimal', $decFormat));
+            $this->setDurationDecFormat((bool) $query->getUser()->getPreferenceValue('timesheet.export_decimal', $decFormat));
         }
 
         $showRates = $this->isRenderRate($query);
@@ -677,25 +677,25 @@ abstract class AbstractSpreadsheetRenderer
      */
     abstract protected function saveSpreadsheet(Spreadsheet $spreadsheet): string;
     /**
-     * Get the value of durationFormatDec
+     * Get the value of durationDecFormat
      *
      * @return bool
      */
-    public function getDurationFormatDec(): bool
+    public function getDurationDecFormat(): bool
     {
-        return $this->durationFormatDec;
+        return $this->durationDecFormat;
     }
 
     /**
-     * Set the value of durationFormatDec
+     * Set the value of durationDecFormat
      *
-     * @param bool $durationFormatDec
+     * @param bool $durationDecFormat
      *
      * @return self
      */
-    public function setDurationFormatDec(bool $durationFormatDec)
+    public function setDurationDecFormat(bool $durationDecFormat)
     {
-        $this->durationFormatDec = $durationFormatDec;
+        $this->durationDecFormat = $durationDecFormat;
 
         return $this;
     }
