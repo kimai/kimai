@@ -46,7 +46,6 @@ abstract class AbstractSpreadsheetRenderer
     public const RATE_FORMAT = self::RATE_FORMAT_LEFT;
     public const DURATION_DEC_FORMAT = '#0.00';
 
-
     /**
      * @var DateExtensions
      */
@@ -676,6 +675,7 @@ abstract class AbstractSpreadsheetRenderer
      * @throws \Exception
      */
     abstract protected function saveSpreadsheet(Spreadsheet $spreadsheet): string;
+
     /**
      * Get the value of durationDecFormat
      *
@@ -683,6 +683,10 @@ abstract class AbstractSpreadsheetRenderer
      */
     public function getDurationDecFormat(): bool
     {
+        if (\is_null($this->durationDecFormat)) {
+            $this->durationDecFormat = false;
+        }
+
         return $this->durationDecFormat;
     }
 
