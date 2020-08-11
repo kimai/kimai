@@ -14,7 +14,10 @@ use App\Reporting\MonthByUser;
 use App\Reporting\MonthByUserForm;
 use App\Reporting\MonthlyUserList;
 use App\Reporting\MonthlyUserListForm;
+use App\Reporting\ProjectView;
+use App\Reporting\ProjectViewForm;
 use App\Repository\Query\UserQuery;
+use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Timesheet\UserDateTimeFactory;
@@ -44,8 +47,9 @@ final class ReportingController extends AbstractController
      */
     private $dateTimeFactory;
 
-    public function __construct(TimesheetRepository $timesheetRepository, UserRepository $userRepository, UserDateTimeFactory $dateTimeFactory)
+    public function __construct(ProjectRepository $projectRepository, TimesheetRepository $timesheetRepository, UserRepository $userRepository, UserDateTimeFactory $dateTimeFactory)
     {
+        $this->projectRepository = $projectRepository;
         $this->timesheetRepository = $timesheetRepository;
         $this->userRepository = $userRepository;
         $this->dateTimeFactory = $dateTimeFactory;
@@ -106,6 +110,22 @@ final class ReportingController extends AbstractController
             'current' => $start,
             'next' => $nextMonth,
             'previous' => $previousMonth,
+        ]);
+    }
+
+    /**
+     * @Route(path="/project_view", name="report_project_view", methods={"GET","POST"})
+     */
+    public function projectView(Request $request) {
+        $values = new ProjectView();
+        $form = $this->createForm(ProjectViewForm::class, $values, []);
+
+        $today = \DateTime::createFromFormat('U', (string) time());
+        $entries = $this->projectRepository->getProjectView($today);
+
+        return $this->render('reporting/project_view.html.twig', [
+            'form' => $form->createView(),
+            'entries' => $entries,
         ]);
     }
 

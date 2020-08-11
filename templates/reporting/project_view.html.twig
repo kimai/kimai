@@ -1,0 +1,47 @@
+{% extends 'reporting/layout.html.twig' %}
+
+{% block report_title %}{{ 'project_view'|trans({}, 'reporting') }}{% endblock %}
+
+{% block report %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% block box_before %}
+            {{ form_start(form, {'action': path('report_project_view'), 'attr': {'class': 'form-inline'}}) }}
+        {% endblock %}
+        {% block box_after %}
+            {{ form_end(form) }}
+        {% endblock %}
+        {% block box_title %}
+            {{ form_widget(form) }}
+        {% endblock %}
+        {% block box_body_class %}project-view-reporting-box no-padding table-responsive{% endblock %}
+        {% block box_body %}
+            <table class="table table-bordered table-hover dataTable">
+                <tr>
+                    <th></th>
+                    <th>{{'label.name'|trans}}</th>
+                    <th>{{'label.duration'|trans}}</th>
+                    <th>{{'label.week'|trans}}</th>
+                    <th>{{'label.total'|trans}}</th>
+                    <th>{{'label.expected_duration'|trans}}</th>
+                    <th>{{'label.expected_delivery'|trans}}</th>
+                    <th>{{'label.comment'|trans}}</th>
+                    <th></th>
+                </tr>
+                {% for entry in entries %}
+                    <td></td>
+                    <td>{{entry.name}}</td>
+                    <td>{{entry.today|duration}}</td>
+                    <td>{{entry.week|duration}}</td>
+                    <td>{{entry.total|duration}}</td>
+                    <td>{{entry.expected_duration|duration}}</td>
+                    <td>{{entry.expected_delivery|date("Y/m/d")}}</td>
+                    <td>{{entry.comment}}</td>
+                    <td></td>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

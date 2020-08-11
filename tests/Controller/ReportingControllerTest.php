@@ -21,6 +21,11 @@ class ReportingControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecured('/reporting');
     }
 
+    public function testProjectViewIsSecure()
+    {
+        $this->assertUrlIsSecured('/reporting/project_view');
+    }
+
     public function testMonthlyListIsSecure()
     {
         $this->assertUrlIsSecured('/reporting/monthly_users_list');
@@ -36,6 +41,13 @@ class ReportingControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/reporting/');
         self::assertStringContainsString('<div class="box-body user-month-reporting-box', $client->getResponse()->getContent());
+    }
+
+    public function testProjectViewReport()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/reporting/project_view');
+        self::assertStringContainsString('<div class="box-body project-view-reporting-box', $client->getResponse()->getContent());
     }
 
     public function testMonthlyUsersReport()
