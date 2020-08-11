@@ -21,6 +21,7 @@ use App\Importer\UnknownUserException;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Utils\Duration;
@@ -80,6 +81,10 @@ class ImportTimesheetCommand extends Command
      */
     private $users;
     /**
+     * @var TagRepository
+     */
+    private $tagRepository;
+    /**
      * @var TimesheetRepository
      */
     private $timesheets;
@@ -116,13 +121,14 @@ class ImportTimesheetCommand extends Command
      */
     private $begin = self::DEFAULT_BEGIN;
 
-    public function __construct(CustomerRepository $customers, ProjectRepository $projects, ActivityRepository $activities, UserRepository $users, TimesheetRepository $timesheets, FormConfiguration $configuration)
+    public function __construct(CustomerRepository $customers, ProjectRepository $projects, ActivityRepository $activities, UserRepository $users, TagRepository $tagRepository, TimesheetRepository $timesheets, FormConfiguration $configuration)
     {
         parent::__construct();
         $this->customers = $customers;
         $this->projects = $projects;
         $this->activities = $activities;
         $this->users = $users;
+        $this->tagRepository = $tagRepository;
         $this->timesheets = $timesheets;
         $this->configuration = $configuration;
     }
@@ -309,11 +315,14 @@ class ImportTimesheetCommand extends Command
                 $timesheet->setExported((bool) $record['Exported']);
 
                 if (!empty($record['Tags'])) {
-                    foreach (explode(',', $record['Tags']) as $tag) {
-                        if (empty($tag)) {
+                    foreach (explode(',', $record['Tags']) as $tagName) {
+                        if (empty($tagName)) {
                             continue;
+                        } elseif (!empty($tag = $this->tagRepository->findTagByName($tagName))) {
+                            $timesheet->addTag($tag);
+                        } else {
+                            $timesheet->addTag((new Tag())->setName($tagName));
                         }
-                        $timesheet->addTag((new Tag())->setName($tag));
                     }
                 }
 
