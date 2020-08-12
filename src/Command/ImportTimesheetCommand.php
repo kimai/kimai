@@ -318,11 +318,13 @@ class ImportTimesheetCommand extends Command
                     foreach (explode(',', $record['Tags']) as $tagName) {
                         if (empty($tagName)) {
                             continue;
-                        } elseif (!empty($tag = $this->tagRepository->findTagByName($tagName))) {
-                            $timesheet->addTag($tag);
-                        } else {
-                            $timesheet->addTag((new Tag())->setName($tagName));
+                        } 
+                        
+                        if (null === ($tag = $this->tagRepository->findTagByName($tagName)) {
+                            $tag = (new Tag())->setName($tagName);
                         }
+                        
+                        $timesheet->addTag($tag);
                     }
                 }
 
