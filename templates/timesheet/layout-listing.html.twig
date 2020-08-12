@@ -75,30 +75,6 @@
         {% set dayDuration = 0 %}
         {% set dayRate = {} %}
         {% set lastEntry = null %}
-        {% set timesheetDuration = 0 %}
-        {% set firstDate = null %}
-        {% set lastDate = null %}
-        {% set wholeEntriesNumber = 0 %}
-
-        {% for entry in wholeEntries %}
-            {% set wholeEntriesNumber = wholeEntriesNumber + 1 %}
-            {% if entry.end is not null%}
-                {%- set timesheetDuration = timesheetDuration + entry.duration -%}
-            {% endif %}
-            {% if entry.end is not null%}
-                {% if firstDate is null %}
-                    {% set firstDate = entry.end%}
-                {% endif %}
-                {% if lastDate is null %}
-                    {% set lastDate = entry.end %}
-                {% endif %}
-                {% if entry.end.timestamp > lastDate.timestamp %}
-                    {% set lastDate = entry.end %}
-                {% elseif entry.begin.timestamp < firstDate.timestamp %}
-                    {% set firstDate = entry.end %}
-                {% endif %}
-            {% endif %}
-        {% endfor %}
 
         {% for entry in entries %}
             {%- set customerCurrency = entry.project.customer.currency -%}
@@ -209,7 +185,7 @@
         {% endif %}
 
         {% if showSummary %}
-            {{ _self.summary(firstDate|date_short, lastDate|date_short, timesheetDuration, dayRate, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) }}
+            {{ _self.summary(summaryStartDate|date_short, summaryEndDate|date_short, summaryDuration, dayRate, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) }}
         {% endif %}
 
         {{ tables.data_table_footer(entries, paginationRoute, multiUpdateForm) }}
@@ -252,7 +228,7 @@
     </tr>
 {% endmacro %}
 
-{% macro summary(start_day, end_day, duration, dayRates, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) %}
+{% macro summary(start_day, end_day, durationTotal, dayRates, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) %}
     {% import "macros/datatables.html.twig" as tables %}
     <tr class="summary info">
         <td></td>
@@ -261,16 +237,9 @@
             <td class="{{ tables.data_table_column_class(tableName, columns, 'starttime') }}"></td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'endtime') }}"></td>
         {% endif %}
-        <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ duration|duration }}</td>
+        <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ durationTotal }}</td>
         {% if canSeeRate %}
-            <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'rate') }}">
-                {% for currency, rate in dayRates %}
-                    {{ rate|money(currency) }}
-                    {% if not loop.last %}
-                        <br>
-                    {% endif %}
-                {% endfor %}
-            </td>
+            <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'rate') }}"></td>
         {% endif %}
         <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}"></td>
         <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}"></td>
