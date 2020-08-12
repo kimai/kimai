@@ -320,7 +320,7 @@ class ImportTimesheetCommand extends Command
                             continue;
                         } 
                         
-                        if (null === ($tag = $this->tagRepository->findTagByName($tagName)) {
+                        if (null === ($tag = $this->tagRepository->findTagByName($tagName))) {
                             $tag = (new Tag())->setName($tagName);
                         }
                         
