@@ -16,8 +16,8 @@ use App\Reporting\MonthlyUserList;
 use App\Reporting\MonthlyUserListForm;
 use App\Reporting\ProjectView;
 use App\Reporting\ProjectViewForm;
-use App\Repository\Query\UserQuery;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Timesheet\UserDateTimeFactory;
@@ -34,6 +34,10 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 final class ReportingController extends AbstractController
 {
+    /**
+     * @var ProjectRepository
+     */
+    private $projectRepository;
     /**
      * @var TimesheetRepository
      */
@@ -116,7 +120,8 @@ final class ReportingController extends AbstractController
     /**
      * @Route(path="/project_view", name="report_project_view", methods={"GET","POST"})
      */
-    public function projectView(Request $request) {
+    public function projectView(Request $request)
+    {
         $values = new ProjectView();
         $form = $this->createForm(ProjectViewForm::class, $values, []);
 

@@ -11,17 +11,10 @@ namespace App\Reporting;
 
 final class Report implements ReportInterface
 {
-    /**
-     * @var string
-     */
     private $id;
-    /**
-     * @var string
-     */
+
     private $label;
-    /**
-     * @var string
-     */
+
     private $route;
 
     public function __construct(string $id, string $route, string $label)

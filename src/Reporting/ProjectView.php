@@ -11,39 +11,17 @@ namespace App\Reporting;
 
 final class ProjectView
 {
-    /**
-     * @var string
-     */
     private $name;
 
-    /**
-     * @var integer
-     */
     private $today;
 
-
-    /**
-     * @var integer
-     */
     private $week;
 
-    /**
-     * @var integer
-     */
     private $total;
 
-    /**
-     * @var integer
-     */
     private $expectedDuration;
 
-    /**
-     * @var integer
-     */
     private $expectedDelivery;
 
-    /**
-     * @var string
-     */
     private $description;
 }
