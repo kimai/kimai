@@ -490,14 +490,6 @@
             </trans-unit>
 
             <!--
-              Project View
-            -->
-            <trans-unit id="project_view.title">
-                <source>project_view.title</source>
-                <target>Project View</target>
-            </trans-unit>
-
-            <!--
               User profile
             -->
             <trans-unit id="profile.title">

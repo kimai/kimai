@@ -456,6 +456,49 @@ class ProjectRepository extends EntityRepository
         }
     }
 
+    public function getProjectView(\DateTime $startingDate): array
+    {
+        $entityManager = $this->getEntityManager();
+        $startingDateQueryBuilder = $entityManager->createQueryBuilder();
+        $startingDateQueryBuilder
+            ->addSelect('SUM(t1.duration)')
+            ->from(Timesheet::class, 't1')
+            ->andWhere('t1.project = t.project')
+            ->andWhere('DATE(t1.begin) = :starting_date')
+        ;
+        $weekQueryBuilder = $entityManager->createQueryBuilder();
+        $weekQueryBuilder
+            ->addSelect('SUM(t2.duration)')
+            ->from(Timesheet::class, 't2')
+            ->andWhere('t2.project = t.project')
+            ->andWhere('DATE(t2.begin) BETWEEN :first_day_of_starting_date_week AND :last_day_of_starting_date_week')
+        ;
+        $qb = $entityManager->createQueryBuilder();
+        $qb
+            ->addSelect('p.name')
+            ->addSelect("({$startingDateQueryBuilder}) AS today")
+            ->addSelect("({$weekQueryBuilder}) AS week")
+            ->addSelect('p.comment')
+            ->addSelect('SUM(t.duration) AS total')
+            ->addSelect('p.timeBudget AS expected_duration')
+            ->addSelect('p.end AS expected_delivery')
+            ->from(Project::class, 'p')
+            ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
+            ->andWhere($qb->expr()->eq('p.visible', true))
+            ->addGroupBy('p.id')
+            ->addOrderBy('p.name')
+        ;
+        $firstDayOfStartingDateWeek = (clone $startingDate)->modify('this week');
+        $lastDayOfStartingDateWeek = (clone $startingDate)->modify('this week')->modify('+6 days');
+        $qb
+            ->setParameter('starting_date', $startingDate->format('Y-m-d'))
+            ->setParameter('first_day_of_starting_date_week', $firstDayOfStartingDateWeek->format('Y-m-d'))
+            ->setParameter('last_day_of_starting_date_week', $lastDayOfStartingDateWeek->format('Y-m-d'))
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function getComments(Project $project): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

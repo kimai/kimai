@@ -9,10 +9,6 @@
         {% set actions = actions|merge({'create': path('admin_project_create')}) %}
     {% endif %}
 
-    {% if is_granted('details_project') %}
-        {% set actions = actions|merge({'project': path('project_view')}) %}
-    {% endif %}
-
     {% set actions = actions|merge({'help': {'url': 'project.html'|docu_link, 'target': '_blank'}}) %}
 
     {% set event = trigger('actions.projects', {'actions': actions, 'view': view}) %}
