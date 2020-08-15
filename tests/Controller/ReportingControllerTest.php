@@ -21,6 +21,16 @@ class ReportingControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecured('/reporting');
     }
 
+    public function testWeekByUserIsSecure()
+    {
+        $this->assertUrlIsSecured('/reporting/week_by_user');
+    }
+
+    public function testMonthByUserIsSecure()
+    {
+        $this->assertUrlIsSecured('/reporting/month_by_user');
+    }
+
     public function testMonthlyListIsSecure()
     {
         $this->assertUrlIsSecured('/reporting/monthly_users_list');
@@ -31,10 +41,26 @@ class ReportingControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/reporting/monthly_users_list');
     }
 
-    public function testDefaultUsersMonthReport()
+    public function testRedirectForDefaultReportUrl()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->assertAccessIsGranted($client, '/reporting/');
+        $this->request($client, '/reporting/');
+        $this->assertIsRedirect($client, $this->createUrl('/reporting/week_by_user'));
+        $client->followRedirect();
+        self::assertStringContainsString('<div class="box-body user-week-reporting-box', $client->getResponse()->getContent());
+    }
+
+    public function testUserWeekReport()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/reporting/week_by_user');
+        self::assertStringContainsString('<div class="box-body user-week-reporting-box', $client->getResponse()->getContent());
+    }
+
+    public function testUserMonthReport()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/reporting/month_by_user');
         self::assertStringContainsString('<div class="box-body user-month-reporting-box', $client->getResponse()->getContent());
     }
 

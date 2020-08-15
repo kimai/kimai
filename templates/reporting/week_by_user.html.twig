@@ -1,6 +1,6 @@
 {% extends 'reporting/layout.html.twig' %}
 
-{% block report_title %}{{ 'report_user_month'|trans({}, 'reporting') }}{% endblock %}
+{% block report_title %}{{ 'report_user_week'|trans({}, 'reporting') }}{% endblock %}
 
 {% block report %}
 
@@ -14,7 +14,7 @@
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_before %}
-            {{ form_start(form, {'action': path('report_user_month'), 'attr': {'class': 'form-inline'}}) }}
+            {{ form_start(form, {'action': path('report_user_week'), 'attr': {'class': 'form-inline'}}) }}
         {% endblock %}
         {% block box_after %}
             {{ form_end(form) }}
@@ -27,7 +27,7 @@
             {% endif %}
             {{ form_widget(form.date) }}
         {% endblock %}
-        {% block box_body_class %}user-month-reporting-box table-responsive{% if hasData %} no-padding{% endif %}{% endblock %}
+        {% block box_body_class %}user-week-reporting-box table-responsive{% if hasData %} no-padding{% endif %}{% endblock %}
         {% block box_body %}
             {% if not hasData %}
                 {{ widgets.nothing_found() }}
