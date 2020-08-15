@@ -114,8 +114,12 @@ class DailyWorkingTimeChartTest extends TestCase
 
         $sut = new DailyWorkingTimeChart($repository, $user, $mockFactory->create('Europe/Berlin'));
         $data = $sut->getData([]);
-        self::assertCount(7, $data);
-        foreach ($data as $statObj) {
+        self::assertCount(2, $data);
+        self::assertArrayHasKey('activities', $data);
+        self::assertArrayHasKey('data', $data);
+
+        self::assertCount(7, $data['data']);
+        foreach ($data['data'] as $statObj) {
             self::assertInstanceOf(Day::class, $statObj);
         }
     }
