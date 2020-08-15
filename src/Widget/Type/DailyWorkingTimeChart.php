@@ -9,6 +9,8 @@
 
 namespace App\Widget\Type;
 
+use App\Entity\Activity;
+use App\Entity\Project;
 use App\Repository\TimesheetRepository;
 use App\Security\CurrentUser;
 use App\Timesheet\UserDateTimeFactory;
@@ -75,6 +77,28 @@ class DailyWorkingTimeChart extends SimpleWidget
             $end = new DateTime($options['end'], $this->dateTimeFactory->getTimezone());
         }
 
-        return $this->repository->getDailyStats($user, $begin, $end);
+        $activities = [];
+        $statistics = $this->repository->getDailyStats($user, $begin, $end);
+
+        foreach ($statistics as $day) {
+            foreach ($day->getDetails() as $entry) {
+                /** @var Activity $activity */
+                $activity = $entry['activity'];
+                /** @var Project $project */
+                $project = $entry['project'];
+
+                $id = $project->getId() . '_' . $activity->getId();
+
+                $activities[$id] = [
+                    'activity' => $activity,
+                    'project' => $project,
+                ];
+            }
+        }
+
+        return [
+            'activities' => $activities,
+            'data' => $statistics,
+        ];
     }
 }
