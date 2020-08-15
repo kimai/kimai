@@ -59,6 +59,25 @@ final class ReportingController extends AbstractController
         return $this->redirectToRoute('report_user_week');
     }
 
+    private function canSelectUser(): bool
+    {
+        if (!$this->isGranted('view_other_timesheet')) {
+            return false;
+        }
+
+        $currentUser = $this->getUser();
+
+        if ($currentUser->canSeeAllData()) {
+            return true;
+        }
+
+        if ($currentUser->hasTeamAssignment()) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * @Route(path="/month_by_user", name="report_user_month", methods={"GET","POST"})
      *
@@ -71,13 +90,14 @@ final class ReportingController extends AbstractController
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory($currentUser);
         $localeFormats = $this->getLocaleFormats($request->getLocale());
+        $canChangeUser = $this->canSelectUser();
 
         $values = new MonthByUser();
         $values->setUser($currentUser);
         $values->setDate($dateTimeFactory->getStartOfMonth());
 
         $form = $this->createForm(MonthByUserForm::class, $values, [
-            'include_user' => $this->isGranted('view_other_timesheet') && $currentUser->hasTeamAssignment(),
+            'include_user' => $canChangeUser,
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
             'format' => $localeFormats->getDateTypeFormat(),
@@ -89,7 +109,7 @@ final class ReportingController extends AbstractController
             $values->setUser($currentUser);
         }
 
-        if ($currentUser !== $values->getUser() && !$this->isGranted('view_other_timesheet')) {
+        if ($currentUser !== $values->getUser() && !$canChangeUser) {
             throw new AccessDeniedException('User is not allowed to see other users timesheet');
         }
 
@@ -137,13 +157,14 @@ final class ReportingController extends AbstractController
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory($currentUser);
         $localeFormats = $this->getLocaleFormats($request->getLocale());
+        $canChangeUser = $this->canSelectUser();
 
         $values = new WeekByUser();
         $values->setUser($currentUser);
         $values->setDate($dateTimeFactory->getStartOfWeek());
 
         $form = $this->createForm(WeekByUserForm::class, $values, [
-            'include_user' => $this->isGranted('view_other_timesheet') && $currentUser->hasTeamAssignment(),
+            'include_user' => $canChangeUser,
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
             'format' => $localeFormats->getDateTypeFormat(),
@@ -155,7 +176,7 @@ final class ReportingController extends AbstractController
             $values->setUser($currentUser);
         }
 
-        if ($currentUser !== $values->getUser() && !$this->isGranted('view_other_timesheet')) {
+        if ($currentUser !== $values->getUser() && !$canChangeUser) {
             throw new AccessDeniedException('User is not allowed to see other users timesheet');
         }
 
