@@ -54,6 +54,7 @@ final class ReportingExtension extends AbstractExtension
         $event = new ReportingEvent($user);
 
         if ($this->security->isGranted('view_reporting')) {
+            $event->addReport(new Report('week_by_user', 'report_user_week', 'report_user_week'));
             $event->addReport(new Report('month_by_user', 'report_user_month', 'report_user_month'));
             if ($this->security->isGranted('view_other_timesheet')) {
                 $event->addReport(new Report('monthly_users_list', 'report_monthly_users', 'report_monthly_users'));

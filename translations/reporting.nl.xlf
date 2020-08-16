@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="de" datatype="plaintext" original="reporting.en.xlf">
+    <file source-language="en" target-language="nl" datatype="plaintext" original="reporting.en.xlf">
         <body>
             <trans-unit id="reporting.title">
                 <source>reporting.title</source>
-                <target>Reporting</target>
+                <target>Rapporten</target>
             </trans-unit>
             <trans-unit id="report_user_week">
                 <source>report_user_week</source>
-                <target>Wochenansicht für einen Benutzer</target>
+                <target>Weekoverzicht voor een user</target>
             </trans-unit>
             <trans-unit id="report_user_month">
                 <source>report_user_month</source>
-                <target>Monatsansicht für einen Benutzer</target>
+                <target>Maandoverzicht voor een user</target>
             </trans-unit>
             <trans-unit id="report_monthly_users">
                 <source>report_monthly_users</source>
-                <target>Monatsansicht für alle Benutzer</target>
+                <target>Maandoverzicht voor alle users</target>
             </trans-unit>
         </body>
     </file>

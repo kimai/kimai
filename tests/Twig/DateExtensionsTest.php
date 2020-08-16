@@ -139,20 +139,27 @@ class DateExtensionsTest extends TestCase
     /**
      * @dataProvider getMonthNameTestData
      */
-    public function testMonthName(string $locale, string $date, string $expectedName)
+    public function testMonthName(string $locale, string $date, string $expectedName, bool $withYear = false)
     {
         $sut = $this->getSut($locale, []);
-        self::assertEquals($expectedName, $sut->monthName(new \DateTime($date)));
+        self::assertEquals($expectedName, $sut->monthName(new \DateTime($date), $withYear));
     }
 
     public function getMonthNameTestData()
     {
         return [
-            ['de', '2020-07-09 23:59:59', 'Juli'],
-            ['en', '2020-07-09 23:59:59', 'July'],
-            ['de', 'January 2016', 'Januar'],
-            ['en', 'January 2016', 'January'],
-            ['en', '2016-12-23', 'December'],
+            ['de', '2020-07-09 23:59:59', 'Juli', false],
+            ['en', '2020-07-09 23:59:59', 'July', false],
+            ['de', 'January 2016', 'Januar', false],
+            ['en', 'January 2016', 'January', false],
+            ['en', '2016-12-23', 'December', false],
+            ['ru', '2016-12-23', 'декабрь', false],
+            ['de', '2020-07-09 23:59:59', 'Juli 2020', true],
+            ['en', '2020-07-09 23:59:59', 'July 2020', true],
+            ['de', 'January 2016', 'Januar 2016', true],
+            ['en', 'January 2016', 'January 2016', true],
+            ['en', '2015-12-23', 'December 2015', true],
+            ['ru', '2015-12-23', 'декабрь 2015', true],
         ];
     }
 

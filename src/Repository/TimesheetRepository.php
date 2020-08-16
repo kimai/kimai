@@ -444,7 +444,11 @@ class TimesheetRepository extends EntityRepository
 
                     $results[$dateKey]['rate'] += $rate;
                     $results[$dateKey]['duration'] += $duration;
-                    $detailsId = $result->getProject()->getCustomer()->getId() . '_' . $result->getProject()->getId();
+                    $detailsId =
+                        $result->getProject()->getCustomer()->getId()
+                        . '_' . $result->getProject()->getId()
+                        . '_' . $result->getActivity()->getId()
+                    ;
                     if (!isset($results[$dateKey]['details'][$detailsId])) {
                         $results[$dateKey]['details'][$detailsId] = [
                             'project' => $result->getProject(),

@@ -9,6 +9,6 @@
 
 namespace App\Reporting;
 
-final class MonthByUser extends DateByUser
+final class WeekByUser extends DateByUser
 {
 }
