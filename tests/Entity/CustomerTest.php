@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Constants;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\Team;
@@ -71,6 +72,9 @@ class CustomerTest extends TestCase
 
         self::assertInstanceOf(Customer::class, $sut->setColor('#fffccc'));
         self::assertEquals('#fffccc', $sut->getColor());
+
+        self::assertInstanceOf(Customer::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        self::assertNull($sut->getColor());
 
         self::assertInstanceOf(Customer::class, $sut->setCompany('test company'));
         self::assertEquals('test company', $sut->getCompany());

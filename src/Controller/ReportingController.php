@@ -14,12 +14,15 @@ use App\Reporting\MonthByUser;
 use App\Reporting\MonthByUserForm;
 use App\Reporting\MonthlyUserList;
 use App\Reporting\MonthlyUserListForm;
+use App\Reporting\WeekByUser;
+use App\Reporting\WeekByUserForm;
 use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
-use App\Timesheet\UserDateTimeFactory;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -39,46 +42,79 @@ final class ReportingController extends AbstractController
      * @var UserRepository
      */
     private $userRepository;
-    /**
-     * @var UserDateTimeFactory
-     */
-    private $dateTimeFactory;
 
-    public function __construct(TimesheetRepository $timesheetRepository, UserRepository $userRepository, UserDateTimeFactory $dateTimeFactory)
+    public function __construct(TimesheetRepository $timesheetRepository, UserRepository $userRepository)
     {
         $this->timesheetRepository = $timesheetRepository;
         $this->userRepository = $userRepository;
-        $this->dateTimeFactory = $dateTimeFactory;
     }
 
     /**
      * @Route(path="/", name="reporting", methods={"GET"})
-     * @Route(path="/month_by_user", name="report_user_month", methods={"GET","POST"})
+     *
+     * @return Response
      */
-    public function monthByUser(Request $request)
+    public function defaultReport(): Response
     {
-        $user = $this->getUser();
+        return $this->redirectToRoute('report_user_week');
+    }
+
+    private function canSelectUser(): bool
+    {
+        if (!$this->isGranted('view_other_timesheet')) {
+            return false;
+        }
+
+        $currentUser = $this->getUser();
+
+        if ($currentUser->canSeeAllData()) {
+            return true;
+        }
+
+        if ($currentUser->hasTeamAssignment()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @Route(path="/month_by_user", name="report_user_month", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @return Response
+     * @throws Exception
+     */
+    public function monthByUser(Request $request): Response
+    {
+        $currentUser = $this->getUser();
+        $dateTimeFactory = $this->getDateTimeFactory($currentUser);
+        $localeFormats = $this->getLocaleFormats($request->getLocale());
+        $canChangeUser = $this->canSelectUser();
 
         $values = new MonthByUser();
-        $values->setUser($user);
-        $values->setDate($this->dateTimeFactory->getStartOfMonth());
+        $values->setUser($currentUser);
+        $values->setDate($dateTimeFactory->getStartOfMonth());
 
         $form = $this->createForm(MonthByUserForm::class, $values, [
-            'include_user' => $this->isGranted('view_other_timesheet') && $user->hasTeamAssignment(),
+            'include_user' => $canChangeUser,
+            'timezone' => $dateTimeFactory->getTimezone()->getName(),
+            'start_date' => $values->getDate(),
+            'format' => $localeFormats->getDateTypeFormat(),
         ]);
 
         $form->submit($request->query->all(), false);
 
         if ($values->getUser() === null) {
-            $values->setUser($user);
+            $values->setUser($currentUser);
         }
 
-        if ($user !== $values->getUser() && !$this->isGranted('view_other_timesheet')) {
+        if ($currentUser !== $values->getUser() && !$canChangeUser) {
             throw new AccessDeniedException('User is not allowed to see other users timesheet');
         }
 
         if ($values->getDate() === null) {
-            $values->setDate($this->dateTimeFactory->getStartOfMonth());
+            $values->setDate($dateTimeFactory->getStartOfMonth());
         }
 
         $start = $values->getDate();
@@ -110,12 +146,82 @@ final class ReportingController extends AbstractController
     }
 
     /**
-     * @Route(path="/monthly_users_list", name="report_monthly_users", methods={"GET","POST"})
-     * @Security("is_granted('view_other_timesheet')")
+     * @Route(path="/week_by_user", name="report_user_week", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @return Response
+     * @throws Exception
      */
-    public function montlyhUsersList(Request $request)
+    public function weekByUser(Request $request): Response
     {
         $currentUser = $this->getUser();
+        $dateTimeFactory = $this->getDateTimeFactory($currentUser);
+        $localeFormats = $this->getLocaleFormats($request->getLocale());
+        $canChangeUser = $this->canSelectUser();
+
+        $values = new WeekByUser();
+        $values->setUser($currentUser);
+        $values->setDate($dateTimeFactory->getStartOfWeek());
+
+        $form = $this->createForm(WeekByUserForm::class, $values, [
+            'include_user' => $canChangeUser,
+            'timezone' => $dateTimeFactory->getTimezone()->getName(),
+            'start_date' => $values->getDate(),
+            'format' => $localeFormats->getDateTypeFormat(),
+        ]);
+
+        $form->submit($request->query->all(), false);
+
+        if ($values->getUser() === null) {
+            $values->setUser($currentUser);
+        }
+
+        if ($currentUser !== $values->getUser() && !$canChangeUser) {
+            throw new AccessDeniedException('User is not allowed to see other users timesheet');
+        }
+
+        if ($values->getDate() === null) {
+            $values->setDate($dateTimeFactory->getStartOfWeek());
+        }
+
+        $start = $dateTimeFactory->getStartOfWeek($values->getDate());
+        $end = $dateTimeFactory->getEndOfWeek($values->getDate());
+
+        $selectedUser = $values->getUser();
+
+        $previous = clone $start;
+        $previous->modify('-1 week');
+
+        $next = clone $start;
+        $next->modify('+1 week');
+
+        $data = $this->timesheetRepository->getDailyStats($selectedUser, $start, $end);
+        $rows = $this->prepareMonthlyData($data);
+
+        return $this->render('reporting/week_by_user.html.twig', [
+            'form' => $form->createView(),
+            'days' => $data,
+            'rows' => $rows,
+            'user' => $selectedUser,
+            'current' => $start,
+            'next' => $next,
+            'previous' => $previous,
+        ]);
+    }
+
+    /**
+     * @Route(path="/monthly_users_list", name="report_monthly_users", methods={"GET","POST"})
+     * @Security("is_granted('view_other_timesheet')")
+     *
+     * @param Request $request
+     * @return Response
+     * @throws Exception
+     */
+    public function monthlyUsersList(Request $request): Response
+    {
+        $currentUser = $this->getUser();
+        $dateTimeFactory = $this->getDateTimeFactory();
+        $localeFormats = $this->getLocaleFormats($request->getLocale());
 
         $query = new UserQuery();
         $query->setCurrentUser($currentUser);
@@ -124,18 +230,22 @@ final class ReportingController extends AbstractController
         $rows = [];
 
         $values = new MonthlyUserList();
-        $values->setDate($this->dateTimeFactory->getStartOfMonth());
+        $values->setDate($dateTimeFactory->getStartOfMonth());
 
-        $form = $this->createForm(MonthlyUserListForm::class, $values, []);
+        $form = $this->createForm(MonthlyUserListForm::class, $values, [
+            'timezone' => $dateTimeFactory->getTimezone()->getName(),
+            'start_date' => $values->getDate(),
+            'format' => $localeFormats->getDateTypeFormat(),
+        ]);
 
         $form->submit($request->query->all(), false);
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $values->setDate($this->dateTimeFactory->getStartOfMonth());
+            $values->setDate($dateTimeFactory->getStartOfMonth());
         }
 
         if ($values->getDate() === null) {
-            $values->setDate($this->dateTimeFactory->getStartOfMonth());
+            $values->setDate($dateTimeFactory->getStartOfMonth());
         }
 
         $start = $values->getDate();

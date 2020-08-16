@@ -9,14 +9,14 @@
 
 namespace App\Reporting;
 
-use App\Form\Type\MonthPickerType;
 use App\Form\Type\UserType;
+use App\Form\Type\WeekPickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MonthByUserForm extends AbstractType
+class WeekByUserForm extends AbstractType
 {
     /**
      * Simplify cross linking between pages by removing the block prefix.
@@ -33,7 +33,7 @@ class MonthByUserForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('date', MonthPickerType::class, [
+        $builder->add('date', WeekPickerType::class, [
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
@@ -51,7 +51,7 @@ class MonthByUserForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => MonthByUser::class,
+            'data_class' => WeekByUser::class,
             'timezone' => date_default_timezone_get(),
             'start_date' => new \DateTime(),
             'format' => DateType::HTML5_FORMAT,

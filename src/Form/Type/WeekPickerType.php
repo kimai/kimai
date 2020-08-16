@@ -17,11 +17,11 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Custom form field type to select a month via picker and select previous and next month.
+ * Custom form field type to select a week via picker and select previous and next week.
  *
- * Always falls back to the current month if none or an invalid date is given.
+ * Always falls back to the current week if none or an invalid date is given.
  */
-final class MonthPickerType extends AbstractType
+final class WeekPickerType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -45,9 +45,9 @@ final class MonthPickerType extends AbstractType
             $date = $options['start_date'];
         }
 
-        $view->vars['month'] = $date;
-        $view->vars['previousMonth'] = (clone $date)->modify('-1 month');
-        $view->vars['nextMonth'] = (clone $date)->modify('+1 month');
+        $view->vars['week'] = $date;
+        $view->vars['previousWeek'] = (clone $date)->modify('-1 week');
+        $view->vars['nextWeek'] = (clone $date)->modify('+1 week');
         $view->vars['momentFormat'] = (new MomentFormatConverter())->convert($options['format']);
     }
 
@@ -64,6 +64,6 @@ final class MonthPickerType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'monthpicker';
+        return 'weekpicker';
     }
 }

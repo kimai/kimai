@@ -230,34 +230,36 @@ class DateExtensions extends AbstractExtension
         return $date->format($this->timeFormat);
     }
 
-    public function monthName(\DateTime $dateTime): string
+    /**
+     * @see https://framework.zend.com/manual/1.12/en/zend.date.constants.html#zend.date.constants.selfdefinedformats
+     * @see http://userguide.icu-project.org/formatparse/datetime
+     *
+     * @param DateTime $dateTime
+     * @param string $format
+     * @return string
+     */
+    private function formatIntl(\DateTime $dateTime, string $format): string
     {
-        // @see http://userguide.icu-project.org/formatparse/datetime
         $formatter = new \IntlDateFormatter(
             $this->locale,
             \IntlDateFormatter::FULL,
             \IntlDateFormatter::FULL,
             $dateTime->getTimezone()->getName(),
             \IntlDateFormatter::GREGORIAN,
-            'LLLL'
+            $format
         );
 
         return $formatter->format($dateTime);
     }
 
+    public function monthName(\DateTime $dateTime, bool $withYear = false): string
+    {
+        return $this->formatIntl($dateTime, ($withYear ? 'LLLL yyyy' : 'LLLL'));
+    }
+
     public function dayName(\DateTime $dateTime, bool $short = false): string
     {
-        // @see http://userguide.icu-project.org/formatparse/datetime
-        $formatter = new \IntlDateFormatter(
-            $this->locale,
-            \IntlDateFormatter::FULL,
-            \IntlDateFormatter::FULL,
-            $dateTime->getTimezone()->getName(),
-            \IntlDateFormatter::GREGORIAN,
-            $short ? 'EE' : 'EEEE'
-        );
-
-        return $formatter->format($dateTime);
+        return $this->formatIntl($dateTime, ($short ? 'EE' : 'EEEE'));
     }
 
     /**

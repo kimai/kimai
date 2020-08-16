@@ -6,6 +6,10 @@
                 <source>reporting.title</source>
                 <target>Reporting</target>
             </trans-unit>
+            <trans-unit id="report_user_week">
+                <source>report_user_week</source>
+                <target>Weekly view for one user</target>
+            </trans-unit>
             <trans-unit id="report_user_month">
                 <source>report_user_month</source>
                 <target>Monthly view for one user</target>

@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Constants;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
@@ -81,6 +82,9 @@ class ProjectTest extends TestCase
 
         self::assertInstanceOf(Project::class, $sut->setColor('#fffccc'));
         self::assertEquals('#fffccc', $sut->getColor());
+
+        self::assertInstanceOf(Project::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        self::assertNull($sut->getColor());
 
         self::assertInstanceOf(Project::class, $sut->setVisible(false));
         self::assertFalse($sut->isVisible());
