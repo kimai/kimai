@@ -214,6 +214,7 @@ class CustomerRepository extends EntityRepository
 
         $qb
             ->select('c')
+            ->distinct()
             ->from(Customer::class, 'c')
         ;
 
@@ -267,13 +268,6 @@ class CustomerRepository extends EntityRepository
                 $qb->andWhere($searchAnd);
             }
         }
-
-        // this will make sure, that we do not accidentally create results with multiple rows
-        //   => which would result in a wrong LIMIT / pagination results
-        // $qb->addGroupBy('c.id');
-
-        // the second group by is needed due to SQL standard (even though logically not really required for this query)
-        // $qb->addGroupBy($orderBy);
 
         return $qb;
     }

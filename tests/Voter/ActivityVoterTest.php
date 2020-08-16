@@ -111,6 +111,15 @@ class ActivityVoterTest extends AbstractVoterTest
         $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_GRANTED);
 
         $activity = new Activity();
+        $project = new Project();
+        $customer = new Customer();
+        $project->setCustomer($customer);
+        $activity->setProject($project);
+        $activity->addTeam($team);
+
+        $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_GRANTED);
+
+        $activity = new Activity();
 
         $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_DENIED);
     }
@@ -140,6 +149,20 @@ class ActivityVoterTest extends AbstractVoterTest
         $project = new Project();
         $customer = new Customer();
         $project->addTeam($team);
+        $project->setCustomer($customer);
+        $activity->setProject($project);
+
+        $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_GRANTED);
+
+        $activity = new Activity();
+        $team = new Team();
+        $user = new User();
+        $user->addRole(User::ROLE_USER);
+        $team->addUser($user);
+
+        $project = new Project();
+        $customer = new Customer();
+        $activity->addTeam($team);
         $project->setCustomer($customer);
         $activity->setProject($project);
 

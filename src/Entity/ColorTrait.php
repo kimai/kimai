@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Constants;
 use App\Export\Annotation as Exporter;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
@@ -36,6 +37,10 @@ trait ColorTrait
      */
     public function getColor(): ?string
     {
+        if ($this->color === Constants::DEFAULT_COLOR) {
+            return null;
+        }
+
         return $this->color;
     }
 

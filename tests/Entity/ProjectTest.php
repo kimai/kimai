@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Constants;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
@@ -82,6 +83,9 @@ class ProjectTest extends TestCase
         self::assertInstanceOf(Project::class, $sut->setColor('#fffccc'));
         self::assertEquals('#fffccc', $sut->getColor());
 
+        self::assertInstanceOf(Project::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        self::assertNull($sut->getColor());
+
         self::assertInstanceOf(Project::class, $sut->setVisible(false));
         self::assertFalse($sut->isVisible());
 
@@ -131,6 +135,11 @@ class ProjectTest extends TestCase
         self::assertCount(1, $team->getProjects());
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getProjects()[0]);
+
+        // test remove unknown team doesn't do anything
+        $sut->removeTeam(new Team());
+        self::assertCount(1, $sut->getTeams());
+        self::assertCount(1, $team->getProjects());
 
         $sut->removeTeam($team);
         self::assertCount(0, $sut->getTeams());

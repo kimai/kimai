@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Constants;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\Team;
@@ -71,6 +72,9 @@ class CustomerTest extends TestCase
 
         self::assertInstanceOf(Customer::class, $sut->setColor('#fffccc'));
         self::assertEquals('#fffccc', $sut->getColor());
+
+        self::assertInstanceOf(Customer::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        self::assertNull($sut->getColor());
 
         self::assertInstanceOf(Customer::class, $sut->setCompany('test company'));
         self::assertEquals('test company', $sut->getCompany());
@@ -142,6 +146,11 @@ class CustomerTest extends TestCase
         self::assertCount(1, $team->getCustomers());
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getCustomers()[0]);
+
+        // test remove unknown team doesn't do anything
+        $sut->removeTeam(new Team());
+        self::assertCount(1, $sut->getTeams());
+        self::assertCount(1, $team->getCustomers());
 
         $sut->removeTeam(new Team());
         $sut->removeTeam($team);

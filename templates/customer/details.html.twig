@@ -57,13 +57,13 @@
                 {% endif %}
                 {% if customer.phone is not empty %}
                     <tr>
-                        <th>{{ 'label.phone'|trans }}</th> 
+                        <th>{{ 'label.phone'|trans }}</th>
                         <td><a href="tel:{{ customer.phone }}">{{ customer.phone }}</a></td>
                     </tr>
                 {% endif %}
                 {% if customer.mobile is not empty %}
                     <tr>
-                        <th>{{ 'label.mobile'|trans }}</th> 
+                        <th>{{ 'label.mobile'|trans }}</th>
                         <td><a href="tel:{{ customer.mobile }}">{{ customer.mobile }}</a></td>
                     </tr>
                 {% endif %}

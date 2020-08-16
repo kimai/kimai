@@ -137,6 +137,7 @@ class InvoiceRepository extends EntityRepository
 
         $qb
             ->select('i')
+            ->distinct()
             ->from(Invoice::class, 'i')
         ;
 
@@ -150,13 +151,6 @@ class InvoiceRepository extends EntityRepository
         $qb->addOrderBy($orderBy, $query->getOrder());
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
-
-        // this will make sure, that we do not accidentally create results with multiple rows
-        //   => which would result in a wrong LIMIT / pagination results
-        // $qb->addGroupBy('i.id');
-
-        // the second group by is needed due to SQL standard (even though logically not really required for this query)
-        // $qb->addGroupBy($orderBy);
 
         return $qb;
     }

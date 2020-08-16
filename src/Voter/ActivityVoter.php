@@ -19,19 +19,15 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 class ActivityVoter extends AbstractVoter
 {
-    public const VIEW = 'view';
-    public const EDIT = 'edit';
-    public const BUDGET = 'budget';
-    public const DELETE = 'delete';
-
     /**
-     * support rules based on the given $subject (here: Activity)
+     * support rules based on the given activity
      */
     public const ALLOWED_ATTRIBUTES = [
-        self::VIEW,
-        self::EDIT,
-        self::BUDGET,
-        self::DELETE,
+        'view',
+        'edit',
+        'budget',
+        'delete',
+        'permissions',
     ];
 
     /**
@@ -70,8 +66,8 @@ class ActivityVoter extends AbstractVoter
             return true;
         }
 
-        // new and global activities have no project
-        if (null === ($project = $subject->getProject())) {
+        // those cannot be assigned to teams
+        if (\in_array($attribute, ['create', 'delete'])) {
             return false;
         }
 
@@ -79,6 +75,22 @@ class ActivityVoter extends AbstractVoter
         $hasTeamPermission = $this->hasRolePermission($user, $attribute . '_team_activity');
 
         if (!$hasTeamleadPermission && !$hasTeamPermission) {
+            return false;
+        }
+
+        /** @var Team $team */
+        foreach ($subject->getTeams() as $team) {
+            if ($hasTeamleadPermission && $user->isTeamleadOf($team)) {
+                return true;
+            }
+
+            if ($hasTeamPermission && $user->isInTeam($team)) {
+                return true;
+            }
+        }
+
+        // new and global activities have no project
+        if (null === ($project = $subject->getProject())) {
             return false;
         }
 
