@@ -173,6 +173,20 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * @param TimesheetQuery $query
+     * @return int
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function getDurationTotal(TimesheetQuery $query)
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+        $qb->select('SUM(t.duration)');
+        $result = $qb->getQuery()->getSingleScalarResult();
+
+        return empty($result) ? 0 : $result;
+    }
+
+    /**
      * @param string $type
      * @param DateTime|null $begin
      * @param DateTime|null $end

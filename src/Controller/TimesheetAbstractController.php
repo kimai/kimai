@@ -119,13 +119,22 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $pager = $this->repository->getPagerfantaForQuery($query);
 
+        $durationTotal = $this->repository->getDurationTotal($query);
+        $summaryStartDate = $query->getBegin();
+        $summaryEndDate = $query->getEnd();
+        $summaryDuration = sprintf('%02d:%02d h ', ($durationTotal / 3600), ($durationTotal / 60 % 60));
+
         return $this->render($renderTemplate, [
             'entries' => $pager,
+            'summaryDuration' => $summaryDuration,
+            'summaryStartDate' => $summaryStartDate,
+            'summaryEndDate' => $summaryEndDate,
             'page' => $query->getPage(),
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'multiUpdateForm' => $this->getMultiUpdateActionForm()->createView(),
             'showSummary' => $this->includeSummary(),
+            'showDailySummary' => $this->includeDailySummary(),
             'showStartEndTime' => $this->canSeeStartEndTime(),
             'metaColumns' => $this->findMetaColumns($query, $location),
         ]);
@@ -498,9 +507,14 @@ abstract class TimesheetAbstractController extends AbstractController
         return TimesheetEditForm::class;
     }
 
-    protected function includeSummary(): bool
+    protected function includeDailySummary(): bool
     {
         return (bool) $this->getUser()->getPreferenceValue('timesheet.daily_stats', false);
+    }
+
+    protected function includeSummary(): bool
+    {
+        return (bool) $this->getUser()->getPreferenceValue('timesheet.timesheet_summary', false);
     }
 
     protected function includeUserInForms(string $formName): bool

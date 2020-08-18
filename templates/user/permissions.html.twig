@@ -28,12 +28,12 @@
 
 {% block main %}
     {{ tables.datatable_header(tableName, columns, null, {'translationPrefix': ''}) }}
-    
+
     {% set colspan = 1 + (roles|length) %}
 
     {% for title, perms in sorted %}
         {% if perms|length > 0 %}
-            <tr class="summary info">
+            <tr class="daily summary info">
                 <td colspan="{{ colspan }}">{{ title }}</td>
             </tr>
             {% for permission in perms|sort %}

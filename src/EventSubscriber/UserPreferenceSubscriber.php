@@ -179,6 +179,12 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setType(CheckboxType::class),
 
             (new UserPreference())
+                ->setName('timesheet.timesheet_summary')
+                ->setValue(false)
+                ->setOrder(800)
+                ->setType(CheckboxType::class),
+
+            (new UserPreference())
                 ->setName('timesheet.export_decimal')
                 ->setValue(false)
                 ->setOrder(900)
