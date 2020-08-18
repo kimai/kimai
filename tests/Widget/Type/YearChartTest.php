@@ -15,6 +15,8 @@ use App\Widget\Type\YearChart;
 
 /**
  * @covers \App\Widget\Type\YearChart
+ * @covers \App\Widget\Type\SimpleStatisticChart
+ * @covers \App\Widget\Type\SimpleWidget
  */
 class YearChartTest extends AbstractSimpleStatisticsWidgetTypeTest
 {

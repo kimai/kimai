@@ -16,6 +16,7 @@ use App\Widget\Type\SimpleWidget;
 
 /**
  * @covers \App\Widget\Type\Counter
+ * @covers \App\Widget\Type\SimpleStatisticChart
  * @covers \App\Widget\Type\SimpleWidget
  */
 class CounterTest extends AbstractSimpleStatisticsWidgetTypeTest
