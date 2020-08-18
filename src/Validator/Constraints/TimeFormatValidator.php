@@ -26,6 +26,10 @@ class TimeFormatValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\TimeFormat');
         }
 
+        if (null === $value || '' === $value) {
+            return;
+        }
+
         if (!is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
             throw new UnexpectedValueException($value, 'string');
         }

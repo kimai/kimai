@@ -44,7 +44,7 @@ class TimeFormatValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getValidTimes
      */
-    public function testValidationSucceeds(string $value)
+    public function testValidationSucceeds(?string $value)
     {
         $this->validator->validate($value, new TimeFormat());
         $this->assertNoViolation();
@@ -53,6 +53,8 @@ class TimeFormatValidatorTest extends ConstraintValidatorTestCase
     public function getValidTimes()
     {
         return [
+            [''],
+            [null],
             ['00:00'],
             ['00:01'],
             ['23:00'],
@@ -65,7 +67,7 @@ class TimeFormatValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getInvalidTimes
      */
-    public function testValidationProblem(string $value)
+    public function testValidationProblem(?string $value)
     {
         $this->validator->validate($value, new TimeFormat());
 
@@ -78,6 +80,7 @@ class TimeFormatValidatorTest extends ConstraintValidatorTestCase
     public function getInvalidTimes()
     {
         return [
+            ['a'],
             ['1:00'],
             ['01:1'],
             ['00:60'],
