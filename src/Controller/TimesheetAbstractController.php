@@ -122,7 +122,7 @@ abstract class TimesheetAbstractController extends AbstractController
         $durationTotal = $this->repository->getDurationTotal($query);
         $summaryStartDate = $query->getBegin();
         $summaryEndDate = $query->getEnd();
-        $summaryDuration = sprintf('%02d:%02d h ', ($durationTotal/3600),($durationTotal/60%60));
+        $summaryDuration = sprintf('%02d:%02d h ', ($durationTotal / 3600), ($durationTotal / 60 % 60));
 
         return $this->render($renderTemplate, [
             'entries' => $pager,
