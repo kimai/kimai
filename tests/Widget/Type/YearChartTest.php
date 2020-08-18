@@ -9,17 +9,21 @@
 
 namespace App\Tests\Widget\Type;
 
+use App\Repository\TimesheetRepository;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\YearChart;
 
 /**
  * @covers \App\Widget\Type\YearChart
  */
-class YearChartTest extends AbstractWidgetTypeTest
+class YearChartTest extends AbstractSimpleStatisticsWidgetTypeTest
 {
     public function createSut(): AbstractWidgetType
     {
-        return new YearChart();
+        $sut = new YearChart($this->createMock(TimesheetRepository::class));
+        $sut->setQuery(TimesheetRepository::STATS_QUERY_ACTIVE);
+
+        return $sut;
     }
 
     public function getDefaultOptions(): array

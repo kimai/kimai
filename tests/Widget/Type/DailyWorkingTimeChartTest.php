@@ -12,8 +12,6 @@ namespace App\Tests\Widget\Type;
 use App\Entity\User;
 use App\Model\Statistic\Day;
 use App\Repository\TimesheetRepository;
-use App\Tests\Mocks\Security\CurrentUserFactory;
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\DailyWorkingTimeChart;
 use App\Widget\Type\SimpleWidget;
@@ -30,11 +28,11 @@ class DailyWorkingTimeChartTest extends TestCase
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $mockFactory = new UserDateTimeFactoryFactory($this);
-        $userFactory = new CurrentUserFactory($this);
-        $user = $userFactory->create(new User(), 'Europe/Berlin');
 
-        return new DailyWorkingTimeChart($repository, $user, $mockFactory->create('Europe/Berlin'));
+        $sut = new DailyWorkingTimeChart($repository);
+        $sut->setUser(new User());
+
+        return $sut;
     }
 
     public function testExtendsSimpleWidget()
@@ -107,12 +105,8 @@ class DailyWorkingTimeChartTest extends TestCase
             ];
         });
 
-        $userFactory = new CurrentUserFactory($this);
-        $user = $userFactory->create(new User(), 'Europe/Berlin');
-
-        $mockFactory = new UserDateTimeFactoryFactory($this);
-
-        $sut = new DailyWorkingTimeChart($repository, $user, $mockFactory->create('Europe/Berlin'));
+        $sut = new DailyWorkingTimeChart($repository);
+        $sut->setUser(new User());
         $data = $sut->getData([]);
         self::assertCount(2, $data);
         self::assertArrayHasKey('activities', $data);

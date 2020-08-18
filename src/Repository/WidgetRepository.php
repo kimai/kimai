@@ -9,10 +9,8 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
-use App\Security\CurrentUser;
-use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\Counter;
+use App\Widget\Type\SimpleStatisticChart;
 use App\Widget\Type\YearChart;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
@@ -25,29 +23,19 @@ class WidgetRepository
     /**
      * @var TimesheetRepository
      */
-    protected $repository;
+    private $repository;
     /**
      * @var array
      */
-    protected $widgets = [];
+    private $widgets = [];
     /**
      * @var array
      */
-    protected $definitions = [];
-    /**
-     * @var User|null
-     */
-    protected $user;
+    private $definitions = [];
 
-    /**
-     * @param TimesheetRepository $repository
-     * @param CurrentUser $user
-     * @param array $widgets
-     */
-    public function __construct(TimesheetRepository $repository, CurrentUser $user, array $widgets)
+    public function __construct(TimesheetRepository $repository, array $widgets)
     {
         $this->repository = $repository;
-        $this->user = $user->getUser();
         $this->definitions = array_merge($this->getDefaultWidgets(), $widgets);
     }
 
@@ -89,12 +77,6 @@ class WidgetRepository
      */
     protected function create(string $name, array $widget): WidgetInterface
     {
-        $user = $this->user;
-        $timezone = new \DateTimeZone($user->getTimezone());
-        $begin = !empty($widget['begin']) ? new \DateTime($widget['begin'], $timezone) : null;
-        $end = !empty($widget['end']) ? new \DateTime($widget['end'], $timezone) : null;
-        $theUser = $widget['user'] ? $user : null;
-
         if (!isset($widget['type'])) {
             @trigger_error('Using a widget definition without a "type" is deprecated', E_USER_DEPRECATED);
             $widget['type'] = Counter::class;
@@ -104,30 +86,25 @@ class WidgetRepository
             throw new WidgetException(sprintf('Unknown widget type "%s"', $widgetClassName));
         }
 
-        /** @var AbstractWidgetType $model */
-        $model = new $widgetClassName();
-        if (!($model instanceof AbstractWidgetType)) {
+        /** @var SimpleStatisticChart $model */
+        $model = new $widgetClassName($this->repository);
+        if (!($model instanceof SimpleStatisticChart)) {
             throw new WidgetException(
                 sprintf(
                     'Widget type "%s" is not an instance of "%s"',
                     $widgetClassName,
-                    AbstractWidgetType::class
+                    SimpleStatisticChart::class
                 )
             );
         }
 
-        try {
-            $data = $this->repository->getStatistic($widget['query'], $begin, $end, $theUser);
-        } catch (\Exception $ex) {
-            throw new WidgetException(
-                'Failed loading widget data: ' . $ex->getMessage()
-            );
-        }
-
         $model
+            ->setQuery($widget['query'])
+            ->setBegin($widget['begin'])
+            ->setEnd($widget['end'])
             ->setId($name)
             ->setTitle($widget['title'])
-            ->setData($data);
+        ;
 
         if ($widget['query'] == TimesheetRepository::STATS_QUERY_DURATION) {
             $model->setOption('dataType', 'duration');

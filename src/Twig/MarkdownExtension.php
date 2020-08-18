@@ -52,7 +52,7 @@ final class MarkdownExtension extends AbstractExtension
     /**
      * Transforms the entities comment (customer, project, activity ...) into HTML.
      *
-     * @param string $content
+     * @param string|null $content
      * @param bool $fullLength
      * @return string
      */

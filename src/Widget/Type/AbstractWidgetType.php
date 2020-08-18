@@ -30,7 +30,7 @@ abstract class AbstractWidgetType implements WidgetInterface
      */
     protected $data;
 
-    public function setId(string $id): AbstractWidgetType
+    public function setId(string $id): self
     {
         $this->id = $id;
 
@@ -42,7 +42,7 @@ abstract class AbstractWidgetType implements WidgetInterface
         return $this->id;
     }
 
-    public function setData($data): AbstractWidgetType
+    public function setData($data): self
     {
         $this->data = $data;
 
@@ -58,7 +58,7 @@ abstract class AbstractWidgetType implements WidgetInterface
         return $this->data;
     }
 
-    public function setTitle(string $title): AbstractWidgetType
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
@@ -70,7 +70,7 @@ abstract class AbstractWidgetType implements WidgetInterface
         return $this->title;
     }
 
-    public function setOptions(array $options): AbstractWidgetType
+    public function setOptions(array $options): self
     {
         foreach ($options as $key => $value) {
             $this->options[$key] = $value;
