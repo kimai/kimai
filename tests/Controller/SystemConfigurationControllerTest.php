@@ -353,9 +353,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             [
                 '#system_configuration_form_calendar_configuration_2_value',
                 '#system_configuration_form_calendar_configuration_3_value',
-                '#system_configuration_form_calendar_configuration_3_value',
                 '#system_configuration_form_calendar_configuration_4_value',
-                '#system_configuration_form_calendar_configuration_5_value',
                 '#system_configuration_form_calendar_configuration_5_value',
             ],
             true
