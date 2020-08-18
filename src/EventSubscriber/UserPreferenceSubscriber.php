@@ -24,7 +24,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Range;
 
@@ -39,18 +38,13 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
      */
     protected $voter;
     /**
-     * @var TokenStorageInterface
-     */
-    protected $storage;
-    /**
      * @var FormConfiguration
      */
     protected $formConfig;
 
-    public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage, AuthorizationCheckerInterface $voter, FormConfiguration $formConfig)
+    public function __construct(EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter, FormConfiguration $formConfig)
     {
         $this->eventDispatcher = $dispatcher;
-        $this->storage = $storage;
         $this->voter = $voter;
         $this->formConfig = $formConfig;
     }
