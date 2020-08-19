@@ -13,23 +13,19 @@ use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
-use App\Security\CurrentUser;
 
-class UserTeamProjects extends SimpleWidget implements AuthorizedWidget
+class UserTeamProjects extends SimpleWidget implements AuthorizedWidget, UserWidget
 {
     /**
      * @var ProjectRepository
      */
     private $repository;
 
-    public function __construct(CurrentUser $user, ProjectRepository $repository)
+    public function __construct(ProjectRepository $repository)
     {
         $this->setId('UserTeamProjects');
         $this->setTitle('label.my_team_projects');
-        $this->setOptions([
-            'user' => $user->getUser(),
-            'id' => '',
-        ]);
+        $this->setOption('id', '');
         $this->repository = $repository;
     }
 
@@ -79,5 +75,10 @@ class UserTeamProjects extends SimpleWidget implements AuthorizedWidget
     public function getPermissions(): array
     {
         return ['budget_team_project', 'budget_teamlead_project', 'budget_project'];
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->setOption('user', $user);
     }
 }

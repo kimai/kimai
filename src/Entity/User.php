@@ -336,7 +336,7 @@ class User extends BaseUser implements UserInterface
         }
 
         foreach ($this->preferences as $preference) {
-            if ($preference->getName() == $name) {
+            if ($preference->getName() === $name) {
                 return $preference;
             }
         }

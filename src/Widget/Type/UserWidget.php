@@ -9,6 +9,14 @@
 
 namespace App\Widget\Type;
 
-final class YearChart extends SimpleStatisticChart
+use App\Entity\User;
+
+interface UserWidget
 {
+    /**
+     * Sets the current user.
+     *
+     * @param User $user
+     */
+    public function setUser(User $user): void;
 }

@@ -21,7 +21,6 @@ use App\Form\UserTeamsType;
 use App\Repository\TeamRepository;
 use App\Repository\TimesheetRepository;
 use App\Utils\LocaleSettings;
-use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -212,13 +211,6 @@ class ProfileController extends AbstractController
         $event = new PrepareUserEvent($profile);
         $this->dispatcher->dispatch($event);
 
-        /** @var \ArrayIterator $iterator */
-        $iterator = $profile->getPreferences()->getIterator();
-        $iterator->uasort(function (UserPreference $a, UserPreference $b) {
-            return ($a->getOrder() < $b->getOrder()) ? -1 : 1;
-        });
-        $profile->setPreferences(new ArrayCollection(iterator_to_array($iterator)));
-
         $original = [];
         foreach ($profile->getPreferences() as $preference) {
             $original[$preference->getName()] = $preference;
@@ -227,48 +219,59 @@ class ProfileController extends AbstractController
         $form = $this->createPreferencesForm($profile);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $preferences = $profile->getPreferences();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $preferences = $profile->getPreferences();
 
-            // do not allow to add unknown preferences
-            foreach ($preferences as $preference) {
-                if (!isset($original[$preference->getName()])) {
-                    $preferences->removeElement($preference);
+                // do not allow to add unknown preferences
+                foreach ($preferences as $preference) {
+                    if (!isset($original[$preference->getName()])) {
+                        $preferences->removeElement($preference);
+                    }
                 }
-            }
 
-            // but allow to delete already saved settings
-            foreach ($original as $name => $preference) {
-                if (false === $profile->getPreferences()->contains($preference)) {
-                    $entityManager->remove($preference);
+                // but allow to delete already saved settings
+                foreach ($original as $name => $preference) {
+                    if (false === $profile->getPreferences()->contains($preference)) {
+                        $entityManager->remove($preference);
+                    }
                 }
+
+                $profile->setPreferences($preferences);
+                $entityManager->persist($profile);
+                $entityManager->flush();
+
+                $this->flashSuccess('action.update.success');
+
+                // switch locale ONLY if updated profile is the current user
+                $locale = $request->getLocale();
+                if ($this->getUser()->getId() === $profile->getId()) {
+                    $locale = $profile->getPreferenceValue('language', $locale);
+                }
+
+                return $this->redirectToRoute('user_profile_preferences', [
+                    '_locale' => $locale,
+                    'username' => $profile->getUsername()
+                ]);
+            } else {
+                $this->flashError('action.update.error', ['%reason%' => 'Validation failed']);
             }
-
-            $profile->setPreferences($preferences);
-            $entityManager->persist($profile);
-            $entityManager->flush();
-
-            $this->flashSuccess('action.update.success');
-
-            // switch locale ONLY if updated profile is the current user
-            $locale = $request->getLocale();
-            if ($this->getUser()->getId() === $profile->getId()) {
-                $locale = $profile->getPreferenceValue('language', $locale);
-            }
-
-            return $this->redirectToRoute('user_profile_preferences', [
-                '_locale' => $locale,
-                'username' => $profile->getUsername()
-            ]);
         }
 
+        // prepare ordered preferences
         $sections = [];
 
+        /** @var \ArrayIterator $iterator */
+        $iterator = $profile->getPreferences()->getIterator();
+        $iterator->uasort(function (UserPreference $a, UserPreference $b) {
+            return ($a->getOrder() < $b->getOrder()) ? -1 : 1;
+        });
+
         /** @var UserPreference $pref */
-        foreach ($profile->getPreferences() as $pref) {
+        foreach ($iterator as $pref) {
             if ($pref->isEnabled()) {
-                $sections[$pref->getSection()] = $pref->getSection();
+                $sections[$pref->getSection()][] = $pref->getName();
             }
         }
 

@@ -10,7 +10,7 @@
 namespace App\Tests\Twig;
 
 use App\Twig\WidgetExtension;
-use App\Widget\Type\Counter;
+use App\Widget\Type\More;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetRendererInterface;
 use App\Widget\WidgetService;
@@ -72,7 +72,7 @@ class WidgetExtensionTest extends TestCase
 
     public function testRenderWidgetByString()
     {
-        $widget = new Counter();
+        $widget = new More();
         $sut = $this->getSut(true, $widget, new TestRenderer());
         $options = ['foo' => 'bar', 'dataType' => 'blub'];
         $result = $sut->renderWidget('test', $options);
@@ -82,7 +82,7 @@ class WidgetExtensionTest extends TestCase
 
     public function testRenderWidgetObject()
     {
-        $widget = new Counter();
+        $widget = new More();
         $sut = $this->getSut(null, null, new TestRenderer());
         $options = ['foo' => 'bar', 'dataType' => 'blub'];
         $result = $sut->renderWidget($widget, $options);
