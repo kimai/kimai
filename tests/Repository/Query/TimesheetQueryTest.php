@@ -37,7 +37,10 @@ class TimesheetQueryTest extends BaseQueryTest
         $this->assertSearchTerm($sut);
         $this->assertModifiedAfter($sut);
 
-        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getBillable());
+        self::assertFalse($sut->isBillable());
+        self::assertFalse($sut->isNotBillable());
+        self::assertTrue($sut->isIgnoreBillable());
+
         self::assertFalse($sut->isBillable());
         self::assertFalse($sut->isNotBillable());
         $this->assertBillable($sut);
@@ -140,22 +143,19 @@ class TimesheetQueryTest extends BaseQueryTest
 
     protected function assertBillable(TimesheetQuery $sut)
     {
-        self::assertInstanceOf(TimesheetQuery::class, $sut->setBillable(TimesheetQuery::STATE_ALL));
-        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getBillable());
+        $sut->setBillable(null);
         self::assertFalse($sut->isBillable());
         self::assertFalse($sut->isNotBillable());
+        self::assertTrue($sut->isIgnoreBillable());
 
-        $sut->setBillable(PHP_INT_MAX);
-        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getBillable());
-
-        $sut->setBillable(TimesheetQuery::STATE_BILLABLE);
-        self::assertEquals(TimesheetQuery::STATE_BILLABLE, $sut->getBillable());
+        $sut->setBillable(true);
         self::assertTrue($sut->isBillable());
         self::assertFalse($sut->isNotBillable());
+        self::assertFalse($sut->isIgnoreBillable());
 
-        $sut->setBillable(TimesheetQuery::STATE_NOT_BILLABLE);
-        self::assertEquals(TimesheetQuery::STATE_NOT_BILLABLE, $sut->getBillable());
+        $sut->setBillable(false);
         self::assertFalse($sut->isBillable());
         self::assertTrue($sut->isNotBillable());
+        self::assertFalse($sut->isIgnoreBillable());
     }
 }

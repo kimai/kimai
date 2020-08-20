@@ -346,4 +346,13 @@ abstract class AbstractToolbarForm extends AbstractType
             ],
         ]);
     }
+
+    protected function addBillableChoice(FormBuilderInterface $builder)
+    {
+        $builder->add('billable', BillableType::class, [
+            'required' => false,
+            'placeholder' => null,
+            'search' => false,
+        ]);
+    }
 }
