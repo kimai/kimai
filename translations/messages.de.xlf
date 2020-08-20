@@ -340,6 +340,10 @@
                 <source>placeholder.type_message</source>
                 <target>Schreibe Deine Nachricht...</target>
             </trans-unit>
+            <trans-unit id="label.billable">
+                <source>label.billable</source>
+                <target>Abrechenbar</target>
+            </trans-unit>
 
             <!--
               Buttons & Actions
