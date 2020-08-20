@@ -37,6 +37,7 @@ class TimesheetQueryTest extends BaseQueryTest
         $this->assertSearchTerm($sut);
         $this->assertModifiedAfter($sut);
 
+        self::assertNull($sut->getBillable());
         self::assertFalse($sut->isBillable());
         self::assertFalse($sut->isNotBillable());
         self::assertTrue($sut->isIgnoreBillable());
@@ -144,16 +145,19 @@ class TimesheetQueryTest extends BaseQueryTest
     protected function assertBillable(TimesheetQuery $sut)
     {
         $sut->setBillable(null);
+        self::assertNull($sut->getBillable());
         self::assertFalse($sut->isBillable());
         self::assertFalse($sut->isNotBillable());
         self::assertTrue($sut->isIgnoreBillable());
 
         $sut->setBillable(true);
+        self::assertTrue($sut->getBillable());
         self::assertTrue($sut->isBillable());
         self::assertFalse($sut->isNotBillable());
         self::assertFalse($sut->isIgnoreBillable());
 
         $sut->setBillable(false);
+        self::assertFalse($sut->getBillable());
         self::assertFalse($sut->isBillable());
         self::assertTrue($sut->isNotBillable());
         self::assertFalse($sut->isIgnoreBillable());
