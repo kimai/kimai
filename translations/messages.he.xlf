@@ -312,6 +312,10 @@
         <source>label.create_more</source>
         <target>צור רשומות נוספות</target>
       </trans-unit>
+      <trans-unit id="label.billable">
+        <source>label.billable</source>
+        <target>להחזר</target>
+      </trans-unit>
       <trans-unit id="zldXQq6" resname="label.actions">
         <source>label.actions</source>
         <target>פעולות</target>
