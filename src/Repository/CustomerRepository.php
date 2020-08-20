@@ -105,7 +105,7 @@ class CustomerRepository extends EntityRepository
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
-            ->addSelect('COUNT(a.id) as activityAmount')
+            ->select('COUNT(a.id) as activityAmount')
             ->from(Activity::class, 'a')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 'a.project = p.id')
             ->andWhere('a.project = p.id')
@@ -118,7 +118,7 @@ class CustomerRepository extends EntityRepository
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->addSelect('COUNT(p.id) as projectAmount')
+        $qb->select('COUNT(p.id) as projectAmount')
             ->from(Project::class, 'p')
             ->andWhere('p.customer = :customer')
         ;
@@ -165,7 +165,7 @@ class CustomerRepository extends EntityRepository
     }
 
     /**
-     * @deprecated since 1.1 - use getQueryBuilderForFormType() istead - will be removed with 2.0
+     * @deprecated since 1.1 - use getQueryBuilderForFormType() instead - will be removed with 2.0
      */
     public function builderForEntityType($customer)
     {
@@ -214,12 +214,10 @@ class CustomerRepository extends EntityRepository
 
         $qb
             ->select('c')
-            ->distinct()
             ->from(Customer::class, 'c')
         ;
 
-        $orderBy = 'c.' . $query->getOrderBy();
-        $qb->orderBy($orderBy, $query->getOrder());
+        $qb->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
         if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
@@ -268,6 +266,10 @@ class CustomerRepository extends EntityRepository
                 $qb->andWhere($searchAnd);
             }
         }
+
+        // this will make sure, that we do not accidentally create results with multiple rows,
+        // which would result in a wrong LIMIT with paginated results
+        $qb->addGroupBy('c');
 
         return $qb;
     }
