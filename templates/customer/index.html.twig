@@ -7,18 +7,18 @@
 {% set columns = {
     'name': {'class': 'alwaysVisible'},
     'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
-    'number': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'company': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'vat_id': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'contact': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'address': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'country': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'currency': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'phone': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'fax': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'mobile': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'email': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'homepage': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'number': {'class': 'hidden-xs hidden-sm hidden'},
+    'company': {'class': 'hidden-xs hidden-sm hidden'},
+    'vat_id': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': 'vatId'},
+    'contact': {'class': 'hidden-xs hidden-sm hidden'},
+    'address': {'class': 'hidden-xs hidden-sm hidden'},
+    'country': {'class': 'hidden-xs hidden-sm hidden'},
+    'currency': {'class': 'hidden-xs hidden-sm hidden'},
+    'phone': {'class': 'hidden-xs hidden-sm hidden'},
+    'fax': {'class': 'hidden-xs hidden-sm hidden'},
+    'mobile': {'class': 'hidden-xs hidden-sm hidden'},
+    'email': {'class': 'hidden-xs hidden-sm hidden'},
+    'homepage': {'class': 'hidden-xs hidden-sm hidden'},
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
@@ -27,7 +27,7 @@
 {% endfor %}
 {% set columns = columns|merge({
     'team': {'class': 'text-center w-min', 'orderBy': false},
-    'visible': {'class': 'text-center hidden w-min', 'orderBy': false},
+    'visible': {'class': 'text-center hidden w-min'},
     'actions': {'class': 'actions alwaysVisible'},
 }) %}
 
