@@ -261,7 +261,6 @@ class ActivityRepository extends EntityRepository
 
         $qb
             ->select('a')
-            ->distinct()
             ->from(Activity::class, 'a')
             ->leftJoin('a.project', 'p')
             ->leftJoin('p.customer', 'c')
@@ -361,6 +360,13 @@ class ActivityRepository extends EntityRepository
                 $qb->andWhere($searchAnd);
             }
         }
+
+        // this will make sure, that we do not accidentally create results with multiple rows,
+        // which would result in a wrong LIMIT with paginated results
+        $qb->addGroupBy('a');
+
+        // the second group by is needed to satisfy SQL standard (ONLY_FULL_GROUP_BY)
+        $qb->addGroupBy($orderBy);
 
         return $qb;
     }
