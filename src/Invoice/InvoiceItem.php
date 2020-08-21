@@ -13,9 +13,6 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\User;
 
-/**
- * @internal
- */
 final class InvoiceItem
 {
     /**
