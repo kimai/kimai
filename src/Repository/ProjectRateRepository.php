@@ -14,6 +14,9 @@ use App\Entity\ProjectRate;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<ProjectRate>
+ */
 class ProjectRateRepository extends EntityRepository
 {
     public function saveRate(ProjectRate $rate)

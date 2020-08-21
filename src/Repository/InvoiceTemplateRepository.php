@@ -16,6 +16,9 @@ use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<InvoiceTemplate>
+ */
 class InvoiceTemplateRepository extends EntityRepository
 {
     public function hasTemplate(): bool

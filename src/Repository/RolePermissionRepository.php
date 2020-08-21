@@ -14,6 +14,9 @@ use App\Entity\RolePermission;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<RolePermission>
+ */
 class RolePermissionRepository extends EntityRepository
 {
     public function saveRolePermission(RolePermission $permission)
