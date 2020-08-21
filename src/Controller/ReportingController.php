@@ -65,17 +65,7 @@ final class ReportingController extends AbstractController
             return false;
         }
 
-        $currentUser = $this->getUser();
-
-        if ($currentUser->canSeeAllData()) {
-            return true;
-        }
-
-        if ($currentUser->hasTeamAssignment()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**

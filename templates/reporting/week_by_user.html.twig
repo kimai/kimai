@@ -21,7 +21,7 @@
         {% endblock %}
         {% block box_title %}
             {% if form.user is defined %}
-                {{ form_widget(form.user) }}
+                {{ form_row(form.user, {'label': false}) }}
             {% else %}
                 {{ widgets.username(user) }}
             {% endif %}
@@ -34,8 +34,8 @@
             {% else %}
             <table class="table table-bordered table-hover dataTable">
                 <tr>
-                    <th></th>
-                    <th></th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
                     {% for day in days %}
                     <th class="text-center text-nowrap{% if day.day is weekend %} weekend{% endif %}">
                         {{ day.day|day_name(true) }}<br>
@@ -44,13 +44,13 @@
                     {% endfor %}
                 </tr>
                 {% for project in rows %}
-                    <tr>
+                    <tr class="project">
                         <td class="text-nowrap">
                             <strong>{{ widgets.label_project(project.project) }}</strong>
                         </td>
-                        <th class="text-nowrap text-center">{{ project.duration|duration }}</th>
+                        <th class="text-nowrap text-center total">{{ project.duration|duration }}</th>
                         {% for day in project.days %}
-                            <td class="text-nowrap text-center{% if day.date is weekend %} weekend{% endif %}">
+                            <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}">
                                 {% if day.duration > 0 %}
                                     <strong>{{ day.duration|duration }}</strong>
                                 {% endif %}
@@ -58,13 +58,13 @@
                         {% endfor %}
                     </tr>
                     {% for activity in project.activities %}
-                    <tr>
+                    <tr class="activity">
                         <td class="text-nowrap">
                             {{ widgets.label_activity(activity.activity) }}
                         </td>
-                        <th class="text-nowrap text-center">{{ activity.duration|duration }}</th>
+                        <th class="text-nowrap text-center total">{{ activity.duration|duration }}</th>
                         {% for day in activity.days %}
-                            <td class="text-nowrap text-center{% if day.date is weekend %} weekend{% endif %}">
+                            <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}">
                                 {% if day.duration > 0 %}
                                     {{ day.duration|duration }}
                                 {% endif %}
@@ -74,14 +74,14 @@
                     {% endfor %}
                 {% endfor %}
                 {% set total = 0 %}
-                <tr>
+                <tr class="summary">
                     {% for day in days %}
                         {% set total = total + day.totalDuration %}
                     {% endfor %}
                     <th></th>
-                    <th class="text-nowrap text-center">{{ total|duration }}</th>
+                    <th class="text-nowrap text-center total">{{ total|duration }}</th>
                     {% for day in days %}
-                        <th class="text-nowrap text-center{% if day.day is weekend %} weekend{% endif %}">
+                        <th class="text-nowrap text-center day-total{% if day.day is weekend %} weekend{% endif %}">
                             {% if day.totalDuration > 0 %}
                                 {{ day.totalDuration|duration }}
                             {% endif %}
