@@ -25,7 +25,7 @@
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
 
-{% macro timesheet_team(timesheet, view) %}
+{% macro timesheet_team(timesheet, view, options) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set actions = {} %}
 
@@ -60,7 +60,7 @@
     {% endif %}
 
     {% if view != 'index' %}
-        {% set actions = actions|merge({'back': path('admin_timesheet')}) %}
+        {% set actions = actions|merge({'back': options.back|default(path('admin_timesheet'))}) %}
     {% endif %}
 
     {% set event = trigger('actions.timesheet_team', {'actions': actions, 'view': view, 'timesheet': timesheet}) %}
