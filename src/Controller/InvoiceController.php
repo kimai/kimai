@@ -370,7 +370,7 @@ final class InvoiceController extends AbstractController
      * @Route(path="/template/{id}/delete", name="admin_invoice_template_delete", methods={"GET", "POST"})
      * @Security("is_granted('manage_invoice_template')")
      */
-    public function deleteTemplate(InvoiceTemplate $template, Request $request): Response
+    public function deleteTemplate(InvoiceTemplate $template): Response
     {
         try {
             $this->templateRepository->removeTemplate($template);
