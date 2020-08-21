@@ -19,8 +19,8 @@
         {% block box_body %}
             <table class="table table-bordered table-hover dataTable">
                 <tr>
-                    <th></th>
-                    <th></th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
                     {% for day in days %}
                     <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}">
                         {{ day|day_name(true) }}<br>
@@ -30,7 +30,7 @@
                 </tr>
                 {% for userDay in rows %}
                     {% set usersMonthDuration = 0 %}
-                    <tr>
+                    <tr class="user">
                         <td class="text-nowrap">
                             <strong>{{ widgets.username(userDay.user) }}</strong>
                         </td>
@@ -39,15 +39,13 @@
                                 {% set usersMonthDuration = usersMonthDuration + day.totalDuration %}
                             {% endif %}
                         {% endfor %}
-                        <th class="text-nowrap text-center">
-                            {% if usersMonthDuration == 0 %}
-                                -
-                            {% else %}
-                            {{ usersMonthDuration|duration }}
+                        <th class="text-nowrap text-center total">
+                            {% if usersMonthDuration > 0 %}
+                                {{ usersMonthDuration|duration }}
                             {% endif %}
                         </th>
                         {% for day in userDay.days %}
-                            <td class="text-nowrap{% if day.day is weekend %} weekend{% endif %}">
+                            <td class="text-nowrap day-total{% if day.day is weekend %} weekend{% endif %}">
                                 {% if day.totalDuration > 0 %}
                                     {{ day.totalDuration|duration }}
                                 {% endif %}
