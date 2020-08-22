@@ -24,6 +24,9 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<User>
+ */
 class UserRepository extends EntityRepository implements UserLoaderInterface
 {
     public function getById($id): ?User

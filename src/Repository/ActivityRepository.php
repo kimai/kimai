@@ -25,6 +25,9 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Activity>
+ */
 class ActivityRepository extends EntityRepository
 {
     /**

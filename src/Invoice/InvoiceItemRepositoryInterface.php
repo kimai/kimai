@@ -15,8 +15,9 @@ interface InvoiceItemRepositoryInterface
 {
     /**
      * @param InvoiceItemInterface[] $invoiceItems
+     * @return void
      */
-    public function setExported(array $invoiceItems);
+    public function setExported(array $invoiceItems) /* : void */;
 
     /**
      * @param InvoiceQuery $query

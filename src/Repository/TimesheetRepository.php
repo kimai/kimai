@@ -28,6 +28,9 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Timesheet>
+ */
 class TimesheetRepository extends EntityRepository
 {
     public const STATS_QUERY_DURATION = 'duration';
