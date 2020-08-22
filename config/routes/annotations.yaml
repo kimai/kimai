@@ -7,6 +7,11 @@ controllers:
     defaults:
         _locale: '%locale%'
 
+oauth.controllers:
+    resource: '../../src/Controller/OAuth'
+    type: annotation
+    prefix: /oauth
+
 app.api:
     resource: '../src/API/'
     type: rest

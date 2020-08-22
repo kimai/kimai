@@ -23,8 +23,10 @@ security:
             stateless: false
 
             guard:
+                entry_point: App\Security\TokenAuthenticator
                 authenticators:
                     - App\Security\TokenAuthenticator
+                    - App\Security\GitlabAuthenticator
 
             remember_me:
                 secret:   '%kernel.secret%'
@@ -55,6 +57,7 @@ security:
 
     access_control:
         - { path: '^/auth', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/oauth/gitlab', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)$', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/auth', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/login', role: IS_AUTHENTICATED_ANONYMOUSLY }
