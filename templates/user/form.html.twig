@@ -2,11 +2,11 @@
 
 {% block main %}
     {{ form_start(form) }}
-    {% for section, counter in sections %}
+    {% for section, entries in sections %}
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
             {% block box_body %}
                 {% for pref in form.children.preferences %}
-                    {% if pref.vars.data.section == section %}
+                    {% if pref.vars.data.name in entries %}
                         {{ form_row(pref) }}
                     {% endif %}
                 {% endfor %}

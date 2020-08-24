@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Constants;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\Project;
@@ -57,6 +58,9 @@ class ActivityTest extends TestCase
 
         $this->assertInstanceOf(Activity::class, $sut->setColor('#fffccc'));
         $this->assertEquals('#fffccc', $sut->getColor());
+
+        $this->assertInstanceOf(Activity::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        $this->assertNull($sut->getColor());
 
         $this->assertInstanceOf(Activity::class, $sut->setBudget(12345.67));
         $this->assertEquals(12345.67, $sut->getBudget());

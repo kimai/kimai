@@ -26,6 +26,9 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Project>
+ */
 class ProjectRepository extends EntityRepository
 {
     /**
@@ -366,6 +369,13 @@ class ProjectRepository extends EntityRepository
                 $qb->andWhere($searchAnd);
             }
         }
+
+        // this will make sure, that we do not accidentally create results with multiple rows,
+        // which would result in a wrong LIMIT with paginated results
+        $qb->addGroupBy('p');
+
+        // the second group by is needed to satisfy SQL standard (ONLY_FULL_GROUP_BY)
+        $qb->addGroupBy($orderBy);
 
         return $qb;
     }

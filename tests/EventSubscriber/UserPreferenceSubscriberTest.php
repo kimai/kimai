@@ -16,7 +16,6 @@ use App\Event\PrepareUserEvent;
 use App\EventSubscriber\UserPreferenceSubscriber;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
@@ -88,9 +87,8 @@ class UserPreferenceSubscriberTest extends TestCase
         $authMock->expects($this->once())->method('isGranted')->willReturn($seeHourlyRate);
 
         $eventMock = $this->createMock(EventDispatcherInterface::class);
-        $tokenMock = $this->createMock(TokenStorageInterface::class);
         $formConfigMock = $this->createMock(FormConfiguration::class);
 
-        return new UserPreferenceSubscriber($eventMock, $tokenMock, $authMock, $formConfigMock);
+        return new UserPreferenceSubscriber($eventMock, $authMock, $formConfigMock);
     }
 }

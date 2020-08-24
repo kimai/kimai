@@ -15,34 +15,42 @@
         {% block box_title %}
             {{ form_widget(form.date) }}
         {% endblock %}
-        {% block box_body_class %}monthly-user-list-reporting-box no-padding table-responsive{% endblock %}
+        {% block box_body_class %}monthly-user-list-reporting-box table-responsive no-padding{% endblock %}
         {% block box_body %}
             <table class="table table-bordered table-hover dataTable">
                 <tr>
-                    <th></th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
                     {% for day in days %}
                     <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}">
                         {{ day|day_name(true) }}<br>
                         {{ day|date_format('d.m') }}
                     </th>
                     {% endfor %}
-                    <th></th>
                 </tr>
                 {% for userDay in rows %}
                     {% set usersMonthDuration = 0 %}
-                    <tr>
+                    <tr class="user">
                         <td class="text-nowrap">
                             <strong>{{ widgets.username(userDay.user) }}</strong>
                         </td>
                         {% for day in userDay.days %}
-                            <td class="text-nowrap{% if day.day is weekend %} weekend{% endif %}">
+                            {% if day.totalDuration > 0 %}
+                                {% set usersMonthDuration = usersMonthDuration + day.totalDuration %}
+                            {% endif %}
+                        {% endfor %}
+                        <th class="text-nowrap text-center total">
+                            {% if usersMonthDuration > 0 %}
+                                {{ usersMonthDuration|duration }}
+                            {% endif %}
+                        </th>
+                        {% for day in userDay.days %}
+                            <td class="text-nowrap day-total{% if day.day is weekend %} weekend{% endif %}">
                                 {% if day.totalDuration > 0 %}
                                     {{ day.totalDuration|duration }}
-                                    {% set usersMonthDuration = usersMonthDuration + day.totalDuration %}
                                 {% endif %}
                             </td>
                         {% endfor %}
-                        <th class="text-nowrap">{{ usersMonthDuration|duration }}</th>
                     </tr>
                 {% endfor %}
             </table>

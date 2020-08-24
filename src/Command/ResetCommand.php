@@ -30,6 +30,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ResetCommand extends Command
 {
     /**
+     * @var string
+     */
+    private $environment;
+
+    public function __construct(string $kernelEnvironment)
+    {
+        $this->environment = $kernelEnvironment;
+        parent::__construct();
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function configure()
@@ -55,7 +66,7 @@ EOT
      */
     public function isEnabled()
     {
-        return getenv('APP_ENV') !== 'prod';
+        return $this->environment !== 'prod';
     }
 
     /**

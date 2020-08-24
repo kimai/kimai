@@ -28,6 +28,9 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Timesheet>
+ */
 class TimesheetRepository extends EntityRepository
 {
     public const STATS_QUERY_DURATION = 'duration';
@@ -416,7 +419,7 @@ class TimesheetRepository extends EntityRepository
                     $newDateBegin = clone $endTmp;
                 }
 
-                // make sure to exclude entries that are outside the requested timerange:
+                // make sure to exclude entries that are outside the requested time-range:
                 // these entries can exist if you have long running entries that started before $begin
                 // for statistical reasons we have to include everything between $begin and $end while
                 // excluding everything that is outside of that range
@@ -444,7 +447,12 @@ class TimesheetRepository extends EntityRepository
 
                     $results[$dateKey]['rate'] += $rate;
                     $results[$dateKey]['duration'] += $duration;
-                    $detailsId = $result->getProject()->getCustomer()->getId() . '_' . $result->getProject()->getId();
+                    $detailsId =
+                        $result->getProject()->getCustomer()->getId()
+                        . '_' . $result->getProject()->getId()
+                        . '_' . $result->getActivity()->getId()
+                    ;
+
                     if (!isset($results[$dateKey]['details'][$detailsId])) {
                         $results[$dateKey]['details'][$detailsId] = [
                             'project' => $result->getProject(),
@@ -452,10 +460,10 @@ class TimesheetRepository extends EntityRepository
                             'duration' => 0,
                             'rate' => 0,
                         ];
-
-                        $results[$dateKey]['details'][$detailsId]['duration'] += $duration;
-                        $results[$dateKey]['details'][$detailsId]['rate'] += $rate;
                     }
+
+                    $results[$dateKey]['details'][$detailsId]['duration'] += $duration;
+                    $results[$dateKey]['details'][$detailsId]['rate'] += $rate;
                 }
 
                 $beginTmp = $newDateBegin;

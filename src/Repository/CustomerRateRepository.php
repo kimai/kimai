@@ -14,6 +14,9 @@ use App\Entity\CustomerRate;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<CustomerRate>
+ */
 class CustomerRateRepository extends EntityRepository
 {
     public function saveRate(CustomerRate $rate)

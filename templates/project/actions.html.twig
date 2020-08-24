@@ -15,7 +15,7 @@
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
 
-{% macro project(project, view) %}
+{% macro project(project, view, options) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set actions = {} %}
 
@@ -56,7 +56,7 @@
     {% endif %}
 
     {% if view != 'index' and view != 'custom' %}
-        {% set actions = actions|merge({'back': path('admin_project')}) %}
+        {% set actions = actions|merge({'back': options.back|default(path('admin_project'))}) %}
     {% endif %}
 
     {% set event = trigger('actions.project', {'actions': actions, 'view': view, 'project': project}) %}

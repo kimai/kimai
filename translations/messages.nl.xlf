@@ -7,7 +7,7 @@
             -->
             <trans-unit id="time_tracking">
                 <source>time_tracking</source>
-                <target>Bollenbase</target>
+                <target>Tijdregistratie</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -15,7 +15,7 @@
             </trans-unit>
             <trans-unit id="no">
                 <source>no</source>
-                <target>Neen</target>
+                <target>Nee</target>
             </trans-unit>
             <trans-unit id="both">
                 <source>both</source>
@@ -23,15 +23,15 @@
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
-                <target>Verplicht veld</target>
+                <target>Dit is een verplicht veld</target>
             </trans-unit>
             <trans-unit id="create">
                 <source>create</source>
-                <target>Maak een nieuw item aan</target>
+                <target>creëer</target>
             </trans-unit>
             <trans-unit id="confirm.delete">
                 <source>confirm.delete</source>
-                <target>Bent u zeker dat u het wil verwijderen?</target>
+                <target>Weet u zeker dat u het wilt verwijderen?</target>
             </trans-unit>
             <trans-unit id="admin_entity.delete_confirm">
                 <source>admin_entity.delete_confirm</source>
@@ -69,7 +69,7 @@
             </trans-unit>
             <trans-unit id="label.password_repeat">
                 <source>label.password_repeat</source>
-                <target>Wachtwoord herhalen</target>
+                <target>Herhaal Wachtwoord</target>
             </trans-unit>
             <trans-unit id="label.logout">
                 <source>label.logout</source>
@@ -85,11 +85,11 @@
             </trans-unit>
             <trans-unit id="label.api_token_repeat">
                 <source>label.api_token_repeat</source>
-                <target>API wachtwoord herhalen</target>
+                <target>Herhaal API wachtwoord</target>
             </trans-unit>
             <trans-unit id="login_required">
                 <source>login_required</source>
-                <target>Sessie verlopen. Terug naar het aanmeldscherm?</target>
+                <target>Ontbrekende rechten. Terug naar het aanmeldscherm?</target>
             </trans-unit>
 
             <!--
@@ -113,7 +113,7 @@
             </trans-unit>
             <trans-unit id="menu.timesheet">
                 <source>menu.timesheet</source>
-                <target>Mijn prestaties</target>
+                <target>Mijn tijden</target>
             </trans-unit>
             <trans-unit id="menu.invoice">
                 <source>menu.invoice</source>
@@ -129,15 +129,15 @@
             </trans-unit>
             <trans-unit id="menu.admin_customer">
                 <source>menu.admin_customer</source>
-                <target>Cliënten</target>
+                <target>Klanten</target>
             </trans-unit>
             <trans-unit id="menu.admin_project">
                 <source>menu.admin_project</source>
-                <target>Dossiers</target>
+                <target>Projecten</target>
             </trans-unit>
             <trans-unit id="menu.admin_activity">
                 <source>menu.admin_activity</source>
-                <target>Rubrieken</target>
+                <target>Activiteiten</target>
             </trans-unit>
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
@@ -149,7 +149,7 @@
             </trans-unit>
             <trans-unit id="menu.plugin">
                 <source>menu.plugin</source>
-                <target>Uitbreidingen</target>
+                <target>Plugins</target>
             </trans-unit>
             <trans-unit id="menu.system_configuration">
                 <source>menu.system_configuration</source>
@@ -229,11 +229,11 @@
             </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
-                <target>Rubriek</target>
+                <target>Activiteit</target>
             </trans-unit>
             <trans-unit id="label.project">
                 <source>label.project</source>
-                <target>Dossier</target>
+                <target>Project</target>
             </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
@@ -269,7 +269,7 @@
             </trans-unit>
             <trans-unit id="label.customer">
                 <source>label.customer</source>
-                <target>Cliënt</target>
+                <target>Klant</target>
             </trans-unit>
             <trans-unit id="label.email">
                 <source>label.email</source>
@@ -285,7 +285,7 @@
             </trans-unit>
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
-                <target>Hierna nog een item aanmaken</target>
+                <target>Meer items aanmaken</target>
             </trans-unit>
 
             <!--
@@ -309,7 +309,7 @@
             </trans-unit>
             <trans-unit id="action.reset">
                 <source>action.reset</source>
-                <target>Velden wissen</target>
+                <target>Reset</target>
             </trans-unit>
             <trans-unit id="action.back">
                 <source>action.back</source>
@@ -329,11 +329,11 @@
             </trans-unit>
             <trans-unit id="dashboard.subtitle">
                 <source>dashboard.subtitle</source>
-                <target>Enkele cijfers</target>
+                <target>Welkom!</target>
             </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
-                <target>Alle prestaties</target>
+                <target>Alle Gebruikers</target>
             </trans-unit>
 
             <!--
@@ -369,11 +369,11 @@
             -->
             <trans-unit id="timesheet.title">
                 <source>timesheet.title</source>
-                <target>Mijn prestaties</target>
+                <target>Mijn tijden</target>
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
-                <target>Prestatie bewerken</target>
+                <target>Tijden bewerken</target>
             </trans-unit>
             <trans-unit id="label.begin">
                 <source>label.begin</source>
@@ -397,7 +397,7 @@
             </trans-unit>
             <trans-unit id="label.fixedRate">
                 <source>label.fixedRate</source>
-                <target>Forfait</target>
+                <target>Vast bedrag</target>
             </trans-unit>
             <trans-unit id="label.color">
                 <source>label.color</source>
@@ -417,7 +417,7 @@
             </trans-unit>
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
-                <target>Gebruiker sinds</target>
+                <target>Aan het werk sinds</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
@@ -470,7 +470,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.daily_stats">
                 <source>label.timesheet.daily_stats</source>
-                <target>Geef het dagtotaal weer in "Mijn prestaties"</target>
+                <target>Geef het dagtotaal weer in "Mijn tijden"</target>
             </trans-unit>
 
             <!--
@@ -494,12 +494,12 @@
             -->
             <trans-unit id="admin_project.title">
                 <source>admin_project.title</source>
-                <target>Dossiers</target>
+                <target>Projecten</target>
             </trans-unit>
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
                 <target>
-                    Het dossier %project% voor cliënt %customer% telt %records% prestaties voor een totale duur van %duration%.
+                    Het project %project% voor klant %customer% telt %activities% activiteiten en %records% geregistreerde tijden met een totale duur van %duration%.
                 </target>
             </trans-unit>
 
@@ -508,12 +508,12 @@
             -->
             <trans-unit id="admin_activity.title">
                 <source>admin_activity.title</source>
-                <target>Rubrieken</target>
+                <target>Activitieten</target>
             </trans-unit>
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target>
-                    De rubriek %activity% telt %records% prestaties voor een totale duur van %duration%.
+                    De activiteit %activity% in het project %project% voor de klant %customer% telt %records% geregistreerde tijden met een totale duur van %duration%.
                 </target>
             </trans-unit>
 
@@ -522,7 +522,7 @@
             -->
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
-                <target>Cliënten</target>
+                <target>Klanten</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
@@ -530,7 +530,7 @@
             </trans-unit>
             <trans-unit id="label.company">
                 <source>label.company</source>
-                <target>Ondernemingsnummer/nationaal nummer</target>
+                <target>Bedrijfsnaam</target>
             </trans-unit>
             <trans-unit id="label.vat">
                 <source>label.vat</source>
@@ -538,7 +538,7 @@
             </trans-unit>
             <trans-unit id="label.contact">
                 <source>label.contact</source>
-                <target>Opvolging</target>
+                <target>Contact</target>
             </trans-unit>
             <trans-unit id="label.address">
                 <source>label.address</source>
@@ -558,7 +558,7 @@
             </trans-unit>
             <trans-unit id="label.mobile">
                 <source>label.mobile</source>
-                <target>GSM</target>
+                <target>Mobiel</target>
             </trans-unit>
             <trans-unit id="label.homepage">
                 <source>label.homepage</source>
@@ -570,12 +570,12 @@
             </trans-unit>
             <trans-unit id="label.currency">
                 <source>label.currency</source>
-                <target>Munt</target>
+                <target>Valuta</target>
             </trans-unit>
             <trans-unit id="admin_customer.short_stats">
                 <source>admin_customer.short_stats</source>
                 <target>
-                    %customer% heeft %project% dossiers, samen goed voor %records% prestaties voor een totale duur van %duration%.
+                    Momenteel heeft %customer% %project% projecten met %activity% activiteiten, wat opgeteld %records% geregistreerde tijden met een totale duur van %duration% opleverd.
                 </target>
             </trans-unit>
 
@@ -600,16 +600,16 @@
             </trans-unit>
             <trans-unit id="label.active">
                 <source>label.active</source>
-                <target>In dienst</target>
+                <target>Actief</target>
             </trans-unit>
             <trans-unit id="label.roles">
                 <source>label.roles</source>
-                <target>Machtigingen</target>
+                <target>Rechten</target>
             </trans-unit>
             <trans-unit id="admin_user.short_stats">
                 <source>admin_user.short_stats</source>
                 <target>
-                     %user% heeft %records% prestaties voor een totale duur van %duration%.
+                     %user% heeft %records% geregistreerde tijden met een totale duur van %duration%.
                 </target>
             </trans-unit>
 
@@ -648,25 +648,29 @@
             <!--
               Statistics data for Dashboard & Users profile
             -->
+            <trans-unit id="stats.workingTimeWeek">
+                <source>stats.workingTimeWeek</source>
+                <target>Kalenderweek %week%</target>
+            </trans-unit>
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
-                <target>Prestaties vandaag</target>
+                <target>Geregistreerde tijden vandaag</target>
             </trans-unit>
             <trans-unit id="stats.durationWeek">
                 <source>stats.durationWeek</source>
-                <target>Prestaties deze week</target>
+                <target>Geregistreerde tijden deze week</target>
             </trans-unit>
             <trans-unit id="stats.durationMonth">
                 <source>stats.durationMonth</source>
-                <target>Prestaties deze maand</target>
+                <target>Geregistreerde tijden deze maand</target>
             </trans-unit>
             <trans-unit id="stats.durationYear">
                 <source>stats.durationYear</source>
-                <target>Prestaties dit jaar</target>
+                <target>Geregistreerde tijden dit jaar</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
-                <target>Totale prestaties</target>
+                <target>Totale geregistreerde tijden</target>
             </trans-unit>
             <trans-unit id="stats.yourWorkingHours">
                 <source>stats.yourWorkingHours</source>
@@ -722,15 +726,15 @@
             </trans-unit>
             <trans-unit id="stats.activityTotal">
                 <source>stats.activityTotal</source>
-                <target>Rubrieken</target>
+                <target>Activiteiten</target>
             </trans-unit>
             <trans-unit id="stats.projectTotal">
                 <source>stats.projectTotal</source>
-                <target>Dossiers</target>
+                <target>Projecten</target>
             </trans-unit>
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
-                <target>Cliënten</target>
+                <target>Klanten</target>
             </trans-unit>
             <trans-unit id="stats.percentUsed">
                 <source>stats.percentUsed</source>
@@ -922,12 +926,12 @@
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
-                <target>Naar "Mijn prestaties"</target>
+                <target>Naar "Mijn tijden"</target>
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Herstart een van uw laatste prestaties
+                    Herstart een van uw laatste activiteiten
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
@@ -948,7 +952,7 @@
             </trans-unit>
             <trans-unit id="label.entryState">
                 <source>label.entryState</source>
-                <target>Tellers</target>
+                <target>Tijden</target>
             </trans-unit>
             <trans-unit id="label.exported">
                 <source>label.exported</source>
@@ -976,11 +980,11 @@
             </trans-unit>
             <trans-unit id="export.clear_all">
                 <source>export.clear_all</source>
-                <target>De weergegeven prestaties markeren als niet gefactureerd?</target>
+                <target>De weergegeven tijden markeren als niet gefactureerd?</target>
             </trans-unit>
             <trans-unit id="export.mark_all">
                 <source>export.mark_all</source>
-                <target>De weergegeven prestaties markeren als gefactureerd?</target>
+                <target>De weergegeven tijden markeren als gefactureerd?</target>
             </trans-unit>
             <trans-unit id="label.globalsOnly">
                 <source>label.globalsOnly</source>

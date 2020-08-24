@@ -20,6 +20,9 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Invoice>
+ */
 class InvoiceRepository extends EntityRepository
 {
     public function saveInvoice(Invoice $invoice)
@@ -151,6 +154,13 @@ class InvoiceRepository extends EntityRepository
         $qb->addOrderBy($orderBy, $query->getOrder());
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
+
+        // this will make sure, that we do not accidentally create results with multiple rows,
+        // which would result in a wrong LIMIT with paginated results
+        $qb->addGroupBy('i');
+
+        // the second group by is needed to satisfy SQL standard (ONLY_FULL_GROUP_BY)
+        $qb->addGroupBy($orderBy);
 
         return $qb;
     }

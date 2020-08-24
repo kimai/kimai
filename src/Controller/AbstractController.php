@@ -9,7 +9,10 @@
 
 namespace App\Controller;
 
+use App\Configuration\LanguageFormattings;
 use App\Entity\User;
+use App\Timesheet\DateTimeFactory;
+use App\Utils\LocaleFormats;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
 use Symfony\Component\Translation\DataCollectorTranslator;
@@ -108,7 +111,22 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     {
         return array_merge(parent::getSubscribedServices(), [
             'translator' => TranslatorInterface::class,
-            'logger' => LoggerInterface::class
+            'logger' => LoggerInterface::class,
+            LanguageFormattings::class => LanguageFormattings::class,
         ]);
+    }
+
+    protected function getDateTimeFactory(?User $user = null): DateTimeFactory
+    {
+        if (null === $user) {
+            $user = $this->getUser();
+        }
+
+        return new DateTimeFactory(new \DateTimeZone($user->getTimezone()));
+    }
+
+    protected function getLocaleFormats(string $locale): LocaleFormats
+    {
+        return new LocaleFormats($this->container->get(LanguageFormattings::class), $locale);
     }
 }

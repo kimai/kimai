@@ -10,7 +10,6 @@
 namespace App\Tests\Repository\Query;
 
 use App\Repository\Query\InvoiceQuery;
-use App\Repository\Query\TimesheetQuery;
 
 /**
  * @covers \App\Repository\Query\InvoiceQuery
@@ -36,7 +35,11 @@ class InvoiceQueryTest extends TimesheetQueryTest
         $this->assertMarkAsExported($sut);
         $this->assertModifiedAfter($sut);
 
-        self::assertEquals(TimesheetQuery::STATE_BILLABLE, $sut->getBillable());
+        self::assertTrue($sut->getBillable());
+        self::assertTrue($sut->isBillable());
+        self::assertFalse($sut->isNotBillable());
+        self::assertFalse($sut->isIgnoreBillable());
+
         self::assertTrue($sut->isBillable());
         self::assertFalse($sut->isNotBillable());
         $this->assertBillable($sut);

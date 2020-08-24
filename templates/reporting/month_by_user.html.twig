@@ -4,6 +4,13 @@
 
 {% block report %}
 
+    {% set hasData = false %}
+    {% for day in days %}
+        {% if day.details is not empty %}
+            {% set hasData = true %}
+        {% endif %}
+    {% endfor %}
+
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_before %}
@@ -14,69 +21,75 @@
         {% endblock %}
         {% block box_title %}
             {% if form.user is defined %}
-                {{ form_widget(form.user) }}
+                {{ form_row(form.user, {'label': false}) }}
             {% else %}
                 {{ widgets.username(user) }}
             {% endif %}
             {{ form_widget(form.date) }}
         {% endblock %}
-        {% block box_body_class %}user-month-reporting-box no-padding table-responsive{% endblock %}
+        {% block box_body_class %}user-month-reporting-box table-responsive{% if hasData %} no-padding{% endif %}{% endblock %}
         {% block box_body %}
+            {% if not hasData %}
+                {{ widgets.nothing_found() }}
+            {% else %}
             <table class="table table-bordered table-hover dataTable">
                 <tr>
-                    <th></th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
                     {% for day in days %}
                     <th class="text-center text-nowrap{% if day.day is weekend %} weekend{% endif %}">
                         {{ day.day|day_name(true) }}<br>
                         {{ day.day|date_format('d.m') }}
                     </th>
                     {% endfor %}
-                    <th></th>
                 </tr>
                 {% for project in rows %}
-                    <tr>
+                    <tr class="project">
                         <td class="text-nowrap">
                             <strong>{{ widgets.label_project(project.project) }}</strong>
                         </td>
+                        <th class="text-nowrap text-center total">{{ project.duration|duration }}</th>
                         {% for day in project.days %}
-                            <td class="text-nowrap{% if day.date is weekend %} weekend{% endif %}">
+                            <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}">
                                 {% if day.duration > 0 %}
-                                    {{ day.duration|duration }}
+                                    <strong>{{ day.duration|duration }}</strong>
                                 {% endif %}
                             </td>
                         {% endfor %}
-                        <th class="text-nowrap">{{ project.duration|duration }}</th>
                     </tr>
                     {% for activity in project.activities %}
-                    <tr>
+                    <tr class="activity">
                         <td class="text-nowrap">
                             {{ widgets.label_activity(activity.activity) }}
                         </td>
+                        <th class="text-nowrap text-center total">{{ activity.duration|duration }}</th>
                         {% for day in activity.days %}
-                            <td class="text-nowrap{% if day.date is weekend %} weekend{% endif %}">
+                            <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}">
                                 {% if day.duration > 0 %}
                                     {{ day.duration|duration }}
                                 {% endif %}
                             </td>
                         {% endfor %}
-                        <th class="text-nowrap">{{ activity.duration|duration }}</th>
                     </tr>
                     {% endfor %}
                 {% endfor %}
                 {% set total = 0 %}
-                <tr>
-                    <th></th>
+                <tr class="summary">
                     {% for day in days %}
-                        <th class="text-nowrap{% if day.day is weekend %} weekend{% endif %}">
+                        {% set total = total + day.totalDuration %}
+                    {% endfor %}
+                    <th></th>
+                    <th class="text-nowrap text-center total">{{ total|duration }}</th>
+                    {% for day in days %}
+                        <th class="text-nowrap text-center day-total{% if day.day is weekend %} weekend{% endif %}">
                             {% if day.totalDuration > 0 %}
                                 {{ day.totalDuration|duration }}
-                                {% set total = total + day.totalDuration %}
                             {% endif %}
                         </th>
                     {% endfor %}
-                    <th class="text-nowrap">{{ total|duration }}</th>
                 </tr>
             </table>
+            {% endif %}
         {% endblock %}
     {% endembed %}
 

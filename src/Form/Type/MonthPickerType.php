@@ -9,8 +9,6 @@
 
 namespace App\Form\Type;
 
-use App\Timesheet\UserDateTimeFactory;
-use App\Utils\LocaleSettings;
 use App\Utils\MomentFormatConverter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -26,37 +24,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class MonthPickerType extends AbstractType
 {
     /**
-     * @var LocaleSettings
-     */
-    private $localeSettings;
-
-    /**
-     * @var UserDateTimeFactory
-     */
-    private $dateTime;
-
-    public function __construct(LocaleSettings $localeSettings, UserDateTimeFactory $dateTime)
-    {
-        $this->localeSettings = $localeSettings;
-        $this->dateTime = $dateTime;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $pickerFormat = $this->localeSettings->getDatePickerFormat();
-        $dateFormat = $this->localeSettings->getDateTypeFormat();
-        $timezone = $this->dateTime->getTimezone()->getName();
-
         $resolver->setDefaults([
             'widget' => 'single_text',
             'html5' => false,
-            'format' => $dateFormat,
-            'format_picker' => $pickerFormat,
-            'model_timezone' => $timezone,
-            'view_timezone' => $timezone,
+            'format' => DateType::HTML5_FORMAT,
+            'start_date' => new \DateTime(),
         ]);
     }
 
@@ -66,13 +42,13 @@ final class MonthPickerType extends AbstractType
         $date = $form->getData();
 
         if (null === $date) {
-            $date = $this->dateTime->getStartOfMonth();
+            $date = $options['start_date'];
         }
 
         $view->vars['month'] = $date;
         $view->vars['previousMonth'] = (clone $date)->modify('-1 month');
         $view->vars['nextMonth'] = (clone $date)->modify('+1 month');
-        $view->vars['momentFormat'] = (new MomentFormatConverter())->convert($this->localeSettings->getDateTypeFormat());
+        $view->vars['momentFormat'] = (new MomentFormatConverter())->convert($options['format']);
     }
 
     /**
