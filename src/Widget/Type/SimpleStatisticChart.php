@@ -13,7 +13,7 @@ use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Widget\WidgetException;
 
-class SimpleStatisticChart extends SimpleWidget
+class SimpleStatisticChart extends SimpleWidget implements UserWidget
 {
     /**
      * @var TimesheetRepository
@@ -32,9 +32,13 @@ class SimpleStatisticChart extends SimpleWidget
      */
     private $end;
     /**
-     * @var User
+     * @var User|null
      */
     private $user;
+    /**
+     * @var bool
+     */
+    private $queryWithUser = false;
 
     public function __construct(TimesheetRepository $repository)
     {
@@ -62,16 +66,21 @@ class SimpleStatisticChart extends SimpleWidget
         return $this;
     }
 
-    public function setUser(User $user): SimpleStatisticChart
+    public function setUser(User $user): void
     {
         $this->user = $user;
-
-        return $this;
     }
 
     public function setData($data): AbstractWidgetType
     {
         throw new \InvalidArgumentException('Cannot set data on instances of SimpleStatisticChart');
+    }
+
+    public function setQueryWithUser(bool $queryWithUser): SimpleStatisticChart
+    {
+        $this->queryWithUser = $queryWithUser;
+
+        return $this;
     }
 
     /**
@@ -91,7 +100,11 @@ class SimpleStatisticChart extends SimpleWidget
         $end = !empty($this->end) ? new \DateTime($this->end, $timezone) : null;
 
         try {
-            return $this->repository->getStatistic($this->query, $begin, $end, $this->user);
+            if (true === $this->queryWithUser) {
+                return $this->repository->getStatistic($this->query, $begin, $end, $this->user);
+            } else {
+                return $this->repository->getStatistic($this->query, $begin, $end, null);
+            }
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()

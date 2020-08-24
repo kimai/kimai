@@ -106,14 +106,17 @@ class WidgetRepository
             ->setTitle($widget['title'])
         ;
 
-        if ($widget['query'] == TimesheetRepository::STATS_QUERY_DURATION) {
+        if ($widget['query'] === TimesheetRepository::STATS_QUERY_DURATION) {
             $model->setOption('dataType', 'duration');
-        } elseif ($widget['query'] == TimesheetRepository::STATS_QUERY_RATE) {
+        } elseif ($widget['query'] === TimesheetRepository::STATS_QUERY_RATE) {
             $model->setOption('dataType', 'money');
         } else {
             $model->setOption('dataType', 'int');
         }
 
+        if (isset($widget['user'])) {
+            $model->setQueryWithUser((bool) $widget['user']);
+        }
         if (isset($widget['color'])) {
             $model->setOption('color', $widget['color']);
         }
@@ -130,7 +133,7 @@ class WidgetRepository
         [
             'userDurationToday' => [
                 'title' => 'stats.durationToday',
-                'query' => 'duration',
+                'query' => TimesheetRepository::STATS_QUERY_DURATION,
                 'user' => true,
                 'begin' => '00:00:00',
                 'end' => '23:59:59',
@@ -140,7 +143,7 @@ class WidgetRepository
             ],
             'userDurationWeek' => [
                 'title' => 'stats.durationWeek',
-                'query' => 'duration',
+                'query' => TimesheetRepository::STATS_QUERY_DURATION,
                 'user' => true,
                 'begin' => 'monday this week 00:00:00',
                 'end' => 'sunday this week 23:59:59',
@@ -150,7 +153,7 @@ class WidgetRepository
             ],
             'userDurationMonth' => [
                 'title' => 'stats.durationMonth',
-                'query' => 'duration',
+                'query' => TimesheetRepository::STATS_QUERY_DURATION,
                 'user' => true,
                 'begin' => 'first day of this month 00:00:00',
                 'end' => 'last day of this month 23:59:59',
@@ -160,7 +163,7 @@ class WidgetRepository
             ],
             'userDurationYear' => [
                 'title' => 'stats.durationYear',
-                'query' => 'duration',
+                'query' => TimesheetRepository::STATS_QUERY_DURATION,
                 'user' => true,
                 'begin' => '01 january this year 00:00:00',
                 'end' => '31 december this year 23:59:59',
@@ -170,7 +173,7 @@ class WidgetRepository
             ],
             'userDurationTotal' => [
                 'title' => 'stats.durationTotal',
-                'query' => 'duration',
+                'query' => TimesheetRepository::STATS_QUERY_DURATION,
                 'user' => true,
                 'icon' => 'duration',
                 'color' => 'red',
@@ -178,7 +181,7 @@ class WidgetRepository
             ],
             'userAmountToday' => [
                 'title' => 'stats.amountToday',
-                'query' => 'rate',
+                'query' => TimesheetRepository::STATS_QUERY_RATE,
                 'user' => true,
                 'begin' => '00:00:00',
                 'end' => '23:59:59',
@@ -188,7 +191,7 @@ class WidgetRepository
             ],
             'userAmountWeek' => [
                 'title' => 'stats.amountWeek',
-                'query' => 'rate',
+                'query' => TimesheetRepository::STATS_QUERY_RATE,
                 'user' => true,
                 'begin' => 'monday this week 00:00:00',
                 'end' => 'sunday this week 23:59:59',
@@ -198,7 +201,7 @@ class WidgetRepository
             ],
             'userAmountMonth' => [
                 'title' => 'stats.amountMonth',
-                'query' => 'rate',
+                'query' => TimesheetRepository::STATS_QUERY_RATE,
                 'user' => true,
                 'begin' => 'first day of this month 00:00:00',
                 'end' => 'last day of this month 23:59:59',
@@ -208,7 +211,7 @@ class WidgetRepository
             ],
             'userAmountYear' => [
                 'title' => 'stats.amountYear',
-                'query' => 'rate',
+                'query' => TimesheetRepository::STATS_QUERY_RATE,
                 'user' => true,
                 'begin' => '01 january this year 00:00:00',
                 'end' => '31 december this year 23:59:59',
@@ -218,7 +221,7 @@ class WidgetRepository
             ],
             'userAmountTotal' => [
                 'title' => 'stats.amountTotal',
-                'query' => 'rate',
+                'query' => TimesheetRepository::STATS_QUERY_RATE,
                 'user' => true,
                 'icon' => 'money',
                 'color' => 'red',
@@ -226,7 +229,7 @@ class WidgetRepository
             ],
             'durationToday' => [
                 'title' => 'stats.durationToday',
-                'query' => 'duration',
+                'query' => TimesheetRepository::STATS_QUERY_DURATION,
                 'begin' => '00:00:00',
                 'end' => '23:59:59',
                 'icon' => 'duration',
@@ -236,7 +239,7 @@ class WidgetRepository
             ],
             'durationWeek' => [
                 'title' => 'stats.durationWeek',
-                'query' => 'duration',
+                'query' => TimesheetRepository::STATS_QUERY_DURATION,
                 'begin' => 'monday this week 00:00:00',
                 'end' => 'sunday this week 23:59:59',
                 'icon' => 'duration',
@@ -246,7 +249,7 @@ class WidgetRepository
             ],
             'durationMonth' => [
                 'title' => 'stats.durationMonth',
-                'query' => 'duration',
+                'query' => TimesheetRepository::STATS_QUERY_DURATION,
                 'begin' => 'first day of this month 00:00:00',
                 'end' => 'last day of this month 23:59:59',
                 'icon' => 'duration',
@@ -256,7 +259,7 @@ class WidgetRepository
             ],
             'durationYear' => [
                 'title' => 'stats.durationYear',
-                'query' => 'duration',
+                'query' => TimesheetRepository::STATS_QUERY_DURATION,
                 'begin' => '01 january this year 00:00:00',
                 'end' => '31 december this year 23:59:59',
                 'icon' => 'duration',
@@ -266,7 +269,7 @@ class WidgetRepository
             ],
             'durationTotal' => [
                 'title' => 'stats.durationTotal',
-                'query' => 'duration',
+                'query' => TimesheetRepository::STATS_QUERY_DURATION,
                 'icon' => 'duration',
                 'color' => 'red',
                 'user' => false,
@@ -274,7 +277,7 @@ class WidgetRepository
             ],
             'amountToday' => [
                 'title' => 'stats.amountToday',
-                'query' => 'rate',
+                'query' => TimesheetRepository::STATS_QUERY_RATE,
                 'begin' => '00:00:00',
                 'end' => '23:59:59',
                 'icon' => 'money',
@@ -284,7 +287,7 @@ class WidgetRepository
             ],
             'amountWeek' => [
                 'title' => 'stats.amountWeek',
-                'query' => 'rate',
+                'query' => TimesheetRepository::STATS_QUERY_RATE,
                 'begin' => 'monday this week 00:00:00',
                 'end' => 'sunday this week 23:59:59',
                 'icon' => 'money',
@@ -294,7 +297,7 @@ class WidgetRepository
             ],
             'amountMonth' => [
                 'title' => 'stats.amountMonth',
-                'query' => 'rate',
+                'query' => TimesheetRepository::STATS_QUERY_RATE,
                 'begin' => 'first day of this month 00:00:00',
                 'end' => 'last day of this month 23:59:59',
                 'icon' => 'money',
@@ -304,7 +307,7 @@ class WidgetRepository
             ],
             'amountYear' => [
                 'title' => 'stats.amountYear',
-                'query' => 'rate',
+                'query' => TimesheetRepository::STATS_QUERY_RATE,
                 'begin' => '01 january this year 00:00:00',
                 'end' => '31 december this year 23:59:59',
                 'icon' => 'money',
@@ -314,7 +317,7 @@ class WidgetRepository
             ],
             'amountTotal' => [
                 'title' => 'stats.amountTotal',
-                'query' => 'rate',
+                'query' => TimesheetRepository::STATS_QUERY_RATE,
                 'icon' => 'money',
                 'color' => 'red',
                 'user' => false,
@@ -322,7 +325,7 @@ class WidgetRepository
             ],
             'activeUsersToday' => [
                 'title' => 'stats.userActiveToday',
-                'query' => 'users',
+                'query' => TimesheetRepository::STATS_QUERY_USER,
                 'begin' => '00:00:00',
                 'end' => '23:59:59',
                 'icon' => 'user',
@@ -332,7 +335,7 @@ class WidgetRepository
             ],
             'activeUsersWeek' => [
                 'title' => 'stats.userActiveWeek',
-                'query' => 'users',
+                'query' => TimesheetRepository::STATS_QUERY_USER,
                 'begin' => 'monday this week 00:00:00',
                 'end' => 'sunday this week 23:59:59',
                 'icon' => 'user',
@@ -342,7 +345,7 @@ class WidgetRepository
             ],
             'activeUsersMonth' => [
                 'title' => 'stats.userActiveMonth',
-                'query' => 'users',
+                'query' => TimesheetRepository::STATS_QUERY_USER,
                 'begin' => 'first day of this month 00:00:00',
                 'end' => 'last day of this month 23:59:59',
                 'icon' => 'user',
@@ -352,7 +355,7 @@ class WidgetRepository
             ],
             'activeUsersYear' => [
                 'title' => 'stats.userActiveYear',
-                'query' => 'users',
+                'query' => TimesheetRepository::STATS_QUERY_USER,
                 'begin' => '01 january this year 00:00:00',
                 'end' => '31 december this year 23:59:59',
                 'icon' => 'user',
@@ -362,7 +365,7 @@ class WidgetRepository
             ],
             'activeUsersTotal' => [
                 'title' => 'stats.userActiveTotal',
-                'query' => 'users',
+                'query' => TimesheetRepository::STATS_QUERY_USER,
                 'icon' => 'user',
                 'color' => 'red',
                 'user' => false,
@@ -370,7 +373,7 @@ class WidgetRepository
             ],
             'activeRecordings' => [
                 'title' => 'stats.activeRecordings',
-                'query' => 'active',
+                'query' => TimesheetRepository::STATS_QUERY_ACTIVE,
                 'icon' => 'duration',
                 'color' => 'red',
                 'user' => false,
@@ -378,7 +381,7 @@ class WidgetRepository
             ],
             'userRecapThisYear' => [
                 'title' => 'stats.yourWorkingHours',
-                'query' => 'monthly',
+                'query' => TimesheetRepository::STATS_QUERY_MONTHLY,
                 'user' => true,
                 'begin' => '01 january this year 00:00:00',
                 'end' => '31 december this year 23:59:59',
@@ -388,7 +391,7 @@ class WidgetRepository
             ],
             'userRecapLastYear' => [
                 'title' => 'stats.yourWorkingHours',
-                'query' => 'monthly',
+                'query' => TimesheetRepository::STATS_QUERY_MONTHLY,
                 'user' => true,
                 'begin' => '01 january last year 00:00:00',
                 'end' => '31 december last year 23:59:59',
@@ -398,7 +401,7 @@ class WidgetRepository
             ],
             'userRecapTwoYears' => [
                 'title' => 'stats.yourWorkingHours',
-                'query' => 'monthly',
+                'query' => TimesheetRepository::STATS_QUERY_MONTHLY,
                 'user' => true,
                 'begin' => '01 january last year 00:00:00',
                 'end' => '31 december this year 23:59:59',
@@ -408,7 +411,7 @@ class WidgetRepository
             ],
             'userRecapThreeYears' => [
                 'title' => 'stats.yourWorkingHours',
-                'query' => 'monthly',
+                'query' => TimesheetRepository::STATS_QUERY_MONTHLY,
                 'user' => true,
                 'begin' => '2 years ago first day of january 00:00:00',
                 'end' => 'this year last day of december 23:59:59',
