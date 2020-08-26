@@ -9,6 +9,8 @@
 
 namespace App\Invoice;
 
+use App\Configuration\LanguageFormattings;
+use App\Constants;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
 use App\Event\InvoiceCreatedEvent;
@@ -57,7 +59,7 @@ final class ServiceInvoice
      */
     private $dateTimeFactory;
     /**
-     * @var InvoiceFormatter
+     * @var LanguageFormattings
      */
     private $formatter;
     /**
@@ -65,7 +67,7 @@ final class ServiceInvoice
      */
     private $invoiceRepository;
 
-    public function __construct(InvoiceDocumentRepository $repository, FileHelper $fileHelper, InvoiceRepository $invoiceRepository, UserDateTimeFactory $dateTimeFactory, InvoiceFormatter $formatter)
+    public function __construct(InvoiceDocumentRepository $repository, FileHelper $fileHelper, InvoiceRepository $invoiceRepository, UserDateTimeFactory $dateTimeFactory, LanguageFormattings $formatter)
     {
         $this->documents = $repository;
         $this->fileHelper = $fileHelper;
@@ -417,8 +419,20 @@ final class ServiceInvoice
      */
     public function createModel(InvoiceQuery $query): InvoiceModel
     {
-        $model = new InvoiceModel($this->formatter);
+        $template = $query->getTemplate();
+
+        if (null === $template) {
+            throw new \Exception('Cannot create invoice model without template');
+        }
+
+        if (null === $template->getLanguage()) {
+            $template->setLanguage(Constants::DEFAULT_LOCALE);
+            @trigger_error('Using invoice templates without a language is is deprecated and trigger and will throw an exception with 2.0', E_USER_DEPRECATED);
+        }
+
+        $model = new InvoiceModel(new DefaultInvoiceFormatter($this->formatter, $template->getLanguage()));
         $model
+            ->setTemplate($template)
             ->setInvoiceDate($this->dateTimeFactory->createDateTime())
             ->setQuery($query)
         ;
@@ -431,21 +445,18 @@ final class ServiceInvoice
             $model->setCustomer($query->getCustomers()[0]);
         }
 
-        if ($query->getTemplate() !== null) {
-            $generator = $this->getNumberGeneratorByName($query->getTemplate()->getNumberGenerator());
-            if (null === $generator) {
-                throw new \Exception('Unknown number generator: ' . $query->getTemplate()->getNumberGenerator());
-            }
-
-            $calculator = $this->getCalculatorByName($query->getTemplate()->getCalculator());
-            if (null === $calculator) {
-                throw new \Exception('Unknown invoice calculator: ' . $query->getTemplate()->getCalculator());
-            }
-
-            $model->setTemplate($query->getTemplate());
-            $model->setCalculator($calculator);
-            $model->setNumberGenerator($generator);
+        $generator = $this->getNumberGeneratorByName($query->getTemplate()->getNumberGenerator());
+        if (null === $generator) {
+            throw new \Exception('Unknown number generator: ' . $query->getTemplate()->getNumberGenerator());
         }
+
+        $calculator = $this->getCalculatorByName($query->getTemplate()->getCalculator());
+        if (null === $calculator) {
+            throw new \Exception('Unknown invoice calculator: ' . $query->getTemplate()->getCalculator());
+        }
+
+        $model->setCalculator($calculator);
+        $model->setNumberGenerator($generator);
 
         return $model;
     }

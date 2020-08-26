@@ -9,6 +9,7 @@
 
 namespace App\Tests\Invoice;
 
+use App\Configuration\LanguageFormattings;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
 use App\Invoice\Calculator\DefaultCalculator;
@@ -29,11 +30,21 @@ class ServiceInvoiceTest extends TestCase
 {
     private function getSut(array $paths): ServiceInvoice
     {
+        $languages = [
+            'en' => [
+                'date' => 'Y.m.d',
+                'duration' => '%h:%m h',
+                'time' => 'H:i',
+            ]
+        ];
+
+        $formattings = new LanguageFormattings($languages);
+
         $repo = new InvoiceDocumentRepository($paths);
         $invoiceRepo = $this->createMock(InvoiceRepository::class);
         $userDateTime = (new UserDateTimeFactoryFactory($this))->create();
 
-        return new ServiceInvoice($repo, new FileHelper(realpath(__DIR__ . '/../../var/data/')), $invoiceRepo, $userDateTime, new DebugFormatter());
+        return new ServiceInvoice($repo, new FileHelper(realpath(__DIR__ . '/../../var/data/')), $invoiceRepo, $userDateTime, $formattings);
     }
 
     public function testInvalidExceptionOnChangeState()
