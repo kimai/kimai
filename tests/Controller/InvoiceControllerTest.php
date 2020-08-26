@@ -72,7 +72,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $fixture = new InvoiceFixtures();
         $this->importFixture($fixture);
 
-        $this->request($client, '/invoice/?preview=');
+        $this->request($client, '/invoice/?customer=1&template=1&preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);

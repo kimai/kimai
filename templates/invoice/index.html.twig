@@ -69,7 +69,7 @@
         {{ widgets.callout('danger', 'http_error_403.suggestion'|trans({}, 'exceptions')) }}
     {% endif %}
 
-    {% if preview %}
+    {% if model is not null %}
         {% if model.calculator is empty or model.calculator.entries is empty %}
             {{ widgets.nothing_found() }}
         {% else %}
