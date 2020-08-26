@@ -19,6 +19,8 @@ use Twig\TwigFunction;
 
 /**
  * @covers \App\Twig\DateExtensions
+ * @covers \App\Utils\LocaleFormats
+ * @covers \App\Utils\LocaleFormatter
  */
 class DateExtensionsTest extends TestCase
 {

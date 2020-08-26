@@ -13,8 +13,7 @@ use App\Configuration\LanguageFormattings;
 use App\Constants;
 use App\Entity\Timesheet;
 use App\Utils\Duration;
-use App\Utils\LocaleFormats;
-use App\Utils\LocaleHelper;
+use App\Utils\LocaleFormatter;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Locales;
 use Twig\Extension\AbstractExtension;
@@ -27,17 +26,9 @@ use Twig\TwigFunction;
 final class LocaleExtensions extends AbstractExtension
 {
     /**
-     * @var LocaleFormats
+     * @var LocaleFormatter
      */
-    private $localeFormats;
-    /**
-     * @var Duration
-     */
-    private $durationFormatter;
-    /**
-     * @var LocaleHelper
-     */
-    private $helper;
+    private $formatter;
     /**
      * @var LanguageFormattings
      */
@@ -52,7 +43,6 @@ final class LocaleExtensions extends AbstractExtension
             $locale = $requestStack->getMasterRequest()->getLocale();
         }
 
-        $this->durationFormatter = new Duration();
         $this->formats = $formats;
         $this->setLocale($locale);
     }
@@ -90,66 +80,30 @@ final class LocaleExtensions extends AbstractExtension
      */
     public function setLocale(string $locale)
     {
-        $this->helper = new LocaleHelper($locale);
-        $this->localeFormats = new LocaleFormats($this->formats, $locale);
+        $this->formatter = new LocaleFormatter($this->formats, $locale);
     }
 
     /**
      * Transforms seconds into a duration string.
      *
-     * @param int|Timesheet $duration
+     * @param int|Timesheet|null $duration
      * @param bool $decimal
      * @return string
      */
     public function duration($duration, $decimal = false)
     {
-        if ($decimal) {
-            return $this->durationDecimal($duration);
-        }
-
-        $seconds = $this->getSecondsForDuration($duration);
-        $format = $this->localeFormats->getDurationFormat();
-
-        return $this->formatDuration($seconds, $format);
+        return $this->formatter->duration($duration, $decimal);
     }
 
     /**
      * Transforms seconds into a decimal formatted duration string.
      *
-     * @param int|Timesheet $duration
+     * @param int|Timesheet|null $duration
      * @return string
      */
     public function durationDecimal($duration)
     {
-        $seconds = $this->getSecondsForDuration($duration);
-
-        return $this->helper->durationDecimal($seconds);
-    }
-
-    private function getSecondsForDuration($duration): int
-    {
-        if (null === $duration) {
-            $duration = 0;
-        }
-
-        if ($duration instanceof Timesheet) {
-            if (null === $duration->getEnd()) {
-                $duration = time() - $duration->getBegin()->getTimestamp();
-            } else {
-                $duration = $duration->getDuration();
-            }
-        }
-
-        return (int) $duration;
-    }
-
-    private function formatDuration(int $seconds, string $format): string
-    {
-        if ($seconds < 0) {
-            return '?';
-        }
-
-        return $this->durationFormatter->format($seconds, $format);
+        return $this->formatter->durationDecimal($duration);
     }
 
     /**
@@ -158,7 +112,7 @@ final class LocaleExtensions extends AbstractExtension
      */
     public function amount($amount)
     {
-        return $this->helper->amount($amount);
+        return $this->formatter->amount($amount);
     }
 
     /**
@@ -169,7 +123,7 @@ final class LocaleExtensions extends AbstractExtension
      */
     public function currency($currency)
     {
-        return $this->helper->currency($currency);
+        return $this->formatter->currency($currency);
     }
 
     /**
@@ -178,7 +132,7 @@ final class LocaleExtensions extends AbstractExtension
      */
     public function language($language)
     {
-        return $this->helper->language($language);
+        return $this->formatter->language($language);
     }
 
     /**
@@ -187,7 +141,7 @@ final class LocaleExtensions extends AbstractExtension
      */
     public function country($country)
     {
-        return $this->helper->country($country);
+        return $this->formatter->country($country);
     }
 
     /**
@@ -198,7 +152,7 @@ final class LocaleExtensions extends AbstractExtension
      */
     public function money($amount, ?string $currency = null, bool $withCurrency = true)
     {
-        return $this->helper->money($amount, $currency, $withCurrency);
+        return $this->formatter->money($amount, $currency, $withCurrency);
     }
 
     /**
@@ -210,11 +164,6 @@ final class LocaleExtensions extends AbstractExtension
      */
     public function getLocales()
     {
-        $locales = [];
-        foreach ($this->localeFormats->getAvailableLanguages() as $locale) {
-            $locales[] = ['code' => $locale, 'name' => Locales::getName($locale, $locale)];
-        }
-
-        return $locales;
+        return $this->formatter->getLocales();
     }
 }
