@@ -77,7 +77,9 @@ class ExtensionsTest extends TestCase
         $sut = $this->getSut();
         $this->assertEquals('DateTime', $sut->getClassName(new \DateTime()));
         $this->assertEquals('stdClass', $sut->getClassName(new \stdClass()));
+        /* @phpstan-ignore-next-line */
         $this->assertNull($sut->getClassName(''));
+        /* @phpstan-ignore-next-line */
         $this->assertNull($sut->getClassName(null));
         $this->assertEquals('App\Entity\User', $sut->getClassName(new User()));
     }
