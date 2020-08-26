@@ -12,12 +12,14 @@ namespace App\Tests\Invoice;
 use App\Configuration\LanguageFormattings;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
+use App\Entity\InvoiceTemplate;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\TwigRenderer;
 use App\Invoice\ServiceInvoice;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
+use App\Repository\Query\InvoiceQuery;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Utils\FileHelper;
 use PHPUnit\Framework\TestCase;
@@ -106,5 +108,36 @@ class ServiceInvoiceTest extends TestCase
         $this->assertInstanceOf(DateNumberGenerator::class, $sut->getNumberGeneratorByName('date'));
 
         $this->assertEquals(1, \count($sut->getRenderer()));
+    }
+
+    public function testCreateModelThrowsOnMissingTemplate()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Cannot create invoice model without template');
+
+        $sut = $this->getSut([]);
+        $sut->createModel(new InvoiceQuery());
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testCreateModelSetsFallbackLanguage()
+    {
+        $template = new InvoiceTemplate();
+        $template->setNumberGenerator('date');
+
+        self::assertNull($template->getLanguage());
+
+        $query = new InvoiceQuery();
+        $query->setTemplate($template);
+
+        $sut = $this->getSut([]);
+        $sut->addCalculator(new DefaultCalculator());
+        $sut->addNumberGenerator(new DateNumberGenerator());
+
+        $sut->createModel($query);
+
+        self::assertEquals('en', $template->getLanguage());
     }
 }
