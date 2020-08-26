@@ -136,8 +136,28 @@ class ServiceInvoiceTest extends TestCase
         $sut->addCalculator(new DefaultCalculator());
         $sut->addNumberGenerator(new DateNumberGenerator());
 
-        $sut->createModel($query);
+        $model = $sut->createModel($query);
 
-        self::assertEquals('en', $template->getLanguage());
+        self::assertEquals('en', $model->getTemplate()->getLanguage());
+    }
+
+    public function testCreateModelUsesTemplateLanguage()
+    {
+        $template = new InvoiceTemplate();
+        $template->setNumberGenerator('date');
+        $template->setLanguage('de');
+
+        self::assertEquals('de', $template->getLanguage());
+
+        $query = new InvoiceQuery();
+        $query->setTemplate($template);
+
+        $sut = $this->getSut([]);
+        $sut->addCalculator(new DefaultCalculator());
+        $sut->addNumberGenerator(new DateNumberGenerator());
+
+        $model = $sut->createModel($query);
+
+        self::assertEquals('de', $model->getTemplate()->getLanguage());
     }
 }
