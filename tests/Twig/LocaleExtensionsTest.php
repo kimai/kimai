@@ -267,11 +267,11 @@ class LocaleExtensionsTest extends TestCase
 
         // test negative duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('?', $sut->duration('-1'));
+        $this->assertEquals('?', $sut->duration(-1));
 
         // test zero duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('00:00 h', $sut->duration('0'));
+        $this->assertEquals('00:00 h', $sut->duration(0));
 
         $sut = $this->getSut($this->localeEn, 'en');
 
@@ -295,11 +295,11 @@ class LocaleExtensionsTest extends TestCase
 
         // test negative duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('0', $sut->durationDecimal('-1'));
+        $this->assertEquals('0', $sut->durationDecimal(-1));
 
         // test zero duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('0', $sut->durationDecimal('0'));
+        $this->assertEquals('0', $sut->durationDecimal(0));
 
         $sut = $this->getSut($this->localeEn, 'en');
 
