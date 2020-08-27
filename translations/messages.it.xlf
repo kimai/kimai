@@ -144,6 +144,10 @@
                 <source>menu.export</source>
                 <target>Esporta</target>
             </trans-unit>
+            <trans-unit id="menu.reporting">
+                <source>menu.reporting</source>
+                <target>Rapporti</target>
+            </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
                 <target>Registrazioni</target>
@@ -292,6 +296,22 @@
                 <source>label.rate</source>
                 <target>Tariffa</target>
             </trans-unit>
+            <trans-unit id="help.rate">
+                <source>help.rate</source>
+                <target>Tariffa oraria da addebitare</target>
+            </trans-unit>
+            <trans-unit id="label.rate_internal">
+                <source>label.rate_internal</source>
+                <target>Costo interno</target>
+            </trans-unit>
+            <trans-unit id="help.rate_internal">
+                <source>help.rate_internal</source>
+                <target>Costi interni (se questo non è specificato, è utilizzata la tariffa oraria)</target>
+            </trans-unit>
+            <trans-unit id="label.recalculate_rates">
+                <source>label.recalculate_rates</source>
+                <target>Ricalcola tariffe</target>
+            </trans-unit>            
             <trans-unit id="label.language">
                 <source>label.language</source>
                 <target>Lingua</target>
@@ -315,6 +335,14 @@
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
                 <target>Aggiungi informazioni</target>
+            </trans-unit>
+            <trans-unit id="placeholder.type_message">
+                <source>placeholder.type_message</source>
+                <target>Scrivi quì il tuo messaggio...</target>
+            </trans-unit>
+            <trans-unit id="label.billable">
+                <source>label.billable</source>
+                <target>Fatturabile</target>
             </trans-unit>
 
             <!--
@@ -428,6 +456,10 @@
                 <source>label.fixedRate</source>
                 <target>Tasso fisso</target>
             </trans-unit>
+            <trans-unit id="help.fixedRate">
+                <source>help.fixedRate</source>
+                <target>Ogni record ha lo stesso valore, indipendentemente dalla sua durata</target>
+            </trans-unit>
             <trans-unit id="label.color">
                 <source>label.color</source>
                 <target>Colore</target>
@@ -455,6 +487,10 @@
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
                 <target>Profilo registrato il</target>
+            </trans-unit>
+            <trans-unit id="profile.registration_date">
+                <source>profile.registration_date</source>
+                <target>Registrato il</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
@@ -491,6 +527,10 @@
             <trans-unit id="label.login.initial_view">
                 <source>label.login.initial_view</source>
                 <target>Vista iniziale dopo accesso</target>
+            </trans-unit>
+            <trans-unit id="label.lastLogin">
+                <source>label.lastLogin</source>
+                <target>Ultimo login</target>
             </trans-unit>
             <!-- Options for user-preference label.calendar.initial_view -->
             <trans-unit id="month">
@@ -716,6 +756,22 @@
             <!--
               Statistics data for Dashboard & Users profile
             -->
+            <trans-unit id="stats.workingTimeToday">
+                <source>stats.workingTimeToday</source>
+                <target>Oggi, %day%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeWeek">
+                <source>stats.workingTimeWeek</source>
+                <target>Settimana numero %week%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeMonth">
+                <source>stats.workingTimeMonth</source>
+                <target>%month% %year%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeYear">
+                <source>stats.workingTimeYear</source>
+                <target>Anno intero %year%</target>
+            </trans-unit>
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
                 <target>Ore di lavoro odierne</target>
@@ -827,6 +883,10 @@
             <trans-unit id="button.preview">
                 <source>button.preview</source>
                 <target>Anteprima</target>
+            </trans-unit>
+            <trans-unit id="button.preview_print">
+                <source>button.preview_print</source>
+                <target>Anteprima di stampa</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -943,6 +1003,22 @@
             <trans-unit id="label.decimalDuration">
                 <source>label.decimalDuration</source>
                 <target>Mostra durata come numero decimale</target>
+            </trans-unit>
+            <trans-unit id="label.status">
+                <source>label.status</source>
+                <target>Stato</target>
+            </trans-unit>
+            <trans-unit id="status.new">
+                <source>status.new</source>
+                <target>Nuovo</target>
+            </trans-unit>
+            <trans-unit id="status.pending">
+                <source>status.pending</source>
+                <target>In sospeso</target>
+            </trans-unit>
+            <trans-unit id="status.paid">
+                <source>status.paid</source>
+                <target>Pagato</target>
             </trans-unit>
 
             <!--

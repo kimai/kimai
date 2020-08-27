@@ -20,6 +20,9 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Invoice>
+ */
 class InvoiceRepository extends EntityRepository
 {
     public function saveInvoice(Invoice $invoice)

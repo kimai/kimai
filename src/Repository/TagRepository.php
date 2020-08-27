@@ -18,6 +18,9 @@ use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Tag>
+ */
 class TagRepository extends EntityRepository
 {
     /**

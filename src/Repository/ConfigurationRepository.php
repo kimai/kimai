@@ -15,6 +15,9 @@ use App\Form\Model\SystemConfiguration;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Configuration>
+ */
 class ConfigurationRepository extends EntityRepository implements ConfigLoaderInterface
 {
     private static $cacheByPrefix = null;
