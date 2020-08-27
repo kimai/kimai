@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="plugin.marketplace">
                 <source>plugin.marketplace</source>
-                <target>Kimai marketplace</target>
+                <target>Plugins marketplace</target>
             </trans-unit>
         </body>
     </file>
