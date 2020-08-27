@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="report_monthly_users">
                 <source>report_monthly_users</source>
-                <target>Vista mensile sdi tutti gli utenti</target>
+                <target>Vista mensile di tutti gli utenti</target>
             </trans-unit>
         </body>
     </file>
