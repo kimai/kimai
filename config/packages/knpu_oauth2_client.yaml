@@ -1,20 +1,22 @@
+parameters:
+    oauth_clients: google|gitlab
+
 knpu_oauth2_client:
     clients:
         # configure your clients as described here: https://github.com/knpuniversity/oauth2-client-bundle#configuration
 
-        # will create service: "knpu.oauth2.client.gitlab"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\GitlabClient
-        # composer require omines/oauth2-gitlab
         gitlab:
-            # must be "gitlab" - it activates that type!
             type: gitlab
-            # add and set these environment variables in your .env files
             client_id: '%env(OAUTH_GITLAB_CLIENT_ID)%'
             client_secret: '%env(OAUTH_GITLAB_CLIENT_SECRET)%'
-            # a route name you'll create
-            redirect_route: oauth_gitlab_check
-            redirect_params: {}
-            # Base installation URL, modify this for self-hosted instances
+            redirect_route: oauth_check
+            redirect_params: { client: 'gitlab' }
             domain: '%env(OAUTH_GITLAB_DOMAIN)%'
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
+
+        google:
+            type: google
+            client_id: '%env(OAUTH_GOOGLE_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_GOOGLE_CLIENT_SECRET)%'
+            redirect_route: oauth_check
+            redirect_params:  { client: 'google' }
+            hosted_domain: null

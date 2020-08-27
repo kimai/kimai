@@ -36,6 +36,7 @@
         "laravolt/avatar": "^3.0",
         "league/csv": "^9.4",
         "league/html-to-markdown": "^4.9",
+        "league/oauth2-google": "^3.0",
         "mpdf/mpdf": "^8.0",
         "nelmio/api-doc-bundle": "^3.2",
         "nelmio/cors-bundle": "^1.5",

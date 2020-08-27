@@ -7,7 +7,7 @@ controllers:
     defaults:
         _locale: '%locale%'
 
-oauth.controllers:
+oauth:
     resource: '../../src/Controller/OAuth'
     type: annotation
     prefix: /oauth

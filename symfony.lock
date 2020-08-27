@@ -246,6 +246,9 @@
     "league/oauth2-client": {
         "version": "2.5.0"
     },
+    "league/oauth2-google": {
+        "version": "3.0.3"
+    },
     "lorenzo/pinky": {
         "version": "1.0.5"
     },
