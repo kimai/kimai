@@ -144,6 +144,10 @@
                 <source>menu.export</source>
                 <target>Esporta</target>
             </trans-unit>
+            <trans-unit id="menu.reporting">
+                <source>menu.reporting</source>
+                <target>Rapporti</target>
+            </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
                 <target>Registrazioni</target>
@@ -332,6 +336,14 @@
                 <source>label.create_more</source>
                 <target>Aggiungi informazioni</target>
             </trans-unit>
+            <trans-unit id="placeholder.type_message">
+                <source>placeholder.type_message</source>
+                <target>Scrivi quì il tuo messaggio...</target>
+            </trans-unit>
+            <trans-unit id="label.billable">
+                <source>label.billable</source>
+                <target>Fatturabile</target>
+            </trans-unit>
 
             <!--
               Buttons & Actions
@@ -475,6 +487,10 @@
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
                 <target>Profilo registrato il</target>
+            </trans-unit>
+            <trans-unit id="profile.registration_date">
+                <source>profile.registration_date</source>
+                <target>Registrato il</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
@@ -740,6 +756,22 @@
             <!--
               Statistics data for Dashboard & Users profile
             -->
+            <trans-unit id="stats.workingTimeToday">
+                <source>stats.workingTimeToday</source>
+                <target>Oggi, %day%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeWeek">
+                <source>stats.workingTimeWeek</source>
+                <target>Settimana numero %week%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeMonth">
+                <source>stats.workingTimeMonth</source>
+                <target>%month% %year%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeYear">
+                <source>stats.workingTimeYear</source>
+                <target>Anno intero %year%</target>
+            </trans-unit>
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
                 <target>Ore di lavoro odierne</target>
