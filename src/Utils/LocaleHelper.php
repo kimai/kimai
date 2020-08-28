@@ -112,6 +112,10 @@ final class LocaleHelper
             $withCurrency = false;
         }
 
+        if (false === $withCurrency) {
+            return $this->getMoneyFormatter($withCurrency)->format($amount, NumberFormatter::TYPE_DEFAULT);
+        }
+
         return $this->getMoneyFormatter($withCurrency)->formatCurrency($amount, $currency);
     }
 
@@ -143,7 +147,7 @@ final class LocaleHelper
             $this->moneyFormatterNoCurrency->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
 
             // don't understand why this is needed, I'd say this shouldn't be necessary after the above calls
-            // even worse: the logic changes either between PHP/ICU versions
+            // even worse: the logic changes between PHP/ICU versions
             $pattern = $this->moneyFormatterNoCurrency->getPattern();
             $pattern = str_replace(['¤ ', ' ¤', '-¤', ' XXX', 'XXX '], '¤', $pattern);
             $pattern = str_replace('XXX', '¤', $pattern);
