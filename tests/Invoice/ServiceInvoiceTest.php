@@ -9,14 +9,17 @@
 
 namespace App\Tests\Invoice;
 
+use App\Configuration\LanguageFormattings;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
+use App\Entity\InvoiceTemplate;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\TwigRenderer;
 use App\Invoice\ServiceInvoice;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
+use App\Repository\Query\InvoiceQuery;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Utils\FileHelper;
 use PHPUnit\Framework\TestCase;
@@ -29,11 +32,21 @@ class ServiceInvoiceTest extends TestCase
 {
     private function getSut(array $paths): ServiceInvoice
     {
+        $languages = [
+            'en' => [
+                'date' => 'Y.m.d',
+                'duration' => '%h:%m h',
+                'time' => 'H:i',
+            ]
+        ];
+
+        $formattings = new LanguageFormattings($languages);
+
         $repo = new InvoiceDocumentRepository($paths);
         $invoiceRepo = $this->createMock(InvoiceRepository::class);
         $userDateTime = (new UserDateTimeFactoryFactory($this))->create();
 
-        return new ServiceInvoice($repo, new FileHelper(realpath(__DIR__ . '/../../var/data/')), $invoiceRepo, $userDateTime, new DebugFormatter());
+        return new ServiceInvoice($repo, new FileHelper(realpath(__DIR__ . '/../../var/data/')), $invoiceRepo, $userDateTime, $formattings);
     }
 
     public function testInvalidExceptionOnChangeState()
@@ -95,5 +108,56 @@ class ServiceInvoiceTest extends TestCase
         $this->assertInstanceOf(DateNumberGenerator::class, $sut->getNumberGeneratorByName('date'));
 
         $this->assertEquals(1, \count($sut->getRenderer()));
+    }
+
+    public function testCreateModelThrowsOnMissingTemplate()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Cannot create invoice model without template');
+
+        $sut = $this->getSut([]);
+        $sut->createModel(new InvoiceQuery());
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testCreateModelSetsFallbackLanguage()
+    {
+        $template = new InvoiceTemplate();
+        $template->setNumberGenerator('date');
+
+        self::assertNull($template->getLanguage());
+
+        $query = new InvoiceQuery();
+        $query->setTemplate($template);
+
+        $sut = $this->getSut([]);
+        $sut->addCalculator(new DefaultCalculator());
+        $sut->addNumberGenerator(new DateNumberGenerator());
+
+        $model = $sut->createModel($query);
+
+        self::assertEquals('en', $model->getTemplate()->getLanguage());
+    }
+
+    public function testCreateModelUsesTemplateLanguage()
+    {
+        $template = new InvoiceTemplate();
+        $template->setNumberGenerator('date');
+        $template->setLanguage('de');
+
+        self::assertEquals('de', $template->getLanguage());
+
+        $query = new InvoiceQuery();
+        $query->setTemplate($template);
+
+        $sut = $this->getSut([]);
+        $sut->addCalculator(new DefaultCalculator());
+        $sut->addNumberGenerator(new DateNumberGenerator());
+
+        $model = $sut->createModel($query);
+
+        self::assertEquals('de', $model->getTemplate()->getLanguage());
     }
 }

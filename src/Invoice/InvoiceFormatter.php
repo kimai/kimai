@@ -9,22 +9,24 @@
 
 namespace App\Invoice;
 
+use DateTime;
+
 /**
  * @internal this is subject to change
  */
 interface InvoiceFormatter
 {
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      * @return mixed
      */
-    public function getFormattedDateTime(\DateTime $date);
+    public function getFormattedDateTime(DateTime $date);
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      * @return mixed
      */
-    public function getFormattedTime(\DateTime $date);
+    public function getFormattedTime(DateTime $date);
 
     /**
      * @param int|float $amount
@@ -35,10 +37,10 @@ interface InvoiceFormatter
     public function getFormattedMoney($amount, ?string $currency, bool $withCurrency = true);
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      * @return mixed
      */
-    public function getFormattedMonthName(\DateTime $date);
+    public function getFormattedMonthName(DateTime $date);
 
     /**
      * @param int $seconds
@@ -52,5 +54,11 @@ interface InvoiceFormatter
      */
     public function getFormattedDecimalDuration($seconds);
 
+    /**
+     * Returns the currency symbol for the given currency by name.
+     *
+     * @param string $currency
+     * @return string
+     */
     public function getCurrencySymbol(string $currency): string;
 }

@@ -9,6 +9,8 @@
 
 namespace App\Tests\Widget\Type;
 
+use App\Widget\Type\SimpleStatisticChart;
+
 /**
  * @covers \App\Widget\Type\SimpleStatisticChart
  */
@@ -17,6 +19,7 @@ abstract class AbstractSimpleStatisticsWidgetTypeTest extends AbstractWidgetType
     public function testData()
     {
         $sut = $this->createSut();
+        self::assertInstanceOf(SimpleStatisticChart::class, $sut);
 
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Cannot set data on instances of SimpleStatisticChart');

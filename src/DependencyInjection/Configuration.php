@@ -237,7 +237,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue([])
                 ->end()
                 ->booleanNode('simple_form')
-                    ->defaultTrue()
+                    ->defaultFalse()
                 ->end()
                 ->scalarNode('number_format')
                     ->defaultValue('{Y}/{cy,3}')

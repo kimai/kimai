@@ -42,7 +42,7 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'status') }}">{{ macros.invoice_status(entry) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'tax') }}">{{ entry.tax|money(entry.currency) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">{{ entry.total|money(entry.currency) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.invoice(entry) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.invoice(entry, 'index') }}</td>
             </tr>
         {% endfor %}
         {{ tables.data_table_footer(entries, 'admin_invoice_list') }}
