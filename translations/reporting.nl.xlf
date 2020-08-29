@@ -8,15 +8,15 @@
             </trans-unit>
             <trans-unit id="report_user_week">
                 <source>report_user_week</source>
-                <target>Weekoverzicht voor een user</target>
+                <target>Weekoverzicht voor één gebruiker</target>
             </trans-unit>
             <trans-unit id="report_user_month">
                 <source>report_user_month</source>
-                <target>Maandoverzicht voor een user</target>
+                <target>Maandoverzicht voor één gebruiker</target>
             </trans-unit>
             <trans-unit id="report_monthly_users">
                 <source>report_monthly_users</source>
-                <target>Maandoverzicht voor alle users</target>
+                <target>Maandoverzicht voor alle gebruikers</target>
             </trans-unit>
         </body>
     </file>
