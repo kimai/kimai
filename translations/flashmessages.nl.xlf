@@ -28,7 +28,7 @@
             </trans-unit>
             <trans-unit id="timesheet.locked.warning">
                 <source>timesheet.locked.warning</source>
-                <target>U bewerkt een geëporteerd item</target>
+                <target>U bewerkt een geëxporteerd item</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>
