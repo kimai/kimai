@@ -8,27 +8,31 @@
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                <target>Invoerafhankelijk – een invoer per tijdmeting (standaard)</target>
+                <target>Invoerafhankelijk – één invoer per tijdmeting (standaard)</target>
             </trans-unit>
             <trans-unit id="short">
                 <source>short</source>
-                <target>Uren opgeteld – slechts een invoer</target>
+                <target>Uren opgeteld – slechts één invoer</target>
             </trans-unit>
             <trans-unit id="user">
                 <source>user</source>
-                <target>gebruikers gegroepeerd – een invoer per gebruiker</target>
+                <target>gebruikers gegroepeerd – één invoer per gebruiker</target>
             </trans-unit>
             <trans-unit id="activity">
                 <source>activity</source>
-                <target>activiteiten gegroepeerd – een invoer per activiteit</target>
+                <target>activiteiten gegroepeerd – één invoer per activiteit</target>
             </trans-unit>
             <trans-unit id="project">
                 <source>project</source>
-                <target>Eén invoer per dossier</target>
+                <target>Eén invoer per project</target>
             </trans-unit>
             <trans-unit id="date">
                 <source>date</source>
-                <target>Eén invoer per dag (gebruik de startdatum)</target>
+                <target>Eén invoer per dag (gebruikt de startdatum)</target>
+            </trans-unit>
+            <trans-unit id="weekly">
+                <source>weekly</source>
+                <target>Weekelijks: Eén invoer per week (gebruikt de startdatum)</target>
             </trans-unit>
         </body>
     </file>
