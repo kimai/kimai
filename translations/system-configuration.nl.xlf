@@ -14,9 +14,253 @@
                 <source>timesheet</source>
                 <target>Tijdregistratie</target>
             </trans-unit>
+            <trans-unit id="invoice">
+                <source>invoice</source>
+                <target>Facturen</target>
+            </trans-unit>
             <trans-unit id="form_customer">
                 <source>form_customer</source>
-                <target>Maak een cliënt aan</target>
+                <target>Maak standaard klant waardens aan</target>
+            </trans-unit>
+            <trans-unit id="form_user">
+                <source>form_user</source>
+                <target>Gebruiker—standaardwaarden</target>
+            </trans-unit>
+            <trans-unit id="theme">
+                <source>theme</source>
+                <target>Thema</target>
+            </trans-unit>
+            <trans-unit id="calendar">
+                <source>calendar</source>
+                <target>Kalender</target>
+            </trans-unit>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target>Sta markdown-opmaak toe in beschrijvingen en opmerkingen</target>
+            </trans-unit>
+            <trans-unit id="label.theme.tags_create">
+                <source>label.theme.tags_create</source>
+                <target>Labels: Gebruik autocomplete zoekfunctie en laat het aanmaken van labels toe</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode">
+                <source>label.timesheet.mode</source>
+                <target>Tijdsregistratie modus</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_default">
+                <source>label.timesheet.mode_default</source>
+                <target>[Standaard] Start- en eindtijden kunnen aangepast worden</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_only">
+                <source>label.timesheet.mode_duration_only</source>
+                <target>[Tijdsduur] vervangt de eindtijd door een invoerveld voor de tijdsduur</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+                <source>label.timesheet.mode_duration_fixed_begin</source>
+                <target>[Tijdsduur] vaste starttijd, alleen de duur kan worden gewijzigd</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_punch">
+                <source>label.timesheet.mode_punch</source>
+                <target>[Tijdklok] De gebruiker kan opnames starten en stoppen, maar kan tijd of duur niet bewerken</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_future_times">
+                <source>label.timesheet.rules.allow_future_times</source>
+                <target>Sta tijdinvoer in de toekomst toe</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+                <source>label.timesheet.rules.allow_overlapping_records</source>
+                <target>Sta overlappende tijdinvoer toe</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.lockdown_period_start">
+                <source>label.timesheet.rules.lockdown_period_start</source>
+                <target>Begin van blokkeringsperiode (PHP relatieve datum ten opzichte van nu)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.lockdown_period_end">
+                <source>label.timesheet.rules.lockdown_period_end</source>
+                <target>Einde van blokkeringsperiode (PHP relatieve datum ten opzichte van nu)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+                <source>label.timesheet.rules.lockdown_grace_period</source>
+                <target>Einde van gratieperiode voor blokkering (PHP relatieve datum ten opzichte van nu)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.hard_limit">
+                <source>label.timesheet.active_entries.hard_limit</source>
+                <target>Toegestane aantal gelijktijdige tijdregistratie opnames</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.soft_limit">
+                <source>label.timesheet.active_entries.soft_limit</source>
+                <target>Aantal gelijktijdige tijdregistratie opnames wanneer een waarschuwing wordt weergegeven</target>
+            </trans-unit>
+            <trans-unit id="label.theme.autocomplete_chars">
+                <source>label.theme.autocomplete_chars</source>
+                <target>Minimum aantal letters om de auto-completion te starten</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.week_numbers">
+                <source>label.calendar.week_numbers</source>
+                <target>Toon weeknummers</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.weekends">
+                <source>label.calendar.weekends</source>
+                <target>Toon weekenden</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.begin">
+                <source>label.calendar.businessHours.begin</source>
+                <target>Begin van de normale kantooruren (zal worden gemarkeerd)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.end">
+                <source>label.calendar.businessHours.end</source>
+                <target>Einde van de normale kantooruren (zal worden gemarkeerd)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.begin">
+                <source>label.calendar.visibleHours.begin</source>
+                <target>Begin van zichtbaar tijdsbereik</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.end">
+                <source>label.calendar.visibleHours.end</source>
+                <target>Einde zichtbaar tijdsbestek</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.slot_duration">
+                <source>label.calendar.slot_duration</source>
+                <target>Slotduur voor week- en dagweergave (formaat: hh:mm:ss)</target>
+            </trans-unit>
+            <trans-unit id="branding">
+                <source>branding</source>
+                <target>Merknaam</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.logo">
+                <source>label.theme.branding.logo</source>
+                <target>Logo (Afbeelding URL, vervangt het bedrijf in het inlogscherm)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.company">
+                <source>label.theme.branding.company</source>
+                <target>Bedrijf</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.mini">
+                <source>label.theme.branding.mini</source>
+                <target>Mini Logo (ingeklapte zijbalk)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.title">
+                <source>label.theme.branding.title</source>
+                <target>Browser Titel</target>
+            </trans-unit>
+            <trans-unit id="rounding">
+                <source>rounding</source>
+                <target>Tijdafronding</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.begin">
+                <source>label.timesheet.rounding.default.begin</source>
+                <target>Afronding van de starttijd in minuten (0 = gedeactiveerd)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.end">
+                <source>label.timesheet.rounding.default.end</source>
+                <target>Afronding van de eindtijd in minuten (0 = gedeactiveerd)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.duration">
+                <source>label.timesheet.rounding.default.duration</source>
+                <target>Afronding van de duur in minuten (0 = gedeactiveerd)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.mode">
+                <source>label.timesheet.rounding.default.mode</source>
+                <target>Afrondingsmodus</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.days">
+                <source>label.timesheet.rounding.default.days</source>
+                <target>Dagen van de week waarop de afronding zal worden toegepast</target>
+            </trans-unit>
+            <trans-unit id="Monday">
+                <source>Monday</source>
+                <target>Maandag</target>
+            </trans-unit>
+            <trans-unit id="Tuesday">
+                <source>Tuesday</source>
+                <target>Dinsdag</target>
+            </trans-unit>
+            <trans-unit id="Wednesday">
+                <source>Wednesday</source>
+                <target>Woensdag</target>
+            </trans-unit>
+            <trans-unit id="Thursday">
+                <source>Thursday</source>
+                <target>Donderdag</target>
+            </trans-unit>
+            <trans-unit id="Friday">
+                <source>Friday</source>
+                <target>Vrijdag</target>
+            </trans-unit>
+            <trans-unit id="Saturday">
+                <source>Saturday</source>
+                <target>Zaterdag</target>
+            </trans-unit>
+            <trans-unit id="Sunday">
+                <source>Sunday</source>
+                <target>Zondag</target>
+            </trans-unit>
+            <trans-unit id="Ceil">
+                <source>Ceil</source>
+                <target>Plafond: begin, einde en duur worden naar boven afgerond</target>
+            </trans-unit>
+            <trans-unit id="Closest">
+                <source>Closest</source>
+                <target>Dichtstbijzijnde: wiskundige afronding op de dichtstbijzijnde waarde</target>
+            </trans-unit>
+            <trans-unit id="Default">
+                <source>Default</source>
+                <target>Standaard: begin wordt naar beneden afgerond, einde en duur naar boven</target>
+            </trans-unit>
+            <trans-unit id="Floor">
+                <source>Floor</source>
+                <target>Vloer: begin, einde en duur worden naar beneden afgerond</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.default_begin">
+                <source>label.timesheet.default_begin</source>
+                <target>Standaard starttijd (wordt niet in alle tijdsregistratiemodus gebruikt)</target>
+            </trans-unit>
+            <trans-unit id="label.simple_form">
+                <source>label.simple_form</source>
+                <target>Eenvoudige zoekopdracht</target>
+            </trans-unit>
+            <trans-unit id="label.invoice.number_format">
+                <source>label.invoice.number_format</source>
+                <target>Formaat factuurnummer</target>
+            </trans-unit>            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <trans-unit id="title">
+                <source>title</source>
+                <target>Instellingen</target>
+            </trans-unit>
+            <trans-unit id="subtitle">
+                <source>subtitle</source>
+                <target>Wijzig de algemene instellingen van uw tijdregistratie</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Tijdregistratie</target>
+            </trans-unit>
+            <trans-unit id="form_customer">
+                <source>form_customer</source>
+                <target>Maak een klant aan</target>
             </trans-unit>
             <trans-unit id="form_user">
                 <source>form_user</source>
@@ -36,7 +280,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.mode">
                 <source>label.timesheet.mode</source>
-                <target>Opnamemodus</target>
+                <target>Tijdregistratie modus</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_default">
                 <source>label.timesheet.mode_default</source>
