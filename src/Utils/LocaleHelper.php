@@ -130,29 +130,18 @@ final class LocaleHelper
 
     private function getMoneyFormatter(bool $withCurrency = true): NumberFormatter
     {
-        if (null === $this->moneyFormatter) {
-            $this->moneyFormatter = new NumberFormatter($this->locale, NumberFormatter::CURRENCY);
-        }
-
         if ($withCurrency) {
+            if (null === $this->moneyFormatter) {
+                $this->moneyFormatter = new NumberFormatter($this->locale, NumberFormatter::CURRENCY);
+            }
+
             return $this->moneyFormatter;
         }
 
         if (null === $this->moneyFormatterNoCurrency) {
-            // if anyone knows a better way of achieving this, please let me know!
             $this->moneyFormatterNoCurrency = new NumberFormatter($this->locale, NumberFormatter::CURRENCY);
-
-            $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::CURRENCY_CODE, '');
-            $this->moneyFormatterNoCurrency->setSymbol(NumberFormatter::INTL_CURRENCY_SYMBOL, '');
-            $this->moneyFormatterNoCurrency->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-
-            // don't understand why this is needed, I'd say this shouldn't be necessary after the above calls
-            // even worse: the logic changes between PHP/ICU versions
-            $pattern = $this->moneyFormatterNoCurrency->getPattern();
-            $pattern = str_replace(['¤ ', ' ¤', '-¤', ' XXX', 'XXX '], '¤', $pattern);
-            $pattern = str_replace('XXX', '¤', $pattern);
-            $pattern = str_replace('¤', '', $pattern);
-            $this->moneyFormatterNoCurrency->setPattern($pattern);
+            $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::POSITIVE_PREFIX, '');
+            $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::POSITIVE_SUFFIX, '');
         }
 
         return $this->moneyFormatterNoCurrency;
