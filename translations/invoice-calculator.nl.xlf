@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="weekly">
                 <source>weekly</source>
-                <target>Weekelijks: Eén invoer per week (gebruikt de startdatum)</target>
+                <target>Wekelijks: Eén invoer per week (gebruikt de startdatum)</target>
             </trans-unit>
         </body>
     </file>
