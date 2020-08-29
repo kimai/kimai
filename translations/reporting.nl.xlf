@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="reporting.title">
                 <source>reporting.title</source>
-                <target>Rapporten</target>
+                <target>Rapportage</target>
             </trans-unit>
             <trans-unit id="report_user_week">
                 <source>report_user_week</source>
