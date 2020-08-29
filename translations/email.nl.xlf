@@ -40,7 +40,7 @@
             </trans-unit>
             <trans-unit id="reset.intro">
                 <source>reset.intro</source>
-                <target>... dus u bent uw wachtwoord vergeten? Maakt u zich geen zorgen: Kimai zal u helpen om een nieuwe te maken:</target>
+                <target>... dus u bent uw wachtwoord vergeten? Maakt u zich geen zorgen: Kimai zal u helpen om een nieuwe te maken: </target>
             </trans-unit>
         </body>
     </file>
