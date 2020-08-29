@@ -80,47 +80,6 @@
                 <source>company</source>
                 <target>Bedrijfsfactuur</target>
             </trans-unit>            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <trans-unit id="default">
-                <source>default</source>
-                <target>Factuur(standaard)</target>
-            </trans-unit>
-            <trans-unit id="timesheet">
-                <source>timesheet</source>
-                <target>Tijdsregistratie</target>
-            </trans-unit>
-            <trans-unit id="freelancer">
-                <source>freelancer</source>
-                <target>Freelancer</target>
-            </trans-unit>
-            <trans-unit id="open-spreadsheet">
-                <source>open-spreadsheet</source>
-                <target>Rekenblad</target>
-            </trans-unit>
-            <trans-unit id="spreadsheet">
-                <source>spreadsheet</source>
-                <target>Exceltabel</target>
-            </trans-unit>
-            <trans-unit id="export">
-                <source>export</source>
-                <target>Data-export</target>
-            </trans-unit>
-            <trans-unit id="company">
-                <source>company</source>
-                <target>Ondernemingsfactuur</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>
