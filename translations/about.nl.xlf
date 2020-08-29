@@ -12,7 +12,7 @@
             </trans-unit>
             <trans-unit id="website">
                 <source>website</source>
-                <target>Homepage</target>
+                <target>Website</target>
             </trans-unit>
             <trans-unit id="help">
                 <source>help</source>
@@ -36,7 +36,7 @@
             </trans-unit>
             <trans-unit id="library_authors">
                 <source>library_authors</source>
-                <target>… Zonder de volgende softwareontwikkelaars zou Kimai niet mogelijk zijn 👍</target>
+                <target>… de auteurs van de volgende softwarebibliotheken, Kimai zou zonder jullie niet mogelijk zijn 👍</target>
             </trans-unit>
         </body>
     </file>
