@@ -89,6 +89,10 @@ trait MetaTableTypeTrait
      * @var array
      */
     private $options = [];
+    /**
+     * @var int
+     */
+    private $order = 0;
 
     public function getName(): ?string
     {
@@ -216,6 +220,7 @@ trait MetaTableTypeTrait
             ->setIsVisible($meta->isVisible())
             ->setLabel($meta->getLabel())
             ->setOptions($meta->getOptions())
+            ->setOrder($meta->getOrder())
         ;
 
         return $this;
@@ -247,6 +252,18 @@ trait MetaTableTypeTrait
     public function getOptions(): array
     {
         return $this->options;
+    }
+
+    public function getOrder(): int
+    {
+        return $this->order;
+    }
+
+    public function setOrder(int $order): MetaTableTypeInterface
+    {
+        $this->order = $order;
+
+        return $this;
     }
 
     public function __clone()

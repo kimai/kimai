@@ -163,4 +163,19 @@ interface MetaTableTypeInterface
      * @return array
      */
     public function getOptions(): array;
+
+    /**
+     * Sets the weight order.
+     *
+     * @param int $order
+     * @return MetaTableTypeInterface
+     */
+    public function setOrder(int $order): MetaTableTypeInterface;
+
+    /**
+     * Returns the weight order.
+     *
+     * @return int
+     */
+    public function getOrder(): int;
 }

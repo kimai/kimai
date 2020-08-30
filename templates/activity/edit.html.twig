@@ -36,7 +36,9 @@
             {% endif %}
             {{ form_row(form.visible) }}
             {% if form.metaFields is defined and form.metaFields is not empty %}
-                {{ form_row(form.metaFields) }}
+                {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+                    {{ form_row(meta) }}
+                {% endfor %}
             {% endif %}
             {% if form.create_more is defined and app.request.xmlHttpRequest %}
                 <div class="hidden">
