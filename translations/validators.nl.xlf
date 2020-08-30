@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="This value is not a valid role.">
                 <source>This value is not a valid role.</source>
-                <target>Deze invoer is geen geldige machtiging.</target>
+                <target>Deze waarde is geen geldige rol.</target>
             </trans-unit>
             <trans-unit id="End date must not be earlier then start date.">
                 <source>End date must not be earlier then start date.</source>

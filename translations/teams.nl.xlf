@@ -8,11 +8,11 @@
             </trans-unit>
             <trans-unit id="teams.project_access">
                 <source>teams.project_access</source>
-                <target>Toegang verlenen tot dossiers</target>
+                <target>Toegang verlenen tot projecten</target>
             </trans-unit>
             <trans-unit id="teams.customer_access">
                 <source>teams.customer_access</source>
-                <target>Toegang verlenen tot cliënten</target>
+                <target>Toegang verlenen tot klanten</target>
             </trans-unit>
         </body>
     </file>

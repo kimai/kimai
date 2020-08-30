@@ -508,7 +508,7 @@
             -->
             <trans-unit id="admin_activity.title">
                 <source>admin_activity.title</source>
-                <target>Activitieten</target>
+                <target>Activiteiten</target>
             </trans-unit>
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>

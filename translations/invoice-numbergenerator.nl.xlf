@@ -10,6 +10,10 @@
                 <source>date</source>
                 <target>Datum</target>
             </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Geconfigureerd formaat</target>
+            </trans-unit> 
         </body>
     </file>
 </xliff>
