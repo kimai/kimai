@@ -67,7 +67,7 @@
                         </td>
                     </tr>
                 {% endif %}
-                {% for metaField in activity.visibleMetaFields %}
+                {% for metaField in activity.visibleMetaFields|sort((a, b) => a.order <=> b.order) %}
                     <tr>
                         <th>{{ metaField.label|trans }}</th>
                         <td colspan="3">{{ widgets.form_type_value(metaField.type, metaField.value, activity) }}</td>
