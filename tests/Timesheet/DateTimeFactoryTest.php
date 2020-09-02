@@ -89,7 +89,7 @@ class DateTimeFactoryTest extends TestCase
         $this->assertEquals($expected->format('Y'), $dateTime->format('Y'));
         $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
 
-        $expected = new DateTime('now', new DateTimeZone(self::TEST_TIMEZONE));
+        $expected = new DateTime('monday this week', new DateTimeZone(self::TEST_TIMEZONE));
         $dateTime = $sut->getStartOfWeek();
 
         $this->assertEquals(0, $dateTime->format('H'));
