@@ -35,11 +35,11 @@ final class ReloadCommand extends Command
      */
     private $projectDirectory;
 
-    public function __construct(string $projectDirectory)
+    public function __construct(string $name = null, string $projectDirectory)
     {
         $this->projectDirectory = $projectDirectory;
 
-        parent::__construct();
+        parent::__construct($name);
     }
 
     /**

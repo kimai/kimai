@@ -28,7 +28,7 @@ class ReloadCommandTest extends KernelTestCase
     {
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $this->application->add(new ReloadCommand());
+        $this->application->add(new ReloadCommand(null, null));
     }
 
     public function testCommandName()
