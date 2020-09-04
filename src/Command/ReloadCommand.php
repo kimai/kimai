@@ -31,6 +31,18 @@ final class ReloadCommand extends Command
     public const ERROR_LINT_TRANSLATIONS = 16;
 
     /**
+     * @var string
+     */
+    private $projectDirectory;
+
+    public function __construct(string $projectDirectory)
+    {
+        $this->projectDirectory = $projectDirectory;
+
+        parent::__construct();
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function configure()
@@ -52,6 +64,8 @@ final class ReloadCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $io->title('Reloading configurations ...');
+
+        \chdir($this->projectDirectory);
 
         try {
             $command = $this->getApplication()->find('lint:yaml');
