@@ -166,5 +166,8 @@ sdfsdf' . PHP_EOL . "\n" .
         self::assertEquals(5, $sut->getIsoDayByName('FRIday'));
         self::assertEquals(6, $sut->getIsoDayByName('saturday'));
         self::assertEquals(7, $sut->getIsoDayByName('SUNDAY'));
+        // invalid days will return 'monday'
+        self::assertEquals(1, $sut->getIsoDayByName(''));
+        self::assertEquals(1, $sut->getIsoDayByName('sdfgsdf'));
     }
 }
