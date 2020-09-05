@@ -50,4 +50,12 @@ export default class KimaiPlugin {
         return this._core;
     }
 
+    /**
+     * @param {string} name
+     * @returns {(string|number|boolean)}
+     */
+    getConfiguration(name) {
+        return this.getContainer().getConfiguration().get(name);
+    }
+
 }
