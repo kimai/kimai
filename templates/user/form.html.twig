@@ -2,16 +2,15 @@
 
 {% block main %}
     {{ form_start(form) }}
-    {% for section, entries in sections %}
+    {% for section in sections %}
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
             {% block box_body %}
-                {% for pref in form.children.preferences|filter(pref => pref.vars.data.name in entries)|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+                {% for pref in form.children.preferences|filter(pref => pref.vars.data.section == section)|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
                     {{ form_row(pref) }}
                 {% endfor %}
             {% endblock %}
         {% endembed %}
     {% endfor %}
-    {{ form_widget(form) }}
     <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
     {{ form_end(form) }}
 
