@@ -34,7 +34,7 @@ class DayTest extends TestCase
         $date = new DateTime('-8 hours');
         $sut = new Day($date, 12340, 197.25956);
 
-        $sut->setTotalDuration(999.27);
+        $sut->setTotalDuration(999);
         $sut->setTotalRate(0.123456789);
 
         $this->assertEquals(999, $sut->getTotalDuration());

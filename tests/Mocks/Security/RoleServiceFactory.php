@@ -18,7 +18,7 @@ use App\Tests\Mocks\AbstractMockFactory;
 class RoleServiceFactory extends AbstractMockFactory
 {
     /**
-     * @param string[]|null $roles
+     * @param array<string, array<string>>|null $roles
      * @param Role[]|null $repositoryRoles
      * @return RoleService
      */
@@ -33,10 +33,12 @@ class RoleServiceFactory extends AbstractMockFactory
             ];
         }
 
-        $repository = $this->getMockBuilder(RoleRepository::class)->onlyMethods(['findAll'])->disableOriginalConstructor()->getMock();
-        $repository->method('findAll')->willReturn($repositoryRoles);
+        $mock = $this->getMockBuilder(RoleRepository::class)->onlyMethods(['findAll'])->disableOriginalConstructor()->getMock();
+        $mock->method('findAll')->willReturn($repositoryRoles);
 
-        /* @var RoleRepository $repository */
+        /** @var RoleRepository $repository */
+        $repository = $mock;
+
         return new RoleService($repository, $roles);
     }
 }
