@@ -9,6 +9,11 @@
 
 namespace App\Tests\Form\MultiUpdate;
 
+use App\Entity\Activity;
+use App\Entity\Customer;
+use App\Entity\Project;
+use App\Entity\Tag;
+use App\Entity\Timesheet;
 use App\Form\MultiUpdate\MultiUpdateTableDTO;
 use PHPUnit\Framework\TestCase;
 
@@ -45,7 +50,13 @@ class MultiUpdateTableDTOTest extends TestCase
         self::assertInstanceOf(MultiUpdateTableDTO::class, $sut->setAction('sdfsdfsdf'));
         self::assertEquals('sdfsdfsdf', $sut->getAction());
 
-        self::assertInstanceOf(MultiUpdateTableDTO::class, $sut->setEntities([1, 2, 3, 4, 5, 6, 7, 8, 9, '0815']));
-        self::assertEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, '0815'], $sut->getEntities());
+        $activity = new Activity();
+        $project = new Project();
+        $customer = new Customer();
+        $timesheet = new Timesheet();
+        $tag = new Tag();
+
+        self::assertInstanceOf(MultiUpdateTableDTO::class, $sut->setEntities([$tag, $timesheet, $activity, $customer, $project]));
+        self::assertEquals([$tag, $timesheet, $activity, $customer, $project], $sut->getEntities());
     }
 }

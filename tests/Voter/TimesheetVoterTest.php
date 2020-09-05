@@ -41,7 +41,7 @@ class TimesheetVoterTest extends AbstractVoterTest
 
     public function getTestData()
     {
-        $user0 = $this->getUser(0, null);
+        $user0 = $this->getUser(0, 'unknown');
         $user1 = $this->getUser(1, User::ROLE_USER);
         $user2 = $this->getUser(2, User::ROLE_TEAMLEAD);
         $user3 = $this->getUser(3, User::ROLE_ADMIN);

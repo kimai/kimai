@@ -19,12 +19,12 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 final class TimesheetValidator extends ConstraintValidator
 {
     /**
-     * @var TimesheetConstraint[]
+     * @var Constraint[]
      */
     private $constraints;
 
     /**
-     * @param TimesheetConstraint[] $constraints
+     * @param Constraint[] $constraints
      */
     public function __construct(iterable $constraints)
     {

@@ -42,7 +42,22 @@ class Extensions extends AbstractExtension
     {
         return [
             new TwigFunction('class_name', [$this, 'getClassName']),
+            new TwigFunction('iso_day_by_name', [$this, 'getIsoDayByName']),
         ];
+    }
+
+    public function getIsoDayByName(string $weekDay): int
+    {
+        $key = array_search(
+            strtolower($weekDay),
+            ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        );
+
+        if (false === $key) {
+            return 1;
+        }
+
+        return ++$key;
     }
 
     public function color(EntityWithMetaFields $entity): ?string
@@ -77,7 +92,7 @@ class Extensions extends AbstractExtension
      * @param object $object
      * @return null|string
      */
-    public function getClassName($object)
+    public function getClassName($object): ?string
     {
         if (!\is_object($object)) {
             return null;
@@ -107,11 +122,7 @@ class Extensions extends AbstractExtension
         return implode(PHP_EOL, $parts);
     }
 
-    /**
-     * @param string $url
-     * @return string
-     */
-    public function documentationLink($url = '')
+    public function documentationLink(?string $url = ''): string
     {
         return Constants::HOMEPAGE . '/documentation/' . $url;
     }
