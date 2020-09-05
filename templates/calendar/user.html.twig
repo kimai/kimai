@@ -117,6 +117,7 @@
                 allDaySlot: false,
                 navLinks: true,
                 locale: '{{ app.request.locale|replace({'_': '-'})|lower }}',
+                firstDay: {{ iso_day_by_name(app.user.firstDayOfWeek) }},
                 /*
                 // TODO calculate height properly instead of relying on the default aspectRatio
                 height: function() {

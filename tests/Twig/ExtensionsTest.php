@@ -44,7 +44,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['class_name'];
+        $functions = ['class_name', 'iso_day_by_name'];
         $sut = $this->getSut();
         $twigFunctions = $sut->getFunctions();
         $this->assertCount(\count($functions), $twigFunctions);
@@ -153,5 +153,18 @@ sdfsdf' . PHP_EOL . "\n" .
 
         $activity->setColor('#000002');
         self::assertEquals('#000002', $sut->color($activity));
+    }
+
+    public function testIsoDayByName()
+    {
+        $sut = $this->getSut();
+
+        self::assertEquals(1, $sut->getIsoDayByName('MoNdAy'));
+        self::assertEquals(2, $sut->getIsoDayByName('tuesDAY'));
+        self::assertEquals(3, $sut->getIsoDayByName('wednesday'));
+        self::assertEquals(4, $sut->getIsoDayByName('thursday'));
+        self::assertEquals(5, $sut->getIsoDayByName('FRIday'));
+        self::assertEquals(6, $sut->getIsoDayByName('saturday'));
+        self::assertEquals(7, $sut->getIsoDayByName('SUNDAY'));
     }
 }
