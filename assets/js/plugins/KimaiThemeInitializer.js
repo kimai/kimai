@@ -29,7 +29,7 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
      * redirect access denied / session timeouts to login page
      */
     registerGlobalAjaxErrorHandler() {
-        const loginUrl = this.getContainer().getConfiguration().get('login');
+        const loginUrl = this.getConfiguration('login');
         const alert = this.getContainer().getPlugin('alert');
         const translation = this.getContainer().getTranslation().get('login.required');
         jQuery(document).ajaxError(function(event, jqxhr, settings, thrownError) {

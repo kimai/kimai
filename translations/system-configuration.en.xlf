@@ -222,6 +222,10 @@
                 <source>label.invoice.number_format</source>
                 <target>Invoice number format</target>
             </trans-unit>
+            <trans-unit id="first_weekday">
+                <source>first_weekday</source>
+                <target>First day of the week</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

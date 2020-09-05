@@ -25,20 +25,21 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
 
     activateDateTimePicker(selector) {
         const TRANSLATE = this.getContainer().getTranslation();
-        const CONFIG = this.getContainer().getConfiguration();
         const DATE_UTILS = this.getContainer().getPlugin('date');
+        const firstDow = this.getConfiguration('first_dow_iso');
+        const is24hours = this.getConfiguration('twentyFourHours');
 
         jQuery(selector + ' ' + this.selector).each(function(index) {
             let localeFormat = jQuery(this).data('format');
             jQuery(this).daterangepicker({
                 singleDatePicker: true,
                 timePicker: true,
-                timePicker24Hour: CONFIG.get('twentyFourHours'),
+                timePicker24Hour: is24hours,
                 showDropdowns: true,
                 autoUpdateInput: false,
                 locale: {
                     format: localeFormat,
-                    firstDay: moment().startOf('week').format('d'),
+                    firstDay: firstDow,
                     applyLabel: TRANSLATE.get('confirm'),
                     cancelLabel: TRANSLATE.get('cancel'),
                     customRangeLabel: TRANSLATE.get('customRange'),
