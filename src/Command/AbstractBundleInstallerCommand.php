@@ -154,7 +154,7 @@ abstract class AbstractBundleInstallerCommand extends Command
             $this->importMigrations($io, $output);
         } catch (\Exception $ex) {
             $io->error(
-                sprintf('Failed to install database for bundle %s with: %s', $bundleName, $ex->getMessage())
+                sprintf('Failed to install database for bundle %s. %s', $bundleName, $ex->getMessage())
             );
 
             return 1;
@@ -165,7 +165,7 @@ abstract class AbstractBundleInstallerCommand extends Command
                 $this->installAssets($io, $output);
             } catch (\Exception $ex) {
                 $io->error(
-                    sprintf('Failed to install assets for bundle %s with: %s', $bundleName, $ex->getMessage())
+                    sprintf('Failed to install assets for bundle %s. %s', $bundleName, $ex->getMessage())
                 );
 
                 return 1;
@@ -186,7 +186,9 @@ abstract class AbstractBundleInstallerCommand extends Command
         $command = $this->getApplication()->find('assets:install');
         $cmdInput = new ArrayInput([]);
         $cmdInput->setInteractive(false);
-        $command->run($cmdInput, $output);
+        if (0 !== $command->run($cmdInput, $output)) {
+            throw new \Exception('Problem occurred while installing assets.');
+        }
 
         $io->writeln('');
     }
@@ -209,7 +211,9 @@ abstract class AbstractBundleInstallerCommand extends Command
         $command = $this->getApplication()->find('doctrine:migrations:migrate');
         $cmdInput = new ArrayInput(['--allow-no-migration' => true, '--configuration' => $config]);
         $cmdInput->setInteractive(false);
-        $command->run($cmdInput, $output);
+        if (0 !== $command->run($cmdInput, $output)) {
+            throw new \Exception('Problem occurred while executing migrations.');
+        }
 
         $io->writeln('');
     }
