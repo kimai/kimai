@@ -171,6 +171,9 @@ class DateExtensionsTest extends TestCase
         $sut = $this->getSut('en', []);
         $this->assertEquals('2010-01-07T17:43:21+01:00', $sut->dateFormat($date, 'c'));
         $this->assertStringStartsWith('2010-01-07T17:43:21', $sut->dateFormat('7 January 2010 17:43:21', 'c'));
+
+        // next test checks the fallback for errors while converting the date
+        /* @phpstan-ignore-next-line */
         $this->assertEquals(2010.0107, $sut->dateFormat(2010.0107, 'c'));
     }
 
@@ -209,6 +212,9 @@ class DateExtensionsTest extends TestCase
 
         $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull($dateTime));
         $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull('2019-08-17 12:29:47'));
+
+        // next test checks the fallback for errors while converting the date
+        /* @phpstan-ignore-next-line */
         $this->assertEquals(189.45, $sut->dateTimeFull(189.45));
     }
 }

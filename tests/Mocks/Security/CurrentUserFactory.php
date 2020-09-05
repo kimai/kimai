@@ -34,10 +34,16 @@ class CurrentUserFactory extends AbstractMockFactory
             $user->addPreference($pref);
         }
 
-        $repository = $this->getMockBuilder(UserRepository::class)->onlyMethods(['getUserById'])->disableOriginalConstructor()->getMock();
-        $repository->expects(TestCase::atMost(1))->method('getUserById')->willReturn($user);
-        $token = $this->getMockBuilder(UsernamePasswordToken::class)->onlyMethods(['getUser'])->disableOriginalConstructor()->getMock();
-        $token->method('getUser')->willReturn($user);
+        $mock = $this->getMockBuilder(UserRepository::class)->onlyMethods(['getUserById'])->disableOriginalConstructor()->getMock();
+        $mock->expects(TestCase::atMost(1))->method('getUserById')->willReturn($user);
+        /** @var UserRepository $repository */
+        $repository = $mock;
+
+        $mock = $this->getMockBuilder(UsernamePasswordToken::class)->onlyMethods(['getUser'])->disableOriginalConstructor()->getMock();
+        $mock->method('getUser')->willReturn($user);
+        /** @var UsernamePasswordToken $token */
+        $token = $mock;
+
         $tokenStorage = new TokenStorage();
         $tokenStorage->setToken($token);
 
