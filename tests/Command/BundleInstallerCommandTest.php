@@ -36,10 +36,7 @@ class BundleInstallerCommandTest extends KernelTestCase
         $this->application = new Application($kernel);
         $container = self::$kernel->getContainer();
 
-        $this->application->add(new $className(
-            $container->getParameter('kernel.project_dir'),
-            $container->getParameter('kimai.plugin_dir')
-        ));
+        $this->application->add(new $className());
 
         return $this->application->find('kimai:bundle:test:install');
     }
@@ -172,7 +169,7 @@ class TestBundleInstallerCommand extends AbstractBundleInstallerCommand
 
 class InstallerWithMissingMigrationsCommand extends TestBundleInstallerCommand
 {
-    protected function getMigrationsFilename(): ?string
+    protected function getMigrationConfigFilename(): ?string
     {
         return __DIR__ . '/sdfsdfsdfsdf';
     }

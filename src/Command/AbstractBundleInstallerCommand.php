@@ -9,6 +9,7 @@
 
 namespace App\Command;
 
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -23,43 +24,16 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 abstract class AbstractBundleInstallerCommand extends Command
 {
     /**
-     * @var string
-     */
-    protected $projectDir;
-    /**
-     * @var string
-     */
-    protected $pluginDir;
-
-    public function __construct(string $projectDir, string $pluginDir)
-    {
-        parent::__construct(self::$defaultName);
-        $this->projectDir = $projectDir;
-        $this->pluginDir = $pluginDir;
-    }
-
-    /**
-     * If you need to overwrite the constructor, make sure to overwrite these methods as well.
-     *
-     * Returns the absolute path to the Kimai plugins directory.
-     *
-     * @return string
-     */
-    protected function getPluginsDir(): string
-    {
-        return $this->pluginDir;
-    }
-
-    /**
-     * If you need to overwrite the constructor, make sure to overwrite these methods as well.
-     *
      * Returns the base directory to the Kimai installation.
      *
      * @return string
      */
-    protected function getBaseDir(): string
+    protected function getRootDirectory(): string
     {
-        return $this->projectDir;
+        /** @var Application $application */
+        $application = $this->getApplication();
+
+        return $application->getKernel()->getProjectDir();
     }
 
     /**
@@ -78,7 +52,7 @@ abstract class AbstractBundleInstallerCommand extends Command
      *
      * @return string|null
      */
-    protected function getMigrationsFilename(): ?string
+    protected function getMigrationConfigFilename(): ?string
     {
         return null;
     }
@@ -142,9 +116,9 @@ abstract class AbstractBundleInstallerCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         // many users execute the bin/console command from arbitrary locations
-        // this will make sure that relative paths (like doctinr migrations) work as expected
+        // this will make sure that relative paths (like doctrine migrations) work as expected
         $path = getcwd();
-        chdir($this->getBaseDir());
+        chdir($this->getRootDirectory());
 
         $bundleName = $this->getBundleName();
         $io->title(
@@ -196,7 +170,7 @@ abstract class AbstractBundleInstallerCommand extends Command
 
     protected function importMigrations(SymfonyStyle $io, OutputInterface $output)
     {
-        $config = $this->getMigrationsFilename();
+        $config = $this->getMigrationConfigFilename();
 
         if (null === $config) {
             return false;
