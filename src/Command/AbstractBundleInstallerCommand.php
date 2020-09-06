@@ -10,6 +10,7 @@
 namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -111,7 +112,7 @@ abstract class AbstractBundleInstallerCommand extends Command
         $parts = explode('\\', $class->getNamespaceName());
 
         if ($parts[0] !== 'KimaiPlugin') {
-            throw new \Exception(
+            throw new LogicException(
                 sprintf('Unsupported namespace given, expected "KimaiPlugin" but received "%s". Please overwrite getBundleName() and return the correct bundle name.', $parts[0])
             );
         }
