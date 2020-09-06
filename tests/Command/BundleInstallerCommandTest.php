@@ -61,7 +61,7 @@ class BundleInstallerCommandTest extends KernelTestCase
         $commandTester->execute(['command' => $command->getName()]);
         $result = $commandTester->getDisplay();
 
-        self::assertStringContainsString('[ERROR] Failed to install database for bundle TestBundle. Missing doctrine migrations config file:', $result);
+        self::assertStringContainsString('[ERROR] Failed to install database for bundle TestBundle.', $result);
         self::assertEquals(1, $commandTester->getStatusCode());
     }
 
@@ -72,7 +72,7 @@ class BundleInstallerCommandTest extends KernelTestCase
         $commandTester->execute(['command' => $command->getName()]);
         $result = $commandTester->getDisplay();
 
-        self::assertStringContainsString('[ERROR] Failed to install assets for bundle TestBundle. Problem occurred while installing assets.', $result);
+        self::assertStringContainsString('[ERROR] Failed to install assets for bundle TestBundle.', $result);
         self::assertEquals(1, $commandTester->getStatusCode());
     }
 }
