@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \App\Configuration\CalendarConfiguration
  * @covers \App\Configuration\StringAccessibleConfigTrait
+ * @group legacy
  */
 class CalendarConfigurationTest extends TestCase
 {
