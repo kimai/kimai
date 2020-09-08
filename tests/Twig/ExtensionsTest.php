@@ -9,9 +9,8 @@
 
 namespace App\Tests\Twig;
 
+use App\Constants;
 use App\Entity\Activity;
-use App\Entity\Customer;
-use App\Entity\Project;
 use App\Entity\User;
 use App\Twig\Extensions;
 use PHPUnit\Framework\TestCase;
@@ -30,7 +29,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['docu_link', 'multiline_indent', 'color'];
+        $filters = ['docu_link', 'multiline_indent', 'color', 'font_contrast'];
         $sut = $this->getSut();
         $twigFilters = $sut->getFilters();
         $this->assertCount(\count($filters), $twigFilters);
@@ -122,39 +121,30 @@ sdfsdf' . PHP_EOL . "\n" .
         self::assertEquals(implode("\n", $expected), $sut->multilineIndent($string, $indent));
     }
 
+    /**
+     * Just a very short test, as this delegates to Utils/Color
+     */
     public function testColor()
     {
         $sut = $this->getSut();
 
         $globalActivity = new Activity();
         self::assertNull($sut->color($globalActivity));
+        self::assertEquals(Constants::DEFAULT_COLOR, $sut->color($globalActivity, true));
 
         $globalActivity->setColor('#000001');
         self::assertEquals('#000001', $sut->color($globalActivity));
+        self::assertEquals('#000001', $sut->color($globalActivity, true));
+    }
 
-        $customer = new Customer();
-        self::assertNull($sut->color($customer));
+    /**
+     * Just a very short test, as this delegates to Utils/Color
+     */
+    public function testFontContrast()
+    {
+        $sut = $this->getSut();
 
-        $customer->setColor('#000004');
-        self::assertEquals('#000004', $sut->color($customer));
-
-        $project = new Project();
-        self::assertNull($sut->color($project));
-
-        $project->setCustomer($customer);
-        self::assertEquals('#000004', $sut->color($project));
-
-        $project->setColor('#000003');
-        self::assertEquals('#000003', $sut->color($project));
-
-        $activity = new Activity();
-        self::assertNull($sut->color($activity));
-
-        $activity->setProject($project);
-        self::assertEquals('#000003', $sut->color($activity));
-
-        $activity->setColor('#000002');
-        self::assertEquals('#000002', $sut->color($activity));
+        self::assertEquals('#000000', $sut->calculateFontContrastColor('#ccc'));
     }
 
     public function testIsoDayByName()
