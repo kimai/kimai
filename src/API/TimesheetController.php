@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Configuration\TimesheetConfiguration;
-use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Form\API\TimesheetApiEditForm;
@@ -23,7 +22,6 @@ use App\Timesheet\RoundingService;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Timesheet\TrackingModeService;
-use App\Timesheet\UserDateTimeFactory;
 use App\Utils\SearchTerm;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -69,10 +67,6 @@ class TimesheetController extends BaseApiController
      */
     private $configuration;
     /**
-     * @var UserDateTimeFactory
-     */
-    private $dateTime;
-    /**
      * @var TagRepository
      */
     private $tagRepository;
@@ -96,7 +90,6 @@ class TimesheetController extends BaseApiController
     public function __construct(
         ViewHandlerInterface $viewHandler,
         TimesheetRepository $repository,
-        UserDateTimeFactory $dateTime,
         TimesheetConfiguration $configuration,
         TagRepository $tagRepository,
         TrackingModeService $trackingModeService,
@@ -107,7 +100,6 @@ class TimesheetController extends BaseApiController
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->configuration = $configuration;
-        $this->dateTime = $dateTime;
         $this->tagRepository = $tagRepository;
         $this->trackingModeService = $trackingModeService;
         $this->dispatcher = $dispatcher;
@@ -231,12 +223,14 @@ class TimesheetController extends BaseApiController
             $query->setOrderBy($orderBy);
         }
 
+        $factory = $this->getDateTimeFactory();
+
         if (null !== ($begin = $paramFetcher->get('begin'))) {
-            $query->setBegin($this->dateTime->createDateTime($begin));
+            $query->setBegin($factory->createDateTime($begin));
         }
 
         if (null !== ($end = $paramFetcher->get('end'))) {
-            $query->setEnd($this->dateTime->createDateTime($end));
+            $query->setEnd($factory->createDateTime($end));
         }
 
         if (null !== ($active = $paramFetcher->get('active'))) {
@@ -262,7 +256,7 @@ class TimesheetController extends BaseApiController
         }
 
         if (!empty($modifiedAfter = $paramFetcher->get('modified_after'))) {
-            $query->setModifiedAfter($this->dateTime->createDateTime($modifiedAfter));
+            $query->setModifiedAfter($factory->createDateTime($modifiedAfter));
         }
 
         /** @var Pagerfanta $data */
@@ -519,7 +513,8 @@ class TimesheetController extends BaseApiController
     public function recentAction(ParamFetcherInterface $paramFetcher): Response
     {
         $user = $this->getUser();
-        $begin = $this->dateTime->createDateTime('-1 year');
+        $factory = $this->getDateTimeFactory();
+        $begin = $factory->createDateTime('-1 year');
         $limit = 10;
 
         if ($this->isGranted('view_other_timesheet') && null !== ($reqUser = $paramFetcher->get('user'))) {
@@ -534,7 +529,7 @@ class TimesheetController extends BaseApiController
         }
 
         if (null !== ($reqBegin = $paramFetcher->get('begin'))) {
-            $begin = $this->dateTime->createDateTime($reqBegin);
+            $begin = $factory->createDateTime($reqBegin);
         }
 
         $data = $this->repository->getRecentActivities($user, $begin, $limit);
@@ -653,7 +648,7 @@ class TimesheetController extends BaseApiController
         $copyTimesheet = $this->service->createNewTimesheet($user);
 
         $copyTimesheet
-            ->setBegin($this->dateTime->createDateTime())
+            ->setBegin($this->getDateTimeFactory()->createDateTime())
             ->setActivity($timesheet->getActivity())
             ->setProject($timesheet->getProject())
         ;

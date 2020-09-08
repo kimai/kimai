@@ -29,7 +29,6 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Timesheet\TrackingModeService;
-use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -38,10 +37,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class TimesheetAbstractController extends AbstractController
 {
-    /**
-     * @var UserDateTimeFactory
-     */
-    protected $dateTime;
     /**
      * @var TimesheetRepository
      */
@@ -64,14 +59,12 @@ abstract class TimesheetAbstractController extends AbstractController
     protected $service;
 
     public function __construct(
-        UserDateTimeFactory $dateTime,
         TimesheetRepository $repository,
         TrackingModeService $trackingModeService,
         EventDispatcherInterface $dispatcher,
         ServiceExport $exportService,
         TimesheetService $timesheetService
     ) {
-        $this->dateTime = $dateTime;
         $this->repository = $repository;
         $this->trackingModeService = $trackingModeService;
         $this->dispatcher = $dispatcher;
@@ -238,16 +231,18 @@ abstract class TimesheetAbstractController extends AbstractController
         $form->setData($query);
         $form->submit($request->query->all(), false);
 
+        $factory = $this->getDateTimeFactory();
+
         // by default the current month is exported, but it can be overwritten
         // this should not be removed, otherwise we would export EVERY available record in the admin section
         // as the default toolbar query does neither limit the user nor the date-range!
         if (null === $query->getBegin()) {
-            $query->setBegin($this->dateTime->createDateTime('first day of this month'));
+            $query->setBegin($factory->getStartOfMonth());
         }
         $query->getBegin()->setTime(0, 0, 0);
 
         if (null === $query->getEnd()) {
-            $query->setEnd($this->dateTime->createDateTime('last day of this month'));
+            $query->setEnd($factory->getEndOfMonth());
         }
         $query->getEnd()->setTime(23, 59, 59);
 

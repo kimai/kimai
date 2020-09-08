@@ -22,7 +22,6 @@ use App\Repository\InvoiceRepository;
 use App\Repository\InvoiceTemplateRepository;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceQuery;
-use App\Timesheet\UserDateTimeFactory;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
@@ -50,10 +49,6 @@ final class InvoiceController extends AbstractController
      */
     private $templateRepository;
     /**
-     * @var UserDateTimeFactory
-     */
-    private $dateTimeFactory;
-    /**
      * @var InvoiceRepository
      */
     private $invoiceRepository;
@@ -62,12 +57,11 @@ final class InvoiceController extends AbstractController
      */
     private $dispatcher;
 
-    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $templateRepository, InvoiceRepository $invoiceRepository, UserDateTimeFactory $dateTimeFactory, EventDispatcherInterface $dispatcher)
+    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $templateRepository, InvoiceRepository $invoiceRepository, EventDispatcherInterface $dispatcher)
     {
         $this->service = $service;
         $this->templateRepository = $templateRepository;
         $this->invoiceRepository = $invoiceRepository;
-        $this->dateTimeFactory = $dateTimeFactory;
         $this->dispatcher = $dispatcher;
     }
 
@@ -139,8 +133,9 @@ final class InvoiceController extends AbstractController
 
     protected function getDefaultQuery(): InvoiceQuery
     {
-        $begin = $this->dateTimeFactory->createDateTime('first day of this month');
-        $end = $this->dateTimeFactory->createDateTime('last day of this month');
+        $factory = $this->getDateTimeFactory();
+        $begin = $factory->getStartOfMonth();
+        $end = $factory->getEndOfMonth();
 
         $query = new InvoiceQuery();
         $query->setOrder(InvoiceQuery::ORDER_ASC);
