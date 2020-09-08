@@ -381,6 +381,30 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals(2016, $result['rate']);
     }
 
+    public function testPostActionWithFullExpandedResponse()
+    {
+        $dateTime = (new UserDateTimeFactoryFactory($this))->create(self::TEST_TIMEZONE);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'description' => 'foo',
+            'fixedRate' => 2016,
+            'hourlyRate' => 127
+        ];
+        $this->request($client, '/api/timesheets?full=true', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntityFull', $result);
+        $this->assertNotEmpty($result['id']);
+        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertEquals(2016, $result['rate']);
+    }
+
     public function testPostActionForDifferentUser()
     {
         $dateTime = (new UserDateTimeFactoryFactory($this))->create(self::TEST_TIMEZONE);

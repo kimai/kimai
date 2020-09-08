@@ -50,6 +50,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class TimesheetController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Not_Expanded'];
+    public const GROUPS_ENTITY_FULL = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Expanded'];
     public const GROUPS_FORM = ['Default', 'Entity', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Timesheet', 'Expanded'];
@@ -330,12 +331,14 @@ class TimesheetController extends BaseApiController
      *      @SWG\Schema(ref="#/definitions/TimesheetEditForm")
      * )
      *
+     * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources (TimesheetEntityExpanded). Allowed values: true (default: false)")
+     *
      * @Security("is_granted('create_own_timesheet')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function postAction(Request $request): Response
+    public function postAction(Request $request, ParamFetcherInterface $paramFetcher): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -367,7 +370,12 @@ class TimesheetController extends BaseApiController
             }
 
             $view = new View($timesheet, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+            if ('true' === $paramFetcher->get('full')) {
+                $view->getContext()->setGroups(self::GROUPS_ENTITY_FULL);
+            } else {
+                $view->getContext()->setGroups(self::GROUPS_ENTITY);
+            }
 
             return $this->viewHandler->handle($view);
         }
@@ -626,6 +634,7 @@ class TimesheetController extends BaseApiController
      * )
      *
      * @Rest\RequestParam(name="copy", requirements="all|tags|rates|meta|description", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all, tags, rates, description, meta (default: nothing is copied)")
+     * @Rest\RequestParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Changes the restart date to the given one (default: now)")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -647,8 +656,15 @@ class TimesheetController extends BaseApiController
 
         $copyTimesheet = $this->service->createNewTimesheet($user);
 
+        $factory = $this->getDateTimeFactory();
+
+        $begin = $factory->createDateTime();
+        if (null !== ($beginTmp = $paramFetcher->get('begin'))) {
+            $begin = $factory->createDateTime($beginTmp);
+        }
+
         $copyTimesheet
-            ->setBegin($this->getDateTimeFactory()->createDateTime())
+            ->setBegin($begin)
             ->setActivity($timesheet->getActivity())
             ->setProject($timesheet->getProject())
         ;
