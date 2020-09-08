@@ -44,6 +44,11 @@ trait ColorTrait
         return $this->color;
     }
 
+    public function hasColor(): bool
+    {
+        return null !== $this->color && $this->color !== Constants::DEFAULT_COLOR;
+    }
+
     /**
      * @param string $color
      * @return self
