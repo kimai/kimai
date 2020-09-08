@@ -33,6 +33,21 @@ export default class KimaiAPI extends KimaiPlugin {
         });
     }
 
+    post(url, data, callbackSuccess, callbackError) {
+        jQuery.ajax({
+            url: url,
+            headers: {
+                'X-AUTH-SESSION': true,
+                'Content-Type':'application/json'
+            },
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: callbackSuccess,
+            error: callbackError
+        });
+    }
+
     patch(url, data, callbackSuccess, callbackError) {
         jQuery.ajax({
             url: url,
