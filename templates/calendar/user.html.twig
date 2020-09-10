@@ -174,11 +174,9 @@
             API.patch(updateUrl, JSON.stringify(payload), function(result) {
                 ALERT.success('action.update.success');
             }, function(xhr, err) {
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    err = xhr.responseJSON.message;
-                }
-                ALERT.error('action.update.error', err);
+                const callback = API.getPatchErrorHandler();
                 revertFunc();
+                callback(xhr, err);
             });
         };
 
@@ -243,6 +241,7 @@
                 maxTime: '{{ config.timeframeEnd }}',
                 defaultTimedEventDuration: '{{ config.slotDuration }}',  {# how long should entries look like when they don't have an end #}
                 droppable: true,
+                {# drop function handles external draggable events #}
                 drop: function (date, jsEvent, ui, resourceId) {
                     let entry = jsEvent.target;
                     let source = entry.parentElement;
@@ -277,11 +276,6 @@
                             kimai.getPlugin('alert').success('action.update.success');
                             let newItem = convertApiTimesheetToCalendar(result);
                             jQuery('{{ calendarSelector }}').fullCalendar('renderEvent', newItem);
-                        }, function(xhr, err) {
-                            if (xhr.responseJSON && xhr.responseJSON.message) {
-                                err = xhr.responseJSON.message;
-                            }
-                            kimai.getPlugin('alert').error('action.update.error', err);
                         }
                     );
                 },

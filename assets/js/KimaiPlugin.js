@@ -58,4 +58,12 @@ export default class KimaiPlugin {
         return this.getContainer().getConfiguration().get(name);
     }
 
+    /**
+     * @param {string} name
+     * @returns {KimaiPlugin}
+     */
+    getPlugin(name) {
+        return this.getContainer().getPlugin(name);
+    }
+
 }
