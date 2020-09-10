@@ -241,7 +241,7 @@
                 slotLabelInterval: '{{ config.slotDuration }}',
                 minTime: '{{ config.timeframeBegin }}',
                 maxTime: '{{ config.timeframeEnd }}',
-                defaultTimedEventDuration: '00:30',  {# how long should entries look like when they don't have an end #}
+                defaultTimedEventDuration: '{{ config.slotDuration }}',  {# how long should entries look like when they don't have an end #}
                 droppable: true,
                 drop: function (date, jsEvent, ui, resourceId) {
                     let entry = jsEvent.target;
