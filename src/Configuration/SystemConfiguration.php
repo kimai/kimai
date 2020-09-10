@@ -23,9 +23,11 @@ class SystemConfiguration implements SystemBundleConfiguration
         return $repository->getConfiguration();
     }
 
-    /**
-     * @return array
-     */
+    public function getTimesheetDefaultBeginTime(): string
+    {
+        return (string) $this->find('timesheet.default_begin');
+    }
+
     public function getCalendarBusinessDays(): array
     {
         return (array) $this->find('calendar.businessHours.days');

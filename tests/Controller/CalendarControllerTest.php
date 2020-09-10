@@ -9,7 +9,7 @@
 
 namespace App\Tests\Controller;
 
-use App\Configuration\CalendarConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Tests\Configuration\TestConfigLoader;
 
 /**
@@ -36,10 +36,10 @@ class CalendarControllerTest extends ControllerBaseTest
     public function testCalendarActionWithGoogleSource()
     {
         $loader = new TestConfigLoader([]);
-        $config = new CalendarConfiguration($loader, $this->getDefaultSettings());
+        $config = new SystemConfiguration($loader, $this->getDefaultSettings());
 
         $client = $this->getClientForAuthenticatedUser();
-        static::$kernel->getContainer()->set(CalendarConfiguration::class, $config);
+        static::$kernel->getContainer()->set(SystemConfiguration::class, $config);
         $this->request($client, '/calendar/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
