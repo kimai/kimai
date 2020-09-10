@@ -23,10 +23,14 @@ use App\Repository\Loader\TimesheetLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
+use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Exception;
+use InvalidArgumentException;
 use Pagerfanta\Pagerfanta;
+use PDO;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Timesheet>
@@ -74,7 +78,7 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param Timesheet[] $timesheets
-     * @throws \Exception
+     * @throws Exception
      */
     public function deleteMultiple(iterable $timesheets): void
     {
@@ -87,7 +91,7 @@ class TimesheetRepository extends EntityRepository
             }
             $em->flush();
             $em->commit();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $em->rollback();
             throw $ex;
         }
@@ -106,7 +110,7 @@ class TimesheetRepository extends EntityRepository
             $em->persist($timesheet);
             $em->flush();
             $em->commit();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $em->rollback();
             throw $ex;
         }
@@ -126,7 +130,7 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param Timesheet[] $timesheets
-     * @throws \Exception
+     * @throws Exception
      */
     public function saveMultiple(array $timesheets): void
     {
@@ -139,7 +143,7 @@ class TimesheetRepository extends EntityRepository
             }
             $em->flush();
             $em->commit();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $em->rollback();
             throw $ex;
         }
@@ -161,7 +165,7 @@ class TimesheetRepository extends EntityRepository
 
         // seems to be necessary so Doctrine will recognize a changed timestamp
         $begin = clone $entry->getBegin();
-        $end = new \DateTime('now', $begin->getTimezone());
+        $end = new DateTime('now', $begin->getTimezone());
 
         $entry->setBegin($begin);
         $entry->setEnd($end);
@@ -208,7 +212,7 @@ class TimesheetRepository extends EntityRepository
                 $what = 'COUNT(t.id)';
                 break;
             default:
-                throw new \InvalidArgumentException('Invalid query type: ' . $type);
+                throw new InvalidArgumentException('Invalid query type: ' . $type);
         }
 
         return $this->queryTimeRange($what, $begin, $end, $user);
@@ -401,7 +405,7 @@ class TimesheetRepository extends EntityRepository
         $results = [];
         /** @var Timesheet $result */
         foreach ($timesheets as $result) {
-            /** @var \DateTime $beginTmp */
+            /** @var DateTime $beginTmp */
             $beginTmp = $result->getBegin();
             /** @var DateTime $endTmp */
             $endTmp = $result->getEnd();
@@ -412,7 +416,7 @@ class TimesheetRepository extends EntityRepository
 
                 if ($dateKey !== $dateKeyEnd) {
                     $newDateBegin = clone $beginTmp;
-                    $newDateBegin->add(new \DateInterval('P1D'));
+                    $newDateBegin->add(new DateInterval('P1D'));
                     // overlapping records should always start at midnight
                     $newDateBegin->setTime(0, 0, 0);
                 } else {
@@ -490,7 +494,7 @@ class TimesheetRepository extends EntityRepository
      * @param DateTime $begin
      * @param DateTime $end
      * @return Day[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function getDailyStats(?User $user, DateTime $begin, DateTime $end): array
     {
@@ -573,7 +577,7 @@ class TimesheetRepository extends EntityRepository
             foreach ($activeEntries as $activeEntry) {
                 if ($i > $limit) {
                     if ($hardLimit > 1) {
-                        throw new \Exception('timesheet.start.exceeded_limit');
+                        throw new Exception('timesheet.start.exceeded_limit');
                     }
 
                     $this->stopRecording($activeEntry, $flush);
@@ -773,15 +777,15 @@ class TimesheetRepository extends EntityRepository
         }
 
         if ($query->isExported()) {
-            $qb->andWhere('t.exported = :exported')->setParameter('exported', true, \PDO::PARAM_BOOL);
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', true, PDO::PARAM_BOOL);
         } elseif ($query->isNotExported()) {
-            $qb->andWhere('t.exported = :exported')->setParameter('exported', false, \PDO::PARAM_BOOL);
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', false, PDO::PARAM_BOOL);
         }
 
         if ($query->isBillable()) {
-            $qb->andWhere('t.billable = :billable')->setParameter('billable', true, \PDO::PARAM_BOOL);
+            $qb->andWhere('t.billable = :billable')->setParameter('billable', true, PDO::PARAM_BOOL);
         } elseif ($query->isNotBillable()) {
-            $qb->andWhere('t.billable = :billable')->setParameter('billable', false, \PDO::PARAM_BOOL);
+            $qb->andWhere('t.billable = :billable')->setParameter('billable', false, PDO::PARAM_BOOL);
         }
 
         if (null !== $query->getModifiedAfter()) {
@@ -848,7 +852,7 @@ class TimesheetRepository extends EntityRepository
      * @return array|mixed
      * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function getRecentActivities(User $user = null, \DateTime $startFrom = null, $limit = 10)
+    public function getRecentActivities(User $user = null, DateTime $startFrom = null, $limit = 10)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -865,7 +869,7 @@ class TimesheetRepository extends EntityRepository
             ->groupBy('a.id', 'p.id')
             ->orderBy('maxid', 'DESC')
             ->setMaxResults($limit)
-            ->setParameter('visible', true, \PDO::PARAM_BOOL)
+            ->setParameter('visible', true, PDO::PARAM_BOOL)
         ;
 
         if (null !== $user) {
@@ -909,7 +913,7 @@ class TimesheetRepository extends EntityRepository
             ->update(Timesheet::class, 't')
             ->set('t.exported', ':exported')
             ->where($qb->expr()->in('t.id', ':ids'))
-            ->setParameter('exported', true, \PDO::PARAM_BOOL)
+            ->setParameter('exported', true, PDO::PARAM_BOOL)
             ->setParameter('ids', $timesheets)
             ->getQuery()
             ->execute();
@@ -1020,9 +1024,14 @@ class TimesheetRepository extends EntityRepository
             ->setParameter('user', $timesheet->getUser())
         ;
 
+        // if we edit an existing entry, make sure we do not find "the same entry" when only updating eg. the description
+        if ($timesheet->getId() !== null) {
+            $qb->andWhere($qb->expr()->notIn('t.id', $timesheet->getId()));
+        }
+
         try {
             $result = (int) $qb->getQuery()->getSingleScalarResult();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return true;
         }
 
