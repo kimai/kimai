@@ -207,7 +207,7 @@
             let API = kimai.getPlugin('api');
             jQuery('{{ calendarSelector }}').fullCalendar({
                 defaultView: '{{ app.user.getPreferenceValue('calendar.initial_view') }}',
-                {% if not google.apiKey is null %}
+                {% if google is not null %}
                 googleCalendarApiKey: '{{ google.apiKey }}',
                 {% endif %}
                 header    : {
@@ -301,16 +301,18 @@
                         color: '{{ kimai_context.calendar.background_color }}',
                         name: 'kimaiUserTimeSource'
                     }
-                    {% for source in google.sources %}
-                    ,
-                    {
-                        googleCalendarId: '{{ source.uri }}',
-                        name: '{{ source.id }}',
-                        color: '{{ source.color }}',
-                        textColor: '{{ source.color|font_contrast }}',
-                        editable: false
-                    }
-                    {% endfor %}
+                    {% if google is not null %}
+                        {% for source in google.sources %}
+                        ,
+                        {
+                            googleCalendarId: '{{ source.uri }}',
+                            name: '{{ source.id }}',
+                            color: '{{ source.color }}',
+                            textColor: '{{ source.color|font_contrast }}',
+                            editable: false
+                        }
+                        {% endfor %}
+                    {% endif %}
                 ],
                 eventRender: function(eventObj, $el) {
                     // don't show popover for google calendar

@@ -108,12 +108,13 @@ class CalendarController extends AbstractController
         return $sources;
     }
 
-    /**
-     * @return Google
-     */
-    private function getGoogleSources(SystemConfiguration $configuration)
+    private function getGoogleSources(SystemConfiguration $configuration): ?Google
     {
-        $apiKey = $configuration->getCalendarGoogleApiKey() ?? null;
+        $apiKey = $configuration->getCalendarGoogleApiKey();
+        if ($apiKey === null) {
+            return null;
+        }
+
         $sources = [];
 
         foreach ($configuration->getCalendarGoogleSources() as $name => $config) {

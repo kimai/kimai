@@ -22,7 +22,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\Activity
- * @covers \App\Entity\Col
  */
 class ActivityTest extends TestCase
 {

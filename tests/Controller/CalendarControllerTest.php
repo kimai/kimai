@@ -57,32 +57,37 @@ class CalendarControllerTest extends ControllerBaseTest
     protected function getDefaultSettings()
     {
         return [
-            'businessHours' => [
-                'days' => [2, 4, 6],
-                'begin' => '07:49',
-                'end' => '19:27'
+            'timesheet' => [
+                'default_begin' => '08:30:00',
             ],
-            'visibleHours' => [
-                'begin' => '07:49',
-                'end' => '19:27'
+            'calendar' => [
+                'businessHours' => [
+                    'days' => [2, 4, 6],
+                    'begin' => '07:49',
+                    'end' => '19:27'
+                ],
+                'visibleHours' => [
+                    'begin' => '07:49',
+                    'end' => '19:27'
+                ],
+                'day_limit' => 20,
+                'week_numbers' => false,
+                'slot_duration' => '00:15:00',
+                'google' => [
+                    'api_key' => 'wertwertwegsdfbdf243w567fg8ihuon',
+                    'sources' => [
+                        'holidays' => [
+                            'id' => 'de.german#holiday@group.v.calendar.google.com',
+                            'color' => '#ccc',
+                        ],
+                        'holidays_en' => [
+                            'id' => 'en.german#holiday@group.v.calendar.google.com',
+                            'color' => '#fff',
+                        ],
+                    ]
+                ],
+                'weekends' => true,
             ],
-            'day_limit' => 20,
-            'week_numbers' => false,
-            'slot_duration' => '00:15:00',
-            'google' => [
-                'api_key' => 'wertwertwegsdfbdf243w567fg8ihuon',
-                'sources' => [
-                    'holidays' => [
-                        'id' => 'de.german#holiday@group.v.calendar.google.com',
-                        'color' => '#ccc',
-                    ],
-                    'holidays_en' => [
-                        'id' => 'en.german#holiday@group.v.calendar.google.com',
-                        'color' => '#fff',
-                    ],
-                ]
-            ],
-            'weekends' => true,
         ];
     }
 }
