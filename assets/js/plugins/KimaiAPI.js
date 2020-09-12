@@ -92,21 +92,21 @@ export default class KimaiAPI extends KimaiPlugin {
     getDeleteErrorHandler() {
         const self = this;
         return function(xhr, err) {
-            self._handleError('action.delete.error', xhr, err);
+            self.handleError('action.delete.error', xhr, err);
         };
     }
 
     getPatchErrorHandler() {
         const self = this;
         return function(xhr, err) {
-            self._handleError('action.update.error', xhr, err);
+            self.handleError('action.update.error', xhr, err);
         };
     }
 
     getPostErrorHandler() {
         const self = this;
         return function(xhr, err) {
-            self._handleError('action.update.error', xhr, err);
+            self.handleError('action.update.error', xhr, err);
         };
     }
 
@@ -114,21 +114,24 @@ export default class KimaiAPI extends KimaiPlugin {
      * @param {string} message
      * @param {jqXHR} xhr
      * @param {string} err
-     * @private
      */
-    _handleError(message, xhr, err) {
+    handleError(message, xhr, err) {
         let resultError = err;
         if (xhr.responseJSON && xhr.responseJSON.message) {
             resultError = xhr.responseJSON.message;
             // find validation errors
             if (xhr.status === 400 && xhr.responseJSON.errors && xhr.responseJSON.errors.children) {
+                let collected = ['<u>' + resultError + '</u>'];
                 for (let field in xhr.responseJSON.errors.children) {
-                    if (xhr.responseJSON.errors.children[field].hasOwnProperty('errors')) {
-                        resultError = [resultError];
-                        for (let error of xhr.responseJSON.errors.children[field].errors) {
-                            resultError.push(error + ' (' + field + ')');
+                    let tmpField = xhr.responseJSON.errors.children[field];
+                    if (tmpField.hasOwnProperty('errors') && tmpField.errors.length > 0) {
+                        for (let error of tmpField.errors) {
+                            collected.push(error);
                         }
                     }
+                }
+                if (collected.length > 0) {
+                    resultError = collected;
                 }
             }
         } else if (xhr.status && xhr.statusText) {

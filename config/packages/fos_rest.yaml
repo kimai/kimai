@@ -66,6 +66,7 @@ fos_rest:
 #            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
 #            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
 #            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': 400
+            'App\Validator\ValidationFailedException': 400
         messages:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
             'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': true
