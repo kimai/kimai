@@ -97,6 +97,9 @@ class TimesheetRepository extends EntityRepository
         }
     }
 
+    /**
+     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
+     */
     public function add(Timesheet $timesheet, int $maxRunningEntries)
     {
         $em = $this->getEntityManager();
@@ -156,6 +159,7 @@ class TimesheetRepository extends EntityRepository
      * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
      */
     public function stopRecording(Timesheet $entry, bool $flush = true)
     {
@@ -561,6 +565,7 @@ class TimesheetRepository extends EntityRepository
      * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
      */
     public function stopActiveEntries(User $user, int $hardLimit, bool $flush = true)
     {
@@ -1012,21 +1017,30 @@ class TimesheetRepository extends EntityRepository
             $or->add($qb->expr()->between(':end', 't.begin', 't.end'));
             $or->add($qb->expr()->between('t.begin', ':begin', ':end'));
             $or->add($qb->expr()->between('t.end', ':begin', ':end'));
-            $qb->setParameter('end', $timesheet->getEnd());
+            $end = clone $timesheet->getEnd();
+            $end->sub(new DateInterval('PT1S'));
+            $qb->setParameter('end', $end);
         }
+
+        // one second is added, because people normally either use the calendar / times which are rounded to the full minute
+        // for an existing entry like 12:45-13:00 it is impossible to add a new one from 13:00-13:15 as the between() query find the first one
+        // by adding one second the between() select will not match any longer
+
+        $begin = clone $timesheet->getBegin();
+        $begin->add(new DateInterval('PT1S'));
 
         $qb->select($qb->expr()->count('t.id'))
             ->from(Timesheet::class, 't')
             ->andWhere($qb->expr()->eq('t.user', ':user'))
             ->andWhere($qb->expr()->isNotNull('t.end'))
             ->andWhere($or)
-            ->setParameter('begin', $timesheet->getBegin())
-            ->setParameter('user', $timesheet->getUser())
+            ->setParameter('begin', $begin)
+            ->setParameter('user', $timesheet->getUser()->getId())
         ;
 
         // if we edit an existing entry, make sure we do not find "the same entry" when only updating eg. the description
         if ($timesheet->getId() !== null) {
-            $qb->andWhere($qb->expr()->notIn('t.id', $timesheet->getId()));
+            $qb->andWhere($qb->expr()->neq('t.id', $timesheet->getId()));
         }
 
         try {
