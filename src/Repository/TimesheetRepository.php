@@ -643,6 +643,7 @@ class TimesheetRepository extends EntityRepository
         $qb
             ->resetDQLPart('select')
             ->resetDQLPart('orderBy')
+            ->resetDQLPart('groupBy')
             ->select($qb->expr()->countDistinct('t.id'))
         ;
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
@@ -837,6 +838,8 @@ class TimesheetRepository extends EntityRepository
                 $qb->andWhere($searchAnd);
             }
         }
+
+        $qb->addGroupBy('t')->addGroupBy($orderBy);
 
         return $qb;
     }
