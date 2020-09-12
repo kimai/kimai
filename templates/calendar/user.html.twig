@@ -14,7 +14,7 @@
                     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
                         {% block box_title %}{{ source.title|trans }}{% endblock %}
                         {% block box_body %}
-                            <div class="external-events" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
+                            <div class="external-events" data-method="{{ source.method }}" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
                                 {% for entry in source.entries %}
                                     <div draggable="true" style="background-color: {{ entry.color }}; color: {{ entry.color|font_contrast }}" class="external-event ui-draggable ui-draggable-handle" data-entry="{{ entry.data|json_encode|e('html_attr') }}">
                                         {% if source.blockInclude is not null and entry.blockName is not null and block(entry.blockName, source.blockInclude) is defined %}
@@ -257,27 +257,56 @@
                     let view = jQuery('{{ calendarSelector }}').fullCalendar('getView');
                     let begin = date.clone();
 
-                    if (view.name === 'month') {
-                        if (!begin.hasTime()) {
-                            begin.time('{{ defaultStartTime }}');
-                        }
+                    {#
+                        FIXME some tracking modes do not allow to set the time
+
+                        public function canEditEnd(): bool;
+                        public function canEditDuration(): bool;
+                        public function canUpdateTimesWithAPI(): bool;
+
+                    #}
+
+                    {% if not can_edit_begin %}
+                        begin.time('{{ defaultStartTime }}');
+                    {% endif %}
+
+                    if (view.name === 'month' && !begin.hasTime()) {
+                        begin.time('{{ defaultStartTime }}');
                     }
 
                     let end = begin.clone();
                     end.add(moment.duration('{{ config.slotDuration }}'));
 
-                    data.begin = begin.format();
-                    data.end = end.format();
+                    {% if not is_punch_mode %}
+                        {% if can_edit_begin %}
+                            data.begin = begin.format();
+                        {% endif %}
+                        {% if can_edit_end %}
+                            data.end = end.format();
+                        {% endif %}
+                    {% endif %}
 
-                    API.post(
-                        apiUrl,
-                        JSON.stringify(data),
-                        function(result) {
-                            kimai.getPlugin('alert').success('action.update.success');
-                            let newItem = convertApiTimesheetToCalendar(result);
-                            jQuery('{{ calendarSelector }}').fullCalendar('renderEvent', newItem);
-                        }
-                    );
+                    if (source.dataset.method === 'PATCH') {
+                        API.patch(
+                            apiUrl,
+                            JSON.stringify(data),
+                            function (result) {
+                                kimai.getPlugin('alert').success('action.update.success');
+                                let newItem = convertApiTimesheetToCalendar(result);
+                                jQuery('{{ calendarSelector }}').fullCalendar('renderEvent', newItem);
+                            }
+                        );
+                    } else {
+                        API.post(
+                            apiUrl,
+                            JSON.stringify(data),
+                            function (result) {
+                                kimai.getPlugin('alert').success('action.update.success');
+                                let newItem = convertApiTimesheetToCalendar(result);
+                                jQuery('{{ calendarSelector }}').fullCalendar('renderEvent', newItem);
+                            }
+                        );
+                    }
                 },
                 eventSources: [
                     {

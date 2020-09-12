@@ -63,13 +63,23 @@ class CalendarController extends AbstractController
             'timeframeEnd' => $configuration->getCalendarTimeframeEnd(),
         ];
 
+        $isPunchMode = !$mode->canEditDuration() && !$mode->canEditBegin() && !$mode->canEditEnd();
+        $dragAndDrop = [];
+
+        if ($mode->canEditBegin()) {
+            $dragAndDrop = $this->getDragAndDropResources($repository);
+        }
+
         return $this->render('calendar/user.html.twig', [
             'config' => $config,
-            'dragAndDrop' => $this->getDragAndDropResources($repository),
+            'dragAndDrop' => $dragAndDrop,
             'google' => $this->getGoogleSources($configuration),
             'now' => $factory->createDateTime(),
             'defaultStartTime' => $defaultStart->format('h:i:s'),
-            'is_punch_mode' => !$mode->canEditDuration() && !$mode->canEditBegin() && !$mode->canEditEnd()
+            'is_punch_mode' => $isPunchMode,
+            'can_edit_begin' => $mode->canEditBegin(),
+            'can_edit_end' => $mode->canEditBegin(),
+            'can_edit_duration' => $mode->canEditDuration(),
         ]);
     }
 
