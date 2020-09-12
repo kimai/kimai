@@ -40,8 +40,9 @@ fos_rest:
 #            service:              null
 #            formats:
 #                name:                 ~
-#        formats:
-#            name:                 ~
+        formats:
+            json: true
+            xml: false
 #        templating_formats:
 #            name:                 ~
         view_response_listener:
@@ -84,7 +85,7 @@ fos_rest:
         enabled: true
 #        service:              null
         rules:
-            - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json, xml ] }
+            - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json ] }
 #            host:                 null     # URL host name
 #            methods:              null     # Method for URL
 #            stop:                 false
