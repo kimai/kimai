@@ -120,7 +120,12 @@ final class TimesheetService
         }
 
         $this->validateTimesheet($timesheet);
-        $this->stopActiveEntries($timesheet);
+
+        try {
+            $this->stopActiveEntries($timesheet);
+        } catch (ValidationFailedException $vex) {
+            throw new ValidationFailedException($vex->getViolations(), 'Cannot stop running timesheet');
+        }
 
         $this->dispatcher->dispatch(new TimesheetCreatePreEvent($timesheet));
         $this->repository->save($timesheet);
@@ -175,7 +180,7 @@ final class TimesheetService
      * But also to check that all required data is set.
      *
      * @param Timesheet $timesheet
-     * @throws \Exception
+     * @throws ValidationFailedException
      */
     public function stopTimesheet(Timesheet $timesheet): void
     {
@@ -227,6 +232,8 @@ final class TimesheetService
      *
      * @param Timesheet $timesheet
      * @return int
+     * @throws ValidationException
+     * @throws ValidationFailedException
      */
     private function stopActiveEntries(Timesheet $timesheet): int
     {
