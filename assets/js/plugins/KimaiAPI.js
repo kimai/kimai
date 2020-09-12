@@ -120,13 +120,21 @@ export default class KimaiAPI extends KimaiPlugin {
         if (xhr.responseJSON && xhr.responseJSON.message) {
             resultError = xhr.responseJSON.message;
             // find validation errors
-            if (xhr.status === 400 && xhr.responseJSON.errors && xhr.responseJSON.errors.children) {
+            if (xhr.status === 400 && xhr.responseJSON.errors) {
                 let collected = ['<u>' + resultError + '</u>'];
-                for (let field in xhr.responseJSON.errors.children) {
-                    let tmpField = xhr.responseJSON.errors.children[field];
-                    if (tmpField.hasOwnProperty('errors') && tmpField.errors.length > 0) {
-                        for (let error of tmpField.errors) {
-                            collected.push(error);
+                // form errors that are not attached to a field (like extra fields)
+                if (xhr.responseJSON.errors.errors) {
+                    for (let error of xhr.responseJSON.errors.errors) {
+                        collected.push(error);
+                    }
+                }
+                if (xhr.responseJSON.errors.children) {
+                    for (let field in xhr.responseJSON.errors.children) {
+                        let tmpField = xhr.responseJSON.errors.children[field];
+                        if (tmpField.hasOwnProperty('errors') && tmpField.errors.length > 0) {
+                            for (let error of tmpField.errors) {
+                                collected.push(error);
+                            }
                         }
                     }
                 }
