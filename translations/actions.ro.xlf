@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ro" datatype="plaintext" original="actions.en.xlf">
     <header>
@@ -15,7 +15,7 @@
       </trans-unit>
       <trans-unit id="edit">
         <source>edit</source>
-        <target>Edit</target>
+        <target>Editează</target>
       </trans-unit>
       <trans-unit id="trash">
         <source>trash</source>
