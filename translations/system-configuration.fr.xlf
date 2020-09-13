@@ -1,87 +1,231 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="fr" datatype="plaintext" original="system-configuration.en.xlf">
-        <body>
-            <trans-unit id="title">
-                <source>title</source>
-                <target>Réglages</target>
-            </trans-unit>
-            <trans-unit id="subtitle">
-                <source>subtitle</source>
-                <target>Modifier les paramètres globaux de votre service de suivi des temps.</target>
-            </trans-unit>
-            <trans-unit id="timesheet">
-                <source>timesheet</source>
-                <target>Fiche des temps</target>
-            </trans-unit>
-            <trans-unit id="form_customer">
-                <source>form_customer</source>
-                <target>Ajouter un client - valeurs par défaut</target>
-            </trans-unit>
-            <trans-unit id="theme">
-                <source>theme</source>
-                <target>Thème</target>
-            </trans-unit>
-            <trans-unit id="calendar">
-                <source>calendar</source>
-                <target>Calendrier</target>
-            </trans-unit>
-            <trans-unit id="label.theme.markdown_content">
-                <source>label.theme.markdown_content</source>
-                <target>Autoriser le formatage markdown dans les descriptions et commentaires</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode">
-                <source>label.timesheet.mode</source>
-                <target>Mode de suivi des activités</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_default">
-                <source>label.timesheet.mode_default</source>
-                <target>[Par défaut] les horaires de début et de fin peuvent êtres édités</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_duration_only">
-                <source>label.timesheet.mode_duration_only</source>
-                <target>[Durée] remplace l'heure de fin par une saisie de la durée</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_punch">
-                <source>label.timesheet.mode_punch</source>
-                <target>[Temps-réel] l'utilisateur peut démarrer et arrêter des enregistrements, mais pas modifier les heures ou la durée.</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rules.allow_future_times">
-                <source>label.timesheet.rules.allow_future_times</source>
-                <target>Autoriser les saisies d'activités futures</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.active_entries.hard_limit">
-                <source>label.timesheet.active_entries.hard_limit</source>
-                <target>Nombre autorisé de relevés d'activité simultanées</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.active_entries.soft_limit">
-                <source>label.timesheet.active_entries.soft_limit</source>
-                <target>Nombre de relevés de temps d'activité à partir duquel un message d'avertissement est affiché</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.week_numbers">
-                <source>label.calendar.week_numbers</source>
-                <target>Afficher les numéros de semaine</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.weekends">
-                <source>label.calendar.weekends</source>
-                <target>Afficher les week-ends</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.businessHours.begin">
-                <source>label.calendar.businessHours.begin</source>
-                <target>Début des horaires normaux de travail (en surbrillance    )</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.businessHours.end">
-                <source>label.calendar.businessHours.end</source>
-                <target>Fin des horaires normaux de travail (en surbrillance)</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.visibleHours.begin">
-                <source>label.calendar.visibleHours.begin</source>
-                <target>Début de l'intervalle de temps visible</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.visibleHours.end">
-                <source>label.calendar.visibleHours.end</source>
-                <target>Fin de l'intervalle de temps visible</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="system-configuration.en.xlf">
+    <body>
+      <trans-unit id="title">
+        <source>title</source>
+        <target>Paramètres</target>
+      </trans-unit>
+      <trans-unit id="subtitle">
+        <source>subtitle</source>
+        <target>Modifiez la configuration générale de votre service de suivi du temps</target>
+      </trans-unit>
+      <trans-unit id="timesheet">
+        <source>timesheet</source>
+        <target>Fiche de temps</target>
+      </trans-unit>
+      <trans-unit id="form_customer">
+        <source>form_customer</source>
+        <target>Créer un client : Valeurs par défaut</target>
+      </trans-unit>
+      <trans-unit id="theme">
+        <source>theme</source>
+        <target>Thème</target>
+      </trans-unit>
+      <trans-unit id="calendar">
+        <source>calendar</source>
+        <target>Calendrier</target>
+      </trans-unit>
+      <trans-unit id="label.theme.markdown_content">
+        <source>label.theme.markdown_content</source>
+        <target>Autoriser le formatage markdown dans les descriptions et commentaires</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode">
+        <source>label.timesheet.mode</source>
+        <target>Mode de suivi du temps</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_default">
+        <source>label.timesheet.mode_default</source>
+        <target>[Par défaut] les horaires de début et de fin peuvent êtres modifiés</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_duration_only">
+        <source>label.timesheet.mode_duration_only</source>
+        <target>[Durée] remplace l'heure de fin par une saisie de la durée</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_punch">
+        <source>label.timesheet.mode_punch</source>
+        <target>[Temps-réel] l'utilisateur peut démarrer et arrêter des enregistrements, mais ne peut pas modifier les heures ou la durée</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_future_times">
+        <source>label.timesheet.rules.allow_future_times</source>
+        <target>Autoriser la saisie d'activités futures</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.active_entries.hard_limit">
+        <source>label.timesheet.active_entries.hard_limit</source>
+        <target>Nombre autorisé de relevés d'activité simultanées</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.active_entries.soft_limit">
+        <source>label.timesheet.active_entries.soft_limit</source>
+        <target>Nombre de relevés de temps d'activité à partir duquel un message d'avertissement est affiché</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.week_numbers">
+        <source>label.calendar.week_numbers</source>
+        <target>Afficher les numéros de semaine</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.weekends">
+        <source>label.calendar.weekends</source>
+        <target>Afficher les week-ends</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target>Début des horaires normaux de travail (en surbrillance    )</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target>Fin des horaires normaux de travail (en surbrillance)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target>Début de l'intervalle de temps visible</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target>Fin de l'intervalle de temps visible</target>
+      </trans-unit>
+      <trans-unit id="first_weekday">
+        <source>first_weekday</source>
+        <target>Premier jour de la semaine</target>
+      </trans-unit>
+      <trans-unit id="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target>Format du numéro de facture</target>
+      </trans-unit>
+      <trans-unit id="label.simple_form">
+        <source>label.simple_form</source>
+        <target>Recherche simple</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>Heure de début par défaut (non utilisé dans tous les modes de suivi du temps)</target>
+      </trans-unit>
+      <trans-unit id="Floor">
+        <source>Floor</source>
+        <target>Inférieur : l'heure de début, de fin et la durée seront arrondies à l'inférieur</target>
+      </trans-unit>
+      <trans-unit id="Default">
+        <source>Default</source>
+        <target>Standard : l'heure de début sera arrondie à l'inférieur, l'heure de fin et la durée au supérieur</target>
+      </trans-unit>
+      <trans-unit id="Ceil">
+        <source>Ceil</source>
+        <target>Supérieur : l'heure de début, de fin et la durée seront arrondies au supérieur</target>
+      </trans-unit>
+      <trans-unit id="Closest">
+        <source>Closest</source>
+        <target>Au plus proche : arrondi mathématique à la valeur la plus proche</target>
+      </trans-unit>
+      <trans-unit id="Sunday">
+        <source>Sunday</source>
+        <target>Dimanche</target>
+      </trans-unit>
+      <trans-unit id="Saturday">
+        <source>Saturday</source>
+        <target>Samedi</target>
+      </trans-unit>
+      <trans-unit id="Friday">
+        <source>Friday</source>
+        <target>Vendredi</target>
+      </trans-unit>
+      <trans-unit id="Thursday">
+        <source>Thursday</source>
+        <target>Jeudi</target>
+      </trans-unit>
+      <trans-unit id="Wednesday">
+        <source>Wednesday</source>
+        <target>Mercredi</target>
+      </trans-unit>
+      <trans-unit id="Tuesday">
+        <source>Tuesday</source>
+        <target>Mardi</target>
+      </trans-unit>
+      <trans-unit id="Monday">
+        <source>Monday</source>
+        <target>Lundi</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target>Jours de la semaine ou l'arrondi sera appliqué</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target>Mode d'arrondi</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target>Arrondir la durée en minutes (0 = désactivé)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>Arrondir l'heure de fin en minutes (0 = désactivé)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target>Arrondir l'heure de début en minutes (0 = désactivé)</target>
+      </trans-unit>
+      <trans-unit id="rounding">
+        <source>rounding</source>
+        <target>Arrondi des heures</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target>Titre de la page (onglet du navigateur)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target>Mini logo (barre latérale masquée)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.company">
+        <source>label.theme.branding.company</source>
+        <target>Société</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target>Logo (URL de l'image, remplace le nom de la société sur l'écran de connexion)</target>
+      </trans-unit>
+      <trans-unit id="branding">
+        <source>branding</source>
+        <target>Identité</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>Durée de a vue en semaine et en jour (format : hh:mm:ss)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target>Nombre minimum de lettres pour commencer l'auto-complétion</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target>Verrouiller la période de fin (Date relative a la période de fin PHP)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target>Verrouiller la période de fin (Date relative au présent en PHP)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target>Verrouiller la période de début (Date relative au présent en PHP)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+        <source>label.timesheet.rules.allow_overlapping_records</source>
+        <target>Autoriser le chevauchement des heures</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+        <source>label.timesheet.mode_duration_fixed_begin</source>
+        <target>[Durée] heure de début fixe configurable, seule la durée peut-être modifiée</target>
+      </trans-unit>
+      <trans-unit id="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target>Mots-clés : Utiliser la recherche avec auto-complétion et autoriser la création de mots-clés</target>
+      </trans-unit>
+      <trans-unit id="form_user">
+        <source>form_user</source>
+        <target>Utilisateur : Valeurs par défaut</target>
+      </trans-unit>
+      <trans-unit id="invoice">
+        <source>invoice</source>
+        <target>Factures</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
