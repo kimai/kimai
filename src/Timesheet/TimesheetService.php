@@ -17,6 +17,8 @@ use App\Event\TimesheetCreatePreEvent;
 use App\Event\TimesheetDeleteMultiplePreEvent;
 use App\Event\TimesheetDeletePreEvent;
 use App\Event\TimesheetMetaDefinitionEvent;
+use App\Event\TimesheetRestartPostEvent;
+use App\Event\TimesheetRestartPreEvent;
 use App\Event\TimesheetStopPostEvent;
 use App\Event\TimesheetStopPreEvent;
 use App\Event\TimesheetUpdateMultiplePostEvent;
@@ -26,6 +28,7 @@ use App\Event\TimesheetUpdatePreEvent;
 use App\Repository\TimesheetRepository;
 use App\Validator\ValidationException;
 use App\Validator\ValidationFailedException;
+use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -97,7 +100,7 @@ final class TimesheetService
     public function prepareNewTimesheet(Timesheet $timesheet, ?Request $request = null): Timesheet
     {
         if (null !== $timesheet->getId()) {
-            throw new \InvalidArgumentException('Cannot prepare timesheet, already persisted');
+            throw new InvalidArgumentException('Cannot prepare timesheet, already persisted');
         }
 
         $event = new TimesheetMetaDefinitionEvent($timesheet);
@@ -109,10 +112,33 @@ final class TimesheetService
         return $timesheet;
     }
 
+    /**
+     * @param Timesheet $timesheet
+     * @param Timesheet $copyFrom
+     * @throws ValidationFailedException for invalid timesheets or running timesheets that should be stopped
+     * @throws InvalidArgumentException for already persisted timesheets
+     * @throws AccessDeniedHttpException if user is not allowed to start timesheet
+     */
+    public function restartTimesheet(Timesheet $timesheet, Timesheet $copyFrom): Timesheet
+    {
+        $this->dispatcher->dispatch(new TimesheetRestartPreEvent($timesheet, $copyFrom));
+        $this->saveNewTimesheet($timesheet);
+        $this->dispatcher->dispatch(new TimesheetRestartPostEvent($timesheet, $copyFrom));
+
+        return $timesheet;
+    }
+
+    /**
+     * @param Timesheet $timesheet
+     * @return Timesheet
+     * @throws ValidationFailedException for invalid timesheets or running timesheets that should be stopped
+     * @throws InvalidArgumentException for already persisted timesheets
+     * @throws AccessDeniedHttpException if user is not allowed to start timesheet
+     */
     public function saveNewTimesheet(Timesheet $timesheet): Timesheet
     {
         if (null !== $timesheet->getId()) {
-            throw new \InvalidArgumentException('Cannot create timesheet, already persisted');
+            throw new InvalidArgumentException('Cannot create timesheet, already persisted');
         }
 
         if (null === $timesheet->getEnd() && !$this->auth->isGranted('start', $timesheet)) {
@@ -124,6 +150,7 @@ final class TimesheetService
         try {
             $this->stopActiveEntries($timesheet);
         } catch (ValidationFailedException $vex) {
+            // could happen for timesheets that were started in the future (end before begin)
             throw new ValidationFailedException($vex->getViolations(), 'Cannot stop running timesheet');
         }
 
@@ -180,6 +207,7 @@ final class TimesheetService
      * But also to check that all required data is set.
      *
      * @param Timesheet $timesheet
+     * @throws ValidationException for already stopped timesheets
      * @throws ValidationFailedException
      */
     public function stopTimesheet(Timesheet $timesheet): void

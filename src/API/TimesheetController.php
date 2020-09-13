@@ -18,7 +18,6 @@ use App\Form\API\TimesheetApiEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
-use App\Timesheet\RoundingService;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Timesheet\TrackingModeService;
@@ -39,7 +38,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @RouteResource("Timesheet")
@@ -80,10 +78,6 @@ class TimesheetController extends BaseApiController
      */
     private $dispatcher;
     /**
-     * @var RoundingService
-     */
-    private $roundingService;
-    /**
      * @var TimesheetService
      */
     private $service;
@@ -95,7 +89,6 @@ class TimesheetController extends BaseApiController
         TagRepository $tagRepository,
         TrackingModeService $trackingModeService,
         EventDispatcherInterface $dispatcher,
-        RoundingService $roundingService,
         TimesheetService $service
     ) {
         $this->viewHandler = $viewHandler;
@@ -104,7 +97,6 @@ class TimesheetController extends BaseApiController
         $this->tagRepository = $tagRepository;
         $this->trackingModeService = $trackingModeService;
         $this->dispatcher = $dispatcher;
-        $this->roundingService = $roundingService;
         $this->service = $service;
     }
 
@@ -639,7 +631,7 @@ class TimesheetController extends BaseApiController
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function restartAction(int $id, ParamFetcherInterface $paramFetcher, ValidatorInterface $validator): Response
+    public function restartAction(int $id, ParamFetcherInterface $paramFetcher): Response
     {
         $timesheet = $this->repository->find($id);
 
@@ -668,7 +660,7 @@ class TimesheetController extends BaseApiController
             ->setActivity($timesheet->getActivity())
             ->setProject($timesheet->getProject())
         ;
-        $this->roundingService->roundBegin($copyTimesheet);
+        $this->service->prepareNewTimesheet($copyTimesheet);
 
         if (null !== ($copy = $paramFetcher->get('copy'))) {
             if (\in_array($copy, ['rates', 'all'])) {
@@ -694,13 +686,7 @@ class TimesheetController extends BaseApiController
             }
         }
 
-        $errors = $validator->validate($copyTimesheet);
-
-        if (\count($errors) > 0) {
-            throw new BadRequestHttpException($errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage());
-        }
-
-        $this->service->saveNewTimesheet($copyTimesheet);
+        $this->service->restartTimesheet($copyTimesheet, $timesheet);
 
         $view = new View($copyTimesheet, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
