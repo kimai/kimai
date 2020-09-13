@@ -5,15 +5,15 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="oRRnhwf" resname="default.pdf.twig">
+      <trans-unit id="default.pdf.twig">
         <source>default.pdf.twig</source>
         <target>סטנדרטי</target>
       </trans-unit>
-      <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
+      <trans-unit id="default-budget.pdf.twig">
         <source>default-budget.pdf.twig</source>
         <target>עם תקציב נותר</target>
       </trans-unit>
-      <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig">
+      <trans-unit id="default-internal.pdf.twig">
         <source>default-internal.pdf.twig</source>
         <target>עם תעריפים פנימיים</target>
       </trans-unit>

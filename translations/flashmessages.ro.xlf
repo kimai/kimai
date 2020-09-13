@@ -5,51 +5,51 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="S9k1S7Z" resname="warning">
+      <trans-unit id="warning">
         <source>warning</source>
         <target>Atenție</target>
       </trans-unit>
-      <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
+      <trans-unit id="timesheet.stop.success">
         <source>timesheet.stop.success</source>
         <target>Înregistrarea timpului a fost oprită</target>
       </trans-unit>
-      <trans-unit id="NPBnpK_" resname="timesheet.stop.error">
+      <trans-unit id="timesheet.stop.error">
         <source>timesheet.stop.error</source>
         <target>Nu am putut opri înregistrarea timpului</target>
       </trans-unit>
-      <trans-unit id="CCUoZga" resname="timesheet.start.success">
+      <trans-unit id="timesheet.start.success">
         <source>timesheet.start.success</source>
         <target>A pornit înregistrarea timpului</target>
       </trans-unit>
-      <trans-unit id="3w9tuox" resname="timesheet.start.error">
+      <trans-unit id="timesheet.start.error">
         <source>timesheet.start.error</source>
         <target>Nu am putut porni înregistrarea timpului</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
+      <trans-unit id="timesheet.start.exceeded_limit">
         <source>timesheet.start.exceeded_limit</source>
         <target>A fost atinsă limita inregistrărilor active. Te rog ca prima dată să oprești cel putin o înregistrare activă.</target>
       </trans-unit>
-      <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
+      <trans-unit id="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>Editezi o înregistrare care a fost exportată</target>
       </trans-unit>
-      <trans-unit id="72Ih8zO" resname="action.update.success">
+      <trans-unit id="action.update.success">
         <source>action.update.success</source>
         <target>Modificările au fost salvate</target>
       </trans-unit>
-      <trans-unit id="xeu1LSy" resname="action.update.error">
+      <trans-unit id="action.update.error">
         <source>action.update.error</source>
         <target>Modificările nu pot fi salvate: %reason%</target>
       </trans-unit>
-      <trans-unit id="YV50HDB" resname="action.delete.success">
+      <trans-unit id="action.delete.success">
         <source>action.delete.success</source>
         <target>Intrarea a fost ștearsă</target>
       </trans-unit>
-      <trans-unit id="mW91Tmb" resname="action.delete.error">
+      <trans-unit id="action.delete.error">
         <source>action.delete.error</source>
         <target>Nu am putut șterge înregistrarea: %reason%</target>
       </trans-unit>
-      <trans-unit id="B_cz49z" resname="invoice.first_template">
+      <trans-unit id="invoice.first_template">
         <source>invoice.first_template</source>
         <target> Înainte de a începe trebuie să creezi cel puțin un șablon pentru facturi</target>
       </trans-unit>

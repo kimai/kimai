@@ -5,31 +5,31 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="kgxAl_x" resname="teams.title">
+      <trans-unit id="teams.title">
         <source>teams.title</source>
         <target>Echipe</target>
       </trans-unit>
-      <trans-unit id="A_4Fc7c" resname="teams.project_access">
+      <trans-unit id="teams.project_access">
         <source>teams.project_access</source>
         <target>Acordă acces la proiecte</target>
       </trans-unit>
-      <trans-unit id="QchGnbx" resname="teams.customer_access">
+      <trans-unit id="teams.customer_access">
         <source>teams.customer_access</source>
         <target>Acordă access la clienți</target>
       </trans-unit>
-      <trans-unit id=".yIcFDx" resname="team.visibility_global">
+      <trans-unit id="team.visibility_global">
         <source>team.visibility_global</source>
         <target>Vizibil pentru toată lumea, deoarece încă nu a fost selectată nicio echipă.</target>
       </trans-unit>
-      <trans-unit id="hlIIRjb" resname="team.visibility_restricted">
+      <trans-unit id="team.visibility_restricted">
         <source>team.visibility_restricted</source>
         <target>Vizibil numai pentru următoarele echipe și pentru toți administratorii.</target>
       </trans-unit>
-      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited">
+      <trans-unit id="team.project_visibility_inherited">
         <source>team.project_visibility_inherited</source>
         <target>Accesul la acest proiect este limitat, deoarece permisiunile echipei sunt setate pentru client.</target>
       </trans-unit>
-      <trans-unit id="cZEIdcu" resname="team.create_default">
+      <trans-unit id="team.create_default">
         <source>team.create_default</source>
         <target>Crează o echipă nouă pentru a limita accesul</target>
       </trans-unit>
