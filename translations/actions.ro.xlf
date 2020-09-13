@@ -5,79 +5,79 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="bEXLcqN" resname="stop">
+      <trans-unit id="stop">
         <source>stop</source>
         <target>Stop</target>
       </trans-unit>
-      <trans-unit id="PEgjRvN" resname="back">
+      <trans-unit id="back">
         <source>back</source>
         <target>Înapoi</target>
       </trans-unit>
-      <trans-unit id="JiEhxTc" resname="edit">
+      <trans-unit id="edit">
         <source>edit</source>
         <target>Edit</target>
       </trans-unit>
-      <trans-unit id="4G2jBDS" resname="trash">
+      <trans-unit id="trash">
         <source>trash</source>
         <target>Șterge</target>
       </trans-unit>
-      <trans-unit id="hF6RgxM" resname="report">
+      <trans-unit id="report">
         <source>report</source>
         <target>Raport</target>
       </trans-unit>
-      <trans-unit id="JeK2sQZ" resname="repeat">
+      <trans-unit id="repeat">
         <source>repeat</source>
         <target>Repetă</target>
       </trans-unit>
-      <trans-unit id="J0sRBY_" resname="profile-stats">
+      <trans-unit id="profile-stats">
         <source>profile-stats</source>
         <target>Profil</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings">
+      <trans-unit id="settings">
         <source>settings</source>
         <target>Preferințe</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Pontaje</target>
       </trans-unit>
-      <trans-unit id="tsRYY4d" resname="customer">
+      <trans-unit id="customer">
         <source>customer</source>
         <target>Filtrează clienții</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
+      <trans-unit id="project">
         <source>project</source>
         <target>Filtrează proiectele</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="activity">
         <source>activity</source>
         <target>Filtrează activitățile</target>
       </trans-unit>
-      <trans-unit id="b1pgNOd" resname="copy">
+      <trans-unit id="copy">
         <source>copy</source>
         <target>Copiază</target>
       </trans-unit>
-      <trans-unit id="TqFAWIF" resname="home">
+      <trans-unit id="home">
         <source>home</source>
         <target>Pagina de pornire</target>
       </trans-unit>
-      <trans-unit id="PBlIO2x" resname="create-project">
+      <trans-unit id="create-project">
         <source>create-project</source>
         <target>Creează un proiect</target>
       </trans-unit>
-      <trans-unit id="UbouFOs" resname="create-activity">
+      <trans-unit id="create-activity">
         <source>create-activity</source>
         <target>Creează o activitate</target>
       </trans-unit>
-      <trans-unit id="QR1nvcR" resname="create-timesheet">
+      <trans-unit id="create-timesheet">
         <source>create-timesheet</source>
         <target>Creează un pontaj</target>
       </trans-unit>
-      <trans-unit id="T_PN1AT" resname="permissions">
+      <trans-unit id="permissions">
         <source>permissions</source>
         <target>Permisiunile echipei</target>
       </trans-unit>
-      <trans-unit id="Qf.Yt2r" resname="details">
+      <trans-unit id="details">
         <source>details</source>
         <target>Detalii</target>
       </trans-unit>

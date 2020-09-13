@@ -5,31 +5,31 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="kgxAl_x" resname="teams.title">
+      <trans-unit id="teams.title">
         <source>teams.title</source>
         <target>צוותים</target>
       </trans-unit>
-      <trans-unit id="A_4Fc7c" resname="teams.project_access">
+      <trans-unit id="teams.project_access">
         <source>teams.project_access</source>
         <target>הענק גישה לפרויקטים</target>
       </trans-unit>
-      <trans-unit id="QchGnbx" resname="teams.customer_access">
+      <trans-unit id="teams.customer_access">
         <source>teams.customer_access</source>
         <target>הענק גישה ללקוחות</target>
       </trans-unit>
-      <trans-unit id=".yIcFDx" resname="team.visibility_global">
+      <trans-unit id="team.visibility_global">
         <source>team.visibility_global</source>
         <target>ניתן לצפיה עבור כולם מכיוון שאף צוות לא הוקצה עדין.</target>
       </trans-unit>
-      <trans-unit id="hlIIRjb" resname="team.visibility_restricted">
+      <trans-unit id="team.visibility_restricted">
         <source>team.visibility_restricted</source>
         <target>ניתן לצפיה עבור הצוותים הבאים ומנהלי מערכת.</target>
       </trans-unit>
-      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited">
+      <trans-unit id="team.project_visibility_inherited">
         <source>team.project_visibility_inherited</source>
         <target>לפרויקט יש גישה מוגבלת מכיוון שמוגדרות הרשאות צוות עבור הלקוח.</target>
       </trans-unit>
-      <trans-unit id="cZEIdcu" resname="team.create_default">
+      <trans-unit id="team.create_default">
         <source>team.create_default</source>
         <target>צור צוות חדש להגבלת הגישה</target>
       </trans-unit>

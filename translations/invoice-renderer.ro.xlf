@@ -5,39 +5,39 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id=".Bji8X5" resname="label.invoice_renderer">
+      <trans-unit id="label.invoice_renderer">
         <source>label.invoice_renderer</source>
         <target>Document factură</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="default">
         <source>default</source>
         <target>Factură (implicit)</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Pontaj</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="freelancer">
+      <trans-unit id="freelancer">
         <source>freelancer</source>
         <target>Freelancer</target>
       </trans-unit>
-      <trans-unit id="XUbhXLF" resname="open-spreadsheet">
+      <trans-unit id="open-spreadsheet">
         <source>open-spreadsheet</source>
         <target>Calc Spreadsheet</target>
       </trans-unit>
-      <trans-unit id="U_VP0mi" resname="spreadsheet">
+      <trans-unit id="spreadsheet">
         <source>spreadsheet</source>
         <target>Excel</target>
       </trans-unit>
-      <trans-unit id="1GruCMx" resname="export">
+      <trans-unit id="export">
         <source>export</source>
         <target>Data exportului</target>
       </trans-unit>
-      <trans-unit id="8WjM3ZF" resname="company">
+      <trans-unit id="company">
         <source>company</source>
         <target>Factură firmă</target>
       </trans-unit>
-      <trans-unit id="7mEUv6C" resname="help.upload">
+      <trans-unit id="help.upload">
         <source>help.upload</source>
         <target>Atenție: fișierele existente vor fi suprascrise. Tipuri de fișiere permise: DOCX, ODS, XLSX.</target>
       </trans-unit>

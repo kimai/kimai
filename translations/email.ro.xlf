@@ -5,43 +5,43 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
+      <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
         <target><![CDATA[Dacă butonul nu funcționează, copiază & și lipește această adresî în browser: %url%]]></target>
       </trans-unit>
-      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+      <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Acesta este un email generat automat. Te rog să nu răspunzi pentru că nu va fi citit de nimeni.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
+      <trans-unit id="registration.subject">
         <source>registration.subject</source>
         <target>Activează-ți contul</target>
       </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
+      <trans-unit id="registration.title">
         <source>registration.title</source>
         <target>Bine ai venit %username%</target>
       </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
+      <trans-unit id="registration.button">
         <source>registration.button</source>
         <target>Activează-ți contul</target>
       </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
+      <trans-unit id="registration.intro">
         <source>registration.intro</source>
         <target>Te-ai înregistrat în sistemul de pontaj Kimai cu adresa de mail %email%. Trebuie să îți activezi contul în urmatoarele ore, înainte ca adresa să expire.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="reset.subject">
         <source>reset.subject</source>
         <target>Resetează-ți parola</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
+      <trans-unit id="reset.title">
         <source>reset.title</source>
         <target>Asta se poate întâmpla ...</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="reset.button">
         <source>reset.button</source>
         <target>Resetează-ți parola</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
+      <trans-unit id="reset.intro">
         <source>reset.intro</source>
         <target>... ți-ai uitat parola? Nu te îngrijora. Kimai te va ajuta să îți creezi o parolă nouă:</target>
       </trans-unit>

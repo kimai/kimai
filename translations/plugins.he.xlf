@@ -5,19 +5,19 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="2YAbVz6" resname="plugins.title">
+      <trans-unit id="plugins.title">
         <source>plugins.title</source>
         <target>תוספות</target>
       </trans-unit>
-      <trans-unit id="vjcllSx" resname="plugins.subtitle">
+      <trans-unit id="plugins.subtitle">
         <source>plugins.subtitle</source>
         <target>ניתן למקסם את פונקציונאליות המערכת באמצעות תוספות</target>
       </trans-unit>
-      <trans-unit id="vFSLi54" resname="plugin.none_installed">
+      <trans-unit id="plugin.none_installed">
         <source>plugin.none_installed</source>
         <target>לא קיימות תוספות מותקנות</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+      <trans-unit id="plugin.marketplace">
         <source>plugin.marketplace</source>
         <target>Kimai חנות</target>
       </trans-unit>
