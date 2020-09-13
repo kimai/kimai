@@ -1,55 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="fr" datatype="plaintext" original="flashmessages.en.xlf">
-        <body>
-            <trans-unit id="warning">
-                <source>warning</source>
-                <target>Avertissement</target>
-            </trans-unit>
-            <trans-unit id="timesheet.stop.success">
-                <source>timesheet.stop.success</source>
-                <target>Le chronomètre a été arrêté</target>
-            </trans-unit>
-            <trans-unit id="timesheet.stop.error">
-                <source>timesheet.stop.error</source>
-                <target>Le chronomètre ne peut pas être arrêté</target>
-            </trans-unit>
-            <trans-unit id="timesheet.start.success">
-                <source>timesheet.start.success</source>
-                <target>Le chronométrage a commencé</target>
-            </trans-unit>
-            <trans-unit id="timesheet.start.error">
-                <source>timesheet.start.error</source>
-                <target>Le chronométrage ne peut pas être lancé</target>
-            </trans-unit>
-            <trans-unit id="timesheet.start.exceeded_limit">
-                <source>timesheet.start.exceeded_limit</source>
-                <target>La limite des enregistrements des temps d'activité a été atteinte, veuillez arrêter au moins un enregistrement.</target>
-            </trans-unit>
-            <trans-unit id="timesheet.locked.warning">
-                <source>timesheet.locked.warning</source>
-                <target>Vous modifiez un enregistrement que vous avez exporté</target>
-            </trans-unit>
-            <trans-unit id="action.update.success">
-                <source>action.update.success</source>
-                <target>Modifications enregistrées</target>
-            </trans-unit>
-            <trans-unit id="action.update.error">
-                <source>action.update.error</source>
-                <target>Changes could not be saved: %reason%</target>
-            </trans-unit>
-            <trans-unit id="action.delete.success">
-                <source>action.delete.success</source>
-                <target>L'entrée a été supprimée</target>
-            </trans-unit>
-            <trans-unit id="action.delete.error">
-                <source>action.delete.error</source>
-                <target>L'entrée ne peut pas être supprimée : %reason%</target>
-            </trans-unit>
-            <trans-unit id="invoice.first_template">
-                <source>invoice.first_template</source>
-                <target>Vous devez créer votre premier modèle de facture avant de poursuivre</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="flashmessages.en.xlf">
+    <body>
+      <trans-unit id="warning">
+        <source>warning</source>
+        <target>Avertissement</target>
+      </trans-unit>
+      <trans-unit id="timesheet.stop.success">
+        <source>timesheet.stop.success</source>
+        <target>Le chronomètre a été arrêté</target>
+      </trans-unit>
+      <trans-unit id="timesheet.stop.error">
+        <source>timesheet.stop.error</source>
+        <target>Le chronomètre ne peut pas être arrêté</target>
+      </trans-unit>
+      <trans-unit id="timesheet.start.success">
+        <source>timesheet.start.success</source>
+        <target>Le chronométrage a commencé</target>
+      </trans-unit>
+      <trans-unit id="timesheet.start.error">
+        <source>timesheet.start.error</source>
+        <target>Le chronométrage ne peut pas être lancé</target>
+      </trans-unit>
+      <trans-unit id="timesheet.start.exceeded_limit">
+        <source>timesheet.start.exceeded_limit</source>
+        <target>La limite d'enregistrement du temps d'activité a été atteinte, veuillez arrêter au moins un enregistrement.</target>
+      </trans-unit>
+      <trans-unit id="timesheet.locked.warning">
+        <source>timesheet.locked.warning</source>
+        <target>Vous modifiez un enregistrement que vous avez exporté</target>
+      </trans-unit>
+      <trans-unit id="action.update.success">
+        <source>action.update.success</source>
+        <target>Modifications enregistrées</target>
+      </trans-unit>
+      <trans-unit id="action.update.error">
+        <source>action.update.error</source>
+        <target>Les modifications n'ont pas pu êtres enregistrées : %reason%</target>
+      </trans-unit>
+      <trans-unit id="action.delete.success">
+        <source>action.delete.success</source>
+        <target>L'entrée a été supprimée</target>
+      </trans-unit>
+      <trans-unit id="action.delete.error">
+        <source>action.delete.error</source>
+        <target>L'entrée n'a pas pu être supprimée : %reason%</target>
+      </trans-unit>
+      <trans-unit id="invoice.first_template">
+        <source>invoice.first_template</source>
+        <target>Vous devez créer votre premier modèle de facture avant de continuer</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
