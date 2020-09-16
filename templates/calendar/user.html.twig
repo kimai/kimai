@@ -6,12 +6,41 @@
 {% block page_actions %}{{ actions.calendar('index') }}{% endblock %}
 
 {% block main %}
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% block box_body_class %}no-padding{% endblock %}
-        {% block box_body %}
-            <div id="timesheet_calendar"></div>
-        {% endblock %}
-    {% endembed %}
+    <div class="row">
+        {% set hasDragAndDrop = (dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) %}
+        {% if hasDragAndDrop %}
+            <div class="hidden-xs col-sm-5 col-md-4 col-lg-3">
+                {% for source in dragAndDrop|filter(s => s.entries|length > 0) %}
+                    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+                        {% block box_title %}{{ source.title|trans }}{% endblock %}
+                        {% block box_body_class %}drag-and-drop-source{% endblock %}
+                        {% block box_body %}
+                            <div class="external-events" data-method="{{ source.method }}" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
+                                {% for entry in source.entries %}
+                                    <div draggable="true" style="background-color: {{ entry.color }}; color: {{ entry.color|font_contrast }}" class="external-event ui-draggable ui-draggable-handle" data-entry="{{ entry.data|json_encode|e('html_attr') }}">
+                                        {% if source.blockInclude is not null and entry.blockName is not null and block(entry.blockName, source.blockInclude) is defined %}
+                                            {{ block(entry.blockName, source.blockInclude) }}
+                                        {% else %}
+                                            <span class="title">{{ entry.title }}</span>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endblock %}
+                    {% endembed %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="col-xs-12 {% if hasDragAndDrop %}col-sm-7 col-md-8 col-lg-9{% endif %}">
+            {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+                {% block box_body_class %}no-padding{% endblock %}
+                {% block box_body %}
+                    <div id="timesheet_calendar"></div>
+                {% endblock %}
+            {% endembed %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block stylesheets %}
@@ -25,43 +54,159 @@
 {% endblock %}
 
 {% block javascripts %}
+    {% set calendarSelector = '#timesheet_calendar' %}
     {{ parent() }}
     <script>
+        activatePopover();
+
         document.addEventListener('kimai.timesheetUpdate', function() {
-            $('#timesheet_calendar').fullCalendar('refetchEvents');
+            jQuery('{{ calendarSelector }}').fullCalendar('refetchEvents');
         });
 
-        var changeHandler = function(event, delta, revertFunc) {
-            var updateUrl = '{{ path('patch_timesheet', {id: '-XX-'}) }}'.replace('-XX-', event.id);
-            var API = kimai.getPlugin('api');
-            var ALERT = kimai.getPlugin('alert');
+        {# https://gomakethings.com/dynamically-changing-the-text-color-based-on-background-color-contrast-with-vanilla-js/ #}
+        function calculateFontContrastColor(hexcolor)
+        {
+            if (hexcolor.slice(0, 1) === '#') {
+                hexcolor = hexcolor.slice(1);
+            }
 
-            var payload = {'begin': event.start.format()};
+            if (hexcolor.length === 3) {
+                hexcolor = hexcolor.split('').map(function (hex) { return hex + hex; }).join('');
+            }
+
+            let r = parseInt(hexcolor.substr(0,2),16);
+            let g = parseInt(hexcolor.substr(2,2),16);
+            let b = parseInt(hexcolor.substr(4,2),16);
+            let yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+
+            return (yiq >= 128) ? '#000000' : '#ffffff';
+        }
+
+        function convertApiTimesheetToCalendar(apiItem)
+        {
+            const defaultColor = kimai.getConfiguration().get('defaultColor');
+            let color = apiItem.activity.color;
+            if (color === null || color === defaultColor) {
+                color = apiItem.project.color;
+                if (color === null || color === defaultColor) {
+                    color = apiItem.project.customer.color;
+                }
+            }
+            if (color == null) {
+                color = defaultColor;
+            }
+            return {
+                id: apiItem.id,
+                title: apiItem.activity.name,
+                description: apiItem.description,
+                start: apiItem.begin,
+                end: apiItem.end,
+                activity: apiItem.activity.name,
+                project: apiItem.project.name,
+                customer: apiItem.project.customer.name,
+                tags: apiItem.tags,
+                color: color,
+                textColor: calculateFontContrastColor(color),
+            };
+        }
+
+        function renderEventPopoverTitle(eventObj)
+        {
+            return eventObj.start.format('L') + ' | ' + eventObj.start.format('LT') + ' - ' + (eventObj.end ? eventObj.end.format('LT') : '');
+        }
+
+        function renderEventPopoverContent(eventObj)
+        {
+            {# https://stackoverflow.com/questions/26530076/fullcalendar-js-deleting-event-on-button-click #}
+            {#
+            $el.append('<div style="position: absolute; top: 0; right: 0;" class="pull-right closeon">X</div>');
+            $el.find('.closeon').on('click', function(closeEvent) {
+                console.log(closeEvent);
+                jQuery('{{ calendarSelector }}').fullCalendar('removeEvents',eventObj._id);
+                closeEvent.stopPropagation();
+            });
+            #}
+            return '<div class="calendar-entry">' +
+                    '<ul>' +
+                        '<li>' + '{{ 'label.customer'|trans }}: ' + eventObj.customer + '</li>' +
+                        '<li>' + '{{ 'label.project'|trans }}: ' + eventObj.project + '</li>' +
+                        '<li>' + '{{ 'label.activity'|trans }}: ' + eventObj.activity + '</li>' +
+                    '</ul>' +
+                    (eventObj.description !== null || eventObj.tags.length > 0 ? '<hr>' : '') +
+                    (eventObj.description ? '<p>' + eventObj.description + '</p>' : '') +
+                    (eventObj.tags !== null && eventObj.tags.length > 0 ? '<span class="badge bg-green">' + eventObj.tags.join('</span> <span class="badge bg-green">') + '</span>' : '') +
+                '</div>'
+            ;
+        }
+
+        function showPopover()
+        {
+            return window._hidePopovers === false;
+        }
+
+        function activatePopover()
+        {
+            window._hidePopovers = false;
+        }
+
+        function deactivatePopover()
+        {
+            window._hidePopovers = true;
+        }
+
+        function hidePopover()
+        {
+            jQuery('.popover').popover('hide');
+        }
+
+        let changeHandler = function(event, delta, revertFunc) {
+            let updateUrl = '{{ path('patch_timesheet', {id: '-XX-'}) }}'.replace('-XX-', event.id);
+            let API = kimai.getPlugin('api');
+            let ALERT = kimai.getPlugin('alert');
+
+            let payload = {'begin': event.start.format()};
 
             if (event.end !== null && event.end !== undefined) {
                 payload.end = event.end.format();
             } else {
                 payload.end = null;
-
             }
 
             API.patch(updateUrl, JSON.stringify(payload), function(result) {
                 ALERT.success('action.update.success');
             }, function(xhr, err) {
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    err = xhr.responseJSON.message;
-                }
-                ALERT.error('action.update.error', err);
+                const callback = API.getPatchErrorHandler();
                 revertFunc();
+                callback(xhr, err);
             });
         };
 
+
         document.addEventListener('kimai.initialized', function(event) {
-            var kimai = event.detail.kimai;
-            var API = kimai.getPlugin('api');
-            $('#timesheet_calendar').fullCalendar({
+            // prevent multiple open popovers
+            jQuery('html').on('click', function(e) {
+                jQuery('.popover').each(function() {
+                    if(jQuery(e.target).parents(".fc-time-grid-event").get(0) !== $(this).prev().get(0)) {
+                        jQuery(this).popover('hide');
+                    }
+                });
+            });
+
+            // convert HTML to draggable items
+            jQuery('.external-events .external-event').each(function () {
+                {# FullCalendar 3 can only work with jQuery UI elements #}
+                jQuery(this).draggable({
+                    zIndex        : 1070,
+                    revert        : true,   {# will cause the event to go back to its #}
+                    revertDuration: 0       {# original position after the drag #}
+                });
+            });
+
+            let kimai = event.detail.kimai;
+            let API = kimai.getPlugin('api');
+            jQuery('{{ calendarSelector }}').fullCalendar({
                 defaultView: '{{ app.user.getPreferenceValue('calendar.initial_view') }}',
-                {% if not google.apiKey is null %}
+                {% if google is not null %}
                 googleCalendarApiKey: '{{ google.apiKey }}',
                 {% endif %}
                 header    : {
@@ -75,12 +220,12 @@
                 navLinks: true,
                 locale: kimai.getConfiguration().get('locale').replace('_', '-').toLowerCase(),
                 firstDay: kimai.getConfiguration().get('first_dow_iso'),
-                /*
+                {#
                 // TODO calculate height properly instead of relying on the default aspectRatio
                 height: function() {
                     return 'parent';
                 },
-                */
+                #}
                 height: 'auto',
                 nowIndicator: true,
                 now: '{{ now|date_format('c') }}',
@@ -95,50 +240,103 @@
                 slotLabelInterval: '{{ config.slotDuration }}',
                 minTime: '{{ config.timeframeBegin }}',
                 maxTime: '{{ config.timeframeEnd }}',
-                defaultTimedEventDuration: '00:30',
+                defaultTimedEventDuration: '{{ config.slotDuration }}',  {# how long should entries look like when they don't have an end #}
+                droppable: true,
+                {# drop function handles external draggable events #}
+                drop: function (date, jsEvent, ui, resourceId) {
+                    let entry = jsEvent.target;
+                    let source = entry.parentElement;
+                    let plainData = entry.dataset.entry;
+                    let data = JSON.parse(plainData);
+                    let urlReplacer = JSON.parse(source.dataset.routeReplacer);
+                    let apiUrl = source.dataset.route;
+
+                    for (const [key, value] of Object.entries(urlReplacer)) {
+                        apiUrl = apiUrl.replace(key, data[value]);
+                    }
+
+                    let view = jQuery('{{ calendarSelector }}').fullCalendar('getView');
+                    let begin = date.clone();
+
+                    {#
+                        FIXME some tracking modes do not allow to set the time
+
+                        public function canEditEnd(): bool;
+                        public function canEditDuration(): bool;
+                        public function canUpdateTimesWithAPI(): bool;
+
+                    #}
+
+                    {% if not can_edit_begin %}
+                        begin.time('{{ defaultStartTime }}');
+                    {% endif %}
+
+                    if (view.name === 'month' && !begin.hasTime()) {
+                        begin.time('{{ defaultStartTime }}');
+                    }
+
+                    let end = begin.clone();
+                    end.add(moment.duration('{{ config.slotDuration }}'));
+
+                    {% if not is_punch_mode %}
+                        {% if can_edit_begin %}
+                            data.begin = begin.format();
+                        {% endif %}
+                        {% if can_edit_end %}
+                            data.end = end.format();
+                        {% endif %}
+                    {% endif %}
+
+                    if (source.dataset.method === 'PATCH') {
+                        API.patch(
+                            apiUrl,
+                            JSON.stringify(data),
+                            function (result) {
+                                kimai.getPlugin('alert').success('action.update.success');
+                                let newItem = convertApiTimesheetToCalendar(result);
+                                jQuery('{{ calendarSelector }}').fullCalendar('renderEvent', newItem);
+                            }
+                        );
+                    } else {
+                        API.post(
+                            apiUrl,
+                            JSON.stringify(data),
+                            function (result) {
+                                kimai.getPlugin('alert').success('action.update.success');
+                                let newItem = convertApiTimesheetToCalendar(result);
+                                jQuery('{{ calendarSelector }}').fullCalendar('renderEvent', newItem);
+                            }
+                        );
+                    }
+                },
                 eventSources: [
                     {
                         events: function(start, end, timezone, callback) {
-                            var from = moment(start.format()).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
-                            var to = moment(end.format()).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+                            let from = moment(start.format()).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+                            let to = moment(end.format()).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
                             API.get('{{ path('get_timesheets') }}?size=1000&full=true&begin='+from+'&end='+to, {}, function(result) {
-                                var apiEvents = [];
-                                for (var record of result) {
-                                    var color = record.activity.color;
-                                    if (color === null) {
-                                        color = record.project.color;
-                                        if (color === null) {
-                                            color = record.project.customer.color;
-                                        }
-                                    }
-                                    apiEvents.push({
-                                        id: record.id,
-                                        title: record.activity.name,
-                                        description: record.description,
-                                        start: record.begin,
-                                        end: record.end,
-                                        activity: record.activity.name,
-                                        project: record.project.name,
-                                        customer: record.project.customer.name,
-                                        tags: record.tags,
-                                        color: color,
-                                    });
+                                let apiEvents = [];
+                                for (const record of result) {
+                                    apiEvents.push(convertApiTimesheetToCalendar(record));
                                 }
                                 callback(apiEvents);
                             });
                         },
-                        color: '#d2d6de', // see class "dot"
+                        color: '{{ kimai_context.calendar.background_color }}',
                         name: 'kimaiUserTimeSource'
                     }
-                    {% for source in google.sources %}
-                    ,
-                    {
-                        googleCalendarId: '{{ source.uri }}',
-                        name: '{{ source.id }}',
-                        color: '{{ source.color }}',
-                        editable: false
-                    }
-                    {% endfor %}
+                    {% if google is not null %}
+                        {% for source in google.sources %}
+                        ,
+                        {
+                            googleCalendarId: '{{ source.uri }}',
+                            name: '{{ source.id }}',
+                            color: '{{ source.color }}',
+                            textColor: '{{ source.color|font_contrast }}',
+                            editable: false
+                        }
+                        {% endfor %}
+                    {% endif %}
                 ],
                 eventRender: function(eventObj, $el) {
                     // don't show popover for google calendar
@@ -146,23 +344,13 @@
                         return;
                     }
                     // or when an event is dragged or resized
-                    if(window.hidePopover) {
+                    if (!showPopover()) {
                         return;
                     }
+                    hidePopover();
                     $el.popover({
-                        title: eventObj.start.format('L') + ' | ' + eventObj.start.format('LT') + ' - ' + (eventObj.end ? eventObj.end.format('LT') : ''),
-                        content:
-                        '<div class="calendar-entry">' +
-                            '<ul>' +
-                                '<li>' + '{{ 'label.customer'|trans }}: ' + eventObj.customer + '</li>' +
-                                '<li>' + '{{ 'label.project'|trans }}: ' + eventObj.project + '</li>' +
-                                '<li>' + '{{ 'label.activity'|trans }}: ' + eventObj.activity + '</li>' +
-                            '</ul>' +
-                            (eventObj.description || eventObj.tags ? '<hr>' : '') +
-                            (eventObj.description ? '<p>' + eventObj.description + '</p>' : '') +
-                            (eventObj.tags !== null && eventObj.tags.length > 0 ? '<span class="badge bg-green">' + eventObj.tags.join('</span> <span class="badge bg-green">') + '</span>' : '') +
-                        '</div>'
-                        ,
+                        title: renderEventPopoverTitle(eventObj),
+                        content: renderEventPopoverContent(eventObj),
                         trigger: 'hover',
                         placement: 'auto',
                         container: 'body',
@@ -171,26 +359,24 @@
                 },
             {% if not is_punch_mode and is_granted('create_own_timesheet') %}
                 dayClick: function(date, jsEvent, view) {
-                    // day-clicks are always triggered, unless a selection was created
-                    // so clicking in a day (month view) or any slot (week and day view) will trigger a dayClick
-                    // BEFORE triggering a select - make sure not two create dialogs are requested
-                    if(view.type !== 'month') {
+                    {# day-clicks are always triggered, unless a selection was created.
+                       So clicking in a day (month view) or any slot (week and day view) will trigger a dayClick
+                       BEFORE triggering a select - make sure not two create dialogs are requested #}
+                    if (view.type !== 'month') {
                         return;
                     }
-                    var param = 'begin';
-                    var begin = date.format();
 
-                    var createUrl = '{{ path('timesheet_create') }}' + '?' + param + '=' + begin;
+                    let createUrl = '{{ path('timesheet_create') }}?begin=' + date.format();
                     kimai.getPlugin('modal').openUrlInModal(createUrl);
                 },
                 selectable: true,
                 select: function(start, end, jsEvent, view) {
                     if(view.type === 'month') {
-                        // multi-day clicks are NOT allowed in the month view, as simple day clicks would also trigger
-                        // a select - there is no way to distinguish a simple click and a two day selection
+                        {# multi-day clicks are NOT allowed in the month view, as simple day clicks would also trigger
+                           a select - there is no way to distinguish a simple click and a two day selection #}
                         return;
                     }
-                    var createUrl = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
+                    let createUrl = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
                     kimai.getPlugin('modal').openUrlInModal(createUrl);
                 },
             {% endif %}
@@ -200,23 +386,23 @@
                         jsEvent.preventDefault();
                         return;
                     }
-                    var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
+                    let editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
                     kimai.getPlugin('modal').openUrlInModal(editUrl);
                 },
                 {% if not is_punch_mode %}
                 editable: true,
                 eventDragStart: function(event, jsEvent, ui, view) {
-                    window.hidePopover = true;
+                    deactivatePopover();
                 },
-                eventDragStop: function( event, jsEvent, ui, view ) {
-                    window.hidePopover = false;
+                eventDragStop: function(event, jsEvent, ui, view) {
+                    activatePopover();
                 },
                 eventDrop: changeHandler,
                 eventResizeStart: function(event, jsEvent, ui, view) {
-                    window.hidePopover = true;
+                    deactivatePopover();
                 },
-                eventResizeStop: function( event, jsEvent, ui, view ) {
-                    window.hidePopover = false;
+                eventResizeStop: function(event, jsEvent, ui, view) {
+                    activatePopover();
                 },
                 eventResize: changeHandler,
                 {% endif %}

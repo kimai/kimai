@@ -158,7 +158,7 @@ class AppExtensionTest extends TestCase
                 'select_type' => 'selectpicker',
                 'show_about' => true,
                 'chart' => [
-                    'background_color' => 'rgba(0,115,183,0.7)',
+                    'background_color' => '#3c8dbc',
                     'border_color' => '#3b8bba',
                     'grid_color' => 'rgba(0,0,0,.05)',
                     'height' => '200'
@@ -173,6 +173,9 @@ class AppExtensionTest extends TestCase
                 'auto_reload_datatable' => false,
                 'autocomplete_chars' => 3,
                 'tags_create' => true,
+                'calendar' => [
+                    'background_color' => '#d2d6de',
+                ],
             ],
             'kimai.theme.select_type' => 'selectpicker',
             'kimai.theme.show_about' => true,

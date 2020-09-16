@@ -18,7 +18,6 @@ use App\Form\API\TimesheetApiEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
-use App\Timesheet\RoundingService;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Timesheet\TrackingModeService;
@@ -39,7 +38,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @RouteResource("Timesheet")
@@ -50,6 +48,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class TimesheetController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Not_Expanded'];
+    public const GROUPS_ENTITY_FULL = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Expanded'];
     public const GROUPS_FORM = ['Default', 'Entity', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Timesheet', 'Expanded'];
@@ -79,10 +78,6 @@ class TimesheetController extends BaseApiController
      */
     private $dispatcher;
     /**
-     * @var RoundingService
-     */
-    private $roundingService;
-    /**
      * @var TimesheetService
      */
     private $service;
@@ -94,7 +89,6 @@ class TimesheetController extends BaseApiController
         TagRepository $tagRepository,
         TrackingModeService $trackingModeService,
         EventDispatcherInterface $dispatcher,
-        RoundingService $roundingService,
         TimesheetService $service
     ) {
         $this->viewHandler = $viewHandler;
@@ -103,7 +97,6 @@ class TimesheetController extends BaseApiController
         $this->tagRepository = $tagRepository;
         $this->trackingModeService = $trackingModeService;
         $this->dispatcher = $dispatcher;
-        $this->roundingService = $roundingService;
         $this->service = $service;
     }
 
@@ -330,12 +323,14 @@ class TimesheetController extends BaseApiController
      *      @SWG\Schema(ref="#/definitions/TimesheetEditForm")
      * )
      *
+     * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources (TimesheetEntityExpanded). Allowed values: true (default: false)")
+     *
      * @Security("is_granted('create_own_timesheet')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function postAction(Request $request): Response
+    public function postAction(Request $request, ParamFetcherInterface $paramFetcher): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -367,7 +362,12 @@ class TimesheetController extends BaseApiController
             }
 
             $view = new View($timesheet, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+            if ('true' === $paramFetcher->get('full')) {
+                $view->getContext()->setGroups(self::GROUPS_ENTITY_FULL);
+            } else {
+                $view->getContext()->setGroups(self::GROUPS_ENTITY);
+            }
 
             return $this->viewHandler->handle($view);
         }
@@ -626,11 +626,12 @@ class TimesheetController extends BaseApiController
      * )
      *
      * @Rest\RequestParam(name="copy", requirements="all|tags|rates|meta|description", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all, tags, rates, description, meta (default: nothing is copied)")
+     * @Rest\RequestParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Changes the restart date to the given one (default: now)")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function restartAction(int $id, ParamFetcherInterface $paramFetcher, ValidatorInterface $validator): Response
+    public function restartAction(int $id, ParamFetcherInterface $paramFetcher): Response
     {
         $timesheet = $this->repository->find($id);
 
@@ -647,12 +648,19 @@ class TimesheetController extends BaseApiController
 
         $copyTimesheet = $this->service->createNewTimesheet($user);
 
+        $factory = $this->getDateTimeFactory();
+
+        $begin = $factory->createDateTime();
+        if (null !== ($beginTmp = $paramFetcher->get('begin'))) {
+            $begin = $factory->createDateTime($beginTmp);
+        }
+
         $copyTimesheet
-            ->setBegin($this->getDateTimeFactory()->createDateTime())
+            ->setBegin($begin)
             ->setActivity($timesheet->getActivity())
             ->setProject($timesheet->getProject())
         ;
-        $this->roundingService->roundBegin($copyTimesheet);
+        $this->service->prepareNewTimesheet($copyTimesheet);
 
         if (null !== ($copy = $paramFetcher->get('copy'))) {
             if (\in_array($copy, ['rates', 'all'])) {
@@ -678,13 +686,7 @@ class TimesheetController extends BaseApiController
             }
         }
 
-        $errors = $validator->validate($copyTimesheet);
-
-        if (\count($errors) > 0) {
-            throw new BadRequestHttpException($errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage());
-        }
-
-        $this->service->saveNewTimesheet($copyTimesheet);
+        $this->service->restartTimesheet($copyTimesheet, $timesheet);
 
         $view = new View($copyTimesheet, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

@@ -9,12 +9,20 @@
 
 namespace App\Controller;
 
+use App\Calendar\DragAndDropSource;
 use App\Calendar\Google;
-use App\Calendar\Source;
-use App\Configuration\CalendarConfiguration;
+use App\Calendar\GoogleSource;
+use App\Calendar\RecentActivitiesSource;
+use App\Calendar\TimesheetEntry;
+use App\Configuration\SystemConfiguration;
+use App\Event\CalendarDragAndDropSourceEvent;
+use App\Event\CalendarGoogleSourceEvent;
+use App\Repository\TimesheetRepository;
 use App\Timesheet\TrackingModeService;
+use App\Utils\Color;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Controller used to display calendars.
@@ -25,36 +33,108 @@ use Symfony\Component\Routing\Annotation\Route;
 class CalendarController extends AbstractController
 {
     /**
+     * @var EventDispatcherInterface
+     */
+    private $dispatcher;
+
+    public function __construct(EventDispatcherInterface $dispatcher)
+    {
+        $this->dispatcher = $dispatcher;
+    }
+
+    /**
      * @Route(path="/", name="calendar", methods={"GET"})
      */
-    public function userCalendar(CalendarConfiguration $configuration, TrackingModeService $service)
+    public function userCalendar(SystemConfiguration $configuration, TrackingModeService $service, TimesheetRepository $repository)
     {
         $mode = $service->getActiveMode();
+        $factory = $this->getDateTimeFactory();
+        $defaultStart = $factory->createDateTime($configuration->getTimesheetDefaultBeginTime());
+
+        $config = [
+            'dayLimit' => $configuration->getCalendarDayLimit(),
+            'showWeekNumbers' => $configuration->isCalendarShowWeekNumbers(),
+            'showWeekends' => $configuration->isCalendarShowWeekends(),
+            'businessDays' => $configuration->getCalendarBusinessDays(),
+            'businessTimeBegin' => $configuration->getCalendarBusinessTimeBegin(),
+            'businessTimeEnd' => $configuration->getCalendarBusinessTimeEnd(),
+            'slotDuration' => $configuration->getCalendarSlotDuration(),
+            'timeframeBegin' => $configuration->getCalendarTimeframeBegin(),
+            'timeframeEnd' => $configuration->getCalendarTimeframeEnd(),
+        ];
+
+        $isPunchMode = !$mode->canEditDuration() && !$mode->canEditBegin() && !$mode->canEditEnd();
+        $dragAndDrop = [];
+
+        if ($mode->canEditBegin()) {
+            $dragAndDrop = $this->getDragAndDropResources($repository);
+        }
 
         return $this->render('calendar/user.html.twig', [
-            'config' => $configuration,
+            'config' => $config,
+            'dragAndDrop' => $dragAndDrop,
             'google' => $this->getGoogleSources($configuration),
-            'now' => $this->getDateTimeFactory()->createDateTime(),
-            'is_punch_mode' => !$mode->canEditDuration() && !$mode->canEditBegin() && !$mode->canEditEnd()
+            'now' => $factory->createDateTime(),
+            'defaultStartTime' => $defaultStart->format('h:i:s'),
+            'is_punch_mode' => $isPunchMode,
+            'can_edit_begin' => $mode->canEditBegin(),
+            'can_edit_end' => $mode->canEditBegin(),
+            'can_edit_duration' => $mode->canEditDuration(),
         ]);
     }
 
     /**
-     * @return Google
+     * @return DragAndDropSource[]
      */
-    protected function getGoogleSources(CalendarConfiguration $configuration)
+    private function getDragAndDropResources(TimesheetRepository $repository): array
     {
-        $apiKey = $configuration->getGoogleApiKey() ?? null;
         $sources = [];
 
-        foreach ($configuration->getGoogleSources() as $name => $config) {
-            $source = new Source();
-            $source
-                ->setColor($config['color'])
-                ->setUri($config['id'])
-                ->setId($name)
-            ;
+        try {
+            $data = $repository->getRecentActivities(
+                $this->getUser(),
+                $this->getDateTimeFactory()->createDateTime('-1 year'),
+                10
+            );
 
+            $entries = [];
+            $colorHelper = new Color();
+            foreach ($data as $timesheet) {
+                $entries[] = new TimesheetEntry($timesheet, $colorHelper->getTimesheetColor($timesheet));
+            }
+
+            $sources[] = new RecentActivitiesSource($entries);
+        } catch (\Exception $ex) {
+            $this->logException($ex);
+        }
+
+        $event = new CalendarDragAndDropSourceEvent($this->getUser());
+        $this->dispatcher->dispatch($event);
+
+        foreach ($event->getSources() as $source) {
+            $sources[] = $source;
+        }
+
+        return $sources;
+    }
+
+    private function getGoogleSources(SystemConfiguration $configuration): ?Google
+    {
+        $apiKey = $configuration->getCalendarGoogleApiKey();
+        if ($apiKey === null) {
+            return null;
+        }
+
+        $sources = [];
+
+        foreach ($configuration->getCalendarGoogleSources() as $name => $config) {
+            $sources[] = new GoogleSource($name, $config['id'], $config['color']);
+        }
+
+        $event = new CalendarGoogleSourceEvent($this->getUser());
+        $this->dispatcher->dispatch($event);
+
+        foreach ($event->getSources() as $source) {
             $sources[] = $source;
         }
 
