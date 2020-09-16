@@ -78,6 +78,15 @@ class ColorTest extends TestCase
         self::assertEquals(Constants::DEFAULT_COLOR, $sut->getTimesheetColor($timesheet));
         self::assertNull($sut->getColor($timesheet));
         self::assertEquals(Constants::DEFAULT_COLOR, $sut->getColor($timesheet, true));
+
+        $timesheet = new Timesheet();
+        $timesheet->setActivity(new Activity());
+        $project = new Project();
+        $customer = new Customer();
+        $customer->setColor('#123456');
+        $project->setCustomer($customer);
+        $timesheet->setProject($project);
+        self::assertEquals('#123456', $sut->getColor($timesheet, true));
     }
 
     public function testGetFontContrastColor()

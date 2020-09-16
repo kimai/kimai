@@ -70,4 +70,30 @@ class TimesheetEntryTest extends TestCase
         $this->assertNull($sut->getActivity());
         $this->assertEquals($expectedData, $sut->getData());
     }
+
+    public function testGetTitle()
+    {
+        $project = new Project();
+        $project->setName('sdfsdf');
+        $timesheet = new Timesheet();
+        $timesheet->setProject($project);
+
+        $sut = new TimesheetEntry($timesheet, '#ddd');
+        self::assertEquals('sdfsdf', $sut->getTitle());
+
+        $project = new Project();
+        $timesheet = new Timesheet();
+        $timesheet->setProject($project);
+
+        $sut = new TimesheetEntry($timesheet, '#ddd');
+        self::assertEquals('', $sut->getTitle());
+
+        $project = new Project();
+        $timesheet = new Timesheet();
+        $timesheet->setDescription('fooooo');
+        $timesheet->setProject($project);
+
+        $sut = new TimesheetEntry($timesheet, '#ddd');
+        self::assertEquals('fooooo', $sut->getTitle());
+    }
 }
