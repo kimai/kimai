@@ -78,13 +78,13 @@ final class TimesheetFixtures extends Fixture
      */
     private $tags = [];
 
-    public function __construct(?User $user = null, ?int $amount = 10)
+    public function __construct(?User $user = null, ?int $amount = null)
     {
         if ($user !== null) {
             $this->setUser($user);
         }
         if ($amount !== null) {
-            $this->setAmount(10);
+            $this->setAmount($amount);
         }
     }
 
