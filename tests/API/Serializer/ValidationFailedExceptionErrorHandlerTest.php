@@ -61,7 +61,7 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
         $constraints = new ConstraintViolationList();
         $constraints->add(new ConstraintViolation('toooo many tests', 'abc.def', [], '$root', 'begin', 4, null, null, null, '$cause'));
         $constraints->add(new ConstraintViolation('missing tests', 'abc.def', [], '$root', 'begin', 4, null, null, null, '$cause'));
-        $constraints->add(new ConstraintViolation('missing tests', 'test %wuuf% 123', ['%wuuf%' => 'xcv'], '$root', 'end', 4, null, null, null, '$cause'));
+        $constraints->add(new ConstraintViolation('missing tests', 'test %wuuf% 123', ['%wuuf%' => 'xcv'], '$root', 'end', 4, 3, null, null, '$cause'));
         $validations = new ValidationFailedException($constraints, 'Uuups, that is broken');
 
         $serialization = $this->createMock(SerializationVisitorInterface::class);
