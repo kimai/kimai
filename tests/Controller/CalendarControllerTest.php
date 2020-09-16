@@ -11,6 +11,7 @@ namespace App\Tests\Controller;
 
 use App\Configuration\SystemConfiguration;
 use App\Tests\Configuration\TestConfigLoader;
+use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
  * @group integration
@@ -25,12 +26,18 @@ class CalendarControllerTest extends ControllerBaseTest
     public function testCalendarAction()
     {
         $client = $this->getClientForAuthenticatedUser();
+        $fixtures = new TimesheetFixtures($this->getUserByRole(), 10);
+        $fixtures->setStartDate(new \DateTime('-6 month'));
+        $this->importFixture($fixtures);
+
         $this->request($client, '/calendar/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $crawler = $client->getCrawler();
         $calendar = $crawler->filter('div#timesheet_calendar');
         $this->assertEquals(1, $calendar->count());
+        $dragAndDropBoxes = $crawler->filter('div.box-body.drag-and-drop-source');
+        $this->assertEquals(1, $dragAndDropBoxes->count());
     }
 
     public function testCalendarActionWithGoogleSource()

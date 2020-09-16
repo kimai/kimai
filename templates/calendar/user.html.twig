@@ -13,6 +13,7 @@
                 {% for source in dragAndDrop|filter(s => s.entries|length > 0) %}
                     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
                         {% block box_title %}{{ source.title|trans }}{% endblock %}
+                        {% block box_body_class %}drag-and-drop-source{% endblock %}
                         {% block box_body %}
                             <div class="external-events" data-method="{{ source.method }}" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
                                 {% for entry in source.entries %}
