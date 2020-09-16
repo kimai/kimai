@@ -21,10 +21,12 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingModeService;
 use App\Validator\ValidationException;
+use App\Validator\ValidationFailedException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -33,12 +35,19 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class TimesheetServiceTest extends TestCase
 {
-    private function getSut(?AuthorizationCheckerInterface $authorizationChecker = null, ?EventDispatcherInterface $dispatcher = null): TimesheetService
-    {
+    private function getSut(
+        ?AuthorizationCheckerInterface $authorizationChecker = null,
+        ?EventDispatcherInterface $dispatcher = null,
+        ?ValidatorInterface $validator = null,
+        ?TimesheetRepository $repository = null
+    ): TimesheetService {
         $configuration = $this->createMock(TimesheetConfiguration::class);
+        $configuration->method('getActiveEntriesHardLimit')->willReturn(1);
 
-        $repository = $this->createMock(TimesheetRepository::class);
-        $repository->method('getActiveEntries')->willReturn([]);
+        if ($repository === null) {
+            $repository = $this->createMock(TimesheetRepository::class);
+            $repository->method('getActiveEntries')->willReturn([]);
+        }
 
         $service = new TrackingModeService($configuration, []);
         if ($dispatcher === null) {
@@ -47,8 +56,10 @@ class TimesheetServiceTest extends TestCase
         if ($authorizationChecker === null) {
             $authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
         }
-        $validator = $this->createMock(ValidatorInterface::class);
-        $validator->method('validate')->willReturn(new ConstraintViolationList());
+        if ($validator === null) {
+            $validator = $this->createMock(ValidatorInterface::class);
+            $validator->method('validate')->willReturn(new ConstraintViolationList());
+        }
 
         $service = new TimesheetService($configuration, $repository, $service, $dispatcher, $authorizationChecker, $validator);
 
@@ -77,6 +88,50 @@ class TimesheetServiceTest extends TestCase
 
         $this->expectException(AccessDeniedHttpException::class);
         $this->expectExceptionMessage('You are not allowed to start this timesheet record');
+
+        $sut->saveNewTimesheet(new Timesheet());
+    }
+
+    public function testSaveNewTimesheetHasValidationError()
+    {
+        $authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
+        $authorizationChecker->expects($this->once())->method('isGranted')->willReturn(true);
+
+        $constraints = new ConstraintViolationList();
+        $constraints->add(new ConstraintViolation('toooo many tests', 'abc.def', [], '$root', 'begin', 4, null, null, null, '$cause'));
+
+        $validator = $this->createMock(ValidatorInterface::class);
+        $validator->method('validate')->willReturn($constraints);
+
+        $sut = $this->getSut($authorizationChecker, null, $validator);
+
+        $this->expectException(ValidationFailedException::class);
+        $this->expectExceptionMessage('Validation Failed');
+
+        $sut->saveNewTimesheet(new Timesheet());
+    }
+
+    public function testSaveNewTimesheetStopsActiveRecords()
+    {
+        $authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
+        $authorizationChecker->expects($this->once())->method('isGranted')->willReturn(true);
+
+        $timesheet1 = $this->createMock(Timesheet::class);
+        $timesheet1->method('getId')->willReturn(1);
+        $timesheet1->method('getBegin')->willReturn(new \DateTime());
+        $timesheet1->expects($this->once())->method('setBegin');
+        $timesheet1->expects($this->once())->method('setEnd');
+
+        $timesheet2 = $this->createMock(Timesheet::class);
+        $timesheet2->method('getId')->willReturn(1);
+        $timesheet2->method('getBegin')->willReturn(new \DateTime());
+        $timesheet2->expects($this->once())->method('setBegin');
+        $timesheet2->expects($this->once())->method('setEnd');
+
+        $repository = $this->createMock(TimesheetRepository::class);
+        $repository->method('getActiveEntries')->willReturn([$timesheet1, $timesheet2]);
+
+        $sut = $this->getSut($authorizationChecker, null, null, $repository);
 
         $sut->saveNewTimesheet(new Timesheet());
     }
