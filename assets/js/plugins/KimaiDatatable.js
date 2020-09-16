@@ -46,7 +46,7 @@ export default class KimaiDatatable extends KimaiPlugin {
             document.addEventListener(eventName, handle);
         }
 
-        if (this.getContainer().getConfiguration().get('autoReloadDatatable')) {
+        if (this.getConfiguration('autoReloadDatatable')) {
             document.addEventListener('toolbar-change', handle);
         } else {
             document.addEventListener('pagination-change', handle);

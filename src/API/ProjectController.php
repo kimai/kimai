@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\ProjectRate;
 use App\Entity\User;
@@ -21,7 +20,6 @@ use App\Form\API\ProjectRateApiForm;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
-use App\Timesheet\UserDateTimeFactory;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -63,20 +61,15 @@ class ProjectController extends BaseApiController
      */
     private $dispatcher;
     /**
-     * @var UserDateTimeFactory
-     */
-    private $dateTime;
-    /**
      * @var ProjectRateRepository
      */
     private $projectRateRepository;
 
-    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, UserDateTimeFactory $dateTime, ProjectRateRepository $projectRateRepository)
+    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, ProjectRateRepository $projectRateRepository)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
-        $this->dateTime = $dateTime;
         $this->projectRateRepository = $projectRateRepository;
     }
 
@@ -143,16 +136,17 @@ class ProjectController extends BaseApiController
         }
 
         if (!$ignoreDates) {
+            $factory = $this->getDateTimeFactory();
             if (null !== ($begin = $paramFetcher->get('start')) && !empty($begin)) {
-                $query->setProjectStart($this->dateTime->createDateTime($begin));
+                $query->setProjectStart($factory->createDateTime($begin));
             }
 
             if (null !== ($end = $paramFetcher->get('end')) && !empty($end)) {
-                $query->setProjectEnd($this->dateTime->createDateTime($end));
+                $query->setProjectEnd($factory->createDateTime($end));
             }
 
             if (empty($begin) && empty($end)) {
-                $now = $this->dateTime->createDateTime();
+                $now = $factory->createDateTime();
                 $query->setProjectStart($now);
                 $query->setProjectEnd($now);
             }

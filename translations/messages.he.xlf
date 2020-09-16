@@ -1,314 +1,314 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="he" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="he" datatype="plaintext" original="messages.en.xlf">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
+      <trans-unit id="time_tracking">
         <source>time_tracking</source>
         <target>שעות עבודה</target>
       </trans-unit>
-      <trans-unit id="inmIkP6" resname="yes">
+      <trans-unit id="yes">
         <source>yes</source>
         <target>כן</target>
       </trans-unit>
-      <trans-unit id="k5Apjz_" resname="no">
+      <trans-unit id="no">
         <source>no</source>
         <target>לא</target>
       </trans-unit>
-      <trans-unit id=".3dyBTq" resname="both">
+      <trans-unit id="both">
         <source>both</source>
         <target>הכל</target>
       </trans-unit>
-      <trans-unit id="KLIuHvt" resname="This is a mandatory field">
+      <trans-unit id="This is a mandatory field">
         <source>This is a mandatory field</source>
         <target>חובה</target>
       </trans-unit>
-      <trans-unit id="_ohHsMM" resname="create">
+      <trans-unit id="create">
         <source>create</source>
         <target>צור</target>
       </trans-unit>
-      <trans-unit id="DYHuW58" resname="confirm.delete">
+      <trans-unit id="confirm.delete">
         <source>confirm.delete</source>
         <target>אתה באמת מעוניין למחוק?</target>
       </trans-unit>
-      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
+      <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
         <target>
                     הנתון הזה גם כן ימחק!
                     לחילופין, אתה יכול לבחור רשומה שאליה כל הנתונים יעברו:
                 </target>
       </trans-unit>
-      <trans-unit id="COyxNde" resname="delete.not_in_use">
+      <trans-unit id="delete.not_in_use">
         <source>delete.not_in_use</source>
         <target>האובייקט הזה יכול להימחק בביטחה.</target>
       </trans-unit>
-      <trans-unit id="I3TZF5S" resname="cancel">
+      <trans-unit id="cancel">
         <source>cancel</source>
         <target>בטל</target>
       </trans-unit>
-      <trans-unit id="PyZ8KrQ" resname="confirm">
+      <trans-unit id="confirm">
         <source>confirm</source>
         <target>אשר</target>
       </trans-unit>
-      <trans-unit id=".0CFrRV" resname="upload">
+      <trans-unit id="upload">
         <source>upload</source>
         <target>העלה</target>
       </trans-unit>
-      <trans-unit id="JBkykGe" resname="search">
+      <trans-unit id="search">
         <source>search</source>
         <target>חפש</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
+      <trans-unit id="my.profile">
         <source>my.profile</source>
         <target>הפרופיל שלי</target>
       </trans-unit>
-      <trans-unit id="J258iS6" resname="update_multiple">
+      <trans-unit id="update_multiple">
         <source>update_multiple</source>
         <target>%action% %count% entries?</target>
       </trans-unit>
-      <trans-unit id="OTDmccn" resname="attachments">
+      <trans-unit id="attachments">
         <source>attachments</source>
         <target>Files</target>
       </trans-unit>
-      <trans-unit id="0M_Gylq" resname="rates.empty">
+      <trans-unit id="rates.empty">
         <source>rates.empty</source>
         <target>לא הוגדרו עדיין עמלות.</target>
       </trans-unit>
-      <trans-unit id="mflwMcX" resname="rates.title">
+      <trans-unit id="rates.title">
         <source>rates.title</source>
         <target>עמלות</target>
       </trans-unit>
-      <trans-unit id="9pvowqn" resname="label.password">
+      <trans-unit id="label.password">
         <source>label.password</source>
         <target>סיסמה</target>
       </trans-unit>
-      <trans-unit id="WxAnbP0" resname="label.password_repeat">
+      <trans-unit id="label.password_repeat">
         <source>label.password_repeat</source>
         <target>אימות סיסמה</target>
       </trans-unit>
-      <trans-unit id="II4DGnv" resname="label.logout">
+      <trans-unit id="label.logout">
         <source>label.logout</source>
         <target>התנתקות</target>
       </trans-unit>
-      <trans-unit id="hFFZGp_" resname="label.user_profile">
+      <trans-unit id="label.user_profile">
         <source>label.user_profile</source>
         <target>הפרופיל שלי</target>
       </trans-unit>
-      <trans-unit id="gXZR.hV" resname="label.api_token">
+      <trans-unit id="label.api_token">
         <source>label.api_token</source>
         <target>סיסמת API</target>
       </trans-unit>
-      <trans-unit id="s_X2xpI" resname="label.api_token_repeat">
+      <trans-unit id="label.api_token_repeat">
         <source>label.api_token_repeat</source>
         <target>אימות סיסמת API</target>
       </trans-unit>
-      <trans-unit id=".372.o7" resname="login_required">
+      <trans-unit id="login_required">
         <source>login_required</source>
         <target>חסרה הרשאה. התחבר מחדש?</target>
       </trans-unit>
-      <trans-unit id="UoOv6mx" resname="menu.homepage">
+      <trans-unit id="menu.homepage">
         <source>menu.homepage</source>
         <target>דשבורד</target>
       </trans-unit>
-      <trans-unit id="wvvYSw_" resname="menu.admin">
+      <trans-unit id="menu.admin">
         <source>menu.admin</source>
         <target>ניהול</target>
       </trans-unit>
-      <trans-unit id="6OKwCUB" resname="menu.system">
+      <trans-unit id="menu.system">
         <source>menu.system</source>
         <target>מערכת</target>
       </trans-unit>
-      <trans-unit id="wBTFKFR" resname="menu.logout">
+      <trans-unit id="menu.logout">
         <source>menu.logout</source>
         <target>התנתקות</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="menu.timesheet">
+      <trans-unit id="menu.timesheet">
         <source>menu.timesheet</source>
         <target>השעות שלי</target>
       </trans-unit>
-      <trans-unit id="Ci9W8.K" resname="menu.invoice">
+      <trans-unit id="menu.invoice">
         <source>menu.invoice</source>
         <target>חשבוניות</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
+      <trans-unit id="menu.export">
         <source>menu.export</source>
         <target>ייצוא נתונים</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
+      <trans-unit id="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>גיליון שעות</target>
       </trans-unit>
-      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
+      <trans-unit id="menu.admin_customer">
         <source>menu.admin_customer</source>
         <target>לקוחות</target>
       </trans-unit>
-      <trans-unit id="oDLp9t3" resname="menu.admin_project">
+      <trans-unit id="menu.admin_project">
         <source>menu.admin_project</source>
         <target>פרויקטים</target>
       </trans-unit>
-      <trans-unit id="wriHFwl" resname="menu.admin_activity">
+      <trans-unit id="menu.admin_activity">
         <source>menu.admin_activity</source>
         <target>פעילויות</target>
       </trans-unit>
-      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
+      <trans-unit id="menu.admin_user">
         <source>menu.admin_user</source>
         <target>משתמשים</target>
       </trans-unit>
-      <trans-unit id="pA.bYIk" resname="menu.admin_team">
+      <trans-unit id="menu.admin_team">
         <source>menu.admin_team</source>
         <target>צוותים</target>
       </trans-unit>
-      <trans-unit id="hOZxcaK" resname="menu.plugin">
+      <trans-unit id="menu.plugin">
         <source>menu.plugin</source>
         <target>תוספות</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
+      <trans-unit id="menu.system_configuration">
         <source>menu.system_configuration</source>
         <target>הגדרות</target>
       </trans-unit>
-      <trans-unit id="yo4f8Kh" resname="menu.tags">
+      <trans-unit id="menu.tags">
         <source>menu.tags</source>
         <target>תגיות</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="menu.doctor">
+      <trans-unit id="menu.doctor">
         <source>menu.doctor</source>
         <target>דוקטור</target>
       </trans-unit>
-      <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
+      <trans-unit id="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>לא נמצאו רשומות על בסיס הסינונים שבחרת.</target>
       </trans-unit>
-      <trans-unit id="hlu4iX5" resname="error.no_comments_found">
+      <trans-unit id="error.no_comments_found">
         <source>error.no_comments_found</source>
         <target>לא נרשמו הערות עדיין.</target>
       </trans-unit>
-      <trans-unit id="H1qEi4d" resname="label.date">
+      <trans-unit id="label.date">
         <source>label.date</source>
         <target>תאריך</target>
       </trans-unit>
-      <trans-unit id="eJPDE76" resname="label.starttime">
+      <trans-unit id="label.starttime">
         <source>label.starttime</source>
         <target>התחלה</target>
       </trans-unit>
-      <trans-unit id="uZlpDFh" resname="label.endtime">
+      <trans-unit id="label.endtime">
         <source>label.endtime</source>
         <target>סיום</target>
       </trans-unit>
-      <trans-unit id="cgpmY0I" resname="label.duration">
+      <trans-unit id="label.duration">
         <source>label.duration</source>
         <target>משך זמן</target>
       </trans-unit>
-      <trans-unit id="O2X4xZH" resname="label.user">
+      <trans-unit id="label.user">
         <source>label.user</source>
         <target>משתמש</target>
       </trans-unit>
-      <trans-unit id="LDhDPrF" resname="label.username">
+      <trans-unit id="label.username">
         <source>label.username</source>
         <target>שם משתמש</target>
       </trans-unit>
-      <trans-unit id="4cEApe1" resname="label.description">
+      <trans-unit id="label.description">
         <source>label.description</source>
         <target>תיאור</target>
       </trans-unit>
-      <trans-unit id="ysOvPSq" resname="label.name">
+      <trans-unit id="label.name">
         <source>label.name</source>
         <target>שם</target>
       </trans-unit>
-      <trans-unit id="WqTho4C" resname="label.comment">
+      <trans-unit id="label.comment">
         <source>label.comment</source>
         <target>הערה</target>
       </trans-unit>
-      <trans-unit id="txRonia" resname="label.id">
+      <trans-unit id="label.id">
         <source>label.id</source>
         <target>מזהה</target>
       </trans-unit>
-      <trans-unit id="CYpZwBz" resname="label.visible">
+      <trans-unit id="label.visible">
         <source>label.visible</source>
         <target>לתצוגה</target>
       </trans-unit>
-      <trans-unit id="2ktNwkr" resname="label.budget">
+      <trans-unit id="label.budget">
         <source>label.budget</source>
         <target>תקציב</target>
       </trans-unit>
-      <trans-unit id="x8TrOec" resname="label.timeBudget">
+      <trans-unit id="label.timeBudget">
         <source>label.timeBudget</source>
         <target>תקציב זמן</target>
       </trans-unit>
-      <trans-unit id="l1wiL0h" resname="label.activity">
+      <trans-unit id="label.activity">
         <source>label.activity</source>
         <target>פעילות</target>
       </trans-unit>
-      <trans-unit id="KtnqJcg" resname="label.project">
+      <trans-unit id="label.project">
         <source>label.project</source>
         <target>פרויקט</target>
       </trans-unit>
-      <trans-unit id="VNCQ7YU" resname="label.tag">
+      <trans-unit id="label.tag">
         <source>label.tag</source>
         <target>תגיות</target>
       </trans-unit>
-      <trans-unit id="ijQyGRo" resname="label.tags">
+      <trans-unit id="label.tags">
         <source>label.tags</source>
         <target>תגיות</target>
       </trans-unit>
-      <trans-unit id="VAbtieW" resname="label.hourlyRate">
+      <trans-unit id="label.hourlyRate">
         <source>label.hourlyRate</source>
         <target>תעריף שעתי</target>
       </trans-unit>
-      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
+      <trans-unit id="label.hourly_rate">
         <source>label.hourly_rate</source>
         <target>תעריף שעתי</target>
       </trans-unit>
-      <trans-unit id="dezCZWf" resname="label.skin">
+      <trans-unit id="label.skin">
         <source>label.skin</source>
         <target>צבע</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
+      <trans-unit id="label.theme.layout">
         <source>label.theme.layout</source>
         <target>הצג: פריסה</target>
       </trans-unit>
-      <trans-unit id="w8T34A6" resname="label.hours">
+      <trans-unit id="label.hours">
         <source>label.hours</source>
         <target>שעות</target>
       </trans-unit>
-      <trans-unit id="Ih3IFXj" resname="label.rate">
+      <trans-unit id="label.rate">
         <source>label.rate</source>
         <target>תעריף</target>
       </trans-unit>
-      <trans-unit id="djL6LMC" resname="help.rate">
+      <trans-unit id="help.rate">
         <source>help.rate</source>
         <target>תעריף שעתי לחיוב</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
+      <trans-unit id="label.rate_internal">
         <source>label.rate_internal</source>
         <target>תעריף פנימי</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
+      <trans-unit id="help.rate_internal">
         <source>help.rate_internal</source>
         <target>עלות פנימית. אם לא מצוין ערך, ילקח התעריף הרגיל</target>
       </trans-unit>
-      <trans-unit id="foM2o5T" resname="label.language">
+      <trans-unit id="label.language">
         <source>label.language</source>
         <target>שפה</target>
       </trans-unit>
-      <trans-unit id="Z8a2kUf" resname="label.customer">
+      <trans-unit id="label.customer">
         <source>label.customer</source>
         <target>לקוח</target>
       </trans-unit>
-      <trans-unit id="D2N6_cP" resname="label.email">
+      <trans-unit id="label.email">
         <source>label.email</source>
         <target>אימייל</target>
       </trans-unit>
-      <trans-unit id="Ss2xe99" resname="label.team">
+      <trans-unit id="label.team">
         <source>label.team</source>
         <target>צוות</target>
       </trans-unit>
-      <trans-unit id="Zpj9UB4" resname="label.teamlead">
+      <trans-unit id="label.teamlead">
         <source>label.teamlead</source>
         <target>ראש צוות</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
+      <trans-unit id="label.create_more">
         <source>label.create_more</source>
         <target>צור רשומות נוספות</target>
       </trans-unit>
@@ -316,698 +316,698 @@
         <source>label.billable</source>
         <target>להחזר</target>
       </trans-unit>
-      <trans-unit id="zldXQq6" resname="label.actions">
+      <trans-unit id="label.actions">
         <source>label.actions</source>
         <target>פעולות</target>
       </trans-unit>
-      <trans-unit id="ovKkXwU" resname="action.edit">
+      <trans-unit id="action.edit">
         <source>action.edit</source>
         <target>ערוך</target>
       </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
+      <trans-unit id="action.delete">
         <source>action.delete</source>
         <target>מחק</target>
       </trans-unit>
-      <trans-unit id="HLtdhYw" resname="action.save">
+      <trans-unit id="action.save">
         <source>action.save</source>
         <target>שמור</target>
       </trans-unit>
-      <trans-unit id="tKZKI2Z" resname="action.reset">
+      <trans-unit id="action.reset">
         <source>action.reset</source>
         <target>אפס</target>
       </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
+      <trans-unit id="action.back">
         <source>action.back</source>
         <target>חזור</target>
       </trans-unit>
-      <trans-unit id="wCazS.X" resname="action.close">
+      <trans-unit id="action.close">
         <source>action.close</source>
         <target>סגור</target>
       </trans-unit>
-      <trans-unit id="3bqLM8Q" resname="dashboard.title">
+      <trans-unit id="dashboard.title">
         <source>dashboard.title</source>
         <target>דשבורד</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
+      <trans-unit id="dashboard.subtitle">
         <source>dashboard.subtitle</source>
         <target>ברוך הבא!</target>
       </trans-unit>
-      <trans-unit id="yEa1Yz3" resname="dashboard.all">
+      <trans-unit id="dashboard.all">
         <source>dashboard.all</source>
         <target>כל המשתמשים</target>
       </trans-unit>
-      <trans-unit id="giznf_R" resname="more.info.link">
+      <trans-unit id="more.info.link">
         <source>more.info.link</source>
         <target>מידע נוסף</target>
       </trans-unit>
-      <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
+      <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>הראה תפריט</target>
       </trans-unit>
-      <trans-unit id="f3KMQJh" resname="label.my_teams">
+      <trans-unit id="label.my_teams">
         <source>label.my_teams</source>
         <target>הצוותים שלי</target>
       </trans-unit>
-      <trans-unit id="jTiYRIu" resname="label.my_team_projects">
+      <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
         <target>פרויקטים ותקציבים לצוות</target>
       </trans-unit>
-      <trans-unit id="1PQHtXu" resname="label.progress">
+      <trans-unit id="label.progress">
         <source>label.progress</source>
         <target>התקדמות</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
+      <trans-unit id="label.plus_more">
         <source>label.plus_more</source>
         <target>+%count% נוספים</target>
       </trans-unit>
-      <trans-unit id="VXj0Y3h" resname="timesheet.title">
+      <trans-unit id="timesheet.title">
         <source>timesheet.title</source>
         <target>השעות שלי</target>
       </trans-unit>
-      <trans-unit id="dwEVXUR" resname="timesheet.edit">
+      <trans-unit id="timesheet.edit">
         <source>timesheet.edit</source>
         <target>ערוך רשומה</target>
       </trans-unit>
-      <trans-unit id="trDJK9W" resname="label.begin">
+      <trans-unit id="label.begin">
         <source>label.begin</source>
         <target>התחלה</target>
       </trans-unit>
-      <trans-unit id="R9typUt" resname="label.end">
+      <trans-unit id="label.end">
         <source>label.end</source>
         <target>סיום</target>
       </trans-unit>
-      <trans-unit id="egaNXjp" resname="label.daterange">
+      <trans-unit id="label.daterange">
         <source>label.daterange</source>
         <target>טווח זמן</target>
       </trans-unit>
-      <trans-unit id="UbnqJLn" resname="modal.columns.title">
+      <trans-unit id="modal.columns.title">
         <source>modal.columns.title</source>
         <target>שנה הצגת עמודות</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
+      <trans-unit id="modal.columns.description">
         <source>modal.columns.description</source>
         <target>לאחר השמירה, כל העמודות הלא מסומנות יהיו מוסתרות. הגדרה זו תישמר בעוגיה בדפדפן. אם תמחק עוגיות מהדפדפן שלך, הגדרה זו תתבטל</target>
       </trans-unit>
-      <trans-unit id="5gjqxgK" resname="label.fixedRate">
+      <trans-unit id="label.fixedRate">
         <source>label.fixedRate</source>
         <target>תעריף קבוע</target>
       </trans-unit>
-      <trans-unit id="b43sCwO" resname="help.fixedRate">
+      <trans-unit id="help.fixedRate">
         <source>help.fixedRate</source>
         <target>כל רשומה מקבלת את אותו ערך, ללא קשר למשך הזמן</target>
       </trans-unit>
-      <trans-unit id="YTSS_Q1" resname="label.color">
+      <trans-unit id="label.color">
         <source>label.color</source>
         <target>צבע</target>
       </trans-unit>
-      <trans-unit id="EoouxGX" resname="label.replaceTags">
+      <trans-unit id="label.replaceTags">
         <source>label.replaceTags</source>
         <target>החלף תגיות</target>
       </trans-unit>
-      <trans-unit id="BxkmaKz" resname="label.appendTags">
+      <trans-unit id="label.appendTags">
         <source>label.appendTags</source>
         <target>הוסף תגיות</target>
       </trans-unit>
-      <trans-unit id="1_wnK76" resname="profile.title">
+      <trans-unit id="profile.title">
         <source>profile.title</source>
         <target>פרופיל משתמש</target>
       </trans-unit>
-      <trans-unit id="HWKJZ0T" resname="profile.about_me">
+      <trans-unit id="profile.about_me">
         <source>profile.about_me</source>
         <target>על עצמי</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="profile.first_entry">
         <source>profile.first_entry</source>
         <target>תחילת עבודה</target>
       </trans-unit>
-      <trans-unit id="xEYQXPy" resname="profile.settings">
+      <trans-unit id="profile.settings">
         <source>profile.settings</source>
         <target>פרופיל</target>
       </trans-unit>
-      <trans-unit id="A6TLLQa" resname="profile.password">
+      <trans-unit id="profile.password">
         <source>profile.password</source>
         <target>סיסמה</target>
       </trans-unit>
-      <trans-unit id="Z34ZpjK" resname="profile.api-token">
+      <trans-unit id="profile.api-token">
         <source>profile.api-token</source>
         <target>API</target>
       </trans-unit>
-      <trans-unit id="ygtTz8." resname="profile.roles">
+      <trans-unit id="profile.roles">
         <source>profile.roles</source>
         <target>תפקידים</target>
       </trans-unit>
-      <trans-unit id="DZ7XGML" resname="profile.teams">
+      <trans-unit id="profile.teams">
         <source>profile.teams</source>
         <target>צוותים</target>
       </trans-unit>
-      <trans-unit id="MQKiG33" resname="profile.preferences">
+      <trans-unit id="profile.preferences">
         <source>profile.preferences</source>
         <target>העדפות</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
+      <trans-unit id="label.theme.collapsed_sidebar">
         <source>label.theme.collapsed_sidebar</source>
         <target>מזער את התפריט השמאלי</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
+      <trans-unit id="label.calendar.initial_view">
         <source>label.calendar.initial_view</source>
         <target>החל תצוגת לוח שנה</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
+      <trans-unit id="label.login.initial_view">
         <source>label.login.initial_view</source>
         <target>החל תצוגה לאחר התחברות</target>
       </trans-unit>
-      <trans-unit id="hO7mkmf" resname="label.lastLogin">
+      <trans-unit id="label.lastLogin">
         <source>label.lastLogin</source>
         <target>כניסה אחרונה</target>
       </trans-unit>
-      <trans-unit id="pcfRcZ4" resname="month">
+      <trans-unit id="month">
         <source>month</source>
         <target>חודש</target>
       </trans-unit>
-      <trans-unit id="Irm6dfx" resname="agendaWeek">
+      <trans-unit id="agendaWeek">
         <source>agendaWeek</source>
         <target>שבוע</target>
       </trans-unit>
-      <trans-unit id="Q0Zip02" resname="agendaDay">
+      <trans-unit id="agendaDay">
         <source>agendaDay</source>
         <target>יום</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
+      <trans-unit id="label.timesheet.daily_stats">
         <source>label.timesheet.daily_stats</source>
         <target>הראה סטטיסטיקות יומיות בגיליון השעות</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
+      <trans-unit id="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
         <target>ייצא משך זמן עם נקודה עשרונית</target>
       </trans-unit>
-      <trans-unit id="HWiuMV6" resname="calendar.title">
+      <trans-unit id="calendar.title">
         <source>calendar.title</source>
         <target>לוח שנה</target>
       </trans-unit>
-      <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
+      <trans-unit id="admin_timesheet.title">
         <source>admin_timesheet.title</source>
         <target>גיליון שעות</target>
       </trans-unit>
-      <trans-unit id="DFjFRGe" resname="admin_project.title">
+      <trans-unit id="admin_project.title">
         <source>admin_project.title</source>
         <target>פרויקטים</target>
       </trans-unit>
-      <trans-unit id="P1TJqda" resname="admin_project.short_stats">
+      <trans-unit id="admin_project.short_stats">
         <source>admin_project.short_stats</source>
         <target>
                     כרגע, הפרויקט %project% ללקוח %customer% יש %activities%
                     פעילויות ו %records% רשומות זמן, שמסתכמות לסך הכל %duration%.
                 </target>
       </trans-unit>
-      <trans-unit id="yLOqEX_" resname="label.project_start">
+      <trans-unit id="label.project_start">
         <source>label.project_start</source>
         <target>תחילת פרויקט</target>
       </trans-unit>
-      <trans-unit id="4kQGReV" resname="label.project_end">
+      <trans-unit id="label.project_end">
         <source>label.project_end</source>
         <target>סיום פרויקט</target>
       </trans-unit>
-      <trans-unit id="auu8q0u" resname="admin_activity.title">
+      <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>פעילויות</target>
       </trans-unit>
-      <trans-unit id="BUHFvFG" resname="admin_activity.short_stats">
+      <trans-unit id="admin_activity.short_stats">
         <source>admin_activity.short_stats</source>
         <target>
                     כרגע, הפעילות %activity% בפרויקט %project% ללקוח %customer%
                     יש %records% רשומות זמן, שמסתכמות לסך הכל %duration%.
                 </target>
       </trans-unit>
-      <trans-unit id="2TvKX9Z" resname="admin_customer.title">
+      <trans-unit id="admin_customer.title">
         <source>admin_customer.title</source>
         <target>לקוח</target>
       </trans-unit>
-      <trans-unit id="39AtPxQ" resname="label.number">
+      <trans-unit id="label.number">
         <source>label.number</source>
         <target>חשבון</target>
       </trans-unit>
-      <trans-unit id="7jfRn_1" resname="label.company">
+      <trans-unit id="label.company">
         <source>label.company</source>
         <target>שם חברה</target>
       </trans-unit>
-      <trans-unit id="GOStgLi" resname="label.vat">
+      <trans-unit id="label.vat">
         <source>label.vat</source>
         <target>מע''מ</target>
       </trans-unit>
-      <trans-unit id="Dgmh_mv" resname="label.vat_id">
+      <trans-unit id="label.vat_id">
         <source>label.vat_id</source>
         <target>מזהה מע''מ</target>
       </trans-unit>
-      <trans-unit id="0tkOMo1" resname="label.contact">
+      <trans-unit id="label.contact">
         <source>label.contact</source>
         <target>איש קשר</target>
       </trans-unit>
-      <trans-unit id="c9W5AO4" resname="label.address">
+      <trans-unit id="label.address">
         <source>label.address</source>
         <target>כתובת</target>
       </trans-unit>
-      <trans-unit id="k7MJQ82" resname="label.country">
+      <trans-unit id="label.country">
         <source>label.country</source>
         <target>מדינה</target>
       </trans-unit>
-      <trans-unit id="g03c_vw" resname="label.phone">
+      <trans-unit id="label.phone">
         <source>label.phone</source>
         <target>טלפון</target>
       </trans-unit>
-      <trans-unit id="eRyhERS" resname="label.fax">
+      <trans-unit id="label.fax">
         <source>label.fax</source>
         <target>פקס</target>
       </trans-unit>
-      <trans-unit id="AawT9pW" resname="label.mobile">
+      <trans-unit id="label.mobile">
         <source>label.mobile</source>
         <target>טלפון נייד</target>
       </trans-unit>
-      <trans-unit id="PS9IH_t" resname="label.homepage">
+      <trans-unit id="label.homepage">
         <source>label.homepage</source>
         <target>דף הבית</target>
       </trans-unit>
-      <trans-unit id="dmtPdwq" resname="label.timezone">
+      <trans-unit id="label.timezone">
         <source>label.timezone</source>
         <target>אזור זמן</target>
       </trans-unit>
-      <trans-unit id="otd2FZd" resname="label.currency">
+      <trans-unit id="label.currency">
         <source>label.currency</source>
         <target>מטבע</target>
       </trans-unit>
-      <trans-unit id="ffVkgoV" resname="admin_customer.short_stats">
+      <trans-unit id="admin_customer.short_stats">
         <source>admin_customer.short_stats</source>
         <target>
                     כרגע, ללקוח %customer% יש %project% פרויקטים עם %activity% פעילויות, שמסתכמות
                     ב %records% רשומות זמן לסך הכל %duration%.
                 </target>
       </trans-unit>
-      <trans-unit id="t34EvnF" resname="admin_user.title">
+      <trans-unit id="admin_user.title">
         <source>admin_user.title</source>
         <target>משתמש</target>
       </trans-unit>
-      <trans-unit id="TRDzmCV" resname="label.alias">
+      <trans-unit id="label.alias">
         <source>label.alias</source>
         <target>שם</target>
       </trans-unit>
-      <trans-unit id="UrRn8xj" resname="label.title">
+      <trans-unit id="label.title">
         <source>label.title</source>
         <target>תואר</target>
       </trans-unit>
-      <trans-unit id="nWMH_Nr" resname="label.avatar">
+      <trans-unit id="label.avatar">
         <source>label.avatar</source>
         <target>תמונת פרופיל</target>
       </trans-unit>
-      <trans-unit id="KtTP.Sh" resname="label.active">
+      <trans-unit id="label.active">
         <source>label.active</source>
         <target>פעיל</target>
       </trans-unit>
-      <trans-unit id="iD6CNOO" resname="label.roles">
+      <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>תפקיד</target>
       </trans-unit>
-      <trans-unit id="PxaOn9y" resname="admin_user.short_stats">
+      <trans-unit id="admin_user.short_stats">
         <source>admin_user.short_stats</source>
         <target>
                     כרגע למשתמש %user% יש %records% רשומות זמן שמסתכמות לסך הכל %duration%.
                 </target>
       </trans-unit>
-      <trans-unit id="ZlZ20pG" resname="user_permissions.title">
+      <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>
         <target>הרשאות משתמש</target>
       </trans-unit>
-      <trans-unit id="G.GEdlk" resname="user_role.title">
+      <trans-unit id="user_role.title">
         <source>user_role.title</source>
         <target>תפקיד משתמש</target>
       </trans-unit>
-      <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
+      <trans-unit id="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
         <target>תווים מותרים: A-Z ו _</target>
       </trans-unit>
-      <trans-unit id="d75KAlJ" resname="label.version">
+      <trans-unit id="label.version">
         <source>label.version</source>
         <target>גרסה</target>
       </trans-unit>
-      <trans-unit id="8Rfa01v" resname="label.required_version">
+      <trans-unit id="label.required_version">
         <source>label.required_version</source>
         <target>מותאם ל</target>
       </trans-unit>
-      <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
+      <trans-unit id="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>System-Admin</target>
       </trans-unit>
-      <trans-unit id="718iPw6" resname="ROLE_ADMIN">
+      <trans-unit id="ROLE_ADMIN">
         <source>ROLE_ADMIN</source>
         <target>Administrator</target>
       </trans-unit>
-      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD">
+      <trans-unit id="ROLE_TEAMLEAD">
         <source>ROLE_TEAMLEAD</source>
         <target>Teamlead</target>
       </trans-unit>
-      <trans-unit id="rvO5ZXf" resname="ROLE_USER">
+      <trans-unit id="ROLE_USER">
         <source>ROLE_USER</source>
         <target>User</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="stats.durationToday">
         <source>stats.durationToday</source>
         <target>שעות עבודה היום</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="stats.durationWeek">
         <source>stats.durationWeek</source>
         <target>שעות עבודה השבוע</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="stats.durationMonth">
         <source>stats.durationMonth</source>
         <target>שעות עבודה החודש</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="stats.durationYear">
         <source>stats.durationYear</source>
         <target>שעות עבודה השנה</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="stats.durationTotal">
         <source>stats.durationTotal</source>
         <target>סך הכל שעות עבודה</target>
       </trans-unit>
-      <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
+      <trans-unit id="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
         <target>שעות העבודה שלי</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
+      <trans-unit id="stats.amountToday">
         <source>stats.amountToday</source>
         <target>הכנסות היום</target>
       </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
+      <trans-unit id="stats.amountWeek">
         <source>stats.amountWeek</source>
         <target>הכנסות השבוע</target>
       </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
+      <trans-unit id="stats.amountMonth">
         <source>stats.amountMonth</source>
         <target>הכנסות החודש</target>
       </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
+      <trans-unit id="stats.amountYear">
         <source>stats.amountYear</source>
         <target>הכנסות השנה</target>
       </trans-unit>
-      <trans-unit id="Z0fz23v" resname="stats.amountTotal">
+      <trans-unit id="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>סך הכל הכנסות</target>
       </trans-unit>
-      <trans-unit id="xyiadv3" resname="stats.userActiveToday">
+      <trans-unit id="stats.userActiveToday">
         <source>stats.userActiveToday</source>
         <target>משתמשים פעילים היום</target>
       </trans-unit>
-      <trans-unit id="knMHaeO" resname="stats.userActiveWeek">
+      <trans-unit id="stats.userActiveWeek">
         <source>stats.userActiveWeek</source>
         <target>משתמשים פעילים השבוע</target>
       </trans-unit>
-      <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
+      <trans-unit id="stats.userActiveMonth">
         <source>stats.userActiveMonth</source>
         <target>משתמשים פעילים החודש</target>
       </trans-unit>
-      <trans-unit id="AswjFvh" resname="stats.userActiveYear">
+      <trans-unit id="stats.userActiveYear">
         <source>stats.userActiveYear</source>
         <target>משתמשים פעילים השנה</target>
       </trans-unit>
-      <trans-unit id="dLTb1Po" resname="stats.userActiveTotal">
+      <trans-unit id="stats.userActiveTotal">
         <source>stats.userActiveTotal</source>
         <target>משתמשים פעילים</target>
       </trans-unit>
-      <trans-unit id="lEW82ex" resname="stats.activeRecordings">
+      <trans-unit id="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>רשומות פעילות</target>
       </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
+      <trans-unit id="stats.userTotal">
         <source>stats.userTotal</source>
         <target>משתמשים</target>
       </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
+      <trans-unit id="stats.activityTotal">
         <source>stats.activityTotal</source>
         <target>פעילויות</target>
       </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
+      <trans-unit id="stats.projectTotal">
         <source>stats.projectTotal</source>
         <target>פרויקטים</target>
       </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
+      <trans-unit id="stats.customerTotal">
         <source>stats.customerTotal</source>
         <target>לקוחות</target>
       </trans-unit>
-      <trans-unit id="unC5MXv" resname="stats.percentUsed">
+      <trans-unit id="stats.percentUsed">
         <source>stats.percentUsed</source>
         <target>%percent%% בשימוש</target>
       </trans-unit>
-      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
+      <trans-unit id="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
         <target>%percent%% בשימוש (%left% עדין פתוחות)</target>
       </trans-unit>
-      <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
+      <trans-unit id="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>תבנית חשבונית</target>
       </trans-unit>
-      <trans-unit id="iERywrp" resname="invoice.title">
+      <trans-unit id="invoice.title">
         <source>invoice.title</source>
         <target>חשבוניות</target>
       </trans-unit>
-      <trans-unit id="ov4OQOh" resname="invoice.filter">
+      <trans-unit id="invoice.filter">
         <source>invoice.filter</source>
         <target>סנן נתוני חשבונית</target>
       </trans-unit>
-      <trans-unit id="7H7P1mE" resname="button.preview">
+      <trans-unit id="button.preview">
         <source>button.preview</source>
         <target>תצוגה מקדימה</target>
       </trans-unit>
-      <trans-unit id="IQ9DUOW" resname="button.preview_print">
+      <trans-unit id="button.preview_print">
         <source>button.preview_print</source>
         <target>תצוגת הדפסה</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print">
+      <trans-unit id="button.print">
         <source>button.print</source>
         <target>הדפס</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv">
+      <trans-unit id="button.csv">
         <source>button.csv</source>
         <target>CSV</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx">
+      <trans-unit id="button.xlsx">
         <source>button.xlsx</source>
         <target>Excel</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf">
+      <trans-unit id="button.pdf">
         <source>button.pdf</source>
         <target>PDF</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods">
+      <trans-unit id="button.ods">
         <source>button.ods</source>
         <target>ODS</target>
       </trans-unit>
-      <trans-unit id="zPcx3O_" resname="invoice_print">
+      <trans-unit id="invoice_print">
         <source>invoice_print</source>
         <target>חשבונית</target>
       </trans-unit>
-      <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
+      <trans-unit id="label.mark_as_exported">
         <source>label.mark_as_exported</source>
         <target>סמן לייצוא</target>
       </trans-unit>
-      <trans-unit id="p0IprAw" resname="label.template">
+      <trans-unit id="label.template">
         <source>label.template</source>
         <target>תבנית</target>
       </trans-unit>
-      <trans-unit id="zfIRxJh" resname="label.due_days">
+      <trans-unit id="label.due_days">
         <source>label.due_days</source>
         <target>ימים לתשלום</target>
       </trans-unit>
-      <trans-unit id="rAJrxSK" resname="invoice.due_days">
+      <trans-unit id="invoice.due_days">
         <source>invoice.due_days</source>
         <target>יעד לתשלום</target>
       </trans-unit>
-      <trans-unit id="4XKFnWh" resname="invoice.from">
+      <trans-unit id="invoice.from">
         <source>invoice.from</source>
         <target>התחלה</target>
       </trans-unit>
-      <trans-unit id="hx7vsMA" resname="invoice.to">
+      <trans-unit id="invoice.to">
         <source>invoice.to</source>
         <target>סיום</target>
       </trans-unit>
-      <trans-unit id="x_W5sV4" resname="invoice.number">
+      <trans-unit id="invoice.number">
         <source>invoice.number</source>
         <target>מספר חשבונית</target>
       </trans-unit>
-      <trans-unit id="86KyrKO" resname="invoice.subtotal">
+      <trans-unit id="invoice.subtotal">
         <source>invoice.subtotal</source>
         <target>סכום ביניים</target>
       </trans-unit>
-      <trans-unit id="EO57yXg" resname="invoice.tax">
+      <trans-unit id="invoice.tax">
         <source>invoice.tax</source>
         <target>מס</target>
       </trans-unit>
-      <trans-unit id="N68vyvo" resname="invoice.total">
+      <trans-unit id="invoice.total">
         <source>invoice.total</source>
         <target>סך הכל</target>
       </trans-unit>
-      <trans-unit id="TPzFWUs" resname="invoice.service_date">
+      <trans-unit id="invoice.service_date">
         <source>invoice.service_date</source>
         <target>תאריך שירות</target>
       </trans-unit>
-      <trans-unit id="6x24VVR" resname="label.amount">
+      <trans-unit id="label.amount">
         <source>label.amount</source>
         <target>כמות</target>
       </trans-unit>
-      <trans-unit id="g7EpaPY" resname="label.total_rate">
+      <trans-unit id="label.total_rate">
         <source>label.total_rate</source>
         <target>מחיר כולל</target>
       </trans-unit>
-      <trans-unit id="MF3MdTu" resname="label.unit_price">
+      <trans-unit id="label.unit_price">
         <source>label.unit_price</source>
         <target>מחיר יחידה</target>
       </trans-unit>
-      <trans-unit id="77aZC3r" resname="label.payment_terms">
+      <trans-unit id="label.payment_terms">
         <source>label.payment_terms</source>
         <target>תנאי תשלום</target>
       </trans-unit>
-      <trans-unit id="9p2KQag" resname="invoice.signature_user">
+      <trans-unit id="invoice.signature_user">
         <source>invoice.signature_user</source>
         <target>אישור: תאריך / שם העובד / חתימה</target>
       </trans-unit>
-      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer">
+      <trans-unit id="invoice.signature_customer">
         <source>invoice.signature_customer</source>
         <target>אישור: Date / שם הלקוח / חתימה</target>
       </trans-unit>
-      <trans-unit id="c3d6p33" resname="invoice.total_working_time">
+      <trans-unit id="invoice.total_working_time">
         <source>invoice.total_working_time</source>
         <target>משך זמן עבודה כולל</target>
       </trans-unit>
-      <trans-unit id="BS00SS7" resname="label.orderNumber">
+      <trans-unit id="label.orderNumber">
         <source>label.orderNumber</source>
         <target>מספר הזמנה</target>
       </trans-unit>
-      <trans-unit id="as948k9" resname="label.orderDate">
+      <trans-unit id="label.orderDate">
         <source>label.orderDate</source>
         <target>תאריך הזמנה</target>
       </trans-unit>
-      <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
+      <trans-unit id="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
         <target>מספר מע''מ:</target>
       </trans-unit>
-      <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
+      <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
         <target>חשבון בנק</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
+      <trans-unit id="label.decimalDuration">
         <source>label.decimalDuration</source>
         <target>הצג משך זמן עם נקודה עשרונית</target>
       </trans-unit>
-      <trans-unit id="hzhzbqw" resname="label.status">
+      <trans-unit id="label.status">
         <source>label.status</source>
         <target>סטטוס</target>
       </trans-unit>
-      <trans-unit id="X_NRsed" resname="status.new">
+      <trans-unit id="status.new">
         <source>status.new</source>
         <target>חדש</target>
       </trans-unit>
-      <trans-unit id="Uvo1CbP" resname="status.pending">
+      <trans-unit id="status.pending">
         <source>status.pending</source>
         <target>ממתין</target>
       </trans-unit>
-      <trans-unit id="PHJwR4w" resname="status.paid">
+      <trans-unit id="status.paid">
         <source>status.paid</source>
         <target>שולם</target>
       </trans-unit>
-      <trans-unit id="F6Jmro7" resname="export.title">
+      <trans-unit id="export.title">
         <source>export.title</source>
         <target>ייצא</target>
       </trans-unit>
-      <trans-unit id="KxuVIAw" resname="export.subtitle">
+      <trans-unit id="export.subtitle">
         <source>export.subtitle</source>
         <target>ייצא גיליון שעות עבודה במספר פורמטים</target>
       </trans-unit>
-      <trans-unit id="iwWaUoa" resname="export.filter">
+      <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>סנן נתונים לייצוא</target>
       </trans-unit>
-      <trans-unit id="vjmoQGo" resname="export.period">
+      <trans-unit id="export.period">
         <source>export.period</source>
         <target>תקופה</target>
       </trans-unit>
-      <trans-unit id="3CQ7A2m" resname="export.document_title">
+      <trans-unit id="export.document_title">
         <source>export.document_title</source>
         <target>ייצא גיליון שעות</target>
       </trans-unit>
-      <trans-unit id="d5wyWRD" resname="export.full_list">
+      <trans-unit id="export.full_list">
         <source>export.full_list</source>
         <target>רשימה מלאה</target>
       </trans-unit>
-      <trans-unit id="N778uJ6" resname="export.summary">
+      <trans-unit id="export.summary">
         <source>export.summary</source>
         <target>סיכום</target>
       </trans-unit>
-      <trans-unit id="ElDyzrx" resname="export.page_of">
+      <trans-unit id="export.page_of">
         <source>export.page_of</source>
         <target>דף %page% מתוך %pages%</target>
       </trans-unit>
-      <trans-unit id="vKY0tof" resname="export.date_copyright">
+      <trans-unit id="export.date_copyright">
         <source>export.date_copyright</source>
         <target>נוצר ב %date%</target>
       </trans-unit>
-      <trans-unit id="OxdYMR3" resname="active.entries">
+      <trans-unit id="active.entries">
         <source>active.entries</source>
         <target>מדדי זמני הפעילות שלך</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
+      <trans-unit id="timesheet.all">
         <source>timesheet.all</source>
         <target>הצג את כל הרשומות</target>
       </trans-unit>
-      <trans-unit id="WVU_S.A" resname="recent.activities">
+      <trans-unit id="recent.activities">
         <source>recent.activities</source>
         <target>אתחל את אחת הפעילויות האחרונות שלך</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
+      <trans-unit id="recent.activities.format">
         <source>recent.activities.format</source>
         <target>%activity% ב %project% עבור %customer%</target>
       </trans-unit>
-      <trans-unit id="dTHY7Mw" resname="timesheet.start">
+      <trans-unit id="timesheet.start">
         <source>timesheet.start</source>
         <target>צור רשומת זמן חדשה</target>
       </trans-unit>
-      <trans-unit id="MPimOps" resname="label.pageSize">
+      <trans-unit id="label.pageSize">
         <source>label.pageSize</source>
         <target>גודל דף</target>
       </trans-unit>
-      <trans-unit id="KhyA_PW" resname="label.entryState">
+      <trans-unit id="label.entryState">
         <source>label.entryState</source>
         <target>מצב רשומה</target>
       </trans-unit>
-      <trans-unit id="X3JM9wj" resname="label.exported">
+      <trans-unit id="label.exported">
         <source>label.exported</source>
         <target>ייצוא</target>
       </trans-unit>
-      <trans-unit id="_DDecAV" resname="entryState.exported">
+      <trans-unit id="entryState.exported">
         <source>entryState.exported</source>
         <target>כן</target>
       </trans-unit>
-      <trans-unit id="ccCiXyR" resname="entryState.not_exported">
+      <trans-unit id="entryState.not_exported">
         <source>entryState.not_exported</source>
         <target>לא</target>
       </trans-unit>
-      <trans-unit id="do7fP0q" resname="entryState.all">
+      <trans-unit id="entryState.all">
         <source>entryState.all</source>
         <target>הכל</target>
       </trans-unit>
-      <trans-unit id="xm7mqoK" resname="entryState.running">
+      <trans-unit id="entryState.running">
         <source>entryState.running</source>
         <target>פעילה</target>
       </trans-unit>
-      <trans-unit id="spHpd_I" resname="entryState.stopped">
+      <trans-unit id="entryState.stopped">
         <source>entryState.stopped</source>
         <target>לא פעילה</target>
       </trans-unit>
-      <trans-unit id="BhsaLxX" resname="export.clear_all">
+      <trans-unit id="export.clear_all">
         <source>export.clear_all</source>
         <target>סמן את כל הרשומות כפתוחות?</target>
       </trans-unit>
-      <trans-unit id="qtjPKUT" resname="export.mark_all">
+      <trans-unit id="export.mark_all">
         <source>export.mark_all</source>
         <target>נקה את כל הרשומות המסומנות?</target>
       </trans-unit>
-      <trans-unit id="S0vT92U" resname="label.globalsOnly">
+      <trans-unit id="label.globalsOnly">
         <source>label.globalsOnly</source>
         <target>רק גלובלי</target>
       </trans-unit>

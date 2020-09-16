@@ -78,6 +78,16 @@ final class TimesheetFixtures extends Fixture
      */
     private $tags = [];
 
+    public function __construct(?User $user = null, ?int $amount = null)
+    {
+        if ($user !== null) {
+            $this->setUser($user);
+        }
+        if ($amount !== null) {
+            $this->setAmount($amount);
+        }
+    }
+
     public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions): TimesheetFixtures
     {
         $this->allowEmptyDescriptions = $allowEmptyDescriptions;

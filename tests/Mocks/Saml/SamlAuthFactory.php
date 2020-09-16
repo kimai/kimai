@@ -76,8 +76,10 @@ class SamlAuthFactory extends AbstractMockFactory
             ];
         }
 
-        $request = $this->getMockBuilder(Request::class)->getMock();
-        $request->method('isFromTrustedProxy')->willReturn($fromTrustedProxy);
+        $mock = $this->getMockBuilder(Request::class)->getMock();
+        $mock->method('isFromTrustedProxy')->willReturn($fromTrustedProxy);
+        /** @var Request $request */
+        $request = $mock;
 
         $requestStack = new RequestStack();
         $requestStack->push($request);

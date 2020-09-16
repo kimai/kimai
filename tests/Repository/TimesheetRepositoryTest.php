@@ -43,6 +43,9 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $this->assertIsArray($result);
     }
 
+    /**
+     * @group legacy
+     */
     public function testStoppedEntriesCannotBeStoppedAgain()
     {
         $em = $this->getEntityManager();
@@ -72,6 +75,9 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $repository->stopRecording($entities[0]);
     }
 
+    /**
+     * @group legacy
+     */
     public function testStopRecording()
     {
         $em = $this->getEntityManager();

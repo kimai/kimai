@@ -27,8 +27,8 @@ class ActivityStatisticTest extends TestCase
     public function testSetter()
     {
         $sut = new ActivityStatistic();
-        $sut->setRecordAmount(7654.298);
-        $sut->setRecordDuration(826.10);
+        $sut->setRecordAmount(7654);
+        $sut->setRecordDuration(826);
 
         $this->assertEquals(7654, $sut->getRecordAmount());
         $this->assertEquals(826, $sut->getRecordDuration());

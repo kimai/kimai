@@ -26,6 +26,7 @@ nelmio_api_doc:
             - { alias: TagEntity,                   type: App\Entity\Tag,                           groups: [Default, Entity, Tag] }
             - { alias: TimesheetEditForm,           type: App\Form\API\TimesheetApiEditForm,        groups: [Default, Entity, Timesheet, Not_Expanded] }
             - { alias: TimesheetEntity,             type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet, Timesheet_Entity, Not_Expanded] }
+            - { alias: TimesheetEntityExpanded,     type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet, Timesheet_Entity, Expanded] }
             - { alias: TimesheetCollection,         type: App\Entity\Timesheet,                     groups: [Default, Collection, Timesheet, Not_Expanded] }
             - { alias: TimesheetCollectionExpanded, type: App\Entity\Timesheet,                     groups: [Default, Collection, Timesheet, Subresource, Expanded] }
             - { alias: UserCreateForm,              type: App\Form\API\UserApiCreateForm,           groups: [Default, Entity, User, User_Entity] }

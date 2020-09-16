@@ -33,7 +33,30 @@ export default class KimaiAPI extends KimaiPlugin {
         });
     }
 
+    post(url, data, callbackSuccess, callbackError) {
+        if (callbackError === null || callbackError === undefined) {
+            callbackError = this.getPostErrorHandler();
+        }
+
+        jQuery.ajax({
+            url: url,
+            headers: {
+                'X-AUTH-SESSION': true,
+                'Content-Type':'application/json'
+            },
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: callbackSuccess,
+            error: callbackError
+        });
+    }
+
     patch(url, data, callbackSuccess, callbackError) {
+        if (callbackError === null || callbackError === undefined) {
+            callbackError = this.getPatchErrorHandler();
+        }
+
         jQuery.ajax({
             url: url,
             headers: {
@@ -49,6 +72,10 @@ export default class KimaiAPI extends KimaiPlugin {
     }
 
     delete(url, callbackSuccess, callbackError) {
+        if (callbackError === null || callbackError === undefined) {
+            callbackError = this.getDeleteErrorHandler();
+        }
+
         jQuery.ajax({
             url: url,
             headers: {
@@ -60,6 +87,66 @@ export default class KimaiAPI extends KimaiPlugin {
             success: callbackSuccess,
             error: callbackError
         });
+    }
+
+    getDeleteErrorHandler() {
+        const self = this;
+        return function(xhr, err) {
+            self.handleError('action.delete.error', xhr, err);
+        };
+    }
+
+    getPatchErrorHandler() {
+        const self = this;
+        return function(xhr, err) {
+            self.handleError('action.update.error', xhr, err);
+        };
+    }
+
+    getPostErrorHandler() {
+        const self = this;
+        return function(xhr, err) {
+            self.handleError('action.update.error', xhr, err);
+        };
+    }
+
+    /**
+     * @param {string} message
+     * @param {jqXHR} xhr
+     * @param {string} err
+     */
+    handleError(message, xhr, err) {
+        let resultError = err;
+        if (xhr.responseJSON && xhr.responseJSON.message) {
+            resultError = xhr.responseJSON.message;
+            // find validation errors
+            if (xhr.status === 400 && xhr.responseJSON.errors) {
+                let collected = ['<u>' + resultError + '</u>'];
+                // form errors that are not attached to a field (like extra fields)
+                if (xhr.responseJSON.errors.errors) {
+                    for (let error of xhr.responseJSON.errors.errors) {
+                        collected.push(error);
+                    }
+                }
+                if (xhr.responseJSON.errors.children) {
+                    for (let field in xhr.responseJSON.errors.children) {
+                        let tmpField = xhr.responseJSON.errors.children[field];
+                        if (tmpField.hasOwnProperty('errors') && tmpField.errors.length > 0) {
+                            for (let error of tmpField.errors) {
+                                collected.push(error);
+                            }
+                        }
+                    }
+                }
+                if (collected.length > 0) {
+                    resultError = collected;
+                }
+            }
+        } else if (xhr.status && xhr.statusText) {
+            resultError = '[' + xhr.status + '] ' + xhr.statusText;
+        }
+
+        this.getPlugin('alert').error(message, resultError);
     }
 
 }
