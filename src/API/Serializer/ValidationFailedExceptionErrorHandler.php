@@ -57,10 +57,6 @@ class ValidationFailedExceptionErrorHandler implements SubscribingHandlerInterfa
 
     private function getErrorMessage(ConstraintViolationInterface $error): string
     {
-        if (null === $this->translator) {
-            return $error->getMessage();
-        }
-
         if (null !== $error->getPlural()) {
             return $this->translator->trans($error->getMessageTemplate(), ['%count%' => $error->getPlural()] + $error->getParameters(), 'validators');
         }
