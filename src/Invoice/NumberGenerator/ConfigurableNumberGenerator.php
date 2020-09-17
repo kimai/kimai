@@ -107,7 +107,7 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                     }
                     $formatterLength = \intval($local);
                     if ((string) $formatterLength !== $local) {
-                        $formatterLength = null;
+                        throw new \InvalidArgumentException('Unknown format length found');
                     }
                     break;
 

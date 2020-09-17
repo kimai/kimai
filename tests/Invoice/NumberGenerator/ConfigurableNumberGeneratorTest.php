@@ -92,6 +92,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{c+13,2}', '14', $invoiceDate],
             ['{c+13}', '14', $invoiceDate],
             ['{cd+111}', '112', $invoiceDate],
+            ['{cd+111,5}', '00112', $invoiceDate],
             ['{cd+111,2}', '113', $invoiceDate, 2],
             ['{cm+0,2}', '03', $invoiceDate, 2], // zero is not allowed and set to 1
             ['{cm+0}', '2', $invoiceDate], // zero is not allowed and set to 1
@@ -155,6 +156,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{,a}', $invoiceDate, 'format length'],
             ['{Y,!}/{cy,o}', $invoiceDate, 'format length'],
             ['{cm,}', $invoiceDate, 'format length'],
+            ['{cd+111,050}', $invoiceDate,  'format length'],
             ['{-+}', $invoiceDate, 'increment'],
             ['{+}', $invoiceDate, 'increment'],
             ['{+-}', $invoiceDate, 'decrement'],
