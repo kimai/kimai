@@ -92,7 +92,7 @@ EOT
         if ($this->askConfirmation($input, $output, 'Do you want to drop and re-create the schema y/N ?')) {
             try {
                 $command = $this->getApplication()->find('doctrine:schema:drop');
-                $command->run(new ArrayInput(['--force' => true]), $output);
+                $command->run(new ArrayInput(['--force' => true, '--full-database' => true]), $output);
             } catch (Exception $ex) {
                 $io->error('Failed to drop database schema: ' . $ex->getMessage());
 
@@ -100,10 +100,12 @@ EOT
             }
 
             try {
-                $command = $this->getApplication()->find('doctrine:schema:create');
-                $command->run(new ArrayInput([]), $output);
+                $command = $this->getApplication()->find('doctrine:migrations:migrate');
+                $cmdInput = new ArrayInput([]);
+                $cmdInput->setInteractive(false);
+                $command->run($cmdInput, $output);
             } catch (Exception $ex) {
-                $io->error('Failed to create database schema: ' . $ex->getMessage());
+                $io->error('Failed to execute a migration: ' . $ex->getMessage());
 
                 return 3;
             }
@@ -120,17 +122,6 @@ EOT
             return 4;
         }
 
-        try {
-            $command = $this->getApplication()->find('doctrine:migrations:version');
-            $cmdInput = new ArrayInput(['--add' => true, '--all' => true]);
-            $cmdInput->setInteractive(false);
-            $command->run($cmdInput, $output);
-        } catch (Exception $ex) {
-            $io->error('Failed to set migration status: ' . $ex->getMessage());
-
-            return 5;
-        }
-
         if (!$input->getOption('no-cache')) {
             $command = $this->getApplication()->find('cache:clear');
             try {
@@ -138,7 +129,7 @@ EOT
             } catch (Exception $ex) {
                 $io->error('Failed to clear cache: ' . $ex->getMessage());
 
-                return 6;
+                return 5;
             }
         }
 
