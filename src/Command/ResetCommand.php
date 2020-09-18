@@ -105,7 +105,7 @@ EOT
                 $cmdInput->setInteractive(false);
                 $command->run($cmdInput, $output);
             } catch (Exception $ex) {
-                $io->error('Failed to execute a migration: ' . $ex->getMessage());
+                $io->error('Failed to execute a migrations: ' . $ex->getMessage());
 
                 return 3;
             }
