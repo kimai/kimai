@@ -75,10 +75,7 @@ export default class KimaiAPILink extends KimaiPlugin {
             if (attributes.msgError) {
                 message = attributes.msgError;
             }
-            if (xhr.responseJSON && xhr.responseJSON.message) {
-                err = xhr.responseJSON.message;
-            }
-            alert.error(message, err);
+            API.handleError(message, xhr, err);
         };
 
         if (method === 'PATCH') {
@@ -87,6 +84,12 @@ export default class KimaiAPILink extends KimaiPlugin {
                 data  = attributes.payload;
             }
             API.patch(url, data, successHandle, errorHandle);
+        } else if (method === 'POST') {
+            let data = {};
+            if (attributes.payload) {
+                data  = attributes.payload;
+            }
+            API.post(url, data, successHandle, errorHandle);
         } else if (method === 'DELETE') {
             API.delete(url, successHandle, errorHandle);
         }

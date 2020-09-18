@@ -78,10 +78,10 @@ final class MarkdownExtension extends AbstractExtension
     /**
      * Transforms the timesheet description content into HTML.
      *
-     * @param string $content
+     * @param string|null $content
      * @return string
      */
-    public function timesheetContent($content): string
+    public function timesheetContent(?string $content): string
     {
         if (empty($content)) {
             return '';

@@ -10,10 +10,8 @@
 namespace App\Twig;
 
 use App\Constants;
-use App\Entity\Activity;
-use App\Entity\Customer;
 use App\Entity\EntityWithMetaFields;
-use App\Entity\Project;
+use App\Utils\Color;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -32,6 +30,7 @@ class Extensions extends AbstractExtension
             new TwigFilter('docu_link', [$this, 'documentationLink']),
             new TwigFilter('multiline_indent', [$this, 'multilineIndent']),
             new TwigFilter('color', [$this, 'color']),
+            new TwigFilter('font_contrast', [$this, 'calculateFontContrastColor']),
         ];
     }
 
@@ -42,42 +41,45 @@ class Extensions extends AbstractExtension
     {
         return [
             new TwigFunction('class_name', [$this, 'getClassName']),
+            new TwigFunction('iso_day_by_name', [$this, 'getIsoDayByName']),
         ];
     }
 
-    public function color(EntityWithMetaFields $entity): ?string
+    public function getIsoDayByName(string $weekDay): int
     {
-        if ($entity instanceof Activity) {
-            if (!empty($entity->getColor())) {
-                return $entity->getColor();
-            }
+        $key = array_search(
+            strtolower($weekDay),
+            ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        );
 
-            if (null !== $entity->getProject()) {
-                $entity = $entity->getProject();
-            }
+        if (false === $key) {
+            return 1;
         }
 
-        if ($entity instanceof Project) {
-            if (!empty($entity->getColor())) {
-                return $entity->getColor();
-            }
-            $entity = $entity->getCustomer();
-        }
+        return ++$key;
+    }
 
-        if ($entity instanceof Customer) {
-            if (!empty($entity->getColor())) {
-                return $entity->getColor();
-            }
-        }
+    /**
+     * Returns null instead of the default color if $defaultColor is not set to true.
+     *
+     * @param EntityWithMetaFields $entity
+     * @return string|null
+     */
+    public function color(EntityWithMetaFields $entity, bool $defaultColor = false): ?string
+    {
+        return (new Color())->getColor($entity, $defaultColor);
+    }
 
-        return null;
+    public function calculateFontContrastColor(string $color): string
+    {
+        return (new Color())->getFontContrastColor($color);
     }
 
     /**
      * @param object $object
      * @return null|string
      */
-    public function getClassName($object)
+    public function getClassName($object): ?string
     {
         if (!\is_object($object)) {
             return null;
@@ -107,11 +109,7 @@ class Extensions extends AbstractExtension
         return implode(PHP_EOL, $parts);
     }
 
-    /**
-     * @param string $url
-     * @return string
-     */
-    public function documentationLink($url = '')
+    public function documentationLink(?string $url = ''): string
     {
         return Constants::HOMEPAGE . '/documentation/' . $url;
     }

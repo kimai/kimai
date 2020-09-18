@@ -9,6 +9,9 @@
 
 namespace App\Configuration;
 
+/**
+ * @deprecated since 1.11 - use SystemConfiguration instead
+ */
 class CalendarConfiguration implements SystemBundleConfiguration
 {
     use StringAccessibleConfigTrait;

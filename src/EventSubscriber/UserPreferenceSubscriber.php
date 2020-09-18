@@ -15,6 +15,7 @@ use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\Event\UserPreferenceEvent;
 use App\Form\Type\CalendarViewType;
+use App\Form\Type\FirstWeekDayType;
 use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
@@ -126,9 +127,16 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
             (new UserPreference())
                 ->setName(UserPreference::LOCALE)
                 ->setValue($this->getDefaultLanguage())
-                ->setOrder(300)
+                ->setOrder(250)
                 ->setSection('locale')
                 ->setType(LanguageType::class),
+
+            (new UserPreference())
+                ->setName(UserPreference::FIRST_WEEKDAY)
+                ->setValue(User::DEFAULT_FIRST_WEEKDAY)
+                ->setOrder(300)
+                ->setSection('locale')
+                ->setType(FirstWeekDayType::class),
 
             (new UserPreference())
                 ->setName(UserPreference::SKIN)

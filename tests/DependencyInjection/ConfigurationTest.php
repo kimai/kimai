@@ -340,7 +340,7 @@ class ConfigurationTest extends TestCase
                 'auto_reload_datatable' => false,
                 'show_about' => true,
                 'chart' => [
-                    'background_color' => 'rgba(0,115,183,0.7)',
+                    'background_color' => '#3c8dbc',
                     'border_color' => '#3b8bba',
                     'grid_color' => 'rgba(0,0,0,.05)',
                     'height' => '200',
@@ -354,6 +354,9 @@ class ConfigurationTest extends TestCase
                 ],
                 'autocomplete_chars' => 3,
                 'tags_create' => true,
+                'calendar' => [
+                    'background_color' => '#d2d6de'
+                ]
             ],
             'industry' => [
                 'translation' => null,

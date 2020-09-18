@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="he" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="he" datatype="plaintext" original="email.en.xlf">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
+      <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
         <target>אם הכפתור לא עובד, אנא העתק והדבק את הכתובת הבאה בדפדפן שלך: %url%</target>
       </trans-unit>
-      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+      <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>זהו מייל שנוצר אוטומטית. נא לא להשיב למייל זה.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
+      <trans-unit id="registration.subject">
         <source>registration.subject</source>
         <target>הפעל את החשבון שלך</target>
       </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
+      <trans-unit id="registration.title">
         <source>registration.title</source>
         <target>ברוך הבא %username%</target>
       </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
+      <trans-unit id="registration.button">
         <source>registration.button</source>
         <target>הפעל את החשבון שלך</target>
       </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
+      <trans-unit id="registration.intro">
         <source>registration.intro</source>
         <target>נרשמת למערכת דיווח השעות עם כתובת המייל: %email%. עליך להפעיל את החשבון בשעות הקרובות לפני שיפוג תוקף הלינק</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="reset.subject">
         <source>reset.subject</source>
         <target>אפס את הסיסמה שלך</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
+      <trans-unit id="reset.title">
         <source>reset.title</source>
         <target>זה עלול לקרות ...</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="reset.button">
         <source>reset.button</source>
         <target>אפס את הסיסמה שלך</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
+      <trans-unit id="reset.intro">
         <source>reset.intro</source>
         <target>שכחת את הסיסמה שלך? אל דאגה, נעזור לך ליצור סיסמה חדשה:</target>
       </trans-unit>
