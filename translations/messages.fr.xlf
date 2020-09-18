@@ -247,7 +247,7 @@
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>E-mail</target>
+        <target>Courriel</target>
       </trans-unit>
       <trans-unit id="label.create_more">
         <source>label.create_more</source>
