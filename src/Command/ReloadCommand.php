@@ -31,15 +31,16 @@ final class ReloadCommand extends Command
     public const ERROR_LINT_TRANSLATIONS = 16;
 
     /**
-     * @var string
+     * Returns the base directory to the Kimai installation.
+     *
+     * @return string
      */
-    private $projectDirectory;
-
-    public function __construct(string $name = null, string $projectDirectory)
+    protected function getRootDirectory(): string
     {
-        $this->projectDirectory = $projectDirectory;
+        /** @var Application $application */
+        $application = $this->getApplication();
 
-        parent::__construct($name);
+        return $application->getKernel()->getProjectDir();
     }
 
     /**
@@ -65,7 +66,9 @@ final class ReloadCommand extends Command
 
         $io->title('Reloading configurations ...');
 
-        \chdir($this->projectDirectory);
+        // many users execute the bin/console command from arbitrary locations
+        $path = getcwd();
+        \chdir($this->getRootDirectory());
 
         try {
             $command = $this->getApplication()->find('lint:yaml');
@@ -105,6 +108,8 @@ final class ReloadCommand extends Command
 
         // flush the cache, in case values from the database are cached
         $cacheResult = $this->rebuildCaches($environment, $io, $input, $output);
+
+        chdir($path);
 
         if ($cacheResult !== 0) {
             $io->warning(
