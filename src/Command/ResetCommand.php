@@ -92,11 +92,29 @@ EOT
         if ($this->askConfirmation($input, $output, 'Do you want to drop and re-create the schema y/N ?')) {
             try {
                 $command = $this->getApplication()->find('doctrine:schema:drop');
-                $command->run(new ArrayInput(['--force' => true, '--full-database' => true]), $output);
+                $command->run(new ArrayInput(['--force' => true]), $output);
             } catch (Exception $ex) {
                 $io->error('Failed to drop database schema: ' . $ex->getMessage());
 
                 return 2;
+            }
+
+            try {
+                $command = $this->getApplication()->find('doctrine:query:sql');
+                $command->run(new ArrayInput(['sql' => 'DROP TABLE IF EXISTS migration_versions']), $output);
+            } catch (Exception $ex) {
+                $io->error('Failed to drop migration_versions table: ' . $ex->getMessage());
+
+                return 3;
+            }
+
+            try {
+                $command = $this->getApplication()->find('doctrine:query:sql');
+                $command->run(new ArrayInput(['sql' => 'DROP TABLE IF EXISTS kimai2_sessions']), $output);
+            } catch (Exception $ex) {
+                $io->error('Failed to drop kimai2_sessions table: ' . $ex->getMessage());
+
+                return 4;
             }
 
             try {
@@ -107,7 +125,7 @@ EOT
             } catch (Exception $ex) {
                 $io->error('Failed to execute a migrations: ' . $ex->getMessage());
 
-                return 3;
+                return 5;
             }
         }
 
@@ -119,7 +137,7 @@ EOT
         } catch (Exception $ex) {
             $io->error('Failed to import fixtures: ' . $ex->getMessage());
 
-            return 4;
+            return 6;
         }
 
         if (!$input->getOption('no-cache')) {
@@ -129,7 +147,7 @@ EOT
             } catch (Exception $ex) {
                 $io->error('Failed to clear cache: ' . $ex->getMessage());
 
-                return 5;
+                return 7;
             }
         }
 
