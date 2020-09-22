@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Configuration\FormConfiguration;
 use App\Entity\Activity;
+use App\Entity\ActivityComment;
 use App\Entity\ActivityRate;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
@@ -20,6 +21,7 @@ use App\Event\ActivityMetaDisplayEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
+use App\Form\ActivityCommentForm;
 use App\Form\ActivityEditForm;
 use App\Form\ActivityRateForm;
 use App\Form\ActivityTeamPermissionForm;
@@ -118,6 +120,8 @@ final class ActivityController extends AbstractController
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
 
+        $commentForm = null;
+        $comments = null;
         $stats = null;
         $rates = [];
         $teams = null;
@@ -130,6 +134,14 @@ final class ActivityController extends AbstractController
             $rates = $rateRepository->getRatesForActivity($activity);
         }
 
+        if ($this->isGranted('comments', $activity)) {
+            $comments = $this->repository->getComments($activity);
+        }
+
+        if ($this->isGranted('comments_create', $activity)) {
+            $commentForm = $this->getCommentForm($activity, new ActivityComment())->createView();
+        }
+
         if ($this->isGranted('budget', $activity)) {
             $stats = $this->repository->getActivityStatistics($activity);
         }
@@ -140,6 +152,8 @@ final class ActivityController extends AbstractController
 
         return $this->render('activity/details.html.twig', [
             'activity' => $activity,
+            'comments' => $comments,
+            'commentForm' => $commentForm,
             'stats' => $stats,
             'rates' => $rates,
             'team' => $defaultTeam,
@@ -193,6 +207,61 @@ final class ActivityController extends AbstractController
         }
 
         return $this->renderActivityForm($activity, $request);
+    }
+
+    /**
+     * @Route(path="/{id}/comment_delete", name="project_comment_delete", methods={"GET"})
+     * @Security("is_granted('edit', comment.getActivity()) and is_granted('comments', comment.getActivity())")
+     */
+    public function deleteCommentAction(ActivityComment $comment)
+    {
+        $activityId = $comment->getActivity()->getId();
+
+        try {
+            $this->repository->deleteComment($comment);
+        } catch (\Exception $ex) {
+            $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+        }
+
+        return $this->redirectToRoute('activity_details', ['id' => $activityId]);
+    }
+
+    /**
+     * @Route(path="/{id}/comment_add", name="activity_comment_add", methods={"POST"})
+     * @Security("is_granted('comments_create', activity)")
+     */
+    public function addCommentAction(Activity $activity, Request $request)
+    {
+        $comment = new ActivityComment();
+        $form = $this->getCommentForm($activity, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->repository->saveComment($comment);
+            } catch (\Exception $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
+    }
+
+    /**
+     * @Route(path="/{id}/comment_pin", name="project_comment_pin", methods={"GET"})
+     * @Security("is_granted('edit', comment.getActivity()) and is_granted('comments', comment.getActivity())")
+     */
+    public function pinCommentAction(ActivityComment $comment)
+    {
+        $comment->setPinned(!$comment->isPinned());
+        try {
+            $this->repository->saveComment($comment);
+        } catch (\Exception $ex) {
+            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+        }
+
+        return $this->redirectToRoute('activity_details', ['id' => $comment->getActivity()->getId()]);
     }
 
     /**
@@ -394,6 +463,19 @@ final class ActivityController extends AbstractController
                 'page' => $query->getPage(),
             ]),
             'method' => 'GET',
+        ]);
+    }
+
+    private function getCommentForm(Activity $activity, ActivityComment $comment): FormInterface
+    {
+        if (null === $comment->getId()) {
+            $comment->setActivity($activity);
+            $comment->setCreatedBy($this->getUser());
+        }
+
+        return $this->createForm(ActivityCommentForm::class, $comment, [
+            'action' => $this->generateUrl('activity_comment_add', ['id' => $activity->getId()]),
+            'method' => 'POST',
         ]);
     }
 
