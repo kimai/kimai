@@ -4,227 +4,227 @@
     <body>
       <trans-unit id="title">
         <source>title</source>
-        <target></target>
+        <target>Configurações</target>
       </trans-unit>
       <trans-unit id="subtitle">
         <source>subtitle</source>
-        <target></target>
+        <target>Alterar as configurações globais do seu rastreador de tempo</target>
       </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
-        <target></target>
+        <target>Horário</target>
       </trans-unit>
       <trans-unit id="invoice">
         <source>invoice</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="form_customer">
         <source>form_customer</source>
-        <target></target>
+        <target>Criar cliente - Valores padrões</target>
       </trans-unit>
       <trans-unit id="form_user">
         <source>form_user</source>
-        <target></target>
+        <target>Utilizador - Valores padrões</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
-        <target></target>
+        <target>Tema</target>
       </trans-unit>
       <trans-unit id="calendar">
         <source>calendar</source>
-        <target></target>
+        <target>Calendário</target>
       </trans-unit>
       <trans-unit id="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
-        <target></target>
+        <target>Permitir tags no formato markdown em descrições e comentários</target>
       </trans-unit>
       <trans-unit id="label.theme.tags_create">
         <source>label.theme.tags_create</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.timesheet.mode">
         <source>label.timesheet.mode</source>
-        <target></target>
+        <target>Modo de rastreamento de tempo</target>
       </trans-unit>
       <trans-unit id="label.timesheet.mode_default">
         <source>label.timesheet.mode_default</source>
-        <target></target>
+        <target>[Default] horários de início e fim podem ser editados</target>
       </trans-unit>
       <trans-unit id="label.timesheet.mode_duration_only">
         <source>label.timesheet.mode_duration_only</source>
-        <target></target>
+        <target>[Duration] substituir o horário final por um campo de entrada de duração</target>
       </trans-unit>
       <trans-unit id="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
-        <target></target>
+        <target>[Duration] Tempo de início fixo configurável, somente a duração pode ser mudada</target>
       </trans-unit>
       <trans-unit id="label.timesheet.mode_punch">
         <source>label.timesheet.mode_punch</source>
-        <target></target>
+        <target>[Time-clock] utilizador pode iniciar e parar registos, mas não editar os tempos ou duração</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.allow_future_times">
         <source>label.timesheet.rules.allow_future_times</source>
-        <target></target>
+        <target>Permitir entradas de tempo no futuro</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_period_start">
         <source>label.timesheet.rules.lockdown_period_start</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_period_end">
         <source>label.timesheet.rules.lockdown_period_end</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.timesheet.active_entries.hard_limit">
         <source>label.timesheet.active_entries.hard_limit</source>
-        <target></target>
+        <target>Quantidade permitida de entradas de tempo de execução simultâneas</target>
       </trans-unit>
       <trans-unit id="label.timesheet.active_entries.soft_limit">
         <source>label.timesheet.active_entries.soft_limit</source>
-        <target></target>
+        <target>Quantidade de entradas de tempo de execução a partir das quais um aviso é exibido</target>
       </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
-        <target></target>
+        <target>Mostrar números de semanas</target>
       </trans-unit>
       <trans-unit id="label.calendar.weekends">
         <source>label.calendar.weekends</source>
-        <target></target>
+        <target>Mostrar fins de semana</target>
       </trans-unit>
       <trans-unit id="label.calendar.businessHours.begin">
         <source>label.calendar.businessHours.begin</source>
-        <target></target>
+        <target>Início do horário comercial normal (será destacado)</target>
       </trans-unit>
       <trans-unit id="label.calendar.businessHours.end">
         <source>label.calendar.businessHours.end</source>
-        <target></target>
+        <target>Fim do horário comercial normal (será destacado)</target>
       </trans-unit>
       <trans-unit id="label.calendar.visibleHours.begin">
         <source>label.calendar.visibleHours.begin</source>
-        <target></target>
+        <target>Início do intervalo de tempo visível</target>
       </trans-unit>
       <trans-unit id="label.calendar.visibleHours.end">
         <source>label.calendar.visibleHours.end</source>
-        <target></target>
+        <target>Fim do intervalo de tempo visível</target>
       </trans-unit>
       <trans-unit id="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.theme.branding.title">
         <source>label.theme.branding.title</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="rounding">
         <source>rounding</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.begin">
         <source>label.timesheet.rounding.default.begin</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.end">
         <source>label.timesheet.rounding.default.end</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.duration">
         <source>label.timesheet.rounding.default.duration</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.mode">
         <source>label.timesheet.rounding.default.mode</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.days">
         <source>label.timesheet.rounding.default.days</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="Monday">
         <source>Monday</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="Tuesday">
         <source>Tuesday</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="Wednesday">
         <source>Wednesday</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="Thursday">
         <source>Thursday</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="Friday">
         <source>Friday</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="Saturday">
         <source>Saturday</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="Sunday">
         <source>Sunday</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="Ceil">
         <source>Ceil</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="Closest">
         <source>Closest</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="Default">
         <source>Default</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="Floor">
         <source>Floor</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.simple_form">
         <source>label.simple_form</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.invoice.number_format">
         <source>label.invoice.number_format</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="first_weekday">
         <source>first_weekday</source>
-        <target></target>
+        <target/>
       </trans-unit>
     </body>
   </file>
