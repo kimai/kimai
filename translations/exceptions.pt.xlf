@@ -4,39 +4,39 @@
     <body>
       <trans-unit id="access.denied">
         <source>access.denied</source>
-        <target></target>
+        <target>Acesso Negado</target>
       </trans-unit>
       <trans-unit id="stacktrace">
         <source>stacktrace</source>
-        <target></target>
+        <target>Um problema ocorreu</target>
       </trans-unit>
       <trans-unit id="http_error.title">
         <source>http_error.title</source>
-        <target></target>
+        <target>Erro</target>
       </trans-unit>
       <trans-unit id="http_error.description">
         <source>http_error.description</source>
-        <target></target>
+        <target>Oops! Um erro ocorreu.</target>
       </trans-unit>
       <trans-unit id="http_error.suggestion">
         <source>http_error.suggestion</source>
-        <target></target>
+        <target>Um erro inesperado aconteceu, favor tente novamente. Se deparou com um bug, favor contatar o administrador caso o problema se repita novamente.</target>
       </trans-unit>
       <trans-unit id="http_error_404.description">
         <source>http_error_404.description</source>
-        <target></target>
+        <target>Oops! Página não encontrada.</target>
       </trans-unit>
       <trans-unit id="http_error_404.suggestion">
         <source>http_error_404.suggestion</source>
-        <target></target>
+        <target>Não conseguimos encontrar a página que está a procurar. Por favor retorne ao dashboard e começe novamente.</target>
       </trans-unit>
       <trans-unit id="http_error_403.description">
         <source>http_error_403.description</source>
-        <target></target>
+        <target>Esta página é restrita.</target>
       </trans-unit>
       <trans-unit id="http_error_403.suggestion">
         <source>http_error_403.suggestion</source>
-        <target></target>
+        <target>Desculpe, não tem permissões suficientes para ver esta página. Por favor, fale com o seu administrador se acha que isso é um erro.</target>
       </trans-unit>
     </body>
   </file>
