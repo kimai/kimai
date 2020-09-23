@@ -4,19 +4,19 @@
     <body>
       <trans-unit id="reporting.title">
         <source>reporting.title</source>
-        <target></target>
+        <target>Jelentések</target>
       </trans-unit>
       <trans-unit id="report_user_week">
         <source>report_user_week</source>
-        <target></target>
+        <target>Egy felhasználó heti nézete</target>
       </trans-unit>
       <trans-unit id="report_user_month">
         <source>report_user_month</source>
-        <target></target>
+        <target>Egy felhasználó havi nézete</target>
       </trans-unit>
       <trans-unit id="report_monthly_users">
         <source>report_monthly_users</source>
-        <target></target>
+        <target>Összes felhasználó havi nézete</target>
       </trans-unit>
     </body>
   </file>
