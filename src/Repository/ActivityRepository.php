@@ -10,6 +10,7 @@
 namespace App\Repository;
 
 use App\Entity\Activity;
+use App\Entity\ActivityComment;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
@@ -446,5 +447,34 @@ class ActivityRepository extends EntityRepository
             $em->rollback();
             throw $ex;
         }
+    }
+
+    public function getComments(Activity $activity): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->select('comments')
+            ->from(ActivityComment::class, 'comments')
+            ->andWhere($qb->expr()->eq('comments.activity', ':activity'))
+            ->addOrderBy('comments.pinned', 'DESC')
+            ->addOrderBy('comments.createdAt', 'DESC')
+            ->setParameter('activity', $activity)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function saveComment(ActivityComment $comment)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($comment);
+        $entityManager->flush();
+    }
+
+    public function deleteComment(ActivityComment $comment)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($comment);
+        $entityManager->flush();
     }
 }
