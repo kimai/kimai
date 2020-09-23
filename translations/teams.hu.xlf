@@ -4,31 +4,31 @@
     <body>
       <trans-unit id="teams.title">
         <source>teams.title</source>
-        <target></target>
+        <target>Csoportok</target>
       </trans-unit>
       <trans-unit id="teams.project_access">
         <source>teams.project_access</source>
-        <target></target>
+        <target>Jogosultság a projektek eléréséhez</target>
       </trans-unit>
       <trans-unit id="teams.customer_access">
         <source>teams.customer_access</source>
-        <target></target>
+        <target>Jogosultság az ügyfelek eléréséhez</target>
       </trans-unit>
       <trans-unit id="team.visibility_global">
         <source>team.visibility_global</source>
-        <target></target>
+        <target>Mindenki számára látható, mivel még nem lett csoport hozzárendelve.</target>
       </trans-unit>
       <trans-unit id="team.visibility_restricted">
         <source>team.visibility_restricted</source>
-        <target></target>
+        <target>Csak a következő csoportok és adminisztrátorok láthatják.</target>
       </trans-unit>
       <trans-unit id="team.project_visibility_inherited">
         <source>team.project_visibility_inherited</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="team.create_default">
         <source>team.create_default</source>
-        <target></target>
+        <target>Új csoport készítése a jogosultságok korlátozására</target>
       </trans-unit>
     </body>
   </file>
