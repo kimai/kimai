@@ -910,6 +910,82 @@
         <source>upload</source>
         <target>Feltöltés</target>
       </trans-unit>
+      <trans-unit id="label.plus_more">
+        <source>label.plus_more</source>
+        <target>+%count% több</target>
+      </trans-unit>
+      <trans-unit id="label.progress">
+        <source>label.progress</source>
+        <target>Haladás</target>
+      </trans-unit>
+      <trans-unit id="label.my_team_projects">
+        <source>label.my_team_projects</source>
+        <target>Csoport projektjei &amp; költségvetése</target>
+      </trans-unit>
+      <trans-unit id="label.my_teams">
+        <source>label.my_teams</source>
+        <target>Csoportjaim</target>
+      </trans-unit>
+      <trans-unit id="action.reset">
+        <source>action.reset</source>
+        <target>Visszaállítás</target>
+      </trans-unit>
+      <trans-unit id="label.billable">
+        <source>label.billable</source>
+        <target>Számlázható</target>
+      </trans-unit>
+      <trans-unit id="placeholder.type_message">
+        <source>placeholder.type_message</source>
+        <target>Üzenet írása...</target>
+      </trans-unit>
+      <trans-unit id="label.teamlead">
+        <source>label.teamlead</source>
+        <target>Csoportvezető</target>
+      </trans-unit>
+      <trans-unit id="label.team">
+        <source>label.team</source>
+        <target>Csoport</target>
+      </trans-unit>
+      <trans-unit id="label.recalculate_rates">
+        <source>label.recalculate_rates</source>
+        <target>Bérek újraszámlálása</target>
+      </trans-unit>
+      <trans-unit id="help.rate_internal">
+        <source>help.rate_internal</source>
+        <target>Belső kiadások (ha nincs beállítva, a normál bér lesz használva)</target>
+      </trans-unit>
+      <trans-unit id="label.rate_internal">
+        <source>label.rate_internal</source>
+        <target>Belső bér</target>
+      </trans-unit>
+      <trans-unit id="help.rate">
+        <source>help.rate</source>
+        <target>Óránként számolt bér</target>
+      </trans-unit>
+      <trans-unit id="label.theme.layout">
+        <source>label.theme.layout</source>
+        <target>Megjelenítés: elrendezés</target>
+      </trans-unit>
+      <trans-unit id="error.no_comments_found">
+        <source>error.no_comments_found</source>
+        <target>Még nincsenek hozzászólások.</target>
+      </trans-unit>
+      <trans-unit id="menu.doctor">
+        <source>menu.doctor</source>
+        <target>Doktor</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_team">
+        <source>menu.admin_team</source>
+        <target>Csoportok</target>
+      </trans-unit>
+      <trans-unit id="menu.reporting">
+        <source>menu.reporting</source>
+        <target>Jelentések</target>
+      </trans-unit>
+      <trans-unit id="login_required">
+        <source>login_required</source>
+        <target>Hiányzó jogosultság. Átirányítás a kezdőlapra?</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
