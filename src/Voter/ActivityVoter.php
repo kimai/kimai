@@ -26,6 +26,8 @@ class ActivityVoter extends AbstractVoter
         'view',
         'edit',
         'budget',
+        'comments',
+        'comments_create',
         'delete',
         'permissions',
     ];

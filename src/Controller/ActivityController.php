@@ -210,7 +210,7 @@ final class ActivityController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/comment_delete", name="project_comment_delete", methods={"GET"})
+     * @Route(path="/{id}/comment_delete", name="activity_comment_delete", methods={"GET"})
      * @Security("is_granted('edit', comment.getActivity()) and is_granted('comments', comment.getActivity())")
      */
     public function deleteCommentAction(ActivityComment $comment)
@@ -249,7 +249,7 @@ final class ActivityController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/comment_pin", name="project_comment_pin", methods={"GET"})
+     * @Route(path="/{id}/comment_pin", name="activity_comment_pin", methods={"GET"})
      * @Security("is_granted('edit', comment.getActivity()) and is_granted('comments', comment.getActivity())")
      */
     public function pinCommentAction(ActivityComment $comment)

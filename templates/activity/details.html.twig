@@ -96,7 +96,7 @@
     {% if comments is not null %}
         {% set options = {'form': commentForm, 'comments': comments} %}
         {% if can_edit %}
-            {% set options = options|merge({'route_pin': 'project_comment_pin', 'route_delete': 'project_comment_delete'}) %}
+            {% set options = options|merge({'route_pin': 'activity_comment_pin', 'route_delete': 'activity_comment_delete'}) %}
         {% endif %}
         {{ include('embeds/comments.html.twig', options) }}
     {% endif %}
