@@ -37,7 +37,7 @@ class ActivityComment implements CommentInterface
 
     public function setActivity(Activity $activity): ActivityComment
     {
-        $this->Activity = $activity;
+        $this->activity = $activity;
 
         return $this;
     }
