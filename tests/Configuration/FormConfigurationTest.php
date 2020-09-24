@@ -86,11 +86,8 @@ class FormConfigurationTest extends TestCase
         $this->assertEquals('FR', $sut->find('defaults.customer.country'));
     }
 
-    public function testUnknownConfigAreNotImportedAndFindingThemThrowsException()
+    public function testUnknownConfigAreImported()
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unknown config: foobar');
-
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('defaults.customer.foobar')->setValue('hello'),
         ]);
