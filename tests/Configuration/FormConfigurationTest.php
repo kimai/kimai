@@ -91,6 +91,8 @@ class FormConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('defaults.customer.foobar')->setValue('hello'),
         ]);
+        $this->assertTrue($sut->has('customer.foobar'));
+        $this->assertFalse($sut->has('xxxx.foobar'));
         $this->assertEquals('hello', $sut->find('customer.foobar'));
     }
 }

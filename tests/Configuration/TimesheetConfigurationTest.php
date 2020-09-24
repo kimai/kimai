@@ -121,6 +121,7 @@ class TimesheetConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('timesheet.foo')->setValue('hello'),
         ]);
+        $this->assertTrue($sut->has('foo'));
         $this->assertEquals('hello', $sut->find('foo'));
     }
 }
