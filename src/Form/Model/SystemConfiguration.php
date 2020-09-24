@@ -66,4 +66,15 @@ class SystemConfiguration
 
         return $this;
     }
+
+    /**
+     * @param Configuration $configuration
+     * @return SystemConfiguration
+     */
+    public function addConfiguration(Configuration $configuration): SystemConfiguration
+    {
+        $this->configuration[] = $configuration;
+
+        return $this;
+    }
 }
