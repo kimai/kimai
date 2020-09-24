@@ -660,7 +660,6 @@ class TimesheetController extends BaseApiController
             ->setActivity($timesheet->getActivity())
             ->setProject($timesheet->getProject())
         ;
-        $this->service->prepareNewTimesheet($copyTimesheet);
 
         if (null !== ($copy = $paramFetcher->get('copy'))) {
             if (\in_array($copy, ['rates', 'all'])) {
@@ -685,6 +684,12 @@ class TimesheetController extends BaseApiController
                 }
             }
         }
+
+        // needs to be executed AFTER copying the values!
+        // the event triggered in prepareNewTimesheet() will add meta fields first. Afterwards
+        // setMetaField() will merge meta fields and if we merge in the existing ones from the copied record,
+        // it will fail, because they do not have a type assigned
+        $this->service->prepareNewTimesheet($copyTimesheet);
 
         $this->service->restartTimesheet($copyTimesheet, $timesheet);
 
