@@ -129,15 +129,14 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(false, $sut->find('timesheet.rules.allow_future_times'));
     }
 
-    public function testUnknownConfigAreNotImportedAndFindingThemThrowsException()
+    public function testUnknownConfigs()
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unknown config: foo');
-
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('timesheet.foo')->setValue('hello'),
         ]);
-        $this->assertEquals('hello', $sut->find('foo'));
+        $this->assertEquals('hello', $sut->find('timesheet.foo'));
+        $this->assertFalse($sut->has('xxxxxxxx.yyyyyyyyy'));
+        $this->assertNull($sut->find('xxxxxxxx.yyyyyyyyy'));
     }
 
     public function testCalendarWithoutLoader()

@@ -41,6 +41,11 @@ class InvoiceModelTest extends TestCase
         self::assertInstanceOf(\DateTime::class, $sut->getInvoiceDate());
 
         self::assertSame($formatter, $sut->getFormatter());
+
+        $newFormatter = new DebugFormatter();
+        $sut->setFormatter($newFormatter);
+        self::assertNotSame($formatter, $sut->getFormatter());
+        self::assertSame($newFormatter, $sut->getFormatter());
     }
 
     public function testEmptyObjectThrowsExceptionOnNumberGenerator()

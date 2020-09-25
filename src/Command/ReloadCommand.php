@@ -120,11 +120,13 @@ final class ReloadCommand extends Command
                     'bin/console cache:warmup --env=' . $environment
                 ]
             );
-        } else {
-            $io->success(
-                sprintf('Kimai config was reloaded')
-            );
+
+            return $cacheResult;
         }
+
+        $io->success(
+            sprintf('Kimai config was reloaded')
+        );
 
         return 0;
     }

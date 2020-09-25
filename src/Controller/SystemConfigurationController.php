@@ -202,6 +202,10 @@ final class SystemConfigurationController extends AbstractController
 
         foreach ($event->getConfigurations() as $configs) {
             foreach ($configs->getConfiguration() as $config) {
+                if (!$this->configurations->has($config->getName())) {
+                    continue;
+                }
+
                 $configValue = $this->configurations->find($config->getName());
                 if (null !== $configValue) {
                     $config->setValue($configValue);
