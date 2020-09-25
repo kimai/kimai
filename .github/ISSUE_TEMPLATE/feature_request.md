@@ -1,6 +1,9 @@
 ---
 name: Feature request
 about: Suggest an idea to make Kimai better
+title: ''
+labels: feature request
+assignees: ''
 
 ---
 
@@ -13,5 +16,5 @@ A clear and concise description of what you want to happen.
 **Describe alternatives you've considered**
 A clear and concise description of any alternative solutions or features you've considered.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Screenshot**
+Add a mockup / screenshot of your idea here.
