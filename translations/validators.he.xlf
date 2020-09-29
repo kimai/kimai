@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="validators.en.xlf">
     <header>
@@ -392,6 +392,26 @@
       <trans-unit id="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
         <target>תאריך ההתחלה לא יכול להיות בעתיד.</target>
+      </trans-unit>
+      <trans-unit id="The given value is not a valid time.">
+        <source>The given value is not a valid time.</source>
+        <target>הערך שסופק אינו מועד תקין.</target>
+      </trans-unit>
+      <trans-unit id="You already have an entry for this time.">
+        <source>You already have an entry for this time.</source>
+        <target>כבר יש לך רשומה למועד הזה.</target>
+      </trans-unit>
+      <trans-unit id="This period is locked, please choose a later date.">
+        <source>This period is locked, please choose a later date.</source>
+        <target>תקופה זו נעולה, נא להשתמש במועד מאוחר יותר.</target>
+      </trans-unit>
+      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
+        <target>לא ניתן להשתמש במסמך החשבונית הזה, נא לשנות את שם הקובץ ולהעלות אותו שוב.</target>
+      </trans-unit>
+      <trans-unit id="You must select at least one user or team.">
+        <source>You must select at least one user or team.</source>
+        <target>עליך לבחור בצוות או משתמש אחד לפחות.</target>
       </trans-unit>
     </body>
   </file>
