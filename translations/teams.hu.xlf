@@ -22,10 +22,6 @@
         <source>team.visibility_restricted</source>
         <target>Csak a következő csoportok és adminisztrátorok láthatják.</target>
       </trans-unit>
-      <trans-unit id="team.project_visibility_inherited">
-        <source>team.project_visibility_inherited</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="team.create_default">
         <source>team.create_default</source>
         <target>Új csoport készítése a jogosultságok korlátozására</target>
