@@ -26,11 +26,11 @@
                             {% set type = 'success' %}
                             {% set domain = 'FOSUserBundle' %}
                         {% endif %}
-                        {% if type == constant('\\App\\Controller\\AbstractController::FLASH_ERROR') %}
+                        {% if type == 'error' %}
                             ALERT.error('{{ message|trans({}, domain) }}');
-                        {% elseif type == constant('\\App\\Controller\\AbstractController::FLASH_WARNING') %}
+                        {% elseif type == 'warning' %}
                             ALERT.warning('{{ message|trans({}, domain) }}');
-                        {% elseif type == constant('\\App\\Controller\\AbstractController::FLASH_SUCCESS') %}
+                        {% elseif type == 'success' %}
                             ALERT.success('{{ message|trans({}, domain) }}');
                         {% else %}
                             ALERT.info('{{ message|trans({}, domain) }}');
