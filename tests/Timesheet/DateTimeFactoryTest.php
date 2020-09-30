@@ -113,11 +113,10 @@ class DateTimeFactoryTest extends TestCase
         $this->assertEquals(29, $dateTime->format('d'));
         $this->assertEquals(7, $dateTime->format('N'));
         $this->assertEquals('Sunday', $dateTime->format('l'));
-        $this->assertEquals($expected->format('m'), $dateTime->format('m'));
-        $this->assertEquals($expected->format('Y'), $dateTime->format('Y'));
+        $this->assertEquals('07', $dateTime->format('m'));
+        $this->assertEquals('2018', $dateTime->format('Y'));
         $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
 
-        $expected = new DateTime('now', new DateTimeZone(self::TEST_TIMEZONE));
         $dateTime = $sut->getEndOfWeek();
 
         $this->assertEquals(23, $dateTime->format('H'));
@@ -125,8 +124,7 @@ class DateTimeFactoryTest extends TestCase
         $this->assertEquals(59, $dateTime->format('s'));
         $this->assertEquals(7, $dateTime->format('N'));
         $this->assertEquals('Sunday', $dateTime->format('l'));
-        $this->assertEquals($expected->format('m'), $dateTime->format('m'));
-        $this->assertEquals($expected->format('Y'), $dateTime->format('Y'));
+        // month and year can be different when the week started at the end of the month
         $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
     }
 
