@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="special_thanks">
         <source>special_thanks</source>
-        <target>Remerciements à…</target>
+        <target>Des remerciements particuliers vont à …</target>
       </trans-unit>
       <trans-unit id="library_authors">
         <source>library_authors</source>

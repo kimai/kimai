@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="http_error.description">
                 <source>http_error.description</source>
-                <target>Oops! Um erro ocorreu.</target>
+                <target>Um erro ocorreu.</target>
             </trans-unit>
             <trans-unit id="http_error.suggestion">
                 <source>http_error.suggestion</source>
@@ -27,7 +27,7 @@
             </trans-unit>
             <trans-unit id="http_error_404.description">
                 <source>http_error_404.description</source>
-                <target>Oops! Página não encontrada.</target>
+                <target>Página não encontrada.</target>
             </trans-unit>
             <trans-unit id="http_error_404.suggestion">
                 <source>http_error_404.suggestion</source>

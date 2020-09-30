@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="registration.title">
         <source>registration.title</source>
-        <target>Benvenuto/a %username%</target>
+        <target>Benvenuto %username%</target>
       </trans-unit>
       <trans-unit id="registration.button">
         <source>registration.button</source>

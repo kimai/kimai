@@ -1104,7 +1104,7 @@
       </trans-unit>
       <trans-unit id="export.mark_all">
         <source>export.mark_all</source>
-        <target>&gt;Imposta tutte le voci come rendicontate?</target>
+        <target>Imposta tutte le voci come rendicontate?</target>
       </trans-unit>
       <trans-unit id="label.globalsOnly">
         <source>label.globalsOnly</source>
