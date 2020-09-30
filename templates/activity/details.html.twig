@@ -90,6 +90,9 @@
         {% if is_granted('permissions', activity) %}
             {% set options = options|merge({'route_create': path('activity_team_create', {'id': activity.id}), 'route_edit': path('admin_activity_permissions', {'id': activity.id})}) %}
         {% endif %}
+        {% if activity.project is not null and (activity.project.teams|length > 0 or activity.project.customer.teams|length > 0) %}
+            {% set options = options|merge({'empty_message': 'team.activity_visibility_inherited'}) %}
+        {% endif %}
         {{ include('embeds/teams.html.twig', options) }}
     {% endif %}
 
