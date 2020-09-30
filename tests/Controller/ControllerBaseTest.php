@@ -321,10 +321,10 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasFlashError(HttpKernelBrowser $client, string $message = null)
     {
-        $node = $client->getCrawler()->filter('div.alert.alert-error.alert-dismissible');
-        self::assertGreaterThan(0, $node->count(), 'Could not find flash error message');
+        $content = $client->getResponse()->getContent();
+        self::assertStringContainsString('ALERT.error(\'', $content, 'Could not find flash error message');
         if (null !== $message) {
-            self::assertStringContainsString($message, $node->text(null, true));
+            self::assertStringContainsString($message, $content);
         }
     }
 
