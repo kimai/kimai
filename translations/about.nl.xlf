@@ -18,10 +18,6 @@
                 <source>help</source>
                 <target>Help</target>
             </trans-unit>
-            <trans-unit id="tab.thanks">
-                <source>tab.thanks</source>
-                <target>Dank u wel</target>
-            </trans-unit>
             <trans-unit id="donate">
                 <source>donate</source>
                 <target>Doneer aan Kimaï</target>

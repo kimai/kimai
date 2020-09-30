@@ -18,10 +18,6 @@
                 <source>help</source>
                 <target>ドキュメント</target>
             </trans-unit>
-            <trans-unit id="tab.thanks">
-                <source>tab.thanks</source>
-                <target>謝辞</target>
-            </trans-unit>
             <trans-unit id="donate">
                 <source>donate</source>
                 <target>Kimai の発展のために寄付を行う</target>

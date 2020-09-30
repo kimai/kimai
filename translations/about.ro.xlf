@@ -21,10 +21,6 @@
         <source>help</source>
         <target>Documentație</target>
       </trans-unit>
-      <trans-unit id="tab.thanks">
-        <source>tab.thanks</source>
-        <target>Mulțumiri speciale</target>
-      </trans-unit>
       <trans-unit id="donate">
         <source>donate</source>
         <target>Donează pentru dezvoltarea Kimai</target>

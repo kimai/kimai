@@ -21,10 +21,6 @@
         <source>help</source>
         <target>עזרה</target>
       </trans-unit>
-      <trans-unit id="tab.thanks">
-        <source>tab.thanks</source>
-        <target>תודות</target>
-      </trans-unit>
       <trans-unit id="donate">
         <source>donate</source>
         <target>תרומה</target>
