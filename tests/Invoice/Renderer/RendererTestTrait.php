@@ -29,12 +29,6 @@ use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\AbstractRenderer;
 use App\Repository\Query\InvoiceQuery;
-use App\Twig\DateExtensions;
-use App\Twig\Extensions;
-use App\Utils\LocaleSettings;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 trait RendererTestTrait
 {
@@ -74,7 +68,6 @@ trait RendererTestTrait
 
     protected function getFormatter(): InvoiceFormatter
     {
-        $requestStack = new RequestStack();
         $languages = [
             'en' => [
                 'date' => 'Y.m.d',
@@ -83,17 +76,9 @@ trait RendererTestTrait
             ]
         ];
 
-        $request = new Request();
-        $request->setLocale('en');
-        $requestStack->push($request);
+        $formattings = new LanguageFormattings($languages);
 
-        $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($languages));
-
-        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dateExtension = new DateExtensions($localeSettings);
-        $extensions = new Extensions($localeSettings);
-
-        return new DefaultInvoiceFormatter($translator, $dateExtension, $extensions);
+        return new DefaultInvoiceFormatter($formattings, 'en');
     }
 
     protected function getInvoiceModel(): InvoiceModel
@@ -108,12 +93,14 @@ trait RendererTestTrait
 
         $customer = new Customer();
         $customer->setName('customer,with/special#name');
+        $customer->setAddress('Foo' . PHP_EOL . 'Street' . PHP_EOL . '1111 City');
         $customer->setCurrency('EUR');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
         $template = new InvoiceTemplate();
-        $template->setTitle('a very *long* test invoice / template title with [special] character');
+        $template->setTitle('a very *long* test invoice / template title with [ßpecial] chäracter');
         $template->setVat(19);
+        $template->setLanguage('en');
 
         $project = new Project();
         $project->setName('project name');
@@ -124,6 +111,16 @@ trait RendererTestTrait
         $activity->setName('activity description');
         $activity->setProject($project);
         $activity->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity')->setIsVisible(true));
+
+        $project2 = new Project();
+        $project2->setName('project 2 name');
+        $project2->setCustomer($customer);
+        $project2->setMetaField((new ProjectMeta())->setName('foo-project')->setValue('bar-project2')->setIsVisible(true));
+
+        $activity2 = new Activity();
+        $activity2->setName('activity 1 description');
+        $activity2->setProject($project2);
+        $activity2->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity2')->setIsVisible(true));
 
         $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
         $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
@@ -164,8 +161,8 @@ trait RendererTestTrait
             ->setDuration(1800)
             ->setRate(111.11)
             ->setUser($user1)
-            ->setActivity($activity)
-            ->setProject($project)
+            ->setActivity($activity2)
+            ->setProject($project2)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
             ->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet1')->setIsVisible(true))
@@ -180,6 +177,14 @@ trait RendererTestTrait
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
+            ->setDescription(
+                "foo\n" .
+                "foo\r\n" .
+                'foo' . PHP_EOL .
+                "bar\n" .
+                "bar\r\n" .
+                'Hello'
+            )
             ->setMetaField((new TimesheetMeta())->setName('foo-timesheet3')->setValue('bluuuub')->setIsVisible(true))
         ;
 
@@ -192,15 +197,23 @@ trait RendererTestTrait
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
+            ->setDescription(
+                "foo\n" .
+                "foo\r\n" .
+                'foo' . PHP_EOL .
+                "bar\n" .
+                "bar\r\n" .
+                'Hello'
+            )
         ;
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->setActivities([$activity, $activity2]);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
-        $query->setProject($project);
+        $query->setProjects([$project, $project2]);
 
         $model = new InvoiceModel($this->getFormatter());
         $model->setCustomer($customer);
@@ -271,7 +284,7 @@ trait RendererTestTrait
         $entries = [$timesheet];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->addActivity($activity);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 

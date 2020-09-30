@@ -43,10 +43,14 @@
                         {% set value = manager.permission(role.name, permission) %}
                         <td class="text-center">
                             {# see RolePermissionManager for this special case #}
-                            {% if (permission != 'role_permissions' and permission != 'view_user') or role.name != 'ROLE_SUPER_ADMIN' %}
-                                <a href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': (value ? '0' : '1')}) }}">{{ widgets.label_boolean(value) }}</a>
+                            {% if role.name == 'ROLE_SUPER_ADMIN' and permission in always_apply_superadmin %}
+                                {% if value %}
+                                    {{ widgets.label('yes'|trans, 'warning') }}
+                                {% else %}
+                                    <a href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': '1'}) }}">{{ widgets.label('no'|trans, 'danger') }}</a>
+                                {% endif %}
                             {% else %}
-                                {{ widgets.label_boolean(value) }}
+                                <a href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': (value ? '0' : '1')}) }}">{{ widgets.label_boolean(value) }}</a>
                             {% endif %}
                         </td>
                     {% endfor %}
@@ -55,7 +59,7 @@
         {% endif %}
     {% endfor %}
 
-    {{ tables.data_table_footer(permissions) }}
+    {{ tables.data_table_footer() }}
 
 {% endblock %}
 

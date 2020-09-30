@@ -44,7 +44,7 @@ class RoleType extends AbstractType
         $builder->get('name')->addViewTransformer(
             new CallbackTransformer(
                 function ($roleName) {
-                    if (is_string($roleName)) {
+                    if (\is_string($roleName)) {
                         $roleName = str_replace(' ', '_', $roleName);
                         $roleName = str_replace('-', '_', $roleName);
                         $roleName = strtoupper($roleName);

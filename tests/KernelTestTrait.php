@@ -14,23 +14,26 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * A trait to be used in all tests that extend the KernelTestCase.
  */
 trait KernelTestTrait
 {
-    protected function importFixture($client, Fixture $fixture)
+    public function getEntityManager(): EntityManagerInterface
     {
-        if ($client instanceof HttpKernelBrowser) {
-            $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
-        } elseif ($client instanceof EntityManager) {
-            $em = $client;
-        } else {
-            throw new \InvalidArgumentException('Fixtures need an EntityManager to be imported');
+        if (!$this instanceof KernelTestCase) {
+            throw new \Exception('KernelTestTrait can only be used in a KernelTestCase');
         }
+
+        return $this::$container->get('doctrine.orm.entity_manager');
+    }
+
+    protected function importFixture(Fixture $fixture)
+    {
+        $em = $this::$container->get('doctrine.orm.entity_manager');
 
         $loader = new Loader();
         $loader->addFixture($fixture);
@@ -39,17 +42,16 @@ trait KernelTestTrait
         $executor->execute($loader->getFixtures(), true);
     }
 
-    protected function getUserByName(EntityManager $em, string $username): ?User
+    protected function getUserByName(string $username): ?User
     {
-        return $em->getRepository(User::class)->findOneBy(['username' => $username]);
+        return $this->getEntityManager()->getRepository(User::class)->findOneBy(['username' => $username]);
     }
 
     /**
-     * @param EntityManager $em
      * @param string $role
      * @return User|null
      */
-    protected function getUserByRole(EntityManager $em, string $role = User::ROLE_USER)
+    protected function getUserByRole(string $role = User::ROLE_USER)
     {
         $name = null;
 
@@ -74,6 +76,6 @@ trait KernelTestTrait
                 return null;
         }
 
-        return $this->getUserByName($em, $name);
+        return $this->getUserByName($name);
     }
 }

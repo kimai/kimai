@@ -123,7 +123,7 @@ final class ActivityFixtures extends Fixture
             ;
 
             if (null !== $this->callback) {
-                call_user_func($this->callback, $activity);
+                \call_user_func($this->callback, $activity);
             }
             $manager->persist($activity);
         }

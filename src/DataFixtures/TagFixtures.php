@@ -11,7 +11,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Tag;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
@@ -61,7 +61,7 @@ class TagFixtures extends Fixture
                 $tagName = $faker->text(rand(5, 10));
             }
 
-            if (in_array($tagName, $existing)) {
+            if (\in_array($tagName, $existing)) {
                 continue;
             }
 

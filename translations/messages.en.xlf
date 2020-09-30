@@ -144,6 +144,10 @@
                 <source>menu.export</source>
                 <target>Export</target>
             </trans-unit>
+            <trans-unit id="menu.reporting">
+                <source>menu.reporting</source>
+                <target>Reporting</target>
+            </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
                 <target>Timesheets</target>
@@ -292,6 +296,22 @@
                 <source>label.rate</source>
                 <target>Rate</target>
             </trans-unit>
+            <trans-unit id="help.rate">
+                <source>help.rate</source>
+                <target>Hourly rate to be charged</target>
+            </trans-unit>
+            <trans-unit id="label.rate_internal">
+                <source>label.rate_internal</source>
+                <target>Internal rate</target>
+            </trans-unit>
+            <trans-unit id="help.rate_internal">
+                <source>help.rate_internal</source>
+                <target>Internal costs (if this is not specified, the normal rate is used)</target>
+            </trans-unit>
+            <trans-unit id="label.recalculate_rates">
+                <source>label.recalculate_rates</source>
+                <target>Recalculate rates</target>
+            </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
                 <target>Language</target>
@@ -315,6 +335,14 @@
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
                 <target>Create further entries</target>
+            </trans-unit>
+            <trans-unit id="placeholder.type_message">
+                <source>placeholder.type_message</source>
+                <target>Type your message...</target>
+            </trans-unit>
+            <trans-unit id="label.billable">
+                <source>label.billable</source>
+                <target>Billable</target>
             </trans-unit>
 
             <!--
@@ -428,6 +456,10 @@
                 <source>label.fixedRate</source>
                 <target>Fixed rate</target>
             </trans-unit>
+            <trans-unit id="help.fixedRate">
+                <source>help.fixedRate</source>
+                <target>Each time record gets the same value, regardless of its duration</target>
+            </trans-unit>
             <trans-unit id="label.color">
                 <source>label.color</source>
                 <target>Color</target>
@@ -455,6 +487,10 @@
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
                 <target>Working since</target>
+            </trans-unit>
+            <trans-unit id="profile.registration_date">
+                <source>profile.registration_date</source>
+                <target>Registered at</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
@@ -491,6 +527,10 @@
             <trans-unit id="label.login.initial_view">
                 <source>label.login.initial_view</source>
                 <target>Initial view after login</target>
+            </trans-unit>
+            <trans-unit id="label.lastLogin">
+                <source>label.lastLogin</source>
+                <target>Last login</target>
             </trans-unit>
             <!-- Options for user-preference label.calendar.initial_view -->
             <trans-unit id="month">
@@ -716,6 +756,22 @@
             <!--
               Statistics data for Dashboard & Users profile
             -->
+            <trans-unit id="stats.workingTimeToday">
+                <source>stats.workingTimeToday</source>
+                <target>Today, %day%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeWeek">
+                <source>stats.workingTimeWeek</source>
+                <target>Calendar week %week%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeMonth">
+                <source>stats.workingTimeMonth</source>
+                <target>%month% %year%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeYear">
+                <source>stats.workingTimeYear</source>
+                <target>Full year %year%</target>
+            </trans-unit>
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
                 <target>Working hours today</target>
@@ -820,10 +876,6 @@
                 <source>invoice.title</source>
                 <target>Invoices</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Create invoices from your recorded timesheet entries.</target>
-            </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
                 <target>Filter invoice data</target>
@@ -831,6 +883,10 @@
             <trans-unit id="button.preview">
                 <source>button.preview</source>
                 <target>Preview</target>
+            </trans-unit>
+            <trans-unit id="button.preview_print">
+                <source>button.preview_print</source>
+                <target>Print preview</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -948,6 +1004,22 @@
                 <source>label.decimalDuration</source>
                 <target>Display duration as decimal number</target>
             </trans-unit>
+            <trans-unit id="label.status">
+                <source>label.status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="status.new">
+                <source>status.new</source>
+                <target>New</target>
+            </trans-unit>
+            <trans-unit id="status.pending">
+                <source>status.pending</source>
+                <target>Pending</target>
+            </trans-unit>
+            <trans-unit id="status.paid">
+                <source>status.paid</source>
+                <target>Paid</target>
+            </trans-unit>
 
             <!--
               Export
@@ -970,7 +1042,7 @@
             </trans-unit>
             <trans-unit id="export.document_title">
                 <source>export.document_title</source>
-                <target>List of expenses</target>
+                <target>Export of timesheets</target>
             </trans-unit>
             <trans-unit id="export.full_list">
                 <source>export.full_list</source>
@@ -987,58 +1059,6 @@
             <trans-unit id="export.date_copyright">
                 <source>export.date_copyright</source>
                 <target>Created %date% with %kimai%</target>
-            </trans-unit>
-
-            <!--
-              Month names
-            -->
-            <trans-unit id="month.1">
-                <source>month.1</source>
-                <target>January</target>
-            </trans-unit>
-            <trans-unit id="month.2">
-                <source>month.2</source>
-                <target>February</target>
-            </trans-unit>
-            <trans-unit id="month.3">
-                <source>month.3</source>
-                <target>March</target>
-            </trans-unit>
-            <trans-unit id="month.4">
-                <source>month.4</source>
-                <target>April</target>
-            </trans-unit>
-            <trans-unit id="month.5">
-                <source>month.5</source>
-                <target>May</target>
-            </trans-unit>
-            <trans-unit id="month.6">
-                <source>month.6</source>
-                <target>June</target>
-            </trans-unit>
-            <trans-unit id="month.7">
-                <source>month.7</source>
-                <target>July</target>
-            </trans-unit>
-            <trans-unit id="month.8">
-                <source>month.8</source>
-                <target>August</target>
-            </trans-unit>
-            <trans-unit id="month.9">
-                <source>month.9</source>
-                <target>September</target>
-            </trans-unit>
-            <trans-unit id="month.10">
-                <source>month.10</source>
-                <target>October</target>
-            </trans-unit>
-            <trans-unit id="month.11">
-                <source>month.11</source>
-                <target>November</target>
-            </trans-unit>
-            <trans-unit id="month.12">
-                <source>month.12</source>
-                <target>December</target>
             </trans-unit>
 
             <!--

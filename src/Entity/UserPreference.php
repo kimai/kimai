@@ -27,9 +27,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class UserPreference
 {
     public const HOURLY_RATE = 'hourly_rate';
+    public const INTERNAL_RATE = 'internal_rate';
     public const SKIN = 'skin';
     public const LOCALE = 'language';
     public const TIMEZONE = 'timezone';
+    public const FIRST_WEEKDAY = 'first_weekday';
 
     /**
      * @var int
@@ -51,7 +53,8 @@ class UserPreference
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
-     * @Assert\Length(min=2, max=50)
+     * @Assert\NotNull()
+     * @Assert\Length(min=2, max=50, allowEmptyString=false)
      */
     private $name;
     /**
@@ -81,11 +84,12 @@ class UserPreference
      * @var int
      */
     private $order = 1000;
-
     /**
-     * @return int
+     * @var string
      */
-    public function getId()
+    private $section = 'default';
+
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -261,5 +265,17 @@ class UserPreference
         $this->order = $order;
 
         return $this;
+    }
+
+    public function setSection(string $section): UserPreference
+    {
+        $this->section = $section;
+
+        return $this;
+    }
+
+    public function getSection(): string
+    {
+        return $this->section;
     }
 }

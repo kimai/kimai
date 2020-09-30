@@ -9,47 +9,40 @@
 
 namespace App\Repository\Query;
 
-use App\Entity\Team;
 use App\Entity\User;
 
 /**
- * Can be used for pre-filling form types with the: UserRepository
+ * Can be used to pre-fill form types with: UserRepository::getQueryBuilderForFormType()
  */
-final class UserFormTypeQuery
+final class UserFormTypeQuery extends BaseFormTypeQuery
 {
-    /**
-     * @var User
-     */
-    private $user;
-    /**
-     * @var array<Team>
-     */
-    private $teams = [];
+    use VisibilityTrait;
 
-    public function addTeam(Team $team): UserFormTypeQuery
+    /**
+     * @var User[]
+     */
+    private $includeUsers = [];
+
+    /**
+     * Sets a list of users which must be included in the result always.
+     *
+     * @param array $users
+     * @return UserFormTypeQuery
+     */
+    public function setUsersAlwaysIncluded(array $users): UserFormTypeQuery
     {
-        $this->teams[$team->getId()] = $team;
+        $this->includeUsers = $users;
 
         return $this;
     }
 
     /**
-     * @return Team[]
+     * Get the list of users which should always be included in the result.
+     *
+     * @return User[]
      */
-    public function getTeams(): array
+    public function getUsersAlwaysIncluded(): array
     {
-        return array_values($this->teams);
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(User $user): UserFormTypeQuery
-    {
-        $this->user = $user;
-
-        return $this;
+        return $this->includeUsers;
     }
 }

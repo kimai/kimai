@@ -25,6 +25,9 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Activity>
+ */
 class ActivityRepository extends EntityRepository
 {
     /**
@@ -97,6 +100,7 @@ class ActivityRepository extends EntityRepository
             ->addSelect('COUNT(t.id) as recordAmount')
             ->addSelect('SUM(t.duration) as recordDuration')
             ->addSelect('SUM(t.rate) as recordRate')
+            ->addSelect('SUM(t.internalRate) as recordInternalRate')
             ->from(Timesheet::class, 't')
             ->where('t.activity = :activity')
         ;
@@ -107,6 +111,7 @@ class ActivityRepository extends EntityRepository
             $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
             $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
             $stats->setRecordRate($timesheetResult[0]['recordRate']);
+            $stats->setRecordInternalRate($timesheetResult[0]['recordInternalRate']);
         }
 
         return $stats;
@@ -120,7 +125,7 @@ class ActivityRepository extends EntityRepository
         }
 
         // make sure that admins see all activities
-        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+        if (null !== $user && $user->canSeeAllData()) {
             return;
         }
 
@@ -128,18 +133,26 @@ class ActivityRepository extends EntityRepository
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
-        $qb->leftJoin('p.teams', 'teams')
+        $qb->leftJoin('a.teams', 'teams')
+            ->leftJoin('p.teams', 'p_teams')
             ->leftJoin('c.teams', 'c_teams');
 
         if (empty($teams)) {
-            $qb->andWhere($qb->expr()->isNull('c_teams'));
             $qb->andWhere($qb->expr()->isNull('teams'));
+            $qb->andWhere($qb->expr()->isNull('p_teams'));
+            $qb->andWhere($qb->expr()->isNull('c_teams'));
 
             return;
         }
 
-        $orProject = $qb->expr()->orX(
+        $orActivity = $qb->expr()->orX(
             $qb->expr()->isNull('teams'),
+            $qb->expr()->isMemberOf(':teams', 'a.teams')
+        );
+        $qb->andWhere($orActivity);
+
+        $orProject = $qb->expr()->orX(
+            $qb->expr()->isNull('p_teams'),
             $qb->expr()->isMemberOf(':teams', 'p.teams')
         );
         $qb->andWhere($orProject);
@@ -154,13 +167,13 @@ class ActivityRepository extends EntityRepository
     }
 
     /**
-     * @deprecated since 1.1
+     * @deprecated since 1.1 - use getQueryBuilderForFormType() instead - will be removed with 2.0
      */
     public function builderForEntityType($activity, $project)
     {
         $query = new ActivityFormTypeQuery();
-        $query->setActivity($activity);
-        $query->setProject($project);
+        $query->addActivity($activity);
+        $query->addProject($project);
 
         return $this->getQueryBuilderForFormType($query);
     }
@@ -212,14 +225,14 @@ class ActivityRepository extends EntityRepository
 
         if ($query->isGlobalsOnly()) {
             $where->add($qb->expr()->isNull('a.project'));
-        } elseif (null !== $query->getProject()) {
+        } elseif ($query->hasProjects()) {
             $where->add(
                 $qb->expr()->orX(
-                    $qb->expr()->eq('a.project', ':project'),
+                    $qb->expr()->in('a.project', ':project'),
                     $qb->expr()->isNull('a.project')
                 )
             );
-            $qb->setParameter('project', $query->getProject());
+            $qb->setParameter('project', $query->getProjects());
         }
 
         if (null !== $query->getActivityToIgnore()) {
@@ -233,10 +246,9 @@ class ActivityRepository extends EntityRepository
         $or->add($where);
 
         // this must always be the last part of the query
-        /* @var Activity $entity */
-        if (null !== $query->getActivity()) {
-            $or->add($qb->expr()->eq('a.id', ':activity'));
-            $qb->setParameter('activity', $query->getActivity());
+        if ($query->hasActivities()) {
+            $or->add($qb->expr()->in('a.id', ':activity'));
+            $qb->setParameter('activity', $query->getActivities());
         }
 
         if ($or->count() > 0) {
@@ -274,38 +286,34 @@ class ActivityRepository extends EntityRepository
 
         $where = $qb->expr()->andX();
 
-        if (in_array($query->getVisibility(), [ActivityQuery::SHOW_VISIBLE, ActivityQuery::SHOW_HIDDEN])) {
+        if (!$query->isShowBoth()) {
             if (!$query->isGlobalsOnly()) {
                 $where->add(
                     $qb->expr()->orX(
-                        $qb->expr()->eq('c.visible', ':customer_visible'),
-                        $qb->expr()->isNull('c.visible')
+                        $qb->expr()->isNull('a.project'),
+                        $qb->expr()->andX(
+                            $qb->expr()->eq('c.visible', ':is_visible'),
+                            $qb->expr()->eq('p.visible', ':is_visible')
+                        )
                     )
                 );
-                $where->add(
-                    $qb->expr()->orX(
-                        $qb->expr()->eq('p.visible', ':project_visible'),
-                        $qb->expr()->isNull('p.visible')
-                    )
-                );
-                $qb->setParameter('project_visible', true, \PDO::PARAM_BOOL);
-                $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
+                $qb->setParameter('is_visible', true, \PDO::PARAM_BOOL);
             }
 
-            $where->add('a.visible = :visible');
+            $where->add($qb->expr()->eq('a.visible', ':visible'));
 
-            if (ActivityQuery::SHOW_VISIBLE === $query->getVisibility()) {
+            if ($query->isShowVisible()) {
                 $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
-            } elseif (ActivityQuery::SHOW_HIDDEN === $query->getVisibility()) {
+            } elseif ($query->isShowHidden()) {
                 $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
             }
         }
 
         if ($query->isGlobalsOnly()) {
             $where->add($qb->expr()->isNull('a.project'));
-        } elseif (null !== $query->getProject()) {
+        } elseif ($query->hasProjects()) {
             $orX = $qb->expr()->orX(
-                $qb->expr()->eq('a.project', ':project')
+                $qb->expr()->in('a.project', ':project')
             );
 
             if (!$query->isExcludeGlobals()) {
@@ -313,7 +321,7 @@ class ActivityRepository extends EntityRepository
             }
 
             $where->add($orX);
-            $qb->setParameter('project', $query->getProject());
+            $qb->setParameter('project', $query->getProjects());
         } elseif (null !== $query->getCustomer()) {
             $where->add('p.customer = :customer');
             $qb->setParameter('customer', $query->getCustomer());
@@ -323,7 +331,7 @@ class ActivityRepository extends EntityRepository
             $qb->andWhere($where);
         }
 
-        $this->addPermissionCriteria($qb, $query->getCurrentUser());
+        $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
         if ($query->hasSearchTerm()) {
             $searchAnd = $qb->expr()->andX();
@@ -356,10 +364,12 @@ class ActivityRepository extends EntityRepository
             }
         }
 
-        // this will make sure, that we do not accidentally create results with multiple rows
-        //   => which would result in a wrong LIMIT / pagination results
-        // the second group by is needed due to SQL standard (even though logically not really required for this query)
-        $qb->addGroupBy('a.id')->addGroupBy($orderBy);
+        // this will make sure, that we do not accidentally create results with multiple rows,
+        // which would result in a wrong LIMIT with paginated results
+        $qb->addGroupBy('a');
+
+        // the second group by is needed to satisfy SQL standard (ONLY_FULL_GROUP_BY)
+        $qb->addGroupBy($orderBy);
 
         return $qb;
     }

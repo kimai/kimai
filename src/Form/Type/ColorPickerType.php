@@ -9,6 +9,7 @@
 
 namespace App\Form\Type;
 
+use App\Constants;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
@@ -17,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ColorPickerType extends AbstractType implements DataTransformerInterface
 {
-    public const DEFAULT_COLOR = '#d2d6de';
+    public const DEFAULT_COLOR = Constants::DEFAULT_COLOR;
 
     /**
      * {@inheritdoc}
@@ -33,6 +34,10 @@ class ColorPickerType extends AbstractType implements DataTransformerInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'documentation' => [
+                'type' => 'string',
+                'description' => sprintf('The color code as hex (default: %s)', self::DEFAULT_COLOR),
+            ],
             'label' => 'label.color',
         ]);
     }

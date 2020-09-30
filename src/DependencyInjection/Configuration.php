@@ -9,8 +9,10 @@
 
 namespace App\DependencyInjection;
 
+use App\Constants;
 use App\Entity\Customer;
 use App\Entity\User;
+use App\Repository\InvoiceDocumentRepository;
 use App\Timesheet\Rounding\RoundingInterface;
 use App\Widget\Type\CompoundRow;
 use App\Widget\Type\Counter;
@@ -37,26 +39,25 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->scalarNode('data_dir')
-                    ->isRequired()
+                    ->defaultNull()
                     ->validate()
                         ->ifTrue(function ($value) {
+                            if (null === $value) {
+                                return false;
+                            }
+
                             return !file_exists($value);
                         })
                         ->thenInvalid('Data directory does not exist')
                     ->end()
                 ->end()
                 ->scalarNode('plugin_dir')
-                    ->isRequired()
-                    ->validate()
-                        ->ifTrue(function ($value) {
-                            return !file_exists($value);
-                        })
-                        ->thenInvalid('Plugin directory does not exist')
-                    ->end()
+                    ->setDeprecated('Changing the plugin directory via "kimai.plugin_dir" is not supported since 1.9')
                 ->end()
                 ->append($this->getUserNode())
                 ->append($this->getTimesheetNode())
                 ->append($this->getInvoiceNode())
+                ->append($this->getExportNode())
                 ->append($this->getLanguagesNode())
                 ->append($this->getCalendarNode())
                 ->append($this->getThemeNode())
@@ -195,6 +196,18 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('allow_future_times')
                             ->defaultTrue()
                         ->end()
+                        ->booleanNode('allow_overlapping_records')
+                            ->defaultTrue()
+                        ->end()
+                        ->scalarNode('lockdown_period_start')
+                            ->defaultNull()
+                        ->end()
+                        ->scalarNode('lockdown_period_end')
+                            ->defaultNull()
+                        ->end()
+                        ->scalarNode('lockdown_grace_period')
+                            ->defaultNull()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
@@ -216,7 +229,40 @@ class Configuration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                     ->defaultValue([
                         'var/invoices/',
-                        'templates/invoice/renderer/'
+                        InvoiceDocumentRepository::DEFAULT_DIRECTORY
+                    ])
+                ->end()
+                ->arrayNode('documents')
+                    ->requiresAtLeastOneElement()
+                    ->scalarPrototype()->end()
+                    ->defaultValue([])
+                ->end()
+                ->booleanNode('simple_form')
+                    ->defaultFalse()
+                ->end()
+                ->scalarNode('number_format')
+                    ->defaultValue('{Y}/{cy,3}')
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    protected function getExportNode()
+    {
+        $builder = new TreeBuilder('export');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('defaults')
+                    ->scalarPrototype()->end()
+                    ->defaultValue([
+                        'var/export/',
+                        'templates/export/renderer/'
                     ])
                 ->end()
                 ->arrayNode('documents')
@@ -341,10 +387,16 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('chart')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('background_color')->defaultValue('rgba(0,115,183,0.7)')->end()
+                        ->scalarNode('background_color')->defaultValue('#3c8dbc')->end() // rgba(0,115,183,0.7) = #0073b7 = Constants::DEFAULT_COLOR
                         ->scalarNode('border_color')->defaultValue('#3b8bba')->end()
                         ->scalarNode('grid_color')->defaultValue('rgba(0,0,0,.05)')->end()
                         ->scalarNode('height')->defaultValue('200')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('calendar')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('background_color')->defaultValue(Constants::DEFAULT_COLOR)->end()
                     ->end()
                 ->end()
                 ->arrayNode('branding')
@@ -656,7 +708,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->validate()
                 ->ifTrue(static function ($v) {
-                    return null !== $v['connection']['host'] && !extension_loaded('ldap');
+                    return null !== $v['connection']['host'] && !\extension_loaded('ldap');
                 })
                 ->thenInvalid('LDAP is activated, but the LDAP PHP extension is not loaded.')
             ->end()
@@ -799,7 +851,7 @@ class Configuration implements ConfigurationInterface
                                 ->variableNode('requestedAuthnContext')
                                     ->validate()
                                         ->ifTrue(function ($v) {
-                                            return !is_bool($v) && !is_array($v);
+                                            return !\is_bool($v) && !\is_array($v);
                                         })
                                         ->thenInvalid('Must be an array or a bool.')
                                     ->end()

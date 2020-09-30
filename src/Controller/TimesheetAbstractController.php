@@ -29,7 +29,6 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Timesheet\TrackingModeService;
-use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -38,10 +37,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class TimesheetAbstractController extends AbstractController
 {
-    /**
-     * @var UserDateTimeFactory
-     */
-    protected $dateTime;
     /**
      * @var TimesheetRepository
      */
@@ -61,17 +56,15 @@ abstract class TimesheetAbstractController extends AbstractController
     /**
      * @var TimesheetService
      */
-    private $service;
+    protected $service;
 
     public function __construct(
-        UserDateTimeFactory $dateTime,
         TimesheetRepository $repository,
         TrackingModeService $trackingModeService,
         EventDispatcherInterface $dispatcher,
         ServiceExport $exportService,
         TimesheetService $timesheetService
     ) {
-        $this->dateTime = $dateTime;
         $this->repository = $repository;
         $this->trackingModeService = $trackingModeService;
         $this->dispatcher = $dispatcher;
@@ -154,7 +147,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->save($entry);
+                $this->service->updateTimesheet($entry);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute($this->getTimesheetRoute(), ['page' => $request->get('page', 1)]);
@@ -172,7 +165,7 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function getTags(TagRepository $tagRepository, $tagNames)
     {
         $tags = [];
-        if (!is_array($tagNames)) {
+        if (!\is_array($tagNames)) {
             $tagNames = explode(',', $tagNames);
         }
         foreach ($tagNames as $tagName) {
@@ -238,16 +231,18 @@ abstract class TimesheetAbstractController extends AbstractController
         $form->setData($query);
         $form->submit($request->query->all(), false);
 
+        $factory = $this->getDateTimeFactory();
+
         // by default the current month is exported, but it can be overwritten
         // this should not be removed, otherwise we would export EVERY available record in the admin section
         // as the default toolbar query does neither limit the user nor the date-range!
         if (null === $query->getBegin()) {
-            $query->setBegin($this->dateTime->createDateTime('first day of this month'));
+            $query->setBegin($factory->getStartOfMonth());
         }
         $query->getBegin()->setTime(0, 0, 0);
 
         if (null === $query->getEnd()) {
-            $query->setEnd($this->dateTime->createDateTime('last day of this month'));
+            $query->setEnd($factory->getEndOfMonth());
         }
         $query->getEnd()->setTime(23, 59, 59);
 
@@ -296,7 +291,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $dto->setEntities($timesheets);
 
-        if (count($dto->getEntities()) === 0) {
+        if (\count($dto->getEntities()) === 0) {
             return $this->redirectToRoute($this->getTimesheetRoute());
         }
 
@@ -330,21 +325,28 @@ abstract class TimesheetAbstractController extends AbstractController
                     $timesheet->setExported($dto->isExported());
                     $execute = true;
                 }
-                // setting both values allows to erase wrong
-                if (null !== $dto->getHourlyRate()) {
+
+                if ($dto->isRecalculateRates()) {
                     $timesheet->setFixedRate(null);
-                    $timesheet->setHourlyRate($dto->getHourlyRate());
+                    $timesheet->setHourlyRate(null);
+                    $timesheet->setInternalRate(null);
                     $execute = true;
                 } elseif (null !== $dto->getFixedRate()) {
                     $timesheet->setFixedRate($dto->getFixedRate());
                     $timesheet->setHourlyRate(null);
+                    $timesheet->setInternalRate(null);
+                    $execute = true;
+                } elseif (null !== $dto->getHourlyRate()) {
+                    $timesheet->setFixedRate(null);
+                    $timesheet->setInternalRate(null);
+                    $timesheet->setHourlyRate($dto->getHourlyRate());
                     $execute = true;
                 }
             }
 
             if ($execute) {
                 try {
-                    $this->repository->saveMultiple($dto->getEntities());
+                    $this->service->updateMultipleTimesheets($dto->getEntities());
                     $this->flashSuccess('action.update.success');
 
                     return $this->redirectToRoute($this->getTimesheetRoute());
@@ -378,7 +380,7 @@ abstract class TimesheetAbstractController extends AbstractController
             $dto->setEntities($timesheets);
 
             try {
-                $this->repository->deleteMultiple($dto->getEntities());
+                $this->service->deleteMultipleTimesheets($dto->getEntities());
                 $this->flashSuccess('action.delete.success');
             } catch (\Exception $ex) {
                 $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);

@@ -1,0 +1,112 @@
+{% extends 'reporting/layout.html.twig' %}
+
+{% block report_title %}{{ 'report_user_month'|trans({}, 'reporting') }}{% endblock %}
+
+{% block report %}
+
+    {% set hasData = false %}
+    {% for day in days %}
+        {% if day.details is not empty %}
+            {% set hasData = true %}
+        {% endif %}
+    {% endfor %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% block box_before %}
+            {{ form_start(form, {'action': path('report_user_month'), 'attr': {'class': 'form-inline'}}) }}
+        {% endblock %}
+        {% block box_after %}
+            {{ form_end(form) }}
+        {% endblock %}
+        {% block box_title %}
+            {% if form.user is defined %}
+                {{ form_row(form.user, {'label': false}) }}
+            {% else %}
+                {{ widgets.username(user) }}
+            {% endif %}
+            {{ form_widget(form.date) }}
+        {% endblock %}
+        {% block box_body_class %}user-month-reporting-box table-responsive{% if hasData %} no-padding{% endif %}{% endblock %}
+        {% block box_body %}
+            {% if not hasData %}
+                {{ widgets.nothing_found() }}
+            {% else %}
+            <table class="table table-bordered table-hover dataTable">
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    {% for day in days %}
+                    <th class="text-center text-nowrap{% if day.day is weekend %} weekend{% endif %}">
+                        {{ day.day|day_name(true) }}<br>
+                        {{ day.day|date_format('d.m') }}
+                    </th>
+                    {% endfor %}
+                </tr>
+                {% for project in rows %}
+                    <tr class="project">
+                        <td class="text-nowrap">
+                            <strong>{{ widgets.label_project(project.project) }}</strong>
+                        </td>
+                        <th class="text-nowrap text-center total">{{ project.duration|duration }}</th>
+                        {% for day in project.days %}
+                            <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}">
+                                {% if day.duration > 0 %}
+                                    <strong>{{ day.duration|duration }}</strong>
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% for activity in project.activities %}
+                    <tr class="activity">
+                        <td class="text-nowrap">
+                            {{ widgets.label_activity(activity.activity) }}
+                        </td>
+                        <th class="text-nowrap text-center total">{{ activity.duration|duration }}</th>
+                        {% for day in activity.days %}
+                            <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}">
+                                {% if day.duration > 0 %}
+                                    {{ day.duration|duration }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+                {% set total = 0 %}
+                <tr class="summary">
+                    {% for day in days %}
+                        {% set total = total + day.totalDuration %}
+                    {% endfor %}
+                    <th></th>
+                    <th class="text-nowrap text-center total">{{ total|duration }}</th>
+                    {% for day in days %}
+                        <th class="text-nowrap text-center day-total{% if day.day is weekend %} weekend{% endif %}">
+                            {% if day.totalDuration > 0 %}
+                                {{ day.totalDuration|duration }}
+                            {% endif %}
+                        </th>
+                    {% endfor %}
+                </tr>
+            </table>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            {% if form.user is defined %}
+            $('#{{ form.user.vars.id }}').on('change', function(ev) {
+                $(this).closest('form').submit();
+            });
+            {% endif %}
+            $('#{{ form.date.vars.id }}').on('change', function(ev) {
+                $(this).closest('form').submit();
+            });
+        });
+    </script>
+{% endblock %}

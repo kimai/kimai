@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: ar|cs|de|de_CH|da|en|es|eu|fr|hu|it|ja|ko|nl|pl|pt_BR|ru|sk|sv|tr|zh_CN
+    app_locales: ar|cs|de|de_CH|da|en|eo|es|eu|fr|he|hu|it|ja|ko|nl|pl|pt_BR|ro|ru|sk|sv|tr|vi|zh_CN
 
 services:
     # default configuration for services in *this* file
@@ -14,6 +14,7 @@ services:
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
             $projectDirectory: '%kernel.project_dir%'
+            $kernelEnvironment: '%kernel.environment%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -41,6 +42,9 @@ services:
     App\Controller\DashboardController:
         arguments:
             $dashboard: '%kimai.dashboard%'
+
+    App\Configuration\MailConfiguration:
+        arguments: ['%env(MAILER_FROM)%']
 
     App\Configuration\LanguageFormattings:
         arguments: ['%kimai.languages%']
@@ -74,6 +78,9 @@ services:
     App\Plugin\PluginManager:
         arguments: [!tagged kimai.plugin]
 
+    App\Validator\Constraints\TimesheetValidator:
+        arguments: [!tagged timesheet.validator]
+
     App\Widget\WidgetService:
         arguments:
             $renderer: !tagged widget.renderer
@@ -82,6 +89,10 @@ services:
         decorates: translator
         arguments:
             $localDomains: '%kimai.i18n_domains%'
+
+    App\Utils\FileHelper:
+        arguments:
+            $dataDir: '%kimai.data_dir%'
 
     # ================================================================================
     # DATABASE
@@ -94,11 +105,24 @@ services:
         tags:
             - { name: doctrine.event_subscriber, priority: 50 }
 
+    # updates timestampable columns (higher priority, so the TimesheetSubscriber will be executed later)
+    Gedmo\Timestampable\TimestampableListener:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, priority: 60 }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
     # make sure, that sqlite supports foreign keys and cascade deletes
     App\Doctrine\SqliteSessionInitSubscriber:
         class: App\Doctrine\SqliteSessionInitSubscriber
         tags:
             - { name: doctrine.event_listener, event: postConnect }
+
+    # store and retrieve sessions in and from database
+    App\Security\SessionHandler:
+        arguments:
+            - !service { class: PDO, factory: ['@database_connection', 'getWrappedConnection'] }
 
     # ================================================================================
     # FORMS
@@ -226,3 +250,8 @@ services:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\ProjectRate']
+
+    App\Repository\InvoiceRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Invoice']

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ro" datatype="plaintext" original="about.en.xlf">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="about.title">
+        <source>about.title</source>
+        <target>Despre Kimai</target>
+      </trans-unit>
+      <trans-unit id="support">
+        <source>support</source>
+        <target>Suport</target>
+      </trans-unit>
+      <trans-unit id="website">
+        <source>website</source>
+        <target>Pagina de web</target>
+      </trans-unit>
+      <trans-unit id="help">
+        <source>help</source>
+        <target>Documentație</target>
+      </trans-unit>
+      <trans-unit id="tab.thanks">
+        <source>tab.thanks</source>
+        <target>Mulțumiri speciale</target>
+      </trans-unit>
+      <trans-unit id="donate">
+        <source>donate</source>
+        <target>Donează pentru dezvoltarea Kimai</target>
+      </trans-unit>
+      <trans-unit id="published_under">
+        <source>published_under</source>
+        <target>%kimai% este publicat sub</target>
+      </trans-unit>
+      <trans-unit id="special_thanks">
+        <source>special_thanks</source>
+        <target>Mulțuniri speciale pentru …</target>
+      </trans-unit>
+      <trans-unit id="library_authors">
+        <source>library_authors</source>
+        <target>… autorii acestor librării software. Kimai nu ar exista fără voi 👍</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

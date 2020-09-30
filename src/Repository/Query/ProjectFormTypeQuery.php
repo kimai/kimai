@@ -11,31 +11,13 @@ namespace App\Repository\Query;
 
 use App\Entity\Customer;
 use App\Entity\Project;
-use App\Entity\Team;
-use App\Entity\User;
 
-final class ProjectFormTypeQuery
+final class ProjectFormTypeQuery extends BaseFormTypeQuery
 {
-    /**
-     * @var Customer|int|null
-     */
-    private $customer;
-    /**
-     * @var Project|int|null
-     */
-    private $project;
     /**
      * @var Project|null
      */
     private $projectToIgnore;
-    /**
-     * @var User
-     */
-    private $user;
-    /**
-     * @var array<Team>
-     */
-    private $teams = [];
     /**
      * @var bool
      */
@@ -47,73 +29,19 @@ final class ProjectFormTypeQuery
      */
     public function __construct($project = null, $customer = null)
     {
-        $this->project = $project;
-        $this->customer = $customer;
-    }
+        if (null !== $project) {
+            if (!\is_array($project)) {
+                $project = [$project];
+            }
+            $this->setProjects($project);
+        }
 
-    public function addTeam(Team $team): ProjectFormTypeQuery
-    {
-        $this->teams[$team->getId()] = $team;
-
-        return $this;
-    }
-
-    /**
-     * @return Team[]
-     */
-    public function getTeams(): array
-    {
-        return array_values($this->teams);
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(User $user): ProjectFormTypeQuery
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Customer|int|null
-     */
-    public function getCustomer()
-    {
-        return $this->customer;
-    }
-
-    /**
-     * @param Customer|int|null $customer
-     * @return $this
-     */
-    public function setCustomer($customer): ProjectFormTypeQuery
-    {
-        $this->customer = $customer;
-
-        return $this;
-    }
-
-    /**
-     * @return Project|int|null
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * @param Project|int|null $project
-     * @return ProjectFormTypeQuery
-     */
-    public function setProject($project): ProjectFormTypeQuery
-    {
-        $this->project = $project;
-
-        return $this;
+        if (null !== $customer) {
+            if (!\is_array($customer)) {
+                $customer = [$customer];
+            }
+            $this->setCustomers($customer);
+        }
     }
 
     /**

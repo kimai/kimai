@@ -21,6 +21,10 @@ class UserControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/user/');
+    }
+
+    public function testIsSecureForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/user/');
     }
 
@@ -33,6 +37,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertPageActions($client, [
             'search search-toggle visible-xs-inline' => '#',
             'visibility' => '#',
+            'download toolbar-action' => $this->createUrl('/admin/user/export'),
             'permissions' => $this->createUrl('/admin/permissions'),
             'create' => $this->createUrl('/admin/user/create'),
             'help' => 'https://www.kimai.org/documentation/users.html'
@@ -60,6 +65,38 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_user_admin', 1);
     }
 
+    public function testExportIsSecureForRole()
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/user/export');
+    }
+
+    public function testExportAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/user/export');
+        $this->assertExcelExportResponse($client, 'kimai-users_');
+    }
+
+    public function testExportActionWithSearchTermQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $this->request($client, '/admin/user/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/user/export'));
+        $client->submit($form, [
+            'searchTerm' => 'hourly_rate:35 tony',
+            'role' => 'ROLE_TEAMLEAD',
+            'visibility' => 1,
+            'pageSize' => 50,
+            'page' => 1,
+        ]);
+
+        $this->assertExcelExportResponse($client, 'kimai-users_');
+    }
+
     public function testCreateAction()
     {
         $username = '亚历山德拉';
@@ -72,7 +109,7 @@ class UserControllerTest extends ControllerBaseTest
             'user_create' => [
                 'username' => $username,
                 'alias' => $username,
-                'plainPassword' => ['first' => 'abcdef', 'second' => 'abcdef'],
+                'plainPassword' => ['first' => '12345678', 'second' => '12345678'],
                 'email' => 'foobar@example.com',
                 'enabled' => 1,
             ]
@@ -83,7 +120,7 @@ class UserControllerTest extends ControllerBaseTest
         $expectedTabs = ['#settings', '#password', '#api-token', '#teams', '#roles'];
 
         $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
-        $this->assertEquals(count($expectedTabs), $tabs->count());
+        $this->assertEquals(\count($expectedTabs), $tabs->count());
         $foundTabs = [];
         /** @var \DOMElement $tab */
         foreach ($tabs->filter('a') as $tab) {
@@ -141,16 +178,16 @@ class UserControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $em = $this->getEntityManager();
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $fixture = new TimesheetFixtures();
         $fixture->setUser($user);
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         $this->request($client, '/admin/user/' . $user->getId() . '/delete');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -194,7 +231,7 @@ class UserControllerTest extends ControllerBaseTest
                 [
                     'user_create' => [
                         'username' => '',
-                        'plainPassword' => ['first' => 'sdfsdf'],
+                        'plainPassword' => ['first' => 'sdfsdf123'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
                         'avatar' => 'asdfawer',
@@ -203,7 +240,9 @@ class UserControllerTest extends ControllerBaseTest
                 ],
                 [
                     '#user_create_username',
+                    '#user_create_username',
                     '#user_create_plainPassword_first',
+                    '#user_create_email',
                     '#user_create_email',
                 ]
             ],
@@ -211,8 +250,8 @@ class UserControllerTest extends ControllerBaseTest
             [
                 [
                     'user_create' => [
-                        'username' => 'xx',
-                        'plainPassword' => ['first' => 'sdfsdf', 'second' => 'sdfxxx'],
+                        'username' => 'x',
+                        'plainPassword' => ['first' => 'sdfsdf123', 'second' => 'sdfxxxxxxx'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
                         'avatar' => 'asdfawer',
@@ -221,8 +260,26 @@ class UserControllerTest extends ControllerBaseTest
                 ],
                 [
                     '#user_create_username',
+                    '#user_create_username',
                     '#user_create_plainPassword_first',
                     '#user_create_email',
+                    '#user_create_email',
+                ]
+            ],
+            // invalid fields: password (too short)
+            [
+                [
+                    'user_create' => [
+                        'username' => 'test123',
+                        'plainPassword' => ['first' => 'test123', 'second' => 'test123'],
+                        'alias' => 'ycvyxcb',
+                        'title' => '34rtwrtewrt',
+                        'avatar' => 'asdfawer',
+                        'email' => 'ydfbvsdfgs@example.com',
+                    ]
+                ],
+                [
+                    '#user_create_plainPassword_first',
                 ]
             ],
         ];

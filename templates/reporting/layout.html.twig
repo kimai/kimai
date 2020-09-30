@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% import "reporting/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'reporting.title'|trans({}, 'reporting') }}{% endblock %}
+{% block page_subtitle %}{% block report_title %}{% endblock %}{% endblock %}
+{% block page_actions %}{{ actions.reporting() }}{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-12" id="reporting-content">
+            {% block report %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

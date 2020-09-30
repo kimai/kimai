@@ -1,0 +1,16 @@
+{% for key, value in model.toArray %}
+{{ key }}
+{% if value is not empty %}
+{{ value|multiline_indent('	') }}
+{% endif %}
+{% endfor %}
+{% for entry in model.calculator.entries %}
+---
+{% set items = model.itemToArray(entry) %}
+{% for key, value in items %}
+{{ key }}
+{% if value is not empty %}
+{{ value|multiline_indent('	') }}
+{% endif %}
+{% endfor %}
+{% endfor %}

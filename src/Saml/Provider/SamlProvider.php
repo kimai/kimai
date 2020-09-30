@@ -9,6 +9,7 @@
 
 namespace App\Saml\Provider;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Saml\SamlTokenFactory;
 use App\Saml\User\SamlUserFactory;
@@ -17,7 +18,6 @@ use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProvid
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\User\ChainUserProvider;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 final class SamlProvider implements AuthenticationProviderInterface
@@ -47,14 +47,16 @@ final class SamlProvider implements AuthenticationProviderInterface
         $this->userFactory = $userFactory;
     }
 
+    /**
+     * @param SamlTokenInterface $token
+     * @return SamlTokenInterface
+     */
     public function authenticate(TokenInterface $token)
     {
         $user = null;
 
-        /** @var ChainUserProvider $p */
-        $p = $this->userProvider;
-
         try {
+            /** @var User $user */
             $user = $this->userProvider->loadUserByUsername($token->getUsername());
         } catch (UsernameNotFoundException $e) {
         }
@@ -73,14 +75,10 @@ final class SamlProvider implements AuthenticationProviderInterface
             );
         }
 
-        if ($user) {
-            $authenticatedToken = $this->tokenFactory->createToken($user, $token->getAttributes(), $user->getRoles());
-            $authenticatedToken->setAuthenticated(true);
+        $authenticatedToken = $this->tokenFactory->createToken($user, $token->getAttributes(), $user->getRoles());
+        $authenticatedToken->setAuthenticated(true);
 
-            return $authenticatedToken;
-        }
-
-        throw new AuthenticationException('The authentication failed.');
+        return $authenticatedToken;
     }
 
     public function supports(TokenInterface $token)

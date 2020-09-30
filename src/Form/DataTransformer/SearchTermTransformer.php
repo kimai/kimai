@@ -23,7 +23,7 @@ class SearchTermTransformer implements DataTransformerInterface
      */
     public function transform($searchTerm)
     {
-        if (empty($searchTerm) || !$searchTerm instanceof SearchTerm) {
+        if (empty($searchTerm) || !($searchTerm instanceof SearchTerm)) {
             return '';
         }
 
@@ -33,7 +33,7 @@ class SearchTermTransformer implements DataTransformerInterface
     /**
      * Transforms a string to a SearchTerm object.
      *
-     * @param string $searchTerm
+     * @param string|null $searchTerm
      * @return SearchTerm|null
      * @throws TransformationFailedException if object (issue) is not found
      */

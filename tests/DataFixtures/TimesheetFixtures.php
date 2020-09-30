@@ -78,6 +78,16 @@ final class TimesheetFixtures extends Fixture
      */
     private $tags = [];
 
+    public function __construct(?User $user = null, ?int $amount = null)
+    {
+        if ($user !== null) {
+            $this->setUser($user);
+        }
+        if ($amount !== null) {
+            $this->setAmount($amount);
+        }
+    }
+
     public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions): TimesheetFixtures
     {
         $this->allowEmptyDescriptions = $allowEmptyDescriptions;
@@ -241,7 +251,7 @@ final class TimesheetFixtures extends Fixture
             );
 
             if (null !== $this->callback) {
-                call_user_func($this->callback, $timesheet);
+                \call_user_func($this->callback, $timesheet);
             }
             $manager->persist($timesheet);
         }
@@ -267,7 +277,7 @@ final class TimesheetFixtures extends Fixture
             );
 
             if (null !== $this->callback) {
-                call_user_func($this->callback, $timesheet);
+                \call_user_func($this->callback, $timesheet);
             }
             $manager->persist($timesheet);
         }
@@ -279,7 +289,7 @@ final class TimesheetFixtures extends Fixture
     {
         if (true === $this->useTags) {
             $tagObject = new Tag();
-            $tagObject->setName($this->tags[($cnt % count($this->tags))]);
+            $tagObject->setName($this->tags[($cnt % \count($this->tags))]);
 
             return [$tagObject];
         }
@@ -355,7 +365,7 @@ final class TimesheetFixtures extends Fixture
             ->setRate($rate)
             ->setBegin($start);
 
-        if (count($tagArray) > 0) {
+        if (\count($tagArray) > 0) {
             foreach ($tagArray as $item) {
                 $entry->addTag($item);
             }

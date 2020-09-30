@@ -9,16 +9,13 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
-use App\Tests\Mocks\TrackingModeServiceFactory;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
+use App\Validator\Constraints\TimesheetFutureTimes;
 use App\Validator\Constraints\TimesheetValidator;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
@@ -29,32 +26,28 @@ use Symfony\Component\Validator\Test\ConstraintViolationAssertion;
  */
 class TimesheetValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator($isGranted = true)
+    protected function createValidator()
     {
-        $authMock = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
-        $authMock->method('isGranted')->willReturn($isGranted);
+        return $this->createMyValidator();
+    }
 
-        $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new TimesheetConfiguration($loader, [
-            'rules' => [
-                'allow_future_times' => false,
-            ],
-            'rounding' => [
-                'default' => [
-                    'begin' => 1
-                ]
-            ]
-        ]);
-        $service = (new TrackingModeServiceFactory($this))->create('default');
-
-        return new TimesheetValidator($authMock, $config, $service);
+    protected function createMyValidator(bool $isGranted = true)
+    {
+        return new TimesheetValidator([]);
     }
 
     public function testConstraintIsInvalid()
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate('foo', new NotBlank());
+        $this->validator->validate(new Timesheet(), new NotBlank());
+    }
+
+    public function testInvalidValueThrowsException()
+    {
+        $this->expectException(UnexpectedTypeException::class);
+
+        $this->validator->validate(new NotBlank(), new TimesheetConstraint(['message' => 'myMessage']));
     }
 
     public function testEmptyTimesheet()
@@ -82,42 +75,20 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($timesheet, new TimesheetConstraint(['message' => 'myMessage']));
 
-        $this->buildViolation('The begin date cannot be in the future.')
-            ->atPath('property.path.begin')
-            ->setCode(TimesheetConstraint::BEGIN_IN_FUTURE_ERROR)
-            ->buildNextViolation('A timesheet must have an activity.')
+        $this
+            ->buildViolation('A timesheet must have an activity.')
             ->atPath('property.path.activity')
             ->setCode(TimesheetConstraint::MISSING_ACTIVITY_ERROR)
             ->buildNextViolation('A timesheet must have a project.')
             ->atPath('property.path.project')
             ->setCode(TimesheetConstraint::MISSING_PROJECT_ERROR)
-            ->assertRaised();
-    }
-
-    public function testRestartDisallowed()
-    {
-        $this->validator = $this->createValidator(false);
-        $this->validator->initialize($this->context);
-
-        $begin = new \DateTime('-10 hour');
-        $customer = new Customer();
-        $activity = new Activity();
-        $project = new Project();
-        $project->setCustomer($customer);
-        $activity->setProject($project);
-
-        $timesheet = new Timesheet();
-        $timesheet
-            ->setBegin($begin)
-            ->setActivity($activity)
-            ->setProject($project)
-        ;
-
-        $this->validator->validate($timesheet, new TimesheetConstraint(['message' => 'myMessage']));
-
-        $this->buildViolation('You are not allowed to start this timesheet record.')
-            ->atPath('property.path.end')
-            ->setCode(TimesheetConstraint::START_DISALLOWED)
+            // The test context is not able to handle calls to validate() - see ConstraintValidatorTestCase::createContext()
+            // therefor sub-constraints will not be executed :-(
+            /*
+            ->buildNextViolation('The begin date cannot be in the future.')
+            ->atPath('property.path.begin')
+            ->setCode(TimesheetFutureTimes::BEGIN_IN_FUTURE_ERROR)
+            */
             ->assertRaised();
     }
 

@@ -11,63 +11,44 @@ namespace App\Timesheet;
 
 use App\Entity\User;
 use App\Security\CurrentUser;
+use DateTimeZone;
 
-class UserDateTimeFactory
+/**
+ * @internal use DateTimeFactory instead: this one relies on the global context and will be deprecated in the future
+ */
+class UserDateTimeFactory extends DateTimeFactory
 {
     /**
-     * @var \DateTimeZone
+     * @var CurrentUser
      */
-    protected $timezone;
+    private $user;
+    /**
+     * @var bool
+     */
+    private $initializedFromUser = false;
 
     public function __construct(CurrentUser $user)
     {
-        $timezone = date_default_timezone_get();
+        parent::__construct(null);
+        $this->user = $user;
+    }
 
-        $user = $user->getUser();
-        if ($user instanceof User) {
-            $timezone = $user->getTimezone();
+    public function getTimezone(): DateTimeZone
+    {
+        if ($this->initializedFromUser === false) {
+            $timezone = date_default_timezone_get();
+
+            $user = $this->user->getUser();
+            if ($user instanceof User) {
+                $timezone = $user->getTimezone();
+            }
+
+            $timezone = new DateTimeZone($timezone);
+
+            parent::setTimezone($timezone);
+            $this->initializedFromUser = true;
         }
 
-        $this->timezone = new \DateTimeZone($timezone);
-    }
-
-    public function getTimezone(): \DateTimeZone
-    {
-        return $this->timezone;
-    }
-
-    public function getStartOfMonth(): \DateTime
-    {
-        $date = $this->createDateTime('first day of this month');
-        $date->setTime(0, 0, 0);
-
-        return $date;
-    }
-
-    public function getEndOfMonth(): \DateTime
-    {
-        $date = $this->createDateTime('last day of this month');
-        $date->setTime(23, 59, 59);
-
-        return $date;
-    }
-
-    public function createDateTime(string $datetime = 'now'): \DateTime
-    {
-        $date = new \DateTime($datetime, $this->timezone);
-
-        return $date;
-    }
-
-    /**
-     * @param string $format
-     * @param null|string $datetime
-     * @return bool|\DateTime
-     */
-    public function createDateTimeFromFormat(string $format, ?string $datetime = 'now')
-    {
-        $date = \DateTime::createFromFormat($format, $datetime, $this->timezone);
-
-        return $date;
+        return parent::getTimezone();
     }
 }

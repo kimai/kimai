@@ -1,0 +1,71 @@
+{% extends 'reporting/layout.html.twig' %}
+
+{% block report_title %}{{ 'report_monthly_users'|trans({}, 'reporting') }}{% endblock %}
+
+{% block report %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% block box_before %}
+            {{ form_start(form, {'action': path('report_monthly_users'), 'attr': {'class': 'form-inline'}}) }}
+        {% endblock %}
+        {% block box_after %}
+            {{ form_end(form) }}
+        {% endblock %}
+        {% block box_title %}
+            {{ form_widget(form.date) }}
+        {% endblock %}
+        {% block box_body_class %}monthly-user-list-reporting-box table-responsive no-padding{% endblock %}
+        {% block box_body %}
+            <table class="table table-bordered table-hover dataTable">
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    {% for day in days %}
+                    <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}">
+                        {{ day|day_name(true) }}<br>
+                        {{ day|date_format('d.m') }}
+                    </th>
+                    {% endfor %}
+                </tr>
+                {% for userDay in rows %}
+                    {% set usersMonthDuration = 0 %}
+                    <tr class="user">
+                        <td class="text-nowrap">
+                            <strong>{{ widgets.username(userDay.user) }}</strong>
+                        </td>
+                        {% for day in userDay.days %}
+                            {% if day.totalDuration > 0 %}
+                                {% set usersMonthDuration = usersMonthDuration + day.totalDuration %}
+                            {% endif %}
+                        {% endfor %}
+                        <th class="text-nowrap text-center total">
+                            {% if usersMonthDuration > 0 %}
+                                {{ usersMonthDuration|duration }}
+                            {% endif %}
+                        </th>
+                        {% for day in userDay.days %}
+                            <td class="text-nowrap day-total{% if day.day is weekend %} weekend{% endif %}">
+                                {% if day.totalDuration > 0 %}
+                                    {{ day.totalDuration|duration }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            $('#{{ form.date.vars.id }}').on('change', function(ev) {
+                $(this).closest('form').submit();
+            });
+        });
+    </script>
+{% endblock %}

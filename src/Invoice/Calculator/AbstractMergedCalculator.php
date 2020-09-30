@@ -10,7 +10,6 @@
 namespace App\Invoice\Calculator;
 
 use App\Entity\Timesheet;
-use App\Export\ExportItemInterface;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceItemInterface;
 use App\Invoice\InvoiceItemWithAmountInterface;
@@ -30,7 +29,12 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
         $this->mergeInvoiceItems($invoiceItem, $entry);
     }
 
-    protected function mergeInvoiceItems(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
+    /**
+     * @param InvoiceItem $invoiceItem
+     * @param InvoiceItemInterface $entry
+     * @return void
+     */
+    protected function mergeInvoiceItems(InvoiceItem $invoiceItem, InvoiceItemInterface $entry) /* : void */
     {
         $duration = $invoiceItem->getDuration();
         if (null !== $entry->getDuration()) {
@@ -42,13 +46,8 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
             $amount = $entry->getAmount();
         }
 
-        $type = Timesheet::TYPE_TIMESHEET;
-        $category = Timesheet::CATEGORY_WORK;
-
-        if ($entry instanceof ExportItemInterface) {
-            $type = $entry->getType();
-            $category = $entry->getCategory();
-        }
+        $type = $entry->getType();
+        $category = $entry->getCategory();
 
         if (null !== $invoiceItem->getType() && $type !== $invoiceItem->getType()) {
             $type = self::TYPE_MIXED;
@@ -63,6 +62,11 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
         $invoiceItem->setAmount($invoiceItem->getAmount() + $amount);
         $invoiceItem->setUser($entry->getUser());
         $invoiceItem->setRate($invoiceItem->getRate() + $entry->getRate());
+        if (method_exists($entry, 'getInternalRate')) {
+            $invoiceItem->setInternalRate($invoiceItem->getInternalRate() + $entry->getInternalRate());
+        } else {
+            $invoiceItem->setInternalRate($invoiceItem->getInternalRate() + $entry->getRate());
+        }
         $invoiceItem->setDuration($duration);
 
         if (null !== $entry->getFixedRate()) {

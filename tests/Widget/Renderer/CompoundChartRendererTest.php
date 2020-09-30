@@ -12,7 +12,7 @@ namespace App\Tests\Widget\Renderer;
 use App\Widget\Renderer\CompoundChartRenderer;
 use App\Widget\Type\CompoundChart;
 use App\Widget\Type\CompoundRow;
-use App\Widget\Type\Counter;
+use App\Widget\Type\More;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 
@@ -40,7 +40,7 @@ class CompoundChartRendererTest extends TestCase
         $sut = new CompoundChartRenderer($twig);
         $row = new CompoundChart();
         $row->setTitle('foo-bar');
-        $row->addWidget(new Counter());
+        $row->addWidget(new More());
 
         $result = $sut->render($row);
         $result = json_decode($result, true);

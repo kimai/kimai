@@ -7,16 +7,15 @@
 
 span.label-color,
 span.label-meta,
+span.label-tag,
 span.label-activity,
 span.label-project,
 span.label-customer {
     display: inline-block;
     .dot {
-        height: 10px;
-        width: 10px;
-        background-color: $gray-lte;
-        border-radius: 50%;
-        display: inline-block;
+        font-size: 9px;
+        margin-right: 3px;
+        color: $gray-lte;
     }
 }
 
@@ -34,6 +33,9 @@ table.dataTable {
         }
         th.multiCheckbox {
             width: 15px;
+        }
+        &.overlapping {
+            border-top: 2px dotted red;
         }
     }
     td {

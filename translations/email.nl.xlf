@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="nl" datatype="plaintext" original="email.en.xlf">
+        <body>
+            <trans-unit id="button_copy_url_to_browser">
+                <source>button_copy_url_to_browser</source>
+                <target>Als de knop niet werkt, kopieer &amp; plak de volgende URL in uw browser: %url%</target>
+            </trans-unit>
+            <trans-unit id="automated_email_dont_answer">
+                <source>automated_email_dont_answer</source>
+                <target>Dit is een automatisch gegenereerde e-mail. Gelieve niet te antwoorden, het adres wordt niet gelezen.</target>
+            </trans-unit>
+            <trans-unit id="registration.subject">
+                <source>registration.subject</source>
+                <target>Activeer uw account</target>
+            </trans-unit>
+            <trans-unit id="registration.title">
+                <source>registration.title</source>
+                <target>Welkom %username%</target>
+            </trans-unit>
+            <trans-unit id="registration.button">
+                <source>registration.button</source>
+                <target>Activeer uw account</target>
+            </trans-unit>
+            <trans-unit id="registration.intro">
+                <source>registration.intro</source>
+                <target>U hebt zich aangemeld bij de Kimai tijdregistratie met de e-mail %email%. U moet uw account in de komende uren activeren, voordat de link afloopt.</target>
+            </trans-unit>
+            <trans-unit id="reset.subject">
+                <source>reset.subject</source>
+                <target>Reset uw wachtwoord</target>
+            </trans-unit>
+            <trans-unit id="reset.title">
+                <source>reset.title</source>
+                <target>Dat kan gebeuren ...</target>
+            </trans-unit>
+            <trans-unit id="reset.button">
+                <source>reset.button</source>
+                <target>Reset uw wachtwoord</target>
+            </trans-unit>
+            <trans-unit id="reset.intro">
+                <source>reset.intro</source>
+                <target>... dus u bent uw wachtwoord vergeten? Maakt u zich geen zorgen: Kimai zal u helpen om een nieuwe te maken: </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

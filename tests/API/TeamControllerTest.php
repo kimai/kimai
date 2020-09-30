@@ -9,8 +9,6 @@
 
 namespace App\Tests\API;
 
-use App\Entity\Customer;
-use App\Entity\Project;
 use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,14 +23,28 @@ class TeamControllerTest extends APIControllerBaseTest
     {
         $fixture = new TeamFixtures();
         $fixture->setAmount(1);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
     }
 
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/teams');
-        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/teams');
-        $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/api/teams');
+    }
+
+    public function getRoleTestData()
+    {
+        return [
+            [User::ROLE_USER],
+            [User::ROLE_TEAMLEAD],
+        ];
+    }
+
+    /**
+     * @dataProvider getRoleTestData
+     */
+    public function testIsSecureForRole(string $role)
+    {
+        $this->assertUrlIsSecuredForRole($role, '/api/teams');
     }
 
     public function testGetCollection()
@@ -44,8 +56,8 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        self::assertEquals(2, count($result));
-        $this->assertStructure($result[0], false);
+        self::assertEquals(2, \count($result));
+        self::assertApiResponseTypeStructure('TeamCollection', $result[0]);
     }
 
     public function testGetEntity()
@@ -56,7 +68,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result, true);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
     }
 
     public function testNotFound()
@@ -66,7 +78,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
     public function testDeleteActionWithUnknownTeam()
     {
-        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/teams/255', []);
+        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/teams/255');
     }
 
     public function testPostAction()
@@ -81,7 +93,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
@@ -98,6 +110,20 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
         self::assertEquals('Access denied.', $json['message']);
+    }
+
+    public function testPostActionWithValidationErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => '',
+            'teamlead' => 9999,
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['name', 'teamlead']);
     }
 
     public function testPatchAction()
@@ -121,9 +147,32 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         $this->assertNotEmpty($result['id']);
         self::assertCount(4, $result['users']);
+    }
+
+    public function testPatchActionWithValidationErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 1,
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $data = [
+            'name' => '1',
+            'teamlead' => 9999,
+            'users' => [9999]
+        ];
+        $this->request($client, '/api/teams/' . $result['id'], 'PATCH', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['name', 'teamlead', 'users']);
     }
 
     public function testDeleteAction()
@@ -134,7 +183,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         $this->assertNotEmpty($result['id']);
         $id = $result['id'];
 
@@ -142,8 +191,6 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
         $this->assertEmpty($client->getResponse()->getContent());
-
-        $this->assertEntityNotFound(User::ROLE_ADMIN, '/api/teams/' . $id);
     }
 
     public function testPostMemberAction()
@@ -163,7 +210,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(2, $result['users']);
     }
 
@@ -200,12 +247,6 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
         $json = json_decode($client->getResponse()->getContent(), true);
         self::assertEquals('User is already member of the team', $json['message']);
-
-        // cannot add disabled user
-        $this->request($client, '/api/teams/' . $result['id'] . '/members/3', 'POST');
-        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
-        $json = json_decode($client->getResponse()->getContent(), true);
-        self::assertEquals('Cannot add disabled user to team', $json['message']);
     }
 
     public function testDeleteMemberAction()
@@ -226,7 +267,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(3, $result['users']);
     }
 
@@ -288,7 +329,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(1, $result['customers']);
         self::assertEquals(1, $result['customers'][0]['id']);
     }
@@ -328,21 +369,6 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
         $json = json_decode($client->getResponse()->getContent(), true);
         self::assertEquals('Team has already access to customer', $json['message']);
-
-        $customer = new Customer();
-        $customer->setName('foooo');
-        $customer->setVisible(false);
-        $customer->setCountry('DE');
-        $customer->setTimezone('Europe/Berlin');
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $em->persist($customer);
-        $em->flush();
-
-        // cannot add invisible customer
-        $this->request($client, '/api/teams/' . $result['id'] . '/customers/' . $customer->getId(), 'POST');
-        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
-        $json = json_decode($client->getResponse()->getContent(), true);
-        self::assertEquals('Cannot grant access to an invisible customer', $json['message']);
     }
 
     public function testDeleteCustomerAction()
@@ -369,7 +395,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(0, $result['customers']);
     }
 
@@ -415,13 +441,12 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertCount(0, $result['projects']);
-
         $this->request($client, '/api/teams/' . $result['id'] . '/projects/1', 'POST');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(1, $result['projects']);
         self::assertEquals(1, $result['projects'][0]['id']);
     }
@@ -461,27 +486,6 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
         $json = json_decode($client->getResponse()->getContent(), true);
         self::assertEquals('Team has already access to project', $json['message']);
-
-        $customer = new Customer();
-        $customer->setName('foooo');
-        $customer->setVisible(false);
-        $customer->setCountry('DE');
-        $customer->setTimezone('Europe/Berlin');
-
-        $project = new Project();
-        $project->setName('foooo');
-        $project->setVisible(false);
-        $project->setCustomer($customer);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $em->persist($customer);
-        $em->persist($project);
-        $em->flush();
-
-        // cannot add invisible project
-        $this->request($client, '/api/teams/' . $result['id'] . '/projects/' . $project->getId(), 'POST');
-        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
-        $json = json_decode($client->getResponse()->getContent(), true);
-        self::assertEquals('Cannot grant access to an invisible project', $json['message']);
     }
 
     public function testDeleteProjectAction()
@@ -508,7 +512,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(0, $result['projects']);
     }
 
@@ -543,22 +547,120 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals('Project is not assigned to the team', $json['message']);
     }
 
-    protected function assertStructure(array $result, $full = true)
+    public function testPostActivityAction()
     {
-        $expectedKeys = [
-            'id', 'name'
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 1,
         ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+        self::assertCount(0, $result['activities']);
+        $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'POST');
+        $this->assertTrue($client->getResponse()->isSuccessful());
 
-        if ($full) {
-            $expectedKeys = array_merge($expectedKeys, [
-                'teamlead', 'users', 'customers', 'projects'
-            ]);
-        }
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
+        self::assertCount(1, $result['activities']);
+        self::assertEquals(1, $result['activities'][0]['id']);
+    }
 
-        $actual = array_keys($result);
-        sort($actual);
-        sort($expectedKeys);
+    public function testPostActivityActionErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 1,
+            'users' => [2]
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
 
-        self::assertEquals($expectedKeys, $actual, 'Team structure does not match');
+        //  team not found
+        $this->request($client, '/api/teams/999/activities/999', 'POST');
+        self::assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        self::assertEquals('Team not found', $json['message']);
+
+        //  activity not found
+        $this->request($client, '/api/teams/' . $result['id'] . '/activities/999', 'POST');
+        self::assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        self::assertEquals('Activity not found', $json['message']);
+
+        // add activity
+        $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'POST');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+        self::assertCount(1, $result['activities']);
+
+        // cannot add existing activity
+        $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'POST');
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        self::assertEquals('Team has already access to activity', $json['message']);
+    }
+
+    public function testDeleteActivityAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 1,
+            'users' => [2, 4, 5]
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+        self::assertCount(0, $result['activities']);
+
+        // add activity
+        $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'POST');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+        self::assertCount(1, $result['activities']);
+
+        $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'DELETE');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
+        self::assertCount(0, $result['activities']);
+    }
+
+    public function testDeleteActivityActionErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'teamlead' => 1,
+            'users' => [2, 4, 5]
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        //  team not found
+        $this->request($client, '/api/teams/999/activities/999', 'DELETE');
+        self::assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        self::assertEquals('Team not found', $json['message']);
+
+        //  activity not found
+        $this->request($client, '/api/teams/' . $result['id'] . '/activities/999', 'DELETE');
+        self::assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        self::assertEquals('Activity not found', $json['message']);
+
+        // cannot remove activity
+        $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'DELETE');
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        self::assertEquals('Activity is not assigned to the team', $json['message']);
     }
 }

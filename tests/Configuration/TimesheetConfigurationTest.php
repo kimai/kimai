@@ -36,6 +36,9 @@ class TimesheetConfigurationTest extends TestCase
         return [
             'rules' => [
                 'allow_future_times' => false,
+                'lockdown_period_start' => null,
+                'lockdown_period_end' => null,
+                'lockdown_grace_period' => null,
             ],
             'mode' => 'duration_only',
             'markdown_content' => false,
@@ -51,6 +54,9 @@ class TimesheetConfigurationTest extends TestCase
     {
         return [
             (new Configuration())->setName('timesheet.rules.allow_future_times')->setValue('1'),
+            (new Configuration())->setName('timesheet.rules.lockdown_period_start')->setValue('first day of last month'),
+            (new Configuration())->setName('timesheet.rules.lockdown_period_end')->setValue('last day of last month'),
+            (new Configuration())->setName('timesheet.rules.lockdown_grace_period')->setValue('+5 days'),
             (new Configuration())->setName('timesheet.mode')->setValue('default'),
             (new Configuration())->setName('timesheet.markdown_content')->setValue('1'),
             (new Configuration())->setName('timesheet.default_begin')->setValue('07:00'),
@@ -70,10 +76,14 @@ class TimesheetConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), []);
         $this->assertEquals(99, $sut->getActiveEntriesHardLimit());
         $this->assertEquals(15, $sut->getActiveEntriesSoftLimit());
-        $this->assertEquals(false, $sut->isAllowFutureTimes());
-        $this->assertEquals(false, $sut->isMarkdownEnabled());
+        $this->assertFalse($sut->isAllowFutureTimes());
+        $this->assertFalse($sut->isMarkdownEnabled());
         $this->assertEquals('duration_only', $sut->getTrackingMode());
         $this->assertEquals('now', $sut->getDefaultBeginTime());
+        $this->assertFalse($sut->isLockdownActive());
+        $this->assertEquals('', $sut->getLockdownPeriodStart());
+        $this->assertEquals('', $sut->getLockdownPeriodEnd());
+        $this->assertEquals('', $sut->getLockdownGracePeriod());
     }
 
     public function testDefaultWithLoader()
@@ -85,6 +95,10 @@ class TimesheetConfigurationTest extends TestCase
         $this->assertEquals(true, $sut->isMarkdownEnabled());
         $this->assertEquals('default', $sut->getTrackingMode());
         $this->assertEquals('07:00', $sut->getDefaultBeginTime());
+        $this->assertTrue($sut->isLockdownActive());
+        $this->assertEquals('first day of last month', $sut->getLockdownPeriodStart());
+        $this->assertEquals('last day of last month', $sut->getLockdownPeriodEnd());
+        $this->assertEquals('+5 days', $sut->getLockdownGracePeriod());
     }
 
     public function testDefaultWithMixedConfigs()
@@ -102,14 +116,12 @@ class TimesheetConfigurationTest extends TestCase
         $this->assertEquals(false, $sut->find('timesheet.rules.allow_future_times'));
     }
 
-    public function testUnknownConfigAreNotImportedAndFindingThemThrowsException()
+    public function testUnknownConfigAreImported()
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unknown config: foo');
-
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('timesheet.foo')->setValue('hello'),
         ]);
+        $this->assertTrue($sut->has('foo'));
         $this->assertEquals('hello', $sut->find('foo'));
     }
 }

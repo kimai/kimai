@@ -29,6 +29,10 @@ class CustomerControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/customer/');
+    }
+
+    public function testIsSecureForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/customer/');
     }
 
@@ -51,9 +55,8 @@ class CustomerControllerTest extends ControllerBaseTest
             $customer->setMetaField((new CustomerMeta())->setName('location')->setValue('homeoffice'));
             $customer->setMetaField((new CustomerMeta())->setName('feature')->setValue('timetracking'));
         });
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/');
 
         $form = $client->getCrawler()->filter('form.header-search')->form();
@@ -67,6 +70,37 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_customer_admin', 5);
+    }
+
+    public function testExportIsSecureForRole()
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/customer/export');
+    }
+
+    public function testExportAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->assertAccessIsGranted($client, '/admin/customer/export');
+        $this->assertExcelExportResponse($client, 'kimai-customers_');
+    }
+
+    public function testExportActionWithSearchTermQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->request($client, '/admin/customer/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/customer/export'));
+        $client->submit($form, [
+            'searchTerm' => 'feature:timetracking foo',
+            'visibility' => 1,
+            'pageSize' => 50,
+            'page' => 1,
+        ]);
+
+        $this->assertExcelExportResponse($client, 'kimai-customers_');
     }
 
     public function testDetailsAction()
@@ -85,7 +119,7 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#comments_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn-box-tool');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn.btn-default');
         self::assertEquals(2, $node->count());
         $node = $client->getCrawler()->filter('div.box#customer_rates_box');
         self::assertEquals(1, $node->count());
@@ -109,34 +143,6 @@ class CustomerControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#customer_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
         self::assertStringContainsString('123.45', $node->text(null, true));
-    }
-
-    public function testDeleteRateAction()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/customer/1/rate');
-        $form = $client->getCrawler()->filter('form[name=customer_rate_form]')->form();
-        $client->submit($form, [
-            'customer_rate_form' => [
-                'user' => null,
-                'rate' => 123.45,
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#customer_rates_box');
-        self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#customer_rates_box table.dataTable tbody tr:not(.summary)');
-        self::assertEquals(1, $node->count());
-        self::assertStringContainsString('123.45', $node->text(null, true));
-
-        $node = $client->getCrawler()->filter('div.box#customer_rates_box table.dataTable tbody tr td.actions a');
-        self::assertEquals(1, $node->count());
-        $url = $node->attr('href');
-        $client->request('GET', $url);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $node = $client->getCrawler()->filter('div.box#customer_rates_box table.dataTable tbody tr:not(.summary)');
-        self::assertEquals(0, $node->count());
     }
 
     public function testAddCommentAction()
@@ -172,7 +178,6 @@ class CustomerControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.confirmation-link');
         self::assertEquals($this->createUrl('/admin/customer/1/comment_delete'), $node->attr('href'));
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/admin/customer/1/comment_delete');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
@@ -197,7 +202,6 @@ class CustomerControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.btn.active');
         self::assertEquals(0, $node->count());
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/admin/customer/1/comment_pin');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
@@ -213,14 +217,19 @@ class CustomerControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
         self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/admin/customer/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-title');
         self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
         $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
         self::assertEquals(1, $node->count());
+
+        // creating the default team a second time fails, as the name already exists
+        $this->request($client, '/admin/customer/1/create_team');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $this->assertHasFlashError($client, 'Changes could not be saved: Team already existing');
     }
 
     public function testProjectsAction()
@@ -231,15 +240,14 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
 
         /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $customer = $em->getRepository(Customer::class)->find(1);
 
         $fixture = new ProjectFixtures();
         $fixture->setAmount(9); // to trigger a second page (every third activity is hidden)
         $fixture->setCustomers([$customer]);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/projects/1');
 
         $node = $client->getCrawler()->filter('div.box#project_list_box .box-tools ul.pagination li');
@@ -309,7 +317,7 @@ class CustomerControllerTest extends ControllerBaseTest
     public function testTeamPermissionAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
@@ -318,7 +326,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $fixture->setAddCustomer(false);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/customer/1/permissions');
         $form = $client->getCrawler()->filter('form[name=customer_team_permission_form]')->form();
@@ -345,7 +353,7 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/admin/customer/2/edit');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -368,14 +376,14 @@ class CustomerControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
@@ -407,17 +415,17 @@ class CustomerControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1)->setIsVisible(true);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
@@ -441,7 +449,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {

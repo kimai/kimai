@@ -9,7 +9,6 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\User;
 use App\Event\DashboardEvent;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
@@ -92,11 +91,13 @@ class DashboardSubscriber implements EventSubscriberInterface
         $section->setOrder(100);
 
         if ($this->security->isGranted('view_user')) {
+            $query = new UserQuery();
+            $query->setCurrentUser($user);
             $section->addWidget(
                 (new More())
                     ->setId('userTotal')
                     ->setTitle('stats.userTotal')
-                    ->setData($this->user->countUsersForQuery((new UserQuery())->setCurrentUser($user)))
+                    ->setData($this->user->countUsersForQuery($query))
                     ->setOptions([
                         'route' => 'admin_user',
                         'icon' => 'user',
@@ -106,11 +107,13 @@ class DashboardSubscriber implements EventSubscriberInterface
         }
 
         if ($this->security->isGranted('view_customer')) {
+            $query = new CustomerQuery();
+            $query->setCurrentUser($user);
             $section->addWidget(
                 (new More())
                     ->setId('customerTotal')
                     ->setTitle('stats.customerTotal')
-                    ->setData($this->customer->countCustomersForQuery((new CustomerQuery())->setCurrentUser($user)))
+                    ->setData($this->customer->countCustomersForQuery($query))
                     ->setOptions([
                         'route' => 'admin_customer',
                         'icon' => 'customer',
@@ -120,11 +123,13 @@ class DashboardSubscriber implements EventSubscriberInterface
         }
 
         if ($this->security->isGranted('view_project')) {
+            $query = new ProjectQuery();
+            $query->setCurrentUser($user);
             $section->addWidget(
                 (new More())
                     ->setId('projectTotal')
                     ->setTitle('stats.projectTotal')
-                    ->setData($this->project->countProjectsForQuery((new ProjectQuery())->setCurrentUser($user)))
+                    ->setData($this->project->countProjectsForQuery($query))
                     ->setOptions([
                         'route' => 'admin_project',
                         'icon' => 'project',
@@ -134,11 +139,13 @@ class DashboardSubscriber implements EventSubscriberInterface
         }
 
         if ($this->security->isGranted('view_activity')) {
+            $query = new ActivityQuery();
+            $query->setCurrentUser($user);
             $section->addWidget(
                 (new More())
                     ->setId('activityTotal')
                     ->setTitle('stats.activityTotal')
-                    ->setData($this->activity->countActivitiesForQuery((new ActivityQuery())->setCurrentUser($user)))
+                    ->setData($this->activity->countActivitiesForQuery($query))
                     ->setOptions([
                         'route' => 'admin_activity',
                         'icon' => 'activity',
@@ -147,7 +154,7 @@ class DashboardSubscriber implements EventSubscriberInterface
             );
         }
 
-        if (count($section->getWidgets()) > 0) {
+        if (\count($section->getWidgets()) > 0) {
             $event->addSection($section);
         }
     }

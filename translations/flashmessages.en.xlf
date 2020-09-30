@@ -48,7 +48,7 @@
             </trans-unit>
             <trans-unit id="invoice.first_template">
                 <source>invoice.first_template</source>
-                <target>Please create your first invoice template to proceed</target>
+                <target>Please create an invoice template first</target>
             </trans-unit>
         </body>
     </file>

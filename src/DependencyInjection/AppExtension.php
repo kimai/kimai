@@ -49,9 +49,14 @@ class AppExtension extends Extension
         $config['invoice']['documents'] = array_merge($config['invoice']['documents'], $config['invoice']['defaults']);
         unset($config['invoice']['defaults']);
 
-        // safe alternatives to %kernel.project_dir%
+        $config['export']['documents'] = array_merge($config['export']['documents'], $config['export']['defaults']);
+        unset($config['export']['defaults']);
+
+        if (empty($config['data_dir'])) {
+            $config['data_dir'] = $container->getParameter('kernel.project_dir') . '/var/data';
+        }
         $container->setParameter('kimai.data_dir', $config['data_dir']);
-        $container->setParameter('kimai.plugin_dir', $config['plugin_dir']);
+        $container->setParameter('kimai.plugin_dir', $container->getParameter('kernel.project_dir') . '/var/plugins');
 
         $this->setLanguageFormats($config['languages'], $container);
         unset($config['languages']);
@@ -60,6 +65,7 @@ class AppExtension extends Extension
         $container->setParameter('kimai.dashboard', $config['dashboard']);
         $container->setParameter('kimai.widgets', $config['widgets']);
         $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
+        $container->setParameter('kimai.export.documents', $config['export']['documents']);
         $container->setParameter('kimai.defaults', $config['defaults']);
 
         $this->createPermissionParameter($config['permissions'], $container);
@@ -86,11 +92,11 @@ class AppExtension extends Extension
         // this should happen always at the end, so bundles do not mess with the base configuration
         if ($container->hasParameter('kimai.bundles.config')) {
             $bundleConfig = $container->getParameter('kimai.bundles.config');
-            if (!is_array($bundleConfig)) {
+            if (!\is_array($bundleConfig)) {
                 trigger_error('Invalid bundle configuration found, skipping all bundle configuration');
             }
             foreach ($bundleConfig as $key => $value) {
-                if (array_key_exists($key, $config)) {
+                if (\array_key_exists($key, $config)) {
                     trigger_error(sprintf('Invalid bundle configuration "%s" found, skipping', $key));
                     continue;
                 }
@@ -106,7 +112,7 @@ class AppExtension extends Extension
 
         // make sure all allowed locales are registered
         foreach ($locales as $locale) {
-            if (!array_key_exists($locale, $config)) {
+            if (!\array_key_exists($locale, $config)) {
                 $config[$locale] = $config[Constants::DEFAULT_LOCALE];
             }
         }
@@ -186,7 +192,7 @@ class AppExtension extends Extension
                 return false;
             }
 
-            return !in_array('!' . $permission, $deleteFromArray);
+            return !\in_array('!' . $permission, $deleteFromArray);
         });
     }
 

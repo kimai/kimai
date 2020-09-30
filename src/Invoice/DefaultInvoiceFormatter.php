@@ -9,37 +9,19 @@
 
 namespace App\Invoice;
 
-use App\Twig\DateExtensions;
-use App\Twig\Extensions;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Configuration\LanguageFormattings;
+use App\Utils\LocaleFormatter;
 
 final class DefaultInvoiceFormatter implements InvoiceFormatter
 {
     /**
-     * @var DateExtensions
+     * @var LocaleFormatter
      */
-    private $dateExtension;
+    private $formatter;
 
-    /**
-     * @var Extensions
-     */
-    private $extension;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @param TranslatorInterface $translator
-     * @param DateExtensions $dateExtension
-     * @param Extensions $extensions
-     */
-    public function __construct(TranslatorInterface $translator, DateExtensions $dateExtension, Extensions $extensions)
+    public function __construct(LanguageFormattings $formats, string $locale)
     {
-        $this->translator = $translator;
-        $this->dateExtension = $dateExtension;
-        $this->extension = $extensions;
+        $this->formatter = new LocaleFormatter($formats, $locale);
     }
 
     /**
@@ -48,7 +30,7 @@ final class DefaultInvoiceFormatter implements InvoiceFormatter
      */
     public function getFormattedDateTime(\DateTime $date)
     {
-        return $this->dateExtension->dateShort($date);
+        return $this->formatter->dateShort($date);
     }
 
     /**
@@ -57,17 +39,7 @@ final class DefaultInvoiceFormatter implements InvoiceFormatter
      */
     public function getFormattedTime(\DateTime $date)
     {
-        return $this->dateExtension->time($date);
-    }
-
-    /**
-     * @param int $amount
-     * @param string $currency
-     * @return string
-     */
-    public function getFormattedMoney($amount, $currency)
-    {
-        return $this->extension->money($amount, $currency);
+        return $this->formatter->time($date);
     }
 
     /**
@@ -76,7 +48,18 @@ final class DefaultInvoiceFormatter implements InvoiceFormatter
      */
     public function getFormattedMonthName(\DateTime $date)
     {
-        return $this->translator->trans($this->dateExtension->monthName($date));
+        return $this->formatter->monthName($date);
+    }
+
+    /**
+     * @param float|int $amount
+     * @param string|null $currency
+     * @param bool $withCurrency
+     * @return string
+     */
+    public function getFormattedMoney($amount, ?string $currency, bool $withCurrency = true)
+    {
+        return $this->formatter->money($amount, $currency, $withCurrency);
     }
 
     /**
@@ -85,7 +68,7 @@ final class DefaultInvoiceFormatter implements InvoiceFormatter
      */
     public function getFormattedDuration($seconds)
     {
-        return $this->extension->duration($seconds);
+        return $this->formatter->duration($seconds);
     }
 
     /**
@@ -94,11 +77,11 @@ final class DefaultInvoiceFormatter implements InvoiceFormatter
      */
     public function getFormattedDecimalDuration($seconds)
     {
-        return $this->extension->durationDecimal($seconds);
+        return $this->formatter->durationDecimal($seconds);
     }
 
     public function getCurrencySymbol(string $currency): string
     {
-        return $this->extension->currency($currency);
+        return $this->formatter->currency($currency);
     }
 }

@@ -166,11 +166,11 @@
             </trans-unit>
             <trans-unit id="label.starttime">
                 <source>label.starttime</source>
-                <target>Začít</target>
+                <target>Začátek</target>
             </trans-unit>
             <trans-unit id="label.endtime">
                 <source>label.endtime</source>
-                <target>Ukončit</target>
+                <target>Konec</target>
             </trans-unit>
             <trans-unit id="label.duration">
                 <source>label.duration</source>
@@ -246,7 +246,7 @@
             </trans-unit>
             <trans-unit id="label.rate">
                 <source>label.rate</source>
-                <target>Hodnotit</target>
+                <target>Sazba</target>
             </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
@@ -418,7 +418,7 @@
             </trans-unit>
             <trans-unit id="profile.preferences">
                 <source>profile.preferences</source>
-                <target>Priorita</target>
+                <target>Předvolby</target>
             </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
@@ -752,10 +752,6 @@
                 <source>invoice.title</source>
                 <target>Faktura</target>
             </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Vytvářejte faktury z vašich zaznamenaných položek časového záznamu.</target>
-            </trans-unit>
             <trans-unit id="invoice.preview">
                 <source>invoice.preview</source>
                 <target>Toto je náhled dat, která se zobrazí ve vašem fakturačním dokladu.</target>
@@ -899,58 +895,6 @@
             <trans-unit id="export.date_copyright">
                 <source>export.date_copyright</source>
                 <target>Vytvořeno %date% s %kimai%</target>
-            </trans-unit>
-
-            <!--
-              Month names
-            -->
-            <trans-unit id="month.1">
-                <source>month.1</source>
-                <target>Leden</target>
-            </trans-unit>
-            <trans-unit id="month.2">
-                <source>month.2</source>
-                <target>Únor</target>
-            </trans-unit>
-            <trans-unit id="month.3">
-                <source>month.3</source>
-                <target>Březen</target>
-            </trans-unit>
-            <trans-unit id="month.4">
-                <source>month.4</source>
-                <target>Doben</target>
-            </trans-unit>
-            <trans-unit id="month.5">
-                <source>month.5</source>
-                <target>Květen</target>
-            </trans-unit>
-            <trans-unit id="month.6">
-                <source>month.6</source>
-                <target>Červen</target>
-            </trans-unit>
-            <trans-unit id="month.7">
-                <source>month.7</source>
-                <target>Červenec</target>
-            </trans-unit>
-            <trans-unit id="month.8">
-                <source>month.8</source>
-                <target>Srpen</target>
-            </trans-unit>
-            <trans-unit id="month.9">
-                <source>month.9</source>
-                <target>Září</target>
-            </trans-unit>
-            <trans-unit id="month.10">
-                <source>month.10</source>
-                <target>Říjen</target>
-            </trans-unit>
-            <trans-unit id="month.11">
-                <source>month.11</source>
-                <target>Listopad</target>
-            </trans-unit>
-            <trans-unit id="month.12">
-                <source>month.12</source>
-                <target>Prosinec</target>
             </trans-unit>
 
             <!--

@@ -16,9 +16,11 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
+use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 
 /**
  * @group integration
@@ -28,6 +30,10 @@ class ActivityControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/activity/');
+    }
+
+    public function testIsSecureForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/activity/');
     }
 
@@ -50,9 +56,8 @@ class ActivityControllerTest extends ControllerBaseTest
             $activity->setMetaField((new ActivityMeta())->setName('location')->setValue('homeoffice'));
             $activity->setMetaField((new ActivityMeta())->setName('feature')->setValue('timetracking'));
         });
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/');
 
         $form = $client->getCrawler()->filter('form.header-search')->form();
@@ -60,6 +65,8 @@ class ActivityControllerTest extends ControllerBaseTest
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
             'pageSize' => 50,
+            'customers' => [1],
+            'projects' => [1],
             'page' => 1,
         ]);
 
@@ -68,25 +75,66 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_activity_admin', 5);
     }
 
+    public function testExportIsSecureForRole()
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/activity/export');
+    }
+
+    public function testExportAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->assertAccessIsGranted($client, '/admin/activity/export');
+        $this->assertExcelExportResponse($client, 'kimai-activities_');
+    }
+
+    public function testExportActionWithSearchTermQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new ActivityFixtures();
+        $fixture->setAmount(5);
+        $fixture->setCallback(function (Activity $activity) {
+            $activity->setVisible(true);
+            $activity->setComment('I am a foobar with tralalalala some more content');
+            $activity->setMetaField((new ActivityMeta())->setName('location')->setValue('homeoffice'));
+            $activity->setMetaField((new ActivityMeta())->setName('feature')->setValue('timetracking'));
+        });
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/admin/activity/');
+
+        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/activity/export'));
+        $client->submit($form, [
+            'searchTerm' => 'feature:timetracking foo',
+            'visibility' => 1,
+            'pageSize' => 50,
+            'customers' => [1],
+            'projects' => [1],
+            'page' => 1,
+        ]);
+
+        $this->assertExcelExportResponse($client, 'kimai-activities_');
+    }
+
     public function testDetailsAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setActivities($em->getRepository(Activity::class)->findAll());
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_ADMIN));
-        $this->importFixture($client, $fixture);
+        $fixture->setUser($this->getUserByRole(User::ROLE_ADMIN));
+        $this->importFixture($fixture);
 
         $project = $em->getRepository(Project::class)->find(1);
         $fixture = new ActivityFixtures();
         $fixture->setAmount(6); // to trigger a second page
         $fixture->setProjects([$project]);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/1/details');
         self::assertHasProgressbar($client);
 
@@ -116,34 +164,6 @@ class ActivityControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#activity_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
         self::assertStringContainsString('123.45', $node->text(null, true));
-    }
-
-    public function testDeleteRateAction()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/activity/1/rate');
-        $form = $client->getCrawler()->filter('form[name=activity_rate_form]')->form();
-        $client->submit($form, [
-            'activity_rate_form' => [
-                'user' => null,
-                'rate' => 123.45,
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#activity_rates_box');
-        self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#activity_rates_box table.dataTable tbody tr:not(.summary)');
-        self::assertEquals(1, $node->count());
-        self::assertStringContainsString('123.45', $node->text(null, true));
-
-        $node = $client->getCrawler()->filter('div.box#activity_rates_box table.dataTable tbody tr td.actions a');
-        self::assertEquals(1, $node->count());
-        $url = $node->attr('href');
-        $client->request('GET', $url);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
-        $node = $client->getCrawler()->filter('div.box#activity_rates_box table.dataTable tbody tr:not(.summary)');
-        self::assertEquals(0, $node->count());
     }
 
     public function testCreateAction()
@@ -189,7 +209,7 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $fixture = new ProjectFixtures();
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/activity/create');
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
@@ -257,6 +277,61 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertEquals('', $editForm->get('activity_edit_form[project]')->getValue());
     }
 
+    public function testTeamPermissionAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        /** @var Activity $activity */
+        $activity = $em->getRepository(Activity::class)->find(1);
+        self::assertEquals(0, $activity->getTeams()->count());
+
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(2);
+        $fixture->setAddCustomer(false);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/admin/activity/1/permissions');
+        $form = $client->getCrawler()->filter('form[name=activity_team_permission_form]')->form();
+        /** @var ChoiceFormField $team1 */
+        $team1 = $form->get('activity_team_permission_form[teams][0]');
+        $team1->tick();
+        /** @var ChoiceFormField $team2 */
+        $team2 = $form->get('activity_team_permission_form[teams][1]');
+        $team2->tick();
+
+        $client->submit($form);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
+        $client->followRedirect();
+        $this->assertHasDataTable($client);
+
+        /** @var Activity $activity */
+        $activity = $em->getRepository(Activity::class)->find(1);
+        self::assertEquals(2, $activity->getTeams()->count());
+    }
+
+    public function testCreateDefaultTeamAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/activity/1/details');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
+
+        $this->request($client, '/admin/activity/1/create_team');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-title');
+        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
+        self::assertEquals(1, $node->count());
+
+        // creating the default team a second time fails, as the name already exists
+        $this->request($client, '/admin/activity/1/create_team');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
+        $client->followRedirect();
+        $this->assertHasFlashError($client, 'Changes could not be saved: Team already existing');
+    }
+
     public function testDeleteAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -283,15 +358,15 @@ class ActivityControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $fixture = new TimesheetFixtures();
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
@@ -324,18 +399,18 @@ class ActivityControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $fixture = new TimesheetFixtures();
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setAmount(10);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
         $fixture = new ActivityFixtures();
         $fixture->setAmount(1)->setIsGlobal(true)->setIsVisible(true);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
@@ -359,7 +434,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, count($timesheets));
+        $this->assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {

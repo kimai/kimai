@@ -8,9 +8,54 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [1.10](https://github.com/kevinpapst/kimai2/releases/tag/1.10)
+
+**New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+- Invoice renderer `CSV` was removed
+- Sessions are now stored in the database (all users have to re-login after upgrade)
+- New permissions: `lockdown_grace_timesheet`, `lockdown_override_timesheet`, `view_all_data`
+- Fixed team permissions on user queries: depending on your previous team & permission setup your users might see less data (SUPER_ADMINS see all data, but new: ADMINS only see all data if they own the `view_all_data` permission)
+- Markdown does not support headings any more, text like `# foo` is not converted to `<h1 id="foo">foo</h1>` anymore
+
+### Developer
+
+- **BC break**: removed registration of `.env` with `putenv()` - do not rely on `getenv()` as it is not thread-safe
+- **BC break**: interface method signature `HtmlToPdfConverter::convertToPdf()` changed
+- **BC break**: the macros `badge` and `label` do not apply the `|trans` filter any more
+- **BC Break**: removed `getVisible()` (deprecated since 1.4) method on Customer, Project and Activity (use `isVisible()` instead, templates are still working)
+- **BC Break**: API changes
+    - some representation names changed (eg. from `ActivityMetaField` to `ActivityMeta`, `TimesheetSubCollection` vs `TimesheetCollectionExpanded`), you could use `class_alias()` if you use auto-generated code from Swagger-Gen or alike
+    - new result types were introduced
+    - result data changed in some areas to smooth out inconsistencies (eg. TeamEntity fields changed in nested results)
+
+## [1.9](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
+
+**New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+- The directory `var/data/invoices/` will be used to store archived invoice files (check file permissions)
+- The default invoice number format changed. If you want to use the old one: configure `{date}` as format - see [invoice documentation](https://www.kimai.org/documentation/invoices.html)
+- HTML invoice templates are now treated like other files and offered as download. If you are using relative URLs for including assets (CSS, images) you need to either inline them (see the default templates) or use absolute URLs
+- Invoice templates that use the templates variables `${activity.X}` or `${project.X}` should be checked and possibly adapted, as multi-select is now possible for filtering
+- Invoice templates have access to all meta-fields as variables, not only the ones marked as visible
+- Rates configuration/structure changed for customer, project and activity 
+  - **Invoice templates**: rates variables were removed
+
+Permission changes:
+- `history_invoice` - NEW: grants all features for the new invoice archive (by default for all admins)
+
+### Developer
+
+- **BC break**: `InvoiceItemInterface` has new methods `getType()` and `getCategory()`
+- **BC break**: API fields changed - see new `/rates` endpoints
+
 ## [1.8](https://github.com/kevinpapst/kimai2/releases/tag/1.8)
 
+**New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+- New PHP requirement: `ext-xsl` - which should be pre-installed in most environments when `ext-xml` is loaded
 - New mailer library: check if emails are still working (eg. by using the "password forgotten" function) or if you need to adjust your configuration, [see docs at symfony.com](https://symfony.com/doc/current/components/mailer.html#transport)
+- Support for line breaks in multiline invoice fields for spreadsheets (check your invoice templates after the update) 
 
 Permission changes:
 

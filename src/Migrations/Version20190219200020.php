@@ -23,17 +23,9 @@ final class Version20190219200020 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
-        $platform = $this->getPlatform();
-
-        if (!in_array($platform, ['sqlite', 'mysql'])) {
-            $this->abortIf(true, 'Unsupported database platform: ' . $platform);
-        }
-
-        $userPrefs = $this->getTableName('user_preferences');
-
-        $this->addSql('DELETE FROM ' . $userPrefs . ' WHERE name = "theme.fixed_layout"');
-        $this->addSql('DELETE FROM ' . $userPrefs . ' WHERE name = "theme.boxed_layout"');
-        $this->addSql('DELETE FROM ' . $userPrefs . ' WHERE name = "theme.mini_sidebar"');
+        $this->addSql('DELETE FROM kimai2_user_preferences WHERE name = "theme.fixed_layout"');
+        $this->addSql('DELETE FROM kimai2_user_preferences WHERE name = "theme.boxed_layout"');
+        $this->addSql('DELETE FROM kimai2_user_preferences WHERE name = "theme.mini_sidebar"');
     }
 
     public function down(Schema $schema): void

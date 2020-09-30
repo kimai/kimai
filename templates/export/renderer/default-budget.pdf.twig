@@ -1,0 +1,11 @@
+{% extends 'export/pdf-layout.html.twig' %}
+{% set showRateBudget = false %}
+{% set showTimeBudget = false %}
+{% for budget in budgets %}
+    {% if budget.money_left > 0 %}
+        {% set showRateBudget = true %}
+    {% endif %}
+    {% if budget.time_left > 0 %}
+        {% set showTimeBudget = true %}
+    {% endif %}
+{% endfor %}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="he" datatype="plaintext" original="export.en.xlf">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="default.pdf.twig">
+        <source>default.pdf.twig</source>
+        <target>סטנדרטי</target>
+      </trans-unit>
+      <trans-unit id="default-budget.pdf.twig">
+        <source>default-budget.pdf.twig</source>
+        <target>עם תקציב נותר</target>
+      </trans-unit>
+      <trans-unit id="default-internal.pdf.twig">
+        <source>default-internal.pdf.twig</source>
+        <target>עם תעריפים פנימיים</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

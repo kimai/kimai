@@ -45,6 +45,9 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             'entry.rate',
             'entry.rate_nc',
             'entry.rate_plain',
+            'entry.rate_internal',
+            'entry.rate_internal_nc',
+            'entry.rate_internal_plain',
             'entry.total',
             'entry.total_nc',
             'entry.total_plain',
@@ -59,6 +62,8 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             'entry.end_time',
             'entry.end_timestamp',
             'entry.date',
+            'entry.week',
+            'entry.weekyear',
             'entry.user_id',
             'entry.user_name',
             'entry.user_alias',
@@ -88,6 +93,6 @@ class InvoiceItemDefaultHydratorTest extends TestCase
         sort($givenKeys);
 
         $this->assertEquals($expectedKeys, $givenKeys);
-        $this->assertEquals(count($keys), count($givenKeys));
+        $this->assertEquals(\count($keys), \count($givenKeys));
     }
 }

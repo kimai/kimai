@@ -18,6 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Base class for all Doctrine migrations.
+ *
+ * @codeCoverageIgnore
  */
 abstract class AbstractMigration extends BaseAbstractMigration implements ContainerAwareInterface
 {
@@ -45,7 +47,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     /**
      * @param string $name
      * @return string
-     * @deprecated since 0.9
+     * @deprecated since 0.9 - will be removed with 2.0
      */
     protected function getTableName($name)
     {
@@ -124,7 +126,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     protected function abortIfPlatformNotSupported()
     {
         $platform = $this->getPlatform();
-        if (!in_array($platform, ['sqlite', 'mysql'])) {
+        if (!\in_array($platform, ['sqlite', 'mysql'])) {
             $this->abortIf(true, 'Unsupported database platform: ' . $platform);
         }
     }

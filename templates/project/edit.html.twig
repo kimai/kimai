@@ -1,5 +1,4 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
-{% import "macros/widgets.html.twig" as widgets %}
 {% import "project/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
@@ -8,7 +7,7 @@
 {% block main %}
     {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
-        'title': project.name|default('create'|trans),
+        'title': project.name|default('create-project'|trans({}, 'actions')),
         'form': form,
         'back': path('admin_project')
     } %}
@@ -52,7 +51,14 @@
             {% endif %}
             {{ form_row(form.visible) }}
             {% if form.metaFields is defined and form.metaFields is not empty %}
-                {{ form_row(form.metaFields) }}
+                {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+                    {{ form_row(meta) }}
+                {% endfor %}
+            {% endif %}
+            {% if form.create_more is defined and app.request.xmlHttpRequest %}
+                <div class="hidden">
+                    {{ form_row(form.create_more) }}
+                </div>
             {% endif %}
             {{ form_widget(form) }}
         {% endblock %}

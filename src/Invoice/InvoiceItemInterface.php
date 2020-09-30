@@ -15,7 +15,7 @@ use App\Entity\Project;
 use App\Entity\User;
 
 /**
- * @deprecated will be removed with 2.0 - use ExportItemInterface instead
+ * @method float|null getInternalRate()
  */
 interface InvoiceItemInterface
 {
@@ -28,6 +28,11 @@ interface InvoiceItemInterface
     public function getHourlyRate(): ?float;
 
     public function getRate(): float;
+
+    // will be activated with 2.0
+    /*
+    public function getInternalRate(): ?float;
+    */
 
     public function getUser(): ?User;
 
@@ -43,4 +48,18 @@ interface InvoiceItemInterface
      * @return MetaTableTypeInterface[]
      */
     public function getVisibleMetaFields(): array;
+
+    /**
+     * A name representation for this type of item.
+     *
+     * @return string
+     */
+    public function getType(): string;
+
+    /**
+     * A name representation for the category of this item.
+     *
+     * @return string
+     */
+    public function getCategory(): string;
 }

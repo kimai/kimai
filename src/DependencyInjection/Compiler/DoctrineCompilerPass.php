@@ -21,7 +21,7 @@ class DoctrineCompilerPass implements CompilerPassInterface
     /**
      * @var string[]
      */
-    protected $allowedEngines = [
+    private $allowedEngines = [
         'mysql',
         'sqlite'
     ];
@@ -33,24 +33,36 @@ class DoctrineCompilerPass implements CompilerPassInterface
     protected function findEngine()
     {
         $engine = null;
+        $databaseUrl = null;
 
-        if (null === $engine) {
-            $dbConfig = explode('://', getenv('DATABASE_URL'));
-            $engine = $dbConfig['0'] ?: null;
+        if (null === $databaseUrl && isset($_ENV['DATABASE_URL'])) {
+            $databaseUrl = $_ENV['DATABASE_URL'];
+        }
+
+        if (null === $databaseUrl && isset($_SERVER['DATABASE_URL'])) {
+            $databaseUrl = $_SERVER['DATABASE_URL'];
+        }
+
+        if (null === $databaseUrl && (false !== $envDbUrl = getenv('DATABASE_URL'))) {
+            $databaseUrl = $envDbUrl;
+        }
+
+        if (null !== $databaseUrl) {
+            $urlParts = explode('://', $databaseUrl);
+            $engine = $urlParts[0] ?: null;
         }
 
         if (null === $engine) {
             $engine = getenv('DATABASE_ENGINE');
         }
 
-        if (false === $engine) {
+        if (empty($engine)) {
             throw new \Exception(
-                'Could not detect database engine. Please set the environment config DATABASE_ENGINE ' .
-                'to one of: "' . implode(', ', $this->allowedEngines) . '" in your .env file, e.g. DATABASE_ENGINE=sqlite'
+                'Could not detect database engine, make sure DATABASE_URL is available from $_SERVER or $_ENV. Check your .env file.'
             );
         }
 
-        if (!in_array($engine, $this->allowedEngines)) {
+        if (!\in_array($engine, $this->allowedEngines)) {
             throw new \Exception(
                 'Unsupported database engine: ' . $engine . '. Kimai only supports one of: ' .
                 implode(', ', $this->allowedEngines)

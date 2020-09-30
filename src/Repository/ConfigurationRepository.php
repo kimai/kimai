@@ -15,14 +15,18 @@ use App\Form\Model\SystemConfiguration;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Configuration>
+ */
 class ConfigurationRepository extends EntityRepository implements ConfigLoaderInterface
 {
     private static $cacheByPrefix = null;
     private static $cacheAll = [];
 
-    private function clearCache()
+    public function clearCache()
     {
         static::$cacheByPrefix = null;
+        static::$cacheAll = null;
     }
 
     private function prefillCache()
@@ -36,12 +40,20 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
         static::$cacheByPrefix = [];
         foreach ($configs as $config) {
             $key = substr($config->getName(), 0, strpos($config->getName(), '.'));
-            if (!array_key_exists($key, static::$cacheByPrefix)) {
+            if (!\array_key_exists($key, static::$cacheByPrefix)) {
                 static::$cacheByPrefix[$key] = [];
             }
             static::$cacheByPrefix[$key][] = $config;
             static::$cacheAll[] = $config;
         }
+    }
+
+    public function saveConfiguration(Configuration $configuration)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($configuration);
+        $entityManager->flush();
+        $this->clearCache();
     }
 
     /**
@@ -56,7 +68,7 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
             return static::$cacheAll;
         }
 
-        if (!array_key_exists($prefix, static::$cacheByPrefix)) {
+        if (!\array_key_exists($prefix, static::$cacheByPrefix)) {
             return [];
         }
 
@@ -84,7 +96,7 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
                 }
 
                 // allow to use entity types
-                if (is_object($value) && method_exists($value, 'getId')) {
+                if (\is_object($value) && method_exists($value, 'getId')) {
                     $value = $value->getId();
                 }
 

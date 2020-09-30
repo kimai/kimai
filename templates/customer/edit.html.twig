@@ -1,5 +1,4 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
-{% import "macros/widgets.html.twig" as widgets %}
 {% import "customer/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
@@ -80,7 +79,9 @@
             {% endif %}
             {{ form_row(form.visible) }}
             {% if form.metaFields is defined and form.metaFields is not empty %}
-                {{ form_row(form.metaFields) }}
+                {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+                    {{ form_row(meta) }}
+                {% endfor %}
             {% endif %}
             {{ form_widget(form) }}
         {% endblock %}

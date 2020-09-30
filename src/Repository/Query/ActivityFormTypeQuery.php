@@ -12,67 +12,32 @@ namespace App\Repository\Query;
 use App\Entity\Activity;
 use App\Entity\Project;
 
-final class ActivityFormTypeQuery
+final class ActivityFormTypeQuery extends BaseFormTypeQuery
 {
-    /**
-     * @var Activity|int|null
-     */
-    private $activity;
-    /**
-     * @var Project|int|null
-     */
-    private $project;
     /**
      * @var Activity|null
      */
     private $activityToIgnore;
 
     /**
-     * @param Activity|int|null $activity
-     * @param Project|int|null $project
+     * @param Activity|int|array|null $activity
+     * @param Project|int|array|null $project
      */
     public function __construct($activity = null, $project = null)
     {
-        $this->activity = $activity;
-        $this->project = $project;
-    }
+        if (null !== $activity) {
+            if (!\is_array($activity)) {
+                $activity = [$activity];
+            }
+            $this->setActivities($activity);
+        }
 
-    /**
-     * @return Activity|int|null
-     */
-    public function getActivity()
-    {
-        return $this->activity;
-    }
-
-    /**
-     * @param Activity|int|null $activity
-     * @return ActivityFormTypeQuery
-     */
-    public function setActivity($activity): ActivityFormTypeQuery
-    {
-        $this->activity = $activity;
-
-        return $this;
-    }
-
-    /**
-     * @return Project|int|null
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * @param Project|int|null $project
-     * @return ActivityFormTypeQuery
-     */
-    public function setProject($project): ActivityFormTypeQuery
-    {
-        $this->project = $project;
-
-        return $this;
+        if (null !== $project) {
+            if (!\is_array($project)) {
+                $project = [$project];
+            }
+            $this->setProjects($project);
+        }
     }
 
     /**
@@ -92,12 +57,21 @@ final class ActivityFormTypeQuery
 
     public function isGlobalsOnly(): bool
     {
-        return
-            (
-                null === $this->activity ||
-                ($this->activity instanceof Activity && null === $this->activity->getProject())
-            )
-            &&
-            null === $this->project;
+        if ($this->hasProjects()) {
+            return false;
+        }
+
+        if (!$this->hasActivities()) {
+            return true;
+        }
+
+        foreach ($this->getActivities() as $activity) {
+            // this is a potential problem, if only IDs were set
+            if ($activity instanceof Activity && !$activity->isGlobal()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

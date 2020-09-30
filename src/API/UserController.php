@@ -33,11 +33,16 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @RouteResource("User")
+ * @SWG\Tag(name="User")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 final class UserController extends BaseApiController
 {
+    public const GROUPS_ENTITY = ['Default', 'Entity', 'User', 'User_Entity'];
+    public const GROUPS_FORM = ['Default', 'Entity', 'User', 'User_Entity'];
+    public const GROUPS_COLLECTION = ['Default', 'Collection', 'User'];
+
     /**
      * @var UserRepository
      */
@@ -55,10 +60,6 @@ final class UserController extends BaseApiController
      */
     private $configuration;
 
-    /**
-     * @param ViewHandlerInterface $viewHandler
-     * @param UserRepository $repository
-     */
     public function __construct(ViewHandlerInterface $viewHandler, UserRepository $repository, UserPasswordEncoderInterface $encoder, FormConfiguration $config)
     {
         $this->viewHandler = $viewHandler;
@@ -82,7 +83,7 @@ final class UserController extends BaseApiController
      * @Rest\QueryParam(name="visible", requirements="1|2|3", strict=true, nullable=true, description="Visibility status to filter users. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)")
      * @Rest\QueryParam(name="orderBy", requirements="id|username|alias|email", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, username, alias, email (default: username)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
-     * @Rest\QueryParam(name="term", requirements="[a-zA-Z0-9 \-,:]+", strict=true, nullable=true, description="Free search term")
+     * @Rest\QueryParam(name="term", description="Free search term")
      *
      * @Security("is_granted('view_user')")
      *
@@ -92,6 +93,7 @@ final class UserController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new UserQuery();
+        $query->setCurrentUser($this->getUser());
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {
             $query->setVisibility($visible);
@@ -111,7 +113,7 @@ final class UserController extends BaseApiController
 
         $data = $this->repository->getUsersForQuery($query);
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Collection', 'User']);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
@@ -148,7 +150,7 @@ final class UserController extends BaseApiController
         }
 
         $view = new View($user, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -170,7 +172,7 @@ final class UserController extends BaseApiController
     public function meAction(): Response
     {
         $view = new View($this->getUser(), 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -221,13 +223,13 @@ final class UserController extends BaseApiController
             $this->repository->saveUser($user);
 
             $view = new View($user, 200);
-            $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }
@@ -283,7 +285,7 @@ final class UserController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
+            $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
         }
@@ -291,7 +293,7 @@ final class UserController extends BaseApiController
         $this->repository->saveUser($user);
 
         $view = new View($user, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }

@@ -23,7 +23,7 @@ class IconExtensionTest extends TestCase
         $filters = ['icon'];
         $sut = new IconExtension();
         $twigFilters = $sut->getFilters();
-        $this->assertCount(count($filters), $twigFilters);
+        $this->assertCount(\count($filters), $twigFilters);
         $i = 0;
         /** @var TwigFilter $filter */
         foreach ($twigFilters as $filter) {
@@ -39,7 +39,7 @@ class IconExtensionTest extends TestCase
             'delete', 'repeat', 'edit', 'manual', 'help', 'start', 'start-small', 'stop', 'stop-small', 'filter',
             'create', 'list', 'print', 'visibility', 'calendar', 'money', 'duration', 'download', 'copy', 'settings',
             'export', 'pdf', 'csv', 'ods', 'xlsx', 'on', 'off', 'audit', 'home', 'shop', 'about', 'debug', 'profile-stats',
-            'profile', 'warning', 'permissions', 'back', 'tag', 'avatar', 'timesheet-team', 'plugin', 'configuration'
+            'profile', 'warning', 'permissions', 'back', 'tag', 'avatar', 'timesheet-team', 'plugin', 'configuration', 'reporting'
         ];
 
         // test pre-defined icons

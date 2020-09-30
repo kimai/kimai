@@ -9,8 +9,6 @@
 
 namespace App\Form;
 
-use App\Entity\Customer;
-use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Form\Type\DateTimePickerType;
 use App\Form\Type\DurationType;

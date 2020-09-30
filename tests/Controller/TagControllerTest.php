@@ -26,10 +26,10 @@ class TagControllerTest extends ControllerBaseTest
 
         $fixture = new TagFixtures();
         $fixture->setTagArray($tagList);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
     }
 
-    public function testDebugIsSecure()
+    public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/tags/');
     }
@@ -110,7 +110,7 @@ class TagControllerTest extends ControllerBaseTest
         $node = $form->getFormNode();
         $node->setAttribute('action', $this->createUrl('/admin/tags/multi-delete'));
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Tag[] $tags */
         $tags = $em->getRepository(Tag::class)->findAll();
         self::assertCount(10, $tags);

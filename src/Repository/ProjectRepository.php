@@ -26,6 +26,9 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Project>
+ */
 class ProjectRepository extends EntityRepository
 {
     /**
@@ -73,25 +76,38 @@ class ProjectRepository extends EntityRepository
         return $this->count([]);
     }
 
-    public function getProjectStatistics(Project $project): ProjectStatistic
+    public function getProjectStatistics(Project $project, ?\DateTime $begin = null, ?\DateTime $end = null): ProjectStatistic
     {
         $stats = new ProjectStatistic($project);
 
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb
+            ->from(Timesheet::class, 't')
             ->addSelect('COUNT(t.id) as recordAmount')
             ->addSelect('SUM(t.duration) as recordDuration')
             ->addSelect('SUM(t.rate) as recordRate')
-            ->from(Timesheet::class, 't')
+            ->addSelect('SUM(t.internalRate) as recordInternalRate')
             ->andWhere('t.project = :project')
+            ->setParameter('project', $project)
         ;
-        $timesheetResult = $qb->getQuery()->execute(['project' => $project], Query::HYDRATE_ARRAY);
+
+        if (null !== $begin) {
+            $qb->andWhere($qb->expr()->gte('t.begin', ':begin'))
+                ->setParameter('begin', $begin);
+        }
+        if (null !== $end) {
+            $qb->andWhere($qb->expr()->lte('t.end', ':end'))
+                ->setParameter('end', $end);
+        }
+
+        $timesheetResult = $qb->getQuery()->getArrayResult();
 
         if (isset($timesheetResult[0])) {
             $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
             $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
             $stats->setRecordRate($timesheetResult[0]['recordRate']);
+            $stats->setRecordInternalRate($timesheetResult[0]['recordInternalRate']);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -118,7 +134,7 @@ class ProjectRepository extends EntityRepository
         }
 
         // make sure that admins see all projects
-        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+        if (null !== $user && $user->canSeeAllData()) {
             return;
         }
 
@@ -152,13 +168,13 @@ class ProjectRepository extends EntityRepository
     }
 
     /**
-     * @deprecated since 1.1 - don't use this method, it ignores team permission checks
+     * @deprecated since 1.1 - use getQueryBuilderForFormType() istead - will be removed with 2.0
      */
     public function builderForEntityType($project, $customer)
     {
         $query = new ProjectFormTypeQuery();
-        $query->setProject($project);
-        $query->setCustomer($customer);
+        $query->addProject($project);
+        $query->addCustomer($customer);
 
         return $this->getQueryBuilderForFormType($query);
     }
@@ -216,13 +232,14 @@ class ProjectRepository extends EntityRepository
         $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
         $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
 
-        if (null !== $query->getProject()) {
-            $qb->orWhere('p.id = :project')->setParameter('project', $query->getProject());
+        if ($query->hasProjects()) {
+            $qb->orWhere($qb->expr()->in('p.id', ':project'))
+                ->setParameter('project', $query->getProjects());
         }
 
-        if (null !== $query->getCustomer()) {
-            $qb->andWhere('p.customer = :customer')
-                ->setParameter('customer', $query->getCustomer());
+        if ($query->hasCustomers()) {
+            $qb->andWhere($qb->expr()->in('p.customer', ':customer'))
+                ->setParameter('customer', $query->getCustomers());
         }
 
         if (null !== $query->getProjectToIgnore()) {
@@ -257,24 +274,24 @@ class ProjectRepository extends EntityRepository
 
         $qb->addOrderBy($orderBy, $query->getOrder());
 
-        if (in_array($query->getVisibility(), [ProjectQuery::SHOW_VISIBLE, ProjectQuery::SHOW_HIDDEN])) {
+        if (!$query->isShowBoth()) {
             $qb
                 ->andWhere($qb->expr()->eq('p.visible', ':visible'))
                 ->andWhere($qb->expr()->eq('c.visible', ':customer_visible'))
             ;
 
-            if (ProjectQuery::SHOW_VISIBLE === $query->getVisibility()) {
+            if ($query->isShowVisible()) {
                 $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
-            } elseif (ProjectQuery::SHOW_HIDDEN === $query->getVisibility()) {
+            } elseif ($query->isShowHidden()) {
                 $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
             }
 
             $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
         }
 
-        if (null !== $query->getCustomer()) {
-            $qb->andWhere('p.customer = :customer')
-                ->setParameter('customer', $query->getCustomer());
+        if ($query->hasCustomers()) {
+            $qb->andWhere($qb->expr()->in('p.customer', ':customer'))
+                ->setParameter('customer', $query->getCustomers());
         }
 
         // this is far from being perfect, possible enhancements:
@@ -352,10 +369,12 @@ class ProjectRepository extends EntityRepository
             }
         }
 
-        // this will make sure, that we do not accidentally create results with multiple rows
-        //   => which would result in a wrong LIMIT / pagination results
-        // the second group by is needed due to SQL standard (even though logically not really required for this query)
-        $qb->addGroupBy('p.id')->addGroupBy($orderBy);
+        // this will make sure, that we do not accidentally create results with multiple rows,
+        // which would result in a wrong LIMIT with paginated results
+        $qb->addGroupBy('p');
+
+        // the second group by is needed to satisfy SQL standard (ONLY_FULL_GROUP_BY)
+        $qb->addGroupBy($orderBy);
 
         return $qb;
     }

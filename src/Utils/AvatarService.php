@@ -18,7 +18,7 @@ class AvatarService
     /**
      * @var string
      */
-    private $projectDirectory;
+    private $directory;
 
     public const AVATAR_CONFIG = [
         'driver' => 'gd',
@@ -105,7 +105,17 @@ class AvatarService
 
     public function __construct(string $projectDirectory)
     {
-        $this->projectDirectory = $projectDirectory;
+        $this->setStorageDirectory($projectDirectory . '/public/avatars/');
+    }
+
+    public function getStorageDirectory(): string
+    {
+        return $this->directory;
+    }
+
+    public function setStorageDirectory(string $directory)
+    {
+        $this->directory = realpath($directory);
     }
 
     private function getAvatarUrl(User $profile): string
@@ -115,9 +125,7 @@ class AvatarService
 
     private function getImagePath(User $profile): string
     {
-        $avatarPath = realpath($this->projectDirectory . '/public/avatars/');
-
-        return $avatarPath . '/' . $this->getAvatarUrl($profile);
+        return $this->getStorageDirectory() . '/' . $this->getAvatarUrl($profile);
     }
 
     public function generateAvatar(User $profile, bool $regenerate = false): bool
@@ -129,11 +137,10 @@ class AvatarService
         $filePath = $this->getImagePath($profile);
 
         if ($regenerate || !file_exists($filePath)) {
-            if (!is_writable(dirname($filePath))) {
+            if (!is_writable(\dirname($filePath))) {
                 return false;
             }
             $avatar = new Avatar(self::AVATAR_CONFIG);
-            $avatar->create($profile->getDisplayName())->save($filePath, 90);
             $avatar->create($profile->getDisplayName())->save($filePath, 90);
         }
 
@@ -155,6 +162,6 @@ class AvatarService
 
     public function hasDependencies(): bool
     {
-        return extension_loaded('gd') && function_exists('imagettfbbox');
+        return \extension_loaded('gd') && \function_exists('imagettfbbox');
     }
 }

@@ -32,16 +32,21 @@ class TwigContextCompilerPass implements CompilerPassInterface
         $saml = $container->getParameter('kimai.saml');
         $twig->addMethodCall('addGlobal', ['saml', $saml]);
 
-        if ($container->hasDefinition('twig.loader.native_filesystem')) {
-            $definition = $container->getDefinition('twig.loader.native_filesystem');
+        $definition = $container->getDefinition('twig.loader.native_filesystem');
 
-            $path = dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR;
-            foreach ($container->getParameter('kimai.invoice.documents') as $invoicePath) {
-                if (!is_dir($path . $invoicePath)) {
-                    continue;
-                }
-                $definition->addMethodCall('addPath', [$path . $invoicePath, 'invoice']);
+        $path = \dirname(\dirname(\dirname(__DIR__))) . DIRECTORY_SEPARATOR;
+        foreach ($container->getParameter('kimai.invoice.documents') as $invoicePath) {
+            if (!is_dir($path . $invoicePath)) {
+                continue;
             }
+            $definition->addMethodCall('addPath', [$path . $invoicePath, 'invoice']);
+        }
+
+        foreach ($container->getParameter('kimai.export.documents') as $exportPath) {
+            if (!is_dir($path . $exportPath)) {
+                continue;
+            }
+            $definition->addMethodCall('addPath', [$path . $exportPath, 'export']);
         }
     }
 }

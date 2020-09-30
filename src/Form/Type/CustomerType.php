@@ -39,6 +39,7 @@ class CustomerType extends AbstractType
             'choice_label' => 'name',
             'query_builder_for_user' => true,
             'project_enabled' => false,
+            'project_select' => 'project',
             'start_date_param' => '%begin%',
             'end_date_param' => '%end%',
             'ignore_date' => false,
@@ -57,8 +58,9 @@ class CustomerType extends AbstractType
         });
 
         $resolver->setDefault('api_data', function (Options $options) {
-            if (true === $options['project_enabled']) {
-                $routeParams = ['customer' => '%customer%', 'visible' => $options['project_visibility']];
+            if (false !== $options['project_enabled']) {
+                $name = \is_string($options['project_enabled']) ? $options['project_enabled'] : 'customer';
+                $routeParams = [$name => '%' . $name . '%', 'visible' => $options['project_visibility']];
                 $emptyRouteParams = ['visible' => $options['project_visibility']];
 
                 if (!$options['ignore_date']) {
@@ -77,7 +79,7 @@ class CustomerType extends AbstractType
                 }
 
                 return [
-                    'select' => 'project',
+                    'select' => $options['project_select'],
                     'route' => 'get_projects',
                     'route_params' => $routeParams,
                     'empty_route_params' => $emptyRouteParams,

@@ -18,6 +18,10 @@ export default class KimaiAlert extends KimaiPlugin {
         return 'alert';
     }
 
+    /**
+     * @param {string} title
+     * @param {string|array} message
+     */
     error(title, message) {
         const translation = this.getContainer().getTranslation();
         if (translation.has(title)) {
@@ -26,11 +30,20 @@ export default class KimaiAlert extends KimaiPlugin {
         if (translation.has(message)) {
             message = translation.get(message);
         }
-        Swal.fire({
-            icon: 'error',
-            title: title.replace('%reason%', ''),
-            text: message,
-        });
+
+        if (Array.isArray(message)) {
+            Swal.fire({
+                icon: 'error',
+                title: title.replace('%reason%', ''),
+                html: message.join('<br>'),
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: title.replace('%reason%', ''),
+                text: message,
+            });
+        }
     }
 
     warning(message) {

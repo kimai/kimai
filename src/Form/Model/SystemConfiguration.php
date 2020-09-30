@@ -13,6 +13,7 @@ class SystemConfiguration
 {
     public const SECTION_ROUNDING = 'rounding';
     public const SECTION_TIMESHEET = 'timesheet';
+    public const SECTION_FORM_INVOICE = 'invoice';
     public const SECTION_FORM_CUSTOMER = 'form_customer';
     public const SECTION_FORM_USER = 'form_user';
     public const SECTION_THEME = 'theme';
@@ -20,27 +21,20 @@ class SystemConfiguration
     public const SECTION_BRANDING = 'branding';
 
     /**
-     * @var string
+     * @var string|null
      */
     private $section;
     /**
      * @var Configuration[]
      */
-    private $configuration;
+    private $configuration = [];
 
-    /**
-     * @return string
-     */
-    public function getSection(): string
+    public function getSection(): ?string
     {
         return $this->section;
     }
 
-    /**
-     * @param string $section
-     * @return SystemConfiguration
-     */
-    public function setSection(string $section)
+    public function setSection(?string $section): SystemConfiguration
     {
         $this->section = $section;
 
@@ -59,9 +53,16 @@ class SystemConfiguration
      * @param Configuration[] $configuration
      * @return SystemConfiguration
      */
-    public function setConfiguration(array $configuration)
+    public function setConfiguration(array $configuration): SystemConfiguration
     {
         $this->configuration = $configuration;
+
+        return $this;
+    }
+
+    public function addConfiguration(Configuration $configuration): SystemConfiguration
+    {
+        $this->configuration[] = $configuration;
 
         return $this;
     }

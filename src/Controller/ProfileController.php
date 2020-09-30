@@ -20,7 +20,7 @@ use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
 use App\Repository\TeamRepository;
 use App\Repository\TimesheetRepository;
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Utils\LocaleSettings;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -58,7 +58,6 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route(path="/", name="fos_user_profile_show", methods={"GET"})
      * @Route(path="/", name="my_profile", methods={"GET"})
      */
     public function profileAction()
@@ -70,7 +69,7 @@ class ProfileController extends AbstractController
      * @Route(path="/{username}", name="user_profile", methods={"GET"})
      * @Security("is_granted('view', profile)")
      */
-    public function indexAction(User $profile, TimesheetRepository $repository)
+    public function indexAction(User $profile, TimesheetRepository $repository, LocaleSettings $localeSettings)
     {
         $userStats = $repository->getUserStatistics($profile);
         $monthlyStats = $repository->getMonthlyStats($profile);
@@ -80,6 +79,7 @@ class ProfileController extends AbstractController
             'user' => $profile,
             'stats' => $userStats,
             'years' => $monthlyStats,
+            'stat_date_format' => $localeSettings->getDatePickerFormat(),
         ];
 
         return $this->render('user/stats.html.twig', $viewVars);
@@ -211,13 +211,6 @@ class ProfileController extends AbstractController
         $event = new PrepareUserEvent($profile);
         $this->dispatcher->dispatch($event);
 
-        /** @var \ArrayIterator $iterator */
-        $iterator = $profile->getPreferences()->getIterator();
-        $iterator->uasort(function (UserPreference $a, UserPreference $b) {
-            return ($a->getOrder() < $b->getOrder()) ? -1 : 1;
-        });
-        $profile->setPreferences(new ArrayCollection(iterator_to_array($iterator)));
-
         $original = [];
         foreach ($profile->getPreferences() as $preference) {
             $original[$preference->getName()] = $preference;
@@ -226,46 +219,67 @@ class ProfileController extends AbstractController
         $form = $this->createPreferencesForm($profile);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $preferences = $profile->getPreferences();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $preferences = $profile->getPreferences();
 
-            // do not allow to add unknown preferences
-            foreach ($preferences as $preference) {
-                if (!isset($original[$preference->getName()])) {
-                    $preferences->removeElement($preference);
+                // do not allow to add unknown preferences
+                foreach ($preferences as $preference) {
+                    if (!isset($original[$preference->getName()])) {
+                        $preferences->removeElement($preference);
+                    }
                 }
-            }
 
-            // but allow to delete already saved settings
-            foreach ($original as $name => $preference) {
-                if (false === $profile->getPreferences()->contains($preference)) {
-                    $entityManager->remove($preference);
+                // but allow to delete already saved settings
+                foreach ($original as $name => $preference) {
+                    if (false === $profile->getPreferences()->contains($preference)) {
+                        $entityManager->remove($preference);
+                    }
                 }
+
+                $profile->setPreferences($preferences);
+                $entityManager->persist($profile);
+                $entityManager->flush();
+
+                $this->flashSuccess('action.update.success');
+
+                // switch locale ONLY if updated profile is the current user
+                $locale = $request->getLocale();
+                if ($this->getUser()->getId() === $profile->getId()) {
+                    $locale = $profile->getPreferenceValue('language', $locale);
+                }
+
+                return $this->redirectToRoute('user_profile_preferences', [
+                    '_locale' => $locale,
+                    'username' => $profile->getUsername()
+                ]);
+            } else {
+                $this->flashError('action.update.error', ['%reason%' => 'Validation failed']);
             }
+        }
 
-            $profile->setPreferences($preferences);
-            $entityManager->persist($profile);
-            $entityManager->flush();
+        // prepare ordered preferences
+        $sections = [];
 
-            $this->flashSuccess('action.update.success');
+        /** @var \ArrayIterator $iterator */
+        $iterator = $profile->getPreferences()->getIterator();
+        $iterator->uasort(function (UserPreference $a, UserPreference $b) {
+            return ($a->getOrder() < $b->getOrder()) ? -1 : 1;
+        });
 
-            // switch locale ONLY if updated profile is the current user
-            $locale = $request->getLocale();
-            if ($this->getUser()->getId() === $profile->getId()) {
-                $locale = $profile->getPreferenceValue('language', $locale);
+        /** @var UserPreference $pref */
+        foreach ($iterator as $pref) {
+            if ($pref->isEnabled()) {
+                $sections[$pref->getSection()] = $pref->getSection();
             }
-
-            return $this->redirectToRoute('user_profile_preferences', [
-                '_locale' => $locale,
-                'username' => $profile->getUsername()
-            ]);
         }
 
         return $this->render('user/form.html.twig', [
             'tab' => 'preferences',
             'user' => $profile,
             'form' => $form->createView(),
+            'sections' => $sections
         ]);
     }
 
@@ -364,7 +378,6 @@ class ProfileController extends AbstractController
             UserPasswordType::class,
             $user,
             [
-                'validation_groups' => ['PasswordUpdate'],
                 'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUsername()]),
                 'method' => 'POST'
             ]
@@ -377,7 +390,6 @@ class ProfileController extends AbstractController
             UserApiTokenType::class,
             $user,
             [
-                'validation_groups' => ['apiTokenUpdate'],
                 'action' => $this->generateUrl('user_profile_api_token', ['username' => $user->getUsername()]),
                 'method' => 'POST'
             ]

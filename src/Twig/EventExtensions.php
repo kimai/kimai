@@ -9,75 +9,19 @@
 
 namespace App\Twig;
 
-use App\Entity\User;
-use App\Event\ThemeEvent;
-use App\Security\CurrentUser;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use App\Twig\Runtime\ThemeEventExtension;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class EventExtensions extends AbstractExtension
 {
     /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-    /**
-     * @var User
-     */
-    protected $user;
-
-    /**
-     * @param EventDispatcherInterface $dispatcher
-     * @param CurrentUser $user
-     */
-    public function __construct(EventDispatcherInterface $dispatcher, CurrentUser $user)
-    {
-        $this->eventDispatcher = $dispatcher;
-        $this->user = $user->getUser();
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getFunctions()
     {
         return [
-            new TwigFunction('trigger', [$this, 'triggerEvent']),
+            new TwigFunction('trigger', [ThemeEventExtension::class, 'trigger']),
         ];
-    }
-
-    /**
-     * @return EventDispatcherInterface
-     */
-    protected function getDispatcher()
-    {
-        return $this->eventDispatcher;
-    }
-
-    /**
-     * @param string $eventName
-     *
-     * @return bool
-     */
-    protected function hasListener($eventName)
-    {
-        return $this->getDispatcher()->hasListeners($eventName);
-    }
-
-    /**
-     * @param string $eventName
-     * @param mixed $payload
-     * @return ThemeEvent
-     */
-    public function triggerEvent(string $eventName, $payload = null)
-    {
-        $themeEvent = new ThemeEvent($this->user, $payload);
-
-        if ($this->hasListener($eventName)) {
-            $this->getDispatcher()->dispatch($themeEvent, $eventName);
-        }
-
-        return $themeEvent;
     }
 }

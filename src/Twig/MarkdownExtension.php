@@ -52,7 +52,7 @@ final class MarkdownExtension extends AbstractExtension
     /**
      * Transforms the entities comment (customer, project, activity ...) into HTML.
      *
-     * @param string $content
+     * @param string|null $content
      * @param bool $fullLength
      * @return string
      */
@@ -62,7 +62,7 @@ final class MarkdownExtension extends AbstractExtension
             return '';
         }
 
-        if (!$fullLength && strlen($content) > 101) {
+        if (!$fullLength && \strlen($content) > 101) {
             $content = trim(substr($content, 0, 100)) . ' &hellip;';
         }
 
@@ -78,10 +78,10 @@ final class MarkdownExtension extends AbstractExtension
     /**
      * Transforms the timesheet description content into HTML.
      *
-     * @param string $content
+     * @param string|null $content
      * @return string
      */
-    public function timesheetContent($content): string
+    public function timesheetContent(?string $content): string
     {
         if (empty($content)) {
             return '';

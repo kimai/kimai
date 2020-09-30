@@ -14,7 +14,7 @@
 {% block profile_content %}
 
     {% if years is empty %}
-        {{ widgets.callout('warning', 'error.no_entries_found') }}
+        {{ widgets.nothing_found() }}
     {% endif %}
 
     <script type="text/javascript">
@@ -49,6 +49,16 @@
                         }
                     }
                 }
+                {%- if is_granted('view_reporting') and (app.user.id == user.id or is_granted('view_other_timesheet')) -%}
+                ,
+                onClick: function(event, elements) {
+                    var element = elements[0];
+                    var month = this.data.datasets[0].monthData[element._index];
+                    var formattedMonth = moment(month).format('{{ stat_date_format }}');
+                    var reportUrl = '{{ path('report_user_month', {'user': user.id, 'date': 'XXXXX'})|raw }}'.replace('XXXXX', formattedMonth);
+                    document.location = reportUrl;
+                }
+            {% endif %}
             };
         }
     </script>
@@ -58,7 +68,6 @@
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
             {% block box_title %}{{ year }}{% endblock %}
             {% block box_body %}
-
                 <div class="chart">
                     <canvas id="userProfileChart{{ year }}" style="height: {{ kimai_context.chart.height }}px;"></canvas>
                 </div>
@@ -77,20 +86,24 @@
                                         {% if not loop.last %},{% endif %}
                                         {% endfor %}
                                     ],
-                                    realData        : [
+                                    realData: [
                                         {% for month in yearStat.months %}
                                         '{{ month.totalDuration|duration }}'
                                         {% if not loop.last %},{% endif %}
                                         {% endfor %}
-                                    ]
+                                    ],
+                                    monthData: [
+                                        {% for month in yearStat.months %}
+                                        '{{ yearStat.year }}-{{ month.month|length == 1 ? '0'~ month.month : month.month }}-01'
+                                        {% if not loop.last %},{% endif %}
+                                        {% endfor %}
+                                    ],
                                 }
                             ]
                         };
 
-                        var userProfileChartCanvas{{ year }} = $("#userProfileChart{{ year }}").get(0).getContext("2d");
-
                         var userProfileChart{{ year }} = new Chart(
-                            userProfileChartCanvas{{ year }}, {
+                            $("#userProfileChart{{ year }}").get(0).getContext("2d"), {
                                 type: 'bar',
                                 data: userProfileChartData{{ year }},
                                 options: userProfileChartOptions()

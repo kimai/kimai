@@ -9,8 +9,16 @@
 
 namespace App\Tests\API;
 
+use App\DataFixtures\UserFixtures;
+use App\Entity\Activity;
 use App\Entity\Customer;
+use App\Entity\CustomerMeta;
+use App\Entity\CustomerRate;
+use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\User;
+use App\Repository\CustomerRateRepository;
+use App\Repository\CustomerRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,6 +27,53 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CustomerControllerTest extends APIControllerBaseTest
 {
+    use RateControllerTestTrait;
+
+    protected function getRateUrl($id = '1', $rateId = null): string
+    {
+        if (null !== $rateId) {
+            return sprintf('/api/customers/%s/rates/%s', $id, $rateId);
+        }
+
+        return sprintf('/api/customers/%s/rates', $id);
+    }
+
+    protected function importTestRates($id): array
+    {
+        /** @var CustomerRateRepository $rateRepository */
+        $rateRepository = $this->getEntityManager()->getRepository(CustomerRate::class);
+        /** @var CustomerRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Customer::class);
+        /** @var Customer|null $customer */
+        $customer = $repository->find($id);
+
+        if (null === $customer) {
+            $customer = new Customer();
+            $customer->setCountry('DE');
+            $customer->setTimezone('Europre/Paris');
+            $customer->setName('foooo');
+            $repository->saveCustomer($customer);
+        }
+
+        $rate1 = new CustomerRate();
+        $rate1->setCustomer($customer);
+        $rate1->setRate(17.45);
+        $rate1->setIsFixed(false);
+
+        $rateRepository->saveRate($rate1);
+
+        $rate2 = new CustomerRate();
+        $rate2->setCustomer($customer);
+        $rate2->setRate(99);
+        $rate2->setInternalRate(9);
+        $rate2->setIsFixed(true);
+        $rate2->setUser($this->getUserByName(UserFixtures::USERNAME_USER));
+
+        $rateRepository->saveRate($rate2);
+
+        return [$rate1, $rate2];
+    }
+
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/customers');
@@ -32,21 +87,21 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(1, count($result));
-        $this->assertStructure($result[0], false);
+        $this->assertEquals(1, \count($result));
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
     public function testGetCollectionWithQuery()
     {
-        $query = ['order' => 'ASC', 'orderBy' => 'name', 'visible' => 3];
+        $query = ['order' => 'ASC', 'orderBy' => 'name', 'visible' => 3, 'term' => 'test'];
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/customers', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(1, count($result));
-        $this->assertStructure($result[0], false);
+        $this->assertEquals(1, \count($result));
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
     public function testGetEntity()
@@ -56,7 +111,51 @@ class CustomerControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result, true);
+        self::assertApiResponseTypeStructure('CustomerEntity', $result);
+    }
+
+    public function testGetEntityWithFullResponse()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $this->getEntityManager();
+
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+
+        // add meta fields
+        $meta = new CustomerMeta();
+        $meta->setName('bar')->setValue('foo')->setIsVisible(false);
+        $customer->setMetaField($meta);
+        $meta = new CustomerMeta();
+        $meta->setName('foo')->setValue('bar')->setIsVisible(true);
+        $customer->setMetaField($meta);
+        $em->persist($customer);
+
+        // add a new project ...
+        $project = new Project();
+        $project->setName('Activity Test');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        // ... with activity
+        $activity = (new Activity())->setName('first one')->setComment('1')->setProject($project);
+        $em->persist($activity);
+
+        // and finally a team
+        $team = new Team();
+        $team->setName('Testing customer 1 team');
+        $team->setTeamLead($this->getUserByRole(User::ROLE_USER));
+        $team->addCustomer($customer);
+        $team->addProject($project);
+        $team->addUser($this->getUserByRole(User::ROLE_TEAMLEAD));
+        $em->persist($team);
+
+        $this->assertAccessIsGranted($client, '/api/customers/1');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('CustomerEntity', $result);
     }
 
     public function testNotFound()
@@ -73,13 +172,33 @@ class CustomerControllerTest extends APIControllerBaseTest
             'country' => 'DE',
             'currency' => 'EUR',
             'timezone' => 'Europe/Berlin',
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('CustomerEntity', $result);
+        $this->assertNotEmpty($result['id']);
+    }
+
+    public function testPostActionWithLeastFields()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'country' => 'DE',
+            'currency' => 'EUR',
+            'timezone' => 'Europe/Berlin',
+        ];
+        $this->request($client, '/api/customers', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('CustomerEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
@@ -127,13 +246,15 @@ class CustomerControllerTest extends APIControllerBaseTest
             'country' => 'DE',
             'currency' => 'EUR',
             'timezone' => 'Europe/Berlin',
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/customers/1', 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('CustomerEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
@@ -179,6 +300,13 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['currency']);
     }
 
+    public function testMetaActionNotAllowed()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/api/customers/1/meta', 'PATCH', [], json_encode(['name' => 'asdasd']));
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to update this customer');
+    }
+
     public function testMetaActionThrowsNotFound()
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/customers/42/meta', []);
@@ -221,29 +349,9 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
         $this->assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());
-    }
-
-    protected function assertStructure(array $result, $full = true)
-    {
-        $expectedKeys = [
-            'id', 'name', 'visible', 'color', 'metaFields', 'teams'
-        ];
-
-        if ($full) {
-            $expectedKeys = array_merge($expectedKeys, [
-                'homepage', 'number', 'comment', 'company', 'contact', 'address', 'country', 'currency',
-                'phone', 'fax', 'mobile', 'email', 'timezone', 'budget', 'timeBudget'
-            ]);
-        }
-
-        $actual = array_keys($result);
-        sort($actual);
-        sort($expectedKeys);
-
-        $this->assertEquals($expectedKeys, $actual, 'Customer structure does not match');
     }
 }

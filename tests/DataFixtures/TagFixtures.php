@@ -68,7 +68,7 @@ final class TagFixtures extends Fixture
             $tag = $this->createTagEntry($tagName);
 
             if (null !== $this->callback) {
-                call_user_func($this->callback, $tag);
+                \call_user_func($this->callback, $tag);
             }
             $manager->persist($tag);
         }

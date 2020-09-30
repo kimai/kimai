@@ -15,13 +15,16 @@ use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration as SystemConfigurationModel;
 use App\Form\SystemConfigurationForm;
 use App\Form\Type\DateTimeTextType;
+use App\Form\Type\DayTimeType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\RoundingModeType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TrackingModeType;
 use App\Form\Type\WeekDaysType;
+use App\Form\Type\YesNoType;
 use App\Repository\ConfigurationRepository;
 use App\Validator\Constraints\DateTimeFormat;
+use App\Validator\Constraints\TimeFormat;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -33,8 +36,8 @@ use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -135,15 +138,19 @@ final class SystemConfigurationController extends AbstractController
         $form = $this->createConfigurationsForm($configModel);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $this->repository->saveSystemConfiguration($form->getData());
-                $this->flashSuccess('action.update.success');
-            } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
-            }
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                try {
+                    $this->repository->saveSystemConfiguration($form->getData());
+                    $this->flashSuccess('action.update.success');
+                } catch (\Exception $ex) {
+                    $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                }
 
-            return $this->redirectToRoute('system_configuration');
+                return $this->redirectToRoute('system_configuration');
+            } else {
+                $this->flashError('action.update.error', ['%reason%' => 'Validation problem']);
+            }
         }
 
         $configSettings = $this->getInitializedConfigurations();
@@ -195,6 +202,10 @@ final class SystemConfigurationController extends AbstractController
 
         foreach ($event->getConfigurations() as $configs) {
             foreach ($configs->getConfiguration() as $config) {
+                if (!$this->configurations->has($config->getName())) {
+                    continue;
+                }
+
                 $configValue = $this->configurations->find($config->getName());
                 if (null !== $configValue) {
                     $config->setValue($configValue);
@@ -226,6 +237,28 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration())
                         ->setName('timesheet.rules.allow_future_times')
                         ->setType(CheckboxType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('timesheet.rules.allow_overlapping_records')
+                        ->setType(CheckboxType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('timesheet.rules.lockdown_period_start')
+                        ->setType(TextType::class)
+                        ->setRequired(false)
+                        ->setConstraints([new DateTimeFormat()])
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('timesheet.rules.lockdown_period_end')
+                        ->setType(TextType::class)
+                        ->setRequired(false)
+                        ->setConstraints([new DateTimeFormat()])
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('timesheet.rules.lockdown_grace_period')
+                        ->setType(TextType::class)
+                        ->setRequired(false)
+                        ->setConstraints([new DateTimeFormat()])
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
                         ->setName('timesheet.active_entries.hard_limit')
@@ -273,6 +306,22 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration())
                         ->setName('timesheet.rounding.default.days')
                         ->setType(WeekDaysType::class)
+                        ->setTranslationDomain('system-configuration'),
+                ]),
+            (new SystemConfigurationModel())
+                ->setSection(SystemConfigurationModel::SECTION_FORM_INVOICE)
+                ->setConfiguration([
+                    (new Configuration())
+                        ->setName('invoice.number_format')
+                        ->setLabel('invoice.number_format')
+                        ->setRequired(true)
+                        ->setType(TextType::class) // TODO that should be a custom type with validation
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('invoice.simple_form')
+                        ->setLabel('simple_form')
+                        ->setRequired(false)
+                        ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel())
@@ -354,23 +403,23 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration())
                         ->setName('calendar.businessHours.begin')
                         ->setTranslationDomain('system-configuration')
-                        ->setType(TextType::class)
-                        ->setConstraints([new DateTime(['format' => 'H:i']), new NotNull()]),
+                        ->setType(DayTimeType::class)
+                        ->setConstraints([new NotBlank(), new TimeFormat()]),
                     (new Configuration())
                         ->setName('calendar.businessHours.end')
                         ->setTranslationDomain('system-configuration')
-                        ->setType(TextType::class)
-                        ->setConstraints([new DateTime(['format' => 'H:i']), new NotNull()]),
+                        ->setType(DayTimeType::class)
+                        ->setConstraints([new NotBlank(), new TimeFormat()]),
                     (new Configuration())
                         ->setName('calendar.visibleHours.begin')
                         ->setTranslationDomain('system-configuration')
-                        ->setType(TextType::class)
-                        ->setConstraints([new DateTime(['format' => 'H:i']), new NotNull()]),
+                        ->setType(DayTimeType::class)
+                        ->setConstraints([new NotBlank(), new TimeFormat()]),
                     (new Configuration())
                         ->setName('calendar.visibleHours.end')
                         ->setTranslationDomain('system-configuration')
-                        ->setType(TextType::class)
-                        ->setConstraints([new DateTime(['format' => 'H:i']), new NotNull()]),
+                        ->setType(DayTimeType::class)
+                        ->setConstraints([new NotBlank(), new TimeFormat()]),
                     (new Configuration())
                         ->setName('calendar.slot_duration')
                         ->setTranslationDomain('system-configuration')

@@ -13,7 +13,8 @@ use App\Plugin\Plugin;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginManager;
 use App\Plugin\PluginMetadata;
-use App\Tests\Plugin\Fixtures\TestPlugin;
+use App\Tests\Plugin\Fixtures\TestPlugin\TestPlugin;
+use App\Tests\Plugin\Fixtures\TestPlugin2\TestPlugin2;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -38,19 +39,17 @@ class PluginManagerTest extends TestCase
     {
         $sut = new PluginManager([]);
 
-        $plugin = $this->getMockBuilder(PluginInterface::class)
-            ->onlyMethods(['getName', 'getPath'])
-            ->getMock();
-
-        $plugin->method('getName')->willReturn('foo');
-        $plugin->method('getPath')->willReturn('bar');
+        $plugin = $this->createMock(PluginInterface::class);
+        $plugin->expects($this->any())->method('getName')->willReturn('foo');
+        $plugin->expects($this->any())->method('getPath')->willReturn('bar');
 
         $sut->addPlugin(new TestPlugin());
         $sut->addPlugin($plugin);
+        $sut->addPlugin(new TestPlugin2());
         $sut->addPlugin(new TestPlugin());
 
         // make sure a plugin with the same name is not added twice, the first one wins!
-        $this->assertEquals(2, count($sut->getPlugins()));
+        $this->assertEquals(2, \count($sut->getPlugins()));
 
         $foo = $sut->getPlugin('foo');
         $this->assertInstanceOf(Plugin::class, $foo);

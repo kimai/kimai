@@ -34,7 +34,7 @@ abstract class AbstractCalculatorTest extends TestCase
         $this->assertEquals(0, $sut->getVat());
         $this->assertEquals(0, $sut->getSubtotal());
         $this->assertEquals(0, $sut->getTimeWorked());
-        $this->assertEquals(0, count($sut->getEntries()));
+        $this->assertEquals(0, \count($sut->getEntries()));
         $this->assertEquals(0, $sut->getTax());
     }
 
@@ -73,9 +73,9 @@ abstract class AbstractCalculatorTest extends TestCase
 
         $query = new InvoiceQuery();
         if ($addProject === true) {
-            $query->setProject($project);
+            $query->setProjects([$project]);
         } elseif ($addActivity === true) {
-            $query->setActivity($activity);
+            $query->setActivities([$activity]);
         }
 
         $timesheet = new Timesheet();
@@ -95,7 +95,7 @@ abstract class AbstractCalculatorTest extends TestCase
         $model->setQuery($query);
 
         $sut->setModel($model);
-        $this->assertEquals(1, count($sut->getEntries()));
+        $this->assertEquals(1, \count($sut->getEntries()));
 
         /** @var Timesheet $result */
         $result = $sut->getEntries()[0];

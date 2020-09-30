@@ -12,7 +12,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -140,11 +140,11 @@ class UserFixtures extends Fixture
             $username = $faker->userName;
             $email = $faker->email;
 
-            if (in_array($username, $existingName)) {
+            if (\in_array($username, $existingName)) {
                 continue;
             }
 
-            if (in_array($email, $existingEmail)) {
+            if (\in_array($email, $existingEmail)) {
                 continue;
             }
 

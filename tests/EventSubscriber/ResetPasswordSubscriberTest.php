@@ -32,6 +32,9 @@ class ResetPasswordSubscriberTest extends TestCase
         $this->assertTrue(method_exists(ResetPasswordSubscriber::class, $methodName));
     }
 
+    /**
+     * @group legacy
+     */
     public function testUnknownUserTypeIsIgnored()
     {
         $user = new TestUserEntity();

@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -19,11 +20,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\UniqueConstraint(columns={"name"})
  *      }
  * )
+ * @UniqueEntity("name")
  */
 class InvoiceTemplate
 {
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -36,7 +38,7 @@ class InvoiceTemplate
      *
      * @ORM\Column(name="name", type="string", length=60, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=1, max=60)
+     * @Assert\Length(min=1, max=60, allowEmptyString=false)
      */
     private $name;
 
@@ -145,7 +147,7 @@ class InvoiceTemplate
     private $decimalDuration = false;
 
     /**
-     * Used when rendering HTML templates.
+     * Used for translations and locale dependent number and date formats.
      *
      * @var string
      *
@@ -169,6 +171,8 @@ class InvoiceTemplate
     {
         return $this->name;
     }
+
+    // ---- trait methods below ---
 
     public function getTitle(): ?string
     {
@@ -344,5 +348,12 @@ class InvoiceTemplate
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
     }
 }

@@ -9,7 +9,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Entity\CustomerRate;
 use App\Entity\ProjectRate;
@@ -24,12 +23,18 @@ use App\Repository\Loader\TimesheetLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
+use DateInterval;
 use DateTime;
-use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Exception;
+use InvalidArgumentException;
 use Pagerfanta\Pagerfanta;
+use PDO;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Timesheet>
+ */
 class TimesheetRepository extends EntityRepository
 {
     public const STATS_QUERY_DURATION = 'duration';
@@ -73,7 +78,7 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param Timesheet[] $timesheets
-     * @throws \Exception
+     * @throws Exception
      */
     public function deleteMultiple(iterable $timesheets): void
     {
@@ -86,7 +91,29 @@ class TimesheetRepository extends EntityRepository
             }
             $em->flush();
             $em->commit();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
+            $em->rollback();
+            throw $ex;
+        }
+    }
+
+    /**
+     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
+     */
+    public function add(Timesheet $timesheet, int $maxRunningEntries)
+    {
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
+
+        try {
+            if (null === $timesheet->getEnd()) {
+                $this->stopActiveEntries($timesheet->getUser(), $maxRunningEntries, false);
+            }
+
+            $em->persist($timesheet);
+            $em->flush();
+            $em->commit();
+        } catch (Exception $ex) {
             $em->rollback();
             throw $ex;
         }
@@ -106,7 +133,7 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param Timesheet[] $timesheets
-     * @throws \Exception
+     * @throws Exception
      */
     public function saveMultiple(array $timesheets): void
     {
@@ -119,7 +146,7 @@ class TimesheetRepository extends EntityRepository
             }
             $em->flush();
             $em->commit();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $em->rollback();
             throw $ex;
         }
@@ -127,12 +154,14 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param Timesheet $entry
+     * @param bool $flush
      * @return bool
      * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
      */
-    public function stopRecording(Timesheet $entry)
+    public function stopRecording(Timesheet $entry, bool $flush = true)
     {
         if (null !== $entry->getEnd()) {
             throw new RepositoryException('Timesheet entry already stopped');
@@ -140,14 +169,16 @@ class TimesheetRepository extends EntityRepository
 
         // seems to be necessary so Doctrine will recognize a changed timestamp
         $begin = clone $entry->getBegin();
-        $end = new \DateTime('now', $begin->getTimezone());
+        $end = new DateTime('now', $begin->getTimezone());
 
         $entry->setBegin($begin);
         $entry->setEnd($end);
 
         $entityManager = $this->getEntityManager();
         $entityManager->persist($entry);
-        $entityManager->flush();
+        if ($flush) {
+            $entityManager->flush();
+        }
 
         return true;
     }
@@ -164,7 +195,7 @@ class TimesheetRepository extends EntityRepository
     {
         switch ($type) {
             case self::STATS_QUERY_ACTIVE:
-                return count($this->getActiveEntries($user));
+                return \count($this->getActiveEntries($user));
 
             case self::STATS_QUERY_MONTHLY:
                 return $this->getMonthlyStats($user, $begin, $end);
@@ -185,7 +216,7 @@ class TimesheetRepository extends EntityRepository
                 $what = 'COUNT(t.id)';
                 break;
             default:
-                throw new \InvalidArgumentException('Invalid query type: ' . $type);
+                throw new InvalidArgumentException('Invalid query type: ' . $type);
         }
 
         return $this->queryTimeRange($what, $begin, $end, $user);
@@ -336,6 +367,9 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * In case this method is called with one timezone and the results are from another timezone,
+     * it might return rows outside the time-range.
+     *
      * @param DateTime $begin
      * @param DateTime $end
      * @param User|null $user
@@ -343,66 +377,98 @@ class TimesheetRepository extends EntityRepository
      */
     protected function getDailyData(DateTime $begin, DateTime $end, ?User $user = null)
     {
-        $query = new TimesheetQuery();
-        $query
-            ->setBegin($begin)
-            ->setEnd($end)
-            ->setUser($user)
-            ->setState(TimesheetQuery::STATE_STOPPED)
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $or = $qb->expr()->orX();
+        $or->add($qb->expr()->between(':begin', 't.begin', 't.end'));
+        $or->add($qb->expr()->between(':end', 't.begin', 't.end'));
+        $or->add($qb->expr()->between('t.begin', ':begin', ':end'));
+        $or->add($qb->expr()->between('t.end', ':begin', ':end'));
+
+        $qb->select('t, p, a, c')
+            ->from(Timesheet::class, 't')
+            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->andWhere($or)
+            ->orderBy('t.begin', 'DESC')
+            ->setParameter('begin', $begin)
+            ->setParameter('end', $end)
+            ->leftJoin('t.activity', 'a')
+            ->leftJoin('t.project', 'p')
+            ->leftJoin('p.customer', 'c')
         ;
-        $timesheets = $this->getTimesheetsForQuery($query);
+
+        if (null !== $user) {
+            $qb
+                ->andWhere($qb->expr()->eq('t.user', ':user'))
+                ->setParameter('user', $user)
+            ;
+        }
+
+        $timesheets = $qb->getQuery()->getResult();
 
         $results = [];
         /** @var Timesheet $result */
         foreach ($timesheets as $result) {
-            $timezone = new \DateTimeZone($result->getTimezone());
-            /** @var \DateTime $beginTmp */
+            /** @var DateTime $beginTmp */
             $beginTmp = $result->getBegin();
-            $beginTmp->setTimezone($timezone);
             /** @var DateTime $endTmp */
             $endTmp = $result->getEnd();
-            $endTmp->setTimezone($timezone);
             $dateKeyEnd = $endTmp->format('Ymd');
 
             do {
                 $dateKey = $beginTmp->format('Ymd');
 
-                if (!isset($results[$dateKey])) {
-                    $results[$dateKey] = [
-                        'rate' => 0,
-                        'duration' => 0,
-                        'month' => $beginTmp->format('n'),
-                        'year' => $beginTmp->format('Y'),
-                        'day' => $beginTmp->format('j'),
-                        'details' => []
-                    ];
-                }
-
                 if ($dateKey !== $dateKeyEnd) {
                     $newDateBegin = clone $beginTmp;
-                    $newDateBegin->add(new \DateInterval('P1D'));
+                    $newDateBegin->add(new DateInterval('P1D'));
+                    // overlapping records should always start at midnight
                     $newDateBegin->setTime(0, 0, 0);
                 } else {
                     $newDateBegin = clone $endTmp;
                 }
 
-                $duration = $newDateBegin->getTimestamp() - $beginTmp->getTimestamp();
-                $durationPercent = 0;
-                if ($result->getDuration() !== null && $result->getDuration() > 0) {
-                    $durationPercent = $duration / $result->getDuration();
-                }
-                $rate = $result->getRate() * $durationPercent;
+                // make sure to exclude entries that are outside the requested time-range:
+                // these entries can exist if you have long running entries that started before $begin
+                // for statistical reasons we have to include everything between $begin and $end while
+                // excluding everything that is outside of that range
+                // --------------------------------------------------------------------------------------
+                // Be aware that this will NOT filter every record, in case there is a timezone mismatch between the
+                // begin/end dates and the ones from the database (eg. recorded in UTC) - which might actually be
+                // before $begin (which happens thanks to the timezone conversion when querying the database)
+                if ($newDateBegin > $begin && $beginTmp < $end) {
+                    if (!isset($results[$dateKey])) {
+                        $results[$dateKey] = [
+                            'rate' => 0,
+                            'duration' => 0,
+                            'month' => $beginTmp->format('n'),
+                            'year' => $beginTmp->format('Y'),
+                            'day' => $beginTmp->format('j'),
+                            'details' => []
+                        ];
+                    }
+                    $duration = $newDateBegin->getTimestamp() - $beginTmp->getTimestamp();
+                    $durationPercent = 0;
+                    if ($result->getDuration() !== null && $result->getDuration() > 0) {
+                        $durationPercent = $duration / $result->getDuration();
+                    }
+                    $rate = $result->getRate() * $durationPercent;
 
-                $results[$dateKey]['rate'] += $rate;
-                $results[$dateKey]['duration'] += $duration;
-                $detailsId = $result->getProject()->getCustomer()->getId() . '_' . $result->getProject()->getId();
-                if (!isset($results[$dateKey]['details'][$detailsId])) {
-                    $results[$dateKey]['details'][$detailsId] = [
-                        'project' => $result->getProject(),
-                        'activity' => $result->getActivity(),
-                        'duration' => 0,
-                        'rate' => 0,
-                    ];
+                    $results[$dateKey]['rate'] += $rate;
+                    $results[$dateKey]['duration'] += $duration;
+                    $detailsId =
+                        $result->getProject()->getCustomer()->getId()
+                        . '_' . $result->getProject()->getId()
+                        . '_' . $result->getActivity()->getId()
+                    ;
+
+                    if (!isset($results[$dateKey]['details'][$detailsId])) {
+                        $results[$dateKey]['details'][$detailsId] = [
+                            'project' => $result->getProject(),
+                            'activity' => $result->getActivity(),
+                            'duration' => 0,
+                            'rate' => 0,
+                        ];
+                    }
 
                     $results[$dateKey]['details'][$detailsId]['duration'] += $duration;
                     $results[$dateKey]['details'][$detailsId]['rate'] += $rate;
@@ -410,6 +476,7 @@ class TimesheetRepository extends EntityRepository
 
                 $beginTmp = $newDateBegin;
 
+                // yes, we only want to compare the day, not the time
                 if ((int) $end->format('Ymd') < (int) $newDateBegin->format('Ymd')) {
                     break 1;
                 }
@@ -427,13 +494,13 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
+     * @param User|null $user
      * @param DateTime $begin
      * @param DateTime $end
      * @return Day[]
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getDailyStats(User $user, DateTime $begin, DateTime $end): array
+    public function getDailyStats(?User $user, DateTime $begin, DateTime $end): array
     {
         /** @var Day[] $days */
         $days = [];
@@ -454,7 +521,13 @@ class TimesheetRepository extends EntityRepository
             $dateTime->setDate($statRow['year'], $statRow['month'], $statRow['day']);
             $dateTime->setTime(0, 0, 0);
             $day = new Day($dateTime, (int) $statRow['duration'], (float) $statRow['rate']);
-            $days[$dateTime->format('Ymd')] = $day;
+            $day->setDetails($statRow['details']);
+            $dateKey = $dateTime->format('Ymd');
+            // make sure entries from other timezones are filtered
+            if (!\array_key_exists($dateKey, $days)) {
+                continue;
+            }
+            $days[$dateKey] = $day;
         }
 
         ksort($days);
@@ -487,12 +560,14 @@ class TimesheetRepository extends EntityRepository
     /**
      * @param User $user
      * @param int $hardLimit
+     * @param bool $flush
      * @return int
      * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
      */
-    public function stopActiveEntries(User $user, int $hardLimit)
+    public function stopActiveEntries(User $user, int $hardLimit, bool $flush = true)
     {
         $counter = 0;
         $activeEntries = $this->getActiveEntries($user);
@@ -502,15 +577,15 @@ class TimesheetRepository extends EntityRepository
         // -> all entries, including the new one must not exceed the $limit
         $limit = $hardLimit - 1;
 
-        if (count($activeEntries) > $limit) {
+        if (\count($activeEntries) > $limit) {
             $i = 1;
             foreach ($activeEntries as $activeEntry) {
                 if ($i > $limit) {
                     if ($hardLimit > 1) {
-                        throw new \Exception('timesheet.start.exceeded_limit');
+                        throw new Exception('timesheet.start.exceeded_limit');
                     }
 
-                    $this->stopRecording($activeEntry);
+                    $this->stopRecording($activeEntry, $flush);
                     $counter++;
                 }
                 $i++;
@@ -527,24 +602,37 @@ class TimesheetRepository extends EntityRepository
             return;
         }
 
-        if (empty($teams)) {
+        // make sure that admins see all timesheet records
+        if (null !== $user && $user->canSeeAllData()) {
             return;
         }
 
-        // make sure that admins see all timesheet records
-        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
-            return;
+        if (null !== $user) {
+            $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
         $qb
             ->leftJoin('p.teams', 'teams')
             ->leftJoin('c.teams', 'c_teams');
 
-        $orTeam = $qb->expr()->orX(
-            $qb->expr()->isMemberOf(':teams', 'p.teams'),
+        if (empty($teams)) {
+            $qb->andWhere($qb->expr()->isNull('c_teams'));
+            $qb->andWhere($qb->expr()->isNull('teams'));
+
+            return;
+        }
+
+        $orProject = $qb->expr()->orX(
+            $qb->expr()->isNull('teams'),
+            $qb->expr()->isMemberOf(':teams', 'p.teams')
+        );
+        $qb->andWhere($orProject);
+
+        $orCustomer = $qb->expr()->orX(
+            $qb->expr()->isNull('c_teams'),
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
-        $qb->andWhere($orTeam);
+        $qb->andWhere($orCustomer);
 
         $qb->setParameter('teams', $teams);
     }
@@ -643,7 +731,7 @@ class TimesheetRepository extends EntityRepository
         if (empty($user) && null !== $query->getCurrentUser()) {
             $currentUser = $query->getCurrentUser();
 
-            if (!$currentUser->isSuperAdmin() && !$currentUser->isAdmin()) {
+            if (!$currentUser->canSeeAllData()) {
                 // make sure that the user himself is in the list of users, if he is part of a team
                 // if teams are used and the user is not a teamlead, the list of users would be empty and then leading to NOT limit the select by user IDs
                 $user[] = $currentUser;
@@ -682,9 +770,9 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('begin', $query->getBegin());
         }
 
-        if (TimesheetQuery::STATE_RUNNING == $query->getState()) {
+        if ($query->isRunning()) {
             $qb->andWhere($qb->expr()->isNull('t.end'));
-        } elseif (TimesheetQuery::STATE_STOPPED == $query->getState()) {
+        } elseif ($query->isStopped()) {
             $qb->andWhere($qb->expr()->isNotNull('t.end'));
         }
 
@@ -693,25 +781,34 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('end', $query->getEnd());
         }
 
-        if ($query->getExported() === TimesheetQuery::STATE_EXPORTED) {
-            $qb->andWhere('t.exported = :exported')->setParameter('exported', true, \PDO::PARAM_BOOL);
-        } elseif ($query->getExported() === TimesheetQuery::STATE_NOT_EXPORTED) {
-            $qb->andWhere('t.exported = :exported')->setParameter('exported', false, \PDO::PARAM_BOOL);
+        if ($query->isExported()) {
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', true, PDO::PARAM_BOOL);
+        } elseif ($query->isNotExported()) {
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', false, PDO::PARAM_BOOL);
         }
 
-        if (null !== $query->getActivity()) {
-            $qb->andWhere('t.activity = :activity')
-                ->setParameter('activity', $query->getActivity());
+        if ($query->isBillable()) {
+            $qb->andWhere('t.billable = :billable')->setParameter('billable', true, PDO::PARAM_BOOL);
+        } elseif ($query->isNotBillable()) {
+            $qb->andWhere('t.billable = :billable')->setParameter('billable', false, PDO::PARAM_BOOL);
         }
 
-        if (null === $query->getActivity() || ($query->getActivity() instanceof Activity && null === $query->getActivity()->getProject())) {
-            if (null !== $query->getProject()) {
-                $qb->andWhere('t.project = :project')
-                    ->setParameter('project', $query->getProject());
-            } elseif (null !== $query->getCustomer()) {
-                $qb->andWhere('p.customer = :customer')
-                    ->setParameter('customer', $query->getCustomer());
-            }
+        if (null !== $query->getModifiedAfter()) {
+            $qb->andWhere($qb->expr()->gte($this->getDatetimeFieldSql('t.modifiedAt'), ':modified_at'))
+                ->setParameter('modified_at', $query->getModifiedAfter());
+        }
+
+        if ($query->hasActivities()) {
+            $qb->andWhere($qb->expr()->in('t.activity', ':activity'))
+                ->setParameter('activity', $query->getActivities());
+        }
+
+        if ($query->hasProjects()) {
+            $qb->andWhere($qb->expr()->in('t.project', ':project'))
+                ->setParameter('project', $query->getProjects());
+        } elseif ($query->hasCustomers()) {
+            $qb->andWhere($qb->expr()->in('p.customer', ':customer'))
+                ->setParameter('customer', $query->getCustomers());
         }
 
         $tags = $query->getTags();
@@ -760,7 +857,7 @@ class TimesheetRepository extends EntityRepository
      * @return array|mixed
      * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function getRecentActivities(User $user = null, \DateTime $startFrom = null, $limit = 10)
+    public function getRecentActivities(User $user = null, DateTime $startFrom = null, $limit = 10)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -777,7 +874,7 @@ class TimesheetRepository extends EntityRepository
             ->groupBy('a.id', 'p.id')
             ->orderBy('maxid', 'DESC')
             ->setMaxResults($limit)
-            ->setParameter('visible', true, \PDO::PARAM_BOOL)
+            ->setParameter('visible', true, PDO::PARAM_BOOL)
         ;
 
         if (null !== $user) {
@@ -821,7 +918,7 @@ class TimesheetRepository extends EntityRepository
             ->update(Timesheet::class, 't')
             ->set('t.exported', ':exported')
             ->where($qb->expr()->in('t.id', ':ids'))
-            ->setParameter('exported', true, \PDO::PARAM_BOOL)
+            ->setParameter('exported', true, PDO::PARAM_BOOL)
             ->setParameter('ids', $timesheets)
             ->getQuery()
             ->execute();
@@ -906,5 +1003,52 @@ class TimesheetRepository extends EntityRepository
         $results = array_merge($results, $qb->getQuery()->getResult());
 
         return $results;
+    }
+
+    public function hasRecordForTime(Timesheet $timesheet): bool
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $or = $qb->expr()->orX(
+            $qb->expr()->between(':begin', 't.begin', 't.end')
+        );
+
+        if (null !== $timesheet->getEnd()) {
+            $or->add($qb->expr()->between(':end', 't.begin', 't.end'));
+            $or->add($qb->expr()->between('t.begin', ':begin', ':end'));
+            $or->add($qb->expr()->between('t.end', ':begin', ':end'));
+            $end = clone $timesheet->getEnd();
+            $end->sub(new DateInterval('PT1S'));
+            $qb->setParameter('end', $end);
+        }
+
+        // one second is added, because people normally either use the calendar / times which are rounded to the full minute
+        // for an existing entry like 12:45-13:00 it is impossible to add a new one from 13:00-13:15 as the between() query find the first one
+        // by adding one second the between() select will not match any longer
+
+        $begin = clone $timesheet->getBegin();
+        $begin->add(new DateInterval('PT1S'));
+
+        $qb->select($qb->expr()->count('t.id'))
+            ->from(Timesheet::class, 't')
+            ->andWhere($qb->expr()->eq('t.user', ':user'))
+            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->andWhere($or)
+            ->setParameter('begin', $begin)
+            ->setParameter('user', $timesheet->getUser()->getId())
+        ;
+
+        // if we edit an existing entry, make sure we do not find "the same entry" when only updating eg. the description
+        if ($timesheet->getId() !== null) {
+            $qb->andWhere($qb->expr()->neq('t.id', $timesheet->getId()));
+        }
+
+        try {
+            $result = (int) $qb->getQuery()->getSingleScalarResult();
+        } catch (Exception $ex) {
+            return true;
+        }
+
+        return $result > 0;
     }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="he" datatype="plaintext" original="exceptions.en.xlf">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="access.denied">
+        <source>access.denied</source>
+        <target>הגישה נדחתה</target>
+      </trans-unit>
+      <trans-unit id="stacktrace">
+        <source>stacktrace</source>
+        <target>הבעיה התרחשה כאן</target>
+      </trans-unit>
+      <trans-unit id="http_error.title">
+        <source>http_error.title</source>
+        <target>שגיאה</target>
+      </trans-unit>
+      <trans-unit id="http_error.description">
+        <source>http_error.description</source>
+        <target>משהוא לא טוב קרה</target>
+      </trans-unit>
+      <trans-unit id="http_error.suggestion">
+        <source>http_error.suggestion</source>
+        <target>
+                    התרחשה שגיאה קריטית. אנא נסה שוב.
+                    יתכן שמצאת באג בתוכנה. אנא פנה למנהל המערכת שלך.
+                </target>
+      </trans-unit>
+      <trans-unit id="http_error_404.description">
+        <source>http_error_404.description</source>
+        <target>הדף לא נמצא</target>
+      </trans-unit>
+      <trans-unit id="http_error_404.suggestion">
+        <source>http_error_404.suggestion</source>
+        <target>
+                    לא הצלחנו למצוא את הדף שאתה מחפש.
+                    אנא חזור לדף הבית שלך והתחל מחדש.
+                </target>
+      </trans-unit>
+      <trans-unit id="http_error_403.description">
+        <source>http_error_403.description</source>
+        <target>הגישה לדף מוגבלת</target>
+      </trans-unit>
+      <trans-unit id="http_error_403.suggestion">
+        <source>http_error_403.suggestion</source>
+        <target>
+                    מצטערים, אך אין לך מספיק הרשאות כדי לצפות בדף.
+                    אנא פנה למנהל המערכת שלך אם לדעתך זו שגיאה.
+                </target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -58,9 +58,9 @@ class DebugRendererTest extends TestCase
         $response = $sut->render($document, $model);
         $data = json_decode($response->getContent(), true);
 
-        $this->assertModelStructure($data['model'], $hasProject);
+        $this->assertModelStructure($data['model'], \count($model->getQuery()->getProjects()), \count($model->getQuery()->getActivities()));
         $rows = $data['entries'];
-        $this->assertEquals($expectedRows, count($rows));
+        $this->assertEquals($expectedRows, \count($rows));
 
         $i = 0;
         foreach ($rows as $row) {
@@ -74,7 +74,7 @@ class DebugRendererTest extends TestCase
         // TODO check values or formats?
     }
 
-    protected function assertModelStructure(array $model, $hasProject = true)
+    protected function assertModelStructure(array $model, int $projectCounter = 0, int $activityCounter = 0)
     {
         $keys = [
             'invoice.due_date',
@@ -84,6 +84,7 @@ class DebugRendererTest extends TestCase
             'invoice.currency_symbol',
             'invoice.vat',
             'invoice.tax',
+            'invoice.language',
             'invoice.tax_nc',
             'invoice.tax_plain',
             'invoice.total_time',
@@ -109,6 +110,14 @@ class DebugRendererTest extends TestCase
             'query.month',
             'query.month_number',
             'query.year',
+            'query.begin_day',
+            'query.begin_month',
+            'query.begin_month_number',
+            'query.begin_year',
+            'query.end_day',
+            'query.end_month',
+            'query.end_month_number',
+            'query.end_year',
             'customer.id',
             'customer.address',
             'customer.name',
@@ -119,6 +128,10 @@ class DebugRendererTest extends TestCase
             'customer.number',
             'customer.homepage',
             'customer.comment',
+            'customer.email',
+            'customer.fax',
+            'customer.phone',
+            'customer.mobile',
             'customer.meta.foo-customer',
             'activity.id',
             'activity.name',
@@ -133,7 +146,16 @@ class DebugRendererTest extends TestCase
             'testFromModelHydrator'
         ];
 
-        if ($hasProject) {
+        if ($activityCounter > 1) {
+            $keys = array_merge($keys, [
+                'activity.1.id',
+                'activity.1.name',
+                'activity.1.comment',
+                'activity.1.meta.foo-activity',
+            ]);
+        }
+
+        if ($projectCounter > 0) {
             $keys = array_merge($keys, [
                 'project.id',
                 'project.name',
@@ -150,6 +172,24 @@ class DebugRendererTest extends TestCase
                 'project.budget_time_decimal',
                 'project.budget_time_minutes',
             ]);
+            if ($projectCounter > 1) {
+                $keys = array_merge($keys, [
+                    'project.1.id',
+                    'project.1.name',
+                    'project.1.comment',
+                    'project.1.order_date',
+                    'project.1.order_number',
+                    'project.1.meta.foo-project',
+                    'project.1.start_date',
+                    'project.1.end_date',
+                    'project.1.budget_money',
+                    'project.1.budget_money_nc',
+                    'project.1.budget_money_plain',
+                    'project.1.budget_time',
+                    'project.1.budget_time_decimal',
+                    'project.1.budget_time_minutes',
+                ]);
+            }
         }
 
         $givenKeys = array_keys($model);
@@ -168,6 +208,9 @@ class DebugRendererTest extends TestCase
             'entry.rate',
             'entry.rate_nc',
             'entry.rate_plain',
+            'entry.rate_internal',
+            'entry.rate_internal_nc',
+            'entry.rate_internal_plain',
             'entry.total',
             'entry.total_nc',
             'entry.total_plain',
@@ -182,6 +225,8 @@ class DebugRendererTest extends TestCase
             'entry.end_time',
             'entry.end_timestamp',
             'entry.date',
+            'entry.week',
+            'entry.weekyear',
             'entry.user_id',
             'entry.user_name',
             'entry.user_alias',
@@ -212,6 +257,6 @@ class DebugRendererTest extends TestCase
         sort($givenKeys);
 
         $this->assertEquals($expectedKeys, $givenKeys);
-        $this->assertEquals(count($keys), count($givenKeys));
+        $this->assertEquals(\count($keys), \count($givenKeys));
     }
 }

@@ -14,8 +14,8 @@ use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\InvoiceModel;
-use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Repository\Query\InvoiceQuery;
+use App\Tests\Invoice\NumberGenerator\IncrementingNumberGenerator;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -41,6 +41,21 @@ class InvoiceModelTest extends TestCase
         self::assertInstanceOf(\DateTime::class, $sut->getInvoiceDate());
 
         self::assertSame($formatter, $sut->getFormatter());
+
+        $newFormatter = new DebugFormatter();
+        $sut->setFormatter($newFormatter);
+        self::assertNotSame($formatter, $sut->getFormatter());
+        self::assertSame($newFormatter, $sut->getFormatter());
+    }
+
+    public function testEmptyObjectThrowsExceptionOnNumberGenerator()
+    {
+        $formatter = new DebugFormatter();
+        $sut = new InvoiceModel($formatter);
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('InvoiceModel::getInvoiceNumber() cannot be called before calling setNumberGenerator()');
+        $sut->getInvoiceNumber();
     }
 
     public function testSetter()
@@ -59,9 +74,14 @@ class InvoiceModelTest extends TestCase
         self::assertInstanceOf(InvoiceModel::class, $sut->setCalculator($calculator));
         self::assertSame($calculator, $sut->getCalculator());
 
-        $generator = new DateNumberGenerator();
+        $generator = new IncrementingNumberGenerator();
         self::assertInstanceOf(InvoiceModel::class, $sut->setNumberGenerator($generator));
         self::assertSame($generator, $sut->getNumberGenerator());
+        $number = $sut->getInvoiceNumber();
+        $first = $sut->getNumberGenerator()->getInvoiceNumber();
+        $second = $sut->getNumberGenerator()->getInvoiceNumber();
+        self::assertEquals(((int) $first + 1), $second);
+        self::assertEquals($number, $sut->getInvoiceNumber());
 
         $template = new InvoiceTemplate();
         self::assertNull($sut->getDueDate());

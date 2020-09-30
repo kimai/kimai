@@ -103,7 +103,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_inline_tag' => true,
         'phpdoc_no_access' => true,
         'phpdoc_no_alias_tag' => true,
-        'phpdoc_no_empty_return' => true,
+        'phpdoc_no_empty_return' => false,
         'phpdoc_no_package' => true,
         'phpdoc_no_useless_inheritdoc' => true,
         'phpdoc_return_self_reference' => true,
@@ -141,6 +141,18 @@ return PhpCsFixer\Config::create()
             'method',
             'property',
         ]],
+        'native_function_invocation' => [
+            'include' => [
+                '@compiler_optimized'
+            ],
+            'scope' => 'namespaced'
+        ],
+        'native_function_type_declaration_casing' => true,
+        'no_alias_functions' => [
+            'sets' => [
+                '@internal'
+            ]
+        ],
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()

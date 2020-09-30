@@ -16,7 +16,9 @@ use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @covers \App\EventSubscriber\RegistrationSubscriber
@@ -29,13 +31,14 @@ class RegistrationSubscriberTest extends TestCase
         $this->assertArrayHasKey(FOSUserEvents::REGISTRATION_SUCCESS, $events);
         $methodName = $events[FOSUserEvents::REGISTRATION_SUCCESS][0];
         $this->assertTrue(method_exists(RegistrationSubscriber::class, $methodName));
+
+        $this->assertArrayHasKey(FOSUserEvents::RESETTING_RESET_SUCCESS, $events);
+        $methodName = $events[FOSUserEvents::RESETTING_RESET_SUCCESS][0];
+        $this->assertTrue(method_exists(RegistrationSubscriber::class, $methodName));
     }
 
     /**
-     * Legacy test becuase the user bundle won't update to a new release
-     *
      * @dataProvider getTestData
-     * @group legacy
      */
     public function testRoleAssignmentForNewUser(array $existingUsers, $expectedRoles)
     {
@@ -54,7 +57,7 @@ class RegistrationSubscriberTest extends TestCase
 
         $event = new FormEvent($form, $request);
 
-        $sut = new RegistrationSubscriber($userManager);
+        $sut = new RegistrationSubscriber($userManager, $this->createMock(UrlGeneratorInterface::class));
         $sut->onRegistrationSuccess($event);
 
         $this->assertEquals($expectedRoles, $user->getRoles());
@@ -69,5 +72,28 @@ class RegistrationSubscriberTest extends TestCase
             // NewUserGetUserRole
             [[new User()], [User::ROLE_USER]],
         ];
+    }
+
+    public function testResetting()
+    {
+        $userManager = $this->createMock(UserManagerInterface::class);
+        $form = $this->createMock(FormInterface::class);
+        $request = $this->createMock(Request::class);
+        $router = $this->createMock(UrlGeneratorInterface::class);
+
+        $router->expects($this->any())->method('generate')->willReturnArgument(0);
+        $request->expects($this->any())->method('getLocale')->willReturn('ru');
+
+        $event = new FormEvent($form, $request);
+        self::assertNull($event->getResponse());
+
+        $sut = new RegistrationSubscriber($userManager, $router);
+        $sut->onResettingSuccess($event);
+
+        self::assertInstanceOf(RedirectResponse::class, $event->getResponse());
+
+        /** @var RedirectResponse $response */
+        $response = $event->getResponse();
+        self::assertEquals('my_profile', $response->getTargetUrl());
     }
 }

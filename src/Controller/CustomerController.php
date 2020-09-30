@@ -14,10 +14,12 @@ use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
 use App\Entity\MetaTableTypeInterface;
-use App\Entity\Rate;
 use App\Entity\Team;
 use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\CustomerMetaDisplayEvent;
+use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\CustomerCommentForm;
 use App\Form\CustomerEditForm;
 use App\Form\CustomerRateForm;
@@ -244,7 +246,7 @@ final class CustomerController extends AbstractController
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
         $query->setPageSize(5);
-        $query->setCustomer($customer);
+        $query->addCustomer($customer);
 
         /* @var $entries Pagerfanta */
         $entries = $projectRepository->getPagerfantaForQuery($query);
@@ -313,25 +315,6 @@ final class CustomerController extends AbstractController
             'now' => new \DateTime('now', $timezone),
             'rates' => $rates
         ]);
-    }
-
-    /**
-     * @Route(path="/{id}/rate_delete/{rate}", name="admin_customer_rate_delete", methods={"GET"})
-     * @Security("is_granted('edit', customer)")
-     */
-    public function deleteRateAction(Customer $customer, CustomerRate $rate, CustomerRateRepository $repository)
-    {
-        if ($rate->getCustomer() !== $customer) {
-            $this->flashError('action.delete.error', ['%reason%' => 'Invalid customer']);
-        } else {
-            try {
-                $repository->deleteRate($rate);
-            } catch (\Exception $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
-            }
-        }
-
-        return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
     }
 
     /**
@@ -424,6 +407,34 @@ final class CustomerController extends AbstractController
             'stats' => $stats,
             'form' => $deleteForm->createView(),
         ]);
+    }
+
+    /**
+     * @Route(path="/export", name="customer_export", methods={"GET"})
+     */
+    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
+    {
+        $query = new CustomerQuery();
+        $query->setCurrentUser($this->getUser());
+
+        $form = $this->getToolbarForm($query);
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
+
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
+
+        $entries = $this->repository->getCustomersForQuery($query);
+
+        $spreadsheet = $exporter->export(
+            Customer::class,
+            $entries,
+            new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::EXPORT)
+        );
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-customers');
+
+        return $writer->getFileResponse($spreadsheet);
     }
 
     /**

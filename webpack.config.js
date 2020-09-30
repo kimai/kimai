@@ -10,6 +10,8 @@ Encore
     .cleanupOutputBeforeBuild()
 
     .addEntry('app', './assets/app.js')
+    .addEntry('invoice', './assets/invoice.js')
+    .addEntry('invoice-pdf', './assets/invoice-pdf.js')
     .addEntry('chart', './assets/chart.js')
     .addEntry('calendar', './assets/calendar.js')
     .copyFiles({ from: './assets/images', to: 'images/[path][name].[ext]' })
@@ -25,7 +27,7 @@ Encore
     .enableSassLoader()
     .autoProvidejQuery()
 
-    // prevent that moment locales will be included which we don't need
+    // prevent that unused moment locales will be included
     .addPlugin(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/))
 
     .configureBabel(null, {

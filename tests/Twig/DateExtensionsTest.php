@@ -11,7 +11,6 @@ namespace App\Tests\Twig;
 
 use App\Configuration\LanguageFormattings;
 use App\Twig\DateExtensions;
-use App\Utils\LocaleSettings;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -20,6 +19,8 @@ use Twig\TwigFunction;
 
 /**
  * @covers \App\Twig\DateExtensions
+ * @covers \App\Utils\LocaleFormats
+ * @covers \App\Utils\LocaleFormatter
  */
 class DateExtensionsTest extends TestCase
 {
@@ -35,17 +36,15 @@ class DateExtensionsTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($dateSettings));
-
-        return new DateExtensions($localeSettings);
+        return new DateExtensions($requestStack, new LanguageFormattings($dateSettings));
     }
 
     public function testGetFilters()
     {
-        $filters = ['month_name', 'date_short', 'date_time', 'date_full', 'date_format', 'time', 'hour24'];
+        $filters = ['month_name', 'day_name', 'date_short', 'date_time', 'date_full', 'date_format', 'time', 'hour24'];
         $sut = $this->getSut('de', []);
         $twigFilters = $sut->getFilters();
-        $this->assertCount(count($filters), $twigFilters);
+        $this->assertCount(\count($filters), $twigFilters);
         $i = 0;
         foreach ($twigFilters as $filter) {
             $this->assertInstanceOf(TwigFilter::class, $filter);
@@ -58,7 +57,7 @@ class DateExtensionsTest extends TestCase
         $functions = ['get_format_duration'];
         $sut = $this->getSut('de', []);
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(count($functions), $twigFunctions);
+        $this->assertCount(\count($functions), $twigFunctions);
         $i = 0;
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {
@@ -91,6 +90,7 @@ class DateExtensionsTest extends TestCase
             ['de', new \DateTime('1980-12-14'), '14.12.1980'],
             ['ru', new \DateTime('1980-12-14'), '14.12.1980'],
             ['ru', '1980-12-14', '14.12.1980'],
+            ['ru', 1.2345, 1.2345],
         ];
     }
 
@@ -115,26 +115,53 @@ class DateExtensionsTest extends TestCase
             ['en', new \DateTime('7 January 2010'), '2010-01-07 12:01 AM'],
             ['de', (new \DateTime('1980-12-14'))->setTime(13, 27, 55), '14.12.1980 13:27:55'],
             ['de', '1980-12-14 13:27:55', '14.12.1980 13:27:55'],
+            ['de', 1.2345, 1.2345],
         ];
     }
 
     /**
-     * @param \DateTime $date
-     * @param string $result
-     * @dataProvider getMonthData
+     * @dataProvider getDayNameTestData
      */
-    public function testMonthName(\DateTime $date, $result)
+    public function testDayName(string $locale, string $date, string $expectedName, bool $short)
     {
-        $sut = $this->getSut('en', []);
-        $this->assertEquals($result, $sut->monthName($date));
+        $sut = $this->getSut($locale, []);
+        self::assertEquals($expectedName, $sut->dayName(new \DateTime($date), $short));
     }
 
-    public function getMonthData()
+    public function getDayNameTestData()
     {
         return [
-            [new \DateTime('January 2016'), 'month.1'],
-            [new \DateTime('2016-06-23'), 'month.6'],
-            [new \DateTime('2016-12-23'), 'month.12'],
+            ['de', '2020-07-09 12:00:00', 'Donnerstag', false],
+            ['en', '2020-07-09 12:00:00', 'Thursday', false],
+            ['de', '2020-07-09 12:00:00', 'Do.', true],
+            ['en', '2020-07-09 12:00:00', 'Thu', true],
+        ];
+    }
+
+    /**
+     * @dataProvider getMonthNameTestData
+     */
+    public function testMonthName(string $locale, string $date, string $expectedName, bool $withYear = false)
+    {
+        $sut = $this->getSut($locale, []);
+        self::assertEquals($expectedName, $sut->monthName(new \DateTime($date), $withYear));
+    }
+
+    public function getMonthNameTestData()
+    {
+        return [
+            ['de', '2020-07-09 23:59:59', 'Juli', false],
+            ['en', '2020-07-09 23:59:59', 'July', false],
+            ['de', 'January 2016', 'Januar', false],
+            ['en', 'January 2016', 'January', false],
+            ['en', '2016-12-23', 'December', false],
+            ['ru', '2016-12-23', 'декабрь', false],
+            ['de', '2020-07-09 23:59:59', 'Juli 2020', true],
+            ['en', '2020-07-09 23:59:59', 'July 2020', true],
+            ['de', 'January 2016', 'Januar 2016', true],
+            ['en', 'January 2016', 'January 2016', true],
+            ['en', '2015-12-23', 'December 2015', true],
+            ['ru', '2015-12-23', 'декабрь 2015', true],
         ];
     }
 
@@ -144,6 +171,10 @@ class DateExtensionsTest extends TestCase
         $sut = $this->getSut('en', []);
         $this->assertEquals('2010-01-07T17:43:21+01:00', $sut->dateFormat($date, 'c'));
         $this->assertStringStartsWith('2010-01-07T17:43:21', $sut->dateFormat('7 January 2010 17:43:21', 'c'));
+
+        // next test checks the fallback for errors while converting the date
+        /* @phpstan-ignore-next-line */
+        $this->assertEquals(2010.0107, $sut->dateFormat(2010.0107, 'c'));
     }
 
     public function testTime()
@@ -181,5 +212,9 @@ class DateExtensionsTest extends TestCase
 
         $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull($dateTime));
         $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull('2019-08-17 12:29:47'));
+
+        // next test checks the fallback for errors while converting the date
+        /* @phpstan-ignore-next-line */
+        $this->assertEquals(189.45, $sut->dateTimeFull(189.45));
     }
 }

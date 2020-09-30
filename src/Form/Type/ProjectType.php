@@ -64,6 +64,7 @@ class ProjectType extends AbstractType
             },
             'query_builder_for_user' => true,
             'activity_enabled' => false,
+            'activity_select' => 'activity',
             'activity_visibility' => ActivityQuery::SHOW_VISIBLE,
             'ignore_date' => false,
         ]);
@@ -83,11 +84,13 @@ class ProjectType extends AbstractType
         });
 
         $resolver->setDefault('api_data', function (Options $options) {
-            if (true === $options['activity_enabled']) {
+            if (false !== $options['activity_enabled']) {
+                $name = \is_string($options['activity_enabled']) ? $options['activity_enabled'] : 'project';
+
                 return [
-                    'select' => 'activity',
+                    'select' => $options['activity_select'],
                     'route' => 'get_activities',
-                    'route_params' => ['project' => '%project%', 'visible' => $options['activity_visibility']],
+                    'route_params' => [$name => '%' . $name . '%', 'visible' => $options['activity_visibility']],
                     'empty_route_params' => ['globals' => 'true', 'visible' => $options['activity_visibility']],
                 ];
             }

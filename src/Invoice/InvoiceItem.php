@@ -13,9 +13,6 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\User;
 
-/**
- * @internal
- */
 final class InvoiceItem
 {
     /**
@@ -30,6 +27,10 @@ final class InvoiceItem
      * @var float
      */
     private $rate = 0.00;
+    /**
+     * @var float
+     */
+    private $rateInternal = 0.00;
     /**
      * @var float
      */
@@ -148,6 +149,18 @@ final class InvoiceItem
     public function setRate(float $rate): InvoiceItem
     {
         $this->rate = $rate;
+
+        return $this;
+    }
+
+    public function getInternalRate(): float
+    {
+        return $this->rateInternal;
+    }
+
+    public function setInternalRate(float $rateInternal): InvoiceItem
+    {
+        $this->rateInternal = $rateInternal;
 
         return $this;
     }

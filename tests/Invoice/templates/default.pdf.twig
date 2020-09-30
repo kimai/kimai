@@ -1,0 +1,147 @@
+{% extends 'invoice/layout.html.twig' %}
+{% set language = model.template.language|default(app.request.locale) %}
+{% set isDecimal = model.template.decimalDuration|default(false) %}
+{% set currency = model.currency %}
+
+{% block invoice %}
+<div class="row">
+    <div class="col-xs-12">
+        <h2 class="page-header">
+            <span contenteditable="true">{{ model.template.title }}</span>
+            <small class="pull-right">{{ 'label.date'|trans({}, 'messages', language) }}: {{ model.invoiceDate|date_short }}</small>
+        </h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-5">
+        {{ 'invoice.from'|trans({}, 'messages', language) }}
+        <address contenteditable="true">
+            <strong>{{ model.template.company }}</strong><br>
+            {{ model.template.address|trim|nl2br }}
+            {% if model.template.vatId is not empty %}
+            <br>
+            {{ 'label.vat_id'|trans({}, 'messages', language) }}:
+            {{ model.template.vatId }}
+            {% endif %}
+        </address>
+    </div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-5">
+        {{ 'invoice.to'|trans({}, 'messages', language) }}
+        <address contenteditable="true">
+            <strong>{{ model.customer.company|default(model.customer.name) }}</strong><br>
+            {{ model.customer.address|nl2br }}
+            {% if model.customer.vatId is not empty %}
+                <br>
+                {{ 'label.vat_id'|trans({}, 'messages', language) }}: {{ model.customer.vatId }}
+            {% endif %}
+            {% if model.customer.number is not empty %}
+                <br>
+                {{ 'label.number'|trans({}, 'messages', language) }}: {{ model.customer.number }}
+            {% endif %}
+            {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
+                <br>
+                {{ 'label.orderNumber'|trans({}, 'messages', language) }}: {{ model.query.project.orderNumber }}
+            {% endif %}
+        </address>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-5">
+        <p contenteditable="true">
+            <strong>{{ 'invoice.number'|trans({}, 'messages', language) }}:</strong>
+            {{ model.invoiceNumber }}
+            
+            <br>
+            <strong>{{ 'invoice.due_days'|trans({}, 'messages', language) }}:</strong>
+            {{ model.dueDate|date_short }}
+        </p>
+    </div>
+    <div class="col-sm-7"></div>
+</div>
+
+<div class="row invoice-items">
+    <div class="col-xs-12 table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ 'label.date'|trans({}, 'messages', language) }}</th>
+                    <th>{{ 'label.description'|trans({}, 'messages', language) }}</th>
+                    <th class="text-right">{{ 'label.unit_price'|trans({}, 'messages', language) }}</th>
+                    <th class="text-right">{{ 'label.amount'|trans({}, 'messages', language) }}</th>
+                    <th class="text-right">{{ 'label.total_rate'|trans({}, 'messages', language) }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entry in model.calculator.entries %}
+                {% set duration = entry.duration|duration(isDecimal) %}
+                {% if entry.fixedRate %}
+                    {% set rate = entry.fixedRate %}
+                    {% set duration = entry.amount|amount %}
+                {% else %}
+                    {% set rate = entry.hourlyRate %}
+                {% endif %}
+                <tr>
+                    <td nowrap class="text-nowrap">{{ entry.begin|date_short }}</td>
+                    <td contenteditable="true">
+                        {% if entry.description is not empty %}
+                            {{ entry.description|nl2br }}
+                        {% else %}
+                            {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
+                        {% endif %}
+                    </td>
+                    <td nowrap class="text-nowrap text-right">{{ rate|money(currency) }}</td>
+                    <td nowrap class="text-nowrap text-right">{{ duration }}</td>
+                    <td nowrap class="text-nowrap text-right">{{ entry.rate|money(currency) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-right">
+                        {{ 'invoice.subtotal'|trans({}, 'messages', language) }}
+                    </td>
+                    <td class="text-right">{{ model.calculator.subtotal|money(currency) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-right">
+                        {{ 'invoice.tax'|trans({}, 'messages', language) }} ({{ model.calculator.vat }}%)
+                    </td>
+                    <td class="text-right">{{ model.calculator.tax|money(currency) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-right text-nowrap">
+                        <strong>{{ 'invoice.total'|trans({}, 'messages', language) }}</strong>
+                    </td>
+                    <td class="text-right">
+                        <strong>{{ model.calculator.total|money(currency) }}</strong>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        {% if model.template.paymentTerms is not empty %}
+        <div contenteditable="true" class="paymentTerms">
+            {{ model.template.paymentTerms|nl2br|md2html }}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<footer class="footer">
+    <p>
+        <strong>{{ 'label.address'|trans({}, 'messages', language) }}</strong>: {{ model.template.company }} &ndash; {{ model.template.address|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+        <br>
+        <strong>{{ 'label.invoice_bank_account'|trans({}, 'messages', language) }}</strong>: {{ model.template.paymentDetails|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+        <br>
+        <strong>{{ 'label.contact'|trans({}, 'messages', language) }}</strong>: {{ model.template.contact|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+    </p>
+</footer>
+
+{% endblock %}

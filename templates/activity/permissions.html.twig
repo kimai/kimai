@@ -1,0 +1,13 @@
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% import "activity/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.activity(activity, 'permissions') }}{% endblock %}
+
+{% block main %}
+    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
+        'title': activity.name,
+        'form': form,
+        'back': path('admin_activity')
+    }) }}
+{% endblock %}

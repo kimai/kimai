@@ -14,16 +14,23 @@ use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
+use App\Entity\Team;
 use App\Event\ActivityMetaDefinitionEvent;
 use App\Event\ActivityMetaDisplayEvent;
+use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\ActivityEditForm;
 use App\Form\ActivityRateForm;
+use App\Form\ActivityTeamPermissionForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
+use App\Repository\TeamRepository;
+use Exception;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -37,7 +44,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used to manage activities in the admin part of the site.
  *
  * @Route(path="/admin/activity")
- * @Security("is_granted('view_activity')")
+ * @Security("is_granted('view_activity') or is_granted('view_teamlead_activity') or is_granted('view_team_activity')")
  */
 final class ActivityController extends AbstractController
 {
@@ -64,11 +71,6 @@ final class ActivityController extends AbstractController
     /**
      * @Route(path="/", defaults={"page": 1}, name="admin_activity", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_activity_paginated", methods={"GET"})
-     * @Security("is_granted('view_activity')")
-     *
-     * @param int $page
-     * @param Request $request
-     * @return Response
      */
     public function indexAction($page, Request $request)
     {
@@ -111,15 +113,20 @@ final class ActivityController extends AbstractController
      * @Route(path="/{id}/details", name="activity_details", methods={"GET", "POST"})
      * @Security("is_granted('view', activity)")
      */
-    public function detailsAction(Activity $activity, ActivityRateRepository $rateRepository)
+    public function detailsAction(Activity $activity, TeamRepository $teamRepository, ActivityRateRepository $rateRepository)
     {
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
 
         $stats = null;
         $rates = [];
+        $teams = null;
+        $defaultTeam = null;
 
         if ($this->isGranted('edit', $activity)) {
+            if ($this->isGranted('create_team')) {
+                $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
+            }
             $rates = $rateRepository->getRatesForActivity($activity);
         }
 
@@ -127,30 +134,17 @@ final class ActivityController extends AbstractController
             $stats = $this->repository->getActivityStatistics($activity);
         }
 
+        if ($this->isGranted('permissions', $activity) || $this->isGranted('details', $activity) || $this->isGranted('view_team')) {
+            $teams = $activity->getTeams();
+        }
+
         return $this->render('activity/details.html.twig', [
             'activity' => $activity,
             'stats' => $stats,
-            'rates' => $rates
+            'rates' => $rates,
+            'team' => $defaultTeam,
+            'teams' => $teams,
         ]);
-    }
-
-    /**
-     * @Route(path="/{id}/rate_delete/{rate}", name="admin_activity_rate_delete", methods={"GET"})
-     * @Security("is_granted('edit', activity)")
-     */
-    public function deleteRateAction(Activity $activity, ActivityRate $rate, ActivityRateRepository $repository)
-    {
-        if ($rate->getActivity() !== $activity) {
-            $this->flashError('action.delete.error', ['%reason%' => 'Invalid activity']);
-        } else {
-            try {
-                $repository->deleteRate($rate);
-            } catch (\Exception $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
-            }
-        }
-
-        return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
     }
 
     /**
@@ -175,7 +169,7 @@ final class ActivityController extends AbstractController
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
         }
@@ -190,10 +184,6 @@ final class ActivityController extends AbstractController
      * @Route(path="/create", name="admin_activity_create", methods={"GET", "POST"})
      * @Route(path="/create/{project}", name="admin_activity_create_with_project", methods={"GET", "POST"})
      * @Security("is_granted('create_activity')")
-     *
-     * @param Request $request
-     * @param Project|null $project
-     * @return RedirectResponse|Response
      */
     public function createAction(Request $request, ?Project $project = null)
     {
@@ -206,12 +196,65 @@ final class ActivityController extends AbstractController
     }
 
     /**
+     * @Route(path="/{id}/permissions", name="admin_activity_permissions", methods={"GET", "POST"})
+     * @Security("is_granted('permissions', activity)")
+     */
+    public function teamPermissionsAction(Activity $activity, Request $request)
+    {
+        $form = $this->createForm(ActivityTeamPermissionForm::class, $activity, [
+            'action' => $this->generateUrl('admin_activity_permissions', ['id' => $activity->getId()]),
+            'method' => 'POST',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->repository->saveActivity($activity);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('admin_activity');
+            } catch (Exception $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->render('activity/permissions.html.twig', [
+            'activity' => $activity,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route(path="/{id}/create_team", name="activity_team_create", methods={"GET"})
+     * @Security("is_granted('create_team') and is_granted('permissions', activity)")
+     */
+    public function createDefaultTeamAction(Activity $activity, TeamRepository $teamRepository)
+    {
+        $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
+        if (null !== $defaultTeam) {
+            $this->flashError('action.update.error', ['%reason%' => 'Team already existing']);
+
+            return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
+        }
+
+        $defaultTeam = new Team();
+        $defaultTeam->setName($activity->getName());
+        $defaultTeam->setTeamLead($this->getUser());
+        $defaultTeam->addActivity($activity);
+
+        try {
+            $teamRepository->saveTeam($defaultTeam);
+        } catch (Exception $ex) {
+            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+        }
+
+        return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
+    }
+
+    /**
      * @Route(path="/{id}/edit", name="admin_activity_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', activity)")
-     *
-     * @param Activity $activity
-     * @param Request $request
-     * @return RedirectResponse|Response
      */
     public function editAction(Activity $activity, Request $request)
     {
@@ -221,10 +264,6 @@ final class ActivityController extends AbstractController
     /**
      * @Route(path="/{id}/delete", name="admin_activity_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', activity)")
-     *
-     * @param Activity $activity
-     * @param Request $request
-     * @return RedirectResponse|Response
      */
     public function deleteAction(Activity $activity, Request $request)
     {
@@ -241,7 +280,7 @@ final class ActivityController extends AbstractController
                 'label' => 'label.activity',
                 'query_builder' => function (ActivityRepository $repo) use ($activity) {
                     $query = new ActivityFormTypeQuery();
-                    $query->setProject($activity->getProject());
+                    $query->addProject($activity->getProject());
                     $query->setActivityToIgnore($activity);
 
                     return $repo->getQueryBuilderForFormType($query);
@@ -258,7 +297,7 @@ final class ActivityController extends AbstractController
             try {
                 $this->repository->deleteActivity($activity, $deleteForm->get('activity')->getData());
                 $this->flashSuccess('action.delete.success');
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
             }
 
@@ -273,6 +312,34 @@ final class ActivityController extends AbstractController
                 'form' => $deleteForm->createView(),
             ]
         );
+    }
+
+    /**
+     * @Route(path="/export", name="activity_export", methods={"GET"})
+     */
+    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
+    {
+        $query = new ActivityQuery();
+        $query->setCurrentUser($this->getUser());
+
+        $form = $this->getToolbarForm($query);
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
+
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
+
+        $entries = $this->repository->getActivitiesForQuery($query);
+
+        $spreadsheet = $exporter->export(
+            Activity::class,
+            $entries,
+            new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT)
+        );
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-activities');
+
+        return $writer->getFileResponse($spreadsheet);
     }
 
     /**
@@ -302,7 +369,7 @@ final class ActivityController extends AbstractController
                 } else {
                     return $this->redirectToRoute('admin_activity');
                 }
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
         }

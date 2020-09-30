@@ -11,11 +11,13 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Form\API\TeamApiEditForm;
+use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\TeamRepository;
@@ -33,11 +35,16 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @RouteResource("Team")
+ * @SWG\Tag(name="Team")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 final class TeamController extends BaseApiController
 {
+    public const GROUPS_ENTITY = ['Default', 'Entity', 'Team', 'Team_Entity', 'Not_Expanded'];
+    public const GROUPS_FORM = ['Default', 'Entity', 'Team', 'Team_Entity', 'Not_Expanded'];
+    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Team'];
+
     /**
      * @var TeamRepository
      */
@@ -75,7 +82,7 @@ final class TeamController extends BaseApiController
         $data = $this->repository->findAll();
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Collection', 'Team']);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
@@ -103,7 +110,7 @@ final class TeamController extends BaseApiController
         }
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -153,7 +160,7 @@ final class TeamController extends BaseApiController
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the new created team",
-     *          @SWG\Schema(ref="#/definitions/TeamEntity",),
+     *          @SWG\Schema(ref="#/definitions/TeamEntity"),
      *      )
      * )
      * @SWG\Parameter(
@@ -185,13 +192,13 @@ final class TeamController extends BaseApiController
             $this->repository->saveTeam($team);
 
             $view = new View($team, 200);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }
@@ -242,7 +249,7 @@ final class TeamController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+            $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
         }
@@ -250,7 +257,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -261,7 +268,7 @@ final class TeamController extends BaseApiController
      * @SWG\Post(
      *  @SWG\Response(
      *      response=200,
-     *      description="Adds a new user to a team. The user must not be deactivated.",
+     *      description="Adds a new user to a team.",
      *      @SWG\Schema(ref="#/definitions/TeamEntity")
      *  )
      * )
@@ -293,15 +300,11 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('Team not found');
         }
 
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $repository->find($userId);
 
         if (null === $user) {
             throw new NotFoundException('User not found');
-        }
-
-        if (!$user->isEnabled()) {
-            throw new BadRequestHttpException('Cannot add disabled user to team');
         }
 
         if ($user->isInTeam($team)) {
@@ -313,7 +316,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -356,7 +359,7 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('Team not found');
         }
 
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $repository->find($userId);
 
         if (null === $user) {
@@ -376,7 +379,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -387,7 +390,7 @@ final class TeamController extends BaseApiController
      * @SWG\Post(
      *  @SWG\Response(
      *      response=200,
-     *      description="Adds a new customer to a team. The customer must not be invisible.",
+     *      description="Adds a new customer to a team.",
      *      @SWG\Schema(ref="#/definitions/TeamEntity")
      *  )
      * )
@@ -419,15 +422,11 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('Team not found');
         }
 
-        /** @var Customer $customer */
+        /** @var Customer|null $customer */
         $customer = $repository->find($customerId);
 
         if (null === $customer) {
             throw new NotFoundException('Customer not found');
-        }
-
-        if (!$customer->isVisible()) {
-            throw new BadRequestHttpException('Cannot grant access to an invisible customer');
         }
 
         if ($team->hasCustomer($customer)) {
@@ -439,7 +438,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -482,7 +481,7 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('Team not found');
         }
 
-        /** @var Customer $customer */
+        /** @var Customer|null $customer */
         $customer = $repository->find($customerId);
 
         if (null === $customer) {
@@ -498,7 +497,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -509,7 +508,7 @@ final class TeamController extends BaseApiController
      * @SWG\Post(
      *  @SWG\Response(
      *      response=200,
-     *      description="Adds a new project to a team. The project must not be invisible.",
+     *      description="Adds a new project to a team.",
      *      @SWG\Schema(ref="#/definitions/TeamEntity")
      *  )
      * )
@@ -541,15 +540,11 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('Team not found');
         }
 
-        /** @var Project $project */
+        /** @var Project|null $project */
         $project = $repository->find($projectId);
 
         if (null === $project) {
             throw new NotFoundException('Project not found');
-        }
-
-        if (!$project->isVisible()) {
-            throw new BadRequestHttpException('Cannot grant access to an invisible project');
         }
 
         if ($team->hasProject($project)) {
@@ -561,7 +556,7 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -604,7 +599,7 @@ final class TeamController extends BaseApiController
             throw new NotFoundException('Team not found');
         }
 
-        /** @var Project $project */
+        /** @var Project|null $project */
         $project = $repository->find($projectId);
 
         if (null === $project) {
@@ -620,7 +615,125 @@ final class TeamController extends BaseApiController
         $this->repository->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Grant the team access to an activity
+     *
+     * @SWG\Post(
+     *  @SWG\Response(
+     *      response=200,
+     *      description="Adds a new activity to a team.",
+     *      @SWG\Schema(ref="#/definitions/TeamEntity")
+     *  )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The team that is granted access",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="activityId",
+     *      in="path",
+     *      type="integer",
+     *      description="The activity to grant acecess to (Activity ID)",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('edit_team')")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function postActivityAction(int $id, int $activityId, ActivityRepository $repository): Response
+    {
+        $team = $this->repository->find($id);
+
+        if (null === $team) {
+            throw new NotFoundException('Team not found');
+        }
+
+        /** @var Activity|null $activity */
+        $activity = $repository->find($activityId);
+
+        if (null === $activity) {
+            throw new NotFoundException('Activity not found');
+        }
+
+        if ($team->hasActivity($activity)) {
+            throw new BadRequestHttpException('Team has already access to activity');
+        }
+
+        $team->addActivity($activity);
+
+        $this->repository->saveTeam($team);
+
+        $view = new View($team, Response::HTTP_OK);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Revokes access for an activity from a team
+     *
+     * @SWG\Delete(
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Removes a activity from the team.",
+     *          @SWG\Schema(ref="#/definitions/TeamEntity")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The team whose permission will be revoked",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="activityId",
+     *      in="path",
+     *      type="integer",
+     *      description="The activity to remove (Activity ID)",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('edit_team')")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function deleteActivityAction(int $id, int $activityId, ActivityRepository $repository): Response
+    {
+        $team = $this->repository->find($id);
+
+        if (null === $team) {
+            throw new NotFoundException('Team not found');
+        }
+
+        /** @var Activity|null $activity */
+        $activity = $repository->find($activityId);
+
+        if (null === $activity) {
+            throw new NotFoundException('Activity not found');
+        }
+
+        if (!$team->hasActivity($activity)) {
+            throw new BadRequestHttpException('Activity is not assigned to the team');
+        }
+
+        $team->removeActivity($activity);
+
+        $this->repository->saveTeam($team);
+
+        $view = new View($team, Response::HTTP_OK);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }

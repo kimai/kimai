@@ -11,6 +11,7 @@ namespace App\Export\Base;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class XlsxRenderer extends AbstractSpreadsheetRenderer
 {
@@ -38,6 +39,37 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer
         if (false === $filename) {
             throw new \Exception('Could not open temporary file');
         }
+
+        // Store expensive calculations for later
+        $sheet = $spreadsheet->getActiveSheet();
+        $highestRow = $sheet->getHighestRow();
+        $highestColumn = $sheet->getHighestColumn();
+
+        // Enable auto filter for header row
+        $sheet->setAutoFilter('A1:' . $highestColumn . '1');
+
+        // Freeze first row and date & time columns for easier navigation
+        $sheet->freezePane('D2');
+
+        /** @var string $column */
+        foreach (range('A', $highestColumn) as $column) {
+            // We default to a reasonable auto-width decided by the client,
+            // sadly ->getDefaultColumnDimension() is not supported so it needs
+            // to be specific about what column should be auto sized.
+            $col = $sheet->getColumnDimension($column);
+
+            // If no other width is specified (which defaults to -1)
+            if ((int) $col->getWidth() === -1) {
+                $col->setAutoSize(true);
+            }
+        }
+
+        // Text inside cells should be top left
+        $sheet
+            ->getStyle('A2:' . $highestColumn . $highestRow)
+            ->getAlignment()
+            ->setVertical(Alignment::VERTICAL_TOP)
+            ->setHorizontal(Alignment::HORIZONTAL_LEFT);
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save($filename);

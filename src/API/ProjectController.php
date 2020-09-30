@@ -12,12 +12,14 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\Project;
+use App\Entity\ProjectRate;
 use App\Entity\User;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\API\ProjectApiEditForm;
+use App\Form\API\ProjectRateApiForm;
+use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
-use App\Timesheet\UserDateTimeFactory;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -35,11 +37,17 @@ use Symfony\Component\Validator\Constraints;
 
 /**
  * @RouteResource("Project")
+ * @SWG\Tag(name="Project")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class ProjectController extends BaseApiController
 {
+    public const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
+    public const GROUPS_FORM = ['Default', 'Entity', 'Project'];
+    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
+    public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
+
     /**
      * @var ProjectRepository
      */
@@ -53,16 +61,16 @@ class ProjectController extends BaseApiController
      */
     private $dispatcher;
     /**
-     * @var UserDateTimeFactory
+     * @var ProjectRateRepository
      */
-    private $dateTime;
+    private $projectRateRepository;
 
-    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, UserDateTimeFactory $dateTime)
+    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, ProjectRateRepository $projectRateRepository)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
-        $this->dateTime = $dateTime;
+        $this->projectRateRepository = $projectRateRepository;
     }
 
     /**
@@ -77,13 +85,14 @@ class ProjectController extends BaseApiController
      *      )
      * )
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter projects")
-     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter projects. Allowed values: 1=visible, 2=hidden, 3=both (default; 1)")
+     * @Rest\QueryParam(name="customers", requirements="[\d|,]+", strict=true, nullable=true, description="Comma separated list of customer IDs to filter projects")
+     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter projects. Allowed values: 1=visible, 2=hidden, 3=both (default: 1)")
      * @Rest\QueryParam(name="start", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that started before this date will be included. Allowed format: HTML5 (default: now, if end is also empty)")
      * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that ended after this date will be included. Allowed format: HTML5 (default: now, if start is also empty)")
      * @Rest\QueryParam(name="ignoreDates", requirements="1", strict=true, nullable=true, description="If set, start and end are completely ignored. Allowed values: 1 (default: off)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
      * @Rest\QueryParam(name="orderBy", requirements="id|name|customer", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, customer (default: name)")
-     * @Rest\QueryParam(name="term", requirements="[a-zA-Z0-9 \-,:]+", strict=true, nullable=true, description="Free search term")
+     * @Rest\QueryParam(name="term", description="Free search term")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -104,8 +113,17 @@ class ProjectController extends BaseApiController
             $query->setOrderBy($orderBy);
         }
 
+        if (!empty($customers = $paramFetcher->get('customers'))) {
+            if (!\is_array($customers)) {
+                $customers = explode(',', $customers);
+            }
+            if (!empty($customers)) {
+                $query->setCustomers($customers);
+            }
+        }
+
         if (!empty($customer = $paramFetcher->get('customer'))) {
-            $query->setCustomer($customer);
+            $query->addCustomer($customer);
         }
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {
@@ -114,20 +132,21 @@ class ProjectController extends BaseApiController
 
         $ignoreDates = false;
         if (null !== $paramFetcher->get('ignoreDates')) {
-            $ignoreDates = intval($paramFetcher->get('ignoreDates')) === 1;
+            $ignoreDates = \intval($paramFetcher->get('ignoreDates')) === 1;
         }
 
         if (!$ignoreDates) {
+            $factory = $this->getDateTimeFactory();
             if (null !== ($begin = $paramFetcher->get('start')) && !empty($begin)) {
-                $query->setProjectStart($this->dateTime->createDateTime($begin));
+                $query->setProjectStart($factory->createDateTime($begin));
             }
 
             if (null !== ($end = $paramFetcher->get('end')) && !empty($end)) {
-                $query->setProjectEnd($this->dateTime->createDateTime($end));
+                $query->setProjectEnd($factory->createDateTime($end));
             }
 
             if (empty($begin) && empty($end)) {
-                $now = $this->dateTime->createDateTime();
+                $now = $factory->createDateTime();
                 $query->setProjectStart($now);
                 $query->setProjectEnd($now);
             }
@@ -139,7 +158,7 @@ class ProjectController extends BaseApiController
 
         $data = $this->repository->getProjectsForQuery($query);
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Collection', 'Project']);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
@@ -165,7 +184,7 @@ class ProjectController extends BaseApiController
         }
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -204,6 +223,7 @@ class ProjectController extends BaseApiController
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'date_format' => self::DATE_FORMAT,
+            'include_budget' => $this->isGranted('budget', $project),
         ]);
 
         $form->submit($request->request->all());
@@ -212,13 +232,13 @@ class ProjectController extends BaseApiController
             $this->repository->saveProject($project);
 
             $view = new View($project, 200);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }
@@ -268,6 +288,7 @@ class ProjectController extends BaseApiController
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'date_format' => self::DATE_FORMAT,
+            'include_budget' => $this->isGranted('budget', $project),
         ]);
 
         $form->setData($project);
@@ -275,7 +296,7 @@ class ProjectController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+            $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
         }
@@ -283,13 +304,13 @@ class ProjectController extends BaseApiController
         $this->repository->saveProject($project);
 
         $view = new View($project, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
 
     /**
-     * Sets the value of a meta-field for an existing project.
+     * Sets the value of a meta-field for an existing project
      *
      * @SWG\Response(
      *      response=200,
@@ -336,7 +357,169 @@ class ProjectController extends BaseApiController
         $this->repository->saveProject($project);
 
         $view = new View($project, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Returns a collection of all rates for one project
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Returns a collection of project rate entities",
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/ProjectRate")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The project whose rates will be returned",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function getRatesAction(int $id): Response
+    {
+        /** @var Project|null $project */
+        $project = $this->repository->find($id);
+
+        if (null === $project) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $project)) {
+            throw new AccessDeniedHttpException('Access denied.');
+        }
+
+        $rates = $this->projectRateRepository->getRatesForProject($project);
+
+        $view = new View($rates, 200);
+        $view->getContext()->setGroups(self::GROUPS_RATE);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Deletes one rate for an project
+     *
+     * @SWG\Delete(
+     *      @SWG\Response(
+     *          response=204,
+     *          description="Returns no content: 204 on successful delete"
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The project whose rate will be removed",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="rateId",
+     *      in="path",
+     *      type="integer",
+     *      description="The rate to remove",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function deleteRateAction(string $id, string $rateId): Response
+    {
+        /** @var Project|null $project */
+        $project = $this->repository->find($id);
+
+        if (null === $project) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $project)) {
+            throw new AccessDeniedHttpException('Access denied.');
+        }
+
+        /** @var ProjectRate|null $rate */
+        $rate = $this->projectRateRepository->find($rateId);
+
+        if (null === $rate || $rate->getProject() !== $project) {
+            throw new NotFoundException();
+        }
+
+        $this->projectRateRepository->deleteRate($rate);
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Adds a new rate to an project
+     *
+     * @SWG\Post(
+     *  @SWG\Response(
+     *      response=200,
+     *      description="Returns the new created rate",
+     *      @SWG\Schema(ref="#/definitions/ProjectRate")
+     *  )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The project to add the rate for",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/ProjectRateForm")
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function postRateAction(int $id, Request $request): Response
+    {
+        /** @var Project|null $project */
+        $project = $this->repository->find($id);
+
+        if (null === $project) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $project)) {
+            throw new AccessDeniedHttpException('Access denied.');
+        }
+
+        $rate = new ProjectRate();
+        $rate->setProject($project);
+
+        $form = $this->createForm(ProjectRateApiForm::class, $rate, [
+            'method' => 'POST',
+        ]);
+
+        $form->setData($rate);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            $view = new View($form, Response::HTTP_OK);
+            $view->getContext()->setGroups(self::GROUPS_RATE);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        $this->projectRateRepository->saveRate($rate);
+
+        $view = new View($rate, Response::HTTP_OK);
+        $view->getContext()->setGroups(self::GROUPS_RATE);
 
         return $this->viewHandler->handle($view);
     }

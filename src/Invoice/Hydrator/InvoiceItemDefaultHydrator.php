@@ -30,6 +30,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
         $formatter = $this->model->getFormatter();
 
         $rate = $item->getRate();
+        $internalRate = $item->getInternalRate();
         $appliedRate = $item->getHourlyRate();
         $amount = $formatter->getFormattedDuration($item->getDuration());
         $description = $item->getDescription();
@@ -63,15 +64,18 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.type' => $item->getType(),
             'entry.category' => $item->getCategory(),
             'entry.rate' => $formatter->getFormattedMoney($appliedRate, $currency),
-            'entry.rate_nc' => $formatter->getFormattedMoney($appliedRate, null),
+            'entry.rate_nc' => $formatter->getFormattedMoney($appliedRate, $currency, false),
             'entry.rate_plain' => $appliedRate,
+            'entry.rate_internal' => $formatter->getFormattedMoney($internalRate, $currency),
+            'entry.rate_internal_nc' => $formatter->getFormattedMoney($internalRate, $currency, false),
+            'entry.rate_internal_plain' => $internalRate,
             'entry.total' => $formatter->getFormattedMoney($rate, $currency),
-            'entry.total_nc' => $formatter->getFormattedMoney($rate, null),
+            'entry.total_nc' => $formatter->getFormattedMoney($rate, $currency, false),
             'entry.total_plain' => $rate,
             'entry.currency' => $currency,
             'entry.duration' => $item->getDuration(),
             'entry.duration_decimal' => $formatter->getFormattedDecimalDuration($item->getDuration()),
-            'entry.duration_minutes' => number_format($item->getDuration() / 60),
+            'entry.duration_minutes' => (int) ($item->getDuration() / 60),
             'entry.begin' => $formatter->getFormattedDateTime($begin),
             'entry.begin_time' => $formatter->getFormattedTime($begin),
             'entry.begin_timestamp' => $begin->getTimestamp(),
@@ -79,6 +83,8 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.end_time' => $formatter->getFormattedTime($end),
             'entry.end_timestamp' => $end->getTimestamp(),
             'entry.date' => $formatter->getFormattedDateTime($begin),
+            'entry.week' => \intval($begin->format('W')),
+            'entry.weekyear' => $begin->format('o'),
             'entry.user_id' => $user->getId(),
             'entry.user_name' => $user->getUsername(),
             'entry.user_title' => $user->getTitle(),
@@ -91,7 +97,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.activity_id' => $activity->getId(),
             ]);
 
-            foreach ($activity->getVisibleMetaFields() as $metaField) {
+            foreach ($activity->getMetaFields() as $metaField) {
                 $values = array_merge($values, [
                     'entry.activity.meta.' . $metaField->getName() => $metaField->getValue(),
                 ]);
@@ -104,7 +110,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.project_id' => $project->getId(),
             ]);
 
-            foreach ($project->getVisibleMetaFields() as $metaField) {
+            foreach ($project->getMetaFields() as $metaField) {
                 $values = array_merge($values, [
                     'entry.project.meta.' . $metaField->getName() => $metaField->getValue(),
                 ]);
@@ -117,7 +123,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.customer_id' => $customer->getId(),
             ]);
 
-            foreach ($customer->getVisibleMetaFields() as $metaField) {
+            foreach ($customer->getMetaFields() as $metaField) {
                 $values = array_merge($values, [
                     'entry.customer.meta.' . $metaField->getName() => $metaField->getValue(),
                 ]);

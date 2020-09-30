@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="he" datatype="plaintext" original="actions.en.xlf">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="stop">
+        <source>stop</source>
+        <target>עצור</target>
+      </trans-unit>
+      <trans-unit id="back">
+        <source>back</source>
+        <target>חזור</target>
+      </trans-unit>
+      <trans-unit id="edit">
+        <source>edit</source>
+        <target>ערוך</target>
+      </trans-unit>
+      <trans-unit id="trash">
+        <source>trash</source>
+        <target>מחק</target>
+      </trans-unit>
+      <trans-unit id="report">
+        <source>report</source>
+        <target>דו''ח</target>
+      </trans-unit>
+      <trans-unit id="repeat">
+        <source>repeat</source>
+        <target>התחל שוב</target>
+      </trans-unit>
+      <trans-unit id="profile-stats">
+        <source>profile-stats</source>
+        <target>פרופיל</target>
+      </trans-unit>
+      <trans-unit id="settings">
+        <source>settings</source>
+        <target>העדפות</target>
+      </trans-unit>
+      <trans-unit id="timesheet">
+        <source>timesheet</source>
+        <target>גיליון שעות</target>
+      </trans-unit>
+      <trans-unit id="customer">
+        <source>customer</source>
+        <target>סנן לקוחות</target>
+      </trans-unit>
+      <trans-unit id="project">
+        <source>project</source>
+        <target>סנן פרויקטים</target>
+      </trans-unit>
+      <trans-unit id="activity">
+        <source>activity</source>
+        <target>סנן פעילויות</target>
+      </trans-unit>
+      <trans-unit id="copy">
+        <source>copy</source>
+        <target>צור עותק</target>
+      </trans-unit>
+      <trans-unit id="home">
+        <source>home</source>
+        <target>דף הבית</target>
+      </trans-unit>
+      <trans-unit id="create-project">
+        <source>create-project</source>
+        <target>צור פרוייקט</target>
+      </trans-unit>
+      <trans-unit id="create-activity">
+        <source>create-activity</source>
+        <target>צור פעילות</target>
+      </trans-unit>
+      <trans-unit id="create-timesheet">
+        <source>create-timesheet</source>
+        <target>צור גיליון שעות</target>
+      </trans-unit>
+      <trans-unit id="permissions">
+        <source>permissions</source>
+        <target>הרשאות צוות</target>
+      </trans-unit>
+      <trans-unit id="details">
+        <source>details</source>
+        <target>פרטים</target>
+      </trans-unit>
+      <trans-unit id="download">
+        <source>download</source>
+        <target>הורד</target>
+      </trans-unit>
+      <trans-unit id="invoice.pending">
+        <source>invoice.pending</source>
+        <target>ממתין לתשלום</target>
+      </trans-unit>
+      <trans-unit id="invoice.paid">
+        <source>invoice.paid</source>
+        <target>חשבונית שולמה</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

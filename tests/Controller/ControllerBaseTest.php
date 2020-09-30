@@ -12,8 +12,8 @@ namespace App\Tests\Controller;
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Tests\KernelTestTrait;
-use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
@@ -214,7 +214,50 @@ abstract class ControllerBaseTest extends WebTestCase
             self::assertEquals($expectedUrl, $element->getAttribute('href'));
         }
 
-        self::assertEquals(count($buttons), $node->count(), 'Invalid amount of page actions');
+        self::assertEquals(\count($buttons), $node->count(), 'Invalid amount of page actions');
+    }
+
+    /**
+     * @param HttpKernelBrowser $client the client to use
+     * @param string $url the URL of the page displaying the initial form to submit
+     * @param string $formSelector a selector to find the form to test
+     * @param array $formData values to fill in the form
+     * @param array $fieldNames array of form-fields that should fail
+     * @param bool $disableValidation whether the form should validate before submitting or not
+     */
+    protected function assertHasValidationError(HttpKernelBrowser $client, $url, $formSelector, array $formData, array $fieldNames, $disableValidation = true)
+    {
+        $crawler = $client->request('GET', $this->createUrl($url));
+        $form = $crawler->filter($formSelector)->form();
+        if ($disableValidation) {
+            $form->disableValidation();
+        }
+        $result = $client->submit($form, $formData);
+
+        $submittedForm = $result->filter($formSelector);
+        $validationErrors = $submittedForm->filter('li.text-danger');
+
+        self::assertEquals(
+            \count($fieldNames),
+            \count($validationErrors),
+            sprintf('Expected %s validation errors, found %s', \count($fieldNames), \count($validationErrors))
+        );
+
+        foreach ($fieldNames as $name) {
+            $field = $submittedForm->filter($name);
+            self::assertNotNull($field, 'Could not find form field: ' . $name);
+            $list = $field->nextAll();
+            self::assertNotNull($list, 'Form field has no validation message: ' . $name);
+
+            $validation = $list->filter('li.text-danger');
+            if (\count($validation) < 1) {
+                // decorated form fields with icon have a different html structure, see kimai-theme.html.twig
+                /** @var \DOMElement $listMsg */
+                $listMsg = $field->parents()->getNode(1);
+                $classes = $listMsg->getAttribute('class');
+                self::assertStringContainsString('has-error', $classes, 'Form field has no validation message: ' . $name);
+            }
+        }
     }
 
     /**
@@ -228,37 +271,7 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertFormHasValidationError($role, $url, $formSelector, array $formData, array $fieldNames, $disableValidation = true)
     {
         $client = $this->getClientForAuthenticatedUser($role);
-        $crawler = $client->request('GET', $this->createUrl($url));
-        $form = $crawler->filter($formSelector)->form();
-        if ($disableValidation) {
-            $form->disableValidation();
-        }
-        $result = $client->submit($form, $formData);
-
-        $submittedForm = $result->filter($formSelector);
-        $validationErrors = $submittedForm->filter('li.text-danger');
-
-        self::assertEquals(
-            count($fieldNames),
-            count($validationErrors),
-            sprintf('Expected %s validation errors, found %s', count($fieldNames), count($validationErrors))
-        );
-
-        foreach ($fieldNames as $name) {
-            $field = $submittedForm->filter($name);
-            self::assertNotNull($field, 'Could not find form field: ' . $name);
-            $list = $field->nextAll();
-            self::assertNotNull($list, 'Form field has no validation message: ' . $name);
-
-            $validation = $list->filter('li.text-danger');
-            if (count($validation) < 1) {
-                // decorated form fields with icon have a different html structure, see kimai-theme.html.twig
-                /** @var \DOMElement $listMsg */
-                $listMsg = $field->parents()->getNode(1);
-                $classes = $listMsg->getAttribute('class');
-                self::assertStringContainsString('has-error', $classes, 'Form field has no validation message: ' . $name);
-            }
-        }
+        $this->assertHasValidationError($client, $url, $formSelector, $formData, $fieldNames, $disableValidation);
     }
 
     /**
@@ -321,12 +334,23 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertIsRedirect(HttpKernelBrowser $client, $url = null)
     {
-        self::assertTrue($client->getResponse()->isRedirect());
+        self::assertTrue($client->getResponse()->isRedirect(), 'Response is not a redirect');
         if (null === $url) {
             return;
         }
 
-        self::assertTrue($client->getResponse()->headers->has('Location'));
-        self::assertStringEndsWith($url, $client->getResponse()->headers->get('Location'));
+        self::assertTrue($client->getResponse()->headers->has('Location'), 'Could not find "Location" header');
+        self::assertStringEndsWith($url, $client->getResponse()->headers->get('Location'), 'Redirect URL does not match');
+    }
+
+    protected function assertExcelExportResponse(HttpKernelBrowser $client, string $prefix)
+    {
+        /** @var BinaryFileResponse $response */
+        $response = $client->getResponse();
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
+
+        self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
+        self::assertStringContainsString('attachment; filename=' . $prefix, $response->headers->get('Content-Disposition'));
+        self::assertStringContainsString('.xlsx', $response->headers->get('Content-Disposition'));
     }
 }

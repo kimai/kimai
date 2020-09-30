@@ -17,6 +17,36 @@ class ParsedownExtension extends \Parsedown
     private $ids = [];
 
     /**
+     * Overwritten to prevent # to show up as headings for two reasons:
+     * - Hashes are often used to cross link issues in other systems
+     * - Headings should not occur in time record listings
+     */
+    protected $BlockTypes = [
+        '*' => ['Rule', 'List'],
+        '+' => ['List'],
+        '-' => ['SetextHeader', 'Table', 'Rule', 'List'],
+        '0' => ['List'],
+        '1' => ['List'],
+        '2' => ['List'],
+        '3' => ['List'],
+        '4' => ['List'],
+        '5' => ['List'],
+        '6' => ['List'],
+        '7' => ['List'],
+        '8' => ['List'],
+        '9' => ['List'],
+        ':' => ['Table'],
+        '<' => ['Comment', 'Markup'],
+        '=' => ['SetextHeader'],
+        '>' => ['Quote'],
+        '[' => ['Reference'],
+        '_' => ['Rule'],
+        '`' => ['FencedCode'],
+        '|' => ['Table'],
+        '~' => ['FencedCode'],
+    ];
+
+    /**
      * Overwritten to add support for file:///
      */
     protected $safeLinksWhitelist = [
@@ -52,7 +82,7 @@ class ParsedownExtension extends \Parsedown
             $url = $matches[0][0];
 
             $Inline = [
-                'extent' => strlen($matches[0][0]),
+                'extent' => \strlen($matches[0][0]),
                 'position' => $matches[0][1],
                 'element' => [
                     'name' => 'a',

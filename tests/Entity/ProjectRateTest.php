@@ -25,6 +25,7 @@ class ProjectRateTest extends TestCase
         $sut = new ProjectRate();
         self::assertNull($sut->getId());
         self::assertEquals(0.00, $sut->getRate());
+        self::assertNull($sut->getInternalRate());
         self::assertNull($sut->getProject());
         self::assertNull($sut->getUser());
         self::assertEquals(3, $sut->getScore());
@@ -41,11 +42,18 @@ class ProjectRateTest extends TestCase
         self::assertInstanceOf(ProjectRate::class, $sut->setRate(12.34));
         self::assertEquals(12.34, $sut->getRate());
 
+        self::assertInstanceOf(ProjectRate::class, $sut->setInternalRate(7.12));
+        self::assertEquals(7.12, $sut->getInternalRate());
+        $sut->setInternalRate(null);
+        self::assertNull($sut->getInternalRate());
+
         $user = new User();
         $user->setAlias('foo');
         $user->setUsername('bar');
         self::assertInstanceOf(ProjectRate::class, $sut->setUser($user));
         self::assertSame($user, $sut->getUser());
+        $sut->setUser(null);
+        self::assertNull($sut->getUser());
 
         $entity = new Project();
         $entity->setName('foo');

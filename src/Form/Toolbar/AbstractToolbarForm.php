@@ -9,6 +9,7 @@
 
 namespace App\Form\Toolbar;
 
+use App\Entity\Activity;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DateRangeType;
@@ -70,25 +71,47 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    protected function addCustomerChoice(FormBuilderInterface $builder, array $options = [])
+    protected function addCustomerChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false)
     {
+        $this->addCustomerSelect($builder, $options, false, $multiProject);
+    }
+
+    protected function addCustomerMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false)
+    {
+        $this->addCustomerSelect($builder, $options, true, $multiProject);
+    }
+
+    private function addCustomerSelect(FormBuilderInterface $builder, array $options, bool $multiCustomer, bool $multiProject)
+    {
+        $name = 'customer';
+        if ($multiCustomer) {
+            $name = 'customers';
+        }
+
         // just a fake field for having this field at the right position in the frontend
-        $builder->add('customer', HiddenType::class);
+        $builder->add($name, HiddenType::class);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $options) {
+            function (FormEvent $event) use ($builder, $options, $name, $multiCustomer, $multiProject) {
                 $data = $event->getData();
-                $event->getForm()->add('customer', CustomerType::class, array_merge([
+                $event->getForm()->add($name, CustomerType::class, array_merge([
+                    'multiple' => $multiCustomer,
                     'required' => false,
-                    'project_enabled' => true,
+                    'project_enabled' => $multiCustomer ? 'customers' : 'customer',
+                    'project_select' => $multiProject ? 'projects' : 'project',
                     'end_date_param' => '%daterange%',
                     'start_date_param' => '%daterange%',
-                    'query_builder' => function (CustomerRepository $repo) use ($builder, $data) {
+                    'query_builder' => function (CustomerRepository $repo) use ($builder, $data, $name, $multiCustomer) {
                         $query = new CustomerFormTypeQuery();
                         $query->setUser($builder->getOption('user'));
-                        if (isset($data['customer']) && !empty($data['customer'])) {
-                            $query->setCustomer($data['customer']);
+
+                        if (isset($data[$name]) && !empty($data[$name])) {
+                            if ($multiCustomer) {
+                                $query->setCustomers($data[$name]);
+                            } else {
+                                $query->addCustomer($data[$name]);
+                            }
                         }
 
                         return $repo->getQueryBuilderForFormType($query);
@@ -131,28 +154,56 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    protected function addProjectChoice(FormBuilderInterface $builder, array $options = [])
+    protected function addProjectChoice(FormBuilderInterface $builder, array $options = [], bool $multiCustomer = false, bool $multiActivity = false)
     {
+        $this->addProjectSelect($builder, $options, false, $multiCustomer, $multiActivity);
+    }
+
+    protected function addProjectMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiCustomer = false, bool $multiActivity = false)
+    {
+        $this->addProjectSelect($builder, $options, true, $multiCustomer, $multiActivity);
+    }
+
+    private function addProjectSelect(FormBuilderInterface $builder, array $options, bool $multiProject, bool $multiCustomer, bool $multiActivity)
+    {
+        $name = 'project';
+        if ($multiProject) {
+            $name = 'projects';
+        }
         // just a fake field for having this field at the right position in the frontend
-        $builder->add('project', HiddenType::class);
+        $builder->add($name, HiddenType::class);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $options) {
+            function (FormEvent $event) use ($builder, $options, $name, $multiCustomer, $multiProject, $multiActivity) {
                 $data = $event->getData();
-                $event->getForm()->add('project', ProjectType::class, array_merge([
+                $event->getForm()->add($name, ProjectType::class, array_merge([
+                    'multiple' => $multiProject,
                     'required' => false,
-                    'activity_enabled' => true,
-                    'query_builder' => function (ProjectRepository $repo) use ($builder, $data, $options) {
+                    'activity_enabled' => $multiProject ? 'projects' : 'project',
+                    'activity_select' => $multiActivity ? 'activities' : 'activity',
+                    'query_builder' => function (ProjectRepository $repo) use ($builder, $data, $options, $multiCustomer, $multiProject) {
                         $query = new ProjectFormTypeQuery();
                         $query->setUser($builder->getOption('user'));
 
-                        if (isset($data['customer']) && !empty($data['customer'])) {
-                            $query->setCustomer($data['customer']);
+                        $name = $multiCustomer ? 'customers' : 'customer';
+                        if (isset($data[$name]) && !empty($data[$name])) {
+                            if (\is_array($data[$name])) {
+                                $query->setCustomers($data[$name]);
+                            } else {
+                                $query->addCustomer($data[$name]);
+                            }
                         }
-                        if (isset($data['project']) && !empty($data['project'])) {
-                            $query->setProject($data['project']);
+
+                        $name = $multiProject ? 'projects' : 'project';
+                        if (isset($data[$name]) && !empty($data[$name])) {
+                            if (\is_array($data[$name])) {
+                                $query->setProjects($data[$name]);
+                            } else {
+                                $query->addProject($data[$name]);
+                            }
                         }
+
                         if (isset($options['ignore_date']) && true === $options['ignore_date']) {
                             $query->setIgnoreDate(true);
                         }
@@ -164,30 +215,62 @@ abstract class AbstractToolbarForm extends AbstractType
         );
     }
 
-    protected function addActivityChoice(FormBuilderInterface $builder)
+    protected function addActivityChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false)
     {
+        $this->addActivitySelect($builder, $options, false, $multiProject);
+    }
+
+    protected function addActivityMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false)
+    {
+        $this->addActivitySelect($builder, $options, true, $multiProject);
+    }
+
+    private function addActivitySelect(FormBuilderInterface $builder, array $options = [], bool $multiActivity = false, bool $multiProject = false)
+    {
+        $name = 'activity';
+        if ($multiActivity) {
+            $name = 'activities';
+        }
+
         // just a fake field for having this field at the right position in the frontend
-        $builder->add('activity', HiddenType::class);
+        $builder->add($name, HiddenType::class);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event) use ($name, $multiActivity, $multiProject) {
                 $data = $event->getData();
-                $event->getForm()->add('activity', ActivityType::class, [
+                $event->getForm()->add($name, ActivityType::class, [
+                    'multiple' => $multiActivity,
                     'required' => false,
-                    'query_builder' => function (ActivityRepository $repo) use ($data) {
+                    'query_builder' => function (ActivityRepository $repo) use ($data, $multiActivity, $multiProject) {
                         $query = new ActivityFormTypeQuery();
 
-                        if (isset($data['activity']) && !empty($data['activity'])) {
-                            $activity = $data['activity'];
-                            if (is_string($data['activity'])) {
-                                $activity = $repo->find($data['activity']);
+                        $name = $multiActivity ? 'activities' : 'activity';
+                        if (isset($data[$name]) && !empty($data[$name])) {
+                            // we need to pre-fetch the activities to see if they are global, see ActivityFormTypeQuery::isGlobalsOnly()
+                            $activities = $data[$name];
+                            if (!\is_array($activities)) {
+                                $activities = [$activities];
                             }
-
-                            $query->setActivity($activity);
+                            foreach ($activities as $activity) {
+                                if ($activity instanceof Activity) {
+                                    $query->addActivity($activity);
+                                } elseif ($activity !== null) {
+                                    $tmp = $repo->find($activity);
+                                    if (null !== $tmp) {
+                                        $query->addActivity($tmp);
+                                    }
+                                }
+                            }
                         }
-                        if (isset($data['project']) && !empty($data['project'])) {
-                            $query->setProject($data['project']);
+
+                        $name = $multiProject ? 'projects' : 'project';
+                        if (isset($data[$name]) && !empty($data[$name])) {
+                            if ($multiProject) {
+                                $query->setProjects($data[$name]);
+                            } else {
+                                $query->addProject($data[$name]);
+                            }
                         }
 
                         return $repo->getQueryBuilderForFormType($query);
@@ -261,6 +344,15 @@ abstract class AbstractToolbarForm extends AbstractType
                 'entryState.exported' => TimesheetQuery::STATE_EXPORTED,
                 'entryState.not_exported' => TimesheetQuery::STATE_NOT_EXPORTED
             ],
+        ]);
+    }
+
+    protected function addBillableChoice(FormBuilderInterface $builder)
+    {
+        $builder->add('billable', BillableType::class, [
+            'required' => false,
+            'placeholder' => null,
+            'search' => false,
         ]);
     }
 }

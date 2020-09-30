@@ -19,6 +19,9 @@ use App\Entity\Rate;
 use App\Entity\Team;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Event\ProjectMetaDisplayEvent;
+use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\ProjectCommentForm;
 use App\Form\ProjectEditForm;
 use App\Form\ProjectRateForm;
@@ -249,7 +252,7 @@ final class ProjectController extends AbstractController
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
         $query->setPageSize(5);
-        $query->setProject($project);
+        $query->addProject($project);
         $query->setExcludeGlobals(true);
 
         /* @var $entries Pagerfanta */
@@ -312,25 +315,6 @@ final class ProjectController extends AbstractController
             'teams' => $teams,
             'rates' => $rates
         ]);
-    }
-
-    /**
-     * @Route(path="/{id}/rate_delete/{rate}", name="admin_project_rate_delete", methods={"GET"})
-     * @Security("is_granted('edit', project)")
-     */
-    public function deleteRateAction(Project $project, ProjectRate $rate, ProjectRateRepository $repository)
-    {
-        if ($rate->getProject() !== $project) {
-            $this->flashError('action.delete.error', ['%reason%' => 'Invalid project']);
-        } else {
-            try {
-                $repository->deleteRate($rate);
-            } catch (\Exception $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
-            }
-        }
-
-        return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
     }
 
     /**
@@ -405,7 +389,7 @@ final class ProjectController extends AbstractController
                 'label' => 'label.project',
                 'query_builder' => function (ProjectRepository $repo) use ($project) {
                     $query = new ProjectFormTypeQuery();
-                    $query->setCustomer($project->getCustomer());
+                    $query->addCustomer($project->getCustomer());
                     $query->setProjectToIgnore($project);
                     $query->setUser($this->getUser());
 
@@ -435,6 +419,34 @@ final class ProjectController extends AbstractController
             'stats' => $stats,
             'form' => $deleteForm->createView(),
         ]);
+    }
+
+    /**
+     * @Route(path="/export", name="project_export", methods={"GET"})
+     */
+    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
+    {
+        $query = new ProjectQuery();
+        $query->setCurrentUser($this->getUser());
+
+        $form = $this->getToolbarForm($query);
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
+
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
+
+        $entries = $this->repository->getProjectsForQuery($query);
+
+        $spreadsheet = $exporter->export(
+            Project::class,
+            $entries,
+            new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT)
+        );
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-projects');
+
+        return $writer->getFileResponse($spreadsheet);
     }
 
     /**

@@ -6,9 +6,9 @@
                 <source>label.invoice_number_generator</source>
                 <target>Générateur de numéros de facture</target>
             </trans-unit>
-            <trans-unit id="default">
-                <source>default</source>
-                <target>Date (par defaut)</target>
+            <trans-unit id="date">
+                <source>date</source>
+                <target>Date</target>
             </trans-unit>
         </body>
     </file>

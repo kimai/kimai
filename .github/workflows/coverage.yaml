@@ -9,7 +9,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                php: ['7.4']
+                php: ['7.3']
 
         name: Coverage - PHP ${{ matrix.php }}
         steps:
@@ -18,10 +18,10 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: pcov
-                    extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite
+                    extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql, zip, gd, ldap
             -   run: |
                     composer install --no-progress
-                    composer require zendframework/zend-ldap
+                    composer require laminas/laminas-ldap
             -   name: Setup problem matchers for PHPUnit
                 run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
             -   name: Run tests

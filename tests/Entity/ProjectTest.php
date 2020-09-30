@@ -9,10 +9,14 @@
 
 namespace App\Tests\Entity;
 
+use App\Constants;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
 use App\Entity\Team;
+use App\Export\Spreadsheet\ColumnDefinition;
+use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
@@ -32,9 +36,9 @@ class ProjectTest extends TestCase
         self::assertNull($sut->getStart());
         self::assertNull($sut->getEnd());
         self::assertNull($sut->getComment());
-        self::assertTrue($sut->getVisible());
         self::assertTrue($sut->isVisible());
         self::assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
         self::assertEquals(0.0, $sut->getBudget());
         self::assertEquals(0, $sut->getTimeBudget());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
@@ -77,11 +81,17 @@ class ProjectTest extends TestCase
         self::assertInstanceOf(Project::class, $sut->setComment('a comment'));
         self::assertEquals('a comment', $sut->getComment());
 
+        self::assertFalse($sut->hasColor());
         self::assertInstanceOf(Project::class, $sut->setColor('#fffccc'));
         self::assertEquals('#fffccc', $sut->getColor());
+        self::assertTrue($sut->hasColor());
+
+        self::assertInstanceOf(Project::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        self::assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
 
         self::assertInstanceOf(Project::class, $sut->setVisible(false));
-        self::assertFalse($sut->getVisible());
+        self::assertFalse($sut->isVisible());
 
         self::assertInstanceOf(Project::class, $sut->setBudget(12345.67));
         self::assertEquals(12345.67, $sut->getBudget());
@@ -130,8 +140,49 @@ class ProjectTest extends TestCase
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getProjects()[0]);
 
+        // test remove unknown team doesn't do anything
+        $sut->removeTeam(new Team());
+        self::assertCount(1, $sut->getTeams());
+        self::assertCount(1, $team->getProjects());
+
         $sut->removeTeam($team);
         self::assertCount(0, $sut->getTeams());
         self::assertCount(0, $team->getProjects());
+    }
+
+    public function testExportAnnotations()
+    {
+        $sut = new AnnotationExtractor(new AnnotationReader());
+
+        $columns = $sut->extract(Project::class);
+
+        self::assertIsArray($columns);
+
+        $expected = [
+            ['label.id', 'integer'],
+            ['label.name', 'string'],
+            ['label.customer', 'string'],
+            ['label.orderNumber', 'string'],
+            ['label.orderDate', 'datetime'],
+            ['label.project_start', 'datetime'],
+            ['label.project_end', 'datetime'],
+            ['label.color', 'string'],
+            ['label.visible', 'boolean'],
+            ['label.comment', 'string'],
+        ];
+
+        self::assertCount(\count($expected), $columns);
+
+        foreach ($columns as $column) {
+            self::assertInstanceOf(ColumnDefinition::class, $column);
+        }
+
+        $i = 0;
+
+        foreach ($expected as $item) {
+            $column = $columns[$i++];
+            self::assertEquals($item[0], $column->getLabel());
+            self::assertEquals($item[1], $column->getType());
+        }
     }
 }

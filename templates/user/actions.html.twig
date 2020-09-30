@@ -9,6 +9,8 @@
         {% set actions = actions|merge({'back': path('admin_user')}) %}
     {% endif %}
 
+    {% set actions = actions|merge({'download': {'url': path('user_export'), 'class': 'toolbar-action'}}) %}
+
     {% if is_granted('role_permissions') %}
         {% set actions = actions|merge({'permissions': path('admin_user_permissions')}) %}
     {% endif %}
@@ -51,11 +53,12 @@
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
 
-{% macro user(user, view) %}
+{% macro user(user, view, options) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set actions = {} %}
 
     {% if user.id is not empty %}
+        {% set view_other = is_granted('view_other_timesheet') %}
         {% if is_granted('view', user) %}
             {% set actions = actions|merge({'profile-stats': {'url': path('user_profile', {'username' : user.username})}}) %}
         {% endif %}
@@ -68,12 +71,21 @@
         {% if actions|length > 0 %}
             {% set actions = actions|merge({'divider': null}) %}
         {% endif %}
-        {% if is_granted('view_other_timesheet') and user.enabled %}
+        {% if is_granted('view_reporting') %}
+            {% if view_other or app.user.id == user.id %}
+                {% set actions = actions|merge({'report': path('report_user_month', {'user': user.id})}) %}
+            {% endif %}
+        {% endif %}
+        {% if view_other and user.enabled %}
             {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'users': [user.id]})}) %}
         {% endif %}
         {% if view == 'index' and is_granted('delete', user) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_user_delete', {'id': user.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
+    {% endif %}
+
+    {% if options.back is defined %}
+        {% set actions = actions|merge({'back': options.back}) %}
     {% endif %}
 
     {% set event = trigger('actions.user', {'actions': actions, 'view': view, 'user': user}) %}

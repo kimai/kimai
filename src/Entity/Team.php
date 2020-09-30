@@ -12,6 +12,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Swagger\Annotations as SWG;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -23,11 +25,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TeamRepository")
  * @UniqueEntity("name")
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class Team
 {
     /**
+     * The internal ID
+     *
      * @var int
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -35,15 +44,28 @@ class Team
      */
     private $id;
     /**
+     * Team name
+     *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=100)
+     * @Assert\Length(min=2, max=100, allowEmptyString=false)
      */
     private $name;
     /**
+     * Teamlead
+     *
+     * The teamlead for this team
+     *
      * @var User
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Team_Entity"})
+     * @SWG\Property(ref="#/definitions/User")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
@@ -51,29 +73,68 @@ class Team
      */
     private $teamlead;
     /**
+     * Team member
+     *
+     * All team member, including the teamlead
+     *
      * @var User[]|ArrayCollection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Team_Entity"})
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/User"))
      *
      * @ORM\ManyToMany(targetEntity="User", mappedBy="teams", fetch="EXTRA_LAZY")
      */
     private $users;
     /**
+     * Customers
+     *
+     * All customers assigned to the team
+     *
      * @var Customer[]|ArrayCollection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Team_Entity"})
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Customer"))
      *
      * @ORM\ManyToMany(targetEntity="Customer", mappedBy="teams", fetch="EXTRA_LAZY")
      */
     private $customers;
     /**
+     * Projects
+     *
+     * All projects assigned to the team
+     *
      * @var Project[]|ArrayCollection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Team_Entity", "Expanded"})
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Project"))
      *
      * @ORM\ManyToMany(targetEntity="Project", mappedBy="teams", fetch="EXTRA_LAZY")
      */
     private $projects;
+    /**
+     * Activities
+     *
+     * All activities assigned to the team
+     *
+     * @var Activity[]|ArrayCollection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Team_Entity", "Expanded"})
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Activity"))
+     *
+     * @ORM\ManyToMany(targetEntity="Activity", mappedBy="teams", fetch="EXTRA_LAZY")
+     */
+    private $activities;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->projects = new ArrayCollection();
+        $this->activities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -208,6 +269,39 @@ class Team
     public function getProjects(): iterable
     {
         return $this->projects;
+    }
+
+    public function hasActivity(Activity $activity): bool
+    {
+        return $this->activities->contains($activity);
+    }
+
+    public function addActivity(Activity $activity)
+    {
+        if ($this->activities->contains($activity)) {
+            return;
+        }
+
+        $this->activities->add($activity);
+        $activity->addTeam($this);
+    }
+
+    public function removeActivity(Activity $activity)
+    {
+        if (!$this->activities->contains($activity)) {
+            return;
+        }
+
+        $this->activities->removeElement($activity);
+        $activity->removeTeam($this);
+    }
+
+    /**
+     * @return Collection<Activity>
+     */
+    public function getActivities(): iterable
+    {
+        return $this->activities;
     }
 
     /**

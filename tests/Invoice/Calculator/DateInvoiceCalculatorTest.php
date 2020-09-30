@@ -105,7 +105,7 @@ class DateInvoiceCalculatorTest extends AbstractCalculatorTest
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
 
         $query = new InvoiceQuery();
-        $query->setProject($project1);
+        $query->setProjects([$project1]);
 
         $model = new InvoiceModel(new DebugFormatter());
         $model->setCustomer($customer);
@@ -122,7 +122,7 @@ class DateInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals('EUR', $model->getCurrency());
         $this->assertEquals(2521.12, $sut->getSubtotal());
         $this->assertEquals(6600, $sut->getTimeWorked());
-        $this->assertEquals(3, count($sut->getEntries()));
+        $this->assertEquals(3, \count($sut->getEntries()));
 
         $entries = $sut->getEntries();
         self::assertCount(3, $entries);

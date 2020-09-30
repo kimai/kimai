@@ -21,8 +21,8 @@ class LayoutControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $em = $this->getEntityManager();
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->request($client, '/dashboard/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -77,8 +77,8 @@ class LayoutControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $em = $this->getEntityManager();
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->request($client, '/layou/active_entries');
         $this->assertTrue($client->getResponse()->isSuccessful());

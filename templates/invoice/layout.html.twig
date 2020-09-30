@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale }}">
+{% set fallback = app.request is not null ? app.request.locale : 'en' %}
+{% set language = model.template.language|default(fallback) %}
+<html lang="{{ language }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>{% block title %}{{ model.numberGenerator.invoiceNumber }}-{{  model.customer.company|default(model.customer.name)|u.snake }}{% endblock %}</title>
-    {{ encore_entry_link_tags('app') }}
-    {{ encore_entry_script_tags('app') }}
+    <title>{% block title %}{{ model.invoiceNumber }}-{{ model.customer.company|default(model.customer.name)|u.snake }}{% endblock %}</title>
+    <style type="text/css">
+        {{ encore_entry_css_source('invoice')|raw }}
+    </style>
 </head>
 <body class="invoice_print">
 <div class="wrapper">
