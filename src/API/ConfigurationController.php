@@ -81,6 +81,7 @@ final class ConfigurationController extends BaseApiController
             ->setDuration($this->formats->getDurationFormat($locale))
             ->setTime($this->formats->getTimeFormat($locale))
             ->setIs24hours($this->formats->isTwentyFourHours($locale))
+            ->setNow($this->getDateTimeFactory()->createDateTime())
         ;
 
         $view = new View($model, 200);
