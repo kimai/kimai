@@ -56,7 +56,7 @@ class UserCreateType extends UserEditType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'validation_groups' => ['UserCreate'],
+            'validation_groups' => ['UserCreate', 'Registration'],
             'include_add_more' => false,
         ]);
     }
