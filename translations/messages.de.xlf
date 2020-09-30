@@ -244,7 +244,7 @@
         <source>label.visible</source>
         <target>Sichtbar</target>
       </trans-unit>
-      <trans-unit id="label.budget">
+      <trans-unit id="label.budget" approved="yes">
         <source>label.budget</source>
         <target>Budget</target>
       </trans-unit>
@@ -746,7 +746,7 @@
         <source>stats.workingTimeWeek</source>
         <target>Kalenderwoche %week%</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeMonth">
+      <trans-unit id="stats.workingTimeMonth" approved="yes">
         <source>stats.workingTimeMonth</source>
         <target>%month% %year%</target>
       </trans-unit>
