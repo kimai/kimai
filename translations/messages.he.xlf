@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="messages.en.xlf">
     <header>
@@ -66,7 +66,7 @@
       </trans-unit>
       <trans-unit id="update_multiple">
         <source>update_multiple</source>
-        <target>%action% %count% entries?</target>
+        <target>%action% %count% רשומות?</target>
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>
@@ -406,7 +406,7 @@
       </trans-unit>
       <trans-unit id="modal.columns.description">
         <source>modal.columns.description</source>
-        <target>לאחר השמירה, כל העמודות הלא מסומנות יהיו מוסתרות. הגדרה זו תישמר בעוגיה בדפדפן. אם תמחק עוגיות מהדפדפן שלך, הגדרה זו תתבטל</target>
+        <target>לאחר השמירה, כל העמודות הלא מסומנות יהיו מוסתרות. הגדרה זו תישמר בעוגיה בדפדפן. אם תמחק עוגיות מהדפדפן שלך, הגדרה זו תתבטל.</target>
       </trans-unit>
       <trans-unit id="label.fixedRate">
         <source>label.fixedRate</source>
@@ -627,9 +627,7 @@
       </trans-unit>
       <trans-unit id="admin_user.short_stats">
         <source>admin_user.short_stats</source>
-        <target>
-                    כרגע למשתמש %user% יש %records% רשומות זמן שמסתכמות לסך הכל %duration%.
-                </target>
+        <target>כרגע למשתמש %user% יש %records% רשומות זמן שמסתכמות לכדי %duration% סך הכול.</target>
       </trans-unit>
       <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>
@@ -641,7 +639,7 @@
       </trans-unit>
       <trans-unit id="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
-        <target>תווים מותרים: A-Z ו _</target>
+        <target>תווים מותרים: A-Z ו־_</target>
       </trans-unit>
       <trans-unit id="label.version">
         <source>label.version</source>
@@ -649,23 +647,23 @@
       </trans-unit>
       <trans-unit id="label.required_version">
         <source>label.required_version</source>
-        <target>מותאם ל</target>
+        <target>תואם ל־</target>
       </trans-unit>
       <trans-unit id="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
-        <target>System-Admin</target>
+        <target>הנהלת מערכת</target>
       </trans-unit>
       <trans-unit id="ROLE_ADMIN">
         <source>ROLE_ADMIN</source>
-        <target>Administrator</target>
+        <target>הנהלה</target>
       </trans-unit>
       <trans-unit id="ROLE_TEAMLEAD">
         <source>ROLE_TEAMLEAD</source>
-        <target>Teamlead</target>
+        <target>הובלת צוותים</target>
       </trans-unit>
       <trans-unit id="ROLE_USER">
         <source>ROLE_USER</source>
-        <target>User</target>
+        <target>משתמשים</target>
       </trans-unit>
       <trans-unit id="stats.durationToday">
         <source>stats.durationToday</source>
@@ -1010,6 +1008,38 @@
       <trans-unit id="label.globalsOnly">
         <source>label.globalsOnly</source>
         <target>רק גלובלי</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeWeek">
+        <source>stats.workingTimeWeek</source>
+        <target>שבוע מספר %week%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeYear">
+        <source>stats.workingTimeYear</source>
+        <target>שנת %year% במלואה</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeMonth">
+        <source>stats.workingTimeMonth</source>
+        <target>%month% %year%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeToday">
+        <source>stats.workingTimeToday</source>
+        <target>היום, %day%</target>
+      </trans-unit>
+      <trans-unit id="profile.registration_date">
+        <source>profile.registration_date</source>
+        <target>מועד הרישום</target>
+      </trans-unit>
+      <trans-unit id="placeholder.type_message">
+        <source>placeholder.type_message</source>
+        <target>נא להקליד את ההודעה שלך…</target>
+      </trans-unit>
+      <trans-unit id="label.recalculate_rates">
+        <source>label.recalculate_rates</source>
+        <target>חישוב תעריפים מחדש</target>
+      </trans-unit>
+      <trans-unit id="menu.reporting">
+        <source>menu.reporting</source>
+        <target>דיווח</target>
       </trans-unit>
     </body>
   </file>

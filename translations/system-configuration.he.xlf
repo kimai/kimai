@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="system-configuration.en.xlf">
     <header>
@@ -208,6 +208,26 @@
       <trans-unit id="label.invoice.number_format">
         <source>label.invoice.number_format</source>
         <target>פורמט מספר חשבונית</target>
+      </trans-unit>
+      <trans-unit id="first_weekday">
+        <source>first_weekday</source>
+        <target>היום הראשון בשבוע</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target>סיום תקופת נעילה (תאריך PHP ביחס לעכשיו)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target>התחלת תקופת נעילה (תאריך PHP ביחס לעכשיו)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target>סיום תקופת חסד לנעילה (תאריך PHP יחסי למועד סיום תקופת הנעילה)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+        <source>label.timesheet.rules.allow_overlapping_records</source>
+        <target>לאפשר רשומות בזמנים חופפים</target>
       </trans-unit>
     </body>
   </file>
