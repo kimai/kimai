@@ -37,6 +37,7 @@ class ActivityToolbarForm extends AbstractToolbarForm
                 'yes' => 1,
                 'no' => 0,
             ],
+            'search' => false,
             'placeholder' => null,
             'required' => false,
             'label' => 'label.globalsOnly',
