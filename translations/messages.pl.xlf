@@ -867,7 +867,7 @@
       </trans-unit>
       <trans-unit id="label.total_rate">
         <source>label.total_rate</source>
-        <target>Cena łącznie</target>
+        <target>Cena całkowita</target>
       </trans-unit>
       <trans-unit id="label.unit_price">
         <source>label.unit_price</source>
