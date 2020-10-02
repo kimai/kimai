@@ -169,7 +169,7 @@ final class InvoiceController extends AbstractController
 
             return $this->file($file->getRealPath(), $file->getBasename());
         } catch (Exception $ex) {
-            $this->flashError($ex->getMessage());
+            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('invoice');
@@ -185,7 +185,7 @@ final class InvoiceController extends AbstractController
             $this->service->changeInvoiceStatus($invoice, $status);
             $this->flashSuccess('action.update.success');
         } catch (Exception $ex) {
-            $this->flashError('action.update.error');
+            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('admin_invoice_list');
@@ -201,7 +201,7 @@ final class InvoiceController extends AbstractController
             $this->service->deleteInvoice($invoice);
             $this->flashSuccess('action.delete.success');
         } catch (Exception $ex) {
-            $this->flashError('action.delete.error');
+            $this->flashDeleteException($ex);
         }
 
         return $this->redirectToRoute('admin_invoice_list');
@@ -324,10 +324,8 @@ final class InvoiceController extends AbstractController
                     $this->flashSuccess('action.update.success');
 
                     return $this->redirectToRoute('admin_invoice_document_upload');
-                } catch (Exception $e) {
-                    $this->flashError(
-                        sprintf('Failed uploading invoice document: %e', $e->getMessage())
-                    );
+                } catch (Exception $ex) {
+                    $this->flashException($ex, 'action.upload.error');
                 }
             }
         }
@@ -370,7 +368,7 @@ final class InvoiceController extends AbstractController
             $this->templateRepository->removeTemplate($template);
             $this->flashSuccess('action.delete.success');
         } catch (Exception $ex) {
-            $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashDeleteException($ex);
         }
 
         return $this->redirectToRoute('admin_invoice_template');
@@ -389,7 +387,7 @@ final class InvoiceController extends AbstractController
 
                 return $this->redirectToRoute('admin_invoice_template');
             } catch (Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 

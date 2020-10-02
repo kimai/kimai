@@ -56,7 +56,8 @@ class HomepageController extends AbstractController
             $language = $routeSettings[1];
             try {
                 return $this->redirectToRoute($route, ['_locale' => $language]);
-            } catch (\Exception $exception) {
+            } catch (\Exception $ex) {
+                $this->logException($ex);
                 // something is wrong with the url parameters ...
             }
         }
