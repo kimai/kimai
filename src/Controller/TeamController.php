@@ -113,7 +113,7 @@ final class TeamController extends AbstractController
 
             return $this->redirectToRoute('admin_team_edit', ['id' => $newTeam->getId()]);
         } catch (\Exception $ex) {
-            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('admin_team');
@@ -152,7 +152,7 @@ final class TeamController extends AbstractController
 
                 return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -192,7 +192,7 @@ final class TeamController extends AbstractController
 
                     return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
                 } catch (\Exception $ex) {
-                    $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                    $this->flashUpdateException($ex);
                 }
             }
         }
@@ -212,7 +212,7 @@ final class TeamController extends AbstractController
 
                         return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
                     } catch (\Exception $ex) {
-                        $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                        $this->flashUpdateException($ex);
                     }
                 }
             }
@@ -231,7 +231,7 @@ final class TeamController extends AbstractController
 
                         return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
                     } catch (\Exception $ex) {
-                        $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                        $this->flashUpdateException($ex);
                     }
                 }
             }

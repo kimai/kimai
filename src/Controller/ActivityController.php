@@ -170,7 +170,7 @@ final class ActivityController extends AbstractController
 
                 return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
             } catch (Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -215,7 +215,7 @@ final class ActivityController extends AbstractController
 
                 return $this->redirectToRoute('admin_activity');
             } catch (Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -246,7 +246,7 @@ final class ActivityController extends AbstractController
         try {
             $teamRepository->saveTeam($defaultTeam);
         } catch (Exception $ex) {
-            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
@@ -298,7 +298,7 @@ final class ActivityController extends AbstractController
                 $this->repository->deleteActivity($activity, $deleteForm->get('activity')->getData());
                 $this->flashSuccess('action.delete.success');
             } catch (Exception $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashDeleteException($ex);
             }
 
             return $this->redirectToRoute('admin_activity');
@@ -370,7 +370,7 @@ final class ActivityController extends AbstractController
                     return $this->redirectToRoute('admin_activity');
                 }
             } catch (Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 

@@ -152,7 +152,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
                 return $this->redirectToRoute($this->getTimesheetRoute(), ['page' => $request->get('page', 1)]);
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -213,7 +213,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
                 return $this->redirectToRoute($this->getTimesheetRoute());
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -351,7 +351,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
                     return $this->redirectToRoute($this->getTimesheetRoute());
                 } catch (\Exception $ex) {
-                    $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                    $this->flashUpdateException($ex);
                 }
             }
         }
@@ -383,7 +383,7 @@ abstract class TimesheetAbstractController extends AbstractController
                 $this->service->deleteMultipleTimesheets($dto->getEntities());
                 $this->flashSuccess('action.delete.success');
             } catch (\Exception $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashDeleteException($ex);
             }
         }
 

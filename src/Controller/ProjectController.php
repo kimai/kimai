@@ -134,7 +134,7 @@ final class ProjectController extends AbstractController
 
                 return $this->redirectToRoute('admin_project');
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -171,7 +171,7 @@ final class ProjectController extends AbstractController
         try {
             $this->repository->deleteComment($comment);
         } catch (\Exception $ex) {
-            $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashDeleteException($ex);
         }
 
         return $this->redirectToRoute('project_details', ['id' => $projectId]);
@@ -192,7 +192,7 @@ final class ProjectController extends AbstractController
             try {
                 $this->repository->saveComment($comment);
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -209,7 +209,7 @@ final class ProjectController extends AbstractController
         try {
             $this->repository->saveComment($comment);
         } catch (\Exception $ex) {
-            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('project_details', ['id' => $comment->getProject()->getId()]);
@@ -236,7 +236,7 @@ final class ProjectController extends AbstractController
         try {
             $teamRepository->saveTeam($defaultTeam);
         } catch (\Exception $ex) {
-            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
@@ -340,7 +340,7 @@ final class ProjectController extends AbstractController
 
                 return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -408,7 +408,7 @@ final class ProjectController extends AbstractController
                 $this->repository->deleteProject($project, $deleteForm->get('project')->getData());
                 $this->flashSuccess('action.delete.success');
             } catch (\Exception $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashDeleteException($ex);
             }
 
             return $this->redirectToRoute('admin_project');
@@ -474,7 +474,7 @@ final class ProjectController extends AbstractController
                     return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
                 }
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
