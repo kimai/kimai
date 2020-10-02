@@ -618,7 +618,7 @@
       </trans-unit>
       <trans-unit id="stats.userActiveWeek">
         <source>stats.userActiveWeek</source>
-        <target>Active users this week</target>
+        <target>Usuários ativos nessa semana</target>
       </trans-unit>
       <trans-unit id="stats.userActiveMonth">
         <source>stats.userActiveMonth</source>
