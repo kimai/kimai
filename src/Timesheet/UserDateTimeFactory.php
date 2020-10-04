@@ -14,7 +14,7 @@ use App\Security\CurrentUser;
 use DateTimeZone;
 
 /**
- * @internal use DateTimeFactory instead: this one relies on the global context and will be deprecated in the future
+ * @deprecated will be removed with 2.0
  */
 class UserDateTimeFactory extends DateTimeFactory
 {
