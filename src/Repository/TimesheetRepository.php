@@ -253,13 +253,13 @@ class TimesheetRepository extends EntityRepository
 
         if (!empty($begin)) {
             $qb
-                ->andWhere($qb->expr()->gte($this->getDatetimeFieldSql('t.begin'), ':from'))
+                ->andWhere($qb->expr()->gte('t.begin', ':from'))
                 ->setParameter('from', $begin);
         }
 
         if (!empty($end)) {
             $qb
-                ->andWhere($qb->expr()->lte($this->getDatetimeFieldSql('t.end'), ':to'))
+                ->andWhere($qb->expr()->lte('t.end', ':to'))
                 ->setParameter('to', $end);
         }
 
@@ -320,14 +320,14 @@ class TimesheetRepository extends EntityRepository
         ;
 
         if (!empty($begin)) {
-            $qb->andWhere($qb->expr()->gte($this->getDatetimeFieldSql('t.begin'), ':from'))
+            $qb->andWhere($qb->expr()->gte('t.begin', ':from'))
                 ->setParameter('from', $begin);
         } else {
             $qb->andWhere($qb->expr()->isNotNull('t.begin'));
         }
 
         if (!empty($end)) {
-            $qb->andWhere($qb->expr()->lte($this->getDatetimeFieldSql('t.end'), ':to'))
+            $qb->andWhere($qb->expr()->lte('t.end', ':to'))
                 ->setParameter('to', $end);
         } else {
             $qb->andWhere($qb->expr()->isNotNull('t.end'));
@@ -595,31 +595,39 @@ class TimesheetRepository extends EntityRepository
         return $counter;
     }
 
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    /**
+     * This method was deactivated, because it causes all kind of troubles.
+     * First and foremost: the join on the customer and project tables to check for the ones without any team-assignments
+     * is a terrible performance bottleneck.
+     *
+     * But the other one is a logical problem:
+     * - a teamlead should see all records from his team-members, even if they recorded times for another project.
+     * - activity permissions are not checked
+     * - it is impossible to query objects with the correct permissions (there will always be a lot of false positives and negatives)
+     */
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): bool
     {
+        return false;
+        /*
         // make sure that all queries without a user see all projects
         if (null === $user && empty($teams)) {
-            return;
+            return false;
         }
 
         // make sure that admins see all timesheet records
         if (null !== $user && $user->canSeeAllData()) {
-            return;
+            return false;
         }
 
         if (null !== $user) {
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
-        $qb
-            ->leftJoin('p.teams', 'teams')
-            ->leftJoin('c.teams', 'c_teams');
-
         if (empty($teams)) {
             $qb->andWhere($qb->expr()->isNull('c_teams'));
             $qb->andWhere($qb->expr()->isNull('teams'));
 
-            return;
+            return true;
         }
 
         $orProject = $qb->expr()->orX(
@@ -635,6 +643,9 @@ class TimesheetRepository extends EntityRepository
         $qb->andWhere($orCustomer);
 
         $qb->setParameter('teams', $teams);
+
+        return true;
+        */
     }
 
     public function getPagerfantaForQuery(TimesheetQuery $query): Pagerfanta
@@ -652,7 +663,8 @@ class TimesheetRepository extends EntityRepository
         $qb
             ->resetDQLPart('select')
             ->resetDQLPart('orderBy')
-            ->select($qb->expr()->countDistinct('t.id'))
+            // faster then using "distinct id", as the user field is a separate (and smaller) index
+            ->select($qb->expr()->count('t.user'))
         ;
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
@@ -695,23 +707,29 @@ class TimesheetRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
+        $requiresProject = false;
+        $requiresCustomer = false;
+        $requiresTeams = false;
+        $requiresActivity = false;
+
         $qb
             ->select('t')
+            ->distinct()
             ->from(Timesheet::class, 't')
-            ->leftJoin('t.project', 'p')
-            ->leftJoin('p.customer', 'c')
         ;
 
         $orderBy = $query->getOrderBy();
         switch ($orderBy) {
             case 'project':
                 $orderBy = 'p.name';
+                $requiresProject = true;
                 break;
             case 'customer':
+                $requiresCustomer = true;
                 $orderBy = 'c.name';
                 break;
             case 'activity':
-                $qb->leftJoin('t.activity', 'a');
+                $requiresActivity = true;
                 $orderBy = 'a.name';
                 break;
             default:
@@ -728,18 +746,14 @@ class TimesheetRepository extends EntityRepository
 
         $user = array_merge($user, $query->getUsers());
 
-        if (empty($user) && null !== $query->getCurrentUser()) {
-            $currentUser = $query->getCurrentUser();
+        if (empty($user) && null !== ($currentUser = $query->getCurrentUser()) && !$currentUser->canSeeAllData()) {
+            // make sure that the user himself is in the list of users, if he is part of a team
+            // if teams are used and the user is not a teamlead, the list of users would be empty and then leading to NOT limit the select by user IDs
+            $user[] = $currentUser;
 
-            if (!$currentUser->canSeeAllData()) {
-                // make sure that the user himself is in the list of users, if he is part of a team
-                // if teams are used and the user is not a teamlead, the list of users would be empty and then leading to NOT limit the select by user IDs
-                $user[] = $currentUser;
-
-                foreach ($currentUser->getTeams() as $team) {
-                    if ($currentUser->isTeamleadOf($team)) {
-                        $query->addTeam($team);
-                    }
+            foreach ($currentUser->getTeams() as $team) {
+                if ($currentUser->isTeamleadOf($team)) {
+                    $query->addTeam($team);
                 }
             }
         }
@@ -766,7 +780,7 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (null !== $query->getBegin()) {
-            $qb->andWhere($qb->expr()->gte($this->getDatetimeFieldSql('t.begin'), ':begin'))
+            $qb->andWhere($qb->expr()->gte('t.begin', ':begin'))
                 ->setParameter('begin', $query->getBegin());
         }
 
@@ -777,7 +791,7 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (null !== $query->getEnd()) {
-            $qb->andWhere($qb->expr()->lte($this->getDatetimeFieldSql('t.begin'), ':end'))
+            $qb->andWhere($qb->expr()->lte('t.begin', ':end'))
                 ->setParameter('end', $query->getEnd());
         }
 
@@ -794,7 +808,7 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (null !== $query->getModifiedAfter()) {
-            $qb->andWhere($qb->expr()->gte($this->getDatetimeFieldSql('t.modifiedAt'), ':modified_at'))
+            $qb->andWhere($qb->expr()->gte('t.modifiedAt', ':modified_at'))
                 ->setParameter('modified_at', $query->getModifiedAfter());
         }
 
@@ -807,6 +821,7 @@ class TimesheetRepository extends EntityRepository
             $qb->andWhere($qb->expr()->in('t.project', ':project'))
                 ->setParameter('project', $query->getProjects());
         } elseif ($query->hasCustomers()) {
+            $requiresCustomer = true;
             $qb->andWhere($qb->expr()->in('p.customer', ':customer'))
                 ->setParameter('customer', $query->getCustomers());
         }
@@ -817,7 +832,7 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('tags', $query->getTags());
         }
 
-        $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
+        $requiresTeams = $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
         if ($query->hasSearchTerm()) {
             $searchAnd = $qb->expr()->andX();
@@ -845,6 +860,25 @@ class TimesheetRepository extends EntityRepository
             if ($searchAnd->count() > 0) {
                 $qb->andWhere($searchAnd);
             }
+        }
+
+        if ($requiresCustomer || $requiresProject || $requiresTeams) {
+            $qb->leftJoin('t.project', 'p');
+        }
+
+        if ($requiresCustomer || $requiresTeams) {
+            $qb->leftJoin('p.customer', 'c');
+        }
+
+        if ($requiresActivity) {
+            $qb->leftJoin('t.activity', 'a');
+        }
+
+        if ($requiresTeams) {
+            $qb
+                ->leftJoin('p.teams', 'teams')
+                ->leftJoin('c.teams', 'c_teams')
+            ;
         }
 
         return $qb;
@@ -883,7 +917,7 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (null !== $startFrom) {
-            $qb->andWhere($qb->expr()->gte($this->getDatetimeFieldSql('t.begin'), ':begin'))
+            $qb->andWhere($qb->expr()->gte('t.begin', ':begin'))
                 ->setParameter('begin', $startFrom);
         }
 
@@ -924,16 +958,6 @@ class TimesheetRepository extends EntityRepository
             ->execute();
 
         $em->commit();
-    }
-
-    private function getDatetimeFieldSql(string $field): string
-    {
-        // this would change the selected data for queries that join across multiple timezones
-        // but due to tax laws, this is disabled - exports/invoices should *always* include the data from
-        // the own timezone, not from the original users timezone
-        // return sprintf('CONVERT_TZ(%s, \'UTC\', t.timezone)', $field);
-
-        return $field;
     }
 
     /**
