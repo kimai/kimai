@@ -88,6 +88,23 @@ final class I18nConfig
      * @Serializer\Type(name="boolean")
      */
     private $is24hours = true;
+    /**
+     * The current time of the user
+     *
+     * @var \DateTime
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="DateTime")
+     */
+    private $now;
+
+    public function setNow(\DateTime $now): I18nConfig
+    {
+        $this->now = $now;
+
+        return $this;
+    }
 
     public function setFormDateTime(string $formDateTime): I18nConfig
     {
