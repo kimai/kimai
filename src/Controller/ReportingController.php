@@ -200,7 +200,7 @@ final class ReportingController extends AbstractController
             'previous' => $previous,
         ]);
     }
-    
+
     /**
      * @Route(path="/weekly_users_list", name="report_all_week", methods={"GET","POST"})
      * @Security("is_granted('view_other_timesheet')")
@@ -273,7 +273,7 @@ final class ReportingController extends AbstractController
             'next' => $nextWeek,
             'previous' => $previousWeek,
         ]);
-    }    
+    }
 
     /**
      * @Route(path="/monthly_users_list", name="report_monthly_users", methods={"GET","POST"})
