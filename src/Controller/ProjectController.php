@@ -162,7 +162,7 @@ final class ProjectController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->projectService->updateProject($project);
+                $this->projectService->saveNewProject($project);
                 $this->flashSuccess('action.update.success');
 
                 if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {

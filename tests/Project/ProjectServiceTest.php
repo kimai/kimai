@@ -12,6 +12,8 @@ namespace App\Tests\Project;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Event\ProjectCreateEvent;
+use App\Event\ProjectCreatePostEvent;
+use App\Event\ProjectCreatePreEvent;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Event\ProjectUpdatePostEvent;
 use App\Event\ProjectUpdatePreEvent;
@@ -123,6 +125,25 @@ class ProjectServiceTest extends TestCase
         self::assertSame($customer, $project->getCustomer());
     }
 
+    public function testSaveNewProjectDispatchesEvents()
+    {
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
+            if ($event instanceof ProjectCreatePreEvent) {
+                self::assertInstanceOf(Project::class, $event->getProject());
+            } elseif ($event instanceof ProjectCreatePostEvent) {
+                self::assertInstanceOf(Project::class, $event->getProject());
+            } else {
+                $this->fail('Invalid event received');
+            }
+        });
+
+        $sut = $this->getSut($dispatcher);
+
+        $project = new Project();
+        $sut->saveNewProject($project);
+    }
+
     public function testCreateNewProjectWithoutCustomer()
     {
         $sut = $this->getSut();
@@ -130,8 +151,7 @@ class ProjectServiceTest extends TestCase
         $project = $sut->createNewProject();
         self::assertNull($project->getCustomer());
 
-        $customer = new Customer();
-        $project = $sut->createNewProject($customer);
-        self::assertSame($customer, $project->getCustomer());
+        $project = $sut->createNewProject();
+        self::assertNull($project->getCustomer());
     }
 }
