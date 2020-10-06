@@ -92,7 +92,7 @@ class ReportingControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importReportingFixture(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/reporting/weekly_users_list');
-        self::assertStringContainsString('<div class="box-body weekly-user-list-reporting-box', $client->getResponse()->getContent());
+        self::assertStringContainsString('<div class="box-body monthly-user-list-reporting-box', $client->getResponse()->getContent());
         $select = $client->getCrawler()->filterXPath("//select[@id='user']");
         self::assertEquals(0, $select->count());
     }
