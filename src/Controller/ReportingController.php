@@ -16,6 +16,8 @@ use App\Reporting\MonthlyUserList;
 use App\Reporting\MonthlyUserListForm;
 use App\Reporting\WeekByUser;
 use App\Reporting\WeekByUserForm;
+use App\Reporting\WeeklyUserList;
+use App\Reporting\WeeklyUserListForm;
 use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
@@ -198,6 +200,80 @@ final class ReportingController extends AbstractController
             'previous' => $previous,
         ]);
     }
+    
+    /**
+     * @Route(path="/weekly_users_list", name="report_all_week", methods={"GET","POST"})
+     * @Security("is_granted('view_other_timesheet')")
+     *
+     * @param Request $request
+     * @return Response
+     * @throws Exception
+     */
+    public function weeklyUsersList(Request $request): Response
+    {
+        $currentUser = $this->getUser();
+        $dateTimeFactory = $this->getDateTimeFactory();
+        $localeFormats = $this->getLocaleFormats($request->getLocale());
+
+        $query = new UserQuery();
+        $query->setCurrentUser($currentUser);
+        $allUsers = $this->userRepository->getUsersForQuery($query);
+
+        $rows = [];
+
+        $values = new WeeklyUserList();
+        $values->setDate($dateTimeFactory->getStartOfWeek());
+
+        $form = $this->createForm(WeeklyUserListForm::class, $values, [
+            'timezone' => $dateTimeFactory->getTimezone()->getName(),
+            'start_date' => $values->getDate(),
+            'format' => $localeFormats->getDateTypeFormat(),
+        ]);
+
+        $form->submit($request->query->all(), false);
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $values->setDate($dateTimeFactory->getStartOfWeek());
+        }
+
+        if ($values->getDate() === null) {
+            $values->setDate($dateTimeFactory->getStartOfWeek());
+        }
+
+        $start = $dateTimeFactory->getStartOfWeek($values->getDate());
+        $end = $dateTimeFactory->getEndOfWeek($values->getDate());
+
+        $previousWeek = clone $start;
+        $previousWeek->modify('-1 week');
+
+        $nextWeek = clone $start;
+        $nextWeek->modify('+1 week');
+
+        foreach ($allUsers as $user) {
+            $rows[] = [
+                'days' => $this->timesheetRepository->getDailyStats($user, $start, $end),
+                'user' => $user
+            ];
+        }
+
+        $days = [];
+
+        if (isset($rows[0])) {
+            /** @var Day $day */
+            foreach ($rows[0]['days'] as $day) {
+                $days[$day->getDay()->format('Ymd')] = $day->getDay();
+            }
+        }
+
+        return $this->render('reporting/weekly_user_list.html.twig', [
+            'form' => $form->createView(),
+            'rows' => $rows,
+            'days' => $days,
+            'current' => $start,
+            'next' => $nextWeek,
+            'previous' => $previousWeek,
+        ]);
+    }    
 
     /**
      * @Route(path="/monthly_users_list", name="report_monthly_users", methods={"GET","POST"})
