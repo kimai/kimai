@@ -17,6 +17,7 @@ use App\Entity\User;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\API\ProjectApiEditForm;
 use App\Form\API\ProjectRateApiForm;
+use App\Project\ProjectService;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
@@ -64,13 +65,18 @@ class ProjectController extends BaseApiController
      * @var ProjectRateRepository
      */
     private $projectRateRepository;
+    /**
+     * @var ProjectService
+     */
+    private $projectService;
 
-    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, ProjectRateRepository $projectRateRepository)
+    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, ProjectRateRepository $projectRateRepository, ProjectService $projectService)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
         $this->projectRateRepository = $projectRateRepository;
+        $this->projectService = $projectService;
     }
 
     /**
@@ -216,10 +222,7 @@ class ProjectController extends BaseApiController
             throw new AccessDeniedHttpException('User cannot create projects');
         }
 
-        $project = new Project();
-
-        $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event);
+        $project = $this->projectService->createNewProject();
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'date_format' => self::DATE_FORMAT,
@@ -229,7 +232,7 @@ class ProjectController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $this->repository->saveProject($project);
+            $this->projectService->saveNewProject($project);
 
             $view = new View($project, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -301,7 +304,7 @@ class ProjectController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $this->repository->saveProject($project);
+        $this->projectService->updateProject($project);
 
         $view = new View($project, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -354,7 +357,7 @@ class ProjectController extends BaseApiController
 
         $meta->setValue($value);
 
-        $this->repository->saveProject($project);
+        $this->projectService->updateProject($project);
 
         $view = new View($project, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
