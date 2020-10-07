@@ -15,14 +15,13 @@ use App\Entity\ProjectRate;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRateRepository;
-use App\Repository\ProjectRepository;
 
 final class ProjectDuplicationService
 {
     /**
-     * @var ProjectRepository
+     * @var ProjectService
      */
-    private $projectRepository;
+    private $projectService;
     /**
      * @var ActivityRepository
      */
@@ -37,12 +36,12 @@ final class ProjectDuplicationService
     private $activityRateRepository;
 
     public function __construct(
-        ProjectRepository $projectRepository,
+        ProjectService $projectService,
         ActivityRepository $activityRepository,
         ProjectRateRepository $projectRateRepository,
         ActivityRateRepository $activityRateRepository
     ) {
-        $this->projectRepository = $projectRepository;
+        $this->projectService = $projectService;
         $this->activityRepository = $activityRepository;
         $this->projectRateRepository = $projectRateRepository;
         $this->activityRateRepository = $activityRateRepository;
@@ -68,7 +67,7 @@ final class ProjectDuplicationService
             $newProject->setEnd(null);
         }
 
-        $this->projectRepository->saveProject($newProject);
+        $this->projectService->saveNewProject($newProject);
 
         foreach ($this->projectRateRepository->getRatesForProject($project) as $rate) {
             /** @var ProjectRate $newRate */

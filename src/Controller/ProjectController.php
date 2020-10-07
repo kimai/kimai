@@ -29,6 +29,7 @@ use App\Form\ProjectTeamPermissionForm;
 use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
 use App\Project\ProjectDuplicationService;
+use App\Project\ProjectService;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
@@ -40,9 +41,7 @@ use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -65,12 +64,17 @@ final class ProjectController extends AbstractController
      * @var EventDispatcherInterface
      */
     private $dispatcher;
+    /**
+     * @var ProjectService
+     */
+    private $projectService;
 
-    public function __construct(ProjectRepository $repository, FormConfiguration $configuration, EventDispatcherInterface $dispatcher)
+    public function __construct(ProjectRepository $repository, FormConfiguration $configuration, EventDispatcherInterface $dispatcher, ProjectService $projectService)
     {
         $this->repository = $repository;
         $this->configuration = $configuration;
         $this->dispatcher = $dispatcher;
+        $this->projectService = $projectService;
     }
 
     /**
@@ -129,7 +133,7 @@ final class ProjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->repository->saveProject($project);
+                $this->projectService->updateProject($project);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_project');
@@ -151,13 +155,33 @@ final class ProjectController extends AbstractController
      */
     public function createAction(Request $request, ?Customer $customer = null)
     {
-        $project = new Project();
+        $project = $this->projectService->createNewProject($customer);
 
-        if (null !== $customer) {
-            $project->setCustomer($customer);
+        $editForm = $this->createEditForm($project);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            try {
+                $this->projectService->saveNewProject($project);
+                $this->flashSuccess('action.update.success');
+
+                if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
+                    $newProject = $this->projectService->createNewProject($project->getCustomer());
+                    $editForm = $this->createEditForm($newProject);
+                    $editForm->get('create_more')->setData(true);
+                    $project = $newProject;
+                } else {
+                    return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+                }
+            } catch (\Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
         }
 
-        return $this->renderProjectForm($project, $request);
+        return $this->render('project/edit.html.twig', [
+            'project' => $project,
+            'form' => $editForm->createView()
+        ]);
     }
 
     /**
@@ -356,7 +380,24 @@ final class ProjectController extends AbstractController
      */
     public function editAction(Project $project, Request $request)
     {
-        return $this->renderProjectForm($project, $request);
+        $editForm = $this->createEditForm($project);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            try {
+                $this->projectService->updateProject($project);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+            } catch (\Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
+        }
+
+        return $this->render('project/edit.html.twig', [
+            'project' => $project,
+            'form' => $editForm->createView()
+        ]);
     }
 
     /**
@@ -447,41 +488,6 @@ final class ProjectController extends AbstractController
         $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-projects');
 
         return $writer->getFileResponse($spreadsheet);
-    }
-
-    /**
-     * @param Project $project
-     * @param Request $request
-     * @return RedirectResponse|Response
-     */
-    private function renderProjectForm(Project $project, Request $request)
-    {
-        $editForm = $this->createEditForm($project);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            try {
-                $this->repository->saveProject($project);
-                $this->flashSuccess('action.update.success');
-
-                if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
-                    $newProject = new Project();
-                    $newProject->setCustomer($project->getCustomer());
-                    $editForm = $this->createEditForm($newProject);
-                    $editForm->get('create_more')->setData(true);
-                    $project = $newProject;
-                } else {
-                    return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
-                }
-            } catch (\Exception $ex) {
-                $this->flashUpdateException($ex);
-            }
-        }
-
-        return $this->render('project/edit.html.twig', [
-            'project' => $project,
-            'form' => $editForm->createView()
-        ]);
     }
 
     protected function getToolbarForm(ProjectQuery $query): FormInterface
