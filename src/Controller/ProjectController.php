@@ -165,14 +165,7 @@ final class ProjectController extends AbstractController
                 $this->projectService->saveNewProject($project);
                 $this->flashSuccess('action.update.success');
 
-                if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
-                    $newProject = $this->projectService->createNewProject($project->getCustomer());
-                    $editForm = $this->createEditForm($newProject);
-                    $editForm->get('create_more')->setData(true);
-                    $project = $newProject;
-                } else {
-                    return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
-                }
+                return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
             } catch (\Exception $ex) {
                 $this->flashUpdateException($ex);
             }
@@ -530,7 +523,6 @@ final class ProjectController extends AbstractController
             'action' => $url,
             'method' => 'POST',
             'currency' => $currency,
-            'create_more' => true,
             'include_budget' => $this->isGranted('budget', $project)
         ]);
     }

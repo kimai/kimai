@@ -40,11 +40,6 @@
                     {{ form_row(meta) }}
                 {% endfor %}
             {% endif %}
-            {% if form.create_more is defined and app.request.xmlHttpRequest %}
-                <div class="hidden">
-                {{ form_row(form.create_more) }}
-                </div>
-            {% endif %}
             {{ form_widget(form) }}
         {% endblock %}
     {% endembed %}
