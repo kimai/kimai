@@ -6,7 +6,7 @@
     {% set actions = actions|merge({'download': {'url': path('activity_export'), 'class': 'toolbar-action'}}) %}
 
     {% if is_granted('create_activity') %}
-        {% set actions = actions|merge({'create': path('admin_activity_create')}) %}
+        {% set actions = actions|merge({'create': {'url': path('admin_activity_create'), 'class': 'modal-ajax-form'}}) %}
     {% endif %}
 
     {% set actions = actions|merge({'help': {'url': 'activity.html'|docu_link, 'target': '_blank'}}) %}
