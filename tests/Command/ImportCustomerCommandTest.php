@@ -12,9 +12,6 @@ namespace App\Tests\Command;
 use App\Command\ImportCustomerCommand;
 use App\Configuration\FormConfiguration;
 use App\Repository\CustomerRepository;
-use App\Repository\ProjectRepository;
-use App\Repository\TeamRepository;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -35,12 +32,9 @@ class ImportCustomerCommandTest extends KernelTestCase
         $this->application = new Application($kernel);
 
         $customers = $this->createMock(CustomerRepository::class);
-        $projects = $this->createMock(ProjectRepository::class);
-        $teams = $this->createMock(TeamRepository::class);
-        $users = $this->createMock(UserRepository::class);
         $configuration = $this->createMock(FormConfiguration::class);
 
-        $this->application->add(new ImportCustomerCommand($customers, $projects, $teams, $users, $configuration));
+        $this->application->add(new ImportCustomerCommand($customers, $configuration));
     }
 
     public function testCommandName()
