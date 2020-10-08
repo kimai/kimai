@@ -21,6 +21,7 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
+use App\Timesheet\TrackingModeService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
@@ -42,11 +43,12 @@ class TimesheetTeamController extends TimesheetAbstractController
      *
      * @param int $page
      * @param Request $request
+     * @param TrackingModeService $service
      * @return Response
      */
-    public function indexAction($page, Request $request)
+    public function indexAction($page, Request $request, TrackingModeService $service)
     {
-        return $this->index($page, $request, 'timesheet-team/index.html.twig', TimesheetMetaDisplayEvent::TEAM_TIMESHEET);
+        return $this->index($page, $request, 'timesheet-team/index.html.twig', TimesheetMetaDisplayEvent::TEAM_TIMESHEET, $service);
     }
 
     /**
