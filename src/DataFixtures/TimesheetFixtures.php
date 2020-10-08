@@ -119,6 +119,8 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
                     null,
                     false
                 );
+
+                $all++;
                 $manager->persist($entry);
             }
 
@@ -128,7 +130,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
 
         // TODO this breaks if too many records need to be loaded: find a better way of adding tags
-        if (self::MAX_TIMESHEETS_TOTAL < self::ADD_TAGS_MAX_ENTRIES) {
+        if ($all < self::ADD_TAGS_MAX_ENTRIES) {
             $entries = $manager->getRepository(Timesheet::class)->findAll();
             foreach ($entries as $temp) {
                 $tagAmount = rand(0, self::MAX_TAG_PER_ENTRY);
