@@ -11,6 +11,9 @@ namespace App\Voter;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Security\AclDecisionManager;
+use App\Security\RolePermissionManager;
+use App\Timesheet\TrackingModeService;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
@@ -27,6 +30,7 @@ class TimesheetVoter extends AbstractVoter
     public const VIEW_RATE = 'view_rate';
     public const EDIT_RATE = 'edit_rate';
     public const EDIT_EXPORT = 'edit_export';
+    public const DUPLICATE = 'duplicate';
 
     /**
      * support rules based on the given $subject (here: Timesheet)
@@ -41,8 +45,19 @@ class TimesheetVoter extends AbstractVoter
         self::VIEW_RATE,
         self::EDIT_RATE,
         self::EDIT_EXPORT,
-        'duplicate'
+        self::DUPLICATE
     ];
+
+    /**
+     * @var TrackingModeService
+     */
+    private $service;
+
+    public function __construct(AclDecisionManager $decisionManager, RolePermissionManager $roleManager, TrackingModeService $service)
+    {
+        $this->service = $service;
+        parent::__construct($decisionManager, $roleManager);
+    }
 
     /**
      * @param string $attribute
@@ -100,8 +115,11 @@ class TimesheetVoter extends AbstractVoter
                 $permission .= $attribute;
                 break;
 
-            case 'duplicate':
-                $permission = self::EDIT;
+            case self::DUPLICATE:
+                if (!$this->canDuplicate($user, $subject)) {
+                    return false;
+                }
+                $permission .= self::EDIT;
                 break;
 
             case self::VIEW_RATE:
@@ -168,6 +186,20 @@ class TimesheetVoter extends AbstractVoter
     protected function canDelete(User $user, Timesheet $timesheet): bool
     {
         if ($timesheet->isExported() && !$this->hasRolePermission($user, 'edit_exported_timesheet')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function canDuplicate(User $user, Timesheet $timesheet): bool
+    {
+        if ($timesheet->isExported() && !$this->hasRolePermission($user, 'edit_exported_timesheet')) {
+            return false;
+        }
+
+        $mode = $this->service->getActiveMode();
+        if (!$mode->canEditDuration() && !$mode->canEditBegin() && !$mode->canEditEnd()) {
             return false;
         }
 
