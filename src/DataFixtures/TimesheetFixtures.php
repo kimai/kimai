@@ -18,7 +18,7 @@ use App\Entity\UserPreference;
 use App\Timesheet\Util;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
@@ -125,17 +125,19 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
         }
         $manager->flush();
 
-        $entries = $manager->getRepository(Timesheet::class)->findAll();
-        foreach ($entries as $temp) {
-            $tagAmount = rand(0, self::MAX_TAG_PER_ENTRY);
-            for ($iTag = 0; $iTag < $tagAmount; $iTag++) {
-                $tagId = rand(1, TagFixtures::MAX_TAGS);
-                if (isset($allTags[$tagId])) {
-                    $temp->addTag($allTags[$tagId]);
+        // TODO this breaks if we create more than a couple of hundred timesheets
+        /*
+                $entries = $manager->getRepository(Timesheet::class)->findAll();
+                foreach ($entries as $temp) {
+                    $tagAmount = rand(0, self::MAX_TAG_PER_ENTRY);
+                    for ($iTag = 0; $iTag < $tagAmount; $iTag++) {
+                        $tagId = rand(1, TagFixtures::MAX_TAGS);
+                        if (isset($allTags[$tagId])) {
+                            $temp->addTag($allTags[$tagId]);
+                        }
+                    }
                 }
-            }
-        }
-
+        */
         $manager->flush();
         $manager->clear(Timesheet::class);
         $manager->clear(Tag::class);

@@ -13,7 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
@@ -69,7 +69,7 @@ class CustomerFixtures extends Fixture
             }
 
             $manager->flush();
-            $manager->clear();
+            $manager->clear(Activity::class);
         }
 
         $amountGlobalActivities = rand(self::MIN_GLOBAL_ACTIVITIES, self::MAX_GLOBAL_ACTIVITIES);
@@ -80,7 +80,9 @@ class CustomerFixtures extends Fixture
         }
 
         $manager->flush();
-        $manager->clear();
+        $manager->clear(Activity::class);
+        $manager->clear(Project::class);
+        $manager->clear(Customer::class);
     }
 
     /**

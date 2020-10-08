@@ -14,7 +14,7 @@ use App\Entity\Team;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
@@ -31,9 +31,6 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
     public const AMOUNT_TEAMS = 10;
     public const MAX_USERS_PER_TEAM = 15;
     public const MAX_PROJECTS_PER_TEAM = 5;
-
-    // lower batch size, as user preferences are added in the same run
-    public const BATCH_SIZE = 50;
 
     /**
      * @return class-string[]
@@ -88,13 +85,13 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create();
 
         for ($i = 1; $i <= self::AMOUNT_TEAMS; $i++) {
-            $maxUsers = count($allUsers) - 1;
+            $maxUsers = \count($allUsers) - 1;
             if (self::MAX_USERS_PER_TEAM < $maxUsers) {
                 $maxUsers = self::MAX_USERS_PER_TEAM;
             }
             $userCount = mt_rand(0, $maxUsers);
 
-            $maxProjects = count($allProjects) - 1;
+            $maxProjects = \count($allProjects) - 1;
             if (self::MAX_PROJECTS_PER_TEAM < $maxProjects) {
                 $maxProjects = self::MAX_PROJECTS_PER_TEAM;
             }
@@ -108,7 +105,7 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
 
             if ($userCount > 0) {
                 $userKeys = array_rand($allUsers, $userCount);
-                if (!is_array($userKeys)) {
+                if (!\is_array($userKeys)) {
                     $userKeys = [$userKeys];
                 }
                 foreach ($userKeys as $userKey) {
@@ -118,7 +115,7 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
 
             if ($projectCount > 0) {
                 $projectKeys = array_rand($allProjects, $projectCount);
-                if (!is_array($projectKeys)) {
+                if (!\is_array($projectKeys)) {
                     $projectKeys = [$projectKeys];
                 }
                 foreach ($projectKeys as $projectKey) {
@@ -127,11 +124,6 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
             }
 
             $manager->persist($team);
-
-            if ($i % self::BATCH_SIZE === 0) {
-                $manager->flush();
-                $manager->clear(Team::class);
-            }
         }
 
         $manager->flush();
