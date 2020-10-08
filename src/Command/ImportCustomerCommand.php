@@ -158,17 +158,17 @@ class ImportCustomerCommand extends Command
             try {
                 $tmpCustomer = $this->customers->findBy(['name' => $record['Name']]);
 
-                if (count($tmpCustomer) !== 1 && isset($record['Number']) && !empty($record['Number'])) {
+                if (\count($tmpCustomer) !== 1 && isset($record['Number']) && !empty($record['Number'])) {
                     $tmpCustomer = $this->customers->findBy(['number' => $record['Number']]);
                 }
 
                 $customer = null;
 
-                if (count($tmpCustomer) > 1) {
+                if (\count($tmpCustomer) > 1) {
                     throw new \Exception(
                         sprintf('Found multiple matching customers by name "%s" or number "%s"', $record['Name'], $record['Number'])
                     );
-                } elseif (count($tmpCustomer) === 1) {
+                } elseif (\count($tmpCustomer) === 1) {
                     $updated++;
                     $customer = $tmpCustomer[0];
                 } else {
@@ -263,7 +263,7 @@ class ImportCustomerCommand extends Command
         $fields = [];
 
         foreach (self::$requiredHeader as $headerName) {
-            if (!in_array($headerName, $header)) {
+            if (!\in_array($headerName, $header)) {
                 $fields[] = $headerName;
             }
         }
