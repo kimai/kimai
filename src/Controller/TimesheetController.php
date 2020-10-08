@@ -14,7 +14,6 @@ use App\Event\TimesheetMetaDisplayEvent;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\TagRepository;
-use App\Timesheet\TrackingModeService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,12 +32,11 @@ class TimesheetController extends TimesheetAbstractController
      *
      * @param int $page
      * @param Request $request
-     * @param TrackingModeService $service
      * @return Response
      */
-    public function indexAction($page, Request $request, TrackingModeService $service)
+    public function indexAction($page, Request $request)
     {
-        return $this->index($page, $request, 'timesheet/index.html.twig', TimesheetMetaDisplayEvent::TIMESHEET, $service);
+        return $this->index($page, $request, 'timesheet/index.html.twig', TimesheetMetaDisplayEvent::TIMESHEET);
     }
 
     /**

@@ -77,7 +77,7 @@ abstract class TimesheetAbstractController extends AbstractController
         return $this->trackingModeService->getActiveMode();
     }
 
-    protected function index($page, Request $request, string $renderTemplate, string $location, TrackingModeService $service): Response
+    protected function index($page, Request $request, string $renderTemplate, string $location): Response
     {
         $query = new TimesheetQuery();
         $query->setPage($page);
@@ -111,7 +111,6 @@ abstract class TimesheetAbstractController extends AbstractController
         $this->prepareQuery($query);
 
         $pager = $this->repository->getPagerfantaForQuery($query);
-        $mode = $service->getActiveMode();
 
         return $this->render($renderTemplate, [
             'entries' => $pager,
@@ -122,7 +121,6 @@ abstract class TimesheetAbstractController extends AbstractController
             'showSummary' => $this->includeSummary(),
             'showStartEndTime' => $this->canSeeStartEndTime(),
             'metaColumns' => $this->findMetaColumns($query, $location),
-            'is_punch_mode' => !$mode->canEditDuration() && !$mode->canEditBegin() && !$mode->canEditEnd()
         ]);
     }
 
