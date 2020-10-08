@@ -32,7 +32,7 @@ export default class KimaiPaginatedBoxWidget {
             document.addEventListener(eventName, reloadPage);
         }
 
-        this.widget.on('click', '.box-tools a', function (event) {
+        this.widget.on('click', '.box-tools ul.pagination a', function (event) {
             event.preventDefault();
             self.loadPage(jQuery(event.currentTarget).attr('href'));
         });

@@ -11,11 +11,13 @@ namespace App\Command;
 
 use App\Constants;
 use Doctrine\DBAL\Connection;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Command used to update a Kimai installation.
@@ -66,8 +68,11 @@ final class UpdateCommand extends Command
 
         $io->title('Kimai updates running ...');
 
-        // we cannot change the environment here, as it needs to be configured in the .env file before this command is started
-        $environment = getenv('APP_ENV');
+        /** @var Application $application */
+        $application = $this->getApplication();
+        /** @var KernelInterface $kernel */
+        $kernel = $application->getKernel();
+        $environment = $kernel->getEnvironment();
 
         // make sure database is available, Kimai running and installed
         try {

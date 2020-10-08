@@ -12,24 +12,24 @@ namespace App\Tests\Controller;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
-use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
  */
 class TagControllerTest extends ControllerBaseTest
 {
-    protected function importTags(Client $client): void
+    protected function importTags(HttpKernelBrowser $client): void
     {
         $tagList = ['Test', 'Administration', 'Support', '#2018-001', '#2018-002', '#2018-003', 'Development',
             'Marketing', 'First Level Support', 'Bug Fixing'];
 
         $fixture = new TagFixtures();
         $fixture->setTagArray($tagList);
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
     }
 
-    public function testDebugIsSecure()
+    public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/tags/');
     }
@@ -110,7 +110,7 @@ class TagControllerTest extends ControllerBaseTest
         $node = $form->getFormNode();
         $node->setAttribute('action', $this->createUrl('/admin/tags/multi-delete'));
 
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Tag[] $tags */
         $tags = $em->getRepository(Tag::class)->findAll();
         self::assertCount(10, $tags);

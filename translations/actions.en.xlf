@@ -70,6 +70,10 @@
                 <source>create-timesheet</source>
                 <target>Create timesheet</target>
             </trans-unit>
+            <trans-unit id="create-timesheet-multiuser">
+                <source>create-timesheet-multiuser</source>
+                <target>For multiple users</target>
+            </trans-unit>
             <trans-unit id="permissions">
                 <source>permissions</source>
                 <target>Team permissions</target>
@@ -77,6 +81,18 @@
             <trans-unit id="details">
                 <source>details</source>
                 <target>Show</target>
+            </trans-unit>
+            <trans-unit id="download">
+                <source>download</source>
+                <target>Download</target>
+            </trans-unit>
+            <trans-unit id="invoice.pending">
+                <source>invoice.pending</source>
+                <target>Waiting for payment</target>
+            </trans-unit>
+            <trans-unit id="invoice.paid">
+                <source>invoice.paid</source>
+                <target>Invoice paid</target>
             </trans-unit>
         </body>
     </file>

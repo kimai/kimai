@@ -29,7 +29,7 @@ class InvoiceModelActivityHydratorTest extends TestCase
         $result = $sut->hydrate($model);
         $this->assertModelStructure($result);
 
-        $model->getQuery()->setActivity(null);
+        $model->getQuery()->setActivities([]);
         $result = $sut->hydrate($model);
         self::assertEmpty($result);
     }
@@ -41,6 +41,10 @@ class InvoiceModelActivityHydratorTest extends TestCase
             'activity.name',
             'activity.comment',
             'activity.meta.foo-activity',
+            'activity.1.id',
+            'activity.1.name',
+            'activity.1.comment',
+            'activity.1.meta.foo-activity',
         ];
 
         $givenKeys = array_keys($model);

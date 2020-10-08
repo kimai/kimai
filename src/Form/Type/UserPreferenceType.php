@@ -34,10 +34,6 @@ class UserPreferenceType extends AbstractType
         $this->translate = $translator;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventListener(
@@ -56,7 +52,7 @@ class UserPreferenceType extends AbstractType
                 }
 
                 $required = true;
-                if (CheckboxType::class == $preference->getType()) {
+                if (CheckboxType::class === $preference->getType()) {
                     $required = false;
                 }
 

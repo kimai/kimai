@@ -41,6 +41,7 @@ class TimesheetVoter extends AbstractVoter
         self::VIEW_RATE,
         self::EDIT_RATE,
         self::EDIT_EXPORT,
+        'duplicate'
     ];
 
     /**
@@ -54,7 +55,7 @@ class TimesheetVoter extends AbstractVoter
             return false;
         }
 
-        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
+        if (!\in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
             return false;
         }
 
@@ -97,6 +98,10 @@ class TimesheetVoter extends AbstractVoter
                     return false;
                 }
                 $permission .= $attribute;
+                break;
+
+            case 'duplicate':
+                $permission = self::EDIT;
                 break;
 
             case self::VIEW_RATE:

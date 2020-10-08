@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \App\Configuration\CalendarConfiguration
  * @covers \App\Configuration\StringAccessibleConfigTrait
+ * @group legacy
  */
 class CalendarConfigurationTest extends TestCase
 {
@@ -40,6 +41,10 @@ class CalendarConfigurationTest extends TestCase
                 'days' => [2, 4, 6],
                 'begin' => '07:49',
                 'end' => '19:27'
+            ],
+            'visibleHours' => [
+                'begin' => '09:00',
+                'end' => '21:34',
             ],
             'day_limit' => 20,
             'slot_duration' => '01:11:00',
@@ -79,6 +84,10 @@ class CalendarConfigurationTest extends TestCase
 
         $this->assertEquals('wertwertwegsdfbdf243w567fg8ihuon', $sut->getGoogleApiKey());
         $sources = $sut->getGoogleSources();
-        $this->assertEquals(2, count($sources));
+        $this->assertEquals(2, \count($sources));
+
+        self::assertTrue($sut->isShowWeekends());
+        self::assertEquals('09:00', $sut->getTimeframeBegin());
+        self::assertEquals('21:34', $sut->getTimeframeEnd());
     }
 }

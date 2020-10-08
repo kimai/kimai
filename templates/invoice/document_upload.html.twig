@@ -1,0 +1,49 @@
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% import "invoice/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.invoice_upload('index') }}{% endblock %}
+
+{% block main %}
+    {% if form is not null %}
+        {% form_theme form '@AdminLTE/layout/form-theme-horizontal.html.twig' %}
+        {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+        {% set formOptions = {
+            'title': 'upload'|trans,
+            'form': form,
+            'back': path('admin_invoice_template')
+        } %}
+
+        {% embed formEditTemplate with formOptions %}
+            {% block form_body %}
+                {{ form_row(form.document) }}
+                {{ form_widget(form) }}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+    {% if documents|length > 0 %}
+        {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'documents': documents} %}
+            {% import "project/actions.html.twig" as actions %}
+            {% import "macros/widgets.html.twig" as widgets %}
+            {% block box_title %}{{ 'label.invoice_renderer'|trans({}, 'invoice-renderer') }}{% endblock %}
+            {% block box_attributes %}
+                id="invoice_document_list"
+            {% endblock %}
+            {% block box_body_class %}no-padding{% endblock %}
+            {% block box_body %}
+                <table class="table table-hover dataTable">
+                    <tbody>
+                    {% for document in documents %}
+                        <tr>
+                            <td style="width: 33%">{{ document.id }}</td>
+                            <td style="width: 33%">{{ document.lastChange|date }}</td>
+                            <td>{{ document.name }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endblock %}

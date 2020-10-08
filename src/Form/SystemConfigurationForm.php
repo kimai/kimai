@@ -45,6 +45,9 @@ class SystemConfigurationForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'edit_system_configurations',
+            'attr' => [
+                'data-form-event' => 'kimai.systemConfigUpdate'
+            ],
         ]);
     }
 }

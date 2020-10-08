@@ -6,14 +6,15 @@
  */
 
 @import 'variables';
+@import 'layout';
 @import 'error-page';
 @import 'print';
 @import 'content';
+@import 'box';
 @import 'content-header';
 @import 'toolbar';
 @import 'sidebar';
 @import 'footer';
-@import 'invoice';
 @import 'datatable';
 @import 'datatable-extensions';
 @import 'calendar';
@@ -24,3 +25,4 @@
 @import 'sweetalert';
 @import 'autocomplete';
 @import 'selectpicker';
+@import 'reporting';

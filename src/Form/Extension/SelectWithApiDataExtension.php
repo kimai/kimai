@@ -52,7 +52,7 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
 
         $apiData = $options['api_data'];
 
-        if (!is_array($apiData)) {
+        if (!\is_array($apiData)) {
             throw new \InvalidArgumentException('Option "api_data" must be an array for form "' . $form->getName() . '"');
         }
 

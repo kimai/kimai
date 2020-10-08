@@ -58,7 +58,7 @@ class MonthTest extends TestCase
     public function testSetter()
     {
         $sut = new Month('01');
-        $sut->setTotalDuration(999.27);
+        $sut->setTotalDuration(999);
         $sut->setTotalRate(0.123456789);
 
         $this->assertEquals(999, $sut->getTotalDuration());

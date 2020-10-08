@@ -1,10 +1,7 @@
+# TODO upgrade to 2.8
+# https://github.com/FriendsOfSymfony/FOSRestBundle/releases/tag/2.8.0
 fos_rest:
 #    disable_csrf_role: IS_AUTHENTICATED_ANONYMOUSLY
-#    access_denied_listener:
-#        enabled:              false
-#        service:              null
-#        formats:
-#            name:                 ~
 #    unauthorized_challenge:  null
     param_fetcher_listener:
         enabled:              true
@@ -14,10 +11,11 @@ fos_rest:
 #    allowed_methods_listener:
 #        enabled:              false
 #        service:              null
+    # TODO activate with 2.8
+    # routing_loader: false
     routing_loader:
         default_format: json
         include_format: true
-#        prefix_methods:       true
     body_converter:
         enabled:              true
 #        validate:             false
@@ -42,8 +40,9 @@ fos_rest:
 #            service:              null
 #            formats:
 #                name:                 ~
-#        formats:
-#            name:                 ~
+        formats:
+            json: true
+            xml: false
 #        templating_formats:
 #            name:                 ~
         view_response_listener:
@@ -58,12 +57,17 @@ fos_rest:
 #            mime_type:            application/javascript+jsonp
     exception:
         enabled:              true
+        # TODO active with 2.8
+        # serialize_exceptions: false
+        # TODO deprecated with 2.8
+        # https://github.com/FriendsOfSymfony/FOSRestBundle/issues/2200#issuecomment-629150462
+        # https://github.com/FriendsOfSymfony/FOSRestBundle/issues/2224
         exception_controller: 'fos_rest.exception.controller:showAction'
-#        service:              null
         codes:
 #            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
 #            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
 #            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': 400
+            'App\Validator\ValidationFailedException': 400
         messages:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
             'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': true
@@ -81,7 +85,7 @@ fos_rest:
         enabled: true
 #        service:              null
         rules:
-            - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json, xml ] }
+            - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json ] }
 #            host:                 null     # URL host name
 #            methods:              null     # Method for URL
 #            stop:                 false

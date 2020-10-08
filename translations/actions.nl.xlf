@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="stop">
                 <source>stop</source>
-                <target>Beëindigen</target>
+                <target>Stoppen</target>
             </trans-unit>
             <trans-unit id="back">
                 <source>back</source>
@@ -36,19 +36,19 @@
             </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
-                <target>Prestaties</target>
+                <target>Tijden</target>
             </trans-unit>
             <trans-unit id="customer">
                 <source>customer</source>
-                <target>Filter op cliënt</target>
+                <target>Filter op klant</target>
             </trans-unit>
             <trans-unit id="project">
                 <source>project</source>
-                <target>Filter op dossier</target>
+                <target>Filter op project</target>
             </trans-unit>
             <trans-unit id="activity">
                 <source>activity</source>
-                <target>Filter op rubriek</target>
+                <target>Filter op activiteiten</target>
             </trans-unit>
             <trans-unit id="copy">
                 <source>copy</source>
@@ -56,23 +56,23 @@
             </trans-unit>
             <trans-unit id="home">
                 <source>home</source>
-                <target>Homepage</target>
+                <target>Startpagina</target>
             </trans-unit>
             <trans-unit id="create-project">
                 <source>create-project</source>
-                <target>Maak een dossier</target>
+                <target>Maak een project</target>
             </trans-unit>
             <trans-unit id="create-activity">
                 <source>create-activity</source>
-                <target>Maak een rubriek</target>
+                <target>Maak een activiteit</target>
             </trans-unit>
             <trans-unit id="create-timesheet">
                 <source>create-timesheet</source>
-                <target>Voeg een prestatie toe</target>
+                <target>Voeg een tijd toe</target>
             </trans-unit>
             <trans-unit id="permissions">
                 <source>permissions</source>
-                <target>Team machtigen</target>
+                <target>Team rechten</target>
             </trans-unit>
         </body>
     </file>

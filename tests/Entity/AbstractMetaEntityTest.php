@@ -37,6 +37,7 @@ abstract class AbstractMetaEntityTest extends TestCase
         self::assertEmpty($sut->getOptions());
         self::assertFalse($sut->isVisible());
         self::assertFalse($sut->isRequired());
+        self::assertEquals(0, $sut->getOrder());
     }
 
     public function testSetterAndGetter()
@@ -64,6 +65,9 @@ abstract class AbstractMetaEntityTest extends TestCase
 
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setType(DateTimePickerType::class));
         self::assertEquals(DateTimePickerType::class, $sut->getType());
+
+        self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setOrder(7));
+        self::assertEquals(7, $sut->getOrder());
 
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->addConstraint(new Length(['max' => 10])));
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->addConstraint(new NotNull([])));
@@ -112,7 +116,8 @@ abstract class AbstractMetaEntityTest extends TestCase
             ->setType('blub2')
             ->setEntity($entity2)
             ->setIsRequired(true)
-            ->setisVisible(true)
+            ->setIsVisible(true)
+            ->setOrder(93)
             ->setConstraints([new NotBlank(), new Length(['min' => 1])])
             ->setOptions(['foo1' => 'bar1'])
         ;
@@ -123,6 +128,7 @@ abstract class AbstractMetaEntityTest extends TestCase
         self::assertEquals('bar', $meta1->getValue());
         self::assertEquals('blub2', $meta1->getType());
         self::assertEquals('TRALALA', $meta1->getLabel());
+        self::assertEquals(93, $meta1->getOrder());
         self::assertTrue($meta1->isRequired());
         self::assertTrue($meta1->isVisible());
         self::assertSame($entity1, $meta1->getEntity());

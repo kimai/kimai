@@ -54,9 +54,9 @@ security:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     access_control:
-        - { path: '^/auth/saml/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: '^/auth/saml/metadata', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/auth', roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)$', role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/(%app_locales%)/auth', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/login', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/register', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/resetting', role: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -10,6 +10,7 @@
 namespace App\Export\Base;
 
 use App\Export\ExportItemInterface;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Timesheet\UserDateTimeFactory;
 use App\Utils\HtmlToPdfConverter;
@@ -33,17 +34,42 @@ class PDFRenderer
      * @var HtmlToPdfConverter
      */
     private $converter;
+    /**
+     * @var ProjectRepository
+     */
+    private $projectRepository;
+    /**
+     * @var string
+     */
+    private $id = 'pdf';
+    /**
+     * @var string
+     */
+    private $template = 'default.pdf.twig';
 
-    public function __construct(Environment $twig, UserDateTimeFactory $dateTime, HtmlToPdfConverter $converter)
+    public function __construct(Environment $twig, UserDateTimeFactory $dateTime, HtmlToPdfConverter $converter, ProjectRepository $projectRepository)
     {
         $this->twig = $twig;
         $this->dateTime = $dateTime;
         $this->converter = $converter;
+        $this->projectRepository = $projectRepository;
     }
 
     protected function getTemplate(): string
     {
-        return 'export/renderer/pdf.html.twig';
+        return '@export/' . $this->template;
+    }
+
+    protected function getOptions(TimesheetQuery $query): array
+    {
+        $decimal = false;
+        if (null !== $query->getCurrentUser()) {
+            $decimal = (bool) $query->getCurrentUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+        } elseif (null !== $query->getUser()) {
+            $decimal = (bool) $query->getUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+        }
+
+        return ['decimal' => $decimal];
     }
 
     /**
@@ -56,12 +82,15 @@ class PDFRenderer
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
-        $content = $this->twig->render($this->getTemplate(), [
+        $summary = $this->calculateSummary($timesheets);
+        $content = $this->twig->render($this->getTemplate(), array_merge([
             'entries' => $timesheets,
             'query' => $query,
             'now' => $this->dateTime->createDateTime(),
-            'summaries' => $this->calculateSummary($timesheets),
-        ]);
+            'summaries' => $summary,
+            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectRepository),
+            'decimal' => false,
+        ], $this->getOptions($query)));
 
         $content = $this->converter->convertToPdf($content);
 
@@ -75,8 +104,22 @@ class PDFRenderer
         return $response;
     }
 
+    public function setTemplate(string $filename): PDFRenderer
+    {
+        $this->template = $filename;
+
+        return $this;
+    }
+
+    public function setId(string $id): PDFRenderer
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getId(): string
     {
-        return 'pdf';
+        return $this->id;
     }
 }

@@ -32,9 +32,6 @@ class DateTimePickerType extends AbstractType
      */
     protected $dateTime;
 
-    /**
-     * @param LocaleSettings $localeSettings
-     */
     public function __construct(LocaleSettings $localeSettings, UserDateTimeFactory $dateTime)
     {
         $this->localeSettings = $localeSettings;

@@ -37,7 +37,8 @@ class Configuration
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
-     * @Assert\Length(min=2, max=100)
+     * @Assert\NotNull()
+     * @Assert\Length(min=2, max=100, allowEmptyString=false)
      */
     private $name;
 

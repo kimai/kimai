@@ -29,11 +29,13 @@ trait EntityFormTrait
         if ($options['include_budget']) {
             $builder
                 ->add('budget', MoneyType::class, [
+                    'empty_data' => '0.00',
                     'label' => 'label.budget',
                     'required' => false,
                     'currency' => $currency,
                 ])
                 ->add('timeBudget', DurationType::class, [
+                    'empty_data' => 0,
                     'label' => 'label.timeBudget',
                     'icon' => 'clock',
                     'required' => false,

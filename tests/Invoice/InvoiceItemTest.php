@@ -26,6 +26,7 @@ class InvoiceItemTest extends TestCase
         self::assertNull($sut->getFixedRate());
         self::assertNull($sut->getEnd());
         self::assertEquals(0.00, $sut->getRate());
+        self::assertEquals(0.00, $sut->getInternalRate());
         self::assertNull($sut->getProject());
         self::assertIsArray($sut->getAdditionalFields());
         self::assertEmpty($sut->getAdditionalFields());

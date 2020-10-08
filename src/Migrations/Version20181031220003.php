@@ -22,19 +22,13 @@ final class Version20181031220003 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
-        $platform = $this->getPlatform();
+        $timesheet = 'kimai2_timesheet';
+        $projects = 'kimai2_projects';
+        $activities = 'kimai2_activities';
+        $users = 'kimai2_users';
+        $customers = 'kimai2_customers';
 
-        if (!in_array($platform, ['sqlite', 'mysql'])) {
-            $this->abortIf(true, 'Unsupported database platform: ' . $platform);
-        }
-
-        $timesheet = $this->getTableName('timesheet');
-        $projects = $this->getTableName('projects');
-        $activities = $this->getTableName('activities');
-        $users = $this->getTableName('users');
-        $customers = $this->getTableName('customers');
-
-        if ($platform === 'sqlite') {
+        if ($this->isPlatformSqlite()) {
             // project table
             $this->addSql('DROP INDEX IDX_407F12069395C3F3');
             $this->addSql('CREATE TEMPORARY TABLE __temp__' . $projects . ' AS SELECT id, customer_id, name, order_number, comment, visible, budget, fixed_rate, hourly_rate FROM ' . $projects);
@@ -68,7 +62,7 @@ final class Version20181031220003 extends AbstractMigration
         $this->addSql('UPDATE ' . $timesheet . ' SET project_id = (SELECT project_id FROM ' . $activities . ' WHERE id = activity_id)');
 
         // now update the timesheet table and disallow null values for all required columns (that was a bug before)
-        if ($platform === 'sqlite') {
+        if ($this->isPlatformSqlite()) {
             $this->addSql('DROP INDEX IDX_4F60C6B181C06096');
             $this->addSql('DROP INDEX IDX_4F60C6B18D93D649');
             $this->addSql('DROP INDEX IDX_4F60C6B1166D1F9C');
@@ -92,17 +86,11 @@ final class Version20181031220003 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $platform = $this->getPlatform();
+        $timesheet = 'kimai2_timesheet';
+        $projects = 'kimai2_projects';
+        $customers = 'kimai2_customers';
 
-        if (!in_array($platform, ['sqlite', 'mysql'])) {
-            $this->abortIf(true, 'Unsupported database platform: ' . $platform);
-        }
-
-        $timesheet = $this->getTableName('timesheet');
-        $projects = $this->getTableName('projects');
-        $customers = $this->getTableName('customers');
-
-        if ($platform === 'sqlite') {
+        if ($this->isPlatformSqlite()) {
             // project table
             $this->addSql('DROP INDEX IDX_407F12069395C3F3');
             $this->addSql('CREATE TEMPORARY TABLE __temp__' . $projects . ' AS SELECT id, customer_id, name, order_number, comment, visible, budget, fixed_rate, hourly_rate FROM ' . $projects);

@@ -12,6 +12,7 @@ namespace App\EventSubscriber;
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel as KimaiMenuItemModel;
 use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
+use KevinPapst\AdminLTEBundle\Model\MenuItemInterface;
 use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -95,7 +96,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
 
     /**
      * @param string $route
-     * @param MenuItemModel[] $items
+     * @param MenuItemInterface[] $items
      */
     protected function activateByRoute($route, $items)
     {

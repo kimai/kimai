@@ -95,7 +95,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $options = $reflection->getProperty('options');
         $options->setAccessible(true);
         $arr = $options->getValue($handler);
-        if (!is_array($arr) || !isset($arr[$name])) {
+        if (!\is_array($arr) || !isset($arr[$name])) {
             return $default;
         }
 

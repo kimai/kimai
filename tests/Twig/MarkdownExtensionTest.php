@@ -38,7 +38,7 @@ class MarkdownExtensionTest extends TestCase
         $config = new TimesheetConfiguration($loader, ['markdown_content' => true]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
-        $this->assertEquals('<h1 id="foobar">foobar</h1>', $sut->markdownToHtml('# foobar'));
+        $this->assertEquals('<p># foobar</p>', $sut->markdownToHtml('# foobar'));
     }
 
     public function testTimesheetContent()

@@ -4,6 +4,7 @@
 
 {% block title %}{{ 'menu.export'|trans }}{% endblock %}
 {% block invoice %}
+    {% set decimal = decimal|default(false) %}
     {% set showUserColumn = true %}
     {% if query.user %}
         {% set showUserColumn = false %}
@@ -72,7 +73,7 @@
                         {% for field in metaColumns %}
                             <td>{{ tables.datatable_meta_column(entry, field) }}</td>
                         {% endfor %}
-                        <td class="text-nowrap">{{ entry.duration|duration }}</td>
+                        <td class="text-nowrap">{{ entry.duration|duration(decimal) }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -86,7 +87,7 @@
                         <th></th>
                     {% endfor %}
                     <th>{{ 'invoice.total_working_time'|trans }}</th>
-                    <th class="text-nowrap">{{ timeWorked|duration }}</th>
+                    <th class="text-nowrap">{{ timeWorked|duration(decimal) }}</th>
                 </tr>
                 </tfoot>
             </table>

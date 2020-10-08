@@ -12,6 +12,7 @@ namespace App\Tests\Form\MultiUpdate;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use PHPUnit\Framework\TestCase;
@@ -59,8 +60,10 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setAction('sdfsdfsdf'));
         self::assertEquals('sdfsdfsdf', $sut->getAction());
 
-        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setEntities([1, 2, 3, 4, 5, 6, 7, 8, 9, '0815']));
-        self::assertEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, '0815'], $sut->getEntities());
+        $entities = [new Timesheet(), new Timesheet(), new Timesheet(), new Timesheet()];
+
+        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setEntities($entities));
+        self::assertEquals($entities, $sut->getEntities());
 
         self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setExported(true));
         self::assertTrue($sut->isExported());

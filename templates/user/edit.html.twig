@@ -3,9 +3,15 @@
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
 
 {% block main %}
-    {{ include('default/_form.html.twig', {
+    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formOptions = {
         'title': 'create'|trans,
         'form': form,
         'back': path('admin_user')
-    }) }}
+    } %}
+    {% embed formEditTemplate with formOptions %}
+        {% block form_body %}
+            {{ form_widget(form) }}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

@@ -6,9 +6,13 @@
                 <source>label.invoice_number_generator</source>
                 <target>Rechnungsnummern-Generator</target>
             </trans-unit>
+            <trans-unit id="date">
+                <source>date</source>
+                <target>Datum</target>
+            </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                <target>Datum (Standard)</target>
+                <target>Konfiguriertes Format</target>
             </trans-unit>
         </body>
     </file>

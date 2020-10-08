@@ -16,12 +16,12 @@ use App\Entity\Project;
  */
 class ActivityQuery extends ProjectQuery
 {
-    public const ACTIVITY_ORDER_ALLOWED = ['id', 'name', 'comment', 'customer', 'project'];
+    public const ACTIVITY_ORDER_ALLOWED = ['id', 'name', 'comment', 'customer', 'project', 'visible'];
 
     /**
-     * @var Project|int|null
+     * @var Project[]|int[]
      */
-    private $project;
+    private $projects = [];
     /**
      * @var bool
      */
@@ -72,20 +72,58 @@ class ActivityQuery extends ProjectQuery
 
     /**
      * @return Project|int|null
+     * @deprecated since 1.9 - use getProjects() instead - will be removed with 2.0
      */
     public function getProject()
     {
-        return $this->project;
+        if (\count($this->projects) > 0) {
+            return $this->projects[0];
+        }
+
+        return null;
     }
 
     /**
      * @param Project|int|null $project
      * @return self
+     * @deprecated since 1.9 - use setProjects() or addProject() instead - will be removed with 2.0
      */
     public function setProject($project = null): self
     {
-        $this->project = $project;
+        if (null === $project) {
+            $this->projects = [];
+        } else {
+            $this->projects = [$project];
+        }
 
         return $this;
+    }
+
+    /**
+     * @param Project|int $project
+     * @return self
+     */
+    public function addProject($project): self
+    {
+        $this->projects[] = $project;
+
+        return $this;
+    }
+
+    public function setProjects(array $projects): self
+    {
+        $this->projects = $projects;
+
+        return $this;
+    }
+
+    public function getProjects(): array
+    {
+        return $this->projects;
+    }
+
+    public function hasProjects(): bool
+    {
+        return !empty($this->projects);
     }
 }

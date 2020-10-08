@@ -191,19 +191,28 @@ class TimesheetMultiUpdate extends AbstractType
         }
 
         if ($options['include_exported']) {
-            $builder->add('exported', YesNoType::class, [
-                'label' => 'label.exported'
+            $builder->add('exported', ChoiceType::class, [
+                'label' => 'label.mark_as_exported',
+                'required' => false,
+                'choices' => [
+                    'entryState.exported' => true,
+                    'entryState.not_exported' => false
+                ]
             ]);
         }
 
         if ($options['include_rate']) {
             $builder
+                ->add('recalculateRates', YesNoType::class, [
+                    'label' => 'label.recalculate_rates',
+                ])
                 ->add('fixedRate', FixedRateType::class, [
                     'currency' => $currency,
                 ])
                 ->add('hourlyRate', HourlyRateType::class, [
                     'currency' => $currency,
-                ]);
+                ])
+            ;
         }
 
         $builder->add('entities', HiddenType::class, [

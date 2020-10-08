@@ -6,9 +6,9 @@
                 <source>label.invoice_number_generator</source>
                 <target>請求書番号 ジェネレーター</target>
             </trans-unit>
-            <trans-unit id="default">
-                <source>default</source>
-                <target>日付 (デフォルト)</target>
+            <trans-unit id="date">
+                <source>date</source>
+                <target>日付</target>
             </trans-unit>
         </body>
     </file>

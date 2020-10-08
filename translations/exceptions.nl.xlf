@@ -21,9 +21,8 @@
             <trans-unit id="http_error.suggestion">
                 <source>http_error.suggestion</source>
                 <target>
-                    Een onverwachte fout trad op. Probeer opnieuw.
-                    Mogelijk vond u een bug. Contacteer uw administrator
-                    wanneer het probleem zich blijft stellen.
+                    Een kritieke fout trad op. Probeer alstublieft opnieuw.
+                    Mogelijk vond u een software probleem. Neem contact op met uw administrator wanneer het probleem zich blijft voortdoen.
                 </target>
             </trans-unit>
             <trans-unit id="http_error_404.description">
@@ -45,7 +44,7 @@
                 <source>http_error_403.suggestion</source>
                 <target>
                     Het spijt ons maar u heeft onvoldoende rechten om deze pagina te zien.
-                    Spreek uw administrator aan als u denkt dat dit een vergissing is.
+                    Spreek met uw beheerder als u denkt dat dit een vergissing is.
                 </target>
             </trans-unit>
         </body>

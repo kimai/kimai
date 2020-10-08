@@ -101,7 +101,7 @@ final class TeamFixtures extends Fixture
             $lead = null;
             while (null === $lead) {
                 $tmp = $user[array_rand($user)];
-                if (!in_array($tmp, $this->skipUser)) {
+                if (!\in_array($tmp, $this->skipUser)) {
                     $lead = $tmp;
                 }
             }
@@ -116,7 +116,7 @@ final class TeamFixtures extends Fixture
                 $userToAdd = null;
                 while (null === $userToAdd) {
                     $tmp = $user[array_rand($user)];
-                    if (!in_array($tmp, $this->skipUser)) {
+                    if (!\in_array($tmp, $this->skipUser)) {
                         $userToAdd = $tmp;
                     }
                 }
@@ -128,7 +128,7 @@ final class TeamFixtures extends Fixture
             }
 
             if (null !== $this->callback) {
-                call_user_func($this->callback, $team);
+                \call_user_func($this->callback, $team);
             }
             $manager->persist($team);
         }

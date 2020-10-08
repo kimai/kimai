@@ -9,6 +9,9 @@
 
 namespace App\Configuration;
 
+/**
+ * @internal will be deprecated soon, use SystemConfiguration instead
+ */
 class ThemeConfiguration implements SystemBundleConfiguration, \ArrayAccess
 {
     use StringAccessibleConfigTrait;

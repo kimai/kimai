@@ -10,18 +10,14 @@
 namespace App\Widget\Type;
 
 use App\Entity\User;
-use App\Security\CurrentUser;
 
-class UserTeams extends SimpleWidget implements AuthorizedWidget
+class UserTeams extends SimpleWidget implements AuthorizedWidget, UserWidget
 {
-    public function __construct(CurrentUser $user)
+    public function __construct()
     {
         $this->setId('UserTeams');
         $this->setTitle('label.my_teams');
-        $this->setOptions([
-            'user' => $user->getUser(),
-            'id' => '',
-        ]);
+        $this->setOption('id', '');
     }
 
     public function getOptions(array $options = []): array
@@ -50,5 +46,10 @@ class UserTeams extends SimpleWidget implements AuthorizedWidget
     public function getPermissions(): array
     {
         return ['view_team_member', 'view_team'];
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->setOption('user', $user);
     }
 }

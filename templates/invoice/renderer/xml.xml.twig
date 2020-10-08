@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kimai version="{{ constant('App\\Constants::VERSION') }}">
+{% for key, value in model.toArray %}
+    <{{ key }}{% if value is empty %}/>{% else %}>{{ value|escape }}</{{ key }}>{% endif %}
+
+{% endfor %}
+    <items>
+        {%- for entry in model.calculator.entries %}
+
+        <item>
+{% for key, value in model.itemToArray(entry) %}
+            <{{ key }}{% if value is empty %}/>{% else %}>{{ value|escape }}</{{ key }}>{% endif %}
+
+{% endfor %}
+        </item>
+        {%- endfor %}
+
+    </items>
+</kimai>

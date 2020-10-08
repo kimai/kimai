@@ -16,7 +16,6 @@ use App\Form\TagEditForm;
 use App\Form\Toolbar\TagToolbarForm;
 use App\Repository\Query\TagQuery;
 use App\Repository\TagRepository;
-use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,8 +79,8 @@ class TagController extends AbstractController
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('tags');
-            } catch (ORMException $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            } catch (\Exception $ex) {
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -112,8 +111,8 @@ class TagController extends AbstractController
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('tags');
-            } catch (ORMException $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            } catch (\Exception $ex) {
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -139,7 +138,7 @@ class TagController extends AbstractController
                 $repository->multiDelete($dto->getEntities());
                 $this->flashSuccess('action.delete.success');
             } catch (\Exception $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashDeleteException($ex);
             }
         }
 

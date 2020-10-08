@@ -17,8 +17,10 @@ use App\Form\Model\DateRange;
 /**
  * Can be used for advanced timesheet repository queries.
  */
-class TimesheetQuery extends ActivityQuery
+class TimesheetQuery extends ActivityQuery implements BillableInterface
 {
+    use BillableTrait;
+
     public const STATE_ALL = 1;
     public const STATE_RUNNING = 2;
     public const STATE_STOPPED = 3;
@@ -32,9 +34,9 @@ class TimesheetQuery extends ActivityQuery
      */
     protected $timesheetUser;
     /**
-     * @var Activity|null
+     * @var array
      */
-    protected $activity;
+    private $activities = [];
     /**
      * @var int
      */
@@ -43,6 +45,10 @@ class TimesheetQuery extends ActivityQuery
      * @var int
      */
     protected $exported = self::STATE_ALL;
+    /**
+     * @var \DateTime|null
+     */
+    private $modifiedAfter;
     /**
      * @var DateRange
      */
@@ -93,7 +99,7 @@ class TimesheetQuery extends ActivityQuery
     /**
      * Limit the data exclusively to the user (eg. users own timesheets).
      *
-     * @return User|null
+     * @return User|int|null
      */
     public function getUser()
     {
@@ -114,64 +120,110 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
-     * Activity overwrites: setProject() and setCustomer()
-     *
-     * @return Activity|null
+     * @return Activity|int|null
+     * @deprecated since 1.9 - use getActivities() instead - will be removed with 2.0
      */
     public function getActivity()
     {
-        return $this->activity;
+        if (\count($this->activities) > 0) {
+            return $this->activities[0];
+        }
+
+        return null;
+    }
+
+    public function getActivities(): array
+    {
+        return $this->activities;
     }
 
     /**
      * @param Activity|int|null $activity
-     * @return TimesheetQuery
+     * @return $this
+     * @deprecated since 1.9 - use setActivities() or addActivity() instead - will be removed with 2.0
      */
-    public function setActivity($activity = null)
+    public function setActivity($activity)
     {
-        $this->activity = $activity;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    /**
-     * @param int $state
-     * @return TimesheetQuery
-     */
-    public function setState($state)
-    {
-        $state = (int) $state;
-        if (in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED], true)) {
-            $this->state = $state;
+        if (null === $activity) {
+            $this->activities = [];
+        } else {
+            $this->activities = [$activity];
         }
 
         return $this;
     }
 
     /**
-     * @return int
+     * @param Activity|int $activity
+     * @return $this
      */
-    public function getExported()
+    public function addActivity($activity): TimesheetQuery
+    {
+        $this->activities[] = $activity;
+
+        return $this;
+    }
+
+    /**
+     * @param Activity[]|int[] $activities
+     * @return $this
+     */
+    public function setActivities(array $activities): TimesheetQuery
+    {
+        $this->activities = $activities;
+
+        return $this;
+    }
+
+    public function hasActivities(): bool
+    {
+        return !empty($this->activities);
+    }
+
+    public function getState(): int
+    {
+        return $this->state;
+    }
+
+    public function isRunning(): bool
+    {
+        return $this->state === self::STATE_RUNNING;
+    }
+
+    public function isStopped(): bool
+    {
+        return $this->state === self::STATE_STOPPED;
+    }
+
+    public function setState(int $state): TimesheetQuery
+    {
+        $state = (int) $state;
+        if (\in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED], true)) {
+            $this->state = $state;
+        }
+
+        return $this;
+    }
+
+    public function getExported(): int
     {
         return $this->exported;
     }
 
-    /**
-     * @param int $exported
-     * @return TimesheetQuery
-     */
-    public function setExported($exported)
+    public function isExported(): bool
+    {
+        return $this->exported === self::STATE_EXPORTED;
+    }
+
+    public function isNotExported(): bool
+    {
+        return $this->exported === self::STATE_NOT_EXPORTED;
+    }
+
+    public function setExported(int $exported): TimesheetQuery
     {
         $exported = (int) $exported;
-        if (in_array($exported, [self::STATE_ALL, self::STATE_EXPORTED, self::STATE_NOT_EXPORTED], true)) {
+        if (\in_array($exported, [self::STATE_ALL, self::STATE_EXPORTED, self::STATE_NOT_EXPORTED], true)) {
             $this->exported = $exported;
         }
 
@@ -183,11 +235,7 @@ class TimesheetQuery extends ActivityQuery
         return $this->dateRange->getBegin();
     }
 
-    /**
-     * @param \DateTime $begin
-     * @return TimesheetQuery
-     */
-    public function setBegin($begin)
+    public function setBegin(\DateTime $begin): TimesheetQuery
     {
         $this->dateRange->setBegin($begin);
 
@@ -199,40 +247,26 @@ class TimesheetQuery extends ActivityQuery
         return $this->dateRange->getEnd();
     }
 
-    /**
-     * @param \DateTime $end
-     * @return TimesheetQuery
-     */
-    public function setEnd($end)
+    public function setEnd(\DateTime $end): TimesheetQuery
     {
         $this->dateRange->setEnd($end);
 
         return $this;
     }
 
-    /**
-     * @return DateRange
-     */
     public function getDateRange(): DateRange
     {
         return $this->dateRange;
     }
 
-    /**
-     * @param DateRange $dateRange
-     * @return TimesheetQuery
-     */
-    public function setDateRange(DateRange $dateRange)
+    public function setDateRange(DateRange $dateRange): TimesheetQuery
     {
         $this->dateRange = $dateRange;
 
         return $this;
     }
 
-    /**
-     * @return iterable
-     */
-    public function getTags($allowUnknown = false)
+    public function getTags(bool $allowUnknown = false): iterable
     {
         if (empty($this->tags)) {
             return [];
@@ -250,13 +284,21 @@ class TimesheetQuery extends ActivityQuery
         return $result;
     }
 
-    /**
-     * @param iterable $tags
-     * @return $this
-     */
-    public function setTags(iterable $tags)
+    public function setTags(iterable $tags): TimesheetQuery
     {
         $this->tags = $tags;
+
+        return $this;
+    }
+
+    public function getModifiedAfter(): ?\DateTime
+    {
+        return $this->modifiedAfter;
+    }
+
+    public function setModifiedAfter(\DateTime $modifiedAfter): TimesheetQuery
+    {
+        $this->modifiedAfter = $modifiedAfter;
 
         return $this;
     }

@@ -22,6 +22,12 @@ class InvoiceQuery extends TimesheetQuery
      */
     private $markAsExported = false;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setBillable(true);
+    }
+
     public function getTemplate(): ?InvoiceTemplate
     {
         return $this->template;

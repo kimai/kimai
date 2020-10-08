@@ -12,7 +12,7 @@ namespace App\Export;
 final class ServiceExport
 {
     /**
-     * @var RendererInterface[]
+     * @var ExportRendererInterface[]
      */
     private $renderer = [];
 
@@ -21,7 +21,7 @@ final class ServiceExport
      */
     private $exporter = [];
 
-    public function addRenderer(RendererInterface $renderer): ServiceExport
+    public function addRenderer(ExportRendererInterface $renderer): ServiceExport
     {
         $this->renderer[] = $renderer;
 
@@ -29,14 +29,14 @@ final class ServiceExport
     }
 
     /**
-     * @return RendererInterface[]
+     * @return ExportRendererInterface[]
      */
     public function getRenderer(): array
     {
         return $this->renderer;
     }
 
-    public function getRendererById(string $id): ?RendererInterface
+    public function getRendererById(string $id): ?ExportRendererInterface
     {
         foreach ($this->renderer as $renderer) {
             if ($renderer->getId() === $id) {

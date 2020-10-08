@@ -12,10 +12,13 @@ namespace App\Command;
 use App\Doctrine\TimesheetSubscriber;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
+use App\Entity\ActivityRate;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
+use App\Entity\ProjectRate;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -58,52 +61,58 @@ final class KimaiImporterCommand extends Command
      * Create the user default passwords
      * @var UserPasswordEncoderInterface
      */
-    protected $encoder;
+    private $encoder;
     /**
      * Validates the entities before they will be created
      * @var ValidatorInterface
      */
-    protected $validator;
+    private $validator;
     /**
      * Connection to the Kimai v2 database to write imported data to
      * @var ManagerRegistry
      */
-    protected $doctrine;
+    private $doctrine;
     /**
      * Connection to the old database to import data from
      * @var Connection
      */
-    protected $connection;
+    private $connection;
     /**
      * Prefix for the v1 database tables.
      * @var string
      */
-    protected $dbPrefix = '';
+    private $dbPrefix = '';
     /**
+     * Old UserID => new User()
      * @var User[]
      */
-    protected $users = [];
+    private $users = [];
     /**
      * @var Customer[]
      */
-    protected $customers = [];
+    private $customers = [];
     /**
+     * Old Project ID => new Project()
      * @var Project[]
      */
-    protected $projects = [];
+    private $projects = [];
     /**
      * id => [projectId => Activity]
-     * @var Activity[]
+     * @var array<Activity[]>
      */
-    protected $activities = [];
+    private $activities = [];
+    /**
+     * @var Team[]
+     */
+    protected $teams = [];
     /**
      * @var bool
      */
-    protected $debug = false;
+    private $debug = false;
     /**
      * @var array
      */
-    protected $oldActivities = [];
+    private $oldActivities = [];
 
     public function __construct(UserPasswordEncoderInterface $encoder, ManagerRegistry $registry, ValidatorInterface $validator)
     {
@@ -157,21 +166,21 @@ final class KimaiImporterCommand extends Command
         $this->dbPrefix = $input->getArgument('prefix');
 
         $password = $input->getArgument('password');
-        if (trim(strlen($password)) < 6) {
-            $io->error('Password length is not sufficient, at least 6 character are required');
+        if (null === $password || \strlen($password = trim($password)) < 8) {
+            $io->error('Password length is not sufficient, at least 8 character are required');
 
             return 1;
         }
 
         $country = $input->getArgument('country');
-        if (2 != trim(strlen($country))) {
+        if (null === $country || 2 != \strlen($country = trim($country))) {
             $io->error('Country code needs to be exactly 2 character');
 
             return 1;
         }
 
         $currency = $input->getArgument('currency');
-        if (3 != trim(strlen($currency))) {
+        if (null === $currency || 3 != \strlen($currency = trim($currency))) {
             $io->error('Currency code needs to be exactly 3 character');
 
             return 1;
@@ -248,9 +257,78 @@ final class KimaiImporterCommand extends Command
             return 1;
         }
 
+        try {
+            $groups = $this->fetchAllFromImport('groups');
+        } catch (Exception $ex) {
+            $io->error('Failed to load groups: ' . $ex->getMessage());
+
+            return 1;
+        }
+
+        try {
+            $groupToCustomer = $this->fetchAllFromImport('groups_customers');
+        } catch (Exception $ex) {
+            $io->error('Failed to load groups-customers mappings: ' . $ex->getMessage());
+
+            return 1;
+        }
+
+        try {
+            $groupToProject = $this->fetchAllFromImport('groups_projects');
+        } catch (Exception $ex) {
+            $io->error('Failed to load groups-projects mappings: ' . $ex->getMessage());
+
+            return 1;
+        }
+
+        try {
+            $groupToUser = $this->fetchAllFromImport('groups_users');
+        } catch (Exception $ex) {
+            $io->error('Failed to load groups-users mappings: ' . $ex->getMessage());
+
+            return 1;
+        }
+
         $bytesCached = memory_get_usage(true);
 
-        $io->success('Fetched Kimai v1 data, trying to import now ...');
+        $io->success('Fetched Kimai v1 data, validating now ...');
+        $validationMessages = [];
+        try {
+            $usedEmails = [];
+            foreach ($users as $oldUser) {
+                if (empty($oldUser['mail'])) {
+                    $validationMessages[] = sprintf('User "%s" with ID %s has no email', $oldUser['name'], $oldUser['userID']);
+                    continue;
+                }
+                if (\in_array($oldUser['mail'], $usedEmails)) {
+                    $validationMessages[] = sprintf('Email "%s" for user "%s" with ID %s is already used', $oldUser['mail'], $oldUser['name'], $oldUser['userID']);
+                }
+                $usedEmails[] = $oldUser['mail'];
+            }
+
+            $customerIds = [];
+            foreach ($customer as $oldCustomer) {
+                $customerIds[] = $oldCustomer['customerID'];
+            }
+
+            foreach ($projects as $oldProject) {
+                if (!\in_array($oldProject['customerID'], $customerIds)) {
+                    $validationMessages[] = sprintf('Project "%s" with ID %s has unknown customer with ID %s', $oldProject['name'], $oldProject['projectID'], $oldProject['customerID']);
+                }
+            }
+        } catch (Exception $ex) {
+            $validationMessages[] = $ex->getMessage();
+        }
+
+        if (!empty($validationMessages)) {
+            foreach ($validationMessages as $errorMessage) {
+                $io->error($errorMessage);
+            }
+
+            return 1;
+        }
+
+        $io->success('Pre-validated data, trying to import now ...');
 
         $allImports = 0;
 
@@ -290,6 +368,16 @@ final class KimaiImporterCommand extends Command
             $io->success('Imported activities: ' . $counter);
         } catch (Exception $ex) {
             $io->error('Failed to import activities: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
+
+            return 1;
+        }
+
+        try {
+            $counter = $this->importGroups($io, $groups, $groupToCustomer, $groupToProject, $groupToUser);
+            $allImports += $counter;
+            $io->success('Imported groups/teams: ' . $counter);
+        } catch (Exception $ex) {
+            $io->error('Failed to import groups/teams: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
             return 1;
         }
@@ -377,12 +465,10 @@ final class KimaiImporterCommand extends Command
     protected function deactivateLifecycleCallbacks(Connection $connection)
     {
         $allListener = $connection->getEventManager()->getListeners();
-        foreach ($allListener as $name => $listener) {
-            if (in_array($name, ['prePersist', 'preUpdate'])) {
-                foreach ($listener as $service => $class) {
-                    if (TimesheetSubscriber::class === $class) {
-                        $connection->getEventManager()->removeEventListener(['prePersist', 'preUpdate'], $class);
-                    }
+        foreach ($allListener as $event => $listeners) {
+            foreach ($listeners as $hash => $object) {
+                if ($object instanceof TimesheetSubscriber) {
+                    $connection->getEventManager()->removeEventListener([$event], $object);
                 }
             }
         }
@@ -514,7 +600,7 @@ final class KimaiImporterCommand extends Command
             foreach ($preferences as $pref) {
                 $key = $pref['option'];
 
-                if (!array_key_exists($key, $prefsToImport)) {
+                if (!\array_key_exists($key, $prefsToImport)) {
                     continue;
                 }
 
@@ -687,6 +773,14 @@ final class KimaiImporterCommand extends Command
 
         foreach ($projects as $oldProject) {
             $isActive = (bool) $oldProject['visible'] && !(bool) $oldProject['trash'];
+
+            if (!isset($this->customers[$oldProject['customerID']])) {
+                $io->error(
+                    sprintf('Found project with unknown customer. Project ID: "%s", Name: "%s", Customer ID: "%s"', $oldProject['projectID'], $oldProject['name'], $oldProject['customerID'])
+                );
+                continue;
+            }
+
             $customer = $this->customers[$oldProject['customerID']];
             $name = $oldProject['name'];
             if (empty($name)) {
@@ -710,31 +804,12 @@ final class KimaiImporterCommand extends Command
 
             $project->setMetaField($metaField);
 
-            foreach ($fixedRates as $fixedRow) {
-                if ($fixedRow['activityID'] !== null || $fixedRow['projectID'] === null) {
-                    continue;
-                }
-                if ($fixedRow['projectID'] == $oldProject['projectID']) {
-                    $project->setFixedRate($fixedRow['rate']);
-                }
-            }
-
-            foreach ($rates as $ratesRow) {
-                if ($ratesRow['userID'] !== null || $ratesRow['activityID'] !== null || $ratesRow['projectID'] === null) {
-                    continue;
-                }
-                if ($ratesRow['projectID'] == $oldProject['projectID']) {
-                    $project->setHourlyRate($ratesRow['rate']);
-                }
-            }
-
             if (!$this->validateImport($io, $project)) {
                 throw new Exception('Failed to validate project: ' . $project->getName());
             }
 
             try {
                 $entityManager->persist($project);
-                $entityManager->flush();
                 if ($this->debug) {
                     $io->success('Created project: ' . $project->getName() . ' for customer: ' . $customer->getName());
                 }
@@ -743,6 +818,54 @@ final class KimaiImporterCommand extends Command
                 $io->error('Failed to create project: ' . $project->getName());
                 $io->error('Reason: ' . $ex->getMessage());
             }
+
+            foreach ($fixedRates as $fixedRow) {
+                // activity rates a re assigned in createActivity()
+                if ($fixedRow['activityID'] !== null || $fixedRow['projectID'] === null) {
+                    continue;
+                }
+                if ($fixedRow['projectID'] == $oldProject['projectID']) {
+                    $projectRate = new ProjectRate();
+                    $projectRate->setProject($project);
+                    $projectRate->setRate($fixedRow['rate']);
+                    $projectRate->setIsFixed(true);
+
+                    try {
+                        $entityManager->persist($projectRate);
+                        if ($this->debug) {
+                            $io->success('Created fixed project rate: ' . $project->getName() . ' for customer: ' . $customer->getName());
+                        }
+                    } catch (Exception $ex) {
+                        $io->error(sprintf('Failed to create fixed project rate for %s: %s' . $project->getName(), $ex->getMessage()));
+                    }
+                }
+            }
+
+            foreach ($rates as $ratesRow) {
+                if ($ratesRow['activityID'] !== null || $ratesRow['projectID'] === null) {
+                    continue;
+                }
+                if ($ratesRow['projectID'] == $oldProject['projectID']) {
+                    $projectRate = new ProjectRate();
+                    $projectRate->setProject($project);
+                    $projectRate->setRate($ratesRow['rate']);
+
+                    if ($ratesRow['userID'] !== null) {
+                        $projectRate->setUser($this->users[$ratesRow['userID']]);
+                    }
+
+                    try {
+                        $entityManager->persist($projectRate);
+                        if ($this->debug) {
+                            $io->success('Created project rate: ' . $project->getName() . ' for customer: ' . $customer->getName());
+                        }
+                    } catch (Exception $ex) {
+                        $io->error(sprintf('Failed to create project rate for %s: %s' . $project->getName(), $ex->getMessage()));
+                    }
+                }
+            }
+
+            $entityManager->flush();
 
             $this->projects[$oldProject['projectID']] = $project;
         }
@@ -826,7 +949,7 @@ final class KimaiImporterCommand extends Command
      * @param array $oldActivity
      * @param array $fixedRates
      * @param array $rates
-     * @param int $projectId
+     * @param int|null $oldProjectId
      * @return Activity
      * @throws Exception
      */
@@ -836,12 +959,12 @@ final class KimaiImporterCommand extends Command
         array $oldActivity,
         array $fixedRates,
         array $rates,
-        $projectId
+        $oldProjectId = null
     ) {
-        $activityId = $oldActivity['activityID'];
+        $oldActivityId = $oldActivity['activityID'];
 
-        if (isset($this->activities[$activityId][$projectId])) {
-            return $this->activities[$activityId][$projectId];
+        if (isset($this->activities[$oldActivityId][$oldProjectId])) {
+            return $this->activities[$oldActivityId][$oldProjectId];
         }
 
         $isActive = (bool) $oldActivity['visible'] && !(bool) $oldActivity['trash'];
@@ -851,9 +974,9 @@ final class KimaiImporterCommand extends Command
             $io->warning('Found empty activity name, setting it to: ' . $name);
         }
 
-        if (null !== $projectId && !isset($this->projects[$projectId])) {
+        if (null !== $oldProjectId && !isset($this->projects[$oldProjectId])) {
             throw new Exception(
-                sprintf('Did not find project [%s], skipping activity creation [%s] %s', $projectId, $activityId, $name)
+                sprintf('Did not find project [%s], skipping activity creation [%s] %s', $oldProjectId, $oldActivityId, $name)
             );
         }
 
@@ -865,8 +988,8 @@ final class KimaiImporterCommand extends Command
             ->setBudget($oldActivity['budget'] ?? 0)
         ;
 
-        if (null !== $projectId) {
-            $project = $this->projects[$projectId];
+        if (null !== $oldProjectId) {
+            $project = $this->projects[$oldProjectId];
             $activity->setProject($project);
         }
 
@@ -877,39 +1000,12 @@ final class KimaiImporterCommand extends Command
 
         $activity->setMetaField($metaField);
 
-        foreach ($fixedRates as $fixedRow) {
-            if ($fixedRow['activityID'] === null) {
-                continue;
-            }
-            if ($fixedRow['projectID'] !== null && $fixedRow['projectID'] !== $projectId) {
-                continue;
-            }
-
-            if ($fixedRow['activityID'] == $oldActivity['activityID']) {
-                $activity->setFixedRate($fixedRow['rate']);
-            }
-        }
-
-        foreach ($rates as $ratesRow) {
-            if ($ratesRow['userID'] !== null || $ratesRow['activityID'] === null) {
-                continue;
-            }
-            if ($ratesRow['projectID'] !== null && $ratesRow['projectID'] !== $projectId) {
-                continue;
-            }
-
-            if ($ratesRow['activityID'] == $oldActivity['activityID']) {
-                $activity->setHourlyRate($ratesRow['rate']);
-            }
-        }
-
         if (!$this->validateImport($io, $activity)) {
             throw new Exception('Failed to validate activity: ' . $activity->getName());
         }
 
         try {
             $entityManager->persist($activity);
-            $entityManager->flush();
             if ($this->debug) {
                 $io->success('Created activity: ' . $activity->getName());
             }
@@ -918,10 +1014,65 @@ final class KimaiImporterCommand extends Command
             $io->error('Reason: ' . $ex->getMessage());
         }
 
-        if (!isset($this->activities[$activityId])) {
-            $this->activities[$activityId] = [];
+        if (!isset($this->activities[$oldActivityId])) {
+            $this->activities[$oldActivityId] = [];
         }
-        $this->activities[$activityId][$projectId] = $activity;
+        $this->activities[$oldActivityId][$oldProjectId] = $activity;
+
+        foreach ($fixedRates as $fixedRow) {
+            if ($fixedRow['activityID'] === null) {
+                continue;
+            }
+            if ($fixedRow['projectID'] !== null && $fixedRow['projectID'] !== $oldProjectId) {
+                continue;
+            }
+
+            if ($fixedRow['activityID'] == $oldActivityId) {
+                $activityRate = new ActivityRate();
+                $activityRate->setActivity($activity);
+                $activityRate->setRate($fixedRow['rate']);
+                $activityRate->setIsFixed(true);
+
+                try {
+                    $entityManager->persist($activityRate);
+                    if ($this->debug) {
+                        $io->success('Created fixed activity rate: ' . $activity->getName());
+                    }
+                } catch (Exception $ex) {
+                    $io->error(sprintf('Failed to create fixed activity rate for %s: %s' . $activity->getName(), $ex->getMessage()));
+                }
+            }
+        }
+
+        foreach ($rates as $ratesRow) {
+            if ($ratesRow['activityID'] === null) {
+                continue;
+            }
+            if ($ratesRow['projectID'] !== null && $ratesRow['projectID'] !== $oldProjectId) {
+                continue;
+            }
+
+            if ($ratesRow['activityID'] == $oldActivityId) {
+                $activityRate = new ActivityRate();
+                $activityRate->setActivity($activity);
+                $activityRate->setRate($ratesRow['rate']);
+
+                if ($ratesRow['userID'] !== null) {
+                    $activityRate->setUser($this->users[$ratesRow['userID']]);
+                }
+
+                try {
+                    $entityManager->persist($activityRate);
+                    if ($this->debug) {
+                        $io->success('Created activity rate: ' . $activity->getName());
+                    }
+                } catch (Exception $ex) {
+                    $io->error(sprintf('Failed to create activity rate for %s: %s' . $activity->getName(), $ex->getMessage()));
+                }
+            }
+        }
+
+        $entityManager->flush();
 
         return $activity;
     }
@@ -966,7 +1117,7 @@ final class KimaiImporterCommand extends Command
         $activityCounter = 0;
         $userCounter = 0;
         $entityManager = $this->getDoctrine()->getManager();
-        $total = count($records);
+        $total = \count($records);
 
         $io->writeln('Importing timesheets, please wait');
 
@@ -1103,7 +1254,7 @@ final class KimaiImporterCommand extends Command
                 ->setDuration($duration)
                 ->setActivity($activity)
                 ->setProject($project)
-                ->setExported(intval($oldRecord['cleared']) !== 0)
+                ->setExported(\intval($oldRecord['cleared']) !== 0)
                 ->setTimezone($timezone)
             ;
 
@@ -1146,11 +1297,178 @@ final class KimaiImporterCommand extends Command
         if ($activityCounter > 0) {
             $io->success('Created new activities during timesheet import: ' . $activityCounter);
         }
-        if (count($errors['projectActivityMismatch']) > 0) {
+        if (\count($errors['projectActivityMismatch']) > 0) {
             $io->error('Found invalid mapped project - activity combinations in these old timesheet recors: ' . implode(',', $errors['projectActivityMismatch']));
         }
         if ($failed > 0) {
             $io->error(sprintf('Failed importing %s timesheet records', $failed));
+        }
+
+        return $counter;
+    }
+
+    /** Imports Kimai v1 groups as teams and connects teams with users, customers and projects
+     *
+     * -- are currently unsupported fields that can't be mapped
+     *
+     * $groups
+     * ["groupID"] => int(10) "1"
+     * ["name"] => varchar(160) "a group name"
+     * -- ["trash"] => tinyint(1) 1/0
+     *
+     * $groups_customers
+     * ["groupID"] => int(10) "1"
+     * ["customerID"] => int(10) "1"
+     *
+     * $groups_projects
+     * ["groupID"] => int(10) "1"
+     * ["projectID"] => int(10) "1"
+     *
+     * $groups_users
+     * ["groupID"] => int(10) "1"
+     * ["customerID"] => int(10) "1"
+     * -- ["membershipRoleID"] => int(10) "1"
+     *
+     * @param SymfonyStyle $io
+     * @param array $groups
+     * @param array $groupToCustomer
+     * @param array $groupToProject
+     * @param array $groupToUser
+     *
+     * @return int
+     * @throws Exception
+     */
+    protected function importGroups(SymfonyStyle $io, array $groups, array $groupToCustomer, array $groupToProject, array $groupToUser)
+    {
+        $counter = 0;
+        $skippedTrashed = 0;
+        $skippedEmpty = 0;
+        $failed = 0;
+
+        $newTeams = [];
+        // create teams just with names of groups
+        foreach ($groups as $group) {
+            if ($group['trash'] === 1) {
+                $io->warning(sprintf('Didn\'t import team: "%s" because it is trashed.', $group['name']));
+                $skippedTrashed++;
+                continue;
+            }
+
+            $team = new Team();
+            $team->setName($group['name']);
+
+            $newTeams[$group['groupID']] = $team;
+        }
+
+        // connect groups with users
+        foreach ($groupToUser as $row) {
+            if (!isset($newTeams[$row['groupID']])) {
+                continue;
+            }
+            $team = $newTeams[$row['groupID']];
+
+            if (!isset($this->users[$row['userID']])) {
+                continue;
+            }
+            $user = $this->users[$row['userID']];
+
+            $team->addUser($user);
+
+            // first user in the team will become team lead
+            if ($team->getTeamLead() == null) {
+                $team->setTeamLead($user);
+            }
+
+            // any other user with admin role in the team will become team lead
+            // should be the last added admin of the source group
+            if ($row['membershipRoleID'] === 1) {
+                $team->setTeamLead($user);
+            }
+        }
+
+        // if team has no users it will not be persisted
+        foreach ($newTeams as $oldId => $team) {
+            if ($team->getTeamLead() === null) {
+                $io->warning(sprintf('Didn\'t import team: %s because it has no users.', $team->getName()));
+                ++$skippedEmpty;
+                unset($newTeams[$oldId]);
+            }
+        }
+
+        // connect groups with customers
+        foreach ($groupToCustomer as $row) {
+            if (!isset($newTeams[$row['groupID']])) {
+                continue;
+            }
+            $team = $newTeams[$row['groupID']];
+
+            if (!isset($this->customers[$row['customerID']])) {
+                continue;
+            }
+            $customer = $this->customers[$row['customerID']];
+
+            $team->addCustomer($customer);
+        }
+
+        // connect groups with projects
+        foreach ($groupToProject as $row) {
+            if (!isset($newTeams[$row['groupID']])) {
+                continue;
+            }
+            $team = $newTeams[$row['groupID']];
+
+            if (!isset($this->projects[$row['projectID']])) {
+                continue;
+            }
+            $project = $this->projects[$row['projectID']];
+
+            $team->addProject($project);
+
+            if ($project->getCustomer() !== null) {
+                $team->addCustomer($project->getCustomer());
+            }
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        // validate and persist each team
+        foreach ($newTeams as $oldId => $team) {
+            if (!$this->validateImport($io, $team)) {
+                throw new Exception('Failed to validate team: ' . $team->getName());
+            }
+
+            try {
+                $entityManager->persist($team);
+                if ($this->debug) {
+                    $io->success(
+                        sprintf(
+                            'Created team: %s with %s users, %s projects and %s customers.',
+                            $team->getName(),
+                            \count($team->getUsers()),
+                            \count($team->getProjects()),
+                            \count($team->getCustomers())
+                        )
+                    );
+                }
+                ++$counter;
+                $this->teams[$oldId] = $team;
+            } catch (Exception $ex) {
+                $io->error('Failed to create team: ' . $team->getName());
+                $io->error('Reason: ' . $ex->getMessage());
+                ++$failed;
+            }
+        }
+
+        $entityManager->flush();
+
+        if ($skippedTrashed > 0) {
+            $io->warning('Didn\'t import teams because they are trashed: ' . $skippedTrashed);
+        }
+        if ($skippedEmpty > 0) {
+            $io->warning('Didn\'t import teams because they have no users: ' . $skippedEmpty);
+        }
+        if ($failed > 0) {
+            $io->error('Failed importing teams: ' . $failed);
         }
 
         return $counter;

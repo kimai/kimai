@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eo" datatype="plaintext" original="invoice-renderer.en.xlf">
+        <body>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target>Faktura dokumento</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Fakturo (defaŭlte)</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Temposlipo</target>
+            </trans-unit>
+            <trans-unit id="freelancer">
+                <source>freelancer</source>
+                <target>Sendependa laboristo</target>
+            </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target>Calc kalkultabelilo</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="export">
+                <source>export</source>
+                <target>Eksporto de datumoj</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target>Fakturo de kompanio</target>
+            </trans-unit>
+            <trans-unit id="help.upload">
+                <source>help.upload</source>
+                <target>Atentu: ekzistantaj dosieroj estos anstataŭigitaj. Permesitaj tipoj de dosieroj estas: DOCX, ODS, XLSX.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

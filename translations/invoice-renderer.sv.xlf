@@ -6,6 +6,10 @@
                 <source>label.invoice_renderer</source>
                 <target state="translated">Fakturadokument</target>
             </trans-unit>
+            <trans-unit id="help.upload">
+                <source>help.upload</source>
+                <target state="translated">Obs: redan exsiterande filer kommer att skrivas över. Tillåtna fil typer är: DOCX, ODS, XLSX.</target>
+            </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
                 <target state="translated">Faktura (standard)</target>

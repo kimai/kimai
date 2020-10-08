@@ -6,9 +6,9 @@
                 <source>label.invoice_number_generator</source>
                 <target>发票数字生成器</target>
             </trans-unit>
-            <trans-unit id="default">
-                <source>default</source>
-                <target>日期（默认）</target>
+            <trans-unit id="date">
+                <source>date</source>
+                <target>日期</target>
             </trans-unit>
         </body>
     </file>

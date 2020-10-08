@@ -26,11 +26,11 @@ final class Version20190305152308 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
-        $customers = $this->getTableName('customers');
-        $projects = $this->getTableName('projects');
-        $activities = $this->getTableName('activities');
-        $timesheet = $this->getTableName('timesheet');
-        $users = $this->getTableName('users');
+        $customers = 'kimai2_customers';
+        $projects = 'kimai2_projects';
+        $activities = 'kimai2_activities';
+        $timesheet = 'kimai2_timesheet';
+        $users = 'kimai2_users';
 
         if ($this->isPlatformSqlite()) {
             // first backup of ALL tables
@@ -84,10 +84,10 @@ final class Version20190305152308 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $customers = $this->getTableName('customers');
-        $projects = $this->getTableName('projects');
-        $activities = $this->getTableName('activities');
-        $timesheet = $this->getTableName('timesheet');
+        $customers = 'kimai2_customers';
+        $projects = 'kimai2_projects';
+        $activities = 'kimai2_activities';
+        $timesheet = 'kimai2_timesheet';
 
         if ($this->isPlatformSqlite()) {
             // first backup of ALL tables

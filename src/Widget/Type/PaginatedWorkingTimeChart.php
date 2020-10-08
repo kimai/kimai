@@ -9,34 +9,37 @@
 
 namespace App\Widget\Type;
 
+use App\Entity\User;
 use App\Repository\TimesheetRepository;
-use App\Security\CurrentUser;
-use App\Timesheet\UserDateTimeFactory;
 use DateTime;
 
-final class PaginatedWorkingTimeChart extends SimpleWidget
+final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
 {
     /**
      * @var TimesheetRepository
      */
     private $repository;
-    /**
-     * @var UserDateTimeFactory
-     */
-    private $dateTimeFactory;
 
-    public function __construct(TimesheetRepository $repository, CurrentUser $user, UserDateTimeFactory $dateTime)
+    public function __construct(TimesheetRepository $repository)
     {
         $this->repository = $repository;
-        $this->dateTimeFactory = $dateTime;
         $this->setId('PaginatedWorkingTimeChart');
         $this->setTitle('stats.yourWorkingHours');
 
         $this->setOptions([
-            'year' => (new DateTime('now', $this->dateTimeFactory->getTimezone()))->format('Y'),
-            'week' => (new DateTime('now', $this->dateTimeFactory->getTimezone()))->format('W'),
-            'user' => $user->getUser(),
+            'year' => (new DateTime('now'))->format('Y'),
+            'week' => (new DateTime('now'))->format('W'),
             'type' => 'bar',
+        ]);
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->setOption('user', $user);
+        $now = new DateTime('now', new \DateTimeZone($user->getTimezone()));
+        $this->setOptions([
+            'year' => $now->format('Y'),
+            'week' => $now->format('W'),
         ]);
     }
 
@@ -44,16 +47,16 @@ final class PaginatedWorkingTimeChart extends SimpleWidget
     {
         $options = parent::getOptions($options);
 
-        if (!in_array($options['type'], ['bar', 'line'])) {
+        if (!\in_array($options['type'], ['bar', 'line'])) {
             $options['type'] = 'bar';
         }
 
         return $options;
     }
 
-    private function getDate($year, $week, $day, $hour, $minute, $second)
+    private function getDate(\DateTimeZone $timezone, $year, $week, $day, $hour, $minute, $second)
     {
-        $now = new DateTime('now', $this->dateTimeFactory->getTimezone());
+        $now = new DateTime('now', $timezone);
         $now->setISODate($year, $week, $day);
         $now->setTime($hour, $minute, $second);
 
@@ -63,10 +66,16 @@ final class PaginatedWorkingTimeChart extends SimpleWidget
     public function getData(array $options = [])
     {
         $options = $this->getOptions($options);
-        $user = $options['user'];
 
-        $weekBegin = $this->getDate($options['year'], $options['week'], 1, 0, 0, 0);
-        $weekEnd = $this->getDate($options['year'], $options['week'], 7, 23, 59, 59);
+        $user = $options['user'];
+        if (null === $user || !($user instanceof User)) {
+            throw new \InvalidArgumentException('Widget option "user" must be an instance of ' . User::class);
+        }
+
+        $timezone = new \DateTimeZone($user->getTimezone());
+
+        $weekBegin = $this->getDate($timezone, $options['year'], $options['week'], 1, 0, 0, 0);
+        $weekEnd = $this->getDate($timezone, $options['year'], $options['week'], 7, 23, 59, 59);
 
         return [
             'begin' => clone $weekBegin,
@@ -74,8 +83,8 @@ final class PaginatedWorkingTimeChart extends SimpleWidget
             'stats' => $this->repository->getDailyStats($user, $weekBegin, $weekEnd),
             'day' => $this->repository->getStatistic(
                 'duration',
-                new DateTime('00:00:00', $this->dateTimeFactory->getTimezone()),
-                new DateTime('23:59:59', $this->dateTimeFactory->getTimezone()),
+                new DateTime('00:00:00', $timezone),
+                new DateTime('23:59:59', $timezone),
                 $user
             ),
             'week' => $this->repository->getStatistic(
@@ -92,8 +101,8 @@ final class PaginatedWorkingTimeChart extends SimpleWidget
             ),
             'year' => $this->repository->getStatistic(
                 'duration',
-                new DateTime(sprintf('01 january %s 00:00:00', $options['year']), $this->dateTimeFactory->getTimezone()),
-                new DateTime(sprintf('31 december %s 23:59:59', $options['year']), $this->dateTimeFactory->getTimezone()),
+                new DateTime(sprintf('01 january %s 00:00:00', $options['year']), $timezone),
+                new DateTime(sprintf('31 december %s 23:59:59', $options['year']), $timezone),
                 $user
             ),
         ];

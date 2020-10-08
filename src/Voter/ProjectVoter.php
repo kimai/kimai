@@ -44,7 +44,7 @@ class ProjectVoter extends AbstractVoter
             return false;
         }
 
-        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
+        if (!\in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
             return false;
         }
 
@@ -70,7 +70,7 @@ class ProjectVoter extends AbstractVoter
         }
 
         // those cannot be assigned to teams
-        if (in_array($attribute, ['create', 'delete'])) {
+        if (\in_array($attribute, ['create', 'delete'])) {
             return false;
         }
 

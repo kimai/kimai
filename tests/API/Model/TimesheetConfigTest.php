@@ -17,30 +17,15 @@ use PHPUnit\Framework\TestCase;
  */
 class TimesheetConfigTest extends TestCase
 {
-    public function testDefaultValues()
-    {
-        $sut = new TimesheetConfig();
-        $this->assertTrue($sut->isAllowFutureTimes());
-        $this->assertEquals('now', $sut->getDefaultBeginTime());
-        $this->assertEquals('default', $sut->getTrackingMode());
-        $this->assertEquals(1, $sut->getActiveEntriesSoftLimit());
-        $this->assertEquals(1, $sut->getActiveEntriesHardLimit());
-    }
-
     public function testSetter()
     {
         $sut = new TimesheetConfig();
 
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setIsAllowFutureTimes(false));
+        $this->assertInstanceOf(TimesheetConfig::class, $sut->setIsAllowOverlapping(false));
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setDefaultBeginTime('08:00'));
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setTrackingMode('punch'));
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setActiveEntriesSoftLimit(2));
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setActiveEntriesHardLimit(3));
-
-        $this->assertFalse($sut->isAllowFutureTimes());
-        $this->assertEquals('08:00', $sut->getDefaultBeginTime());
-        $this->assertEquals('punch', $sut->getTrackingMode());
-        $this->assertEquals(2, $sut->getActiveEntriesSoftLimit());
-        $this->assertEquals(3, $sut->getActiveEntriesHardLimit());
     }
 }

@@ -4,11 +4,11 @@
         <body>
             <trans-unit id="access.denied">
                 <source>access.denied</source>
-                <target state="translated">Åtkomst nekas</target>
+                <target state="translated">Åtkomst nekad</target>
             </trans-unit>
             <trans-unit id="stacktrace">
                 <source>stacktrace</source>
-                <target state="translated">Ett problem uppstod</target>
+                <target state="translated">Ett problem uppstod här</target>
             </trans-unit>
             <trans-unit id="http_error.title">
                 <source>http_error.title</source>
@@ -21,29 +21,32 @@
             <trans-unit id="http_error.suggestion">
                 <source>http_error.suggestion</source>
                 <target state="translated">
-Ett oväntat fel inträffade, försök igen.
-                     Du kan ha hittat en bugg, så kontakta din administratör om problemet
-                     går inte bort efter att du försökt det igen.</target>
+                    Ett oväntat fel inträffade, försök igen.
+                    Om problemet kvarstår efter att du försökt igen, kontakta din administratör.
+                    Du kan ha hittat en bugg.</target>
             </trans-unit>
             <trans-unit id="http_error_404.description">
                 <source>http_error_404.description</source>
-                <target state="translated">Oj! Hittade inte sidan.</target>
+                <target state="translated">Oj! Sidan hittades inte</target>
             </trans-unit>
             <trans-unit id="http_error_404.suggestion">
                 <source>http_error_404.suggestion</source>
-                <target state="translated">Vi kunde inte hitta den sida du letade efter.
-                     Under tiden kan du återvända till din dashboard och börja om.
-</target>
+                <target state="translated">
+                    Vi kunde inte hitta sidan du letade efter.
+                    Under tiden kan du återvända till din dashboard och börja om.
+                </target>
             </trans-unit>
             <trans-unit id="http_error_403.description">
                 <source>http_error_403.description</source>
-                <target state="translated">Den här sidan är begränsad.</target>
+                <target state="translated">
+                    Den här sidan är begränsad.
+                </target>
             </trans-unit>
             <trans-unit id="http_error_403.suggestion">
                 <source>http_error_403.suggestion</source>
                 <target state="translated">
-Tyvärr, men du har inte tillräckligt med behörigheter för att se den här sidan.
-                     Snälla prata med din administratör om du tycker att det här är ett fel.</target>
+                    Tyvärr har du inte tillräckligt med behörigheter för att se den här sidan.
+                    Var vänlig och kontakta din administratör om du tycker att det här är ett fel.</target>
             </trans-unit>
         </body>
     </file>

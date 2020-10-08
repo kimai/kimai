@@ -28,25 +28,25 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @RouteResource("Tag")
+ * @SWG\Tag(name="Tag")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
-class TagController extends BaseApiController
+final class TagController extends BaseApiController
 {
+    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Tag'];
+    public const GROUPS_ENTITY = ['Default', 'Entity', 'Tag'];
+    public const GROUPS_FORM = ['Default', 'Entity', 'Tag'];
+
     /**
      * @var TagRepository
      */
-    protected $repository;
-
+    private $repository;
     /**
      * @var ViewHandlerInterface
      */
-    protected $viewHandler;
+    private $viewHandler;
 
-    /**
-     * @param ViewHandlerInterface $viewHandler
-     * @param TagRepository $repository
-     */
     public function __construct(ViewHandlerInterface $viewHandler, TagRepository $repository)
     {
         $this->viewHandler = $viewHandler;
@@ -77,7 +77,7 @@ class TagController extends BaseApiController
         $data = $this->repository->findAllTagNames($filter);
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Collection', 'Tag']);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
@@ -119,13 +119,13 @@ class TagController extends BaseApiController
             $this->repository->saveTag($tag);
 
             $view = new View($tag, 200);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Tag']);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Tag']);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }
@@ -136,7 +136,7 @@ class TagController extends BaseApiController
      * @SWG\Delete(
      *      @SWG\Response(
      *          response=204,
-     *          description="Delete one tag"
+     *          description="HTTP code 204 for a successful delete"
      *      ),
      * )
      * @SWG\Parameter(

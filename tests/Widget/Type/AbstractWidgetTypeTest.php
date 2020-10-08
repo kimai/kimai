@@ -38,7 +38,6 @@ abstract class AbstractWidgetTypeTest extends TestCase
         self::assertInstanceOf(AbstractWidgetType::class, $sut->setOptions([]));
         self::assertInstanceOf(AbstractWidgetType::class, $sut->setId(''));
         self::assertInstanceOf(AbstractWidgetType::class, $sut->setTitle(''));
-        self::assertInstanceOf(AbstractWidgetType::class, $sut->setData(''));
     }
 
     public function testSetter()
@@ -57,8 +56,14 @@ abstract class AbstractWidgetTypeTest extends TestCase
         // id
         $sut->setId('cvbnmyx');
         self::assertEquals('cvbnmyx', $sut->getId());
+    }
 
-        // data
+    public function testData()
+    {
+        $sut = $this->createSut();
+
+        self::assertInstanceOf(AbstractWidgetType::class, $sut->setData(''));
+
         $sut->setData('slkudfhalksjdhfkljsahdf');
         self::assertEquals('slkudfhalksjdhfkljsahdf', $sut->getData());
 

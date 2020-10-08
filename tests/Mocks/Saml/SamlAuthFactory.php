@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class SamlAuthFactory extends AbstractMockFactory
 {
-    public function create(?array $connection = null): SamlAuth
+    public function create(?array $connection = null, bool $fromTrustedProxy = false): SamlAuth
     {
         if (null === $connection) {
             $connection = [
@@ -76,8 +76,13 @@ class SamlAuthFactory extends AbstractMockFactory
             ];
         }
 
+        $mock = $this->getMockBuilder(Request::class)->getMock();
+        $mock->method('isFromTrustedProxy')->willReturn($fromTrustedProxy);
+        /** @var Request $request */
+        $request = $mock;
+
         $requestStack = new RequestStack();
-        $requestStack->push(new Request());
+        $requestStack->push($request);
 
         return new SamlAuth($requestStack, $connection);
     }

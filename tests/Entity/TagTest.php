@@ -23,6 +23,7 @@ class TagTest extends TestCase
         $sut = new Tag();
         $this->assertNull($sut->getId());
         $this->assertNull($sut->getName());
+        $this->assertNull($sut->getColor());
     }
 
     public function testSetterAndGetter()
@@ -32,6 +33,9 @@ class TagTest extends TestCase
         $this->assertInstanceOf(Tag::class, $sut->setName('foo'));
         $this->assertEquals('foo', $sut->getName());
         $this->assertEquals('foo', (string) $sut);
+
+        $this->assertInstanceOf(Tag::class, $sut->setColor('#fffccc'));
+        $this->assertEquals('#fffccc', $sut->getColor());
     }
 
     public function testWithTimesheet()

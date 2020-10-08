@@ -25,7 +25,7 @@
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
 
-{% macro timesheet(timesheet, view) %}
+{% macro timesheet(timesheet, view, options) %}
     {%- apply spaceless -%}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set actions = {} %}
@@ -37,6 +37,10 @@
 
         {% if timesheet.end and is_granted('start', timesheet) %}
             {% set actions = actions|merge({'repeat': {'url': path('restart_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-payload': '{"copy": "all"}', 'data-event': 'kimai.timesheetStart kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'timesheet.start.error', 'data-msg-success': 'timesheet.start.success'}}}) %}
+        {% endif %}
+
+        {% if is_granted('duplicate', timesheet) %}
+            {% set actions = actions|merge({'copy': {'url': path('duplicate_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-payload': '{"copy": "all"}', 'data-event': 'kimai.timesheetStart kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'action.update.error', 'data-msg-success': 'action.update.success'}}}) %}
         {% endif %}
 
         {% if is_granted('edit', timesheet) %}
@@ -57,7 +61,7 @@
     {% endif %}
 
     {% if view != 'index' %}
-        {% set actions = actions|merge({'back': path('timesheet')}) %}
+        {% set actions = actions|merge({'back': options.back|default(path('timesheet'))}) %}
     {% endif %}
 
     {% set event = trigger('actions.timesheet', {'actions': actions, 'view': view, 'timesheet': timesheet}) %}

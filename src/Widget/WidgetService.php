@@ -16,11 +16,11 @@ class WidgetService
     /**
      * @var WidgetRendererInterface[]
      */
-    protected $renderer = [];
+    private $renderer = [];
     /**
      * @var WidgetRepository
      */
-    protected $repository;
+    private $repository;
 
     /**
      * @param WidgetRepository $repository
@@ -34,10 +34,6 @@ class WidgetService
         $this->repository = $repository;
     }
 
-    /**
-     * @param string $widget
-     * @return bool
-     */
     public function hasWidget(string $widget): bool
     {
         return $this->repository->has($widget);
@@ -68,7 +64,7 @@ class WidgetService
             }
         }
 
-        throw new WidgetException(sprintf('No renderer available for widget "%s"', get_class($widget)));
+        throw new WidgetException(sprintf('No renderer available for widget "%s"', \get_class($widget)));
     }
 
     /**

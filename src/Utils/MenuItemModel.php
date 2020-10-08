@@ -31,6 +31,6 @@ class MenuItemModel extends BaseMenuItemModel
 
     public function isChildRoute(string $route): bool
     {
-        return in_array($route, $this->childRoutes);
+        return \in_array($route, $this->childRoutes);
     }
 }

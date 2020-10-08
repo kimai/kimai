@@ -1,9 +1,9 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% extends 'invoice/layout.html.twig' %}
-{% set language = model.template.language|default(app.request.locale) %}
-{% set isDecimal = model.template.decimalDuration|default(false) %}
 
 {% block invoice %}
+{% set isDecimal = model.template.decimalDuration|default(false) %}
+{% set currency = model.currency %}
 <div class="row" id="freelancer-invoice">
     <div class="col-xs-12">
         <header>
@@ -12,33 +12,33 @@
             </address>
         </header>
         <article class="address">
-            <h1>{{ 'invoice.to'|trans({}, 'messages', language) }}</h1>
+            <h1>{{ 'invoice.to'|trans }}</h1>
             <address>
                 <p>
                     <strong>{{ model.customer.company|default(model.customer.name) }}</strong><br>
                     {{ model.customer.address|nl2br }}
                     {% if model.customer.vatId is not empty %}
                     <br>
-                    {{ 'label.vat_id'|trans({}, 'messages', language) }}: {{ model.customer.vatId }}
+                    {{ 'label.vat_id'|trans }}: {{ model.customer.vatId }}
                     {% endif %}
                 </p>
             </address>
             <table class="meta">
                 <tr>
-                    <th>{{ 'label.date'|trans({}, 'messages', language) }}:</th>
+                    <th>{{ 'label.date'|trans }}:</th>
                     <td contenteditable="true">{{ model.invoiceDate|date_short }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'invoice.service_date'|trans({}, 'messages', language) }}:</th>
-                    <td><span contenteditable="true">{{ model.query.end|month_name|trans({}, 'messages', language) }} {{ model.query.end|date('Y') }}</td>
+                    <th>{{ 'invoice.service_date'|trans }}:</th>
+                    <td><span contenteditable="true">{{ model.query.end|month_name }} {{ model.query.end|date('Y') }}</span></td>
                 </tr>
                 <tr>
-                    <th>{{ 'invoice.number'|trans({}, 'messages', language) }}:</th>
-                    <td><span contenteditable="true">{{ model.numberGenerator.invoiceNumber }}</td>
+                    <th>{{ 'invoice.number'|trans }}:</th>
+                    <td>{{ model.invoiceNumber }}</td>
                 </tr>
                 {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
                     <tr>
-                        <th>{{ 'label.orderNumber'|trans({}, 'messages', language) }}</th>
+                        <th>{{ 'label.orderNumber'|trans }}</th>
                         <td contenteditable="true">
                             {{ model.query.project.orderNumber }}
                         </td>
@@ -46,7 +46,7 @@
                 {% endif %}
                 {% if model.template.vatId is not empty %}
                     <tr>
-                        <th>{{ 'label.vat_id'|trans({}, 'messages', language) }}:</th>
+                        <th>{{ 'label.vat_id'|trans }}:</th>
                         <td>
                             {{ model.template.vatId }}
                         </td>
@@ -59,10 +59,10 @@
             <table class="inventory">
                 <thead>
                     <tr>
-                        <th>{{ 'label.description'|trans({}, 'messages', language) }}</th>
-                        <th class="text-right">{{ 'label.unit_price'|trans({}, 'messages', language) }}</th>
-                        <th class="text-right">{{ 'label.amount'|trans({}, 'messages', language) }}</th>
-                        <th class="text-right">{{ 'label.total_rate'|trans({}, 'messages', language) }}</th>
+                        <th>{{ 'label.description'|trans }}</th>
+                        <th class="text-right">{{ 'label.unit_price'|trans }}</th>
+                        <th class="text-right">{{ 'label.amount'|trans }}</th>
+                        <th class="text-right">{{ 'label.total_rate'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,25 +83,25 @@
                                 {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
                             {% endif %}
                         </td>
-                        <td class="text-right text-nowrap">{{ rate|money(model.calculator.currency) }}</td>
+                        <td class="text-right text-nowrap">{{ rate|money(currency) }}</td>
                         <td class="text-right text-nowrap">{{ duration }}</td>
-                        <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
+                        <td class="text-right text-nowrap">{{ entry.rate|money(currency) }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
             <table class="balance">
                 <tr>
-                    <th>{{ 'invoice.subtotal'|trans({}, 'messages', language) }}</th>
-                    <td>{{ model.calculator.subtotal|money(model.calculator.currency) }}</td>
+                    <th>{{ 'invoice.subtotal'|trans }}</th>
+                    <td>{{ model.calculator.subtotal|money(currency) }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'invoice.tax'|trans({}, 'messages', language) }} ({{ model.calculator.vat }}%)</th>
-                    <td>{{ model.calculator.tax|money(model.calculator.currency) }}</td>
+                    <th>{{ 'invoice.tax'|trans }} ({{ model.calculator.vat }}%)</th>
+                    <td>{{ model.calculator.tax|money(currency) }}</td>
                 </tr>
                 <tr>
-                    <th class="total">{{ 'invoice.total'|trans({}, 'messages', language) }}</th>
-                    <td class="total">{{ model.calculator.total|money(model.calculator.currency) }}</td>
+                    <th class="total">{{ 'invoice.total'|trans }}</th>
+                    <td class="total">{{ model.calculator.total|money(currency) }}</td>
                 </tr>
             </table>
         </article>
@@ -116,7 +116,7 @@
             <div class="row">
                 <div class="col-sm-4" contenteditable="true">
                     <p>
-                        <strong>{{ 'label.address'|trans({}, 'messages', language) }}</strong>
+                        <strong>{{ 'label.address'|trans }}</strong>
                     </p>
                     <p>
                         {{ model.template.company }}<br>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="col-sm-4 text-center" contenteditable="true">
                     <p>
-                        <strong>{{ 'label.invoice_bank_account'|trans({}, 'messages', language) }}</strong>
+                        <strong>{{ 'label.invoice_bank_account'|trans }}</strong>
                     </p>
                     <p>
                         {{ model.template.paymentDetails|nl2br }}
@@ -133,7 +133,7 @@
                 </div>
                 <div class="col-sm-4 text-right" contenteditable="true">
                     <p>
-                        <strong>{{ 'label.contact'|trans({}, 'messages', language) }}</strong>
+                        <strong>{{ 'label.contact'|trans }}</strong>
                     </p>
                     <p>
                         {{ model.template.contact|nl2br }}

@@ -39,7 +39,7 @@ final class RoleService
             $roles = [];
             foreach ($this->roles as $key => $value) {
                 $roles[] = $key;
-                if (is_array($value)) {
+                if (\is_array($value)) {
                     foreach ($value as $name) {
                         $roles[] = $name;
                     }

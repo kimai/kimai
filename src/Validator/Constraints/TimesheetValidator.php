@@ -9,89 +9,60 @@
 
 namespace App\Validator\Constraints;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
-use App\Timesheet\TrackingModeService;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class TimesheetValidator extends ConstraintValidator
+final class TimesheetValidator extends ConstraintValidator
 {
     /**
-     * @var AuthorizationCheckerInterface
+     * @var Constraint[]
      */
-    protected $auth;
-    /**
-     * @var TimesheetConfiguration
-     */
-    protected $configuration;
-    /**
-     * @var TrackingModeService
-     */
-    protected $trackingModeService;
+    private $constraints;
 
     /**
-     * @param AuthorizationCheckerInterface $auth
-     * @param TimesheetConfiguration $configuration
+     * @param Constraint[] $constraints
      */
-    public function __construct(AuthorizationCheckerInterface $auth, TimesheetConfiguration $configuration, TrackingModeService $service)
+    public function __construct(iterable $constraints)
     {
-        $this->auth = $auth;
-        $this->configuration = $configuration;
-        $this->trackingModeService = $service;
+        $this->constraints = $constraints;
     }
 
     /**
-     * @param TimesheetEntity|mixed $value
+     * @param TimesheetEntity $timesheet
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($timesheet, Constraint $constraint)
     {
         if (!($constraint instanceof TimesheetConstraint)) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Timesheet');
+            throw new UnexpectedTypeException($constraint, Timesheet::class);
         }
 
-        if (!is_object($value) || !($value instanceof TimesheetEntity)) {
-            return;
+        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
         }
 
-        $this->validateBeginAndEnd($value, $this->context);
-        $this->validateActivityAndProject($value, $this->context);
-        $this->validatePermissions($value, $this->context);
+        $this->validateBeginAndEnd($timesheet, $this->context);
+        $this->validateActivityAndProject($timesheet, $this->context);
+        $this->validateActiveLimit($timesheet, $this->context);
+
+        foreach ($this->constraints as $constraint) {
+            $this->context
+                ->getValidator()
+                ->inContext($this->context)
+                ->validate($timesheet, $constraint, [Constraint::DEFAULT_GROUP]);
+        }
     }
 
     /**
      * @param TimesheetEntity $timesheet
      * @param ExecutionContextInterface $context
      */
-    protected function validatePermissions(TimesheetEntity $timesheet, ExecutionContextInterface $context)
+    protected function validateActiveLimit(TimesheetEntity $timesheet, ExecutionContextInterface $context)
     {
-        // special case that would otherwise need to be validated in several controllers:
-        // an entry is edited and the end date is removed (or duration deleted) would restart the record,
-        // which might be disallowed for the current user
-        if ($context->getViolations()->count() == 0 && null === $timesheet->getEnd()) {
-            $mode = $this->trackingModeService->getActiveMode();
-            $path = 'start';
-            if ($mode->canEditEnd()) {
-                $path = 'end';
-            } elseif ($mode->canEditDuration()) {
-                $path = 'duration';
-            }
-            if (!$this->auth->isGranted('start', $timesheet)) {
-                $context->buildViolation('You are not allowed to start this timesheet record.')
-                    ->atPath($path)
-                    ->setTranslationDomain('validators')
-                    ->setCode(TimesheetConstraint::START_DISALLOWED)
-                    ->addViolation();
-
-                return;
-            }
-        }
-
         // TODO check active entries against hard_limit
     }
 
@@ -101,7 +72,10 @@ class TimesheetValidator extends ConstraintValidator
      */
     protected function validateBeginAndEnd(TimesheetEntity $timesheet, ExecutionContextInterface $context)
     {
-        if (null === $timesheet->getBegin()) {
+        $begin = $timesheet->getBegin();
+        $end = $timesheet->getEnd();
+
+        if (null === $begin) {
             $context->buildViolation('You must submit a begin date.')
                 ->atPath('begin')
                 ->setTranslationDomain('validators')
@@ -111,24 +85,12 @@ class TimesheetValidator extends ConstraintValidator
             return;
         }
 
-        if (null !== $timesheet->getBegin() && null !== $timesheet->getEnd() && $timesheet->getEnd()->getTimestamp() < $timesheet->getBegin()->getTimestamp()) {
+        if (null !== $end && $begin > $end) {
             $context->buildViolation('End date must not be earlier then start date.')
                 ->atPath('end')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetConstraint::END_BEFORE_BEGIN_ERROR)
                 ->addViolation();
-        }
-
-        if (false === $this->configuration->isAllowFutureTimes()) {
-            // allow configured default rounding time + 1 minute - see #1295
-            $allowedDiff = ($this->configuration->getDefaultRoundingBegin() * 60) + 60;
-            if ((time() + $allowedDiff) < $timesheet->getBegin()->getTimestamp()) {
-                $context->buildViolation('The begin date cannot be in the future.')
-                    ->atPath('begin')
-                    ->setTranslationDomain('validators')
-                    ->setCode(TimesheetConstraint::BEGIN_IN_FUTURE_ERROR)
-                    ->addViolation();
-            }
         }
     }
 

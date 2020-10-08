@@ -16,6 +16,7 @@ use App\Repository\Query\ActivityQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * @covers \App\Event\AbstractMetaDisplayEvent
  * @covers \App\Event\ActivityMetaDisplayEvent
  */
 class ActivityMetaDisplayEventTest extends TestCase

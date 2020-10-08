@@ -15,6 +15,17 @@ use App\Repository\RolePermissionRepository;
 final class RolePermissionManager
 {
     /**
+     * Permissions that are always true for ROLE_SUPER_ADMIN, no matter what is inside the database.
+     *
+     * @var string[]
+     */
+    public const SUPER_ADMIN_PERMISSIONS = [
+        'view_all_data',
+        'role_permissions',
+        'view_user'
+    ];
+
+    /**
      * @var array
      */
     private $permissions = [];
@@ -36,23 +47,22 @@ final class RolePermissionManager
         foreach ($all as $item) {
             $perm = $item['permission'];
             $role = strtoupper($item['role']);
-            $isAllowed = $item['allowed'];
+            $isAllowed = (bool) $item['allowed'];
 
-            // see permissions.html.twig for this special case
-            if ($role === User::ROLE_SUPER_ADMIN && in_array($perm, ['role_permissions', 'view_user'])) {
+            // these permissions may not be revoked at any time, because super admin would loose the ability to reactivate any permission
+            if ($role === User::ROLE_SUPER_ADMIN && \in_array($perm, self::SUPER_ADMIN_PERMISSIONS)) {
                 continue;
             }
 
-            if (!$isAllowed) {
-                if (array_key_exists($role, $this->permissions)) {
-                    if (($key = array_search($perm, $this->permissions[$role])) !== false) {
-                        unset($this->permissions[$role][$key]);
-                    }
+            if (!\array_key_exists($role, $this->permissions)) {
+                $this->permissions[$role] = [];
+            }
+
+            if (false === $isAllowed) {
+                if (($key = array_search($perm, $this->permissions[$role])) !== false) {
+                    unset($this->permissions[$role][$key]);
                 }
             } else {
-                if (!array_key_exists($role, $this->permissions)) {
-                    $this->permissions[$role] = [];
-                }
                 $this->permissions[$role][] = $perm;
             }
         }
@@ -66,7 +76,7 @@ final class RolePermissionManager
      */
     public function isRegisteredPermission(string $permission): bool
     {
-        return in_array($permission, $this->knownPermissions);
+        return \in_array($permission, $this->knownPermissions);
     }
 
     public function hasPermission(string $role, string $permission): bool
@@ -77,7 +87,7 @@ final class RolePermissionManager
             return false;
         }
 
-        return in_array($permission, $this->permissions[$role]);
+        return \in_array($permission, $this->permissions[$role]);
     }
 
     /**

@@ -75,6 +75,17 @@ class InvoiceTemplateTest extends TestCase
 
         self::assertInstanceOf(InvoiceTemplate::class, $sut->setLanguage('de'));
         self::assertEquals('de', $sut->getLanguage());
+
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setNumberGenerator('foo'));
+        self::assertEquals('foo', $sut->getNumberGenerator());
+
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setRenderer('bar'));
+        self::assertEquals('bar', $sut->getRenderer());
+
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setCalculator('fooBar'));
+        self::assertEquals('fooBar', $sut->getCalculator());
+
+        self::assertEquals($sut, clone $sut);
     }
 
     public function testToString()

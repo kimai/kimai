@@ -2,6 +2,7 @@
 {% import "doctor/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'menu.doctor'|trans }}{% endblock %}
+{% block page_subtitle %}Environment: <strong>{{ environment }}</strong>{% endblock %}
 {% block page_actions %}{{ actions.doctor('index') }}{% endblock %}
 
 {% block main %}
@@ -83,10 +84,12 @@
             {% if logSize > 52428800 %}
                 <p>Your logfile is larger than 50 MB, consider deleting it (it will be re-created automatically).</p>
             {% endif %}
-            <pre>{% for logLine in logs -%}
+            <pre>{% for logLine in logs|reverse -%}
                 {%- set logLineClass = '' -%}
                 {%- if '.CRITICAL' in logLine -%}
                     {%- set logLineClass = 'text-danger text-bold' -%}
+                {%- elseif '.WARNING' in logLine -%}
+                    {%- set logLineClass = 'text-warning text-bold' -%}
                 {%- elseif '.ERROR' in logLine -%}
                     {%- set logLineClass = 'text-warning text-bold' -%}
                 {%- elseif '.DEBUG' in logLine -%}
@@ -99,8 +102,9 @@
 
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {collapsed: true} %}
         {% block box_title %}Composer packages{% endblock %}
+        {% block box_body_class %}no-padding{% endblock %}
         {% block box_body %}
-            <table class="table">
+            <table class="table table-hover">
                 {% for name, value in composer %}
                     <tr>
                         <th style="width:15%">{{ name }}</th>
@@ -112,23 +116,10 @@
     {% endembed %}
     
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {collapsed: true} %}
-        {% block box_title %}Environment variables{% endblock %}
-        {% block box_body %}
-            <table class="table">
-                {% for name, value in dotenv %}
-                    <tr>
-                        <th style="width:15%">{{ name }}</th>
-                        <td>{{ value }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        {% endblock %}
-    {% endembed %}
-
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {collapsed: true} %}
         {% block box_title %}PHP{% endblock %}
+        {% block box_body_class %}no-padding{% endblock %}
         {% block box_body %}
-            <table class="table">
+            <table class="table table-hover">
                 <tr>
                     <th style="width:15%">Version</th>
                     <td>{{ constant('PHP_VERSION') }}</td>
@@ -155,8 +146,9 @@
 
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {collapsed: true} %}
         {% block box_title %}Server{% endblock %}
+        {% block box_body_class %}no-padding{% endblock %}
         {% block box_body %}
-            <table class="table">
+            <table class="table table-hover">
                 {% for name, value in info %}
                     <tr>
                         <th style="width:15%">{{ name }}</th>

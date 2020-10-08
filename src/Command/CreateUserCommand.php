@@ -102,7 +102,7 @@ final class CreateUserCommand extends Command
                 $value = $error->getInvalidValue();
                 $io->error(
                     $error->getPropertyPath()
-                    . ' (' . (is_array($value) ? implode(',', $value) : $value) . ')'
+                    . ' (' . (\is_array($value) ? implode(',', $value) : $value) . ')'
                     . "\n    "
                     . $error->getMessage()
                 );

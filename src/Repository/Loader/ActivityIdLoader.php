@@ -93,6 +93,15 @@ final class ActivityIdLoader implements LoaderInterface
                 ->andWhere($qb->expr()->in('a.id', $ids))
                 ->getQuery()
                 ->execute();
+
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL a.{id}', 'teams', 'teamlead')
+                ->from(Activity::class, 'a')
+                ->leftJoin('a.teams', 'teams')
+                ->leftJoin('teams.teamlead', 'teamlead')
+                ->andWhere($qb->expr()->in('a.id', $ids))
+                ->getQuery()
+                ->execute();
         }
     }
 }

@@ -34,6 +34,18 @@ final class HtmlRenderer implements TimesheetExportInterface
         $this->dispatcher = $dispatcher;
     }
 
+    private function getOptions(TimesheetQuery $query): array
+    {
+        $decimal = false;
+        if (null !== $query->getCurrentUser()) {
+            $decimal = (bool) $query->getCurrentUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+        } elseif (null !== $query->getUser()) {
+            $decimal = (bool) $query->getUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+        }
+
+        return ['decimal' => $decimal];
+    }
+
     /**
      * @param Timesheet[] $timesheets
      * @param TimesheetQuery $query
@@ -53,11 +65,12 @@ final class HtmlRenderer implements TimesheetExportInterface
         $this->dispatcher->dispatch($event);
         $timesheetMetaFields = $event->getFields();
 
-        $content = $this->twig->render('timesheet/export.html.twig', [
+        $content = $this->twig->render('timesheet/export.html.twig', array_merge([
             'entries' => $timesheets,
             'query' => $query,
             'metaColumns' => $timesheetMetaFields,
-        ]);
+            'decimal' => false,
+        ], $this->getOptions($query)));
 
         $response = new Response();
         $response->setContent($content);

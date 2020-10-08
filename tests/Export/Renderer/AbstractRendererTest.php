@@ -25,10 +25,10 @@ use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
+use App\Export\ExportRendererInterface;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
-use App\Utils\LocaleSettings;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -59,10 +59,8 @@ abstract class AbstractRendererTest extends KernelTestCase
         $request->setLocale('en');
         $requestStack->push($request);
 
-        $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($languages));
-
         $translator = $this->createMock(TranslatorInterface::class);
-        $dateExtension = new DateExtensions($localeSettings);
+        $dateExtension = new DateExtensions($requestStack, new LanguageFormattings($languages));
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
@@ -74,10 +72,10 @@ abstract class AbstractRendererTest extends KernelTestCase
     }
 
     /**
-     * @param RendererInterface $renderer
+     * @param ExportRendererInterface $renderer
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function render(RendererInterface $renderer)
+    protected function render(ExportRendererInterface $renderer)
     {
         $customer = new Customer();
         $customer->setName('Customer Name');
@@ -167,10 +165,10 @@ abstract class AbstractRendererTest extends KernelTestCase
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
 
         $query = new TimesheetQuery();
-        $query->setActivity($activity);
+        $query->setActivities([$activity]);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
-        $query->setProject($project);
+        $query->setProjects([$project]);
 
         return $renderer->render($entries, $query);
     }

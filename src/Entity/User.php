@@ -9,10 +9,14 @@
 
 namespace App\Entity;
 
+use App\Constants;
+use App\Export\Annotation as Exporter;
+use App\Utils\StringHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -27,6 +31,36 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @UniqueEntity("username")
  * @UniqueEntity("email")
+ *
+ * @Serializer\ExclusionPolicy("all")
+ * @Serializer\VirtualProperty(
+ *      "LanguageAsString",
+ *      exp="object.getLocale()",
+ *      options={
+ *          @Serializer\SerializedName("language"),
+ *          @Serializer\Type(name="string"),
+ *          @Serializer\Groups({"User_Entity"})
+ *      }
+ * )
+ * @Serializer\VirtualProperty(
+ *      "TimezoneAsString",
+ *      exp="object.getTimezone()",
+ *      options={
+ *          @Serializer\SerializedName("timezone"),
+ *          @Serializer\Type(name="string"),
+ *          @Serializer\Groups({"User_Entity"})
+ *      }
+ * )
+ *
+ * @Exporter\Order({"id", "username", "alias", "title", "email", "last_login", "language", "timezone", "active", "registeredAt", "roles", "teams"})
+ * @Exporter\Expose("email", label="label.email", exp="object.getEmail()")
+ * @Exporter\Expose("username", label="label.username", exp="object.getUsername()")
+ * @Exporter\Expose("timezone", label="label.timezone", exp="object.getTimezone()")
+ * @Exporter\Expose("language", label="label.language", exp="object.getLanguage()")
+ * @Exporter\Expose("last_login", label="label.lastLogin", exp="object.getLastLogin()", type="datetime")
+ * @Exporter\Expose("roles", label="label.roles", exp="object.getRoles()", type="array")
+ * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
+ * @Exporter\Expose("active", label="label.active", exp="object.isEnabled()", type="boolean")
  */
 class User extends BaseUser implements UserInterface
 {
@@ -36,71 +70,109 @@ class User extends BaseUser implements UserInterface
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     public const DEFAULT_ROLE = self::ROLE_USER;
-    public const DEFAULT_LANGUAGE = 'en';
+    public const DEFAULT_LANGUAGE = Constants::DEFAULT_LOCALE;
+    public const DEFAULT_FIRST_WEEKDAY = 'monday';
 
     public const AUTH_INTERNAL = 'kimai';
     public const AUTH_LDAP = 'ldap';
     public const AUTH_SAML = 'saml';
 
     /**
+     * Internal ID
+     *
      * @var int
+     * @internal must be protected because of parent class
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
+     * @Exporter\Expose(label="label.id", type="integer")
      *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer")
      */
     protected $id;
-
     /**
+     * The user alias will be displayed in the frontend instead of the username
+     *
      * @var string
      *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
+     * @Exporter\Expose(label="label.alias")
+     *
      * @ORM\Column(name="alias", type="string", length=60, nullable=true)
-     * @Assert\Length(max=160)
+     * @Assert\Length(max=60)
      */
     private $alias;
-
     /**
+     * Registration date for the user
+     *
      * @var \DateTime
+     *
+     * @Exporter\Expose(label="profile.registration_date", type="datetime")
      *
      * @ORM\Column(name="registration_date", type="datetime", nullable=true)
      */
     private $registeredAt;
-
     /**
+     * An additional title for the user, like the Job position or Department
+     *
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"User_Entity"})
+     *
+     * @Exporter\Expose(label="label.title")
      *
      * @ORM\Column(name="title", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
     private $title;
-
     /**
+     * URL to the users avatar, will be auto-generated if empty
+     *
      * @var string
      *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"User_Entity"})
+     *
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
     private $avatar;
-
     /**
+     * API token (password) for this user
+     *
      * @var string
      *
      * @ORM\Column(name="api_token", type="string", length=255, nullable=true)
      */
-    protected $apiToken;
-
+    private $apiToken;
     /**
      * @var string
+     * @internal to be set via form, must not be persisted
      */
-    protected $plainApiToken;
-
+    private $plainApiToken;
     /**
+     * User preferences
+     *
+     * List of preferences for this user, required ones have dedicated fields/methods
+     *
      * @var UserPreference[]|Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user", cascade={"persist"})
      */
     private $preferences;
-
     /**
+     * All teams of the user
+     *
      * @var Team[]|ArrayCollection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"User_Entity"})
      *
      * @ORM\ManyToMany(targetEntity="Team", inversedBy="users", cascade={"persist"})
      * @ORM\JoinTable(
@@ -114,17 +186,24 @@ class User extends BaseUser implements UserInterface
      * )
      */
     private $teams;
-
     /**
+     * The type of authentication used by the user (eg. "kimai", "ldap", "saml")
+     *
      * @var string
+     * @internal for internal usage only
      *
      * @ORM\Column(name="auth", type="string", length=20, nullable=true)
+     * @Assert\Length(max=20)
      */
     private $auth = self::AUTH_INTERNAL;
-
     /**
-     * User constructor.
+     * This flag will be initialized in UserEnvironmentSubscriber.
+     *
+     * @var bool|null
+     * @internal has no database mapping as the value is calculated from a permission
      */
+    private $isAllowedToSeeAllData = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -152,7 +231,7 @@ class User extends BaseUser implements UserInterface
 
     public function setAlias(?string $alias): User
     {
-        $this->alias = $alias;
+        $this->alias = StringHelper::ensureMaxLength($alias, 60);
 
         return $this;
     }
@@ -169,7 +248,7 @@ class User extends BaseUser implements UserInterface
 
     public function setTitle(?string $title): User
     {
-        $this->title = $title;
+        $this->title = StringHelper::ensureMaxLength($title, 50);
 
         return $this;
     }
@@ -259,7 +338,7 @@ class User extends BaseUser implements UserInterface
         }
 
         foreach ($this->preferences as $preference) {
-            if ($preference->getName() == $name) {
+            if ($preference->getName() === $name) {
                 return $preference;
             }
         }
@@ -288,6 +367,11 @@ class User extends BaseUser implements UserInterface
             $language = User::DEFAULT_LANGUAGE;
         }
         $this->setPreferenceValue(UserPreference::LOCALE, $language);
+    }
+
+    public function getFirstDayOfWeek(): string
+    {
+        return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY);
     }
 
     public function setTimezone(?string $timezone)
@@ -350,6 +434,11 @@ class User extends BaseUser implements UserInterface
         $team->removeUser($this);
     }
 
+    public function hasTeamAssignment(): bool
+    {
+        return !$this->getTeams()->isEmpty();
+    }
+
     /**
      * @return Collection<Team>
      */
@@ -366,6 +455,31 @@ class User extends BaseUser implements UserInterface
     public function isTeamleadOf(Team $team): bool
     {
         return $team->getTeamLead() === $this;
+    }
+
+    public function canSeeAllData(): bool
+    {
+        return $this->isSuperAdmin() || true === $this->isAllowedToSeeAllData;
+    }
+
+    /**
+     * This method should not be called by plugins and returns true on success or false on a failure.
+     *
+     * @internal immutable property that cannot be set by plugins
+     * @param bool $canSeeAllData
+     * @return bool
+     * @throws \Exception
+     */
+    public function initCanSeeAllData(bool $canSeeAllData): bool
+    {
+        // prevent manipulation from plugins
+        if (null !== $this->isAllowedToSeeAllData) {
+            return false;
+        }
+
+        $this->isAllowedToSeeAllData = $canSeeAllData;
+
+        return true;
     }
 
     public function isTeamlead(): bool

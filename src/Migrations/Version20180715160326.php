@@ -37,24 +37,18 @@ final class Version20180715160326 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $platform = $this->getPlatform();
-
-        if (!in_array($platform, ['sqlite', 'mysql'])) {
-            $this->abortIf(true, 'Unsupported database platform: ' . $platform);
-        }
-
-        $users = $this->getTableName('users');
+        $users = 'kimai2_users';
 
         // delete all existing indexes
         $indexesOld = $schema->getTable($users)->getIndexes();
         foreach ($indexesOld as $index) {
-            if (in_array('name', $index->getColumns()) || in_array('mail', $index->getColumns())) {
+            if (\in_array('name', $index->getColumns()) || \in_array('mail', $index->getColumns())) {
                 $this->indexesOld[] = $index;
                 $this->addSqlDropIndex($index->getName(), $users);
             }
         }
 
-        if ($platform === 'sqlite') {
+        if ($this->isPlatformSqlite()) {
             $this->addSql('CREATE TEMPORARY TABLE __temp__' . $users . ' AS SELECT id, name, mail, password, alias, active, registration_date, title, avatar, roles FROM ' . $users);
             $this->addSql('DROP TABLE ' . $users);
             $this->addSql('CREATE TABLE ' . $users . ' (id INTEGER NOT NULL, alias VARCHAR(60) DEFAULT NULL COLLATE BINARY, registration_date DATETIME DEFAULT NULL, title VARCHAR(50) DEFAULT NULL COLLATE BINARY, avatar VARCHAR(255) DEFAULT NULL COLLATE BINARY, enabled BOOLEAN NOT NULL, password VARCHAR(255) NOT NULL, roles CLOB NOT NULL --(DC2Type:array)
@@ -87,20 +81,14 @@ final class Version20180715160326 extends AbstractMigration
      */
     public function down(Schema $schema): void
     {
-        $platform = $this->getPlatform();
-
-        if (!in_array($platform, ['sqlite', 'mysql'])) {
-            $this->abortIf(true, 'Unsupported database platform: ' . $platform);
-        }
-
-        $users = $this->getTableName('users');
+        $users = 'kimai2_users';
 
         $indexToDelete = ['UNIQ_B9AC5BCE92FC23A8', 'UNIQ_B9AC5BCEA0D96FBF', 'UNIQ_B9AC5BCEC05FB297', 'UNIQ_B9AC5BCEF85E0677', 'UNIQ_B9AC5BCEE7927C74'];
         foreach ($indexToDelete as $index) {
             $this->addSqlDropIndex($index, $users);
         }
 
-        if ($platform === 'sqlite') {
+        if ($this->isPlatformSqlite()) {
             $this->addSql('CREATE TEMPORARY TABLE __temp__' . $users . ' AS SELECT id, username, email, enabled, password, roles, alias, registration_date, title, avatar FROM ' . $users);
             $this->addSql('DROP TABLE ' . $users);
             $this->addSql('CREATE TABLE ' . $users . ' (id INTEGER NOT NULL, alias VARCHAR(60) DEFAULT NULL, registration_date DATETIME DEFAULT NULL, title VARCHAR(50) DEFAULT NULL, avatar VARCHAR(255) DEFAULT NULL, active BOOLEAN NOT NULL, password VARCHAR(254) DEFAULT NULL COLLATE BINARY, roles CLOB NOT NULL COLLATE BINARY --(DC2Type:array)

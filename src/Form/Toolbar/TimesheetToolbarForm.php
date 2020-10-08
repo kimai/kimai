@@ -23,14 +23,19 @@ class TimesheetToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $newOptions = [];
+        if ($options['ignore_date'] === true) {
+            $newOptions['ignore_date'] = true;
+        }
+
         $this->addSearchTermInputField($builder);
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
         }
         $this->addDateRangeChoice($builder);
-        $this->addCustomerChoice($builder);
-        $this->addProjectChoice($builder);
-        $this->addActivityChoice($builder);
+        $this->addCustomerMultiChoice($builder, $newOptions, true);
+        $this->addProjectMultiChoice($builder, $newOptions, true, true);
+        $this->addActivityMultiChoice($builder, [], true);
         $this->addTagInputField($builder);
         $this->addTimesheetStateChoice($builder);
         $this->addExportStateChoice($builder);
@@ -49,6 +54,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
             'data_class' => TimesheetQuery::class,
             'csrf_protection' => false,
             'include_user' => false,
+            'ignore_date' => true,
         ]);
     }
 }

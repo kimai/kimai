@@ -45,3 +45,33 @@
         {{ block('form_widget_simple') }}
     {% endif %}
 {%- endblock text_widget %}
+
+{% block monthpicker_widget -%}
+    <div class="btn-group">
+        <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousMonth|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}">
+            <i class="{{ 'left'|icon }}"></i>
+        </a>
+        <a class="btn btn-default" href="#" onclick="return false;">
+            <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
+        </a>
+        <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{ nextMonth|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}">
+            <i class="{{ 'right'|icon }}"></i>
+        </a>
+    </div>
+    {{ block('hidden_widget') }}
+{%- endblock monthpicker_widget %}
+
+{% block weekpicker_widget -%}
+    <div class="btn-group">
+        <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousWeek|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}">
+            <i class="{{ 'left'|icon }}"></i>
+        </a>
+        <a class="btn btn-default" href="#" onclick="return false;">
+            <span id="{{ form.vars.id }}_week_number">{{ 'stats.workingTimeWeek'|trans({'%week%': week|date_format('W')}) }}</span>
+        </a>
+        <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{ nextWeek|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}">
+            <i class="{{ 'right'|icon }}"></i>
+        </a>
+    </div>
+    {{ block('hidden_widget') }}
+{%- endblock weekpicker_widget %}

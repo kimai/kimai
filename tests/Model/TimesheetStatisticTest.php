@@ -41,8 +41,8 @@ class TimesheetStatisticTest extends TestCase
         $sut->setFirstEntry($date);
 
         $this->assertEquals(2, $sut->getRecordsTotal());
-        $this->assertEquals(7654, $sut->getAmountTotal());
-        $this->assertEquals(826, $sut->getAmountThisMonth());
+        $this->assertEquals(7654.298, $sut->getAmountTotal());
+        $this->assertEquals(826.10, $sut->getAmountThisMonth());
         $this->assertEquals(13, $sut->getDurationTotal());
         $this->assertEquals(200, $sut->getDurationThisMonth());
         $this->assertSame($date, $sut->getFirstEntry());
