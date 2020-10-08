@@ -14,7 +14,6 @@ use App\Export\ServiceExport;
 use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\Query\ExportQuery;
 use App\Repository\TimesheetRepository;
-use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\SubmitButton;
@@ -39,20 +38,15 @@ class ExportController extends AbstractController
      * @var ServiceExport
      */
     protected $export;
-    /**
-     * @var UserDateTimeFactory
-     */
-    protected $dateFactory;
 
     /**
      * @param TimesheetRepository $timesheet
      * @param ServiceExport $export
      */
-    public function __construct(TimesheetRepository $timesheet, ServiceExport $export, UserDateTimeFactory $dateTime)
+    public function __construct(TimesheetRepository $timesheet, ServiceExport $export)
     {
         $this->timesheetRepository = $timesheet;
         $this->export = $export;
-        $this->dateFactory = $dateTime;
     }
 
     /**
@@ -114,6 +108,7 @@ class ExportController extends AbstractController
         $entries = $this->getEntries($query);
         $response = $renderer->render($entries, $query);
 
+        // TODO check entries if user is allowed to update export state - see https://github.com/kevinpapst/kimai2/issues/1473
         if ($query->isMarkAsExported()) {
             $this->timesheetRepository->setExported($entries);
         }
@@ -123,8 +118,10 @@ class ExportController extends AbstractController
 
     protected function getDefaultQuery(): ExportQuery
     {
-        $begin = $this->dateFactory->createDateTime('first day of this month 00:00:00');
-        $end = $this->dateFactory->createDateTime('last day of this month 23:59:59');
+        $factory = $this->getDateTimeFactory();
+
+        $begin = $factory->createDateTime('first day of this month 00:00:00');
+        $end = $factory->createDateTime('last day of this month 23:59:59');
 
         $query = new ExportQuery();
         $query->setOrder(ExportQuery::ORDER_ASC);
@@ -157,6 +154,7 @@ class ExportController extends AbstractController
     {
         return $this->createForm(ExportToolbarForm::class, $query, [
             'action' => $this->generateUrl('export', []),
+            'include_user' => $this->isGranted('view_other_timesheet'),
             'method' => $method,
             'attr' => [
                 'id' => 'export-form'
