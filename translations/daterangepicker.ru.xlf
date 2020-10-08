@@ -4,39 +4,39 @@
     <body>
       <trans-unit id="daterangepicker.today">
         <source>daterangepicker.today</source>
-        <target></target>
+        <target>Сегодня</target>
       </trans-unit>
       <trans-unit id="daterangepicker.yesterday">
         <source>daterangepicker.yesterday</source>
-        <target></target>
+        <target>Вчера</target>
       </trans-unit>
       <trans-unit id="daterangepicker.lastWeek">
         <source>daterangepicker.lastWeek</source>
-        <target></target>
+        <target>Прошлая неделя</target>
       </trans-unit>
       <trans-unit id="daterangepicker.thisWeek">
         <source>daterangepicker.thisWeek</source>
-        <target></target>
+        <target>Эта неделя</target>
       </trans-unit>
       <trans-unit id="daterangepicker.lastMonth">
         <source>daterangepicker.lastMonth</source>
-        <target></target>
+        <target>Прошлый месяц</target>
       </trans-unit>
       <trans-unit id="daterangepicker.thisMonth">
         <source>daterangepicker.thisMonth</source>
-        <target></target>
+        <target>Этот месяц</target>
       </trans-unit>
       <trans-unit id="daterangepicker.lastYear">
         <source>daterangepicker.lastYear</source>
-        <target></target>
+        <target>Прошлый год</target>
       </trans-unit>
       <trans-unit id="daterangepicker.thisYear">
         <source>daterangepicker.thisYear</source>
-        <target></target>
+        <target>Этот год</target>
       </trans-unit>
       <trans-unit id="daterangepicker.customRange">
         <source>daterangepicker.customRange</source>
-        <target></target>
+        <target>Свой диапазон</target>
       </trans-unit>
     </body>
   </file>
