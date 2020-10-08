@@ -35,13 +35,15 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
     public const MIN_TIMESHEETS_PER_USER = 50;
     public const MAX_TIMESHEETS_PER_USER = 500;
     public const MAX_TIMESHEETS_TOTAL = 5000;
-    public const MAX_RUNNING_TIMESHEETS_PER_USER = 2;
+    public const MAX_RUNNING_TIMESHEETS_PER_USER = 1;
     public const TIMERANGE_DAYS = 1095; // 3 years
     public const TIMERANGE_RUNNING = 1047; // in minutes = 17:45 hours
     public const MIN_MINUTES_PER_ENTRY = 15;
     public const MAX_MINUTES_PER_ENTRY = 840; // 14h
+    public const MAX_DESCRIPTION_LENGTH = 500;
+
+    public const ADD_TAGS_MAX_ENTRIES = 10000;
     public const MAX_TAG_PER_ENTRY = 3;
-    public const MAX_DESCRIPTION_LENGTH = 50;
 
     public const BATCH_SIZE = 100;
 
@@ -125,19 +127,20 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
         }
         $manager->flush();
 
-        // TODO this breaks if we create more than a couple of hundred timesheets
-        /*
-                $entries = $manager->getRepository(Timesheet::class)->findAll();
-                foreach ($entries as $temp) {
-                    $tagAmount = rand(0, self::MAX_TAG_PER_ENTRY);
-                    for ($iTag = 0; $iTag < $tagAmount; $iTag++) {
-                        $tagId = rand(1, TagFixtures::MAX_TAGS);
-                        if (isset($allTags[$tagId])) {
-                            $temp->addTag($allTags[$tagId]);
-                        }
+        // TODO this breaks if too many records need to be loaded: find a better way of adding tags
+        if (self::MAX_TIMESHEETS_TOTAL < self::ADD_TAGS_MAX_ENTRIES) {
+            $entries = $manager->getRepository(Timesheet::class)->findAll();
+            foreach ($entries as $temp) {
+                $tagAmount = rand(0, self::MAX_TAG_PER_ENTRY);
+                for ($iTag = 0; $iTag < $tagAmount; $iTag++) {
+                    $tagId = rand(1, TagFixtures::MAX_TAGS);
+                    if (isset($allTags[$tagId])) {
+                        $temp->addTag($allTags[$tagId]);
                     }
                 }
-        */
+            }
+        }
+
         $manager->flush();
         $manager->clear(Timesheet::class);
         $manager->clear(Tag::class);
