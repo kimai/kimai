@@ -9,7 +9,7 @@
 
 namespace App\Controller;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\Spreadsheet\UserExporter;
@@ -97,7 +97,7 @@ final class UserController extends AbstractController
         ]);
     }
 
-    private function createNewDefaultUser(FormConfiguration $config): User
+    private function createNewDefaultUser(SystemConfiguration $config): User
     {
         $user = new User();
         $user->setEnabled(true);
@@ -112,7 +112,7 @@ final class UserController extends AbstractController
      * @Route(path="/create", name="admin_user_create", methods={"GET", "POST"})
      * @Security("is_granted('create_user')")
      */
-    public function createAction(Request $request, FormConfiguration $config): Response
+    public function createAction(Request $request, SystemConfiguration $config): Response
     {
         $user = $this->createNewDefaultUser($config);
         $editForm = $this->getCreateUserForm($user);

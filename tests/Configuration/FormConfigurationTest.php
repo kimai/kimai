@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \App\Configuration\FormConfiguration
  * @covers \App\Configuration\StringAccessibleConfigTrait
+ * @group legacy
  */
 class FormConfigurationTest extends TestCase
 {

@@ -9,7 +9,7 @@
 
 namespace App\Command;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -89,7 +89,7 @@ class ImportTimesheetCommand extends Command
      */
     private $timesheets;
     /**
-     * @var FormConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
     /**
@@ -121,7 +121,7 @@ class ImportTimesheetCommand extends Command
      */
     private $begin = self::DEFAULT_BEGIN;
 
-    public function __construct(CustomerRepository $customers, ProjectRepository $projects, ActivityRepository $activities, UserRepository $users, TagRepository $tagRepository, TimesheetRepository $timesheets, FormConfiguration $configuration)
+    public function __construct(CustomerRepository $customers, ProjectRepository $projects, ActivityRepository $activities, UserRepository $users, TagRepository $tagRepository, TimesheetRepository $timesheets, SystemConfiguration $configuration)
     {
         parent::__construct();
         $this->customers = $customers;

@@ -9,7 +9,7 @@
 
 namespace App\Controller;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
@@ -57,7 +57,7 @@ final class ProjectController extends AbstractController
      */
     private $repository;
     /**
-     * @var FormConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
     /**
@@ -69,7 +69,7 @@ final class ProjectController extends AbstractController
      */
     private $projectService;
 
-    public function __construct(ProjectRepository $repository, FormConfiguration $configuration, EventDispatcherInterface $dispatcher, ProjectService $projectService)
+    public function __construct(ProjectRepository $repository, SystemConfiguration $configuration, EventDispatcherInterface $dispatcher, ProjectService $projectService)
     {
         $this->repository = $repository;
         $this->configuration = $configuration;

@@ -82,4 +82,39 @@ class SystemConfiguration implements SystemBundleConfiguration
     {
         return (string) $this->find('calendar.slot_duration');
     }
+
+    public function getCustomerDefaultTimezone(): ?string
+    {
+        return $this->find('defaults.customer.timezone');
+    }
+
+    public function getCustomerDefaultCurrency(): string
+    {
+        return $this->find('defaults.customer.currency');
+    }
+
+    public function getCustomerDefaultCountry(): string
+    {
+        return $this->find('defaults.customer.country');
+    }
+
+    public function getUserDefaultTimezone(): ?string
+    {
+        return $this->find('defaults.user.timezone');
+    }
+
+    public function getUserDefaultTheme(): ?string
+    {
+        return $this->find('defaults.user.theme');
+    }
+
+    public function getUserDefaultLanguage(): string
+    {
+        return $this->find('defaults.user.language');
+    }
+
+    public function getUserDefaultCurrency(): string
+    {
+        return $this->find('defaults.user.currency');
+    }
 }

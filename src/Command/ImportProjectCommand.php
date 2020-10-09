@@ -9,16 +9,10 @@
 
 namespace App\Command;
 
-use App\Configuration\FormConfiguration;
-use App\Entity\Customer;
 use App\Entity\Team;
-use App\Importer\CsvReader;
-use App\Importer\DefaultProjectImporter;
+use App\Importer\ImporterService;
 use App\Importer\ImportNotFoundException;
 use App\Importer\ImportNotReadableException;
-use App\Importer\ImportReader;
-use App\Repository\CustomerRepository;
-use App\Repository\ProjectRepository;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\Console\Command\Command;
@@ -228,6 +222,10 @@ class ImportProjectCommand extends Command
 
                 if ($project->getId() === null) {
                     $createdProjects++;
+                    $createTeam = (null !== $teamlead);
+                } elseif ($skipUpdate === false) {
+                    $this->importerService->importProject($project);
+                    $updatedProjects++;
                 } else {
                     $updatedProjects++;
                 }
