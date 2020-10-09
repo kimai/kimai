@@ -10,10 +10,13 @@
 namespace App\Command;
 
 use App\Configuration\FormConfiguration;
+use App\Importer\CsvReader;
 use App\Importer\DefaultCustomerImporter;
 use App\Importer\GrandtotalCustomerImporter;
+use App\Importer\ImportNotFoundException;
+use App\Importer\ImportNotReadableException;
+use App\Importer\ImportReader;
 use App\Repository\CustomerRepository;
-use League\Csv\Reader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -51,10 +54,34 @@ class ImportCustomerCommand extends Command
                 'Import customers from a CSV file.' . PHP_EOL .
                 'Customer will be matched by name or number, and if not found created on the fly.' . PHP_EOL
             )
-            ->addOption('delimiter', null, InputOption::VALUE_OPTIONAL, 'The CSV field delimiter', ',')
             ->addArgument('file', InputArgument::REQUIRED, 'The CSV file to be imported')
-            ->addOption('importer', null, InputOption::VALUE_REQUIRED, 'The importer to use (supported: default, grandtotal)')
+            ->addOption('importer', null, InputOption::VALUE_REQUIRED, 'The importer to use (supported: default, grandtotal)', 'default')
+            ->addOption('reader', null, InputOption::VALUE_REQUIRED, 'The reader to use (supported: csv, csv-semicolon)', 'csv')
         ;
+    }
+
+    protected function getImporter(?string $importer = null)
+    {
+        switch ($importer) {
+            case 'default':
+                return new DefaultCustomerImporter($this->customers, $this->configuration);
+            case 'grandtotal':
+                return new GrandtotalCustomerImporter($this->customers, $this->configuration);
+        }
+
+        throw new \Exception('Unknown importer');
+    }
+
+    protected function getReader(?string $reader = null): ImportReader
+    {
+        switch ($reader) {
+            case 'csv':
+                return new CsvReader(',');
+            case 'csv-semicolon':
+                return new CsvReader(';');
+        }
+
+        throw new \Exception('Unknown reader');
     }
 
     /**
@@ -68,40 +95,26 @@ class ImportCustomerCommand extends Command
 
         $io->title('Kimai importer: Customers');
 
-        $csvFile = $input->getArgument('file');
-        if (!file_exists($csvFile)) {
-            $io->error('File not existing: ' . $csvFile);
-
-            return 1;
-        }
-
-        if (!is_readable($csvFile)) {
-            $io->error('File cannot be read: ' . $csvFile);
-
-            return 2;
-        }
-
-        $csv = Reader::createFromPath($csvFile, 'r');
-        $csv->setDelimiter($input->getOption('delimiter'));
-        $csv->setHeaderOffset(0);
-        $records = $csv->getRecords();
-
         $doImport = true;
         $row = 1;
         $errors = 0;
         $customers = [];
         $importer = null;
 
-        if (null !== ($importerName = $input->getOption('importer'))) {
-            switch ($importerName) {
-                case 'grandtotal':
-                    $importer = new GrandtotalCustomerImporter($this->customers, $this->configuration);
-                    break;
-            }
-        }
+        $importer = $this->getImporter($input->getOption('importer'));
+        $reader = $this->getReader($input->getOption('reader'));
+        $importerFile = $input->getArgument('file');
 
-        if ($importer === null) {
-            $importer = new DefaultCustomerImporter($this->customers, $this->configuration);
+        try {
+            $records = $reader->read($importerFile);
+        } catch (ImportNotFoundException $ex) {
+            $io->error('File not existing: ' . $importerFile);
+
+            return 1;
+        } catch (ImportNotReadableException $ex) {
+            $io->error('File cannot be read: ' . $importerFile);
+
+            return 2;
         }
 
         foreach ($records as $record) {
@@ -124,6 +137,7 @@ class ImportCustomerCommand extends Command
 
         $created = 0;
         $updated = 0;
+
         foreach ($customers as $customer) {
             try {
                 if ($customer->getId() !== null) {
