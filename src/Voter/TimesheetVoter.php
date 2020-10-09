@@ -194,7 +194,7 @@ class TimesheetVoter extends AbstractVoter
 
     protected function canDuplicate(User $user, Timesheet $timesheet): bool
     {
-        if ($timesheet->isExported() && !$this->hasRolePermission($user, 'edit_exported_timesheet')) {
+        if (!$this->canEdit($user, $timesheet)) {
             return false;
         }
 
