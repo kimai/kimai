@@ -19,6 +19,7 @@ final class DefaultCustomerImporter extends AbstractCustomerImporter
         foreach ($row as $name => $value) {
             switch (strtolower($name)) {
                 case 'name':
+                    $customer->setName(substr($value, 0, 149));
                     if (empty($customer->getCompany())) {
                         $customer->setCompany($value);
                     }
@@ -128,6 +129,7 @@ final class DefaultCustomerImporter extends AbstractCustomerImporter
                     if (stripos($name, 'meta.') === 0) {
                         $tmpName = str_replace('meta.', '', $name);
                         $meta = new CustomerMeta();
+                        $meta->setIsVisible(true);
                         $meta->setName($tmpName);
                         $meta->setValue($value);
                         $customer->setMetaField($meta);
