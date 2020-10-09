@@ -9,15 +9,11 @@
 
 namespace App\Command;
 
-use App\Configuration\FormConfiguration;
-use App\Importer\CsvReader;
-use App\Importer\DefaultCustomerImporter;
-use App\Importer\GrandtotalCustomerImporter;
+use App\Importer\ImporterService;
 use App\Importer\ImportNotFoundException;
 use App\Importer\ImportNotReadableException;
-use App\Importer\ImportReader;
-use App\Repository\CustomerRepository;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -32,14 +28,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class ImportCustomerCommand extends Command
 {
-    private $customers;
-    private $configuration;
+    private $importer;
 
-    public function __construct(CustomerRepository $customers, FormConfiguration $configuration)
+    public function __construct(ImporterService $importer)
     {
         parent::__construct();
-        $this->customers = $customers;
-        $this->configuration = $configuration;
+        $this->importer = $importer;
     }
 
     /**
@@ -57,31 +51,8 @@ class ImportCustomerCommand extends Command
             ->addArgument('file', InputArgument::REQUIRED, 'The CSV file to be imported')
             ->addOption('importer', null, InputOption::VALUE_REQUIRED, 'The importer to use (supported: default, grandtotal)', 'default')
             ->addOption('reader', null, InputOption::VALUE_REQUIRED, 'The reader to use (supported: csv, csv-semicolon)', 'csv')
+            ->addOption('no-update', null, InputOption::VALUE_NONE, 'If you want to create new customers, but not update existing ones')
         ;
-    }
-
-    protected function getImporter(?string $importer = null)
-    {
-        switch ($importer) {
-            case 'default':
-                return new DefaultCustomerImporter($this->customers, $this->configuration);
-            case 'grandtotal':
-                return new GrandtotalCustomerImporter($this->customers, $this->configuration);
-        }
-
-        throw new \Exception('Unknown importer');
-    }
-
-    protected function getReader(?string $reader = null): ImportReader
-    {
-        switch ($reader) {
-            case 'csv':
-                return new CsvReader(',');
-            case 'csv-semicolon':
-                return new CsvReader(';');
-        }
-
-        throw new \Exception('Unknown reader');
     }
 
     /**
@@ -95,14 +66,15 @@ class ImportCustomerCommand extends Command
 
         $io->title('Kimai importer: Customers');
 
+        $skipUpdate = $input->getOption('no-update');
         $doImport = true;
         $row = 1;
         $errors = 0;
         $customers = [];
         $importer = null;
 
-        $importer = $this->getImporter($input->getOption('importer'));
-        $reader = $this->getReader($input->getOption('reader'));
+        $importer = $this->importer->getCustomerImporter($input->getOption('importer'));
+        $reader = $this->importer->getReader($input->getOption('reader'));
         $importerFile = $input->getArgument('file');
 
         try {
@@ -117,6 +89,12 @@ class ImportCustomerCommand extends Command
             return 2;
         }
 
+        $amount = iterator_count($records);
+        $records->rewind();
+        $io->text(sprintf('Found %s rows to process, converting now ...', $amount));
+
+        $progressBar = new ProgressBar($output, $amount);
+
         foreach ($records as $record) {
             try {
                 $customers[] = $importer->convertEntryToCustomer($record);
@@ -125,9 +103,12 @@ class ImportCustomerCommand extends Command
                 $doImport = false;
                 $errors++;
             }
+            $progressBar->advance();
 
             $row++;
         }
+        $progressBar->finish();
+        $io->writeln('');
 
         if (!$doImport) {
             $io->caution(sprintf('Not importing, previous %s errors need to be fixed first.', $errors));
@@ -135,17 +116,28 @@ class ImportCustomerCommand extends Command
             return 3;
         }
 
+        $amount = \count($customers);
+        $io->text(sprintf('Converted %s customers, importing into Kimai now ...', $amount));
+
+        $progressBar = new ProgressBar($output, $amount);
+
         $created = 0;
         $updated = 0;
+        $noUpdatedCustomers = 0;
 
         foreach ($customers as $customer) {
             try {
-                if ($customer->getId() !== null) {
+                $progressBar->advance();
+
+                if ($customer->getId() === null) {
+                    $this->importer->importCustomer($customer);
+                    $created++;
+                } elseif ($skipUpdate === false) {
+                    $this->importer->importCustomer($customer);
                     $updated++;
                 } else {
-                    $created++;
+                    $noUpdatedCustomers++;
                 }
-                $this->customers->saveCustomer($customer);
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed importing customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
 
@@ -153,11 +145,18 @@ class ImportCustomerCommand extends Command
             }
         }
 
+        $progressBar->finish();
+        $io->writeln('');
+        $io->writeln('');
+
+        if ($created > 0) {
+            $io->success(sprintf('Imported %s customer', $created));
+        }
         if ($updated > 0) {
             $io->success(sprintf('Updated %s customer', $updated));
         }
-        if ($created > 0) {
-            $io->success(sprintf('Imported %s customer', $created));
+        if ($noUpdatedCustomers > 0) {
+            $io->success(sprintf('Skipped %s existing customer', $noUpdatedCustomers));
         }
 
         if ($updated === 0 && $created === 0) {

@@ -43,7 +43,7 @@ final class GrandtotalCustomerImporter extends AbstractCustomerImporter
         return null;
     }
 
-    protected function convertEntry(Customer $customer, array $row)
+    protected function mapEntryToCustomer(Customer $customer, array $row)
     {
         $names = ['first' => '', 'middle' => '', 'last' => '', 'title' => ''];
         $address = ['street' => '',  'city' => '', 'code' => ''];

@@ -9,42 +9,34 @@
 
 namespace App\Importer;
 
-use App\Configuration\FormConfiguration;
+use App\Customer\CustomerService;
 use App\Entity\Customer;
 use App\Entity\Project;
-use App\Repository\CustomerRepository;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectService;
 
-abstract class AbstractProjectImporter
+abstract class AbstractProjectImporter implements ProjectImporterInterface
 {
-    private $projectRepository;
-    private $customerRepository;
-    private $configuration;
+    private $projectService;
+    private $customerService;
     /**
      * @var Customer[]
      */
     private $customerCache = [];
 
-    public function __construct(ProjectRepository $projectRepository, CustomerRepository $customerRepository, FormConfiguration $configuration)
+    public function __construct(ProjectService $projectService, CustomerService $customerService)
     {
-        $this->projectRepository = $projectRepository;
-        $this->customerRepository = $customerRepository;
-        $this->configuration = $configuration;
+        $this->projectService = $projectService;
+        $this->customerService = $customerService;
     }
 
     protected function findProjectByName(string $name): ?Project
     {
-        return $this->projectRepository->findOneBy(['name' => $name]);
-    }
-
-    protected function findProjectByOrderNumber(string $number): ?Project
-    {
-        return $this->projectRepository->findOneBy(['order_number' => $number]);
+        return $this->projectService->findProjectByName($name);
     }
 
     protected function findCustomerByName(string $name): ?Customer
     {
-        return $this->customerRepository->findOneBy(['name' => $name]);
+        return $this->customerService->findCustomerByName($name);
     }
 
     public function convertEntryToProject(array $entry): Project
@@ -56,26 +48,36 @@ abstract class AbstractProjectImporter
         return $project;
     }
 
-    protected function createNewProject(string $name): Project
+    protected function createNewProject(Customer $customer, string $name): Project
     {
-        $project = new Project();
-        $project->setName(substr($name, 0, 149));
+        $project = $this->projectService->createNewProject($customer);
+        $project->setName($name);
 
         return $project;
     }
 
     protected function findProject(array $entry): ?Project
     {
+        $name = $this->findCustomerName($entry);
+        $customer = $this->findCustomer($name);
+
         $name = $this->findProjectName($entry);
         $project = $this->findProjectByName($name);
 
         if ($project === null) {
-            $project = $this->createNewProject($name);
+            $project = $this->createNewProject($customer, $name);
         }
 
-        $name = $this->findCustomerName($entry);
-        $customer = $this->findCustomer($name);
-        $project->setCustomer($customer);
+        if ($customer->getId() !== $project->getCustomer()->getId()) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Customer mismatch for project %s with attached customer %s and new customer %s',
+                    $project->getName(),
+                    $project->getCustomer()->getName(),
+                    $customer->getName()
+                )
+            );
+        }
 
         return $project;
     }
@@ -86,30 +88,14 @@ abstract class AbstractProjectImporter
             $customer = $this->findCustomerByName($customerName);
 
             if ($customer === null) {
-                $customer = new Customer();
+                $customer = $this->customerService->createNewCustomer();
                 $customer->setName($customerName);
-                $customer->setCountry($this->configuration->getCustomerDefaultCountry());
-                $timezone = date_default_timezone_get();
-                if (null !== $this->configuration->getCustomerDefaultTimezone()) {
-                    $timezone = $this->configuration->getCustomerDefaultTimezone();
-                }
-                $customer->setTimezone($timezone);
             }
 
             $this->customerCache[$customerName] = $customer;
         }
 
         return $this->customerCache[$customerName];
-    }
-
-    protected function getDefaultTimezone(): string
-    {
-        $timezone = date_default_timezone_get();
-        if (null !== $this->configuration->getCustomerDefaultTimezone()) {
-            $timezone = $this->configuration->getCustomerDefaultTimezone();
-        }
-
-        return $timezone;
     }
 
     /**
@@ -129,7 +115,7 @@ abstract class AbstractProjectImporter
                 case 'project-name':
                 case 'name':
                     if (!empty($value)) {
-                        return $value;
+                        return substr($value, 0, 149);
                     }
             }
         }
@@ -153,7 +139,7 @@ abstract class AbstractProjectImporter
                 case 'customer-name':
                 case 'customer name':
                     if (!empty($value)) {
-                        return $value;
+                        return substr($value, 0, 149);
                     }
             }
         }

@@ -14,14 +14,8 @@ use App\Entity\ProjectMeta;
 
 final class DefaultProjectImporter extends AbstractProjectImporter
 {
-    private $timezone;
-
     protected function convertEntry(Project $project, array $row)
     {
-        if ($this->timezone === null) {
-            $this->timezone = new \DateTimeZone($this->getDefaultTimezone());
-        }
-
         foreach ($row as $name => $value) {
             switch (strtolower($name)) {
                 case 'name':
@@ -44,7 +38,8 @@ final class DefaultProjectImporter extends AbstractProjectImporter
                 case 'orderdate':
                 case 'order-date':
                     if (!empty($value)) {
-                        $project->setOrderDate(new \DateTime($value, $this->timezone));
+                        $timezone = new \DateTimeZone($project->getCustomer()->getTimezone());
+                        $project->setOrderDate(new \DateTime($value, $timezone));
                     }
                 break;
 
@@ -65,7 +60,6 @@ final class DefaultProjectImporter extends AbstractProjectImporter
                         $tmpName = str_replace('meta.', '', $name);
                         $meta = new ProjectMeta();
                         $meta->setIsVisible(true);
-                        $meta->setType($tmpName);
                         $meta->setName($tmpName);
                         $meta->setValue($value);
                         $project->setMetaField($meta);

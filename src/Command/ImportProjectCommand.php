@@ -31,51 +31,16 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class ImportProjectCommand extends Command
 {
-    /**
-     * @var CustomerRepository
-     */
-    private $customers;
-    /**
-     * @var ProjectRepository
-     */
-    private $projects;
-    /**
-     * @var TeamRepository
-     */
+    private $importerService;
     private $teams;
-    /**
-     * @var UserRepository
-     */
     private $users;
-    /**
-     * @var FormConfiguration
-     */
-    private $configuration;
-    /**
-     * @var Customer[]
-     */
-    private $customerCache = [];
-    /**
-     * The datetime of this import as formatted string.
-     *
-     * @var string
-     */
-    private $dateTime = '';
-    /**
-     * Comment that will be added to new customers, projects and activities.
-     *
-     * @var string
-     */
-    private $comment = '';
 
-    public function __construct(CustomerRepository $customers, ProjectRepository $projects, TeamRepository $teams, UserRepository $users, FormConfiguration $configuration)
+    public function __construct(ImporterService $importerService, TeamRepository $teams, UserRepository $users)
     {
         parent::__construct();
-        $this->customers = $customers;
-        $this->projects = $projects;
+        $this->importerService = $importerService;
         $this->teams = $teams;
         $this->users = $users;
-        $this->configuration = $configuration;
     }
 
     /**
@@ -94,29 +59,8 @@ class ImportProjectCommand extends Command
             ->addOption('importer', null, InputOption::VALUE_REQUIRED, 'The importer to use (supported: default)', 'default')
             ->addOption('reader', null, InputOption::VALUE_REQUIRED, 'The reader to use (supported: csv, csv-semicolon)', 'csv')
             ->addOption('teamlead', null, InputOption::VALUE_REQUIRED, 'If you want to create empty teams for each project, give the username of the teamlead to be assigned')
+            ->addOption('no-update', null, InputOption::VALUE_NONE, 'If you want to create new project, but not update existing ones')
         ;
-    }
-
-    protected function getImporter(?string $importer = null)
-    {
-        switch ($importer) {
-            case 'default':
-                return new DefaultProjectImporter($this->projects, $this->customers, $this->configuration);
-        }
-
-        throw new \Exception('Unknown importer');
-    }
-
-    protected function getReader(?string $reader = null): ImportReader
-    {
-        switch ($reader) {
-            case 'csv':
-                return new CsvReader(',');
-            case 'csv-semicolon':
-                return new CsvReader(';');
-        }
-
-        throw new \Exception('Unknown reader');
     }
 
     /**
@@ -152,13 +96,14 @@ class ImportProjectCommand extends Command
             $teamlead = $tmpUser[0];
         }
 
+        $skipUpdate = $input->getOption('no-update');
         $doImport = true;
         $row = 1;
         $errors = 0;
         $projects = [];
 
-        $importer = $this->getImporter($input->getOption('importer'));
-        $reader = $this->getReader($input->getOption('reader'));
+        $importer = $this->importerService->getProjectImporter($input->getOption('importer'));
+        $reader = $this->importerService->getReader($input->getOption('reader'));
         $importerFile = $input->getArgument('file');
 
         $io->text('Reading import file ...');
@@ -177,7 +122,7 @@ class ImportProjectCommand extends Command
 
         $amount = iterator_count($records);
         $records->rewind();
-        $io->text(sprintf('Found %s rows to process, converting now...', $amount));
+        $io->text(sprintf('Found %s rows to process, converting now ...', $amount));
 
         $progressBar = new ProgressBar($output, $amount);
 
@@ -204,10 +149,11 @@ class ImportProjectCommand extends Command
 
         $createdProjects = 0;
         $updatedProjects = 0;
+        $noUpdatedProjects = 0;
         $createdCustomers = 0;
 
         $amount = \count($projects);
-        $io->text(sprintf('Converted %s projects, importing into Kimai now...', $amount));
+        $io->text(sprintf('Converted %s projects, importing into Kimai now ...', $amount));
 
         $progressBar = new ProgressBar($output, $amount);
 
@@ -216,22 +162,24 @@ class ImportProjectCommand extends Command
             $progressBar->advance();
             try {
                 if ($project->getCustomer()->getId() === null) {
-                    $this->customers->saveCustomer($project->getCustomer());
+                    $this->importerService->importCustomer($project->getCustomer());
                     $createdCustomers++;
                 }
 
+                $createTeam = false;
+
                 if ($project->getId() === null) {
+                    $this->importerService->importProject($project);
                     $createdProjects++;
                     $createTeam = (null !== $teamlead);
                 } elseif ($skipUpdate === false) {
                     $this->importerService->importProject($project);
                     $updatedProjects++;
                 } else {
-                    $updatedProjects++;
+                    $noUpdatedProjects++;
                 }
-                $this->projects->saveProject($project);
 
-                if (null === $teamlead) {
+                if (!$createTeam) {
                     continue;
                 }
 
@@ -245,24 +193,32 @@ class ImportProjectCommand extends Command
                 $team->addProject($project);
 
                 $this->teams->saveTeam($team);
-                $this->projects->saveProject($project);
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed importing project row %s with: %s', $row, $ex->getMessage()));
 
                 return 5;
             }
         }
+
         $progressBar->finish();
+        $io->writeln('');
         $io->writeln('');
 
         if ($createdCustomers === 0 && $updatedProjects === 0 && $createdProjects === 0) {
-            $io->text('Nothing was imported');
+            if ($noUpdatedProjects > 0) {
+                $io->success(sprintf('Skipped %s existing projects', $noUpdatedProjects));
+            } else {
+                $io->text('Nothing was imported');
+            }
         } else {
             if ($createdCustomers > 0) {
                 $io->success(sprintf('Imported %s customers', $createdCustomers));
             }
             if ($updatedProjects > 0) {
                 $io->success(sprintf('Updated %s projects', $updatedProjects));
+            }
+            if ($noUpdatedProjects > 0) {
+                $io->success(sprintf('Skipped %s existing projects', $noUpdatedProjects));
             }
             if ($createdProjects > 0) {
                 $io->success(sprintf('Imported %s projects', $createdProjects));

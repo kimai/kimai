@@ -9,46 +9,41 @@
 
 namespace App\Importer;
 
-use App\Configuration\FormConfiguration;
+use App\Customer\CustomerService;
 use App\Entity\Customer;
-use App\Repository\CustomerRepository;
 
-abstract class AbstractCustomerImporter
+abstract class AbstractCustomerImporter implements CustomerImporterInterface
 {
-    private $repository;
-    private $configuration;
+    private $customerService;
 
-    public function __construct(CustomerRepository $repository, FormConfiguration $configuration)
+    public function __construct(CustomerService $repository)
     {
-        $this->repository = $repository;
-        $this->configuration = $configuration;
+        $this->customerService = $repository;
     }
 
     protected function findCustomerByName(string $name): ?Customer
     {
-        return $this->repository->findOneBy(['name' => $name]);
+        return $this->customerService->findCustomerByName($name);
     }
 
     protected function findCustomerByNumber(string $number): ?Customer
     {
-        return $this->repository->findOneBy(['number' => $number]);
+        return $this->customerService->findCustomerByNumber($number);
     }
 
     public function convertEntryToCustomer(array $entry): Customer
     {
         $customer = $this->findCustomer($entry);
 
-        $this->convertEntry($customer, $entry);
+        $this->mapEntryToCustomer($customer, $entry);
 
         return $customer;
     }
 
     protected function createNewCustomer(string $name): Customer
     {
-        $customer = new Customer();
+        $customer = $this->customerService->createNewCustomer();
         $customer->setName(substr($name, 0, 149));
-
-        $customer->setTimezone($this->getDefaultTimezone());
 
         return $customer;
     }
@@ -70,16 +65,6 @@ abstract class AbstractCustomerImporter
         }
 
         return $customer;
-    }
-
-    protected function getDefaultTimezone(): string
-    {
-        $timezone = date_default_timezone_get();
-        if (null !== $this->configuration->getCustomerDefaultTimezone()) {
-            $timezone = $this->configuration->getCustomerDefaultTimezone();
-        }
-
-        return $timezone;
     }
 
     /**
@@ -132,5 +117,5 @@ abstract class AbstractCustomerImporter
      * @param array $entry
      * @return mixed
      */
-    abstract protected function convertEntry(Customer $customer, array $entry);
+    abstract protected function mapEntryToCustomer(Customer $customer, array $entry);
 }

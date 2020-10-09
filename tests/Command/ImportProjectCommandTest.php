@@ -9,16 +9,18 @@
 
 namespace App\Tests\Command;
 
-use App\Command\ImportCustomerCommand;
+use App\Command\ImportProjectCommand;
 use App\Importer\ImporterService;
+use App\Repository\TeamRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
- * @covers \App\Command\ImportCustomerCommand
+ * @covers \App\Command\ImportProjectCommand
  * @group integration
  */
-class ImportCustomerCommandTest extends KernelTestCase
+class ImportProjectCommandTest extends KernelTestCase
 {
     /**
      * @var Application
@@ -31,13 +33,15 @@ class ImportCustomerCommandTest extends KernelTestCase
         $this->application = new Application($kernel);
 
         $importer = $this->createMock(ImporterService::class);
+        $teams = $this->createMock(TeamRepository::class);
+        $users = $this->createMock(UserRepository::class);
 
-        $this->application->add(new ImportCustomerCommand($importer));
+        $this->application->add(new ImportProjectCommand($importer, $teams, $users));
     }
 
     public function testCommandName()
     {
-        $command = $this->application->find('kimai:import:customer');
-        self::assertInstanceOf(ImportCustomerCommand::class, $command);
+        $command = $this->application->find('kimai:import:project');
+        self::assertInstanceOf(ImportProjectCommand::class, $command);
     }
 }
