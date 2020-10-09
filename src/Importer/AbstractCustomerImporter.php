@@ -46,13 +46,9 @@ abstract class AbstractCustomerImporter
     protected function createNewCustomer(string $name): Customer
     {
         $customer = new Customer();
-        $customer->setName($name);
+        $customer->setName(substr($name, 0, 149));
 
-        $timezone = date_default_timezone_get();
-        if (null !== $this->configuration->getCustomerDefaultTimezone()) {
-            $timezone = $this->configuration->getCustomerDefaultTimezone();
-        }
-        $customer->setTimezone($timezone);
+        $customer->setTimezone($this->getDefaultTimezone());
 
         return $customer;
     }
@@ -74,6 +70,16 @@ abstract class AbstractCustomerImporter
         }
 
         return $customer;
+    }
+
+    protected function getDefaultTimezone(): string
+    {
+        $timezone = date_default_timezone_get();
+        if (null !== $this->configuration->getCustomerDefaultTimezone()) {
+            $timezone = $this->configuration->getCustomerDefaultTimezone();
+        }
+
+        return $timezone;
     }
 
     /**
