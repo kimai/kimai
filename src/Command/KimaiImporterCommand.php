@@ -113,6 +113,13 @@ final class KimaiImporterCommand extends Command
      * @var array
      */
     private $oldActivities = [];
+    /**
+     * If true, unknown Activities will be created globally.
+     * Default behavior: create project specific activities
+     *
+     * @var bool
+     */
+    private $unknownAsGlobal = false;
 
     public function __construct(UserPasswordEncoderInterface $encoder, ManagerRegistry $registry, ValidatorInterface $validator)
     {
@@ -143,6 +150,7 @@ final class KimaiImporterCommand extends Command
             ->addArgument('currency', InputArgument::OPTIONAL, 'The default currency for customer (code like EUR, CHF, GBP or USD)', 'EUR')
             ->addOption('timezone', null, InputOption::VALUE_OPTIONAL, 'Default timezone for imported users', date_default_timezone_get())
             ->addOption('language', null, InputOption::VALUE_OPTIONAL, 'Default language for imported users', User::DEFAULT_LANGUAGE)
+            ->addOption('global', null, InputOption::VALUE_NONE, 'If set, activities without mapping will be created globally instead of project-specific (default behavior)')
         ;
     }
 
@@ -164,6 +172,7 @@ final class KimaiImporterCommand extends Command
         $this->connection = DriverManager::getConnection($connectionParams, $config);
 
         $this->dbPrefix = $input->getArgument('prefix');
+        $this->unknownAsGlobal = $input->getOption('global');
 
         $password = $input->getArgument('password');
         if (null === $password || \strlen($password = trim($password)) < 8) {
@@ -906,8 +915,12 @@ final class KimaiImporterCommand extends Command
 
         // remember which activity has at least one assigned project
         $oldActivityMapping = [];
-        foreach ($activityToProject as $mapping) {
-            $oldActivityMapping[$mapping['activityID']][] = $mapping['projectID'];
+        if ($this->unknownAsGlobal) {
+            $oldActivityMapping['___GLOBAL___'][] = PHP_INT_MAX;
+        } else {
+            foreach ($activityToProject as $mapping) {
+                $oldActivityMapping[$mapping['activityID']][] = $mapping['projectID'];
+            }
         }
 
         // create global activities
