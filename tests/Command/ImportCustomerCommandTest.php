@@ -32,7 +32,6 @@ class ImportCustomerCommandTest extends KernelTestCase
         $this->application = new Application($kernel);
         $container = self::$kernel->getContainer();
 
-        $importer = $this->createMock(ImporterService::class);
         $importer = $container->get(ImporterService::class);
 
         $this->application->add(new ImportCustomerCommand($importer));
@@ -58,7 +57,7 @@ class ImportCustomerCommandTest extends KernelTestCase
 
         self::assertStringContainsString('Kimai importer: Customers', $result);
         self::assertStringContainsString('[ERROR] File not existing or not readable', $result);
-        self::assertStringContainsString('tests/Command/../Importer/_data/foo_bar.csv1', $result);
+        self::assertStringContainsString('_data/foo_bar', $result);
 
         self::assertEquals(2, $commandTester->getStatusCode());
     }
@@ -153,7 +152,8 @@ class ImportCustomerCommandTest extends KernelTestCase
 
         $result = $commandTester->getDisplay();
 
-        self::assertStringContainsString('Invalid row 1: Missing customer name, expected in one of the columns: "Organization", "Firma"', $result);
+        self::assertStringContainsString('Invalid row 1: Missing customer name, expected in one of the columns:', $result);
+        self::assertStringContainsString('! [CAUTION] Not importing, previous 10 errors need to be fixed first.', $result);
 
         self::assertEquals(3, $commandTester->getStatusCode());
     }
