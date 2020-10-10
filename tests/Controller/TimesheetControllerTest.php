@@ -51,7 +51,6 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $start = new \DateTime('first day of this month');
 
-        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setAmountRunning(2);
@@ -88,7 +87,6 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $start = new \DateTime('first day of this month');
 
-        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -125,7 +123,6 @@ class TimesheetControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser();
 
-        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -310,15 +307,15 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'system_configuration_form_timesheet' => [
                 'configuration' => [
-                    ['name' => 'timesheet.mode', 'value' => 'duration_only'],
-                    ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
+                    ['name' => 'timesheet.mode', 'value' => 'default'],
+                    ['name' => 'timesheet.active_entries.default_begin', 'value' => '08:00'],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => true],
                     ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
                     ['name' => 'timesheet.rules.lockdown_period_start', 'value' => null],
                     ['name' => 'timesheet.rules.lockdown_period_end', 'value' => null],
                     ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => null],
-                    ['name' => 'timesheet.active_entries.hard_limit', 'value' => 99],
-                    ['name' => 'timesheet.active_entries.soft_limit', 'value' => 77],
+                    ['name' => 'timesheet.active_entries.hard_limit', 'value' => 1],
+                    ['name' => 'timesheet.active_entries.soft_limit', 'value' => 1],
                 ]
             ]
         ]);
@@ -393,7 +390,6 @@ class TimesheetControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser();
 
-        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -434,7 +430,6 @@ class TimesheetControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
@@ -473,7 +468,6 @@ class TimesheetControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);

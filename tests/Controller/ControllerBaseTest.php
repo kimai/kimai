@@ -11,6 +11,7 @@ namespace App\Tests\Controller;
 
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
+use App\Repository\ConfigurationRepository;
 use App\Tests\KernelTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -25,6 +26,15 @@ abstract class ControllerBaseTest extends WebTestCase
     use KernelTestTrait;
 
     public const DEFAULT_LANGUAGE = 'en';
+
+    protected function tearDown(): void
+    {
+        /** @var ConfigurationRepository $repository */
+        $repository = static::$kernel->getContainer()->get(ConfigurationRepository::class);
+        $repository->clearCache();
+
+        parent::tearDown();
+    }
 
     protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER): HttpKernelBrowser
     {
