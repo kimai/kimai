@@ -21,9 +21,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * This command can change anytime, don't rely on its API for the future!
- *
- * @internal
- * @codeCoverageIgnore
  */
 class ImportCustomerCommand extends Command
 {
