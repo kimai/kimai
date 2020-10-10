@@ -304,6 +304,8 @@ class TimesheetControllerTest extends ControllerBaseTest
     public function testCreateActionWithFromAndToValuesTwiceFailsOnOverlappingRecord()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/system-config/');
+
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_timesheet]')->form();
         $client->submit($form, [
             'system_configuration_form_timesheet' => [
