@@ -72,8 +72,15 @@ class ImportCustomerCommand extends Command
         $customers = [];
         $importer = null;
 
-        $importer = $this->importer->getCustomerImporter($input->getOption('importer'));
-        $reader = $this->importer->getReader($input->getOption('reader'));
+        try {
+            $importer = $this->importer->getCustomerImporter($input->getOption('importer'));
+            $reader = $this->importer->getReader($input->getOption('reader'));
+        } catch (\Exception $ex) {
+            $io->error($ex->getMessage());
+
+            return 1;
+        }
+
         $importerFile = $input->getArgument('file');
 
         try {
@@ -81,7 +88,7 @@ class ImportCustomerCommand extends Command
         } catch (ImportNotFoundException $ex) {
             $io->error('File not existing or not readable: ' . $importerFile);
 
-            return 1;
+            return 2;
         }
 
         $amount = iterator_count($records);
@@ -108,7 +115,7 @@ class ImportCustomerCommand extends Command
         if (!$doImport) {
             $io->caution(sprintf('Not importing, previous %s errors need to be fixed first.', $errors));
 
-            return 2;
+            return 3;
         }
 
         $amount = \count($customers);
@@ -136,7 +143,7 @@ class ImportCustomerCommand extends Command
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed importing customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
 
-                return 3;
+                return 4;
             }
         }
 

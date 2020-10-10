@@ -1,6 +1,6 @@
 parameters:
     locale: en
-    app_locales: ar|cs|de|de_CH|da|en|es|fr|hu|it|ja|ko|nl|pt_BR|ru|sk|sv|tr|zh_CN
+    app_locales: ar|cs|de|de_CH|da|en|eo|es|eu|fr|he|hu|it|ja|ko|nl|pl|pt_BR|ro|ru|sk|sv|tr|vi|zh_CN
 
 services:
     _defaults:
@@ -20,3 +20,9 @@ services:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Configuration']
+
+    # required for the importer command test
+    App\Importer\ImporterService:
+        public: true
+        arguments:
+          [ '@App\Customer\CustomerService', '@App\Project\ProjectService' ]
