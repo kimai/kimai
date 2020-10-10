@@ -11,7 +11,6 @@ namespace App\Command;
 
 use App\Importer\ImporterService;
 use App\Importer\ImportNotFoundException;
-use App\Importer\ImportNotReadableException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -80,13 +79,9 @@ class ImportCustomerCommand extends Command
         try {
             $records = $reader->read($importerFile);
         } catch (ImportNotFoundException $ex) {
-            $io->error('File not existing: ' . $importerFile);
+            $io->error('File not existing or not readable: ' . $importerFile);
 
             return 1;
-        } catch (ImportNotReadableException $ex) {
-            $io->error('File cannot be read: ' . $importerFile);
-
-            return 2;
         }
 
         $amount = iterator_count($records);
@@ -113,7 +108,7 @@ class ImportCustomerCommand extends Command
         if (!$doImport) {
             $io->caution(sprintf('Not importing, previous %s errors need to be fixed first.', $errors));
 
-            return 3;
+            return 2;
         }
 
         $amount = \count($customers);
@@ -141,7 +136,7 @@ class ImportCustomerCommand extends Command
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed importing customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
 
-                return 4;
+                return 3;
             }
         }
 

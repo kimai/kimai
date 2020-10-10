@@ -10,6 +10,7 @@
 namespace App\Tests\Importer;
 
 use App\Importer\CsvReader;
+use App\Importer\ImportNotFoundException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CsvReaderTest extends TestCase
 {
-    public function testException()
+    public function testRead()
     {
         $sut = new CsvReader(';');
         $result = $sut->read(__DIR__ . '/_data/grandtotal_en.csv');
@@ -49,5 +50,13 @@ Downtown',
             'zusatz 1' => 'blub',
             'zusatz 2' => 'foo',
           ]], $result);
+    }
+
+    public function testReadNotFound()
+    {
+        $this->expectException(ImportNotFoundException::class);
+
+        $sut = new CsvReader(';');
+        $sut->read(__DIR__ . '/_data/fffffoooooooooooo');
     }
 }

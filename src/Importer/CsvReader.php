@@ -22,12 +22,8 @@ final class CsvReader implements ImportReader
 
     public function read(string $input): \Iterator
     {
-        if (!file_exists($input)) {
-            throw new ImportNotFoundException();
-        }
-
         if (!is_readable($input)) {
-            throw new ImportNotReadableException();
+            throw new ImportNotFoundException();
         }
 
         $csv = Reader::createFromPath($input, 'r');

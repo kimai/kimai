@@ -15,7 +15,6 @@ interface ImportReader
      * @param string $input
      * @return \Iterator
      * @throws ImportNotFoundException
-     * @throws ImportNotReadableException
      */
     public function read(string $input): \Iterator;
 }

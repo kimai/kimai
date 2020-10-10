@@ -12,7 +12,6 @@ namespace App\Command;
 use App\Entity\Team;
 use App\Importer\ImporterService;
 use App\Importer\ImportNotFoundException;
-use App\Importer\ImportNotReadableException;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\Console\Command\Command;
@@ -111,13 +110,9 @@ class ImportProjectCommand extends Command
         try {
             $records = $reader->read($importerFile);
         } catch (ImportNotFoundException $ex) {
-            $io->error('File not existing: ' . $importerFile);
+            $io->error('File not existing or not readable: ' . $importerFile);
 
             return 1;
-        } catch (ImportNotReadableException $ex) {
-            $io->error('File cannot be read: ' . $importerFile);
-
-            return 2;
         }
 
         $amount = iterator_count($records);
@@ -144,7 +139,7 @@ class ImportProjectCommand extends Command
         if (!$doImport) {
             $io->caution(sprintf('Not importing, previous %s errors need to be fixed first.', $errors));
 
-            return 4;
+            return 2;
         }
 
         $createdProjects = 0;
@@ -196,7 +191,7 @@ class ImportProjectCommand extends Command
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed importing project row %s with: %s', $row, $ex->getMessage()));
 
-                return 5;
+                return 3;
             }
         }
 
