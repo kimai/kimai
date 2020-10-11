@@ -13,7 +13,7 @@ use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Configuration;
 
 /**
- * @covers \App\Configuration\FormConfiguration
+ * @covers \App\Configuration\SystemConfiguration
  */
 class TestConfigLoader implements ConfigLoaderInterface
 {

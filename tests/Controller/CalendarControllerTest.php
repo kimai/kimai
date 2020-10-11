@@ -64,6 +64,11 @@ class CalendarControllerTest extends ControllerBaseTest
     protected function getDefaultSettings()
     {
         return [
+            'defaults' => [
+                'user' => [
+                    'language' => 'en'
+                ],
+            ],
             'timesheet' => [
                 'default_begin' => '08:30:00',
             ],

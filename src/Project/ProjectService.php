@@ -23,7 +23,7 @@ use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-final class ProjectService
+class ProjectService
 {
     /**
      * @var ProjectRepository
@@ -38,11 +38,8 @@ final class ProjectService
      */
     private $validator;
 
-    public function __construct(
-        ProjectRepository $projectRepository,
-        EventDispatcherInterface $dispatcher,
-        ValidatorInterface $validator
-    ) {
+    public function __construct(ProjectRepository $projectRepository, EventDispatcherInterface $dispatcher, ValidatorInterface $validator)
+    {
         $this->repository = $projectRepository;
         $this->dispatcher = $dispatcher;
         $this->validator = $validator;
@@ -100,5 +97,10 @@ final class ProjectService
         $this->dispatcher->dispatch(new ProjectUpdatePostEvent($project));
 
         return $project;
+    }
+
+    public function findProjectByName(string $name): ?Project
+    {
+        return $this->repository->findOneBy(['name' => $name]);
     }
 }

@@ -9,7 +9,7 @@
 
 namespace App\Tests\EventSubscriber;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
@@ -91,7 +91,7 @@ class UserPreferenceSubscriberTest extends TestCase
         $authMock->expects($this->once())->method('isGranted')->willReturn($seeHourlyRate);
 
         $eventMock = $this->createMock(EventDispatcherInterface::class);
-        $formConfigMock = $this->createMock(FormConfiguration::class);
+        $formConfigMock = $this->createMock(SystemConfiguration::class);
 
         return new UserPreferenceSubscriber($eventMock, $authMock, $formConfigMock);
     }

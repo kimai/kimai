@@ -9,7 +9,7 @@
 
 namespace App\Controller;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Entity\MetaTableTypeInterface;
@@ -51,7 +51,7 @@ final class ActivityController extends AbstractController
      */
     private $repository;
     /**
-     * @var FormConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
     /**
@@ -59,7 +59,7 @@ final class ActivityController extends AbstractController
      */
     private $dispatcher;
 
-    public function __construct(ActivityRepository $repository, FormConfiguration $configuration, EventDispatcherInterface $dispatcher)
+    public function __construct(ActivityRepository $repository, SystemConfiguration $configuration, EventDispatcherInterface $dispatcher)
     {
         $this->repository = $repository;
         $this->configuration = $configuration;

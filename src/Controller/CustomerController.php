@@ -9,7 +9,7 @@
 
 namespace App\Controller;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
@@ -109,7 +109,7 @@ final class CustomerController extends AbstractController
      * @Route(path="/create", name="admin_customer_create", methods={"GET", "POST"})
      * @Security("is_granted('create_customer')")
      */
-    public function createAction(Request $request, FormConfiguration $configuration)
+    public function createAction(Request $request, SystemConfiguration $configuration)
     {
         $timezone = date_default_timezone_get();
         if (null !== $configuration->getCustomerDefaultTimezone()) {

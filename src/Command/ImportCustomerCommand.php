@@ -9,17 +9,10 @@
 
 namespace App\Command;
 
-use App\Configuration\FormConfiguration;
-use App\Entity\Customer;
-use App\Entity\Project;
-use App\Entity\Team;
-use App\Importer\InvalidFieldsException;
-use App\Repository\CustomerRepository;
-use App\Repository\ProjectRepository;
-use App\Repository\TeamRepository;
-use App\Repository\UserRepository;
-use League\Csv\Reader;
+use App\Importer\ImporterService;
+use App\Importer\ImportNotFoundException;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -28,72 +21,15 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * This command can change anytime, don't rely on its API for the future!
- *
- * @internal
- * @codeCoverageIgnore
  */
 class ImportCustomerCommand extends Command
 {
-    protected static $defaultName = 'kimai:import:customer';
+    private $importer;
 
-    private static $requiredHeader = [
-        'Name',
-        'Customer',
-    ];
-
-    private static $supportedHeader = [
-        'Name',
-        'Customer',
-        'Comment',
-        'OrderNumber',
-        'OrderDate',
-    ];
-
-    /**
-     * @var CustomerRepository
-     */
-    private $customers;
-    /**
-     * @var ProjectRepository
-     */
-    private $projects;
-    /**
-     * @var TeamRepository
-     */
-    private $teams;
-    /**
-     * @var UserRepository
-     */
-    private $users;
-    /**
-     * @var FormConfiguration
-     */
-    private $configuration;
-    /**
-     * @var Customer[]
-     */
-    private $customerCache = [];
-    /**
-     * The datetime of this import as formatted string.
-     *
-     * @var string
-     */
-    private $dateTime = '';
-    /**
-     * Comment that will be added to new customers, projects and activities.
-     *
-     * @var string
-     */
-    private $comment = '';
-
-    public function __construct(CustomerRepository $customers, ProjectRepository $projects, TeamRepository $teams, UserRepository $users, FormConfiguration $configuration)
+    public function __construct(ImporterService $importer)
     {
         parent::__construct();
-        $this->customers = $customers;
-        $this->projects = $projects;
-        $this->teams = $teams;
-        $this->users = $users;
-        $this->configuration = $configuration;
+        $this->importer = $importer;
     }
 
     /**
@@ -102,18 +38,16 @@ class ImportCustomerCommand extends Command
     protected function configure()
     {
         $this
-            ->setName(self::$defaultName)
-            ->setDescription('Import projects from CSV file')
+            ->setName('kimai:import:customer')
+            ->setDescription('Import customer from CSV file')
             ->setHelp(
-                'This command allows to import projects from a CSV file, creating customers (if not existing) and optional empty teams for each project.' . PHP_EOL .
-                'Imported customer will be matched by name and optionally created on the fly.' . PHP_EOL .
-                'Required column names: ' . implode(', ', self::$requiredHeader) . PHP_EOL .
-                'Supported column names: ' . implode(', ', self::$supportedHeader) . PHP_EOL
+                'Import customers from a CSV file.' . PHP_EOL .
+                'Customer will be matched by name or number, and if not found created on the fly.' . PHP_EOL
             )
-            ->addOption('teamlead', null, InputOption::VALUE_REQUIRED, 'If you want to create empty teams for each project, give the username of the teamlead to be assigned')
-            ->addOption('delimiter', null, InputOption::VALUE_OPTIONAL, 'The CSV field delimiter', ',')
-            ->addOption('comment', null, InputOption::VALUE_OPTIONAL, 'A description to be added to created customers and projects. %s will be replaced with the current datetime', 'Imported at %s')
             ->addArgument('file', InputArgument::REQUIRED, 'The CSV file to be imported')
+            ->addOption('importer', null, InputOption::VALUE_REQUIRED, 'The importer to use (supported: default, grandtotal)', 'default')
+            ->addOption('reader', null, InputOption::VALUE_REQUIRED, 'The reader to use (supported: csv, csv-semicolon)', 'csv')
+            ->addOption('no-update', null, InputOption::VALUE_NONE, 'If you want to create new customers, but not update existing ones')
         ;
     }
 
@@ -126,213 +60,108 @@ class ImportCustomerCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->title('Kimai importer: Projects');
+        $io->title('Kimai importer: Customers');
 
-        $csvFile = $input->getArgument('file');
-        if (!file_exists($csvFile)) {
-            $io->error('File not existing: ' . $csvFile);
+        $skipUpdate = $input->getOption('no-update');
+        $doImport = true;
+        $row = 1;
+        $errors = 0;
+        $customers = [];
+        $importer = null;
+
+        try {
+            $importer = $this->importer->getCustomerImporter($input->getOption('importer'));
+            $reader = $this->importer->getReader($input->getOption('reader'));
+        } catch (\Exception $ex) {
+            $io->error($ex->getMessage());
 
             return 1;
         }
 
-        if (!is_readable($csvFile)) {
-            $io->error('File cannot be read: ' . $csvFile);
+        $importerFile = $input->getArgument('file');
+
+        try {
+            $records = $reader->read($importerFile);
+        } catch (ImportNotFoundException $ex) {
+            $io->error('File not existing or not readable: ' . $importerFile);
 
             return 2;
         }
 
-        $this->dateTime = (new \DateTime())->format('Y.m.d H:i');
-        $this->comment = sprintf($input->getOption('comment'), $this->dateTime);
+        $amount = iterator_count($records);
+        $records->rewind();
+        $io->text(sprintf('Found %s rows to process, converting now ...', $amount));
 
-        $csv = Reader::createFromPath($csvFile, 'r');
-        $csv->setDelimiter($input->getOption('delimiter'));
-        $csv->setHeaderOffset(0);
-        $header = $csv->getHeader();
-
-        // validate teamlead
-        $teamlead = $input->getOption('teamlead');
-        if (null !== $teamlead) {
-            $tmpUser = $this->users->findOneBy(['username' => $teamlead]);
-            if (null === $tmpUser) {
-                $tmpUser = $this->users->findOneBy(['email' => $teamlead]);
-                if (null === $tmpUser) {
-                    $io->error(
-                        sprintf(
-                            'You requested to create empty teams for each project, but the given teamlead cannot be found.' . PHP_EOL .
-                            'Please create a user with the name (or email) %s first, before continuing.' . PHP_EOL,
-                            $teamlead
-                        )
-                    );
-
-                    return 3;
-                }
-            }
-
-            $teamlead = $tmpUser;
-        }
-
-        if (!$this->validateHeader($header)) {
-            $io->error(
-                sprintf(
-                    'Found invalid CSV header: %s' . PHP_EOL .
-                    'Required fields: %s' . PHP_EOL .
-                    'All supported fields: %s' . PHP_EOL,
-                    implode(', ', $header),
-                    implode(', ', self::$requiredHeader),
-                    implode(', ', self::$supportedHeader)
-                )
-            );
-
-            return 4;
-        }
-
-        $records = $csv->getRecords();
-
-        $doImport = true;
-        $row = 1;
-        $errors = 0;
+        $progressBar = new ProgressBar($output, $amount);
 
         foreach ($records as $record) {
             try {
-                $this->validateRow($record);
-            } catch (InvalidFieldsException $ex) {
-                $io->error(sprintf('Invalid row %s, invalid fields: %s', $row, implode(', ', $ex->getFields())));
+                $customers[] = $importer->convertEntryToCustomer($record);
+            } catch (\Exception $ex) {
+                $io->error(sprintf('Invalid row %s: %s', $row, $ex->getMessage()));
                 $doImport = false;
                 $errors++;
             }
+            $progressBar->advance();
 
             $row++;
         }
+        $progressBar->finish();
+        $io->writeln('');
 
         if (!$doImport) {
             $io->caution(sprintf('Not importing, previous %s errors need to be fixed first.', $errors));
 
-            return 5;
+            return 3;
         }
 
-        $row = 0;
-        foreach ($records as $record) {
-            $row++;
+        $amount = \count($customers);
+        $io->text(sprintf('Converted %s customers, importing into Kimai now ...', $amount));
+
+        $progressBar = new ProgressBar($output, $amount);
+
+        $created = 0;
+        $updated = 0;
+        $noUpdatedCustomers = 0;
+
+        foreach ($customers as $customer) {
             try {
-                $customer = $this->getCustomer($record['Customer']);
-                $projectName = $record['Name'];
+                $progressBar->advance();
 
-                $project = new Project();
-                $project->setName($projectName);
-                $project->setCustomer($customer);
-
-                $comment = $this->comment;
-                if (isset($record['Comment']) && !empty($record['Comment'])) {
-                    $comment = $record['Comment'];
-                }
-                $project->setComment($comment);
-
-                if (isset($record['OrderNumber']) && !empty($record['OrderNumber'])) {
-                    $project->setOrderNumber($record['OrderNumber']);
-                }
-                if (isset($record['OrderDate']) && !empty($record['OrderDate'])) {
-                    $project->setOrderDate($record['OrderDate']);
-                }
-
-                $team = null;
-                if (null !== $teamlead) {
-                    $team = new Team();
-                    $team->setName($projectName);
-                    $team->setTeamLead($teamlead);
-
-                    $this->teams->saveTeam($team);
-                }
-
-                $this->projects->saveProject($project);
-
-                if (null !== $team) {
-                    $project->addTeam($team);
-                    $team->addProject($project);
-
-                    $this->teams->saveTeam($team);
-                    $this->projects->saveProject($project);
+                if ($customer->getId() === null) {
+                    $this->importer->importCustomer($customer);
+                    $created++;
+                } elseif ($skipUpdate === false) {
+                    $this->importer->importCustomer($customer);
+                    $updated++;
+                } else {
+                    $noUpdatedCustomers++;
                 }
             } catch (\Exception $ex) {
-                $io->error(sprintf('Failed importing project row %s with: %s', $row, $ex->getMessage()));
+                $io->error(sprintf('Failed importing customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
 
-                return 6;
+                return 4;
             }
         }
 
-        $io->success(sprintf('Imported %s rows', $row));
+        $progressBar->finish();
+        $io->writeln('');
+        $io->writeln('');
+
+        if ($created > 0) {
+            $io->success(sprintf('Imported %s customer', $created));
+        }
+        if ($updated > 0) {
+            $io->success(sprintf('Updated %s customer', $updated));
+        }
+        if ($noUpdatedCustomers > 0) {
+            $io->success(sprintf('Skipped %s existing customer', $noUpdatedCustomers));
+        }
+
+        if ($updated === 0 && $created === 0) {
+            $io->text('Nothing was imported');
+        }
 
         return 0;
-    }
-
-    private function getCustomer(string $customerName): Customer
-    {
-        if (!\array_key_exists($customerName, $this->customerCache)) {
-            $tmpCustomer = $this->customers->findBy(['name' => $customerName]);
-
-            if (\count($tmpCustomer) > 1) {
-                throw new \Exception(sprintf('Found multiple customers with the name: %s', $customerName));
-            } elseif (\count($tmpCustomer) === 1) {
-                $tmpCustomer = $tmpCustomer[0];
-            }
-
-            if ($tmpCustomer instanceof Customer) {
-                $this->customerCache[$customerName] = $tmpCustomer;
-            }
-        }
-
-        if (\array_key_exists($customerName, $this->customerCache)) {
-            return $this->customerCache[$customerName];
-        }
-
-        $customer = new Customer();
-        $customer->setName(sprintf($customerName, $this->dateTime));
-        $customer->setComment($this->comment);
-        $customer->setCountry($this->configuration->getCustomerDefaultCountry());
-        $timezone = date_default_timezone_get();
-        if (null !== $this->configuration->getCustomerDefaultTimezone()) {
-            $timezone = $this->configuration->getCustomerDefaultTimezone();
-        }
-        $customer->setTimezone($timezone);
-
-        $this->customers->saveCustomer($customer);
-
-        $this->customerCache[$customerName] = $customer;
-
-        return $customer;
-    }
-
-    /**
-     * @param array $row
-     * @return bool
-     * @throws InvalidFieldsException
-     */
-    private function validateRow(array $row)
-    {
-        $fields = [];
-
-        foreach (self::$requiredHeader as $headerName) {
-            if (!isset($row[$headerName]) || empty($row[$headerName])) {
-                $fields[] = $headerName;
-            }
-        }
-
-        if (!empty($fields)) {
-            throw new InvalidFieldsException($fields);
-        }
-
-        return true;
-    }
-
-    private function validateHeader(array $header)
-    {
-        $fields = [];
-
-        foreach (self::$requiredHeader as $headerName) {
-            if (!\in_array($headerName, $header)) {
-                $fields[] = $headerName;
-            }
-        }
-
-        return empty($fields);
     }
 }

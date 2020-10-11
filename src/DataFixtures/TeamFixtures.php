@@ -32,9 +32,6 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
     public const MAX_USERS_PER_TEAM = 15;
     public const MAX_PROJECTS_PER_TEAM = 5;
 
-    // lower batch size, as user preferences are added in the same run
-    public const BATCH_SIZE = 50;
-
     /**
      * @return class-string[]
      */
@@ -127,11 +124,6 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
             }
 
             $manager->persist($team);
-
-            if ($i % self::BATCH_SIZE === 0) {
-                $manager->flush();
-                $manager->clear(Team::class);
-            }
         }
 
         $manager->flush();

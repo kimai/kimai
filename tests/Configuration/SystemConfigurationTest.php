@@ -51,6 +51,12 @@ class SystemConfigurationTest extends TestCase
                     'currency' => 'GBP',
                     'country' => 'FR',
                 ],
+                'user' => [
+                    'timezone' => 'foo/bar',
+                    'theme' => 'blue',
+                    'language' => 'IT',
+                    'currency' => 'USD',
+                ],
             ],
             'calendar' => [
                 'businessHours' => [
@@ -163,5 +169,29 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('00:30:00', $sut->getCalendarSlotDuration());
         $sources = $sut->getCalendarGoogleSources();
         $this->assertEquals(2, \count($sources));
+    }
+
+    public function testFormDefaultWithoutLoader()
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        $this->assertEquals('Europe/London', $sut->getCustomerDefaultTimezone());
+        $this->assertEquals('GBP', $sut->getCustomerDefaultCurrency());
+        $this->assertEquals('FR', $sut->getCustomerDefaultCountry());
+        $this->assertEquals('foo/bar', $sut->getUserDefaultTimezone());
+        $this->assertEquals('blue', $sut->getUserDefaultTheme());
+        $this->assertEquals('IT', $sut->getUserDefaultLanguage());
+        $this->assertEquals('USD', $sut->getUserDefaultCurrency());
+    }
+
+    public function testFormDefaultWithLoader()
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), $this->getDefaultLoaderSettings());
+        $this->assertEquals('Russia/Moscov', $sut->getCustomerDefaultTimezone());
+        $this->assertEquals('RUB', $sut->getCustomerDefaultCurrency());
+        $this->assertEquals('FR', $sut->getCustomerDefaultCountry());
+        $this->assertEquals('foo/bar', $sut->getUserDefaultTimezone());
+        $this->assertEquals('blue', $sut->getUserDefaultTheme());
+        $this->assertEquals('IT', $sut->getUserDefaultLanguage());
+        $this->assertEquals('USD', $sut->getUserDefaultCurrency());
     }
 }
