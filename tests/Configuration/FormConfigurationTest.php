@@ -35,6 +35,13 @@ class FormConfigurationTest extends TestCase
                 'currency' => 'GBP',
                 'country' => 'FR',
             ],
+            'user' => [
+                'timezone' => 'Europe/London',
+                'currency' => 'GBP',
+                'country' => 'FR',
+                'language' => 'it',
+                'theme' => 'blue',
+            ],
         ];
     }
 
@@ -44,6 +51,11 @@ class FormConfigurationTest extends TestCase
             (new Configuration())->setName('defaults.customer.timezone')->setValue('Russia/Moscov'),
             (new Configuration())->setName('defaults.customer.currency')->setValue('USD'),
             (new Configuration())->setName('defaults.customer.country')->setValue('RU'),
+            (new Configuration())->setName('defaults.user.timezone')->setValue('Russia/Moscov'),
+            (new Configuration())->setName('defaults.user.currency')->setValue('USD'),
+            (new Configuration())->setName('defaults.user.language')->setValue('RU'),
+            (new Configuration())->setName('defaults.user.country')->setValue('RU'),
+            (new Configuration())->setName('defaults.user.theme')->setValue('black'),
         ];
     }
 
@@ -67,6 +79,11 @@ class FormConfigurationTest extends TestCase
         $this->assertEquals('Russia/Moscov', $sut->getCustomerDefaultTimezone());
         $this->assertEquals('USD', $sut->getCustomerDefaultCurrency());
         $this->assertEquals('RU', $sut->getCustomerDefaultCountry());
+        $this->assertEquals('USD', $sut->getUserDefaultCurrency());
+        $this->assertEquals('RU', $sut->getUserDefaultLanguage());
+        $this->assertEquals('black', $sut->getUserDefaultTheme());
+        $this->assertEquals('Russia/Moscov', $sut->getUserDefaultTimezone());
+        $this->assertEquals('Russia/Moscov', $sut->offsetGet('defaults.user.timezone'));
     }
 
     public function testDefaultWithMixedConfigs()
