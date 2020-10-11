@@ -87,12 +87,12 @@ class ImportCustomerCommandTest extends KernelTestCase
         $commandTester->execute([
             'command' => $command->getName(),
             'file' => __DIR__ . '/../Importer/_data/customers2.csv',
-            '--reader' => 'fooo',
+            '--importer' => 'fooo',
         ]);
 
         $result = $commandTester->getDisplay();
 
-        self::assertStringContainsString('[ERROR] Unknown import reader: fooo', $result);
+        self::assertStringContainsString('[ERROR] Unknown customer importer: fooo', $result);
 
         self::assertEquals(1, $commandTester->getStatusCode());
     }
@@ -111,7 +111,29 @@ class ImportCustomerCommandTest extends KernelTestCase
 
         self::assertStringContainsString('Found 10 rows to process, converting now ...', $result);
         self::assertStringContainsString('Converted 10 customers, importing into Kimai now ...', $result);
-        self::assertStringContainsString('[OK] Imported 10 customer', $result);
+        self::assertStringContainsString('[OK] Imported 9 customer', $result);
+        self::assertStringContainsString('[OK] Updated 1 customer', $result);
+
+        self::assertEquals(0, $commandTester->getStatusCode());
+    }
+
+    public function testDefaultImportSkipUpdate()
+    {
+        $command = $this->application->find('kimai:import:customer');
+        $commandTester = new CommandTester($command);
+        $commandTester->setInputs(['no']);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            'file' => __DIR__ . '/../Importer/_data/customers.csv',
+            '--no-update' => true,
+        ]);
+
+        $result = $commandTester->getDisplay();
+
+        self::assertStringContainsString('Found 10 rows to process, converting now ...', $result);
+        self::assertStringContainsString('Converted 10 customers, importing into Kimai now ...', $result);
+        self::assertStringContainsString('[OK] Imported 9 customer', $result);
+        self::assertStringContainsString('[OK] Skipped 1 existing customer', $result);
 
         self::assertEquals(0, $commandTester->getStatusCode());
     }
