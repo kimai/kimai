@@ -16,9 +16,9 @@ final class GrandtotalCustomerImporter extends AbstractCustomerImporter
     protected function findCustomerName(array $row): string
     {
         foreach ($row as $name => $value) {
-            switch ($name) {
-                case 'Organization':
-                case 'Firma':
+            switch (strtolower($name)) {
+                case 'organization':
+                case 'firma':
                     if (!empty($value)) {
                         return $value;
                     }
@@ -32,8 +32,8 @@ final class GrandtotalCustomerImporter extends AbstractCustomerImporter
     {
         foreach ($row as $name => $value) {
             switch (strtolower($name)) {
-                case 'Customer number':
-                case 'Kundennummer':
+                case 'customer number':
+                case 'kundennummer':
                     if (!empty($value)) {
                         return $value;
                     }
@@ -49,95 +49,95 @@ final class GrandtotalCustomerImporter extends AbstractCustomerImporter
         $address = ['street' => '',  'city' => '', 'code' => ''];
 
         foreach ($row as $name => $value) {
-            switch ($name) {
-                case 'Department':
-                case 'Abteilung':
+            switch (strtolower($name)) {
+                case 'department':
+                case 'abteilung':
 
-                case 'Salutation':
-                case 'Briefanrede':
+                case 'salutation':
+                case 'briefanrede':
 
-                case 'State':
-                case 'Bundesland':
+                case 'state':
+                case 'bundesland':
 
-                case 'IBAN':
-                case 'BIC':
+                case 'iban':
+                case 'bic':
 
-                case 'SEPA Mandate ID':
-                case 'SEPA Mandat':
+                case 'sepa mandate id':
+                case 'sepa mandat':
                     // not supported in Kimai
                     break;
 
-                case 'Organization':
-                case 'Firma':
+                case 'organization':
+                case 'firma':
                     $customer->setCompany($value);
                     break;
 
-                case 'E-Mail':
+                case 'e-mail':
                     if (!empty($value)) {
                         $customer->setEmail($value);
                     }
                     break;
 
-                case 'Country':
-                case 'Land':
+                case 'country':
+                case 'land':
                     if (!empty($value)) {
                         $customer->setCountry($value);
                     }
                     break;
 
-                case 'Customer number':
-                case 'Kundennummer':
+                case 'customer number':
+                case 'kundennummer':
                     if (!empty($value)) {
                         $customer->setNumber($value);
                     }
                     break;
 
-                case 'Tax-ID':
-                case 'Umsatzsteuer':
+                case 'tax-id':
+                case 'umsatzsteuer':
                     if (!empty($value)) {
                         $customer->setVatId($value);
                     }
                     break;
 
-                case 'Note':
-                case 'Notiz':
+                case 'note':
+                case 'notiz':
                     if (!empty($value)) {
                         $customer->setComment(strip_tags($value));
                     }
                 break;
 
-                case 'Title':
-                case 'Titel':
+                case 'title':
+                case 'titel':
                     $names['title'] = $value;
                     break;
 
-                case 'First name':
-                case 'Vorname':
+                case 'first name':
+                case 'vorname':
                     $names['first'] = $value;
                     break;
 
-                case 'Middle name':
-                case 'Zweiter Vorname':
+                case 'middle name':
+                case 'zweiter vorname':
                     $names['middle'] = $value;
                     break;
 
-                case 'Last name':
-                case 'Nachname':
+                case 'last name':
+                case 'nachname':
                     $names['last'] = $value;
                     break;
 
-                case 'Street':
-                case 'Straße':
+                case 'street':
+                case 'straße':
                     $address['street'] = $value;
                     break;
 
-                case 'ZIP':
-                case 'PLZ':
+                case 'zip':
+                case 'plz':
                     $address['code'] = $value;
                     break;
 
-                case 'City':
-                case 'Ort':
+                case 'city':
+                case 'ort':
                     $address['city'] = $value;
                     break;
             }
