@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="teams.en.xlf">
     <header>
@@ -32,6 +32,10 @@
       <trans-unit id="team.create_default">
         <source>team.create_default</source>
         <target>צור צוות חדש להגבלת הגישה</target>
+      </trans-unit>
+      <trans-unit id="team.activity_visibility_inherited">
+        <source>team.activity_visibility_inherited</source>
+        <target>לפעילות יש גישה מוגבלת, כיוון שמוגדרות הרשאות קבוצתיות למיזם ו/או ללקוח.</target>
       </trans-unit>
     </body>
   </file>
