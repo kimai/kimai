@@ -65,6 +65,7 @@ final class DefaultCustomerImporter extends AbstractCustomerImporter
                     break;
 
                 case 'comment':
+                case 'description':
                     if (!empty($value)) {
                         $customer->setComment($value);
                     }

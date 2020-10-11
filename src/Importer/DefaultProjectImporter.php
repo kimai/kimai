@@ -23,6 +23,7 @@ final class DefaultProjectImporter extends AbstractProjectImporter
                     break;
 
                 case 'comment':
+                case 'description':
                     if (!empty($value)) {
                         $project->setComment($value);
                     }
