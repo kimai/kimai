@@ -33,6 +33,7 @@ final class DefaultCustomerImporter extends AbstractCustomerImporter
 
                 case 'email':
                 case 'e-mail':
+                case 'e mail':
                     if (!empty($value)) {
                         $customer->setEmail($value);
                     }
@@ -46,6 +47,8 @@ final class DefaultCustomerImporter extends AbstractCustomerImporter
 
                 case 'number':
                 case 'account':
+                case 'customer number':
+                case 'customer account':
                     if (!empty($value)) {
                         $customer->setNumber($value);
                     }
@@ -54,6 +57,8 @@ final class DefaultCustomerImporter extends AbstractCustomerImporter
                 case 'vat':
                 case 'vat-id':
                 case 'vat id':
+                case 'tax-id':
+                case 'tax id':
                     if (!empty($value)) {
                         $customer->setVatId($value);
                     }
@@ -124,6 +129,19 @@ final class DefaultCustomerImporter extends AbstractCustomerImporter
                         $customer->setVisible((bool) $value);
                     }
                 break;
+
+                case 'budget':
+                    if (!empty($value)) {
+                        $customer->setBudget($value);
+                    }
+                    break;
+
+                case 'time budget':
+                case 'time-budget':
+                    if (!empty($value)) {
+                        $customer->setTimeBudget($value);
+                    }
+                    break;
 
                 default:
                     if (stripos($name, 'meta.') === 0) {

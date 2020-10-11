@@ -35,7 +35,8 @@ class ImportProjectCommandTest extends KernelTestCase
 
         $importer = $container->get(ImporterService::class);
         $teams = $this->createMock(TeamRepository::class);
-        $users = $this->createMock(UserRepository::class);
+        /** @var UserRepository $users */
+        $users = $container->get(UserRepository::class);
 
         $this->application->add(new ImportProjectCommand($importer, $teams, $users));
     }
@@ -157,6 +158,51 @@ class ImportProjectCommandTest extends KernelTestCase
 
         self::assertStringContainsString('Invalid row 1: Missing customer name', $result);
         self::assertStringContainsString('! [CAUTION] Not importing, previous 3 errors need to be fixed first.', $result);
+
+        self::assertEquals(3, $commandTester->getStatusCode());
+    }
+
+    public function testDefaultImportWithSemicolonAndTeamlead()
+    {
+        $command = $this->application->find('kimai:import:project');
+        $commandTester = new CommandTester($command);
+        $commandTester->setInputs(['no']);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            'file' => __DIR__ . '/../Importer/_data/projects2.csv',
+            '--importer' => 'default',
+            '--reader' => 'csv-semicolon',
+            '--teamlead' => 'clara_customer',
+        ]);
+
+        $result = $commandTester->getDisplay();
+
+        self::assertStringContainsString('Found 39 rows to process, converting now ...', $result);
+        self::assertStringContainsString('Converted 39 projects, importing into Kimai now ...', $result);
+        self::assertStringContainsString('[OK] Imported 39 projects', $result);
+        self::assertStringContainsString('[OK] Imported 10 customers', $result);
+        self::assertStringContainsString('[OK] Created 39 teams', $result);
+
+        self::assertEquals(0, $commandTester->getStatusCode());
+    }
+
+    public function testDefaultImportWithSemicolonAndMissingTeamlead()
+    {
+        $command = $this->application->find('kimai:import:project');
+        $commandTester = new CommandTester($command);
+        $commandTester->setInputs(['no']);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            'file' => __DIR__ . '/../Importer/_data/projects2.csv',
+            '--importer' => 'default',
+            '--reader' => 'csv-semicolon',
+            '--teamlead' => 'foobar',
+        ]);
+
+        $result = $commandTester->getDisplay();
+
+        self::assertStringContainsString('You requested to create empty teams for each project', $result);
+        self::assertStringContainsString('Please create a user with the name (or email) foobar', $result);
 
         self::assertEquals(3, $commandTester->getStatusCode());
     }

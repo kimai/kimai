@@ -30,6 +30,7 @@ final class DefaultProjectImporter extends AbstractProjectImporter
 
                 case 'ordernumber':
                 case 'order-number':
+                case 'order number':
                     if (!empty($value)) {
                         $project->setOrderNumber($value);
                     }
@@ -37,6 +38,7 @@ final class DefaultProjectImporter extends AbstractProjectImporter
 
                 case 'orderdate':
                 case 'order-date':
+                case 'order date':
                     if (!empty($value)) {
                         $timezone = new \DateTimeZone($project->getCustomer()->getTimezone());
                         $project->setOrderDate(new \DateTime($value, $timezone));
@@ -46,6 +48,19 @@ final class DefaultProjectImporter extends AbstractProjectImporter
                 case 'color':
                     if (!empty($value)) {
                         $project->setColor($value);
+                    }
+                break;
+
+                case 'budget':
+                    if (!empty($value)) {
+                        $project->setBudget($value);
+                    }
+                break;
+
+                case 'time budget':
+                case 'time-budget':
+                    if (!empty($value)) {
+                        $project->setTimeBudget($value);
                     }
                 break;
 

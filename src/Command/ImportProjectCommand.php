@@ -73,10 +73,10 @@ class ImportProjectCommand extends Command
         // validate teamlead
         $teamlead = $input->getOption('teamlead');
         if (null !== $teamlead) {
-            $tmpUser = $this->users->findBy(['username' => $teamlead]);
-            if (empty($tmpUser) || \count($tmpUser) > 1) {
-                $tmpUser = $this->users->findBy(['email' => $teamlead]);
-                if (empty($tmpUser) || \count($tmpUser) > 1) {
+            $tmpUser = $this->users->findOneBy(['username' => $teamlead]);
+            if ($tmpUser === null) {
+                $tmpUser = $this->users->findOneBy(['email' => $teamlead]);
+                if ($tmpUser === null) {
                     $io->error(
                         sprintf(
                             'You requested to create empty teams for each project, but the given teamlead cannot be found.' . PHP_EOL .
@@ -89,7 +89,7 @@ class ImportProjectCommand extends Command
                 }
             }
 
-            $teamlead = $tmpUser[0];
+            $teamlead = $tmpUser;
         }
 
         $skipUpdate = $input->getOption('no-update');
@@ -150,6 +150,7 @@ class ImportProjectCommand extends Command
         $updatedProjects = 0;
         $noUpdatedProjects = 0;
         $createdCustomers = 0;
+        $createdTeams = 0;
 
         $amount = \count($projects);
         $io->text(sprintf('Converted %s projects, importing into Kimai now ...', $amount));
@@ -192,6 +193,7 @@ class ImportProjectCommand extends Command
                 $team->addProject($project);
 
                 $this->teams->saveTeam($team);
+                $createdTeams++;
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed importing project row %s with: %s', $row, $ex->getMessage()));
 
@@ -221,6 +223,9 @@ class ImportProjectCommand extends Command
             }
             if ($createdProjects > 0) {
                 $io->success(sprintf('Imported %s projects', $createdProjects));
+            }
+            if ($createdTeams > 0) {
+                $io->success(sprintf('Created %s teams', $createdTeams));
             }
         }
 
