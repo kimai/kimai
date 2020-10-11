@@ -91,13 +91,73 @@ class ImportProjectCommandTest extends KernelTestCase
         $commandTester->execute([
             'command' => $command->getName(),
             'file' => __DIR__ . '/../Importer/_data/customers2.csv',
-            '--reader' => 'fooo',
+            '--importer' => 'grandtotal',
         ]);
 
         $result = $commandTester->getDisplay();
 
-        self::assertStringContainsString('[ERROR] Unknown import reader: fooo', $result);
+        self::assertStringContainsString('[ERROR] Unknown project importer: grandtotal', $result);
 
         self::assertEquals(1, $commandTester->getStatusCode());
+    }
+
+    public function testDefaultImport()
+    {
+        $command = $this->application->find('kimai:import:project');
+        $commandTester = new CommandTester($command);
+        $commandTester->setInputs(['no']);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            'file' => __DIR__ . '/../Importer/_data/projects.csv',
+        ]);
+
+        $result = $commandTester->getDisplay();
+
+        self::assertStringContainsString('Found 3 rows to process, converting now ...', $result);
+        self::assertStringContainsString('Converted 3 projects, importing into Kimai now ...', $result);
+        self::assertStringContainsString('[OK] Imported 3 projects', $result);
+
+        self::assertEquals(0, $commandTester->getStatusCode());
+    }
+
+    public function testDefaultImportWithSemicolon()
+    {
+        $command = $this->application->find('kimai:import:project');
+        $commandTester = new CommandTester($command);
+        $commandTester->setInputs(['no']);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            'file' => __DIR__ . '/../Importer/_data/projects2.csv',
+            '--importer' => 'default',
+            '--reader' => 'csv-semicolon',
+        ]);
+
+        $result = $commandTester->getDisplay();
+
+        self::assertStringContainsString('Found 39 rows to process, converting now ...', $result);
+        self::assertStringContainsString('Converted 39 projects, importing into Kimai now ...', $result);
+        self::assertStringContainsString('[OK] Imported 39 projects', $result);
+        self::assertStringContainsString('[OK] Imported 10 customers', $result);
+
+        self::assertEquals(0, $commandTester->getStatusCode());
+    }
+
+    public function testGrandtotalImportWithInvalidCsvFile()
+    {
+        $command = $this->application->find('kimai:import:project');
+        $commandTester = new CommandTester($command);
+        $commandTester->setInputs(['no']);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            'file' => __DIR__ . '/../Importer/_data/projects.csv',
+            '--reader' => 'csv-semicolon',
+        ]);
+
+        $result = $commandTester->getDisplay();
+
+        self::assertStringContainsString('Invalid row 1: Missing customer name', $result);
+        self::assertStringContainsString('! [CAUTION] Not importing, previous 3 errors need to be fixed first.', $result);
+
+        self::assertEquals(3, $commandTester->getStatusCode());
     }
 }

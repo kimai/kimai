@@ -151,7 +151,7 @@ class ImportCustomerCommandTest extends KernelTestCase
 
         $result = $commandTester->getDisplay();
 
-        self::assertStringContainsString('Invalid row 1: Missing customer name, expected in one of the columns:', $result);
+        self::assertStringContainsString('Invalid row 1: Missing customer name', $result);
         self::assertStringContainsString('! [CAUTION] Not importing, previous 10 errors need to be fixed first.', $result);
 
         self::assertEquals(3, $commandTester->getStatusCode());
@@ -192,9 +192,10 @@ class ImportCustomerCommandTest extends KernelTestCase
 
         $result = $commandTester->getDisplay();
 
-        self::assertStringContainsString('Found 1 rows to process, converting now ...', $result);
-        self::assertStringContainsString('Converted 1 customers, importing into Kimai now ...', $result);
+        self::assertStringContainsString('Found 2 rows to process, converting now ...', $result);
+        self::assertStringContainsString('Converted 2 customers, importing into Kimai now ...', $result);
         self::assertStringContainsString('[OK] Imported 1 customer', $result);
+        self::assertStringContainsString('[OK] Updated 1 customer', $result);
 
         self::assertEquals(0, $commandTester->getStatusCode());
     }
