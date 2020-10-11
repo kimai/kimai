@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="email.en.xlf">
     <header>
@@ -27,7 +27,7 @@
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>נרשמת למערכת דיווח השעות עם כתובת המייל: %email%. עליך להפעיל את החשבון בשעות הקרובות לפני שיפוג תוקף הלינק</target>
+        <target>נרשמת למערכת דיווח השעות עם כתובת הדוא״ל: %email%. עליך להפעיל את החשבון בשעות הקרובות לפני שיפוג תוקף הקישור.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
