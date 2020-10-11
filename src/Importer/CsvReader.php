@@ -11,7 +11,7 @@ namespace App\Importer;
 
 use League\Csv\Reader;
 
-final class CsvReader implements ImportReader
+final class CsvReader implements ImportReaderInterface
 {
     private $delimiter;
 

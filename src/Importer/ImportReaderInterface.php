@@ -9,7 +9,7 @@
 
 namespace App\Importer;
 
-interface ImportReader
+interface ImportReaderInterface
 {
     /**
      * @param string $input

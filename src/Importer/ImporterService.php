@@ -79,7 +79,7 @@ class ImporterService
         }
     }
 
-    public function getReader(string $name): ImportReader
+    public function getReader(string $name): ImportReaderInterface
     {
         switch ($name) {
             case 'csv':
