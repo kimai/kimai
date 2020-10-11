@@ -102,7 +102,7 @@ class ImportProjectCommand extends Command
         $projects = [];
 
         try {
-            $importer = $this->importerService->getCustomerImporter($input->getOption('importer'));
+            $importer = $this->importerService->getProjectImporter($input->getOption('importer'));
             $reader = $this->importerService->getReader($input->getOption('reader'));
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
