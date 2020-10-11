@@ -12,6 +12,7 @@ namespace App\Tests\Importer;
 use App\Customer\CustomerService;
 use App\Entity\Customer;
 use App\Importer\DefaultCustomerImporter;
+use App\Importer\UnsupportedFormatException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,10 +20,10 @@ use PHPUnit\Framework\TestCase;
  */
 class DefaultCustomerImporterTest extends TestCase
 {
-    private function getSut(): DefaultCustomerImporter
+    private function getSut(int $count = 1): DefaultCustomerImporter
     {
         $customerService = $this->createMock(CustomerService::class);
-        $customerService->expects($this->once())->method('createNewCustomer')->willReturnCallback(
+        $customerService->expects($this->exactly($count))->method('createNewCustomer')->willReturnCallback(
             function () {
                 return new Customer();
             }
@@ -49,15 +50,41 @@ class DefaultCustomerImporterTest extends TestCase
         return $sut->convertEntryToCustomer($import);
     }
 
+    public function testImportMissingName()
+    {
+        $this->expectException(UnsupportedFormatException::class);
+        $this->expectExceptionMessage('Missing customer name, expected in column: "Name"');
+
+        return $this->getSut(0)->convertEntryToCustomer(['sdfgsdfgsdfg' => 'sdfgsdfg']);
+    }
+
     public function testImport()
     {
         $customer = $this->prepareCustomer([]);
         self::assertEquals('Test customer', $customer->getName());
     }
 
-    public function testImport2()
+    public function testImportWithMultipleValues()
     {
-        $customer = $this->prepareCustomer([]);
+        $customer = $this->prepareCustomer([
+            'e mail' => 'test@example.com',
+            'contact' => 'Foo Bar',
+            'phone' => '0123 4567890',
+            'mobile' => '111 354687',
+            'fax' => '999 112233445566778899',
+            'homepage' => 'www.example.com',
+            'budget' => 1000.17,
+            'time budget' => 3600,
+            'meta.qwertz' => 'uztiuzgubhöklji7gl',
+        ]);
         self::assertEquals('Test customer', $customer->getName());
+        self::assertEquals(1000.17, $customer->getBudget());
+        self::assertEquals(3600, $customer->getTimeBudget());
+        self::assertEquals('0123 4567890', $customer->getPhone());
+        self::assertEquals('111 354687', $customer->getMobile());
+        self::assertEquals('999 112233445566778899', $customer->getFax());
+        self::assertEquals('www.example.com', $customer->getHomepage());
+        self::assertEquals('www.example.com', $customer->getHomepage());
+        self::assertEquals('uztiuzgubhöklji7gl', $customer->getMetaField('qwertz')->getValue());
     }
 }

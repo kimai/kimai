@@ -116,9 +116,50 @@ class ImportProjectCommandTest extends KernelTestCase
 
         self::assertStringContainsString('Found 3 rows to process, converting now ...', $result);
         self::assertStringContainsString('Converted 3 projects, importing into Kimai now ...', $result);
-        self::assertStringContainsString('[OK] Imported 3 projects', $result);
+        self::assertStringContainsString('[OK] Imported 2 projects', $result);
+        self::assertStringContainsString('[OK] Updated 1 projects', $result);
 
         self::assertEquals(0, $commandTester->getStatusCode());
+    }
+
+    public function testDefaultImportSkipUpdate()
+    {
+        $command = $this->application->find('kimai:import:project');
+        $commandTester = new CommandTester($command);
+        $commandTester->setInputs(['no']);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            'file' => __DIR__ . '/../Importer/_data/projects.csv',
+            '--no-update' => true,
+        ]);
+
+        $result = $commandTester->getDisplay();
+
+        self::assertStringContainsString('Found 3 rows to process, converting now ...', $result);
+        self::assertStringContainsString('Converted 3 projects, importing into Kimai now ...', $result);
+        self::assertStringContainsString('[OK] Imported 2 projects', $result);
+        self::assertStringContainsString('[OK] Skipped 1 existing projects', $result);
+
+        self::assertEquals(0, $commandTester->getStatusCode());
+    }
+
+    public function testDefaultImportWithInvalidCustomerMapping()
+    {
+        $command = $this->application->find('kimai:import:project');
+        $commandTester = new CommandTester($command);
+        $commandTester->setInputs(['no']);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            'file' => __DIR__ . '/../Importer/_data/projects_invalid.csv',
+        ]);
+
+        $result = $commandTester->getDisplay();
+
+        self::assertStringContainsString('Found 3 rows to process, converting now ...', $result);
+        self::assertStringContainsString('[ERROR] Invalid row 2: Customer mismatch for project', $result);
+        self::assertStringContainsString('[CAUTION] Not importing, previous 1 errors need to be fixed first.', $result);
+
+        self::assertEquals(3, $commandTester->getStatusCode());
     }
 
     public function testDefaultImportWithSemicolon()

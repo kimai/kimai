@@ -40,7 +40,8 @@ final class DefaultProjectImporter extends AbstractProjectImporter
                 case 'order-date':
                 case 'order date':
                     if (!empty($value)) {
-                        $timezone = new \DateTimeZone($project->getCustomer()->getTimezone());
+                        $timezone = $project->getCustomer()->getTimezone();
+                        $timezone = new \DateTimeZone($timezone ?? date_default_timezone_get());
                         $project->setOrderDate(new \DateTime($value, $timezone));
                     }
                 break;

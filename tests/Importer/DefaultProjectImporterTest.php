@@ -13,6 +13,7 @@ use App\Customer\CustomerService;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Importer\DefaultProjectImporter;
+use App\Importer\UnsupportedFormatException;
 use App\Project\ProjectService;
 use PHPUnit\Framework\TestCase;
 
@@ -21,11 +22,12 @@ use PHPUnit\Framework\TestCase;
  */
 class DefaultProjectImporterTest extends TestCase
 {
-    private function getSut(): DefaultProjectImporter
+    private function getSut(int $count = 1): DefaultProjectImporter
     {
         $projectService = $this->createMock(ProjectService::class);
-        $projectService->expects($this->once())->method('createNewProject')->willReturnCallback(
-            function ($customer) {
+        $projectService->expects($this->exactly($count))->method('createNewProject')->willReturnCallback(
+            function (Customer $customer) {
+                $customer->setTimezone('Europe/Paris');
                 $project = new Project();
                 $project->setCustomer($customer);
 
@@ -56,6 +58,14 @@ class DefaultProjectImporterTest extends TestCase
         return $sut->convertEntryToProject($import);
     }
 
+    public function testImportMissingName()
+    {
+        $this->expectException(UnsupportedFormatException::class);
+        $this->expectExceptionMessage('Missing project name, expected in one of the columns: "Name", "Project , "Project Name", "Project-Name", "ProjectName"');
+
+        return $this->getSut(0)->convertEntryToProject(['CuStOMer-name' => 'Test CUSTOMER!']);
+    }
+
     public function testImport()
     {
         $project = $this->prepareProject(['CuStOMer-name' => 'Test CUSTOMER!']);
@@ -63,10 +73,20 @@ class DefaultProjectImporterTest extends TestCase
         self::assertEquals('Test CUSTOMER!', $project->getCustomer()->getName());
     }
 
-    public function testImport2()
+    public function testImportWithMultipleValues()
     {
-        $project = $this->prepareProject(['CuStOMer-name' => 'Test CUSTOMER!']);
+        $project = $this->prepareProject([
+            'CuStOMer-name' => 'Test CUSTOMER!',
+            'order date' => '2020-07-21 17:28:54',
+            'budget' => 1000.17,
+            'time budget' => 3600,
+            'meta.abcd' => 'uztiuzgubhöklji7gl',
+        ]);
         self::assertEquals('Test project', $project->getName());
         self::assertEquals('Test CUSTOMER!', $project->getCustomer()->getName());
+        self::assertEquals(1000.17, $project->getBudget());
+        self::assertEquals(3600, $project->getTimeBudget());
+        self::assertEquals('2020-07-21T17:28:54+0200', $project->getOrderDate()->format(DATE_ISO8601));
+        self::assertEquals('uztiuzgubhöklji7gl', $project->getMetaField('abcd')->getValue());
     }
 }
