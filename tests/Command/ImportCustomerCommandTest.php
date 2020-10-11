@@ -16,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * @covers \App\Command\ImportCustomerCommand
  * @group integration
  */
 class ImportCustomerCommandTest extends KernelTestCase

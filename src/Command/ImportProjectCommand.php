@@ -101,8 +101,15 @@ class ImportProjectCommand extends Command
         $errors = 0;
         $projects = [];
 
-        $importer = $this->importerService->getProjectImporter($input->getOption('importer'));
-        $reader = $this->importerService->getReader($input->getOption('reader'));
+        try {
+            $importer = $this->importerService->getCustomerImporter($input->getOption('importer'));
+            $reader = $this->importerService->getReader($input->getOption('reader'));
+        } catch (\Exception $ex) {
+            $io->error($ex->getMessage());
+
+            return 1;
+        }
+
         $importerFile = $input->getArgument('file');
 
         $io->text('Reading import file ...');
@@ -112,7 +119,7 @@ class ImportProjectCommand extends Command
         } catch (ImportNotFoundException $ex) {
             $io->error('File not existing or not readable: ' . $importerFile);
 
-            return 1;
+            return 2;
         }
 
         $amount = iterator_count($records);
@@ -139,7 +146,7 @@ class ImportProjectCommand extends Command
         if (!$doImport) {
             $io->caution(sprintf('Not importing, previous %s errors need to be fixed first.', $errors));
 
-            return 2;
+            return 3;
         }
 
         $createdProjects = 0;
@@ -191,7 +198,7 @@ class ImportProjectCommand extends Command
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed importing project row %s with: %s', $row, $ex->getMessage()));
 
-                return 3;
+                return 4;
             }
         }
 
