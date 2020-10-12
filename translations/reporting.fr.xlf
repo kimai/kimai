@@ -4,19 +4,19 @@
     <body>
       <trans-unit id="reporting.title">
         <source>reporting.title</source>
-        <target></target>
+        <target>Reporting</target>
       </trans-unit>
       <trans-unit id="report_user_week">
         <source>report_user_week</source>
-        <target></target>
+        <target>Vue par semaine pour un utilisateur</target>
       </trans-unit>
       <trans-unit id="report_user_month">
         <source>report_user_month</source>
-        <target></target>
+        <target>Vue par mois pour un utilisateur</target>
       </trans-unit>
       <trans-unit id="report_monthly_users">
         <source>report_monthly_users</source>
-        <target></target>
+        <target>Vue par mois pour tous les utilisateurs</target>
       </trans-unit>
     </body>
   </file>
