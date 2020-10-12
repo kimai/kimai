@@ -909,6 +909,10 @@
         <source>delete.not_in_use</source>
         <target>Этот элемент можно безопасно удалить.</target>
       </trans-unit>
+      <trans-unit id="admin_entity.delete_confirm">
+        <source>admin_entity.delete_confirm</source>
+        <target>Эти данные будут удалены! Вы можете выбрать запись, в которую будут перенесены все данные:</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
