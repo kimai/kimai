@@ -4,43 +4,43 @@
     <body>
       <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target></target>
+        <target>Düğme çalışmıyorsa, lütfen şu URL'yi kopyalayıp tarayıcınıza yapıştırın: %url%</target>
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target></target>
+        <target>Bu otomatik olarak oluşturulmuş bir e-postadır. Lütfen yanıtlamayın, adres okunmayacaktır.</target>
       </trans-unit>
       <trans-unit id="registration.subject">
         <source>registration.subject</source>
-        <target></target>
+        <target>Hesabınızı etkinleştirin</target>
       </trans-unit>
       <trans-unit id="registration.title">
         <source>registration.title</source>
-        <target></target>
+        <target>Hoş geldin %username%</target>
       </trans-unit>
       <trans-unit id="registration.button">
         <source>registration.button</source>
-        <target></target>
+        <target>Hesabınızı etkinleştirin</target>
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target></target>
+        <target>Kimai zaman izleyicisine %email% e-posta adresiyle kaydoldunuz. Şimdi, bağlantının süresi dolmadan birkaç saat içinde hesabınızı etkinleştirmeniz gerekiyor.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
-        <target></target>
+        <target>Parolanızı sıfırlayın</target>
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target></target>
+        <target>Bu olabilir ...</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
-        <target></target>
+        <target>Parolanızı sıfırlayın</target>
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target></target>
+        <target>... parolanızı mı unuttunuz? Endişelenmeyin: Kimai, yeni bir tane oluşturmanıza yardımcı olacaktır:</target>
       </trans-unit>
     </body>
   </file>
