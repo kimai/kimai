@@ -4,15 +4,15 @@
     <body>
       <trans-unit id="default.pdf.twig">
         <source>default.pdf.twig</source>
-        <target></target>
+        <target>Standart</target>
       </trans-unit>
       <trans-unit id="default-budget.pdf.twig">
         <source>default-budget.pdf.twig</source>
-        <target></target>
+        <target>Kalan bütçe ile</target>
       </trans-unit>
       <trans-unit id="default-internal.pdf.twig">
         <source>default-internal.pdf.twig</source>
-        <target></target>
+        <target>Dahili ücretlerle</target>
       </trans-unit>
     </body>
   </file>
