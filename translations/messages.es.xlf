@@ -1086,6 +1086,30 @@
         <source>Allowed character: A-Z and _</source>
         <target state="translated">Permitido letras de la A _Z y _</target>
       </trans-unit>
+      <trans-unit id="label.project_end">
+        <source>label.project_end</source>
+        <target>Fin del proyecto</target>
+      </trans-unit>
+      <trans-unit id="profile.registration_date">
+        <source>profile.registration_date</source>
+        <target>Registrado el</target>
+      </trans-unit>
+      <trans-unit id="label.appendTags">
+        <source>label.appendTags</source>
+        <target>Agregar etiquetas</target>
+      </trans-unit>
+      <trans-unit id="help.fixedRate">
+        <source>help.fixedRate</source>
+        <target>Cada registro de tiempo obtiene el mismo valor, independientemente de su duración</target>
+      </trans-unit>
+      <trans-unit id="label.billable">
+        <source>label.billable</source>
+        <target>Facturable</target>
+      </trans-unit>
+      <trans-unit id="attachments">
+        <source>attachments</source>
+        <target>Archivos</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
