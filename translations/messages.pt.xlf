@@ -144,7 +144,7 @@
             -->
       <trans-unit id="error.no_entries_found">
         <source>error.no_entries_found</source>
-        <target>Nenhuma entrada existente</target>
+        <target>Nenhuma entrada encontrada baseada nos filtros selecionados.</target>
       </trans-unit>
       <!--
               General labels
