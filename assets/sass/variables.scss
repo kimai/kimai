@@ -7,8 +7,11 @@
 
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
+/* For highlighting rows, fieldsets and so on */
+$highlight-bg: #f5f5f5;
+
 /**
- * A simple one to one clone of /node_modules/admin-lte/build/less/variables.less
+ * BELOW: A simple one to one clone of /node_modules/admin-lte/build/less/variables.less
  */
 
 // COLORS
