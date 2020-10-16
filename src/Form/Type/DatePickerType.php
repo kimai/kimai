@@ -13,7 +13,8 @@ use App\Timesheet\UserDateTimeFactory;
 use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -21,20 +22,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DatePickerType extends AbstractType
 {
-    /**
-     * @var LocaleSettings
-     */
-    protected $localeSettings;
+    private $localeSettings;
+    private $dateTime;
 
-    /**
-     * @var UserDateTimeFactory
-     */
-    protected $dateTime;
-
-    /**
-     * @param LocaleSettings $localeSettings
-     * @param UserDateTimeFactory $dateTime
-     */
     public function __construct(LocaleSettings $localeSettings, UserDateTimeFactory $dateTime)
     {
         $this->localeSettings = $localeSettings;
@@ -58,14 +48,20 @@ class DatePickerType extends AbstractType
             'model_timezone' => $timezone,
             'view_timezone' => $timezone,
         ]);
+    }
 
-        $resolver->setDefault('attr', function (Options $options) {
-            return [
-                'autocomplete' => 'off',
-                'placeholder' => $options['format'],
-                'data-format' => $options['format_picker'],
-            ];
-        });
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        if (!isset($view->vars['attr'])) {
+            $view->vars['attr'] = [];
+        }
+
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'data-datepickerenable' => 'on',
+            'autocomplete' => 'off',
+            'placeholder' => strtoupper($options['format']),
+            'data-format' => $options['format_picker'],
+        ]);
     }
 
     /**

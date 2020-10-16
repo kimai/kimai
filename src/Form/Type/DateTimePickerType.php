@@ -14,7 +14,8 @@ use App\Timesheet\UserDateTimeFactory;
 use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -61,22 +62,21 @@ class DateTimePickerType extends AbstractType
             'with_seconds' => false,
             'model_timezone' => $timezone,
             'view_timezone' => $timezone,
-            'autofocus' => false,
         ]);
+    }
 
-        $resolver->setDefault('attr', function (Options $options) {
-            $values = [
-                'data-datetimepicker' => 'on',
-                'autocomplete' => 'off',
-                'placeholder' => $options['format'],
-                'data-format' => $options['format_picker'],
-            ];
-            if ($options['autofocus']) {
-                $values['autofocus'] = 'autofocus';
-            }
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        if (!isset($view->vars['attr'])) {
+            $view->vars['attr'] = [];
+        }
 
-            return $values;
-        });
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'data-datetimepicker' => 'on',
+            'autocomplete' => 'off',
+            'placeholder' => strtoupper($options['format']),
+            'data-format' => $options['format_picker'],
+        ]);
     }
 
     /**
