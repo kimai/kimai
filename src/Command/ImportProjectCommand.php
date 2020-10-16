@@ -14,6 +14,7 @@ use App\Importer\ImporterService;
 use App\Importer\ImportNotFoundException;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
+use App\Validator\ValidationFailedException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -56,6 +57,8 @@ class ImportProjectCommand extends Command
             ->addOption('reader', null, InputOption::VALUE_REQUIRED, 'The reader to use (supported: csv, csv-semicolon)', 'csv')
             ->addOption('teamlead', null, InputOption::VALUE_REQUIRED, 'If you want to create empty teams for each project, give the username of the teamlead to be assigned')
             ->addOption('no-update', null, InputOption::VALUE_NONE, 'If you want to create new project, but not update existing ones')
+            ->addOption('date-format', null, InputOption::VALUE_REQUIRED, 'Date format for imports', 'Y-m-d')
+            ->addOption('timezone', null, InputOption::VALUE_REQUIRED, 'Timezone for imports', date_default_timezone_get())
         ;
     }
 
@@ -125,9 +128,17 @@ class ImportProjectCommand extends Command
 
         $progressBar = new ProgressBar($output, $amount);
 
+        $options = [];
+        if (null !== ($dateFormat = $input->getOption('date-format'))) {
+            $options['dateformat'] = $dateFormat;
+        }
+        if (null !== ($timezone = $input->getOption('timezone'))) {
+            $options['timezone'] = $timezone;
+        }
+
         foreach ($records as $record) {
             try {
-                $projects[] = $importer->convertEntryToProject($record);
+                $projects[] = $importer->convertEntryToProject($record, $options);
             } catch (\Exception $ex) {
                 $io->error(sprintf('Invalid row %s: %s', $row, $ex->getMessage()));
                 $doImport = false;
@@ -158,7 +169,6 @@ class ImportProjectCommand extends Command
         $progressBar = new ProgressBar($output, $amount);
 
         foreach ($projects as $project) {
-            $row++;
             $progressBar->advance();
             try {
                 if ($project->getCustomer()->getId() === null) {
@@ -194,8 +204,16 @@ class ImportProjectCommand extends Command
 
                 $this->teams->saveTeam($team);
                 $createdTeams++;
+            } catch (ValidationFailedException $ex) {
+                $io->error(sprintf('Failed importing project "%s" with: %s', $project->getName(), $ex->getMessage()));
+                for ($i = 0; $i < $ex->getViolations()->count(); $i++) {
+                    $violation = $ex->getViolations()->get($i);
+                    $io->error(sprintf('Failed validating field "%s" with value "%s": %s', $violation->getPropertyPath(), $violation->getInvalidValue(), $violation->getMessage()));
+                }
+
+                return 4;
             } catch (\Exception $ex) {
-                $io->error(sprintf('Failed importing project row %s with: %s', $row, $ex->getMessage()));
+                $io->error(sprintf('Failed importing project "%s" with: %s', $project->getName(), $ex->getMessage()));
 
                 return 4;
             }

@@ -14,7 +14,7 @@ use App\Entity\ProjectMeta;
 
 final class DefaultProjectImporter extends AbstractProjectImporter
 {
-    protected function convertEntry(Project $project, array $row)
+    protected function convertEntry(Project $project, array $row, array $options = []): void
     {
         foreach ($row as $name => $value) {
             switch (strtolower($name)) {
@@ -33,7 +33,7 @@ final class DefaultProjectImporter extends AbstractProjectImporter
                 case 'order-number':
                 case 'order number':
                     if (!empty($value)) {
-                        $project->setOrderNumber($value);
+                        $project->setOrderNumber(substr($value, 0, 20));
                     }
                 break;
 
@@ -42,8 +42,20 @@ final class DefaultProjectImporter extends AbstractProjectImporter
                 case 'order date':
                     if (!empty($value)) {
                         $timezone = $project->getCustomer()->getTimezone();
+                        if (isset($options['timezone'])) {
+                            $timezone = $options['timezone'];
+                        }
                         $timezone = new \DateTimeZone($timezone ?? date_default_timezone_get());
-                        $project->setOrderDate(new \DateTime($value, $timezone));
+                        if (isset($options['dateformat'])) {
+                            $date = \DateTime::createFromFormat($options['dateformat'], $value, $timezone);
+                        } else {
+                            $date = new \DateTime($value, $timezone);
+                        }
+                        if ($date instanceof \DateTime) {
+                            $project->setOrderDate($date);
+                        } else {
+                            throw new \InvalidArgumentException('Invalid order date: ' . $value);
+                        }
                     }
                 break;
 
@@ -84,7 +96,5 @@ final class DefaultProjectImporter extends AbstractProjectImporter
                 break;
             }
         }
-
-        return $project;
     }
 }
