@@ -13,5 +13,13 @@ use App\Entity\Project;
 
 interface ProjectImporterInterface
 {
-    public function convertEntryToProject(array $entry): Project;
+    /**
+     * Convert an entry (key-value pairs) to a Project entity.
+     * Accepts an optional array of options (like "dateformat" or "timezone").
+     *
+     * @param array<string, mixed> $entry
+     * @param array<string, mixed> $options
+     * @return Project
+     */
+    public function convertEntryToProject(array $entry, array $options = []): Project;
 }
