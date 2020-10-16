@@ -116,7 +116,7 @@
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">
-                        {{ entry.description|escape|desc2html }}
+                        {{ entry.description|desc2html }}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}">
                         {{ rate|money(currency) }}

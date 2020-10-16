@@ -33,10 +33,10 @@
         <tr>
             <td>
                 <strong>{{ 'label.contact'|trans }}</strong>:
-                {{ model.template.contact|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+                {{ model.template.contact|nl2str(' &ndash; ') }}
                 <br>
                 <strong>{{ 'label.invoice_bank_account'|trans }}</strong>:
-                {{ model.template.paymentDetails|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+                {{ model.template.paymentDetails|nl2str(' &ndash; ') }}
             </td>
             <td align="right">
                 {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
@@ -151,9 +151,9 @@ mpdf-->
     </table>
 
     {% if model.template.paymentTerms is not empty %}
-    <p>
+    <div class="paymentTerms">
         {{ model.template.paymentTerms|md2html }}
-    </p>
+    </div>
     {% endif %}
 </div>
 </body>

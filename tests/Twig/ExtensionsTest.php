@@ -14,6 +14,7 @@ use App\Entity\Activity;
 use App\Entity\User;
 use App\Twig\Extensions;
 use PHPUnit\Framework\TestCase;
+use Twig\Node\Node;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
@@ -29,7 +30,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['docu_link', 'multiline_indent', 'color', 'font_contrast'];
+        $filters = ['docu_link', 'multiline_indent', 'color', 'font_contrast', 'nl2str'];
         $sut = $this->getSut();
         $twigFilters = $sut->getFilters();
         $this->assertCount(\count($filters), $twigFilters);
@@ -39,6 +40,11 @@ class ExtensionsTest extends TestCase
             $this->assertInstanceOf(TwigFilter::class, $filter);
             $this->assertEquals($filters[$i++], $filter->getName());
         }
+
+        // make sure that the nl2str filters does proper escaping
+        self::assertEquals('nl2str', $twigFilters[4]->getName());
+        self::assertEquals('html', $twigFilters[4]->getPreEscape());
+        self::assertEquals(['html'], $twigFilters[4]->getSafe(new Node()));
     }
 
     public function testGetFunctions()
@@ -161,5 +167,26 @@ sdfsdf' . PHP_EOL . "\n" .
         // invalid days will return 'monday'
         self::assertEquals(1, $sut->getIsoDayByName(''));
         self::assertEquals(1, $sut->getIsoDayByName('sdfgsdf'));
+    }
+
+    public function getTestDataReplaceNewline()
+    {
+        yield [',', new \stdClass(), new \stdClass()];
+        yield [',', null, null];
+        yield [',', '', ''];
+        yield ['*', PHP_EOL, '*'];
+        yield [',', 'foo' . PHP_EOL . 'bar', 'foo,bar'];
+        yield [' &ndash; ', 'foo' . PHP_EOL . 'bar', 'foo &ndash; bar'];
+        yield [' &ndash; ', "foo\r\nbar\rtest\nhello", 'foo &ndash; bar &ndash; test &ndash; hello'];
+    }
+
+    /**
+     * @dataProvider getTestDataReplaceNewline
+     */
+    public function testReplaceNewline(string $replacer, $input, $expected)
+    {
+        $sut = $this->getSut();
+
+        self::assertEquals($expected, $sut->replaceNewline($input, $replacer));
     }
 }

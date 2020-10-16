@@ -31,6 +31,7 @@ class Extensions extends AbstractExtension
             new TwigFilter('multiline_indent', [$this, 'multilineIndent']),
             new TwigFilter('color', [$this, 'color']),
             new TwigFilter('font_contrast', [$this, 'calculateFontContrastColor']),
+            new TwigFilter('nl2str', [$this, 'replaceNewline'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
         ];
     }
 
@@ -112,5 +113,14 @@ class Extensions extends AbstractExtension
     public function documentationLink(?string $url = ''): string
     {
         return Constants::HOMEPAGE . '/documentation/' . $url;
+    }
+
+    public function replaceNewline($input, string $newline)
+    {
+        if (!\is_string($input)) {
+            return $input;
+        }
+
+        return str_replace(["\r\n", "\n", "\r"], $newline, $input);
     }
 }
