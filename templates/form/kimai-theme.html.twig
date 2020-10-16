@@ -23,7 +23,7 @@
 {% block datetime_widget -%}
     <div class="input-group">
         <div class="input-group-addon">
-            <a href="#" onclick="if (!$('#{{ id }}').is(':disabled')) { $('#{{ id }}').val(moment().format('{{ attr['data-format'] }}')).trigger('change'); }"><i class="{{ 'calendar'|icon }}"></i></a>
+            <a href="#" onclick="if (!$('#{{ id }}').is(':disabled')) { $('#{{ id }}').val(moment().format('{{ attr['data-format'] }}')).change(); }return false;"><i class="{{ 'calendar'|icon }}"></i></a>
         </div>
         {{ block('form_widget_simple') }}
     </div>
@@ -32,7 +32,7 @@
 {% block date_widget -%}
     <div class="input-group">
         <div class="input-group-addon">
-            <a href="#" onclick="if (!$('#{{ id }}').is(':disabled')) { $('#{{ id }}').val(moment().format('{{ attr['data-format'] }}')).trigger('change'); }"><i class="{{ 'calendar'|icon }}"></i></a>
+            <a href="#" onclick="if (!$('#{{ id }}').is(':disabled')) { $('#{{ id }}').val(moment().format('{{ attr['data-format'] }}')).change(); }return false;"><i class="{{ 'calendar'|icon }}"></i></a>
         </div>
         {{ block('form_widget_simple') }}
     </div>
