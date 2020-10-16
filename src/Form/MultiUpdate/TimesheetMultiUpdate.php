@@ -235,7 +235,8 @@ class TimesheetMultiUpdate extends AbstractType
                 'choices' => $choices,
                 'multiple' => true,
                 'expanded' => true,
-                'help' => 'Each custom field that should be updated, needs to be checked'
+                'label' => 'label.batch_meta_fields',
+                'help' => 'help.batch_meta_fields',
             ]);
         }
 
