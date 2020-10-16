@@ -52,10 +52,6 @@ class DatePickerType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if (!isset($view->vars['attr'])) {
-            $view->vars['attr'] = [];
-        }
-
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-datepickerenable' => 'on',
             'autocomplete' => 'off',

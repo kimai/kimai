@@ -64,10 +64,6 @@ class DateRangeType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if (!isset($view->vars['attr'])) {
-            $view->vars['attr'] = [];
-        }
-
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'autocomplete' => 'off',
             'placeholder' => strtoupper($options['format_picker']) . $options['separator'] . strtoupper($options['format_picker']),

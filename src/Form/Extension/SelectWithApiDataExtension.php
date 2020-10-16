@@ -73,10 +73,6 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
             $formPrefix .= '_';
         }
 
-        if (!isset($view->vars['attr'])) {
-            $view->vars['attr'] = [];
-        }
-
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-related-select' => $formPrefix . $apiData['select'],
             'data-api-url' => $this->router->generate($apiData['route'], $apiData['route_params']),
