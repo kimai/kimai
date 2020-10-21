@@ -4,81 +4,81 @@
         <body>
             <trans-unit id="label.invoice_renderer">
                 <source>label.invoice_renderer</source>
-                <target>Invoice document</target>
+                <target state="translated">Lasku</target>
             </trans-unit>
             <trans-unit id="help.upload">
                 <source>help.upload</source>
-                <target>Attention: existing files will be overwritten. Allowed file types are: DOCX, ODS, XLSX.</target>
+                <target state="translated">Huomioitavaa: olemassa olevat tiedostot korvataan. Sallitut tiedosto tyypit on: DOCX, ODS, XLSX.</target>
             </trans-unit>
             <!-- Optgroups -->
             <trans-unit id="programmatic">
                 <source>programmatic</source>
-                <target>For further processing</target>
+                <target state="translated">Jatko käsittelyä varten</target>
             </trans-unit>
             <trans-unit id="Html">
                 <source>Html</source>
-                <target>HTML (for printing via Browser)</target>
+                <target state="translated">HTML (tulostukseen selaimen kautta)</target>
             </trans-unit>
             <trans-unit id="Docx">
                 <source>Docx</source>
-                <target>Microsoft Word (Docx)</target>
+                <target state="translated">Microsoft Word (Docx)</target>
             </trans-unit>
             <trans-unit id="Xls">
                 <source>Xls</source>
-                <target>Microsoft Excel (Xls)</target>
+                <target state="translated">Microsoft Excel (Xls)</target>
             </trans-unit>
             <trans-unit id="Ods">
                 <source>Ods</source>
-                <target>Open Office (Spreadsheet)</target>
+                <target state="translated">Open Office (Taulukkolaskenta)</target>
             </trans-unit>
             <trans-unit id="Xlsx">
                 <source>Xlsx</source>
-                <target>Microsoft Excel (Xlsx)</target>
+                <target state="translated">Microsoft Excel (Xlsx)</target>
             </trans-unit>
             <trans-unit id="Pdf">
                 <source>Pdf</source>
-                <target>PDF</target>
+                <target state="translated">PDF</target>
             </trans-unit>
             <!-- Renderer -->
             <trans-unit id="default">
                 <source>default</source>
-                <target>Invoice</target>
+                <target state="translated">Lasku</target>
             </trans-unit>
             <trans-unit id="default-pdf">
                 <source>default-pdf</source>
-                <target>Invoice</target>
+                <target state="translated">Lasku</target>
             </trans-unit>
             <trans-unit id="xml">
                 <source>xml</source>
-                <target>XML</target>
+                <target state="translated">XML</target>
             </trans-unit>
             <trans-unit id="javascript">
                 <source>javascript</source>
-                <target>JSON</target>
+                <target state="translated">JSON</target>
             </trans-unit>
             <trans-unit id="text">
                 <source>text</source>
-                <target>Text</target>
+                <target state="translated">Teksti</target>
             </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
-                <target>Timesheet</target>
+                <target state="translated">Työajanseuranta</target>
             </trans-unit>
             <trans-unit id="freelancer">
                 <source>freelancer</source>
-                <target>Freelancer</target>
+                <target state="translated">Freelancer</target>
             </trans-unit>
             <trans-unit id="open-spreadsheet">
                 <source>open-spreadsheet</source>
-                <target>Invoice</target>
+                <target state="translated">Lasku</target>
             </trans-unit>
             <trans-unit id="spreadsheet">
                 <source>spreadsheet</source>
-                <target>Invoice</target>
+                <target state="translated">Lasku</target>
             </trans-unit>
             <trans-unit id="company">
                 <source>company</source>
-                <target>Invoice</target>
+                <target state="translated">Lasku</target>
             </trans-unit>
         </body>
     </file>
