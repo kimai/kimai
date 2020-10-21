@@ -13,6 +13,7 @@ use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
+use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\TagsType;
 use App\Form\Type\UserType;
@@ -60,6 +61,7 @@ class TimesheetMultiUpdate extends AbstractType
         $project = null;
         $customer = null;
         $currency = null;
+        $entry = null;
         $customerCount = $this->customers->countCustomer(true);
 
         if (isset($options['data'])) {
@@ -119,6 +121,7 @@ class TimesheetMultiUpdate extends AbstractType
             );
 
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
+        // TODO replace me with FormTrait
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) use ($builder, $project, $customer) {
@@ -146,12 +149,14 @@ class TimesheetMultiUpdate extends AbstractType
                 'required' => false,
                 'placeholder' => '',
                 'query_builder' => function (ActivityRepository $repo) use ($activity, $project) {
+                    // TODO respect user (team permission)
                     return $repo->getQueryBuilderForFormType(new ActivityFormTypeQuery($activity, $project));
                 },
             ])
         ;
 
         // replaces the activity select after submission, to make sure only activities for the selected project are displayed
+        // TODO replace me with FormTrait
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) use ($activity) {
@@ -164,6 +169,7 @@ class TimesheetMultiUpdate extends AbstractType
                     'required' => false,
                     'placeholder' => '',
                     'query_builder' => function (ActivityRepository $repo) use ($data, $activity) {
+                        // TODO respect user (team permission)
                         return $repo->getQueryBuilderForFormType(new ActivityFormTypeQuery($activity, $data['project']));
                     },
                 ]);
@@ -213,6 +219,25 @@ class TimesheetMultiUpdate extends AbstractType
                     'currency' => $currency,
                 ])
             ;
+        }
+
+        // meta fields only if at least one exists
+        if ($entry !== null && $entry->getMetaFields()->count() > 0) {
+            $builder->add('metaFields', MetaFieldsCollectionType::class);
+
+            $choices = [];
+            foreach ($entry->getMetaFields() as $field) {
+                $name = $field->getName();
+                $label = $entry->getMetaField($name)->getLabel();
+                $choices[$label] = $name;
+            }
+            $builder->add('updateMeta', ChoiceType::class, [
+                'choices' => $choices,
+                'multiple' => true,
+                'expanded' => true,
+                'label' => 'label.batch_meta_fields',
+                'help' => 'help.batch_meta_fields',
+            ]);
         }
 
         $builder->add('entities', HiddenType::class, [

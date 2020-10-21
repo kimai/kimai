@@ -17,6 +17,8 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,16 +32,12 @@ class DateRangeType extends AbstractType
     /**
      * @var LocaleSettings
      */
-    protected $localeSettings;
+    private $localeSettings;
     /**
      * @var UserDateTimeFactory
      */
-    protected $dateFactory;
+    private $dateFactory;
 
-    /**
-     * @param LocaleSettings $localeSettings
-     * @param UserDateTimeFactory $dateTime
-     */
     public function __construct(LocaleSettings $localeSettings, UserDateTimeFactory $dateTime)
     {
         $this->localeSettings = $localeSettings;
@@ -55,23 +53,23 @@ class DateRangeType extends AbstractType
         $dateFormat = $this->localeSettings->getDateFormat();
 
         $resolver->setDefaults([
-            'model_timezone' => null,
-            'view_timezone' => null,
+            'timezone' => date_default_timezone_get(),
             'label' => 'label.daterange',
             'format' => $dateFormat,
             'separator' => self::DATE_SPACER,
             'format_picker' => $pickerFormat,
             'allow_empty' => true,
         ]);
+    }
 
-        $resolver->setDefault('attr', function (Options $options) {
-            return [
-                'autocomplete' => 'off',
-                'placeholder' => $options['format_picker'] . $options['separator'] . $options['format_picker'],
-                'data-format' => $options['format_picker'],
-                'data-separator' => $options['separator'],
-            ];
-        });
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'autocomplete' => 'off',
+            'placeholder' => strtoupper($options['format_picker']) . $options['separator'] . strtoupper($options['format_picker']),
+            'data-format' => $options['format_picker'],
+            'data-separator' => $options['separator'],
+        ]);
     }
 
     /**
@@ -129,6 +127,8 @@ class DateRangeType extends AbstractType
         $formatDate = $options['format'];
         $separator = $options['separator'];
         $allowEmpty = $options['allow_empty'];
+        //$timezone = new \DateTimeZone($options['timezone']);
+        $timezone = $this->dateFactory->getTimezone();
         $pattern = $this->formatToPattern($formatDate, $separator);
 
         $builder->addModelTransformer(new CallbackTransformer(
@@ -152,7 +152,7 @@ class DateRangeType extends AbstractType
 
                 return $display;
             },
-            function ($dates) use ($formatDate, $pattern, $separator, $allowEmpty) {
+            function ($dates) use ($formatDate, $pattern, $separator, $allowEmpty, $timezone) {
                 $range = new DateRange();
 
                 if (empty($dates) && $allowEmpty) {
@@ -171,13 +171,13 @@ class DateRangeType extends AbstractType
                     throw new TransformationFailedException('Invalid date range given');
                 }
 
-                $begin = \DateTime::createFromFormat($formatDate, $values[0], $this->dateFactory->getTimezone());
+                $begin = \DateTime::createFromFormat($formatDate, $values[0], $timezone);
                 if ($begin === false) {
                     throw new TransformationFailedException('Invalid begin date given');
                 }
                 $range->setBegin($begin);
 
-                $end = \DateTime::createFromFormat($formatDate, $values[1], $this->dateFactory->getTimezone());
+                $end = \DateTime::createFromFormat($formatDate, $values[1], $timezone);
                 if ($end === false) {
                     throw new TransformationFailedException('Invalid end date given');
                 }

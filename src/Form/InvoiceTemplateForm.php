@@ -16,6 +16,7 @@ use App\Form\Type\InvoiceRendererType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -62,16 +63,16 @@ class InvoiceTemplateForm extends AbstractType
                 'label' => 'label.invoice_bank_account',
                 'required' => false,
             ])
-            ->add('dueDays', TextType::class, [
+            ->add('dueDays', IntegerType::class, [
                 'label' => 'label.due_days',
             ])
             ->add('vat', NumberType::class, [
                 'label' => 'label.vat',
                 'scale' => 2,
             ])
-            ->add('renderer', InvoiceRendererType::class, [])
-            ->add('calculator', InvoiceCalculatorType::class, [])
-            ->add('numberGenerator', InvoiceNumberGeneratorType::class, [])
+            ->add('renderer', InvoiceRendererType::class)
+            ->add('calculator', InvoiceCalculatorType::class)
+            ->add('numberGenerator', InvoiceNumberGeneratorType::class)
             ->add('language', LanguageType::class, [
                 'required' => false,
             ])
