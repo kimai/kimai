@@ -146,12 +146,23 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    protected function addDateRangeChoice(FormBuilderInterface $builder, $allowEmpty = true, $required = false)
+    protected function addDateRange(FormBuilderInterface $builder, array $options, $allowEmpty = true, $required = false)
     {
-        $builder->add('daterange', DateRangeType::class, [
+        $params = [
             'required' => $required,
             'allow_empty' => $allowEmpty,
-        ]);
+        ];
+
+        if (\array_key_exists('timezone', $options)) {
+            $params['timezone'] = $options['timezone'];
+        }
+
+        $builder->add('daterange', DateRangeType::class, $params);
+    }
+
+    protected function addDateRangeChoice(FormBuilderInterface $builder, $allowEmpty = true, $required = false)
+    {
+        $this->addDateRange($builder, [], $allowEmpty, $required);
     }
 
     protected function addProjectChoice(FormBuilderInterface $builder, array $options = [], bool $multiCustomer = false, bool $multiActivity = false)

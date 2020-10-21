@@ -253,7 +253,6 @@ class AppExtensionTest extends TestCase
             'kimai.i18n_domains' => []
         ];
 
-        // nasty parameter, should be removed!!!
         $this->assertTrue($container->hasParameter('kimai.config'));
 
         foreach ($expected as $key => $value) {

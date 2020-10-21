@@ -26,12 +26,12 @@ use App\Event\TimesheetUpdateMultiplePreEvent;
 use App\Event\TimesheetUpdatePostEvent;
 use App\Event\TimesheetUpdatePreEvent;
 use App\Repository\TimesheetRepository;
+use App\Security\AccessDeniedException;
 use App\Validator\ValidationException;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -117,7 +117,7 @@ final class TimesheetService
      * @param Timesheet $copyFrom
      * @throws ValidationFailedException for invalid timesheets or running timesheets that should be stopped
      * @throws InvalidArgumentException for already persisted timesheets
-     * @throws AccessDeniedHttpException if user is not allowed to start timesheet
+     * @throws AccessDeniedException if user is not allowed to start timesheet
      */
     public function restartTimesheet(Timesheet $timesheet, Timesheet $copyFrom): Timesheet
     {
@@ -133,7 +133,7 @@ final class TimesheetService
      * @return Timesheet
      * @throws ValidationFailedException for invalid timesheets or running timesheets that should be stopped
      * @throws InvalidArgumentException for already persisted timesheets
-     * @throws AccessDeniedHttpException if user is not allowed to start timesheet
+     * @throws AccessDeniedException if user is not allowed to start timesheet
      */
     public function saveNewTimesheet(Timesheet $timesheet): Timesheet
     {
@@ -142,7 +142,7 @@ final class TimesheetService
         }
 
         if (null === $timesheet->getEnd() && !$this->auth->isGranted('start', $timesheet)) {
-            throw new AccessDeniedHttpException('You are not allowed to start this timesheet record');
+            throw new AccessDeniedException('You are not allowed to start this timesheet record');
         }
 
         $this->validateTimesheet($timesheet);

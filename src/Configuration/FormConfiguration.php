@@ -10,7 +10,7 @@
 namespace App\Configuration;
 
 /**
- * @internal will be deprecated soon, use SystemConfiguration instead
+ * @deprecated will be removed with 2.0, use SystemConfiguration instead
  */
 class FormConfiguration implements SystemBundleConfiguration
 {

@@ -9,7 +9,7 @@
 
 namespace App\Controller;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Entity\MetaTableTypeInterface;
@@ -35,9 +35,7 @@ use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -53,7 +51,7 @@ final class ActivityController extends AbstractController
      */
     private $repository;
     /**
-     * @var FormConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
     /**
@@ -61,7 +59,7 @@ final class ActivityController extends AbstractController
      */
     private $dispatcher;
 
-    public function __construct(ActivityRepository $repository, FormConfiguration $configuration, EventDispatcherInterface $dispatcher)
+    public function __construct(ActivityRepository $repository, SystemConfiguration $configuration, EventDispatcherInterface $dispatcher)
     {
         $this->repository = $repository;
         $this->configuration = $configuration;
@@ -192,7 +190,27 @@ final class ActivityController extends AbstractController
             $activity->setProject($project);
         }
 
-        return $this->renderActivityForm($activity, $request);
+        $event = new ActivityMetaDefinitionEvent($activity);
+        $this->dispatcher->dispatch($event);
+
+        $editForm = $this->createEditForm($activity);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            try {
+                $this->repository->saveActivity($activity);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('admin_activity');
+            } catch (Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
+        }
+
+        return $this->render('activity/edit.html.twig', [
+            'activity' => $activity,
+            'form' => $editForm->createView()
+        ]);
     }
 
     /**
@@ -258,7 +276,27 @@ final class ActivityController extends AbstractController
      */
     public function editAction(Activity $activity, Request $request)
     {
-        return $this->renderActivityForm($activity, $request);
+        $event = new ActivityMetaDefinitionEvent($activity);
+        $this->dispatcher->dispatch($event);
+
+        $editForm = $this->createEditForm($activity);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            try {
+                $this->repository->saveActivity($activity);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
+            } catch (Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
+        }
+
+        return $this->render('activity/edit.html.twig', [
+            'activity' => $activity,
+            'form' => $editForm->createView()
+        ]);
     }
 
     /**
@@ -343,47 +381,6 @@ final class ActivityController extends AbstractController
     }
 
     /**
-     * @param Activity $activity
-     * @param Request $request
-     * @return RedirectResponse|Response
-     */
-    protected function renderActivityForm(Activity $activity, Request $request)
-    {
-        $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event);
-
-        $editForm = $this->createEditForm($activity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            try {
-                $this->repository->saveActivity($activity);
-                $this->flashSuccess('action.update.success');
-
-                if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
-                    $newActivity = new Activity();
-                    $newActivity->setProject($activity->getProject());
-                    $editForm = $this->createEditForm($newActivity);
-                    $editForm->get('create_more')->setData(true);
-                    $activity = $newActivity;
-                } else {
-                    return $this->redirectToRoute('admin_activity');
-                }
-            } catch (Exception $ex) {
-                $this->flashUpdateException($ex);
-            }
-        }
-
-        return $this->render(
-            'activity/edit.html.twig',
-            [
-                'activity' => $activity,
-                'form' => $editForm->createView()
-            ]
-        );
-    }
-
-    /**
      * @param ActivityQuery $query
      * @return FormInterface
      */
@@ -417,7 +414,6 @@ final class ActivityController extends AbstractController
             'action' => $url,
             'method' => 'POST',
             'currency' => $currency,
-            'create_more' => true,
             'customer' => true,
             'include_budget' => $this->isGranted('budget', $activity)
         ]);

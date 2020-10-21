@@ -9,7 +9,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
@@ -39,15 +39,15 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
      */
     protected $voter;
     /**
-     * @var FormConfiguration
+     * @var SystemConfiguration
      */
-    protected $formConfig;
+    protected $configuration;
 
-    public function __construct(EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter, FormConfiguration $formConfig)
+    public function __construct(EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter, SystemConfiguration $formConfig)
     {
         $this->eventDispatcher = $dispatcher;
         $this->voter = $voter;
-        $this->formConfig = $formConfig;
+        $this->configuration = $formConfig;
     }
 
     public static function getSubscribedEvents(): array
@@ -59,22 +59,22 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
 
     private function getDefaultTheme(): ?string
     {
-        return $this->formConfig->getUserDefaultTheme();
+        return $this->configuration->getUserDefaultTheme();
     }
 
     private function getDefaultCurrency(): string
     {
-        return $this->formConfig->getUserDefaultCurrency();
+        return $this->configuration->getUserDefaultCurrency();
     }
 
     private function getDefaultLanguage(): string
     {
-        return $this->formConfig->getUserDefaultLanguage();
+        return $this->configuration->getUserDefaultLanguage();
     }
 
     private function getDefaultTimezone(): string
     {
-        $timezone = $this->formConfig->getUserDefaultTimezone();
+        $timezone = $this->configuration->getUserDefaultTimezone();
         if (null === $timezone) {
             $timezone = date_default_timezone_get();
         }
