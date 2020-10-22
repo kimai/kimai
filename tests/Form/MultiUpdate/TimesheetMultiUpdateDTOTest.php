@@ -13,8 +13,10 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
+use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -38,6 +40,9 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         self::assertFalse($sut->isReplaceTags());
         self::assertNull($sut->getFixedRate());
         self::assertNull($sut->getHourlyRate());
+        self::assertInstanceOf(Collection::class, $sut->getMetaFields());
+        self::assertEmpty($sut->getMetaFields());
+        self::assertEquals([], $sut->getUpdateMeta());
     }
 
     public function testSetterAndGetter()
@@ -97,5 +102,28 @@ class TimesheetMultiUpdateDTOTest extends TestCase
 
         self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setHourlyRate(123.45));
         self::assertEquals(123.45, $sut->getHourlyRate());
+
+        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setUpdateMeta(['foo', 'bar']));
+        self::assertEquals(['foo', 'bar'], $sut->getUpdateMeta());
+
+        $meta = new TimesheetMeta();
+        $meta->setName('foo')->setValue('bar')->setType('hello');
+        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setMetaField($meta));
+        self::assertSame($meta, $sut->getMetaField('foo'));
+        self::assertEquals('bar', $sut->getMetaField('foo')->getValue());
+        self::assertEquals('hello', $sut->getMetaField('foo')->getType());
+        self::assertEquals(1, $sut->getMetaFields()->count());
+
+        $meta2 = new TimesheetMeta();
+        $meta2->setName('foo')->setValue('hello')->setType('world');
+        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setMetaField($meta2));
+        self::assertSame($meta, $sut->getMetaField('foo'));
+        self::assertEquals('bar', $sut->getMetaField('foo')->getValue());
+        self::assertEquals('world', $sut->getMetaField('foo')->getType());
+        self::assertEquals(1, $sut->getMetaFields()->count());
+
+        $meta2->setName('foo2')->setValue('hello')->setType('world');
+        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setMetaField($meta2));
+        self::assertEquals(2, $sut->getMetaFields()->count());
     }
 }

@@ -39,11 +39,11 @@ abstract class AbstractProjectImporter implements ProjectImporterInterface
         return $this->customerService->findCustomerByName($name);
     }
 
-    public function convertEntryToProject(array $entry): Project
+    public function convertEntryToProject(array $entry, array $options = []): Project
     {
         $project = $this->findProject($entry);
 
-        $this->convertEntry($project, $entry);
+        $this->convertEntry($project, $entry, $options);
 
         return $project;
     }
@@ -71,7 +71,7 @@ abstract class AbstractProjectImporter implements ProjectImporterInterface
         if ($customer->getId() !== $project->getCustomer()->getId()) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    'Customer mismatch for project %s with attached customer %s and new customer %s',
+                    'Customer mismatch for project "%s" with attached customer "%s" and new customer "%s"',
                     $project->getName(),
                     $project->getCustomer()->getName(),
                     $customer->getName()
@@ -84,7 +84,10 @@ abstract class AbstractProjectImporter implements ProjectImporterInterface
 
     private function findCustomer(string $customerName): Customer
     {
-        if (!\array_key_exists($customerName, $this->customerCache)) {
+        $customerName = trim($customerName);
+        $key = strtolower($customerName);
+
+        if (!\array_key_exists($key, $this->customerCache)) {
             $customer = $this->findCustomerByName($customerName);
 
             if ($customer === null) {
@@ -92,10 +95,10 @@ abstract class AbstractProjectImporter implements ProjectImporterInterface
                 $customer->setName($customerName);
             }
 
-            $this->customerCache[$customerName] = $customer;
+            $this->customerCache[$key] = $customer;
         }
 
-        return $this->customerCache[$customerName];
+        return $this->customerCache[$key];
     }
 
     /**
@@ -152,7 +155,8 @@ abstract class AbstractProjectImporter implements ProjectImporterInterface
      *
      * @param Project $project
      * @param array $entry
-     * @return mixed
+     * @param array $options
+     * @return void
      */
-    abstract protected function convertEntry(Project $project, array $entry);
+    abstract protected function convertEntry(Project $project, array $entry, array $options = []): void;
 }

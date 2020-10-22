@@ -11,19 +11,15 @@ namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 
 class DayTimeType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $resolver->setDefaults([
-            'attr' => [
-                'placeholder' => 'hh:mm'
-            ],
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'placeholder' => 'hh:mm'
         ]);
     }
 

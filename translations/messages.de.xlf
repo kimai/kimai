@@ -1110,6 +1110,14 @@
         <source>label.globalsOnly</source>
         <target>Nur globale</target>
       </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>Zusätzliche Felder</target>
+      </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>Felder die aktualisiert werden sollen, müssen zunächst durch einen Klick auf die zugehörige Checkbox freigeschaltet werden.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

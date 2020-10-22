@@ -56,6 +56,7 @@ final class ActivityIdLoader implements LoaderInterface
             ->getQuery()
             ->execute();
 
+        // global activities don't have projects
         if (!empty($activities)) {
             $projectIds = array_map(function (Activity $activity) {
                 if (null === $activity->getProject()) {
@@ -93,15 +94,15 @@ final class ActivityIdLoader implements LoaderInterface
                 ->andWhere($qb->expr()->in('a.id', $ids))
                 ->getQuery()
                 ->execute();
-
-            $qb = $em->createQueryBuilder();
-            $qb->select('PARTIAL a.{id}', 'teams', 'teamlead')
-                ->from(Activity::class, 'a')
-                ->leftJoin('a.teams', 'teams')
-                ->leftJoin('teams.teamlead', 'teamlead')
-                ->andWhere($qb->expr()->in('a.id', $ids))
-                ->getQuery()
-                ->execute();
         }
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL a.{id}', 'teams', 'teamlead')
+            ->from(Activity::class, 'a')
+            ->leftJoin('a.teams', 'teams')
+            ->leftJoin('teams.teamlead', 'teamlead')
+            ->andWhere($qb->expr()->in('a.id', $ids))
+            ->getQuery()
+            ->execute();
     }
 }
