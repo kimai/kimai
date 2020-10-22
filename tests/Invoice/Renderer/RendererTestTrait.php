@@ -162,6 +162,7 @@ trait RendererTestTrait
             ->setRate(111.11)
             ->setUser($user1)
             ->setActivity($activity2)
+            ->setDescription('== jhg ljhg ') // make sure that spreadsheets don't render it as formula
             ->setProject($project2)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())

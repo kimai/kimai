@@ -12,6 +12,7 @@ namespace App\Invoice\Renderer;
 use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceModel;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -93,7 +94,11 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                     $value = str_replace($searchKey, $content, $value);
                 }
 
-                $cell->setValue($value);
+                if (\is_string($value)) {
+                    $cell->setValueExplicit($value, DataType::TYPE_STRING);
+                } else {
+                    $cell->setValue($value);
+                }
             }
 
             if ($sheetValues !== false && $entryRow < $invoiceItemCount - 1) {
