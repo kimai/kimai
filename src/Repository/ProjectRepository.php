@@ -366,13 +366,6 @@ class ProjectRepository extends EntityRepository
             }
         }
 
-        // this will make sure, that we do not accidentally create results with multiple rows,
-        // which would result in a wrong LIMIT with paginated results
-        $qb->addGroupBy('p');
-
-        // the second group by is needed to satisfy SQL standard (ONLY_FULL_GROUP_BY)
-        $qb->addGroupBy($orderBy);
-
         return $qb;
     }
 

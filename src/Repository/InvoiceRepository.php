@@ -115,18 +115,16 @@ class InvoiceRepository extends EntityRepository
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
-        $qb
-            ->leftJoin('i.customer', 'c')
-            ->leftJoin('c.teams', 'c_teams');
+        $qb->leftJoin('i.customer', 'c');
 
         if (empty($teams)) {
-            $qb->andWhere($qb->expr()->isNull('c_teams'));
+            $qb->andWhere('SIZE(c.teams) = 0');
 
             return;
         }
 
         $orCustomer = $qb->expr()->orX(
-            $qb->expr()->isNull('c_teams'),
+            'SIZE(c.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
         $qb->andWhere($orCustomer);
@@ -153,13 +151,6 @@ class InvoiceRepository extends EntityRepository
         $qb->addOrderBy($orderBy, $query->getOrder());
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
-
-        // this will make sure, that we do not accidentally create results with multiple rows,
-        // which would result in a wrong LIMIT with paginated results
-        $qb->addGroupBy('i');
-
-        // the second group by is needed to satisfy SQL standard (ONLY_FULL_GROUP_BY)
-        $qb->addGroupBy($orderBy);
 
         return $qb;
     }

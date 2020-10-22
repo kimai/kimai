@@ -268,10 +268,6 @@ class CustomerRepository extends EntityRepository
             }
         }
 
-        // this will make sure, that we do not accidentally create results with multiple rows,
-        // which would result in a wrong LIMIT with paginated results
-        $qb->addGroupBy('c');
-
         return $qb;
     }
 
