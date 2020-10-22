@@ -13,6 +13,7 @@ use App\Entity\ActivityRate;
 use App\Entity\CustomerRate;
 use App\Entity\ProjectRate;
 use App\Entity\RateInterface;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\Statistic\Day;
@@ -596,19 +597,18 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * This method was deactivated, because it causes all kind of troubles.
-     * First and foremost: the join on the customer and project tables to check for the ones without any team-assignments
-     * is a terrible performance bottleneck.
+     * This method causes me some headaches ...
      *
-     * But the other one is a logical problem:
-     * - a teamlead should see all records from his team-members, even if they recorded times for another project.
-     * - activity permissions are not checked
-     * - it is impossible to query objects with the correct permissions (there will always be a lot of false positives and negatives)
+     * Activity permissions are currently not checked (which would be easy to add)
+     *
+     * Especially the following question is still un-answered!
+     *
+     * Should a teamlead:
+     * 1 . see all records of his team-members, even if they recorded times for projects invisible to him
+     * 2. only see records for projects which can be accessed by hom (current situation)
      */
     private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): bool
     {
-        return false;
-        /*
         // make sure that all queries without a user see all projects
         if (null === $user && empty($teams)) {
             return false;
@@ -624,28 +624,31 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (empty($teams)) {
-            $qb->andWhere($qb->expr()->isNull('c_teams'));
-            $qb->andWhere($qb->expr()->isNull('teams'));
+            $qb->andWhere('SIZE(c.teams) = 0');
+            $qb->andWhere('SIZE(p.teams) = 0');
 
             return true;
         }
 
+        $ids = array_values(array_unique(array_map(function (Team $team) {
+            return $team->getId();
+        }, $teams)));
+
         $orProject = $qb->expr()->orX(
-            $qb->expr()->isNull('teams'),
+            'SIZE(p.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'p.teams')
         );
         $qb->andWhere($orProject);
 
         $orCustomer = $qb->expr()->orX(
-            $qb->expr()->isNull('c_teams'),
+            'SIZE(c.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
         $qb->andWhere($orCustomer);
 
-        $qb->setParameter('teams', $teams);
+        $qb->setParameter('teams', $ids);
 
         return true;
-        */
     }
 
     public function getPagerfantaForQuery(TimesheetQuery $query): Pagerfanta
@@ -709,12 +712,10 @@ class TimesheetRepository extends EntityRepository
 
         $requiresProject = false;
         $requiresCustomer = false;
-        $requiresTeams = false;
         $requiresActivity = false;
 
         $qb
             ->select('t')
-            ->distinct()
             ->from(Timesheet::class, 't')
         ;
 
@@ -872,13 +873,6 @@ class TimesheetRepository extends EntityRepository
 
         if ($requiresActivity) {
             $qb->leftJoin('t.activity', 'a');
-        }
-
-        if ($requiresTeams) {
-            $qb
-                ->leftJoin('p.teams', 'teams')
-                ->leftJoin('c.teams', 'c_teams')
-            ;
         }
 
         return $qb;
