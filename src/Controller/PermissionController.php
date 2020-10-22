@@ -78,6 +78,7 @@ final class PermissionController extends AbstractController
                 $role->setName($roleName);
                 $this->roleRepository->saveRole($role);
                 $existing[] = $roleName;
+                $all[] = $role;
             }
         }
 
@@ -145,7 +146,7 @@ final class PermissionController extends AbstractController
             'ROLE_TEAMLEAD' => null,
             'ROLE_USER' => null,
         ];
-        foreach ($this->roleRepository->findAll() as $role) {
+        foreach ($all as $role) {
             $roles[$role->getName()] = $role;
         }
 
