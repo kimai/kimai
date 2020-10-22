@@ -630,10 +630,6 @@ class TimesheetRepository extends EntityRepository
             return true;
         }
 
-        $ids = array_values(array_unique(array_map(function (Team $team) {
-            return $team->getId();
-        }, $teams)));
-
         $orProject = $qb->expr()->orX(
             'SIZE(p.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'p.teams')
@@ -645,6 +641,10 @@ class TimesheetRepository extends EntityRepository
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
         $qb->andWhere($orCustomer);
+
+        $ids = array_values(array_unique(array_map(function (Team $team) {
+            return $team->getId();
+        }, $teams)));
 
         $qb->setParameter('teams', $ids);
 

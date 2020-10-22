@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Customer;
 use App\Entity\Invoice;
+use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\Loader\InvoiceLoader;
 use App\Repository\Paginator\LoaderPaginator;
@@ -129,7 +130,11 @@ class InvoiceRepository extends EntityRepository
         );
         $qb->andWhere($orCustomer);
 
-        $qb->setParameter('teams', $teams);
+        $ids = array_values(array_unique(array_map(function (Team $team) {
+            return $team->getId();
+        }, $teams)));
+
+        $qb->setParameter('teams', $ids);
     }
 
     private function getQueryBuilderForQuery(InvoiceQuery $query): QueryBuilder
