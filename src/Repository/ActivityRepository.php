@@ -263,7 +263,6 @@ class ActivityRepository extends EntityRepository
         $qb
             ->select('a')
             ->from(Activity::class, 'a')
-            ->distinct()
             ->leftJoin('a.project', 'p')
             ->leftJoin('p.customer', 'c')
         ;
