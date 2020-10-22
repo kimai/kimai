@@ -150,16 +150,14 @@ class CustomerRepository extends EntityRepository
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
-        $qb->leftJoin('c.teams', 'teams');
-
         if (empty($teams)) {
-            $qb->andWhere($qb->expr()->isNull('teams'));
+            $qb->andWhere('SIZE(c.teams) = 0');
 
             return;
         }
 
         $or = $qb->expr()->orX(
-            $qb->expr()->isNull('teams'),
+            'SIZE(c.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
         $qb->andWhere($or);

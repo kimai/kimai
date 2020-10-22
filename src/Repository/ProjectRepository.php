@@ -142,24 +142,21 @@ class ProjectRepository extends EntityRepository
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
-        $qb->leftJoin('p.teams', 'teams')
-            ->leftJoin('c.teams', 'c_teams');
-
         if (empty($teams)) {
-            $qb->andWhere($qb->expr()->isNull('c_teams'));
-            $qb->andWhere($qb->expr()->isNull('teams'));
+            $qb->andWhere('SIZE(c.teams) = 0');
+            $qb->andWhere('SIZE(p.teams) = 0');
 
             return;
         }
 
         $orProject = $qb->expr()->orX(
-            $qb->expr()->isNull('teams'),
+            'SIZE(p.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'p.teams')
         );
         $qb->andWhere($orProject);
 
         $orCustomer = $qb->expr()->orX(
-            $qb->expr()->isNull('c_teams'),
+            'SIZE(c.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
         $qb->andWhere($orCustomer);

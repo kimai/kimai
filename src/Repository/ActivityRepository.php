@@ -133,37 +133,31 @@ class ActivityRepository extends EntityRepository
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
-        $qb->leftJoin('a.teams', 'teams');
-        if (!$globalsOnly) {
-            $qb->leftJoin('p.teams', 'p_teams')
-                ->leftJoin('c.teams', 'c_teams');
-        }
-
         if (empty($teams)) {
-            $qb->andWhere($qb->expr()->isNull('teams'));
+            $qb->andWhere('SIZE(a.teams) = 0');
             if (!$globalsOnly) {
-                $qb->andWhere($qb->expr()->isNull('p_teams'));
-                $qb->andWhere($qb->expr()->isNull('c_teams'));
+                $qb->andWhere('SIZE(p.teams) = 0');
+                $qb->andWhere('SIZE(c.teams) = 0');
             }
 
             return;
         }
 
         $orActivity = $qb->expr()->orX(
-            $qb->expr()->isNull('teams'),
+            'SIZE(a.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'a.teams')
         );
         $qb->andWhere($orActivity);
 
         if (!$globalsOnly) {
             $orProject = $qb->expr()->orX(
-                $qb->expr()->isNull('p_teams'),
+                'SIZE(p.teams) = 0',
                 $qb->expr()->isMemberOf(':teams', 'p.teams')
             );
             $qb->andWhere($orProject);
 
             $orCustomer = $qb->expr()->orX(
-                $qb->expr()->isNull('c_teams'),
+                'SIZE(c.teams) = 0',
                 $qb->expr()->isMemberOf(':teams', 'c.teams')
             );
             $qb->andWhere($orCustomer);
