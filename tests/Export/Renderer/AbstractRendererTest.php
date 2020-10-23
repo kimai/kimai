@@ -140,6 +140,7 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setDuration(400)
             ->setRate(1947.99)
             ->setUser($user2)
+            ->setDescription('== jhg ljhg ') // make sure that spreadsheets don't render it as formula
             ->setActivity($activity)
             ->setProject($project)
             ->setBegin(new \DateTime())
