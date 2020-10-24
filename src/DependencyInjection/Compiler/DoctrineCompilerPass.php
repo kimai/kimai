@@ -26,45 +26,47 @@ class DoctrineCompilerPass implements CompilerPassInterface
         'sqlite'
     ];
 
+    private function getEnvVar(string $name): ?string
+    {
+        $envVarValue = null;
+
+        if (isset($_ENV[$name])) {
+            $envVarValue = $_ENV[$name];
+        }
+
+        if ($envVarValue === null && isset($_SERVER[$name])) {
+            $envVarValue = $_SERVER[$name];
+        }
+
+        if ($envVarValue === null) {
+            $envVarValue = getenv($name);
+        }
+
+        if ($envVarValue === false || empty($envVarValue)) {
+            return null;
+        }
+
+        return $envVarValue;
+    }
+
     /**
      * @return array|false|null|string
      * @throws \Exception
      */
-    protected function findEngine()
+    private function findEngine()
     {
         $engine = null;
-        $databaseUrl = null;
 
-        if ($databaseUrl === null && isset($_ENV['DATABASE_URL'])) {
-            $databaseUrl = $_ENV['DATABASE_URL'];
-        }
-
-        if ($databaseUrl === null && isset($_SERVER['DATABASE_URL'])) {
-            $databaseUrl = $_SERVER['DATABASE_URL'];
-        }
-
-        if ($databaseUrl === null) {
-            $databaseUrl = getenv('DATABASE_URL');
-        }
-
-        if ($databaseUrl !== false && !empty($databaseUrl)) {
+        if (null !== ($databaseUrl = $this->getEnvVar('DATABASE_URL'))) {
             $urlParts = explode('://', $databaseUrl);
             $engine = $urlParts[0] ?: null;
         }
 
-        if ($engine === null && isset($_ENV['DATABASE_ENGINE'])) {
-            $engine = $_ENV['DATABASE_ENGINE'];
-        }
-
-        if ($engine === null && isset($_SERVER['DATABASE_ENGINE'])) {
-            $engine = $_SERVER['DATABASE_ENGINE'];
+        if ($engine === null) {
+            $engine = $this->getEnvVar('DATABASE_ENGINE');
         }
 
         if ($engine === null) {
-            $engine = getenv('DATABASE_ENGINE');
-        }
-
-        if ($engine === false || empty($engine)) {
             throw new \Exception(
                 'Could not detect database engine, make sure DATABASE_URL is available from $_SERVER or $_ENV. Check your .env file.'
             );
