@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f47c3d8af4e41b30f62641f10408fbcb",
+    "content-hash": "ac12305a3b408d263503ffa2a58461b6",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -3155,58 +3155,6 @@
                 }
             ],
             "time": "2020-05-20T15:37:54+00:00"
-        },
-        {
-            "name": "kimai/kimai2-composer",
-            "version": "0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kimai/kimai2-composer.git",
-                "reference": "7ff68f4270d2e48920309a3c1530f4d247a24905"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kimai/kimai2-composer/zipball/7ff68f4270d2e48920309a3c1530f4d247a24905",
-                "reference": "7ff68f4270d2e48920309a3c1530f4d247a24905",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0"
-            },
-            "require-dev": {
-                "composer/composer": "^1.0",
-                "composer/semver": "^1.0",
-                "friendsofphp/php-cs-fixer": "^2.10"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Kimai2\\Composer\\Plugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Kimai2\\Composer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kevin Papst",
-                    "email": "kpapst@gmx.net",
-                    "homepage": "https://github.com/kevinpapst"
-                }
-            ],
-            "description": "An installer for Kimai 2 plugins",
-            "homepage": "https://github.com/kimai/kimai2-composer",
-            "keywords": [
-                "Kimai",
-                "installer",
-                "time-tracker",
-                "time-tracking"
-            ],
-            "time": "2019-03-10T19:34:31+00:00"
         },
         {
             "name": "kimai/user-bundle",
