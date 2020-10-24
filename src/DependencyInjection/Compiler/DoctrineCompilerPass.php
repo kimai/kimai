@@ -26,37 +26,47 @@ class DoctrineCompilerPass implements CompilerPassInterface
         'sqlite'
     ];
 
+    private function getEnvVar(string $name): ?string
+    {
+        $envVarValue = null;
+
+        if (isset($_ENV[$name])) {
+            $envVarValue = $_ENV[$name];
+        }
+
+        if ($envVarValue === null && isset($_SERVER[$name])) {
+            $envVarValue = $_SERVER[$name];
+        }
+
+        if ($envVarValue === null) {
+            $envVarValue = getenv($name);
+        }
+
+        if ($envVarValue === false || empty($envVarValue)) {
+            return null;
+        }
+
+        return $envVarValue;
+    }
+
     /**
-     * @return array|false|null|string
+     * @return string
      * @throws \Exception
      */
-    protected function findEngine()
+    private function findEngine(): string
     {
         $engine = null;
-        $databaseUrl = null;
 
-        if (null === $databaseUrl && isset($_ENV['DATABASE_URL'])) {
-            $databaseUrl = $_ENV['DATABASE_URL'];
-        }
-
-        if (null === $databaseUrl && isset($_SERVER['DATABASE_URL'])) {
-            $databaseUrl = $_SERVER['DATABASE_URL'];
-        }
-
-        if (null === $databaseUrl && (false !== $envDbUrl = getenv('DATABASE_URL'))) {
-            $databaseUrl = $envDbUrl;
-        }
-
-        if (null !== $databaseUrl) {
+        if (null !== ($databaseUrl = $this->getEnvVar('DATABASE_URL'))) {
             $urlParts = explode('://', $databaseUrl);
             $engine = $urlParts[0] ?: null;
         }
 
-        if (null === $engine) {
-            $engine = getenv('DATABASE_ENGINE');
+        if ($engine === null) {
+            $engine = $this->getEnvVar('DATABASE_ENGINE');
         }
 
-        if (empty($engine)) {
+        if ($engine === null) {
             throw new \Exception(
                 'Could not detect database engine, make sure DATABASE_URL is available from $_SERVER or $_ENV. Check your .env file.'
             );
