@@ -35,28 +35,36 @@ class DoctrineCompilerPass implements CompilerPassInterface
         $engine = null;
         $databaseUrl = null;
 
-        if (null === $databaseUrl && isset($_ENV['DATABASE_URL'])) {
+        if ($databaseUrl === null && isset($_ENV['DATABASE_URL'])) {
             $databaseUrl = $_ENV['DATABASE_URL'];
         }
 
-        if (null === $databaseUrl && isset($_SERVER['DATABASE_URL'])) {
+        if ($databaseUrl === null && isset($_SERVER['DATABASE_URL'])) {
             $databaseUrl = $_SERVER['DATABASE_URL'];
         }
 
-        if (null === $databaseUrl && (false !== $envDbUrl = getenv('DATABASE_URL'))) {
-            $databaseUrl = $envDbUrl;
+        if ($databaseUrl === null) {
+            $databaseUrl = getenv('DATABASE_URL');
         }
 
-        if (null !== $databaseUrl) {
+        if ($databaseUrl !== false && !empty($databaseUrl)) {
             $urlParts = explode('://', $databaseUrl);
             $engine = $urlParts[0] ?: null;
         }
 
-        if (null === $engine) {
+        if ($engine === null && isset($_ENV['DATABASE_ENGINE'])) {
+            $engine = $_ENV['DATABASE_ENGINE'];
+        }
+
+        if ($engine === null && isset($_SERVER['DATABASE_ENGINE'])) {
+            $engine = $_SERVER['DATABASE_ENGINE'];
+        }
+
+        if ($engine === null) {
             $engine = getenv('DATABASE_ENGINE');
         }
 
-        if (empty($engine)) {
+        if ($engine === false || empty($engine)) {
             throw new \Exception(
                 'Could not detect database engine, make sure DATABASE_URL is available from $_SERVER or $_ENV. Check your .env file.'
             );
