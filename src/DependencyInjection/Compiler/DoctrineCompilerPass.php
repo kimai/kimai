@@ -50,10 +50,10 @@ class DoctrineCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * @return array|false|null|string
+     * @return string
      * @throws \Exception
      */
-    private function findEngine()
+    private function findEngine(): string
     {
         $engine = null;
 
