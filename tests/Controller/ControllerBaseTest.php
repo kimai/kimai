@@ -11,6 +11,7 @@ namespace App\Tests\Controller;
 
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
+use App\Repository\ConfigurationRepository;
 use App\Tests\KernelTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -25,6 +26,15 @@ abstract class ControllerBaseTest extends WebTestCase
     use KernelTestTrait;
 
     public const DEFAULT_LANGUAGE = 'en';
+
+    protected function tearDown(): void
+    {
+        /** @var ConfigurationRepository $repository */
+        $repository = static::$kernel->getContainer()->get(ConfigurationRepository::class);
+        $repository->clearCache();
+
+        parent::tearDown();
+    }
 
     protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER): HttpKernelBrowser
     {
@@ -308,10 +318,10 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasFlashSuccess(HttpKernelBrowser $client, string $message = null)
     {
-        $node = $client->getCrawler()->filter('div.alert.alert-success.alert-dismissible');
-        self::assertGreaterThan(0, $node->count(), 'Could not find flash success message');
+        $content = $client->getResponse()->getContent();
+        self::assertStringContainsString('ALERT.success(\'', $content, 'Could not find flash success message');
         if (null !== $message) {
-            self::assertStringContainsString($message, $node->text(null, true));
+            self::assertStringContainsString($message, $content);
         }
     }
 
@@ -321,10 +331,10 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasFlashError(HttpKernelBrowser $client, string $message = null)
     {
-        $node = $client->getCrawler()->filter('div.alert.alert-error.alert-dismissible');
-        self::assertGreaterThan(0, $node->count(), 'Could not find flash error message');
+        $content = $client->getResponse()->getContent();
+        self::assertStringContainsString('ALERT.error(\'', $content, 'Could not find flash error message');
         if (null !== $message) {
-            self::assertStringContainsString($message, $node->text(null, true));
+            self::assertStringContainsString($message, $content);
         }
     }
 

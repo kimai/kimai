@@ -20,8 +20,7 @@ class ActivityLoaderTest extends AbstractLoaderTest
 {
     public function testLoadResults()
     {
-        // mock needs improvements, because it should be 5
-        $em = $this->getEntityManagerMock(2);
+        $em = $this->getEntityManagerMock(3);
 
         $sut = new ActivityLoader($em);
 

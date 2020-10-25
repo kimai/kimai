@@ -144,7 +144,7 @@ final class SystemConfigurationController extends AbstractController
                     $this->repository->saveSystemConfiguration($form->getData());
                     $this->flashSuccess('action.update.success');
                 } catch (\Exception $ex) {
-                    $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                    $this->flashUpdateException($ex);
                 }
 
                 return $this->redirectToRoute('system_configuration');
@@ -202,6 +202,10 @@ final class SystemConfigurationController extends AbstractController
 
         foreach ($event->getConfigurations() as $configs) {
             foreach ($configs->getConfiguration() as $config) {
+                if (!$this->configurations->has($config->getName())) {
+                    continue;
+                }
+
                 $configValue = $this->configurations->find($config->getName());
                 if (null !== $configValue) {
                     $config->setValue($configValue);

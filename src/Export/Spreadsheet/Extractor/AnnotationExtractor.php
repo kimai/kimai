@@ -42,8 +42,8 @@ final class AnnotationExtractor implements ExtractorInterface
      */
     public function extract($value): array
     {
-        if (!\is_string($value)) {
-            throw new ExtractorException('AnnotationExtractor needs a class name (string) for work');
+        if (!\is_string($value) || empty($value)) {
+            throw new ExtractorException('AnnotationExtractor needs a non-empty class name for work');
         }
 
         try {

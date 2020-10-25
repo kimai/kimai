@@ -18,10 +18,6 @@
                 <source>help</source>
                 <target>Dokumentado</target>
             </trans-unit>
-            <trans-unit id="tab.thanks">
-                <source>tab.thanks</source>
-                <target>Specialaj dankoj</target>
-            </trans-unit>
             <trans-unit id="donate">
                 <source>donate</source>
                 <target>Donacu por la estonteco de Kimai</target>

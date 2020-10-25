@@ -1,0 +1,11 @@
+Firma;Abteilung;Titel;Vorname;Zweiter Vorname;Nachname;E-Mail;Straße;PLZ;Ort;Bundesland;Briefanrede;Land;Kundennummer;Umsatzsteuer-ID;Notiz;IBAN;BIC;SEPA Mandat ID;zusatz 1;zusatz 2
+Keleo;IT Abteilung;Bc;Kevin;;Papst;unknown@kimai.org;"Acme Street
+Downtown";1022;Vienna;;Sehr geehrter Herr;DE;00001;DE1234567890;"sakdjhfg laksjhdfasd f#asd<br>
+ fas<br>
+ dfasdfasdf<br>
+ asdfasdfasdf";0987654321;12345678;;blub;foo
+Test;IT Abteilung;Bc;Kevin;;Tspap;unknown@kimai.org;"Acme Street 2
+Downtown";1022;Vienna;;Sehr geehrter Herr;DE;1;DE0987654321;"sakdjhfg laksjhdfasd f#asd<br>
+ fas<br>
+ dfasdfasdf<br>
+ asdfasdfasdf";0987654321;12345678;;blub;foo

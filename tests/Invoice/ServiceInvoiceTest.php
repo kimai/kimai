@@ -20,7 +20,6 @@ use App\Invoice\ServiceInvoice;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Utils\FileHelper;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
@@ -44,9 +43,8 @@ class ServiceInvoiceTest extends TestCase
 
         $repo = new InvoiceDocumentRepository($paths);
         $invoiceRepo = $this->createMock(InvoiceRepository::class);
-        $userDateTime = (new UserDateTimeFactoryFactory($this))->create();
 
-        return new ServiceInvoice($repo, new FileHelper(realpath(__DIR__ . '/../../var/data/')), $invoiceRepo, $userDateTime, $formattings);
+        return new ServiceInvoice($repo, new FileHelper(realpath(__DIR__ . '/../../var/data/')), $invoiceRepo, $formattings);
     }
 
     public function testInvalidExceptionOnChangeState()

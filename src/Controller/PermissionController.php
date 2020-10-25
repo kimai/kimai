@@ -78,6 +78,7 @@ final class PermissionController extends AbstractController
                 $role->setName($roleName);
                 $this->roleRepository->saveRole($role);
                 $existing[] = $roleName;
+                $all[] = $role;
             }
         }
 
@@ -145,7 +146,7 @@ final class PermissionController extends AbstractController
             'ROLE_TEAMLEAD' => null,
             'ROLE_USER' => null,
         ];
-        foreach ($this->roleRepository->findAll() as $role) {
+        foreach ($all as $role) {
             $roles[$role->getName()] = $role;
         }
 
@@ -185,7 +186,7 @@ final class PermissionController extends AbstractController
                 $this->roleRepository->saveRole($role);
                 $this->flashSuccess('action.update.success');
             } catch (\Exception $ex) {
-                $this->flashSuccess('action.update.error');
+                $this->flashUpdateException($ex);
             }
 
             return $this->redirectToRoute('admin_user_permissions');
@@ -214,7 +215,7 @@ final class PermissionController extends AbstractController
             $this->roleRepository->deleteRole($role);
             $this->flashSuccess('action.delete.success');
         } catch (\Exception $ex) {
-            $this->flashError('action.delete.error');
+            $this->flashDeleteException($ex);
         }
 
         return $this->redirectToRoute('admin_user_permissions');
@@ -246,7 +247,7 @@ final class PermissionController extends AbstractController
             $rolePermissionRepository->saveRolePermission($permission);
             $this->flashSuccess('action.update.success');
         } catch (\Exception $ex) {
-            $this->flashError('action.update.error');
+            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('admin_user_permissions');

@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="button_copy_url_to_browser">
+        <source>button_copy_url_to_browser</source>
+        <target>Si le bouton ne fonctionne pas, veuillez copier-coller l'URL suivante dans votre navigateur : %url%</target>
+      </trans-unit>
+      <trans-unit id="automated_email_dont_answer">
+        <source>automated_email_dont_answer</source>
+        <target>Ceci est un courriel généré automatiquement. Merci de ne pas répondre ; l’adresse ne sera pas lu.</target>
+      </trans-unit>
+      <trans-unit id="registration.subject">
+        <source>registration.subject</source>
+        <target>Activer votre compte</target>
+      </trans-unit>
+      <trans-unit id="registration.title">
+        <source>registration.title</source>
+        <target>Bienvenue %username%</target>
+      </trans-unit>
+      <trans-unit id="registration.button">
+        <source>registration.button</source>
+        <target>Activez votre compte</target>
+      </trans-unit>
+      <trans-unit id="registration.intro">
+        <source>registration.intro</source>
+        <target>Vous vous êtes inscrit·e sur Kimai avec le courriel %email%. Vous devez maintenant activer votre compte dans les prochaines heures, avant que le lien expire.</target>
+      </trans-unit>
+      <trans-unit id="reset.subject">
+        <source>reset.subject</source>
+        <target>Réinitialiser le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="reset.title">
+        <source>reset.title</source>
+        <target>Cela peut arriver…</target>
+      </trans-unit>
+      <trans-unit id="reset.button">
+        <source>reset.button</source>
+        <target>Réinitialiser le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="reset.intro">
+        <source>reset.intro</source>
+        <target>… donc vous avez oublié votre mot de passe ? Ne vous inquiétez pas : Kimai vous aidera à en créer un nouveau :</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

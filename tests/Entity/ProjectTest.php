@@ -38,6 +38,7 @@ class ProjectTest extends TestCase
         self::assertNull($sut->getComment());
         self::assertTrue($sut->isVisible());
         self::assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
         self::assertEquals(0.0, $sut->getBudget());
         self::assertEquals(0, $sut->getTimeBudget());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
@@ -80,11 +81,14 @@ class ProjectTest extends TestCase
         self::assertInstanceOf(Project::class, $sut->setComment('a comment'));
         self::assertEquals('a comment', $sut->getComment());
 
+        self::assertFalse($sut->hasColor());
         self::assertInstanceOf(Project::class, $sut->setColor('#fffccc'));
         self::assertEquals('#fffccc', $sut->getColor());
+        self::assertTrue($sut->hasColor());
 
         self::assertInstanceOf(Project::class, $sut->setColor(Constants::DEFAULT_COLOR));
         self::assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
 
         self::assertInstanceOf(Project::class, $sut->setVisible(false));
         self::assertFalse($sut->isVisible());

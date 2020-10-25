@@ -16,7 +16,7 @@
     {% endif %}
 
     {% if is_granted('create_user') %}
-        {% set actions = actions|merge({'create': path('admin_user_create')}) %}
+        {% set actions = actions|merge({'create': {'url': path('admin_user_create')}}) %}
     {% endif %}
 
     {% if view == 'index' %}

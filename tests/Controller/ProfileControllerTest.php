@@ -444,7 +444,8 @@ class ProfileControllerTest extends ControllerBaseTest
                     1 => ['name' => UserPreference::INTERNAL_RATE, 'value' => 19.54],
                     2 => ['name' => UserPreference::TIMEZONE, 'value' => 'America/Creston'],
                     3 => ['name' => UserPreference::LOCALE, 'value' => 'ar'],
-                    4 => ['name' => UserPreference::SKIN, 'value' => 'blue'],
+                    4 => ['name' => UserPreference::FIRST_WEEKDAY, 'value' => 'sunday'],
+                    5 => ['name' => UserPreference::SKIN, 'value' => 'blue'],
                 ]
             ]
         ]);
@@ -467,5 +468,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals('ar', $user->getLanguage());
         $this->assertEquals('ar', $user->getLocale());
         $this->assertEquals('blue', $user->getPreferenceValue(UserPreference::SKIN));
+        $this->assertEquals('sunday', $user->getPreferenceValue(UserPreference::FIRST_WEEKDAY));
+        $this->assertEquals('sunday', $user->getFirstDayOfWeek());
     }
 }

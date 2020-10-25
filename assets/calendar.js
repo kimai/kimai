@@ -1,4 +1,7 @@
 
+// can be removed, once fullcalendar was updated and works without draggable jquery ui objects
+require('jquery-ui/ui/widgets/draggable');
+
 require('fullcalendar');
 require('fullcalendar/dist/gcal.min');
 

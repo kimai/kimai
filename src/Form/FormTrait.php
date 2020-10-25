@@ -105,8 +105,11 @@ trait FormTrait
         $builder
             ->add('activity', ActivityType::class, [
                 'placeholder' => '',
-                'query_builder' => function (ActivityRepository $repo) use ($activity, $project) {
-                    return $repo->getQueryBuilderForFormType(new ActivityFormTypeQuery($activity, $project));
+                'query_builder' => function (ActivityRepository $repo) use ($builder, $activity, $project) {
+                    $query = new ActivityFormTypeQuery($activity, $project);
+                    $query->setUser($builder->getOption('user'));
+
+                    return $repo->getQueryBuilderForFormType($query);
                 },
             ])
         ;
@@ -114,7 +117,7 @@ trait FormTrait
         // replaces the activity select after submission, to make sure only activities for the selected project are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($activity) {
+            function (FormEvent $event) use ($builder, $activity) {
                 $data = $event->getData();
                 if (!isset($data['project']) || empty($data['project'])) {
                     return;
@@ -122,8 +125,11 @@ trait FormTrait
 
                 $event->getForm()->add('activity', ActivityType::class, [
                     'placeholder' => '',
-                    'query_builder' => function (ActivityRepository $repo) use ($data, $activity) {
-                        return $repo->getQueryBuilderForFormType(new ActivityFormTypeQuery($activity, $data['project']));
+                    'query_builder' => function (ActivityRepository $repo) use ($builder, $data, $activity) {
+                        $query = new ActivityFormTypeQuery($activity, $data['project']);
+                        $query->setUser($builder->getOption('user'));
+
+                        return $repo->getQueryBuilderForFormType($query);
                     },
                 ]);
             }

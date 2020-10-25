@@ -89,6 +89,10 @@ trait MetaTableTypeTrait
      * @var array
      */
     private $options = [];
+    /**
+     * @var int
+     */
+    private $order = 0;
 
     public function getName(): ?string
     {
@@ -210,13 +214,20 @@ trait MetaTableTypeTrait
     public function merge(MetaTableTypeInterface $meta): MetaTableTypeInterface
     {
         $this
-            ->setType($meta->getType())
             ->setConstraints($meta->getConstraints())
             ->setIsRequired($meta->isRequired())
             ->setIsVisible($meta->isVisible())
-            ->setLabel($meta->getLabel())
             ->setOptions($meta->getOptions())
+            ->setOrder($meta->getOrder())
         ;
+
+        if ($meta->getLabel() !== null) {
+            $this->setLabel($meta->getLabel());
+        }
+
+        if ($meta->getType() !== null) {
+            $this->setType($meta->getType());
+        }
 
         return $this;
     }
@@ -247,6 +258,18 @@ trait MetaTableTypeTrait
     public function getOptions(): array
     {
         return $this->options;
+    }
+
+    public function getOrder(): int
+    {
+        return $this->order;
+    }
+
+    public function setOrder(int $order): MetaTableTypeInterface
+    {
+        $this->order = $order;
+
+        return $this;
     }
 
     public function __clone()

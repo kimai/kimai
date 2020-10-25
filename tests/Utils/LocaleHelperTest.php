@@ -201,11 +201,11 @@ class LocaleHelperTest extends TestCase
 
         // test negative duration
         $sut = $this->getSut('en');
-        $this->assertEquals('0', $sut->durationDecimal('-1'));
+        $this->assertEquals('0', $sut->durationDecimal(-1));
 
         // test zero duration
         $sut = $this->getSut('en');
-        $this->assertEquals('0', $sut->durationDecimal('0'));
+        $this->assertEquals('0', $sut->durationDecimal(0));
     }
 
     protected function getTimesheet($seconds)

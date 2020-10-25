@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\CustomerStatistic;
@@ -150,21 +151,23 @@ class CustomerRepository extends EntityRepository
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
-        $qb->leftJoin('c.teams', 'teams');
-
         if (empty($teams)) {
-            $qb->andWhere($qb->expr()->isNull('teams'));
+            $qb->andWhere('SIZE(c.teams) = 0');
 
             return;
         }
 
         $or = $qb->expr()->orX(
-            $qb->expr()->isNull('teams'),
+            'SIZE(c.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
         $qb->andWhere($or);
 
-        $qb->setParameter('teams', $teams);
+        $ids = array_values(array_unique(array_map(function (Team $team) {
+            return $team->getId();
+        }, $teams)));
+
+        $qb->setParameter('teams', $ids);
     }
 
     /**
@@ -269,10 +272,6 @@ class CustomerRepository extends EntityRepository
                 $qb->andWhere($searchAnd);
             }
         }
-
-        // this will make sure, that we do not accidentally create results with multiple rows,
-        // which would result in a wrong LIMIT with paginated results
-        $qb->addGroupBy('c');
 
         return $qb;
     }

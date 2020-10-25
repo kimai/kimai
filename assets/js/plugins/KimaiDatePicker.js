@@ -27,6 +27,7 @@ export default class KimaiDatePicker extends KimaiPlugin {
     activateDatePicker(selector) {
         const TRANSLATE = this.getContainer().getTranslation();
         const DATE_UTILS = this.getContainer().getPlugin('date');
+        const firstDow = this.getConfiguration('first_dow_iso');
 
         jQuery(selector + ' ' + this.selector).each(function(index) {
             let localeFormat = jQuery(this).data('format');
@@ -36,7 +37,7 @@ export default class KimaiDatePicker extends KimaiPlugin {
                 autoUpdateInput: false,
                 locale: {
                     format: localeFormat,
-                    firstDay: moment().startOf('week').format('d'),
+                    firstDay: firstDow,
                     applyLabel: TRANSLATE.get('confirm'),
                     cancelLabel: TRANSLATE.get('cancel'),
                     customRangeLabel: TRANSLATE.get('customRange'),

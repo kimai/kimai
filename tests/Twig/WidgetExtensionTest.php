@@ -58,6 +58,7 @@ class WidgetExtensionTest extends TestCase
         $this->expectExceptionMessage('Widget must either implement WidgetInterface or be a string');
 
         $sut = $this->getSut();
+        /* @phpstan-ignore-next-line */
         $sut->renderWidget(true);
     }
 

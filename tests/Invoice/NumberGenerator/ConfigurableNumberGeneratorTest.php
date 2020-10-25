@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigurableNumberGeneratorTest extends TestCase
 {
-    private function getSut(string $format)
+    private function getSut(string $format, int $counter = 1)
     {
         $config = $this->createMock(SystemConfiguration::class);
         $config->expects($this->any())
@@ -33,19 +33,19 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $repository
             ->expects($this->any())
             ->method('getCounterForAllTime')
-            ->willReturn(1);
+            ->willReturn($counter);
         $repository
             ->expects($this->any())
             ->method('getCounterForYear')
-            ->willReturn(1);
+            ->willReturn($counter);
         $repository
             ->expects($this->any())
             ->method('getCounterForMonth')
-            ->willReturn(1);
+            ->willReturn($counter);
         $repository
             ->expects($this->any())
             ->method('getCounterForDay')
-            ->willReturn(1);
+            ->willReturn($counter);
 
         return new ConfigurableNumberGenerator($repository, $config);
     }
@@ -68,12 +68,14 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{cy}', '2', $invoiceDate],
             ['{cm}', '2', $invoiceDate],
             ['{cd}', '2', $invoiceDate],
+            ['{cc}', '2', $invoiceDate],
+            ['{ccy}', '2', $invoiceDate],
+            ['{ccm}', '2', $invoiceDate],
+            ['{ccd}', '2', $invoiceDate],
             // number formatting (not testing the lower case versions, as the tests might break depending on the date)
             ['{date,10}', '0000' . $invoiceDate->format('ymd'), $invoiceDate],
-            ['{date,a}', $invoiceDate->format('ymd'), $invoiceDate], // invalid formatter length
             ['{Y,6}', '00' . $invoiceDate->format('Y'), $invoiceDate],
             ['{M,3}', '0' . $invoiceDate->format('m'), $invoiceDate],
-            ['{M,#}', $invoiceDate->format('m'), $invoiceDate], // invalid formatter length
             ['{D,3}', '0' . $invoiceDate->format('d'), $invoiceDate],
             // counter across all invoices
             ['{c,2}', '02', $invoiceDate],
@@ -86,32 +88,50 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{ccm,2}', '02', $invoiceDate],
             ['{ccd,2}', '02', $invoiceDate],
             // with incrementing counter
+            ['{c+13,3}', '014', $invoiceDate],
             ['{c+13,2}', '14', $invoiceDate],
-            ['{ccy+1,2}', '02', $invoiceDate],
-            ['{cm+-1,2}', '02', $invoiceDate], // negative is not allowed and set to 1
-            ['{cm+0,2}', '02', $invoiceDate], // zero is not allowed and set to 1
-            ['{cd+111,2}', '112', $invoiceDate],
             ['{c+13}', '14', $invoiceDate],
-            ['{cy+1}', '2', $invoiceDate],
-            ['{cm+-1}', '2', $invoiceDate], // negative is not allowed and set to 1
-            ['{cm+0}', '2', $invoiceDate], // zero is not allowed and set to 1
             ['{cd+111}', '112', $invoiceDate],
+            ['{cd+111,5}', '00112', $invoiceDate],
+            ['{cd+111,2}', '113', $invoiceDate, 2],
+            ['{cm+0,2}', '03', $invoiceDate, 2], // zero is not allowed and set to 1
+            ['{cm+0}', '2', $invoiceDate], // zero is not allowed and set to 1
+            ['{cy+2}', '3', $invoiceDate],
+            ['{cc+4}', '5', $invoiceDate],
+            ['{ccy+2,2}', '03', $invoiceDate],
+            ['{ccm+2,2}', '03', $invoiceDate],
+            ['{ccd+2,2}', '03', $invoiceDate],
             // mixing identifiers
             ['{Y}{cy}', $invoiceDate->format('Y') . '2', $invoiceDate],
             ['{Y}{cy}{m}', $invoiceDate->format('Y') . '2' . $invoiceDate->format('n'), $invoiceDate],
             ['{Y}-{cy}/{m}', $invoiceDate->format('Y') . '-2/' . $invoiceDate->format('n'), $invoiceDate],
             ['{Y}-{cy}/{m}', $invoiceDate->format('Y') . '-2/' . $invoiceDate->format('n'), $invoiceDate],
             ['{Y,5}/{cy,5}', '0' . $invoiceDate->format('Y') . '/00002', $invoiceDate],
-            ['{Y,!}/{cy,o}', $invoiceDate->format('Y') . '/2', $invoiceDate], // invalid formatter length
+            // with decrementing counter
+            ['{c-1,2}', '00', $invoiceDate],
+            ['{c-2,2}', '-1', $invoiceDate],
+            // with incrementing and decrementing counter
+            ['{c-5+13,1}', '9', $invoiceDate],
+            ['{c+13-5,2}', '09', $invoiceDate],
+            // undefined behaviour - can change at any time
+            ['{cm+-1,2}', '00', $invoiceDate],
+            ['{cm+-1}', '0', $invoiceDate],
+            ['{cm-+1,2}', '02', $invoiceDate],
+            ['{cm-+1}', '2', $invoiceDate],
+            ['{a-+1+-1+++2}', '{a-+1+-1+++2}', $invoiceDate],
+            ['{date+2+2+2}', $invoiceDate->format('ymd'), $invoiceDate],
+            ['{cm+22+2+2-1-13-4}', '9', $invoiceDate],
+            ['{cm+22+2-2-22}', '6', $invoiceDate, 5],
+            ['{cm-21+22+2-2}', '6', $invoiceDate, 5],
         ];
     }
 
     /**
      * @dataProvider getTestData
      */
-    public function testGetInvoiceNumber(string $format, string $expectedInvoiceNumber, \DateTime $invoiceDate)
+    public function testGetInvoiceNumber(string $format, string $expectedInvoiceNumber, \DateTime $invoiceDate, int $counter = 1)
     {
-        $sut = $this->getSut($format);
+        $sut = $this->getSut($format, $counter);
         $model = new InvoiceModel(new DebugFormatter());
         $model->setInvoiceDate($invoiceDate);
         $model->setCustomer(new Customer());
@@ -119,5 +139,44 @@ class ConfigurableNumberGeneratorTest extends TestCase
 
         $this->assertEquals($expectedInvoiceNumber, $sut->getInvoiceNumber());
         $this->assertEquals('default', $sut->getId());
+    }
+
+    public function getInvalidTestData()
+    {
+        $invoiceDate = new \DateTime();
+
+        return [
+            ['{cm-}', $invoiceDate, 'decrement'],
+            ['{cm+}', $invoiceDate, 'increment'],
+            ['{cm+-}', $invoiceDate, 'decrement'],
+            ['{cm-+}', $invoiceDate, 'increment'],
+            ['{cy,}', $invoiceDate, 'format length'],
+            ['{date,a}', $invoiceDate, 'format length'],
+            ['{M,#}', $invoiceDate, 'format length'],
+            ['{,a}', $invoiceDate, 'format length'],
+            ['{Y,!}/{cy,o}', $invoiceDate, 'format length'],
+            ['{cm,}', $invoiceDate, 'format length'],
+            ['{cd+111,050}', $invoiceDate,  'format length'],
+            ['{-+}', $invoiceDate, 'increment'],
+            ['{+}', $invoiceDate, 'increment'],
+            ['{+-}', $invoiceDate, 'decrement'],
+        ];
+    }
+
+    /**
+     * @dataProvider getInvalidTestData
+     */
+    public function testInvalidGetInvoiceNumber(string $format, \DateTime $invoiceDate, string $brokenPart)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf('Unknown %s found', $brokenPart));
+
+        $sut = $this->getSut($format);
+        $model = new InvoiceModel(new DebugFormatter());
+        $model->setInvoiceDate($invoiceDate);
+        $model->setCustomer(new Customer());
+        $sut->setModel($model);
+
+        $sut->getInvoiceNumber();
     }
 }

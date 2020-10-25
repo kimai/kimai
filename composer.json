@@ -30,7 +30,6 @@
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.2",
         "kevinpapst/adminlte-bundle": "^3.0",
-        "kimai/kimai2-composer": "^0.1",
         "kimai/user-bundle": "^1.1",
         "laravolt/avatar": "^3.0",
         "league/csv": "^9.4",
@@ -170,7 +169,7 @@
         "kimai:phpstan": "@phpstan",
         "phpstan": [
             "vendor/bin/phpstan analyse src -c phpstan.neon --level=5",
-            "vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=4"
+            "vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=5"
         ],
         "kimai:codestyle": "@codestyle",
         "codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",

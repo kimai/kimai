@@ -50,6 +50,10 @@
                 <source>invoice.first_template</source>
                 <target>Bitte legen Sie zunächst eine Rechnungsvorlage an</target>
             </trans-unit>
+            <trans-unit id="action.upload.error">
+                <source>action.upload.error</source>
+                <target>Die Datei konnte nicht hochgeladen bzw. gespeichert werden: %reason%</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

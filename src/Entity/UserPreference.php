@@ -31,6 +31,7 @@ class UserPreference
     public const SKIN = 'skin';
     public const LOCALE = 'language';
     public const TIMEZONE = 'timezone';
+    public const FIRST_WEEKDAY = 'first_weekday';
 
     /**
      * @var int

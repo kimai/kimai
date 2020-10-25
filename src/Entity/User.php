@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Constants;
 use App\Export\Annotation as Exporter;
 use App\Utils\StringHelper;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -69,7 +70,8 @@ class User extends BaseUser implements UserInterface
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     public const DEFAULT_ROLE = self::ROLE_USER;
-    public const DEFAULT_LANGUAGE = 'en';
+    public const DEFAULT_LANGUAGE = Constants::DEFAULT_LOCALE;
+    public const DEFAULT_FIRST_WEEKDAY = 'monday';
 
     public const AUTH_INTERNAL = 'kimai';
     public const AUTH_LDAP = 'ldap';
@@ -365,6 +367,11 @@ class User extends BaseUser implements UserInterface
             $language = User::DEFAULT_LANGUAGE;
         }
         $this->setPreferenceValue(UserPreference::LOCALE, $language);
+    }
+
+    public function getFirstDayOfWeek(): string
+    {
+        return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY);
     }
 
     public function setTimezone(?string $timezone)

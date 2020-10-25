@@ -19,7 +19,7 @@ use App\Event\InvoicePreRenderEvent;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
-use App\Timesheet\UserDateTimeFactory;
+use App\Timesheet\DateTimeFactory;
 use App\Utils\FileHelper;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,10 +55,6 @@ final class ServiceInvoice
      */
     private $fileHelper;
     /**
-     * @var UserDateTimeFactory
-     */
-    private $dateTimeFactory;
-    /**
      * @var LanguageFormattings
      */
     private $formatter;
@@ -67,12 +63,11 @@ final class ServiceInvoice
      */
     private $invoiceRepository;
 
-    public function __construct(InvoiceDocumentRepository $repository, FileHelper $fileHelper, InvoiceRepository $invoiceRepository, UserDateTimeFactory $dateTimeFactory, LanguageFormattings $formatter)
+    public function __construct(InvoiceDocumentRepository $repository, FileHelper $fileHelper, InvoiceRepository $invoiceRepository, LanguageFormattings $formatter)
     {
         $this->documents = $repository;
         $this->fileHelper = $fileHelper;
         $this->invoiceRepository = $invoiceRepository;
-        $this->dateTimeFactory = $dateTimeFactory;
         $this->formatter = $formatter;
     }
 
@@ -272,11 +267,13 @@ final class ServiceInvoice
             return [];
         }
 
+        $factory = $this->getDateTimeFactory($query);
+
         if (null === $query->getBegin()) {
-            $query->setBegin($this->dateTimeFactory->createDateTime('first day of this month'));
+            $query->setBegin($factory->getStartOfMonth());
         }
         if (null === $query->getEnd()) {
-            $query->setEnd($this->dateTimeFactory->createDateTime('last day of this month'));
+            $query->setEnd($factory->getEndOfMonth());
         }
         $query->getBegin()->setTime(0, 0, 0);
         $query->getEnd()->setTime(23, 59, 59);
@@ -305,6 +302,17 @@ final class ServiceInvoice
         }
 
         return $entries;
+    }
+
+    private function getDateTimeFactory(InvoiceQuery $query): DateTimeFactory
+    {
+        $timezone = date_default_timezone_get();
+
+        if (null !== $query->getCurrentUser()) {
+            $timezone = $query->getCurrentUser()->getTimezone();
+        }
+
+        return new DateTimeFactory(new \DateTimeZone($timezone));
     }
 
     /**
@@ -433,7 +441,7 @@ final class ServiceInvoice
         $model = new InvoiceModel(new DefaultInvoiceFormatter($this->formatter, $template->getLanguage()));
         $model
             ->setTemplate($template)
-            ->setInvoiceDate($this->dateTimeFactory->createDateTime())
+            ->setInvoiceDate($this->getDateTimeFactory($query)->createDateTime())
             ->setQuery($query)
         ;
 

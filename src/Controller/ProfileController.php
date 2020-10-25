@@ -271,7 +271,7 @@ class ProfileController extends AbstractController
         /** @var UserPreference $pref */
         foreach ($iterator as $pref) {
             if ($pref->isEnabled()) {
-                $sections[$pref->getSection()][] = $pref->getName();
+                $sections[$pref->getSection()] = $pref->getSection();
             }
         }
 

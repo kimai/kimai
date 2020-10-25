@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Form\API\UserApiCreateForm;
 use App\Form\API\UserApiEditForm;
@@ -56,11 +56,11 @@ final class UserController extends BaseApiController
      */
     private $encoder;
     /**
-     * @var FormConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
 
-    public function __construct(ViewHandlerInterface $viewHandler, UserRepository $repository, UserPasswordEncoderInterface $encoder, FormConfiguration $config)
+    public function __construct(ViewHandlerInterface $viewHandler, UserRepository $repository, UserPasswordEncoderInterface $encoder, SystemConfiguration $config)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;

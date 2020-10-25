@@ -300,7 +300,6 @@ class CustomerControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/edit');
         $form = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
-        $this->assertFalse($form->has('customer_edit_form[create_more]'));
         $this->assertEquals('Test', $form->get('customer_edit_form[name]')->getValue());
         $client->submit($form, [
             'customer_edit_form' => [

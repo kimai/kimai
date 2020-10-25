@@ -48,10 +48,6 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
             return;
         }
 
-        if (!isset($view->vars['attr'])) {
-            $view->vars['attr'] = [];
-        }
-
         $extendedOptions = ['class' => 'selectpicker'];
 
         if (false !== $options['width']) {

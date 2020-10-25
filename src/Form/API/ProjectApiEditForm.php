@@ -34,7 +34,6 @@ class ProjectApiEditForm extends ProjectEditForm
 
         $resolver->setDefaults([
             'csrf_protection' => false,
-            'create_more' => false,
         ]);
     }
 }

@@ -61,6 +61,7 @@ class MetaFieldExtractorTest extends TestCase
         $this->expectException(ExtractorException::class);
         $this->expectExceptionMessage('MetaFieldExtractor needs a MetaDisplayEventInterface instance for work');
 
+        /* @phpstan-ignore-next-line */
         $sut->extract(new \stdClass());
     }
 }

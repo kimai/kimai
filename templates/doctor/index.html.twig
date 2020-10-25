@@ -2,7 +2,7 @@
 {% import "doctor/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'menu.doctor'|trans }}{% endblock %}
-{% block page_subtitle %}Environment: <strong>{{ environment }}</strong>{% endblock %}
+{% block page_subtitle %}Environment: {{ environment }} &ndash; Version: {{ constant('App\\Constants::VERSION') }} {{ constant('App\\Constants::STATUS') }}{% endblock %}
 {% block page_actions %}{{ actions.doctor('index') }}{% endblock %}
 
 {% block main %}

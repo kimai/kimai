@@ -240,7 +240,9 @@ class UserControllerTest extends ControllerBaseTest
                 ],
                 [
                     '#user_create_username',
+                    '#user_create_username',
                     '#user_create_plainPassword_first',
+                    '#user_create_email',
                     '#user_create_email',
                 ]
             ],
@@ -258,7 +260,9 @@ class UserControllerTest extends ControllerBaseTest
                 ],
                 [
                     '#user_create_username',
+                    '#user_create_username',
                     '#user_create_plainPassword_first',
+                    '#user_create_email',
                     '#user_create_email',
                 ]
             ],

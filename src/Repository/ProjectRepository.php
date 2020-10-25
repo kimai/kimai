@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\ProjectComment;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\ProjectStatistic;
@@ -142,29 +143,30 @@ class ProjectRepository extends EntityRepository
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
-        $qb->leftJoin('p.teams', 'teams')
-            ->leftJoin('c.teams', 'c_teams');
-
         if (empty($teams)) {
-            $qb->andWhere($qb->expr()->isNull('c_teams'));
-            $qb->andWhere($qb->expr()->isNull('teams'));
+            $qb->andWhere('SIZE(c.teams) = 0');
+            $qb->andWhere('SIZE(p.teams) = 0');
 
             return;
         }
 
         $orProject = $qb->expr()->orX(
-            $qb->expr()->isNull('teams'),
+            'SIZE(p.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'p.teams')
         );
         $qb->andWhere($orProject);
 
         $orCustomer = $qb->expr()->orX(
-            $qb->expr()->isNull('c_teams'),
+            'SIZE(c.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
         $qb->andWhere($orCustomer);
 
-        $qb->setParameter('teams', $teams);
+        $ids = array_values(array_unique(array_map(function (Team $team) {
+            return $team->getId();
+        }, $teams)));
+
+        $qb->setParameter('teams', $ids);
     }
 
     /**
@@ -368,13 +370,6 @@ class ProjectRepository extends EntityRepository
                 $qb->andWhere($searchAnd);
             }
         }
-
-        // this will make sure, that we do not accidentally create results with multiple rows,
-        // which would result in a wrong LIMIT with paginated results
-        $qb->addGroupBy('p');
-
-        // the second group by is needed to satisfy SQL standard (ONLY_FULL_GROUP_BY)
-        $qb->addGroupBy($orderBy);
 
         return $qb;
     }

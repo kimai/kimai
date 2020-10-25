@@ -9,21 +9,13 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
-use App\Repository\TimesheetRepository;
-use App\Tests\Mocks\TrackingModeServiceFactory;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
-use App\Validator\Constraints\TimesheetFutureTimesValidator;
-use App\Validator\Constraints\TimesheetLockdownValidator;
-use App\Validator\Constraints\TimesheetOverlappingValidator;
-use App\Validator\Constraints\TimesheetRestartValidator;
+use App\Validator\Constraints\TimesheetFutureTimes;
 use App\Validator\Constraints\TimesheetValidator;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
@@ -41,32 +33,7 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
 
     protected function createMyValidator(bool $isGranted = true)
     {
-        $auth = $this->createMock(AuthorizationCheckerInterface::class);
-        $auth->method('isGranted')->willReturn($isGranted);
-
-        $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new TimesheetConfiguration($loader, [
-            'rules' => [
-                'allow_future_times' => false,
-                'allow_overlapping_records' => true,
-            ],
-            'rounding' => [
-                'default' => [
-                    'begin' => 1
-                ]
-            ]
-        ]);
-        $service = (new TrackingModeServiceFactory($this))->create('default');
-        $repository = $this->createMock(TimesheetRepository::class);
-
-        $constraints = [
-            new TimesheetFutureTimesValidator($config),
-            new TimesheetLockdownValidator($auth, $config),
-            new TimesheetOverlappingValidator($config, $repository),
-            new TimesheetRestartValidator($service, $auth),
-        ];
-
-        return new TimesheetValidator($constraints);
+        return new TimesheetValidator([]);
     }
 
     public function testConstraintIsInvalid()

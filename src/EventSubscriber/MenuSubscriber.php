@@ -95,7 +95,7 @@ final class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('view_reporting')) {
             $reporting = new MenuItemModel('reporting', 'menu.reporting', 'reporting', [], $this->getIcon('reporting'));
-            $reporting->setChildRoutes(['report_user_month', 'report_monthly_users']);
+            $reporting->setChildRoutes(['report_user_week', 'report_user_month', 'report_monthly_users']);
             $menu->addChild($reporting);
         }
 

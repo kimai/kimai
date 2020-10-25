@@ -9,12 +9,10 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Configuration;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
-use App\Repository\ConfigurationRepository;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 
@@ -53,7 +51,6 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $start = new \DateTime('first day of this month');
 
-        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setAmountRunning(2);
@@ -90,7 +87,6 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $start = new \DateTime('first day of this month');
 
-        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -127,7 +123,6 @@ class TimesheetControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser();
 
-        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -305,60 +300,54 @@ class TimesheetControllerTest extends ControllerBaseTest
 
     public function testCreateActionWithFromAndToValuesTwiceFailsOnOverlappingRecord()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->request($client, '/timesheet/create?from=2018-08-02T20%3A00%3A00&to=2018-08-02T20%3A30%3A00');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/system-config/');
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_timesheet]')->form();
         $client->submit($form, [
-            'timesheet_edit_form' => [
-                'hourlyRate' => 100,
-                'project' => 1,
-                'activity' => 1,
+            'system_configuration_form_timesheet' => [
+                'configuration' => [
+                    ['name' => 'timesheet.mode', 'value' => 'default'],
+                    ['name' => 'timesheet.active_entries.default_begin', 'value' => '08:00'],
+                    ['name' => 'timesheet.rules.allow_future_times', 'value' => true],
+                    ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
+                    ['name' => 'timesheet.rules.lockdown_period_start', 'value' => null],
+                    ['name' => 'timesheet.rules.lockdown_period_end', 'value' => null],
+                    ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => null],
+                    ['name' => 'timesheet.active_entries.hard_limit', 'value' => 1],
+                    ['name' => 'timesheet.active_entries.soft_limit', 'value' => 1],
+                ]
             ]
         ]);
 
-        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
-        $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasFlashSuccess($client);
+        $client = $this->getClientForAuthenticatedUser();
 
-        $em = $this->getEntityManager();
-        /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
-        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
-        $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
-        $this->assertEquals(50, $timesheet->getRate());
+        $begin = new \DateTime('2018-08-02T20:00:00');
+        $end = new \DateTime('2018-08-02T20:30:00');
 
-        $expected = new \DateTime('2018-08-02T20:00:00');
-        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getBegin()->format(\DateTime::ATOM));
+        $fixture = new TimesheetFixtures();
+        $fixture->setCallback(function (Timesheet $timesheet) use ($begin, $end) {
+            $timesheet->setBegin($begin);
+            $timesheet->setEnd($end);
+        });
+        $fixture->setAmount(1);
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
+        $this->importFixture($fixture);
 
-        $expected = new \DateTime('2018-08-02T20:30:00');
-        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
-
-        /** @var ConfigurationRepository $configurations */
-        $configurations = $em->getRepository(Configuration::class);
-        $config = new Configuration();
-        $config->setName('timesheet.rules.allow_overlapping_records');
-        $config->setValue(false);
-        $configurations->saveConfiguration($config);
-
-        // create a second entry that is overlapping fails due to the changed config above
+        // create a second entry that is overlapping - should fail due to the changed config above
         $this->assertHasValidationError(
             $client,
             '/timesheet/create?from=2018-08-02T20%3A02%3A00&to=2018-08-02T20%3A20%3A00',
             'form[name=timesheet_edit_form]',
             [
                 'timesheet_edit_form' => [
-                    'hourlyRate' => 100,
+                    //'hourlyRate' => 100,
                     'project' => 1,
                     'activity' => 1,
                 ]
             ],
             ['#timesheet_edit_form_begin']
         );
-
-        $configurations->clearCache();
     }
 
     public function testCreateActionWithBeginAndEndAndTagValues()
@@ -401,7 +390,6 @@ class TimesheetControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser();
 
-        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -442,7 +430,6 @@ class TimesheetControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
@@ -481,7 +468,6 @@ class TimesheetControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);

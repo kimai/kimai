@@ -10,7 +10,7 @@
 namespace App\Tests\Command;
 
 use App\Command\ImportTimesheetCommand;
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
@@ -19,6 +19,7 @@ use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @covers \App\Command\ImportTimesheetCommand
@@ -42,9 +43,10 @@ class ImportTimesheetCommandTest extends KernelTestCase
         $users = $this->createMock(UserRepository::class);
         $tagRepository = $this->createMock(TagRepository::class);
         $timesheets = $this->createMock(TimesheetRepository::class);
-        $configuration = $this->createMock(FormConfiguration::class);
+        $configuration = $this->createMock(SystemConfiguration::class);
+        $encoder = $this->createMock(UserPasswordEncoderInterface::class);
 
-        $this->application->add(new ImportTimesheetCommand($customers, $projects, $activities, $users, $tagRepository, $timesheets, $configuration));
+        $this->application->add(new ImportTimesheetCommand($customers, $projects, $activities, $users, $tagRepository, $timesheets, $configuration, $encoder));
     }
 
     public function testCommandName()
