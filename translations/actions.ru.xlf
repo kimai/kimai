@@ -1,98 +1,94 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="tr" datatype="plaintext" original="actions.en.xlf">
+  <file source-language="en" target-language="ru" datatype="plaintext" original="actions.en.xlf">
     <body>
       <trans-unit id="stop">
         <source>stop</source>
-        <target state="translated">Dur</target>
+        <target>Стоп</target>
       </trans-unit>
       <trans-unit id="back">
         <source>back</source>
-        <target state="translated">Geri</target>
+        <target>Назад</target>
       </trans-unit>
       <trans-unit id="edit">
         <source>edit</source>
-        <target state="translated">Düzenle</target>
+        <target>Редактировать</target>
       </trans-unit>
       <trans-unit id="trash">
         <source>trash</source>
-        <target state="translated">Sil</target>
-      </trans-unit>
-      <trans-unit id="report">
-        <source>report</source>
-        <target state="translated">Rapor</target>
+        <target>Удалить</target>
       </trans-unit>
       <trans-unit id="repeat">
         <source>repeat</source>
-        <target state="translated">Tekrarla</target>
+        <target>Начать заново</target>
       </trans-unit>
       <trans-unit id="profile-stats">
         <source>profile-stats</source>
-        <target state="translated">Profil</target>
+        <target>Профиль</target>
       </trans-unit>
       <trans-unit id="settings">
         <source>settings</source>
-        <target state="translated">Ayarlar</target>
+        <target>Настройки</target>
       </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
-        <target state="translated">Zaman Çizelgesi</target>
+        <target>Расписания</target>
       </trans-unit>
       <trans-unit id="customer">
         <source>customer</source>
-        <target state="translated">Müşterileri Filtrele</target>
+        <target>Фильтр клиентов</target>
       </trans-unit>
       <trans-unit id="project">
         <source>project</source>
-        <target state="translated">Projeleri Filtrele</target>
+        <target>Фильтр проектов</target>
       </trans-unit>
       <trans-unit id="activity">
         <source>activity</source>
-        <target state="translated">Etkinlikleri filtrele</target>
+        <target>Фильтр действий</target>
       </trans-unit>
       <trans-unit id="copy">
         <source>copy</source>
-        <target state="translated">Kopya oluştur</target>
+        <target>Создать копию</target>
       </trans-unit>
       <trans-unit id="home">
         <source>home</source>
-        <target state="translated">Anasayfa</target>
+        <target>Домашняя страница</target>
       </trans-unit>
       <trans-unit id="create-project">
         <source>create-project</source>
-        <target state="translated">Yeni proje</target>
+        <target>Создать проект</target>
       </trans-unit>
       <trans-unit id="create-activity">
         <source>create-activity</source>
-        <target state="translated">Etkinlik oluştur</target>
+        <target>Создать действие</target>
       </trans-unit>
       <trans-unit id="create-timesheet">
         <source>create-timesheet</source>
-        <target state="translated">Yeni zaman çizelgesi</target>
-      </trans-unit>
-      <trans-unit id="permissions">
-        <source>permissions</source>
-        <target state="translated">Takım izinleri</target>
-      </trans-unit>
-      <trans-unit id="invoice.paid">
-        <source>invoice.paid</source>
-        <target>Fatura ödendi</target>
-      </trans-unit>
-      <trans-unit id="invoice.pending">
-        <source>invoice.pending</source>
-        <target>Ödeme bekleniyor</target>
-      </trans-unit>
-      <trans-unit id="download">
-        <source>download</source>
-        <target>İndir</target>
-      </trans-unit>
-      <trans-unit id="details">
-        <source>details</source>
-        <target>Göster</target>
+        <target>Создать расписание</target>
       </trans-unit>
       <trans-unit id="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>
-        <target>Birden çok kullanıcı için</target>
+        <target>Для нескольких пользователей</target>
+      </trans-unit>
+      <trans-unit id="permissions">
+        <source>permissions</source>
+        <target>Права команды</target>
+      </trans-unit>
+      <trans-unit id="details">
+        <source>details</source>
+        <target>Показать</target>
+      </trans-unit>
+      <trans-unit id="download">
+        <source>download</source>
+        <target>Скачать</target>
+      </trans-unit>
+      <trans-unit id="invoice.pending">
+        <source>invoice.pending</source>
+        <target>Ожидание платежа</target>
+      </trans-unit>
+      <trans-unit id="invoice.paid">
+        <source>invoice.paid</source>
+        <target>Счет оплачен</target>
       </trans-unit>
     </body>
   </file>
