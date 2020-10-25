@@ -688,7 +688,7 @@
             </trans-unit>
             <trans-unit id="label.title">
                 <source>label.title</source>
-                <target state="translated">Titteli</target>
+                <target state="translated">Otsikko</target>
             </trans-unit>
             <trans-unit id="label.avatar">
                 <source>label.avatar</source>
