@@ -50,6 +50,10 @@
         <source>invoice.first_template</source>
         <target>Vous devez créer votre premier modèle de facture avant de continuer</target>
       </trans-unit>
+      <trans-unit id="action.upload.error">
+        <source>action.upload.error</source>
+        <target>Le fichier n'a pas pu être mis en ligne ou enregistré : %reason%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

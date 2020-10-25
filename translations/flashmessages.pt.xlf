@@ -40,15 +40,19 @@
       </trans-unit>
       <trans-unit id="action.delete.success">
         <source>action.delete.success</source>
-        <target>A entrada foi excluída com sucesso</target>
+        <target>A entrada foi apagada</target>
       </trans-unit>
       <trans-unit id="action.delete.error">
         <source>action.delete.error</source>
-        <target>A entrada não pode ser excluída: %reason%</target>
+        <target>A entrada não pode ser apagada: %reason%</target>
       </trans-unit>
       <trans-unit id="invoice.first_template">
         <source>invoice.first_template</source>
         <target>Precisa criar a sua primeira fatura modelo antes de prosseguir</target>
+      </trans-unit>
+      <trans-unit id="action.upload.error">
+        <source>action.upload.error</source>
+        <target>O ficheiro não pôde ser carregado ou gravado: %reason%</target>
       </trans-unit>
     </body>
   </file>
