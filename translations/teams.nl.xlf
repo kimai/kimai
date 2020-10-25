@@ -14,6 +14,14 @@
                 <source>teams.customer_access</source>
                 <target>Toegang verlenen tot klanten</target>
             </trans-unit>
+            <trans-unit id="team.create_default">
+                <source>team.create_default</source>
+                <target>Maak een nieuw team aan om de toegang te beperken</target>
+            </trans-unit>
+            <trans-unit id="team.visibility_restricted">
+                <source>team.visibility_restricted</source>
+                <target>Alleen zichtbaar voor de volgende teams en alle beheerders</target>
+            </trans-unit>            
         </body>
     </file>
 </xliff>
