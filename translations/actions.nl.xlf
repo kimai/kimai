@@ -74,6 +74,10 @@
                 <source>permissions</source>
                 <target>Team rechten</target>
             </trans-unit>
+            <trans-unit id="create-timesheet-multiuser">
+                <source>create-timesheet-multiuser</source>
+                <target>Voor meerdere gebruikers</target>
+            </trans-unit>            
         </body>
     </file>
 </xliff>
