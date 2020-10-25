@@ -718,7 +718,7 @@
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
-                <target>Lopende tellers</target>
+                <target>Lopende tijden</target>
             </trans-unit>
             <trans-unit id="stats.userTotal">
                 <source>stats.userTotal</source>
@@ -922,7 +922,7 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>Uw lopende tellers</target>
+                <target>Uw lopende tijden</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
@@ -990,6 +990,86 @@
                 <source>label.globalsOnly</source>
                 <target>Enkel algemene</target>
             </trans-unit>
+            <trans-unit id="user_role.title">
+                <source>user_role.title</source>
+                <target>gebruikersrol</target>
+            </trans-unit>
+            <trans-unit id="profile.registration_date">
+                <source>profile.registration_date</source>
+                <target>Geregistreerd op</target>
+            </trans-unit>
+            <trans-unit id="user_permissions.title">
+                <source>user_permissions.title</source>
+                <target>Gebruikersrechten</target>
+            </trans-unit>
+            <trans-unit id="rates.title">
+                <source>rates.title</source>
+                <target>Kosten</target>
+            </trans-unit>
+            <trans-unit id="rates.empty">
+                <source>rates.empty</source>
+                <target>Er zijn nog geen kosten geconfigureerd.</target>
+            </trans-unit>
+            <trans-unit id="label.rate_internal">
+                <source>label.rate_internal</source>
+                <target>Intern tarief</target>
+            </trans-unit>
+            <trans-unit id="error.no_comments_found">
+                <source>error.no_comments_found</source>
+                <target>Er zijn nog geen opmerkingen geplaatst.</target>
+            </trans-unit>
+            <trans-unit id="placeholder.type_message">
+                <source>placeholder.type_message</source>
+                <target>Typ uw bericht...</target>
+            </trans-unit>
+            <trans-unit id="label.project_start">
+                <source>label.project_start</source>
+                <target>Project start</target>
+            </trans-unit>
+            <trans-unit id="label.project_end">
+                <source>label.project_end</source>
+                <target>Project eind</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeToday">
+                <source>stats.workingTimeToday</source>
+                <target>Vandaag, %day%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeWeek">
+                <source>stats.workingTimeWeek</source>
+                <target>Kalenderweek %week%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeMonth">
+                <source>stats.workingTimeMonth</source>
+                <target>%month% %year%</target>
+            </trans-unit>
+            <trans-unit id="stats.workingTimeYear">
+                <source>stats.workingTimeYear</source>
+                <target>Volledig jaar %year%</target>
+            </trans-unit>
+            <trans-unit id="status.new">
+                <source>status.new</source>
+                <target>Nieuw</target>
+            </trans-unit>
+            <trans-unit id="status.pending">
+                <source>status.pending</source>
+                <target>In afwachting van</target>
+            </trans-unit>
+            <trans-unit id="status.paid">
+                <source>status.paid</source>
+                <target>Betaald</target>
+            </trans-unit>
+            <trans-unit id="label.vat_id">
+                <source>label.vat_id</source>
+                <target>Btw-nummer</target>
+            </trans-unit>
+            <trans-unit id="upload">
+                <source>upload</source>
+                <target>Upload</target>
+            </trans-unit>
+            <trans-unit id="update_multiple">
+                <source>update_multiple</source>
+                <target>%action% %count% boekingen?</target>
+            </trans-unit>            
         </body>
     </file>
 </xliff>
