@@ -70,18 +70,6 @@
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Разрешить перекрывать время записей</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_period_start">
-        <source>label.timesheet.rules.lockdown_period_start</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_period_end">
-        <source>label.timesheet.rules.lockdown_period_end</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
-        <source>label.timesheet.rules.lockdown_grace_period</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="label.timesheet.active_entries.hard_limit">
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Разрешенное количество одновременно запущенных таймеров</target>
@@ -118,10 +106,6 @@
         <source>label.calendar.visibleHours.end</source>
         <target>Конец видимого диапазона времени</target>
       </trans-unit>
-      <trans-unit id="label.calendar.slot_duration">
-        <source>label.calendar.slot_duration</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
         <target>Брендинг</target>
@@ -137,34 +121,6 @@
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
         <target>Мини лого (свернутая боковая панель)</target>
-      </trans-unit>
-      <trans-unit id="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="rounding">
-        <source>rounding</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.begin">
-        <source>label.timesheet.rounding.default.begin</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.end">
-        <source>label.timesheet.rounding.default.end</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.duration">
-        <source>label.timesheet.rounding.default.duration</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.mode">
-        <source>label.timesheet.rounding.default.mode</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.days">
-        <source>label.timesheet.rounding.default.days</source>
-        <target/>
       </trans-unit>
       <trans-unit id="Monday">
         <source>Monday</source>
@@ -193,34 +149,6 @@
       <trans-unit id="Sunday">
         <source>Sunday</source>
         <target>Воскресенье</target>
-      </trans-unit>
-      <trans-unit id="Ceil">
-        <source>Ceil</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="Closest">
-        <source>Closest</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="Default">
-        <source>Default</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="Floor">
-        <source>Floor</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="label.timesheet.default_begin">
-        <source>label.timesheet.default_begin</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="label.invoice.number_format">
-        <source>label.invoice.number_format</source>
-        <target/>
       </trans-unit>
       <trans-unit id="first_weekday">
         <source>first_weekday</source>
