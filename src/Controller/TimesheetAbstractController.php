@@ -270,6 +270,15 @@ abstract class TimesheetAbstractController extends AbstractController
             $dto->setEntities($form->getData()->getEntities());
         }
 
+        // using a new timesheet to make sure we ONLY use meta-fields which are registered via events
+        $fake = new Timesheet();
+        $event = new TimesheetMetaDefinitionEvent($fake);
+        $this->dispatcher->dispatch($event);
+
+        foreach ($fake->getMetaFields() as $field) {
+            $dto->setMetaField(clone $field);
+        }
+
         $form = $this->getMultiUpdateForm($dto);
         $form->handleRequest($request);
 
@@ -341,6 +350,17 @@ abstract class TimesheetAbstractController extends AbstractController
                     $timesheet->setInternalRate(null);
                     $timesheet->setHourlyRate($dto->getHourlyRate());
                     $execute = true;
+                }
+
+                foreach ($dto->getUpdateMeta() as $metaName) {
+                    if (null !== ($metaField = $dto->getMetaField($metaName))) {
+                        if (null !== ($timesheetMeta = $timesheet->getMetaField($metaName))) {
+                            $timesheetMeta->setValue($metaField->getValue());
+                        } else {
+                            $timesheet->setMetaField(clone $metaField);
+                        }
+                        $execute = true;
+                    }
                 }
             }
 

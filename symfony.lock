@@ -210,9 +210,6 @@
     "kevinpapst/adminlte-bundle": {
         "version": "0.3"
     },
-    "kimai/kimai2-composer": {
-        "version": "0.1"
-    },
     "kimai/user-bundle": {
         "version": "dev-master"
     },

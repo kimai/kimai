@@ -47,7 +47,7 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
                 showDropdowns: true,
                 autoUpdateInput: false,
                 autoApply: false,
-                linkedCalendars: false,
+                linkedCalendars: true,
                 locale: {
                     separator: separator,
                     format: localeFormat,
