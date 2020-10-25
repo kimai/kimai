@@ -1034,10 +1034,6 @@
                 <source>stats.workingTimeToday</source>
                 <target>Vandaag, %day%</target>
             </trans-unit>
-            <trans-unit id="stats.workingTimeWeek">
-                <source>stats.workingTimeWeek</source>
-                <target>Kalenderweek %week%</target>
-            </trans-unit>
             <trans-unit id="stats.workingTimeMonth">
                 <source>stats.workingTimeMonth</source>
                 <target>%month% %year%</target>
