@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fi" datatype="plaintext" original="teams.en.xlf">
+        <body>
+            <trans-unit id="teams.title">
+                <source>teams.title</source>
+                <target state="translated">Tiimit</target>
+            </trans-unit>
+            <trans-unit id="teams.project_access">
+                <source>teams.project_access</source>
+                <target state="translated">Myönnä pääsy projekteihin</target>
+            </trans-unit>
+            <trans-unit id="teams.customer_access">
+                <source>teams.customer_access</source>
+                <target state="translated">Myönnä pääsy asiakkaisiin</target>
+            </trans-unit>
+            <trans-unit id="team.visibility_global">
+                <source>team.visibility_global</source>
+                <target state="translated">Näkyy kaikille, koska tiimiä ei ole vielä määritetty</target>
+            </trans-unit>
+            <trans-unit id="team.visibility_restricted">
+                <source>team.visibility_restricted</source>
+                <target state="translated">Näkyy vain seuraaville tiimeille ja ylläpitäjille.</target>
+            </trans-unit>
+            <trans-unit id="team.project_visibility_inherited">
+                <source>team.project_visibility_inherited</source>
+                <target state="translated">Projektilla on rajoitettu käyttöoikeus, koska tiimin käyttöoikeudet on asetettu asiakkaalle.</target>
+            </trans-unit>
+            <trans-unit id="team.activity_visibility_inherited">
+                <source>team.activity_visibility_inherited</source>
+                <target state="translated">Työtehtävällä on rajoitettu käyttöoikeus, koska tiimin käyttöoikeudet on asetettu projektille ja/tai asiakkaalle</target>
+            </trans-unit>
+            <trans-unit id="team.create_default">
+                <source>team.create_default</source>
+                <target state="translated">Luo uusi tiimi käytön rajoittamiseksi</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
