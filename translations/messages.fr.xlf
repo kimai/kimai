@@ -1107,6 +1107,14 @@
         <source>profile.registration_date</source>
         <target>Inscrit à</target>
       </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>Champs qui doivent d'abord être mis à jour en cliquant sur la case à cocher associée.</target>
+      </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>Champs additionnels</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
