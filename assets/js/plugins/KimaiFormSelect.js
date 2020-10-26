@@ -169,6 +169,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
     /**
      * @param {string} label
      * @param {string} value
+     * @returns {HTMLElement}
      * @private
      */
     _createOption(label, value) {
@@ -180,20 +181,12 @@ export default class KimaiFormSelect extends KimaiPlugin {
 
     /**
      * @param {string} label
+     * @returns {HTMLElement}
      * @private
      */
     _createOptgroup(label) {
         let optGroup = document.createElement('optgroup');
         optGroup.label = label;
-        //optGroup.label = new Option(label).innerHTML.replace(/"/g,"&quot;");
         return optGroup;
-    }
-
-    /**
-     * @param {string} name
-     * @private
-     */
-    _escapeSelectName(name) {
-        return name.replace(/</, '&lt;').replace(/>/, '&gt;');
     }
 }
