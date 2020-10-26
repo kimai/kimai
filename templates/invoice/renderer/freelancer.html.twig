@@ -8,7 +8,7 @@
     <div class="col-xs-12">
         <header>
             <address>
-                <p contenteditable="true">{{ model.template.company }} &ndash; {{ model.template.address|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}</p>
+                <p contenteditable="true">{{ model.template.company }} &ndash; {{ model.template.address|nl2str(' &ndash; ') }}</p>
             </address>
         </header>
         <article class="address">
@@ -108,7 +108,7 @@
         {% if model.template.paymentTerms is not empty %}
             <article class="paymentTerms">
                 <div contenteditable="true">
-                    {{ model.template.paymentTerms|nl2br|md2html }}
+                    {{ model.template.paymentTerms|md2html }}
                 </div>
             </article>
         {% endif %}

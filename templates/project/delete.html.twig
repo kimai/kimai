@@ -9,17 +9,15 @@
     {% set inUse = (stats.recordAmount > 0) %}
 
     {% set params = {
-        '%project%': '<strong>' ~ project.name ~ '</strong>',
-        '%customer%': '<strong>' ~ project.customer.name ~ '</strong>',
-        '%records%': '<strong>' ~ stats.recordAmount ~ '</strong>',
-        '%activities%': '<strong>' ~ stats.activityAmount ~ '</strong>',
-        '%duration%': '<strong>' ~ stats.recordDuration|duration ~ '</strong>'
+        '%project%': project.name,
+        '%customer%': project.customer.name,
+        '%records%': stats.recordAmount,
+        '%activities%': stats.activityAmount,
+        '%duration%': stats.recordDuration|duration
     } %}
 
-    {% set message = '<p>' ~ ("admin_project.short_stats"|trans(params)|raw) ~ '</p><p>' ~ ("admin_entity.delete_confirm"|trans|raw) ~ '</p>' %}
-
     {{ include(app.request.xmlHttpRequest ? 'default/_form_delete_modal.html.twig' : 'default/_form_delete.html.twig', {
-        'message': message|raw,
+        'message': ("admin_project.short_stats"|trans(params) ~ "admin_entity.delete_confirm"|trans),
         'form': form,
         'used': inUse,
         'back': path('admin_project')

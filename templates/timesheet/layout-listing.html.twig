@@ -144,7 +144,7 @@
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">
                     {% if allowMarkdown %}
-                        {{ entry.description|escape|desc2html }}
+                        {{ entry.description|desc2html }}
                     {% else %}
                         {{ entry.description|nl2br }}
                     {% endif %}

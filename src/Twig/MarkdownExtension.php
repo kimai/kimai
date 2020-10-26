@@ -43,9 +43,9 @@ final class MarkdownExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('md2html', [$this, 'markdownToHtml'], ['is_safe' => ['html']]),
-            new TwigFilter('desc2html', [$this, 'timesheetContent'], ['is_safe' => ['html']]),
-            new TwigFilter('comment2html', [$this, 'commentContent'], ['is_safe' => ['html']]),
+            new TwigFilter('md2html', [$this, 'markdownToHtml'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
+            new TwigFilter('desc2html', [$this, 'timesheetContent'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
+            new TwigFilter('comment2html', [$this, 'commentContent'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
         ];
     }
 

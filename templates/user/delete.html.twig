@@ -1,6 +1,5 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/datatables.html.twig" as tables %}
 
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
 
@@ -9,15 +8,13 @@
     {% set inUse = (stats.recordsTotal > 0) %}
 
     {% set params = {
-        '%user%': '<strong>' ~ widgets.username(user) ~ '</strong>',
-        '%records%': '<strong>' ~ stats.recordsTotal ~ '</strong>',
-        '%duration%': '<strong>' ~ stats.durationTotal|duration ~ '</strong>'
+        '%user%': widgets.username(user),
+        '%records%': stats.recordsTotal,
+        '%duration%': stats.durationTotal|duration
     } %}
 
-    {% set message = '<p>' ~ ("admin_user.short_stats"|trans(params)|raw) ~ '</p>' %}
-
     {{ include(app.request.xmlHttpRequest ? 'default/_form_delete_modal.html.twig' : 'default/_form_delete.html.twig', {
-        'message': message|raw,
+        'message': "admin_user.short_stats"|trans(params),
         'form': form,
         'used': inUse,
         'back': path('admin_user')

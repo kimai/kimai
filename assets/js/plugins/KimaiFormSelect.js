@@ -130,29 +130,29 @@ export default class KimaiFormSelect extends KimaiPlugin {
         select.find('option').remove().end().find('optgroup').remove().end();
 
         if (emptyOption.length !== 0) {
-            select.append('<option value="">' + emptyOption.text() + '</option>');
+            select.append(this._createOption(emptyOption.text(), ''));
         }
 
-        let htmlOptions = '';
-        let emptyOptions = '';
+        let emptyOpts = [];
+        let options = [];
 
         for (const [key, value] of Object.entries(data)) {
             if (key === '__empty__') {
                 for (const entity of value) {
-                    emptyOptions +=  '<option value="' + entity.id + '">' + entity.name + '</option>';
+                    emptyOpts.push(this._createOption(entity.name, entity.id));
                 }
                 continue;
             }
 
-            htmlOptions += '<optgroup label="' + key + '">';
+            let optGroup = this._createOptgroup(key);
             for (const entity of value) {
-                htmlOptions +=  '<option value="' + entity.id + '">' + entity.name + '</option>';
+                optGroup.appendChild(this._createOption(entity.name, entity.id));
             }
-            htmlOptions += '</optgroup>';
+            options.push(optGroup);
         }
 
-        select.append(htmlOptions);
-        select.append(emptyOptions);
+        select.append(options);
+        select.append(emptyOpts);
 
         // if available, re-select the previous selected option (mostly usable for global activities)
         select.val(selectedValue);
@@ -164,5 +164,29 @@ export default class KimaiFormSelect extends KimaiPlugin {
         if (select.hasClass('selectpicker')) {
             select.trigger('change.select2');
         }
+    }
+
+    /**
+     * @param {string} label
+     * @param {string} value
+     * @returns {HTMLElement}
+     * @private
+     */
+    _createOption(label, value) {
+        let option = document.createElement('option');
+        option.innerText = label;
+        option.value = value;
+        return option;
+    }
+
+    /**
+     * @param {string} label
+     * @returns {HTMLElement}
+     * @private
+     */
+    _createOptgroup(label) {
+        let optGroup = document.createElement('optgroup');
+        optGroup.label = label;
+        return optGroup;
     }
 }
