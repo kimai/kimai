@@ -128,12 +128,14 @@ class TimesheetServiceTest extends TestCase
         $timesheet2->expects($this->once())->method('setBegin');
         $timesheet2->expects($this->once())->method('setEnd');
 
+        $newTimesheet = new Timesheet();
+
         $repository = $this->createMock(TimesheetRepository::class);
-        $repository->method('getActiveEntries')->willReturn([$timesheet1, $timesheet2]);
+        $repository->method('getActiveEntries')->willReturn([$newTimesheet, $timesheet1, $timesheet2]);
 
         $sut = $this->getSut($authorizationChecker, null, null, $repository);
 
-        $sut->saveNewTimesheet(new Timesheet());
+        $sut->saveNewTimesheet($newTimesheet);
     }
 
     public function testCannotRestartedPersistedTimesheet()
