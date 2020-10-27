@@ -145,18 +145,25 @@ final class TimesheetService
             throw new AccessDeniedException('You are not allowed to start this timesheet record');
         }
 
-        $this->validateTimesheet($timesheet);
-
+        $this->repository->begin();
         try {
-            $this->stopActiveEntries($timesheet);
-        } catch (ValidationFailedException $vex) {
-            // could happen for timesheets that were started in the future (end before begin)
-            throw new ValidationFailedException($vex->getViolations(), 'Cannot stop running timesheet');
-        }
+            $this->validateTimesheet($timesheet);
 
-        $this->dispatcher->dispatch(new TimesheetCreatePreEvent($timesheet));
-        $this->repository->save($timesheet);
-        $this->dispatcher->dispatch(new TimesheetCreatePostEvent($timesheet));
+            $this->dispatcher->dispatch(new TimesheetCreatePreEvent($timesheet));
+            $this->repository->save($timesheet);
+            $this->dispatcher->dispatch(new TimesheetCreatePostEvent($timesheet));
+
+            try {
+                $this->stopActiveEntries($timesheet);
+            } catch (ValidationFailedException $vex) {
+                // could happen for timesheets that were started in the future (end before begin)
+                throw new ValidationFailedException($vex->getViolations(), 'Cannot stop running timesheet');
+            }
+            $this->repository->commit();
+        } catch (\Exception $ex) {
+            $this->repository->rollback();
+            throw $ex;
+        }
 
         return $timesheet;
     }
@@ -170,6 +177,7 @@ final class TimesheetService
      */
     public function updateTimesheet(Timesheet $timesheet): Timesheet
     {
+        // FIXME stop active entries upon update
         // there is at least one edge case which leads to a problem:
         // if you do not allow overlapping entries, you cannot restart a timesheet by removing the
         // end date if another timesheet is running, because the check for existing timesheets will always trigger
@@ -187,7 +195,7 @@ final class TimesheetService
     }
 
     /**
-     * Does NOT validate the given timesheet!
+     * Does NOT validate the given timesheets!
      *
      * @param array $timesheets
      * @return array
@@ -256,7 +264,9 @@ final class TimesheetService
     }
 
     /**
-     * Stops all active records for the current user, besides the given $timesheet.
+     * Stops active records if more than allowed are running for the timesheet user.
+     *
+     * The given $timesheet will be ignored and not stopped (assuming it is the latest one that was re-started).
      *
      * @param Timesheet $timesheet
      * @return int
@@ -265,28 +275,22 @@ final class TimesheetService
      */
     private function stopActiveEntries(Timesheet $timesheet): int
     {
-        $user = $timesheet->getUser();
         $hardLimit = $this->configuration->getActiveEntriesHardLimit();
-        $activeEntries = $this->repository->getActiveEntries($user);
+        $activeEntries = $this->repository->getActiveEntries($timesheet->getUser());
+
+        if (empty($activeEntries)) {
+            return 0;
+        }
+
+        $activeEntries = array_reverse($activeEntries);
+        $needsStop = \count($activeEntries) - $hardLimit;
         $counter = 0;
 
-        // reduce limit by one:
-        // this method is only called when a new entry is started
-        // -> all entries, including the new one must not exceed the $limit
-        $limit = $hardLimit - 1;
-
-        if (\count($activeEntries) > $limit) {
-            $i = 1;
-            foreach ($activeEntries as $activeEntry) {
-                if ($i > $limit && $timesheet->getId() !== $activeEntry->getId()) {
-                    if ($hardLimit > 1) {
-                        throw new ValidationException('timesheet.start.exceeded_limit');
-                    }
-
-                    $this->stopTimesheet($activeEntry);
-                    $counter++;
-                }
-                $i++;
+        foreach ($activeEntries as $activeEntry) {
+            if ($timesheet->getId() !== $activeEntry->getId() && $needsStop > 0) {
+                $this->stopTimesheet($activeEntry);
+                $needsStop--;
+                $counter++;
             }
         }
 
