@@ -120,6 +120,22 @@ class TimesheetRepository extends EntityRepository
         }
     }
 
+    public function begin()
+    {
+        $this->getEntityManager()->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->getEntityManager()->flush();
+        $this->getEntityManager()->commit();
+    }
+
+    public function rollback()
+    {
+        $this->getEntityManager()->rollback();
+    }
+
     /**
      * @param Timesheet $timesheet
      * @throws \Doctrine\ORM\ORMException
