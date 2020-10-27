@@ -138,7 +138,7 @@ class Invoice
      *
      * @ORM\Column(name="invoice_filename", type="string", length=150, nullable=false)
      * @Assert\NotNull()
-     * @Assert\Length(min=1, max=150)
+     * @Assert\Length(min=1, max=150, allowEmptyString=false)
      */
     private $invoiceFilename;
 
