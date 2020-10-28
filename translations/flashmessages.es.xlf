@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="warning">
         <source>warning</source>
-        <target>Aviso</target>
+        <target>Atención</target>
       </trans-unit>
       <trans-unit id="timesheet.stop.success">
         <source>timesheet.stop.success</source>
@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
-        <target>Estás editando un registro exportado</target>
+        <target>Está editando un registro exportado</target>
       </trans-unit>
       <trans-unit id="action.update.success">
         <source>action.update.success</source>
@@ -48,7 +48,7 @@
       </trans-unit>
       <trans-unit id="invoice.first_template">
         <source>invoice.first_template</source>
-        <target>Debe crear una plantilla de factura primero antes</target>
+        <target>Debe crear una plantilla de factura primero</target>
       </trans-unit>
       <trans-unit id="action.upload.error">
         <source>action.upload.error</source>
