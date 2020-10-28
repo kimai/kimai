@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="trash">
         <source>trash</source>
-        <target>Borrar</target>
+        <target>Eliminar</target>
       </trans-unit>
       <trans-unit id="report">
         <source>report</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="settings">
         <source>settings</source>
-        <target>Ajustes</target>
+        <target>Preferencias</target>
       </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
