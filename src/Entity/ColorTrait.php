@@ -28,7 +28,7 @@ trait ColorTrait
      * @Exporter\Expose(label="label.color")
      *
      * @ORM\Column(name="color", type="string", length=7, nullable=true)
-     * @Assert\Length(min=4, max=7)
+     * @Assert\Length(min=4, max=7, allowEmptyString=true)
      */
     private $color = null;
 
