@@ -100,12 +100,10 @@ class ColorTest extends TestCase
         $this->assertEquals('#000000', $sut->getFontContrastColor('#ffffff'));
     }
 
-    public function testGetFontContrastColorThrowsExceptionOnNonHexadecimalColor()
+    public function testGetFontContrastColorReturnsContrastForDefaultColorOnNonHexadecimalColor()
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid color code given, only #hexadecimal is supported.');
-
         $sut = new Color();
-        $sut->getFontContrastColor('000000');
+        $this->assertEquals('#000000', $sut->getFontContrastColor('000000'));
+        $this->assertEquals('#000000', $sut->getFontContrastColor(Constants::DEFAULT_COLOR));
     }
 }

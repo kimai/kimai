@@ -79,7 +79,8 @@ final class Color
     public function getFontContrastColor(string $color): string
     {
         if ($color[0] !== '#') {
-            throw new \InvalidArgumentException('Invalid color code given, only #hexadecimal is supported.');
+            // do not throw exception on invalid colors, as they were not validate in the past
+            $color = Constants::DEFAULT_COLOR;
         }
 
         $color = substr($color, 1);
