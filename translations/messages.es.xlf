@@ -35,10 +35,7 @@
       </trans-unit>
       <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-                    ¡Estos datos también serán borrados!
-                    En alternativa, puede seleccionar un registro al que se le transferirán todos los datos:
-                </target>
+        <target>¡Estos datos también se eliminarán! Como alternativa, puede seleccionar un registro al que se le transferirán todos los datos:</target>
       </trans-unit>
       <trans-unit id="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -386,7 +383,7 @@
       </trans-unit>
       <trans-unit id="modal.columns.description">
         <source>modal.columns.description</source>
-        <target>Las columnas sin seleccionar serán ocultadas al guardar la configuración, la cual se guardará en una cookie del navegador. Si borra las cookies, se restablecerá a la configuración por defecto.</target>
+        <target>Las columnas sin seleccionar se ocultarán al guardar la configuración, la cual se guardará en una «cookie» del navegador. Si elimina las «cookies», se restablecerá a la configuración predeterminada.</target>
       </trans-unit>
       <trans-unit id="label.fixedRate">
         <source>label.fixedRate</source>
@@ -578,7 +575,7 @@
       </trans-unit>
       <trans-unit id="label.title">
         <source>label.title</source>
-        <target>Título</target>
+        <target>Puesto</target>
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
@@ -867,11 +864,11 @@
       </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
-        <target>Periodo</target>
+        <target>Período</target>
       </trans-unit>
       <trans-unit id="export.document_title">
         <source>export.document_title</source>
-        <target>Lista de gastos</target>
+        <target>Exportación de partes de horas</target>
       </trans-unit>
       <trans-unit id="export.full_list">
         <source>export.full_list</source>
@@ -894,7 +891,7 @@
             -->
       <trans-unit id="active.entries">
         <source>active.entries</source>
-        <target>Los cálculos de tu tiempo activo</target>
+        <target>Los cálculos de su tiempo activo</target>
       </trans-unit>
       <trans-unit id="timesheet.all">
         <source>timesheet.all</source>
