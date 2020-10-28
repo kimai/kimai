@@ -33,6 +33,7 @@ class HexColorValidatorTest extends ConstraintValidatorTestCase
         yield ['#fff000'];
         yield ['#000aaa'];
         yield ['#fffaaa'];
+        yield ['']; // should actually be invalid, but it was allowed in the past :(
         yield [null];
     }
 
@@ -68,7 +69,6 @@ class HexColorValidatorTest extends ConstraintValidatorTestCase
         yield ['#ffdd'];
         yield ['#ffddd'];
         yield ['#ffddddd'];
-        yield [''];
         yield [new \stdClass(), 'object'];
         yield [[], 'array'];
     }

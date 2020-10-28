@@ -21,9 +21,10 @@ trait EntityFormTrait
 {
     public function addCommonFields(FormBuilderInterface $builder, array $options): void
     {
-        $currency = $options['currency'];
         $builder
-            ->add('color', ColorPickerType::class)
+            ->add('color', ColorPickerType::class, [
+                'required' => false,
+            ])
         ;
 
         if ($options['include_budget']) {
@@ -32,7 +33,7 @@ trait EntityFormTrait
                     'empty_data' => '0.00',
                     'label' => 'label.budget',
                     'required' => false,
-                    'currency' => $currency,
+                    'currency' => $options['currency'],
                 ])
                 ->add('timeBudget', DurationType::class, [
                     'empty_data' => 0,

@@ -14,7 +14,6 @@ use App\Export\Annotation as Exporter;
 use App\Validator\Constraints as Constraints;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use Symfony\Component\Validator\Constraints as Assert;
 
 trait ColorTrait
 {
@@ -29,7 +28,6 @@ trait ColorTrait
      * @Exporter\Expose(label="label.color")
      *
      * @ORM\Column(name="color", type="string", length=7, nullable=true)
-     * @Assert\Length(min=4, max=7, allowEmptyString=true)
      * @Constraints\HexColor()
      */
     private $color = null;

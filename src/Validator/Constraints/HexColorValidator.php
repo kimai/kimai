@@ -26,7 +26,7 @@ class HexColorValidator extends ConstraintValidator
 
         $color = $value;
 
-        if ($color === null) {
+        if ($color === null || (\is_string($color) && empty($color))) {
             return;
         }
 
