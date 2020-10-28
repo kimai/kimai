@@ -100,10 +100,17 @@ class ColorTest extends TestCase
         $this->assertEquals('#000000', $sut->getFontContrastColor('#ffffff'));
     }
 
-    public function testGetFontContrastColorReturnsContrastForDefaultColorOnNonHexadecimalColor()
+    public function testGetFontContrastColorReturnsContrastForDefaultColorOnInvalidColor()
     {
         $sut = new Color();
+        $this->assertEquals('#000000', $sut->getFontContrastColor(''));
         $this->assertEquals('#000000', $sut->getFontContrastColor('000000'));
         $this->assertEquals('#000000', $sut->getFontContrastColor(Constants::DEFAULT_COLOR));
+        $this->assertEquals('#000000', $sut->getFontContrastColor('#6'));
+        $this->assertEquals('#000000', $sut->getFontContrastColor('#66'));
+        $this->assertEquals('#000000', $sut->getFontContrastColor('#6666'));
+        $this->assertEquals('#000000', $sut->getFontContrastColor('#cccc'));
+        $this->assertEquals('#000000', $sut->getFontContrastColor('#ccccc'));
+        $this->assertEquals('#000000', $sut->getFontContrastColor('#ccccccc'));
     }
 }
