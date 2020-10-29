@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target>Se o botão não funcionar, por favor, copie &amp; cole a seguinte URL no seu navegador: %url%</target>
+        <target>Se o botão não funcionar, por favor, copie e cole a seguinte URL no seu navegador: %url%</target>
       </trans-unit>
     </body>
   </file>
