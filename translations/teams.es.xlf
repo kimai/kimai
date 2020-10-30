@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="es" datatype="plaintext" original="teams.en.xlf">
+    <body>
+      <trans-unit id="teams.title">
+        <source>teams.title</source>
+        <target>Equipos</target>
+      </trans-unit>
+      <trans-unit id="teams.project_access">
+        <source>teams.project_access</source>
+        <target>Conceder acceso a los proyectos</target>
+      </trans-unit>
+      <trans-unit id="teams.customer_access">
+        <source>teams.customer_access</source>
+        <target>Conceder acceso a los clientes</target>
+      </trans-unit>
+      <trans-unit id="team.visibility_global">
+        <source>team.visibility_global</source>
+        <target>Visible para todos, dado que no se ha asignado aún a ningún equipo.</target>
+      </trans-unit>
+      <trans-unit id="team.visibility_restricted">
+        <source>team.visibility_restricted</source>
+        <target>Visible solo para los equipos siguientes y para todos los administradores.</target>
+      </trans-unit>
+      <trans-unit id="team.project_visibility_inherited">
+        <source>team.project_visibility_inherited</source>
+        <target>El proyecto tiene acceso limitado porque los permisos de equipo están configurados para el cliente.</target>
+      </trans-unit>
+      <trans-unit id="team.activity_visibility_inherited">
+        <source>team.activity_visibility_inherited</source>
+        <target>La actividad tiene acceso limitado porque los permisos de equipo están configurados para el proyecto o el cliente.</target>
+      </trans-unit>
+      <trans-unit id="team.create_default">
+        <source>team.create_default</source>
+        <target>Crear un equipo nuevo para limitar el acceso</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
