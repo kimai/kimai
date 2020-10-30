@@ -1002,7 +1002,7 @@
       </trans-unit>
       <trans-unit id="rates.title">
         <source>rates.title</source>
-        <target>Elementos</target>
+        <target>Honorarios</target>
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
