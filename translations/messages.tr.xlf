@@ -1101,6 +1101,14 @@
         <source>upload</source>
         <target>Karşıya yükle</target>
       </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>Güncellenecek alanlar önce ilgili onay kutusuna tıklanarak etkinleştirilmelidir.</target>
+      </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>Ek alanlar</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
