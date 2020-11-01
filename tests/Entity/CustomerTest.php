@@ -109,6 +109,12 @@ class CustomerTest extends TestCase
 
         self::assertInstanceOf(Customer::class, $sut->setVatId('ID 1234567890'));
         self::assertEquals('ID 1234567890', $sut->getVatId());
+
+        self::assertInstanceOf(Customer::class, $sut->setCountry(null));
+        self::assertNull($sut->getCountry());
+
+        self::assertInstanceOf(Customer::class, $sut->setCurrency(null));
+        self::assertNull($sut->getCurrency());
     }
 
     public function testMetaFields()
