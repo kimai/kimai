@@ -41,16 +41,10 @@ nelmio_api_doc:
         path_patterns:
             - ^/api(?!/doc)
     documentation:
-        #host: '{{hostname}}'
-        host: '%router.request_context.host%'
-        basePath: '%router.request_context.base_url%'
-        schemes: ['%router.request_context.scheme%']
         info:
             title: Kimai 2 - API Docs
             description: |
-                JSON API for the Kimai 2 time-tracking software. Read more about its usage in the [API documentation](https://www.kimai.org/documentation/rest-api.html) and then download a [Swagger file](doc.json) for import e.g. in Postman.
-                Be aware: it is not yet considered stable and BC breaks might happen, especially when using code generation.
-                The order of JSON attributes is not guaranteed.
+                JSON API for the Kimai 2 time-tracking software: [API documentation](https://www.kimai.org/documentation/rest-api.html), [Swagger definition file](doc.json)
             version: '0.6'
         securityDefinitions:
             apiUser:
