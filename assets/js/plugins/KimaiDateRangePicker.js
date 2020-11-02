@@ -27,7 +27,7 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
     activateDateRangePicker(selector) {
         const TRANSLATE = this.getContainer().getTranslation();
         const DATE_UTILS = this.getContainer().getPlugin('date');
-        const firstDow = this.getConfiguration('first_dow_iso');
+        const firstDow = this.getConfiguration('first_dow_iso') % 7;
 
         jQuery(selector + ' ' + this.selector).each(function(index) {
             let localeFormat = jQuery(this).data('format');

@@ -26,7 +26,7 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
     activateDateTimePicker(selector) {
         const TRANSLATE = this.getContainer().getTranslation();
         const DATE_UTILS = this.getContainer().getPlugin('date');
-        const firstDow = this.getConfiguration('first_dow_iso');
+        const firstDow = this.getConfiguration('first_dow_iso') % 7;
         const is24hours = this.getConfiguration('twentyFourHours');
 
         jQuery(selector + ' ' + this.selector).each(function(index) {
