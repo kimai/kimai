@@ -2,54 +2,88 @@
 #
 # For the full copyright and license information, please view the LICENSE
 # file that was distributed with this source code.
-FROM php:7.2.9-apache-stretch AS tmp_kimai2_base
+FROM php:7.4.12-cli
 
-RUN apt update && \
-    apt install -y --allow-unauthenticated \
-        git \
-        haveged \
-        libicu-dev \
-        libjpeg-dev \
-        libldap2-dev \
-        libldb-dev \
-        libpng-dev \
-        mysql-client \
-        unzip \
-        wget \
-        zip \
-        && \
-    EXPECTED_SIGNATURE="$(wget -q -O - https://composer.github.io/installer.sig)" && \
-    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    ACTUAL_SIGNATURE="$(php -r "echo hash_file('sha384', 'composer-setup.php');")" && \
-    if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then >&2 echo 'ERROR: Invalid installer signature'; rm composer-setup.php; exit 1; fi && \
-    php composer-setup.php --quiet && \
-    rm composer-setup.php && \
-    mv /var/www/html/composer.phar /usr/bin/composer && \
-    docker-php-ext-install \
+ENV APP_ENV dev
+
+# Install tools and dependencies
+RUN set -ex \
+    && apt-get update \
+    && apt-get -y install \
+        git haveged unzip zip wget \
+        libicu-dev libcurl4-openssl-dev libjpeg-dev libldap2-dev \
+        libldb-dev libpng-dev libxslt-dev libxml2-dev libssl-dev \
+        libzip-dev libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev \
+        libwebp-dev libmagickwand-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Activate PHP extensions
+RUN set -ex \
+    && docker-php-ext-configure \
+        gd --enable-gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install \
         gd \
         intl \
+        ctype \
         ldap \
         pdo_mysql \
-        zip && \
-    apt remove -y wget && \
-    apt -y autoremove && \
-    apt clean && \
-    cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+        xsl \
+        xml \
+        iconv \
+        bcmath \
+        curl \
+        fileinfo \
+        gettext \
+        xmlrpc \
+        xmlwriter \
+        simplexml \
+        zip \
+        opcache
 
-FROM tmp_kimai2_base
+# Install composer
+ENV COMPOSER_MEMORY_LIMIT=-1
 
-RUN git clone https://github.com/kevinpapst/kimai2.git /opt/kimai && \
-    sed "s/prod/dev/g" /opt/kimai/.env.dist > /opt/kimai/.env && \
-    composer install --working-dir=/opt/kimai --dev --optimize-autoloader && \
-    /opt/kimai/bin/console doctrine:database:create && \
-    /opt/kimai/bin/console doctrine:schema:create && \
-    /opt/kimai/bin/console doctrine:migrations:version --add --all && \
-    /opt/kimai/bin/console cache:warmup && \
-    chown -R www-data:www-data /opt/kimai/var && \
-    chown www-data:www-data /opt/kimai/vendor/mpdf/mpdf/tmp
+RUN set -ex \
+    && curl -sSL https://getcomposer.org/download/1.10.17/composer.phar -o /usr/local/bin/composer \
+    && chmod +x /usr/local/bin/composer
 
-WORKDIR /opt/kimai
+# Install symfony cli
+RUN set -ex \
+    && curl -sSL https://github.com/symfony/cli/releases/download/v4.20.1/symfony_linux_amd64 -o /usr/local/bin/symfony \
+    && chmod +x /usr/local/bin/symfony
+
+# Install production php.ini and some tweaks
+RUN set -ex \
+    && cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
+    && sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /usr/local/etc/php/php.ini \
+    && sed -i 's/;opcache.memory_consumption=128/opcache.memory_consumption=256/g' /usr/local/etc/php/php.ini \
+    && sed -i 's/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=20000/g' /usr/local/etc/php/php.ini \
+    && sed -i 's/log_errors_max_len = 1024/log_errors_max_len = 8192/g' /usr/local/etc/php/php.ini \
+    && chown -R www-data:www-data /var/www
+
+USER www-data:www-data
+
+WORKDIR /var/www/html
+
+# Create shallow clone of kimai and configure it as dev role
+RUN set -ex \
+    && git clone --depth 1 https://github.com/kevinpapst/kimai2.git . \
+    && composer install --optimize-autoloader
+
+# Create default SQLite database with a default user and compile it into the
+# image to offer some default setup to spool up incase of a demo.
+RUN set -ex \
+    && bin/console doctrine:database:create -n \
+    && bin/console doctrine:migrations:migrate -n  \
+    && bin/console doctrine:schema:update -n --force \
+    && bin/console cache:warmup -n \
+    && bin/console kimai:create-user admin admin@kimai.local ROLE_SUPER_ADMIN adminpassword
+
+# Perform basic sanity checks
+RUN set -ex \
+    && symfony check:requirements \
+    && symfony security:check --disable-exit-code
 
 EXPOSE 8001
-USER www-data
-CMD /opt/kimai/bin/console server:run 0.0.0.0:8001
+
+CMD symfony serve --port=8001 --no-tls
