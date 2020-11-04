@@ -946,6 +946,18 @@
         <source>attachments</source>
         <target>파일</target>
       </trans-unit>
+      <trans-unit id="my.profile">
+        <source>my.profile</source>
+        <target>내 프로필</target>
+      </trans-unit>
+      <trans-unit id="search">
+        <source>search</source>
+        <target>찾기</target>
+      </trans-unit>
+      <trans-unit id="upload">
+        <source>upload</source>
+        <target>업로드</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
