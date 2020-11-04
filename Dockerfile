@@ -73,11 +73,8 @@ RUN set -ex \
 # Create default SQLite database with a default user and compile it into the
 # image to offer some default setup to spool up incase of a demo.
 RUN set -ex \
-    && bin/console doctrine:database:create -n \
-    && bin/console doctrine:migrations:migrate -n  \
-    && bin/console doctrine:schema:update -n --force \
-    && bin/console cache:warmup -n \
-    && bin/console kimai:create-user admin admin@kimai.local ROLE_SUPER_ADMIN adminpassword
+    && bin/console kimai:install -n \
+    && bin/console kimai:create-user admin admin@example.com ROLE_SUPER_ADMIN password
 
 # Perform basic sanity checks
 RUN set -ex \
