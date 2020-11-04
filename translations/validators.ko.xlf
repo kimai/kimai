@@ -1,19 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="ko" datatype="plaintext" original="validators.en.xlf">
-        <body>
-            <trans-unit id="This value is not a valid role.">
-                <source>This value is not a valid role.</source>
-                <target state="translated">이 값은 유효한 값이 아닙니다.</target>
-            </trans-unit>
-            <trans-unit id="End date must not be earlier then start date.">
-                <source>End date must not be earlier then start date.</source>
-                <target state="translated">종료 시각은 시작 시각보다 빠를 수 없습니다.</target>
-            </trans-unit>
-            <trans-unit id="The begin date cannot be in the future.">
-                <source>The begin date cannot be in the future.</source>
-                <target state="translated">시작 시각은 미래가 될 수 없습니다. </target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ko" datatype="plaintext" original="validators.en.xlf">
+    <body>
+      <trans-unit id="This value is not a valid role.">
+        <source>This value is not a valid role.</source>
+        <target state="translated">이 값은 유효한 값이 아닙니다.</target>
+      </trans-unit>
+      <trans-unit id="End date must not be earlier then start date.">
+        <source>End date must not be earlier then start date.</source>
+        <target state="translated">종료 시각은 시작 시각보다 빠를 수 없습니다.</target>
+      </trans-unit>
+      <trans-unit id="The begin date cannot be in the future.">
+        <source>The begin date cannot be in the future.</source>
+        <target state="translated">시작 시각은 미래가 될 수 없습니다. </target>
+      </trans-unit>
+      <trans-unit id="The given value is not a valid time.">
+        <source>The given value is not a valid time.</source>
+        <target>주어진 값은 유효한 시간이 아닙니다.</target>
+      </trans-unit>
+      <trans-unit id="You already have an entry for this time.">
+        <source>You already have an entry for this time.</source>
+        <target>이 시간에 대한 항목이 이미 있습니다.</target>
+      </trans-unit>
+      <trans-unit id="This period is locked, please choose a later date.">
+        <source>This period is locked, please choose a later date.</source>
+        <target>이 기간은 잠겨 있으니, 후일로 선택하시길 바랍니다.</target>
+      </trans-unit>
+      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
+        <target>이 인보이스 문서는 사용할 수 없으니, 파일 이름을 변경하고 다시 업로드를 해야 합니다.</target>
+      </trans-unit>
+      <trans-unit id="You must select at least one user or team.">
+        <source>You must select at least one user or team.</source>
+        <target>하나 이상의 사용자 혹은 팀을 선택해야 합니다.</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
