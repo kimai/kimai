@@ -1,79 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="ko" datatype="plaintext" original="actions.en.xlf">
-        <body>
-            <trans-unit id="stop">
-                <source>stop</source>
-                <target state="translated">정지</target>
-            </trans-unit>
-            <trans-unit id="back">
-                <source>back</source>
-                <target state="translated">뒤로</target>
-            </trans-unit>
-            <trans-unit id="edit">
-                <source>edit</source>
-                <target state="translated">편집 </target>
-            </trans-unit>
-            <trans-unit id="trash">
-                <source>trash</source>
-                <target state="translated">삭제 </target>
-            </trans-unit>
-            <trans-unit id="report">
-                <source>report</source>
-                <target state="translated">보고 </target>
-            </trans-unit>
-            <trans-unit id="repeat">
-                <source>repeat</source>
-                <target state="translated">재시작</target>
-            </trans-unit>
-            <trans-unit id="profile-stats">
-                <source>profile-stats</source>
-                <target state="translated">통계</target>
-            </trans-unit>
-            <trans-unit id="settings">
-                <source>settings</source>
-                <target state="translated">설정 </target>
-            </trans-unit>
-            <trans-unit id="timesheet">
-                <source>timesheet</source>
-                <target state="translated">타임시트</target>
-            </trans-unit>
-            <trans-unit id="customer">
-                <source>customer</source>
-                <target state="translated">필터 고객들 </target>
-            </trans-unit>
-            <trans-unit id="project">
-                <source>project</source>
-                <target state="translated">필터 프로젝트들 </target>
-            </trans-unit>
-            <trans-unit id="activity">
-                <source>activity</source>
-                <target state="translated">필터 활동들</target>
-            </trans-unit>
-            <trans-unit id="copy">
-                <source>copy</source>
-                <target state="translated">복사 생성</target>
-            </trans-unit>
-            <trans-unit id="home">
-                <source>home</source>
-                <target state="translated">홈페이지 </target>
-            </trans-unit>
-            <trans-unit id="create-project">
-                <source>create-project</source>
-                <target state="translated">프로젝트 생성 </target>
-            </trans-unit>
-            <trans-unit id="create-activity">
-                <source>create-activity</source>
-                <target state="translated">활동 생성 </target>
-            </trans-unit>
-            <trans-unit id="create-timesheet">
-                <source>create-timesheet</source>
-                <target state="translated">타임시트 생성 </target>
-            </trans-unit>
-            <trans-unit id="permissions">
-                <source>permissions</source>
-                <target state="translated">팀 승인 </target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ko" datatype="plaintext" original="actions.en.xlf">
+    <body>
+      <trans-unit id="stop">
+        <source>stop</source>
+        <target state="translated">정지</target>
+      </trans-unit>
+      <trans-unit id="back">
+        <source>back</source>
+        <target state="translated">뒤로</target>
+      </trans-unit>
+      <trans-unit id="edit">
+        <source>edit</source>
+        <target state="translated">편집 </target>
+      </trans-unit>
+      <trans-unit id="trash">
+        <source>trash</source>
+        <target state="translated">삭제 </target>
+      </trans-unit>
+      <trans-unit id="report">
+        <source>report</source>
+        <target state="translated">보고 </target>
+      </trans-unit>
+      <trans-unit id="repeat">
+        <source>repeat</source>
+        <target state="translated">재시작</target>
+      </trans-unit>
+      <trans-unit id="profile-stats">
+        <source>profile-stats</source>
+        <target state="translated">통계</target>
+      </trans-unit>
+      <trans-unit id="settings">
+        <source>settings</source>
+        <target state="translated">설정 </target>
+      </trans-unit>
+      <trans-unit id="timesheet">
+        <source>timesheet</source>
+        <target state="translated">타임시트</target>
+      </trans-unit>
+      <trans-unit id="customer">
+        <source>customer</source>
+        <target state="translated">필터 고객들 </target>
+      </trans-unit>
+      <trans-unit id="project">
+        <source>project</source>
+        <target state="translated">필터 프로젝트들 </target>
+      </trans-unit>
+      <trans-unit id="activity">
+        <source>activity</source>
+        <target state="translated">필터 활동들</target>
+      </trans-unit>
+      <trans-unit id="copy">
+        <source>copy</source>
+        <target state="translated">복사 생성</target>
+      </trans-unit>
+      <trans-unit id="home">
+        <source>home</source>
+        <target state="translated">홈페이지 </target>
+      </trans-unit>
+      <trans-unit id="create-project">
+        <source>create-project</source>
+        <target state="translated">프로젝트 생성 </target>
+      </trans-unit>
+      <trans-unit id="create-activity">
+        <source>create-activity</source>
+        <target state="translated">활동 생성 </target>
+      </trans-unit>
+      <trans-unit id="create-timesheet">
+        <source>create-timesheet</source>
+        <target state="translated">타임시트 생성 </target>
+      </trans-unit>
+      <trans-unit id="permissions">
+        <source>permissions</source>
+        <target state="translated">팀 승인 </target>
+      </trans-unit>
+      <trans-unit id="invoice.paid">
+        <source>invoice.paid</source>
+        <target>인보이스 지불</target>
+      </trans-unit>
+      <trans-unit id="invoice.pending">
+        <source>invoice.pending</source>
+        <target>결제 대기 중</target>
+      </trans-unit>
+      <trans-unit id="details">
+        <source>details</source>
+        <target>보이기</target>
+      </trans-unit>
+      <trans-unit id="download">
+        <source>download</source>
+        <target>다운로드</target>
+      </trans-unit>
+      <trans-unit id="create-timesheet-multiuser">
+        <source>create-timesheet-multiuser</source>
+        <target>여러 사용자의 경우</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
