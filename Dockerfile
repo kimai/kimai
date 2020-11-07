@@ -40,6 +40,29 @@ RUN set -ex \
         zip \
         opcache
 
+# Install Xdebug
+ARG XDEBUG=1
+
+RUN set -ex \
+    && if [ "$XDEBUG" = "1" ]; then \
+      mkdir /tmp/build \
+      && curl -sSL https://github.com/xdebug/xdebug/archive/2.9.8.tar.gz | tar -xzC /tmp/build \
+      && cd /tmp/build/xdebug-* \
+      && phpize \
+      && ./configure --enable-xdebug \
+      && make \
+      && make install \
+      && rm -rf /tmp/build \
+      && echo "zend_extension=xdebug.so" > /usr/local/etc/php/conf.d/xdebug.ini \
+      && echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/xdebug.ini \
+      && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+      && echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+      && echo "xdebug.remote_host=host.docker.internal" >> /usr/local/etc/php/conf.d/xdebug.ini \
+      && echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini \
+      && echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+      && echo "xdebug.remote_handler=dbgp" >> /usr/local/etc/php/conf.d/xdebug.ini; \
+    fi
+
 WORKDIR /var/www/html
 
 # Install composer
