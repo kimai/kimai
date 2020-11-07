@@ -92,6 +92,10 @@ RUN set -ex \
     && git clone --depth 1 https://github.com/kevinpapst/kimai2.git . \
     && composer install --optimize-autoloader
 
+# Setup demo specific ENV
+ENV APP_ENV=dev \
+    DATABASE_URL=sqlite:////var/data/kimaidemo.sqlite
+
 # Create default SQLite database with a default user and compile it into the
 # image to offer some default setup to spool up incase of a demo.
 RUN set -ex \
@@ -102,10 +106,6 @@ RUN set -ex \
 RUN set -ex \
     && symfony check:requirements \
     && symfony security:check --disable-exit-code
-
-# Setup demo specific ENV
-ENV APP_ENV=dev \
-    DATABASE_URL=sqlite:///var/data/kimaidemo.sqlite
 
 EXPOSE 8001
 
