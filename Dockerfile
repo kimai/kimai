@@ -4,8 +4,6 @@
 # file that was distributed with this source code.
 FROM php:7.4.12-cli
 
-ENV APP_ENV dev
-
 # Install tools and dependencies
 RUN set -ex \
     && apt-get update \
@@ -84,11 +82,10 @@ RUN set -ex \
     && sed -i 's/;opcache.memory_consumption=128/opcache.memory_consumption=256/g' /usr/local/etc/php/php.ini \
     && sed -i 's/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=20000/g' /usr/local/etc/php/php.ini \
     && sed -i 's/log_errors_max_len = 1024/log_errors_max_len = 8192/g' /usr/local/etc/php/php.ini \
-    && chown -R www-data:www-data /var/www
+    && mkdir -p /var/data \
+    && chown -R www-data:www-data /var/www /var/data
 
 USER www-data:www-data
-
-WORKDIR /var/www/html
 
 # Create shallow clone of kimai and configure it as dev role
 RUN set -ex \
@@ -105,6 +102,10 @@ RUN set -ex \
 RUN set -ex \
     && symfony check:requirements \
     && symfony security:check --disable-exit-code
+
+# Setup demo specific ENV
+ENV APP_ENV=dev \
+    DATABASE_URL=sqlite:///var/data/kimaidemo.sqlite
 
 EXPOSE 8001
 
