@@ -40,19 +40,21 @@ RUN set -ex \
         zip \
         opcache
 
+WORKDIR /var/www/html
+
 # Install composer
 ENV COMPOSER_MEMORY_LIMIT=-1
 
 RUN set -ex \
-    && curl -sSL https://getcomposer.org/download/1.10.17/composer.phar -o /usr/local/bin/composer \
+    && curl -sS https://getcomposer.org/composer-stable.phar -o /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer
 
 # Install symfony cli
 RUN set -ex \
-    && curl -sSL https://github.com/symfony/cli/releases/download/v4.20.1/symfony_linux_amd64 -o /usr/local/bin/symfony \
-    && chmod +x /usr/local/bin/symfony
+    && curl -sS https://get.symfony.com/cli/installer | bash \
+    && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
 
-# Install production php.ini and some tweaks
+# Install production php.ini and make sore there is a folder to hold the demo database
 RUN set -ex \
     && cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
     && sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /usr/local/etc/php/php.ini \
