@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ko" datatype="plaintext" original="teams.en.xlf">
+    <body>
+      <trans-unit id="teams.title">
+        <source>teams.title</source>
+        <target>팀</target>
+      </trans-unit>
+      <trans-unit id="teams.project_access">
+        <source>teams.project_access</source>
+        <target>프로젝트에 대한 액세스 권한 부여</target>
+      </trans-unit>
+      <trans-unit id="teams.customer_access">
+        <source>teams.customer_access</source>
+        <target>고객에 대한 액세스 권한 부여</target>
+      </trans-unit>
+      <trans-unit id="team.visibility_global">
+        <source>team.visibility_global</source>
+        <target>아직 팀이 지정되지 않았으므로, 모든 사람에게 표시됩니다.</target>
+      </trans-unit>
+      <trans-unit id="team.visibility_restricted">
+        <source>team.visibility_restricted</source>
+        <target>다음 팀과 모든 관리자에게만 표시됩니다.</target>
+      </trans-unit>
+      <trans-unit id="team.project_visibility_inherited">
+        <source>team.project_visibility_inherited</source>
+        <target>고객에게 팀 권한이 설정되어 있기 때문에, 프로젝트는 제한된 액세스 권한을 갖습니다.</target>
+      </trans-unit>
+      <trans-unit id="team.activity_visibility_inherited">
+        <source>team.activity_visibility_inherited</source>
+        <target>프로젝트 및 / 또는 고객에 대해 팀 권한이 설정되어 있으므로, 활동에 제한된 액세스 권한이 있습니다.</target>
+      </trans-unit>
+      <trans-unit id="team.create_default">
+        <source>team.create_default</source>
+        <target>액세스를 제한 할 새 팀 만들기</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
