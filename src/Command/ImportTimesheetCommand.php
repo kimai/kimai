@@ -351,7 +351,7 @@ class ImportTimesheetCommand extends Command
                         if ($duration > 0) {
                             $end = (new \DateTime())->setTimezone($timezone)->setTimestamp($begin->getTimestamp() + $duration);
                         } else {
-                            $end->modify(new \DateInterval('P1D'));
+                            $end->add(new \DateInterval('P1D'));
                         }
                     }
                 }
