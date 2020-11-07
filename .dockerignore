@@ -1,0 +1,3 @@
+# The given Dockerfile is for development only and will always
+# clone a clean version from github, so we ignore everything on build.
+**
