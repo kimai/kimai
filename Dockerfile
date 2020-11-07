@@ -39,7 +39,7 @@ RUN set -ex \
         opcache
 
 # Install Xdebug
-ARG XDEBUG=1
+ARG XDEBUG=0
 
 RUN set -ex \
     && if [ "$XDEBUG" = "1" ]; then \
