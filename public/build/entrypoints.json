@@ -26,7 +26,7 @@
         "build/invoice-pdf.0efd7a97.js"
       ],
       "css": [
-        "build/invoice-pdf.340721a4.css"
+        "build/invoice-pdf.cdf28364.css"
       ]
     },
     "chart": {
@@ -58,7 +58,7 @@
     "build/invoice.74279541.js": "sha384-2BXic5Sgorf2tXai6zSAN4wLY2dbg06L03/xMKW6itMcszvtnRArKzfBh6DNcF3f",
     "build/invoice.13d8ef4e.css": "sha384-B6RN/wZJToSBCZk2JeLokIqWEhbh+Eb9arYbt9dM+YoC2Z6PnCeTwTqSGyexWWJh",
     "build/invoice-pdf.0efd7a97.js": "sha384-bSdIeRCtEJiYYuc2reb0e5CpJ1Kbd1lQNEkElMTiq1SX0IINzdwJJYf6WnCcHrNC",
-    "build/invoice-pdf.340721a4.css": "sha384-+dk8iSafBIWj8bKpeEAkhkOR6G6o2OyL1ZeGuaIHuECtidl5cqoGbLSw+yKfSc0e",
+    "build/invoice-pdf.cdf28364.css": "sha384-DhWomcxV34umbO4PT7u0CJtvH+X3wAYjszoa3tvP1G08QdYkvtwfKhvdnL/Z8f+8",
     "build/2.7ab75d0a.js": "sha384-Eb0w73RbUwsfLVRbeGf0Aql77LzAUDrwqY74pyTgwSnf0dsMKwsjlumzhO2JHnVN",
     "build/chart.34d60a88.js": "sha384-I57c9DtU3AOG2kzKqIZkIu0hi1aGYHRZ5QG4LKC9+9slzJnAMttPGXoL2cQG3m6y",
     "build/calendar.541a15eb.js": "sha384-a4HtJGznLY7D1lv25yrokaIVHLY++qak0X2qi83Er1UxWKKLb2Gu6foE+CMA9xhb",
