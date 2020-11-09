@@ -26,10 +26,10 @@
         <source>team.project_visibility_inherited</source>
         <target>Das Projekt ist nur eingeschränkt sichtbar, da Team Berechtigungen für den Kunden gesetzt sind.</target>
       </trans-unit>
-        <trans-unit id="team.activity_visibility_inherited">
-            <source>team.activity_visibility_inherited</source>
-            <target>Die Tätigkeit ist nur eingeschränkt sichtbar, da Team Berechtigungen für das Projekt und/oder den Kunden gesetzt sind.</target>
-        </trans-unit>
+      <trans-unit id="team.activity_visibility_inherited" approved="yes">
+        <source>team.activity_visibility_inherited</source>
+        <target>Die Tätigkeit ist nur eingeschränkt sichtbar, da Team Berechtigungen für das Projekt und/oder den Kunden gesetzt sind.</target>
+      </trans-unit>
       <trans-unit id="team.create_default" approved="yes">
         <source>team.create_default</source>
         <target>Erstelle ein neues Team um den Zugriff zu beschränken</target>
