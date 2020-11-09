@@ -146,7 +146,7 @@ final class ReportingController extends AbstractController
         $values = new ProjectView();
         $form = $this->createForm(ProjectViewForm::class, $values, []);
 
-        $today = \DateTime::createFromFormat('U', (string) time());
+        $today = $this->getDateTimeFactory()->createDateTimeFromFormat('U', (string) time());
         $entries = $projectRepository->getProjectView($today);
 
         return $this->render('reporting/project_view.html.twig', [
