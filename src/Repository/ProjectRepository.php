@@ -460,7 +460,7 @@ class ProjectRepository extends EntityRepository
         }
     }
 
-    public function getProjectView(\DateTime $begin, \DateTime $end): array
+    public function getProjectView(\DateTime $begin, \DateTime $end, User $user): array
     {
         $entityManager = $this->getEntityManager();
 
@@ -482,23 +482,20 @@ class ProjectRepository extends EntityRepository
 
         $qb = $entityManager->createQueryBuilder();
         $qb
-            ->addSelect('p.name')
+            ->addSelect('p')
             ->addSelect("({$startingDateQueryBuilder}) AS today")
             ->addSelect("({$weekQueryBuilder}) AS week")
-            ->addSelect('p.comment')
             ->addSelect('SUM(t.duration) AS total')
-            ->addSelect('p.timeBudget AS expected_duration')
-            ->addSelect('p.end AS expected_delivery')
             ->from(Project::class, 'p')
+            ->leftJoin('p.customer', 'c')
             ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
             ->andWhere($qb->expr()->eq('p.visible', true))
-            ->addGroupBy('p.id')
-            ->addGroupBy('p.name')
+            ->andWhere($qb->expr()->eq('c.visible', true))
+            ->andHaving($qb->expr()->gt('total', 0))
+            ->addGroupBy('p')
             ->addGroupBy('t.project')
-            ->addGroupBy('p.comment')
-            ->addGroupBy('p.timeBudget')
-            ->addGroupBy('p.end')
         ;
+        $this->addPermissionCriteria($qb, $user);
 
         $qb
             ->setParameter('starting_date', $begin->format('Y-m-d'))

@@ -344,26 +344,6 @@
                 <source>label.billable</source>
                 <target>Billable</target>
             </trans-unit>
-            <trans-unit id="label.today">
-                <source>label.today</source>
-                <target>Today</target>
-            </trans-unit>
-            <trans-unit id="label.week">
-                <source>label.week</source>
-                <target>Week</target>
-            </trans-unit>
-            <trans-unit id="label.total">
-                <source>label.total</source>
-                <target>Total</target>
-            </trans-unit>
-            <trans-unit id="label.expected_duration">
-                <source>label.expected_duration</source>
-                <target>Expected Duration</target>
-            </trans-unit>
-            <trans-unit id="label.expected_delivery">
-                <source>label.expected_delivery</source>
-                <target>Expected Delivery</target>
-            </trans-unit>
 
             <!--
               Buttons & Actions

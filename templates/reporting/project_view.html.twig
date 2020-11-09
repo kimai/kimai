@@ -1,42 +1,34 @@
 {% extends 'reporting/layout.html.twig' %}
 
-{% block report_title %}{{ 'project_view'|trans({}, 'reporting') }}{% endblock %}
+{% block report_title %}{{ 'report_project_view'|trans({}, 'reporting') }}{% endblock %}
 
 {% block report %}
 
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_before %}
-            {{ form_start(form, {'action': path('report_project_view'), 'attr': {'class': 'form-inline'}}) }}
-        {% endblock %}
-        {% block box_after %}
-            {{ form_end(form) }}
-        {% endblock %}
-        {% block box_title %}
-            {{ form_widget(form) }}
-        {% endblock %}
         {% block box_body_class %}project-view-reporting-box no-padding table-responsive{% endblock %}
         {% block box_body %}
             <table class="table table-bordered table-hover dataTable">
                 <tr>
                     <th>{{'label.name'|trans}}</th>
-                    <th>{{'label.duration'|trans}}</th>
-                    <th>{{'label.week'|trans}}</th>
-                    <th>{{'label.total'|trans}}</th>
-                    <th>{{'label.expected_duration'|trans}}</th>
-                    <th>{{'label.expected_delivery'|trans}}</th>
+                    <th class="text-nowrap text-right">{{ 'daterangepicker.today'|trans({}, 'daterangepicker') }}</th>
+                    <th class="text-nowrap text-right">{{ 'agendaWeek'|trans }}</th>
+                    <th class="text-nowrap text-right">{{ 'stats.durationTotal'|trans }}</th>
+                    <th class="text-nowrap text-right">{{ 'label.timeBudget'|trans }}</th>
+                    <th class="text-nowrap text-center">{{ 'label.project_end'|trans }}</th>
                     <th>{{'label.comment'|trans}}</th>
                 </tr>
-                {% for entry in entries %}
-                <tr>
-                    <td>{{entry.name}}</td>
-                    <td>{{entry.today|duration}}</td>
-                    <td>{{entry.week|duration}}</td>
-                    <td>{{entry.total|duration}}</td>
-                    <td>{{entry.expected_duration|duration}}</td>
-                    <td>{{entry.expected_delivery|date("Y/m/d")}}</td>
-                    <td>{{entry.comment}}</td>
-                </tr>
+                {% for entry in entries|sort((a, b) => a.0.name <=> b.0.name) %}
+                    {% set project = entry.0 %}
+                    <tr>
+                        <td>{{ project.name }}</td>
+                        <td class="text-nowrap text-right">{{ entry.today|duration }}</td>
+                        <td class="text-nowrap text-right">{{ entry.week|duration }}</td>
+                        <td class="text-nowrap text-right">{{ entry.total|duration }}</td>
+                        <td class="text-nowrap text-right">{{ project.timeBudget|duration }}</td>
+                        <td class="text-nowrap text-center">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
+                        <td>{{ project.comment }}</td>
+                    </tr>
                 {% endfor %}
             </table>
         {% endblock %}

@@ -15,7 +15,6 @@ use App\Reporting\MonthByUserForm;
 use App\Reporting\MonthlyUserList;
 use App\Reporting\MonthlyUserListForm;
 use App\Reporting\ProjectView;
-use App\Reporting\ProjectViewForm;
 use App\Reporting\WeekByUser;
 use App\Reporting\WeekByUserForm;
 use App\Repository\ProjectRepository;
@@ -140,18 +139,15 @@ final class ReportingController extends AbstractController
 
     /**
      * @Route(path="/project_view", name="report_project_view", methods={"GET","POST"})
+     * @Security("is_granted('budget_project')")
      */
     public function projectView(Request $request, ProjectRepository $projectRepository)
     {
-        $values = new ProjectView();
-        $form = $this->createForm(ProjectViewForm::class, $values, []);
-
         $start = $this->getDateTimeFactory()->getStartOfWeek();
         $end = $this->getDateTimeFactory()->getEndOfWeek();
-        $entries = $projectRepository->getProjectView($start, $end);
+        $entries = $projectRepository->getProjectView($start, $end, $this->getUser());
 
         return $this->render('reporting/project_view.html.twig', [
-            'form' => $form->createView(),
             'entries' => $entries,
         ]);
     }
