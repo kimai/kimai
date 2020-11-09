@@ -22,6 +22,7 @@ class EventExtensions extends AbstractExtension
     {
         return [
             new TwigFunction('trigger', [ThemeEventExtension::class, 'trigger']),
+            new TwigFunction('javascript_translations', [ThemeEventExtension::class, 'getJavascriptTranslations']),
         ];
     }
 }
