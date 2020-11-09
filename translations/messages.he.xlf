@@ -1041,6 +1041,14 @@
         <source>menu.reporting</source>
         <target>דיווח</target>
       </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>שדות שיש לעדכן צריכים קודם להיות פעילים על ידי סימון התיבה המשויכת</target>
+      </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>שדות נוספים</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
