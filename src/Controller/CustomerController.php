@@ -9,7 +9,7 @@
 
 namespace App\Controller;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
@@ -109,7 +109,7 @@ final class CustomerController extends AbstractController
      * @Route(path="/create", name="admin_customer_create", methods={"GET", "POST"})
      * @Security("is_granted('create_customer')")
      */
-    public function createAction(Request $request, FormConfiguration $configuration)
+    public function createAction(Request $request, SystemConfiguration $configuration)
     {
         $timezone = date_default_timezone_get();
         if (null !== $configuration->getCustomerDefaultTimezone()) {
@@ -144,7 +144,7 @@ final class CustomerController extends AbstractController
 
                 return $this->redirectToRoute('admin_customer');
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -165,7 +165,7 @@ final class CustomerController extends AbstractController
         try {
             $this->repository->deleteComment($comment);
         } catch (\Exception $ex) {
-            $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashDeleteException($ex);
         }
 
         return $this->redirectToRoute('customer_details', ['id' => $customerId]);
@@ -186,7 +186,7 @@ final class CustomerController extends AbstractController
             try {
                 $this->repository->saveComment($comment);
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -203,7 +203,7 @@ final class CustomerController extends AbstractController
         try {
             $this->repository->saveComment($comment);
         } catch (\Exception $ex) {
-            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('customer_details', ['id' => $comment->getCustomer()->getId()]);
@@ -230,7 +230,7 @@ final class CustomerController extends AbstractController
         try {
             $teamRepository->saveTeam($defaultTeam);
         } catch (\Exception $ex) {
-            $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
@@ -340,7 +340,7 @@ final class CustomerController extends AbstractController
 
                 return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -396,7 +396,7 @@ final class CustomerController extends AbstractController
                 $this->repository->deleteCustomer($customer, $deleteForm->get('customer')->getData());
                 $this->flashSuccess('action.delete.success');
             } catch (\Exception $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashDeleteException($ex);
             }
 
             return $this->redirectToRoute('admin_customer');
@@ -455,7 +455,7 @@ final class CustomerController extends AbstractController
 
                 return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 

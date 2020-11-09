@@ -6,7 +6,7 @@
     {% set actions = actions|merge({'download': {'url': path('customer_export'), 'class': 'toolbar-action'}}) %}
 
     {% if is_granted('create_customer') %}
-        {% set actions = actions|merge({'create': path('admin_customer_create')}) %}
+        {% set actions = actions|merge({'create': {'url': path('admin_customer_create'), 'class': 'modal-ajax-form'}}) %}
     {% endif %}
 
     {% set actions = actions|merge({'help': {'url': 'customer.html'|docu_link, 'target': '_blank'}}) %}
@@ -15,7 +15,7 @@
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
 
-{% macro customer(customer, view) %}
+{% macro customer(customer, view, options) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set actions = {} %}
 
@@ -58,7 +58,7 @@
     {% endif %}
 
     {% if view != 'index' and view != 'custom' %}
-        {% set actions = actions|merge({'back': path('admin_customer')}) %}
+        {% set actions = actions|merge({'back': options.back|default(path('admin_customer'))}) %}
     {% endif %}
 
     {% set event = trigger('actions.customer', {'actions': actions, 'view': view, 'customer': customer}) %}

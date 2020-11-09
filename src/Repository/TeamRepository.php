@@ -21,6 +21,9 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Team>
+ */
 class TeamRepository extends EntityRepository
 {
     public function find($id, $lockMode = null, $lockVersion = null)

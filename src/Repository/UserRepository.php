@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Role;
 use App\Entity\User;
+use App\Repository\Loader\UserIdLoader;
 use App\Repository\Loader\UserLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
@@ -24,6 +25,9 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<User>
+ */
 class UserRepository extends EntityRepository implements UserLoaderInterface
 {
     public function getById($id): ?User
@@ -53,16 +57,15 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
      */
     public function getUserById($id): ?User
     {
-        return $this->createQueryBuilder('u')
-            ->select('u', 'p', 't', 'tu', 'tl')
-            ->leftJoin('u.preferences', 'p')
-            ->leftJoin('u.teams', 't')
-            ->leftJoin('t.users', 'tu')
-            ->leftJoin('t.teamlead', 'tl')
-            ->where('u.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult();
+        /** @var User|null $user */
+        $user = $this->findOneBy(['id' => $id]);
+
+        if ($user !== null) {
+            $loader = new UserIdLoader($this->getEntityManager());
+            $loader->loadResults([$user->getId()]);
+        }
+
+        return $user;
     }
 
     /**
@@ -124,17 +127,21 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
      */
     public function loadUserByUsername($username)
     {
-        return $this->createQueryBuilder('u')
-            ->select('u', 'p', 't', 'tu', 'tl')
-            ->leftJoin('u.preferences', 'p')
-            ->leftJoin('u.teams', 't')
-            ->leftJoin('t.users', 'tu')
-            ->leftJoin('t.teamlead', 'tl')
+        /** @var User|null $user */
+        $user = $this->createQueryBuilder('u')
+            ->select('u')
             ->where('u.username = :username')
             ->orWhere('u.email = :username')
             ->setParameter('username', $username)
             ->getQuery()
             ->getOneOrNullResult();
+
+        if ($user !== null) {
+            $loader = new UserIdLoader($this->getEntityManager());
+            $loader->loadResults([$user->getId()]);
+        }
+
+        return $user;
     }
 
     public function getQueryBuilderForFormType(UserFormTypeQuery $query): QueryBuilder

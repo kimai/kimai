@@ -9,6 +9,7 @@
 
 namespace App\Tests\API;
 
+use App\API\BaseApiController;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -38,9 +39,10 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setHourlyRate(true)
             ->setAmount(10)
             ->setUser($this->getUserByRole($role))
-            ->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1))
             ->setAllowEmptyDescriptions(false)
+            ->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1))
         ;
+
         $this->importFixture($fixture);
     }
 
@@ -273,12 +275,62 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public function testGetEntity()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $em = $this->getEntityManager();
+
+        $startDate = new \DateTime('2020-03-27 14:35:59', new \DateTimeZone('Pacific/Tongatapu'));
+        $endDate = (clone $startDate)->modify('+ 46385 seconds');
+        $project = $em->getRepository(Project::class)->find(1);
+        $activity = $em->getRepository(Activity::class)->find(1);
+
+        $tag = new Tag();
+        $tag->setName('test');
+        $em->persist($tag);
+
+        $timesheet = new Timesheet();
+        $timesheet
+            ->setHourlyRate(137.21)
+            ->setInternalRate(64.96)
+            ->setBegin($startDate)
+            ->setEnd($endDate)
+            ->setExported(true)
+            ->setDescription('**foo**' . PHP_EOL . 'bar')
+            ->setUser($this->getUserByRole(User::ROLE_USER))
+            ->setProject($project)
+            ->setActivity($activity)
+            ->addTag($tag)
+        ;
+        $em->persist($timesheet);
+
         $this->assertAccessIsGranted($client, '/api/timesheets/1');
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+
+        $expected = [
+            'activity' => 1,
+            'project' => 1,
+            'user' => 2,
+            'tags' => [
+                0 => 'test'
+            ],
+            'id' => 1,
+            // make sure the timezone is properly applied in serializer (see #1858)
+            // minute and second are different from the above datetime object, because of applied default minute rounding
+            'begin' => '2020-03-27T14:35:00+1300',
+            'end' => '2020-03-28T03:30:00+1300',
+            'description' => "**foo**\nbar",
+            'duration' => 46500,
+            'exported' => true,
+            'metaFields' => [],
+            'hourlyRate' => 137.21,
+            'rate' => 1772.3,
+            'internalRate' => 0.0,
+        ];
+
+        foreach ($expected as $key => $value) {
+            self::assertEquals($value, $result[$key]);
+        }
     }
 
     public function testGetEntityAccessDenied()
@@ -325,6 +377,30 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        $this->assertNotEmpty($result['id']);
+        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertEquals(2016, $result['rate']);
+    }
+
+    public function testPostActionWithFullExpandedResponse()
+    {
+        $dateTime = (new UserDateTimeFactoryFactory($this))->create(self::TEST_TIMEZONE);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'description' => 'foo',
+            'fixedRate' => 2016,
+            'hourlyRate' => 127
+        ];
+        $this->request($client, '/api/timesheets?full=true', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntityFull', $result);
         $this->assertNotEmpty($result['id']);
         $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
@@ -775,6 +851,38 @@ class TimesheetControllerTest extends APIControllerBaseTest
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->find($result['id']);
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        $this->assertNull($timesheet->getEnd());
+        $this->assertEquals(1, $timesheet->getActivity()->getId());
+        $this->assertEquals(1, $timesheet->getProject()->getId());
+        $this->assertEmpty($timesheet->getDescription());
+        $this->assertEmpty($timesheet->getTags());
+    }
+
+    public function testRestartActionWithBegin()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importFixtureForUser(User::ROLE_USER);
+
+        $data = [
+            'description' => 'foo',
+            'tags' => 'another,testing,bar'
+        ];
+        $this->request($client, '/api/timesheets/1', 'PATCH', [], json_encode($data));
+
+        $begin = new \DateTime('2019-11-27 13:55:00');
+        $this->request($client, '/api/timesheets/1/restart', 'PATCH', ['begin' => $begin->format(BaseApiController::DATE_FORMAT_PHP)]);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        $this->assertEmpty($result['description']);
+        $this->assertEmpty($result['tags']);
+
+        $em = $this->getEntityManager();
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find($result['id']);
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        $this->assertEquals($begin->format(BaseApiController::DATE_FORMAT_PHP), $timesheet->getBegin()->format(BaseApiController::DATE_FORMAT_PHP));
         $this->assertNull($timesheet->getEnd());
         $this->assertEquals(1, $timesheet->getActivity()->getId());
         $this->assertEquals(1, $timesheet->getProject()->getId());

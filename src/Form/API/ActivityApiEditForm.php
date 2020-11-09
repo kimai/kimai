@@ -34,7 +34,6 @@ class ActivityApiEditForm extends ActivityEditForm
 
         $resolver->setDefaults([
             'csrf_protection' => false,
-            'create_more' => false,
         ]);
     }
 }

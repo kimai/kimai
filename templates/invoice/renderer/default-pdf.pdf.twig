@@ -33,10 +33,10 @@
         <tr>
             <td>
                 <strong>{{ 'label.contact'|trans }}</strong>:
-                {{ model.template.contact|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+                {{ model.template.contact|nl2str(' &ndash; ') }}
                 <br>
                 <strong>{{ 'label.invoice_bank_account'|trans }}</strong>:
-                {{ model.template.paymentDetails|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+                {{ model.template.paymentDetails|nl2str(' &ndash; ') }}
             </td>
             <td align="right">
                 {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
@@ -95,11 +95,11 @@ mpdf-->
     <table class="items">
         <thead>
             <tr>
-                <th class="first">{{ 'label.date'|trans }}</th>
-                <th>{{ 'label.description'|trans }}</th>
-                <th class="text-right">{{ 'label.unit_price'|trans }}</th>
-                <th class="text-right">{{ 'label.amount'|trans }}</th>
-                <th class="last text-right">{{ 'label.total_rate'|trans }}</th>
+                <th class="first"><strong>{{ 'label.date'|trans }}</strong></th>
+                <th><strong>{{ 'label.description'|trans }}</strong></th>
+                <th class="text-right"><strong>{{ 'label.unit_price'|trans }}</strong></th>
+                <th class="text-right"><strong>{{ 'label.amount'|trans }}</strong></th>
+                <th class="last text-right"><strong>{{ 'label.total_rate'|trans }}</strong></th>
             </tr>
         </thead>
         <tbody>
@@ -151,9 +151,9 @@ mpdf-->
     </table>
 
     {% if model.template.paymentTerms is not empty %}
-    <p>
+    <div class="paymentTerms">
         {{ model.template.paymentTerms|md2html }}
-    </p>
+    </div>
     {% endif %}
 </div>
 </body>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="pt" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="registration.subject">
+        <source>registration.subject</source>
+        <target>Ative a sua conta</target>
+      </trans-unit>
+      <trans-unit id="registration.title">
+        <source>registration.title</source>
+        <target>Bem-vindo %username%</target>
+      </trans-unit>
+      <trans-unit id="registration.button">
+        <source>registration.button</source>
+        <target>Ative a sua conta</target>
+      </trans-unit>
+      <trans-unit id="button_copy_url_to_browser">
+        <source>button_copy_url_to_browser</source>
+        <target>Se o botão não funcionar, por favor, copie e cole a seguinte URL no seu navegador: %url%</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

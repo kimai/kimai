@@ -18,10 +18,6 @@
                 <source>help</source>
                 <target>Pomoc</target>
             </trans-unit>
-            <trans-unit id="tab.thanks">
-                <source>tab.thanks</source>
-                <target>Poďakovanie</target>
-            </trans-unit>
             <trans-unit id="donate">
                 <source>donate</source>
                 <target>Podporte Kimai</target>

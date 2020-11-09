@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="tr" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="button_copy_url_to_browser">
+        <source>button_copy_url_to_browser</source>
+        <target>Düğme çalışmıyorsa, lütfen şu URL'yi kopyalayıp tarayıcınıza yapıştırın: %url%</target>
+      </trans-unit>
+      <trans-unit id="automated_email_dont_answer">
+        <source>automated_email_dont_answer</source>
+        <target>Bu otomatik olarak oluşturulmuş bir e-postadır. Lütfen yanıtlamayın, adres okunmayacaktır.</target>
+      </trans-unit>
+      <trans-unit id="registration.subject">
+        <source>registration.subject</source>
+        <target>Hesabınızı etkinleştirin</target>
+      </trans-unit>
+      <trans-unit id="registration.title">
+        <source>registration.title</source>
+        <target>Hoş geldin %username%</target>
+      </trans-unit>
+      <trans-unit id="registration.button">
+        <source>registration.button</source>
+        <target>Hesabınızı etkinleştirin</target>
+      </trans-unit>
+      <trans-unit id="registration.intro">
+        <source>registration.intro</source>
+        <target>Kimai zaman izleyicisine %email% e-posta adresiyle kaydoldunuz. Şimdi, bağlantının süresi dolmadan birkaç saat içinde hesabınızı etkinleştirmeniz gerekiyor.</target>
+      </trans-unit>
+      <trans-unit id="reset.subject">
+        <source>reset.subject</source>
+        <target>Parolanızı sıfırlayın</target>
+      </trans-unit>
+      <trans-unit id="reset.title">
+        <source>reset.title</source>
+        <target>Bu olabilir ...</target>
+      </trans-unit>
+      <trans-unit id="reset.button">
+        <source>reset.button</source>
+        <target>Parolanızı sıfırlayın</target>
+      </trans-unit>
+      <trans-unit id="reset.intro">
+        <source>reset.intro</source>
+        <target>... parolanızı mı unuttunuz? Endişelenmeyin: Kimai, yeni bir tane oluşturmanıza yardımcı olacaktır:</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

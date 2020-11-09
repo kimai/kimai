@@ -20,7 +20,7 @@ export default class KimaiAutocomplete extends KimaiPlugin {
     }
 
     init() {
-        this.minChars = this.getContainer().getConfiguration().get('autoComplete');
+        this.minChars = this.getConfiguration('autoComplete');
     }
 
     getId() {

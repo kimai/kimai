@@ -118,6 +118,9 @@ class Project implements EntityWithMetaFields
      * @Serializer\Expose()
      * @Serializer\Groups({"Project_Entity"})
      * @Serializer\Type(name="DateTime")
+     * @Serializer\Accessor(getter="getOrderDate")
+     *
+     * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
      * @Exporter\Expose(label="label.orderDate", type="datetime")
      *
@@ -130,6 +133,9 @@ class Project implements EntityWithMetaFields
      * @Serializer\Expose()
      * @Serializer\Groups({"Project"})
      * @Serializer\Type(name="DateTime")
+     * @Serializer\Accessor(getter="getStart")
+     *
+     * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
      * @Exporter\Expose(label="label.project_start", type="datetime")
      *
@@ -142,6 +148,9 @@ class Project implements EntityWithMetaFields
      * @Serializer\Expose()
      * @Serializer\Groups({"Project"})
      * @Serializer\Type(name="DateTime")
+     * @Serializer\Accessor(getter="getEnd")
+     *
+     * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
      * @Exporter\Expose(label="label.project_end", type="datetime")
      *

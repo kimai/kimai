@@ -45,9 +45,11 @@ final class TimesheetFutureTimesValidator extends ConstraintValidator
             return;
         }
 
+        $now = new \DateTime('now', $timesheet->getBegin()->getTimezone());
+
         // allow configured default rounding time + 1 minute - see #1295
         $allowedDiff = ($this->configuration->getDefaultRoundingBegin() * 60) + 60;
-        if ((time() + $allowedDiff) < $timesheet->getBegin()->getTimestamp()) {
+        if (($now->getTimestamp() + $allowedDiff) < $timesheet->getBegin()->getTimestamp()) {
             $this->context->buildViolation('The begin date cannot be in the future.')
                 ->atPath('begin')
                 ->setTranslationDomain('validators')

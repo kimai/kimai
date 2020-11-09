@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.11.1](https://github.com/kevinpapst/kimai2/tree/1.11.1)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.11...1.11.1)
+
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.11.1)
+
+## [1.11](https://github.com/kevinpapst/kimai2/tree/1.11)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.10.2...1.11)
+
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.11)
+
+## [1.10.2](https://github.com/kevinpapst/kimai2/tree/1.10.2)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.9...1.10.2)
+
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.10.2)
+
+## [1.10.1](https://github.com/kevinpapst/kimai2/tree/1.10.1)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.9...1.10.1)
+
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.10.1)
+
 ## [1.10](https://github.com/kevinpapst/kimai2/tree/1.10)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.9...1.10)
 

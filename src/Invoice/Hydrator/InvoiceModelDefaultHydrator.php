@@ -22,7 +22,7 @@ class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         $subtotal = $model->getCalculator()->getSubtotal();
         $formatter = $model->getFormatter();
 
-        $values = [
+        return [
             'invoice.due_date' => $formatter->getFormattedDateTime($model->getDueDate()),
             'invoice.date' => $formatter->getFormattedDateTime($model->getInvoiceDate()),
             'invoice.number' => $model->getInvoiceNumber(),
@@ -67,7 +67,5 @@ class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'query.end_month_number' => $model->getQuery()->getEnd()->format('m'),                  // since 1.9
             'query.end_year' => $model->getQuery()->getEnd()->format('Y'),                          // since 1.9
         ];
-
-        return $values;
     }
 }

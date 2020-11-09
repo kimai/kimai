@@ -14,7 +14,7 @@ use App\Entity\UserPreference;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * This event should be used, if further user preferences should added dynamically
+ * This event should be used, if further user preferences should be added dynamically.
  */
 final class UserPreferenceEvent extends Event
 {
@@ -26,11 +26,11 @@ final class UserPreferenceEvent extends Event
     /**
      * @var User
      */
-    protected $user;
+    private $user;
     /**
      * @var UserPreference[]
      */
-    protected $preferences;
+    private $preferences = [];
 
     /**
      * @param User $user
@@ -44,9 +44,10 @@ final class UserPreferenceEvent extends Event
 
     /**
      * Do not set the preferences directly to the user object, but ONLY via addPreference()
+     *
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -54,7 +55,7 @@ final class UserPreferenceEvent extends Event
     /**
      * @return UserPreference[]
      */
-    public function getPreferences()
+    public function getPreferences(): array
     {
         return $this->preferences;
     }

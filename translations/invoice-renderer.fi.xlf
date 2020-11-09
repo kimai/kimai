@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fi" datatype="plaintext" original="invoice-renderer.en.xlf">
+        <body>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target state="translated">Lasku</target>
+            </trans-unit>
+            <trans-unit id="help.upload">
+                <source>help.upload</source>
+                <target state="translated">Huomioitavaa: olemassa olevat tiedostot korvataan. Sallitut tiedosto tyypit on: DOCX, ODS, XLSX.</target>
+            </trans-unit>
+            <!-- Optgroups -->
+            <trans-unit id="programmatic">
+                <source>programmatic</source>
+                <target state="translated">Jatko käsittelyä varten</target>
+            </trans-unit>
+            <trans-unit id="Html">
+                <source>Html</source>
+                <target state="translated">HTML (tulostukseen selaimen kautta)</target>
+            </trans-unit>
+            <trans-unit id="Docx">
+                <source>Docx</source>
+                <target state="translated">Microsoft Word (Docx)</target>
+            </trans-unit>
+            <trans-unit id="Xls">
+                <source>Xls</source>
+                <target state="translated">Microsoft Excel (Xls)</target>
+            </trans-unit>
+            <trans-unit id="Ods">
+                <source>Ods</source>
+                <target state="translated">Open Office (Taulukkolaskenta)</target>
+            </trans-unit>
+            <trans-unit id="Xlsx">
+                <source>Xlsx</source>
+                <target state="translated">Microsoft Excel (Xlsx)</target>
+            </trans-unit>
+            <trans-unit id="Pdf">
+                <source>Pdf</source>
+                <target state="translated">PDF</target>
+            </trans-unit>
+            <!-- Renderer -->
+            <trans-unit id="default">
+                <source>default</source>
+                <target state="translated">Lasku</target>
+            </trans-unit>
+            <trans-unit id="default-pdf">
+                <source>default-pdf</source>
+                <target state="translated">Lasku</target>
+            </trans-unit>
+            <trans-unit id="xml">
+                <source>xml</source>
+                <target state="translated">XML</target>
+            </trans-unit>
+            <trans-unit id="javascript">
+                <source>javascript</source>
+                <target state="translated">JSON</target>
+            </trans-unit>
+            <trans-unit id="text">
+                <source>text</source>
+                <target state="translated">Teksti</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target state="translated">Työajanseuranta</target>
+            </trans-unit>
+            <trans-unit id="freelancer">
+                <source>freelancer</source>
+                <target state="translated">Freelancer</target>
+            </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target state="translated">Lasku</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target state="translated">Lasku</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target state="translated">Lasku</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

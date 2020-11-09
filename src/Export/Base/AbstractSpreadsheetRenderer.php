@@ -21,6 +21,7 @@ use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
 use DateTime;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
@@ -312,7 +313,7 @@ abstract class AbstractSpreadsheetRenderer
             $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use (&$isColumnFormatted, $maxWidth, $wrapText) {
                 $cell = $sheet->getCellByColumnAndRow($column, $row);
 
-                $cell->setValue($entity->getDescription());
+                $cell->setValueExplicit($entity->getDescription(), DataType::TYPE_STRING);
 
                 // Apply wrap text if configured
                 if ($wrapText) {

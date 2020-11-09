@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="hu" datatype="plaintext" original="teams.en.xlf">
+    <body>
+      <trans-unit id="teams.title">
+        <source>teams.title</source>
+        <target>Csoportok</target>
+      </trans-unit>
+      <trans-unit id="teams.project_access">
+        <source>teams.project_access</source>
+        <target>Jogosultság a projektek eléréséhez</target>
+      </trans-unit>
+      <trans-unit id="teams.customer_access">
+        <source>teams.customer_access</source>
+        <target>Jogosultság az ügyfelek eléréséhez</target>
+      </trans-unit>
+      <trans-unit id="team.visibility_global">
+        <source>team.visibility_global</source>
+        <target>Mindenki számára látható, mivel még nem lett csoport hozzárendelve.</target>
+      </trans-unit>
+      <trans-unit id="team.visibility_restricted">
+        <source>team.visibility_restricted</source>
+        <target>Csak a következő csoportok és adminisztrátorok láthatják.</target>
+      </trans-unit>
+      <trans-unit id="team.create_default">
+        <source>team.create_default</source>
+        <target>Új csoport készítése a jogosultságok korlátozására</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

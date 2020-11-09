@@ -10,7 +10,6 @@
 namespace App\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,7 +23,7 @@ final class WidgetController extends AbstractController
      * @Route(path="/working-time/{year}/{week}", requirements={"year": "[1-9]\d*", "week": "[0-9]\d*"}, name="widgets_working_time_chart", methods={"GET"})
      * @Security("is_granted('view_own_timesheet')")
      */
-    public function workingtimechartAction($year, $week, Request $request): Response
+    public function workingtimechartAction($year, $week): Response
     {
         return $this->render('widget/paginatedworkingtimechart.html.twig', [
             'user' => $this->getUser(),

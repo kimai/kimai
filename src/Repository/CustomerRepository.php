@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\CustomerStatistic;
@@ -27,6 +28,9 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Customer>
+ */
 class CustomerRepository extends EntityRepository
 {
     /**
@@ -105,7 +109,7 @@ class CustomerRepository extends EntityRepository
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
-            ->addSelect('COUNT(a.id) as activityAmount')
+            ->select('COUNT(a.id) as activityAmount')
             ->from(Activity::class, 'a')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 'a.project = p.id')
             ->andWhere('a.project = p.id')
@@ -118,7 +122,7 @@ class CustomerRepository extends EntityRepository
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->addSelect('COUNT(p.id) as projectAmount')
+        $qb->select('COUNT(p.id) as projectAmount')
             ->from(Project::class, 'p')
             ->andWhere('p.customer = :customer')
         ;
@@ -147,25 +151,27 @@ class CustomerRepository extends EntityRepository
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
-        $qb->leftJoin('c.teams', 'teams');
-
         if (empty($teams)) {
-            $qb->andWhere($qb->expr()->isNull('teams'));
+            $qb->andWhere('SIZE(c.teams) = 0');
 
             return;
         }
 
         $or = $qb->expr()->orX(
-            $qb->expr()->isNull('teams'),
+            'SIZE(c.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
         $qb->andWhere($or);
 
-        $qb->setParameter('teams', $teams);
+        $ids = array_values(array_unique(array_map(function (Team $team) {
+            return $team->getId();
+        }, $teams)));
+
+        $qb->setParameter('teams', $ids);
     }
 
     /**
-     * @deprecated since 1.1 - use getQueryBuilderForFormType() istead - will be removed with 2.0
+     * @deprecated since 1.1 - use getQueryBuilderForFormType() instead - will be removed with 2.0
      */
     public function builderForEntityType($customer)
     {
@@ -214,12 +220,10 @@ class CustomerRepository extends EntityRepository
 
         $qb
             ->select('c')
-            ->distinct()
             ->from(Customer::class, 'c')
         ;
 
-        $orderBy = 'c.' . $query->getOrderBy();
-        $qb->orderBy($orderBy, $query->getOrder());
+        $qb->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
         if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));

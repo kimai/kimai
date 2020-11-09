@@ -15,26 +15,30 @@ use App\Form\Model\SystemConfiguration;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Configuration>
+ */
 class ConfigurationRepository extends EntityRepository implements ConfigLoaderInterface
 {
-    private static $cacheByPrefix = null;
+    private static $cacheByPrefix = [];
     private static $cacheAll = [];
+    private static $initialized = false;
 
     public function clearCache()
     {
-        static::$cacheByPrefix = null;
-        static::$cacheAll = null;
+        static::$cacheByPrefix = [];
+        static::$cacheAll = [];
+        static::$initialized = false;
     }
 
     private function prefillCache()
     {
-        if (null !== static::$cacheByPrefix) {
+        if (static::$initialized === true) {
             return;
         }
 
         /** @var Configuration[] $configs */
         $configs = $this->findAll();
-        static::$cacheByPrefix = [];
         foreach ($configs as $config) {
             $key = substr($config->getName(), 0, strpos($config->getName(), '.'));
             if (!\array_key_exists($key, static::$cacheByPrefix)) {
@@ -43,6 +47,7 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
             static::$cacheByPrefix[$key][] = $config;
             static::$cacheAll[] = $config;
         }
+        static::$initialized = true;
     }
 
     public function saveConfiguration(Configuration $configuration)

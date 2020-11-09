@@ -1,0 +1,8 @@
+/* Currently only used in batch-update form for timesheets, to highlight sections of combined fields */
+form fieldset {
+    border-radius: $box-border-radius;
+    padding: 10px;
+    &:hover {
+        background-color: $highlight-bg;
+    }
+}

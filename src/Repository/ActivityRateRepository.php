@@ -14,6 +14,9 @@ use App\Entity\ActivityRate;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<ActivityRate>
+ */
 class ActivityRateRepository extends EntityRepository
 {
     public function saveRate(ActivityRate $rate)

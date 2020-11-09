@@ -111,7 +111,7 @@
                         </tr>
                     {% endif %}
                 {% endif %}
-                {% for metaField in customer.visibleMetaFields %}
+                {% for metaField in customer.visibleMetaFields|sort((a, b) => a.order <=> b.order) %}
                     <tr>
                         <th>{{ metaField.label|trans }}</th>
                         <td>{{ widgets.form_type_value(metaField.type, metaField.value, customer) }}</td>

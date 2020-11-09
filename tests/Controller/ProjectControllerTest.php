@@ -19,7 +19,6 @@ use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
-use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
@@ -341,8 +340,6 @@ class ProjectControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/create');
         $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
-        $this->assertTrue($form->has('project_edit_form[create_more]'));
-        $this->assertFalse($form->get('project_edit_form[create_more]')->hasValue());
         $client->submit($form, [
             'project_edit_form' => [
                 'name' => 'Test 2',
@@ -366,45 +363,11 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertFalse($form->has('project_edit_form[metaFields][1][value]'));
     }
 
-    public function testCreateActionWithCreateMore()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-
-        $fixture = new CustomerFixtures();
-        $fixture->setAmount(10);
-        $this->importFixture($fixture);
-
-        $this->assertAccessIsGranted($client, '/admin/project/create');
-        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
-        $this->assertTrue($form->has('project_edit_form[create_more]'));
-
-        /** @var \Symfony\Component\DomCrawler\Field\ChoiceFormField $customer */
-        $customer = $form->get('project_edit_form[customer]');
-        $options = $customer->availableOptionValues();
-        $selectedCustomer = $options[array_rand($options)];
-
-        $client->submit($form, [
-            'project_edit_form' => [
-                'name' => 'Test create more',
-                'create_more' => true,
-                'customer' => $selectedCustomer
-            ]
-        ]);
-        $this->assertFalse($client->getResponse()->isRedirect());
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
-        $this->assertTrue($form->has('project_edit_form[create_more]'));
-        $this->assertTrue($form->get('project_edit_form[create_more]')->hasValue());
-        $this->assertEquals(1, $form->get('project_edit_form[create_more]')->getValue());
-        $this->assertEquals($selectedCustomer, $form->get('project_edit_form[customer]')->getValue());
-    }
-
     public function testEditAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/edit');
         $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
-        $this->assertFalse($form->has('project_edit_form[create_more]'));
         $this->assertEquals('Test', $form->get('project_edit_form[name]')->getValue());
         $client->submit($form, [
             'project_edit_form' => ['name' => 'Test 2']

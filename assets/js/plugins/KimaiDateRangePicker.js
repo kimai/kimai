@@ -27,6 +27,7 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
     activateDateRangePicker(selector) {
         const TRANSLATE = this.getContainer().getTranslation();
         const DATE_UTILS = this.getContainer().getPlugin('date');
+        const firstDow = this.getConfiguration('first_dow_iso') % 7;
 
         jQuery(selector + ' ' + this.selector).each(function(index) {
             let localeFormat = jQuery(this).data('format');
@@ -46,11 +47,11 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
                 showDropdowns: true,
                 autoUpdateInput: false,
                 autoApply: false,
-                linkedCalendars: false,
+                linkedCalendars: true,
                 locale: {
                     separator: separator,
                     format: localeFormat,
-                    firstDay: moment().startOf('week').format('d'),
+                    firstDay: firstDow,
                     applyLabel: TRANSLATE.get('confirm'),
                     cancelLabel: TRANSLATE.get('cancel'),
                     customRangeLabel: TRANSLATE.get('customRange'),

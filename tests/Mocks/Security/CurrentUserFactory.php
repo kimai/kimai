@@ -11,10 +11,8 @@ namespace App\Tests\Mocks\Security;
 
 use App\Entity\User;
 use App\Entity\UserPreference;
-use App\Repository\UserRepository;
 use App\Security\CurrentUser;
 use App\Tests\Mocks\AbstractMockFactory;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
@@ -34,13 +32,14 @@ class CurrentUserFactory extends AbstractMockFactory
             $user->addPreference($pref);
         }
 
-        $repository = $this->getMockBuilder(UserRepository::class)->onlyMethods(['getUserById'])->disableOriginalConstructor()->getMock();
-        $repository->expects(TestCase::atMost(1))->method('getUserById')->willReturn($user);
-        $token = $this->getMockBuilder(UsernamePasswordToken::class)->onlyMethods(['getUser'])->disableOriginalConstructor()->getMock();
-        $token->method('getUser')->willReturn($user);
+        $mock = $this->getMockBuilder(UsernamePasswordToken::class)->onlyMethods(['getUser'])->disableOriginalConstructor()->getMock();
+        $mock->method('getUser')->willReturn($user);
+        /** @var UsernamePasswordToken $token */
+        $token = $mock;
+
         $tokenStorage = new TokenStorage();
         $tokenStorage->setToken($token);
 
-        return new CurrentUser($tokenStorage, $repository);
+        return new CurrentUser($tokenStorage);
     }
 }

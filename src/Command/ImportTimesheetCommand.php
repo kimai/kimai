@@ -9,7 +9,7 @@
 
 namespace App\Command;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -17,20 +17,22 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Importer\InvalidFieldsException;
-use App\Importer\UnknownUserException;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Utils\Duration;
 use League\Csv\Reader;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * This command can change anytime, don't rely on its API for the future!
@@ -63,30 +65,15 @@ class ImportTimesheetCommand extends Command
         'Fixed rate',
     ];
 
-    /**
-     * @var CustomerRepository
-     */
     private $customers;
-    /**
-     * @var ProjectRepository
-     */
     private $projects;
-    /**
-     * @var ActivityRepository
-     */
     private $activities;
-    /**
-     * @var UserRepository
-     */
     private $users;
-    /**
-     * @var TimesheetRepository
-     */
+    private $tagRepository;
     private $timesheets;
-    /**
-     * @var FormConfiguration
-     */
     private $configuration;
+    private $encoder;
+
     /**
      * @var Customer
      */
@@ -95,6 +82,10 @@ class ImportTimesheetCommand extends Command
      * @var Customer[]
      */
     private $customerCache = [];
+    /**
+     * @var Project[]
+     */
+    private $projectCache = [];
     /**
      * @var User[]
      */
@@ -115,16 +106,31 @@ class ImportTimesheetCommand extends Command
      * @var string
      */
     private $begin = self::DEFAULT_BEGIN;
+    // some statistics to display to the user
+    private $createdProjects = 0;
+    private $createdUsers = 0;
+    private $createdCustomers = 0;
+    private $createdActivities = 0;
 
-    public function __construct(CustomerRepository $customers, ProjectRepository $projects, ActivityRepository $activities, UserRepository $users, TimesheetRepository $timesheets, FormConfiguration $configuration)
-    {
+    public function __construct(
+        CustomerRepository $customers,
+        ProjectRepository $projects,
+        ActivityRepository $activities,
+        UserRepository $users,
+        TagRepository $tagRepository,
+        TimesheetRepository $timesheets,
+        SystemConfiguration $configuration,
+        UserPasswordEncoderInterface $encoder
+    ) {
         parent::__construct();
         $this->customers = $customers;
         $this->projects = $projects;
         $this->activities = $activities;
         $this->users = $users;
+        $this->tagRepository = $tagRepository;
         $this->timesheets = $timesheets;
         $this->configuration = $configuration;
+        $this->encoder = $encoder;
     }
 
     /**
@@ -145,7 +151,12 @@ class ImportTimesheetCommand extends Command
             ->addOption('activity', null, InputOption::VALUE_OPTIONAL, 'Whether new activities should be "global" or "project" specific. Allowed values are "global" and "project"', 'project')
             ->addOption('delimiter', null, InputOption::VALUE_OPTIONAL, 'The CSV field delimiter', ',')
             ->addOption('begin', null, InputOption::VALUE_OPTIONAL, 'Default begin if none was provided in the format HH:MM', self::DEFAULT_BEGIN)
-            ->addOption('comment', null, InputOption::VALUE_OPTIONAL, 'A description to be added to created customers, projects and activities. %s will be replaced with the current datetime', 'Imported at %s')
+            ->addOption('comment', null, InputOption::VALUE_OPTIONAL, 'A description to be added to created customers, projects and activities. %s will be replaced with the current datetime', 'Created by import at %s')
+            ->addOption('create-users', null, InputOption::VALUE_NONE, 'If set, accounts for not found users will be created')
+            ->addOption('ignore-errors', null, InputOption::VALUE_NONE, 'If set, invalid rows will be skipped')
+            ->addOption('batch', null, InputOption::VALUE_NONE, 'If set, timesheets will be written in batches of 100')
+            ->addOption('domain', null, InputOption::VALUE_OPTIONAL, 'Domain name used for email addresses of new created users. If provided usernames already include a domain, this option will be skipped.', 'example.com')
+            ->addOption('password', null, InputOption::VALUE_OPTIONAL, 'Password for new created users.', 'password')
             ->addArgument('file', InputArgument::REQUIRED, 'The CSV file to be imported')
         ;
     }
@@ -227,14 +238,25 @@ class ImportTimesheetCommand extends Command
             return 5;
         }
 
-        $records = $csv->getRecords();
+        $all = $csv->getRecords();
+        $total = iterator_count($all);
 
+        $io->text(sprintf('Found %s timesheets to import, validating now', $total));
+
+        $records = [];
         $doImport = true;
         $row = 1;
         $errors = 0;
 
+        $createUsers = $input->getOption('create-users');
+        $ignoreErrors = $input->getOption('ignore-errors');
+
         // ======================= validate rows =======================
-        foreach ($records as $record) {
+        $progressBar = new ProgressBar($output, $total);
+
+        $countAll = 0;
+        foreach ($all as $record) {
+            $this->convertRow($record);
             try {
                 $this->validateRow($record);
             } catch (InvalidFieldsException $ex) {
@@ -243,31 +265,57 @@ class ImportTimesheetCommand extends Command
                 $errors++;
             }
 
-            try {
-                $user = $this->getUser($record['User']);
-            } catch (\Exception $ex) {
-                $io->error(sprintf('Unknown user %s in row %s', $record['User'], $row));
-                $doImport = false;
-                $errors++;
+            if (!$createUsers) {
+                if (null === $this->getUser($record['User'])) {
+                    if (!$ignoreErrors) {
+                        $io->error(sprintf('Unknown user %s in row %s', $record['User'], $row));
+                    }
+                    $doImport = false;
+                    $errors++;
+                }
             }
 
             $row++;
-        }
 
-        if (!$doImport) {
+            if ($doImport) {
+                $records[] = $record;
+            }
+            $countAll++;
+            $progressBar->advance();
+        }
+        $progressBar->finish();
+
+        if (!$ignoreErrors && !$doImport) {
             $io->caution(sprintf('Not importing, previous %s errors need to be fixed first.', $errors));
 
             return 5;
         }
 
+        $io->text(sprintf('Validated %s rows.', $countAll));
+        $io->text(sprintf('Importing %s of %s rows, skipping %s with validation errors.', \count($records), iterator_count($all), $errors));
+
+        // values for new users
+        $password = $input->getOption('password');
+        $domain = $input->getOption('domain');
+
+        $progressBar = new ProgressBar($output, \count($records));
+
         $durationParser = new Duration();
         $row = 0;
+
+        $isBatchUpdate = $input->getOption('batch');
+        $batches = [];
+
         foreach ($records as $record) {
             $row++;
             try {
                 $project = $this->getProject($record['Project'], $record['Customer'], $input->getOption('customer'));
                 $activity = $this->getActivity($record['Activity'], $project, $activityType);
+
                 $user = $this->getUser($record['User']);
+                if (null === $user) {
+                    $user = $this->createUser($record['User'], $domain, $password);
+                }
 
                 $begin = null;
                 $end = null;
@@ -309,11 +357,16 @@ class ImportTimesheetCommand extends Command
                 $timesheet->setExported((bool) $record['Exported']);
 
                 if (!empty($record['Tags'])) {
-                    foreach (explode(',', $record['Tags']) as $tag) {
-                        if (empty($tag)) {
+                    foreach (explode(',', $record['Tags']) as $tagName) {
+                        if (empty($tagName)) {
                             continue;
                         }
-                        $timesheet->addTag((new Tag())->setName($tag));
+
+                        if (null === ($tag = $this->tagRepository->findTagByName($tagName))) {
+                            $tag = (new Tag())->setName($tagName);
+                        }
+
+                        $timesheet->addTag($tag);
                     }
                 }
 
@@ -327,12 +380,42 @@ class ImportTimesheetCommand extends Command
                     $timesheet->setFixedRate($record['Fixed rate']);
                 }
 
-                $this->timesheets->save($timesheet);
+                if ($isBatchUpdate) {
+                    $batches[] = $timesheet;
+
+                    if ($row % 100 === 0) {
+                        $this->timesheets->saveMultiple($batches);
+                        $batches = [];
+                    }
+                } else {
+                    $this->timesheets->save($timesheet);
+                }
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed importing timesheet row %s with: %s', $row, $ex->getMessage()));
 
                 return 6;
             }
+
+            $progressBar->advance();
+        }
+
+        if ($isBatchUpdate && \count($batches) > 0) {
+            $this->timesheets->saveMultiple($batches);
+        }
+
+        $progressBar->finish();
+
+        if ($this->createdUsers > 0) {
+            $io->success(sprintf('Created %s users', $this->createdUsers));
+        }
+        if ($this->createdCustomers > 0) {
+            $io->success(sprintf('Created %s customers', $this->createdCustomers));
+        }
+        if ($this->createdProjects > 0) {
+            $io->success(sprintf('Created %s projects', $this->createdProjects));
+        }
+        if ($this->createdActivities > 0) {
+            $io->success(sprintf('Created %s activities', $this->createdActivities));
         }
 
         $io->success(sprintf('Imported %s rows', $row));
@@ -340,14 +423,35 @@ class ImportTimesheetCommand extends Command
         return 0;
     }
 
-    private function getUser($user): User
+    private function createUser($username, $domain, $password): User
+    {
+        $user = new User();
+        $user->setUsername($username);
+        if (stripos($username, '@') === false) {
+            $email = preg_replace('/[[:^print:]]/', '', $username) . '@' . $domain;
+            $email = strtolower($email);
+        } else {
+            $email = $username;
+        }
+        $user->setEmail($email);
+        $user->setPassword($this->encoder->encodePassword($user, $password));
+
+        $this->users->saveUser($user);
+        $this->createdUsers++;
+
+        $this->userCache[$username] = $user;
+
+        return $user;
+    }
+
+    private function getUser($user): ?User
     {
         if (!\array_key_exists($user, $this->userCache)) {
             $tmpUser = $this->users->findOneBy(['username' => $user]);
             if (null === $tmpUser) {
                 $tmpUser = $this->users->findOneBy(['email' => $user]);
                 if (null === $tmpUser) {
-                    throw new UnknownUserException($user);
+                    return null;
                 }
             }
             $this->userCache[$user] = $tmpUser;
@@ -376,6 +480,7 @@ class ImportTimesheetCommand extends Command
                 $tmpActivity->setProject($project);
             }
             $this->activities->saveActivity($tmpActivity);
+            $this->createdActivities++;
         }
 
         return $tmpActivity;
@@ -383,41 +488,46 @@ class ImportTimesheetCommand extends Command
 
     private function getProject($project, $customer, $fallbackCustomer): Project
     {
-        /** @var Customer $tmpCustomer */
-        $tmpCustomer = $this->getCustomer($customer, $fallbackCustomer);
-        /** @var Project $tmpProject */
-        $tmpProject = null;
-        /** @var Project[] $tmpProjects */
-        $tmpProjects = $this->projects->findBy(['name' => $project]);
+        if (!\array_key_exists($project, $this->projectCache)) {
+            /** @var Customer $tmpCustomer */
+            $tmpCustomer = $this->getCustomer($customer, $fallbackCustomer);
+            /** @var Project $tmpProject */
+            $tmpProject = null;
+            /** @var Project[] $tmpProjects */
+            $tmpProjects = $this->projects->findBy(['name' => $project]);
 
-        if (\count($tmpProjects) > 1) {
-            /** @var Project $prj */
-            foreach ($tmpProjects as $prj) {
-                if ($prj->getCustomer()->getName() !== $tmpCustomer->getName()) {
-                    continue;
+            if (\count($tmpProjects) > 1) {
+                /** @var Project $prj */
+                foreach ($tmpProjects as $prj) {
+                    if (strcasecmp($prj->getCustomer()->getName(), $tmpCustomer->getName()) !== 0) {
+                        continue;
+                    }
+                    $tmpProject = $prj;
+                    break;
                 }
-                $tmpProject = $prj;
-                break;
+            } elseif (\count($tmpProjects) === 1) {
+                $tmpProject = $tmpProjects[0];
             }
-        } elseif (\count($tmpProjects) === 1) {
-            $tmpProject = $tmpProjects[0];
-        }
 
-        if (null !== $tmpProject) {
-            if ($tmpProject->getCustomer()->getName() !== $tmpCustomer->getName()) {
-                $tmpProject = null;
+            if (null !== $tmpProject) {
+                if (strcasecmp($tmpProject->getCustomer()->getName(), $tmpCustomer->getName()) !== 0) {
+                    $tmpProject = null;
+                }
             }
+
+            if ($tmpProject === null) {
+                $tmpProject = new Project();
+                $tmpProject->setName($project);
+                $tmpProject->setComment($this->comment);
+                $tmpProject->setCustomer($tmpCustomer);
+                $this->projects->saveProject($tmpProject);
+                $this->createdProjects++;
+            }
+
+            $this->projectCache[$project] = $tmpProject;
         }
 
-        if ($tmpProject === null) {
-            $tmpProject = new Project();
-            $tmpProject->setName($project);
-            $tmpProject->setComment($this->comment);
-            $tmpProject->setCustomer($tmpCustomer);
-            $this->projects->saveProject($tmpProject);
-        }
-
-        return $tmpProject;
+        return $this->projectCache[$project];
     }
 
     private function getCustomer($customer, $fallback): Customer
@@ -454,9 +564,12 @@ class ImportTimesheetCommand extends Command
             }
 
             if (null === $tmpFallback) {
-                $newName = self::DEFAULT_CUSTOMER;
-                if (!empty($fallback) && \is_string($fallback)) {
-                    $newName = $fallback;
+                $newName = $customer;
+                if (empty($customer)) {
+                    $newName = self::DEFAULT_CUSTOMER;
+                    if (!empty($fallback) && \is_string($fallback)) {
+                        $newName = $fallback;
+                    }
                 }
                 $tmpFallback = new Customer();
                 $tmpFallback->setName(sprintf($newName, $this->dateTime));
@@ -468,6 +581,7 @@ class ImportTimesheetCommand extends Command
                 }
                 $tmpFallback->setTimezone($timezone);
                 $this->customers->saveCustomer($tmpFallback);
+                $this->createdCustomers++;
             }
 
             $this->customerFallback = $tmpFallback;
@@ -513,5 +627,53 @@ class ImportTimesheetCommand extends Command
         $result = array_diff(self::$supportedHeader, $header);
 
         return empty($result);
+    }
+
+    /**
+     * Add project specific conversion logic here
+     *
+     * @param array $row
+     */
+    private function convertRow(array &$row)
+    {
+        // negative durations
+        if ($row['Duration'][0] === '-') {
+            $row['Duration'] = substr($row['Duration'], 1);
+        }
+
+        if (!\array_key_exists('Tags', $row)) {
+            $row['Tags'] = null;
+        }
+        if (empty($row['Date'])) {
+            $row['Date'] = '1970-01-01';
+        }
+        if (!\array_key_exists('Exported', $row)) {
+            $row['Exported'] = false;
+        }
+        if (!\array_key_exists('Rate', $row)) {
+            $row['Rate'] = null;
+        }
+        if (!\array_key_exists('Hourly rate', $row)) {
+            $row['Hourly rate'] = null;
+        }
+        if (!\array_key_exists('Fixed rate', $row)) {
+            $row['Fixed rate'] = null;
+        }
+        if (!empty($row['From'])) {
+            $len = \strlen($row['From']);
+            if ($len === 1) {
+                $row['From'] = '0' . $row['From'] . ':00';
+            } elseif ($len == 2) {
+                $row['From'] = $row['From'] . ':00';
+            }
+        }
+        if (!empty($row['To'])) {
+            $len = \strlen($row['To']);
+            if ($len === 1) {
+                $row['To'] = '0' . $row['To'] . ':00';
+            } elseif ($len == 2) {
+                $row['To'] = $row['To'] . ':00';
+            }
+        }
     }
 }

@@ -18,10 +18,6 @@
                 <source>help</source>
                 <target>Dokumentation</target>
             </trans-unit>
-            <trans-unit id="tab.thanks">
-                <source>tab.thanks</source>
-                <target state="translated">Speciellt tack</target>
-            </trans-unit>
             <trans-unit id="donate">
                 <source>donate</source>
                 <target state="translated">Donera för framtiden för Kimai</target>

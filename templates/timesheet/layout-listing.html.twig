@@ -41,7 +41,7 @@
 }) %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
+        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
@@ -144,7 +144,7 @@
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">
                     {% if allowMarkdown %}
-                        {{ entry.description|escape|desc2html }}
+                        {{ entry.description|desc2html }}
                     {% else %}
                         {{ entry.description|nl2br }}
                     {% endif %}

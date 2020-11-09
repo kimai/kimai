@@ -1,0 +1,6 @@
+Organization;Department;Title;First name;Middle name;Last name;E-Mail;Street;ZIP;City;State;Salutation;Country;Customer number;Tax-ID;Note;IBAN;BIC;SEPA Mandate ID;zusatz 1;zusatz 2
+Keleo;IT Abteilung;Bc;Kevin;;Papst;unknown@kimai.org;"Acme Street
+Downtown";1022;Vienna;;Sehr geehrter Herr;DE;00001;DE1234567890;"sakdjhfg laksjhdfasd f#asd<br>
+ fas<br>
+ dfasdfasdf<br>
+ asdfasdfasdf";0987654321;12345678;;blub;foo

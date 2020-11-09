@@ -1,16 +1,9 @@
 {% set type = options.type|default('bar') %}
 {% set chart_id = options.id %}
 {% set backgroundColor = kimai_context.chart.background_color %}
-{% set borderColor = kimai_context.chart.border_color %}
 {% set gridColor = kimai_context.chart.grid_color %}
-{% set colors = options.color|default('')|split(';') %}
-{% if colors.0 is defined and not colors.0 is empty %}
-    {% set backgroundColor = colors.0 %}
-    {% set borderColor = colors.0 %}
-    {% if colors.1 is defined and not colors.1 is empty %}
-        {% set borderColor = colors.1 %}
-    {% endif %}
-{% endif %}
+{% set activities = data.activities %}
+{% set data = data.data %}
 
 <div class="chart">
     <canvas id="{{ chart_id }}" style="height: {{ kimai_context.chart.height }}px;"></canvas>
@@ -31,22 +24,50 @@
                         {%- endfor %}
                     ],
                     datasets: [
+                        {% for activityId, activity in activities -%}
+                        {% set activityColor = activity.activity|color|default(activity.project|color|default(backgroundColor)) %}
+                        {% set activityName = activity.activity.name %}
                         {
-                            backgroundColor: '{{ backgroundColor }}',
-                            borderColor: '{{ borderColor }}',
+                            label: '{{ activityName }}',
+                            backgroundColor: '{{ activityColor }}',
+                            borderColor: '#fff',
+                            borderWidth: 1,
                             data: [
-                                {% for day in data -%}
-                                {{ (day.totalDuration / 3600)|number_format(2, '.', '') }}
-                                {%- if not loop.last %},{% endif -%}
-                                {%- endfor %}
+                                {%- for day in data -%}
+                                    {% set realDayData = null %}
+                                    {%- for entry in day.details -%}
+                                        {% set loopId = (entry.project.id ~ '_' ~ entry.activity.id) %}
+                                        {%- if loopId == activityId -%}
+                                            {% set realDayData = (entry.duration / 3600)|number_format(2, '.', '') %}
+                                        {%- endif -%}
+                                    {%- endfor -%}
+                                    {%- if realDayData is not null -%}
+                                        '{{ realDayData }}'
+                                    {%- else -%}
+                                        0
+                                    {%- endif -%}
+                                    {%- if not loop.last %},{% endif -%}
+                                {%- endfor -%}
                             ],
                             realData: [
-                                {% for day in data -%}
-                                '{{ day.totalDuration|duration }}'
-                                {%- if not loop.last %},{% endif -%}
-                                {%- endfor %}
+                                {%- for day in data -%}
+                                    {% set realDayData = null %}
+                                    {%- for entry in day.details -%}
+                                        {% set loopId = (entry.project.id ~ '_' ~ entry.activity.id) %}
+                                        {%- if loopId == activityId -%}
+                                            {% set realDayData = {duration: entry.duration|duration, project: entry.project.name, customer: entry.project.customer.name, activity: entry.activity.name, total: day.totalDuration|duration} %}
+                                        {%- endif -%}
+                                    {%- endfor -%}
+                                    {%- if realDayData is not null -%}
+                                        {{ realDayData|json_encode|raw }}
+                                    {%- else -%}
+                                        0
+                                    {%- endif -%}
+                                    {%- if not loop.last %},{% endif -%}
+                                {%- endfor -%}
                             ]
-                        }
+                        },
+                        {%- endfor %}
                     ]
                 },
                 options: {
@@ -57,11 +78,13 @@
                     categoryPercentage: 0.9,
                     scales: {
                         xAxes: [{
+                            stacked: true,
                             gridLines: {
                                 display: false
                             },
                         }],
                         yAxes: [{
+                            stacked: true,
                             ticks: {
                                 beginAtZero: true
                             },
@@ -70,14 +93,36 @@
                                 color: '{{ gridColor }}',
                                 lineWidth: 1
                             }
-                        }]
+                        }],
                     },
                     tooltips: {
                         callbacks: {
                             label: function(tooltipItem, data) {
-                                return data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                            }
-                        }
+                                var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                                return ' ' + tooltipData.duration + ': ' + tooltipData.activity;
+                            },
+                            beforeTitle: function(tooltipItems, data) {
+                                var tooltipItem = tooltipItems[0];
+                                var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                                return tooltipData.customer;
+                            },
+                            title: function(tooltipItems, data) {
+                                var tooltipItem = tooltipItems[0];
+                                var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                                return tooltipData.project;
+                            },
+                            afterTitle: function(tooltipItems, data) {
+                                return ' ';
+                            },
+                            footer: function(tooltipItems, data) {
+                                var tooltipItem = tooltipItems[0];
+                                var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                                return '{{ 'stats.durationTotal'|trans }}: ' + tooltipData.total;
+                            },
+                            beforeFooter: function(tooltipItems, data) {
+                                return ' ';
+                            },
+                        },
                     }
                 }
             }

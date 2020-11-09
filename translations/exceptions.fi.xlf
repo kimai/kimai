@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fi" datatype="plaintext" original="exceptions.en.xlf">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target state="translated">Käyttö estetty</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target state="translated">Ongelma tapahtui täällä</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target state="translated">Virhe</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target state="translated">Jokin meni pieleen</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target state="translated">
+                    Kriittinen virhe, yritä uudelleen.
+                    Olet saattanut löytää ohjelmistoon liittyvän ongelman, ota yhteyttä järjestelmänvalvojaan mikäli ongelma jatkuu.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target state="translated">Sivua ei löytynyt</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target state="translated">
+                    Hakemaasi sivua ei löytynyt.
+                    Palaa takaisin ohjauspaneeliin ja aloita alusta.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target state="translated">Sivun käyttö on rajoitettu</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target state="translated">
+                    Pahoittelut, mutta sinulla ei ole riittäviä oikeuksia tarkastella tätä sivua.
+                    Keskustele järjestelmänvalvojasi kanssa, jos luulet että tässä on virhe.
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

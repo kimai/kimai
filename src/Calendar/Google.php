@@ -9,39 +9,36 @@
 
 namespace App\Calendar;
 
-class Google
+final class Google
 {
     /**
-     * @var Source[]
+     * @var GoogleSource[]
      */
-    protected $sources = [];
+    private $sources;
     /**
      * @var string
      */
-    protected $apiKey = null;
+    private $apiKey;
 
     /**
      * @param string $apiKey
-     * @param Source[] $sources
+     * @param GoogleSource[] $sources
      */
-    public function __construct($apiKey, $sources = [])
+    public function __construct(string $apiKey, array $sources = [])
     {
         $this->apiKey = $apiKey;
         $this->sources = $sources;
     }
 
     /**
-     * @return Source[]
+     * @return GoogleSource[]
      */
-    public function getSources()
+    public function getSources(): array
     {
         return $this->sources;
     }
 
-    /**
-     * @return string
-     */
-    public function getApiKey()
+    public function getApiKey(): string
     {
         return $this->apiKey;
     }

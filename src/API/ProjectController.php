@@ -11,17 +11,16 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\ProjectRate;
 use App\Entity\User;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\API\ProjectApiEditForm;
 use App\Form\API\ProjectRateApiForm;
+use App\Project\ProjectService;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
-use App\Timesheet\UserDateTimeFactory;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -63,21 +62,21 @@ class ProjectController extends BaseApiController
      */
     private $dispatcher;
     /**
-     * @var UserDateTimeFactory
-     */
-    private $dateTime;
-    /**
      * @var ProjectRateRepository
      */
     private $projectRateRepository;
+    /**
+     * @var ProjectService
+     */
+    private $projectService;
 
-    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, UserDateTimeFactory $dateTime, ProjectRateRepository $projectRateRepository)
+    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, ProjectRateRepository $projectRateRepository, ProjectService $projectService)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
-        $this->dateTime = $dateTime;
         $this->projectRateRepository = $projectRateRepository;
+        $this->projectService = $projectService;
     }
 
     /**
@@ -143,16 +142,17 @@ class ProjectController extends BaseApiController
         }
 
         if (!$ignoreDates) {
+            $factory = $this->getDateTimeFactory();
             if (null !== ($begin = $paramFetcher->get('start')) && !empty($begin)) {
-                $query->setProjectStart($this->dateTime->createDateTime($begin));
+                $query->setProjectStart($factory->createDateTime($begin));
             }
 
             if (null !== ($end = $paramFetcher->get('end')) && !empty($end)) {
-                $query->setProjectEnd($this->dateTime->createDateTime($end));
+                $query->setProjectEnd($factory->createDateTime($end));
             }
 
             if (empty($begin) && empty($end)) {
-                $now = $this->dateTime->createDateTime();
+                $now = $factory->createDateTime();
                 $query->setProjectStart($now);
                 $query->setProjectEnd($now);
             }
@@ -222,10 +222,7 @@ class ProjectController extends BaseApiController
             throw new AccessDeniedHttpException('User cannot create projects');
         }
 
-        $project = new Project();
-
-        $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event);
+        $project = $this->projectService->createNewProject();
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'date_format' => self::DATE_FORMAT,
@@ -235,7 +232,7 @@ class ProjectController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $this->repository->saveProject($project);
+            $this->projectService->saveNewProject($project);
 
             $view = new View($project, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -307,7 +304,7 @@ class ProjectController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $this->repository->saveProject($project);
+        $this->projectService->updateProject($project);
 
         $view = new View($project, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -360,7 +357,7 @@ class ProjectController extends BaseApiController
 
         $meta->setValue($value);
 
-        $this->repository->saveProject($project);
+        $this->projectService->updateProject($project);
 
         $view = new View($project, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

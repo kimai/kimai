@@ -114,6 +114,9 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="DateTime")
+     * @Serializer\Accessor(getter="getBegin")
+     *
+     * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
      * @ORM\Column(name="start_time", type="datetime", nullable=false)
      * @Assert\NotNull()
@@ -125,6 +128,9 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="DateTime")
+     * @Serializer\Accessor(getter="getEnd")
+     *
+     * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
      * @ORM\Column(name="end_time", type="datetime", nullable=true)
      */

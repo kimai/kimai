@@ -42,7 +42,7 @@ final class UserMails implements FOSMailerInterface
     public function sendConfirmationEmailMessage(UserInterface $user)
     {
         $username = $user->getUsername();
-        $language = 'en';
+        $language = User::DEFAULT_LANGUAGE;
 
         if ($user instanceof User) {
             $username = $user->getDisplayName();
@@ -70,7 +70,7 @@ final class UserMails implements FOSMailerInterface
     public function sendResettingEmailMessage(UserInterface $user)
     {
         $username = $user->getUsername();
-        $language = 'en';
+        $language = User::DEFAULT_LANGUAGE;
 
         if ($user instanceof User) {
             $username = $user->getDisplayName();

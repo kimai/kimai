@@ -37,6 +37,7 @@ interface MetaDisplayEventInterface
      * Adds a field that should be displayed.
      *
      * @param MetaTableTypeInterface $meta
+     * @return void
      */
-    public function addField(MetaTableTypeInterface $meta);
+    public function addField(MetaTableTypeInterface $meta) /* : void */;
 }

@@ -184,11 +184,58 @@ class ProjectControllerTest extends APIControllerBaseTest
     public function testGetEntity()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->assertAccessIsGranted($client, '/api/projects/1');
+        $em = $this->getEntityManager();
+
+        $customer = (new Customer())
+            ->setName('first one')
+            ->setVisible(true)
+            ->setCountry('de')
+            ->setTimezone('Europe/Berlin')
+        ;
+        $em->persist($customer);
+
+        $orderDate = new \DateTime('2019-11-29 14:35:17', new \DateTimeZone('Pacific/Tongatapu'));
+        $startDate = new \DateTime('2020-01-07 18:19:20', new \DateTimeZone('Pacific/Tongatapu'));
+        $endDate = new \DateTime('2021-03-23 00:00:01', new \DateTimeZone('Pacific/Tongatapu'));
+
+        $project = (new Project())
+            ->setName('first')
+            ->setVisible(true)
+            ->setCustomer($customer)
+            ->setOrderDate($orderDate)
+            ->setStart($startDate)
+            ->setEnd($endDate)
+        ;
+        $em->persist($project);
+
+        $this->assertAccessIsGranted($client, '/api/projects/2');
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
+
+        $expected = [
+            'parentTitle' => 'first one',
+            'customer' => 2,
+            'id' => 2,
+            'name' => 'first',
+            'orderNumber' => null,
+            // make sure the timezone is properly applied in serializer (see #1858)
+            'orderDate' => '2019-11-29T14:35:17+1300',
+            'start' => '2020-01-07T18:19:20+1300',
+            'end' => '2021-03-23T00:00:01+1300',
+            'comment' => null,
+            'visible' => true,
+            'budget' => 0.0,
+            'timeBudget' => 0,
+            'metaFields' => [],
+            'teams' => [],
+            'color' => null,
+        ];
+
+        foreach ($expected as $key => $value) {
+            self::assertEquals($value, $result[$key]);
+        }
     }
 
     public function testNotFound()

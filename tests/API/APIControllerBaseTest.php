@@ -67,7 +67,15 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
      */
     protected function createUrl($url, $json = true)
     {
-        return '/' . ltrim($url, '/') . ($json ? '.json' : '');
+        if ($json) {
+            if (stripos($url, '?') !== false) {
+                $url = str_replace('?', '.json?', $url);
+            } else {
+                $url .= '.json';
+            }
+        }
+
+        return '/' . ltrim($url, '/');
     }
 
     protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, $method = 'GET')
@@ -453,6 +461,15 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'color' => '@string',
                 ];
 
+            case 'ActivityExpanded':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'bool',
+                    'project' => ['result' => 'object', 'type' => '@ProjectExpanded'],
+                    'color' => '@string',
+                ];
+
             // collection of activities
             case 'ActivityCollection':
                 return [
@@ -492,6 +509,26 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'rate' => 'float',
                     'activity' => 'int',
                     'project' => 'int',
+                    'tags' => ['result' => 'array', 'type' => 'string'],
+                    'user' => 'int',
+                    'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
+                    'internalRate' => 'float',
+                    'exported' => 'bool',
+                    'fixedRate' => '@float',
+                    'hourlyRate' => '@float',
+                    // TODO new fields: billable, category
+                ];
+
+            case 'TimesheetEntityFull':
+                return [
+                    'id' => 'int',
+                    'begin' => 'DateTime',
+                    'end' => '@DateTime',
+                    'duration' => '@int',
+                    'description' => '@string',
+                    'rate' => 'float',
+                    'activity' => ['result' => 'object', 'type' => 'ActivityExpanded'],
+                    'project' => ['result' => 'object', 'type' => 'ProjectExpanded'],
                     'tags' => ['result' => 'array', 'type' => 'string'],
                     'user' => 'int',
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
@@ -586,14 +623,14 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                         break;
 
                     case 'object':
-                        self::assertIsArray($result[$key], sprintf('Key "%s" in type "%s" is not an array', $key, $type));
-
                         if ($value['type'][0] === '@') {
                             if (empty($result[$key])) {
                                 break;
                             }
                             $value['type'] = substr($value['type'], 1);
                         }
+
+                        self::assertIsArray($result[$key], sprintf('Key "%s" in type "%s" is not an array', $key, $type));
 
                         self::assertApiResponseTypeStructure($value['type'], $result[$key]);
                         break;

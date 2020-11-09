@@ -29,15 +29,18 @@ class VisibilityQueryTest extends TestCase
         self::assertFalse($sut->isShowHidden());
         self::assertFalse($sut->isShowBoth());
 
+        /* @phpstan-ignore-next-line */
         $sut->setVisibility('foo-bar');
         $this->assertEquals(VisibilityQuery::SHOW_VISIBLE, $sut->getVisibility());
 
-        $sut->setVisibility('2');
+        /* @phpstan-ignore-next-line */
+        $sut->setVisibility('2');   // cast to integer
         $this->assertEquals(VisibilityQuery::SHOW_HIDDEN, $sut->getVisibility());
         self::assertFalse($sut->isShowVisible());
         self::assertTrue($sut->isShowHidden());
         self::assertFalse($sut->isShowBoth());
 
+        /* @phpstan-ignore-next-line */
         $sut->setVisibility('0'); // keep the value that was previously set
         $this->assertEquals(VisibilityQuery::SHOW_HIDDEN, $sut->getVisibility());
 
@@ -63,15 +66,18 @@ class VisibilityQueryTest extends TestCase
         self::assertFalse($sut->isShowHidden());
         self::assertFalse($sut->isShowBoth());
 
+        /* @phpstan-ignore-next-line */
         $sut->setVisibility('foo-bar');
         $this->assertEquals(VisibilityInterface::SHOW_VISIBLE, $sut->getVisibility());
 
+        /* @phpstan-ignore-next-line */
         $sut->setVisibility('2');
         $this->assertEquals(VisibilityInterface::SHOW_HIDDEN, $sut->getVisibility());
         self::assertFalse($sut->isShowVisible());
         self::assertTrue($sut->isShowHidden());
         self::assertFalse($sut->isShowBoth());
 
+        /* @phpstan-ignore-next-line */
         $sut->setVisibility('0'); // keep the value that was previously set
         $this->assertEquals(VisibilityInterface::SHOW_HIDDEN, $sut->getVisibility());
 

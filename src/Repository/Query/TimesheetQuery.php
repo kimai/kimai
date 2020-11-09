@@ -17,15 +17,15 @@ use App\Form\Model\DateRange;
 /**
  * Can be used for advanced timesheet repository queries.
  */
-class TimesheetQuery extends ActivityQuery
+class TimesheetQuery extends ActivityQuery implements BillableInterface
 {
+    use BillableTrait;
+
     public const STATE_ALL = 1;
     public const STATE_RUNNING = 2;
     public const STATE_STOPPED = 3;
     public const STATE_EXPORTED = 4;
     public const STATE_NOT_EXPORTED = 5;
-    public const STATE_BILLABLE = 6;
-    public const STATE_NOT_BILLABLE = 7;
 
     public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'customer', 'project', 'activity', 'description'];
 
@@ -45,10 +45,6 @@ class TimesheetQuery extends ActivityQuery
      * @var int
      */
     protected $exported = self::STATE_ALL;
-    /**
-     * @var int
-     */
-    private $billable = self::STATE_ALL;
     /**
      * @var \DateTime|null
      */
@@ -291,30 +287,6 @@ class TimesheetQuery extends ActivityQuery
     public function setTags(iterable $tags): TimesheetQuery
     {
         $this->tags = $tags;
-
-        return $this;
-    }
-
-    public function getBillable(): int
-    {
-        return $this->billable;
-    }
-
-    public function isBillable(): bool
-    {
-        return $this->billable === self::STATE_BILLABLE;
-    }
-
-    public function isNotBillable(): bool
-    {
-        return $this->billable === self::STATE_NOT_BILLABLE;
-    }
-
-    public function setBillable(int $billable): TimesheetQuery
-    {
-        if (\in_array($billable, [self::STATE_ALL, self::STATE_BILLABLE, self::STATE_NOT_BILLABLE], true)) {
-            $this->billable = $billable;
-        }
 
         return $this;
     }

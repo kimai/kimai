@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Constants;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\Team;
@@ -47,6 +48,7 @@ class CustomerTest extends TestCase
         self::assertNull($sut->getTimezone());
 
         self::assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
         self::assertEquals(0.0, $sut->getBudget());
         self::assertEquals(0, $sut->getTimeBudget());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
@@ -69,8 +71,14 @@ class CustomerTest extends TestCase
         self::assertInstanceOf(Customer::class, $sut->setComment('hello world'));
         self::assertEquals('hello world', $sut->getComment());
 
+        self::assertFalse($sut->hasColor());
         self::assertInstanceOf(Customer::class, $sut->setColor('#fffccc'));
         self::assertEquals('#fffccc', $sut->getColor());
+        self::assertTrue($sut->hasColor());
+
+        self::assertInstanceOf(Customer::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        self::assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
 
         self::assertInstanceOf(Customer::class, $sut->setCompany('test company'));
         self::assertEquals('test company', $sut->getCompany());
@@ -101,6 +109,12 @@ class CustomerTest extends TestCase
 
         self::assertInstanceOf(Customer::class, $sut->setVatId('ID 1234567890'));
         self::assertEquals('ID 1234567890', $sut->getVatId());
+
+        self::assertInstanceOf(Customer::class, $sut->setCountry(null));
+        self::assertNull($sut->getCountry());
+
+        self::assertInstanceOf(Customer::class, $sut->setCurrency(null));
+        self::assertNull($sut->getCurrency());
     }
 
     public function testMetaFields()

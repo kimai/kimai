@@ -47,6 +47,14 @@ final class TimesheetOverlappingValidator extends ConstraintValidator
             throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
         }
 
+        $begin = $timesheet->getBegin();
+        $end = $timesheet->getEnd();
+
+        // this case is handled in TimesheetValidator and should not raise a second validation
+        if ($begin !== null && $end !== null && $begin > $end) {
+            return;
+        }
+
         if ($this->configuration->isAllowOverlappingRecords()) {
             return;
         }

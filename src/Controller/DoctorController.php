@@ -104,9 +104,33 @@ class DoctorController extends AbstractController
                 'logs' => $this->getLog(),
                 'logLines' => $logLines,
                 'logSize' => $this->getLogSize(),
-                'composer' => Versions::VERSIONS,
+                'composer' => $this->getComposerPackages(),
             ]
         ));
+    }
+
+    private function getComposerPackages(): array
+    {
+        $packages = [];
+
+        if (class_exists('Composer\Versions')) {
+            // TODO composer 2
+        } else {
+            $packages = Versions::VERSIONS;
+        }
+
+        // remove kimai from the package list
+        $packages = array_filter($packages, function ($name) {
+            if ($name === Versions::ROOT_PACKAGE_NAME) {
+                return false;
+            }
+
+            return true;
+        }, ARRAY_FILTER_USE_KEY);
+
+        ksort($packages);
+
+        return $packages;
     }
 
     private function getLoadedExtensions()

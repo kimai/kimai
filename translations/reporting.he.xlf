@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="he" datatype="plaintext" original="reporting.en.xlf">
+    <body>
+      <trans-unit id="reporting.title">
+        <source>reporting.title</source>
+        <target>דיווח</target>
+      </trans-unit>
+      <trans-unit id="report_user_week">
+        <source>report_user_week</source>
+        <target>תצוגה שבועית למשתמש אחד</target>
+      </trans-unit>
+      <trans-unit id="report_user_month">
+        <source>report_user_month</source>
+        <target>תצוגה חודשית למשתמש אחד</target>
+      </trans-unit>
+      <trans-unit id="report_monthly_users">
+        <source>report_monthly_users</source>
+        <target>תצוגה חודשית לכל המשתמשים</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

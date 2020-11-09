@@ -19,12 +19,12 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 final class TimesheetValidator extends ConstraintValidator
 {
     /**
-     * @var TimesheetConstraint[]
+     * @var Constraint[]
      */
     private $constraints;
 
     /**
-     * @param TimesheetConstraint[] $constraints
+     * @param Constraint[] $constraints
      */
     public function __construct(iterable $constraints)
     {
@@ -72,7 +72,10 @@ final class TimesheetValidator extends ConstraintValidator
      */
     protected function validateBeginAndEnd(TimesheetEntity $timesheet, ExecutionContextInterface $context)
     {
-        if (null === $timesheet->getBegin()) {
+        $begin = $timesheet->getBegin();
+        $end = $timesheet->getEnd();
+
+        if (null === $begin) {
             $context->buildViolation('You must submit a begin date.')
                 ->atPath('begin')
                 ->setTranslationDomain('validators')
@@ -82,7 +85,7 @@ final class TimesheetValidator extends ConstraintValidator
             return;
         }
 
-        if (null !== $timesheet->getBegin() && null !== $timesheet->getEnd() && $timesheet->getEnd()->getTimestamp() < $timesheet->getBegin()->getTimestamp()) {
+        if (null !== $end && $begin > $end) {
             $context->buildViolation('End date must not be earlier then start date.')
                 ->atPath('end')
                 ->setTranslationDomain('validators')

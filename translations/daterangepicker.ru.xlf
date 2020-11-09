@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ru" datatype="plaintext" original="daterangepicker.en.xlf">
+    <body>
+      <trans-unit id="daterangepicker.today">
+        <source>daterangepicker.today</source>
+        <target>Сегодня</target>
+      </trans-unit>
+      <trans-unit id="daterangepicker.yesterday">
+        <source>daterangepicker.yesterday</source>
+        <target>Вчера</target>
+      </trans-unit>
+      <trans-unit id="daterangepicker.lastWeek">
+        <source>daterangepicker.lastWeek</source>
+        <target>Прошлая неделя</target>
+      </trans-unit>
+      <trans-unit id="daterangepicker.thisWeek">
+        <source>daterangepicker.thisWeek</source>
+        <target>Эта неделя</target>
+      </trans-unit>
+      <trans-unit id="daterangepicker.lastMonth">
+        <source>daterangepicker.lastMonth</source>
+        <target>Прошлый месяц</target>
+      </trans-unit>
+      <trans-unit id="daterangepicker.thisMonth">
+        <source>daterangepicker.thisMonth</source>
+        <target>Этот месяц</target>
+      </trans-unit>
+      <trans-unit id="daterangepicker.lastYear">
+        <source>daterangepicker.lastYear</source>
+        <target>Прошлый год</target>
+      </trans-unit>
+      <trans-unit id="daterangepicker.thisYear">
+        <source>daterangepicker.thisYear</source>
+        <target>Этот год</target>
+      </trans-unit>
+      <trans-unit id="daterangepicker.customRange">
+        <source>daterangepicker.customRange</source>
+        <target>Свой диапазон</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

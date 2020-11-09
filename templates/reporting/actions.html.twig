@@ -6,6 +6,7 @@
         {% set children = children|merge({(report.id): {'title': report.label|trans({}, 'reporting'), 'url': path(report.route), 'class': 'toolbar-action report-' ~ report.id}}) %}
     {% endfor %}
     {% set actions = actions|merge({'reporting': {'children': children}}) %}
+    {% set actions = actions|merge({'help': {'url': 'reporting.html'|docu_link, 'target': '_blank'}}) %}
     {% set event = trigger('actions.reporting', {'actions': actions}) %}
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}

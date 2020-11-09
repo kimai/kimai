@@ -30,6 +30,10 @@
                 <source>You already have an entry for this time.</source>
                 <target>Es existiert bereits ein Eintrag für diesen Zeitpunkt.</target>
             </trans-unit>
+            <trans-unit id="The given value is not a valid time.">
+                <source>The given value is not a valid time.</source>
+                <target>Der eingetragene Wert ist keine gültige Uhrzeit.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

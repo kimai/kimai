@@ -57,8 +57,8 @@ trait StringAccessibleConfigTrait
             }
             foreach ($temp as $key2) {
                 if (!\array_key_exists($key2, $array)) {
-                    // unknown values will silently be skipped
-                    continue 2;
+                    $array[$key2] = $configuration->getValue();
+                    continue;
                 }
                 if (\is_array($array[$key2])) {
                     $array = &$array[$key2];
@@ -87,6 +87,13 @@ trait StringAccessibleConfigTrait
     public function find(string $key)
     {
         $this->prepare();
+        $key = $this->prepareSearchKey($key);
+
+        return $this->get($key, $this->settings);
+    }
+
+    private function prepareSearchKey(string $key): string
+    {
         $prefix = $this->getPrefix() . '.';
         $length = \strlen($prefix);
 
@@ -94,7 +101,7 @@ trait StringAccessibleConfigTrait
             $key = substr($key, $length);
         }
 
-        return $this->get($key, $this->settings);
+        return $key;
     }
 
     /**
@@ -108,7 +115,7 @@ trait StringAccessibleConfigTrait
         $search = array_shift($keys);
 
         if (!\array_key_exists($search, $config)) {
-            throw new \InvalidArgumentException('Unknown config: ' . $key);
+            return null;
         }
 
         if (\is_array($config[$search]) && !empty($keys)) {
@@ -118,18 +125,27 @@ trait StringAccessibleConfigTrait
         return $config[$search];
     }
 
+    public function has(string $key): bool
+    {
+        $this->prepare();
+        $key = $this->prepareSearchKey($key);
+
+        $keys = explode('.', $key);
+        $search = array_shift($keys);
+
+        if (!\array_key_exists($search, $this->settings)) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * @return bool
      */
     public function offsetExists($offset)
     {
-        try {
-            $this->find($offset);
-        } catch (\Exception $ex) {
-            return false;
-        }
-
-        return true;
+        return $this->has($offset);
     }
 
     /**

@@ -22,8 +22,10 @@ class SearchTermTransformerTest extends TestCase
     {
         $sut = new SearchTermTransformer();
 
+        /* @phpstan-ignore-next-line */
         self::assertEquals('', $sut->transform(''));
         self::assertEquals('', $sut->transform(null));
+        /* @phpstan-ignore-next-line */
         self::assertEquals('', $sut->transform(new \stdClass()));
 
         self::assertEquals(

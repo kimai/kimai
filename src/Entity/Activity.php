@@ -332,7 +332,7 @@ class Activity implements EntityWithMetaFields
     public function addTeam(Team $team)
     {
         if ($this->teams->contains($team)) {
-            return $this;
+            return;
         }
 
         $this->teams->add($team);

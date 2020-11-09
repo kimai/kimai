@@ -9,7 +9,10 @@
 
 namespace App\Controller;
 
+use App\Configuration\LanguageFormattings;
 use App\Entity\User;
+use App\Timesheet\DateTimeFactory;
+use App\Utils\LocaleFormats;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
 use Symfony\Component\Translation\DataCollectorTranslator;
@@ -77,6 +80,44 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     }
 
     /**
+     * Adds an exception flash message for failed update/create actions.
+     *
+     * @param \Exception $exception
+     */
+    protected function flashUpdateException(\Exception $exception)
+    {
+        $this->flashException($exception, 'action.update.error');
+    }
+
+    /**
+     * Adds an exception flash message for failed delete actions.
+     *
+     * @param \Exception $exception
+     */
+    protected function flashDeleteException(\Exception $exception)
+    {
+        $this->flashException($exception, 'action.delete.error');
+    }
+
+    /**
+     * Adds a "error" flash message and logs the Exception.
+     *
+     * @param \Exception $exception
+     * @param string $translationKey
+     * @param array $parameter
+     */
+    protected function flashException(\Exception $exception, string $translationKey, array $parameter = [])
+    {
+        $this->logException($exception);
+
+        if (!\array_key_exists('%reason%', $parameter)) {
+            $parameter['%reason%'] = $exception->getMessage();
+        }
+
+        $this->addFlashTranslated('error', $translationKey, $parameter);
+    }
+
+    /**
      * Adds a fully translated (both $message and all keys in $parameter) flash message to the stack.
      *
      * @param string $type
@@ -108,7 +149,22 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     {
         return array_merge(parent::getSubscribedServices(), [
             'translator' => TranslatorInterface::class,
-            'logger' => LoggerInterface::class
+            'logger' => LoggerInterface::class,
+            LanguageFormattings::class => LanguageFormattings::class,
         ]);
+    }
+
+    protected function getDateTimeFactory(?User $user = null): DateTimeFactory
+    {
+        if (null === $user) {
+            $user = $this->getUser();
+        }
+
+        return new DateTimeFactory(new \DateTimeZone($user->getTimezone()));
+    }
+
+    protected function getLocaleFormats(string $locale): LocaleFormats
+    {
+        return new LocaleFormats($this->container->get(LanguageFormattings::class), $locale);
     }
 }

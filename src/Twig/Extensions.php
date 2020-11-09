@@ -10,6 +10,8 @@
 namespace App\Twig;
 
 use App\Constants;
+use App\Entity\EntityWithMetaFields;
+use App\Utils\Color;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -27,6 +29,9 @@ class Extensions extends AbstractExtension
         return [
             new TwigFilter('docu_link', [$this, 'documentationLink']),
             new TwigFilter('multiline_indent', [$this, 'multilineIndent']),
+            new TwigFilter('color', [$this, 'color']),
+            new TwigFilter('font_contrast', [$this, 'calculateFontContrastColor']),
+            new TwigFilter('nl2str', [$this, 'replaceNewline'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
         ];
     }
 
@@ -37,14 +42,45 @@ class Extensions extends AbstractExtension
     {
         return [
             new TwigFunction('class_name', [$this, 'getClassName']),
+            new TwigFunction('iso_day_by_name', [$this, 'getIsoDayByName']),
         ];
+    }
+
+    public function getIsoDayByName(string $weekDay): int
+    {
+        $key = array_search(
+            strtolower($weekDay),
+            ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        );
+
+        if (false === $key) {
+            return 1;
+        }
+
+        return ++$key;
+    }
+
+    /**
+     * Returns null instead of the default color if $defaultColor is not set to true.
+     *
+     * @param EntityWithMetaFields $entity
+     * @return string|null
+     */
+    public function color(EntityWithMetaFields $entity, bool $defaultColor = false): ?string
+    {
+        return (new Color())->getColor($entity, $defaultColor);
+    }
+
+    public function calculateFontContrastColor(string $color): string
+    {
+        return (new Color())->getFontContrastColor($color);
     }
 
     /**
      * @param object $object
      * @return null|string
      */
-    public function getClassName($object)
+    public function getClassName($object): ?string
     {
         if (!\is_object($object)) {
             return null;
@@ -74,12 +110,17 @@ class Extensions extends AbstractExtension
         return implode(PHP_EOL, $parts);
     }
 
-    /**
-     * @param string $url
-     * @return string
-     */
-    public function documentationLink($url = '')
+    public function documentationLink(?string $url = ''): string
     {
         return Constants::HOMEPAGE . '/documentation/' . $url;
+    }
+
+    public function replaceNewline($input, string $newline)
+    {
+        if (!\is_string($input)) {
+            return $input;
+        }
+
+        return str_replace(["\r\n", "\n", "\r"], $newline, $input);
     }
 }

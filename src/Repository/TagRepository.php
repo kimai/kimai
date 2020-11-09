@@ -10,14 +10,17 @@
 namespace App\Repository;
 
 use App\Entity\Tag;
+use App\Repository\Paginator\QueryBuilderPaginator;
 use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\Query\TagQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Tag>
+ */
 class TagRepository extends EntityRepository
 {
     /**
@@ -105,14 +108,31 @@ class TagRepository extends EntityRepository
      */
     public function getTagCount(TagQuery $query)
     {
+        $qb = $this->getQueryBuilderForQuery($query);
+        $qb
+            ->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->select($qb->expr()->count('tag.name'))
+        ;
+        $counter = (int) $qb->getQuery()->getSingleScalarResult();
+
+        $qb = $this->getQueryBuilderForQuery($query);
+
+        $paginator = new QueryBuilderPaginator($qb, $counter);
+
+        $pagerfanta = new Pagerfanta($paginator);
+        $pagerfanta->setMaxPerPage($query->getPageSize());
+        $pagerfanta->setCurrentPage($query->getPage());
+
+        return $pagerfanta;
+    }
+
+    private function getQueryBuilderForQuery(TagQuery $query): QueryBuilder
+    {
         $qb = $this->createQueryBuilder('tag');
 
         $qb
-            ->select('tag.id, tag.name, tag.color, count(timesheets.id) as amount')
-            ->leftJoin('tag.timesheets', 'timesheets')
-            ->addGroupBy('tag.id')
-            ->addGroupBy('tag.name')
-            ->addGroupBy('tag.color')
+            ->select('tag.id, tag.name, tag.color, SIZE(tag.timesheets) as amount')
         ;
 
         $orderBy = $query->getOrderBy();
@@ -145,11 +165,7 @@ class TagRepository extends EntityRepository
             }
         }
 
-        $paginator = new Pagerfanta(new DoctrineORMAdapter($qb->getQuery(), false));
-        $paginator->setMaxPerPage($query->getPageSize());
-        $paginator->setCurrentPage($query->getPage());
-
-        return $paginator;
+        return $qb;
     }
 
     public function getQueryBuilderForFormType(TagFormTypeQuery $query): QueryBuilder

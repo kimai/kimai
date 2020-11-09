@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Customer;
 use App\Entity\Invoice;
+use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\Loader\InvoiceLoader;
 use App\Repository\Paginator\LoaderPaginator;
@@ -20,6 +21,9 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Invoice>
+ */
 class InvoiceRepository extends EntityRepository
 {
     public function saveInvoice(Invoice $invoice)
@@ -112,23 +116,25 @@ class InvoiceRepository extends EntityRepository
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
-        $qb
-            ->leftJoin('i.customer', 'c')
-            ->leftJoin('c.teams', 'c_teams');
+        $qb->leftJoin('i.customer', 'c');
 
         if (empty($teams)) {
-            $qb->andWhere($qb->expr()->isNull('c_teams'));
+            $qb->andWhere('SIZE(c.teams) = 0');
 
             return;
         }
 
         $orCustomer = $qb->expr()->orX(
-            $qb->expr()->isNull('c_teams'),
+            'SIZE(c.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
         $qb->andWhere($orCustomer);
 
-        $qb->setParameter('teams', $teams);
+        $ids = array_values(array_unique(array_map(function (Team $team) {
+            return $team->getId();
+        }, $teams)));
+
+        $qb->setParameter('teams', $ids);
     }
 
     private function getQueryBuilderForQuery(InvoiceQuery $query): QueryBuilder
@@ -137,7 +143,6 @@ class InvoiceRepository extends EntityRepository
 
         $qb
             ->select('i')
-            ->distinct()
             ->from(Invoice::class, 'i')
         ;
 

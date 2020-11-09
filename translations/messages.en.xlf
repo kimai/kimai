@@ -188,7 +188,7 @@
                 <source>menu.doctor</source>
                 <target>Doctor</target>
             </trans-unit>
-
+            
             <!--
               Error templates
             -->
@@ -339,6 +339,10 @@
             <trans-unit id="placeholder.type_message">
                 <source>placeholder.type_message</source>
                 <target>Type your message...</target>
+            </trans-unit>
+            <trans-unit id="label.billable">
+                <source>label.billable</source>
+                <target>Billable</target>
             </trans-unit>
             <trans-unit id="label.today">
                 <source>label.today</source>
@@ -1147,6 +1151,14 @@
             <trans-unit id="label.globalsOnly">
                 <source>label.globalsOnly</source>
                 <target>Only global</target>
+            </trans-unit>
+            <trans-unit id="label.batch_meta_fields">
+                <source>label.batch_meta_fields</source>
+                <target>Additional fields</target>
+            </trans-unit>
+            <trans-unit id="help.batch_meta_fields">
+                <source>help.batch_meta_fields</source>
+                <target>Fields that are to be updated must first be activated by clicking on the associated checkbox.</target>
             </trans-unit>
         </body>
     </file>

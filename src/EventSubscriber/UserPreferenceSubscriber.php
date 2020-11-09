@@ -9,12 +9,13 @@
 
 namespace App\EventSubscriber;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\Event\UserPreferenceEvent;
 use App\Form\Type\CalendarViewType;
+use App\Form\Type\FirstWeekDayType;
 use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
@@ -24,7 +25,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Range;
 
@@ -39,20 +39,15 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
      */
     protected $voter;
     /**
-     * @var TokenStorageInterface
+     * @var SystemConfiguration
      */
-    protected $storage;
-    /**
-     * @var FormConfiguration
-     */
-    protected $formConfig;
+    protected $configuration;
 
-    public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage, AuthorizationCheckerInterface $voter, FormConfiguration $formConfig)
+    public function __construct(EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter, SystemConfiguration $formConfig)
     {
         $this->eventDispatcher = $dispatcher;
-        $this->storage = $storage;
         $this->voter = $voter;
-        $this->formConfig = $formConfig;
+        $this->configuration = $formConfig;
     }
 
     public static function getSubscribedEvents(): array
@@ -64,22 +59,22 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
 
     private function getDefaultTheme(): ?string
     {
-        return $this->formConfig->getUserDefaultTheme();
+        return $this->configuration->getUserDefaultTheme();
     }
 
     private function getDefaultCurrency(): string
     {
-        return $this->formConfig->getUserDefaultCurrency();
+        return $this->configuration->getUserDefaultCurrency();
     }
 
     private function getDefaultLanguage(): string
     {
-        return $this->formConfig->getUserDefaultLanguage();
+        return $this->configuration->getUserDefaultLanguage();
     }
 
     private function getDefaultTimezone(): string
     {
-        $timezone = $this->formConfig->getUserDefaultTimezone();
+        $timezone = $this->configuration->getUserDefaultTimezone();
         if (null === $timezone) {
             $timezone = date_default_timezone_get();
         }
@@ -132,9 +127,16 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
             (new UserPreference())
                 ->setName(UserPreference::LOCALE)
                 ->setValue($this->getDefaultLanguage())
-                ->setOrder(300)
+                ->setOrder(250)
                 ->setSection('locale')
                 ->setType(LanguageType::class),
+
+            (new UserPreference())
+                ->setName(UserPreference::FIRST_WEEKDAY)
+                ->setValue(User::DEFAULT_FIRST_WEEKDAY)
+                ->setOrder(300)
+                ->setSection('locale')
+                ->setType(FirstWeekDayType::class),
 
             (new UserPreference())
                 ->setName(UserPreference::SKIN)

@@ -152,6 +152,7 @@ class Customer implements EntityWithMetaFields
      *
      * @ORM\Column(name="country", type="string", length=2, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Country()
      * @Assert\Length(max=2)
      */
     private $country;
@@ -165,6 +166,7 @@ class Customer implements EntityWithMetaFields
      *
      * @ORM\Column(name="currency", type="string", length=3, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Currency()
      * @Assert\Length(max=3)
      */
     private $currency = self::DEFAULT_CURRENCY;
@@ -428,7 +430,7 @@ class Customer implements EntityWithMetaFields
         return $this->address;
     }
 
-    public function setCountry(string $country): Customer
+    public function setCountry(?string $country): Customer
     {
         $this->country = $country;
 
@@ -440,14 +442,14 @@ class Customer implements EntityWithMetaFields
         return $this->country;
     }
 
-    public function setCurrency(string $currency): Customer
+    public function setCurrency(?string $currency): Customer
     {
         $this->currency = $currency;
 
         return $this;
     }
 
-    public function getCurrency(): string
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
@@ -599,7 +601,7 @@ class Customer implements EntityWithMetaFields
     public function addTeam(Team $team)
     {
         if ($this->teams->contains($team)) {
-            return $this;
+            return;
         }
 
         $this->teams->add($team);

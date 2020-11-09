@@ -9,11 +9,11 @@
 
 namespace App\Tests\Widget\Type;
 
+use App\Entity\Activity;
+use App\Entity\Project;
 use App\Entity\User;
 use App\Model\Statistic\Day;
 use App\Repository\TimesheetRepository;
-use App\Tests\Mocks\Security\CurrentUserFactory;
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\DailyWorkingTimeChart;
 use App\Widget\Type\SimpleWidget;
@@ -30,11 +30,11 @@ class DailyWorkingTimeChartTest extends TestCase
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $mockFactory = new UserDateTimeFactoryFactory($this);
-        $userFactory = new CurrentUserFactory($this);
-        $user = $userFactory->create(new User(), 'Europe/Berlin');
 
-        return new DailyWorkingTimeChart($repository, $user, $mockFactory->create('Europe/Berlin'));
+        $sut = new DailyWorkingTimeChart($repository);
+        $sut->setUser(new User());
+
+        return $sut;
     }
 
     public function testExtendsSimpleWidget()
@@ -100,22 +100,38 @@ class DailyWorkingTimeChartTest extends TestCase
 
     public function testGetData()
     {
+        $activity = $this->createMock(Activity::class);
+        $activity->method('getId')->willReturn(42);
+
+        $project = $this->createMock(Project::class);
+        $project->method('getId')->willReturn(4711);
+
         $repository = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->onlyMethods(['getDailyData'])->getMock();
-        $repository->expects($this->once())->method('getDailyData')->willReturnCallback(function ($begin, $end, $user) {
+        $repository->expects($this->once())->method('getDailyData')->willReturnCallback(function ($begin, $end, $user) use ($activity, $project) {
             return [
-                ['year' => $begin->format('Y'), 'month' => $begin->format('n'), 'day' => $begin->format('j'), 'rate' => 13.75, 'duration' => 1234, 'details' => []]
+                ['year' => $begin->format('Y'), 'month' => $begin->format('n'), 'day' => $begin->format('j'), 'rate' => 13.75, 'duration' => 1234, 'details' => [
+                    ['activity' => $activity, 'project' => $project]
+                ]]
             ];
         });
 
-        $userFactory = new CurrentUserFactory($this);
-        $user = $userFactory->create(new User(), 'Europe/Berlin');
-
-        $mockFactory = new UserDateTimeFactoryFactory($this);
-
-        $sut = new DailyWorkingTimeChart($repository, $user, $mockFactory->create('Europe/Berlin'));
+        $sut = new DailyWorkingTimeChart($repository);
+        $sut->setUser(new User());
         $data = $sut->getData([]);
-        self::assertCount(7, $data);
-        foreach ($data as $statObj) {
+        self::assertCount(2, $data);
+        self::assertArrayHasKey('activities', $data);
+        self::assertArrayHasKey('data', $data);
+
+        self::assertCount(1, $data['activities']);
+        self::assertArrayHasKey('4711_42', $data['activities']);
+        self::assertCount(2, $data['activities']['4711_42']);
+        self::assertArrayHasKey('activity', $data['activities']['4711_42']);
+        self::assertArrayHasKey('project', $data['activities']['4711_42']);
+        self::assertSame($activity, $data['activities']['4711_42']['activity']);
+        self::assertSame($project, $data['activities']['4711_42']['project']);
+
+        self::assertCount(7, $data['data']);
+        foreach ($data['data'] as $statObj) {
             self::assertInstanceOf(Day::class, $statObj);
         }
     }

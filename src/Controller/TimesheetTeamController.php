@@ -140,7 +140,7 @@ class TimesheetTeamController extends TimesheetAbstractController
 
                 return $this->redirectToRoute($this->getTimesheetRoute());
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 

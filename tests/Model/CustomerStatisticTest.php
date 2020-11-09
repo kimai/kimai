@@ -29,8 +29,8 @@ class CustomerStatisticTest extends TestCase
     public function testSetter()
     {
         $sut = new CustomerStatistic();
-        $sut->setRecordAmount(7654.298);
-        $sut->setRecordDuration(826.10);
+        $sut->setRecordAmount(7654);
+        $sut->setRecordDuration(826);
         $sut->setActivityAmount(13);
         $sut->setProjectAmount(2);
 

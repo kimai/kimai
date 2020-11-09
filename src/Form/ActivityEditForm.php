@@ -115,10 +115,6 @@ class ActivityEditForm extends AbstractType
         );
 
         $this->addCommonFields($builder, $options);
-
-        if (null === $id && $options['create_more']) {
-            $this->addCreateMore($builder);
-        }
     }
 
     /**
@@ -131,7 +127,6 @@ class ActivityEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_activity_edit',
-            'create_more' => false,
             'customer' => false,
             'currency' => Customer::DEFAULT_CURRENCY,
             'include_budget' => false,

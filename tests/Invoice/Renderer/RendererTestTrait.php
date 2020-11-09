@@ -29,10 +29,6 @@ use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\AbstractRenderer;
 use App\Repository\Query\InvoiceQuery;
-use App\Twig\DateExtensions;
-use App\Twig\LocaleExtensions;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 trait RendererTestTrait
 {
@@ -72,7 +68,6 @@ trait RendererTestTrait
 
     protected function getFormatter(): InvoiceFormatter
     {
-        $requestStack = new RequestStack();
         $languages = [
             'en' => [
                 'date' => 'Y.m.d',
@@ -81,16 +76,9 @@ trait RendererTestTrait
             ]
         ];
 
-        $request = new Request();
-        $request->setLocale('en');
-        $requestStack->push($request);
-
         $formattings = new LanguageFormattings($languages);
 
-        $dateExtension = new DateExtensions($requestStack, $formattings);
-        $extensions = new LocaleExtensions($requestStack, $formattings);
-
-        return new DefaultInvoiceFormatter($dateExtension, $extensions);
+        return new DefaultInvoiceFormatter($formattings, 'en');
     }
 
     protected function getInvoiceModel(): InvoiceModel
@@ -174,6 +162,7 @@ trait RendererTestTrait
             ->setRate(111.11)
             ->setUser($user1)
             ->setActivity($activity2)
+            ->setDescription('== jhg ljhg ') // make sure that spreadsheets don't render it as formula
             ->setProject($project2)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())

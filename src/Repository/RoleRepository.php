@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 
 /**
+ * @extends \Doctrine\ORM\EntityRepository<Role>
  * @method Role[] findAll()
  */
 class RoleRepository extends EntityRepository

@@ -47,7 +47,7 @@
     {{ widgets.page_actions(actions) }}
 {% endmacro %}
 
-{% macro invoice(invoice) %}
+{% macro invoice(invoice, view, options) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
     {% set actions = {} %}
@@ -63,8 +63,16 @@
         {% set actions = actions|merge({'trash': {'url': path('admin_invoice_delete', {'id' : invoice.id}), 'class': 'confirmation-link', 'attr': {'data-question': 'confirm.delete'}}}) %}
     {% endif %}
 
+    {% if options.back is defined %}
+        {% set actions = actions|merge({'back': options.back}) %}
+    {% endif %}
+
     {% set event = trigger('actions.invoice', {'actions': actions, 'invoice': invoice}) %}
-    {{ widgets.table_actions(actions) }}
+    {% if view == 'index' or view == 'custom' %}
+        {{ widgets.table_actions(event.payload.actions) }}
+    {% else %}
+        {{ widgets.entity_actions(event.payload.actions) }}
+    {% endif %}
 {% endmacro %}
 
 {% macro invoice_listing(view) %}

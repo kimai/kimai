@@ -75,9 +75,20 @@ class AnnotationExtractorTest extends TestCase
         $sut = new AnnotationExtractor(new AnnotationReader());
 
         $this->expectException(ExtractorException::class);
-        $this->expectExceptionMessage('AnnotationExtractor needs a class name (string) for work');
+        $this->expectExceptionMessage('AnnotationExtractor needs a non-empty class name for work');
 
+        /* @phpstan-ignore-next-line */
         $sut->extract(new \stdClass());
+    }
+
+    public function testExceptionOnEmptyString()
+    {
+        $sut = new AnnotationExtractor(new AnnotationReader());
+
+        $this->expectException(ExtractorException::class);
+        $this->expectExceptionMessage('AnnotationExtractor needs a non-empty class name for work');
+
+        $sut->extract('');
     }
 
     public function testExceptionOnMissingExpression()

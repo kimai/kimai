@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="es" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="button_copy_url_to_browser">
+        <source>button_copy_url_to_browser</source>
+        <target>Si el botón no funciona, copie y pegue el URL siguiente en el navegador: %url%</target>
+      </trans-unit>
+      <trans-unit id="automated_email_dont_answer">
+        <source>automated_email_dont_answer</source>
+        <target>Este mensaje se generó automáticamente. No responda; no se leen los mensajes enviados a esta dirección.</target>
+      </trans-unit>
+      <trans-unit id="registration.subject">
+        <source>registration.subject</source>
+        <target>Active su cuenta</target>
+      </trans-unit>
+      <trans-unit id="registration.title">
+        <source>registration.title</source>
+        <target>Le damos la bienvenida, %username%</target>
+      </trans-unit>
+      <trans-unit id="registration.button">
+        <source>registration.button</source>
+        <target>Active su cuenta</target>
+      </trans-unit>
+      <trans-unit id="registration.intro">
+        <source>registration.intro</source>
+        <target>Se ha dado de alta en el gestor de tiempo Kimai con la cuenta de correo %email%. Tiene unas cuantas horas para activar su cuenta antes de que el enlace caduque.</target>
+      </trans-unit>
+      <trans-unit id="reset.subject">
+        <source>reset.subject</source>
+        <target>Restablezca su contraseña</target>
+      </trans-unit>
+      <trans-unit id="reset.title">
+        <source>reset.title</source>
+        <target>Esto puede pasar…</target>
+      </trans-unit>
+      <trans-unit id="reset.button">
+        <source>reset.button</source>
+        <target>Restablecer la contraseña</target>
+      </trans-unit>
+      <trans-unit id="reset.intro">
+        <source>reset.intro</source>
+        <target>¿Ha olvidado su contraseña? No se preocupe: Kimai le ayudará a crearse una nueva.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
