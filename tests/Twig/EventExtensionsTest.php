@@ -25,7 +25,7 @@ class EventExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['trigger'];
+        $functions = ['trigger', 'javascript_translations'];
         $sut = $this->getSut();
         $twigFunctions = $sut->getFunctions();
         self::assertCount(\count($functions), $twigFunctions);

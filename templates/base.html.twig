@@ -239,29 +239,9 @@
                     defaultColor: '{{ constant('App\\Constants::DEFAULT_COLOR') }}',
                 },
                 {
-                    'confirm': '{{ 'confirm'|trans }}',
-                    'cancel': '{{ 'cancel'|trans }}',
-                    'today': '{{ 'daterangepicker.today'|trans({}, 'daterangepicker')|escape('js') }}',
-                    'yesterday': '{{ 'daterangepicker.yesterday'|trans({}, 'daterangepicker')|escape('js') }}',
-                    'lastWeek': '{{ 'daterangepicker.lastWeek'|trans({}, 'daterangepicker')|escape('js') }}',
-                    'thisWeek': '{{ 'daterangepicker.thisWeek'|trans({}, 'daterangepicker')|escape('js') }}',
-                    'lastMonth': '{{ 'daterangepicker.lastMonth'|trans({}, 'daterangepicker')|escape('js') }}',
-                    'thisMonth': '{{ 'daterangepicker.thisMonth'|trans({}, 'daterangepicker')|escape('js') }}',
-                    'lastYear': '{{ 'daterangepicker.lastYear'|trans({}, 'daterangepicker')|escape('js') }}',
-                    'thisYear': '{{ 'daterangepicker.thisYear'|trans({}, 'daterangepicker')|escape('js') }}',
-                    'customRange': '{{ 'daterangepicker.customRange'|trans({}, 'daterangepicker')|escape('js') }}',
-                    'timesheet.start.success': '{{ 'timesheet.start.success'|trans({}, 'flashmessages')|escape('js') }}',
-                    'timesheet.start.error': '{{ 'timesheet.start.error'|trans({}, 'flashmessages')|escape('js') }}',
-                    'timesheet.start.exceeded_limit': '{{ 'timesheet.start.exceeded_limit'|trans({}, 'flashmessages')|escape('js') }}',
-                    'timesheet.stop.success': '{{ 'timesheet.stop.success'|trans({}, 'flashmessages')|escape('js') }}',
-                    'timesheet.stop.error': '{{ 'timesheet.stop.error'|trans({}, 'flashmessages')|escape('js') }}',
-                    'action.update.success': '{{ 'action.update.success'|trans({}, 'flashmessages')|escape('js') }}',
-                    'action.update.error': '{{ 'action.update.error'|trans({}, 'flashmessages')|escape('js') }}',
-                    'action.delete.success': '{{ 'action.delete.success'|trans({}, 'flashmessages')|escape('js') }}',
-                    'action.delete.error': '{{ 'action.delete.error'|trans({}, 'flashmessages')|escape('js') }}',
-                    'confirm.delete': '{{ 'confirm.delete'|trans|escape('js') }}',
-                    'delete': '{{ 'action.delete'|trans|escape('js') }}',
-                    'login.required': '{{ 'login_required'|trans|escape('js') }}'
+                {% for key, translation in javascript_translations() -%}
+                    '{{ key }}': '{{ translation.0|trans({}, translation.1)|escape('js') }}',
+                {%- endfor %}
                 }
             );
             window.kimai = loader.getKimai();

@@ -24,7 +24,7 @@ class ThemeEventExtensionTest extends TestCase
     protected function getSut(bool $hasListener = true): ThemeEventExtension
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $dispatcher->expects($this->once())->method('hasListeners')->willReturn($hasListener);
+        $dispatcher->method('hasListeners')->willReturn($hasListener);
         $dispatcher->expects($hasListener ? $this->once() : $this->never())->method('dispatch');
 
         $user = (new CurrentUserFactory($this))->create(new User());
@@ -44,5 +44,12 @@ class ThemeEventExtensionTest extends TestCase
         $sut = $this->getSut(false);
         $event = $sut->trigger('foo', []);
         self::assertInstanceOf(ThemeEvent::class, $event);
+    }
+
+    public function testJavascriptTranslations()
+    {
+        $sut = $this->getSut();
+        $values = $sut->getJavascriptTranslations();
+        self::assertCount(23, $values);
     }
 }

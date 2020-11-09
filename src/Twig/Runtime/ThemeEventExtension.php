@@ -10,6 +10,7 @@
 namespace App\Twig\Runtime;
 
 use App\Event\ThemeEvent;
+use App\Event\ThemeJavascriptTranslationsEvent;
 use App\Security\CurrentUser;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Extension\RuntimeExtensionInterface;
@@ -45,5 +46,14 @@ final class ThemeEventExtension implements RuntimeExtensionInterface
         }
 
         return $themeEvent;
+    }
+
+    public function getJavascriptTranslations(): array
+    {
+        $event = new ThemeJavascriptTranslationsEvent();
+
+        $this->eventDispatcher->dispatch($event);
+
+        return $event->getTranslations();
     }
 }
