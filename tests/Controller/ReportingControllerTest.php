@@ -89,7 +89,7 @@ class ReportingControllerTest extends ControllerBaseTest
 
     public function testProjectViewReport()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/reporting/project_view');
         self::assertStringContainsString('<div class="box-body project-view-reporting-box', $client->getResponse()->getContent());
     }
