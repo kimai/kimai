@@ -19,7 +19,6 @@
         {% block box_body %}
             <table class="table table-bordered table-hover dataTable">
                 <tr>
-                    <th></th>
                     <th>{{'label.name'|trans}}</th>
                     <th>{{'label.duration'|trans}}</th>
                     <th>{{'label.week'|trans}}</th>
@@ -27,10 +26,9 @@
                     <th>{{'label.expected_duration'|trans}}</th>
                     <th>{{'label.expected_delivery'|trans}}</th>
                     <th>{{'label.comment'|trans}}</th>
-                    <th></th>
                 </tr>
                 {% for entry in entries %}
-                    <td></td>
+                <tr>
                     <td>{{entry.name}}</td>
                     <td>{{entry.today|duration}}</td>
                     <td>{{entry.week|duration}}</td>
@@ -38,7 +36,7 @@
                     <td>{{entry.expected_duration|duration}}</td>
                     <td>{{entry.expected_delivery|date("Y/m/d")}}</td>
                     <td>{{entry.comment}}</td>
-                    <td></td>
+                </tr>
                 {% endfor %}
             </table>
         {% endblock %}
