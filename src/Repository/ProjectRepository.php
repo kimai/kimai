@@ -460,9 +460,10 @@ class ProjectRepository extends EntityRepository
         }
     }
 
-    public function getProjectView(\DateTime $startingDate): array
+    public function getProjectView(\DateTime $begin, \DateTime $end): array
     {
         $entityManager = $this->getEntityManager();
+
         $startingDateQueryBuilder = $entityManager->createQueryBuilder();
         $startingDateQueryBuilder
             ->addSelect('SUM(t1.duration)')
@@ -470,13 +471,15 @@ class ProjectRepository extends EntityRepository
             ->andWhere('t1.project = t.project')
             ->andWhere('DATE(t1.begin) = :starting_date')
         ;
+
         $weekQueryBuilder = $entityManager->createQueryBuilder();
         $weekQueryBuilder
             ->addSelect('SUM(t2.duration)')
             ->from(Timesheet::class, 't2')
             ->andWhere('t2.project = t.project')
-            ->andWhere('DATE(t2.begin) BETWEEN :first_day_of_starting_date_week AND :last_day_of_starting_date_week')
+            ->andWhere('DATE(t2.begin) BETWEEN :start_date AND :end_date')
         ;
+
         $qb = $entityManager->createQueryBuilder();
         $qb
             ->addSelect('p.name')
@@ -490,14 +493,17 @@ class ProjectRepository extends EntityRepository
             ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
             ->andWhere($qb->expr()->eq('p.visible', true))
             ->addGroupBy('p.id')
-            ->addOrderBy('p.name')
+            ->addGroupBy('p.name')
+            ->addGroupBy('t.project')
+            ->addGroupBy('p.comment')
+            ->addGroupBy('p.timeBudget')
+            ->addGroupBy('p.end')
         ;
-        $firstDayOfStartingDateWeek = (clone $startingDate)->modify('this week');
-        $lastDayOfStartingDateWeek = (clone $startingDate)->modify('this week')->modify('+6 days');
+
         $qb
-            ->setParameter('starting_date', $startingDate->format('Y-m-d'))
-            ->setParameter('first_day_of_starting_date_week', $firstDayOfStartingDateWeek->format('Y-m-d'))
-            ->setParameter('last_day_of_starting_date_week', $lastDayOfStartingDateWeek->format('Y-m-d'))
+            ->setParameter('starting_date', $begin->format('Y-m-d'))
+            ->setParameter('start_date', $begin->format('Y-m-d'))
+            ->setParameter('end_date', $end->format('Y-m-d'))
         ;
 
         return $qb->getQuery()->getResult();
