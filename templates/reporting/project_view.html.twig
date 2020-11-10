@@ -5,6 +5,7 @@
 {% block report %}
 
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/progressbar.html.twig" as progress %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_body_class %}project-view-reporting-box no-padding table-responsive{% endblock %}
         {% block box_body %}
@@ -13,8 +14,7 @@
                     <th>{{'label.name'|trans}}</th>
                     <th class="text-nowrap text-right">{{ 'daterangepicker.today'|trans({}, 'daterangepicker') }}</th>
                     <th class="text-nowrap text-right">{{ 'agendaWeek'|trans }}</th>
-                    <th class="text-nowrap text-right">{{ 'stats.durationTotal'|trans }}</th>
-                    <th class="text-nowrap text-right">{{ 'label.timeBudget'|trans }}</th>
+                    <th class="text-nowrap text-right" style="width: 200px">{{ 'stats.durationTotal'|trans }}</th>
                     <th class="text-nowrap text-center">{{ 'label.project_end'|trans }}</th>
                     <th>{{'label.comment'|trans}}</th>
                 </tr>
@@ -24,8 +24,15 @@
                         <td>{{ project.name }}</td>
                         <td class="text-nowrap text-right">{{ entry.today|duration }}</td>
                         <td class="text-nowrap text-right">{{ entry.week|duration }}</td>
-                        <td class="text-nowrap text-right">{{ entry.total|duration }}</td>
-                        <td class="text-nowrap text-right">{{ project.timeBudget|duration }}</td>
+                        {% if project.timeBudget > 0 %}
+                        <td class="text-nowrap">
+                            {{ progress.progressbar(project.timeBudget, entry.total|default(0), entry.total|duration ~ ' / ' ~ project.timeBudget|duration, '') }}
+                        </td>
+                        {% else %}
+                        <td class="text-nowrap text-right">
+                            {{ entry.total|duration }}
+                        </td>
+                        {% endif %}
                         <td class="text-nowrap text-center">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
                         <td>{{ project.comment }}</td>
                     </tr>
