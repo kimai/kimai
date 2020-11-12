@@ -9,10 +9,13 @@
 
 namespace App\Widget\Type;
 
-class Counter extends SimpleWidget
+use App\Repository\TimesheetRepository;
+
+final class Counter extends SimpleStatisticChart
 {
-    public function __construct()
+    public function __construct(TimesheetRepository $repository)
     {
+        parent::__construct($repository);
         $this->setOption('dataType', 'int');
     }
 }

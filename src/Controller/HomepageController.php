@@ -32,7 +32,7 @@ class HomepageController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $userRoute = $user->getPreferenceValue('login.initial_view', InitialViewType::DEFAULT_VIEW);
-        $userLanguage = $user->getLocale();
+        $userLanguage = $user->getLanguage();
         $requestLanguage = $request->getLocale();
 
         if (empty($requestLanguage)) {
@@ -56,7 +56,8 @@ class HomepageController extends AbstractController
             $language = $routeSettings[1];
             try {
                 return $this->redirectToRoute($route, ['_locale' => $language]);
-            } catch (\Exception $exception) {
+            } catch (\Exception $ex) {
+                $this->logException($ex);
                 // something is wrong with the url parameters ...
             }
         }

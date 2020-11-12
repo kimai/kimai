@@ -41,6 +41,7 @@ class AboutController extends AbstractController
         try {
             $license = file_get_contents($filename);
         } catch (\Exception $ex) {
+            $this->logException($ex);
             $license = false;
         }
 

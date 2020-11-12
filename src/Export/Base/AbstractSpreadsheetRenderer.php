@@ -21,6 +21,7 @@ use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
 use DateTime;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
@@ -72,6 +73,7 @@ abstract class AbstractSpreadsheetRenderer
         'rate' => [],
         'rate_internal' => [],
         'user' => [],
+        'username' => [],
         'customer' => [],
         'project' => [],
         'activity' => [],
@@ -251,6 +253,25 @@ abstract class AbstractSpreadsheetRenderer
             };
         }
 
+        if (isset($columns['username'])) {
+            if (!isset($columns['username']['render'])) {
+                $columns['username']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                    $username = '';
+                    if (null !== $entity->getUser()) {
+                        $username = $entity->getUser()->getUsername();
+                    }
+                    $sheet->setCellValueByColumnAndRow($column, $row, $username);
+                };
+            }
+            if (!isset($columns['username']['header'])) {
+                $columns['username']['header'] = function (Worksheet $sheet, $row, $column) {
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.name'));
+
+                    return 1;
+                };
+            }
+        }
+
         if (isset($columns['customer']) && !isset($columns['customer']['render'])) {
             $columns['customer']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
                 $customer = '';
@@ -292,7 +313,7 @@ abstract class AbstractSpreadsheetRenderer
             $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use (&$isColumnFormatted, $maxWidth, $wrapText) {
                 $cell = $sheet->getCellByColumnAndRow($column, $row);
 
-                $cell->setValue($entity->getDescription());
+                $cell->setValueExplicit($entity->getDescription(), DataType::TYPE_STRING);
 
                 // Apply wrap text if configured
                 if ($wrapText) {

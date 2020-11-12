@@ -28,9 +28,13 @@ class TimesheetTest extends TestCase
     public function testDefaultValues()
     {
         $sut = new Timesheet();
+        self::assertEquals('timesheet', $sut->getType());
+        self::assertEquals('work', $sut->getCategory());
         self::assertNull($sut->getId());
         self::assertNull($sut->getBegin());
         self::assertNull($sut->getEnd());
+        self::assertTrue($sut->isBillable());
+        self::assertNull($sut->getModifiedAt());
         self::assertSame(0, $sut->getDuration());
         self::assertNull($sut->getUser());
         self::assertNull($sut->getActivity());
@@ -137,5 +141,35 @@ class TimesheetTest extends TestCase
         $sut->setMetaField((new TimesheetMeta())->setName('blab')->setIsVisible(true));
         self::assertEquals(3, $sut->getMetaFields()->count());
         self::assertCount(2, $sut->getVisibleMetaFields());
+    }
+
+    public function testBillable()
+    {
+        $sut = new Timesheet();
+        self::assertTrue($sut->isBillable());
+        self::assertInstanceOf(Timesheet::class, $sut->setBillable(false));
+        self::assertFalse($sut->isBillable());
+        self::assertInstanceOf(Timesheet::class, $sut->setBillable(true));
+        self::assertTrue($sut->isBillable());
+    }
+
+    public function testCategory()
+    {
+        $sut = new Timesheet();
+        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::HOLIDAY));
+        self::assertEquals('holiday', $sut->getCategory());
+        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::WORK));
+        self::assertEquals('work', $sut->getCategory());
+        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::SICKNESS));
+        self::assertEquals('sickness', $sut->getCategory());
+        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::PARENTAL));
+        self::assertEquals('parental', $sut->getCategory());
+        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::OVERTIME));
+        self::assertEquals('overtime', $sut->getCategory());
+
+        self::expectException(\InvalidArgumentException::class);
+        self::expectExceptionMessage('Invalid timesheet category "foo" given, expected one of: work, holiday, sickness, parental, overtime');
+
+        $sut->setCategory('foo');
     }
 }

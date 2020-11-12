@@ -21,32 +21,54 @@ class DoctrineCompilerPass implements CompilerPassInterface
     /**
      * @var string[]
      */
-    protected $allowedEngines = [
+    private $allowedEngines = [
         'mysql',
         'sqlite'
     ];
 
+    private function getEnvVar(string $name): ?string
+    {
+        $envVarValue = null;
+
+        if (isset($_ENV[$name])) {
+            $envVarValue = $_ENV[$name];
+        }
+
+        if ($envVarValue === null && isset($_SERVER[$name])) {
+            $envVarValue = $_SERVER[$name];
+        }
+
+        if ($envVarValue === null) {
+            $envVarValue = getenv($name);
+        }
+
+        if ($envVarValue === false || empty($envVarValue)) {
+            return null;
+        }
+
+        return $envVarValue;
+    }
+
     /**
-     * @return array|false|null|string
+     * @return string
      * @throws \Exception
      */
-    protected function findEngine()
+    private function findEngine(): string
     {
         $engine = null;
 
-        if (null === $engine) {
-            $dbConfig = explode('://', getenv('DATABASE_URL'));
-            $engine = $dbConfig['0'] ?: null;
+        if (null !== ($databaseUrl = $this->getEnvVar('DATABASE_URL'))) {
+            $urlParts = explode('://', $databaseUrl);
+            $engine = $urlParts[0] ?: null;
         }
 
-        if (null === $engine) {
-            $engine = getenv('DATABASE_ENGINE');
+        if ($engine === null) {
+            $engine = $this->getEnvVar('DATABASE_ENGINE');
         }
 
-        if (false === $engine) {
+        if ($engine === null) {
             throw new \Exception(
-                'Could not detect database engine. Please set the environment config DATABASE_ENGINE ' .
-                'to one of: "' . implode(', ', $this->allowedEngines) . '" in your .env file, e.g. DATABASE_ENGINE=sqlite'
+                'Could not detect database engine, make sure DATABASE_URL is available from $_SERVER or $_ENV. Check your .env file.'
             );
         }
 

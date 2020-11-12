@@ -42,6 +42,11 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class CustomerController extends BaseApiController
 {
+    public const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
+    public const GROUPS_FORM = ['Default', 'Entity', 'Customer'];
+    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Customer'];
+    public const GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
+
     /**
      * @var CustomerRepository
      */
@@ -112,7 +117,7 @@ class CustomerController extends BaseApiController
 
         $data = $this->repository->getCustomersForQuery($query);
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Collection', 'Customer']);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
@@ -138,7 +143,7 @@ class CustomerController extends BaseApiController
         }
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Customer']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -185,13 +190,13 @@ class CustomerController extends BaseApiController
             $this->repository->saveCustomer($customer);
 
             $view = new View($customer, 200);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Customer']);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Customer']);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }
@@ -248,7 +253,7 @@ class CustomerController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Customer']);
+            $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
         }
@@ -256,7 +261,7 @@ class CustomerController extends BaseApiController
         $this->repository->saveCustomer($customer);
 
         $view = new View($customer, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Customer']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -309,7 +314,7 @@ class CustomerController extends BaseApiController
         $this->repository->saveCustomer($customer);
 
         $view = new View($customer, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Customer']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -352,7 +357,7 @@ class CustomerController extends BaseApiController
         $rates = $this->customerRateRepository->getRatesForCustomer($customer);
 
         $view = new View($rates, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'CustomerRate']);
+        $view->getContext()->setGroups(self::GROUPS_RATE);
 
         return $this->viewHandler->handle($view);
     }
@@ -463,7 +468,7 @@ class CustomerController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'CustomerRate']);
+            $view->getContext()->setGroups(self::GROUPS_RATE);
 
             return $this->viewHandler->handle($view);
         }
@@ -471,7 +476,7 @@ class CustomerController extends BaseApiController
         $this->customerRateRepository->saveRate($rate);
 
         $view = new View($rate, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'CustomerRate']);
+        $view->getContext()->setGroups(self::GROUPS_RATE);
 
         return $this->viewHandler->handle($view);
     }

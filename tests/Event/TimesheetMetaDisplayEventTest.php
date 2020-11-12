@@ -16,6 +16,7 @@ use App\Repository\Query\TimesheetQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * @covers \App\Event\AbstractMetaDisplayEvent
  * @covers \App\Event\TimesheetMetaDisplayEvent
  */
 class TimesheetMetaDisplayEventTest extends TestCase

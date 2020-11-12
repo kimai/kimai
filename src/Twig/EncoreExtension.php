@@ -55,14 +55,16 @@ class EncoreExtension extends AbstractExtension implements ServiceSubscriberInte
 
     public function getEncoreEntryCssSource(string $packageName): string
     {
-        $files = $this->container
-            ->get(EntrypointLookupInterface::class)->getCssFiles($packageName);
+        $lookup = $this->container->get(EntrypointLookupInterface::class);
+        $files = $lookup->getCssFiles($packageName);
 
         $source = '';
 
         foreach ($files as $file) {
             $source .= file_get_contents($this->publicDir . '/' . $file);
         }
+
+        $lookup->reset();
 
         return $source;
     }

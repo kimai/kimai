@@ -17,31 +17,23 @@ use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class UserProfileSubscriber implements EventSubscriberInterface
+final class UserProfileSubscriber implements EventSubscriberInterface
 {
     /**
      * @var EventDispatcherInterface
      */
-    protected $eventDispatcher;
-
+    private $eventDispatcher;
     /**
      * @var TokenStorageInterface
      */
-    protected $storage;
+    private $storage;
 
-    /**
-     * @param EventDispatcherInterface $dispatcher
-     * @param TokenStorageInterface $storage
-     */
     public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage)
     {
         $this->eventDispatcher = $dispatcher;
         $this->storage = $storage;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -49,10 +41,7 @@ class UserProfileSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param KernelEvent $event
-     */
-    public function prepareUserProfile(KernelEvent $event)
+    public function prepareUserProfile(KernelEvent $event): void
     {
         if (!$this->canHandleEvent($event)) {
             return;
@@ -65,11 +54,7 @@ class UserProfileSubscriber implements EventSubscriberInterface
         $this->eventDispatcher->dispatch($event);
     }
 
-    /**
-     * @param KernelEvent $event
-     * @return bool
-     */
-    protected function canHandleEvent(KernelEvent $event): bool
+    private function canHandleEvent(KernelEvent $event): bool
     {
         // Ignore sub-requests
         if (!$event->isMasterRequest()) {

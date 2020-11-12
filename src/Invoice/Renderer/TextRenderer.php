@@ -12,23 +12,11 @@ namespace App\Invoice\Renderer;
 use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
-use App\Invoice\RendererInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Twig\Environment;
 
-final class TextRenderer implements RendererInterface
+final class TextRenderer extends AbstractTwigRenderer
 {
-    /**
-     * @var Environment
-     */
-    private $twig;
-
-    public function __construct(Environment $twig)
-    {
-        $this->twig = $twig;
-    }
-
     public function supports(InvoiceDocument $document): bool
     {
         return stripos($document->getFilename(), '.txt.twig') !== false;
@@ -36,9 +24,7 @@ final class TextRenderer implements RendererInterface
 
     public function render(InvoiceDocument $document, InvoiceModel $model): Response
     {
-        $content = $this->twig->render('@invoice/' . basename($document->getFilename()), [
-            'model' => $model
-        ]);
+        $content = $this->renderTwigTemplate($document, $model);
         $filename = (string) new InvoiceFilename($model);
 
         $response = new Response($content);

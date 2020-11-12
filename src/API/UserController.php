@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Form\API\UserApiCreateForm;
 use App\Form\API\UserApiEditForm;
@@ -39,6 +39,10 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 final class UserController extends BaseApiController
 {
+    public const GROUPS_ENTITY = ['Default', 'Entity', 'User', 'User_Entity'];
+    public const GROUPS_FORM = ['Default', 'Entity', 'User', 'User_Entity'];
+    public const GROUPS_COLLECTION = ['Default', 'Collection', 'User'];
+
     /**
      * @var UserRepository
      */
@@ -52,15 +56,11 @@ final class UserController extends BaseApiController
      */
     private $encoder;
     /**
-     * @var FormConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
 
-    /**
-     * @param ViewHandlerInterface $viewHandler
-     * @param UserRepository $repository
-     */
-    public function __construct(ViewHandlerInterface $viewHandler, UserRepository $repository, UserPasswordEncoderInterface $encoder, FormConfiguration $config)
+    public function __construct(ViewHandlerInterface $viewHandler, UserRepository $repository, UserPasswordEncoderInterface $encoder, SystemConfiguration $config)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
@@ -93,6 +93,7 @@ final class UserController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new UserQuery();
+        $query->setCurrentUser($this->getUser());
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {
             $query->setVisibility($visible);
@@ -112,7 +113,7 @@ final class UserController extends BaseApiController
 
         $data = $this->repository->getUsersForQuery($query);
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Collection', 'User']);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
@@ -149,7 +150,7 @@ final class UserController extends BaseApiController
         }
 
         $view = new View($user, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -171,7 +172,7 @@ final class UserController extends BaseApiController
     public function meAction(): Response
     {
         $view = new View($this->getUser(), 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -222,13 +223,13 @@ final class UserController extends BaseApiController
             $this->repository->saveUser($user);
 
             $view = new View($user, 200);
-            $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }
@@ -284,7 +285,7 @@ final class UserController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
+            $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
         }
@@ -292,7 +293,7 @@ final class UserController extends BaseApiController
         $this->repository->saveUser($user);
 
         $view = new View($user, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }

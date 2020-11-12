@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
@@ -33,6 +34,8 @@ class TeamTest extends TestCase
         self::assertEquals(0, $sut->getCustomers()->count());
         self::assertInstanceOf(Collection::class, $sut->getProjects());
         self::assertEquals(0, $sut->getProjects()->count());
+        self::assertInstanceOf(Collection::class, $sut->getActivities());
+        self::assertEquals(0, $sut->getActivities()->count());
     }
 
     public function testSetterAndGetter()
@@ -88,6 +91,26 @@ class TeamTest extends TestCase
         self::assertEquals(1, $sut->getProjects()->count());
         $sut->removeProject($project);
         self::assertEquals(0, $sut->getProjects()->count());
+    }
+
+    public function testActivities()
+    {
+        $activity = new Activity();
+        $activity->setName('foo');
+        self::assertEmpty($activity->getTeams());
+
+        $sut = new Team();
+        self::assertFalse($sut->hasActivity($activity));
+        $sut->addActivity($activity);
+        self::assertEquals(1, $sut->getActivities()->count());
+        self::assertTrue($sut->hasActivity($activity));
+        $actual = $sut->getActivities()[0];
+        self::assertSame($actual, $activity);
+        self::assertSame($sut, $activity->getTeams()[0]);
+        $sut->removeActivity(new Activity());
+        self::assertEquals(1, $sut->getActivities()->count());
+        $sut->removeActivity($activity);
+        self::assertEquals(0, $sut->getActivities()->count());
     }
 
     public function testUsers()

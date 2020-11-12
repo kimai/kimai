@@ -33,13 +33,23 @@ class InvoiceQueryTest extends TimesheetQueryTest
         $this->assertState($sut);
         $this->assertExported($sut);
         $this->assertMarkAsExported($sut);
+        $this->assertModifiedAfter($sut);
+
+        self::assertTrue($sut->getBillable());
+        self::assertTrue($sut->isBillable());
+        self::assertFalse($sut->isNotBillable());
+        self::assertFalse($sut->isIgnoreBillable());
+
+        self::assertTrue($sut->isBillable());
+        self::assertFalse($sut->isNotBillable());
+        $this->assertBillable($sut);
     }
 
     protected function assertMarkAsExported(InvoiceQuery $sut)
     {
-        $this->assertFalse($sut->isMarkAsExported());
+        self::assertFalse($sut->isMarkAsExported());
 
         $sut->setMarkAsExported(true);
-        $this->assertTrue($sut->isMarkAsExported());
+        self::assertTrue($sut->isMarkAsExported());
     }
 }

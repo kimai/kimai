@@ -18,6 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Base class for all Doctrine migrations.
+ *
+ * @codeCoverageIgnore
  */
 abstract class AbstractMigration extends BaseAbstractMigration implements ContainerAwareInterface
 {

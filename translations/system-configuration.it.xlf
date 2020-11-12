@@ -140,7 +140,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.rounding.default.days">
                 <source>label.timesheet.rounding.default.days</source>
-                <target>Giorani della settimana per applicazione arrotondamento</target>
+                <target>Giorni della settimana per applicazione arrotondamento</target>
             </trans-unit>
             <trans-unit id="Monday">
                 <source>Monday</source>

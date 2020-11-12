@@ -2,11 +2,15 @@
     font-size: unset;
 }
 
-.swal2-container {
-    top: 95px !important;
-
+body.swal2-toast-shown .swal2-container {
     // never block the top two bars double-bars display (smaller displays)
     @media only screen and (max-width: 768px) {
+        top: 95px !important;
         width: 80%;
+    }
+
+    // never block the top bar on single-bar display (larger devices)
+    @media only screen and (min-width: 768px) {
+        top: 60px !important;
     }
 }

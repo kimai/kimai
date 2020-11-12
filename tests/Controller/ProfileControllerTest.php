@@ -243,6 +243,24 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), 'test1234', $user->getSalt()));
     }
 
+    public function testPasswordActionFailsIfPasswordLengthToShort()
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_USER,
+            '/profile/' . UserFixtures::USERNAME_USER . '/password',
+            'form[name=user_password]',
+            [
+                'user_password' => [
+                    'plainPassword' => [
+                        'first' => 'abcdef1',
+                        'second' => 'abcdef1',
+                    ]
+                ]
+            ],
+            ['#user_password_plainPassword_first']
+        );
+    }
+
     public function testApiTokenAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -255,15 +273,15 @@ class ProfileControllerTest extends ControllerBaseTest
         $passwordEncoder = static::$kernel->getContainer()->get('test.PasswordEncoder');
 
         $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN, $user->getSalt()));
-        $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), 'test123', $user->getSalt()));
+        $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), 'test1234', $user->getSalt()));
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
 
         $form = $client->getCrawler()->filter('form[name=user_api_token]')->form();
         $client->submit($form, [
             'user_api_token' => [
                 'plainApiToken' => [
-                    'first' => 'test123',
-                    'second' => 'test123',
+                    'first' => 'test1234',
+                    'second' => 'test1234',
                 ]
             ]
         ]);
@@ -278,7 +296,25 @@ class ProfileControllerTest extends ControllerBaseTest
         $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN, $user->getSalt()));
-        $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), 'test123', $user->getSalt()));
+        $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), 'test1234', $user->getSalt()));
+    }
+
+    public function testApiTokenActionFailsIfPasswordLengthToShort()
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_USER,
+            '/profile/' . UserFixtures::USERNAME_USER . '/api-token',
+            'form[name=user_api_token]',
+            [
+                'user_api_token' => [
+                    'plainApiToken' => [
+                        'first' => 'abcdef1',
+                        'second' => 'abcdef1',
+                    ]
+                ]
+            ],
+            ['#user_api_token_plainApiToken_first']
+        );
     }
 
     public function testRolesActionIsSecured()
@@ -374,10 +410,14 @@ class ProfileControllerTest extends ControllerBaseTest
         return [
             // assert that the user doesn't have the "hourly-rate_own_profile" permission
             [User::ROLE_USER, UserFixtures::USERNAME_USER, 82, 82, 'ar', null],
-            // admins are allowed to update their own hourly rate
+            // teamleads are allowed to update their own hourly rate, but not other peoples hourly rate
+            [User::ROLE_TEAMLEAD, UserFixtures::USERNAME_TEAMLEAD, 35, 37.5, 'ar', 19.54],
+            // admins are allowed to update their own hourly rate, but not other peoples hourly rate
             [User::ROLE_ADMIN, UserFixtures::USERNAME_ADMIN, 81, 37.5, 'ar', 19.54],
-            // admins are allowed to update other peoples hourly rate
-            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_USER, 82, 37.5, 'en', 19.54],
+            // super-admins are allowed to update other peoples hourly rate
+            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_ADMIN, 81, 37.5, 'en', 19.54],
+            // super-admins are allowed to update their own hourly rate
+            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_SUPER_ADMIN, 46, 37.5, 'ar', 19.54],
         ];
     }
 
@@ -395,21 +435,17 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals($hourlyRateOriginal, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
         $this->assertNull($user->getPreferenceValue(UserPreference::INTERNAL_RATE));
         $this->assertNull($user->getPreferenceValue(UserPreference::SKIN));
-        $this->assertEquals(false, $user->getPreferenceValue('theme.collapsed_sidebar'));
-        $this->assertEquals('month', $user->getPreferenceValue('calendar.initial_view'));
 
         $form = $client->getCrawler()->filter('form[name=user_preferences_form]')->form();
         $client->submit($form, [
             'user_preferences_form' => [
                 'preferences' => [
-                    ['name' => UserPreference::HOURLY_RATE, 'value' => 37.5],
-                    ['name' => UserPreference::INTERNAL_RATE, 'value' => 19.54],
-                    ['name' => 'timezone', 'value' => 'America/Creston'],
-                    ['name' => 'language', 'value' => 'ar'],
-                    ['name' => UserPreference::SKIN, 'value' => 'blue'],
-                    ['name' => 'theme.layout', 'value' => 'fixed'],
-                    ['name' => 'theme.collapsed_sidebar', 'value' => true],
-                    ['name' => 'calendar.initial_view', 'value' => 'agendaDay'],
+                    0 => ['name' => UserPreference::HOURLY_RATE, 'value' => 37.5],
+                    1 => ['name' => UserPreference::INTERNAL_RATE, 'value' => 19.54],
+                    2 => ['name' => UserPreference::TIMEZONE, 'value' => 'America/Creston'],
+                    3 => ['name' => UserPreference::LOCALE, 'value' => 'ar'],
+                    4 => ['name' => UserPreference::FIRST_WEEKDAY, 'value' => 'sunday'],
+                    5 => ['name' => UserPreference::SKIN, 'value' => 'blue'],
                 ]
             ]
         ]);
@@ -426,10 +462,13 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertEquals($hourlyRate, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
         $this->assertEquals($expectedInternalRate, $user->getPreferenceValue(UserPreference::INTERNAL_RATE));
-        $this->assertEquals('', $user->getPreferenceValue('America/Creston'));
-        $this->assertEquals('ar', $user->getPreferenceValue('language'));
+        $this->assertEquals('America/Creston', $user->getPreferenceValue(UserPreference::TIMEZONE));
+        $this->assertEquals('America/Creston', $user->getTimezone());
+        $this->assertEquals('ar', $user->getPreferenceValue(UserPreference::LOCALE));
+        $this->assertEquals('ar', $user->getLanguage());
+        $this->assertEquals('ar', $user->getLocale());
         $this->assertEquals('blue', $user->getPreferenceValue(UserPreference::SKIN));
-        $this->assertEquals(true, $user->getPreferenceValue('theme.collapsed_sidebar'));
-        $this->assertEquals('agendaDay', $user->getPreferenceValue('calendar.initial_view'));
+        $this->assertEquals('sunday', $user->getPreferenceValue(UserPreference::FIRST_WEEKDAY));
+        $this->assertEquals('sunday', $user->getFirstDayOfWeek());
     }
 }

@@ -14,6 +14,7 @@ use App\Configuration\TimesheetConfiguration;
 use App\Twig\MarkdownExtension;
 use App\Utils\Markdown;
 use PHPUnit\Framework\TestCase;
+use Twig\Node\Node;
 
 /**
  * @covers \App\Twig\MarkdownExtension
@@ -27,9 +28,21 @@ class MarkdownExtensionTest extends TestCase
         $sut = new MarkdownExtension(new Markdown(), $config);
         $filters = $sut->getFilters();
         $this->assertCount(3, $filters);
+
+        // make sure that the md2html filter does proper escaping
         $this->assertEquals('md2html', $filters[0]->getName());
+        self::assertEquals('html', $filters[0]->getPreEscape());
+        self::assertEquals(['html'], $filters[0]->getSafe(new Node()));
+
+        // make sure that the desc2html filter does proper escaping
         $this->assertEquals('desc2html', $filters[1]->getName());
+        self::assertEquals('html', $filters[1]->getPreEscape());
+        self::assertEquals(['html'], $filters[1]->getSafe(new Node()));
+
+        // make sure that the comment2html filter does proper escaping
         $this->assertEquals('comment2html', $filters[2]->getName());
+        self::assertEquals('html', $filters[2]->getPreEscape());
+        self::assertEquals(['html'], $filters[2]->getSafe(new Node()));
     }
 
     public function testMarkdownToHtml()
@@ -38,7 +51,7 @@ class MarkdownExtensionTest extends TestCase
         $config = new TimesheetConfiguration($loader, ['markdown_content' => true]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
-        $this->assertEquals('<h1 id="foobar">foobar</h1>', $sut->markdownToHtml('# foobar'));
+        $this->assertEquals('<p># foobar</p>', $sut->markdownToHtml('# foobar'));
     }
 
     public function testTimesheetContent()

@@ -267,9 +267,16 @@ final class InvoiceModel
         return $this;
     }
 
-    public function getFormatter(): ?InvoiceFormatter
+    public function getFormatter(): InvoiceFormatter
     {
         return $this->formatter;
+    }
+
+    public function setFormatter(InvoiceFormatter $formatter): InvoiceModel
+    {
+        $this->formatter = $formatter;
+
+        return $this;
     }
 
     public function getCurrency(): string

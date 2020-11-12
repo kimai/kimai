@@ -205,4 +205,15 @@ class TeamControllerTest extends ControllerBaseTest
         $team = $em->getRepository(Team::class)->find(1);
         self::assertEquals(1, \count($team->getProjects()));
     }
+
+    public function testDuplicateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/teams/1/duplicate');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/teams/2/edit'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('#team_edit_form_name');
+        self::assertEquals(1, $node->count());
+        self::assertEquals('Test team [COPY]', $node->attr('value'));
+    }
 }

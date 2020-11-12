@@ -30,6 +30,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ResetCommand extends Command
 {
     /**
+     * @var string
+     */
+    private $environment;
+
+    public function __construct(string $kernelEnvironment)
+    {
+        $this->environment = $kernelEnvironment;
+        parent::__construct();
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function configure()
@@ -55,7 +66,7 @@ EOT
      */
     public function isEnabled()
     {
-        return getenv('APP_ENV') !== 'prod';
+        return $this->environment !== 'prod';
     }
 
     /**
@@ -89,12 +100,32 @@ EOT
             }
 
             try {
-                $command = $this->getApplication()->find('doctrine:schema:create');
-                $command->run(new ArrayInput([]), $output);
+                $command = $this->getApplication()->find('doctrine:query:sql');
+                $command->run(new ArrayInput(['sql' => 'DROP TABLE IF EXISTS migration_versions']), $output);
             } catch (Exception $ex) {
-                $io->error('Failed to create database schema: ' . $ex->getMessage());
+                $io->error('Failed to drop migration_versions table: ' . $ex->getMessage());
 
                 return 3;
+            }
+
+            try {
+                $command = $this->getApplication()->find('doctrine:query:sql');
+                $command->run(new ArrayInput(['sql' => 'DROP TABLE IF EXISTS kimai2_sessions']), $output);
+            } catch (Exception $ex) {
+                $io->error('Failed to drop kimai2_sessions table: ' . $ex->getMessage());
+
+                return 4;
+            }
+
+            try {
+                $command = $this->getApplication()->find('doctrine:migrations:migrate');
+                $cmdInput = new ArrayInput([]);
+                $cmdInput->setInteractive(false);
+                $command->run($cmdInput, $output);
+            } catch (Exception $ex) {
+                $io->error('Failed to execute a migrations: ' . $ex->getMessage());
+
+                return 5;
             }
         }
 
@@ -106,18 +137,7 @@ EOT
         } catch (Exception $ex) {
             $io->error('Failed to import fixtures: ' . $ex->getMessage());
 
-            return 4;
-        }
-
-        try {
-            $command = $this->getApplication()->find('doctrine:migrations:version');
-            $cmdInput = new ArrayInput(['--add' => true, '--all' => true]);
-            $cmdInput->setInteractive(false);
-            $command->run($cmdInput, $output);
-        } catch (Exception $ex) {
-            $io->error('Failed to set migration status: ' . $ex->getMessage());
-
-            return 5;
+            return 6;
         }
 
         if (!$input->getOption('no-cache')) {
@@ -127,7 +147,7 @@ EOT
             } catch (Exception $ex) {
                 $io->error('Failed to clear cache: ' . $ex->getMessage());
 
-                return 6;
+                return 7;
             }
         }
 

@@ -13,6 +13,7 @@ use App\Event\DashboardEvent;
 use App\Widget\Type\AbstractContainer;
 use App\Widget\Type\AuthorizedWidget;
 use App\Widget\Type\CompoundRow;
+use App\Widget\Type\UserWidget;
 use App\Widget\WidgetContainerInterface;
 use App\Widget\WidgetException;
 use App\Widget\WidgetService;
@@ -31,15 +32,15 @@ class DashboardController extends AbstractController
     /**
      * @var EventDispatcherInterface
      */
-    protected $eventDispatcher;
+    private $eventDispatcher;
     /**
      * @var WidgetService
      */
-    protected $widgets;
+    private $widgets;
     /**
      * @var array
      */
-    protected $dashboard;
+    private $dashboard;
 
     /**
      * @param EventDispatcherInterface $dispatcher
@@ -58,8 +59,9 @@ class DashboardController extends AbstractController
      */
     public function indexAction()
     {
-        $event = new DashboardEvent($this->getUser());
+        $user = $this->getUser();
 
+        $event = new DashboardEvent($user);
         foreach ($this->dashboard as $widgetRow) {
             if (empty($widgetRow['widgets'])) {
                 continue;
@@ -108,6 +110,10 @@ class DashboardController extends AbstractController
                         }
                     }
                     $add = $tmp;
+                }
+
+                if ($widget instanceof UserWidget) {
+                    $widget->setUser($user);
                 }
 
                 if ($add) {

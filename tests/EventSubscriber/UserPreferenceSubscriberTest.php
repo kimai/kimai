@@ -9,14 +9,13 @@
 
 namespace App\Tests\EventSubscriber;
 
-use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\EventSubscriber\UserPreferenceSubscriber;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
@@ -41,14 +40,18 @@ class UserPreferenceSubscriberTest extends TestCase
         self::assertSame($user, $event->getUser());
 
         $prefs = $sut->getDefaultPreferences($user);
-        self::assertCount(11, $prefs);
+        self::assertCount(12, $prefs);
 
         foreach ($prefs as $pref) {
             switch ($pref->getName()) {
                 case UserPreference::HOURLY_RATE:
                 case UserPreference::INTERNAL_RATE:
                     self::assertTrue($pref->isEnabled());
-                break;
+                    break;
+
+                case UserPreference::FIRST_WEEKDAY:
+                    self::assertEquals('monday', $pref->getValue());
+                    break;
 
                 default:
                     self::assertTrue($pref->isEnabled());
@@ -67,7 +70,7 @@ class UserPreferenceSubscriberTest extends TestCase
         // TODO test merging values
         $sut->loadUserPreferences($event);
         $prefs = $event->getUser()->getPreferences();
-        self::assertCount(11, $prefs);
+        self::assertCount(12, $prefs);
 
         foreach ($prefs as $pref) {
             switch ($pref->getName()) {
@@ -88,9 +91,8 @@ class UserPreferenceSubscriberTest extends TestCase
         $authMock->expects($this->once())->method('isGranted')->willReturn($seeHourlyRate);
 
         $eventMock = $this->createMock(EventDispatcherInterface::class);
-        $tokenMock = $this->createMock(TokenStorageInterface::class);
-        $formConfigMock = $this->createMock(FormConfiguration::class);
+        $formConfigMock = $this->createMock(SystemConfiguration::class);
 
-        return new UserPreferenceSubscriber($eventMock, $tokenMock, $authMock, $formConfigMock);
+        return new UserPreferenceSubscriber($eventMock, $authMock, $formConfigMock);
     }
 }

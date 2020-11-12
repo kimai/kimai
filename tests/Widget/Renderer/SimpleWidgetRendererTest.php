@@ -10,7 +10,6 @@
 namespace App\Tests\Widget\Renderer;
 
 use App\Widget\Renderer\SimpleWidgetRenderer;
-use App\Widget\Type\Counter;
 use App\Widget\Type\More;
 use App\Widget\Type\SimpleWidget;
 use PHPUnit\Framework\TestCase;
@@ -60,7 +59,6 @@ class SimpleWidgetRendererTest extends TestCase
     {
         return [
             [new SimpleWidget(), 'widget/widget-simplewidget.html.twig', 'yellow'],
-            [new Counter(), 'widget/widget-counter.html.twig', 'asdfgh'],
             [new More(), 'widget/widget-more.html.twig', '#123456'],
         ];
     }

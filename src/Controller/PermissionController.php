@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Role;
 use App\Entity\RolePermission;
+use App\Entity\User;
 use App\Event\PermissionSectionsEvent;
 use App\Event\PermissionsEvent;
 use App\Form\RoleType;
@@ -77,6 +78,7 @@ final class PermissionController extends AbstractController
                 $role->setName($roleName);
                 $this->roleRepository->saveRole($role);
                 $existing[] = $roleName;
+                $all[] = $role;
             }
         }
 
@@ -95,10 +97,13 @@ final class PermissionController extends AbstractController
             new PermissionSection('Project (Admin)', '_project'),
             new PermissionSection('Project (Team member)', '_team_project'),
             new PermissionSection('Project (Teamlead)', '_teamlead_project'),
-            new PermissionSection('Activity', '_activity'),
+            new PermissionSection('Activity (Admin)', '_activity'),
+            new PermissionSection('Activity (Team member)', '_team_activity'),
+            new PermissionSection('Activity (Teamlead)', '_teamlead_activity'),
             new PermissionSection('Timesheet', '_timesheet'),
             new PermissionSection('Timesheet (other)', '_other_timesheet'),
             new PermissionSection('Timesheet (own)', '_own_timesheet'),
+            new PermissionSection('Reporting', '_reporting'),
         ];
 
         $event = new PermissionSectionsEvent();
@@ -141,7 +146,7 @@ final class PermissionController extends AbstractController
             'ROLE_TEAMLEAD' => null,
             'ROLE_USER' => null,
         ];
-        foreach ($this->roleRepository->findAll() as $role) {
+        foreach ($all as $role) {
             $roles[$role->getName()] = $role;
         }
 
@@ -157,6 +162,7 @@ final class PermissionController extends AbstractController
             'sorted' => $event->getPermissions(),
             'manager' => $this->manager,
             'system_roles' => $this->roleService->getSystemRoles(),
+            'always_apply_superadmin' => RolePermissionManager::SUPER_ADMIN_PERMISSIONS,
         ]);
     }
 
@@ -180,7 +186,7 @@ final class PermissionController extends AbstractController
                 $this->roleRepository->saveRole($role);
                 $this->flashSuccess('action.update.success');
             } catch (\Exception $ex) {
-                $this->flashSuccess('action.update.error');
+                $this->flashUpdateException($ex);
             }
 
             return $this->redirectToRoute('admin_user_permissions');
@@ -209,7 +215,7 @@ final class PermissionController extends AbstractController
             $this->roleRepository->deleteRole($role);
             $this->flashSuccess('action.delete.success');
         } catch (\Exception $ex) {
-            $this->flashError('action.delete.error');
+            $this->flashDeleteException($ex);
         }
 
         return $this->redirectToRoute('admin_user_permissions');
@@ -219,10 +225,14 @@ final class PermissionController extends AbstractController
      * @Route(path="/roles/{id}/{name}/{value}", name="admin_user_permission_save", methods={"GET"})
      * @Security("is_granted('role_permissions')")
      */
-    public function savePermission(Role $role, string $name, string $value, RolePermissionRepository $rolePermissionRepository): Response
+    public function savePermission(Role $role, string $name, bool $value, RolePermissionRepository $rolePermissionRepository): Response
     {
         if (!$this->manager->isRegisteredPermission($name)) {
             throw $this->createNotFoundException('Unknown permission: ' . $name);
+        }
+
+        if (false === $value && $role->getName() === User::ROLE_SUPER_ADMIN && \in_array($name, RolePermissionManager::SUPER_ADMIN_PERMISSIONS)) {
+            throw $this->createAccessDeniedException(sprintf('Permission "%s" cannot be deactivated for role "%s"', $name, $role->getName()));
         }
 
         try {
@@ -237,7 +247,7 @@ final class PermissionController extends AbstractController
             $rolePermissionRepository->saveRolePermission($permission);
             $this->flashSuccess('action.update.success');
         } catch (\Exception $ex) {
-            $this->flashError('action.update.error');
+            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('admin_user_permissions');

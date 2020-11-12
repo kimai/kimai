@@ -45,7 +45,7 @@ class TeamMemberType extends AbstractType
                 /** @var User $user */
                 $user = $options['user'];
 
-                if (null !== $user && !$user->getTeams()->isEmpty() && !$user->isSuperAdmin() && !$user->isAdmin()) {
+                if (null !== $user && $user->hasTeamAssignment() && !$user->canSeeAllData()) {
                     $qb
                         ->leftJoin('u.teams', 'teams')
                         ->leftJoin('teams.users', 'users')

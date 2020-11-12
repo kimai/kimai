@@ -22,6 +22,18 @@
                 <source>This invoice document cannot be used, please rename the file and upload it again.</source>
                 <target>Dieses Rechnungsdokument kann nicht verwendet werden, bitte benennen Sie die Datei um und laden Sie diese erneut hoch.</target>
             </trans-unit>
+            <trans-unit id="This period is locked, please choose a later date.">
+                <source>This period is locked, please choose a later date.</source>
+                <target>Dieser Zeitraum ist gesperrt, bitte wählen Sie ein späteres Datum.</target>
+            </trans-unit>
+            <trans-unit id="You already have an entry for this time.">
+                <source>You already have an entry for this time.</source>
+                <target>Es existiert bereits ein Eintrag für diesen Zeitpunkt.</target>
+            </trans-unit>
+            <trans-unit id="The given value is not a valid time.">
+                <source>The given value is not a valid time.</source>
+                <target>Der eingetragene Wert ist keine gültige Uhrzeit.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

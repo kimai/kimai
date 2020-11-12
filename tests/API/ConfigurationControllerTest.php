@@ -29,13 +29,13 @@ class ConfigurationControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(7, \count($result));
+        $this->assertEquals(8, \count($result));
         $this->assertI18nStructure($result);
     }
 
     protected function assertI18nStructure(array $result)
     {
-        $expectedKeys = ['date', 'dateTime', 'duration', 'formDate', 'formDateTime', 'is24hours', 'time'];
+        $expectedKeys = ['date', 'dateTime', 'duration', 'formDate', 'formDateTime', 'is24hours', 'time', 'now'];
         $actual = array_keys($result);
         sort($actual);
         sort($expectedKeys);
@@ -56,13 +56,13 @@ class ConfigurationControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(5, \count($result));
+        $this->assertEquals(6, \count($result));
         $this->assertTimesheetStructure($result);
     }
 
     protected function assertTimesheetStructure(array $result)
     {
-        $expectedKeys = ['activeEntriesHardLimit', 'activeEntriesSoftLimit', 'defaultBeginTime', 'isAllowFutureTimes', 'trackingMode'];
+        $expectedKeys = ['activeEntriesHardLimit', 'activeEntriesSoftLimit', 'defaultBeginTime', 'isAllowFutureTimes', 'isAllowOverlapping', 'trackingMode'];
         $actual = array_keys($result);
         sort($actual);
         sort($expectedKeys);

@@ -225,6 +225,8 @@ class DebugRendererTest extends TestCase
             'entry.end_time',
             'entry.end_timestamp',
             'entry.date',
+            'entry.week',
+            'entry.weekyear',
             'entry.user_id',
             'entry.user_name',
             'entry.user_alias',

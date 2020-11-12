@@ -29,6 +29,10 @@ class TagEditForm extends AbstractType
                 'attr' => [
                     'autofocus' => 'autofocus'
                 ],
+                'documentation' => [
+                    'type' => 'string',
+                    'description' => 'The tag name (forbidden character: comma)',
+                ],
             ])
             ->add('color', ColorPickerType::class);
     }

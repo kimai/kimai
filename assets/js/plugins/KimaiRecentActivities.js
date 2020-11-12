@@ -40,7 +40,8 @@ export default class KimaiRecentActivities extends KimaiPlugin {
         // don't block initial browser rendering
         setTimeout(handle, 500);
 
-        document.addEventListener('kimai.timesheetStop', handle);
+        document.addEventListener('kimai.recentActivities', handle);
+        document.addEventListener('kimai.timesheetUpdate', handle);
         document.addEventListener('kimai.activityUpdate', handle);
         document.addEventListener('kimai.projectUpdate', handle);
         document.addEventListener('kimai.customerUpdate', handle);

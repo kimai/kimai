@@ -11,14 +11,22 @@ namespace App\Configuration;
 
 class MailConfiguration
 {
+    /**
+     * @var string
+     */
+    private $mailFrom;
+
+    public function __construct(string $mailFrom)
+    {
+        $this->mailFrom = $mailFrom;
+    }
+
     public function getFromAddress(): ?string
     {
-        $from = getenv('MAILER_FROM');
-
-        if ($from === false || empty($from)) {
+        if (empty($this->mailFrom)) {
             return null;
         }
 
-        return $from;
+        return $this->mailFrom;
     }
 }

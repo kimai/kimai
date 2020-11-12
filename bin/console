@@ -9,11 +9,10 @@ use Symfony\Component\Dotenv\Dotenv;
 
 set_time_limit(0);
 
-require __DIR__.'/../vendor/autoload.php';
+require dirname(__DIR__) . '/vendor/autoload.php';
 
-if (!isset($_SERVER['APP_ENV'])) {
-    (new Dotenv(true))->load(__DIR__.'/../.env');
-}
+// do NOT rely on calls to getenv() as it is not thread safe
+(new Dotenv(false))->loadEnv(dirname(__DIR__).'/.env');
 
 $input = new ArgvInput();
 $env = $input->getParameterOption(['--env', '-e'], $_SERVER['APP_ENV'] ?? 'prod');
@@ -22,9 +21,7 @@ $debug = (bool) ($_SERVER['APP_DEBUG'] ?? (in_array($env, ['dev', 'test']))) && 
 if ($debug) {
     umask(0000);
 
-    if (class_exists(Debug::class)) {
-        Debug::enable();
-    }
+    Debug::enable();
 }
 
 $kernel = new Kernel($env, $debug);

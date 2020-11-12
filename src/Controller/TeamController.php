@@ -84,6 +84,42 @@ final class TeamController extends AbstractController
     }
 
     /**
+     * @Route(path="/{id}/duplicate", name="team_duplicate", methods={"GET", "POST"})
+     * @Security("is_granted('edit', team) and is_granted('create_team')")
+     */
+    public function duplicateTeam(Team $team, Request $request)
+    {
+        $newTeam = new Team();
+        $newTeam->setName($team->getName() . ' [COPY]');
+        $newTeam->setTeamLead($team->getTeamLead());
+
+        foreach ($team->getUsers() as $user) {
+            $newTeam->addUser($user);
+        }
+        foreach ($team->getCustomers() as $customer) {
+            $newTeam->addCustomer($customer);
+        }
+        foreach ($team->getProjects() as $project) {
+            $newTeam->addProject($project);
+        }
+
+        try {
+            // make sure that the teamlead is always part of the team, otherwise permission checks
+            // and filtering might not work as expected!
+            $team->addUser($team->getTeamLead());
+
+            $this->repository->saveTeam($newTeam);
+            $this->flashSuccess('action.update.success');
+
+            return $this->redirectToRoute('admin_team_edit', ['id' => $newTeam->getId()]);
+        } catch (\Exception $ex) {
+            $this->flashUpdateException($ex);
+        }
+
+        return $this->redirectToRoute('admin_team');
+    }
+
+    /**
      * @Route(path="/{id}/edit", name="admin_team_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', team)")
      */
@@ -116,7 +152,7 @@ final class TeamController extends AbstractController
 
                 return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -156,7 +192,7 @@ final class TeamController extends AbstractController
 
                     return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
                 } catch (\Exception $ex) {
-                    $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                    $this->flashUpdateException($ex);
                 }
             }
         }
@@ -176,7 +212,7 @@ final class TeamController extends AbstractController
 
                         return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
                     } catch (\Exception $ex) {
-                        $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                        $this->flashUpdateException($ex);
                     }
                 }
             }
@@ -195,7 +231,7 @@ final class TeamController extends AbstractController
 
                         return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
                     } catch (\Exception $ex) {
-                        $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                        $this->flashUpdateException($ex);
                     }
                 }
             }

@@ -9,6 +9,7 @@
 
 namespace App\DependencyInjection;
 
+use App\Constants;
 use App\Entity\Customer;
 use App\Entity\User;
 use App\Repository\InvoiceDocumentRepository;
@@ -195,6 +196,18 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('allow_future_times')
                             ->defaultTrue()
                         ->end()
+                        ->booleanNode('allow_overlapping_records')
+                            ->defaultTrue()
+                        ->end()
+                        ->scalarNode('lockdown_period_start')
+                            ->defaultNull()
+                        ->end()
+                        ->scalarNode('lockdown_period_end')
+                            ->defaultNull()
+                        ->end()
+                        ->scalarNode('lockdown_grace_period')
+                            ->defaultNull()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
@@ -225,7 +238,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue([])
                 ->end()
                 ->booleanNode('simple_form')
-                    ->defaultTrue()
+                    ->defaultFalse()
                 ->end()
                 ->scalarNode('number_format')
                     ->defaultValue('{Y}/{cy,3}')
@@ -374,10 +387,16 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('chart')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('background_color')->defaultValue('rgba(0,115,183,0.7)')->end()
+                        ->scalarNode('background_color')->defaultValue('#3c8dbc')->end() // rgba(0,115,183,0.7) = #0073b7 = Constants::DEFAULT_COLOR
                         ->scalarNode('border_color')->defaultValue('#3b8bba')->end()
                         ->scalarNode('grid_color')->defaultValue('rgba(0,0,0,.05)')->end()
                         ->scalarNode('height')->defaultValue('200')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('calendar')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('background_color')->defaultValue(Constants::DEFAULT_COLOR)->end()
                     ->end()
                 ->end()
                 ->arrayNode('branding')

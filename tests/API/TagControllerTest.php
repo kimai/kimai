@@ -66,14 +66,30 @@ class TagControllerTest extends APIControllerBaseTest
         $this->importTagFixtures($client);
         $data = [
             'name' => 'foo',
+            'color' => '#000FFF'
         ];
         $this->request($client, '/api/tags', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('TagEntity', $result);
         $this->assertNotEmpty($result['id']);
+        self::assertEquals('#000FFF', $result['color']);
+    }
+
+    public function testPostActionWithValidationErrors()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importTagFixtures($client);
+        $data = [
+            'name' => '1',
+            'color' => '11231231231',
+        ];
+        $this->request($client, '/api/tags', 'POST', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['name', 'color']);
     }
 
     public function testPostActionWithInvalidUser()
@@ -127,22 +143,5 @@ class TagControllerTest extends APIControllerBaseTest
     public function testDeleteActionWithUnknownTimesheet()
     {
         $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/tags/255');
-    }
-
-    protected function assertStructure(array $result, $full = true)
-    {
-        $expectedKeys = [
-            'id', 'name', 'color', 'timesheets'
-        ];
-
-        if ($full) {
-            $expectedKeys = array_merge($expectedKeys, []);
-        }
-
-        $actual = array_keys($result);
-        sort($actual);
-        sort($expectedKeys);
-
-        $this->assertEquals($expectedKeys, $actual, 'Tag structure does not match');
     }
 }

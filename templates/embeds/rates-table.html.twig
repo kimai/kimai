@@ -5,13 +5,14 @@
         {{ 'rates.title'|trans }}
     {% endblock %}
     {% block box_tools %}
-        <a class="modal-ajax-form open-edit btn btn-box-tool" data-href="{{ create_url }}" data-toggle="tooltip" data-placement="top" title="{{ 'create'|trans }}"><i class="{{ 'create'|icon }}"></i></a>
+        <a class="modal-ajax-form open-edit btn btn-default btn-sm" data-href="{{ create_url }}" data-toggle="tooltip" data-placement="top" title="{{ 'create'|trans }}"><i class="{{ 'create'|icon }}"></i></a>
     {% endblock %}
+    {% block box_body_class %}no-padding{% endblock %}
     {% block box_body %}
         {% if rates is empty %}
-            {{ 'rates.empty'|trans }}
+            <div class="comment">{{ 'rates.empty'|trans }}</div>
         {% else %}
-            <table class="table dataTable" >
+            <table class="table dataTable">
                 <thead>
                 <tr>
                     <th>

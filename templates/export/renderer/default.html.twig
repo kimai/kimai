@@ -440,7 +440,7 @@
                         </td>
                         <td class="column-description" {% if not columns.description %}style="display: none"{% endif %}>
                             {% if entry.description is not empty %}
-                                {{ entry.description|escape|desc2html }}
+                                {{ entry.description|desc2html }}
                             {% endif %}
                         </td>
                         <td class="column-exported" {% if not columns.exported %}style="display: none"{% endif %}>

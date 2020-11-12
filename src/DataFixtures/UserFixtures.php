@@ -41,9 +41,6 @@ class UserFixtures extends Fixture
     public const MIN_RATE = 30;
     public const MAX_RATE = 120;
 
-    // lower batch size, as user preferences are added in the same run
-    public const BATCH_SIZE = 50;
-
     /**
      * @var UserPasswordEncoderInterface
      */
@@ -88,14 +85,18 @@ class UserFixtures extends Fixture
                 ->setEnabled($userData[6])
                 ->setPassword($passwordEncoder->encodePassword($user, self::DEFAULT_PASSWORD))
                 ->setApiToken($passwordEncoder->encodePassword($user, self::DEFAULT_API_TOKEN))
-                ->setPreferences($this->getUserPreferences($user, $userData[7]))
             ;
-
             $manager->persist($user);
+
+            $prefs = $this->getUserPreferences($user, $userData[7]);
+            $user->setPreferences($prefs);
+            $manager->persist($prefs[0]);
+            $manager->persist($prefs[1]);
         }
 
         $manager->flush();
-        $manager->clear();
+        $manager->clear(User::class);
+        $manager->clear(UserPreference::class);
     }
 
     /**
@@ -160,19 +161,17 @@ class UserFixtures extends Fixture
                 ->setRoles([User::ROLE_USER])
                 ->setEnabled(true)
                 ->setPassword($passwordEncoder->encodePassword($user, self::DEFAULT_PASSWORD))
-                ->setPreferences($this->getUserPreferences($user))
             ;
-
             $manager->persist($user);
 
-            if ($i % self::BATCH_SIZE === 0) {
-                $manager->flush();
-                $manager->clear();
-            }
+            $prefs = $this->getUserPreferences($user);
+            $user->setPreferences($prefs);
+            $manager->persist($prefs[0]);
         }
 
         $manager->flush();
-        $manager->clear();
+        $manager->clear(User::class);
+        $manager->clear(UserPreference::class);
     }
 
     /**

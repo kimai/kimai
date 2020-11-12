@@ -10,6 +10,7 @@
 namespace App\Tests\Entity;
 
 use Symfony\Component\Validator\ConstraintViolationInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Classes using this MUST extend \Symfony\Bundle\FrameworkBundle\Test\KernelTestCase
@@ -20,12 +21,12 @@ trait EntityValidationTestTrait
      * @param object $entity
      * @param array|string $fieldNames
      */
-    protected function assertHasViolationForField(object $entity, $fieldNames)
+    protected function assertHasViolationForField(object $entity, $fieldNames, $groups = null)
     {
         self::bootKernel();
+        /** @var ValidatorInterface $validator */
         $validator = static::$kernel->getContainer()->get('validator');
-
-        $violations = $validator->validate($entity);
+        $violations = $validator->validate($entity, null, $groups);
 
         if (!\is_array($fieldNames)) {
             $fieldNames = [$fieldNames];
@@ -55,12 +56,13 @@ trait EntityValidationTestTrait
         $this->assertEquals($expected, $countViolations, sprintf('Expected %s violations, found %s in %s.', $expected, $actual, implode(', ', array_keys($violatedFields))));
     }
 
-    protected function assertHasNoViolations($entity)
+    protected function assertHasNoViolations($entity, $groups = null)
     {
         self::bootKernel();
+        /** @var ValidatorInterface $validator */
         $validator = static::$kernel->getContainer()->get('validator');
 
-        $violations = $validator->validate($entity);
+        $violations = $validator->validate($entity, null, $groups);
         $actual = $violations->count();
 
         $this->assertEquals(0, $actual, sprintf('Expected 0 violations, found %s.', $actual));

@@ -18,6 +18,10 @@ export default class KimaiAlert extends KimaiPlugin {
         return 'alert';
     }
 
+    /**
+     * @param {string} title
+     * @param {string|array} message
+     */
     error(title, message) {
         const translation = this.getContainer().getTranslation();
         if (translation.has(title)) {
@@ -26,14 +30,48 @@ export default class KimaiAlert extends KimaiPlugin {
         if (translation.has(message)) {
             message = translation.get(message);
         }
-        Swal.fire({
-            icon: 'error',
-            title: title.replace('%reason%', ''),
-            text: message,
-        });
+
+        if (Array.isArray(message)) {
+            Swal.fire({
+                icon: 'error',
+                title: title.replace('%reason%', ''),
+                html: message.join('<br>'),
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: title.replace('%reason%', ''),
+                text: message,
+            });
+        }
+    }
+
+    warning(message) {
+        this._show('warning', message);
     }
 
     success(message) {
+        this._toast('success', message);
+    }
+
+    info(message) {
+        this._show('info', message);
+    }
+
+    _show(type, message) {
+        const translation = this.getContainer().getTranslation();
+
+        if (translation.has(message)) {
+            message = translation.get(message);
+        }
+
+        Swal.fire({
+            icon: type,
+            title: message,
+        });
+    }
+
+    _toast(type, message) {
         const translation = this.getContainer().getTranslation();
 
         if (translation.has(message)) {
@@ -46,7 +84,7 @@ export default class KimaiAlert extends KimaiPlugin {
             toast: true,
             position: 'top',
             showConfirmButton: false,
-            icon: 'success',
+            icon: type,
             title: message,
         });
     }

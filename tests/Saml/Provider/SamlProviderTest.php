@@ -19,6 +19,7 @@ use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlToken;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\ChainUserProvider;
 
 /**
@@ -26,7 +27,7 @@ use Symfony\Component\Security\Core\User\ChainUserProvider;
  */
 class SamlProviderTest extends TestCase
 {
-    protected function getSamlProvider($mapping = null, $loadUser = false): SamlProvider
+    protected function getSamlProvider($mapping = null, $loadUser = false, ?SamlUserFactory $userFactory = null): SamlProvider
     {
         if (null === $mapping) {
             $mapping = [
@@ -41,12 +42,16 @@ class SamlProviderTest extends TestCase
             ];
         }
 
+        if (null === $userFactory) {
+            $userFactory = new SamlUserFactory($mapping);
+        }
+
         $repository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         if ($loadUser !== false) {
             $repository->expects($this->once())->method('loadUserByUsername')->willReturn($loadUser);
         }
         $userProvider = new ChainUserProvider([new DoctrineUserProvider($repository)]);
-        $provider = new SamlProvider($repository, $userProvider, new SamlTokenFactory(), new SamlUserFactory($mapping));
+        $provider = new SamlProvider($repository, $userProvider, new SamlTokenFactory(), $userFactory);
 
         return $provider;
     }
@@ -107,5 +112,23 @@ class SamlProviderTest extends TestCase
         self::assertEquals('foo1@example.com', $tokenUser->getUsername());
         self::assertEquals('Tralalala', $tokenUser->getTitle());
         self::assertEquals('foo@example.com', $tokenUser->getEmail());
+    }
+
+    public function testAuthenticateThrowsAuthenticationException()
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('Failed creating or hydrating user "foo1@example.com": Missing user attribute: Email');
+
+        $user = new User();
+        $user->setAuth(User::AUTH_SAML);
+
+        $token = new SamlToken([]);
+        $token->setUser('foo1@example.com');
+        $token->setAttributes([
+            'Chicken' => ['foo@example.com'],
+        ]);
+
+        $sut = $this->getSamlProvider(null, $user);
+        $sut->authenticate($token);
     }
 }

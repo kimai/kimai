@@ -15,10 +15,11 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
-use App\Tests\DataFixtures\ProjectFixtures;
+use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 
 /**
  * @group integration
@@ -71,6 +72,48 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_activity_admin', 5);
+    }
+
+    public function testExportIsSecureForRole()
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/activity/export');
+    }
+
+    public function testExportAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->assertAccessIsGranted($client, '/admin/activity/export');
+        $this->assertExcelExportResponse($client, 'kimai-activities_');
+    }
+
+    public function testExportActionWithSearchTermQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new ActivityFixtures();
+        $fixture->setAmount(5);
+        $fixture->setCallback(function (Activity $activity) {
+            $activity->setVisible(true);
+            $activity->setComment('I am a foobar with tralalalala some more content');
+            $activity->setMetaField((new ActivityMeta())->setName('location')->setValue('homeoffice'));
+            $activity->setMetaField((new ActivityMeta())->setName('feature')->setValue('timetracking'));
+        });
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/admin/activity/');
+
+        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/activity/export'));
+        $client->submit($form, [
+            'searchTerm' => 'feature:timetracking foo',
+            'visibility' => 1,
+            'pageSize' => 50,
+            'customers' => [1],
+            'projects' => [1],
+            'page' => 1,
+        ]);
+
+        $this->assertExcelExportResponse($client, 'kimai-activities_');
     }
 
     public function testDetailsAction()
@@ -127,8 +170,6 @@ class ActivityControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/create');
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        $this->assertTrue($form->has('activity_edit_form[create_more]'));
-        $this->assertFalse($form->get('activity_edit_form[create_more]')->hasValue());
         $client->submit($form, [
             'activity_edit_form' => [
                 'name' => 'An AcTiVitY Name',
@@ -159,52 +200,17 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertFalse($form->has('activity_edit_form[metaFields][1][value]'));
     }
 
-    public function testCreateActionWithCreateMore()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-
-        $fixture = new ProjectFixtures();
-        $fixture->setAmount(10);
-        $this->importFixture($fixture);
-
-        $this->assertAccessIsGranted($client, '/admin/activity/create');
-        $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        $this->assertTrue($form->has('activity_edit_form[create_more]'));
-
-        /** @var \Symfony\Component\DomCrawler\Field\ChoiceFormField $project */
-        $project = $form->get('activity_edit_form[project]');
-        $options = $project->availableOptionValues();
-        $selectedProject = $options[array_rand($options)];
-
-        $client->submit($form, [
-            'activity_edit_form' => [
-                'name' => 'Test create more',
-                'create_more' => true,
-                'project' => $selectedProject,
-            ]
-        ]);
-        $this->assertFalse($client->getResponse()->isRedirect());
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        $this->assertTrue($form->has('activity_edit_form[create_more]'));
-        $this->assertTrue($form->get('activity_edit_form[create_more]')->hasValue());
-        $this->assertEquals(1, $form->get('activity_edit_form[create_more]')->getValue());
-        $this->assertEquals($selectedProject, $form->get('activity_edit_form[project]')->getValue());
-    }
-
     public function testEditAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/1/edit');
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        $this->assertFalse($form->has('activity_edit_form[create_more]'));
         $this->assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
         $client->submit($form, [
             'activity_edit_form' => ['name' => 'Test 2', 'customer' => 1, 'project' => '1']
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
         $this->request($client, '/admin/activity/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
@@ -217,20 +223,70 @@ class ActivityControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/1/edit');
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        $this->assertFalse($form->has('activity_edit_form[create_more]'));
         $this->assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
         $client->submit($form, [
             'activity_edit_form' => ['name' => 'Test 2']
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
         $this->request($client, '/admin/activity/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
-        // make sure no customer or project is pre-selected for global activities
-        $this->assertEquals('', $editForm->get('activity_edit_form[customer]')->getValue());
-        $this->assertEquals('', $editForm->get('activity_edit_form[project]')->getValue());
+    }
+
+    public function testTeamPermissionAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        /** @var Activity $activity */
+        $activity = $em->getRepository(Activity::class)->find(1);
+        self::assertEquals(0, $activity->getTeams()->count());
+
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(2);
+        $fixture->setAddCustomer(false);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/admin/activity/1/permissions');
+        $form = $client->getCrawler()->filter('form[name=activity_team_permission_form]')->form();
+        /** @var ChoiceFormField $team1 */
+        $team1 = $form->get('activity_team_permission_form[teams][0]');
+        $team1->tick();
+        /** @var ChoiceFormField $team2 */
+        $team2 = $form->get('activity_team_permission_form[teams][1]');
+        $team2->tick();
+
+        $client->submit($form);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
+        $client->followRedirect();
+        $this->assertHasDataTable($client);
+
+        /** @var Activity $activity */
+        $activity = $em->getRepository(Activity::class)->find(1);
+        self::assertEquals(2, $activity->getTeams()->count());
+    }
+
+    public function testCreateDefaultTeamAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/activity/1/details');
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
+
+        $this->request($client, '/admin/activity/1/create_team');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-title');
+        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
+        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
+        self::assertEquals(1, $node->count());
+
+        // creating the default team a second time fails, as the name already exists
+        $this->request($client, '/admin/activity/1/create_team');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
+        $client->followRedirect();
+        $this->assertHasFlashError($client, 'Changes could not be saved: Team already existing');
     }
 
     public function testDeleteAction()

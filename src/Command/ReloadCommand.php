@@ -31,6 +31,19 @@ final class ReloadCommand extends Command
     public const ERROR_LINT_TRANSLATIONS = 16;
 
     /**
+     * Returns the base directory to the Kimai installation.
+     *
+     * @return string
+     */
+    protected function getRootDirectory(): string
+    {
+        /** @var Application $application */
+        $application = $this->getApplication();
+
+        return $application->getKernel()->getProjectDir();
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function configure()
@@ -52,6 +65,10 @@ final class ReloadCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $io->title('Reloading configurations ...');
+
+        // many users execute the bin/console command from arbitrary locations
+        $path = getcwd();
+        \chdir($this->getRootDirectory());
 
         try {
             $command = $this->getApplication()->find('lint:yaml');
@@ -92,6 +109,8 @@ final class ReloadCommand extends Command
         // flush the cache, in case values from the database are cached
         $cacheResult = $this->rebuildCaches($environment, $io, $input, $output);
 
+        chdir($path);
+
         if ($cacheResult !== 0) {
             $io->warning(
                 [
@@ -101,11 +120,13 @@ final class ReloadCommand extends Command
                     'bin/console cache:warmup --env=' . $environment
                 ]
             );
-        } else {
-            $io->success(
-                sprintf('Kimai config was reloaded')
-            );
+
+            return $cacheResult;
         }
+
+        $io->success(
+            sprintf('Kimai config was reloaded')
+        );
 
         return 0;
     }

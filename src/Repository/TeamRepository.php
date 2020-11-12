@@ -21,6 +21,9 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Team>
+ */
 class TeamRepository extends EntityRepository
 {
     public function find($id, $lockMode = null, $lockVersion = null)
@@ -174,7 +177,7 @@ class TeamRepository extends EntityRepository
         }
 
         // make sure that admins see all user
-        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+        if (null !== $user && $user->canSeeAllData()) {
             return;
         }
 

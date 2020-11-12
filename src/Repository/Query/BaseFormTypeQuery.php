@@ -248,6 +248,17 @@ abstract class BaseFormTypeQuery
     }
 
     /**
+     * @param Team[] $teams
+     * @return self
+     */
+    public function setTeams(array $teams): self
+    {
+        $this->teams = $teams;
+
+        return $this;
+    }
+
+    /**
      * @return Team[]
      */
     public function getTeams(): array

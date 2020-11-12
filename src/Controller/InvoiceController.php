@@ -22,7 +22,7 @@ use App\Repository\InvoiceRepository;
 use App\Repository\InvoiceTemplateRepository;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceQuery;
-use App\Timesheet\UserDateTimeFactory;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\SubmitButton;
@@ -49,10 +49,6 @@ final class InvoiceController extends AbstractController
      */
     private $templateRepository;
     /**
-     * @var UserDateTimeFactory
-     */
-    private $dateTimeFactory;
-    /**
      * @var InvoiceRepository
      */
     private $invoiceRepository;
@@ -61,12 +57,11 @@ final class InvoiceController extends AbstractController
      */
     private $dispatcher;
 
-    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $templateRepository, InvoiceRepository $invoiceRepository, UserDateTimeFactory $dateTimeFactory, EventDispatcherInterface $dispatcher)
+    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $templateRepository, InvoiceRepository $invoiceRepository, EventDispatcherInterface $dispatcher)
     {
         $this->service = $service;
         $this->templateRepository = $templateRepository;
         $this->invoiceRepository = $invoiceRepository;
-        $this->dateTimeFactory = $dateTimeFactory;
         $this->dispatcher = $dispatcher;
     }
 
@@ -83,7 +78,6 @@ final class InvoiceController extends AbstractController
             $this->flashWarning('invoice.first_template');
         }
 
-        $showPreview = false;
         $model = null;
 
         $query = $this->getDefaultQuery();
@@ -92,6 +86,11 @@ final class InvoiceController extends AbstractController
         $form->submit($request->query->all(), false);
 
         if ($this->isGranted('create_invoice') && $form->isValid()) {
+            // use the current request locale as fallback, if no translation was configured
+            if (null !== $query->getTemplate() && null === $query->getTemplate()->getLanguage()) {
+                $query->getTemplate()->setLanguage($request->getLocale());
+            }
+
             try {
                 /** @var SubmitButton $createButton */
                 $createButton = $form->get('create');
@@ -104,7 +103,7 @@ final class InvoiceController extends AbstractController
                 if ($printButton->isClicked()) {
                     return $this->service->renderInvoice($query, $this->dispatcher);
                 }
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $this->logException($ex);
                 $this->flashError('action.update.error', ['%reason%' => 'check doctor/logs']);
             }
@@ -112,36 +111,31 @@ final class InvoiceController extends AbstractController
             /** @var SubmitButton $previewButton */
             $previewButton = $form->get('preview');
             if ($previewButton->isClicked()) {
-                $showPreview = true;
-            }
-        }
-
-        try {
-            $model = $this->service->createModel($query);
-            if ($showPreview) {
-                $entries = $this->service->findInvoiceItems($query);
-                if (!empty($entries)) {
-                    $model->addEntries($entries);
+                try {
+                    $model = $this->service->createModel($query);
+                    $entries = $this->service->findInvoiceItems($query);
+                    if (!empty($entries)) {
+                        $model->addEntries($entries);
+                    }
+                } catch (Exception $ex) {
+                    $this->logException($ex);
+                    $this->flashError($ex->getMessage());
                 }
             }
-        } catch (\Exception $ex) {
-            $this->logException($ex);
-            $this->flashError($ex->getMessage());
-            $showPreview = false;
         }
 
         return $this->render('invoice/index.html.twig', [
             'query' => $query,
             'model' => $model,
             'form' => $form->createView(),
-            'preview' => $showPreview,
         ]);
     }
 
     protected function getDefaultQuery(): InvoiceQuery
     {
-        $begin = $this->dateTimeFactory->createDateTime('first day of this month');
-        $end = $this->dateTimeFactory->createDateTime('last day of this month');
+        $factory = $this->getDateTimeFactory();
+        $begin = $factory->getStartOfMonth();
+        $end = $factory->getEndOfMonth();
 
         $query = new InvoiceQuery();
         $query->setOrder(InvoiceQuery::ORDER_ASC);
@@ -174,8 +168,8 @@ final class InvoiceController extends AbstractController
             $file = $this->service->getInvoiceFile($invoice);
 
             return $this->file($file->getRealPath(), $file->getBasename());
-        } catch (\Exception $ex) {
-            $this->flashError($ex->getMessage());
+        } catch (Exception $ex) {
+            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('invoice');
@@ -190,8 +184,8 @@ final class InvoiceController extends AbstractController
         try {
             $this->service->changeInvoiceStatus($invoice, $status);
             $this->flashSuccess('action.update.success');
-        } catch (\Exception $ex) {
-            $this->flashError('action.update.error');
+        } catch (Exception $ex) {
+            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('admin_invoice_list');
@@ -206,8 +200,8 @@ final class InvoiceController extends AbstractController
         try {
             $this->service->deleteInvoice($invoice);
             $this->flashSuccess('action.delete.success');
-        } catch (\Exception $ex) {
-            $this->flashError('action.delete.error');
+        } catch (Exception $ex) {
+            $this->flashDeleteException($ex);
         }
 
         return $this->redirectToRoute('admin_invoice_list');
@@ -330,10 +324,8 @@ final class InvoiceController extends AbstractController
                     $this->flashSuccess('action.update.success');
 
                     return $this->redirectToRoute('admin_invoice_document_upload');
-                } catch (\Exception $e) {
-                    $this->flashError(
-                        sprintf('Failed uploading invoice document: %e', $e->getMessage())
-                    );
+                } catch (Exception $ex) {
+                    $this->flashException($ex, 'action.upload.error');
                 }
             }
         }
@@ -370,13 +362,13 @@ final class InvoiceController extends AbstractController
      * @Route(path="/template/{id}/delete", name="admin_invoice_template_delete", methods={"GET", "POST"})
      * @Security("is_granted('manage_invoice_template')")
      */
-    public function deleteTemplate(InvoiceTemplate $template, Request $request): Response
+    public function deleteTemplate(InvoiceTemplate $template): Response
     {
         try {
             $this->templateRepository->removeTemplate($template);
             $this->flashSuccess('action.delete.success');
-        } catch (\Exception $ex) {
-            $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+        } catch (Exception $ex) {
+            $this->flashDeleteException($ex);
         }
 
         return $this->redirectToRoute('admin_invoice_template');
@@ -394,8 +386,8 @@ final class InvoiceController extends AbstractController
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_invoice_template');
-            } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            } catch (Exception $ex) {
+                $this->flashUpdateException($ex);
             }
         }
 

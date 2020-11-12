@@ -11,15 +11,19 @@ namespace App\Form\MultiUpdate;
 
 use App\Entity\Activity;
 use App\Entity\Customer;
+use App\Entity\EntityWithMetaFields;
+use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\Tag;
+use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @App\Validator\Constraints\TimesheetMultiUpdate
  */
-class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO
+class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements EntityWithMetaFields
 {
     /**
      * @var Tag[]|ArrayCollection|iterable
@@ -61,6 +65,19 @@ class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO
      * @var float|null
      */
     private $hourlyRate = null;
+    /**
+     * @var TimesheetMeta[]|Collection
+     */
+    private $meta;
+    /**
+     * @var string[]
+     */
+    private $updateMeta = [];
+
+    public function __construct()
+    {
+        $this->meta = new ArrayCollection();
+    }
 
     public function getCustomer(): ?Customer
     {
@@ -183,5 +200,53 @@ class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO
         $this->hourlyRate = $hourlyRate;
 
         return $this;
+    }
+
+    /**
+     * @return TimesheetMeta[]|Collection
+     */
+    public function getMetaFields(): Collection
+    {
+        return $this->meta;
+    }
+
+    public function getMetaField(string $name): ?MetaTableTypeInterface
+    {
+        foreach ($this->meta as $field) {
+            if (strtolower($field->getName()) === strtolower($name)) {
+                return $field;
+            }
+        }
+
+        return null;
+    }
+
+    public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
+    {
+        $this->updateMeta[$meta->getName()] = $meta->getName();
+        if (null === ($current = $this->getMetaField($meta->getName()))) {
+            $this->meta->add($meta);
+
+            return $this;
+        }
+
+        $current->merge($meta);
+
+        return $this;
+    }
+
+    public function setUpdateMeta(array $names): EntityWithMetaFields
+    {
+        $this->updateMeta = $names;
+
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getUpdateMeta(): array
+    {
+        return $this->updateMeta;
     }
 }

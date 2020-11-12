@@ -11,6 +11,7 @@ namespace App\Tests\API;
 
 use App\DataFixtures\UserFixtures;
 use App\Entity\Activity;
+use App\Entity\ActivityMeta;
 use App\Entity\ActivityRate;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -103,6 +104,12 @@ class ActivityControllerTest extends APIControllerBaseTest
         $em->persist($activity);
 
         $activity = (new Activity())->setName('fifth one')->setComment('5')->setProject($project2);
+        $meta = new ActivityMeta();
+        $meta->setName('bar')->setValue('foo')->setIsVisible(false);
+        $activity->setMetaField($meta);
+        $meta = new ActivityMeta();
+        $meta->setName('foo')->setValue('bar')->setIsVisible(true);
+        $activity->setMetaField($meta);
         $em->persist($activity);
 
         $activity = (new Activity())->setName('sixth one')->setComment('6')->setVisible(false);
@@ -127,7 +134,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         for ($i = 0; $i < \count($result); $i++) {
             $activity = $result[$i];
             $hasProject = $expected[$i][0];
-            $this->assertStructure($activity, false);
+            self::assertApiResponseTypeStructure('ActivityCollection', $activity);
             if ($hasProject) {
                 $this->assertEquals($expected[$i][1], $activity['project']);
             }
@@ -161,7 +168,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(5, \count($result));
-        $this->assertStructure($result[0], false);
+        self::assertApiResponseTypeStructure('ActivityCollection', $result[0]);
         $this->assertEquals(1, $result[4]['project']);
         $this->assertEquals(2, $result[3]['project']);
         $this->assertEquals(2, $result[2]['project']);
@@ -174,7 +181,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result, true);
+        self::assertApiResponseTypeStructure('ActivityEntity', $result);
     }
 
     public function testNotFound()
@@ -197,7 +204,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('ActivityEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
@@ -212,7 +219,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('ActivityEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
@@ -262,7 +269,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('ActivityEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
@@ -350,24 +357,5 @@ class ActivityControllerTest extends APIControllerBaseTest
         /** @var Activity $activity */
         $activity = $em->getRepository(Activity::class)->find(1);
         $this->assertEquals('another,testing,bar', $activity->getMetaField('metatestmock')->getValue());
-    }
-
-    protected function assertStructure(array $result, $full = true)
-    {
-        $expectedKeys = [
-            'id', 'name', 'visible', 'project', 'color', 'metaFields', 'parentTitle'
-        ];
-
-        if ($full) {
-            $expectedKeys = array_merge($expectedKeys, [
-                'comment', 'budget', 'timeBudget'
-            ]);
-        }
-
-        $actual = array_keys($result);
-        sort($actual);
-        sort($expectedKeys);
-
-        $this->assertEquals($expectedKeys, $actual, 'Activity structure does not match');
     }
 }

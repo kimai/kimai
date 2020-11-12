@@ -428,7 +428,7 @@
         </thead>
         {% endif %}
         <tbody>
-        {% for team in teams %}
+        {% for team in teams|sort((a, b) => a.name <=> b.name) %}
             <tr{% if is_granted('edit', team) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_team_member', {'id': team.id}) }}"{% endif %}>
                 <td>
                     {{ team.name }}

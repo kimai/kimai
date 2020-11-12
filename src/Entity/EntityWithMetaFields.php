@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\Collection;
 interface EntityWithMetaFields
 {
     /**
-     * @internal only here for symfony forms
      * @return Collection|MetaTableTypeInterface[]
      */
     public function getMetaFields(): Collection;

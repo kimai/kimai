@@ -26,6 +26,10 @@
                 <source>team.project_visibility_inherited</source>
                 <target>The project has limited access, because team permissions are set for the customer.</target>
             </trans-unit>
+            <trans-unit id="team.activity_visibility_inherited">
+                <source>team.activity_visibility_inherited</source>
+                <target>The activity has limited access, because team permissions are set for the project and/or customer.</target>
+            </trans-unit>
             <trans-unit id="team.create_default">
                 <source>team.create_default</source>
                 <target>Create a new team to limit access</target>

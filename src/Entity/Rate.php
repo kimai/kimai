@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Swagger\Annotations as SWG;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -17,6 +18,9 @@ trait Rate
 {
     /**
      * @var int|null
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -26,13 +30,19 @@ trait Rate
     /**
      * @var User
      *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @SWG\Property(ref="#/definitions/User")
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
-     * @SWG\Property(ref="#/definitions/User")
      */
     private $user;
     /**
      * @var float
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="rate", type="float", nullable=false)
      * @Assert\GreaterThanOrEqual(0)
@@ -41,11 +51,17 @@ trait Rate
     /**
      * @var float|null
      *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
      * @ORM\Column(name="internal_rate", type="float", nullable=true)
      */
     private $internalRate;
     /**
      * @var bool
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="fixed", type="boolean", nullable=false)
      * @Assert\NotNull()

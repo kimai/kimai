@@ -100,4 +100,67 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertStringContainsString('<p>Congrats example, your account is now activated.</p>', $content);
         $this->assertStringContainsString('<a href="/en/homepage">', $content);
     }
+
+    /**
+     * @dataProvider getValidationTestData
+     */
+    public function testRegisterActionWithValidationProblems(array $formData, array $validationFields)
+    {
+        $client = self::createClient();
+
+        $this->assertHasValidationError($client, '/register/', 'form[name=fos_user_registration_form]', $formData, $validationFields);
+    }
+
+    public function getValidationTestData()
+    {
+        return [
+            [
+                // invalid fields: username, password_second, email
+                [
+                    'fos_user_registration_form' => [
+                        'username' => '',
+                        'plainPassword' => ['first' => 'sdfsdf123'],
+                        'email' => '',
+                    ]
+                ],
+                [
+                    '#fos_user_registration_form_username',
+                    '#fos_user_registration_form_username',
+                    '#fos_user_registration_form_plainPassword_first',
+                    '#fos_user_registration_form_email',
+                    '#fos_user_registration_form_email',
+                ]
+            ],
+            // invalid fields: username, password, email
+            [
+                [
+                    'fos_user_registration_form' => [
+                        'username' => 'x',
+                        'plainPassword' => ['first' => 'sdfsdf123', 'second' => 'sdfxxxxxxx'],
+                        'email' => 'ydfbvsdfgs',
+                    ]
+                ],
+                [
+                    '#fos_user_registration_form_username',
+                    '#fos_user_registration_form_username',
+                    '#fos_user_registration_form_plainPassword_first',
+                    '#fos_user_registration_form_email',
+                    '#fos_user_registration_form_email',
+                ]
+            ],
+            // invalid fields: password (too short)
+            [
+                [
+                    'fos_user_registration_form' => [
+                        'username' => 'test123',
+                        'plainPassword' => ['first' => 'test123', 'second' => 'test123'],
+                        'email' => 'ydfbvsdfgs@example.com',
+                    ]
+                ],
+                [
+                    '#fos_user_registration_form_plainPassword_first',
+                ]
+            ],
+        ];
+    }
 }

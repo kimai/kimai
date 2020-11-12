@@ -10,9 +10,11 @@
 namespace App\Security;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
+/**
+ * @deprecated will be removed with 2.0
+ */
 final class CurrentUser
 {
     /**
@@ -20,36 +22,23 @@ final class CurrentUser
      */
     private $storage;
     /**
-     * @var UserRepository
-     */
-    private $repository;
-    /**
      * @var User|null
      */
     private $user;
 
-    /**
-     * @param TokenStorageInterface $storage
-     * @param UserRepository $repository
-     */
-    public function __construct(TokenStorageInterface $storage, UserRepository $repository)
+    public function __construct(TokenStorageInterface $storage)
     {
         $this->storage = $storage;
-        $this->repository = $repository;
     }
 
-    /**
-     * @return User|null
-     */
-    public function getUser()
+    public function getUser(): ?User
     {
-        if (null === $this->storage->getToken()) {
-            return null;
-        }
-
-        // some inline caching to prevent multiple DB lookups
         if (null !== $this->user) {
             return $this->user;
+        }
+
+        if (null === $this->storage->getToken()) {
+            return null;
         }
 
         /** @var User $user */
@@ -59,7 +48,7 @@ final class CurrentUser
             return null;
         }
 
-        $this->user = $this->repository->getUserById($user->getId());
+        $this->user = $user;
 
         return $this->user;
     }

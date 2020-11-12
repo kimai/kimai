@@ -9,9 +9,14 @@
 
 namespace App\Tests\Entity;
 
+use App\Constants;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\Project;
+use App\Entity\Team;
+use App\Export\Spreadsheet\ColumnDefinition;
+use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
@@ -27,14 +32,16 @@ class ActivityTest extends TestCase
         $this->assertNull($sut->getProject());
         $this->assertNull($sut->getName());
         $this->assertNull($sut->getComment());
-        $this->assertTrue($sut->getVisible());
+        $this->assertTrue($sut->isVisible());
         $this->assertTrue($sut->isGlobal());
         $this->assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
         $this->assertEquals(0.0, $sut->getBudget());
         $this->assertEquals(0, $sut->getTimeBudget());
         $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
         $this->assertEquals(0, $sut->getMetaFields()->count());
         $this->assertNull($sut->getMetaField('foo'));
+        $this->assertInstanceOf(Collection::class, $sut->getTeams());
     }
 
     public function testSetterAndGetter()
@@ -45,13 +52,19 @@ class ActivityTest extends TestCase
         $this->assertEquals('foo-bar', (string) $sut);
 
         $this->assertInstanceOf(Activity::class, $sut->setVisible(false));
-        $this->assertFalse($sut->getVisible());
+        $this->assertFalse($sut->isVisible());
 
         $this->assertInstanceOf(Activity::class, $sut->setComment('hello world'));
         $this->assertEquals('hello world', $sut->getComment());
 
+        self::assertFalse($sut->hasColor());
         $this->assertInstanceOf(Activity::class, $sut->setColor('#fffccc'));
         $this->assertEquals('#fffccc', $sut->getColor());
+        self::assertTrue($sut->hasColor());
+
+        $this->assertInstanceOf(Activity::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        $this->assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
 
         $this->assertInstanceOf(Activity::class, $sut->setBudget(12345.67));
         $this->assertEquals(12345.67, $sut->getBudget());
@@ -89,5 +102,60 @@ class ActivityTest extends TestCase
         $sut->setMetaField((new ActivityMeta())->setName('blab')->setIsVisible(true));
         self::assertEquals(3, $sut->getMetaFields()->count());
         self::assertCount(2, $sut->getVisibleMetaFields());
+    }
+
+    public function testTeams()
+    {
+        $sut = new Activity();
+        $team = new Team();
+        self::assertEmpty($sut->getTeams());
+        self::assertEmpty($team->getActivities());
+
+        $sut->addTeam($team);
+        self::assertCount(1, $sut->getTeams());
+        self::assertCount(1, $team->getActivities());
+        self::assertSame($team, $sut->getTeams()[0]);
+        self::assertSame($sut, $team->getActivities()[0]);
+
+        // test remove unknown team doesn't do anything
+        $sut->removeTeam(new Team());
+        self::assertCount(1, $sut->getTeams());
+        self::assertCount(1, $team->getActivities());
+
+        $sut->removeTeam($team);
+        self::assertCount(0, $sut->getTeams());
+        self::assertCount(0, $team->getActivities());
+    }
+
+    public function testExportAnnotations()
+    {
+        $sut = new AnnotationExtractor(new AnnotationReader());
+
+        $columns = $sut->extract(Activity::class);
+
+        self::assertIsArray($columns);
+
+        $expected = [
+            ['label.id', 'integer'],
+            ['label.name', 'string'],
+            ['label.project', 'string'],
+            ['label.color', 'string'],
+            ['label.visible', 'boolean'],
+            ['label.comment', 'string'],
+        ];
+
+        self::assertCount(\count($expected), $columns);
+
+        foreach ($columns as $column) {
+            self::assertInstanceOf(ColumnDefinition::class, $column);
+        }
+
+        $i = 0;
+
+        foreach ($expected as $item) {
+            $column = $columns[$i++];
+            self::assertEquals($item[0], $column->getLabel());
+            self::assertEquals($item[1], $column->getType());
+        }
     }
 }

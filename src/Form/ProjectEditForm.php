@@ -78,6 +78,7 @@ class ProjectEditForm extends AbstractType
                 'required' => false,
             ]))
             ->add('customer', CustomerType::class, [
+                'placeholder' => (null === $id && null === $customer) ? '' : false,
                 'query_builder' => function (CustomerRepository $repo) use ($builder, $customer) {
                     $query = new CustomerFormTypeQuery($customer);
                     $query->setUser($builder->getOption('user'));
@@ -87,10 +88,6 @@ class ProjectEditForm extends AbstractType
             ]);
 
         $this->addCommonFields($builder, $options);
-
-        if (null === $id && $options['create_more']) {
-            $this->addCreateMore($builder);
-        }
     }
 
     /**
@@ -106,7 +103,6 @@ class ProjectEditForm extends AbstractType
             'currency' => Customer::DEFAULT_CURRENCY,
             'date_format' => null,
             'include_budget' => false,
-            'create_more' => false,
             'attr' => [
                 'data-form-event' => 'kimai.projectUpdate'
             ],

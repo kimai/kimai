@@ -1,6 +1,9 @@
 ---
 name: Bug report
-about: Create a report to help us improve Kimai
+about: Found a problem? Create a report to help us improve Kimai
+title: ''
+labels: bug
+assignees: ''
 
 ---
 
@@ -8,27 +11,17 @@ about: Create a report to help us improve Kimai
 A clear and concise description of what the bug is.
 
 **To Reproduce**
-Steps to reproduce the behavior:
 1. Go to '...'
 2. Click on '....'
 3. See error
 
 **Logfile**
 ```
-Add the last lines from your logfile at var/log/prod.log, around the time when the problem happened.
+Add the last lines from your logfile at "var/log/prod.log" or "Doctor > Logs", around the time when the problem happened.
 ```
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Desktop/Smartphone**
-Please complete the following information if this seems to be a frontend issue:
- - Device: [e.g. iPhone6s]
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
 **Additional context**
-Add any other context about the problem here.
- - Kimai version
- - PHP version
+ - Kimai version: ?.? 
+ - PHP version: ?.?
+ - Device: [Ubuntu Laptop 16 inch, Windows Desktop 27 inch, iPhone 6s]
+ - Browser [e.g. Firefox 81, Chrome 85, Safari 14]

@@ -27,7 +27,6 @@ class UserValidationTest extends KernelTestCase
             [null, null],
             ['x', 'test@'], // too short username
             [str_pad('#', 61, '-'), 'test@x.'], // too long username
-            [str_pad('#', 61, '-'), 'test@x.', ['xxxxx']], // too short password and invalid role
         ];
     }
 
@@ -48,14 +47,34 @@ class UserValidationTest extends KernelTestCase
             $defaultFields[] = 'roles';
         }
 
-        $this->assertHasViolationForField($user, $defaultFields);
+        $this->assertHasViolationForField($user, $defaultFields, ['Profile']);
+    }
+
+    public function testInvalidRoles()
+    {
+        $user = new User();
+        $user->setUsername('foo');
+        $user->setEmail('foo@example.com');
+        $user->setRoles(['xxxxxx']);
+
+        $this->assertHasViolationForField($user, ['roles'], ['RolesUpdate']);
+    }
+
+    public function testValidRoles()
+    {
+        $user = new User();
+        $user->setUsername('foo');
+        $user->setEmail('foo@example.com');
+        $user->setRoles(['ROLE_TEAMLEAD']);
+
+        $this->assertHasNoViolations($user, ['RolesUpdate']);
     }
 
     public function getValidTestData()
     {
         return [
-            [str_pad('#', 3, '-'), 'test@x.x'], // shortest possible username
-            [str_pad('#', 60, '-'), 'test@x.x', ['ROLE_TEAMLEAD']], // longest possible password and valid role
+            [str_pad('#', 8, '-'), 'test@x.x'], // shortest possible username
+            [str_pad('#', 60, '-'), 'test@x.x'], // longest possible username
         ];
     }
 
@@ -71,6 +90,6 @@ class UserValidationTest extends KernelTestCase
             $user->setRoles($roles);
         }
 
-        $this->assertHasNoViolations($user);
+        $this->assertHasNoViolations($user, ['Profile']);
     }
 }

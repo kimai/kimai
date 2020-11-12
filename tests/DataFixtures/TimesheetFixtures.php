@@ -78,6 +78,16 @@ final class TimesheetFixtures extends Fixture
      */
     private $tags = [];
 
+    public function __construct(?User $user = null, ?int $amount = null)
+    {
+        if ($user !== null) {
+            $this->setUser($user);
+        }
+        if ($amount !== null) {
+            $this->setAmount($amount);
+        }
+    }
+
     public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions): TimesheetFixtures
     {
         $this->allowEmptyDescriptions = $allowEmptyDescriptions;
@@ -292,6 +302,7 @@ final class TimesheetFixtures extends Fixture
         $start = \DateTime::createFromFormat('Y-m-d', $this->startDate);
         $start->modify("+ $i days");
         $start->modify('+ ' . rand(1, 172800) . ' seconds'); // up to 2 days
+
         return $start;
     }
 
