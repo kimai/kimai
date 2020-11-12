@@ -29,14 +29,14 @@ class TimesheetToolbarForm extends AbstractToolbarForm
         }
 
         $this->addSearchTermInputField($builder);
-        if ($options['include_user']) {
-            $this->addUsersChoice($builder);
-        }
         $this->addDateRangeChoice($builder);
         $this->addCustomerMultiChoice($builder, $newOptions, true);
         $this->addProjectMultiChoice($builder, $newOptions, true, true);
         $this->addActivityMultiChoice($builder, [], true);
         $this->addTagInputField($builder);
+        if ($options['include_user']) {
+            $this->addUsersChoice($builder);
+        }
         $this->addTimesheetStateChoice($builder);
         $this->addExportStateChoice($builder);
         $this->addPageSizeChoice($builder);
