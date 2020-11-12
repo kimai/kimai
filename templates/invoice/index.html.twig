@@ -42,11 +42,11 @@
                 {% if form.activities is defined %}
                     {{ form_row(form.activities) }}
                 {% endif %}
-                {% if form.users is defined %}
-                    {{ form_row(form.users) }}
-                {% endif %}
                 {% if form.tags is defined %}
                     {{ form_row(form.tags) }}
+                {% endif %}
+                {% if form.users is defined %}
+                    {{ form_row(form.users) }}
                 {% endif %}
                 {% if form.exported is defined %}
                     {{ form_row(form.exported) }}
