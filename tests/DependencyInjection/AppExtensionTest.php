@@ -56,7 +56,6 @@ class AppExtensionTest extends TestCase
                     ],
                 ],
                 'data_dir' => '/tmp/',
-                'plugin_dir' => '/tmp/', // still here, to make sure that this value is NOT applied!
                 'timesheet' => [],
                 'saml' => [
                     'connection' => []
@@ -323,6 +322,29 @@ class AppExtensionTest extends TestCase
         $minConfig['kimai']['timesheet']['mode'] = 'punch';
 
         $this->extension->load($minConfig, $container = $this->getContainer());
+    }
+
+    /**
+     * @expectedDeprecation Changing the plugin directory via "kimai.plugin_dir" is not supported since 1.9
+     * @group legacy
+     */
+    public function testChangingPluginsDirDeprecationIsTriggered()
+    {
+        $minConfig = $this->getMinConfig();
+        $minConfig['kimai']['plugin_dir'] = '/tmp/';
+
+        $this->extension->load($minConfig, $container = $this->getContainer());
+    }
+
+    public function testChangingPluginsIsIgnored()
+    {
+        $minConfig = $this->getMinConfig();
+        $minConfig['kimai']['plugin_dir'] = '/tmp/';
+        $expected = realpath(__DIR__ . '/../../') . '/var/plugins';
+
+        $this->extension->load($minConfig, $container = $this->getContainer());
+
+        $this->assertEquals($expected, $container->getParameter('kimai.plugin_dir'), 'Invalid config: kimai.plugin_dir');
     }
 
     public function testLdapDefaultValues()
