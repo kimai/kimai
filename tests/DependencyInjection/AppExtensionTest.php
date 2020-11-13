@@ -328,15 +328,7 @@ class AppExtensionTest extends TestCase
      * @expectedDeprecation Changing the plugin directory via "kimai.plugin_dir" is not supported since 1.9
      * @group legacy
      */
-    public function testChangingPluginsDirDeprecationIsTriggered()
-    {
-        $minConfig = $this->getMinConfig();
-        $minConfig['kimai']['plugin_dir'] = '/tmp/';
-
-        $this->extension->load($minConfig, $container = $this->getContainer());
-    }
-
-    public function testChangingPluginsIsIgnored()
+    public function testChangingPluginsIsIgnoredAndTriggersDeprecation()
     {
         $minConfig = $this->getMinConfig();
         $minConfig['kimai']['plugin_dir'] = '/tmp/';
