@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fi" datatype="plaintext" original="actions.en.xlf">
+        <body>
+            <trans-unit id="stop">
+                <source>stop</source>
+                <target state="translated">Pysäytä</target>
+            </trans-unit>
+            <trans-unit id="back">
+                <source>back</source>
+                <target state="translated">Takaisin</target>
+            </trans-unit>
+            <trans-unit id="edit">
+                <source>edit</source>
+                <target state="translated">Muokkaa</target>
+            </trans-unit>
+            <trans-unit id="trash">
+                <source>trash</source>
+                <target state="translated">Poista</target>
+            </trans-unit>
+            <trans-unit id="report">
+                <source>report</source>
+                <target state="translated">Raportti</target>
+            </trans-unit>
+            <trans-unit id="repeat">
+                <source>repeat</source>
+                <target state="translated">Aloita uudelleen</target>
+            </trans-unit>
+            <trans-unit id="profile-stats">
+                <source>profile-stats</source>
+                <target state="translated">Profiili</target>
+            </trans-unit>
+            <trans-unit id="settings">
+                <source>settings</source>
+                <target state="translated">Asetukset</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target state="translated">Työajanseuranta</target>
+            </trans-unit>
+            <trans-unit id="customer">
+                <source>customer</source>
+                <target state="translated">Suodata asiakkaita</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target state="translated">Suodata projekteja</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target state="translated">Suodata työtehtäviä</target>
+            </trans-unit>
+            <trans-unit id="copy">
+                <source>copy</source>
+                <target state="translated">Luo kopio</target>
+            </trans-unit>
+            <trans-unit id="home">
+                <source>home</source>
+                <target state="translated">Kotisivu</target>
+            </trans-unit>
+            <trans-unit id="create-project">
+                <source>create-project</source>
+                <target state="translated">Luo projekti</target>
+            </trans-unit>
+            <trans-unit id="create-activity">
+                <source>create-activity</source>
+                <target state="translated">Luo työtehtävä</target>
+            </trans-unit>
+            <trans-unit id="create-timesheet">
+                <source>create-timesheet</source>
+                <target state="translated">Luo työajanseuranta</target>
+            </trans-unit>
+            <trans-unit id="create-timesheet-multiuser">
+                <source>create-timesheet-multiuser</source>
+                <target state="translated">Usealle käyttäjälle</target>
+            </trans-unit>
+            <trans-unit id="permissions">
+                <source>permissions</source>
+                <target state="translated">Tiimin oikeudet</target>
+            </trans-unit>
+            <trans-unit id="details">
+                <source>details</source>
+                <target state="translated">Näytä</target>
+            </trans-unit>
+            <trans-unit id="download">
+                <source>download</source>
+                <target state="translated">Lataa</target>
+            </trans-unit>
+            <trans-unit id="invoice.pending">
+                <source>invoice.pending</source>
+                <target state="translated">Odottaa maksua</target>
+            </trans-unit>
+            <trans-unit id="invoice.paid">
+                <source>invoice.paid</source>
+                <target state="translated">Maksettu lasku</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

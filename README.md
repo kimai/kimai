@@ -1,11 +1,17 @@
-# Kimai 2 - online time-tracker
+<h1 align="center">Kimai 2 - online time-tracker</h1>
 
-[![CI Status](https://github.com/kevinpapst/kimai2/workflows/CI/badge.svg)](https://github.com/kevinpapst/kimai2/actions)
-[![Code Coverage](https://codecov.io/gh/kevinpapst/kimai2/branch/master/graph/badge.svg)](https://codecov.io/gh/kevinpapst/kimai2)
-[![Latest Stable Version](https://poser.pugx.org/kevinpapst/kimai2/v/stable)](https://packagist.org/packages/kevinpapst/kimai2)
-[![License](https://poser.pugx.org/kevinpapst/kimai2/license)](https://packagist.org/packages/kevinpapst/kimai2)
-[![Gitter](https://badges.gitter.im/kimai2/support.svg)](https://gitter.im/kimai2/support)
-[![Bountysource](https://img.shields.io/bountysource/team/kimai2/activity)](https://www.bountysource.com/teams/kimai2)
+<p align="center">
+    <img src="https://raw.githubusercontent.com/kimai/images/master/repository-header.png" alt="Kimai logo">
+</p>
+
+<p align="center">
+    <a href="https://github.com/kevinpapst/kimai2/actions"><img alt="CI Status" src="https://github.com/kevinpapst/kimai2/workflows/CI/badge.svg"></a>
+    <a href="https://codecov.io/gh/kevinpapst/kimai2"><img alt="Code Coverage" src="https://codecov.io/gh/kevinpapst/kimai2/branch/master/graph/badge.svg"></a>
+    <a href="https://packagist.org/packages/kevinpapst/kimai2"><img alt="Latest stable version" src="https://poser.pugx.org/kevinpapst/kimai2/v/stable"></a>
+    <a href="https://packagist.org/packages/kevinpapst/kimai2"><img alt="License" src="https://poser.pugx.org/kevinpapst/kimai2/license"></a>
+    <a href="https://gitter.im/kimai2/support"><img alt="Gitter" src="https://badges.gitter.im/kimai2/support.svg"></a>
+    <a href="https://www.bountysource.com/teams/kimai2"><img alt="Bountysource" src="https://img.shields.io/bountysource/team/kimai2/activity"></a>
+</p>
 
 Kimai is a free, open source and online time-tracking software designed for small businesses and freelancers. 
 It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Doctrine, AdminLTE, Webpack, ES6 etc.
@@ -33,7 +39,7 @@ with most advanced features from Kimai 1 and many new ones, including but not li
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
 authentication via SAML/LDAP/Database, customizable role permissions, responsive and ready for your mobile device, 
-hourly and fixed rates, advanced filtering, money and time budgets with report, support for plugins and many more.
+user specific rates, advanced search & filtering, money and time budgets with report, support for plugins and many more.
 
 ## Installation
 
@@ -59,11 +65,13 @@ You can see a rough development roadmap in the [Milestones](https://github.com/k
 It is open for changes and input from the community, your [ideas and questions](https://github.com/kevinpapst/kimai2/issues) are welcome.
 
 > Kimai 2 uses a rolling release concept for delivering updates.
-> You can upgrade Kimai at any time , you don't need to wait for the next official release.
+> You can upgrade Kimai at any time, you don't need to wait for the next official release.
+> The master branch is always deployable, release tags are only snapshots of the current development version.
 
-Release versions will be created on a regular base (approx. one release per month) and you can should use these tags if you are not familiar with git.
+Release versions will be created on a regular base (approx. one release every 4-8 weeks).
 Every code change, whether it's a new feature or a bug fix, will be done on the master branch. 
-I have to do it this way, as I develop Kimai in my free time and want to put my effort into the software instead of backporting changes for old versions. 
+Kimai is actively developed in my spare time and I put my effort into the software instead of backporting changes for old versions.
+The only exception is a critical security issue, which I would fix in the latest stable version as well. 
 
 ## Credits
 

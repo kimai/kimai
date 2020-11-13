@@ -9,24 +9,6 @@
 
 namespace App\Repository\Query;
 
-use App\Entity\User;
-
-final class TagFormTypeQuery
+final class TagFormTypeQuery extends BaseFormTypeQuery
 {
-    /**
-     * @var User
-     */
-    private $user;
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(User $user): TagFormTypeQuery
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 }

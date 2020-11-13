@@ -48,7 +48,11 @@
             </trans-unit>
             <trans-unit id="invoice.first_template">
                 <source>invoice.first_template</source>
-                <target>You have to create your first template invoice before you can proceed</target>
+                <target>Please create an invoice template first</target>
+            </trans-unit>
+            <trans-unit id="action.upload.error">
+                <source>action.upload.error</source>
+                <target>The file could not be uploaded or saved: %reason%</target>
             </trans-unit>
         </body>
     </file>

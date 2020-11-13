@@ -92,7 +92,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($role, $constraint);
 
-        $expectedFormat = is_string($role) ? '"' . $role . '"' : $role;
+        $expectedFormat = \is_string($role) ? '"' . $role . '"' : $role;
 
         $this->buildViolation('myMessage')
             ->setParameter('{{ value }}', $expectedFormat)

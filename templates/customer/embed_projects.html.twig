@@ -1,4 +1,3 @@
-{% if projects|length > 0 %}
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'customer': customer, 'projects': projects, 'page': page} %}
         {% import "project/actions.html.twig" as actions %}
         {% import "macros/widgets.html.twig" as widgets %}
@@ -7,29 +6,40 @@
             id="project_list_box"  data-href="{{ path('customer_projects', {'id': customer.id}) }}" data-reload="kimai.projectUpdate"
         {% endblock %}
         {% block box_tools %}
-            {{ pagination(projects, { css_container_class: 'pagination pagination-sm inline', routeName: 'customer_projects', routeParams: {'id': customer.id} }) }}
+            {% if customer.visible and is_granted('create_project') %}
+                <a class="modal-ajax-form open-edit btn btn-default btn-sm btn-pager" data-href="{{ path('admin_project_create_with_customer', {'customer': customer.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'create'|trans }}"><i class="{{ 'create'|icon }}"></i></a>
+            {% endif %}
+            {% if projects|length > 0 %}
+                {{ pagination(projects, { css_container_class: 'pagination pagination-sm inline', routeName: 'customer_projects', routeParams: {'id': customer.id} }) }}
+            {% endif %}
         {% endblock %}
         {% block box_body_class %}no-padding{% endblock %}
         {% block box_tools_attributes %}data-page="{{ page }}"{% endblock %}
         {% block box_body %}
+            {% if projects|length == 0 %}
+                <div class="comment">{{ 'error.no_entries_found'|trans }}</div>
+            {% else %}
             <table class="table table-hover dataTable">
+                <thead>
+                    <tr>
+                        <th>{{ 'label.name'|trans }}</th>
+                        <th class="hidden-xs">{{ 'label.comment'|trans }}</th>
+                        <th class="w-min text-center">{{ 'label.team'|trans }}</th>
+                        <th class="actions"></th>
+                    </tr>
+                </thead>
                 <tbody>
                 {% for project in projects %}
                     <tr>
-                        <td>{{ project.name }}</td>
-                        <td>{{ project.comment|comment2html }}</td>
-                        <td>
-                            {% if project.teams|length > 0 %}
-                                {{ widgets.badge_counter(project.teams|length) }}
-                            {% else %}
-                                {{ widgets.icon('unlocked') }}
-                            {% endif %}
-                        </td>
+                        <td>{{ widgets.label_project(project) }}</td>
+                        <td class="hidden-xs">{{ project.comment|comment2html }}</td>
+                        <td class="w-min text-center">{{ widgets.badge_team_access(project.teams) }}</td>
                         <td class="actions">{{ actions.project(project, 'custom') }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
+            {% endif %}
         {% endblock %}
     {% endembed %}
     <script type="text/javascript">
@@ -38,4 +48,3 @@
             KimaiPaginatedBoxWidget.create('#project_list_box');
         });
     </script>
-{% endif %}

@@ -28,7 +28,7 @@ interface WidgetRendererInterface
      * The given $options array overwrites the widgets internal options for this call.
      *
      * @param WidgetInterface $widget
-     * @param array $options
+     * @param array<string, mixed> $options
      * @return string
      */
     public function render(WidgetInterface $widget, array $options = []): string;

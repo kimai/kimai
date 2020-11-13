@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="vi" datatype="plaintext" original="invoice-renderer.en.xlf">
+        <body>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target>Tài liệu hóa đơn</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Hóa đơn (mặc định)</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Bảng chấm công</target>
+            </trans-unit>
+            <trans-unit id="freelancer">
+                <source>freelancer</source>
+                <target>Freelancer</target>
+            </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target>Calc Spreadsheet</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="export">
+                <source>export</source>
+                <target>Xuất dữ liệu</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target>Hóa đơn công ty</target>
+            </trans-unit>
+            <trans-unit id="help.upload">
+                <source>help.upload</source>
+                <target>Chú ý: các tệp hiện có sẽ bị ghi đè. Các loại tệp được phép là: DOCX, ODS, XLSX.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,8 @@
+@media (max-width: $screen-sm-min) {
+    .main-header .logo {
+        display: none;
+    }
+    .fixed .content-wrapper, .fixed .right-side, .control-sidebar, .main-sidebar {
+        padding-top: 50px;
+    }
+}

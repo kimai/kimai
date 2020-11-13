@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eo" datatype="plaintext" original="system-configuration.en.xlf">
+        <body>
+            <trans-unit id="title">
+                <source>title</source>
+                <target>Agordoj</target>
+            </trans-unit>
+            <trans-unit id="subtitle">
+                <source>subtitle</source>
+                <target>Ŝanĝi ĝeneralajn agordojn de via tempospurilo</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Temposlipo</target>
+            </trans-unit>
+            <trans-unit id="invoice">
+                <source>invoice</source>
+                <target>Fakturoj</target>
+            </trans-unit>
+            <trans-unit id="form_customer">
+                <source>form_customer</source>
+                <target>Krei defaŭltajn valorojn de kliento</target>
+            </trans-unit>
+            <trans-unit id="form_user">
+                <source>form_user</source>
+                <target>Defaŭltaj valoroj de uzanto</target>
+            </trans-unit>
+            <trans-unit id="theme">
+                <source>theme</source>
+                <target>Etoso</target>
+            </trans-unit>
+            <trans-unit id="calendar">
+                <source>calendar</source>
+                <target>Kalendaro</target>
+            </trans-unit>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target>Permesi formatadom per Markdown en priskriboj kaj komentoj</target>
+            </trans-unit>
+            <trans-unit id="label.theme.tags_create">
+                <source>label.theme.tags_create</source>
+                <target>Etikedoj: uzi aŭtomate kompletigitan serĉadon kaj permesi krei etikedojn</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode">
+                <source>label.timesheet.mode</source>
+                <target>Temporegistra reĝimo</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_default">
+                <source>label.timesheet.mode_default</source>
+                <target>[Defaŭlte] komenca kaj fina tempoj povas esti redaktitaj</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_only">
+                <source>label.timesheet.mode_duration_only</source>
+                <target>[Daŭro] anstataŭigas la finan tempon per enig-kampo por daŭro</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+                <source>label.timesheet.mode_duration_fixed_begin</source>
+                <target>[Daŭro] agordebla fiksita komenca tempo, nur daŭro povas esti ŝanĝita</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_punch">
+                <source>label.timesheet.mode_punch</source>
+                <target>[Tempo-mezurado] uzanto povas komenci kaj fini registraĵojn, sed ne redakti tempojn aŭ daŭron</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_future_times">
+                <source>label.timesheet.rules.allow_future_times</source>
+                <target>Permesi tempajn registraĵojn en estonto</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.hard_limit">
+                <source>label.timesheet.active_entries.hard_limit</source>
+                <target>Permesita nombro de samtempaj ŝaltitaj tempaj registraĵoj</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.soft_limit">
+                <source>label.timesheet.active_entries.soft_limit</source>
+                <target>Nombro de samtempaj ŝaltitaj tempaj registraĵoj de kiuj atentigo estas montrita</target>
+            </trans-unit>
+            <trans-unit id="label.theme.autocomplete_chars">
+                <source>label.theme.autocomplete_chars</source>
+                <target>Minimuma nombro de literoj por komenci aŭtomatan kompletigon</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.week_numbers">
+                <source>label.calendar.week_numbers</source>
+                <target>Montri semajnajn nombrojn</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.weekends">
+                <source>label.calendar.weekends</source>
+                <target>Montri semajnfinojn</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.begin">
+                <source>label.calendar.businessHours.begin</source>
+                <target>Komenco de normalaj laborhoroj (estos emfazita)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.end">
+                <source>label.calendar.businessHours.end</source>
+                <target>Fino de normalaj laborhoroj (estos emfazita)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.begin">
+                <source>label.calendar.visibleHours.begin</source>
+                <target>Komenco de videbla tempoperiodo</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.end">
+                <source>label.calendar.visibleHours.end</source>
+                <target>Fino de videbla tempoperiodo</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.slot_duration">
+                <source>label.calendar.slot_duration</source>
+                <target>Daŭro de tempo-bloko por semajna kaj taga vidoj (formo: hh:mm:ss)</target>
+            </trans-unit>
+            <trans-unit id="branding">
+                <source>branding</source>
+                <target>Varmarkado</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.logo">
+                <source>label.theme.branding.logo</source>
+                <target>Emblemo (URL de bildo, anstataŭigas la kompanion en ensaluta ekrano)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.company">
+                <source>label.theme.branding.company</source>
+                <target>Kompanio</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.mini">
+                <source>label.theme.branding.mini</source>
+                <target>Eta emblemo (maletendita flankpanelo)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.title">
+                <source>label.theme.branding.title</source>
+                <target>Retumila titolo</target>
+            </trans-unit>
+            <trans-unit id="rounding">
+                <source>rounding</source>
+                <target>Rondigo de tempo</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.begin">
+                <source>label.timesheet.rounding.default.begin</source>
+                <target>Rondigo de komenca tempo en minutoj (0 = malaktivigita)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.end">
+                <source>label.timesheet.rounding.default.end</source>
+                <target>Rondigo de fina tempo en minutoj (0 = malaktivigita)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.duration">
+                <source>label.timesheet.rounding.default.duration</source>
+                <target>Rondigo de daŭro en minutoj (0 = malaktivigita)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.mode">
+                <source>label.timesheet.rounding.default.mode</source>
+                <target>Rondiga reĝimo</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.days">
+                <source>label.timesheet.rounding.default.days</source>
+                <target>Tagoj de la semajno kiam la rondigo estos aplikata</target>
+            </trans-unit>
+            <trans-unit id="Monday">
+                <source>Monday</source>
+                <target>Lundo</target>
+            </trans-unit>
+            <trans-unit id="Tuesday">
+                <source>Tuesday</source>
+                <target>Mardo</target>
+            </trans-unit>
+            <trans-unit id="Wednesday">
+                <source>Wednesday</source>
+                <target>Merkredo</target>
+            </trans-unit>
+            <trans-unit id="Thursday">
+                <source>Thursday</source>
+                <target>Ĵaŭdo</target>
+            </trans-unit>
+            <trans-unit id="Friday">
+                <source>Friday</source>
+                <target>Vendredo</target>
+            </trans-unit>
+            <trans-unit id="Saturday">
+                <source>Saturday</source>
+                <target>Sabato</target>
+            </trans-unit>
+            <trans-unit id="Sunday">
+                <source>Sunday</source>
+                <target>Dimanĉo</target>
+            </trans-unit>
+            <trans-unit id="Ceil">
+                <source>Ceil</source>
+                <target>Supren: komenco, fino kaj daŭro estos rondigitaj supren</target>
+            </trans-unit>
+            <trans-unit id="Closest">
+                <source>Closest</source>
+                <target>Plej proksimen: matematika rondigo ĝis la plej proksima valoro</target>
+            </trans-unit>
+            <trans-unit id="Default">
+                <source>Default</source>
+                <target>Defaŭlte: komenco estos rondigita suben, fino kaj daŭro supren</target>
+            </trans-unit>
+            <trans-unit id="Floor">
+                <source>Floor</source>
+                <target>Suben: komenco, fino kaj daŭro estos rondigitaj suben</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.default_begin">
+                <source>label.timesheet.default_begin</source>
+                <target>Defaŭlta komenca tempo (ne uzita en ĉiuj temporegistraj reĝimoj)</target>
+            </trans-unit>
+            <trans-unit id="label.simple_form">
+                <source>label.simple_form</source>
+                <target>Simpla serĉo</target>
+            </trans-unit>
+            <trans-unit id="label.invoice.number_format">
+                <source>label.invoice.number_format</source>
+                <target>Formo de faktura numero</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

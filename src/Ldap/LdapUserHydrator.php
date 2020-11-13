@@ -63,11 +63,14 @@ class LdapUserHydrator
 
         $this->hydrateUserWithAttributesMap($user, $ldapEntry, $attributeMap);
 
-        if (is_array($user->getEmail())) {
-            $user->setEmail($user->getEmail()[0]);
+        /** @var string|array|null $email */
+        $email = $user->getEmail();
+
+        if (\is_array($email)) {
+            $user->setEmail($email[0]);
         }
 
-        if (null === $user->getEmail()) {
+        if (null === $email) {
             $user->setEmail($user->getUsername());
         }
 
@@ -104,7 +107,7 @@ class LdapUserHydrator
                 $roleName = sprintf('ROLE_%s', self::slugify($roleName));
             }
 
-            if (!in_array($roleName, $allowedRoles)) {
+            if (!\in_array($roleName, $allowedRoles)) {
                 continue;
             }
 
@@ -127,17 +130,17 @@ class LdapUserHydrator
     {
         /** @var array $attr */
         foreach ($attributeMap as $attr) {
-            if (!array_key_exists($attr['ldap_attr'], $ldapUserAttributes)) {
+            if (!\array_key_exists($attr['ldap_attr'], $ldapUserAttributes)) {
                 continue;
             }
 
             $ldapValue = $ldapUserAttributes[$attr['ldap_attr']];
 
-            if (array_key_exists('count', $ldapValue)) {
+            if (\array_key_exists('count', $ldapValue)) {
                 unset($ldapValue['count']);
             }
 
-            if (1 === count($ldapValue)) {
+            if (1 === \count($ldapValue)) {
                 $value = array_shift($ldapValue);
             } else {
                 $value = $ldapValue;

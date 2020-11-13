@@ -25,7 +25,7 @@ class TagRepositoryTest extends AbstractRepositoryTest
         $em = $this->getEntityManager();
         $data = new TagFixtures();
         $data->setTagArray(['Test', 'Travel', '#2018-001', '#2018-002', '#2018-003', '#2018-004', '#2018-005', 'Administration', 'Support', 'PR', '#2018-012']);
-        $this->importFixture($em, $data);
+        $this->importFixture($data);
     }
 
     public function testFindIds()
@@ -37,7 +37,7 @@ class TagRepositoryTest extends AbstractRepositoryTest
         $result = $repository->findIdsByTagNameList('2018,Test');
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(7, count($result));
+        $this->assertEquals(7, \count($result));
         $this->assertEquals(1, $result[0]);
         $this->assertEquals(3, $result[1]);
         $this->assertEquals(4, $result[2]);
@@ -56,7 +56,7 @@ class TagRepositoryTest extends AbstractRepositoryTest
         $result = $repository->findIdsByTagNameList('Simply');
         $this->assertIsArray($result);
         $this->assertEmpty($result);
-        $this->assertEquals(0, count($result));
+        $this->assertEquals(0, \count($result));
     }
 
     public function testFindAllTagNames()
@@ -68,7 +68,7 @@ class TagRepositoryTest extends AbstractRepositoryTest
         $result = $repository->findAllTagNames('2018');
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(6, count($result));
+        $this->assertEquals(6, \count($result));
         $this->assertEquals('#2018-001', $result[0]);
         $this->assertEquals('#2018-002', $result[1]);
         $this->assertEquals('#2018-003', $result[2]);
@@ -86,6 +86,6 @@ class TagRepositoryTest extends AbstractRepositoryTest
         $result = $repository->findAllTagNames('Nothing');
         $this->assertIsArray($result);
         $this->assertEmpty($result);
-        $this->assertEquals(0, count($result));
+        $this->assertEquals(0, \count($result));
     }
 }

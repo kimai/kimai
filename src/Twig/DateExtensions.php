@@ -9,11 +9,16 @@
 
 namespace App\Twig;
 
-use App\Utils\LocaleSettings;
+use App\Configuration\LanguageFormattings;
+use App\Constants;
+use App\Utils\LocaleFormats;
+use App\Utils\LocaleFormatter;
 use DateTime;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use Twig\TwigTest;
 
 /**
  * Date specific twig extensions
@@ -21,36 +26,29 @@ use Twig\TwigFunction;
 class DateExtensions extends AbstractExtension
 {
     /**
-     * @var LocaleSettings|null
+     * @var LocaleFormats|null
      */
-    protected $localeSettings = null;
+    protected $localeFormats = null;
     /**
-     * @var string
+     * @var LocaleFormatter
      */
-    protected $dateFormat = null;
+    private $formatter;
     /**
-     * @var string
+     * @var LanguageFormattings
      */
-    protected $dateTimeFormat = null;
-    /**
-     * @var string
-     */
-    protected $dateTimeTypeFormat = null;
-    /**
-     * @var string
-     */
-    protected $timeFormat = null;
-    /**
-     * @var bool
-     */
-    protected $isTwentyFourHour = null;
+    private $formats;
 
-    /**
-     * @param LocaleSettings $localeSettings
-     */
-    public function __construct(LocaleSettings $localeSettings)
+    public function __construct(RequestStack $requestStack, LanguageFormattings $formats)
     {
-        $this->localeSettings = $localeSettings;
+        $locale = Constants::DEFAULT_LOCALE;
+
+        // request is null in a console command
+        if (null !== $requestStack->getMasterRequest()) {
+            $locale = $requestStack->getMasterRequest()->getLocale();
+        }
+
+        $this->formats = $formats;
+        $this->setLocale($locale);
     }
 
     /**
@@ -60,12 +58,27 @@ class DateExtensions extends AbstractExtension
     {
         return [
             new TwigFilter('month_name', [$this, 'monthName']),
+            new TwigFilter('day_name', [$this, 'dayName']),
             new TwigFilter('date_short', [$this, 'dateShort']),
             new TwigFilter('date_time', [$this, 'dateTime']),
             new TwigFilter('date_full', [$this, 'dateTimeFull']),
             new TwigFilter('date_format', [$this, 'dateFormat']),
             new TwigFilter('time', [$this, 'time']),
             new TwigFilter('hour24', [$this, 'hour24']),
+        ];
+    }
+
+    public function getTests()
+    {
+        return [
+            new TwigTest('weekend', function ($dateTime) {
+                if (!$dateTime instanceof \DateTime) {
+                    return false;
+                }
+                $day = (int) $dateTime->format('w');
+
+                return ($day === 0 || $day === 6);
+            }),
         ];
     }
 
@@ -80,73 +93,41 @@ class DateExtensions extends AbstractExtension
     }
 
     /**
+     * Allows to switch the locale used for all twig filter and functions.
+     *
+     * @param string $locale
+     */
+    public function setLocale(string $locale)
+    {
+        $this->formatter = new LocaleFormatter($this->formats, $locale);
+        $this->localeFormats = new LocaleFormats($this->formats, $locale);
+    }
+
+    /**
      * @param DateTime|string $date
      * @return string
-     * @throws \Exception
      */
     public function dateShort($date)
     {
-        if (null === $this->dateFormat) {
-            $this->dateFormat = $this->localeSettings->getDateFormat();
-        }
-
-        if (!$date instanceof DateTime) {
-            $date = new DateTime($date);
-        }
-
-        return date_format($date, $this->dateFormat);
+        return $this->formatter->dateShort($date);
     }
 
     /**
      * @param DateTime|string $date
      * @return string
-     * @throws \Exception
      */
     public function dateTime($date)
     {
-        if (null === $this->dateTimeFormat) {
-            $this->dateTimeFormat = $this->localeSettings->getDateTimeFormat();
-        }
-
-        if (!$date instanceof DateTime) {
-            $date = new DateTime($date);
-        }
-
-        return $date->format($this->dateTimeFormat);
+        return $this->formatter->dateTime($date);
     }
 
     /**
      * @param DateTime|string $date
-     * @param bool $userTimezone
      * @return bool|false|string
-     * @throws \Exception
      */
-    public function dateTimeFull($date, bool $userTimezone = true)
+    public function dateTimeFull($date)
     {
-        if (null === $this->dateTimeTypeFormat) {
-            $this->dateTimeTypeFormat = $this->localeSettings->getDateTimeTypeFormat();
-        }
-
-        if (!$date instanceof DateTime) {
-            $date = new DateTime($date);
-        }
-
-        $timezone = date_default_timezone_get();
-
-        if (!$userTimezone) {
-            $timezone = $date->getTimezone()->getName();
-        }
-
-        $formatter = new \IntlDateFormatter(
-            $this->localeSettings->getLocale(),
-            \IntlDateFormatter::MEDIUM,
-            \IntlDateFormatter::MEDIUM,
-            $timezone,
-            \IntlDateFormatter::GREGORIAN,
-            $this->dateTimeTypeFormat
-        );
-
-        return $formatter->format($date);
+        return $this->formatter->dateTimeFull($date);
     }
 
     /**
@@ -157,38 +138,26 @@ class DateExtensions extends AbstractExtension
      */
     public function dateFormat($date, string $format)
     {
-        if (!$date instanceof DateTime) {
-            $date = new DateTime($date);
-        }
-
-        return date_format($date, $format);
+        return $this->formatter->dateFormat($date, $format);
     }
 
     /**
      * @param DateTime|string $date
      * @return string
-     * @throws \Exception
      */
     public function time($date)
     {
-        if (null === $this->timeFormat) {
-            $this->timeFormat = $this->localeSettings->getTimeFormat();
-        }
-
-        if (!$date instanceof DateTime) {
-            $date = new DateTime($date);
-        }
-
-        return date_format($date, $this->timeFormat);
+        return $this->formatter->time($date);
     }
 
-    /**
-     * @param \DateTime $date
-     * @return string
-     */
-    public function monthName(\DateTime $date)
+    public function monthName(\DateTime $dateTime, bool $withYear = false): string
     {
-        return 'month.' . $date->format('n');
+        return $this->formatter->monthName($dateTime, $withYear);
+    }
+
+    public function dayName(\DateTime $dateTime, bool $short = false): string
+    {
+        return $this->formatter->dayName($dateTime, $short);
     }
 
     /**
@@ -198,15 +167,7 @@ class DateExtensions extends AbstractExtension
      */
     public function hour24($twentyFour, $twelveHour)
     {
-        if (null === $this->isTwentyFourHour) {
-            $this->isTwentyFourHour = $this->localeSettings->isTwentyFourHours();
-        }
-
-        if (true === $this->isTwentyFourHour) {
-            return $twentyFour;
-        }
-
-        return $twelveHour;
+        return $this->formatter->hour24($twentyFour, $twelveHour);
     }
 
     /**
@@ -214,6 +175,6 @@ class DateExtensions extends AbstractExtension
      */
     public function getDurationFormat()
     {
-        return $this->localeSettings->getDurationFormat();
+        return $this->localeFormats->getDurationFormat();
     }
 }

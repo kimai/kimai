@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ko" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="button_copy_url_to_browser">
+        <source>button_copy_url_to_browser</source>
+        <target>버튼이 작동하지 않으면, 복사하여 &amp; amp; 다음 URL을 브라우저에 붙여 넣으십시오: % url %</target>
+      </trans-unit>
+      <trans-unit id="automated_email_dont_answer">
+        <source>automated_email_dont_answer</source>
+        <target>이것은 자동 생성된 이메일입니다. 주소는 읽히지 않으니, 회신하지 마십시오.</target>
+      </trans-unit>
+      <trans-unit id="registration.subject">
+        <source>registration.subject</source>
+        <target>계정 활성화</target>
+      </trans-unit>
+      <trans-unit id="registration.title">
+        <source>registration.title</source>
+        <target>%username%님 환영합니다</target>
+      </trans-unit>
+      <trans-unit id="registration.button">
+        <source>registration.button</source>
+        <target>계정 활성화</target>
+      </trans-unit>
+      <trans-unit id="registration.intro">
+        <source>registration.intro</source>
+        <target>이메일 % email %로 Kimai 시간 트래커에 등록했습니다. 이제 링크가 만료되기 전에 계정을 활성화해야합니다.</target>
+      </trans-unit>
+      <trans-unit id="reset.subject">
+        <source>reset.subject</source>
+        <target>비밀번호 재설정</target>
+      </trans-unit>
+      <trans-unit id="reset.title">
+        <source>reset.title</source>
+        <target>그럴 수 있습니다...</target>
+      </trans-unit>
+      <trans-unit id="reset.button">
+        <source>reset.button</source>
+        <target>비밀번호 재설정</target>
+      </trans-unit>
+      <trans-unit id="reset.intro">
+        <source>reset.intro</source>
+        <target>... 암호를 잊어 버렸습니까? 걱정하지 마세요: Kimai가 새 계정을 만드는 데 도움을 줄 것입니다:</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

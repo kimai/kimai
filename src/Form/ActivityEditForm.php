@@ -86,6 +86,7 @@ class ActivityEditForm extends AbstractType
                 'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer) {
                     $query = new ProjectFormTypeQuery($project, $customer);
                     $query->setUser($builder->getOption('user'));
+                    $query->setIgnoreDate(true);
 
                     return $repo->getQueryBuilderForFormType($query);
                 },
@@ -105,6 +106,7 @@ class ActivityEditForm extends AbstractType
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $data, $project) {
                         $query = new ProjectFormTypeQuery($project, $data['customer']);
                         $query->setUser($builder->getOption('user'));
+                        $query->setIgnoreDate(true);
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
@@ -113,10 +115,6 @@ class ActivityEditForm extends AbstractType
         );
 
         $this->addCommonFields($builder, $options);
-
-        if (null === $id && $options['create_more']) {
-            $this->addCreateMore($builder);
-        }
     }
 
     /**
@@ -129,7 +127,6 @@ class ActivityEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_activity_edit',
-            'create_more' => false,
             'customer' => false,
             'currency' => Customer::DEFAULT_CURRENCY,
             'include_budget' => false,

@@ -9,10 +9,8 @@
 
 namespace App\Tests\Repository;
 
-use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Repository\WidgetRepository;
-use App\Tests\Mocks\Security\CurrentUserFactory;
 use App\Widget\Type\CompoundChart;
 use App\Widget\Type\Counter;
 use App\Widget\WidgetException;
@@ -26,9 +24,8 @@ class WidgetRepositoryTest extends TestCase
     public function testHasWidget()
     {
         $repoMock = $this->createMock(TimesheetRepository::class);
-        $userMock = (new CurrentUserFactory($this))->create(new User());
 
-        $sut = new WidgetRepository($repoMock, $userMock, ['test' => []]);
+        $sut = new WidgetRepository($repoMock, ['test' => []]);
 
         $this->assertFalse($sut->has('foo'));
         $this->assertTrue($sut->has('test'));
@@ -40,9 +37,8 @@ class WidgetRepositoryTest extends TestCase
         $this->expectExceptionMessage('Cannot find widget "foo".');
 
         $repoMock = $this->createMock(TimesheetRepository::class);
-        $userMock = (new CurrentUserFactory($this))->create(new User());
 
-        $sut = new WidgetRepository($repoMock, $userMock, ['test' => []]);
+        $sut = new WidgetRepository($repoMock, ['test' => []]);
         $sut->get('foo');
     }
 
@@ -52,21 +48,19 @@ class WidgetRepositoryTest extends TestCase
         $this->expectExceptionMessage('Unknown widget type "FooBar"');
 
         $repoMock = $this->createMock(TimesheetRepository::class);
-        $userMock = (new CurrentUserFactory($this))->create(new User());
 
-        $sut = new WidgetRepository($repoMock, $userMock, ['test' => ['type' => 'FooBar', 'user' => false]]);
+        $sut = new WidgetRepository($repoMock, ['test' => ['type' => 'FooBar', 'user' => false]]);
         $sut->get('test');
     }
 
     public function testGetWidgetTriggersExceptionOnWrongClass()
     {
         $this->expectException(WidgetException::class);
-        $this->expectExceptionMessage('Widget type "App\Widget\Type\CompoundChart" is not an instance of "App\Widget\Type\AbstractWidgetType"');
+        $this->expectExceptionMessage('Widget type "App\Widget\Type\CompoundChart" is not an instance of "App\Widget\Type\SimpleStatisticChart"');
 
         $repoMock = $this->createMock(TimesheetRepository::class);
-        $userMock = (new CurrentUserFactory($this))->create(new User());
 
-        $sut = new WidgetRepository($repoMock, $userMock, ['test' => ['type' => CompoundChart::class, 'user' => false]]);
+        $sut = new WidgetRepository($repoMock, ['test' => ['type' => CompoundChart::class, 'user' => false]]);
         $sut->get('test');
     }
 
@@ -77,8 +71,6 @@ class WidgetRepositoryTest extends TestCase
     {
         $repoMock = $this->createMock(TimesheetRepository::class);
         $repoMock->method('getStatistic')->willReturn($data);
-
-        $userMock = (new CurrentUserFactory($this))->create(new User());
 
         $widget = [
             'color' => 'sunny',
@@ -91,7 +83,7 @@ class WidgetRepositoryTest extends TestCase
             'type' => Counter::class,
         ];
 
-        $sut = new WidgetRepository($repoMock, $userMock, ['test' => $widget]);
+        $sut = new WidgetRepository($repoMock, ['test' => $widget]);
         $widget = $sut->get('test');
 
         $options = $widget->getOptions();

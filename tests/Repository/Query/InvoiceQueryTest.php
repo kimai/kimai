@@ -9,16 +9,13 @@
 
 namespace App\Tests\Repository\Query;
 
-use App\Entity\Activity;
-use App\Entity\Customer;
-use App\Entity\Project;
-use App\Entity\User;
 use App\Repository\Query\InvoiceQuery;
 
 /**
  * @covers \App\Repository\Query\InvoiceQuery
+ * @covers \App\Repository\Query\TimesheetQuery
  */
-class InvoiceQueryTest extends BaseQueryTest
+class InvoiceQueryTest extends TimesheetQueryTest
 {
     public function testQuery()
     {
@@ -36,87 +33,23 @@ class InvoiceQueryTest extends BaseQueryTest
         $this->assertState($sut);
         $this->assertExported($sut);
         $this->assertMarkAsExported($sut);
+        $this->assertModifiedAfter($sut);
+
+        self::assertTrue($sut->getBillable());
+        self::assertTrue($sut->isBillable());
+        self::assertFalse($sut->isNotBillable());
+        self::assertFalse($sut->isIgnoreBillable());
+
+        self::assertTrue($sut->isBillable());
+        self::assertFalse($sut->isNotBillable());
+        $this->assertBillable($sut);
     }
 
     protected function assertMarkAsExported(InvoiceQuery $sut)
     {
-        $this->assertFalse($sut->isMarkAsExported());
+        self::assertFalse($sut->isMarkAsExported());
 
         $sut->setMarkAsExported(true);
-        $this->assertTrue($sut->isMarkAsExported());
-    }
-
-    protected function assertUser(InvoiceQuery $sut)
-    {
-        $this->assertNull($sut->getUser());
-
-        $expected = new User();
-        $expected->setUsername('foo-bar');
-        $sut->setUser($expected);
-        $this->assertEquals($expected, $sut->getUser());
-    }
-
-    protected function assertCustomer(InvoiceQuery $sut)
-    {
-        $this->assertNull($sut->getCustomer());
-
-        $expected = new Customer();
-        $expected->setName('foo-bar');
-        $sut->setCustomer($expected);
-        $this->assertEquals($expected, $sut->getCustomer());
-    }
-
-    protected function assertProject(InvoiceQuery $sut)
-    {
-        $this->assertNull($sut->getProject());
-
-        $expected = new Project();
-        $expected->setName('foo-bar');
-        $sut->setProject($expected);
-        $this->assertEquals($expected, $sut->getProject());
-    }
-
-    protected function assertActivity(InvoiceQuery $sut)
-    {
-        $this->assertNull($sut->getActivity());
-
-        $expected = new Activity();
-        $expected->setName('foo-bar');
-        $sut->setActivity($expected);
-        $this->assertEquals($expected, $sut->getActivity());
-    }
-
-    protected function assertState(InvoiceQuery $sut)
-    {
-        $this->assertEquals(InvoiceQuery::STATE_ALL, $sut->getState());
-
-        $sut->setState(PHP_INT_MAX);
-        $this->assertEquals(InvoiceQuery::STATE_ALL, $sut->getState());
-
-        $sut->setState(InvoiceQuery::STATE_STOPPED);
-        $this->assertEquals(InvoiceQuery::STATE_STOPPED, $sut->getState());
-
-        $sut->setState(InvoiceQuery::STATE_RUNNING);
-        $this->assertEquals(InvoiceQuery::STATE_RUNNING, $sut->getState());
-
-        $sut->setState(InvoiceQuery::STATE_ALL);
-        $this->assertEquals(InvoiceQuery::STATE_ALL, $sut->getState());
-    }
-
-    protected function assertExported(InvoiceQuery $sut)
-    {
-        $this->assertEquals(InvoiceQuery::STATE_ALL, $sut->getExported());
-
-        $sut->setExported(PHP_INT_MAX);
-        $this->assertEquals(InvoiceQuery::STATE_ALL, $sut->getExported());
-
-        $sut->setExported(InvoiceQuery::STATE_EXPORTED);
-        $this->assertEquals(InvoiceQuery::STATE_EXPORTED, $sut->getExported());
-
-        $sut->setExported(InvoiceQuery::STATE_NOT_EXPORTED);
-        $this->assertEquals(InvoiceQuery::STATE_NOT_EXPORTED, $sut->getExported());
-
-        $sut->setExported(InvoiceQuery::STATE_ALL);
-        $this->assertEquals(InvoiceQuery::STATE_ALL, $sut->getExported());
+        self::assertTrue($sut->isMarkAsExported());
     }
 }

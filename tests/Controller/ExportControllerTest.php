@@ -23,6 +23,10 @@ class ExportControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/export/');
+    }
+
+    public function testIsSecureForrole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/');
     }
 
@@ -39,10 +43,10 @@ class ExportControllerTest extends ControllerBaseTest
     public function testIndexActionWithEntriesAndTeams()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
-        $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $user = $this->getUserByRole(User::ROLE_USER);
         /** @var Team $team */
         $team = new Team();
         $team->setName('fooo');
@@ -53,7 +57,7 @@ class ExportControllerTest extends ControllerBaseTest
         $em->persist($teamlead);
         $em->flush();
 
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         $begin = new \DateTime('first day of this month');
         $fixture = new TimesheetFixtures();
@@ -66,9 +70,9 @@ class ExportControllerTest extends ControllerBaseTest
                 $em->persist($team);
             })
         ;
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
-        $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
 
         $fixture = new TimesheetFixtures();
         $fixture
@@ -76,7 +80,7 @@ class ExportControllerTest extends ControllerBaseTest
             ->setAmount(2)
             ->setStartDate($begin)
         ;
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
         $em->flush();
 
         $this->request($client, '/export/?preview=');
@@ -84,12 +88,13 @@ class ExportControllerTest extends ControllerBaseTest
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_export', 22);
+        // +1 row for summary
+        $this->assertDataTableRowCount($client, 'datatable_export', 23);
 
         // assert export type buttons are available
-        $expected = ['csv', 'html', 'pdf', 'xlsx'];
-        $node = $client->getCrawler()->filter('#export-buttons button');
-        $this->assertEquals(count($expected), $node->count());
+        $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default-internal.pdf.twig', 'default.pdf.twig', 'xlsx'];
+        $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
+        $this->assertEquals(\count($expected), $node->count());
         /** @var \DOMElement $button */
         foreach ($node->getIterator() as $button) {
             $type = $button->getAttribute('data-type');
@@ -100,10 +105,10 @@ class ExportControllerTest extends ControllerBaseTest
     public function testIndexActionWithEntriesForTeamleadDoesNotShowUserWithoutTeam()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $begin = new \DateTime('first day of this month');
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
 
         // these should be ignored, becuase teamlead and user do NOT share a team!
         $fixture = new TimesheetFixtures();
@@ -112,7 +117,7 @@ class ExportControllerTest extends ControllerBaseTest
             ->setAmount(20)
             ->setStartDate($begin)
         ;
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/export/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -120,7 +125,7 @@ class ExportControllerTest extends ControllerBaseTest
         // make sure all existing records are displayed
         $this->assertHasNoEntriesWithFilter($client);
 
-        $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
 
         $fixture = new TimesheetFixtures();
         $fixture
@@ -128,19 +133,20 @@ class ExportControllerTest extends ControllerBaseTest
             ->setAmount(2)
             ->setStartDate($begin)
         ;
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/export/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_export', 2);
+        // +1 row for summary
+        $this->assertDataTableRowCount($client, 'datatable_export', 3);
 
         // assert export type buttons are available
-        $expected = ['csv', 'html', 'pdf', 'xlsx'];
-        $node = $client->getCrawler()->filter('#export-buttons button');
-        $this->assertEquals(count($expected), $node->count());
+        $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default-internal.pdf.twig', 'default.pdf.twig', 'xlsx'];
+        $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
+        $this->assertEquals(\count($expected), $node->count());
         /** @var \DOMElement $button */
         foreach ($node->getIterator() as $button) {
             $type = $button->getAttribute('data-type');
@@ -185,16 +191,16 @@ class ExportControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $begin = new \DateTime('first day of this month');
         $fixture = new TimesheetFixtures();
         $fixture
-            ->setUser($this->getUserByRole($em, User::ROLE_USER))
+            ->setUser($this->getUserByRole(User::ROLE_USER))
             ->setAmount(20)
             ->setStartDate($begin)
         ;
-        $this->importFixture($client, $fixture);
+        $this->importFixture($fixture);
 
         $this->request($client, '/export/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -206,7 +212,7 @@ class ExportControllerTest extends ControllerBaseTest
 
         // don't add daterange to make sure the current month is the default range
         $client->submit($form, [
-            'type' => 'html',
+            'type' => 'default.html.twig',
             'markAsExported' => 1
         ]);
 
@@ -217,7 +223,7 @@ class ExportControllerTest extends ControllerBaseTest
 
         // poor mans assertions ;-)
         $this->assertStringContainsString('export_print', $node->getIterator()[0]->getAttribute('class'));
-        $this->assertStringContainsString('<h2>List of expenses</h2>', $response->getContent());
+        $this->assertStringContainsString('<h2>', $response->getContent());
         $this->assertStringContainsString('<h3>Summary</h3>', $response->getContent());
 
         $node = $client->getCrawler()->filter('section.export div#export-records table.dataTable tbody tr');

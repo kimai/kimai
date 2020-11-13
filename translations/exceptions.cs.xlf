@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="http_error.description">
                 <source>http_error.description</source>
-                <target>Oops! Vyskytla se chyba.</target>
+                <target>Vyskytla se chyba.</target>
             </trans-unit>
             <trans-unit id="http_error.suggestion">
                 <source>http_error.suggestion</source>
@@ -27,7 +27,7 @@
             </trans-unit>
             <trans-unit id="http_error_404.description">
                 <source>http_error_404.description</source>
-                <target>Oops! Stránka neexistuje.</target>
+                <target>Stránka neexistuje.</target>
             </trans-unit>
             <trans-unit id="http_error_404.suggestion">
                 <source>http_error_404.suggestion</source>

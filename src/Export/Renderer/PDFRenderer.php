@@ -10,9 +10,9 @@
 namespace App\Export\Renderer;
 
 use App\Export\Base\PDFRenderer as BasePDFRenderer;
-use App\Export\RendererInterface;
+use App\Export\ExportRendererInterface;
 
-final class PDFRenderer extends BasePDFRenderer implements RendererInterface
+final class PDFRenderer extends BasePDFRenderer implements ExportRendererInterface
 {
     public function getIcon(): string
     {

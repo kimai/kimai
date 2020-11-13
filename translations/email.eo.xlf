@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eo" datatype="plaintext" original="email.en.xlf">
+        <body>
+            <trans-unit id="button_copy_url_to_browser">
+                <source>button_copy_url_to_browser</source>
+                <target>Se la butono ne funkcias, bv. kopii kaj alglui la jenan ligilon al via retumilo: %url%</target>
+            </trans-unit>
+            <trans-unit id="automated_email_dont_answer">
+                <source>automated_email_dont_answer</source>
+                <target>Tio estas aŭtomata mesaĝo. Bonvolu ne respondi, la mesaĝo ne estos legita.</target>
+            </trans-unit>
+            <trans-unit id="registration.subject">
+                <source>registration.subject</source>
+                <target>Aktivigu vian konton</target>
+            </trans-unit>
+            <trans-unit id="registration.title">
+                <source>registration.title</source>
+                <target>Bonvenon, %username%</target>
+            </trans-unit>
+            <trans-unit id="registration.button">
+                <source>registration.button</source>
+                <target>Aktivigu vian konton</target>
+            </trans-unit>
+            <trans-unit id="registration.intro">
+                <source>registration.intro</source>
+                <target>Vi aliĝis al la temporegistrilo Kimai per la retadreso %email%. Nun vi devas aktivigi vian konton dum la sekvaj kelkaj horoj, antaŭ ol la ligilo senvalidiĝos.</target>
+            </trans-unit>
+            <trans-unit id="reset.subject">
+                <source>reset.subject</source>
+                <target>Restarigi vian pasvorton</target>
+            </trans-unit>
+            <trans-unit id="reset.title">
+                <source>reset.title</source>
+                <target>Tio povas okazi ...</target>
+            </trans-unit>
+            <trans-unit id="reset.button">
+                <source>reset.button</source>
+                <target>Restarigi vian pasvorton</target>
+            </trans-unit>
+            <trans-unit id="reset.intro">
+                <source>reset.intro</source>
+                <target>... do, vi forgesis vian pasvorton, ĉu? Ne zorgu: Kimai helpos al vi krei la novan:</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -17,11 +17,11 @@ class Constants
     /**
      * The current release version
      */
-    public const VERSION = '1.8';
+    public const VERSION = '1.11.1';
     /**
      * The current release status, either "stable" or "dev"
      */
-    public const STATUS = 'dev';
+    public const STATUS = 'stable';
     /**
      * The software name
      */
@@ -42,4 +42,8 @@ class Constants
      * Application wide default locale.
      */
     public const DEFAULT_LOCALE = 'en';
+    /**
+     * Default color for Customer, Project and Activity entities
+     */
+    public const DEFAULT_COLOR = '#d2d6de';
 }

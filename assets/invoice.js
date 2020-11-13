@@ -1,0 +1,2 @@
+
+require('./sass/invoice.scss');

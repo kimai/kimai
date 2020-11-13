@@ -141,7 +141,7 @@ class LdapManager
         }
 
         $roleValue = $entries[0][$param];
-        if (is_array($roleValue)) {
+        if (\is_array($roleValue)) {
             $roleValue = $roleValue[0];
         }
         $roles = $this->getRoles($roleValue, $roleParameter);
@@ -157,7 +157,7 @@ class LdapManager
 
         return $this->driver->search(
             $roleParameter['baseDn'],
-            sprintf('(&%s(%s=%s))', $filter, $roleParameter['userDnAttribute'], $dn),
+            sprintf('(&%s(%s=%s))', $filter, $roleParameter['userDnAttribute'], ldap_escape($dn, '', LDAP_ESCAPE_FILTER)),
             [$roleParameter['nameAttribute']]
         );
     }

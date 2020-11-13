@@ -9,14 +9,28 @@
 
 namespace App\Form;
 
+use App\Repository\InvoiceDocumentRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class InvoiceDocumentUploadForm extends AbstractType
 {
+    /**
+     * @var InvoiceDocumentRepository
+     */
+    private $repository;
+
+    public function __construct(InvoiceDocumentRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -37,10 +51,31 @@ class InvoiceDocumentUploadForm extends AbstractType
                             'application/vnd.oasis.opendocument.spreadsheet',
                         ],
                         'mimeTypesMessage' => 'This file type is not allowed',
-                    ])
+                    ]),
+                    new Callback([$this, 'validateDocument'])
                 ],
             ])
         ;
+    }
+
+    public function validateDocument($value, ExecutionContextInterface $context)
+    {
+        if (!($value instanceof UploadedFile)) {
+            return;
+        }
+
+        $name = $value->getClientOriginalName();
+
+        foreach ($this->repository->findBuiltIn() as $document) {
+            if ($document->getName() !== $name) {
+                continue;
+            }
+
+            $context->buildViolation('This invoice document cannot be used, please rename the file and upload it again.')
+                ->setTranslationDomain('validators')
+                ->setCode('kimai-invoice-document-upload-01')
+                ->addViolation();
+        }
     }
 
     /**

@@ -58,3 +58,10 @@ td {
 .open-edit {
     cursor: pointer;
 }
+
+/* allow minimized table columns, eg. customer team & visibility */
+th.w-min,
+td.w-min {
+    width: 1%;
+    white-space: nowrap;
+}

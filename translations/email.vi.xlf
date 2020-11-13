@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="vi" datatype="plaintext" original="email.en.xlf">
+        <body>
+            <trans-unit id="button_copy_url_to_browser">
+                <source>button_copy_url_to_browser</source>
+                <target>Nếu nút không hoạt động, vui lòng sao chép &amp; dán URL vào trình duyệt của bạn: %url%</target>
+            </trans-unit>
+            <trans-unit id="automated_email_dont_answer">
+                <source>automated_email_dont_answer</source>
+                <target>Đây là một e-mail được tạo tự động. Xin đừng trả lời.</target>
+            </trans-unit>
+            <trans-unit id="registration.subject">
+                <source>registration.subject</source>
+                <target>Kích hoạt tài khoản của bạn</target>
+            </trans-unit>
+            <trans-unit id="registration.title">
+                <source>registration.title</source>
+                <target>Chào mừng %username%</target>
+            </trans-unit>
+            <trans-unit id="registration.button">
+                <source>registration.button</source>
+                <target>Kích hoạt tài khoản của bạn</target>
+            </trans-unit>
+            <trans-unit id="registration.intro">
+                <source>registration.intro</source>
+                <target>Bạn đã đăng ký theo dõi thời gian Kimai với email% email%. Bây giờ bạn phải kích hoạt tài khoản của mình trong vài giờ tới, trước khi liên kết hết hạn.</target>
+            </trans-unit>
+            <trans-unit id="reset.subject">
+                <source>reset.subject</source>
+                <target>Đặt lại mật khẩu của bạn</target>
+            </trans-unit>
+            <trans-unit id="reset.title">
+                <source>reset.title</source>
+                <target>Điều đó có thể xảy ra...</target>
+            </trans-unit>
+            <trans-unit id="reset.button">
+                <source>reset.button</source>
+                <target>Đặt lại mật khẩu của bạn</target>
+            </trans-unit>
+            <trans-unit id="reset.intro">
+                <source>reset.intro</source>
+                <target>... bạn quên mật khẩu? Đừng lo lắng: Kimai sẽ giúp bạn tạo một cái mới:</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

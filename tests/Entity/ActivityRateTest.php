@@ -25,6 +25,7 @@ class ActivityRateTest extends TestCase
         $sut = new ActivityRate();
         self::assertNull($sut->getId());
         self::assertEquals(0.00, $sut->getRate());
+        self::assertNull($sut->getInternalRate());
         self::assertNull($sut->getActivity());
         self::assertNull($sut->getUser());
         self::assertEquals(5, $sut->getScore());
@@ -41,11 +42,18 @@ class ActivityRateTest extends TestCase
         self::assertInstanceOf(ActivityRate::class, $sut->setRate(12.34));
         self::assertEquals(12.34, $sut->getRate());
 
+        self::assertInstanceOf(ActivityRate::class, $sut->setInternalRate(7.12));
+        self::assertEquals(7.12, $sut->getInternalRate());
+        $sut->setInternalRate(null);
+        self::assertNull($sut->getInternalRate());
+
         $user = new User();
         $user->setAlias('foo');
         $user->setUsername('bar');
         self::assertInstanceOf(ActivityRate::class, $sut->setUser($user));
         self::assertSame($user, $sut->getUser());
+        $sut->setUser(null);
+        self::assertNull($sut->getUser());
 
         $entity = new Activity();
         $entity->setName('foo');

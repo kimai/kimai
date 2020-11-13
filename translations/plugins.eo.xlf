@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="eo" datatype="plaintext" original="plugins.en.xlf">
+        <body>
+            <trans-unit id="plugins.title">
+                <source>plugins.title</source>
+                <target>Kromprogramoj</target>
+            </trans-unit>
+            <trans-unit id="plugins.subtitle">
+                <source>plugins.subtitle</source>
+                <target>Vi povas plibonigi la funkciadon de Kimai per kromprogramoj</target>
+            </trans-unit>
+            <trans-unit id="plugin.none_installed">
+                <source>plugin.none_installed</source>
+                <target>Vi ankoraŭ ne havas instalitajn kromprogramojn</target>
+            </trans-unit>
+            <trans-unit id="plugin.marketplace">
+                <source>plugin.marketplace</source>
+                <target>Kimai-vendejo</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

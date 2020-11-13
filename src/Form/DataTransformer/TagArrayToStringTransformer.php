@@ -48,7 +48,7 @@ class TagArrayToStringTransformer implements DataTransformerInterface
     /**
      * Transforms a string to an array of tags.
      *
-     * @param string $stringOfTags
+     * @param string|null $stringOfTags
      *
      * @return Tag[]
      * @throws TransformationFailedException if object (issue) is not found

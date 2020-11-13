@@ -29,7 +29,7 @@ class LanguageType extends AbstractType
      */
     public function __construct($locales)
     {
-        if (!is_array($locales)) {
+        if (!\is_array($locales)) {
             $locales = explode('|', $locales);
         }
 
@@ -48,7 +48,8 @@ class LanguageType extends AbstractType
         }
 
         $resolver->setDefaults([
-            'choices' => $choices
+            'choices' => $choices,
+            'label' => 'label.language',
         ]);
     }
 

@@ -26,7 +26,7 @@ class SqliteSessionInitSubscriberTest extends TestCase
     {
         $sut = new SqliteSessionInitSubscriber();
         $events = $sut->getSubscribedEvents();
-        $this->assertTrue(in_array(Events::postConnect, $events));
+        $this->assertTrue(\in_array(Events::postConnect, $events));
     }
 
     public function testPostConnectWithSqlite()

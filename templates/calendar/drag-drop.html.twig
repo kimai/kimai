@@ -1,0 +1,4 @@
+{% block dd_timesheet %}
+    {% import "calendar/widgets.html.twig" as widgets %}
+    {{ widgets.dd_event(entry.title, entry.project ? entry.project.customer.name : null, entry.project ? entry.project.name : null, null) }}
+{% endblock %}

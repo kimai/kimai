@@ -9,21 +9,18 @@
 
 namespace App\Tests\Repository\Query;
 
-use App\Entity\User;
 use App\Repository\Query\TagFormTypeQuery;
 
 /**
  * @covers \App\Repository\Query\TagFormTypeQuery
+ * @covers \App\Repository\Query\BaseFormTypeQuery
  */
-class TagFormTypeQueryTest extends BaseQueryTest
+class TagFormTypeQueryTest extends BaseFormTypeQueryTest
 {
     public function testQuery()
     {
         $sut = new TagFormTypeQuery();
 
-        $user = new User();
-        self::assertNull($sut->getUser());
-        self::assertInstanceOf(TagFormTypeQuery::class, $sut->setUser($user));
-        self::assertSame($user, $sut->getUser());
+        $this->assertBaseQuery($sut);
     }
 }

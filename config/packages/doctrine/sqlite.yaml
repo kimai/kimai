@@ -2,7 +2,6 @@ doctrine:
      orm:
          dql:
              datetime_functions:
-                 convert_tz: App\Doctrine\Query\Sqlite\ConvertTz
                  date: DoctrineExtensions\Query\Sqlite\Date
                  date_format: DoctrineExtensions\Query\Sqlite\DateFormat
                  #dateadd: DoctrineExtensions\Query\Sqlite\DateAdd

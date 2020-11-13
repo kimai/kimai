@@ -78,7 +78,7 @@ trait FormTrait
                     'group_by' => null,
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer, $isNew) {
                         // is there a better wa to prevent starting a record with a hidden project ?
-                        if ($isNew && !empty($project) && (is_int($project) || is_string($project))) {
+                        if ($isNew && !empty($project) && (\is_int($project) || \is_string($project))) {
                             /** @var Project $project */
                             $project = $repo->find($project);
                             if (null !== $project) {
@@ -105,8 +105,11 @@ trait FormTrait
         $builder
             ->add('activity', ActivityType::class, [
                 'placeholder' => '',
-                'query_builder' => function (ActivityRepository $repo) use ($activity, $project) {
-                    return $repo->getQueryBuilderForFormType(new ActivityFormTypeQuery($activity, $project));
+                'query_builder' => function (ActivityRepository $repo) use ($builder, $activity, $project) {
+                    $query = new ActivityFormTypeQuery($activity, $project);
+                    $query->setUser($builder->getOption('user'));
+
+                    return $repo->getQueryBuilderForFormType($query);
                 },
             ])
         ;
@@ -114,7 +117,7 @@ trait FormTrait
         // replaces the activity select after submission, to make sure only activities for the selected project are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($activity) {
+            function (FormEvent $event) use ($builder, $activity) {
                 $data = $event->getData();
                 if (!isset($data['project']) || empty($data['project'])) {
                     return;
@@ -122,12 +125,11 @@ trait FormTrait
 
                 $event->getForm()->add('activity', ActivityType::class, [
                     'placeholder' => '',
-                    'query_builder' => function (ActivityRepository $repo) use ($data, $activity) {
-                        if (!empty($activity) && is_string($activity)) {
-                            $activity = $repo->find($activity);
-                        }
+                    'query_builder' => function (ActivityRepository $repo) use ($builder, $data, $activity) {
+                        $query = new ActivityFormTypeQuery($activity, $data['project']);
+                        $query->setUser($builder->getOption('user'));
 
-                        return $repo->getQueryBuilderForFormType(new ActivityFormTypeQuery($activity, $data['project']));
+                        return $repo->getQueryBuilderForFormType($query);
                     },
                 ]);
             }

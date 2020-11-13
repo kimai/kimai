@@ -4,26 +4,21 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 
-{% block page_title %}{{ 'tags.title'|trans({}, 'tags') }}{% endblock %}
+{% block page_title %}{{ 'menu.tags'|trans }}{% endblock %}
 {% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.tags('index') }}{% endblock %}
 
 {% block main %}
 
     {% if tags|length == 0 %}
-        {{ widgets.callout('warning', 'error.no_entries_found') }}
-        <script type="text/javascript">
-            document.addEventListener('kimai.initialized', function() {
-                KimaiReloadPageWidget.create('kimai.tagUpdate');
-            });
-        </script>
+        {{ widgets.nothing_found('kimai.tagUpdate') }}
     {% else %}
 
         {% set columns = {
             'id': {'class': 'alwaysVisible multiCheckbox', 'orderBy': false, 'title': false, 'html_before': tables.datatable_multiupdate_all()},
-            'name': '',
-            'amount': '',
-            'actions': 'actions alwaysVisible',
+            'name': {'class': 'alwaysVisible'},
+            'amount': {'class': 'text-center w-min'},
+            'actions': {'class': 'actions alwaysVisible'},
         } %}
 
         {% set tableName = 'admin_tags' %}
@@ -38,9 +33,11 @@
 
             <tr{% if manageAllowed %} class="modal-ajax-form open-edit" data-href="{{ path('tags_edit', {'id': tag.id}) }}"{% endif %}>
                 <td class="text-nowrap">{{ tables.datatable_multiupdate_row(tag.id) }}</td>
-                <td>{{ tag.name }}</td>
-                <td>{{ widgets.label(tag.amount, type) }}</td>
-                <td class="actions">
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
+                    {{ widgets.label_color_dot('tag', true, tag.name, null, tag.color|default('#00a65a')) }}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }}">{{ widgets.label(tag.amount, type) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                     {{ actions.tag(tag, 'index') }}
                 </td>
             </tr>

@@ -24,7 +24,7 @@ class ProjectToolbarForm extends AbstractToolbarForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addSearchTermInputField($builder);
-        $this->addCustomerChoice($builder);
+        $this->addCustomerMultiChoice($builder, [], false);
         $this->addVisibilityChoice($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);

@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\CustomerStatistic;
@@ -27,6 +28,9 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @extends \Doctrine\ORM\EntityRepository<Customer>
+ */
 class CustomerRepository extends EntityRepository
 {
     /**
@@ -89,6 +93,7 @@ class CustomerRepository extends EntityRepository
             ->addSelect('COUNT(t.id) as recordAmount')
             ->addSelect('SUM(t.duration) as recordDuration')
             ->addSelect('SUM(t.rate) as recordRate')
+            ->addSelect('SUM(t.internalRate) as recordInternalRate')
             ->from(Timesheet::class, 't')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
             ->andWhere('p.customer = :customer')
@@ -99,11 +104,12 @@ class CustomerRepository extends EntityRepository
             $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
             $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
             $stats->setRecordRate($timesheetResult[0]['recordRate']);
+            $stats->setRecordInternalRate($timesheetResult[0]['recordInternalRate']);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
-            ->addSelect('COUNT(a.id) as activityAmount')
+            ->select('COUNT(a.id) as activityAmount')
             ->from(Activity::class, 'a')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 'a.project = p.id')
             ->andWhere('a.project = p.id')
@@ -116,7 +122,7 @@ class CustomerRepository extends EntityRepository
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->addSelect('COUNT(p.id) as projectAmount')
+        $qb->select('COUNT(p.id) as projectAmount')
             ->from(Project::class, 'p')
             ->andWhere('p.customer = :customer')
         ;
@@ -137,7 +143,7 @@ class CustomerRepository extends EntityRepository
         }
 
         // make sure that admins see all customers
-        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+        if (null !== $user && $user->canSeeAllData()) {
             return;
         }
 
@@ -145,30 +151,32 @@ class CustomerRepository extends EntityRepository
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
 
-        $qb->leftJoin('c.teams', 'teams');
-
         if (empty($teams)) {
-            $qb->andWhere($qb->expr()->isNull('teams'));
+            $qb->andWhere('SIZE(c.teams) = 0');
 
             return;
         }
 
         $or = $qb->expr()->orX(
-            $qb->expr()->isNull('teams'),
+            'SIZE(c.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
         $qb->andWhere($or);
 
-        $qb->setParameter('teams', $teams);
+        $ids = array_values(array_unique(array_map(function (Team $team) {
+            return $team->getId();
+        }, $teams)));
+
+        $qb->setParameter('teams', $ids);
     }
 
     /**
-     * @deprecated since 1.1 - don't use this method, it ignores team permission checks
+     * @deprecated since 1.1 - use getQueryBuilderForFormType() instead - will be removed with 2.0
      */
     public function builderForEntityType($customer)
     {
         $query = new CustomerFormTypeQuery();
-        $query->setCustomer($customer);
+        $query->addCustomer($customer);
 
         return $this->getQueryBuilderForFormType($query);
     }
@@ -187,12 +195,13 @@ class CustomerRepository extends EntityRepository
             ->from(Customer::class, 'c')
             ->orderBy('c.name', 'ASC');
 
+        // TODO this where and the next if($query->hasCustomers()) should go into their own $qb->expr()->orX()
         $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
         $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
 
-        $customer = $query->getCustomer();
-        if (null !== $customer) {
-            $qb->orWhere('c.id = :customer')->setParameter('customer', $customer);
+        if ($query->hasCustomers()) {
+            $qb->orWhere($qb->expr()->in('c.id', ':customer'))
+                ->setParameter('customer', $query->getCustomers());
         }
 
         if (null !== $query->getCustomerToIgnore()) {
@@ -214,13 +223,12 @@ class CustomerRepository extends EntityRepository
             ->from(Customer::class, 'c')
         ;
 
-        $orderBy = 'c.' . $query->getOrderBy();
-        $qb->orderBy($orderBy, $query->getOrder());
+        $qb->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
-        if (CustomerQuery::SHOW_VISIBLE == $query->getVisibility()) {
+        if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
             $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
-        } elseif (CustomerQuery::SHOW_HIDDEN == $query->getVisibility()) {
+        } elseif ($query->isShowHidden()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
             $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
         }
@@ -264,11 +272,6 @@ class CustomerRepository extends EntityRepository
                 $qb->andWhere($searchAnd);
             }
         }
-
-        // this will make sure, that we do not accidentally create results with multiple rows
-        //   => which would result in a wrong LIMIT / pagination results
-        // the second group by is needed due to SQL standard (even though logically not really required for this query)
-        $qb->addGroupBy('c.id')->addGroupBy($orderBy);
 
         return $qb;
     }

@@ -6,9 +6,9 @@
                 <source>label.invoice_number_generator</source>
                 <target>Генератор номеров счета</target>
             </trans-unit>
-            <trans-unit id="default">
-                <source>default</source>
-                <target>Дата (стандартная)</target>
+            <trans-unit id="date">
+                <source>date</source>
+                <target>Дата</target>
             </trans-unit>
         </body>
     </file>

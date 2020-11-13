@@ -12,6 +12,9 @@ namespace App\Tests\Entity;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Export\Spreadsheet\ColumnDefinition;
+use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
@@ -32,6 +35,8 @@ class UserTest extends TestCase
         self::assertNull($user->getApiToken());
         self::assertNull($user->getPlainApiToken());
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
+        self::assertFalse($user->hasTeamAssignment());
+        self::assertFalse($user->canSeeAllData());
 
         $user->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
         self::assertEquals('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', $user->getAvatar());
@@ -145,6 +150,7 @@ class UserTest extends TestCase
         self::assertCount(1, $sut->getTeams());
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getUsers()[0]);
+        self::assertTrue($sut->hasTeamAssignment());
 
         self::assertFalse($sut->isTeamleadOf($team));
         self::assertTrue($sut->isInTeam($team));
@@ -160,18 +166,62 @@ class UserTest extends TestCase
         self::assertCount(2, $sut->getTeams());
         $sut->removeTeam($team);
         self::assertCount(1, $sut->getTeams());
+        self::assertTrue($sut->hasTeamAssignment());
         $sut->removeTeam($team2);
         self::assertCount(0, $sut->getTeams());
+        self::assertFalse($sut->hasTeamAssignment());
     }
 
     public function testRoles()
     {
         $sut = new User();
+        self::assertFalse($sut->canSeeAllData());
+        self::assertFalse($sut->isAdmin());
         self::assertFalse($sut->isTeamlead());
+
         $sut->addRole(User::ROLE_ADMIN);
+        self::assertFalse($sut->canSeeAllData());
+        self::assertTrue($sut->isAdmin());
         self::assertFalse($sut->isTeamlead());
+
         $sut->addRole(User::ROLE_TEAMLEAD);
         self::assertTrue($sut->isTeamlead());
+        self::assertFalse($sut->canSeeAllData());
+
+        $sut->removeRole(User::ROLE_ADMIN);
+        self::assertFalse($sut->canSeeAllData());
+        self::assertFalse($sut->isAdmin());
+
+        $sut->addRole(User::ROLE_SUPER_ADMIN);
+        self::assertTrue($sut->canSeeAllData());
+        self::assertFalse($sut->isAdmin());
+        self::assertTrue($sut->isSuperAdmin());
+
+        $sut->removeRole(User::ROLE_SUPER_ADMIN);
+        self::assertFalse($sut->canSeeAllData());
+        self::assertFalse($sut->isSuperAdmin());
+        self::assertTrue($sut->isTeamlead());
+    }
+
+    /**
+     * This functionality was added, because these fields can be set via external providers (LDAP, SAML) and
+     * an invalid length should not result in errors.
+     *
+     * @see #1562
+     */
+    public function testMaxLength()
+    {
+        $sut = new User();
+        $sut->setAlias('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+        self::assertEquals(60, mb_strlen($sut->getAlias()));
+        $sut->setAlias('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxAAAAA');
+        self::assertEquals(60, mb_strlen($sut->getAlias()));
+        $sut->setAlias('万政提質打録施熟活者韓症写気当。規談表有部確暑将回優隊見竜能南事。竹阪板府入違護究兵厚能提。済伸知題熱正写場京誉事週在複今徳際供。審利世連手阿量携泉指済像更映刊政病世。熱楽時予資方賀月改洋者職原桜提増脚職。気公誌荒原輝文治察専及唱戦白廃模書。着授健出山力集出止員捉害実載措明国無今。棋出陶供供知機使協物確講最新両。');
+        self::assertEquals(60, mb_strlen($sut->getAlias()));
+        $sut->setTitle('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+        self::assertEquals(50, mb_strlen($sut->getTitle()));
+        $sut->setTitle('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxAAAAAA');
+        self::assertEquals(50, mb_strlen($sut->getTitle()));
     }
 
     public function testPreferencesCollectionIsCreatedOnBrokenUser()
@@ -193,5 +243,52 @@ class UserTest extends TestCase
         $sut->addPreference($preference);
 
         self::assertEquals('foobar', $sut->getPreferenceValue('test'));
+    }
+
+    public function testCanSeeAllData()
+    {
+        $sut = new User();
+        $sut->addRole(User::ROLE_USER);
+        self::assertFalse($sut->canSeeAllData());
+        self::assertTrue($sut->initCanSeeAllData(true));
+        self::assertTrue($sut->canSeeAllData());
+        self::assertFalse($sut->initCanSeeAllData(true));
+    }
+
+    public function testExportAnnotations()
+    {
+        $sut = new AnnotationExtractor(new AnnotationReader());
+
+        $columns = $sut->extract(User::class);
+
+        self::assertIsArray($columns);
+
+        $expected = [
+            ['label.id', 'integer'],
+            ['label.username', 'string'],
+            ['label.alias', 'string'],
+            ['label.title', 'string'],
+            ['label.email', 'string'],
+            ['label.lastLogin', 'datetime'],
+            ['label.language', 'string'],
+            ['label.timezone', 'string'],
+            ['label.active', 'boolean'],
+            ['profile.registration_date', 'datetime'],
+            ['label.roles', 'array'],
+        ];
+
+        self::assertCount(\count($expected), $columns);
+
+        foreach ($columns as $column) {
+            self::assertInstanceOf(ColumnDefinition::class, $column);
+        }
+
+        $i = 0;
+
+        foreach ($expected as $item) {
+            $column = $columns[$i++];
+            self::assertEquals($item[0], $column->getLabel());
+            self::assertEquals($item[1], $column->getType());
+        }
     }
 }

@@ -4,18 +4,21 @@
     {% block box_attributes %}id="budget_box"{% endblock %}
     {% block box_body %}
         {% set params = {
-            '%project%': '<strong>' ~ project.name ~ '</strong>',
-            '%customer%': '<strong>' ~ project.customer.name ~ '</strong>',
-            '%records%': '<strong>' ~ stats.recordAmount ~ '</strong>',
-            '%activities%': '<strong>' ~ stats.activityAmount ~ '</strong>',
-            '%duration%': '<strong>' ~ stats.recordDuration|duration ~ '</strong>'
+            '%project%': project.name,
+            '%customer%': project.customer.name,
+            '%records%': stats.recordAmount,
+            '%activities%': stats.activityAmount,
+            '%duration%': stats.recordDuration|duration
         } %}
-        
+
+        {% set currency = project.customer.currency %}
+
         <p>
-            {{ 'admin_project.short_stats'|trans(params)|raw }}
+            {{ 'admin_project.short_stats'|trans(params) }}
+            {{ 'label.rate_internal'|trans }}: {{ stats.recordInternalRate|money(currency) }}.
         </p>
 
-        {{ progress.progressbar(project.budget, stats.recordRate, 'label.budget'|trans, stats.recordRate|money(project.customer.currency) ~ ' / ' ~ project.budget|money(project.customer.currency) ) }}
+        {{ progress.progressbar(project.budget, stats.recordRate, 'label.budget'|trans, stats.recordRate|money(currency) ~ ' / ' ~ project.budget|money(currency) ) }}
         {{ progress.progressbar(project.timeBudget, stats.recordDuration, 'label.timeBudget'|trans, stats.recordDuration|duration ~ ' / ' ~ project.timeBudget|duration ) }}
     {% endblock %}
 {% endembed %}

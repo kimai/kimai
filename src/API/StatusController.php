@@ -20,16 +20,16 @@ use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @SWG\Tag(name="Default")
+ */
 class StatusController extends BaseApiController
 {
     /**
      * @var ViewHandlerInterface
      */
-    protected $viewHandler;
+    private $viewHandler;
 
-    /**
-     * @param ViewHandlerInterface $viewHandler
-     */
     public function __construct(ViewHandlerInterface $viewHandler)
     {
         $this->viewHandler = $viewHandler;

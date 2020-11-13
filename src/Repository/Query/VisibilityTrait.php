@@ -24,10 +24,25 @@ trait VisibilityTrait
     public function setVisibility($visibility)
     {
         $visibility = (int) $visibility;
-        if (in_array($visibility, VisibilityInterface::ALLOWED_VISIBILITY_STATES, true)) {
+        if (\in_array($visibility, VisibilityInterface::ALLOWED_VISIBILITY_STATES, true)) {
             $this->visibility = $visibility;
         }
 
         return $this;
+    }
+
+    public function isShowHidden(): bool
+    {
+        return $this->visibility === VisibilityInterface::SHOW_HIDDEN;
+    }
+
+    public function isShowVisible(): bool
+    {
+        return $this->visibility === VisibilityInterface::SHOW_VISIBLE;
+    }
+
+    public function isShowBoth(): bool
+    {
+        return $this->visibility === VisibilityInterface::SHOW_BOTH;
     }
 }

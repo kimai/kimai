@@ -25,11 +25,11 @@ class TimesheetStatistic
      */
     protected $durationTotal = 0;
     /**
-     * @var int
+     * @var float
      */
     protected $amountThisMonth = 0;
     /**
-     * @var int
+     * @var float
      */
     protected $amountTotal = 0;
     /**
@@ -54,17 +54,24 @@ class TimesheetStatistic
         $this->durationThisMonth = (int) $durationThisMonth;
     }
 
-    public function getAmountTotal(): int
+    /**
+     * This is actually the rate, wrong wording...
+     *
+     * @return float
+     */
+    public function getAmountTotal(): float
     {
         return $this->amountTotal;
     }
 
     /**
-     * @param int $amountTotal
+     * This is actually the rate, wrong wording...
+     *
+     * @param float|int $amountTotal
      */
     public function setAmountTotal($amountTotal)
     {
-        $this->amountTotal = (int) $amountTotal;
+        $this->amountTotal = (float) $amountTotal;
     }
 
     public function getDurationTotal(): int
@@ -80,17 +87,24 @@ class TimesheetStatistic
         $this->durationTotal = (int) $durationTotal;
     }
 
-    public function getAmountThisMonth(): int
+    /**
+     * This is actually the rate, wrong wording...
+     *
+     * @return float
+     */
+    public function getAmountThisMonth(): float
     {
         return $this->amountThisMonth;
     }
 
     /**
-     * @param int $amountThisMonth
+     * This is actually the rate, wrong wording...
+     *
+     * @param float|int $amountThisMonth
      */
     public function setAmountThisMonth($amountThisMonth)
     {
-        $this->amountThisMonth = (int) $amountThisMonth;
+        $this->amountThisMonth = (float) $amountThisMonth;
     }
 
     public function getFirstEntry(): ?\DateTime

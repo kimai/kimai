@@ -89,7 +89,7 @@ final class CustomerFixtures extends Fixture
             ;
 
             if (null !== $this->callback) {
-                call_user_func($this->callback, $customer);
+                \call_user_func($this->callback, $customer);
             }
             $manager->persist($customer);
         }

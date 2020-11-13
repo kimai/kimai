@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,6 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\UniqueConstraint(columns={"timesheet_id", "name"})
  *      }
  * )
+ * @Serializer\ExclusionPolicy("all")
  */
 class TimesheetMeta implements MetaTableTypeInterface
 {
@@ -39,7 +41,7 @@ class TimesheetMeta implements MetaTableTypeInterface
     {
         if (!($entity instanceof Timesheet)) {
             throw new \InvalidArgumentException(
-                sprintf('Expected instanceof Timesheet, received "%s"', get_class($entity))
+                sprintf('Expected instanceof Timesheet, received "%s"', \get_class($entity))
             );
         }
         $this->timesheet = $entity;

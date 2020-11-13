@@ -22,10 +22,6 @@
                 <source>help</source>
                 <target>Dokumentace</target>
             </trans-unit>
-            <trans-unit id="tab.thanks">
-                <source>tab.thanks</source>
-                <target>Zvláštní poděkování</target>
-            </trans-unit>
             <trans-unit id="donate">
                 <source>donate</source>
                 <target>Podpořte budoucnost Kimai</target>

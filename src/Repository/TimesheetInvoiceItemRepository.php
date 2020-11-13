@@ -36,7 +36,7 @@ final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInter
     }
 
     /**
-     * @param InvoiceItemInterface[] $invoiceItems
+     * @param Timesheet[] $invoiceItems
      */
     public function setExported(array $invoiceItems)
     {

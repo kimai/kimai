@@ -1,0 +1,109 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+body {
+    font-family: sans-serif;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+}
+table, tr, td, p {
+    padding: 0;
+    margin: 0;
+}
+th {
+    border: none;
+    text-align: left;
+}
+td {
+    vertical-align: top;
+}
+p {
+    margin-bottom: 12px;
+}
+.text-right {
+    text-align: right;
+}
+.text-nowrap {
+    white-space: nowrap;
+}
+.date {
+    color: #666;
+    font-size: 80%;
+    text-align: right;
+    padding-top: 6px;
+}
+.wrapper {
+    margin: 4px;
+}
+table.addresses, p {
+    line-height: 14pt;
+}
+/* The address table */
+table.addresses {
+    width: 100%;
+    margin-bottom: 30px;
+}
+/* The PDF header */
+table.header {
+    border-spacing: 0;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+}
+table.header .title {
+    font-weight: normal;
+    font-size: 140%;
+}
+/* The PDF footer */
+table.footer {
+    border-spacing: 0;
+    border-top: 1px solid #ccc;
+    font-size: 80%;
+    padding-top: 8px;
+    width: 100%;
+    line-height: 14px;
+}
+table.footer td {
+    vertical-align: bottom;
+}
+/* The invoice items list */
+table.items {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 50px;
+    margin-bottom: 60px;
+}
+table.items thead th,
+table.items tbody td {
+    border-bottom: 1px solid #ccc;
+}
+table.items thead th.first,
+table.items tbody td.first {
+    padding-left: 0;
+}
+table.items thead th.last,
+table.items tbody td.last,
+table.items tfoot td.last{
+    padding-right: 0;
+}
+
+table.items td,
+table.items th {
+    padding: 8px 6px;
+}
+table.items tfoot td,
+table.items tfoot th {
+    padding: 20px 0 0 0;
+    line-height: 1px;
+}
+table.items tfoot td.last {
+    padding-left: 10px;
+}
+table.items tr.odd {
+    background-color: #f5f5f5;
+}

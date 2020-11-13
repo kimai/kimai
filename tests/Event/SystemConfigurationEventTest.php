@@ -9,8 +9,8 @@
 
 namespace App\Tests\Event;
 
-use App\Entity\Configuration;
 use App\Event\SystemConfigurationEvent;
+use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration;
 use PHPUnit\Framework\TestCase;
 

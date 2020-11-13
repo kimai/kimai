@@ -70,6 +70,10 @@ final class InvoiceModel
      * @var InvoiceItemHydrator[]
      */
     private $itemHydrator = [];
+    /**
+     * @var string
+     */
+    private $invoiceNumber;
 
     public function __construct(InvoiceFormatter $formatter)
     {
@@ -103,7 +107,9 @@ final class InvoiceModel
     }
 
     /**
-     * Do not use this method for rendering the invoice, use InvoiceModel::getCalculator()->getEntries() instead.
+     * Returns the raw data from the model.
+     *
+     * Do not use this method for rendering the invoice, use getItems() instead.
      *
      * @return InvoiceItemInterface[]
      */
@@ -190,12 +196,29 @@ final class InvoiceModel
         return new \DateTime('+' . $this->getTemplate()->getDueDays() . ' days');
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getInvoiceDate(): \DateTime
     {
         return $this->invoiceDate;
+    }
+
+    public function setInvoiceDate(\DateTime $date): InvoiceModel
+    {
+        $this->invoiceDate = $date;
+
+        return $this;
+    }
+
+    public function getInvoiceNumber(): string
+    {
+        if (null === $this->generator) {
+            throw new \Exception('InvoiceModel::getInvoiceNumber() cannot be called before calling setNumberGenerator()');
+        }
+
+        if (null === $this->invoiceNumber) {
+            $this->invoiceNumber = $this->generator->getInvoiceNumber();
+        }
+
+        return $this->invoiceNumber;
     }
 
     public function setNumberGenerator(NumberGeneratorInterface $generator): InvoiceModel
@@ -206,6 +229,9 @@ final class InvoiceModel
         return $this;
     }
 
+    /**
+     * @deprecated since 1.9 - will be removed with 2.0 - use getInvoiceNumber() instead
+     */
     public function getNumberGenerator(): ?NumberGeneratorInterface
     {
         return $this->generator;
@@ -241,9 +267,16 @@ final class InvoiceModel
         return $this;
     }
 
-    public function getFormatter(): ?InvoiceFormatter
+    public function getFormatter(): InvoiceFormatter
     {
         return $this->formatter;
+    }
+
+    public function setFormatter(InvoiceFormatter $formatter): InvoiceModel
+    {
+        $this->formatter = $formatter;
+
+        return $this;
     }
 
     public function getCurrency(): string

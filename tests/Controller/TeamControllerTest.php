@@ -24,18 +24,21 @@ class TeamControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/teams/');
+    }
+
+    public function testIsSecureForRole()
+    {
         $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/admin/teams/');
     }
 
     public function testIndexAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(5);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/teams/');
         $this->assertPageActions($client, [
             'search search-toggle visible-xs-inline' => '#',
@@ -49,15 +52,14 @@ class TeamControllerTest extends ControllerBaseTest
     public function testIndexActionWithSearchTermQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(5);
         $fixture->setCallback(function (Team $team) {
             $team->setName($team->getName() . '- fantastic team with foooo bar magic');
         });
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/teams/');
 
         $form = $client->getCrawler()->filter('form.header-search')->form();
@@ -104,10 +106,10 @@ class TeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/teams/1/edit');
         $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
@@ -127,10 +129,10 @@ class TeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/teams/1/edit_member');
         $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
@@ -151,15 +153,15 @@ class TeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $fixture->setAddCustomer(false);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $team = $em->getRepository(Team::class)->find(1);
-        self::assertEquals(0, count($team->getCustomers()));
+        self::assertEquals(0, \count($team->getCustomers()));
 
         $this->assertAccessIsGranted($client, '/admin/teams/1/edit');
         $form = $client->getCrawler()->filter('form[name=team_customer_form]')->form();
@@ -172,7 +174,7 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
 
         $team = $em->getRepository(Team::class)->find(1);
-        self::assertEquals(1, count($team->getCustomers()));
+        self::assertEquals(1, \count($team->getCustomers()));
     }
 
     public function testEditProjectAccessAction()
@@ -180,15 +182,15 @@ class TeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $fixture->setAddCustomer(false);
-        $this->importFixture($em, $fixture);
+        $this->importFixture($fixture);
 
         $team = $em->getRepository(Team::class)->find(1);
-        self::assertEquals(0, count($team->getProjects()));
+        self::assertEquals(0, \count($team->getProjects()));
 
         $this->assertAccessIsGranted($client, '/admin/teams/1/edit');
         $form = $client->getCrawler()->filter('form[name=team_project_form]')->form();
@@ -201,6 +203,17 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
 
         $team = $em->getRepository(Team::class)->find(1);
-        self::assertEquals(1, count($team->getProjects()));
+        self::assertEquals(1, \count($team->getProjects()));
+    }
+
+    public function testDuplicateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/teams/1/duplicate');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/teams/2/edit'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('#team_edit_form_name');
+        self::assertEquals(1, $node->count());
+        self::assertEquals('Test team [COPY]', $node->attr('value'));
     }
 }

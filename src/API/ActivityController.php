@@ -12,8 +12,12 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\Activity;
+use App\Entity\ActivityRate;
+use App\Entity\User;
 use App\Event\ActivityMetaDefinitionEvent;
 use App\Form\API\ActivityApiEditForm;
+use App\Form\API\ActivityRateApiForm;
+use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Utils\SearchTerm;
@@ -32,11 +36,17 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @RouteResource("Activity")
+ * @SWG\Tag(name="Activity")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class ActivityController extends BaseApiController
 {
+    public const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
+    public const GROUPS_FORM = ['Default', 'Entity', 'Activity'];
+    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
+    public const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
+
     /**
      * @var ActivityRepository
      */
@@ -49,12 +59,17 @@ class ActivityController extends BaseApiController
      * @var EventDispatcherInterface
      */
     private $dispatcher;
+    /**
+     * @var ActivityRateRepository
+     */
+    private $activityRateRepository;
 
-    public function __construct(ViewHandlerInterface $viewHandler, ActivityRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(ViewHandlerInterface $viewHandler, ActivityRepository $repository, EventDispatcherInterface $dispatcher, ActivityRateRepository $activityRateRepository)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
+        $this->activityRateRepository = $activityRateRepository;
     }
 
     /**
@@ -68,20 +83,25 @@ class ActivityController extends BaseApiController
      *          @SWG\Items(ref="#/definitions/ActivityCollection")
      *      )
      * )
-     * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities. If none is provided, all activities will be returned.")
+     * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities")
+     * @Rest\QueryParam(name="projects", requirements="[\d|,]+", strict=true, nullable=true, description="Comma separated list of project IDs to filter activities")
      * @Rest\QueryParam(name="visible", requirements="1|2|3", strict=true, nullable=true, description="Visibility status to filter activities. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)")
      * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Use if you want to fetch only global activities. Allowed values: true (default: false)")
      * @Rest\QueryParam(name="globalsFirst", requirements="true|false", strict=true, nullable=true, description="Deprecated parameter, value is not used any more")
      * @Rest\QueryParam(name="orderBy", requirements="id|name|project", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, project (default: name)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
-     * @Rest\QueryParam(name="term", requirements="[a-zA-Z0-9 \-,:]+", strict=true, nullable=true, description="Free search term")
+     * @Rest\QueryParam(name="term", description="Free search term")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         $query = new ActivityQuery();
+        $query->setCurrentUser($user);
 
         if (null !== ($order = $paramFetcher->get('order'))) {
             $query->setOrder($order);
@@ -99,8 +119,17 @@ class ActivityController extends BaseApiController
             @trigger_error('API parameter globalsFirst is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
         }
 
+        if (!empty($projects = $paramFetcher->get('projects'))) {
+            if (!\is_array($projects)) {
+                $projects = explode(',', $projects);
+            }
+            if (!empty($projects)) {
+                $query->setProjects($projects);
+            }
+        }
+
         if (!empty($project = $paramFetcher->get('project'))) {
-            $query->setProject($project);
+            $query->addProject($project);
         }
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {
@@ -113,7 +142,7 @@ class ActivityController extends BaseApiController
 
         $data = $this->repository->getActivitiesForQuery($query);
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Collection', 'Activity']);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
@@ -146,7 +175,7 @@ class ActivityController extends BaseApiController
         }
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -183,7 +212,9 @@ class ActivityController extends BaseApiController
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->createForm(ActivityApiEditForm::class, $activity);
+        $form = $this->createForm(ActivityApiEditForm::class, $activity, [
+            'include_budget' => $this->isGranted('budget', $activity),
+        ]);
 
         $form->submit($request->request->all());
 
@@ -191,13 +222,13 @@ class ActivityController extends BaseApiController
             $this->repository->saveActivity($activity);
 
             $view = new View($activity, 200);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }
@@ -245,14 +276,16 @@ class ActivityController extends BaseApiController
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->createForm(ActivityApiEditForm::class, $activity);
+        $form = $this->createForm(ActivityApiEditForm::class, $activity, [
+            'include_budget' => $this->isGranted('budget', $activity),
+        ]);
 
         $form->setData($activity);
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+            $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
         }
@@ -260,13 +293,13 @@ class ActivityController extends BaseApiController
         $this->repository->saveActivity($activity);
 
         $view = new View($activity, Response::HTTP_OK);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
 
     /**
-     * Sets the value of a meta-field for an existing activity.
+     * Sets the value of a meta-field for an existing activity
      *
      * @SWG\Response(
      *      response=200,
@@ -313,7 +346,169 @@ class ActivityController extends BaseApiController
         $this->repository->saveActivity($activity);
 
         $view = new View($activity, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Returns a collection of all rates for one activity
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Returns a collection of activity rate entities",
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/ActivityRate")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The activity whose rates will be returned",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function getRatesAction(int $id): Response
+    {
+        /** @var Activity|null $activity */
+        $activity = $this->repository->find($id);
+
+        if (null === $activity) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $activity)) {
+            throw new AccessDeniedHttpException('Access denied.');
+        }
+
+        $rates = $this->activityRateRepository->getRatesForActivity($activity);
+
+        $view = new View($rates, 200);
+        $view->getContext()->setGroups(self::GROUPS_RATE);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Deletes one rate for an activity
+     *
+     * @SWG\Delete(
+     *      @SWG\Response(
+     *          response=204,
+     *          description="Returns no content: 204 on successful delete"
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The activity whose rate will be removed",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="rateId",
+     *      in="path",
+     *      type="integer",
+     *      description="The rate to remove",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function deleteRateAction(string $id, string $rateId): Response
+    {
+        /** @var Activity|null $activity */
+        $activity = $this->repository->find($id);
+
+        if (null === $activity) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $activity)) {
+            throw new AccessDeniedHttpException('Access denied.');
+        }
+
+        /** @var ActivityRate|null $rate */
+        $rate = $this->activityRateRepository->find($rateId);
+
+        if (null === $rate || $rate->getActivity() !== $activity) {
+            throw new NotFoundException();
+        }
+
+        $this->activityRateRepository->deleteRate($rate);
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Adds a new rate to an activity
+     *
+     * @SWG\Post(
+     *  @SWG\Response(
+     *      response=200,
+     *      description="Returns the new created rate",
+     *      @SWG\Schema(ref="#/definitions/ActivityRate")
+     *  )
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The activity to add the rate for",
+     *      required=true,
+     * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/ActivityRateForm")
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function postRateAction(int $id, Request $request): Response
+    {
+        /** @var Activity|null $activity */
+        $activity = $this->repository->find($id);
+
+        if (null === $activity) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $activity)) {
+            throw new AccessDeniedHttpException('Access denied.');
+        }
+
+        $rate = new ActivityRate();
+        $rate->setActivity($activity);
+
+        $form = $this->createForm(ActivityRateApiForm::class, $rate, [
+            'method' => 'POST',
+        ]);
+
+        $form->setData($rate);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            $view = new View($form, Response::HTTP_OK);
+            $view->getContext()->setGroups(self::GROUPS_RATE);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        $this->activityRateRepository->saveRate($rate);
+
+        $view = new View($rate, Response::HTTP_OK);
+        $view->getContext()->setGroups(self::GROUPS_RATE);
 
         return $this->viewHandler->handle($view);
     }

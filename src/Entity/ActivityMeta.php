@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,6 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\UniqueConstraint(columns={"activity_id", "name"})
  *      }
  * )
+ * @Serializer\ExclusionPolicy("all")
  */
 class ActivityMeta implements MetaTableTypeInterface
 {
@@ -39,7 +41,7 @@ class ActivityMeta implements MetaTableTypeInterface
     {
         if (!($entity instanceof Activity)) {
             throw new \InvalidArgumentException(
-                sprintf('Expected instanceof Activity, received "%s"', get_class($entity))
+                sprintf('Expected instanceof Activity, received "%s"', \get_class($entity))
             );
         }
         $this->activity = $entity;

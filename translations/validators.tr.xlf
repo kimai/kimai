@@ -1,19 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="tr" datatype="plaintext" original="validators.en.xlf">
-        <body>
-            <trans-unit id="This value is not a valid role.">
-                <source>This value is not a valid role.</source>
-                <target state="translated">Değer geçerli bir rol değildir.</target>
-            </trans-unit>
-            <trans-unit id="End date must not be earlier then start date.">
-                <source>Bitiş, başlangıç tarihinden önce olamaz.</source>
-                <target state="translated">End date must not be earlier then start date.</target>
-            </trans-unit>
-            <trans-unit id="The begin date cannot be in the future.">
-                <source>The begin date cannot be in the future.</source>
-                <target state="translated">Başlangıç, ileri bir tarih olamaz.</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="tr" datatype="plaintext" original="validators.en.xlf">
+    <body>
+      <trans-unit id="This value is not a valid role.">
+        <source>This value is not a valid role.</source>
+        <target state="translated">Değer geçerli bir rol değildir.</target>
+      </trans-unit>
+      <trans-unit id="End date must not be earlier then start date.">
+        <source>End date must not be earlier then start date.</source>
+        <target state="translated">Bitiş tarihi, başlangıç tarihinden önce olmamalıdır.</target>
+      </trans-unit>
+      <trans-unit id="The begin date cannot be in the future.">
+        <source>The begin date cannot be in the future.</source>
+        <target state="translated">Başlangıç, ileri bir tarih olamaz.</target>
+      </trans-unit>
+      <trans-unit id="The given value is not a valid time.">
+        <source>The given value is not a valid time.</source>
+        <target>Verilen değer geçerli bir zaman değil.</target>
+      </trans-unit>
+      <trans-unit id="You already have an entry for this time.">
+        <source>You already have an entry for this time.</source>
+        <target>Bu zaman için zaten bir kaydınız var.</target>
+      </trans-unit>
+      <trans-unit id="This period is locked, please choose a later date.">
+        <source>This period is locked, please choose a later date.</source>
+        <target>Bu dönem kilitli, lütfen daha ileri bir tarih seçin.</target>
+      </trans-unit>
+      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
+        <target>Bu fatura belgesi kullanılamıyor, lütfen dosyayı yeniden adlandırın ve tekrar yükleyin.</target>
+      </trans-unit>
+      <trans-unit id="You must select at least one user or team.">
+        <source>You must select at least one user or team.</source>
+        <target>En az bir kullanıcı veya takım seçmelisiniz.</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

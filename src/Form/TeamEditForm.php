@@ -23,6 +23,9 @@ class TeamEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var Team|null $team */
+        $team = $options['data'] ?? null;
+
         $builder
             ->add('name', TextType::class, [
                 'label' => 'label.name',
@@ -32,7 +35,7 @@ class TeamEditForm extends AbstractType
                 // documentation is for NelmioApiDocBundle
                 'documentation' => [
                     'type' => 'string',
-                    'description' => 'Name of the new team',
+                    'description' => 'Name of the team',
                 ],
             ])
             ->add('teamlead', UserType::class, [
@@ -49,6 +52,14 @@ class TeamEditForm extends AbstractType
                 'multiple' => true,
                 'expanded' => $options['expand_users'],
                 'by_reference' => false,
+                'documentation' => [
+                    'type' => 'array',
+                    'items' => ['type' => 'integer', 'description' => 'User IDs'],
+                    'title' => 'Team member',
+                    'description' => 'Array of team member IDs',
+                ],
+                // make sure that disabled users show up in the result list
+                'include_users' => (null !== $team && $team->getUsers()->count() > 0 ? $team->getUsers()->toArray() : [])
             ])
         ;
     }

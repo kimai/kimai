@@ -36,9 +36,9 @@
                     <tbody>
                     {% for document in documents %}
                         <tr>
-                            <td>{{ document.id }}</td>
-                            <td>{{ document.lastChange|date }}</td>
-                            <td>{{ document.filename|replace({(baseDirectory): ''}) }}</td>
+                            <td style="width: 33%">{{ document.id }}</td>
+                            <td style="width: 33%">{{ document.lastChange|date }}</td>
+                            <td>{{ document.name }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

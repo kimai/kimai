@@ -17,11 +17,8 @@ class AclDecisionManager
     /**
      * @var AccessDecisionManagerInterface
      */
-    protected $decisionManager;
+    private $decisionManager;
 
-    /**
-     * @param AccessDecisionManagerInterface $decisionManager
-     */
     public function __construct(AccessDecisionManagerInterface $decisionManager)
     {
         $this->decisionManager = $decisionManager;

@@ -40,15 +40,15 @@
             </trans-unit>
             <trans-unit id="customer">
                 <source>customer</source>
-                <target state="translated">Filter kunder</target>
+                <target state="translated">Filtrera kunder</target>
             </trans-unit>
             <trans-unit id="project">
                 <source>project</source>
-                <target state="translated">Filter projekt</target>
+                <target state="translated">Filtrera projekt</target>
             </trans-unit>
             <trans-unit id="activity">
                 <source>activity</source>
-                <target state="translated">Filter aktiviter</target>
+                <target state="translated">Filtrera aktiviter</target>
             </trans-unit>
             <trans-unit id="copy">
                 <source>copy</source>
@@ -68,7 +68,7 @@
             </trans-unit>
             <trans-unit id="create-timesheet">
                 <source>create-timesheet</source>
-                <target state="translated">Skapa tidsrapport</target>
+                <target state="translated">Skapa tidrapport</target>
             </trans-unit>
         </body>
     </file>

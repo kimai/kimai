@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fi" datatype="plaintext" original="validators.en.xlf">
+        <body>
+            <trans-unit id="This value is not a valid role.">
+                <source>This value is not a valid role.</source>
+                <target state="translated">Tämä arvo ei ole kelvollinen rooli.</target>
+            </trans-unit>
+            <trans-unit id="End date must not be earlier then start date.">
+                <source>End date must not be earlier then start date.</source>
+                <target state="translated">Lopetus päivämäärä ei voi olla aiemmin kuin aloitus päivämäärä</target>
+            </trans-unit>
+            <trans-unit id="The begin date cannot be in the future.">
+                <source>The begin date cannot be in the future.</source>
+                <target state="translated">Aloitus päivämäärä ei voi olla tulevaisuudessa.</target>
+            </trans-unit>
+            <trans-unit id="You must select at least one user or team.">
+                <source>You must select at least one user or team.</source>
+                <target state="translated">Sinun täytyy valita vähintään yksi käyttäjä tai tiimi.</target>
+            </trans-unit>
+            <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+                <source>This invoice document cannot be used, please rename the file and upload it again.</source>
+                <target state="translated">Tämän laskun dokumenttia ei voida käyttää, nimeä tiedosto uudelleen ja yritä lähettää se uudestaan.</target>
+            </trans-unit>
+            <trans-unit id="This period is locked, please choose a later date.">
+                <source>This period is locked, please choose a later date.</source>
+                <target state="translated">Tämä ajanjakso on lukittu, valitse myöhempi päivämäärä.</target>
+            </trans-unit>
+            <trans-unit id="You already have an entry for this time.">
+                <source>You already have an entry for this time.</source>
+                <target state="translated">Sinulla on jo merkintä tälle ajalle.</target>
+            </trans-unit>
+            <trans-unit id="The given value is not a valid time.">
+                <source>The given value is not a valid time.</source>
+                <target state="translated">Annettu arvo ei ole kelvollinen aika.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

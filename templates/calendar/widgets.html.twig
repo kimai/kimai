@@ -1,0 +1,13 @@
+{% macro dd_event(title, customer, project, activity) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% if customer is not null %}
+        <span class="pull-right info-icon" data-toggle="tooltip" data-placement="top" title="{{ customer }}">{{ widgets.icon('customer') }}</span>
+    {% endif %}
+    {% if project is not null %}
+        <span class="pull-right info-icon" data-toggle="tooltip" data-placement="top" title="{{ project }}">{{ widgets.icon('project') }}</span>
+    {% endif %}
+    {% if activity is not null %}
+        <span class="pull-right info-icon" data-toggle="tooltip" data-placement="top" title="{{ activity }}">{{ widgets.icon('activity') }}</span>
+    {% endif %}
+    <span class="title">{{ title }}</span>
+{% endmacro %}

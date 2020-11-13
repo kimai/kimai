@@ -10,23 +10,24 @@
 {% embed '@AdminLTE/Widgets/box-widget.html.twig' with options %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_tools %}
-        {% if teams|length == 0 and team is null and route_create is not null and is_granted('create_team') %}
-            <a class="btn-box-tool" href="{{ route_create }}" data-toggle="tooltip" data-placement="top" title="{{ 'team.create_default'|trans({}, 'teams') }}"><i class="{{ 'create'|icon }}"></i></a>
+        {% if route_create is not null and (teams|length == 0 or team is null) and is_granted('create_team') %}
+            <a class="btn btn-default btn-sm" href="{{ route_create }}" data-toggle="tooltip" data-placement="top" title="{{ 'team.create_default'|trans({}, 'teams') }}"><i class="{{ 'create'|icon }}"></i></a>
         {% endif %}
         {% if route_edit is not null %}
-            <a class="modal-ajax-form open-edit btn btn-box-tool" href="{{ route_edit }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
+            <a class="modal-ajax-form open-edit btn btn-default btn-sm" href="{{ route_edit }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
         {% endif %}
     {% endblock %}
     {% block box_attributes %}id="team_listing_box"{% endblock %}
     {% block box_title %}
         {{ 'permissions'|trans({}, 'actions') }}
+        {% if teams|length > 0 %}<small class="hidden-xs">{{ 'team.visibility_restricted'|trans({}, 'teams') }}</small>{% endif %}
     {% endblock %}
+    {% block box_body_class %}no-padding{% endblock %}
     {% block box_body %}
         {% if teams|length > 0 %}
-            <p>{{ 'team.visibility_restricted'|trans({}, 'teams') }}</p>
             {{ widgets.team_list(teams) }}
         {% else %}
-            {{ empty_message|default('team.visibility_global')|trans({}, 'teams') }}
+            <div class="comment">{{ empty_message|default('team.visibility_global')|trans({}, 'teams') }}</div>
         {% endif %}
     {% endblock %}
 {% endembed %}

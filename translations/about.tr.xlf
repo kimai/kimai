@@ -18,10 +18,6 @@
                 <source>help</source>
                 <target state="translated">Yardım</target>
             </trans-unit>
-            <trans-unit id="tab.thanks">
-                <source>tab.thanks</source>
-                <target state="translated">Özel teşekkür</target>
-            </trans-unit>
             <trans-unit id="donate">
                 <source>donate</source>
                 <target state="translated">Kimai'nin geleceği için bağışta bulunun</target>

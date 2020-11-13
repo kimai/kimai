@@ -2,9 +2,10 @@
 {% macro export(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    {% set actions = {} %}
+    {% set actions = {'visibility': '#modal_export'} %}
+
     {% if view == 'preview' %}
-        {% set actions = {'off': {'id':'export-toggle-button'}} %}
+        {% set actions = actions|merge({'off': {'id':'export-toggle-button'}}) %}
     {% endif %}
     {% set actions = actions|merge({'help': {'url': 'export.html'|docu_link, 'target': '_blank'}}) %}
 

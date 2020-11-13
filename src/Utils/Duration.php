@@ -122,14 +122,14 @@ class Duration
     protected function parseColonFormat(string $duration): int
     {
         $parts = explode(':', $duration);
-        if (count($parts) < 2 || count($parts) > 3) {
+        if (\count($parts) < 2 || \count($parts) > 3) {
             throw new \InvalidArgumentException(
                 sprintf('Invalid colon format given in "%s"', $duration)
             );
         }
 
         foreach ($parts as $part) {
-            if (strlen($part) === 0) {
+            if (\strlen($part) === 0) {
                 throw new \InvalidArgumentException(
                     sprintf('Colon format cannot parse "%s"', $duration)
                 );
@@ -143,7 +143,7 @@ class Duration
 
         $seconds = 0;
 
-        if (3 == count($parts)) {
+        if (3 == \count($parts)) {
             $seconds += (int) array_pop($parts);
         }
 

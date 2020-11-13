@@ -6,3 +6,29 @@
         }
     }
 }
+
+/* Drag and Drop events with styling */
+.external-events {
+    .external-event {
+        vertical-align: middle;
+        padding: 0 !important;
+        display: inline-block;
+        position: relative;
+        width: 100%;
+    }
+
+    .title {
+        padding: 5px 0 5px 10px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .info-icon {
+        width: 30px;
+        white-space: nowrap;
+        padding: 5px 7px;
+        border-left: 1px solid;
+    }
+}

@@ -27,6 +27,7 @@ use App\Saml\Security\SamlFactory;
 use App\Timesheet\CalculatorInterface as TimesheetCalculator;
 use App\Timesheet\Rounding\RoundingInterface;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
+use App\Validator\Constraints\TimesheetConstraint;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetRendererInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -54,6 +55,7 @@ class Kernel extends BaseKernel
     public const TAG_INVOICE_CALCULATOR = 'invoice.calculator';
     public const TAG_INVOICE_REPOSITORY = 'invoice.repository';
     public const TAG_TIMESHEET_CALCULATOR = 'timesheet.calculator';
+    public const TAG_TIMESHEET_VALIDATOR = 'timesheet.validator';
     public const TAG_TIMESHEET_EXPORTER = 'timesheet.exporter';
     public const TAG_TIMESHEET_TRACKING_MODE = 'timesheet.tracking_mode';
     public const TAG_TIMESHEET_ROUNDING_MODE = 'timesheet.rounding_mode';
@@ -82,6 +84,7 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(TimesheetExportInterface::class)->addTag(self::TAG_TIMESHEET_EXPORTER);
         $container->registerForAutoconfiguration(TrackingModeInterface::class)->addTag(self::TAG_TIMESHEET_TRACKING_MODE);
         $container->registerForAutoconfiguration(RoundingInterface::class)->addTag(self::TAG_TIMESHEET_ROUNDING_MODE);
+        $container->registerForAutoconfiguration(TimesheetConstraint::class)->addTag(self::TAG_TIMESHEET_VALIDATOR);
 
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');
@@ -98,6 +101,23 @@ class Kernel extends BaseKernel
             }
         }
 
+        if ($this->environment === 'test' && getenv('TEST_WITH_BUNDLES') === false) {
+            return;
+        }
+
+        // we can either define all kimai bundles hardcoded ...
+        if (is_file($this->getProjectDir() . '/config/bundles-local.php')) {
+            $contents = require $this->getProjectDir() . '/config/bundles-local.php';
+            foreach ($contents as $class => $envs) {
+                if (isset($envs['all']) || isset($envs[$this->environment])) {
+                    yield new $class();
+                }
+            }
+
+            return;
+        }
+
+        // ... or we load them dynamically from the plugins directory
         foreach ($this->getBundleDirectories() as $bundleDir) {
             $bundleName = $bundleDir->getRelativePathname();
             $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
@@ -109,10 +129,6 @@ class Kernel extends BaseKernel
     {
         $pluginsDir = $this->getProjectDir() . '/var/plugins';
         if (!file_exists($pluginsDir)) {
-            return [];
-        }
-
-        if ($this->environment === 'test' && getenv('TEST_WITH_BUNDLES') === false) {
             return [];
         }
 
@@ -207,9 +223,10 @@ class Kernel extends BaseKernel
         // load application routes
         $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');
 
-        /** @var SplFileInfo $bundleDir */
-        foreach ($this->getBundleDirectories() as $bundleDir) {
-            $routes->import($bundleDir->getRealPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
+        foreach ($this->bundles as $bundle) {
+            if (strpos(\get_class($bundle), 'KimaiPlugin\\') !== false) {
+                $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
+            }
         }
     }
 

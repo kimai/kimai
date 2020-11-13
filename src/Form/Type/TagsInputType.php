@@ -14,6 +14,8 @@ use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -32,10 +34,6 @@ class TagsInputType extends AbstractType
      */
     private $router;
 
-    /**
-     * @param TagArrayToStringTransformer $transformer
-     * @param UrlGeneratorInterface $router
-     */
     public function __construct(TagArrayToStringTransformer $transformer, UrlGeneratorInterface $router)
     {
         $this->transformer = $transformer;
@@ -58,17 +56,20 @@ class TagsInputType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // documentation is for NelmioApiDocBundle
             'documentation' => [
                 'type' => 'string',
                 'description' => 'Comma separated list of tags',
             ],
             'label' => 'label.tag',
-            'attr' => [
-                'data-autocomplete-url' => $this->router->generate('get_tags'),
-                'class' => 'js-autocomplete',
-                'autocomplete' => 'off',
-            ]
+        ]);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'data-autocomplete-url' => $this->router->generate('get_tags'),
+            'class' => 'js-autocomplete',
+            'autocomplete' => 'off',
         ]);
     }
 

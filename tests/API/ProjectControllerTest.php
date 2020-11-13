@@ -9,9 +9,15 @@
 
 namespace App\Tests\API;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\ProjectMeta;
+use App\Entity\ProjectRate;
+use App\Entity\Team;
 use App\Entity\User;
+use App\Repository\ProjectRateRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +28,52 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 class ProjectControllerTest extends APIControllerBaseTest
 {
+    use RateControllerTestTrait;
+
+    protected function getRateUrl($id = '1', $rateId = null): string
+    {
+        if (null !== $rateId) {
+            return sprintf('/api/projects/%s/rates/%s', $id, $rateId);
+        }
+
+        return sprintf('/api/projects/%s/rates', $id);
+    }
+
+    protected function importTestRates($id): array
+    {
+        /** @var ProjectRateRepository $rateRepository */
+        $rateRepository = $this->getEntityManager()->getRepository(ProjectRate::class);
+        /** @var ProjectRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Project::class);
+        /** @var Project|null $project */
+        $project = $repository->find($id);
+
+        if (null === $project) {
+            $project = new Project();
+            $project->setName('foooo');
+            $project->setCustomer($this->getEntityManager()->getRepository(Customer::class)->find(1));
+            $repository->saveProject($project);
+        }
+
+        $rate1 = new ProjectRate();
+        $rate1->setProject($project);
+        $rate1->setRate(17.45);
+        $rate1->setIsFixed(false);
+
+        $rateRepository->saveRate($rate1);
+
+        $rate2 = new ProjectRate();
+        $rate2->setProject($project);
+        $rate2->setRate(99);
+        $rate2->setInternalRate(9);
+        $rate2->setIsFixed(true);
+        $rate2->setUser($this->getUserByName(UserFixtures::USERNAME_USER));
+
+        $rateRepository->saveRate($rate2);
+
+        return [$rate1, $rate2];
+    }
+
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/projects');
@@ -35,13 +87,13 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(1, count($result));
-        $this->assertStructure($result[0], false);
+        $this->assertEquals(1, \count($result));
+        self::assertApiResponseTypeStructure('ProjectCollection', $result[0]);
     }
 
     protected function loadProjectTestData(HttpKernelBrowser $client)
     {
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $customer = $em->getRepository(Customer::class)->find(1);
 
@@ -64,7 +116,24 @@ class ProjectControllerTest extends APIControllerBaseTest
         $em->persist($project);
 
         $project = (new Project())->setName('fifth')->setVisible(true)->setCustomer($customer);
+
+        // add meta fields
+        $meta = new ProjectMeta();
+        $meta->setName('bar')->setValue('foo')->setIsVisible(false);
+        $project->setMetaField($meta);
+        $meta = new ProjectMeta();
+        $meta->setName('foo')->setValue('bar')->setIsVisible(true);
+        $project->setMetaField($meta);
         $em->persist($project);
+
+        // and a team
+        $team = new Team();
+        $team->setName('Testing project team');
+        $team->setTeamLead($this->getUserByRole(User::ROLE_USER));
+        $team->addCustomer($customer);
+        $team->addProject($project);
+        $team->addUser($this->getUserByRole(User::ROLE_TEAMLEAD));
+        $em->persist($team);
 
         $project = (new Project())->setName('sixth')->setVisible(false)->setCustomer($customer3);
         $em->persist($project);
@@ -83,12 +152,12 @@ class ProjectControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertEquals(count($expected), count($result), 'Found wrong amount of projects');
+        $this->assertEquals(\count($expected), \count($result), 'Found wrong amount of projects');
 
-        for ($i = 0; $i < count($expected); $i++) {
+        for ($i = 0; $i < \count($expected); $i++) {
             $project = $result[$i];
             $compare = $expected[$i];
-            $this->assertStructure($project, false);
+            self::assertApiResponseTypeStructure('ProjectCollection', $project);
             $this->assertEquals($compare[1], $project['customer']);
         }
     }
@@ -104,18 +173,69 @@ class ProjectControllerTest extends APIControllerBaseTest
         // customer is invisible, so nothing should be returned
         yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_VISIBLE], []];
         yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', ['customer' => '2', 'customers' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', ['customer' => '2', 'customers' => '2,2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
         // customer is invisible, so nothing should be returned
         yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
+        yield ['/api/projects', ['customers' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
+        yield ['/api/projects', ['customers' => '2,2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
     }
 
     public function testGetEntity()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->assertAccessIsGranted($client, '/api/projects/1');
+        $em = $this->getEntityManager();
+
+        $customer = (new Customer())
+            ->setName('first one')
+            ->setVisible(true)
+            ->setCountry('de')
+            ->setTimezone('Europe/Berlin')
+        ;
+        $em->persist($customer);
+
+        $orderDate = new \DateTime('2019-11-29 14:35:17', new \DateTimeZone('Pacific/Tongatapu'));
+        $startDate = new \DateTime('2020-01-07 18:19:20', new \DateTimeZone('Pacific/Tongatapu'));
+        $endDate = new \DateTime('2021-03-23 00:00:01', new \DateTimeZone('Pacific/Tongatapu'));
+
+        $project = (new Project())
+            ->setName('first')
+            ->setVisible(true)
+            ->setCustomer($customer)
+            ->setOrderDate($orderDate)
+            ->setStart($startDate)
+            ->setEnd($endDate)
+        ;
+        $em->persist($project);
+
+        $this->assertAccessIsGranted($client, '/api/projects/2');
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
+
+        $expected = [
+            'parentTitle' => 'first one',
+            'customer' => 2,
+            'id' => 2,
+            'name' => 'first',
+            'orderNumber' => null,
+            // make sure the timezone is properly applied in serializer (see #1858)
+            'orderDate' => '2019-11-29T14:35:17+1300',
+            'start' => '2020-01-07T18:19:20+1300',
+            'end' => '2021-03-23T00:00:01+1300',
+            'comment' => null,
+            'visible' => true,
+            'budget' => 0.0,
+            'timeBudget' => 0,
+            'metaFields' => [],
+            'teams' => [],
+            'color' => null,
+        ];
+
+        foreach ($expected as $key => $value) {
+            self::assertEquals($value, $result[$key]);
+        }
     }
 
     public function testNotFound()
@@ -133,17 +253,36 @@ class ProjectControllerTest extends APIControllerBaseTest
             'orderDate' => '2018-02-08T13:02:54',
             'start' => '2019-02-01T19:32:17',
             'end' => '2020-02-08T21:11:42',
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
         $this->assertNotEmpty($result['id']);
         self::assertEquals('2018-02-08T13:02:54+0000', $result['orderDate']);
         self::assertEquals('2019-02-01T19:32:17+0000', $result['start']);
         self::assertEquals('2020-02-08T21:11:42+0000', $result['end']);
+    }
+
+    public function testPostActionWithLeastFields()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'customer' => 1
+        ];
+        $this->request($client, '/api/projects', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
+        $this->assertNotEmpty($result['id']);
+        self::assertEquals('foo', $result['name']);
     }
 
     public function testPostActionWithInvalidUser()
@@ -183,14 +322,16 @@ class ProjectControllerTest extends APIControllerBaseTest
             'name' => 'foo',
             'comment' => '',
             'customer' => 1,
-            'visible' => true
+            'visible' => true,
+            'budget' => '999',
+            'timeBudget' => '7200',
         ];
         $this->request($client, '/api/projects/1', 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        $this->assertStructure($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
@@ -274,28 +415,9 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
         $this->assertEquals('another,testing,bar', $project->getMetaField('metatestmock')->getValue());
-    }
-
-    protected function assertStructure(array $result, $full = true)
-    {
-        $expectedKeys = [
-            'id', 'name', 'visible', 'customer', 'color', 'metaFields', 'parentTitle', 'start', 'end', 'teams'
-        ];
-
-        if ($full) {
-            $expectedKeys = array_merge($expectedKeys, [
-                'comment', 'budget', 'timeBudget', 'orderNumber', 'orderDate'
-            ]);
-        }
-
-        $actual = array_keys($result);
-        sort($actual);
-        sort($expectedKeys);
-
-        $this->assertEquals($expectedKeys, $actual, 'Project structure does not match');
     }
 }

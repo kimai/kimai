@@ -22,21 +22,21 @@ class MarkdownTest extends TestCase
     {
         $sut = new Markdown();
         $this->assertEquals('<p><em>test</em></p>', $sut->toHtml('*test*'));
-        $this->assertEquals('<h1 id="foobar">foobar</h1>', $sut->toHtml('# foobar'));
+        $this->assertEquals('<p># foobar</p>', $sut->toHtml('# foobar'));
         $html = <<<'EOT'
 <p>foo bar</p>
 <ul>
 <li>sdfasdfasdf</li>
 <li>asdfasdfasdf</li>
 </ul>
-<h1 id="test">test</h1>
-<p>asdfasdfa</p>
+<p># test<br />
+asdfasdfa</p>
 <pre><code>ssdfsdf</code></pre>
 <p><a href="http://example.com/foo-bar.html" target="_blank">http://example.com/foo-bar.html</a><br />
 <a href="file:///home/kimai/images/beautiful-flower.png" target="_blank">file:///home/kimai/images/beautiful-flower.png</a></p>
 <p>sdfsdf <a href="#test-1">asdfasdf</a> asdfasdf</p>
-<h1 id="test-1">test</h1>
-<p>aasdfasdf<br />
+<p># test<br />
+aasdfasdf<br />
 1111<br />
 222</p>
 EOT;
@@ -70,10 +70,10 @@ EOT;
         $sut = new Markdown();
 
         $html = <<<'EOT'
-<h1 id="test">test</h1>
-<h2 id="test-1">test</h2>
-<h3 id="test-2">test</h3>
-<h1 id="test-3">test</h1>
+<p># test<br />
+## test<br />
+### test<br />
+# test</p>
 EOT;
 
         $markdown = <<<EOT

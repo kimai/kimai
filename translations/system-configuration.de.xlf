@@ -14,6 +14,10 @@
                 <source>timesheet</source>
                 <target>Zeiterfassung</target>
             </trans-unit>
+            <trans-unit id="invoice">
+                <source>invoice</source>
+                <target>Rechnungen</target>
+            </trans-unit>
             <trans-unit id="form_customer">
                 <source>form_customer</source>
                 <target>Kunden anlegen - Standard Werte</target>
@@ -61,6 +65,22 @@
             <trans-unit id="label.timesheet.rules.allow_future_times">
                 <source>label.timesheet.rules.allow_future_times</source>
                 <target>Erlaube Zeiteinträge in der Zukunft</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+                <source>label.timesheet.rules.allow_overlapping_records</source>
+                <target>Erlaube überlappende Zeiteinträge</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.lockdown_period_start">
+                <source>label.timesheet.rules.lockdown_period_start</source>
+                <target>Start des gesperrten Zeitraums (relatives PHP Datumsformat)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.lockdown_period_end">
+                <source>label.timesheet.rules.lockdown_period_end</source>
+                <target>Ende des gesperrten Zeitraums (relatives PHP Datumsformat)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+                <source>label.timesheet.rules.lockdown_grace_period</source>
+                <target>Übergangsfrist für gesperrten Zeitraum (relatives PHP Datumsformat ab Enddatum)</target>
             </trans-unit>
             <trans-unit id="label.timesheet.active_entries.hard_limit">
                 <source>label.timesheet.active_entries.hard_limit</source>
@@ -193,6 +213,18 @@
             <trans-unit id="label.timesheet.default_begin">
                 <source>label.timesheet.default_begin</source>
                 <target>Standard Startzeit (wird nicht in jedem Zeiterfassungs Modus verwendet)</target>
+            </trans-unit>
+            <trans-unit id="label.simple_form">
+                <source>label.simple_form</source>
+                <target>Einfache Suche</target>
+            </trans-unit>
+            <trans-unit id="label.invoice.number_format">
+                <source>label.invoice.number_format</source>
+                <target>Rechnungsnummer Format</target>
+            </trans-unit>
+            <trans-unit id="first_weekday">
+                <source>first_weekday</source>
+                <target>Erster Tag der Woche</target>
             </trans-unit>
         </body>
     </file>

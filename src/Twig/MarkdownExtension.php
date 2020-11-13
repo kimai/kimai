@@ -43,16 +43,16 @@ final class MarkdownExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('md2html', [$this, 'markdownToHtml'], ['is_safe' => ['html']]),
-            new TwigFilter('desc2html', [$this, 'timesheetContent'], ['is_safe' => ['html']]),
-            new TwigFilter('comment2html', [$this, 'commentContent'], ['is_safe' => ['html']]),
+            new TwigFilter('md2html', [$this, 'markdownToHtml'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
+            new TwigFilter('desc2html', [$this, 'timesheetContent'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
+            new TwigFilter('comment2html', [$this, 'commentContent'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
         ];
     }
 
     /**
      * Transforms the entities comment (customer, project, activity ...) into HTML.
      *
-     * @param string $content
+     * @param string|null $content
      * @param bool $fullLength
      * @return string
      */
@@ -62,7 +62,7 @@ final class MarkdownExtension extends AbstractExtension
             return '';
         }
 
-        if (!$fullLength && strlen($content) > 101) {
+        if (!$fullLength && \strlen($content) > 101) {
             $content = trim(substr($content, 0, 100)) . ' &hellip;';
         }
 
@@ -78,10 +78,10 @@ final class MarkdownExtension extends AbstractExtension
     /**
      * Transforms the timesheet description content into HTML.
      *
-     * @param string $content
+     * @param string|null $content
      * @return string
      */
-    public function timesheetContent($content): string
+    public function timesheetContent(?string $content): string
     {
         if (empty($content)) {
             return '';

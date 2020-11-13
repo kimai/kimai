@@ -28,7 +28,7 @@ class ProjectValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Project');
         }
 
-        if (!is_object($value) || !($value instanceof Project)) {
+        if (!\is_object($value) || !($value instanceof Project)) {
             return;
         }
 

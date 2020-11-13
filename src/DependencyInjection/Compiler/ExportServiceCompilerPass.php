@@ -9,10 +9,14 @@
 
 namespace App\DependencyInjection\Compiler;
 
+use App\Export\Renderer\HtmlRenderer;
+use App\Export\Renderer\HtmlRendererFactory;
+use App\Export\Renderer\PdfRendererFactory;
 use App\Export\ServiceExport;
 use App\Kernel;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
@@ -26,11 +30,6 @@ class ExportServiceCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        // always first check if the primary service is defined
-        if (!$container->has(ServiceExport::class)) {
-            return;
-        }
-
         $definition = $container->findDefinition(ServiceExport::class);
 
         $taggedRenderer = $container->findTaggedServiceIds(Kernel::TAG_EXPORT_RENDERER);
@@ -41,6 +40,41 @@ class ExportServiceCompilerPass implements CompilerPassInterface
         $taggedExporter = $container->findTaggedServiceIds(Kernel::TAG_TIMESHEET_EXPORTER);
         foreach ($taggedExporter as $id => $tags) {
             $definition->addMethodCall('addTimesheetExporter', [new Reference($id)]);
+        }
+
+        $path = \dirname(\dirname(\dirname(__DIR__))) . DIRECTORY_SEPARATOR;
+        foreach ($container->getParameter('kimai.export.documents') as $exportPath) {
+            if (!is_dir($path . $exportPath)) {
+                continue;
+            }
+
+            foreach (glob($path . $exportPath . '/*.html.twig') as $htmlTpl) {
+                $tplName = basename($htmlTpl);
+
+                $serviceId = 'exporter_renderer.' . str_replace('.', '_', $tplName);
+
+                $factoryDefinition = new Definition(HtmlRenderer::class);
+                $factoryDefinition->addArgument($tplName);
+                $factoryDefinition->addArgument($tplName);
+                $factoryDefinition->setFactory([new Reference(HtmlRendererFactory::class), 'create']);
+
+                $container->setDefinition($serviceId, $factoryDefinition);
+                $definition->addMethodCall('addRenderer', [new Reference($serviceId)]);
+            }
+
+            foreach (glob($path . $exportPath . '/*.pdf.twig') as $pdfHtml) {
+                $tplName = basename($pdfHtml);
+
+                $serviceId = 'exporter_renderer.' . str_replace('.', '_', $tplName);
+
+                $factoryDefinition = new Definition(HtmlRenderer::class);
+                $factoryDefinition->addArgument($tplName);
+                $factoryDefinition->addArgument($tplName);
+                $factoryDefinition->setFactory([new Reference(PdfRendererFactory::class), 'create']);
+
+                $container->setDefinition($serviceId, $factoryDefinition);
+                $definition->addMethodCall('addRenderer', [new Reference($serviceId)]);
+            }
         }
     }
 }

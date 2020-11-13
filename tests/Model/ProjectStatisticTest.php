@@ -30,8 +30,8 @@ class ProjectStatisticTest extends TestCase
     {
         $project = new Project();
         $sut = new ProjectStatistic($project);
-        $sut->setRecordAmount(7654.298);
-        $sut->setRecordDuration(826.10);
+        $sut->setRecordAmount(7654);
+        $sut->setRecordDuration(826);
         $sut->setActivityAmount(13);
 
         self::assertEquals(13, $sut->getActivityAmount());

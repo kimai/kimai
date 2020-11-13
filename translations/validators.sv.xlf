@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="This value is not a valid role.">
                 <source>This value is not a valid role.</source>
-                <target state="translated">Detta värde är inte en giltig roll.</target>
+                <target state="translated">Detta värdet är inte en giltig roll.</target>
             </trans-unit>
             <trans-unit id="End date must not be earlier then start date.">
                 <source>End date must not be earlier then start date.</source>
@@ -12,7 +12,11 @@
             </trans-unit>
             <trans-unit id="The begin date cannot be in the future.">
                 <source>The begin date cannot be in the future.</source>
-                <target state="translated">Slutdatumet får inte vara tidigare än startdatumet.</target>
+                <target state="translated">Startdatumet får inte vara i framtiden.</target>
+            </trans-unit>
+            <trans-unit id="You must select at least one user or team.">
+                <source>You must select at least one user or team.</source>
+                <target state="translated">Du måste välja minst en anändare eller arbetslag</target>
             </trans-unit>
         </body>
     </file>

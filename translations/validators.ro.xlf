@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ro" datatype="plaintext" original="validators.en.xlf">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="This value should be false.">
+        <source>This value should be false.</source>
+        <target>Această valoare ar trebui să fie falsă (false).</target>
+      </trans-unit>
+      <trans-unit id="This value should be true.">
+        <source>This value should be true.</source>
+        <target>Această valoare ar trebui să fie adevărată (true).</target>
+      </trans-unit>
+      <trans-unit id="This value should be of type {{ type }}.">
+        <source>This value should be of type {{ type }}.</source>
+        <target>Această valoare ar trebui să fie de tipul {{ type }}.</target>
+      </trans-unit>
+      <trans-unit id="This value should be blank.">
+        <source>This value should be blank.</source>
+        <target>Această valoare ar trebui sa fie goală.</target>
+      </trans-unit>
+      <trans-unit id="The value you selected is not a valid choice.">
+        <source>The value you selected is not a valid choice.</source>
+        <target>Valoarea selectată nu este o opțiune validă.</target>
+      </trans-unit>
+      <trans-unit id="You must select at least {{ limit }} choice.|You must select at least {{ limit }} choices.">
+        <source>You must select at least {{ limit }} choice.|You must select at least {{ limit }} choices.</source>
+        <target>Trebuie să selectați cel puțin {{ limit }} opțiune.|Trebuie să selectați cel puțin {{ limit }} opțiuni.|Trebuie să selectați cel puțin {{ limit }} de opțiuni</target>
+      </trans-unit>
+      <trans-unit id="You must select at most {{ limit }} choice.|You must select at most {{ limit }} choices.">
+        <source>You must select at most {{ limit }} choice.|You must select at most {{ limit }} choices.</source>
+        <target>Trebuie să selectați cel mult {{ limit }} opțiune.|Trebuie să selectați cel mult {{ limit }} opțiuni.|Trebuie să selectați cel mult {{ limit }} de opțiuni.</target>
+      </trans-unit>
+      <trans-unit id="One or more of the given values is invalid.">
+        <source>One or more of the given values is invalid.</source>
+        <target>Una sau mai multe dintre valorile furnizate sunt invalide.</target>
+      </trans-unit>
+      <trans-unit id="This field was not expected.">
+        <source>This field was not expected.</source>
+        <target>Acest câmp nu trebuia să fie aici.</target>
+      </trans-unit>
+      <trans-unit id="This field is missing.">
+        <source>This field is missing.</source>
+        <target>Acest câmp lipsește.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid date.">
+        <source>This value is not a valid date.</source>
+        <target>Această valoare nu reprezintă o dată validă.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid datetime.">
+        <source>This value is not a valid datetime.</source>
+        <target>Această valoare nu reprezintă o dată și oră validă.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid email address.">
+        <source>This value is not a valid email address.</source>
+        <target>Această valoare nu reprezintă o adresă de e-mail validă.</target>
+      </trans-unit>
+      <trans-unit id="The file could not be found.">
+        <source>The file could not be found.</source>
+        <target>Fișierul nu a putut fi găsit.</target>
+      </trans-unit>
+      <trans-unit id="The file is not readable.">
+        <source>The file is not readable.</source>
+        <target>Fișierul nu poate fi citit.</target>
+      </trans-unit>
+      <trans-unit id="The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.">
+        <source>The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.</source>
+        <target>Fișierul este prea mare ({{ size }} {{ suffix }}). Dimensiunea maximă permisă este {{ limit }} {{ suffix }}.</target>
+      </trans-unit>
+      <trans-unit id="The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.">
+        <source>The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.</source>
+        <target>Tipul fișierului este invalid ({{ type }}). Tipurile permise de fișiere sunt ({{ types }}).</target>
+      </trans-unit>
+      <trans-unit id="This value should be {{ limit }} or less.">
+        <source>This value should be {{ limit }} or less.</source>
+        <target>Această valoare ar trebui să fie cel mult {{ limit }}.</target>
+      </trans-unit>
+      <trans-unit id="This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.">
+        <source>This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.</source>
+        <target>Această valoare este prea lungă. Ar trebui să aibă maxim {{ limit }} caracter.|Această valoare este prea lungă. Ar trebui să aibă maxim {{ limit }} caractere.|Această valoare este prea lungă. Ar trebui să aibă maxim {{ limit }} de caractere.</target>
+      </trans-unit>
+      <trans-unit id="This value should be {{ limit }} or more.">
+        <source>This value should be {{ limit }} or more.</source>
+        <target>Această valoare ar trebui să fie cel puțin {{ limit }}.</target>
+      </trans-unit>
+      <trans-unit id="This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.">
+        <source>This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.</source>
+        <target>Această valoare este prea scurtă. Ar trebui să aibă minim {{ limit }} caracter.|Această valoare este prea scurtă. Ar trebui să aibă minim {{ limit }} caractere.|Această valoare este prea scurtă. Ar trebui să aibă minim {{ limit }} de caractere.</target>
+      </trans-unit>
+      <trans-unit id="This value should not be blank.">
+        <source>This value should not be blank.</source>
+        <target>Această valoare nu ar trebui să fie goală.</target>
+      </trans-unit>
+      <trans-unit id="This value should not be null.">
+        <source>This value should not be null.</source>
+        <target>Această valoare nu ar trebui să fie nulă (null).</target>
+      </trans-unit>
+      <trans-unit id="This value should be null.">
+        <source>This value should be null.</source>
+        <target>Această valoare ar trebui să fie nulă (null).</target>
+      </trans-unit>
+      <trans-unit id="This value is not valid.">
+        <source>This value is not valid.</source>
+        <target>Această valoare nu este validă.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid time.">
+        <source>This value is not a valid time.</source>
+        <target>Această valoare nu reprezintă o oră validă.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid URL.">
+        <source>This value is not a valid URL.</source>
+        <target>Această valoare nu reprezintă un URL (link) valid.</target>
+      </trans-unit>
+      <trans-unit id="The two values should be equal.">
+        <source>The two values should be equal.</source>
+        <target>Cele două valori ar trebui să fie egale.</target>
+      </trans-unit>
+      <trans-unit id="The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.">
+        <source>The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.</source>
+        <target>Fișierul este prea mare. Mărimea maximă permisă este {{ limit }} {{ suffix }}.</target>
+      </trans-unit>
+      <trans-unit id="The file is too large.">
+        <source>The file is too large.</source>
+        <target>Fișierul este prea mare.</target>
+      </trans-unit>
+      <trans-unit id="The file could not be uploaded.">
+        <source>The file could not be uploaded.</source>
+        <target>Fișierul nu a putut fi încărcat.</target>
+      </trans-unit>
+      <trans-unit id="This value should be a valid number.">
+        <source>This value should be a valid number.</source>
+        <target>Această valoare nu reprezintă un număr valid.</target>
+      </trans-unit>
+      <trans-unit id="This file is not a valid image.">
+        <source>This file is not a valid image.</source>
+        <target>Acest fișier nu este o imagine validă.</target>
+      </trans-unit>
+      <trans-unit id="This is not a valid IP address.">
+        <source>This is not a valid IP address.</source>
+        <target>Această valoare nu este o adresă IP validă.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid language.">
+        <source>This value is not a valid language.</source>
+        <target>Această valoare nu reprezintă o limbă corectă.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid locale.">
+        <source>This value is not a valid locale.</source>
+        <target>Această valoare nu reprezintă un dialect (o limbă) corect.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid country.">
+        <source>This value is not a valid country.</source>
+        <target>Această valoare nu este o țară validă.</target>
+      </trans-unit>
+      <trans-unit id="This value is already used.">
+        <source>This value is already used.</source>
+        <target>Această valoare este folosită deja.</target>
+      </trans-unit>
+      <trans-unit id="The size of the image could not be detected.">
+        <source>The size of the image could not be detected.</source>
+        <target>Mărimea imaginii nu a putut fi detectată.</target>
+      </trans-unit>
+      <trans-unit id="The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.">
+        <source>The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.</source>
+        <target>Lățimea imaginii este prea mare ({{ width }}px). Lățimea maximă permisă este de {{ max_width }}px.</target>
+      </trans-unit>
+      <trans-unit id="The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.">
+        <source>The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.</source>
+        <target>Lățimea imaginii este prea mică ({{ width }}px). Lățimea minimă permisă este de {{ min_width }}px.</target>
+      </trans-unit>
+      <trans-unit id="The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.">
+        <source>The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.</source>
+        <target>Înălțimea imaginii este prea mare ({{ height }}px). Înălțimea maximă permisă este de {{ max_height }}px.</target>
+      </trans-unit>
+      <trans-unit id="The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.">
+        <source>The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.</source>
+        <target>Înălțimea imaginii este prea mică ({{ height }}px). Înălțimea minimă permisă este de {{ min_height }}px.</target>
+      </trans-unit>
+      <trans-unit id="This value should be the user's current password.">
+        <source>This value should be the user's current password.</source>
+        <target>Această valoare trebuie să fie parola curentă a utilizatorului.</target>
+      </trans-unit>
+      <trans-unit id="This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }} characters.">
+        <source>This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }} characters.</source>
+        <target>Această valoare trebuie să conțină exact {{ limit }} caracter.|Această valoare trebuie să conțină exact {{ limit }} caractere.|Această valoare trebuie să conțină exact {{ limit }} de caractere.</target>
+      </trans-unit>
+      <trans-unit id="The file was only partially uploaded.">
+        <source>The file was only partially uploaded.</source>
+        <target>Fișierul a fost încărcat parțial.</target>
+      </trans-unit>
+      <trans-unit id="No file was uploaded.">
+        <source>No file was uploaded.</source>
+        <target>Nu a fost încărcat nici un fișier.</target>
+      </trans-unit>
+      <trans-unit id="No temporary folder was configured in php.ini.">
+        <source>No temporary folder was configured in php.ini.</source>
+        <target>Nu este configurat nici un director temporar in php.ini.</target>
+      </trans-unit>
+      <trans-unit id="Cannot write temporary file to disk.">
+        <source>Cannot write temporary file to disk.</source>
+        <target>Nu a fost posibilă scrierea fișierului temporar pe disk.</target>
+      </trans-unit>
+      <trans-unit id="A PHP extension caused the upload to fail.">
+        <source>A PHP extension caused the upload to fail.</source>
+        <target>O extensie PHP a prevenit încărcarea cu succes a fișierului.</target>
+      </trans-unit>
+      <trans-unit id="This collection should contain {{ limit }} element or more.|This collection should contain {{ limit }} elements or more.">
+        <source>This collection should contain {{ limit }} element or more.|This collection should contain {{ limit }} elements or more.</source>
+        <target>Această colecție trebuie să conțină cel puțin {{ limit }} element.|Această colecție trebuie să conțină cel puțin {{ limit }} elemente.|Această colecție trebuie să conțină cel puțin {{ limit }} de elemente.</target>
+      </trans-unit>
+      <trans-unit id="This collection should contain {{ limit }} element or less.|This collection should contain {{ limit }} elements or less.">
+        <source>This collection should contain {{ limit }} element or less.|This collection should contain {{ limit }} elements or less.</source>
+        <target>Această colecție trebuie să conțină cel mult {{ limit }} element.|Această colecție trebuie să conțină cel mult {{ limit }} elemente.|Această colecție trebuie să conțină cel mult {{ limit }} de elemente.</target>
+      </trans-unit>
+      <trans-unit id="This collection should contain exactly {{ limit }} element.|This collection should contain exactly {{ limit }} elements.">
+        <source>This collection should contain exactly {{ limit }} element.|This collection should contain exactly {{ limit }} elements.</source>
+        <target>Această colecție trebuie să conțină {{ limit }} element.|Această colecție trebuie să conțină {{ limit }} elemente.|Această colecție trebuie să conțină {{ limit }} de elemente.</target>
+      </trans-unit>
+      <trans-unit id="Invalid card number.">
+        <source>Invalid card number.</source>
+        <target>Numărul card invalid.</target>
+      </trans-unit>
+      <trans-unit id="Unsupported card type or invalid card number.">
+        <source>Unsupported card type or invalid card number.</source>
+        <target>Tipul sau numărul cardului nu sunt valide.</target>
+      </trans-unit>
+      <trans-unit id="This is not a valid International Bank Account Number (IBAN).">
+        <source>This is not a valid International Bank Account Number (IBAN).</source>
+        <target>Acesta nu este un cod IBAN (International Bank Account Number) valid.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid ISBN-10.">
+        <source>This value is not a valid ISBN-10.</source>
+        <target>Această valoare nu este un cod ISBN-10 valid.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid ISBN-13.">
+        <source>This value is not a valid ISBN-13.</source>
+        <target>Această valoare nu este un cod ISBN-13 valid.</target>
+      </trans-unit>
+      <trans-unit id="This value is neither a valid ISBN-10 nor a valid ISBN-13.">
+        <source>This value is neither a valid ISBN-10 nor a valid ISBN-13.</source>
+        <target>Această valoare nu este un cod ISBN-10 sau ISBN-13 valid.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid ISSN.">
+        <source>This value is not a valid ISSN.</source>
+        <target>Această valoare nu este un cod ISSN valid.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid currency.">
+        <source>This value is not a valid currency.</source>
+        <target>Această valoare nu este o monedă validă.</target>
+      </trans-unit>
+      <trans-unit id="This value should be equal to {{ compared_value }}.">
+        <source>This value should be equal to {{ compared_value }}.</source>
+        <target>Această valoare trebuie să fie egală cu {{ compared_value }}.</target>
+      </trans-unit>
+      <trans-unit id="This value should be greater than {{ compared_value }}.">
+        <source>This value should be greater than {{ compared_value }}.</source>
+        <target>Această valoare trebuie să fie mai mare de {{ compared_value }}.</target>
+      </trans-unit>
+      <trans-unit id="This value should be greater than or equal to {{ compared_value }}.">
+        <source>This value should be greater than or equal to {{ compared_value }}.</source>
+        <target>Această valoare trebuie să fie mai mare sau egală cu {{ compared_value }}.</target>
+      </trans-unit>
+      <trans-unit id="This value should be identical to {{ compared_value_type }} {{ compared_value }}.">
+        <source>This value should be identical to {{ compared_value_type }} {{ compared_value }}.</source>
+        <target>Această valoare trebuie identică cu {{ compared_value_type }} {{ compared_value }}.</target>
+      </trans-unit>
+      <trans-unit id="This value should be less than {{ compared_value }}.">
+        <source>This value should be less than {{ compared_value }}.</source>
+        <target>Această valoare trebuie să fie mai mică de {{ compared_value }}.</target>
+      </trans-unit>
+      <trans-unit id="This value should be less than or equal to {{ compared_value }}.">
+        <source>This value should be less than or equal to {{ compared_value }}.</source>
+        <target>Această valoare trebuie să fie mai mică sau egală cu {{ compared_value }}.</target>
+      </trans-unit>
+      <trans-unit id="This value should not be equal to {{ compared_value }}.">
+        <source>This value should not be equal to {{ compared_value }}.</source>
+        <target>Această valoare nu trebuie să fie egală cu {{ compared_value }}.</target>
+      </trans-unit>
+      <trans-unit id="This value should not be identical to {{ compared_value_type }} {{ compared_value }}.">
+        <source>This value should not be identical to {{ compared_value_type }} {{ compared_value }}.</source>
+        <target>Această valoare nu trebuie să fie identică cu {{ compared_value_type }} {{ compared_value }}.</target>
+      </trans-unit>
+      <trans-unit id="The image ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.">
+        <source>The image ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.</source>
+        <target>Raportul imaginii este prea mare ({{ ratio }}). Raportul maxim permis este {{ max_ratio }}.</target>
+      </trans-unit>
+      <trans-unit id="The image ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.">
+        <source>The image ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.</source>
+        <target>Raportul imaginii este prea mic ({{ ratio }}). Raportul minim permis este {{ min_ratio }}.</target>
+      </trans-unit>
+      <trans-unit id="The image is square ({{ width }}x{{ height }}px). Square images are not allowed.">
+        <source>The image is square ({{ width }}x{{ height }}px). Square images are not allowed.</source>
+        <target>Imaginea este un pătrat ({{ width }}x{{ height }}px). Imaginile pătrat nu sunt permise.</target>
+      </trans-unit>
+      <trans-unit id="The image is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented images are not allowed.">
+        <source>The image is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented images are not allowed.</source>
+        <target>Imaginea are orientarea peisaj ({{ width }}x{{ height }}px). Imaginile cu orientare peisaj nu sunt permise.</target>
+      </trans-unit>
+      <trans-unit id="The image is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented images are not allowed.">
+        <source>The image is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented images are not allowed.</source>
+        <target>Imaginea are orientarea portret ({{ width }}x{{ height }}px). Imaginile cu orientare portret nu sunt permise.</target>
+      </trans-unit>
+      <trans-unit id="An empty file is not allowed.">
+        <source>An empty file is not allowed.</source>
+        <target>Nu este permisă folosirea unui fișier gol.</target>
+      </trans-unit>
+      <trans-unit id="The host could not be resolved.">
+        <source>The host could not be resolved.</source>
+        <target>Numele host nu a putut fi convertit într-o adresă IP.</target>
+      </trans-unit>
+      <trans-unit id="This value does not match the expected {{ charset }} charset.">
+        <source>This value does not match the expected {{ charset }} charset.</source>
+        <target>Această valoare nu corespunde setului de caractere {{ charset }} așteptat.</target>
+      </trans-unit>
+      <trans-unit id="This is not a valid Business Identifier Code (BIC).">
+        <source>This is not a valid Business Identifier Code (BIC).</source>
+        <target>Codul BIC (Business Identifier Code) nu este valid.</target>
+      </trans-unit>
+      <trans-unit id="Error">
+        <source>Error</source>
+        <target>Eroare</target>
+      </trans-unit>
+      <trans-unit id="This is not a valid UUID.">
+        <source>This is not a valid UUID.</source>
+        <target>Identificatorul universal unic (UUID) nu este valid.</target>
+      </trans-unit>
+      <trans-unit id="This value should be a multiple of {{ compared_value }}.">
+        <source>This value should be a multiple of {{ compared_value }}.</source>
+        <target>Această valoare trebuie să fie un multiplu de {{ compared_value }}.</target>
+      </trans-unit>
+      <trans-unit id="This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.">
+        <source>This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.</source>
+        <target>Codul BIC (Business Identifier Code) nu este asociat cu codul IBAN {{ iban }}.</target>
+      </trans-unit>
+      <trans-unit id="This value should be valid JSON.">
+        <source>This value should be valid JSON.</source>
+        <target>Această valoare trebuie să fie un JSON valid.</target>
+      </trans-unit>
+      <trans-unit id="This form should not contain extra fields.">
+        <source>This form should not contain extra fields.</source>
+        <target>Aceast formular nu ar trebui să conțină câmpuri suplimentare.</target>
+      </trans-unit>
+      <trans-unit id="The uploaded file was too large. Please try to upload a smaller file.">
+        <source>The uploaded file was too large. Please try to upload a smaller file.</source>
+        <target>Fișierul încărcat a fost prea mare. Vă rugăm sa încărcați un fișier mai mic.</target>
+      </trans-unit>
+      <trans-unit id="The CSRF token is invalid. Please try to resubmit the form.">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target>Token-ul CSRF este invalid. Vă rugăm să trimiteți formularul incă o dată.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid role.">
+        <source>This value is not a valid role.</source>
+        <target>Această valoare nu este un rol valid.</target>
+      </trans-unit>
+      <trans-unit id="End date must not be earlier then start date.">
+        <source>End date must not be earlier then start date.</source>
+        <target>Data de încheiere nu trebuie să fie anterioară datei de început.</target>
+      </trans-unit>
+      <trans-unit id="The begin date cannot be in the future.">
+        <source>The begin date cannot be in the future.</source>
+        <target>Data de început nu poate fi în viitor.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

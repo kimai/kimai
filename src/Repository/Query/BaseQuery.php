@@ -193,7 +193,7 @@ class BaseQuery
      */
     public function setOrder($order)
     {
-        if (in_array($order, [self::ORDER_ASC, self::ORDER_DESC])) {
+        if (\in_array($order, [self::ORDER_ASC, self::ORDER_DESC])) {
             $this->order = $order;
         }
 
@@ -264,7 +264,7 @@ class BaseQuery
     {
         foreach ($errors as $error) {
             $key = $error->getOrigin()->getName();
-            if (array_key_exists($key, $this->defaults)) {
+            if (\array_key_exists($key, $this->defaults)) {
                 $this->set($key, $this->defaults[$key]);
             }
         }

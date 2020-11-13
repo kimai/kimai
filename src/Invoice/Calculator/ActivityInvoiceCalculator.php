@@ -21,19 +21,18 @@ class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements 
     protected function calculateSumIdentifier(InvoiceItemInterface $invoiceItem): string
     {
         if (null === $invoiceItem->getActivity()) {
-            throw new \Exception('Cannot work with invoice items that do not have an activity');
-        }
-
-        if (null === $invoiceItem->getActivity()->getId()) {
-            throw new \Exception('Cannot handle un-persisted activities');
+            return '__NULL__';
         }
 
         return (string) $invoiceItem->getActivity()->getId();
     }
 
-    protected function mergeSumTimesheet(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
+    protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
     {
-        $invoiceItem->setActivity($entry->getActivity());
+        if (null === $entry->getActivity()) {
+            return;
+        }
+
         $invoiceItem->setDescription($entry->getActivity()->getName());
     }
 

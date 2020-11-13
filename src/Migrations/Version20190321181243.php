@@ -38,6 +38,6 @@ final class Version20190321181243 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DROP TABLE kimai2_configuration');
+        $schema->dropTable('kimai2_configuration');
     }
 }
