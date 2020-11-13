@@ -1,5 +1,3 @@
-# TODO upgrade to 2.8
-# https://github.com/FriendsOfSymfony/FOSRestBundle/releases/tag/2.8.0
 fos_rest:
     param_fetcher_listener:
         enabled: true
