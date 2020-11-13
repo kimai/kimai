@@ -266,9 +266,17 @@ final class TimesheetService
         }
     }
 
+    /**
+     * Makes sure, that the timesheet record has the timezone of the user.
+     *
+     * This fixes #1442 and prevents a wrong time if a teamlead edits the
+     * timesheet for an employee living in another timezone.
+     *
+     * @param Timesheet $timesheet
+     */
     private function fixTimezone(Timesheet $timesheet)
     {
-        if ($timesheet->getTimezone() !== $timesheet->getUser()->getTimezone()) {
+        if (null !== ($timezone = $timesheet->getTimezone()) && $timezone !== $timesheet->getUser()->getTimezone()) {
             $timesheet->setTimezone($timesheet->getUser()->getTimezone());
         }
     }

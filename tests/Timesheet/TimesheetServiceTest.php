@@ -11,6 +11,7 @@ namespace App\Tests\Timesheet;
 
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Event\TimesheetCreatePostEvent;
 use App\Event\TimesheetCreatePreEvent;
 use App\Event\TimesheetDeleteMultiplePreEvent;
@@ -136,6 +137,50 @@ class TimesheetServiceTest extends TestCase
         $sut = $this->getSut($authorizationChecker, null, null, $repository);
 
         $sut->saveNewTimesheet($newTimesheet);
+    }
+
+    public function testSaveNewTimesheetFixesTimezone()
+    {
+        $user = new User();
+        $user->setTimezone('Europe/Paris');
+
+        $begin = new \DateTime('now', new \DateTimeZone('Africa/Casablanca'));
+        $timesheet = new Timesheet();
+
+        $timesheet->setBegin($begin);
+        self::assertEquals('Africa/Casablanca', $timesheet->getTimezone());
+
+        $timesheet->setUser($user);
+        self::assertEquals('Africa/Casablanca', $timesheet->getTimezone());
+
+        $authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
+        $authorizationChecker->expects($this->once())->method('isGranted')->willReturn(true);
+        $sut = $this->getSut($authorizationChecker);
+
+        $sut->saveNewTimesheet($timesheet);
+
+        self::assertEquals('Europe/Paris', $timesheet->getTimezone());
+    }
+
+    public function testUpdateTimesheetFixesTimezone()
+    {
+        $user = new User();
+        $user->setTimezone('Europe/Paris');
+
+        $begin = new \DateTime('now', new \DateTimeZone('Africa/Casablanca'));
+        $timesheet = new Timesheet();
+
+        $timesheet->setBegin($begin);
+        self::assertEquals('Africa/Casablanca', $timesheet->getTimezone());
+
+        $timesheet->setUser($user);
+        self::assertEquals('Africa/Casablanca', $timesheet->getTimezone());
+
+        $sut = $this->getSut();
+
+        $sut->updateTimesheet($timesheet);
+
+        self::assertEquals('Europe/Paris', $timesheet->getTimezone());
     }
 
     public function testCannotRestartedPersistedTimesheet()
