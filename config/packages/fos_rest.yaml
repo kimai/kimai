@@ -19,25 +19,17 @@ fos_rest:
     exception:
         enabled: true
         map_exception_codes: true
-        # --------------------------
+        serializer_error_renderer: true
         serialize_exceptions: false
-        # https://github.com/FriendsOfSymfony/FOSRestBundle/issues/2200#issuecomment-629150462
-        # https://github.com/FriendsOfSymfony/FOSRestBundle/issues/2224
-        #exception_controller: 'fos_rest.exception.controller:showAction'
-        # TODO deprecated with 2.8
-        # --------------------------
+        exception_listener: false
         codes:
-            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
-#            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
-            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': 400
+            'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': 400
             'App\Validator\ValidationFailedException': 400
             'Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException': 401
-            'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': 400
-        messages:
-            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
-            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': true
-            'Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException': true
-            'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': true
+            'Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException': 403
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': 404
+            'App\API\NotFoundException': 404
     body_listener:
         enabled: true
         decoders:
