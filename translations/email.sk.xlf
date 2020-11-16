@@ -4,43 +4,43 @@
     <body>
       <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target></target>
+        <target>Pokiaľ tlačidlo nefunguje, prosím skopírujte &amp; vložte náslodovnú web adresu do Vášho prehliadača: %url%</target>
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target></target>
+        <target>Toto je automaticky generovaný email. Prosím neodpovedajte na neho, adresa nebude prečítaná.</target>
       </trans-unit>
       <trans-unit id="registration.subject">
         <source>registration.subject</source>
-        <target></target>
+        <target>Aktivuje Vaše konto</target>
       </trans-unit>
       <trans-unit id="registration.title">
         <source>registration.title</source>
-        <target></target>
+        <target>Vitajte %username%</target>
       </trans-unit>
       <trans-unit id="registration.button">
         <source>registration.button</source>
-        <target></target>
+        <target>Aktivujte Váš prístup</target>
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target></target>
+        <target>Prihlásili ste sa do Kimai sledovanie času s emailom %email%. Teraz si musíte Váš účet aktivovať v priebeh niekoľkých hodín predtým než vyprší platnosť linku.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
-        <target></target>
+        <target>Resetujte si heslo</target>
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target></target>
+        <target>To sa môže stať...</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
-        <target></target>
+        <target>Resetovať heslo</target>
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target></target>
+        <target>...zabudli ste Vaše heslo? Bez obáv: Kimai Vám pomôže vytvoriť nové:</target>
       </trans-unit>
     </body>
   </file>
