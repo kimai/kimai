@@ -81,6 +81,22 @@
         <source>details</source>
         <target>Detalii</target>
       </trans-unit>
+      <trans-unit id="invoice.paid">
+        <source>invoice.paid</source>
+        <target>Factură achitată</target>
+      </trans-unit>
+      <trans-unit id="invoice.pending">
+        <source>invoice.pending</source>
+        <target>Se așteaptă plata</target>
+      </trans-unit>
+      <trans-unit id="download">
+        <source>download</source>
+        <target>Descarcă</target>
+      </trans-unit>
+      <trans-unit id="create-timesheet-multiuser">
+        <source>create-timesheet-multiuser</source>
+        <target>Pentru mai mulți utilizatori</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
