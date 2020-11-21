@@ -913,6 +913,30 @@
         <source>admin_entity.delete_confirm</source>
         <target>Эти данные будут удалены! Вы можете выбрать запись, в которую будут перенесены все данные:</target>
       </trans-unit>
+      <trans-unit id="invoice.filter">
+        <source>invoice.filter</source>
+        <target>Фильтровать данные счетов</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.daily_stats">
+        <source>label.timesheet.daily_stats</source>
+        <target>Показать дневную статистику в таблице</target>
+      </trans-unit>
+      <trans-unit id="label.team">
+        <source>label.team</source>
+        <target>Команда</target>
+      </trans-unit>
+      <trans-unit id="menu.doctor">
+        <source>menu.doctor</source>
+        <target>Доктор</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_team">
+        <source>menu.admin_team</source>
+        <target>Команды</target>
+      </trans-unit>
+      <trans-unit id="update_multiple">
+        <source>update_multiple</source>
+        <target>%action% %count% записи(ей)?</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
