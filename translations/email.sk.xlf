@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="registration.subject">
         <source>registration.subject</source>
-        <target>Aktivuje Vaše konto</target>
+        <target>Aktivujte Vaše konto</target>
       </trans-unit>
       <trans-unit id="registration.title">
         <source>registration.title</source>
