@@ -222,6 +222,10 @@
         <source>label.timesheet.rules.lockdown_period_end</source>
         <target>Конец периода блокировки (PHP относительная дата на данный момент)</target>
       </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target>Зафиксировать период старта (Относительная дата PHP до настоящего времени)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
