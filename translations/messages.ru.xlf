@@ -1103,7 +1103,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>сборы пока еще не настроены</target>
+        <target>сборы не были настроены.</target>
       </trans-unit>
     </body>
   </file>
