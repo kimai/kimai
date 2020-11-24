@@ -171,11 +171,11 @@
       </trans-unit>
       <trans-unit id="label.hourlyRate">
         <source>label.hourlyRate</source>
-        <target>Почасовая заработная плата</target>
+        <target>Почасовая оплата</target>
       </trans-unit>
       <trans-unit id="label.hourly_rate">
         <source>label.hourly_rate</source>
-        <target>Почасовая заработная плата</target>
+        <target>Почасовая оплата</target>
       </trans-unit>
       <trans-unit id="label.skin">
         <source>label.skin</source>
@@ -936,6 +936,174 @@
       <trans-unit id="update_multiple">
         <source>update_multiple</source>
         <target>%action% %count% записи(ей)?</target>
+      </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>Поля перед их обновлением должны быть сначала активированы нажатием на соответствующий флажок.</target>
+      </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>Дополнительные поля</target>
+      </trans-unit>
+      <trans-unit id="label.globalsOnly">
+        <source>label.globalsOnly</source>
+        <target>только глобальные</target>
+      </trans-unit>
+      <trans-unit id="export.mark_all">
+        <source>export.mark_all</source>
+        <target>Отметить все показанные записи как очищенные?</target>
+      </trans-unit>
+      <trans-unit id="export.clear_all">
+        <source>export.clear_all</source>
+        <target>Отметить все показанные записи как открытые?</target>
+      </trans-unit>
+      <trans-unit id="entryState.not_exported">
+        <source>entryState.not_exported</source>
+        <target>Открыто</target>
+      </trans-unit>
+      <trans-unit id="entryState.exported">
+        <source>entryState.exported</source>
+        <target>Очищенно</target>
+      </trans-unit>
+      <trans-unit id="label.exported">
+        <source>label.exported</source>
+        <target>Экспортировано</target>
+      </trans-unit>
+      <trans-unit id="recent.activities">
+        <source>recent.activities</source>
+        <target>Перезапустить один из последних видов деятельности</target>
+      </trans-unit>
+      <trans-unit id="active.entries">
+        <source>active.entries</source>
+        <target>Ваши измерения активного времени</target>
+      </trans-unit>
+      <trans-unit id="export.full_list">
+        <source>export.full_list</source>
+        <target>Полный перечень</target>
+      </trans-unit>
+      <trans-unit id="export.subtitle">
+        <source>export.subtitle</source>
+        <target>Экспортировать данные табеля учёта рабочего времени в различные форматы</target>
+      </trans-unit>
+      <trans-unit id="export.document_title">
+        <source>export.document_title</source>
+        <target>Экспортировать табели учета рабочего времени</target>
+      </trans-unit>
+      <trans-unit id="export.filter">
+        <source>export.filter</source>
+        <target>Фильтровать данные для экспорта</target>
+      </trans-unit>
+      <trans-unit id="label.decimalDuration">
+        <source>label.decimalDuration</source>
+        <target>Длительность отображения в виде десятичного числа</target>
+      </trans-unit>
+      <trans-unit id="label.invoice_bank_account">
+        <source>label.invoice_bank_account</source>
+        <target>Банковский счет</target>
+      </trans-unit>
+      <trans-unit id="label.invoice_tax_number">
+        <source>label.invoice_tax_number</source>
+        <target>VAT номер.:</target>
+      </trans-unit>
+      <trans-unit id="label.unit_price">
+        <source>label.unit_price</source>
+        <target>Удельная цена</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeYear">
+        <source>stats.workingTimeYear</source>
+        <target>Весь год %year%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeWeek">
+        <source>stats.workingTimeWeek</source>
+        <target>Календарная неделя %week%</target>
+      </trans-unit>
+      <trans-unit id="label.vat_id">
+        <source>label.vat_id</source>
+        <target>НДС-идентификационный номер</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.export_decimal">
+        <source>label.timesheet.export_decimal</source>
+        <target>Использовать десятичную продолжительность при экспорте</target>
+      </trans-unit>
+      <trans-unit id="label.login.initial_view">
+        <source>label.login.initial_view</source>
+        <target>Первоначальный вид после входа в систему</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.initial_view">
+        <source>label.calendar.initial_view</source>
+        <target>Первоначальный вид календаря</target>
+      </trans-unit>
+      <trans-unit id="profile.teams">
+        <source>profile.teams</source>
+        <target>Команды</target>
+      </trans-unit>
+      <trans-unit id="help.fixedRate">
+        <source>help.fixedRate</source>
+        <target>Каждая временная запись получает одно и то же значение, независимо от ее продолжительности</target>
+      </trans-unit>
+      <trans-unit id="label.fixedRate">
+        <source>label.fixedRate</source>
+        <target>фиксированная ставка</target>
+      </trans-unit>
+      <trans-unit id="label.daterange">
+        <source>label.daterange</source>
+        <target>Временной интервал</target>
+      </trans-unit>
+      <trans-unit id="label.my_team_projects">
+        <source>label.my_team_projects</source>
+        <target>Командные проекты&amp; бюджеты</target>
+      </trans-unit>
+      <trans-unit id="label.my_teams">
+        <source>label.my_teams</source>
+        <target>Мои команды</target>
+      </trans-unit>
+      <trans-unit id="label.billable">
+        <source>label.billable</source>
+        <target>Платный</target>
+      </trans-unit>
+      <trans-unit id="placeholder.type_message">
+        <source>placeholder.type_message</source>
+        <target>Ввести сообщение...</target>
+      </trans-unit>
+      <trans-unit id="label.teamlead">
+        <source>label.teamlead</source>
+        <target>руководство</target>
+      </trans-unit>
+      <trans-unit id="label.recalculate_rates">
+        <source>label.recalculate_rates</source>
+        <target>Пересчитать ставки</target>
+      </trans-unit>
+      <trans-unit id="help.rate_internal">
+        <source>help.rate_internal</source>
+        <target>внутренние затраты (если не указаны, используется обычная ставка)</target>
+      </trans-unit>
+      <trans-unit id="label.rate_internal">
+        <source>label.rate_internal</source>
+        <target>Внутренняя ставка</target>
+      </trans-unit>
+      <trans-unit id="help.rate">
+        <source>help.rate</source>
+        <target>Почасовая ставка, подлежащая оплате</target>
+      </trans-unit>
+      <trans-unit id="label.theme.layout">
+        <source>label.theme.layout</source>
+        <target>отображение: формат</target>
+      </trans-unit>
+      <trans-unit id="label.timeBudget">
+        <source>label.timeBudget</source>
+        <target>бюджет времени</target>
+      </trans-unit>
+      <trans-unit id="menu.reporting">
+        <source>menu.reporting</source>
+        <target>отчет</target>
+      </trans-unit>
+      <trans-unit id="rates.title">
+        <source>rates.title</source>
+        <target>сборы</target>
+      </trans-unit>
+      <trans-unit id="rates.empty">
+        <source>rates.empty</source>
+        <target>сборы пока еще не настроены</target>
       </trans-unit>
     </body>
   </file>
