@@ -1011,11 +1011,11 @@
       </trans-unit>
       <trans-unit id="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
-        <target>Весь год %year%</target>
+        <target>Полный год %year%</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target>Календарная неделя %week%</target>
+        <target>Неделя календаря %week%</target>
       </trans-unit>
       <trans-unit id="label.vat_id">
         <source>label.vat_id</source>
