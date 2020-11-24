@@ -154,6 +154,74 @@
         <source>first_weekday</source>
         <target>Первый день недели</target>
       </trans-unit>
+      <trans-unit id="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target>Формат номера счёта</target>
+      </trans-unit>
+      <trans-unit id="label.simple_form">
+        <source>label.simple_form</source>
+        <target>Простой поиск</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>Время запуска по умолчанию (не используется во всех режимах составления расписания)</target>
+      </trans-unit>
+      <trans-unit id="Floor">
+        <source>Floor</source>
+        <target>Округление к меньшему: начало, конец и продолжительность будут округлены к меньшему</target>
+      </trans-unit>
+      <trans-unit id="Ceil">
+        <source>Ceil</source>
+        <target>Округление к большему: начало, конец и продолжительность будут округлены к большему</target>
+      </trans-unit>
+      <trans-unit id="Default">
+        <source>Default</source>
+        <target>Стандартно: начало будет округлено к меньшему, конец и продолжительность к верхнему</target>
+      </trans-unit>
+      <trans-unit id="Closest">
+        <source>Closest</source>
+        <target>Ближайшее: математическое округление до ближайшего значения</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target>Дни недели, когда будет применяться округление</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target>Режим округления</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target>Округление длительности в минутах (0 = деактивировано)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>Округление времени окончания в минутах (0 = деактивировано)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target>Округление времени старта в минутах (0 = деактивировано)</target>
+      </trans-unit>
+      <trans-unit id="rounding">
+        <source>rounding</source>
+        <target>Округление времени</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target>Заголовок окна браузера</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>Длительность слота для просмотра в течение недели и дня (формат: чч:мм:сс)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target>Конец льготного периода блокировки (PHP относительная дата окончания периода блокировки)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target>Конец периода блокировки (PHP относительная дата на данный момент)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
