@@ -34,6 +34,10 @@
                 <source>weekly</source>
                 <target>Weekly: one entry per week (uses start date)</target>
             </trans-unit>
+            <trans-unit id="date-activity">
+                <source>date-activity</source>
+                <target>Date and Activity: one entry per activity and day (uses start date)</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
