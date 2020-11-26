@@ -69,6 +69,11 @@ class Kernel extends BaseKernel
     {
         return $this->getProjectDir() . '/var/log';
     }
+    
+    public function getProjectDir()
+    {
+        return dirname(__DIR__);
+    }
 
     protected function build(ContainerBuilder $container)
     {
