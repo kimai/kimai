@@ -906,6 +906,38 @@
         <source>upload</source>
         <target>Enviar</target>
       </trans-unit>
+      <trans-unit id="help.rate">
+        <source>help.rate</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="error.no_comments_found">
+        <source>error.no_comments_found</source>
+        <target>Não houve nenhum comentários postados ainda.</target>
+      </trans-unit>
+      <trans-unit id="menu.doctor">
+        <source>menu.doctor</source>
+        <target>Doutor</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_team">
+        <source>menu.admin_team</source>
+        <target>Times</target>
+      </trans-unit>
+      <trans-unit id="menu.reporting">
+        <source>menu.reporting</source>
+        <target>Reportando</target>
+      </trans-unit>
+      <trans-unit id="login_required">
+        <source>login_required</source>
+        <target>Permissão ausente. Redirecionar para o login?</target>
+      </trans-unit>
+      <trans-unit id="rates.title">
+        <source>rates.title</source>
+        <target>Taxas</target>
+      </trans-unit>
+      <trans-unit id="update_multiple">
+        <source>update_multiple</source>
+        <target>%action% %count% entradas?</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
