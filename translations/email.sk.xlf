@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="sk" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="button_copy_url_to_browser">
+        <source>button_copy_url_to_browser</source>
+        <target>Pokiaľ tlačidlo nefunguje, prosím skopírujte &amp; vložte náslodovnú web adresu do Vášho prehliadača: %url%</target>
+      </trans-unit>
+      <trans-unit id="automated_email_dont_answer">
+        <source>automated_email_dont_answer</source>
+        <target>Toto je automaticky generovaný email. Prosím neodpovedajte na neho, adresa nebude prečítaná.</target>
+      </trans-unit>
+      <trans-unit id="registration.subject">
+        <source>registration.subject</source>
+        <target>Aktivuje Vaše konto</target>
+      </trans-unit>
+      <trans-unit id="registration.title">
+        <source>registration.title</source>
+        <target>Vitajte %username%</target>
+      </trans-unit>
+      <trans-unit id="registration.button">
+        <source>registration.button</source>
+        <target>Aktivujte Váš prístup</target>
+      </trans-unit>
+      <trans-unit id="registration.intro">
+        <source>registration.intro</source>
+        <target>Prihlásili ste sa do Kimai sledovanie času s emailom %email%. Teraz si musíte Váš účet aktivovať v priebeh niekoľkých hodín predtým než vyprší platnosť linku.</target>
+      </trans-unit>
+      <trans-unit id="reset.subject">
+        <source>reset.subject</source>
+        <target>Resetujte si heslo</target>
+      </trans-unit>
+      <trans-unit id="reset.title">
+        <source>reset.title</source>
+        <target>To sa môže stať...</target>
+      </trans-unit>
+      <trans-unit id="reset.button">
+        <source>reset.button</source>
+        <target>Resetovať heslo</target>
+      </trans-unit>
+      <trans-unit id="reset.intro">
+        <source>reset.intro</source>
+        <target>...zabudli ste Vaše heslo? Bez obáv: Kimai Vám pomôže vytvoriť nové:</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
