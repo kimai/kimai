@@ -52,10 +52,13 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTest
         $project3 = $this->getMockBuilder(Project::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $project3->method('getId')->willReturn(3);
 
+        $timezone = new \DateTimeZone('Europe/Berlin');
+        $end = new \DateTime('now', $timezone);
+
         $timesheet = new Timesheet();
         $timesheet
-            ->setBegin(new DateTime('2018-11-29'))
-            ->setEnd(new DateTime())
+            ->setBegin(new DateTime('2018-11-26 12:00:00', $timezone))
+            ->setEnd(clone $end)
             ->setDuration(3600)
             ->setRate(293.27)
             ->setUser($user)
@@ -64,8 +67,8 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet2 = new Timesheet();
         $timesheet2
-            ->setBegin(new DateTime('2018-11-29'))
-            ->setEnd(new DateTime())
+            ->setBegin(new DateTime('2018-11-26 12:00:00', $timezone))
+            ->setEnd(clone $end)
             ->setDuration(400)
             ->setRate(84.75)
             ->setUser($user)
@@ -74,8 +77,8 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet3 = new Timesheet();
         $timesheet3
-            ->setBegin(new DateTime('2018-11-28'))
-            ->setEnd(new DateTime())
+            ->setBegin(new DateTime('2018-11-25 12:00:00', $timezone))
+            ->setEnd(clone $end)
             ->setDuration(1800)
             ->setRate(111.11)
             ->setUser($user)
@@ -84,8 +87,8 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet4 = new Timesheet();
         $timesheet4
-            ->setBegin(new DateTime())
-            ->setEnd(new DateTime('2018-11-28'))
+            ->setBegin(new DateTime('2018-11-25 12:00:00', $timezone))
+            ->setEnd(clone $end)
             ->setDuration(400)
             ->setRate(1947.99)
             ->setUser($user)
@@ -94,8 +97,8 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet5 = new Timesheet();
         $timesheet5
-            ->setBegin(new DateTime('2018-11-28'))
-            ->setEnd(new DateTime())
+            ->setBegin(new DateTime('2018-11-25 12:00:00', $timezone))
+            ->setEnd(clone $end)
             ->setDuration(400)
             ->setRate(84)
             ->setUser(new User())
@@ -125,8 +128,8 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $entries = $sut->getEntries();
         self::assertCount(2, $entries);
-        $this->assertEquals(573.13, $entries[0]->getRate());
-        $this->assertEquals(1947.99, $entries[1]->getRate());
+        $this->assertEquals(378.02, $entries[0]->getRate());
+        $this->assertEquals(2143.1, $entries[1]->getRate());
         self::assertEquals(2521.12, $entries[0]->getRate() + $entries[1]->getRate());
     }
 

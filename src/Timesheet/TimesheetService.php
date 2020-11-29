@@ -148,6 +148,7 @@ final class TimesheetService
         $this->repository->begin();
         try {
             $this->validateTimesheet($timesheet);
+            $this->fixTimezone($timesheet);
 
             $this->dispatcher->dispatch(new TimesheetCreatePreEvent($timesheet));
             $this->repository->save($timesheet);
@@ -186,6 +187,8 @@ final class TimesheetService
             $this->stopActiveEntries($timesheet);
         }
         */
+
+        $this->fixTimezone($timesheet);
 
         $this->dispatcher->dispatch(new TimesheetUpdatePreEvent($timesheet));
         $this->repository->save($timesheet);
@@ -260,6 +263,21 @@ final class TimesheetService
 
         if ($errors->count() > 0) {
             throw new ValidationFailedException($errors, 'Validation Failed');
+        }
+    }
+
+    /**
+     * Makes sure, that the timesheet record has the timezone of the user.
+     *
+     * This fixes #1442 and prevents a wrong time if a teamlead edits the
+     * timesheet for an employee living in another timezone.
+     *
+     * @param Timesheet $timesheet
+     */
+    private function fixTimezone(Timesheet $timesheet)
+    {
+        if (null !== ($timezone = $timesheet->getTimezone()) && $timezone !== $timesheet->getUser()->getTimezone()) {
+            $timesheet->setTimezone($timesheet->getUser()->getTimezone());
         }
     }
 
