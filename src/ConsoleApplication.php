@@ -11,9 +11,6 @@ namespace App;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
-/**
- * Overwritten base console application to display application name and version.
- */
 class ConsoleApplication extends Application
 {
     public function getName()
@@ -23,10 +20,6 @@ class ConsoleApplication extends Application
 
     public function getVersion()
     {
-        if (Constants::STATUS !== 'stable') {
-            return sprintf('%s (%s)', Constants::VERSION, Constants::STATUS);
-        }
-
         return Constants::VERSION;
     }
 }
