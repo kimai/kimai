@@ -102,6 +102,22 @@
         <source>theme</source>
         <target>Téma</target>
       </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target>Látható időtartam vége</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target>Látható időtartam kezdete</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target>Rendes munkaidő vége(ki lesz emelve)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target>Rendes munkaidő kezdete(ki lesz emelve)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
