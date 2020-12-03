@@ -209,6 +209,53 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertFalse($client->getResponse()->isSuccessful());
     }
 
+    public function testDeleteActionWithUserReplacementAndTimesheetEntries()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $em = $this->getEntityManager();
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $userNew = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $this->assertNotEquals($userNew->getId(), $user->getId());
+
+        $fixture = new TimesheetFixtures();
+        $fixture->setUser($user);
+        $fixture->setAmount(10);
+        $this->importFixture($fixture);
+
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(10, \count($timesheets));
+        foreach ($timesheets as $timesheet) {
+            $this->assertEquals($user->getId(), $timesheet->getUser()->getId());
+        }
+
+        $this->request($client, '/admin/user/' . $user->getId() . '/delete');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=form]')->form();
+        $this->assertStringEndsWith($this->createUrl('/admin/user/' . $user->getId() . '/delete'), $form->getUri());
+        $client->submit($form, [
+            'form' => [
+                'user' => $userNew->getId()
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/user/'));
+        $client->followRedirect();
+        $this->assertHasFlashDeleteSuccess($client);
+
+        $em->clear();
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(10, \count($timesheets));
+        foreach ($timesheets as $timesheet) {
+            $this->assertEquals($userNew->getId(), $timesheet->getUser()->getId());
+        }
+
+        $this->request($client, '/admin/user/' . $user->getId() . '/edit');
+        $this->assertFalse($client->getResponse()->isSuccessful());
+    }
+
     /**
      * @dataProvider getValidationTestData
      */
