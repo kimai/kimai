@@ -24,7 +24,7 @@
         "doctrine/doctrine-migrations-bundle": "^2.1",
         "doctrine/orm": "^2.7",
         "erusev/parsedown": "^1.6",
-        "friendsofsymfony/rest-bundle": "^3.0",
+        "friendsofsymfony/rest-bundle": "dev-php8 as 3.0.3",
         "gedmo/doctrine-extensions": "^2.4",
         "handcraftedinthealps/rest-routing-bundle": "^1.0",
         "hslavich/oneloginsaml-bundle": "^1.4",
@@ -98,8 +98,12 @@
         {
             "type": "artifact",
             "url": "var/packages/"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/xabbuh/FOSRestBundle"
         }
-    ],    
+    ],
     "config": {
         "platform": {
             "php": "7.2.9"
