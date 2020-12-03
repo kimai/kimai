@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f45119815d929649e22f1500b71a63fd",
+    "content-hash": "f26c242dbbf374ac330626fc09aa4c95",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1778,7 +1778,7 @@
             "version": "dev-php8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/xabbuh/FOSRestBundle.git",
+                "url": "https://github.com/xabbuh/FOSRestBundle",
                 "reference": "da8a7b050c633f0b189aae6c0c0b1634cca4207f"
             },
             "dist": {
@@ -1876,9 +1876,6 @@
             "keywords": [
                 "rest"
             ],
-            "support": {
-                "source": "https://github.com/xabbuh/FOSRestBundle/tree/php8"
-            },
             "time": "2020-12-02T15:28:54+00:00"
         },
         {

@@ -100,8 +100,9 @@
             "url": "var/packages/"
         },
         {
-            "type": "vcs",
-            "url": "https://github.com/xabbuh/FOSRestBundle"
+            "type": "github",
+            "url": "https://github.com/xabbuh/FOSRestBundle",
+            "no-api": true
         }
     ],
     "config": {
