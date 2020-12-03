@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": ">=7.2.9",
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-json": "*",
