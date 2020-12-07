@@ -30,6 +30,10 @@ class InvoiceItemTest extends TestCase
         self::assertNull($sut->getProject());
         self::assertIsArray($sut->getAdditionalFields());
         self::assertEmpty($sut->getAdditionalFields());
+        self::assertNull($sut->getAdditionalField('foo'));
+        self::assertEquals('bar', $sut->getAdditionalField('foo', 'bar'));
+        self::assertInstanceOf(InvoiceItem::class, $sut->addAdditionalField('foo', 'bar2'));
+        self::assertEquals('bar2', $sut->getAdditionalField('foo'));
         self::assertEquals(0, $sut->getAmount());
         self::assertNull($sut->getBegin());
         self::assertNull($sut->getActivity());

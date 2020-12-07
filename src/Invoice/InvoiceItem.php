@@ -88,6 +88,15 @@ final class InvoiceItem
         return $this->additionalFields;
     }
 
+    public function getAdditionalField(string $name, $default = null)
+    {
+        if (isset($this->additionalFields[$name])) {
+            return $this->additionalFields[$name];
+        }
+
+        return $default;
+    }
+
     public function getActivity(): ?Activity
     {
         return $this->activity;
