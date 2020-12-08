@@ -122,7 +122,7 @@ class TimesheetEditForm extends AbstractType
                 'required' => false,
                 'attr' => [
                     'placeholder' => '00:00',
-                    'pattern' => '[0-9]{2,3}:[0-9]{2}'
+                    'pattern' => '[0-9]{1,3}:[0-9]{2}'
                 ]
             ]);
         }
