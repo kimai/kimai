@@ -113,7 +113,8 @@ class TimesheetEditForm extends AbstractType
 
         if ($options['allow_duration']) {
             $this->addDuration($builder);
-        } elseif ($options['allow_end_datetime']) {
+        }
+        if ($options['allow_end_datetime']) {
             $this->addEnd($builder, $dateTimeOptions);
         }
 
@@ -202,12 +203,11 @@ class TimesheetEditForm extends AbstractType
                 /** @var Timesheet $data */
                 $data = $event->getData();
                 $duration = $data->getDuration();
-                $end = null;
-                if (null !== $duration) {
+                if (!empty($duration)) {
                     $end = clone $data->getBegin();
                     $end->modify('+ ' . $duration . 'seconds');
+                    $data->setEnd($end);
                 }
-                $data->setEnd($end);
             }
         );
     }
