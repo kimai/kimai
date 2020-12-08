@@ -12,7 +12,7 @@
     {% set options = {'class': 'alwaysVisible text-center'} %}
     {% if canEditPermissions and role.name not in system_roles|keys %}
         {% set widget %}
-        &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id}) }}" class="confirmation-link" data-question="confirm.delete">{{ widgets.icon('trash') }}</a>
+        &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id, 'token': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ widgets.icon('trash') }}</a>
         {% endset %}
         {% set options = options|merge({'html_after': widget}) %}
     {% endif %}
@@ -47,10 +47,10 @@
                                 {% if value %}
                                     {{ widgets.label('yes'|trans, 'warning') }}
                                 {% else %}
-                                    <a href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': '1'}) }}">{{ widgets.label('no'|trans, 'danger') }}</a>
+                                    <a class="togglePerm permOff" href="#" data-href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': '1', 'token': '__TOKEN__'}) }}">{{ widgets.label('no'|trans, 'danger') }}</a>
                                 {% endif %}
                             {% else %}
-                                <a href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': (value ? '0' : '1')}) }}">{{ widgets.label_boolean(value) }}</a>
+                                <a class="togglePerm {{ value ? 'permOn' : 'permOff' }}" href="#" data-href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': '__VALUE__', 'token': '__TOKEN__'}) }}">{{ widgets.label_boolean(value) }}</a>
                             {% endif %}
                         </td>
                     {% endfor %}
@@ -66,8 +66,44 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        let PERM_TOKEN = '{{ token }}';
         document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.userRoleUpdate');
+            jQuery('a.togglePerm').on('click', function(event) {
+                event.stopPropagation();
+                event.preventDefault();
+
+                let target = event.target;
+                if (!target.matches('a')) {
+                    target = target.parentNode;
+                }
+
+                let linkElement = jQuery(target);
+                let isActive = linkElement.hasClass('permOn');
+                let url = linkElement.data('href').replace(/__VALUE__/, isActive ? '0' : '1').replace(/__TOKEN__/, PERM_TOKEN);
+
+                jQuery.ajax({
+                    url: url,
+                    headers: {'Content-Type':'application/json'},
+                    method: 'POST',
+                    data: [], {# data doesn't matter, everything is in the URL #}
+                    dataType: 'json',
+                    success: function(result) {
+                        kimai.getPlugin('alert').success('action.update.success');
+                        linkElement.toggleClass('permOn').toggleClass('permOff');
+                        if (isActive) {
+                            linkElement.html('{{ widgets.label_boolean(false)|e('js') }}');
+                        } else {
+                            linkElement.html('{{ widgets.label_boolean(true)|e('js') }}');
+                        }
+                        PERM_TOKEN = result.token;
+                    },
+                    error: function(xhr, err) {
+                        kimai.getPlugin('alert').error('action.update.error');
+                    }
+                });
+
+                KimaiReloadPageWidget.create('kimai.userRoleUpdate');
+            });
         });
     </script>
 {% endblock %}
