@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+    - name: Community discussion
+      url: https://github.com/kevinpapst/kimai2/discussions
+      about: Forum for supoport and getting answer to your questions. Discuss anything that is neither a bug nor a request for a new feature here.
