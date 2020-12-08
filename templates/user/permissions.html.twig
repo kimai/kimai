@@ -78,6 +78,8 @@
                 }
 
                 let linkElement = jQuery(target);
+                linkElement.html('<i class="fas fa-spinner fa-pulse"></i>');
+
                 let isActive = linkElement.hasClass('permOn');
                 let url = linkElement.data('href').replace(/__VALUE__/, isActive ? '0' : '1').replace(/__TOKEN__/, PERM_TOKEN);
 
@@ -90,20 +92,25 @@
                     success: function(result) {
                         kimai.getPlugin('alert').success('action.update.success');
                         linkElement.toggleClass('permOn').toggleClass('permOff');
-                        if (isActive) {
-                            linkElement.html('{{ widgets.label_boolean(false)|e('js') }}');
-                        } else {
-                            linkElement.html('{{ widgets.label_boolean(true)|e('js') }}');
-                        }
+                        toggleLabel(linkElement, !isActive);
                         PERM_TOKEN = result.token;
                     },
                     error: function(xhr, err) {
                         kimai.getPlugin('alert').error('action.update.error');
+                        toggleLabel(linkElement, isActive);
                     }
                 });
 
                 KimaiReloadPageWidget.create('kimai.userRoleUpdate');
             });
         });
+
+        function toggleLabel(element, showTrue) {
+            if (showTrue) {
+                element.html('{{ widgets.label_boolean(true)|e('js') }}');
+            } else {
+                element.html('{{ widgets.label_boolean(false)|e('js') }}');
+            }
+        }
     </script>
 {% endblock %}

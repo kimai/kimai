@@ -241,13 +241,8 @@ final class PermissionController extends AbstractController
     public function savePermission(Role $role, string $name, bool $value, string $token, RolePermissionRepository $rolePermissionRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $token)) {
-            $this->flashUpdateException(new \Exception('Invalid CSRF token'));
-
-            return $this->redirectToRoute('admin_user_permissions');
+            throw new BadRequestHttpException('Invalid CSRF token');
         }
-
-        // make sure that the token can only be used once, so refresh it after successful submission
-        $newToken = $csrfTokenManager->refreshToken(self::TOKEN_NAME)->getValue();
 
         if (!$this->manager->isRegisteredPermission($name)) {
             throw $this->createNotFoundException('Unknown permission: ' . $name);
@@ -267,6 +262,10 @@ final class PermissionController extends AbstractController
             $permission->setAllowed((bool) $value);
 
             $rolePermissionRepository->saveRolePermission($permission);
+
+            // refreshToken instead of getToken for more security but worse UX
+            // fast clicking with slow response times would fail, as the token cannot be replaced fast enough
+            $newToken = $csrfTokenManager->getToken(self::TOKEN_NAME)->getValue();
 
             return $this->json(['token' => $newToken]);
         } catch (\Exception $ex) {
