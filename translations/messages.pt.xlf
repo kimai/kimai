@@ -54,11 +54,11 @@
             -->
       <trans-unit id="label.password">
         <source>label.password</source>
-        <target>Senha</target>
+        <target>Palavra-passe</target>
       </trans-unit>
       <trans-unit id="label.password_repeat">
         <source>label.password_repeat</source>
-        <target>Repita a Senha</target>
+        <target>Repita a palavra-passe</target>
       </trans-unit>
       <trans-unit id="label.logout">
         <source>label.logout</source>
@@ -70,11 +70,11 @@
       </trans-unit>
       <trans-unit id="label.api_token">
         <source>label.api_token</source>
-        <target>Senha API</target>
+        <target>Palavra-passe da API</target>
       </trans-unit>
       <trans-unit id="label.api_token_repeat">
         <source>label.api_token_repeat</source>
-        <target>Repita Senha da API</target>
+        <target>Repita a palavra-passe da API</target>
       </trans-unit>
       <!--
               Menu / Navbar items
@@ -366,7 +366,7 @@
       </trans-unit>
       <trans-unit id="profile.password">
         <source>profile.password</source>
-        <target>Senha</target>
+        <target>Palavra-passe</target>
       </trans-unit>
       <trans-unit id="profile.api-token">
         <source>profile.api-token</source>
@@ -618,7 +618,7 @@
       </trans-unit>
       <trans-unit id="stats.userActiveWeek">
         <source>stats.userActiveWeek</source>
-        <target>Usuários ativos nessa semana</target>
+        <target>Utilizadores ativos nessa semana</target>
       </trans-unit>
       <trans-unit id="stats.userActiveMonth">
         <source>stats.userActiveMonth</source>
