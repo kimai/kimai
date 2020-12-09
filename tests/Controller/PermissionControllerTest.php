@@ -12,6 +12,7 @@ namespace App\Tests\Controller;
 use App\DataFixtures\UserFixtures;
 use App\Entity\RolePermission;
 use App\Entity\User;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @group integration
@@ -82,7 +83,7 @@ class PermissionControllerTest extends ControllerBaseTest
 
     public function testDeleteRoleIsSecured()
     {
-        $this->assertUrlIsSecured('/admin/permissions/roles/1/delete');
+        $this->assertUrlIsSecured('/admin/permissions/roles/1/delete/sdfsdfsdfsd');
     }
 
     public function testDeleteRoleIsSecuredForRole()
@@ -123,7 +124,9 @@ class PermissionControllerTest extends ControllerBaseTest
         $user = $this->getUserByName(UserFixtures::USERNAME_USER);
         $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'TEST_ROLE', 'ROLE_USER'], $user->getRoles());
 
-        $this->request($client, '/admin/permissions/roles/1/delete');
+        /** @var CsrfToken $token */
+        $token = static::$kernel->getContainer()->get('security.csrf.token_manager')->getToken('user_role_permissions');
+        $this->request($client, '/admin/permissions/roles/1/delete/' . $token->getValue());
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
         $client->followRedirect();
 
@@ -138,7 +141,7 @@ class PermissionControllerTest extends ControllerBaseTest
 
     public function testSavePermissionIsSecured()
     {
-        $this->assertUrlIsSecured('/admin/permissions/roles/1/view_user/1');
+        $this->assertUrlIsSecured('/admin/permissions/roles/1/view_user/1/asdfasdf', 'POST');
     }
 
     public function testSavePermissionIsSecuredForRole()
@@ -157,15 +160,20 @@ class PermissionControllerTest extends ControllerBaseTest
             ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
+        $client->followRedirect();
 
         $em = $this->getEntityManager();
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
         $this->assertEquals(0, \count($rolePermissions));
 
         // create the permission
-        $this->request($client, '/admin/permissions/roles/1/view_user/1');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
-        $client->followRedirect();
+        $token = static::$kernel->getContainer()->get('security.csrf.token_manager')->getToken('user_role_permissions');
+        $this->request($client, '/admin/permissions/roles/1/view_user/1/' . $token->getValue(), 'POST');
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+        self::assertIsArray($result);
+        self::assertArrayHasKey('token', $result);
 
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
         $this->assertEquals(1, \count($rolePermissions));
@@ -180,9 +188,13 @@ class PermissionControllerTest extends ControllerBaseTest
         $em->clear();
 
         // update the permission
-        $this->request($client, '/admin/permissions/roles/1/view_user/0');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
-        $client->followRedirect();
+        $token = static::$kernel->getContainer()->get('security.csrf.token_manager')->getToken('user_role_permissions');
+        $this->request($client, '/admin/permissions/roles/1/view_user/0/' . $token->getValue(), 'POST');
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $result = json_decode($client->getResponse()->getContent(), true);
+        self::assertIsArray($result);
+        self::assertArrayHasKey('token', $result);
 
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
         $this->assertEquals(1, \count($rolePermissions));

@@ -25,7 +25,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * Controller used to manage user roles and role permissions.
@@ -35,6 +37,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class PermissionController extends AbstractController
 {
+    public const TOKEN_NAME = 'user_role_permissions';
     /**
      * @var RoleService
      */
@@ -59,7 +62,7 @@ final class PermissionController extends AbstractController
      * @Route(path="", name="admin_user_permissions", methods={"GET", "POST"})
      * @Security("is_granted('role_permissions')")
      */
-    public function permissions(EventDispatcherInterface $dispatcher)
+    public function permissions(EventDispatcherInterface $dispatcher, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $all = $this->roleRepository->findAll();
         $existing = [];
@@ -158,6 +161,7 @@ final class PermissionController extends AbstractController
         $dispatcher->dispatch($event);
 
         return $this->render('user/permissions.html.twig', [
+            'token' => $csrfTokenManager->refreshToken(self::TOKEN_NAME)->getValue(),
             'roles' => array_values($roles),
             'sorted' => $event->getPermissions(),
             'manager' => $this->manager,
@@ -199,11 +203,20 @@ final class PermissionController extends AbstractController
     }
 
     /**
-     * @Route(path="/roles/{id}/delete", name="admin_user_role_delete", methods={"GET", "POST"})
+     * @Route(path="/roles/{id}/delete/{token}", name="admin_user_role_delete", methods={"GET", "POST"})
      * @Security("is_granted('role_permissions')")
      */
-    public function deleteRole(Role $role, UserRepository $userRepository): Response
+    public function deleteRole(Role $role, string $token, UserRepository $userRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
+        if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $token)) {
+            $this->flashUpdateException(new \Exception('Invalid CSRF token'));
+
+            return $this->redirectToRoute('admin_user_permissions');
+        }
+
+        // make sure that the token can only be used once, so refresh it after successful submission
+        $csrfTokenManager->refreshToken(self::TOKEN_NAME)->getValue();
+
         try {
             // workaround, as roles is still a string array on users table
             // until this is fixed, the users must be manually updated
@@ -222,11 +235,15 @@ final class PermissionController extends AbstractController
     }
 
     /**
-     * @Route(path="/roles/{id}/{name}/{value}", name="admin_user_permission_save", methods={"GET"})
+     * @Route(path="/roles/{id}/{name}/{value}/{token}", name="admin_user_permission_save", methods={"POST"})
      * @Security("is_granted('role_permissions')")
      */
-    public function savePermission(Role $role, string $name, bool $value, RolePermissionRepository $rolePermissionRepository): Response
+    public function savePermission(Role $role, string $name, bool $value, string $token, RolePermissionRepository $rolePermissionRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
+        if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $token)) {
+            throw new BadRequestHttpException('Invalid CSRF token');
+        }
+
         if (!$this->manager->isRegisteredPermission($name)) {
             throw $this->createNotFoundException('Unknown permission: ' . $name);
         }
@@ -245,11 +262,16 @@ final class PermissionController extends AbstractController
             $permission->setAllowed((bool) $value);
 
             $rolePermissionRepository->saveRolePermission($permission);
-            $this->flashSuccess('action.update.success');
+
+            // refreshToken instead of getToken for more security but worse UX
+            // fast clicking with slow response times would fail, as the token cannot be replaced fast enough
+            $newToken = $csrfTokenManager->getToken(self::TOKEN_NAME)->getValue();
+
+            return $this->json(['token' => $newToken]);
         } catch (\Exception $ex) {
             $this->flashUpdateException($ex);
         }
 
-        return $this->redirectToRoute('admin_user_permissions');
+        throw new BadRequestHttpException();
     }
 }
