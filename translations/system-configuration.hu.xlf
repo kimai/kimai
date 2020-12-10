@@ -42,6 +42,82 @@
         <source>invoice</source>
         <target>Számlák</target>
       </trans-unit>
+      <trans-unit id="label.calendar.weekends">
+        <source>label.calendar.weekends</source>
+        <target>Mutasd a</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.week_numbers">
+        <source>label.calendar.week_numbers</source>
+        <target>Mutasd a hetek</target>
+      </trans-unit>
+      <trans-unit id="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target>A legkevesebb betű az automata-kiegészítő indításához</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target>Lezárási kegyelmi időszak vége (PHP dátuma relatív a lezárási időszak végéhez)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target>Lezárási időszak vége (PHP dátuma relatív a jelenlegihez)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target>Lezárási időszak kezdete (PHP dátuma relatív a jelenlegihez)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+        <source>label.timesheet.rules.allow_overlapping_records</source>
+        <target>Engedélyezd az átfedő rögzítéseket</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_punch">
+        <source>label.timesheet.mode_punch</source>
+        <target>"Ökölcsapás" mód - a felhasználó elindíthat és leállíthat felvételeket, de nem szerkesztheti az időt vagy a hosszt</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+        <source>label.timesheet.mode_duration_fixed_begin</source>
+        <target>"Alapértelmezett fix kezdés" mód - konfigurálható fix kezdeti-idő, csak a terjedelem változtatható</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_default">
+        <source>label.timesheet.mode_default</source>
+        <target>"Alapértelmezett mód" - a kezdeti és vég időpontok szerkeszthetőek</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode">
+        <source>label.timesheet.mode</source>
+        <target>Időmérő mód</target>
+      </trans-unit>
+      <trans-unit id="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target>Címkék: használj automata kiegészítőt és engedélyezd a címke létrehozást</target>
+      </trans-unit>
+      <trans-unit id="label.theme.markdown_content">
+        <source>label.theme.markdown_content</source>
+        <target>Engedélyezz markdown-formázást leírásokban és hozzászólásokban</target>
+      </trans-unit>
+      <trans-unit id="calendar">
+        <source>calendar</source>
+        <target>Naptár</target>
+      </trans-unit>
+      <trans-unit id="theme">
+        <source>theme</source>
+        <target>Téma</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target>Látható időtartam vége</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target>Látható időtartam kezdete</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target>Rendes munkaidő vége(ki lesz emelve)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target>Rendes munkaidő kezdete(ki lesz emelve)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

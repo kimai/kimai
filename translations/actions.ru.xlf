@@ -90,6 +90,10 @@
         <source>invoice.paid</source>
         <target>Счет оплачен</target>
       </trans-unit>
+      <trans-unit id="report">
+        <source>report</source>
+        <target>Сообщить</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
