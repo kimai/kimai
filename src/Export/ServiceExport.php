@@ -9,17 +9,22 @@
 
 namespace App\Export;
 
+use App\Repository\Query\ExportQuery;
+
 final class ServiceExport
 {
     /**
      * @var ExportRendererInterface[]
      */
     private $renderer = [];
-
     /**
      * @var TimesheetExportInterface[]
      */
     private $exporter = [];
+    /**
+     * @var ExportRepositoryInterface[]
+     */
+    private $repositories = [];
 
     public function addRenderer(ExportRendererInterface $renderer): ServiceExport
     {
@@ -71,5 +76,30 @@ final class ServiceExport
         }
 
         return null;
+    }
+
+    public function addExportRepository(ExportRepositoryInterface $repository): ServiceExport
+    {
+        $this->repositories[] = $repository;
+
+        return $this;
+    }
+
+    public function getExportItems(ExportQuery $query)
+    {
+        $items = [];
+
+        foreach ($this->repositories as $repository) {
+            $items = array_merge($items, $repository->getExportItemsForQuery($query));
+        }
+
+        return $items;
+    }
+
+    public function setExported(array $items): void
+    {
+        foreach ($this->repositories as $repository) {
+            $repository->setExported($items);
+        }
     }
 }
