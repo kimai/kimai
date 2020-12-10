@@ -41,7 +41,9 @@
             {{ form_row(form.projects) }}
             {{ form_row(form.activities) }}
             {{ form_row(form.tags) }}
-            {{ form_row(form.users) }}
+            {% if form.users is defined %}
+                {{ form_row(form.users) }}
+            {% endif %}
             {{ form_row(form.exported) }}
             {{ form_row(form.state) }}
             {{ form_row(form.markAsExported) }}

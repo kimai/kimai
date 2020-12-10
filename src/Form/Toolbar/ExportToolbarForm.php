@@ -29,7 +29,9 @@ class ExportToolbarForm extends AbstractToolbarForm
         $this->addSearchTermInputField($builder);
         $this->addExportStateChoice($builder);
         $this->addTimesheetStateChoice($builder);
-        $this->addUsersChoice($builder);
+        if ($options['include_user']) {
+            $this->addUsersChoice($builder);
+        }
         $this->addDateRangeChoice($builder);
         $this->addCustomerMultiChoice($builder, ['start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true], true);
         $this->addProjectMultiChoice($builder, ['ignore_date' => true], true, true);
@@ -61,6 +63,7 @@ class ExportToolbarForm extends AbstractToolbarForm
         $resolver->setDefaults([
             'data_class' => ExportQuery::class,
             'csrf_protection' => false,
+            'include_user' => true,
         ]);
     }
 }
