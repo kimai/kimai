@@ -178,7 +178,7 @@ class ExportControllerTest extends ControllerBaseTest
         $node->setAttribute('method', 'POST');
 
         $client->submit($form, [
-            'type' => 'default'
+            'renderer' => 'default'
         ]);
 
         $response = $client->getResponse();
@@ -212,7 +212,7 @@ class ExportControllerTest extends ControllerBaseTest
 
         // don't add daterange to make sure the current month is the default range
         $client->submit($form, [
-            'type' => 'default.html.twig',
+            'renderer' => 'default.html.twig',
             'markAsExported' => 1
         ]);
 

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+    - name: "Support / Questions / Discussions"
+      url: https://github.com/kevinpapst/kimai2/discussions
+      about:  "This forum is for support questions: eg. if you need help with your Kimai installation, want to know how to use a Kimai feature or wonder where to start creating a new Kimai plugin."

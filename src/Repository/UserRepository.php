@@ -9,7 +9,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Invoice;
 use App\Entity\Role;
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\Loader\UserIdLoader;
 use App\Repository\Loader\UserLoader;
@@ -163,6 +165,14 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 
         if ($or->count() > 0) {
             $qb->andWhere($or);
+        }
+
+        if (\count($query->getUsersToIgnore()) > 0) {
+            $ids = array_map(function (User $user) {
+                return $user->getId();
+            }, $query->getUsersToIgnore());
+
+            $qb->andWhere($qb->expr()->notIn('u.id', $ids));
         }
 
         $qb->orderBy('u.username', 'ASC');
@@ -352,5 +362,42 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         $loader->loadResults($results);
 
         return $results;
+    }
+
+    public function deleteUser(User $delete, ?User $replace = null)
+    {
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
+
+        try {
+            if (null !== $replace) {
+                $qb = $em->createQueryBuilder();
+                $qb
+                    ->update(Timesheet::class, 't')
+                    ->set('t.user', ':replace')
+                    ->where('t.user = :delete')
+                    ->setParameter('delete', $delete)
+                    ->setParameter('replace', $replace)
+                    ->getQuery()
+                    ->execute();
+
+                $qb = $em->createQueryBuilder();
+                $qb
+                    ->update(Invoice::class, 'i')
+                    ->set('i.user', ':replace')
+                    ->where('i.user = :delete')
+                    ->setParameter('delete', $delete)
+                    ->setParameter('replace', $replace)
+                    ->getQuery()
+                    ->execute();
+            }
+
+            $em->remove($delete);
+            $em->flush();
+            $em->commit();
+        } catch (ORMException $ex) {
+            $em->rollback();
+            throw $ex;
+        }
     }
 }
