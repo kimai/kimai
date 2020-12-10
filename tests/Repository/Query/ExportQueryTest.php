@@ -32,7 +32,7 @@ class ExportQueryTest extends TimesheetQueryTest
         $this->assertActivity($sut);
         $this->assertState($sut);
         $this->assertExported($sut);
-        $this->assertType($sut);
+        $this->assertRenderer($sut);
         $this->assertMarkAsExported($sut);
     }
 
@@ -44,7 +44,7 @@ class ExportQueryTest extends TimesheetQueryTest
         $this->assertTrue($sut->isMarkAsExported());
     }
 
-    protected function assertType(ExportQuery $sut)
+    protected function assertRenderer(ExportQuery $sut)
     {
         $this->assertNull($sut->getRenderer());
 
