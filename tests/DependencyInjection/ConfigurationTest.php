@@ -18,11 +18,10 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
  */
 class ConfigurationTest extends TestCase
 {
-    protected function getMinConfig($dataDir = '/tmp/', $pluginDir = '/tmp/')
+    protected function getMinConfig($dataDir = '/tmp/')
     {
         return [
             'data_dir' => $dataDir,
-            'plugin_dir' => $pluginDir,
             'timesheet' => [],
         ];
     }
@@ -52,12 +51,17 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($this->getMinConfig('sdfsdfsdfds'), []);
     }
 
+    /**
+     * @expectedDeprecation Changing the plugin directory via "kimai.plugin_dir" is not supported since 1.9
+     * @group legacy
+     */
     public function testValidatePluginDir()
     {
-        $finalizedConfig = $this->getCompiledConfig($this->getMinConfig());
-        $finalizedConfig['plugin_dir'] = 'sdfsdfs';
+        $config = $this->getMinConfig();
+        $config['plugin_dir'] = '/tmp/';
 
-        $config = $this->getMinConfig('/tmp/', 'sdfsdfs');
+        $finalizedConfig = $this->getCompiledConfig($config);
+        $finalizedConfig['plugin_dir'] = '/tmp/';
 
         $this->assertConfig($config, $finalizedConfig);
     }
@@ -257,7 +261,6 @@ class ConfigurationTest extends TestCase
     {
         $fullDefaultConfig = [
             'data_dir' => '/tmp/',
-            'plugin_dir' => '/tmp/',
             'timesheet' => [
                 'default_begin' => 'now',
                 'mode' => 'default',

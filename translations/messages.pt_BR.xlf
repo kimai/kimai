@@ -906,10 +906,6 @@
         <source>upload</source>
         <target>Enviar</target>
       </trans-unit>
-      <trans-unit id="help.rate">
-        <source>help.rate</source>
-        <target></target>
-      </trans-unit>
       <trans-unit id="error.no_comments_found">
         <source>error.no_comments_found</source>
         <target>Não houve nenhum comentários postados ainda.</target>

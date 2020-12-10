@@ -48,7 +48,7 @@ export default class KimaiConfirmationLink extends KimaiPlugin {
                             if (value) {
                                 if (form === null) {
                                     document.location = url;
-                                } else {
+                                } else {
                                     if (url !== null) {
                                         form.action = url;
                                     }

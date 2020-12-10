@@ -2,7 +2,7 @@
 <?php
 
 use App\Kernel;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
+use App\ConsoleApplication;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\Dotenv\Dotenv;
@@ -25,5 +25,5 @@ if ($debug) {
 }
 
 $kernel = new Kernel($env, $debug);
-$application = new Application($kernel);
+$application = new ConsoleApplication($kernel);
 $application->run($input);
