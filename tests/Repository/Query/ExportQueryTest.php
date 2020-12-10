@@ -46,13 +46,13 @@ class ExportQueryTest extends TimesheetQueryTest
 
     protected function assertType(ExportQuery $sut)
     {
-        $this->assertNull($sut->getType());
+        $this->assertNull($sut->getRenderer());
 
         $exportTypes = ['html', 'csv', 'pdf', 'xlsx', 'ods'];
 
         foreach ($exportTypes as $type) {
-            $sut->setType($type);
-            $this->assertEquals($type, $sut->getType());
+            $sut->setRenderer($type);
+            $this->assertEquals($type, $sut->getRenderer());
         }
     }
 }

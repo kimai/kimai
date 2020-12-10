@@ -957,17 +957,21 @@ class TimesheetRepository extends EntityRepository
         $em = $this->getEntityManager();
         $em->beginTransaction();
 
-        $qb = $em->createQueryBuilder();
-        $qb
-            ->update(Timesheet::class, 't')
-            ->set('t.exported', ':exported')
-            ->where($qb->expr()->in('t.id', ':ids'))
-            ->setParameter('exported', true, PDO::PARAM_BOOL)
-            ->setParameter('ids', $timesheets)
-            ->getQuery()
-            ->execute();
+        try {
+            $qb = $em->createQueryBuilder();
+            $qb
+                ->update(Timesheet::class, 't')
+                ->set('t.exported', ':exported')
+                ->where($qb->expr()->in('t.id', ':ids'))
+                ->setParameter('exported', true, PDO::PARAM_BOOL)
+                ->setParameter('ids', $timesheets)
+                ->getQuery()
+                ->execute();
 
-        $em->commit();
+            $em->commit();
+        } catch (\Exception $ex) {
+            $em->rollback();
+        }
     }
 
     /**

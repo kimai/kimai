@@ -289,13 +289,13 @@
             });
 
             $('body').on('click', '#export-buttons .startExportBtn', function() {
-                $('#type').val($(this).attr('data-type'));
+                $('#renderer').val($(this).attr('data-type'));
                 var $form = $("#export-form");
                 var prevAction = $form.attr('action');
                 var prevMethod = $form.attr('method');
                 $form.attr('target', '_blank').attr('method', 'POST').attr('action', '{{ path('export_data') }}');
                 $form.submit();
-                $('#type').val('');
+                $('#renderer').val('');
                 $form.removeAttr('target').attr('action', prevAction).attr('method', prevMethod);
             });
         });

@@ -1,13 +1,13 @@
 {% set showUserColumn = showUserColumn ?? true %}
 {% set showInternalRate = showInternalRate ?? false %}
-{% set showRateColumn = showRateColumn ?? true %}
+{% set showRateColumn = showRateColumn ?? is_granted('view_rate_other_timesheet') %}
 {% set showRateBudget = showRateBudget ?? false %}
 {% set showTimeBudget = showTimeBudget ?? false %}
 {% set decimal = decimal ?? false %}
-{% if query.user %}
-    {# this is only triggered, if a user exports from his personal timesheet screen #}
+{# this is only triggered, if a user exports from his personal timesheet screen #}
+{% if query.user is not null %}
     {% set showUserColumn = false %}
-    {# if exporting via the admin screen, users without view_rate_own_timesheet might still see their own rates - maybe merge view_rate_own_timesheet and view_rate_other_timesheet into a new view_rate permission? #}
+    {# if exporting via the admin screen, users without view_rate_own_timesheet might still see their own rates #}
     {% set showRateColumn = is_granted('view_rate_own_timesheet') %}
 {% endif %}
 <html lang="{{ app.request.locale }}">
@@ -268,15 +268,12 @@ mpdf-->
                 </td>
                 <td class="duration">{{ entry.duration|duration(decimal) }}</td>
                 {% if showRateColumn %}
-                    {% if is_granted('view_rate', entry) %}
-                        {% set rate = rate + entry.rate %}
-                        {% set rateInternal = rateInternal + entry.internalRate %}
-                        {% set entryRate = entry.rate|money(entry.project.customer.currency) %}
-                        {% set entryRateInternal = entry.internalRate|money(entry.project.customer.currency) %}
-                    {% else %}
-                        {% set entryRate = '&ndash;' %}
-                        {% set entryRateInternal = '&ndash;' %}
-                    {% endif %}
+                    {# no check for is_granted('view_rate', entry) because it is only available for timesheets,
+                       but maybe missing for other potential export repositories #}
+                    {% set rate = rate + entry.rate %}
+                    {% set rateInternal = rateInternal + entry.internalRate %}
+                    {% set entryRate = entry.rate|money(entry.project.customer.currency) %}
+                    {% set entryRateInternal = entry.internalRate|money(entry.project.customer.currency) %}
                     {% if showInternalRate %}
                         <td class="cost">{{ entryRateInternal }}</td>
                     {% endif %}
