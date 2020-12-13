@@ -22,8 +22,9 @@ class DoctrineCompilerPass implements CompilerPassInterface
      * @var string[]
      */
     private $allowedEngines = [
-        'mysql',
-        'sqlite'
+        'mysql' => 'mysql',
+        'mysqli' => 'mysql',
+        'sqlite' => 'sqlite',
     ];
 
     private function getEnvVar(string $name): ?string
@@ -72,14 +73,14 @@ class DoctrineCompilerPass implements CompilerPassInterface
             );
         }
 
-        if (!\in_array($engine, $this->allowedEngines)) {
+        if (!\array_key_exists($engine, $this->allowedEngines)) {
             throw new \Exception(
                 'Unsupported database engine: ' . $engine . '. Kimai only supports one of: ' .
-                implode(', ', $this->allowedEngines)
+                implode(', ', array_keys($this->allowedEngines))
             );
         }
 
-        return $engine;
+        return $this->allowedEngines[$engine];
     }
 
     /**
