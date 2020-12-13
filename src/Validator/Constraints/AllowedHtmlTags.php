@@ -11,6 +11,10 @@ namespace App\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * @Annotation
+ * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
+ */
 class AllowedHtmlTags extends Constraint
 {
     public const DISALLOWED_TAGS_FOUND = 'kimai-allowed-html-tags-00';
@@ -22,11 +26,6 @@ class AllowedHtmlTags extends Constraint
     ];
 
     public $message = 'This string contains invalid HTML tags.';
-
-    public function getTargets()
-    {
-        return self::PROPERTY_CONSTRAINT;
-    }
 
     /**
      * {@inheritdoc}

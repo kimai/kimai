@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
  * @covers \App\Validator\Constraints\AllowedHtmlTags
+ * @covers \App\Validator\Constraints\AllowedHtmlTagsValidator
  */
 class AllowedHtmlTagsTest extends ConstraintValidatorTestCase
 {
@@ -55,7 +56,9 @@ class AllowedHtmlTagsTest extends ConstraintValidatorTestCase
     {
         return [
             ['', 'foo'],
+            ['', ''],
             ['<i>', 'foo<i>kjhg</i>'],
+            ['<i>', 'foo<I>kjhg</I>'],
             ['<u><i>', 'foo<i>kj<u>h</u>g</i><u>kjhgk</u>'],
         ];
     }
