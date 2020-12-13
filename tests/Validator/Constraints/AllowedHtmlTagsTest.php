@@ -34,7 +34,8 @@ class AllowedHtmlTagsTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getValidValues
-     * @param string $role
+     * @param string $allowedTags
+     * @param string $testString
      */
     public function testConstraintWithValidValue(string $allowedTags, string $testString)
     {
@@ -70,7 +71,8 @@ class AllowedHtmlTagsTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidValues
-     * @param mixed $role
+     * @param string $allowedTags
+     * @param string $testString
      */
     public function testValidationError(string $allowedTags, string $testString)
     {
