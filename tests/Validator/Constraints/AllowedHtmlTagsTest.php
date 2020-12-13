@@ -33,6 +33,14 @@ class AllowedHtmlTagsTest extends ConstraintValidatorTestCase
         $this->validator->validate('foo', new NotBlank());
     }
 
+    public function testConstraintIsInvalidObject()
+    {
+        $this->expectException(UnexpectedTypeException::class);
+
+        $constraint = new AllowedHtmlTags(['tags' => '']);
+        $this->validator->validate(new \stdClass(), $constraint);
+    }
+
     /**
      * @dataProvider getValidValues
      * @param string $allowedTags
