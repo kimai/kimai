@@ -1,7 +1,7 @@
 {% extends '@AdminLTE/layout/default-layout.html.twig' %}
 
 {% block body_start %}
-    data-title="{{- get_title() -}}"
+    data-title="{{- get_title()|e('html_attr') -}}"
 {% endblock %}
 
 {% block after_body_start %}
@@ -72,7 +72,7 @@
 
 {% block logo_mini %}
     {% if not kimai_context.branding.mini is empty %}
-        {{ kimai_context.branding.mini|raw }}
+        {{ kimai_context.branding.mini|striptags('<b><i><u><strong><em>')|raw }}
     {% else %}
         <b>K</b>TT
     {% endif %}
@@ -80,7 +80,7 @@
 
 {% block logo_large %}
     {% if not kimai_context.branding.company is empty %}
-        {{ kimai_context.branding.company|raw }}
+        {{ kimai_context.branding.company|striptags('<b><i><u><strong><em>')|raw }}
     {% else %}
         <b>Kimai</b> - Time Tracking
     {% endif %}
