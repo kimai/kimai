@@ -23,6 +23,7 @@ use App\Form\Type\TrackingModeType;
 use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
 use App\Repository\ConfigurationRepository;
+use App\Validator\Constraints\AllowedHtmlTags;
 use App\Validator\Constraints\DateTimeFormat;
 use App\Validator\Constraints\TimeFormat;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -438,12 +439,14 @@ final class SystemConfigurationController extends AbstractController
                         ->setName('theme.branding.company')
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)
-                        ->setType(TextType::class),
+                        ->setType(TextType::class)
+                        ->setConstraints([new AllowedHtmlTags(['tags' => '<b><i><u><strong><em><img><svg>'])]),
                     (new Configuration())
                         ->setName('theme.branding.mini')
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)
-                        ->setType(TextType::class),
+                        ->setType(TextType::class)
+                        ->setConstraints([new AllowedHtmlTags(['tags' => '<b><i><u><strong><em><img><svg>'])]),
                     (new Configuration())
                         ->setName('theme.branding.title')
                         ->setTranslationDomain('system-configuration')
