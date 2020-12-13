@@ -184,7 +184,7 @@
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
-        <target>Küçük Logo (daraltılmış kenar çubuğu)</target>
+        <target>Küçük logo (baş harfler), daraltılmış kenar çubuğu (yalnızca metin, en fazla 3 karakter)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
