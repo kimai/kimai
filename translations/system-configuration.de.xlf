@@ -135,8 +135,8 @@
         <target>Unternehmen</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target state="translated">Mini-Logo, zugeklappte Seitenleist</target>
+        <source>Mini logo (initials), collapsed sidebar (text-only, max. 3 characters)</source>
+        <target state="translated">Mini-Logo (zugeklappte Seitenleiste)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.title">
         <source>label.theme.branding.title</source>
