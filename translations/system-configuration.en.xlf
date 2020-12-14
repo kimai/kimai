@@ -134,7 +134,7 @@
         <source>label.theme.branding.company</source>
         <target>Company</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.mini">
+      <trans-unit id="label.theme.branding.mini" approved="yes">
         <source>Mini logo (collapsed sidebar)</source>
         <target>Mini logo (collapsed sidebar)</target>
       </trans-unit>
