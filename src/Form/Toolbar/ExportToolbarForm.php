@@ -29,12 +29,14 @@ class ExportToolbarForm extends AbstractToolbarForm
         $this->addSearchTermInputField($builder);
         $this->addExportStateChoice($builder);
         $this->addTimesheetStateChoice($builder);
-        $this->addUsersChoice($builder);
+        if ($options['include_user']) {
+            $this->addUsersChoice($builder);
+        }
         $this->addDateRangeChoice($builder);
         $this->addCustomerMultiChoice($builder, ['start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true], true);
         $this->addProjectMultiChoice($builder, ['ignore_date' => true], true, true);
         $this->addActivityMultiChoice($builder, [], true);
-        $this->addExportType($builder);
+        $this->addExportRenderer($builder);
         $this->addTagInputField($builder);
         $builder->add('markAsExported', CheckboxType::class, [
             'label' => 'label.mark_as_exported',
@@ -48,9 +50,9 @@ class ExportToolbarForm extends AbstractToolbarForm
     /**
      * @param FormBuilderInterface $builder
      */
-    protected function addExportType(FormBuilderInterface $builder)
+    protected function addExportRenderer(FormBuilderInterface $builder)
     {
-        $builder->add('type', HiddenType::class, []);
+        $builder->add('renderer', HiddenType::class, []);
     }
 
     /**
@@ -61,6 +63,7 @@ class ExportToolbarForm extends AbstractToolbarForm
         $resolver->setDefaults([
             'data_class' => ExportQuery::class,
             'csrf_protection' => false,
+            'include_user' => true,
         ]);
     }
 }

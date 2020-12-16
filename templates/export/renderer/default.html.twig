@@ -451,7 +451,7 @@
                             {% endif %}
                         </td>
                         <td class="column-tags" {% if not columns.tags %}style="display: none"{% endif %}>
-                            {% if entry.tags is not empty %}
+                            {% if entry.tags is defined and entry.tags is not empty %}
                                 {{ entry.tagsAsArray|join(', ') }}
                             {% endif %}
                         </td>

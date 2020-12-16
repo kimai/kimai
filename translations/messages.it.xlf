@@ -1110,6 +1110,14 @@
         <source>label.globalsOnly</source>
         <target>Solo globale</target>
       </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>Prima di aggiornare i campi è necessario attivarli cliccando sul checkbox corrisopondente</target>
+      </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>Campi aggiuntivi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

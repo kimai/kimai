@@ -38,7 +38,7 @@ class CsvRenderer extends AbstractSpreadsheetRenderer
      */
     protected function saveSpreadsheet(Spreadsheet $spreadsheet): string
     {
-        $filename = tempnam(sys_get_temp_dir(), 'kimai-export-csv');
+        $filename = @tempnam(sys_get_temp_dir(), 'kimai-export-csv');
         if (false === $filename) {
             throw new \Exception('Could not open temporary file');
         }

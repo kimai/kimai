@@ -7,14 +7,13 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Repository;
+namespace App\Export;
 
 use App\Entity\Timesheet;
-use App\Invoice\InvoiceItemInterface;
-use App\Invoice\InvoiceItemRepositoryInterface;
-use App\Repository\Query\InvoiceQuery;
+use App\Repository\Query\ExportQuery;
+use App\Repository\TimesheetRepository;
 
-final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInterface
+final class TimesheetExportRepository implements ExportRepositoryInterface
 {
     /**
      * @var TimesheetRepository
@@ -27,22 +26,13 @@ final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInter
     }
 
     /**
-     * @param InvoiceQuery $query
-     * @return InvoiceItemInterface[]
+     * @param Timesheet[] $items
      */
-    public function getInvoiceItemsForQuery(InvoiceQuery $query): iterable
-    {
-        return $this->repository->getTimesheetsForQuery($query);
-    }
-
-    /**
-     * @param InvoiceItemInterface[] $invoiceItems
-     */
-    public function setExported(array $invoiceItems)
+    public function setExported(array $items): void
     {
         $timesheets = [];
 
-        foreach ($invoiceItems as $item) {
+        foreach ($items as $item) {
             if ($item instanceof Timesheet) {
                 $timesheets[] = $item;
             }
@@ -53,5 +43,15 @@ final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInter
         }
 
         $this->repository->setExported($timesheets);
+    }
+
+    public function getExportItemsForQuery(ExportQuery $query): iterable
+    {
+        return $this->repository->getTimesheetsForQuery($query, true);
+    }
+
+    public function getType(): string
+    {
+        return 'timesheet';
     }
 }

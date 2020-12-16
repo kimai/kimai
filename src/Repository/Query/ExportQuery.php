@@ -14,20 +14,20 @@ class ExportQuery extends TimesheetQuery
     /**
      * @var string
      */
-    private $type;
+    private $renderer;
     /**
      * @var bool
      */
     private $markAsExported = false;
 
-    public function getType(): ?string
+    public function getRenderer(): ?string
     {
-        return $this->type;
+        return $this->renderer;
     }
 
-    public function setType(string $type): ExportQuery
+    public function setRenderer(string $renderer): ExportQuery
     {
-        $this->type = $type;
+        $this->renderer = $renderer;
 
         return $this;
     }

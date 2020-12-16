@@ -34,5 +34,9 @@ class UserFormTypeQueryTest extends BaseFormTypeQueryTest
         self::assertEquals([], $sut->getUsersAlwaysIncluded());
         self::assertInstanceOf(UserFormTypeQuery::class, $sut->setUsersAlwaysIncluded($users));
         self::assertSame($users, $sut->getUsersAlwaysIncluded());
+
+        self::assertEquals([], $sut->getUsersToIgnore());
+        self::assertInstanceOf(UserFormTypeQuery::class, $sut->addUserToIgnore($users[0]));
+        self::assertSame([$users[0]], $sut->getUsersToIgnore());
     }
 }

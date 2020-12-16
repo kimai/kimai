@@ -42,6 +42,11 @@ class ExportServiceCompilerPass implements CompilerPassInterface
             $definition->addMethodCall('addTimesheetExporter', [new Reference($id)]);
         }
 
+        $taggedRepository = $container->findTaggedServiceIds(Kernel::TAG_EXPORT_REPOSITORY);
+        foreach ($taggedRepository as $id => $tags) {
+            $definition->addMethodCall('addExportRepository', [new Reference($id)]);
+        }
+
         $path = \dirname(\dirname(\dirname(__DIR__))) . DIRECTORY_SEPARATOR;
         foreach ($container->getParameter('kimai.export.documents') as $exportPath) {
             if (!is_dir($path . $exportPath)) {
