@@ -8,6 +8,10 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [1.13](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
+
+- Many libraries were updated, including but not limited to Gedmo v3 (which include BC breaks in definitions)
+
 ## [1.12](https://github.com/kevinpapst/kimai2/releases/tag/1.12)
 
 - Export templates can now include items from plugins (eg. Expenses).
