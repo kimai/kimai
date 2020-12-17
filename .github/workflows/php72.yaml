@@ -19,7 +19,7 @@ jobs:
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         strategy:
             matrix:
-                php: ['7.3', '7.4', '8.0']
+                php: ['7.2']
 
         name: Tests - PHP ${{ matrix.php }}
         steps:
@@ -30,8 +30,8 @@ jobs:
                     coverage: none
                     extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql, zip, gd, ldap
             -   run: |
-                    composer install --no-progress
-                    composer require laminas/laminas-ldap
+                    composer install --no-progress --ignore-platform-reqs
+                    composer require laminas/laminas-ldap --ignore-platform-reqs
             -   name: Setup problem matchers for PHPUnit
                 run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
             -   name: Run unit tests
