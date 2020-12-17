@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2.9",
+        "php": ">=7.3",
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-json": "*",
@@ -102,7 +102,7 @@
     ],
     "config": {
         "platform": {
-            "php": "7.2.9"
+            "php": "7.3"
         },
         "preferred-install": {
             "*": "dist"

@@ -9,10 +9,11 @@
 
 namespace App\Doctrine;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration as BaseAbstractMigration;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -82,7 +83,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
 
     /**
      * @param Schema $schema
-     * @throws DBALException
+     * @throws Exception
      */
     public function preUp(Schema $schema): void
     {
@@ -92,7 +93,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
 
     /**
      * @param Schema $schema
-     * @throws DBALException
+     * @throws Exception
      */
     public function postUp(Schema $schema): void
     {
@@ -101,7 +102,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
 
     /**
      * @param Schema $schema
-     * @throws DBALException
+     * @throws Exception
      */
     public function preDown(Schema $schema): void
     {
@@ -111,7 +112,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
 
     /**
      * @param Schema $schema
-     * @throws DBALException
+     * @throws Exception
      */
     public function postDown(Schema $schema): void
     {
@@ -121,7 +122,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     /**
      * Abort the migration is the current platform is not supported.
      *
-     * @throws DBALException
+     * @throws Exception
      */
     protected function abortIfPlatformNotSupported()
     {
@@ -133,7 +134,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
 
     /**
      * @return bool
-     * @throws DBALException
+     * @throws Exception
      */
     protected function isPlatformSqlite()
     {
@@ -142,7 +143,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
 
     /**
      * @return bool
-     * @throws DBALException
+     * @throws Exception
      */
     protected function isPlatformMysql()
     {
@@ -151,36 +152,30 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
 
     /**
      * @return string
-     * @throws DBALException
+     * @throws Exception
      */
     protected function getPlatform()
     {
         return $this->connection->getDatabasePlatform()->getName();
     }
 
-    /**
-     * Call me like this:
-     * $schema = $this->getClassMetaData(User::class);
-     *
-     * @param string $entityName
-     * @return ClassMetadata
-     */
-    protected function getClassMetaData($entityName)
+    protected function getClassMetaData(string $className): ClassMetadata
     {
+        /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        return $em->getClassMetadata($entityName);
+        return $em->getClassMetadata($className);
     }
 
     /**
-     * we do it via addSql instead of $schema->getTable($users)->dropIndex()
+     * We do it via addSql instead of $schema->getTable($users)->dropIndex()
      * otherwise the commands will be executed as last ones.
      *
      * @param string $indexName
      * @param string $tableName
-     * @throws DBALException
+     * @throws Exception
      */
-    protected function addSqlDropIndex($indexName, $tableName)
+    protected function addSqlDropIndex(string $indexName, string $tableName)
     {
         $dropSql = 'DROP INDEX ' . $indexName;
         if (!$this->isPlatformSqlite()) {
