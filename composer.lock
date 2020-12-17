@@ -1942,12 +1942,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/RestRoutingBundle",
-                "reference": "491c7b1e381feb5c8453d0ee5990165237031e00"
+                "reference": "4625104a18abd69fc78aa9dc5180a25fe16db982"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/RestRoutingBundle/zipball/491c7b1e381feb5c8453d0ee5990165237031e00",
-                "reference": "491c7b1e381feb5c8453d0ee5990165237031e00",
+                "url": "https://api.github.com/repos/kevinpapst/RestRoutingBundle/zipball/4625104a18abd69fc78aa9dc5180a25fe16db982",
+                "reference": "4625104a18abd69fc78aa9dc5180a25fe16db982",
                 "shasum": ""
             },
             "require": {
@@ -2006,7 +2006,7 @@
                 "rest",
                 "routing"
             ],
-            "time": "2020-12-17T00:41:22+00:00"
+            "time": "2020-12-17T00:56:07+00:00"
         },
         {
             "name": "hslavich/oneloginsaml-bundle",
