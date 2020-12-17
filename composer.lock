@@ -1942,12 +1942,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/RestRoutingBundle",
-                "reference": "800d84bc505e39fef65359b6612adb7d4263310d"
+                "reference": "201821b41b0b75a51b7886444b2b6d2a04cc7477"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/RestRoutingBundle/zipball/800d84bc505e39fef65359b6612adb7d4263310d",
-                "reference": "800d84bc505e39fef65359b6612adb7d4263310d",
+                "url": "https://api.github.com/repos/kevinpapst/RestRoutingBundle/zipball/201821b41b0b75a51b7886444b2b6d2a04cc7477",
+                "reference": "201821b41b0b75a51b7886444b2b6d2a04cc7477",
                 "shasum": ""
             },
             "require": {
@@ -2006,7 +2006,7 @@
                 "rest",
                 "routing"
             ],
-            "time": "2020-12-17T00:00:25+00:00"
+            "time": "2020-12-17T00:31:55+00:00"
         },
         {
             "name": "hslavich/oneloginsaml-bundle",
@@ -2630,12 +2630,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kimai/user-bundle.git",
-                "reference": "d8ecc0b74b84f2bfec78c956147097261540eefe"
+                "reference": "d94ad04843b6759021172a7f052fe4fda1cc6c35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kimai/user-bundle/zipball/d8ecc0b74b84f2bfec78c956147097261540eefe",
-                "reference": "d8ecc0b74b84f2bfec78c956147097261540eefe",
+                "url": "https://api.github.com/repos/kimai/user-bundle/zipball/d94ad04843b6759021172a7f052fe4fda1cc6c35",
+                "reference": "d94ad04843b6759021172a7f052fe4fda1cc6c35",
                 "shasum": ""
             },
             "require": {
@@ -2691,7 +2691,7 @@
             "support": {
                 "source": "https://github.com/kimai/user-bundle/tree/php8"
             },
-            "time": "2020-12-16T23:09:32+00:00"
+            "time": "2020-12-17T00:11:49+00:00"
         },
         {
             "name": "laravolt/avatar",
