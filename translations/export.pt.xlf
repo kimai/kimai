@@ -4,15 +4,15 @@
     <body>
       <trans-unit id="default.pdf.twig">
         <source>default.pdf.twig</source>
-        <target></target>
+        <target>Padrão</target>
       </trans-unit>
       <trans-unit id="default-budget.pdf.twig">
         <source>default-budget.pdf.twig</source>
-        <target></target>
+        <target>Com orçamento restante</target>
       </trans-unit>
       <trans-unit id="default-internal.pdf.twig">
         <source>default-internal.pdf.twig</source>
-        <target></target>
+        <target>Com taxas internas</target>
       </trans-unit>
     </body>
   </file>
