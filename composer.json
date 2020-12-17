@@ -26,7 +26,7 @@
         "erusev/parsedown": "^1.6",
         "friendsofsymfony/rest-bundle": "^3.0.4",
         "gedmo/doctrine-extensions": "^3.0",
-        "handcraftedinthealps/rest-routing-bundle": "^1.0",
+        "handcraftedinthealps/rest-routing-bundle": "dev-php8",
         "hslavich/oneloginsaml-bundle": "^1.4",
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.2",
@@ -98,6 +98,11 @@
         {
             "type": "artifact",
             "url": "var/packages/"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/kevinpapst/RestRoutingBundle",
+            "no-api": true
         }
     ],
     "config": {

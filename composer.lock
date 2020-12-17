@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "26b8ddbbafc9e98305cf918b4bdcdf54",
+    "content-hash": "f24e61a0da213a9154a5b4a2cb4ece06",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1938,21 +1938,21 @@
         },
         {
             "name": "handcraftedinthealps/rest-routing-bundle",
-            "version": "1.0.0",
+            "version": "dev-php8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/handcraftedinthealps/RestRoutingBundle.git",
-                "reference": "985e8aef8389d21a954c8878d61e04be5afa9483"
+                "url": "https://github.com/kevinpapst/RestRoutingBundle",
+                "reference": "800d84bc505e39fef65359b6612adb7d4263310d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/handcraftedinthealps/RestRoutingBundle/zipball/985e8aef8389d21a954c8878d61e04be5afa9483",
-                "reference": "985e8aef8389d21a954c8878d61e04be5afa9483",
+                "url": "https://api.github.com/repos/kevinpapst/RestRoutingBundle/zipball/800d84bc505e39fef65359b6612adb7d4263310d",
+                "reference": "800d84bc505e39fef65359b6612adb7d4263310d",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "^1.4|^2.0",
-                "php": "^7.2",
+                "php": ">7.2",
                 "symfony/config": "^4.4|^5.0",
                 "symfony/dependency-injection": "^4.4|^5.0",
                 "symfony/finder": "^4.4|^5.0",
@@ -1998,7 +1998,6 @@
                     "Tests/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2007,11 +2006,7 @@
                 "rest",
                 "routing"
             ],
-            "support": {
-                "issues": "https://github.com/handcraftedinthealps/RestRoutingBundle/issues",
-                "source": "https://github.com/handcraftedinthealps/RestRoutingBundle/tree/master"
-            },
-            "time": "2020-05-26T10:06:54+00:00"
+            "time": "2020-12-17T00:00:25+00:00"
         },
         {
             "name": "hslavich/oneloginsaml-bundle",
@@ -14030,6 +14025,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "handcraftedinthealps/rest-routing-bundle": 20,
         "kimai/user-bundle": 20
     },
     "prefer-stable": false,
