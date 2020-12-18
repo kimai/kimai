@@ -12,46 +12,22 @@ namespace App\Doctrine;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration as BaseAbstractMigration;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Base class for all Doctrine migrations.
  *
  * @codeCoverageIgnore
  */
-abstract class AbstractMigration extends BaseAbstractMigration implements ContainerAwareInterface
+abstract class AbstractMigration extends BaseAbstractMigration
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * @param ContainerInterface $container
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
-    /**
-     * @return ContainerInterface
-     */
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
     /**
      * @param string $name
      * @return string
-     * @deprecated since 0.9 - will be removed with 2.0
      */
     protected function getTableName($name)
     {
+        @trigger_error('AbstractMigration::getTableName() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+
         return 'kimai2_' . $name;
     }
 
@@ -127,7 +103,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     protected function abortIfPlatformNotSupported()
     {
         $platform = $this->getPlatform();
-        if (!\in_array($platform, ['sqlite', 'mysql'])) {
+        if (!$this->isPlatformMysql() && !$this->isPlatformSqlite()) {
             $this->abortIf(true, 'Unsupported database platform: ' . $platform);
         }
     }
@@ -138,7 +114,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
      */
     protected function isPlatformSqlite()
     {
-        return ($this->getPlatform() === 'sqlite');
+        return \in_array(strtolower($this->getPlatform()), ['sqlite']);
     }
 
     /**
@@ -147,7 +123,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
      */
     protected function isPlatformMysql()
     {
-        return ($this->getPlatform() === 'mysql');
+        return \in_array(strtolower($this->getPlatform()), ['mysql', 'mysqli']);
     }
 
     /**
@@ -157,14 +133,6 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     protected function getPlatform()
     {
         return $this->connection->getDatabasePlatform()->getName();
-    }
-
-    protected function getClassMetaData(string $className): ClassMetadata
-    {
-        /** @var EntityManager $em */
-        $em = $this->getContainer()->get('doctrine')->getManager();
-
-        return $em->getClassMetadata($className);
     }
 
     /**
