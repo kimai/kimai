@@ -35,6 +35,8 @@ export default class KimaiDatatable extends KimaiPlugin {
         const attributes = dataTable.dataset;
         const events = attributes['reloadEvent'];
 
+        this.fixDropdowns();
+
         if (events === undefined) {
             return;
         }
@@ -55,6 +57,7 @@ export default class KimaiDatatable extends KimaiPlugin {
     }
 
     reloadDatatable() {
+        const self = this;
         const contentArea = this.contentArea;
         const durations = this.getContainer().getPlugin('timesheet-duration');
         const toolbarSelector = this.getContainer().getPlugin('toolbar').getSelector();
@@ -79,11 +82,26 @@ export default class KimaiDatatable extends KimaiPlugin {
                     jQuery(html).find(contentArea)
                 );
                 durations.updateRecords();
+                self.fixDropdowns();
             },
             error: function(xhr, err) {
                 form.submit();
             }
         });
 
+    }
+
+    fixDropdowns() {
+        // HACK: show dropdown menu upwards, if it "leaves" the page
+        jQuery(this.selector + ' [data-toggle=dropdown]').each(function() {
+            let parent = jQuery(this).parent();
+            let menu = parent.find('.dropdown-menu');
+
+            if (parent && menu) {
+                if ((parent.offset().top + parent.outerHeight() + menu.outerHeight()) > jQuery(document).height()) {
+                    parent.addClass('dropup');
+                }
+            }
+        });
     }
 }
