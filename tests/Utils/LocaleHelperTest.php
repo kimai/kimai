@@ -198,6 +198,11 @@ class LocaleHelperTest extends TestCase
         // test extended format
         $sut = $this->getSut('de');
         $this->assertEquals('2,62', $sut->durationDecimal($record->getDuration()));
+        $this->assertEquals('6.328,89', $sut->durationDecimal(22784012));
+        $this->assertEquals('1', $sut->durationDecimal(3600));
+        $this->assertEquals('1,01', $sut->durationDecimal(3630));
+        $this->assertEquals('1,02', $sut->durationDecimal(3661));
+        $this->assertEquals('1,1', $sut->durationDecimal(3960));
 
         // test negative duration
         $sut = $this->getSut('en');
@@ -206,6 +211,7 @@ class LocaleHelperTest extends TestCase
         // test zero duration
         $sut = $this->getSut('en');
         $this->assertEquals('0', $sut->durationDecimal(0));
+        $this->assertEquals('6,328.89', $sut->durationDecimal(22784012));
     }
 
     protected function getTimesheet($seconds)

@@ -46,7 +46,12 @@ final class LocaleHelper
      */
     public function durationDecimal(int $seconds)
     {
-        return $this->getNumberFormatter()->format(number_format($seconds / 3600, 2));
+        $value = round($seconds / 3600, 2);
+        if ($value <= 0) {
+            $value = 0;
+        }
+
+        return $this->getNumberFormatter()->format($value);
     }
 
     /**
