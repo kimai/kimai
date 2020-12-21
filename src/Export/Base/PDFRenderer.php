@@ -9,10 +9,10 @@
 
 namespace App\Export\Base;
 
+use App\Export\ExportContext;
 use App\Export\ExportItemInterface;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
-use App\Timesheet\UserDateTimeFactory;
 use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -26,10 +26,6 @@ class PDFRenderer
      * @var Environment
      */
     private $twig;
-    /**
-     * @var UserDateTimeFactory
-     */
-    private $dateTime;
     /**
      * @var HtmlToPdfConverter
      */
@@ -46,11 +42,14 @@ class PDFRenderer
      * @var string
      */
     private $template = 'default.pdf.twig';
+    /**
+     * @var array
+     */
+    private $pdfOptions = [];
 
-    public function __construct(Environment $twig, UserDateTimeFactory $dateTime, HtmlToPdfConverter $converter, ProjectRepository $projectRepository)
+    public function __construct(Environment $twig, HtmlToPdfConverter $converter, ProjectRepository $projectRepository)
     {
         $this->twig = $twig;
-        $this->dateTime = $dateTime;
         $this->converter = $converter;
         $this->projectRepository = $projectRepository;
     }
@@ -72,6 +71,18 @@ class PDFRenderer
         return ['decimal' => $decimal];
     }
 
+    public function getPdfOptions(): array
+    {
+        return $this->pdfOptions;
+    }
+
+    public function setPdfOption(string $key, string $value): PDFRenderer
+    {
+        $this->pdfOptions[$key] = $value;
+
+        return $this;
+    }
+
     /**
      * @param ExportItemInterface[] $timesheets
      * @param TimesheetQuery $query
@@ -82,21 +93,33 @@ class PDFRenderer
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
+        $context = new ExportContext();
+        $context->setOption('filename', 'kimai-export.pdf');
+
         $summary = $this->calculateSummary($timesheets);
         $content = $this->twig->render($this->getTemplate(), array_merge([
             'entries' => $timesheets,
             'query' => $query,
-            'now' => $this->dateTime->createDateTime(),
+            // @deprecated since 1.13
+            'now' => new \DateTime('now', new \DateTimeZone(date_default_timezone_get())),
             'summaries' => $summary,
             'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectRepository),
             'decimal' => false,
+            'pdfContext' => $context
         ], $this->getOptions($query)));
 
-        $content = $this->converter->convertToPdf($content);
+        $pdfOptions = array_merge($context->getOptions(), $this->getPdfOptions());
+
+        $content = $this->converter->convertToPdf($content, $pdfOptions);
 
         $response = new Response($content);
 
-        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'kimai-export.pdf');
+        $filename = $context->getOption('filename');
+        if (empty($filename)) {
+            $filename = 'kimai-export.pdf';
+        }
+
+        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
 
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', $disposition);
