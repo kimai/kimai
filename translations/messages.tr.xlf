@@ -1109,6 +1109,10 @@
         <source>label.batch_meta_fields</source>
         <target>Ek alanlar</target>
       </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Toplam</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
