@@ -132,9 +132,11 @@ class DateExtensions extends AbstractExtension
         return $this->formatter->dateTimeFull($date);
     }
 
-    public function createDate(string $date, User $user): \DateTime
+    public function createDate(string $date, ?User $user = null): \DateTime
     {
-        return new DateTime($date, new \DateTimeZone($user->getTimezone()));
+        $timezone = $user !== null ? $user->getTimezone() : date_default_timezone_get();
+
+        return new DateTime($date, new \DateTimeZone($timezone));
     }
 
     /**

@@ -231,5 +231,8 @@ class DateExtensionsTest extends TestCase
         $date = $sut->createDate('2019-08-27 16:30:45', $user);
         $this->assertEquals('2019-08-27T16:30:45+0400', $date->format(DATE_ISO8601));
         $this->assertEquals('Asia/Dubai', $date->getTimezone()->getName());
+
+        $date = $sut->createDate('2019-08-27 16:30:45', null);
+        $this->assertEquals(date_default_timezone_get(), $date->getTimezone()->getName());
     }
 }
