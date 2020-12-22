@@ -16,7 +16,7 @@ final class ExportContext
 {
     private $options = [];
 
-    public function setOption(string $key, string $value)
+    public function setOption(string $key, string $value): void
     {
         $this->options[$key] = $value;
     }
