@@ -80,7 +80,10 @@
                 <source>rates.title</source>
                 <target>Fees</target>
             </trans-unit>
-
+            <trans-unit id="sum.total">
+                <source>sum.total</source>
+                <target>Total</target>
+            </trans-unit>
             <!--
               Login / Security
             -->
