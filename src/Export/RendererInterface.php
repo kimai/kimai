@@ -9,6 +9,9 @@
 
 namespace App\Export;
 
+/**
+ * @deprecated since 1.13 - will be removed with 2.0
+ */
 interface RendererInterface extends ExportRendererInterface
 {
 }

@@ -16,10 +16,12 @@ use App\Event\MetaDisplayEventInterface;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
+use App\Export\Export;
 use App\Export\ExportItemInterface;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
+use App\Twig\EnvironmentTrait;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -27,6 +29,7 @@ use Twig\Environment;
 class HtmlRenderer
 {
     use RendererTrait;
+    use EnvironmentTrait;
 
     /**
      * @var Environment
@@ -87,8 +90,17 @@ class HtmlRenderer
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function render(array $timesheets, TimesheetQuery $query): Response
+    public function create(Export $export): Response
     {
+        $timesheets = $export->getItems();
+        $query = $export->getQuery();
+
+        $unknownLanguage = $export->getLanguage() === '__XX__';
+
+        if (!$unknownLanguage) {
+            $previousLocale = $this->changeLocale($this->twig, $export->getLanguage());
+        }
+
         /** @var CustomerQuery $customerQuery */
         $customerQuery = $query->copyTo(new CustomerQuery());
 
@@ -108,6 +120,8 @@ class HtmlRenderer
             'query' => $query,
             'summaries' => $summary,
             'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectRepository),
+            // @deprecated since 1.13, will be removed with 2.0
+            'metaColumns' => $timesheetMetaFields,
             'timesheetMetaFields' => $timesheetMetaFields,
             'customerMetaFields' => $customerMetaFields,
             'projectMetaFields' => $projectMetaFields,
@@ -115,10 +129,21 @@ class HtmlRenderer
             'userPreferences' => $userPreferences,
         ], $this->getOptions($query)));
 
+        if (!$unknownLanguage) {
+            $this->changeLocale($this->twig, $previousLocale);
+        }
+
         $response = new Response();
         $response->setContent($content);
 
         return $response;
+    }
+
+    public function render(array $timesheets, TimesheetQuery $query): Response
+    {
+        return $this->create(
+            new Export($timesheets, $query, $query->getUser() ?? $query->getCurrentUser(), '__XX__')
+        );
     }
 
     protected function getTemplate(): string
@@ -143,5 +168,15 @@ class HtmlRenderer
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getIcon(): string
+    {
+        return 'print';
+    }
+
+    public function getTitle(): string
+    {
+        return 'print';
     }
 }

@@ -9,21 +9,15 @@
 
 namespace App\Export;
 
-use App\Entity\Timesheet;
-use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @deprecated since 1.13 - will be removed with 2.0
- */
-interface TimesheetExportInterface
+interface TimesheetExportRenderer
 {
     /**
-     * @param Timesheet[] $timesheets
-     * @param TimesheetQuery $query
+     * @param Export $export
      * @return Response
      */
-    public function render(array $timesheets, TimesheetQuery $query): Response;
+    public function create(Export $export): Response;
 
     /**
      * @return string

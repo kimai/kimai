@@ -12,6 +12,9 @@ namespace App\Export;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated since 1.13 - will be removed with 2.0
+ */
 interface ExportRendererInterface
 {
     /**

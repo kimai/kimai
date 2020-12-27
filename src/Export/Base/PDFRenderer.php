@@ -9,10 +9,12 @@
 
 namespace App\Export\Base;
 
+use App\Export\Export;
 use App\Export\ExportContext;
 use App\Export\ExportItemInterface;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
+use App\Twig\EnvironmentTrait;
 use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -21,6 +23,7 @@ use Twig\Environment;
 class PDFRenderer
 {
     use RendererTrait;
+    use EnvironmentTrait;
 
     /**
      * @var Environment
@@ -91,12 +94,22 @@ class PDFRenderer
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function render(array $timesheets, TimesheetQuery $query): Response
+    public function create(Export $export): Response
     {
+        $timesheets = $export->getItems();
+        $query = $export->getQuery();
+
         $context = new ExportContext();
         $context->setOption('filename', 'kimai-export.pdf');
 
         $summary = $this->calculateSummary($timesheets);
+
+        $unknownLanguage = $export->getLanguage() === '__XX__';
+
+        if (!$unknownLanguage) {
+            $previousLocale = $this->changeLocale($this->twig, $export->getLanguage());
+        }
+
         $content = $this->twig->render($this->getTemplate(), array_merge([
             'entries' => $timesheets,
             'query' => $query,
@@ -107,6 +120,10 @@ class PDFRenderer
             'decimal' => false,
             'pdfContext' => $context
         ], $this->getOptions($query)));
+
+        if (!$unknownLanguage) {
+            $this->changeLocale($this->twig, $previousLocale);
+        }
 
         $pdfOptions = array_merge($context->getOptions(), $this->getPdfOptions());
 
@@ -127,6 +144,13 @@ class PDFRenderer
         return $response;
     }
 
+    public function render(array $exportItems, TimesheetQuery $query): Response
+    {
+        return $this->create(
+            new Export($exportItems, $query, $query->getUser() ?? $query->getCurrentUser(), '__XX__')
+        );
+    }
+
     public function setTemplate(string $filename): PDFRenderer
     {
         $this->template = $filename;
@@ -144,5 +168,15 @@ class PDFRenderer
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getIcon(): string
+    {
+        return 'pdf';
+    }
+
+    public function getTitle(): string
+    {
+        return 'pdf';
     }
 }

@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\Timesheet;
+use App\Export\Export;
 use App\Export\ServiceExport;
 use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\Query\ExportQuery;
@@ -95,7 +96,10 @@ class ExportController extends AbstractController
         }
 
         $entries = $this->getEntries($query);
-        $response = $renderer->render($entries, $query);
+
+        $response = $renderer->create(
+            new Export($entries, $query, $this->getUser(), $request->getLocale())
+        );
 
         // TODO check entries if user is allowed to update export state - see https://github.com/kevinpapst/kimai2/issues/1473
         if ($query->isMarkAsExported()) {

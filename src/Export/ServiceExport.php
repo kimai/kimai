@@ -14,7 +14,7 @@ use App\Repository\Query\ExportQuery;
 final class ServiceExport
 {
     /**
-     * @var ExportRendererInterface[]
+     * @var ExportRenderer[]
      */
     private $renderer = [];
     /**
@@ -26,22 +26,40 @@ final class ServiceExport
      */
     private $repositories = [];
 
-    public function addRenderer(ExportRendererInterface $renderer): ServiceExport
+    /**
+     * @param ExportRenderer|ExportRendererInterface $renderer
+     * @return ServiceExport
+     */
+    public function addRenderer($renderer): ServiceExport
     {
-        $this->renderer[] = $renderer;
+        if ($renderer instanceof ExportRenderer) {
+            $this->renderer[] = $renderer;
+        } elseif ($renderer instanceof ExportRendererInterface) {
+            $this->renderer[] = new DeprecatedExportRenderer($renderer);
+        } else {
+            throw new \InvalidArgumentException(
+                sprintf('Export renderer "%s" must be an instanceof ExportRendererInterface or ExportRenderer', \get_class($renderer))
+            );
+        }
 
         return $this;
     }
 
     /**
-     * @return ExportRendererInterface[]
+     * @return ExportRenderer[]
+     * @internal
      */
     public function getRenderer(): array
     {
         return $this->renderer;
     }
 
-    public function getRendererById(string $id): ?ExportRendererInterface
+    /**
+     * @param string $id
+     * @return ExportRenderer|null
+     * @internal
+     */
+    public function getRendererById(string $id): ?ExportRenderer
     {
         foreach ($this->renderer as $renderer) {
             if ($renderer->getId() === $id) {
@@ -52,22 +70,40 @@ final class ServiceExport
         return null;
     }
 
-    public function addTimesheetExporter(TimesheetExportInterface $exporter): ServiceExport
+    /**
+     * @param TimesheetExportInterface|TimesheetExportRenderer $exporter
+     * @return ServiceExport
+     */
+    public function addTimesheetExporter($exporter): ServiceExport
     {
-        $this->exporter[] = $exporter;
+        if ($exporter instanceof TimesheetExportRenderer) {
+            $this->exporter[] = $exporter;
+        } elseif ($exporter instanceof TimesheetExportInterface) {
+            $this->exporter[] = new DeprecatedTimesheetExportRenderer($exporter);
+        } else {
+            throw new \InvalidArgumentException(
+                sprintf('Timesheet renderer "%s" must be an instanceof TimesheetExportRenderer or TimesheetExportInterface', \get_class($exporter))
+            );
+        }
 
         return $this;
     }
 
     /**
-     * @return TimesheetExportInterface[]
+     * @return TimesheetExportRenderer[]
+     * @internal
      */
     public function getTimesheetExporter(): array
     {
         return $this->exporter;
     }
 
-    public function getTimesheetExporterById(string $id): ?TimesheetExportInterface
+    /**
+     * @param string $id
+     * @return TimesheetExportInterface|null
+     * @internal
+     */
+    public function getTimesheetExporterById(string $id): ?TimesheetExportRenderer
     {
         foreach ($this->exporter as $exporter) {
             if ($exporter->getId() === $id) {

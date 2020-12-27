@@ -14,6 +14,7 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Event\TimesheetMetaDisplayEvent;
+use App\Export\Export;
 use App\Export\ServiceExport;
 use App\Form\MultiUpdate\MultiUpdateTable;
 use App\Form\MultiUpdate\MultiUpdateTableDTO;
@@ -256,7 +257,9 @@ abstract class TimesheetAbstractController extends AbstractController
             throw $this->createNotFoundException('Invalid timesheet exporter given');
         }
 
-        return $exporter->render($entries, $query);
+        return $exporter->create(
+            new Export($entries, $query, $this->getUser(), $request->getLocale())
+        );
     }
 
     protected function multiUpdate(Request $request, string $renderTemplate)
