@@ -1114,6 +1114,10 @@
         <source>attachments</source>
         <target>Bestanden</target>
       </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Totaal</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

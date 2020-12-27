@@ -8,7 +8,7 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
-## [1.13](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
+## [1.14](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
 
 **ATTENTION** This release bumps the minimum required PHP version to 7.3.
  
@@ -18,6 +18,10 @@ PHP 8 compatibility forced to upgrade MANY libraries:
 
 - Including but not limited to Gedmo v3 (which include BC breaks in definitions)
 - Including Doctrine DBAL in a newer version, that required PHP 7.3
+
+## [1.13](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
+
+- Deprecated `now` variable in export templates: create it yourself with `{% set now = create_date('now', app.user) %}`
 
 ## [1.12](https://github.com/kevinpapst/kimai2/releases/tag/1.12)
 

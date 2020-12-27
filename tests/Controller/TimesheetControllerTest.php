@@ -320,8 +320,6 @@ class TimesheetControllerTest extends ControllerBaseTest
             ]
         ]);
 
-        $client = $this->getClientForAuthenticatedUser();
-
         $begin = new \DateTime('2018-08-02T20:00:00');
         $end = new \DateTime('2018-08-02T20:30:00');
 
@@ -331,7 +329,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             $timesheet->setEnd($end);
         });
         $fixture->setAmount(1);
-        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_SUPER_ADMIN));
         $this->importFixture($fixture);
 
         // create a second entry that is overlapping - should fail due to the changed config above

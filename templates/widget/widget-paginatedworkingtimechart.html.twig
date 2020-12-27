@@ -13,13 +13,13 @@
                         {% set prevWeek = options.week %}
                         {% set nextYear = options.year %}
                         {% set nextWeek = options.week %}
-                        {% if prevWeek == 1 %}
+                        {% if options.week == 1 %}
                             {% set prevYear = prevYear - 1 %}
-                            {% set prevWeek = 52 %}
+                            {% set prevWeek = data.lastWeekInLastYear %}
                         {% else %}
                             {% set prevWeek = prevWeek - 1 %}
                         {% endif %}
-                        {% if nextWeek == 52 %}
+                        {% if options.week == data.lastWeekInYear %}
                             {% set nextYear = nextYear + 1 %}
                             {% set nextWeek = 1 %}
                         {% else %}
@@ -53,13 +53,13 @@
                     <div class="col-sm-3 col-xs-6">
                         <div class="description-block border-right">
                             <h5 class="description-header">{{ data.month|duration }}</h5>
-                            <span class="description-text">{{ 'stats.workingTimeMonth'|trans({'%month%': data.begin|month_name, '%year%': data.begin|date_format('Y')}) }}</span>
+                            <span class="description-text">{{ 'stats.workingTimeMonth'|trans({'%month%': data.thisMonth|month_name, '%year%': data.thisMonth|date_format('Y')}) }}</span>
                         </div>
                     </div>
                     <div class="col-sm-3 col-xs-6">
                         <div class="description-block border-right">
                             <h5 class="description-header">{{ data.year|duration }}</h5>
-                            <span class="description-text">{{ 'stats.workingTimeYear'|trans({'%year%': data.begin|date_format('Y')}) }}</span>
+                            <span class="description-text">{{ 'stats.workingTimeYear'|trans({'%year%': data.thisMonth|date_format('Y')}) }}</span>
                         </div>
                     </div>
                 </div>

@@ -53,6 +53,7 @@ class InvoiceFixtures extends Fixture
                 'Phone: ' . $faker->phoneNumber . PHP_EOL .
                 'Email: ' . $faker->safeEmail
             )
+            ->setLanguage('en')
         ;
 
         $manager->persist($template);

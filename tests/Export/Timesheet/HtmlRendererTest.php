@@ -10,6 +10,7 @@
 namespace App\Tests\Export\Timesheet;
 
 use App\Export\Timesheet\HtmlRenderer;
+use App\Repository\ProjectRepository;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
@@ -23,8 +24,9 @@ class HtmlRendererTest extends AbstractRendererTest
     public function testConfiguration()
     {
         $sut = new HtmlRenderer(
-            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock(),
-            new EventDispatcher()
+            $this->createMock(Environment::class),
+            new EventDispatcher(),
+            $this->createMock(ProjectRepository::class)
         );
 
         $this->assertEquals('print', $sut->getId());
@@ -40,7 +42,7 @@ class HtmlRendererTest extends AbstractRendererTest
         $request->setLocale('en');
         $stack->push($request);
 
-        $sut = new HtmlRenderer($twig, new EventDispatcher());
+        $sut = new HtmlRenderer($twig, new EventDispatcher(), $this->createMock(ProjectRepository::class));
 
         $response = $this->render($sut);
 

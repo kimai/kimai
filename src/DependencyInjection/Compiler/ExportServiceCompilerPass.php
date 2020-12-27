@@ -11,6 +11,7 @@ namespace App\DependencyInjection\Compiler;
 
 use App\Export\Renderer\HtmlRenderer;
 use App\Export\Renderer\HtmlRendererFactory;
+use App\Export\Renderer\PDFRenderer;
 use App\Export\Renderer\PdfRendererFactory;
 use App\Export\ServiceExport;
 use App\Kernel;
@@ -72,7 +73,7 @@ class ExportServiceCompilerPass implements CompilerPassInterface
 
                 $serviceId = 'exporter_renderer.' . str_replace('.', '_', $tplName);
 
-                $factoryDefinition = new Definition(HtmlRenderer::class);
+                $factoryDefinition = new Definition(PDFRenderer::class);
                 $factoryDefinition->addArgument($tplName);
                 $factoryDefinition->addArgument($tplName);
                 $factoryDefinition->setFactory([new Reference(PdfRendererFactory::class), 'create']);
