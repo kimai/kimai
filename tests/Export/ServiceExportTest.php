@@ -48,7 +48,7 @@ class ServiceExportTest extends TestCase
     {
         $sut = new ServiceExport();
 
-        $exporter = new HtmlExporter($this->createMock(Environment::class), new EventDispatcher());
+        $exporter = new HtmlExporter($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectRepository::class));
         $sut->addTimesheetExporter($exporter);
 
         self::assertEquals(1, \count($sut->getTimesheetExporter()));

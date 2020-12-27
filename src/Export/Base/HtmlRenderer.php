@@ -17,7 +17,6 @@ use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\Export;
-use App\Export\ExportItemInterface;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
@@ -83,8 +82,7 @@ class HtmlRenderer
     }
 
     /**
-     * @param ExportItemInterface[] $timesheets
-     * @param TimesheetQuery $query
+     * @param Export $export
      * @return Response
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
@@ -95,9 +93,8 @@ class HtmlRenderer
         $timesheets = $export->getItems();
         $query = $export->getQuery();
 
-        $unknownLanguage = $export->getLanguage() === '__XX__';
-
-        if (!$unknownLanguage) {
+        $previousLocale = null;
+        if ($export->getLanguage() !== '__XX__') {
             $previousLocale = $this->changeLocale($this->twig, $export->getLanguage());
         }
 
@@ -129,7 +126,7 @@ class HtmlRenderer
             'userPreferences' => $userPreferences,
         ], $this->getOptions($query)));
 
-        if (!$unknownLanguage) {
+        if ($previousLocale !== null) {
             $this->changeLocale($this->twig, $previousLocale);
         }
 
@@ -139,6 +136,9 @@ class HtmlRenderer
         return $response;
     }
 
+    /**
+     * @deprecated since 1.13 - will be removed with 2.0
+     */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
         return $this->create(

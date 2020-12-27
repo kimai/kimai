@@ -11,7 +11,6 @@ namespace App\Export\Base;
 
 use App\Export\Export;
 use App\Export\ExportContext;
-use App\Export\ExportItemInterface;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\EnvironmentTrait;
@@ -87,8 +86,7 @@ class PDFRenderer
     }
 
     /**
-     * @param ExportItemInterface[] $timesheets
-     * @param TimesheetQuery $query
+     * @param Export $export
      * @return Response
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
@@ -104,9 +102,8 @@ class PDFRenderer
 
         $summary = $this->calculateSummary($timesheets);
 
-        $unknownLanguage = $export->getLanguage() === '__XX__';
-
-        if (!$unknownLanguage) {
+        $previousLocale = null;
+        if ($export->getLanguage() !== '__XX__') {
             $previousLocale = $this->changeLocale($this->twig, $export->getLanguage());
         }
 
@@ -121,7 +118,7 @@ class PDFRenderer
             'pdfContext' => $context
         ], $this->getOptions($query)));
 
-        if (!$unknownLanguage) {
+        if ($previousLocale !== null) {
             $this->changeLocale($this->twig, $previousLocale);
         }
 
@@ -144,6 +141,9 @@ class PDFRenderer
         return $response;
     }
 
+    /**
+     * @deprecated since 1.13 - will be removed with 2.0
+     */
     public function render(array $exportItems, TimesheetQuery $query): Response
     {
         return $this->create(

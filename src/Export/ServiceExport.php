@@ -18,7 +18,7 @@ final class ServiceExport
      */
     private $renderer = [];
     /**
-     * @var TimesheetExportInterface[]
+     * @var TimesheetExportRenderer[]
      */
     private $exporter = [];
     /**
@@ -100,7 +100,7 @@ final class ServiceExport
 
     /**
      * @param string $id
-     * @return TimesheetExportInterface|null
+     * @return TimesheetExportRenderer|null
      * @internal
      */
     public function getTimesheetExporterById(string $id): ?TimesheetExportRenderer

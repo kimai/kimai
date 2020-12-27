@@ -95,7 +95,13 @@ abstract class AbstractRendererTest extends KernelTestCase
         $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
         $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user1->method('getId')->willReturn(1);
-        $user1->method('getPreferenceValue')->willReturn('50');
+        $user1->method('getPreferenceValue')->willReturnCallback(function ($name, $default = null) {
+            if ($name === 'timesheet.export_decimal') {
+                return false;
+            }
+
+            return '50';
+        });
         $user1->method('getUsername')->willReturn('foo-bar');
 
         $user2 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
@@ -170,6 +176,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
         $query->setProjects([$project]);
+        $query->setCurrentUser($user1);
 
         return $renderer->render($entries, $query);
     }
