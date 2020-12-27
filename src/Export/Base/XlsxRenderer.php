@@ -81,4 +81,14 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer
     {
         return 'xlsx';
     }
+
+    public function getIcon(): string
+    {
+        return 'xlsx';
+    }
+
+    public function getTitle(): string
+    {
+        return 'xlsx';
+    }
 }

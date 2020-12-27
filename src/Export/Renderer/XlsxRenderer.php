@@ -10,17 +10,9 @@
 namespace App\Export\Renderer;
 
 use App\Export\Base\XlsxRenderer as BaseXlsxRenderer;
+use App\Export\ExportRenderer;
 use App\Export\RendererInterface;
 
-final class XlsxRenderer extends BaseXlsxRenderer implements RendererInterface
+final class XlsxRenderer extends BaseXlsxRenderer implements RendererInterface, ExportRenderer
 {
-    public function getIcon(): string
-    {
-        return 'xlsx';
-    }
-
-    public function getTitle(): string
-    {
-        return 'xlsx';
-    }
 }

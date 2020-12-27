@@ -10,17 +10,9 @@
 namespace App\Export\Renderer;
 
 use App\Export\Base\CsvRenderer as BaseCsvRenderer;
+use App\Export\ExportRenderer;
 use App\Export\RendererInterface;
 
-final class CsvRenderer extends BaseCsvRenderer implements RendererInterface
+final class CsvRenderer extends BaseCsvRenderer implements RendererInterface, ExportRenderer
 {
-    public function getIcon(): string
-    {
-        return 'csv';
-    }
-
-    public function getTitle(): string
-    {
-        return 'csv';
-    }
 }

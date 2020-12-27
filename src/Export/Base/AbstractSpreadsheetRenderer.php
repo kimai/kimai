@@ -16,6 +16,7 @@ use App\Event\MetaDisplayEventInterface;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
+use App\Export\Export;
 use App\Export\ExportItemInterface;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
@@ -614,6 +615,16 @@ abstract class AbstractSpreadsheetRenderer
      */
     public function render(array $exportItems, TimesheetQuery $query): Response
     {
+        return $this->create(
+            new Export($exportItems, $query, $query->getUser() ?? $query->getCurrentUser(), 'en')
+        );
+    }
+
+    public function create(Export $export): Response
+    {
+        $exportItems = $export->getItems();
+        $query = $export->getQuery();
+
         $spreadsheet = $this->fromArrayToSpreadsheet($exportItems, $query);
         $filename = $this->saveSpreadsheet($spreadsheet);
 

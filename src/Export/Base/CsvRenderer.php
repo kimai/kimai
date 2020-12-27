@@ -58,4 +58,14 @@ class CsvRenderer extends AbstractSpreadsheetRenderer
     {
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=%s', $duration));
     }
+
+    public function getIcon(): string
+    {
+        return 'csv';
+    }
+
+    public function getTitle(): string
+    {
+        return 'csv';
+    }
 }
