@@ -9,73 +9,14 @@
 
 namespace App\Export\Timesheet;
 
-use App\Entity\Timesheet;
-use App\Event\TimesheetMetaDisplayEvent;
+use App\Export\Base\HtmlRenderer as BaseHtmlRenderer;
 use App\Export\TimesheetExportInterface;
-use App\Repository\Query\TimesheetQuery;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Twig\Environment;
 
-final class HtmlRenderer implements TimesheetExportInterface
+final class HtmlRenderer extends BaseHtmlRenderer implements TimesheetExportInterface
 {
-    /**
-     * @var Environment
-     */
-    private $twig;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-
-    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher)
+    protected function getTemplate(): string
     {
-        $this->twig = $twig;
-        $this->dispatcher = $dispatcher;
-    }
-
-    private function getOptions(TimesheetQuery $query): array
-    {
-        $decimal = false;
-        if (null !== $query->getCurrentUser()) {
-            $decimal = (bool) $query->getCurrentUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
-        } elseif (null !== $query->getUser()) {
-            $decimal = (bool) $query->getUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
-        }
-
-        return ['decimal' => $decimal];
-    }
-
-    /**
-     * @param Timesheet[] $timesheets
-     * @param TimesheetQuery $query
-     * @return Response
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     */
-    public function render(array $timesheets, TimesheetQuery $query): Response
-    {
-        $metaLocation = TimesheetMetaDisplayEvent::TEAM_TIMESHEET_EXPORT;
-        if (null !== $query->getUser()) {
-            $metaLocation = TimesheetMetaDisplayEvent::EXPORT;
-        }
-
-        $event = new TimesheetMetaDisplayEvent($query, $metaLocation);
-        $this->dispatcher->dispatch($event);
-        $timesheetMetaFields = $event->getFields();
-
-        $content = $this->twig->render('timesheet/export.html.twig', array_merge([
-            'entries' => $timesheets,
-            'query' => $query,
-            'metaColumns' => $timesheetMetaFields,
-            'decimal' => false,
-        ], $this->getOptions($query)));
-
-        $response = new Response();
-        $response->setContent($content);
-
-        return $response;
+        return 'timesheet/export.html.twig';
     }
 
     /**
