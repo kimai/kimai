@@ -32,7 +32,7 @@ final class InvoiceFilename
 
         if (!empty($company)) {
             $uCompany = new UnicodeString($company);
-            $filename .= '-' . $uCompany->ascii()->snake();
+            $filename .= '-' . $uCompany->collapseWhitespace()->ascii();
         }
 
         if (null !== $model->getQuery()) {
@@ -41,7 +41,7 @@ final class InvoiceFilename
                 $pName = $projects[0];
                 if ($pName instanceof Project) {
                     $uProject = new UnicodeString($pName->getName());
-                    $filename .= '-' . $uProject->ascii()->snake();
+                    $filename .= '-' . $uProject->collapseWhitespace()->ascii();
                 }
             }
         }
