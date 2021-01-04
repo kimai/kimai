@@ -10,6 +10,7 @@
 namespace App\Utils;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\String\UnicodeString;
 
 final class FileHelper
 {
@@ -67,5 +68,18 @@ final class FileHelper
     public function removeFile(string $filename)
     {
         $this->filesystem->remove($filename);
+    }
+
+    public static function convertToAsciiFilename(string $filename): string
+    {
+        $string = new UnicodeString($filename);
+
+        return $string
+            ->replace('/', ' ')
+            ->replace('%', ' ')
+            ->collapseWhitespace()
+            ->replace(' ', '_')
+            ->ascii()
+            ->snake();
     }
 }
