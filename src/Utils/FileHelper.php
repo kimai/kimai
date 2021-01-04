@@ -72,11 +72,12 @@ final class FileHelper
 
     public static function convertToAsciiFilename(string $filename): string
     {
+        $dangerousCharacters = ['"', "'", '&', '/', '\\', '?', '#', '%'];
+        $filename = str_replace($dangerousCharacters, ' ', $filename);
+
         $string = new UnicodeString($filename);
 
         return $string
-            ->replace('/', ' ')
-            ->replace('%', ' ')
             ->collapseWhitespace()
             ->replace(' ', '_')
             ->ascii()
