@@ -261,6 +261,11 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_USER, '/api/projects/2');
     }
 
+    public function testStatisticsNotFound()
+    {
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/projects/2/statistics');
+    }
+
     public function testPostAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
