@@ -10,15 +10,25 @@
 namespace App\Model;
 
 use App\Entity\Project;
+use JMS\Serializer\Annotation as Serializer;
 
+/**
+ * @Serializer\ExclusionPolicy("all")
+ */
 class ProjectStatistic extends TimesheetCountedStatistic
 {
     /**
      * @var Project
      */
     private $project;
+
     /**
      * @var int
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("activityAmount")
      */
     private $activityAmount = 0;
 

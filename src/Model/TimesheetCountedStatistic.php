@@ -9,22 +9,47 @@
 
 namespace App\Model;
 
+use JMS\Serializer\Annotation as Serializer;
+
+/**
+ * @Serializer\ExclusionPolicy("all")
+ */
 class TimesheetCountedStatistic
 {
     /**
      * @var int
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("recordAmount")
      */
     protected $recordAmount = 0;
     /**
      * @var int
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("recordDuration")
      */
     protected $recordDuration = 0;
     /**
      * @var float
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type("float")
+     * @Serializer\SerializedName("recordRate")
      */
     protected $recordRate = 0.0;
     /**
      * @var float
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type("float")
+     * @Serializer\SerializedName("recordInternalRate")
      */
     protected $recordInternalRate = 0.0;
 

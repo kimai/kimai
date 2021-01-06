@@ -451,6 +451,15 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'orderDate' => '@datetime',
                 ];
 
+            // project statistic
+            case 'ProjectStatistic':
+                return [
+                    'recordAmount' => 'int',
+                    'recordDuration' => 'int',
+                    'recordRate' => 'float',
+                    'recordInternalRate' => 'float',
+                    'activityAmount' => 'int'
+                ];
             // embedded activities
             case 'Activity':
                 return [

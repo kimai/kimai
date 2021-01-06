@@ -196,6 +196,41 @@ class ProjectController extends BaseApiController
     }
 
     /**
+     * Returns one project statistics
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Returns one project statistics",
+     *      @SWG\Schema(ref="#/definitions/ProjectStatistic"),
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="The project whose statistics will be returned",
+     *      required=true,
+     * )
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function getStatisticsAction(int $id): Response
+    {
+        $data = $this->repository->find($id);
+
+        if (null === $data) {
+            throw new NotFoundException();
+        }
+
+        $statistics = $this->repository->getProjectStatistics($data);
+
+        $view = new View($statistics, 200);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
      * Creates a new project
      *
      * @SWG\Post(

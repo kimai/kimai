@@ -15,6 +15,7 @@ nelmio_api_doc:
             - { alias: ProjectRate,                 type: App\Entity\ProjectRate,                   groups: [Default, Entity, Project_Rate] }
             - { alias: ProjectRateForm,             type: App\Form\API\ProjectRateApiForm,          groups: [Default, Entity, Project_Rate] }
             - { alias: ProjectCollection,           type: App\Entity\Project,                       groups: [Default, Collection, Project] }
+            - { alias: ProjectStatistic,            type: App\Model\ProjectStatistic,               groups: [Default] }
             - { alias: ActivityEditForm,            type: App\Form\API\ActivityApiEditForm,         groups: [Default, Entity, Activity] }
             - { alias: ActivityEntity,              type: App\Entity\Activity,                      groups: [Default, Entity, Activity, Activity_Entity, Not_Expanded] }
             - { alias: Activity,                    type: App\Entity\Activity,                      groups: [Default, Not_Expanded] }

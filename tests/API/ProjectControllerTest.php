@@ -181,7 +181,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         yield ['/api/projects', ['customers' => '2,2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
     }
 
-    public function testGetEntity()
+    public function testGetEntityAndStatistics()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $em = $this->getEntityManager();
@@ -231,6 +231,24 @@ class ProjectControllerTest extends APIControllerBaseTest
             'metaFields' => [],
             'teams' => [],
             'color' => null,
+        ];
+
+        foreach ($expected as $key => $value) {
+            self::assertEquals($value, $result[$key]);
+        }
+
+        $this->assertAccessIsGranted($client, '/api/projects/2/statistics');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('ProjectStatistic', $result);
+
+        $expected = [
+            'recordAmount' => 0,
+            'recordDuration' => 0,
+            'recordRate' => 0,
+            'recordInternalRate' => 0,
+            'activityAmount' => 0
         ];
 
         foreach ($expected as $key => $value) {
