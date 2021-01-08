@@ -215,6 +215,8 @@
                     right : 'month,agendaWeek,agendaDay'
                 },
                 eventLimit: {{ config.dayLimit }},
+                weekNumbersWithinDays: true,
+                weekNumberCalculation: 'ISO',
                 weekNumbers: {% if config.showWeekNumbers %}true{% else %}false{% endif %},
                 allDaySlot: false,
                 navLinks: true,
