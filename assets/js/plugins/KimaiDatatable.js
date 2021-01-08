@@ -91,14 +91,17 @@ export default class KimaiDatatable extends KimaiPlugin {
 
     }
 
+    /**
+     * show dropdown menu upwards, if it is outside the visible viewport
+     */
     fixDropdowns() {
-        // show dropdown menu upwards, if it is outside the visible viewport
+        const docHeight = jQuery(document).height();
         jQuery(this.selector + ' [data-toggle=dropdown]').each(function() {
             const parent = jQuery(this).parent();
             const menu = parent.find('.dropdown-menu');
 
             if (parent && menu) {
-                if ((parent.offset().top + parent.outerHeight() + menu.outerHeight()) > jQuery(document).height()) {
+                if ((parent.offset().top + parent.outerHeight() + menu.outerHeight()) > docHeight) {
                     parent.addClass('dropup').removeClass('dropdown');
                 }
             }
