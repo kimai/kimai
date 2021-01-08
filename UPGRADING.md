@@ -11,6 +11,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 ## [1.13](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
 
 - Deprecated `now` variable in export templates: create it yourself with `{% set now = create_date('now', app.user) %}`
+- Changed invoice filename generation (check if you use cronjob for invoices)
 
 ## [1.12](https://github.com/kevinpapst/kimai2/releases/tag/1.12)
 

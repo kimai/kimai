@@ -20,14 +20,15 @@ class FileHelperTest extends TestCase
     public function getFileTestData()
     {
         return [
-            ['barss_laolala_ldksjf123_my_awesome_gmb_h', 'barß / laölala #   ldksjf 123 MyAwesome GmbH'],
+            ['Barss_laolala_ld_ksjf_123_MyAwesome_GmbH', 'Barß / laölala #   ld_ksjf 123 MyAwesome GmbH'],
             ['namaste', 'नमस्ते'],
             ['sa_yonara', 'さ!よなら'],
-            ['sp_asibo_spa_sibo_spas_ibo', ' сп.асибо/спа   сибо#/!спас -- ибо!!'],
-            ['kkakkaekkyakkyaekkeokkekkyeokkyekkokkwasssss', '까깨꺄꺠꺼께껴꼐꼬꽈sssss'],
-            ['ss_n', '\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n"],
-            ['demo_projec_t1', 'Demo ProjecT1'],
-            ['demo_pr_oj_ect1', 'D"e&m%o# Pr\'oj\\e/c?T1'],
+            ['sp_asibo_spa_sibo_spas_--_ibo', ' сп.асибо/спа   сибо#/!спас -- ибо!!'],
+            ['kkakkaekkyakkyaekkeokke_kkyeokkyekkokkwasssss', '까깨꺄꺠꺼께_껴꼐꼬꽈sssss'],
+            ['ss_n_-', '\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n"],
+            ['Demo_ProjecT1', 'Demo ProjecT1'],
+            ['kimai-export', 'kimai-export'],
+            ['D_e_m_o_Pr_oj_e_c_T1', 'D"e&m%o# Pr\'oj\\e/c?T1'],
         ];
     }
 
