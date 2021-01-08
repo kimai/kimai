@@ -23,7 +23,7 @@
       </trans-unit>
       <trans-unit id="This is a mandatory field">
         <source>This is a mandatory field</source>
-        <target>Mandatório</target>
+        <target>Obrigatório</target>
       </trans-unit>
       <trans-unit id="create">
         <source>create</source>
@@ -84,7 +84,7 @@
             -->
       <trans-unit id="menu.homepage">
         <source>menu.homepage</source>
-        <target>Dashboard</target>
+        <target>Painel</target>
       </trans-unit>
       <trans-unit id="menu.admin">
         <source>menu.admin</source>
@@ -147,7 +147,7 @@
             -->
       <trans-unit id="error.no_entries_found">
         <source>error.no_entries_found</source>
-        <target>Nenhuma entrada existente</target>
+        <target>Não foram encontradas entradas com base nos filtros selecionados.</target>
       </trans-unit>
       <!--
               General labels
@@ -632,7 +632,7 @@
       </trans-unit>
       <trans-unit id="stats.userActiveWeek">
         <source>stats.userActiveWeek</source>
-        <target>Active users this week</target>
+        <target>Usuários ativos nesta semana</target>
       </trans-unit>
       <trans-unit id="stats.userActiveMonth">
         <source>stats.userActiveMonth</source>
@@ -933,6 +933,194 @@
       <trans-unit id="update_multiple">
         <source>update_multiple</source>
         <target>%action% %count% entradas?</target>
+      </trans-unit>
+      <trans-unit id="label.appendTags">
+        <source>label.appendTags</source>
+        <target>Tags de apêndice</target>
+      </trans-unit>
+      <trans-unit id="label.decimalDuration">
+        <source>label.decimalDuration</source>
+        <target>Duração da exibição como número decimal</target>
+      </trans-unit>
+      <trans-unit id="Allowed character: A-Z and _">
+        <source>Allowed character: A-Z and _</source>
+        <target>Caractere permitido: A-Z e _</target>
+      </trans-unit>
+      <trans-unit id="label.vat_id">
+        <source>label.vat_id</source>
+        <target>IVA-ID</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.export_decimal">
+        <source>label.timesheet.export_decimal</source>
+        <target>Use a duração decimal na exportação</target>
+      </trans-unit>
+      <trans-unit id="help.fixedRate">
+        <source>help.fixedRate</source>
+        <target>Cada registro de cada vez recebe o mesmo valor, independentemente de sua duração</target>
+      </trans-unit>
+      <trans-unit id="label.my_team_projects">
+        <source>label.my_team_projects</source>
+        <target>Projetos e orçamentos da equipe</target>
+      </trans-unit>
+      <trans-unit id="label.teamlead">
+        <source>label.teamlead</source>
+        <target>Liderança de equipe</target>
+      </trans-unit>
+      <trans-unit id="label.recalculate_rates">
+        <source>label.recalculate_rates</source>
+        <target>Taxas de recalculação</target>
+      </trans-unit>
+      <trans-unit id="export.filter">
+        <source>export.filter</source>
+        <target>Filtrar dados para exportação</target>
+      </trans-unit>
+      <trans-unit id="label.orderDate">
+        <source>label.orderDate</source>
+        <target>Data do pedido</target>
+      </trans-unit>
+      <trans-unit id="label.mark_as_exported">
+        <source>label.mark_as_exported</source>
+        <target>Marca como exportada</target>
+      </trans-unit>
+      <trans-unit id="button.preview_print">
+        <source>button.preview_print</source>
+        <target>Visualização de impressão</target>
+      </trans-unit>
+      <trans-unit id="invoice.filter">
+        <source>invoice.filter</source>
+        <target>Filtrar dados da fatura</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeMonth">
+        <source>stats.workingTimeMonth</source>
+        <target>%month% %year%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeWeek">
+        <source>stats.workingTimeWeek</source>
+        <target>Semana do calendário %week%</target>
+      </trans-unit>
+      <trans-unit id="user_role.title">
+        <source>user_role.title</source>
+        <target>Função do usuário</target>
+      </trans-unit>
+      <trans-unit id="label.plus_more">
+        <source>label.plus_more</source>
+        <target>+%count% mais</target>
+      </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>Os campos a serem atualizados devem primeiro ser ativados clicando na caixa de seleção associada.</target>
+      </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>Campos adicionais</target>
+      </trans-unit>
+      <trans-unit id="status.paid">
+        <source>status.paid</source>
+        <target>Pago</target>
+      </trans-unit>
+      <trans-unit id="status.pending">
+        <source>status.pending</source>
+        <target>Pendente</target>
+      </trans-unit>
+      <trans-unit id="status.new">
+        <source>status.new</source>
+        <target>Novo</target>
+      </trans-unit>
+      <trans-unit id="label.status">
+        <source>label.status</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="button.preview">
+        <source>button.preview</source>
+        <target>Visualizar</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft">
+        <source>stats.percentUsedLeft</source>
+        <target>%percent%% usado (%left% ainda estão abertos)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed">
+        <source>stats.percentUsed</source>
+        <target>%percent%% usado</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeYear">
+        <source>stats.workingTimeYear</source>
+        <target>Ano inteiro %year%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeToday">
+        <source>stats.workingTimeToday</source>
+        <target>Hoje, %day%</target>
+      </trans-unit>
+      <trans-unit id="user_permissions.title">
+        <source>user_permissions.title</source>
+        <target>Permissões do usuário</target>
+      </trans-unit>
+      <trans-unit id="label.project_end">
+        <source>label.project_end</source>
+        <target>Fim do projeto</target>
+      </trans-unit>
+      <trans-unit id="label.project_start">
+        <source>label.project_start</source>
+        <target>Início do projeto</target>
+      </trans-unit>
+      <trans-unit id="label.lastLogin">
+        <source>label.lastLogin</source>
+        <target>Último login</target>
+      </trans-unit>
+      <trans-unit id="profile.teams">
+        <source>profile.teams</source>
+        <target>Equipes</target>
+      </trans-unit>
+      <trans-unit id="profile.registration_date">
+        <source>profile.registration_date</source>
+        <target>Registrado em</target>
+      </trans-unit>
+      <trans-unit id="label.replaceTags">
+        <source>label.replaceTags</source>
+        <target>Substituir tags</target>
+      </trans-unit>
+      <trans-unit id="label.progress">
+        <source>label.progress</source>
+        <target>Progresso</target>
+      </trans-unit>
+      <trans-unit id="label.my_teams">
+        <source>label.my_teams</source>
+        <target>Minhas equipes</target>
+      </trans-unit>
+      <trans-unit id="action.reset">
+        <source>action.reset</source>
+        <target>Restaurar</target>
+      </trans-unit>
+      <trans-unit id="label.billable">
+        <source>label.billable</source>
+        <target>Faturável</target>
+      </trans-unit>
+      <trans-unit id="placeholder.type_message">
+        <source>placeholder.type_message</source>
+        <target>Digite sua mensagem...</target>
+      </trans-unit>
+      <trans-unit id="label.team">
+        <source>label.team</source>
+        <target>Equipe</target>
+      </trans-unit>
+      <trans-unit id="help.rate_internal">
+        <source>help.rate_internal</source>
+        <target>Custos internos (se isso não for especificado, a taxa normal é usada)</target>
+      </trans-unit>
+      <trans-unit id="label.rate_internal">
+        <source>label.rate_internal</source>
+        <target>Taxa interna</target>
+      </trans-unit>
+      <trans-unit id="help.rate">
+        <source>help.rate</source>
+        <target>Taxa horária a ser cobrada</target>
+      </trans-unit>
+      <trans-unit id="label.theme.layout">
+        <source>label.theme.layout</source>
+        <target>Exibição: layout</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Total</target>
       </trans-unit>
     </body>
   </file>

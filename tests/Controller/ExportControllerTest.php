@@ -92,14 +92,22 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_export', 23);
 
         // assert export type buttons are available
-        $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default-internal.pdf.twig', 'default.pdf.twig', 'xlsx'];
+        $expected = [
+            'csv' => 'csv',
+            'default.html.twig' => 'default.html.twig',
+            'default-budget.pdf.twig' => 'default-budget.pdf.twig',
+            'default-internal.pdf.twig' => 'default-internal.pdf.twig',
+            'default.pdf.twig' => 'default.pdf.twig',
+            'xlsx' => 'xlsx'
+        ];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
-        $this->assertEquals(\count($expected), $node->count());
+        $this->assertGreaterThanOrEqual(\count($expected), $node->count());
         /** @var \DOMElement $button */
         foreach ($node->getIterator() as $button) {
             $type = $button->getAttribute('data-type');
-            $this->assertContains($type, $expected);
+            unset($expected[$type]);
         }
+        $this->assertEmpty($expected);
     }
 
     public function testIndexActionWithEntriesForTeamleadDoesNotShowUserWithoutTeam()
@@ -144,14 +152,22 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_export', 3);
 
         // assert export type buttons are available
-        $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default-internal.pdf.twig', 'default.pdf.twig', 'xlsx'];
+        $expected = [
+            'csv' => 'csv',
+            'default.html.twig' => 'default.html.twig',
+            'default-budget.pdf.twig' => 'default-budget.pdf.twig',
+            'default-internal.pdf.twig' => 'default-internal.pdf.twig',
+            'default.pdf.twig' => 'default.pdf.twig',
+            'xlsx' => 'xlsx'
+        ];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
-        $this->assertEquals(\count($expected), $node->count());
+        $this->assertGreaterThanOrEqual(\count($expected), $node->count());
         /** @var \DOMElement $button */
         foreach ($node->getIterator() as $button) {
             $type = $button->getAttribute('data-type');
-            $this->assertContains($type, $expected);
+            unset($expected[$type]);
         }
+        $this->assertEmpty($expected);
     }
 
     public function testExportActionWithMissingRenderer()

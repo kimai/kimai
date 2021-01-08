@@ -11,6 +11,7 @@ namespace App\Twig;
 
 use App\Configuration\LanguageFormattings;
 use App\Constants;
+use App\Entity\User;
 use App\Utils\LocaleFormats;
 use App\Utils\LocaleFormatter;
 use DateTime;
@@ -89,6 +90,7 @@ class DateExtensions extends AbstractExtension
     {
         return [
             new TwigFunction('get_format_duration', [$this, 'getDurationFormat']),
+            new TwigFunction('create_date', [$this, 'createDate']),
         ];
     }
 
@@ -128,6 +130,13 @@ class DateExtensions extends AbstractExtension
     public function dateTimeFull($date)
     {
         return $this->formatter->dateTimeFull($date);
+    }
+
+    public function createDate(string $date, ?User $user = null): \DateTime
+    {
+        $timezone = $user !== null ? $user->getTimezone() : date_default_timezone_get();
+
+        return new DateTime($date, new \DateTimeZone($timezone));
     }
 
     /**

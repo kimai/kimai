@@ -1115,6 +1115,10 @@
         <source>label.batch_meta_fields</source>
         <target>Champs additionnels</target>
       </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Total</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

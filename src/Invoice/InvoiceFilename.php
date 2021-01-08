@@ -10,7 +10,7 @@
 namespace App\Invoice;
 
 use App\Entity\Project;
-use Symfony\Component\String\UnicodeString;
+use App\Utils\FileHelper;
 
 final class InvoiceFilename
 {
@@ -31,8 +31,7 @@ final class InvoiceFilename
         }
 
         if (!empty($company)) {
-            $uCompany = new UnicodeString($company);
-            $filename .= '-' . $uCompany->ascii()->snake();
+            $filename .= '-' . $this->convert($company);
         }
 
         if (null !== $model->getQuery()) {
@@ -40,13 +39,17 @@ final class InvoiceFilename
             if (\count($projects) === 1) {
                 $pName = $projects[0];
                 if ($pName instanceof Project) {
-                    $uProject = new UnicodeString($pName->getName());
-                    $filename .= '-' . $uProject->ascii()->snake();
+                    $filename .= '-' . $this->convert($pName->getName());
                 }
             }
         }
 
         $this->filename = $filename;
+    }
+
+    private function convert(string $filename): string
+    {
+        return FileHelper::convertToAsciiFilename($filename);
     }
 
     public function getFilename()

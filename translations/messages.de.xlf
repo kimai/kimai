@@ -80,6 +80,10 @@
         <source>rates.title</source>
         <target>Gebühren</target>
       </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Gesamt</target>
+      </trans-unit>
       <!--
               Login / Security
             -->

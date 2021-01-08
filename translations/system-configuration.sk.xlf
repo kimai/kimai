@@ -112,7 +112,7 @@
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
-        <target>Mini logo (zbalený postranný panel)</target>
+        <target>Mini Logo (zbalený postranný panel)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
@@ -205,6 +205,30 @@
       <trans-unit id="invoice">
         <source>invoice</source>
         <target>Faktúry</target>
+      </trans-unit>
+      <trans-unit id="Floor">
+        <source>Floor</source>
+        <target>Zem: začiatok, koniec a trvanie sa zaokrúhlia nadol</target>
+      </trans-unit>
+      <trans-unit id="Default">
+        <source>Default</source>
+        <target>Štandardné: začiatok sa zaokrúhli nadol, koniec a trvanie nahor</target>
+      </trans-unit>
+      <trans-unit id="first_weekday">
+        <source>first_weekday</source>
+        <target>Prvý deň v týždni</target>
+      </trans-unit>
+      <trans-unit id="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target>Formát čísla faktúry</target>
+      </trans-unit>
+      <trans-unit id="label.simple_form">
+        <source>label.simple_form</source>
+        <target>Jednoduché vyhľadávanie</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>Predvolený čas spustenia (nepoužíva sa vo všetkých režimoch sledovania času)</target>
       </trans-unit>
     </body>
   </file>

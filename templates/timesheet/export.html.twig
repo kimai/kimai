@@ -43,7 +43,7 @@
                         <th>{{ 'label.username'|trans }}</th>
                     {% endif %}
                     <th>{{ 'label.description'|trans }}</th>
-                    {% for field in metaColumns %}
+                    {% for field in timesheetMetaFields %}
                         <th class="text-nowrap">{{ field.label|trans }}</th>
                     {% endfor %}
                     <th>{{ 'label.hours'|trans }}</th>
@@ -70,7 +70,7 @@
                                 {{ 'label.customer'|trans }}: {{ entry.project.customer.name }}
                             </span>
                         </td>
-                        {% for field in metaColumns %}
+                        {% for field in timesheetMetaFields %}
                             <td>{{ tables.datatable_meta_column(entry, field) }}</td>
                         {% endfor %}
                         <td class="text-nowrap">{{ entry.duration|duration(decimal) }}</td>
@@ -83,7 +83,7 @@
                     {% if showUserColumn %}
                         <th></th>
                     {% endif %}
-                    {% for field in metaColumns %}
+                    {% for field in timesheetMetaFields %}
                         <th></th>
                     {% endfor %}
                     <th>{{ 'invoice.total_working_time'|trans }}</th>

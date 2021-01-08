@@ -10,6 +10,7 @@
 namespace App\Tests\Twig;
 
 use App\Configuration\LanguageFormattings;
+use App\Entity\User;
 use App\Twig\DateExtensions;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,7 @@ class DateExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['get_format_duration'];
+        $functions = ['get_format_duration', 'create_date'];
         $sut = $this->getSut('de', []);
         $twigFunctions = $sut->getFunctions();
         $this->assertCount(\count($functions), $twigFunctions);
@@ -216,5 +217,22 @@ class DateExtensionsTest extends TestCase
         // next test checks the fallback for errors while converting the date
         /* @phpstan-ignore-next-line */
         $this->assertEquals(189.45, $sut->dateTimeFull(189.45));
+    }
+
+    public function testCreateDate()
+    {
+        $user = new User();
+        $user->setTimezone('Europe/Berlin');
+        $sut = $this->getSut('en', []);
+        $date = $sut->createDate('now', $user);
+        $this->assertEquals('Europe/Berlin', $date->getTimezone()->getName());
+
+        $user->setTimezone('Asia/Dubai');
+        $date = $sut->createDate('2019-08-27 16:30:45', $user);
+        $this->assertEquals('2019-08-27T16:30:45+0400', $date->format(DATE_ISO8601));
+        $this->assertEquals('Asia/Dubai', $date->getTimezone()->getName());
+
+        $date = $sut->createDate('2019-08-27 16:30:45', null);
+        $this->assertEquals(date_default_timezone_get(), $date->getTimezone()->getName());
     }
 }
