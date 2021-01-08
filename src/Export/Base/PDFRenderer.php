@@ -13,6 +13,7 @@ use App\Export\ExportContext;
 use App\Export\ExportItemInterface;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
+use App\Utils\FileHelper;
 use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -94,7 +95,7 @@ class PDFRenderer
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
         $context = new ExportContext();
-        $context->setOption('filename', 'kimai-export.pdf');
+        $context->setOption('filename', 'kimai-export');
 
         $summary = $this->calculateSummary($timesheets);
         $content = $this->twig->render($this->getTemplate(), array_merge([
@@ -116,10 +117,12 @@ class PDFRenderer
 
         $filename = $context->getOption('filename');
         if (empty($filename)) {
-            $filename = 'kimai-export.pdf';
+            $filename = 'kimai-export';
         }
 
-        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
+        $filename = FileHelper::convertToAsciiFilename($filename);
+
+        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename . '.pdf');
 
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', $disposition);

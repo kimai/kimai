@@ -186,7 +186,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('| ID | Customer | Total | Filename                                                                |', $output);
         $this->assertStringContainsString('+----+----------+-------+-------------------------------------------------------------------------+', $output);
         $this->assertStringContainsString('| 1  | Test     | 0 EUR | /', $output);
-        $this->assertStringContainsString('/tests/_data/invoices/2020-001-test.html |', $output);
+        $this->assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.html |', $output);
     }
 
     protected function prepareFixtures(\DateTime $start)
