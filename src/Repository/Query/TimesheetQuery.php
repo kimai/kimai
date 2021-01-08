@@ -58,6 +58,10 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
      */
     protected $tags = [];
     /**
+     * @var string|null
+     */
+    protected $category = null;
+    /**
      * @var User[]
      */
     private $users = [];
@@ -299,6 +303,18 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
     public function setModifiedAfter(\DateTime $modifiedAfter): TimesheetQuery
     {
         $this->modifiedAfter = $modifiedAfter;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory($category)
+    {
+        $this->category = $category;
 
         return $this;
     }

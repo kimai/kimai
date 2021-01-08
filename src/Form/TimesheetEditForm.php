@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Entity\Timesheet;
+use App\Form\Type\CategorySelectType;
 use App\Form\Type\DateTimePickerType;
 use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
@@ -140,6 +141,7 @@ class TimesheetEditForm extends AbstractType
         $builder->add('metaFields', MetaFieldsCollectionType::class);
 
         $this->addExported($builder, $options);
+        $this->addCategory($builder, $options);
     }
 
     protected function showCustomer(array $options, bool $isNew, int $customerCount): bool
@@ -245,6 +247,11 @@ class TimesheetEditForm extends AbstractType
         $builder->add('exported', YesNoType::class, [
             'label' => 'label.exported'
         ]);
+    }
+
+    protected function addCategory(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('category', CategorySelectType::class);
     }
 
     /**

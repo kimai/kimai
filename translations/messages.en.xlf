@@ -475,7 +475,30 @@
                 <source>label.appendTags</source>
                 <target>Append tags</target>
             </trans-unit>
-
+            <trans-unit id="label.category">
+                <source>label.category</source>
+                <target>Category</target>
+            </trans-unit>
+            <trans-unit id="label.category.work">
+                <source>label.category.work</source>
+                <target>work</target>
+            </trans-unit>
+            <trans-unit id="label.category.holiday">
+                <source>label.category.holiday</source>
+                <target>holiday</target>
+            </trans-unit>
+            <trans-unit id="label.category.sickness">
+                <source>label.category.sickness</source>
+                <target>sickness</target>
+            </trans-unit>
+            <trans-unit id="label.category.parental">
+                <source>label.category.parental</source>
+                <target>parental</target>
+            </trans-unit>
+            <trans-unit id="label.category.overtime">
+                <source>label.category.overtime</source>
+                <target>overtime</target>
+            </trans-unit>
             <!--
               User profile
             -->

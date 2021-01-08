@@ -10,6 +10,7 @@
 namespace App\Form\Toolbar;
 
 use App\Entity\Activity;
+use App\Entity\Timesheet;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DateRangeType;
@@ -364,6 +365,24 @@ abstract class AbstractToolbarForm extends AbstractType
             'required' => false,
             'placeholder' => null,
             'search' => false,
+        ]);
+    }
+
+    protected function addCategoryChoice(FormBuilderInterface $builder)
+    {
+        $builder->add('category', ChoiceType::class, [
+            'label' => 'label.category',
+            'required' => false,
+            'placeholder' => null,
+            'search' => false,
+            'choices' => [
+                'entryState.all' => null,
+                'label.category.work' => TimeSheet::WORK,
+                'label.category.holiday' => TimeSheet::HOLIDAY,
+                'label.category.sickness' => TimeSheet::SICKNESS,
+                'label.category.parental' => TimeSheet::PARENTAL,
+                'label.category.overtime' => TImeSheet::OVERTIME,
+            ]
         ]);
     }
 }

@@ -98,6 +98,11 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     public const OVERTIME = 'overtime';
 
     /**
+     * Collection of Categories
+     */
+    public const CATEGORIES = [self::WORK, self::HOLIDAY, self::SICKNESS, self::PARENTAL, self::OVERTIME];
+
+    /**
      * @var int|null
      *
      * @Serializer\Expose()
@@ -609,10 +614,8 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
 
     public function setCategory(string $category): Timesheet
     {
-        $allowed = [self::WORK, self::HOLIDAY, self::SICKNESS, self::PARENTAL, self::OVERTIME];
-
-        if (!\in_array($category, $allowed)) {
-            throw new \InvalidArgumentException(sprintf('Invalid timesheet category "%s" given, expected one of: %s', $category, implode(', ', $allowed)));
+        if (!\in_array($category, self::CATEGORIES)) {
+            throw new \InvalidArgumentException(sprintf('Invalid timesheet category "%s" given, expected one of: %s', $category, implode(', ', self::CATEGORIES)));
         }
 
         $this->category = $category;

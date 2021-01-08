@@ -843,6 +843,11 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('customer', $query->getCustomers());
         }
 
+        if (null !== $query->getCategory()) {
+            $qb->andWhere($qb->expr()->in('t.category', ':category'))
+                ->setParameter('category', $query->getCategory());
+        }
+
         $tags = $query->getTags();
         if (!empty($tags)) {
             $qb->andWhere($qb->expr()->isMemberOf(':tags', 't.tags'))
