@@ -11,7 +11,6 @@ namespace App\Tests\Export\Timesheet;
 
 use App\Export\Timesheet\PDFRenderer;
 use App\Repository\ProjectRepository;
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Utils\HtmlToPdfConverter;
 use App\Utils\MPdfConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,16 +24,10 @@ use Twig\Environment;
  */
 class PdfRendererTest extends AbstractRendererTest
 {
-    protected function getDateTimeFactory()
-    {
-        return (new UserDateTimeFactoryFactory($this))->create();
-    }
-
     public function testConfiguration()
     {
         $sut = new PDFRenderer(
             $this->createMock(Environment::class),
-            $this->getDateTimeFactory(),
             $this->createMock(HtmlToPdfConverter::class),
             $this->createMock(ProjectRepository::class)
         );
@@ -54,7 +47,7 @@ class PdfRendererTest extends AbstractRendererTest
         $request->setLocale('en');
         $stack->push($request);
 
-        $sut = new PDFRenderer($twig, $this->getDateTimeFactory(), $converter, $this->createMock(ProjectRepository::class));
+        $sut = new PDFRenderer($twig, $converter, $this->createMock(ProjectRepository::class));
 
         $response = $this->render($sut);
 

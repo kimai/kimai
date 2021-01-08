@@ -1126,6 +1126,10 @@
         <source>help.rate</source>
         <target>Stawka godzinowa do naliczenia</target>
       </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Razem</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
