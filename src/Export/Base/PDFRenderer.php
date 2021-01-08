@@ -13,10 +13,10 @@ use App\Export\ExportContext;
 use App\Export\ExportItemInterface;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
+use App\Utils\FileHelper;
 use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\String\UnicodeString;
 use Twig\Environment;
 
 class PDFRenderer
@@ -120,8 +120,7 @@ class PDFRenderer
             $filename = 'kimai-export.pdf';
         }
 
-        $filename = new UnicodeString($filename);
-        $filename = $filename->collapseWhitespace()->ascii();
+        $filename = FileHelper::convertToAsciiFilename($filename);
 
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
 
