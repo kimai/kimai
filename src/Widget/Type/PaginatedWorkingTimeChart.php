@@ -27,7 +27,7 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
         $this->setTitle('stats.yourWorkingHours');
 
         $this->setOptions([
-            'year' => (new DateTime('now'))->format('Y'),
+            'year' => (new DateTime('now'))->format('o'),
             'week' => (new DateTime('now'))->format('W'),
             'type' => 'bar',
         ]);
@@ -38,7 +38,7 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
         $this->setOption('user', $user);
         $now = new DateTime('now', new \DateTimeZone($user->getTimezone()));
         $this->setOptions([
-            'year' => $now->format('Y'),
+            'year' => $now->format('o'),
             'week' => $now->format('W'),
         ]);
     }
@@ -90,7 +90,7 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
 
         $thisMonth = clone $weekBegin;
         if ((int) $options['week'] === 1) {
-            $thisMonth = (new DateTime())->setISODate($options['year'], $options['week'], 7)->setTime(0, 0, 0);
+            $thisMonth = (new DateTime('now', $timezone))->setISODate($options['year'], $options['week'], 7)->setTime(0, 0, 0);
         }
 
         return [

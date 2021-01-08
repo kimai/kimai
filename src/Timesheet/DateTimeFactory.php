@@ -51,7 +51,7 @@ class DateTimeFactory
             $date = $this->createDateTime('now');
         }
 
-        return $this->createWeekDateTime($date->format('Y'), $date->format('W'), 1, 0, 0, 0);
+        return $this->createWeekDateTime($date->format('o'), $date->format('W'), 1, 0, 0, 0);
     }
 
     public function getEndOfWeek(?DateTime $date = null): DateTime
@@ -60,7 +60,7 @@ class DateTimeFactory
             $date = $this->createDateTime('now');
         }
 
-        return $this->createWeekDateTime($date->format('Y'), $date->format('W'), 7, 23, 59, 59);
+        return $this->createWeekDateTime($date->format('o'), $date->format('W'), 7, 23, 59, 59);
     }
 
     public function getEndOfMonth(): DateTime
