@@ -13,6 +13,7 @@ namespace App\API;
 
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\User;
+use App\Event\RecentActivityEvent;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Form\API\TimesheetApiEditForm;
 use App\Repository\Query\TimesheetQuery;
@@ -32,12 +33,12 @@ use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @RouteResource("Timesheet")
@@ -534,7 +535,10 @@ class TimesheetController extends BaseApiController
 
         $data = $this->repository->getRecentActivities($user, $begin, $limit);
 
-        $view = new View($data, 200);
+        $recentActivity = new RecentActivityEvent($this->getUser(), $data);
+        $this->dispatcher->dispatch($recentActivity);
+
+        $view = new View($recentActivity->getRecentActivities(), 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
 
         return $this->viewHandler->handle($view);

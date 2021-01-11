@@ -10,23 +10,28 @@
 namespace App\Controller;
 
 use App\Configuration\TimesheetConfiguration;
+use App\Event\RecentActivityEvent;
 use App\Repository\TimesheetRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Used for the (initial) page rendering.
  */
 class LayoutController extends AbstractController
 {
-    public function activeEntries(TimesheetRepository $repository, TimesheetConfiguration $configuration): Response
+    public function activeEntries(TimesheetRepository $repository, TimesheetConfiguration $configuration, EventDispatcherInterface $dispatcher): Response
     {
         $user = $this->getUser();
         $activeEntries = $repository->getActiveEntries($user);
 
+        $recentActivity = new RecentActivityEvent($this->getUser(), $activeEntries);
+        $dispatcher->dispatch($recentActivity);
+
         return $this->render(
             'navbar/active-entries.html.twig',
             [
-                'entries' => $activeEntries,
+                'entries' => $recentActivity->getRecentActivities(),
                 'soft_limit' => $configuration->getActiveEntriesSoftLimit(),
             ]
         );
