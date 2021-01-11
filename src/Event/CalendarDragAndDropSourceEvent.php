@@ -41,11 +41,23 @@ final class CalendarDragAndDropSourceEvent extends Event
         return $this;
     }
 
+    public function removeSource(DragAndDropSource $source): bool
+    {
+        $key = array_search($source, $this->sources, true);
+        if (false === $key) {
+            return false;
+        }
+
+        unset($this->sources[$key]);
+
+        return true;
+    }
+
     /**
      * @return DragAndDropSource[]
      */
     public function getSources(): array
     {
-        return $this->sources;
+        return array_values($this->sources);
     }
 }
