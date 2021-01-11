@@ -290,7 +290,7 @@
       </trans-unit>
       <trans-unit id="label.team">
         <source>label.team</source>
-        <target>Zaspół</target>
+        <target state="translated">Zespół</target>
       </trans-unit>
       <trans-unit id="label.teamlead">
         <source>label.teamlead</source>
