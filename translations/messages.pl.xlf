@@ -684,7 +684,7 @@
             -->
       <trans-unit id="stats.durationToday">
         <source>stats.durationToday</source>
-        <target>Pprzepracowane godziny dzisiaj</target>
+        <target state="translated">Przepracowane godziny dzisiaj</target>
       </trans-unit>
       <trans-unit id="stats.durationWeek">
         <source>stats.durationWeek</source>
