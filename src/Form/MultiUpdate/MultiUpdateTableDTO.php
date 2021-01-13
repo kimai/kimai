@@ -51,6 +51,11 @@ class MultiUpdateTableDTO
         return $this->actions;
     }
 
+    public function hasAction(): bool
+    {
+        return \count($this->actions) > 1;
+    }
+
     public function addAction(string $label, string $url): MultiUpdateTableDTO
     {
         $this->actions[$label] = $url;
