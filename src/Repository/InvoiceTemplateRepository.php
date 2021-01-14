@@ -10,10 +10,11 @@
 namespace App\Repository;
 
 use App\Entity\InvoiceTemplate;
+use App\Repository\Paginator\PaginatorInterface;
+use App\Repository\Paginator\QueryBuilderPaginator;
 use App\Repository\Query\BaseQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
 /**
@@ -48,13 +49,33 @@ class InvoiceTemplateRepository extends EntityRepository
         return $qb;
     }
 
+    protected function getPaginatorForQuery(BaseQuery $query): PaginatorInterface
+    {
+        $counter = $this->countTemplatesForQuery($query);
+        $qb = $this->getQueryBuilderForQuery($query);
+
+        return new QueryBuilderPaginator($qb, $counter);
+    }
+
     public function getPagerfantaForQuery(BaseQuery $query): Pagerfanta
     {
-        $paginator = new Pagerfanta(new DoctrineORMAdapter($this->getQueryBuilderForQuery($query), false));
+        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 
         return $paginator;
+    }
+
+    public function countTemplatesForQuery(BaseQuery $query): int
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+        $qb
+            ->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->select($qb->expr()->countDistinct('t.id'))
+        ;
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     /**
