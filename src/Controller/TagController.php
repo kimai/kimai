@@ -51,12 +51,16 @@ class TagController extends AbstractController
         }
 
         $tags = $repository->getTagCount($query);
+        $multiUpdateForm = $this->getMultiUpdateForm($repository);
+        if ($multiUpdateForm !== null) {
+            $multiUpdateForm = $multiUpdateForm->createView();
+        }
 
         return $this->render('tags/index.html.twig', [
             'tags' => $tags,
             'query' => $query,
             'toolbarForm' => $form->createView(),
-            'multiUpdateForm' => $this->getMultiUpdateForm($repository)->createView(),
+            'multiUpdateForm' => $multiUpdateForm,
         ]);
     }
 
@@ -145,10 +149,16 @@ class TagController extends AbstractController
         return $this->redirectToRoute('tags');
     }
 
-    protected function getMultiUpdateForm(TagRepository $repository): FormInterface
+    protected function getMultiUpdateForm(TagRepository $repository): ?FormInterface
     {
         $dto = new MultiUpdateTableDTO();
-        $dto->addDelete($this->generateUrl('tags_multi_delete'));
+        if ($this->isGranted('delete_tag')) {
+            $dto->addDelete($this->generateUrl('tags_multi_delete'));
+        }
+
+        if (!$dto->hasAction()) {
+            return null;
+        }
 
         return $this->createForm(MultiUpdateTable::class, $dto, [
             'action' => $this->generateUrl('tags'),

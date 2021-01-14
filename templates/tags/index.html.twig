@@ -14,12 +14,19 @@
         {{ widgets.nothing_found('kimai.tagUpdate') }}
     {% else %}
 
-        {% set columns = {
-            'id': {'class': 'alwaysVisible multiCheckbox', 'orderBy': false, 'title': false, 'html_before': tables.datatable_multiupdate_all()},
+        {% set columns = {} %}
+
+        {% if multiUpdateForm is not null %}
+            {% set columns = columns|merge({
+                'id': {'class': 'alwaysVisible multiCheckbox', 'orderBy': false, 'title': false, 'html_before': tables.datatable_multiupdate_all()},
+            }) %}
+        {% endif %}
+
+        {% set columns = columns|merge({
             'name': {'class': 'alwaysVisible'},
             'amount': {'class': 'text-center w-min'},
             'actions': {'class': 'actions alwaysVisible'},
-        } %}
+        }) %}
 
         {% set tableName = 'admin_tags' %}
         {% set manageAllowed = is_granted('manage_tag') %}
@@ -32,7 +39,11 @@
             {% endif %}
 
             <tr{% if manageAllowed %} class="modal-ajax-form open-edit" data-href="{{ path('tags_edit', {'id': tag.id}) }}"{% endif %}>
-                <td class="text-nowrap">{{ tables.datatable_multiupdate_row(tag.id) }}</td>
+                {% if multiUpdateForm is not null %}
+                    <td class="text-nowrap">
+                        {{ tables.datatable_multiupdate_row(tag.id) }}
+                    </td>
+                {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
                     {{ widgets.label_color_dot('tag', true, tag.name, null, tag.color|default('#00a65a')) }}
                 </td>
