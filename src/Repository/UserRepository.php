@@ -23,7 +23,6 @@ use App\Repository\Query\UserQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
@@ -104,15 +103,12 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     public function findByQuery(UserQuery $query)
     {
         @trigger_error('UserRepository::findByQuery() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-        $qb = $this->getQueryBuilderForQuery($query);
 
         if (BaseQuery::RESULT_TYPE_PAGER === $query->getResultType()) {
-            $paginator = new Pagerfanta(new DoctrineORMAdapter($qb->getQuery(), false));
-            $paginator->setMaxPerPage($query->getPageSize());
-            $paginator->setCurrentPage($query->getPage());
-
-            return $paginator;
+            return $this->getPagerfantaForQuery($query);
         }
+
+        $qb = $this->getQueryBuilderForQuery($query);
 
         if (BaseQuery::RESULT_TYPE_OBJECTS === $query->getResultType()) {
             return $qb->getQuery()->execute();
