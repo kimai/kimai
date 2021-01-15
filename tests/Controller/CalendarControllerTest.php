@@ -71,6 +71,7 @@ class CalendarControllerTest extends ControllerBaseTest
             ],
             'timesheet' => [
                 'default_begin' => '08:30:00',
+                'mode' => 'default'
             ],
             'calendar' => [
                 'businessHours' => [

@@ -419,8 +419,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'activity' => 1,
             'project' => 1,
             'user' => $user->getId(),
-            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
-            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m'),
             'description' => 'foo',
             'fixedRate' => 2016,
             'hourlyRate' => 127

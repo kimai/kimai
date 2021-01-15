@@ -9,7 +9,7 @@
 
 namespace App\Timesheet\TrackingMode;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,11 +21,11 @@ final class DurationFixedBeginMode implements TrackingModeInterface
      */
     private $dateTime;
     /**
-     * @var TimesheetConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
 
-    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
+    public function __construct(UserDateTimeFactory $dateTime, SystemConfiguration $configuration)
     {
         $this->dateTime = $dateTime;
         $this->configuration = $configuration;
@@ -58,7 +58,7 @@ final class DurationFixedBeginMode implements TrackingModeInterface
         }
 
         $newBegin = clone $timesheet->getBegin();
-        $newBegin->modify($this->configuration->getDefaultBeginTime());
+        $newBegin->modify($this->configuration->getTimesheetDefaultBeginTime());
         $timesheet->setBegin($newBegin);
     }
 

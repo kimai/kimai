@@ -10,7 +10,7 @@
 namespace App\Configuration;
 
 /**
- * @internal will be deprecated soon, use SystemConfiguration instead
+ * @deprecated since 1.13, use SystemConfiguration instead
  */
 class TimesheetConfiguration implements SystemBundleConfiguration
 {

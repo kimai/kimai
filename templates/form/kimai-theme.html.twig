@@ -20,6 +20,24 @@
     </div>
 {% endblock daterange_widget %}
 
+{% block duration_widget %}
+    <div class="input-group">
+        {{ block('form_widget_simple') }}
+        {% if form.vars.duration_presets is defined and form.vars.duration_presets is not empty %}
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right pre-scrollable">
+                {% for value in form.vars.duration_presets %}
+                    <li>
+                        <a href="#" onclick="$('#{{ form.vars.id }}').val('{{ value }}');$('#{{ form.vars.id }}').trigger('change');return false;">{{ value }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+{% endblock duration_widget %}
+
 {% block datetime_widget -%}
     <div class="input-group">
         <div class="input-group-addon">

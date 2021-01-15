@@ -12,6 +12,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 - Deprecated `now` variable in export templates: create it yourself with `{% set now = create_date('now', app.user) %}`
 - Changed invoice filename generation (check if you use cronjob for invoices)
+- **BC break**: duration entered as plain numbers will now be treated as decimal duration in hours instead of seconds
 
 ## [1.12](https://github.com/kevinpapst/kimai2/releases/tag/1.12)
 

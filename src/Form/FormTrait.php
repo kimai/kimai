@@ -14,6 +14,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
+use App\Form\Type\DescriptionType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\TagsType;
 use App\Repository\ActivityRepository;
@@ -22,7 +23,6 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\ProjectFormTypeQuery;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -136,11 +136,15 @@ trait FormTrait
         );
     }
 
-    protected function addDescription(FormBuilderInterface $builder)
+    /**
+     * @deprecated since 1.13
+     */
+    protected function addDescription(FormBuilderInterface $builder, array $options)
     {
+        @trigger_error('FormTrait::addDescription() is deprecated and will be removed with 2.0, use DescriptionType instead', E_USER_DEPRECATED);
+
         $builder
-            ->add('description', TextareaType::class, [
-                'label' => 'label.description',
+            ->add('description', DescriptionType::class, [
                 'required' => false,
                 'attr' => [
                     'autofocus' => 'autofocus'

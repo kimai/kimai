@@ -9,7 +9,6 @@
 
 namespace App\Timesheet\TrackingMode;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,15 +19,10 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
      * @var UserDateTimeFactory
      */
     protected $dateTime;
-    /**
-     * @var TimesheetConfiguration
-     */
-    protected $configuration;
 
-    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
+    public function __construct(UserDateTimeFactory $dateTime)
     {
         $this->dateTime = $dateTime;
-        $this->configuration = $configuration;
     }
 
     public function create(Timesheet $timesheet, ?Request $request = null): void

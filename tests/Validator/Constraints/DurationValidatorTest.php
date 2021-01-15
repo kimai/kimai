@@ -37,6 +37,8 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
             ['1h96m137s'],
             [''],
             ['0'],
+            ['1.2'],
+            ['2,3'],
             [null],
             [0],
             [11257200],
@@ -71,7 +73,6 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
     {
         return [
             ['13-13'],
-            ['13.13'],
             ['3127::00'],
             ['3127:00:'],
             [':3127:00'],

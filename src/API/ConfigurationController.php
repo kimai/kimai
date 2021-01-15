@@ -14,7 +14,7 @@ namespace App\API;
 use App\API\Model\I18nConfig;
 use App\API\Model\TimesheetConfig;
 use App\Configuration\LanguageFormattings;
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
@@ -36,20 +36,10 @@ final class ConfigurationController extends BaseApiController
      * @var ViewHandlerInterface
      */
     private $viewHandler;
-    /**
-     * @var LanguageFormattings
-     */
-    private $formats;
-    /**
-     * @var TimesheetConfiguration
-     */
-    private $timesheetConfiguration;
 
-    public function __construct(ViewHandlerInterface $viewHandler, LanguageFormattings $formats, TimesheetConfiguration $timesheetConfiguration)
+    public function __construct(ViewHandlerInterface $viewHandler)
     {
         $this->viewHandler = $viewHandler;
-        $this->formats = $formats;
-        $this->timesheetConfiguration = $timesheetConfiguration;
     }
 
     /**
@@ -66,7 +56,7 @@ final class ConfigurationController extends BaseApiController
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function i18nAction(): Response
+    public function i18nAction(LanguageFormattings $formats): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -74,13 +64,13 @@ final class ConfigurationController extends BaseApiController
 
         $model = new I18nConfig();
         $model
-            ->setFormDateTime($this->formats->getDateTimeTypeFormat($locale))
-            ->setFormDate($this->formats->getDateTypeFormat($locale))
-            ->setDateTime($this->formats->getDateTimeFormat($locale))
-            ->setDate($this->formats->getDateFormat($locale))
-            ->setDuration($this->formats->getDurationFormat($locale))
-            ->setTime($this->formats->getTimeFormat($locale))
-            ->setIs24hours($this->formats->isTwentyFourHours($locale))
+            ->setFormDateTime($formats->getDateTimeTypeFormat($locale))
+            ->setFormDate($formats->getDateTypeFormat($locale))
+            ->setDateTime($formats->getDateTimeFormat($locale))
+            ->setDate($formats->getDateFormat($locale))
+            ->setDuration($formats->getDurationFormat($locale))
+            ->setTime($formats->getTimeFormat($locale))
+            ->setIs24hours($formats->isTwentyFourHours($locale))
             ->setNow($this->getDateTimeFactory()->createDateTime())
         ;
 
@@ -104,16 +94,16 @@ final class ConfigurationController extends BaseApiController
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function timesheetConfigAction(): Response
+    public function timesheetConfigAction(SystemConfiguration $configuration): Response
     {
         $model = new TimesheetConfig();
         $model
-            ->setTrackingMode($this->timesheetConfiguration->getTrackingMode())
-            ->setDefaultBeginTime($this->timesheetConfiguration->getDefaultBeginTime())
-            ->setActiveEntriesHardLimit($this->timesheetConfiguration->getActiveEntriesHardLimit())
-            ->setActiveEntriesSoftLimit($this->timesheetConfiguration->getActiveEntriesSoftLimit())
-            ->setIsAllowFutureTimes($this->timesheetConfiguration->isAllowFutureTimes())
-            ->setIsAllowOverlapping($this->timesheetConfiguration->isAllowOverlappingRecords())
+            ->setTrackingMode($configuration->getTimesheetTrackingMode())
+            ->setDefaultBeginTime($configuration->getTimesheetDefaultBeginTime())
+            ->setActiveEntriesHardLimit($configuration->getTimesheetActiveEntriesHardLimit())
+            ->setActiveEntriesSoftLimit($configuration->getTimesheetActiveEntriesSoftLimit())
+            ->setIsAllowFutureTimes($configuration->isTimesheetAllowFutureTimes())
+            ->setIsAllowOverlapping($configuration->isTimesheetAllowOverlappingRecords())
         ;
 
         $view = new View($model, 200);

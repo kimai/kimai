@@ -84,6 +84,10 @@
         <source>sum.total</source>
         <target>Gesamt</target>
       </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Das Formular wurde geändert. Bitte klicken Sie "Speichern" oder "Schliessen" um abzubrechen.</target>
+      </trans-unit>
       <!--
               Login / Security
             -->

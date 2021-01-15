@@ -9,7 +9,6 @@
 
 namespace App\Timesheet\TrackingMode;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Timesheet\RoundingService;
 use App\Timesheet\UserDateTimeFactory;
@@ -22,9 +21,9 @@ final class DefaultMode extends AbstractTrackingMode
      */
     private $rounding;
 
-    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration, RoundingService $rounding)
+    public function __construct(UserDateTimeFactory $dateTime, RoundingService $rounding)
     {
-        parent::__construct($dateTime, $configuration);
+        parent::__construct($dateTime);
         $this->rounding = $rounding;
     }
 
@@ -40,7 +39,7 @@ final class DefaultMode extends AbstractTrackingMode
 
     public function canEditDuration(): bool
     {
-        return false;
+        return true;
     }
 
     public function canUpdateTimesWithAPI(): bool

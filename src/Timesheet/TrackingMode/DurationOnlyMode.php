@@ -9,11 +9,24 @@
 
 namespace App\Timesheet\TrackingMode;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
+use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 final class DurationOnlyMode extends AbstractTrackingMode
 {
+    /**
+     * @var SystemConfiguration
+     */
+    private $configuration;
+
+    public function __construct(UserDateTimeFactory $dateTime, SystemConfiguration $configuration)
+    {
+        parent::__construct($dateTime);
+        $this->configuration = $configuration;
+    }
+
     public function canEditBegin(): bool
     {
         return true;
@@ -51,7 +64,7 @@ final class DurationOnlyMode extends AbstractTrackingMode
         }
 
         $newBegin = clone $timesheet->getBegin();
-        $newBegin->modify($this->configuration->getDefaultBeginTime());
+        $newBegin->modify($this->configuration->getTimesheetDefaultBeginTime());
         $timesheet->setBegin($newBegin);
 
         parent::create($timesheet, $request);

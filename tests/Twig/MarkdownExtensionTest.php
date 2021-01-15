@@ -10,7 +10,7 @@
 namespace App\Tests\Twig;
 
 use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Twig\MarkdownExtension;
 use App\Utils\Markdown;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +24,7 @@ class MarkdownExtensionTest extends TestCase
     public function testGetFilters()
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new TimesheetConfiguration($loader, ['markdown_content' => true]);
+        $config = new SystemConfiguration($loader, ['timesheet' => ['markdown_content' => true]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $filters = $sut->getFilters();
         $this->assertCount(3, $filters);
@@ -48,7 +48,7 @@ class MarkdownExtensionTest extends TestCase
     public function testMarkdownToHtml()
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new TimesheetConfiguration($loader, ['markdown_content' => true]);
+        $config = new SystemConfiguration($loader, ['timesheet' => ['markdown_content' => true]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
         $this->assertEquals('<p># foobar</p>', $sut->markdownToHtml('# foobar'));
@@ -57,7 +57,7 @@ class MarkdownExtensionTest extends TestCase
     public function testTimesheetContent()
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new TimesheetConfiguration($loader, ['markdown_content' => false]);
+        $config = new SystemConfiguration($loader, ['timesheet' => ['markdown_content' => false]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals(
             "- test<br />\n- foo",
@@ -66,7 +66,7 @@ class MarkdownExtensionTest extends TestCase
         $this->assertEquals('', $sut->timesheetContent(null));
         $this->assertEquals('', $sut->timesheetContent(''));
 
-        $config = new TimesheetConfiguration($loader, ['markdown_content' => true]);
+        $config = new SystemConfiguration($loader, ['timesheet' => ['markdown_content' => true]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals(
             "<ul>\n<li>test</li>\n<li>foo</li>\n</ul>\n<p>foo <strong>bar</strong></p>",
@@ -77,7 +77,7 @@ class MarkdownExtensionTest extends TestCase
     public function testCommentContent()
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new TimesheetConfiguration($loader, ['markdown_content' => false]);
+        $config = new SystemConfiguration($loader, ['timesheet' => ['markdown_content' => false]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals(
             "<p>- test<br />\n- foo</p>",
@@ -95,7 +95,7 @@ class MarkdownExtensionTest extends TestCase
         $this->assertEquals('<p>' . $loremIpsum . '</p>', $sut->commentContent($loremIpsum, true));
         $this->assertEquals('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l &hellip;', $sut->commentContent($loremIpsum));
 
-        $config = new TimesheetConfiguration($loader, ['markdown_content' => true]);
+        $config = new SystemConfiguration($loader, ['timesheet' => ['markdown_content' => true]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals(
             "<ul>\n<li>test</li>\n<li>foo</li>\n</ul>\n<p>foo <strong>bar</strong></p>",

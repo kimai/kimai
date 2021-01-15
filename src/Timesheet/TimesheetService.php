@@ -9,7 +9,7 @@
 
 namespace App\Timesheet;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\TimesheetCreatePostEvent;
@@ -27,6 +27,7 @@ use App\Event\TimesheetUpdatePostEvent;
 use App\Event\TimesheetUpdatePreEvent;
 use App\Repository\TimesheetRepository;
 use App\Security\AccessDeniedException;
+use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Validator\ValidationException;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
@@ -42,7 +43,7 @@ final class TimesheetService
      */
     private $repository;
     /**
-     * @var TimesheetConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
     /**
@@ -63,7 +64,7 @@ final class TimesheetService
     private $validator;
 
     public function __construct(
-        TimesheetConfiguration $configuration,
+        SystemConfiguration $configuration,
         TimesheetRepository $repository,
         TrackingModeService $service,
         EventDispatcherInterface $dispatcher,
@@ -293,7 +294,7 @@ final class TimesheetService
      */
     private function stopActiveEntries(Timesheet $timesheet): int
     {
-        $hardLimit = $this->configuration->getActiveEntriesHardLimit();
+        $hardLimit = $this->configuration->getTimesheetActiveEntriesHardLimit();
         $activeEntries = $this->repository->getActiveEntries($timesheet->getUser());
 
         if (empty($activeEntries)) {
@@ -313,5 +314,10 @@ final class TimesheetService
         }
 
         return $counter;
+    }
+
+    public function getActiveTrackingMode(): TrackingModeInterface
+    {
+        return $this->trackingModeService->getActiveMode();
     }
 }

@@ -50,6 +50,6 @@ class ThemeEventExtensionTest extends TestCase
     {
         $sut = $this->getSut();
         $values = $sut->getJavascriptTranslations();
-        self::assertCount(23, $values);
+        self::assertCount(24, $values);
     }
 }

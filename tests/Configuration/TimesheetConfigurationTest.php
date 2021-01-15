@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \App\Configuration\TimesheetConfiguration
  * @covers \App\Configuration\StringAccessibleConfigTrait
+ * @group legacy
  */
 class TimesheetConfigurationTest extends TestCase
 {

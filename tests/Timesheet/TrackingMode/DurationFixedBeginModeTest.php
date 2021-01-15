@@ -9,7 +9,7 @@
 
 namespace App\Tests\Timesheet\TrackingMode;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
@@ -26,7 +26,7 @@ class DurationFixedBeginModeTest extends TestCase
     {
         $loader = new TestConfigLoader([]);
         $dateTime = (new UserDateTimeFactoryFactory($this))->create();
-        $configuration = new TimesheetConfiguration($loader, ['default_begin' => '13:47']);
+        $configuration = new SystemConfiguration($loader, ['timesheet' => ['default_begin' => '13:47']]);
 
         return new DurationFixedBeginMode($dateTime, $configuration);
     }

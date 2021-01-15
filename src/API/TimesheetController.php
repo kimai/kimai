@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\User;
 use App\Event\RecentActivityEvent;
 use App\Event\TimesheetMetaDefinitionEvent;
@@ -63,10 +62,6 @@ class TimesheetController extends BaseApiController
      */
     private $viewHandler;
     /**
-     * @var TimesheetConfiguration
-     */
-    private $configuration;
-    /**
      * @var TagRepository
      */
     private $tagRepository;
@@ -86,24 +81,20 @@ class TimesheetController extends BaseApiController
     public function __construct(
         ViewHandlerInterface $viewHandler,
         TimesheetRepository $repository,
-        TimesheetConfiguration $configuration,
         TagRepository $tagRepository,
-        TrackingModeService $trackingModeService,
         EventDispatcherInterface $dispatcher,
         TimesheetService $service
     ) {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
-        $this->configuration = $configuration;
         $this->tagRepository = $tagRepository;
-        $this->trackingModeService = $trackingModeService;
         $this->dispatcher = $dispatcher;
         $this->service = $service;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
     {
-        return $this->trackingModeService->getActiveMode();
+        return $this->service->getActiveTrackingMode();
     }
 
     /**

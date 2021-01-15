@@ -9,7 +9,7 @@
 
 namespace App\Validator\Constraints;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
@@ -23,11 +23,11 @@ final class TimesheetLockdownValidator extends ConstraintValidator
      */
     private $auth;
     /**
-     * @var TimesheetConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
 
-    public function __construct(AuthorizationCheckerInterface $auth, TimesheetConfiguration $configuration)
+    public function __construct(AuthorizationCheckerInterface $auth, SystemConfiguration $configuration)
     {
         $this->auth = $auth;
         $this->configuration = $configuration;
@@ -53,14 +53,14 @@ final class TimesheetLockdownValidator extends ConstraintValidator
             return;
         }
 
-        if (!$this->configuration->isLockdownActive()) {
+        if (!$this->configuration->isTimesheetLockdownActive()) {
             return;
         }
 
-        $lockedStart = $this->configuration->getLockdownPeriodStart();
-        $lockedEnd = $this->configuration->getLockdownPeriodEnd();
+        $lockedStart = $this->configuration->getTimesheetLockdownPeriodStart();
+        $lockedEnd = $this->configuration->getTimesheetLockdownPeriodEnd();
 
-        $gracePeriod = $this->configuration->getLockdownGracePeriod();
+        $gracePeriod = $this->configuration->getTimesheetLockdownGracePeriod();
         if (!empty($gracePeriod)) {
             $gracePeriod = $gracePeriod . ' ';
         }
