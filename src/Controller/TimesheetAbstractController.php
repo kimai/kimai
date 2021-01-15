@@ -492,6 +492,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'action' => $this->generateUrl($this->getTimesheetRoute(), [
                 'page' => $query->getPage(),
             ]),
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'method' => 'GET',
             'include_user' => $this->includeUserInForms('toolbar'),
         ]);

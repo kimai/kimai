@@ -29,7 +29,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
         }
 
         $this->addSearchTermInputField($builder);
-        $this->addDateRangeChoice($builder);
+        $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerMultiChoice($builder, $newOptions, true);
         $this->addProjectMultiChoice($builder, $newOptions, true, true);
         $this->addActivityMultiChoice($builder, [], true);
@@ -55,6 +55,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
             'csrf_protection' => false,
             'include_user' => false,
             'ignore_date' => true,
+            'timezone' => date_default_timezone_get(),
         ]);
     }
 }

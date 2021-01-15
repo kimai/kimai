@@ -61,7 +61,6 @@ class TimesheetEditForm extends AbstractType
         $customerCount = $this->customers->countCustomer(true);
         $timezone = $options['timezone'];
         $isNew = true;
-        $isStopped = false;
 
         if (isset($options['data'])) {
             /** @var Timesheet $entry */
@@ -93,9 +92,6 @@ class TimesheetEditForm extends AbstractType
 
             if (null !== ($begin = $entry->getBegin())) {
                 $timezone = $begin->getTimezone()->getName();
-            }
-            if (null !== ($entry->getEnd())) {
-                $isStopped = true;
             }
         }
 

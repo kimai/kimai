@@ -523,6 +523,7 @@ final class ProjectController extends AbstractController
             'action' => $url,
             'method' => 'POST',
             'currency' => $currency,
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'include_budget' => $this->isGranted('budget', $project)
         ]);
     }

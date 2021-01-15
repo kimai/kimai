@@ -32,7 +32,7 @@ class ExportToolbarForm extends AbstractToolbarForm
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
         }
-        $this->addDateRangeChoice($builder);
+        $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerMultiChoice($builder, ['start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true], true);
         $this->addProjectMultiChoice($builder, ['ignore_date' => true], true, true);
         $this->addActivityMultiChoice($builder, [], true);
@@ -64,6 +64,7 @@ class ExportToolbarForm extends AbstractToolbarForm
             'data_class' => ExportQuery::class,
             'csrf_protection' => false,
             'include_user' => true,
+            'timezone' => date_default_timezone_get(),
         ]);
     }
 }

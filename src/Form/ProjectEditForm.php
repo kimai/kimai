@@ -44,7 +44,10 @@ class ProjectEditForm extends AbstractType
             }
         }
 
-        $dateTimeOptions = [];
+        $dateTimeOptions = [
+            'model_timezone' => $options['timezone'],
+            'view_timezone' => $options['timezone'],
+        ];
         // primarily for API usage, where we cannot use a user/locale specific format
         if (null !== $options['date_format']) {
             $dateTimeOptions['format'] = $options['date_format'];
@@ -103,6 +106,7 @@ class ProjectEditForm extends AbstractType
             'currency' => Customer::DEFAULT_CURRENCY,
             'date_format' => null,
             'include_budget' => false,
+            'timezone' => date_default_timezone_get(),
             'attr' => [
                 'data-form-event' => 'kimai.projectUpdate'
             ],
