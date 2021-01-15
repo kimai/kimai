@@ -21,9 +21,9 @@
 {% endblock daterange_widget %}
 
 {% block duration_widget %}
+    {% if form.vars.duration_presets is defined and form.vars.duration_presets is not empty %}
     <div class="input-group">
         {{ block('form_widget_simple') }}
-        {% if form.vars.duration_presets is defined and form.vars.duration_presets is not empty %}
         <div class="input-group-btn">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
             <ul class="dropdown-menu dropdown-menu-right pre-scrollable">
@@ -34,8 +34,10 @@
                 {% endfor %}
             </ul>
         </div>
-        {% endif %}
     </div>
+    {% else %}
+        {{ block('form_widget_simple') }}
+    {% endif %}
 {% endblock duration_widget %}
 
 {% block datetime_widget -%}
