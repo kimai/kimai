@@ -10,7 +10,6 @@
 namespace App\Form\Type;
 
 use App\Form\Model\DateRange;
-use App\Timesheet\UserDateTimeFactory;
 use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -28,19 +27,11 @@ class DateRangeType extends AbstractType
 {
     public const DATE_SPACER = ' - ';
 
-    /**
-     * @var LocaleSettings
-     */
     private $localeSettings;
-    /**
-     * @var UserDateTimeFactory
-     */
-    private $dateFactory;
 
-    public function __construct(LocaleSettings $localeSettings, UserDateTimeFactory $dateTime)
+    public function __construct(LocaleSettings $localeSettings)
     {
         $this->localeSettings = $localeSettings;
-        $this->dateFactory = $dateTime;
     }
 
     /**
@@ -126,8 +117,7 @@ class DateRangeType extends AbstractType
         $formatDate = $options['format'];
         $separator = $options['separator'];
         $allowEmpty = $options['allow_empty'];
-        //$timezone = new \DateTimeZone($options['timezone']);
-        $timezone = $this->dateFactory->getTimezone();
+        $timezone = new \DateTimeZone($options['timezone']);
         $pattern = $this->formatToPattern($formatDate, $separator);
 
         $builder->addModelTransformer(new CallbackTransformer(
