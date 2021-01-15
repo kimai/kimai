@@ -451,6 +451,8 @@ abstract class TimesheetAbstractController extends AbstractController
             'allow_end_datetime' => $mode->canEditEnd(),
             'allow_duration' => $mode->canEditDuration(),
             'duration_minutes' => $this->configuration->getTimesheetDefaultRoundingDuration(),
+            'begin_minutes' => $this->configuration->getTimesheetDefaultRoundingBegin(),
+            'end_minutes' => $this->configuration->getTimesheetDefaultRoundingEnd(),
             'timezone' => $this->getDateTimeFactory($this->getUser())->getTimezone(),
             'customer' => true,
         ]);
@@ -477,6 +479,8 @@ abstract class TimesheetAbstractController extends AbstractController
             'allow_end_datetime' => $mode->canEditEnd(),
             'allow_duration' => $mode->canEditDuration(),
             'duration_minutes' => $this->configuration->getTimesheetDefaultRoundingDuration(),
+            'begin_minutes' => $this->configuration->getTimesheetDefaultRoundingBegin(),
+            'end_minutes' => $this->configuration->getTimesheetDefaultRoundingEnd(),
             'timezone' => $this->getDateTimeFactory($this->getUser())->getTimezone(),
             'customer' => true,
         ]);
