@@ -181,7 +181,6 @@
             });
         };
 
-
         document.addEventListener('kimai.initialized', function(event) {
             // prevent multiple open popovers
             jQuery('html').on('click', function(e) {
@@ -231,7 +230,8 @@
                 height: 'auto',
                 nowIndicator: true,
                 now: '{{ now|date_format('c') }}',
-                timezone: '{{ app.user.preferenceValue("timezone") }}',
+                {# see https://github.com/kevinpapst/kimai2/issues/2155 #}
+                timezone: '{{ app.user.timezone == 'UTC' ? 'GMT' : app.user.timezone }}',
                 weekends: {% if config.showWeekends %}true{% else %}false{% endif %},
                 businessHours: {
                     dow: [{{ config.businessDays|join(',') }}],
