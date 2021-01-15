@@ -49,6 +49,7 @@ class DateTimePickerType extends AbstractType
             'format' => $dateTimeFormat,
             'format_picker' => $dateTimePicker,
             'with_seconds' => false,
+            'time_increment' => 1,
         ]);
     }
 
@@ -59,6 +60,7 @@ class DateTimePickerType extends AbstractType
             'autocomplete' => 'off',
             'placeholder' => strtoupper($options['format']),
             'data-format' => $options['format_picker'],
+            'data-time-picker-increment' => $options['time_increment'],
         ]);
     }
 
