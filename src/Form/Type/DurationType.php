@@ -43,16 +43,16 @@ class DurationType extends AbstractType
         }
 
         $intervalMinutes = (int) $options['preset_minutes'];
+        $maxHours = (int) $options['preset_hours'];
 
-        if ($intervalMinutes < 1) {
+        if ($intervalMinutes < 1 || $maxHours < 1) {
             return;
         }
 
-        $maxHours = (int) $options['preset_hours'] * 60;
-
+        $maxMinutes = $maxHours * 60;
         $presets = [];
 
-        for ($minutes = $intervalMinutes; $minutes <= $maxHours; $minutes += $intervalMinutes) {
+        for ($minutes = $intervalMinutes; $minutes <= $maxMinutes; $minutes += $intervalMinutes) {
             $h = (int) ($minutes / 60);
             $m = $minutes % 60;
             $interval = new \DateInterval('PT' . $h . 'H' . $m . 'M');
