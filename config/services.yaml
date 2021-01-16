@@ -49,18 +49,6 @@ services:
     App\Configuration\LanguageFormattings:
         arguments: ['%kimai.languages%']
 
-    App\Configuration\TimesheetConfiguration:
-        arguments:
-            $settings: '%kimai.timesheet%'
-
-    App\Configuration\CalendarConfiguration:
-        arguments:
-            $settings: '%kimai.calendar%'
-
-    App\Configuration\FormConfiguration:
-        arguments:
-            $settings: '%kimai.defaults%'
-
     App\Configuration\SystemConfiguration:
         arguments:
             $settings: '%kimai.config%'

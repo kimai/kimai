@@ -61,19 +61,19 @@ class AppExtension extends Extension
         $this->setLanguageFormats($config['languages'], $container);
         unset($config['languages']);
 
-        $container->setParameter('kimai.calendar', $config['calendar']);
+        $container->setParameter('kimai.calendar', $config['calendar']); // @deprecated since 1.13
         $container->setParameter('kimai.dashboard', $config['dashboard']);
         $container->setParameter('kimai.widgets', $config['widgets']);
         $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
         $container->setParameter('kimai.export.documents', $config['export']['documents']);
-        $container->setParameter('kimai.defaults', $config['defaults']);
+        $container->setParameter('kimai.defaults', $config['defaults']); // @deprecated since 1.13
 
         $this->createPermissionParameter($config['permissions'], $container);
         $this->createThemeParameter($config['theme'], $container);
         $this->createUserParameter($config['user'], $container);
         $container->setParameter('kimai.saml', $config['saml']);
         $container->setParameter('kimai.saml.connection', $config['saml']['connection']);
-        $container->setParameter('kimai.timesheet', $config['timesheet']);
+        $container->setParameter('kimai.timesheet', $config['timesheet']); // @deprecated since 1.13
         $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
         $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
 

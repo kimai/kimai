@@ -10,11 +10,11 @@
 namespace App\Tests\Configuration;
 
 use App\Configuration\CalendarConfiguration;
+use App\Configuration\SystemConfiguration;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Configuration\CalendarConfiguration
- * @covers \App\Configuration\StringAccessibleConfigTrait
  * @group legacy
  */
 class CalendarConfigurationTest extends TestCase
@@ -28,7 +28,7 @@ class CalendarConfigurationTest extends TestCase
     {
         $loader = new TestConfigLoader($loaderSettings);
 
-        return new CalendarConfiguration($loader, $settings);
+        return new CalendarConfiguration(new SystemConfiguration($loader, ['calendar' => $settings]));
     }
 
     /**
@@ -89,5 +89,12 @@ class CalendarConfigurationTest extends TestCase
         self::assertTrue($sut->isShowWeekends());
         self::assertEquals('09:00', $sut->getTimeframeBegin());
         self::assertEquals('21:34', $sut->getTimeframeEnd());
+    }
+
+    public function testFindByKey()
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        $this->assertFalse($sut->find('week_numbers'));
+        $this->assertFalse($sut->find('calendar.week_numbers'));
     }
 }

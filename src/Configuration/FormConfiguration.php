@@ -14,7 +14,21 @@ namespace App\Configuration;
  */
 class FormConfiguration implements SystemBundleConfiguration
 {
-    use StringAccessibleConfigTrait;
+    private $configuration;
+
+    public function __construct(SystemConfiguration $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    public function find(string $key)
+    {
+        if (strpos($key, $this->getPrefix() . '.') === false) {
+            $key = $this->getPrefix() . '.' . $key;
+        }
+
+        return $this->configuration->find($key);
+    }
 
     public function getPrefix(): string
     {
