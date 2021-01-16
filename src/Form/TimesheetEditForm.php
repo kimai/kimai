@@ -78,14 +78,6 @@ class TimesheetEditForm extends AbstractType
                 $project = $activity->getProject();
             }
 
-            if (null === $project) {
-                // TODO test if only one project is available and pre-select it automatically
-            }
-
-            if (null === $activity) {
-                // TODO test if only one activity is available and pre-select it automatically
-            }
-
             if (null !== $customer) {
                 $currency = $customer->getCurrency();
             }
@@ -294,7 +286,7 @@ class TimesheetEditForm extends AbstractType
             'allow_end_datetime' => true,
             'allow_duration' => false,
             'duration_minutes' => null,
-            'duration_hours' => 8,
+            'duration_hours' => 10,
             'begin_minutes' => 1,
             'end_minutes' => 1,
             'attr' => [
