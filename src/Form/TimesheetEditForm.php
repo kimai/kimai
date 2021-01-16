@@ -185,14 +185,14 @@ class TimesheetEditForm extends AbstractType
         }
 
         $duration = $options['duration_minutes'];
-        if ($duration !== null && (int) $duration >= 5) {
+        if ($duration !== null && (int) $duration > 0) {
             $durationOptions = array_merge($durationOptions, [
                 'preset_minutes' => $duration
             ]);
         }
 
         $duration = $options['duration_hours'];
-        if ($duration !== null && (int) $duration >= 1) {
+        if ($duration !== null && (int) $duration > 0) {
             $durationOptions = array_merge($durationOptions, [
                 'preset_hours' => $duration,
             ]);

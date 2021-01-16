@@ -28,7 +28,7 @@
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
             <ul class="dropdown-menu dropdown-menu-right pre-scrollable">
                 {% for value in form.vars.duration_presets %}
-                    <li>
+                    <li class="text-center">
                         <a href="#" onclick="$('#{{ form.vars.id }}').val('{{ value }}');$('#{{ form.vars.id }}').trigger('change');return false;">{{ value }}</a>
                     </li>
                 {% endfor %}
