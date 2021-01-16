@@ -37,36 +37,36 @@ class FormConfiguration implements SystemBundleConfiguration
 
     public function getCustomerDefaultTimezone(): ?string
     {
-        return $this->find('customer.timezone');
+        return $this->configuration->getCustomerDefaultTimezone();
     }
 
     public function getCustomerDefaultCurrency(): string
     {
-        return $this->find('customer.currency');
+        return $this->configuration->getCustomerDefaultCurrency();
     }
 
     public function getCustomerDefaultCountry(): string
     {
-        return $this->find('customer.country');
+        return $this->configuration->getCustomerDefaultCountry();
     }
 
     public function getUserDefaultTimezone(): ?string
     {
-        return $this->find('user.timezone');
+        return $this->configuration->getUserDefaultTimezone();
     }
 
     public function getUserDefaultTheme(): ?string
     {
-        return $this->find('user.theme');
+        return $this->configuration->getUserDefaultTheme();
     }
 
     public function getUserDefaultLanguage(): string
     {
-        return $this->find('user.language');
+        return $this->configuration->getUserDefaultLanguage();
     }
 
     public function getUserDefaultCurrency(): string
     {
-        return $this->find('user.currency');
+        return $this->configuration->getUserDefaultCurrency();
     }
 }
