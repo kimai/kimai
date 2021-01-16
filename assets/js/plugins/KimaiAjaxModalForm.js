@@ -32,10 +32,10 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
         this.modal = jQuery('#remote_form_modal');
         this.modal.on('hide.bs.modal', function (e) {
-            let msg = self.getContainer().getTranslation().get('modal.dirty');
             if (self.isDirty) {
                 if (jQuery('#remote_form_modal .modal-body .remote_modal_is_dirty_warning').length === 0) {
-                    jQuery('#remote_form_modal .modal-body').prepend("<p class=\"text-danger small remote_modal_is_dirty_warning\">"+msg+"</p>");
+                    const msg = self.getContainer().getTranslation().get('modal.dirty');
+                    jQuery('#remote_form_modal .modal-body').prepend('<p class="text-danger small remote_modal_is_dirty_warning">' + msg + '</p>');
                 }
                 e.preventDefault();
                 return;
