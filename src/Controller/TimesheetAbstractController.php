@@ -453,7 +453,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'duration_minutes' => $this->configuration->getTimesheetDefaultRoundingDuration(),
             'begin_minutes' => $this->configuration->getTimesheetDefaultRoundingBegin(),
             'end_minutes' => $this->configuration->getTimesheetDefaultRoundingEnd(),
-            'timezone' => $this->getDateTimeFactory($this->getUser())->getTimezone(),
+            'timezone' => $this->getDateTimeFactory()->getTimezone(),
             'customer' => true,
         ]);
     }
@@ -481,7 +481,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'duration_minutes' => $this->configuration->getTimesheetDefaultRoundingDuration(),
             'begin_minutes' => $this->configuration->getTimesheetDefaultRoundingBegin(),
             'end_minutes' => $this->configuration->getTimesheetDefaultRoundingEnd(),
-            'timezone' => $this->getDateTimeFactory($this->getUser())->getTimezone(),
+            'timezone' => $this->getDateTimeFactory()->getTimezone(),
             'customer' => true,
         ]);
     }

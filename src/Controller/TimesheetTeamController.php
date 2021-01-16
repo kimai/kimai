@@ -160,6 +160,7 @@ class TimesheetTeamController extends TimesheetAbstractController
             'allow_begin_datetime' => $mode->canEditBegin(),
             'allow_end_datetime' => $mode->canEditEnd(),
             'allow_duration' => $mode->canEditDuration(),
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'customer' => true,
         ]);
     }
