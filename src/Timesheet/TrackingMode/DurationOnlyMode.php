@@ -11,7 +11,7 @@ namespace App\Timesheet\TrackingMode;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
-use App\Timesheet\UserDateTimeFactory;
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 
 final class DurationOnlyMode extends AbstractTrackingMode
@@ -21,9 +21,8 @@ final class DurationOnlyMode extends AbstractTrackingMode
      */
     private $configuration;
 
-    public function __construct(UserDateTimeFactory $dateTime, SystemConfiguration $configuration)
+    public function __construct(SystemConfiguration $configuration)
     {
-        parent::__construct($dateTime);
         $this->configuration = $configuration;
     }
 
@@ -60,7 +59,7 @@ final class DurationOnlyMode extends AbstractTrackingMode
     public function create(Timesheet $timesheet, ?Request $request = null): void
     {
         if (null === $timesheet->getBegin()) {
-            $timesheet->setBegin($this->dateTime->createDateTime());
+            $timesheet->setBegin(new DateTime('now', $this->getTimezone($timesheet)));
         }
 
         $newBegin = clone $timesheet->getBegin();

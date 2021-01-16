@@ -9,13 +9,15 @@
 
 namespace App\Tests\Timesheet;
 
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
+use App\Entity\User;
+use App\Tests\Mocks\Security\CurrentUserFactory;
 use App\Timesheet\UserDateTimeFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Timesheet\DateTimeFactory
  * @covers \App\Timesheet\UserDateTimeFactory
+ * @group legacy
  */
 class UserDateTimeFactoryTest extends TestCase
 {
@@ -23,7 +25,10 @@ class UserDateTimeFactoryTest extends TestCase
 
     protected function createUserDateTimeFactory(?string $timezone = null): UserDateTimeFactory
     {
-        return (new UserDateTimeFactoryFactory($this))->create($timezone);
+        $userFactory = new CurrentUserFactory($this);
+        $currentUser = $userFactory->create(new User(), $timezone);
+
+        return new UserDateTimeFactory($currentUser);
     }
 
     public function testGetTimezone()

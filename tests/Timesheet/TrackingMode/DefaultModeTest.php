@@ -11,7 +11,6 @@ namespace App\Tests\Timesheet\TrackingMode;
 
 use App\Entity\Timesheet;
 use App\Tests\Mocks\RoundingServiceFactory;
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Timesheet\TrackingMode\DefaultMode;
 
 /**
@@ -30,9 +29,7 @@ class DefaultModeTest extends AbstractTrackingModeTest
      */
     protected function createSut()
     {
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create();
-
-        return new DefaultMode($dateTime, (new RoundingServiceFactory($this))->create());
+        return new DefaultMode((new RoundingServiceFactory($this))->create());
     }
 
     public function testDefaultValues()
