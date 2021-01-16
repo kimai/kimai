@@ -216,6 +216,12 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('', $sut->getTimesheetLockdownPeriodStart());
         $this->assertEquals('', $sut->getTimesheetLockdownPeriodEnd());
         $this->assertEquals('', $sut->getTimesheetLockdownGracePeriod());
+        $this->assertEquals('', $sut->isTimesheetAllowOverlappingRecords());
+        $this->assertEquals('', $sut->getTimesheetDefaultRoundingDays());
+        $this->assertEquals('', $sut->getTimesheetDefaultRoundingMode());
+        $this->assertEquals(0, $sut->getTimesheetDefaultRoundingDuration());
+        $this->assertEquals(0, $sut->getTimesheetDefaultRoundingEnd());
+        $this->assertEquals(0, $sut->getTimesheetDefaultRoundingBegin());
     }
 
     public function testTimesheetWithLoader()
@@ -231,5 +237,11 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('first day of last month', $sut->getTimesheetLockdownPeriodStart());
         $this->assertEquals('last day of last month', $sut->getTimesheetLockdownPeriodEnd());
         $this->assertEquals('+5 days', $sut->getTimesheetLockdownGracePeriod());
+        $this->assertEquals('', $sut->isTimesheetAllowOverlappingRecords());
+        $this->assertEquals('', $sut->getTimesheetDefaultRoundingDays());
+        $this->assertEquals('', $sut->getTimesheetDefaultRoundingMode());
+        $this->assertEquals(0, $sut->getTimesheetDefaultRoundingDuration());
+        $this->assertEquals(0, $sut->getTimesheetDefaultRoundingEnd());
+        $this->assertEquals(0, $sut->getTimesheetDefaultRoundingBegin());
     }
 }

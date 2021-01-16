@@ -135,7 +135,7 @@ class Duration
 
     protected function parseDecimalFormat(string $duration): int
     {
-        $duration = (float) str_replace(',', '.', $duration);
+        $duration = str_replace(',', '.', $duration);
         $duration = (float) $duration;
         $duration = $duration * 3600;
 

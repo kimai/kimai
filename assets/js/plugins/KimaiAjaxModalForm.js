@@ -33,7 +33,6 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         this.modal = jQuery('#remote_form_modal');
         this.modal.on('hide.bs.modal', function (e) {
             let msg = self.getContainer().getTranslation().get('modal.dirty');
-            console.log(self.isDirty);
             if (self.isDirty) {
                 if (jQuery('#remote_form_modal .modal-body .remote_modal_is_dirty_warning').length === 0) {
                     jQuery('#remote_form_modal .modal-body').prepend("<p class=\"text-danger small remote_modal_is_dirty_warning\">"+msg+"</p>");
@@ -61,7 +60,6 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
                 formAutofocus = jQuery(self._getFormIdentifier()).find('input[type=text],textarea,select');
             }
             formAutofocus.filter(':not("[data-datetimepicker=on]")').filter(':visible:first').focus().delay(1000).focus();
-            //jQuery(self._getFormIdentifier()).find('input[type=text],textarea,select').filter(':not("[data-datetimepicker=on]")').filter(':visible:first').focus().delay(1000).focus();
         });
 
         this._addClickHandler(this.selector, function(href) {
@@ -161,7 +159,6 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         form = jQuery(formIdentifier);
 
         this._isDirtyHandler = function(e) {
-            console.log(e);
             self.isDirty = true;
         }
         form.on('change', this._isDirtyHandler);
