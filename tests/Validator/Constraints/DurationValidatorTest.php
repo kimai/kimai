@@ -102,10 +102,8 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($input, $constraint);
 
-        $expectedFormat = \is_string($input) ? '"' . $input . '"' : $input;
-
         $this->buildViolation('myMessage')
-            ->setParameter('{{ value }}', $expectedFormat)
+            ->setParameter('{{ value }}', '"' . $input . '"')
             ->setCode(Regex::REGEX_FAILED_ERROR)
             ->assertRaised();
     }
@@ -123,10 +121,8 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($input, $constraint);
 
-        $expectedFormat = \is_string($input) ? '"' . $input . '"' : $input;
-
         $this->buildViolation('myMessage')
-            ->setParameter('{{ value }}', $expectedFormat)
+            ->setParameter('{{ value }}', '"' . $input . '"')
             ->setCode(Regex::REGEX_FAILED_ERROR)
             ->assertRaised();
     }

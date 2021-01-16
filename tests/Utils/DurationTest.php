@@ -26,12 +26,17 @@ class DurationTest extends TestCase
         $this->assertEquals('02:38:14', $sut->format(9494, Duration::FORMAT_WITH_SECONDS));
     }
 
+    /**
+     * @group legacy
+     */
     public function testParseDurationStringSpecials()
     {
         $sut = new Duration();
         $this->assertEquals(0, $sut->parseDuration('-1', Duration::FORMAT_SECONDS));
         $this->assertEquals(0, $sut->parseDuration('0', Duration::FORMAT_SECONDS));
         $this->assertEquals(3600, $sut->parseDuration('3600', Duration::FORMAT_SECONDS));
+        $this->assertEquals(0, $sut->parseDuration('', Duration::FORMAT_SECONDS));
+        $this->assertEquals(0, $sut->parseDuration('-12', Duration::FORMAT_SECONDS));
     }
 
     /**
@@ -55,11 +60,11 @@ class DurationTest extends TestCase
     public function getParseDurationTestData()
     {
         return [
-            [0, '', Duration::FORMAT_SECONDS],
-            [0, 0, Duration::FORMAT_SECONDS],
-            [0, -12, Duration::FORMAT_SECONDS],
             [3600, 1, Duration::FORMAT_DECIMAL],
             [5400, 1.5, Duration::FORMAT_DECIMAL],
+            [3600, '1', Duration::FORMAT_DECIMAL],
+            [5400, '1.5', Duration::FORMAT_DECIMAL],
+            [5400, '1,5', Duration::FORMAT_DECIMAL],
 
             [0, '', Duration::FORMAT_NATURAL],
             [0, 0, Duration::FORMAT_NATURAL],
