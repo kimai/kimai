@@ -122,7 +122,7 @@ class SystemConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), []);
         $this->assertEquals('Europe/London', $sut->find('defaults.customer.timezone'));
         $this->assertEquals('GBP', $sut->find('defaults.customer.currency'));
-        $this->assertEquals(false, $sut->find('timesheet.rules.allow_future_times'));
+        $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(99, $sut->find('timesheet.active_entries.hard_limit'));
     }
 
@@ -131,7 +131,7 @@ class SystemConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), $this->getDefaultLoaderSettings());
         $this->assertEquals('Russia/Moscov', $sut->find('defaults.customer.timezone'));
         $this->assertEquals('RUB', $sut->find('defaults.customer.currency'));
-        $this->assertEquals(true, $sut->find('timesheet.rules.allow_future_times'));
+        $this->assertTrue($sut->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(7, $sut->find('timesheet.active_entries.hard_limit'));
     }
 
@@ -140,7 +140,7 @@ class SystemConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('timesheet.rules.allow_future_times')->setValue(''),
         ]);
-        $this->assertEquals(false, $sut->find('timesheet.rules.allow_future_times'));
+        $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
     }
 
     public function testUnknownConfigs()
@@ -229,8 +229,8 @@ class SystemConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), $this->getDefaultLoaderSettings());
         $this->assertEquals(7, $sut->getTimesheetActiveEntriesHardLimit());
         $this->assertEquals(3, $sut->getTimesheetActiveEntriesSoftLimit());
-        $this->assertEquals(true, $sut->isTimesheetAllowFutureTimes());
-        $this->assertEquals(true, $sut->isTimesheetMarkdownEnabled());
+        $this->assertTrue($sut->isTimesheetAllowFutureTimes());
+        $this->assertTrue($sut->isTimesheetMarkdownEnabled());
         $this->assertEquals('default', $sut->getTimesheetTrackingMode());
         $this->assertEquals('07:00', $sut->getTimesheetDefaultBeginTime());
         $this->assertTrue($sut->isTimesheetLockdownActive());
