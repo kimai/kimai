@@ -17,7 +17,7 @@ class TimesheetAdminEditForm extends TimesheetEditForm
     {
         $options['allow_begin_datetime'] = true;
         $options['allow_end_datetime'] = true;
-        $options['allow_duration'] = false;
+        $options['allow_duration'] = true;
 
         parent::buildForm($builder, $options);
     }

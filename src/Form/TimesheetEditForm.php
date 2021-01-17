@@ -11,6 +11,7 @@ namespace App\Form;
 
 use App\Entity\Timesheet;
 use App\Form\Type\DateTimePickerType;
+use App\Form\Type\DescriptionType;
 use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
@@ -19,7 +20,6 @@ use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
-use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -41,21 +41,11 @@ class TimesheetEditForm extends AbstractType
      * @var ProjectRepository
      */
     private $projects;
-    /**
-     * @var UserDateTimeFactory
-     */
-    protected $dateTime;
 
-    /**
-     * @param CustomerRepository $customer
-     * @param ProjectRepository $project
-     * @param UserDateTimeFactory $dateTime
-     */
-    public function __construct(CustomerRepository $customer, ProjectRepository $project, UserDateTimeFactory $dateTime)
+    public function __construct(CustomerRepository $customer, ProjectRepository $project)
     {
         $this->customers = $customer;
         $this->projects = $project;
-        $this->dateTime = $dateTime;
     }
 
     /**
@@ -69,7 +59,7 @@ class TimesheetEditForm extends AbstractType
         $currency = false;
         $begin = null;
         $customerCount = $this->customers->countCustomer(true);
-        $timezone = $this->dateTime->getTimezone()->getName();
+        $timezone = $options['timezone'];
         $isNew = true;
 
         if (isset($options['data'])) {
@@ -108,23 +98,15 @@ class TimesheetEditForm extends AbstractType
         }
 
         if ($options['allow_begin_datetime']) {
-            $this->addBegin($builder, $dateTimeOptions);
+            $this->addBegin($builder, $dateTimeOptions, $options);
+        }
+
+        if ($options['allow_end_datetime']) {
+            $this->addEnd($builder, $dateTimeOptions, $options);
         }
 
         if ($options['allow_duration']) {
-            $this->addDuration($builder);
-        } elseif ($options['allow_end_datetime']) {
-            $this->addEnd($builder, $dateTimeOptions);
-        }
-
-        if ($options['allow_begin_datetime'] && $options['allow_end_datetime']) {
-            $builder->add('duration', DurationType::class, [
-                'required' => false,
-                'attr' => [
-                    'placeholder' => '00:00',
-                    'pattern' => '[0-9]{2,3}:[0-9]{2}'
-                ]
-            ]);
+            $this->addDuration($builder, $options, (!$options['allow_begin_datetime'] || !$options['allow_end_datetime']), $isNew);
         }
 
         if ($this->showCustomer($options, $isNew, $customerCount)) {
@@ -133,7 +115,13 @@ class TimesheetEditForm extends AbstractType
 
         $this->addProject($builder, $isNew, $project, $customer);
         $this->addActivity($builder, $activity, $project);
-        $this->addDescription($builder);
+
+        $descriptionOptions = ['required' => false];
+        if (!$isNew) {
+            $descriptionOptions['attr'] = ['autofocus' => 'autofocus'];
+        }
+        $builder->add('description', DescriptionType::class, $descriptionOptions);
+
         $this->addTags($builder);
         $this->addRates($builder, $currency, $options);
         $this->addUser($builder, $options);
@@ -159,30 +147,58 @@ class TimesheetEditForm extends AbstractType
         return true;
     }
 
-    protected function addBegin(FormBuilderInterface $builder, array $dateTimeOptions)
+    protected function addBegin(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
     {
+        if ($options['begin_minutes'] >= 1 && $options['begin_minutes'] <= 60) {
+            $dateTimeOptions['time_increment'] = $options['begin_minutes'];
+        }
+
         $builder->add('begin', DateTimePickerType::class, array_merge($dateTimeOptions, [
-            'label' => 'label.begin'
+            'label' => 'label.begin',
         ]));
     }
 
-    protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions)
+    protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
     {
+        if ($options['end_minutes'] >= 1 && $options['end_minutes'] <= 60) {
+            $dateTimeOptions['time_increment'] = (int) $options['end_minutes'];
+        }
+
         $builder->add('end', DateTimePickerType::class, array_merge($dateTimeOptions, [
             'label' => 'label.end',
             'required' => false,
         ]));
     }
 
-    protected function addDuration(FormBuilderInterface $builder)
+    protected function addDuration(FormBuilderInterface $builder, array $options, bool $forceApply = false, bool $autofocus = false)
     {
-        $builder->add('duration', DurationType::class, [
+        $durationOptions = [
             'required' => false,
             'docu_chapter' => 'timesheet.html#duration-format',
             'attr' => [
-                'placeholder' => '00:00',
-            ]
-        ]);
+                'placeholder' => '0:00',
+            ],
+        ];
+
+        if ($autofocus) {
+            $durationOptions['attr']['autofocus'] = 'autofocus';
+        }
+
+        $duration = $options['duration_minutes'];
+        if ($duration !== null && (int) $duration > 0) {
+            $durationOptions = array_merge($durationOptions, [
+                'preset_minutes' => $duration
+            ]);
+        }
+
+        $duration = $options['duration_hours'];
+        if ($duration !== null && (int) $duration > 0) {
+            $durationOptions = array_merge($durationOptions, [
+                'preset_hours' => $duration,
+            ]);
+        }
+
+        $builder->add('duration', DurationType::class, $durationOptions);
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
@@ -198,16 +214,17 @@ class TimesheetEditForm extends AbstractType
         // make sure that duration is mapped back to end field
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event) use ($forceApply) {
                 /** @var Timesheet $data */
                 $data = $event->getData();
                 $duration = $data->getDuration();
-                $end = null;
-                if (null !== $duration) {
+                // only apply the duration, if the end is not yet set
+                // without that check, the end would be overwritten and the real end time would be lost
+                if (($forceApply && null !== $duration) || (null !== $duration && null === $data->getEnd())) {
                     $end = clone $data->getBegin();
                     $end->modify('+ ' . $duration . 'seconds');
+                    $data->setEnd($end);
                 }
-                $data->setEnd($end);
             }
         );
     }
@@ -263,10 +280,15 @@ class TimesheetEditForm extends AbstractType
             'docu_chapter' => 'timesheet.html',
             'method' => 'POST',
             'date_format' => null,
+            'timezone' => date_default_timezone_get(),
             'customer' => false, // for API usage
             'allow_begin_datetime' => true,
             'allow_end_datetime' => true,
             'allow_duration' => false,
+            'duration_minutes' => null,
+            'duration_hours' => 10,
+            'begin_minutes' => 1,
+            'end_minutes' => 1,
             'attr' => [
                 'data-form-event' => 'kimai.timesheetUpdate',
                 'data-msg-success' => 'action.update.success',

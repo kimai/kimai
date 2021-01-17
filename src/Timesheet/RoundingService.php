@@ -9,7 +9,7 @@
 
 namespace App\Timesheet;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Timesheet\Rounding\RoundingInterface;
 
@@ -24,7 +24,7 @@ final class RoundingService
      */
     private $rulesCache;
     /**
-     * @var TimesheetConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
     /**
@@ -33,11 +33,11 @@ final class RoundingService
     private $roundingModes;
 
     /**
-     * @param TimesheetConfiguration $configuration
+     * @param SystemConfiguration $configuration
      * @param RoundingInterface[] $roundingModes
      * @param array $rules
      */
-    public function __construct(TimesheetConfiguration $configuration, iterable $roundingModes, array $rules)
+    public function __construct(SystemConfiguration $configuration, iterable $roundingModes, array $rules)
     {
         $this->configuration = $configuration;
         $this->roundingModes = $roundingModes;
@@ -49,11 +49,11 @@ final class RoundingService
         if (empty($this->rulesCache)) {
             $this->rulesCache = $this->rules;
             if (empty($this->rulesCache) || \array_key_exists('default', $this->rulesCache)) {
-                $this->rulesCache['default']['days'] = $this->configuration->getDefaultRoundingDays();
-                $this->rulesCache['default']['begin'] = $this->configuration->getDefaultRoundingBegin();
-                $this->rulesCache['default']['end'] = $this->configuration->getDefaultRoundingEnd();
-                $this->rulesCache['default']['duration'] = $this->configuration->getDefaultRoundingDuration();
-                $this->rulesCache['default']['mode'] = $this->configuration->getDefaultRoundingMode();
+                $this->rulesCache['default']['days'] = $this->configuration->getTimesheetDefaultRoundingDays();
+                $this->rulesCache['default']['begin'] = $this->configuration->getTimesheetDefaultRoundingBegin();
+                $this->rulesCache['default']['end'] = $this->configuration->getTimesheetDefaultRoundingEnd();
+                $this->rulesCache['default']['duration'] = $this->configuration->getTimesheetDefaultRoundingDuration();
+                $this->rulesCache['default']['mode'] = $this->configuration->getTimesheetDefaultRoundingMode();
             }
 
             // see AppExtension, conversion from string to array due to system configuration ont allowing to store arrays

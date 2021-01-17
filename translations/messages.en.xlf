@@ -84,6 +84,10 @@
                 <source>sum.total</source>
                 <target>Total</target>
             </trans-unit>
+            <trans-unit id="modal.dirty">
+                <source>modal.dirty</source>
+                <target>The form has changed. Please click "Save" to save the changes or "Close" to cancel.</target>
+            </trans-unit>
             <!--
               Login / Security
             -->

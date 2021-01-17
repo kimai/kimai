@@ -17,6 +17,7 @@ use App\Form\SystemConfigurationForm;
 use App\Form\Type\DateTimeTextType;
 use App\Form\Type\DayTimeType;
 use App\Form\Type\LanguageType;
+use App\Form\Type\MinuteIncrementType;
 use App\Form\Type\RoundingModeType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TrackingModeType;
@@ -274,6 +275,21 @@ final class SystemConfigurationController extends AbstractController
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
                             new GreaterThanOrEqual(['value' => 1])
+                        ]),
+                    (new Configuration())
+                        ->setName('timesheet.time_increment')
+                        ->setType(MinuteIncrementType::class)
+                        ->setOptions(['deactivate' => false])
+                        ->setTranslationDomain('system-configuration')
+                        ->setConstraints([
+                            new GreaterThanOrEqual(['value' => 1])
+                        ]),
+                    (new Configuration())
+                        ->setName('timesheet.duration_increment')
+                        ->setType(MinuteIncrementType::class)
+                        ->setTranslationDomain('system-configuration')
+                        ->setConstraints([
+                            new GreaterThanOrEqual(['value' => 0])
                         ]),
                 ]),
             (new SystemConfigurationModel())

@@ -16,6 +16,11 @@ class Duration
 {
     public const FORMAT_COLON = 'colon';
     public const FORMAT_NATURAL = 'natural';
+    public const FORMAT_DECIMAL = 'decimal';
+
+    /**
+     * @deprecated since 1.13
+     */
     public const FORMAT_SECONDS = 'seconds';
 
     public const FORMAT_WITH_SECONDS = '%h:%m:%s';
@@ -61,8 +66,12 @@ class Duration
             return $this->parseDuration($duration, self::FORMAT_COLON);
         }
 
+        if (strpos($duration, '.') !== false || strpos($duration, ',') !== false) {
+            return $this->parseDuration($duration, self::FORMAT_DECIMAL);
+        }
+
         if (is_numeric($duration) && $duration == (int) $duration) {
-            return $this->parseDuration($duration, self::FORMAT_SECONDS);
+            return $this->parseDuration($duration, self::FORMAT_DECIMAL);
         }
 
         return $this->parseDuration($duration, self::FORMAT_NATURAL);
@@ -91,7 +100,12 @@ class Duration
                 $seconds = $this->parseNaturalFormat($duration);
                 break;
 
+            case self::FORMAT_DECIMAL:
+                $seconds = $this->parseDecimalFormat($duration);
+                break;
+
             case self::FORMAT_SECONDS:
+                @trigger_error('Duration format FORMAT_SECONDS is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
                 $seconds = (int) $duration;
                 break;
 
@@ -117,6 +131,15 @@ class Duration
         } catch (\Exception $e) {
             throw new \InvalidArgumentException('Invalid input for natural format: ' . $duration);
         }
+    }
+
+    protected function parseDecimalFormat(string $duration): int
+    {
+        $duration = str_replace(',', '.', $duration);
+        $duration = (float) $duration;
+        $duration = $duration * 3600;
+
+        return (int) $duration;
     }
 
     protected function parseColonFormat(string $duration): int

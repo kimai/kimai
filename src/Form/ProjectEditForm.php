@@ -44,10 +44,18 @@ class ProjectEditForm extends AbstractType
             }
         }
 
-        $dateTimeOptions = [];
+        $dateTimeOptions = [
+            'model_timezone' => $options['timezone'],
+            'view_timezone' => $options['timezone'],
+        ];
         // primarily for API usage, where we cannot use a user/locale specific format
         if (null !== $options['date_format']) {
             $dateTimeOptions['format'] = $options['date_format'];
+        }
+
+        $timeIncrement = 1;
+        if ($options['time_increment'] >= 1 && $options['time_increment'] <= 60) {
+            $timeIncrement = $options['time_increment'];
         }
 
         $builder
@@ -68,14 +76,17 @@ class ProjectEditForm extends AbstractType
             ->add('orderDate', DateTimePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.orderDate',
                 'required' => false,
+                'time_increment' => $timeIncrement,
             ]))
             ->add('start', DateTimePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.project_start',
                 'required' => false,
+                'time_increment' => $timeIncrement,
             ]))
             ->add('end', DateTimePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.project_end',
                 'required' => false,
+                'time_increment' => $timeIncrement,
             ]))
             ->add('customer', CustomerType::class, [
                 'placeholder' => (null === $id && null === $customer) ? '' : false,
@@ -103,6 +114,8 @@ class ProjectEditForm extends AbstractType
             'currency' => Customer::DEFAULT_CURRENCY,
             'date_format' => null,
             'include_budget' => false,
+            'timezone' => date_default_timezone_get(),
+            'time_increment' => 1,
             'attr' => [
                 'data-form-event' => 'kimai.projectUpdate'
             ],

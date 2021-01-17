@@ -14,95 +14,79 @@ namespace App\Configuration;
  */
 class CalendarConfiguration implements SystemBundleConfiguration
 {
-    use StringAccessibleConfigTrait;
+    private $configuration;
+
+    public function __construct(SystemConfiguration $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    public function find(string $key)
+    {
+        if (strpos($key, $this->getPrefix() . '.') === false) {
+            $key = $this->getPrefix() . '.' . $key;
+        }
+
+        return $this->configuration->find($key);
+    }
 
     public function getPrefix(): string
     {
         return 'calendar';
     }
 
-    /**
-     * @return array
-     */
     public function getBusinessDays(): array
     {
-        return (array) $this->find('businessHours.days');
+        return $this->configuration->getCalendarBusinessDays();
     }
 
-    /**
-     * @return string
-     */
     public function getBusinessTimeBegin(): string
     {
-        return (string) $this->find('businessHours.begin');
+        return $this->configuration->getCalendarBusinessTimeBegin();
     }
 
-    /**
-     * @return string
-     */
     public function getBusinessTimeEnd(): string
     {
-        return (string) $this->find('businessHours.end');
+        return $this->configuration->getCalendarBusinessTimeEnd();
     }
 
-    /**
-     * @return string
-     */
     public function getTimeframeBegin(): string
     {
-        return (string) $this->find('visibleHours.begin');
+        return $this->configuration->getCalendarTimeframeBegin();
     }
 
-    /**
-     * @return string
-     */
     public function getTimeframeEnd(): string
     {
-        return (string) $this->find('visibleHours.end');
+        return $this->configuration->getCalendarTimeframeEnd();
     }
 
-    /**
-     * @return int
-     */
     public function getDayLimit(): int
     {
-        return (int) $this->find('day_limit');
+        return $this->configuration->getCalendarDayLimit();
     }
 
-    /**
-     * @return bool
-     */
     public function isShowWeekNumbers(): bool
     {
-        return (bool) $this->find('week_numbers');
+        return $this->configuration->isCalendarShowWeekNumbers();
     }
 
-    /**
-     * @return bool
-     */
     public function isShowWeekends(): bool
     {
-        return (bool) $this->find('weekends');
+        return $this->configuration->isCalendarShowWeekends();
     }
 
-    /**
-     * @return null|string
-     */
     public function getGoogleApiKey(): ?string
     {
-        return $this->find('google.api_key');
+        return $this->configuration->getCalendarGoogleApiKey();
     }
 
-    /**
-     * @return null|array
-     */
     public function getGoogleSources(): ?array
     {
-        return $this->find('google.sources');
+        return $this->configuration->getCalendarGoogleSources();
     }
 
     public function getSlotDuration(): string
     {
-        return (string) $this->find('slot_duration');
+        return $this->configuration->getCalendarSlotDuration();
     }
 }

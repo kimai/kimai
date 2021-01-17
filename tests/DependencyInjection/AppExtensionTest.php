@@ -207,6 +207,8 @@ class AppExtensionTest extends TestCase
                     'lockdown_grace_period' => null,
                 ],
                 'default_begin' => 'now',
+                'duration_increment' => null,
+                'time_increment' => null,
             ],
             'kimai.timesheet.rates' => [],
             'kimai.timesheet.rounding' => [

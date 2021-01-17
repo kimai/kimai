@@ -27,7 +27,7 @@ class InvoiceToolbarSimpleForm extends AbstractToolbarForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addTemplateChoice($builder);
-        $this->addDateRangeChoice($builder);
+        $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerChoice($builder, ['required' => true, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => ''], true);
         $this->addProjectMultiChoice($builder, ['ignore_date' => true], false, true);
         $builder->add('markAsExported', CheckboxType::class, [
@@ -63,6 +63,7 @@ class InvoiceToolbarSimpleForm extends AbstractToolbarForm
             'data_class' => InvoiceQuery::class,
             'csrf_protection' => false,
             'include_user' => true,
+            'timezone' => date_default_timezone_get(),
         ]);
     }
 }

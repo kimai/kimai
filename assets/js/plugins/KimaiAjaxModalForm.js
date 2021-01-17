@@ -28,9 +28,20 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
     init() {
         const self = this;
+        this.isDirty = false;
 
         this.modal = jQuery('#remote_form_modal');
-        this.modal.on('hide.bs.modal', function () {
+        this.modal.on('hide.bs.modal', function (e) {
+            if (self.isDirty) {
+                if (jQuery('#remote_form_modal .modal-body .remote_modal_is_dirty_warning').length === 0) {
+                    const msg = self.getContainer().getTranslation().get('modal.dirty');
+                    jQuery('#remote_form_modal .modal-body').prepend('<p class="text-danger small remote_modal_is_dirty_warning">' + msg + '</p>');
+                }
+                e.preventDefault();
+                return;
+            }
+            jQuery(self._getFormIdentifier()).off('change', self._isDirtyHandler);
+            self.isDirty = false;
             self.getContainer().getPlugin('event').trigger('modal-hide');
         });
         this.modal.on('hidden.bs.modal', function () {
@@ -44,7 +55,11 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         });
         this.modal.on('shown.bs.modal', function () {
             // workaround for autofocus attribute, as the modal "steals" it
-            jQuery(self._getFormIdentifier()).find('input[type=text],textarea,select').filter(':not("[data-datetimepicker=on]")').filter(':visible:first').focus().delay(1000).focus();
+            let formAutofocus = jQuery(self._getFormIdentifier()).find('[autofocus]');
+            if (formAutofocus.length < 1) {
+                formAutofocus = jQuery(self._getFormIdentifier()).find('input[type=text],textarea,select');
+            }
+            formAutofocus.filter(':not("[data-datetimepicker=on]")').filter(':visible:first').focus().delay(1000).focus();
         });
 
         this._addClickHandler(this.selector, function(href) {
@@ -97,7 +112,7 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         form.off('submit');
 
         // load new form from given content
-        if (jQuery(html).find('#form_modal .modal-content').length > 0 ) {
+        if (jQuery(html).find('#form_modal .modal-content').length > 0) {
             // switch classes, in case the modal type changed
             remoteModal.on('hidden.bs.modal', function () {
                 if (remoteModal.hasClass('modal-danger')) {
@@ -112,6 +127,10 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
             jQuery('#remote_form_modal .modal-content').replaceWith(
                 jQuery(html).find('#form_modal .modal-content')
             );
+
+            jQuery('#remote_form_modal [data-dismiss=modal]').on('click', function() {
+                self.isDirty = false;
+            });
 
             // activate new loaded widgets
             self.getContainer().getPlugin('form').activateForm(formIdentifier);
@@ -138,6 +157,11 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
         // the new form that was loaded via ajax
         form = jQuery(formIdentifier);
+
+        this._isDirtyHandler = function(e) {
+            self.isDirty = true;
+        }
+        form.on('change', this._isDirtyHandler);
 
         // click handler for modal save button, to send forms via ajax
         form.on('submit', function(event){
@@ -181,6 +205,7 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
                         if (msg === null || msg === undefined) {
                             msg = 'action.update.success';
                         }
+                        self.isDirty = false;
                         remoteModal.modal('hide');
                         alert.success(msg);
                     }

@@ -9,7 +9,7 @@
 
 namespace App\Tests\Timesheet;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\TimesheetCreatePostEvent;
@@ -42,8 +42,8 @@ class TimesheetServiceTest extends TestCase
         ?ValidatorInterface $validator = null,
         ?TimesheetRepository $repository = null
     ): TimesheetService {
-        $configuration = $this->createMock(TimesheetConfiguration::class);
-        $configuration->method('getActiveEntriesHardLimit')->willReturn(1);
+        $configuration = $this->createMock(SystemConfiguration::class);
+        $configuration->method('getTimesheetActiveEntriesHardLimit')->willReturn(1);
 
         if ($repository === null) {
             $repository = $this->createMock(TimesheetRepository::class);
