@@ -9,13 +9,17 @@
 
 namespace App\Tests\Voter;
 
+use App\Configuration\ConfigLoaderInterface;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Timesheet\LockdownService;
 use App\Voter\TimesheetVoter;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 /**
@@ -23,10 +27,29 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
  */
 class TimesheetVoterTest extends AbstractVoterTest
 {
+    protected function getVoter(string $voterClass): Voter
+    {
+        $loader = $this->createMock(ConfigLoaderInterface::class);
+        $config = new SystemConfiguration($loader, [
+            'timesheet' => [
+                'rules' => [
+                    'lockdown_period_start' => null,
+                    'lockdown_period_end' => null,
+                    'lockdown_grace_period' => null,
+                ],
+            ]
+        ]);
+
+        $voter = new TimesheetVoter($this->getRolePermissionManager(), new LockdownService($config));
+        self::assertInstanceOf(Voter::class, $voter);
+
+        return $voter;
+    }
+
     protected function assertVote(User $user, $subject, $attribute, $result)
     {
         $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
-        $sut = $this->getVoter(TimesheetVoter::class, $user);
+        $sut = $this->getVoter(TimesheetVoter::class);
 
         $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }
@@ -154,9 +177,10 @@ class TimesheetVoterTest extends AbstractVoterTest
      */
     protected function getUser($id, $role)
     {
-        $user = $this->getMockBuilder(User::class)->getMock();
+        $user = $this->createMock(User::class);
         $user->method('getId')->willReturn($id);
         $user->method('getRoles')->willReturn([$role]);
+        $user->method('getTimezone')->willReturn(date_default_timezone_get());
 
         return $user;
     }

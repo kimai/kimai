@@ -11,12 +11,15 @@ namespace App\Voter;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Security\RolePermissionManager;
+use App\Timesheet\LockdownService;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
  * A voter to check permissions on Timesheets.
  */
-class TimesheetVoter extends AbstractVoter
+class TimesheetVoter extends Voter
 {
     public const VIEW = 'view';
     public const START = 'start';
@@ -31,7 +34,7 @@ class TimesheetVoter extends AbstractVoter
     /**
      * support rules based on the given $subject (here: Timesheet)
      */
-    public const ALLOWED_ATTRIBUTES = [
+    private const ALLOWED_ATTRIBUTES = [
         self::VIEW,
         self::START,
         self::STOP,
@@ -43,6 +46,20 @@ class TimesheetVoter extends AbstractVoter
         self::EDIT_EXPORT,
         'duplicate'
     ];
+
+    private $permissionManager;
+    private $lockdownService;
+
+    private $lockdownGrace;
+    private $lockdownOverride;
+    private $editExported;
+    private $now;
+
+    public function __construct(RolePermissionManager $permissionManager, LockdownService $lockdownService)
+    {
+        $this->permissionManager = $permissionManager;
+        $this->lockdownService = $lockdownService;
+    }
 
     /**
      * @param string $attribute
@@ -101,6 +118,9 @@ class TimesheetVoter extends AbstractVoter
                 break;
 
             case 'duplicate':
+                if (!$this->canDuplicate($user, $subject)) {
+                    return false;
+                }
                 $permission = self::EDIT;
                 break;
 
@@ -128,7 +148,7 @@ class TimesheetVoter extends AbstractVoter
 
         $permission .= '_timesheet';
 
-        return $this->hasRolePermission($user, $permission);
+        return $this->permissionManager->hasRolePermission($user, $permission);
     }
 
     protected function canStart(Timesheet $timesheet): bool
@@ -158,7 +178,11 @@ class TimesheetVoter extends AbstractVoter
 
     protected function canEdit(User $user, Timesheet $timesheet): bool
     {
-        if ($timesheet->isExported() && !$this->hasRolePermission($user, 'edit_exported_timesheet')) {
+        if (!$this->isAllowedExported($user, $timesheet)) {
+            return false;
+        }
+
+        if (!$this->isAllowedInLockdown($user, $timesheet)) {
             return false;
         }
 
@@ -167,10 +191,61 @@ class TimesheetVoter extends AbstractVoter
 
     protected function canDelete(User $user, Timesheet $timesheet): bool
     {
-        if ($timesheet->isExported() && !$this->hasRolePermission($user, 'edit_exported_timesheet')) {
+        if (!$this->isAllowedExported($user, $timesheet)) {
+            return false;
+        }
+
+        if (!$this->isAllowedInLockdown($user, $timesheet)) {
             return false;
         }
 
         return true;
+    }
+
+    protected function canDuplicate(User $user, Timesheet $timesheet): bool
+    {
+        if (!$this->isAllowedInLockdown($user, $timesheet)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function isAllowedExported(User $user, Timesheet $timesheet): bool
+    {
+        if (!$timesheet->isExported()) {
+            return true;
+        }
+
+        if ($this->editExported === null) {
+            $this->editExported = $this->permissionManager->hasRolePermission($user, 'edit_exported_timesheet');
+        }
+
+        return $this->editExported;
+    }
+
+    private function isAllowedInLockdown(User $user, Timesheet $timesheet): bool
+    {
+        if (!$this->lockdownService->isLockdownActive()) {
+            return true;
+        }
+
+        if ($this->lockdownOverride === null) {
+            $this->lockdownOverride = $this->permissionManager->hasRolePermission($user, 'lockdown_override_timesheet');
+        }
+
+        if ($this->lockdownOverride) {
+            return true;
+        }
+
+        if ($this->lockdownGrace === null) {
+            $this->lockdownGrace = $this->permissionManager->hasRolePermission($user, 'lockdown_grace_timesheet');
+        }
+
+        if ($this->now === null) {
+            $this->now = new \DateTime('now', new \DateTimeZone($user->getTimezone()));
+        }
+
+        return $this->lockdownService->isEditable($timesheet, $this->now, $this->lockdownGrace);
     }
 }

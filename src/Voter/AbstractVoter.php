@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
  * Abstract voter to help with checking user permissions.
+ * @deprecated since 1.13
  */
 abstract class AbstractVoter extends Voter
 {
