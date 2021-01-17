@@ -200,4 +200,32 @@ class SystemConfiguration implements SystemBundleConfiguration
     {
         return !empty($this->find('timesheet.rules.lockdown_period_start')) && !empty($this->find('timesheet.rules.lockdown_period_end'));
     }
+
+    private function getIncrement(string $key, int $fallback, int $min = 1): ?int
+    {
+        $config = $this->find($key);
+
+        if ($config === null || trim($config) === '') {
+            return $fallback;
+        }
+
+        $config = (int) $config;
+
+        return $config < $min ? null : $config;
+    }
+
+    public function getTimesheetIncrementDuration(): ?int
+    {
+        return $this->getIncrement('timesheet.duration_increment', $this->getTimesheetDefaultRoundingDuration(), 1);
+    }
+
+    public function getTimesheetIncrementBegin(): ?int
+    {
+        return $this->getIncrement('timesheet.time_increment', $this->getTimesheetDefaultRoundingBegin(), 0);
+    }
+
+    public function getTimesheetIncrementEnd(): ?int
+    {
+        return $this->getIncrement('timesheet.time_increment', $this->getTimesheetDefaultRoundingEnd(), 0);
+    }
 }
