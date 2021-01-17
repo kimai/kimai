@@ -12,6 +12,7 @@ namespace App\Tests\Validator\Constraints;
 use App\Configuration\ConfigLoaderInterface;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
+use App\Timesheet\LockdownService;
 use App\Validator\Constraints\TimesheetLockdown;
 use App\Validator\Constraints\TimesheetLockdownValidator;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -56,7 +57,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
             ]
         ]);
 
-        return new TimesheetLockdownValidator($auth, $config);
+        return new TimesheetLockdownValidator($auth, new LockdownService($config));
     }
 
     public function testConstraintIsInvalid()

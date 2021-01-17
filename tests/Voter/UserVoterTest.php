@@ -26,7 +26,7 @@ class UserVoterTest extends AbstractVoterTest
     public function testVote(User $user, $subject, $attribute, $result)
     {
         $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
-        $sut = $this->getVoter(UserVoter::class, $user);
+        $sut = $this->getVoter(UserVoter::class);
 
         $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }
