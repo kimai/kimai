@@ -139,7 +139,7 @@ trait FormTrait
     /**
      * @deprecated since 1.13
      */
-    protected function addDescription(FormBuilderInterface $builder, array $options)
+    protected function addDescription(FormBuilderInterface $builder)
     {
         @trigger_error('FormTrait::addDescription() is deprecated and will be removed with 2.0, use DescriptionType instead', E_USER_DEPRECATED);
 
