@@ -29,21 +29,7 @@ class TimesheetVoterTest extends AbstractVoterTest
 {
     protected function getVoter(string $voterClass): Voter
     {
-        $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new SystemConfiguration($loader, [
-            'timesheet' => [
-                'rules' => [
-                    'lockdown_period_start' => null,
-                    'lockdown_period_end' => null,
-                    'lockdown_grace_period' => null,
-                ],
-            ]
-        ]);
-
-        $voter = new TimesheetVoter($this->getRolePermissionManager(), new LockdownService($config));
-        self::assertInstanceOf(Voter::class, $voter);
-
-        return $voter;
+        return $this->getLockdownVoter();
     }
 
     protected function assertVote(User $user, $subject, $attribute, $result)
@@ -108,6 +94,36 @@ class TimesheetVoterTest extends AbstractVoterTest
             yield [$timeEntry[0], $timeEntry[1], 'delete', $result];
             yield [$timeEntry[0], $timeEntry[1], 'export', $result];
         }
+    }
+
+    /**
+     * @dataProvider getLockDownTestData
+     */
+    public function testWithLockdown(string $permission, int $expected, string $beginModifier, string $lockdownBegin, string $lockdownEnd, ?string $lockdownGrace)
+    {
+        $user = $this->getUser(1, User::ROLE_USER);
+
+        $begin = new \DateTime('now');
+        $begin->modify($beginModifier);
+
+        $timesheet = new Timesheet();
+        $timesheet->setBegin($begin);
+        $timesheet->setUser($user);
+
+        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $sut = $this->getLockdownVoter($lockdownBegin, $lockdownEnd, $lockdownGrace);
+
+        self::assertEquals($expected, $sut->vote($token, $timesheet, [$permission]));
+    }
+
+    public function getLockDownTestData()
+    {
+        yield ['view', VoterInterface::ACCESS_GRANTED, '+1 days', 'first day of this month', 'last day of this month', '+10 days'];
+        yield ['duplicate', VoterInterface::ACCESS_GRANTED, '+1 days', 'first day of this month', 'last day of this month', '+10 days'];
+        yield ['delete', VoterInterface::ACCESS_GRANTED, '+1 days', 'first day of this month', 'last day of this month', '+10 days'];
+        yield ['edit', VoterInterface::ACCESS_DENIED, '-50 days', 'first day of last month', 'last day of last month', '+1 days'];
+        yield ['duplicate', VoterInterface::ACCESS_DENIED, '-50 days', 'first day of last month', 'last day of last month', '+1 days'];
+        yield ['delete', VoterInterface::ACCESS_DENIED, '-50 days', 'first day of last month', 'last day of last month', '+1 days'];
     }
 
     public function testSpecialCases()
@@ -183,5 +199,24 @@ class TimesheetVoterTest extends AbstractVoterTest
         $user->method('getTimezone')->willReturn(date_default_timezone_get());
 
         return $user;
+    }
+
+    protected function getLockdownVoter(?string $lockdownBegin = null, ?string $lockdownEnd = null, ?string $lockdownGrace = null): Voter
+    {
+        $loader = $this->createMock(ConfigLoaderInterface::class);
+        $config = new SystemConfiguration($loader, [
+            'timesheet' => [
+                'rules' => [
+                    'lockdown_period_start' => $lockdownBegin,
+                    'lockdown_period_end' => $lockdownEnd,
+                    'lockdown_grace_period' => $lockdownGrace,
+                ],
+            ]
+        ]);
+
+        $voter = new TimesheetVoter($this->getRolePermissionManager(), new LockdownService($config));
+        self::assertInstanceOf(Voter::class, $voter);
+
+        return $voter;
     }
 }
