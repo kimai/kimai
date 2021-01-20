@@ -223,6 +223,31 @@ final class SystemConfigurationController extends AbstractController
      */
     protected function getConfigurationTypes()
     {
+        $lockdownStartHelp = null;
+        $lockdownEndHelp = null;
+        $lockdownGraceHelp = null;
+        $dateFormat = 'D, d M Y H:i:s';
+
+        if ($this->configurations->isTimesheetLockdownActive()) {
+            try {
+                if (!empty($this->configurations->getTimesheetLockdownPeriodStart())) {
+                    $lockdownStartHelp = $this->getDateTimeFactory()->createDateTime($this->configurations->getTimesheetLockdownPeriodStart());
+                    $lockdownStartHelp = $lockdownStartHelp->format($dateFormat);
+                }
+                if (!empty($this->configurations->getTimesheetLockdownPeriodEnd())) {
+                    $lockdownEndHelp = $this->getDateTimeFactory()->createDateTime($this->configurations->getTimesheetLockdownPeriodEnd());
+                    if (!empty($this->configurations->getTimesheetLockdownGracePeriod())) {
+                        $lockdownGraceHelp = clone $lockdownEndHelp;
+                        $lockdownGraceHelp->modify($this->configurations->getTimesheetLockdownGracePeriod());
+                        $lockdownGraceHelp = $lockdownGraceHelp->format($dateFormat);
+                    }
+                    $lockdownEndHelp = $lockdownEndHelp->format($dateFormat);
+                }
+            } catch (\Exception $ex) {
+                $lockdownStartHelp = 'invalid';
+            }
+        }
+
         return [
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_TIMESHEET)
@@ -246,18 +271,21 @@ final class SystemConfigurationController extends AbstractController
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
                         ->setName('timesheet.rules.lockdown_period_start')
+                        ->setOptions(['help' => $lockdownStartHelp])
                         ->setType(TextType::class)
                         ->setRequired(false)
                         ->setConstraints([new DateTimeFormat()])
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
                         ->setName('timesheet.rules.lockdown_period_end')
+                        ->setOptions(['help' => $lockdownEndHelp])
                         ->setType(TextType::class)
                         ->setRequired(false)
                         ->setConstraints([new DateTimeFormat()])
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
                         ->setName('timesheet.rules.lockdown_grace_period')
+                        ->setOptions(['help' => $lockdownGraceHelp])
                         ->setType(TextType::class)
                         ->setRequired(false)
                         ->setConstraints([new DateTimeFormat()])

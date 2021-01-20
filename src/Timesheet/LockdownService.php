@@ -54,16 +54,15 @@ final class LockdownService
 
         $lockedStart = $this->configuration->getTimesheetLockdownPeriodStart();
         $lockedEnd = $this->configuration->getTimesheetLockdownPeriodEnd();
-
         $gracePeriod = $this->configuration->getTimesheetLockdownGracePeriod();
-        if (!empty($gracePeriod)) {
-            $gracePeriod = $gracePeriod . ' ';
-        }
 
         try {
             $lockdownStart = new \DateTime($lockedStart, $timesheetStart->getTimezone());
             $lockdownEnd = new \DateTime($lockedEnd, $timesheetStart->getTimezone());
-            $lockdownGrace = new \DateTime($gracePeriod . $lockdownEnd->format('Y-m-d'), $timesheetStart->getTimezone());
+            $lockdownGrace = clone $lockdownEnd;
+            if (!empty($gracePeriod)) {
+                $lockdownGrace->modify($gracePeriod);
+            }
         } catch (\Exception $ex) {
             // should not happen, but ... if parsing of datetimes fails: skip validation
             return true;
