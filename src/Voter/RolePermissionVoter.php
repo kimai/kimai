@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 /**
  * A voter to check the free-configurable permission from "kimai.permissions".
  */
-class RolePermissionVoter extends Voter
+final class RolePermissionVoter extends Voter
 {
     private $permissionManager;
 
