@@ -40,7 +40,7 @@
         "nelmio/cors-bundle": "^1.5",
         "onelogin/php-saml": "^3.4",
         "pagerfanta/pagerfanta": "^2.1",
-        "phpoffice/phpspreadsheet": "^1.10",
+        "phpoffice/phpspreadsheet": "^1.16",
         "phpoffice/phpword": "^0.17",
         "psr/log": "^1.1",
         "sensio/framework-extra-bundle": "^5.2",
@@ -66,6 +66,7 @@
         "symfony/serializer": "^4.4",
         "symfony/translation": "^4.4",
         "symfony/twig-bundle": "^4.4",
+        "symfony/uid": "^5.0",
         "symfony/validator": "^4.4",
         "symfony/webpack-encore-bundle": "^1.5",
         "symfony/yaml": "^4.4",
@@ -132,7 +133,6 @@
         "symfony/polyfill-php54": "*"
     },
     "suggest": {
-        "ext-mbstring": "If ext-mbstring is not available you MUST install symfony/polyfill-mbstring",
         "laminas/laminas-ldap": "For LDAP authentication with Kimai"
     },
     "scripts": {
