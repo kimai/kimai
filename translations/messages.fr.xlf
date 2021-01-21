@@ -1119,6 +1119,10 @@
         <source>sum.total</source>
         <target>Total</target>
       </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Le formulaire a été modifié. Veuillez cliquer sur « Enregistrer » pour enregistrer les modifications ou sur « Fermer ».</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
