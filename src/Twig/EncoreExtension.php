@@ -18,10 +18,6 @@ use Twig\TwigFunction;
 class EncoreExtension extends AbstractExtension implements ServiceSubscriberInterface
 {
     /**
-     * @var EntrypointLookupInterface
-     */
-    private $encoreService;
-    /**
      * @var string
      */
     private $publicDir;
