@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.13](https://github.com/kevinpapst/kimai2/tree/1.13)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.12...1.13)
+
 ## [1.12](https://github.com/kevinpapst/kimai2/tree/1.12)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.11.1...1.12)
 
