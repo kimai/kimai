@@ -32,7 +32,7 @@ class InvoiceDocumentRepositoryTest extends TestCase
         'company.docx',
         'default.html.twig',
         'default-pdf.pdf.twig',
-        'freelancer.html.twig',
+        'freelancer.pdf.twig',
         'timesheet.html.twig',
         'text.txt.twig',
         'javascript.json.twig',
