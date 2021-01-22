@@ -1113,6 +1113,10 @@
         <source>sum.total</source>
         <target>Toplam</target>
       </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Form değişti. Değişiklikleri kaydetmek için "Kaydet" düğmesine, veya iptal etmek için "Kapat" düğmesine tıklayın.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

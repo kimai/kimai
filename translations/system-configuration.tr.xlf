@@ -226,6 +226,22 @@
         <source>invoice</source>
         <target>Faturalar</target>
       </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>Kapalı</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Yuvarlama kuralının yapılandırılan değerini kullan</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Başlangıç &amp; Bitiş için dakika seçimi</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Süre için dakika seçimi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
