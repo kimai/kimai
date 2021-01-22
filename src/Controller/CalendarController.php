@@ -68,7 +68,7 @@ class CalendarController extends AbstractController
         $dragAndDrop = [];
 
         if ($mode->canEditBegin()) {
-            $dragAndDrop = $this->getDragAndDropResources($repository);
+            $dragAndDrop = $this->getDragAndDropResources($configuration, $repository);
         }
 
         return $this->render('calendar/user.html.twig', [
@@ -87,29 +87,32 @@ class CalendarController extends AbstractController
     /**
      * @return DragAndDropSource[]
      */
-    private function getDragAndDropResources(TimesheetRepository $repository): array
+    private function getDragAndDropResources(SystemConfiguration $configuration, TimesheetRepository $repository): array
     {
-        $event = new CalendarDragAndDropSourceEvent($this->getUser());
+        $maxAmount = $configuration->getCalendarDragAndDropMaxEntries();
+        $event = new CalendarDragAndDropSourceEvent($this->getUser(), $maxAmount);
 
-        try {
-            $data = $repository->getRecentActivities(
-                $this->getUser(),
-                $this->getDateTimeFactory()->createDateTime('-1 year'),
-                10
-            );
+        if ($maxAmount > 0) {
+            try {
+                $data = $repository->getRecentActivities(
+                    $this->getUser(),
+                    $this->getDateTimeFactory()->createDateTime('-1 year'),
+                    $maxAmount
+                );
 
-            $recentActivity = new RecentActivityEvent($this->getUser(), $data);
-            $this->dispatcher->dispatch($recentActivity);
+                $recentActivity = new RecentActivityEvent($this->getUser(), $data);
+                $this->dispatcher->dispatch($recentActivity);
 
-            $entries = [];
-            $colorHelper = new Color();
-            foreach ($recentActivity->getRecentActivities() as $timesheet) {
-                $entries[] = new TimesheetEntry($timesheet, $colorHelper->getTimesheetColor($timesheet));
+                $entries = [];
+                $colorHelper = new Color();
+                foreach ($recentActivity->getRecentActivities() as $timesheet) {
+                    $entries[] = new TimesheetEntry($timesheet, $colorHelper->getTimesheetColor($timesheet));
+                }
+
+                $event->addSource(new RecentActivitiesSource($entries));
+            } catch (\Exception $ex) {
+                $this->logException($ex);
             }
-
-            $event->addSource(new RecentActivitiesSource($entries));
-        } catch (\Exception $ex) {
-            $this->logException($ex);
         }
 
         $this->dispatcher->dispatch($event);

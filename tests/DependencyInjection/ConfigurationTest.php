@@ -337,6 +337,7 @@ class ConfigurationTest extends TestCase
                     ],
                 ],
                 'weekends' => true,
+                'dragdrop_amount' => 10,
             ],
             'theme' => [
                 'active_warning' => 3,

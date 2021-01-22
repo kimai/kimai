@@ -130,7 +130,8 @@ class AppExtensionTest extends TestCase
                     'api_key' => null,
                     'sources' => [],
                 ],
-                'weekends' => true
+                'weekends' => true,
+                'dragdrop_amount' => 10,
             ],
             'kimai.dashboard' => [],
             'kimai.widgets' => [],

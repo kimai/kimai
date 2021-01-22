@@ -24,7 +24,7 @@ class CalendarDragAndDropSourceEventTest extends TestCase
         $user = new User();
         $user->setAlias('foo');
 
-        $sut = new CalendarDragAndDropSourceEvent($user);
+        $sut = new CalendarDragAndDropSourceEvent($user, 10);
 
         $hello = new TestDragAndDropSource('hello');
         $tmp1 = new TestDragAndDropSource('foo');
