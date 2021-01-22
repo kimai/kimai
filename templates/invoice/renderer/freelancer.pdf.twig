@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+{% set fallback = app.request is not null ? app.request.locale : 'en' %}
+{% set language = model.template.language|default(fallback) %}
+{% set isDecimal = model.template.decimalDuration|default(false) %}
+{% set currency = model.currency %}
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ model.invoiceNumber }}-{{ model.customer.company|default(model.customer.name)|u.snake }}{% endblock %}</title>
+    <style type="text/css">
+        {{ encore_entry_css_source('invoice-pdf')|raw }}
+    </style>
+</head>
+<body>
+<!--mpdf
+<htmlpageheader name="header">
+    <table class="header">
+        <tr>
+            <td class="text-small">
+                {{ model.template.company }} &ndash; {{ model.template.address|nl2str(' &ndash; ') }}
+            </td>
+            <td class="text-small text-right">
+                {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
+            </td>
+        </tr>
+    </table>
+</htmlpageheader>
+<sethtmlpageheader name="header" page="ALL" value="on" show-this-page="1" />
+<htmlpagefooter name="footer">
+    <table class="footer text-small">
+        <tr>
+            <td style="width: 33%">
+                <strong>{{ 'label.address'|trans }}</strong>
+                <br>
+                {{ model.template.company }}<br>
+                {{ model.template.address|nl2br }}
+            </td>
+            <td class="text-center">
+                <strong>{{ 'label.invoice_bank_account'|trans }}</strong>
+                <br>
+                {{ model.template.paymentDetails|nl2br }}
+            </td>
+            <td class="text-right" style="width: 33%">
+                <strong>{{ 'label.contact'|trans }}</strong>
+                <br>
+                {{ model.template.contact|nl2br }}
+            </td>
+        </tr>
+    </table>
+</htmlpagefooter>
+<sethtmlpagefooter page="ALL" value="on" name="footer" show-this-page="1" />
+mpdf-->
+<div class="wrapper">
+    <table class="addresses">
+        <tr>
+            <td>
+                <strong>{{ model.customer.company|default(model.customer.name) }}</strong><br>
+                {{ model.customer.address|nl2br }}
+                {% if model.customer.vatId is not empty %}
+                    <br>
+                    {{ 'label.vat_id'|trans }}: {{ model.customer.vatId }}
+                {% endif %}
+            </td>
+            <td class="text-right">
+                <table style="width: 240px">
+                    <tr>
+                        <td>{{ 'label.date'|trans }}:</td>
+                        <td class="text-nowrap padding-left">{{ model.invoiceDate|date_short }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'invoice.service_date'|trans }}:</td>
+                        <td class="text-nowrap padding-left">{{ model.query.end|month_name }} {{ model.query.end|date('Y') }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'invoice.number'|trans }}:</td>
+                        <td class="text-nowrap padding-left">{{ model.invoiceNumber }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'invoice.due_days'|trans }}:</td>
+                        <td class="text-nowrap padding-left">{{ model.dueDate|date_short }}</td>
+                    </tr>
+                    {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
+                        <tr>
+                            <td>{{ 'label.orderNumber'|trans }}</td>
+                            <td class="text-nowrap padding-left">{{ model.query.project.orderNumber }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if model.template.vatId is not empty %}
+                        <tr>
+                            <td>{{ 'label.vat_id'|trans }}:</td>
+                            <td class="text-nowrap padding-left">{{ model.template.vatId }}</td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <h2 style="margin-top: 60px">{{ model.template.title }}</h2>
+
+    <table class="items">
+        <thead>
+            <tr>
+                <th class="first">{{ 'label.description'|trans }}</th>
+                <th class="text-right">{{ 'label.unit_price'|trans }}</th>
+                <th class="text-right">{{ 'label.amount'|trans }}</th>
+                <th class="last text-right">{{ 'label.total_rate'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entry in model.calculator.entries %}
+            {% set duration = entry.duration|duration(isDecimal) %}
+            {% if entry.fixedRate is not null %}
+                {% set rate = entry.fixedRate %}
+                {% set duration = entry.amount|amount %}
+            {% else %}
+                {% set rate = entry.hourlyRate %}
+            {% endif %}
+
+            <tr>
+                <td class="first">
+                    {% if entry.description is not empty %}
+                        {{ entry.description|nl2br }}
+                    {% else %}
+                        {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
+                    {% endif %}
+                </td>
+                <td class="text-right text-nowrap">{{ rate|money(currency) }}</td>
+                <td class="text-right text-nowrap">{{ duration }}</td>
+                <td class="last text-right text-nowrap">{{ entry.rate|money(currency) }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-right">
+                    {{ 'invoice.subtotal'|trans }}
+                </td>
+                <td class="last text-right">{{ model.calculator.subtotal|money(currency) }}</td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right">
+                    {{ 'invoice.tax'|trans }} ({{ model.calculator.vat }}%)
+                </td>
+                <td class="last text-right">{{ model.calculator.tax|money(currency) }}</td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right text-nowrap">
+                    <strong>{{ 'invoice.total'|trans }}</strong>
+                </td>
+                <td class="last text-right">
+                    <strong>{{ model.calculator.total|money(currency) }}</strong>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    {% if model.template.paymentTerms is not empty %}
+        <p>
+            {{ model.template.paymentTerms|md2html }}
+        </p>
+    {% endif %}
+</div>
+</body>
+</html>

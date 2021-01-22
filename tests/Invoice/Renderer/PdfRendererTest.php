@@ -31,7 +31,7 @@ class PdfRendererTest extends KernelTestCase
         $env = new Environment($loader);
         $sut = new PdfRenderer($env, $this->createMock(MPdfConverter::class));
         $this->assertTrue($sut->supports($this->getInvoiceDocument('default.pdf.twig', true)));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('freelancer.html.twig')));
+        $this->assertTrue($sut->supports($this->getInvoiceDocument('freelancer.pdf.twig')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('timesheet.html.twig')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('foo.html.twig')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('company.docx')));
