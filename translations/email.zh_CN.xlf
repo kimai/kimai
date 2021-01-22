@@ -1,14 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="zh-Hans" datatype="plaintext" original="email.en.xlf">
+  <file source-language="en" target-language="zh-CN" datatype="plaintext" original="email.en.xlf">
     <body>
       <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
         <target>如果该按钮无效，请复制 &amp; 以下URL并粘贴到浏览器中: %url%</target>
-      </trans-unit>
-      <trans-unit id="automated_email_dont_answer">
-        <source>automated_email_dont_answer</source>
-        <target/>
       </trans-unit>
       <trans-unit id="registration.subject">
         <source>registration.subject</source>
@@ -18,25 +14,9 @@
         <source>registration.title</source>
         <target>欢迎 %username%</target>
       </trans-unit>
-      <trans-unit id="registration.button">
-        <source>registration.button</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="registration.intro">
-        <source>registration.intro</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
         <target>重置您的密码</target>
-      </trans-unit>
-      <trans-unit id="reset.title">
-        <source>reset.title</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="reset.button">
-        <source>reset.button</source>
-        <target/>
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
