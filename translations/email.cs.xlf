@@ -4,43 +4,43 @@
     <body>
       <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target></target>
+        <target>V případě, že nefunguje tlačítko, zkopírujte prosím &amp; následující adresu URL do vašeho prohlížeče: %url%</target>
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target></target>
+        <target>Toto je automaticky generovaný e-mail. Prosím neodpovídejte, e-mail příjemce není sledován.</target>
       </trans-unit>
       <trans-unit id="registration.subject">
         <source>registration.subject</source>
-        <target></target>
+        <target>Aktivujte váš účet</target>
       </trans-unit>
       <trans-unit id="registration.title">
         <source>registration.title</source>
-        <target></target>
+        <target>Vítej %username%</target>
       </trans-unit>
       <trans-unit id="registration.button">
         <source>registration.button</source>
-        <target></target>
+        <target>Aktivujte váš účet</target>
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target></target>
+        <target>Zaregistrovali jste se do Kimai time-tracker s e-mailovou adresou %email%. Nyní je potřeba váš účet aktivovat v několika nejbližších hodinách, jinak odkaz expiruje.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
-        <target></target>
+        <target>Reset hesla</target>
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target></target>
+        <target>Tohle se může stát...</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
-        <target></target>
+        <target>Reset hesla</target>
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target></target>
+        <target>... takže jste zapomněli heslo? Nevadí, Kimai vám pomůže s vytvořením nového:</target>
       </trans-unit>
     </body>
   </file>
