@@ -9,7 +9,7 @@
             {% import "macros/widgets.html.twig" as widgets %}
             {% block box_title %}{{ title|trans }}{% endblock %}
             {% block box_attributes %}id="{{ widgetId }}"{% endblock %}
-            {% block box_body_class %}no-padding{% endblock %}
+            {% block box_body_class %}no-padding box-body-scrollable{% endblock %}
             {% block box_body %}
                 {{ widgets.team_list(teams, false) }}
             {% endblock %}
