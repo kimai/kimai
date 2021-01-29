@@ -1118,6 +1118,10 @@
         <source>update_multiple</source>
         <target>%action% %count% bejegyzést?</target>
       </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Teljes</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

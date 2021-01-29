@@ -31,8 +31,8 @@ class TwigRendererTest extends KernelTestCase
         $sut = new TwigRenderer($env);
 
         $this->assertTrue($sut->supports($this->getInvoiceDocument('default.html.twig')));
-        $this->assertTrue($sut->supports($this->getInvoiceDocument('freelancer.html.twig')));
         $this->assertTrue($sut->supports($this->getInvoiceDocument('timesheet.html.twig')));
+        $this->assertFalse($sut->supports($this->getInvoiceDocument('freelancer.pdf.twig')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('foo.html.twig')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('company.docx')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('export.csv')));

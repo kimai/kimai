@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="subtitle">
         <source>subtitle</source>
-        <target>Cambia las configuraciones globales de tu control de tiempo.</target>
+        <target>Cambia las configuraciones globales de tu gestor de tiempo</target>
       </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
@@ -180,7 +180,7 @@
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
-        <target>Minilogo (barra lateral contraída)</target>
+        <target>Mini logo (barra lateral contraída)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
@@ -197,6 +197,42 @@
       <trans-unit id="label.timesheet.rules.lockdown_period_start">
         <source>label.timesheet.rules.lockdown_period_start</source>
         <target>Inicio de período de cierre (fecha relativa PHP hasta hoy)</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Usar el valor configurado para la regla de redondeo</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Selección de minuto para De &amp; Para</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Selección de minuto para la Duración</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>Tiempo de inicio por defecto (no se usa en todos los modos de seguimiento de tiempo)</target>
+      </trans-unit>
+      <trans-unit id="Floor">
+        <source>Floor</source>
+        <target>Suelo: el inicio, final y la duración se redondearán hacia abajo</target>
+      </trans-unit>
+      <trans-unit id="Default">
+        <source>Default</source>
+        <target>Estándar: el inicio se redondeará hacia abajo, el final y la duración hacia arriba</target>
+      </trans-unit>
+      <trans-unit id="Closest">
+        <source>Closest</source>
+        <target>Más próximo: redondeo matemático al valor más próximo</target>
+      </trans-unit>
+      <trans-unit id="Ceil">
+        <source>Ceil</source>
+        <target>Techo: El inicio, final y la duración se redondearán hacia arriba</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>Redondeo de la hora de finalización en minutos (0 = desactivado)</target>
       </trans-unit>
     </body>
   </file>
