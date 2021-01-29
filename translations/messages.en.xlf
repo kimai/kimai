@@ -560,7 +560,10 @@
                 <source>label.timesheet.export_decimal</source>
                 <target>Use decimal duration in export</target>
             </trans-unit>
-
+            <trans-unit id="theme.update_browser_title">
+                <source>theme.update_browser_title</source>
+                <target>Update browser title</target>
+            </trans-unit>
             <!--
               User timesheet calendar
             -->

@@ -24,6 +24,7 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
     }
 
     init() {
+        this.updateBrowserTitle = !!this.getConfiguration('updateBrowserTitle');
         this.updateRecords();
         const self = this;
         const handle = function() { self.updateRecords(); };
@@ -41,7 +42,9 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
         const activeRecords = document.querySelectorAll(this.selector);
 
         if (activeRecords.length === 0) {
-            document.title = document.querySelector('body').dataset['title'];
+            if (this.updateBrowserTitle) {
+                document.title = document.querySelector('body').dataset['title'];
+            }
             return;
         }
 
@@ -56,6 +59,10 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
         }
 
         if (durations.length === 0) {
+            return;
+        }
+
+        if (!this.updateBrowserTitle) {
             return;
         }
 

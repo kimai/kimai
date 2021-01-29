@@ -552,6 +552,10 @@
         <source>label.timesheet.export_decimal</source>
         <target>Dezimal Format für Export nutzen</target>
       </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Browser Titel aktualisieren</target>
+      </trans-unit>
       <!--
               User timesheet calendar
             -->
