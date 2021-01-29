@@ -40,7 +40,7 @@ class UserPreferenceSubscriberTest extends TestCase
         self::assertSame($user, $event->getUser());
 
         $prefs = $sut->getDefaultPreferences($user);
-        self::assertCount(12, $prefs);
+        self::assertCount(13, $prefs);
 
         foreach ($prefs as $pref) {
             switch ($pref->getName()) {
@@ -70,7 +70,7 @@ class UserPreferenceSubscriberTest extends TestCase
         // TODO test merging values
         $sut->loadUserPreferences($event);
         $prefs = $event->getUser()->getPreferences();
-        self::assertCount(12, $prefs);
+        self::assertCount(13, $prefs);
 
         foreach ($prefs as $pref) {
             switch ($pref->getName()) {
