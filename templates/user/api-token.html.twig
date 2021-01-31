@@ -5,6 +5,9 @@
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}{{ ('profile.' ~ tab)|trans }}{% endblock %}
+        {% block box_tools %}
+            <a class="btn-box-tool" target="_blank" href="{{ path('app.swagger_ui') }}">{{ url('app.swagger_ui') }}</a>
+        {% endblock %}
         {% block box_body %}
             {{ form_start(form) }}
             {{ form_widget(form) }}
