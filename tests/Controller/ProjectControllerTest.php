@@ -234,7 +234,7 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and long comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }
 
@@ -250,15 +250,15 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
         self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.confirmation-link');
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.confirmation-link');
         self::assertEquals($this->createUrl('/admin/project/1/comment_delete'), $node->attr('href'));
 
         $this->request($client, '/admin/project/1/comment_delete');
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-body');
         self::assertStringContainsString('There were no comments posted yet', $node->html());
     }
 
@@ -274,15 +274,15 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
         self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.btn.active');
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
         self::assertEquals(0, $node->count());
 
         $this->request($client, '/admin/project/1/comment_pin');
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.btn.active');
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
         self::assertEquals(1, $node->count());
         self::assertEquals($this->createUrl('/admin/project/1/comment_pin'), $node->attr('href'));
     }
