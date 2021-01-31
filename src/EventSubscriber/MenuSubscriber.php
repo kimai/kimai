@@ -130,7 +130,12 @@ final class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('view_user')) {
             $users = new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], $this->getIcon('user'));
-            $users->setChildRoutes(['admin_user_create', 'admin_user_delete',  'admin_user_permissions', 'user_profile', 'user_profile_edit', 'user_profile_password', 'user_profile_api_token', 'user_profile_roles', 'user_profile_teams', 'user_profile_preferences']);
+            $users->setChildRoutes(['admin_user_create', 'admin_user_delete',  'user_profile', 'user_profile_edit', 'user_profile_password', 'user_profile_api_token', 'user_profile_roles', 'user_profile_teams', 'user_profile_preferences']);
+            $menu->addChild($users);
+        }
+
+        if ($auth->isGranted('role_permissions')) {
+            $users = new MenuItemModel('admin_user_permissions', 'profile.roles', 'admin_user_permissions', [], $this->getIcon('permissions'));
             $menu->addChild($users);
         }
 
