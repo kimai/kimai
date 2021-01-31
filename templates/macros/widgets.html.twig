@@ -232,14 +232,16 @@
             <ul class="dropdown-menu dropdown-menu-right">
                 {%- apply spaceless -%}
                     {%- for icon,values in actions  %}
-                        {% if icon == 'divider' and values is null %}
+                        {% if 'divider' in icon and values is null %}
                             {% if not loop.last and divider is same as (false) %}
                                 <li class="divider"></li>
                             {% endif %}
                             {% set divider = true %}
                         {% else %}
                             {% if values is iterable %}
-                                {% set values = values|merge({'title': icon|trans({}, 'actions')}) %}
+                                {% if values['title'] is not defined %}
+                                    {% set values = values|merge({'title': icon|trans({}, 'actions')}) %}
+                                {% endif %}
                             {% else %}
                                 {% set values = {'url': values, 'title': icon|trans({}, 'actions')} %}
                             {% endif %}
@@ -301,6 +303,7 @@
                 {% set url = '#' %}
             {% endif %}
         {% else %}
+            {% set icon = values.icon ?? icon %}
             {% set disabled = values.disabled ?? false %}
             {% set url = values.url ?? '#' %}
             {% set onclick = values.onclick ?? null %}
