@@ -226,6 +226,18 @@
         <source>label.theme.tags_create</source>
         <target>Tagi: użyj automatycznego wyszukiwania i zezwól na tworzenie tagów</target>
       </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Użyj ustawionej wartości reguły zaokrąglania</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Wybór minut dla Od &amp; Do</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Wybór minut dla czasu trwania</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
