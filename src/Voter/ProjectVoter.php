@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 /**
  * A voter to check permissions on Projects.
  */
-class ProjectVoter extends Voter
+final class ProjectVoter extends Voter
 {
     /**
      * support rules based on the given project

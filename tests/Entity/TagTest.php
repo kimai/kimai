@@ -34,6 +34,9 @@ class TagTest extends TestCase
         $this->assertEquals('foo', $sut->getName());
         $this->assertEquals('foo', (string) $sut);
 
+        $sut->setName(null);
+        $this->assertNull($sut->getName());
+
         $this->assertInstanceOf(Tag::class, $sut->setColor('#fffccc'));
         $this->assertEquals('#fffccc', $sut->getColor());
     }

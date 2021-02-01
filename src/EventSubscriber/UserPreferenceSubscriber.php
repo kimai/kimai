@@ -160,6 +160,13 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setType(CheckboxType::class),
 
             (new UserPreference())
+                ->setName('theme.update_browser_title')
+                ->setValue(true)
+                ->setOrder(550)
+                ->setSection('theme')
+                ->setType(CheckboxType::class),
+
+            (new UserPreference())
                 ->setName('calendar.initial_view')
                 ->setValue(CalendarViewType::DEFAULT_VIEW)
                 ->setOrder(600)

@@ -15,7 +15,7 @@ use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class TeamVoter extends Voter
+final class TeamVoter extends Voter
 {
     /**
      * support rules based on the given $subject (here: Team)

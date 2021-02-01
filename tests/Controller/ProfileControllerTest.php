@@ -93,32 +93,20 @@ class ProfileControllerTest extends ControllerBaseTest
 
     public function getTabTestData()
     {
-        $userTabs = ['#settings', '#password', '#api-token'];
-
         return [
-            [User::ROLE_USER, UserFixtures::USERNAME_USER, ['#settings', '#password', '#api-token']],
-            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_SUPER_ADMIN, array_merge($userTabs, ['#teams', '#roles'])],
+            [User::ROLE_USER, UserFixtures::USERNAME_USER],
+            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_SUPER_ADMIN],
         ];
     }
 
     /**
      * @dataProvider getTabTestData
      */
-    public function testEditActionTabs($role, $username, $expectedTabs)
+    public function testEditActionTabs($role, $username)
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, '/profile/' . $username . '/edit');
         $this->assertTrue($client->getResponse()->isSuccessful());
-
-        $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
-        $this->assertEquals(\count($expectedTabs), $tabs->count());
-        $foundTabs = [];
-
-        /** @var \DOMElement $tab */
-        foreach ($tabs->filter('a') as $tab) {
-            $foundTabs[] = $tab->getAttribute('href');
-        }
-        $this->assertEmpty(array_diff($expectedTabs, $foundTabs));
     }
 
     public function testIndexActionWithDifferentUsername()

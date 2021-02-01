@@ -142,6 +142,7 @@ class UserTest extends TestCase
     public function testTeams()
     {
         $sut = new User();
+        $user = new User();
         $team = new Team();
         self::assertEmpty($sut->getTeams());
         self::assertEmpty($team->getUsers());
@@ -151,6 +152,10 @@ class UserTest extends TestCase
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getUsers()[0]);
         self::assertTrue($sut->hasTeamAssignment());
+        self::assertFalse($sut->hasTeamMember($user));
+
+        $team->addUser($user);
+        self::assertTrue($sut->hasTeamMember($user));
 
         self::assertFalse($sut->isTeamleadOf($team));
         self::assertTrue($sut->isInTeam($team));

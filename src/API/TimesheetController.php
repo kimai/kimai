@@ -13,6 +13,8 @@ namespace App\API;
 
 use App\Entity\User;
 use App\Event\RecentActivityEvent;
+use App\Event\TimesheetDuplicatePostEvent;
+use App\Event\TimesheetDuplicatePreEvent;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Form\API\TimesheetApiEditForm;
 use App\Repository\Query\TimesheetQuery;
@@ -727,7 +729,11 @@ class TimesheetController extends BaseApiController
 
         $copyTimesheet = clone $timesheet;
 
+        $this->dispatcher->dispatch(new TimesheetDuplicatePreEvent($copyTimesheet, $timesheet));
+
         $this->service->saveNewTimesheet($copyTimesheet);
+
+        $this->dispatcher->dispatch(new TimesheetDuplicatePostEvent($copyTimesheet, $timesheet));
 
         $view = new View($copyTimesheet, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

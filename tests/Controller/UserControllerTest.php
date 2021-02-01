@@ -38,7 +38,6 @@ class UserControllerTest extends ControllerBaseTest
             'search search-toggle visible-xs-inline' => '#',
             'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/user/export'),
-            'permissions' => $this->createUrl('/admin/permissions'),
             'create' => $this->createUrl('/admin/user/create'),
             'help' => 'https://www.kimai.org/documentation/users.html'
         ]);
@@ -116,17 +115,6 @@ class UserControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode($username) . '/edit'));
         $client->followRedirect();
-
-        $expectedTabs = ['#settings', '#password', '#api-token', '#teams', '#roles'];
-
-        $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
-        $this->assertEquals(\count($expectedTabs), $tabs->count());
-        $foundTabs = [];
-        /** @var \DOMElement $tab */
-        foreach ($tabs->filter('a') as $tab) {
-            $foundTabs[] = $tab->getAttribute('href');
-        }
-        $this->assertEmpty(array_diff($expectedTabs, $foundTabs));
 
         $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
         $this->assertEquals($username, $form->get('user_edit[alias]')->getValue());

@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 /**
  * A voter to check permissions on Activities.
  */
-class ActivityVoter extends Voter
+final class ActivityVoter extends Voter
 {
     /**
      * support rules based on the given activity
