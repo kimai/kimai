@@ -1076,7 +1076,7 @@
       </trans-unit>
       <trans-unit id="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
-        <target>%month% %year%</target>
+        <target>%miesiąc% %rok%</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
@@ -1129,6 +1129,10 @@
       <trans-unit id="sum.total">
         <source>sum.total</source>
         <target>Razem</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Formularz uległ zmianie. Prosimy, kliknij "Zapisz", by zapisać zmiany, lub "Zamknij", by je anulować.</target>
       </trans-unit>
     </body>
   </file>
