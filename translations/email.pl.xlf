@@ -4,43 +4,43 @@
     <body>
       <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target></target>
+        <target>Jeśli przycisk nie działa, skopiuj &amp; i wklej następujący link do przeglądarki: %link%</target>
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target></target>
+        <target>Ten e-mail został wygenerowany automatycznie. Prosimy na niego nie odpowiadać, adres nie zostanie odczytany.</target>
       </trans-unit>
       <trans-unit id="registration.subject">
         <source>registration.subject</source>
-        <target></target>
+        <target>Aktywuj swoje konto</target>
       </trans-unit>
       <trans-unit id="registration.title">
         <source>registration.title</source>
-        <target></target>
+        <target>Witaj %nazwa użytkownika%</target>
       </trans-unit>
       <trans-unit id="registration.button">
         <source>registration.button</source>
-        <target></target>
+        <target>Aktywuj swoje konto</target>
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target></target>
+        <target>Zarejestrowałeś się w w rejestratorze czasu Kimai za pomocą e-maila %e-mail%. Aktywuj konto w ciągu kilku godzin, zanim link wygaśnie.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
-        <target></target>
+        <target>Zresetuj swoje hasło</target>
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target></target>
+        <target>To może się zdarzyć...</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
-        <target></target>
+        <target>Zresetuj swoje hasło</target>
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target></target>
+        <target>... zapomniałeś hasła? Nie martw się, Kimai pomoże Ci stworzyć nowe:</target>
       </trans-unit>
     </body>
   </file>
