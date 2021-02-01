@@ -173,10 +173,18 @@ final class ProfileController extends AbstractController
      */
     public function rolesAction(User $profile, Request $request)
     {
+        $isSuperAdmin = $profile->isSuperAdmin();
+
         $form = $this->createRolesForm($profile);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // fix that a super admin cannot remove this role from himself.
+            // would be a massive problem, in case that there is only one super-admin account existing
+            if ($isSuperAdmin && !$profile->isSuperAdmin() && $profile->getId() === $this->getUser()->getId()) {
+                $profile->setSuperAdmin(true);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($profile);
             $entityManager->flush();
