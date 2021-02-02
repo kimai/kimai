@@ -1117,6 +1117,10 @@
         <source>modal.dirty</source>
         <target>Form değişti. Değişiklikleri kaydetmek için "Kaydet" düğmesine, veya iptal etmek için "Kapat" düğmesine tıklayın.</target>
       </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Tarayıcı başlığını güncelle</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
