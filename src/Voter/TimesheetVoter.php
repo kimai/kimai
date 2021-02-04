@@ -9,6 +9,7 @@
 
 namespace App\Voter;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Security\RolePermissionManager;
@@ -47,6 +48,9 @@ final class TimesheetVoter extends Voter
         'duplicate'
     ];
 
+    private $configuration;
+    private $cacheAllowCopy;
+
     private $permissionManager;
     private $lockdownService;
 
@@ -55,10 +59,11 @@ final class TimesheetVoter extends Voter
     private $editExported;
     private $now;
 
-    public function __construct(RolePermissionManager $permissionManager, LockdownService $lockdownService)
+    public function __construct(RolePermissionManager $permissionManager, LockdownService $lockdownService, SystemConfiguration $configuration)
     {
         $this->permissionManager = $permissionManager;
         $this->lockdownService = $lockdownService;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -204,6 +209,17 @@ final class TimesheetVoter extends Voter
 
     protected function canDuplicate(User $user, Timesheet $timesheet): bool
     {
+        if ($this->cacheAllowCopy === null) {
+            $this->cacheAllowCopy = $this->configuration->isTimesheetAllowOverlappingRecords();
+        }
+
+        // This is a quickfix, because the API cannot open dialogs. if the method is copied to the timesheet controller,
+        // we could open the edit dialog instead of directly saving the copied entry.
+        // Probably add a new permission is required to differentiate between API and UI.
+        if (!$this->cacheAllowCopy) {
+            return false;
+        }
+
         if (!$this->isAllowedInLockdown($user, $timesheet)) {
             return false;
         }
