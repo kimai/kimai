@@ -720,7 +720,7 @@
       </trans-unit>
       <trans-unit id="invoice.number">
         <source>invoice.number</source>
-        <target>N° de facture</target>
+        <target>Numéro de facture</target>
       </trans-unit>
       <trans-unit id="invoice.subtotal">
         <source>invoice.subtotal</source>
