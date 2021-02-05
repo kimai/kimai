@@ -1112,11 +1112,23 @@
       </trans-unit>
       <trans-unit id="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
-        <target>Prima di aggiornare i campi è necessario attivarli cliccando sul checkbox corrisopondente</target>
+        <target>Prima di aggiornare i campi è necessario attivarli cliccando sulla casella di controllo corrisopondente.</target>
       </trans-unit>
       <trans-unit id="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
         <target>Campi aggiuntivi</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Aggiorna il titolo del browser</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>La forma è cambiata. Fai clic su «Salva» per salvare le modifiche o su «Chiudi» per annullarle.</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Totale</target>
       </trans-unit>
     </body>
   </file>
