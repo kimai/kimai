@@ -86,7 +86,7 @@
       </trans-unit>
       <trans-unit id="modal.dirty">
         <source>modal.dirty</source>
-        <target>Das Formular wurde geändert. Bitte klicken Sie "Speichern" um die Änderungen zu sichern oder "Schließen" um abzubrechen.</target>
+        <target>Das Formular wurde geändert. Bitte klicken Sie „Speichern“, um die Änderungen zu sichern oder „Schließen“, um abzubrechen.</target>
       </trans-unit>
       <!--
               Login / Security
