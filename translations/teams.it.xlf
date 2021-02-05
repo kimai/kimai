@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="teams.title">
         <source>teams.title</source>
-        <target>Gruppo</target>
+        <target>Gruppi</target>
       </trans-unit>
       <trans-unit id="teams.project_access">
         <source>teams.project_access</source>
@@ -29,6 +29,10 @@
       <trans-unit id="team.create_default">
         <source>team.create_default</source>
         <target>Crea un nuovo gruppo per limitare l'accesso</target>
+      </trans-unit>
+      <trans-unit id="team.activity_visibility_inherited">
+        <source>team.activity_visibility_inherited</source>
+        <target>L'attività ha un accesso limitato, perché le autorizzazioni del gruppo sono impostate per il progetto e/o il cliente.</target>
       </trans-unit>
     </body>
   </file>
