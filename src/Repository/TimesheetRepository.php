@@ -495,7 +495,7 @@ class TimesheetRepository extends EntityRepository
 
                 // yes, we only want to compare the day, not the time
                 if ((int) $end->format('Ymd') < (int) $newDateBegin->format('Ymd')) {
-                    break 1;
+                    break;
                 }
             } while ($dateKey !== $dateKeyEnd);
         }
