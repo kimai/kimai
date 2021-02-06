@@ -1122,6 +1122,10 @@
         <source>modal.dirty</source>
         <target>Het formulier is gewijzigd. Klik op "Bewaar" om de wijzigingen te bewaren of "Sluit" om te annuleren.</target>
       </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Werk browser titel bij</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
