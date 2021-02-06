@@ -120,6 +120,9 @@
             "ref": "bb31a3bbec00a8fc8aa1c9fbf9b0ef9fc492f93d"
         }
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
+    },
     "friendsofsymfony/rest-bundle": {
         "version": "2.2",
         "recipe": {
@@ -176,6 +179,15 @@
     },
     "kimai/user-bundle": {
         "version": "dev-master"
+    },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.2.1"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
     },
     "laravolt/avatar": {
         "version": "3.0.0"
@@ -284,6 +296,9 @@
     },
     "phpspec/prophecy": {
         "version": "1.7.3"
+    },
+    "phpstan/phpdoc-parser": {
+        "version": "0.4.10"
     },
     "phpstan/phpstan": {
         "version": "0.11.7"
