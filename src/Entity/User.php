@@ -265,6 +265,13 @@ class User extends BaseUser implements UserInterface
         return $this;
     }
 
+    public function setAvatarBase64(?string $avatar): User
+    {
+        $this->avatar = "data:image/jpeg,base64,".$avatar;
+
+        return $this;
+    }
+
     public function getApiToken(): ?string
     {
         return $this->apiToken;
