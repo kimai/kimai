@@ -267,7 +267,8 @@ class User extends BaseUser implements UserInterface
 
     public function setAvatarBase64(?string $avatar): User
     {
-        $this->avatar = "data:image/jpeg,base64,".$avatar;
+        $prefix = 'data:image/jpeg,base64,'
+        $this->avatar = $prefix.$avatar;
 
         return $this;
     }
