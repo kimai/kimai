@@ -109,11 +109,11 @@
       </trans-unit>
       <trans-unit id="label.api_token">
         <source>label.api_token</source>
-        <target>API Passwort</target>
+        <target>API-Passwort</target>
       </trans-unit>
       <trans-unit id="label.api_token_repeat">
         <source>label.api_token_repeat</source>
-        <target>API Passwort wiederholen</target>
+        <target>API-Passwort wiederholen</target>
       </trans-unit>
       <trans-unit id="login_required">
         <source>login_required</source>
@@ -124,7 +124,7 @@
             -->
       <trans-unit id="menu.homepage">
         <source>menu.homepage</source>
-        <target>Dashboard</target>
+        <target>Instrumententafel</target>
       </trans-unit>
       <trans-unit id="menu.admin">
         <source>menu.admin</source>
