@@ -11,12 +11,12 @@ namespace App\Widget;
 
 use App\Repository\WidgetRepository;
 
-class WidgetService
+final class WidgetService
 {
     /**
      * @var WidgetRendererInterface[]
      */
-    private $renderer = [];
+    private $renderer;
     /**
      * @var WidgetRepository
      */
@@ -28,9 +28,7 @@ class WidgetService
      */
     public function __construct(WidgetRepository $repository, iterable $renderer)
     {
-        foreach ($renderer as $render) {
-            $this->addRenderer($render);
-        }
+        $this->renderer = $renderer;
         $this->repository = $repository;
     }
 
@@ -70,7 +68,7 @@ class WidgetService
     /**
      * @return WidgetRendererInterface[]
      */
-    public function getRenderer(): array
+    public function getRenderer(): iterable
     {
         return $this->renderer;
     }
