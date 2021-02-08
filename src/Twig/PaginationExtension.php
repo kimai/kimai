@@ -31,7 +31,6 @@ class PaginationExtension extends AbstractExtension
 
     public function __construct(UrlGeneratorInterface $router)
     {
-        $this->view = new TwitterBootstrap3View();
         $this->router = $router;
     }
 
@@ -44,6 +43,15 @@ class PaginationExtension extends AbstractExtension
             new TwigFunction('pagerfanta', [$this, 'renderPagerfanta'], ['is_safe' => ['html']]),
             new TwigFunction('pagination', [$this, 'renderPagination'], ['is_safe' => ['html']]),
         ];
+    }
+
+    private function getView(): ViewInterface
+    {
+        if (null === $this->view) {
+            $this->view = new TwitterBootstrap3View();
+        }
+
+        return $this->view;
     }
 
     /**
@@ -70,7 +78,7 @@ class PaginationExtension extends AbstractExtension
         $options['prev_message'] = '<i class="fas fa-chevron-left"></i>';
         $options['next_message'] = '<i class="fas fa-chevron-right"></i>';
 
-        return $this->view->render($pagerfanta, $routeGenerator, $options);
+        return $this->getView()->render($pagerfanta, $routeGenerator, $options);
     }
 
     private function createRouteGenerator(array $options = [])

@@ -11,7 +11,10 @@ namespace App\Widget;
 
 use App\Repository\WidgetRepository;
 
-final class WidgetService
+/**
+ * @final
+ */
+class WidgetService
 {
     /**
      * @var WidgetRendererInterface[]

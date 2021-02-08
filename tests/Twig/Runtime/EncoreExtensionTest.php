@@ -7,17 +7,16 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Twig;
+namespace App\Tests\Twig\Runtime;
 
-use App\Twig\EncoreExtension;
+use App\Twig\Runtime\EncoreExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
-use Twig\TwigFunction;
 
 /**
- * @covers \App\Twig\EncoreExtension
+ * @covers \App\Twig\Runtime\EncoreExtension
  */
 class EncoreExtensionTest extends TestCase
 {
@@ -29,26 +28,12 @@ class EncoreExtensionTest extends TestCase
         $container = new Container(new ParameterBag([]));
         $container->set(EntrypointLookupInterface::class, $entryLookup);
 
-        return new EncoreExtension($container, __DIR__);
+        return new EncoreExtension($container, __DIR__ . '/../');
     }
 
     public function testGetSubscribedServices()
     {
         self::assertEquals([EntrypointLookupInterface::class], EncoreExtension::getSubscribedServices());
-    }
-
-    public function testGetFunctions()
-    {
-        $functions = ['encore_entry_css_source'];
-        $sut = $this->getSut();
-        $twigFunctions = $sut->getFunctions();
-        self::assertCount(\count($functions), $twigFunctions);
-        $i = 0;
-        /** @var TwigFunction $filter */
-        foreach ($twigFunctions as $filter) {
-            self::assertInstanceOf(TwigFunction::class, $filter);
-            self::assertEquals($functions[$i++], $filter->getName());
-        }
     }
 
     public function testGetEncoreEntryCssSource()

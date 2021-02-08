@@ -9,18 +9,18 @@
 
 namespace App\Twig;
 
-use App\Configuration\ThemeConfiguration;
+use App\Configuration\SystemConfiguration;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class ConfigExtension extends AbstractExtension
+final class ConfigExtension extends AbstractExtension
 {
     /**
-     * @var ThemeConfiguration
+     * @var SystemConfiguration
      */
-    protected $configuration;
+    private $configuration;
 
-    public function __construct(ThemeConfiguration $configuration)
+    public function __construct(SystemConfiguration $configuration)
     {
         $this->configuration = $configuration;
     }
@@ -41,6 +41,15 @@ class ConfigExtension extends AbstractExtension
      */
     public function getThemeConfig(string $name)
     {
+        switch ($name) {
+            case 'soft_limit':
+                return $this->configuration->getTimesheetActiveEntriesSoftLimit();
+
+            default:
+                $name = 'theme.' . $name;
+                break;
+        }
+
         return $this->configuration->find($name);
     }
 }
