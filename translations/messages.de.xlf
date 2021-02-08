@@ -122,9 +122,9 @@
       <!--
               Menu / Navbar items
             -->
-      <trans-unit id="menu.homepage">
+      <trans-unit id="menu.homepage" approved="yes">
         <source>menu.homepage</source>
-        <target>Instrumententafel</target>
+        <target>Dashboard</target>
       </trans-unit>
       <trans-unit id="menu.admin">
         <source>menu.admin</source>
