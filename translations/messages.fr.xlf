@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="confirm.delete">
         <source>confirm.delete</source>
-        <target>Êtes-vous sûr de vouloir le supprimer ?</target>
+        <target>Êtes-vous sûr·e de vouloir le supprimer ?</target>
       </trans-unit>
       <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
@@ -772,7 +772,7 @@
       </trans-unit>
       <trans-unit id="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
-        <target>N° de TVA :</target>
+        <target>No de TVA :</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
@@ -818,7 +818,7 @@
             -->
       <trans-unit id="active.entries">
         <source>active.entries</source>
-        <target>Vos releves de périodes d'activités</target>
+        <target>Vos relevés de périodes d'activités</target>
       </trans-unit>
       <trans-unit id="timesheet.all">
         <source>timesheet.all</source>
