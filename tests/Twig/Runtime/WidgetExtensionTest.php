@@ -7,24 +7,23 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Twig;
+namespace App\Tests\Twig\Runtime;
 
-use App\Twig\WidgetExtension;
+use App\Twig\Runtime\WidgetExtension;
 use App\Widget\Type\More;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetRendererInterface;
 use App\Widget\WidgetService;
 use PHPUnit\Framework\TestCase;
-use Twig\TwigFunction;
 
 /**
- * @covers \App\Twig\WidgetExtension
+ * @covers \App\Twig\Runtime\WidgetExtension
  */
 class WidgetExtensionTest extends TestCase
 {
     protected function getSut($hasWidget = null, $getWidget = null, $renderer = null): WidgetExtension
     {
-        $service = $this->getMockBuilder(WidgetService::class)->disableOriginalConstructor()->onlyMethods(['hasWidget', 'getWidget', 'findRenderer'])->getMock();
+        $service = $this->createMock(WidgetService::class);
         if (null !== $hasWidget) {
             $service->expects($this->once())->method('hasWidget')->willReturn($hasWidget);
         }
@@ -36,20 +35,6 @@ class WidgetExtensionTest extends TestCase
         }
 
         return new WidgetExtension($service);
-    }
-
-    public function testGetFunctions()
-    {
-        $functions = ['render_widget'];
-        $sut = $this->getSut();
-        $twigFunctions = $sut->getFunctions();
-        $this->assertCount(\count($functions), $twigFunctions);
-        $i = 0;
-        /** @var TwigFunction $function */
-        foreach ($twigFunctions as $function) {
-            $this->assertInstanceOf(TwigFunction::class, $function);
-            $this->assertEquals($functions[$i++], $function->getName());
-        }
     }
 
     public function testRenderWidgetForInvalidValue()

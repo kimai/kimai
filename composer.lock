@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7931f435fc1cfba7a09fe9d65369984e",
+    "content-hash": "25136f17833c529f24e50535c155dda5",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2795,40 +2795,42 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "3.2.4",
+            "version": "3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "c7cd7c5f7f3f49fae9df24c70e175be77c2cab61"
+                "reference": "67183f1684c71620cd42901539b7196d97f90e2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/c7cd7c5f7f3f49fae9df24c70e175be77c2cab61",
-                "reference": "c7cd7c5f7f3f49fae9df24c70e175be77c2cab61",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/67183f1684c71620cd42901539b7196d97f90e2c",
+                "reference": "67183f1684c71620cd42901539b7196d97f90e2c",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1.3",
-                "symfony/config": ">4.1",
-                "symfony/dependency-injection": ">4.0",
+                "php": ">=7.1.3",
+                "symfony/asset": ">4.3",
+                "symfony/config": ">4.3",
+                "symfony/dependency-injection": ">4.3",
                 "symfony/event-dispatcher": ">4.3",
-                "symfony/http-foundation": ">4.0",
-                "symfony/http-kernel": ">4.0",
-                "symfony/options-resolver": ">4.0",
-                "symfony/security-core": ">4.0",
+                "symfony/http-foundation": ">4.3",
+                "symfony/http-kernel": ">4.3",
+                "symfony/options-resolver": ">4.3",
+                "symfony/security-core": ">4.3",
+                "symfony/translation": ">4.3",
+                "symfony/twig-bridge": ">4.3",
                 "twig/twig": ">2.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.10",
                 "knplabs/knp-menu-bundle": "^2.2",
                 "phpspec/prophecy": "^1.6",
-                "phpstan/phpstan": "^0.11.8",
-                "phpstan/phpstan-phpunit": "^0.11",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
                 "phpunit/phpunit": "^7.3",
-                "symfony/framework-bundle": ">4.0"
+                "symfony/framework-bundle": ">4.3"
             },
             "suggest": {
-                "friendsofsymfony/user-bundle": "Allows easy user management and security support",
                 "knplabs/knp-menu-bundle": "Allows easy menu integration"
             },
             "type": "symfony-bundle",
@@ -2858,7 +2860,7 @@
             "description": "Admin theme bundle for Symfony 4+ based on AdminLTE 2.4 with FOSUserBundle support",
             "support": {
                 "issues": "https://github.com/kevinpapst/AdminLTEBundle/issues",
-                "source": "https://github.com/kevinpapst/AdminLTEBundle/tree/3.2.4"
+                "source": "https://github.com/kevinpapst/AdminLTEBundle/tree/3.3"
             },
             "funding": [
                 {
@@ -2870,7 +2872,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-07-07T11:40:52+00:00"
+            "time": "2021-02-20T16:05:21+00:00"
         },
         {
             "name": "kimai/user-bundle",

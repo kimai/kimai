@@ -43,32 +43,21 @@ final class UserProfileSubscriber implements EventSubscriberInterface
 
     public function prepareUserProfile(KernelEvent $event): void
     {
-        if (!$this->canHandleEvent($event)) {
+        // ignore sub-requests
+        if (!$event->isMasterRequest()) {
             return;
         }
 
-        /** @var User $user */
-        $user = $this->storage->getToken()->getUser();
-
-        $event = new PrepareUserEvent($user);
-        $this->eventDispatcher->dispatch($event);
-    }
-
-    private function canHandleEvent(KernelEvent $event): bool
-    {
-        // Ignore sub-requests
-        if (!$event->isMasterRequest()) {
-            return false;
-        }
-
         // ignore events like the toolbar where we do not have a token
-        if (null === $this->storage->getToken()) {
-            return false;
+        if (null === ($token = $this->storage->getToken())) {
+            return;
         }
 
-        /** @var User $user */
-        $user = $this->storage->getToken()->getUser();
+        $user = $token->getUser();
 
-        return ($user instanceof User);
+        if ($user instanceof User) {
+            $event = new PrepareUserEvent($user);
+            $this->eventDispatcher->dispatch($event);
+        }
     }
 }

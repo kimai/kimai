@@ -19,7 +19,7 @@ use App\Event\UserPreferenceDisplayEvent;
 use App\Export\ExportItemInterface;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
-use App\Twig\DateExtensions;
+use App\Twig\LocaleFormatExtensions;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
@@ -47,7 +47,7 @@ abstract class AbstractSpreadsheetRenderer
     public const RATE_FORMAT = self::RATE_FORMAT_LEFT;
 
     /**
-     * @var DateExtensions
+     * @var LocaleFormatExtensions
      */
     protected $dateExtension;
     /**
@@ -92,7 +92,7 @@ abstract class AbstractSpreadsheetRenderer
         'user-meta' => [],
     ];
 
-    public function __construct(TranslatorInterface $translator, DateExtensions $dateExtension, EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter)
+    public function __construct(TranslatorInterface $translator, LocaleFormatExtensions $dateExtension, EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter)
     {
         $this->translator = $translator;
         $this->dateExtension = $dateExtension;

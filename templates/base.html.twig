@@ -122,7 +122,53 @@
             </li>
         {% endif %}
         {% block navbar_extensions %}{% endblock %}
-        {{ render(controller('App\\Controller\\LayoutController::activeEntries')) }}
+        {% set active_timesheets = active_timesheets(app.user) %}
+        {% set soft_limit = theme_config('soft_limit') %}
+        <li class="dropdown messages-menu" style="{% if active_timesheets is empty %}display:none{% endif %}">
+            <a href="#" class="dropdown-toggle ddt-large ticktac" data-toggle="dropdown">
+                <i class="{{ 'start'|icon }} fa-2x"></i>
+                <span data-warning="{{ soft_limit }}" class="label label-{% if active_timesheets|length > soft_limit %}danger{% else %}warning{% endif %}">{% if active_timesheets|length > 0 %}{{ active_timesheets|length }}{% endif %}</span>
+            </a>
+            <ul class="dropdown-menu"
+                data-api="{{ path('active_timesheet') }}"
+                data-href="{{ path('stop_timesheet', {'id' : '000'}) }}"
+                data-icon="{{ 'stop-small'|icon }}"
+                data-format="{{ get_format_duration() }}">
+                <li class="header">
+                    {{ 'active.entries'|trans }}
+                </li>
+                <li>
+                    <ul class="menu">
+                        {% for entry in active_timesheets %}
+                            <li>
+                                <a href="{{ path('stop_timesheet', {'id' : entry.id}) }}" class="api-link" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
+                                    <div class="pull-left">
+                                        <i class="{{ 'stop-small'|icon }} fa-2x"></i>
+                                    </div>
+                                    <h4>
+                                        <span>{{ entry.activity.name }}</span>
+                                        <small>
+                                            <span data-title="true" data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}" data-format="{{ get_format_duration() }}">{{ entry|duration }}</span>
+                                        </small>
+                                    </h4>
+                                    <p>{{ entry.project.name }} ({{ entry.project.customer.name }})</p>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% if is_granted('create_own_timesheet') %}
+                    <li class="footer"><a href="{{ path('timesheet_create') }}" class="modal-ajax-form">{{ 'timesheet.start'|trans }}</a></li>
+                {% endif %}
+            </ul>
+        </li>
+        {% if is_granted('create_own_timesheet') %}
+            <li class="messages-menu-empty" style="{% if active_timesheets is not empty %}display:none{% endif %}">
+                <a href="{{ path('timesheet_create') }}" class="ddt-large modal-ajax-form">
+                    <i class="{{ 'start'|icon }} fa-2x"></i>
+                </a>
+            </li>
+        {% endif %}
     {% endif %}
 {% endblock %}
 
