@@ -42,6 +42,7 @@ final class UserEnvironmentSubscriber implements EventSubscriberInterface
 
     public function prepareEnvironment(RequestEvent $event): void
     {
+        // ignore sub-requests
         if (!$event->isMasterRequest()) {
             return;
         }
@@ -49,11 +50,13 @@ final class UserEnvironmentSubscriber implements EventSubscriberInterface
         // the locale depends on the request, not on the user configuration
         \Locale::setDefault($event->getRequest()->getLocale());
 
-        if (null === $this->storage->getToken()) {
+        // ignore events like the toolbar where we do not have a token
+        if (null === ($token = $this->storage->getToken())) {
             return;
         }
 
-        $user = $this->storage->getToken()->getUser();
+        $user = $token->getUser();
+
         if ($user instanceof User) {
             date_default_timezone_set($user->getTimezone());
             $user->initCanSeeAllData($this->auth->isGranted('view_all_data'));

@@ -27,10 +27,6 @@ final class TimesheetExtension implements RuntimeExtensionInterface
 
     public function activeEntries(User $user): array
     {
-        $activeEntries = $this->repository->getActiveEntries($user);
-
-        // TODO dispatch event ?
-
-        return $activeEntries;
+        return $this->repository->getActiveEntries($user);
     }
 }
