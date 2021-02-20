@@ -29,7 +29,7 @@ final class LocaleFormatExtensions extends AbstractExtension
     /**
      * @var LocaleFormats|null
      */
-    protected $localeFormats;
+    private $localeFormats;
     /**
      * @var LocaleFormatter|null
      */
