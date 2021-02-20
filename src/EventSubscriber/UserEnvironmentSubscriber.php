@@ -10,8 +10,6 @@
 namespace App\EventSubscriber;
 
 use App\Entity\User;
-use App\Event\PrepareUserEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -28,22 +26,17 @@ final class UserEnvironmentSubscriber implements EventSubscriberInterface
      * @var AuthorizationCheckerInterface
      */
     private $auth;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
 
-    public function __construct(TokenStorageInterface $tokenStorage, AuthorizationCheckerInterface $auth, EventDispatcherInterface $dispatcher)
+    public function __construct(TokenStorageInterface $tokenStorage, AuthorizationCheckerInterface $auth)
     {
         $this->storage = $tokenStorage;
         $this->auth = $auth;
-        $this->eventDispatcher = $dispatcher;
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => ['prepareEnvironment', 200],
+            KernelEvents::REQUEST => ['prepareEnvironment', -100],
         ];
     }
 
@@ -61,14 +54,9 @@ final class UserEnvironmentSubscriber implements EventSubscriberInterface
         }
 
         $user = $this->storage->getToken()->getUser();
-        if (!($user instanceof User)) {
-            return;
+        if ($user instanceof User) {
+            date_default_timezone_set($user->getTimezone());
+            $user->initCanSeeAllData($this->auth->isGranted('view_all_data'));
         }
-
-        date_default_timezone_set($user->getTimezone());
-        $user->initCanSeeAllData($this->auth->isGranted('view_all_data'));
-
-        $event = new PrepareUserEvent($user);
-        $this->eventDispatcher->dispatch($event);
     }
 }
