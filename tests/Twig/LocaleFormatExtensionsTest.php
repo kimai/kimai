@@ -20,7 +20,6 @@ use Twig\TwigFunction;
 
 /**
  * @covers \App\Twig\LocaleFormatExtensions
- * @covers \App\Utils\LanguageFormattings
  * @covers \App\Utils\LocaleFormatter
  * @covers \App\Utils\LocaleFormats
  */
