@@ -30,7 +30,7 @@
         "hslavich/oneloginsaml-bundle": "^1.4",
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.2",
-        "kevinpapst/adminlte-bundle": "dev-master",
+        "kevinpapst/adminlte-bundle": "^3.3",
         "kimai/user-bundle": "^1.1",
         "laravolt/avatar": "^3.0",
         "league/csv": "^9.4",

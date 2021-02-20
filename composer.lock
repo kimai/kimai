@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f982bf747dd1e4c552240fa2e4b86ee6",
+    "content-hash": "25136f17833c529f24e50535c155dda5",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2795,20 +2795,20 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "dev-master",
+            "version": "3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "b3a45c0d7c821ca500364e0044619578fef4b78b"
+                "reference": "67183f1684c71620cd42901539b7196d97f90e2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/b3a45c0d7c821ca500364e0044619578fef4b78b",
-                "reference": "b3a45c0d7c821ca500364e0044619578fef4b78b",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/67183f1684c71620cd42901539b7196d97f90e2c",
+                "reference": "67183f1684c71620cd42901539b7196d97f90e2c",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1.3",
+                "php": ">=7.1.3",
                 "symfony/asset": ">4.3",
                 "symfony/config": ">4.3",
                 "symfony/dependency-injection": ">4.3",
@@ -2833,7 +2833,6 @@
             "suggest": {
                 "knplabs/knp-menu-bundle": "Allows easy menu integration"
             },
-            "default-branch": true,
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
@@ -2861,7 +2860,7 @@
             "description": "Admin theme bundle for Symfony 4+ based on AdminLTE 2.4 with FOSUserBundle support",
             "support": {
                 "issues": "https://github.com/kevinpapst/AdminLTEBundle/issues",
-                "source": "https://github.com/kevinpapst/AdminLTEBundle/tree/master"
+                "source": "https://github.com/kevinpapst/AdminLTEBundle/tree/3.3"
             },
             "funding": [
                 {
@@ -2873,7 +2872,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-02-07T23:37:36+00:00"
+            "time": "2021-02-20T16:05:21+00:00"
         },
         {
             "name": "kimai/user-bundle",
@@ -14493,9 +14492,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "kevinpapst/adminlte-bundle": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
