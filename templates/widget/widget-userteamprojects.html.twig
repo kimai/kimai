@@ -18,8 +18,8 @@
                     <tbody>
                     {% for stats in projectStats|sort((a, b) => a.project.name <=> b.project.name) %}
                         {% set project = stats.project %}
-                        <tr>
-                            <td{% if is_granted('details', stats.project) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': stats.project.id}) }}"{% endif %}>
+                        <tr{% if is_granted('details', stats.project) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': stats.project.id}) }}"{% endif %}>
+                            <td>
                                 {{ widgets.label_project(stats.project) }}
                                 <br>
                                 <small>{{ widgets.label_customer(stats.project.customer) }}</small>
