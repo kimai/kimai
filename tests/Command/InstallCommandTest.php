@@ -56,8 +56,7 @@ class InstallCommandTest extends KernelTestCase
         // create database is skipped
         self::assertStringContainsString('[NOTE] Database is existing and connection could be established', $result);
         // make sure migrations run always
-        self::assertStringContainsString('Application Migrations', $result);
-        self::assertStringContainsString('No migrations to execute.', $result);
+        self::assertStringContainsString('[OK] Already at the latest version ("DoctrineMigrations\\', $result);
 
         self::assertStringContainsString(
             sprintf('[OK] Congratulations! Successfully installed Kimai 2 version %s (%s)', Constants::VERSION, Constants::STATUS),
