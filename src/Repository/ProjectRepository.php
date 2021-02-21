@@ -115,8 +115,9 @@ class ProjectRepository extends EntityRepository
         $qb->select('COUNT(a.id) as activityAmount')
             ->from(Activity::class, 'a')
             ->andWhere('a.project = :project')
+            ->setParameter('project', $project)
         ;
-        $resultActivities = $qb->getQuery()->execute(['project' => $project], Query::HYDRATE_ARRAY);
+        $resultActivities = $qb->getQuery()->getArrayResult();
 
         if (isset($resultActivities[0])) {
             $resultActivities = $resultActivities[0];

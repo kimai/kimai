@@ -104,9 +104,10 @@ class ActivityRepository extends EntityRepository
             ->addSelect('SUM(t.internalRate) as recordInternalRate')
             ->from(Timesheet::class, 't')
             ->where('t.activity = :activity')
+            ->setParameter('activity', $activity)
         ;
 
-        $timesheetResult = $qb->getQuery()->execute(['activity' => $activity], Query::HYDRATE_ARRAY);
+        $timesheetResult = $qb->getQuery()->getArrayResult();
 
         if (isset($timesheetResult[0])) {
             $stats->setRecordAmount($timesheetResult[0]['recordAmount']);

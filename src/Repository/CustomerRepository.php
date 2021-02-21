@@ -97,8 +97,9 @@ class CustomerRepository extends EntityRepository
             ->from(Timesheet::class, 't')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
             ->andWhere('p.customer = :customer')
+            ->setParameter('customer', $customer)
         ;
-        $timesheetResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
+        $timesheetResult = $qb->getQuery()->getArrayResult();
 
         if (isset($timesheetResult[0])) {
             $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
@@ -114,8 +115,9 @@ class CustomerRepository extends EntityRepository
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 'a.project = p.id')
             ->andWhere('a.project = p.id')
             ->andWhere('p.customer = :customer')
+            ->setParameter('customer', $customer)
         ;
-        $activityResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
+        $activityResult = $qb->getQuery()->getArrayResult();
 
         if (isset($activityResult[0])) {
             $stats->setActivityAmount($activityResult[0]['activityAmount']);
@@ -125,8 +127,9 @@ class CustomerRepository extends EntityRepository
         $qb->select('COUNT(p.id) as projectAmount')
             ->from(Project::class, 'p')
             ->andWhere('p.customer = :customer')
+            ->setParameter('customer', $customer)
         ;
-        $projectResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
+        $projectResult = $qb->getQuery()->getArrayResult();
 
         if (isset($projectResult[0])) {
             $stats->setProjectAmount($projectResult[0]['projectAmount']);
