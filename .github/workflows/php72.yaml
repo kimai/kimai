@@ -48,11 +48,11 @@ jobs:
             -   name: Run migrations on SQLite
                 run: |
                     bin/console doctrine:database:create -n
-                    bin/console doctrine:migrations:sync-metadata-storage
                     bin/console doctrine:migrations:migrate -n
                     bin/console doctrine:migrations:migrate first -n
                 env:
                     DATABASE_URL: sqlite:///%kernel.project_dir%/var/data/kimai_migrations.sqlite
+                    DATABASE_VERSION: sqlite-3
                     APP_ENV: dev
                     MAILER_URL: null://localhost
             -   name: Run integration tests
