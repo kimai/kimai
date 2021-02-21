@@ -11,8 +11,10 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\User;
+use App\Event\RecentActivityEvent;
+use App\Event\TimesheetDuplicatePostEvent;
+use App\Event\TimesheetDuplicatePreEvent;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Form\API\TimesheetApiEditForm;
 use App\Repository\Query\TimesheetQuery;
@@ -32,12 +34,12 @@ use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @RouteResource("Timesheet")
@@ -62,10 +64,6 @@ class TimesheetController extends BaseApiController
      */
     private $viewHandler;
     /**
-     * @var TimesheetConfiguration
-     */
-    private $configuration;
-    /**
      * @var TagRepository
      */
     private $tagRepository;
@@ -85,24 +83,20 @@ class TimesheetController extends BaseApiController
     public function __construct(
         ViewHandlerInterface $viewHandler,
         TimesheetRepository $repository,
-        TimesheetConfiguration $configuration,
         TagRepository $tagRepository,
-        TrackingModeService $trackingModeService,
         EventDispatcherInterface $dispatcher,
         TimesheetService $service
     ) {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
-        $this->configuration = $configuration;
         $this->tagRepository = $tagRepository;
-        $this->trackingModeService = $trackingModeService;
         $this->dispatcher = $dispatcher;
         $this->service = $service;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
     {
-        return $this->trackingModeService->getActiveMode();
+        return $this->service->getActiveTrackingMode();
     }
 
     /**
@@ -534,7 +528,10 @@ class TimesheetController extends BaseApiController
 
         $data = $this->repository->getRecentActivities($user, $begin, $limit);
 
-        $view = new View($data, 200);
+        $recentActivity = new RecentActivityEvent($this->getUser(), $data);
+        $this->dispatcher->dispatch($recentActivity);
+
+        $view = new View($recentActivity->getRecentActivities(), 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
 
         return $this->viewHandler->handle($view);
@@ -732,7 +729,11 @@ class TimesheetController extends BaseApiController
 
         $copyTimesheet = clone $timesheet;
 
+        $this->dispatcher->dispatch(new TimesheetDuplicatePreEvent($copyTimesheet, $timesheet));
+
         $this->service->saveNewTimesheet($copyTimesheet);
+
+        $this->dispatcher->dispatch(new TimesheetDuplicatePostEvent($copyTimesheet, $timesheet));
 
         $view = new View($copyTimesheet, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

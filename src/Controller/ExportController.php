@@ -143,6 +143,7 @@ class ExportController extends AbstractController
             'action' => $this->generateUrl('export', []),
             'include_user' => $this->isGranted('view_other_timesheet'),
             'method' => $method,
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'attr' => [
                 'id' => 'export-form'
             ]

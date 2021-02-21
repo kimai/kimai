@@ -10,9 +10,12 @@
 namespace App\API\Serializer;
 
 use App\Validator\ValidationFailedException;
+use FOS\RestBundle\Serializer\Normalizer\FlattenExceptionHandler;
+use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigatorInterface;
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
-use JMS\Serializer\Visitor\SerializationVisitorInterface;
+use JMS\Serializer\JsonSerializationVisitor;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -22,25 +25,52 @@ class ValidationFailedExceptionErrorHandler implements SubscribingHandlerInterfa
      * @var TranslatorInterface
      */
     private $translator;
+    /**
+     * @var FlattenExceptionHandler
+     */
+    private $exceptionHandler;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, FlattenExceptionHandler $exceptionHandler)
     {
         $this->translator = $translator;
+        $this->exceptionHandler = $exceptionHandler;
     }
 
     public static function getSubscribingMethods()
     {
         return [[
             'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
-            'type' => ValidationFailedException::class,
+            'type' => FlattenException::class,
             'format' => 'json',
             'method' => 'serializeExceptionToJson',
+            'priority' => -1
+        ], [
+            'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
+            'type' => ValidationFailedException::class,
+            'format' => 'json',
+            'method' => 'serializeValidationExceptionToJson',
+            'priority' => -1
         ]];
     }
 
-    public function serializeExceptionToJson(SerializationVisitorInterface $visitor, ValidationFailedException $exception, array $type)
+    public function serializeExceptionToJson(JsonSerializationVisitor $visitor, FlattenException $exception, array $type, Context $context)
+    {
+        if ($exception->getClass() !== ValidationFailedException::class) {
+            return $this->exceptionHandler->serializeToJson($visitor, $exception, $type, $context);
+        }
+
+        $original = $context->getAttribute('exception');
+        if ($original instanceof ValidationFailedException) {
+            return $this->serializeValidationExceptionToJson($visitor, $original, $type, $context);
+        }
+
+        return $this->exceptionHandler->serializeToJson($visitor, $exception, $type, $context);
+    }
+
+    public function serializeValidationExceptionToJson(JsonSerializationVisitor $visitor, ValidationFailedException $exception, array $type, Context $context)
     {
         $errors = [];
+
         /** @var ConstraintViolationInterface $error */
         foreach (iterator_to_array($exception->getViolations()) as $error) {
             $errors[$error->getPropertyPath()]['errors'][] = $this->getErrorMessage($error);

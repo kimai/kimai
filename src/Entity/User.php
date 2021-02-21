@@ -439,6 +439,18 @@ class User extends BaseUser implements UserInterface
         return !$this->getTeams()->isEmpty();
     }
 
+    public function hasTeamMember(User $user): bool
+    {
+        /** @var Team $team */
+        foreach ($this->getTeams() as $team) {
+            if ($team->hasUser($user)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * @return Collection<Team>
      */

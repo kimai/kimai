@@ -286,6 +286,8 @@ class ConfigurationTest extends TestCase
                     'lockdown_period_end' => null,
                     'lockdown_grace_period' => null,
                 ],
+                'duration_increment' => null,
+                'time_increment' => null,
             ],
             'user' => [
                 'registration' => true,

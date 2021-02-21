@@ -190,6 +190,64 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertNull($timesheet->getFixedRate());
     }
 
+    /**
+     * @dataProvider getTestDataForDurationValues
+     */
+    public function testCreateActionWithDurationValues($begin, $end, $duration, $expectedDuration, $expectedEnd)
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/timesheet/create');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'description' => 'Testing is fun!',
+                'begin' => $begin,
+                'end' => $end,
+                'duration' => $duration,
+                'project' => 1,
+                'activity' => 1,
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $em = $this->getEntityManager();
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
+        $this->assertEquals($expectedDuration, $timesheet->getDuration());
+        $this->assertEquals($expectedEnd, $timesheet->getEnd()->format('Y-m-d H:i:s'));
+        $this->assertEquals('Testing is fun!', $timesheet->getDescription());
+    }
+
+    public function getTestDataForDurationValues()
+    {
+        // duration is ignored, because end is set and the duration might come from a rounding rule (by default seconds are rounded down with 1)
+        yield ['2018-12-31 00:00:00', '2018-12-31 02:10:10', '01:00', 7800, '2018-12-31 02:10:00'];
+        yield ['2018-12-31 00:00:00', '2018-12-31 02:09:59', '01:00', 7740, '2018-12-31 02:09:00'];
+        // if seconds are given, they are first rounded up (default for duration rounding is 1)
+        yield ['2018-12-31 00:00:00', null, '01:00', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '01:00:10', 3660, '2018-12-31 01:01:00'];
+        yield ['2018-12-31 00:00:00', null, '1h', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '1h10m', 4200, '2018-12-31 01:10:00'];
+        yield ['2018-12-31 00:00:00', null, '1h10s', 3660, '2018-12-31 01:01:00'];
+        yield ['2018-12-31 00:00:00', null, '60m', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '60M1s', 3660, '2018-12-31 01:01:00'];
+        yield ['2018-12-31 00:00:00', null, '3600s', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '59m60s', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '1', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '1,0', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '1.0', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '1.5', 5400, '2018-12-31 01:30:00'];
+        yield ['2018-12-31 00:00:00', null, '1,25', 4500, '2018-12-31 01:15:00'];
+    }
+
     public function testCreateActionShowsMetaFields()
     {
         $client = $this->getClientForAuthenticatedUser();

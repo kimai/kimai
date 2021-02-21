@@ -19,6 +19,7 @@ php.ini
 public/avatars/*.png
 
 templates/invoice/renderer/.~lock*
+translations/branding.en.xlf
 
 /var/data/*
 !/var/data/.gitkeep

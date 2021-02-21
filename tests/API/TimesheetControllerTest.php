@@ -18,8 +18,8 @@ use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
+use App\Timesheet\DateTimeFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -360,7 +360,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testPostAction()
     {
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create(self::TEST_TIMEZONE);
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'activity' => 1,
@@ -384,7 +384,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testPostActionWithFullExpandedResponse()
     {
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create(self::TEST_TIMEZONE);
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'activity' => 1,
@@ -408,7 +408,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testPostActionForDifferentUser()
     {
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create(self::TEST_TIMEZONE);
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $admin = $this->getUserByRole(User::ROLE_ADMIN);
         $user = $this->getUserByRole(User::ROLE_USER);
@@ -494,7 +494,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testPatchAction()
     {
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create(self::TEST_TIMEZONE);
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importFixtureForUser(User::ROLE_USER);
         $data = [
@@ -959,7 +959,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testDuplicateAction()
     {
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create(self::TEST_TIMEZONE);
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'activity' => 1,

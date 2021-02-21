@@ -7,13 +7,12 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Twig;
+namespace App\Twig\Runtime;
 
 use App\Export\ServiceExport;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use Twig\Extension\RuntimeExtensionInterface;
 
-class TimesheetExtension extends AbstractExtension
+final class ExporterExtension implements RuntimeExtensionInterface
 {
     /**
      * @var ServiceExport
@@ -23,16 +22,6 @@ class TimesheetExtension extends AbstractExtension
     public function __construct(ServiceExport $service)
     {
         $this->service = $service;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
-    {
-        return [
-            new TwigFunction('timesheet_exporter', [$this, 'getTimesheetExporter'], []),
-        ];
     }
 
     public function getTimesheetExporter(): array

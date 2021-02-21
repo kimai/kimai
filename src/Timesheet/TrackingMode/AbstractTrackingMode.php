@@ -9,27 +9,13 @@
 
 namespace App\Timesheet\TrackingMode;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
-use App\Timesheet\UserDateTimeFactory;
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTrackingMode implements TrackingModeInterface
 {
-    /**
-     * @var UserDateTimeFactory
-     */
-    protected $dateTime;
-    /**
-     * @var TimesheetConfiguration
-     */
-    protected $configuration;
-
-    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
-    {
-        $this->dateTime = $dateTime;
-        $this->configuration = $configuration;
-    }
+    use TrackingModeTrait;
 
     public function create(Timesheet $timesheet, ?Request $request = null): void
     {
@@ -48,7 +34,7 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
             return;
         }
 
-        $start = $this->dateTime->createDateTimeFromFormat('Y-m-d', $start);
+        $start = DateTime::createFromFormat('Y-m-d', $start, $this->getTimezone($entry));
         if (false === $start) {
             return;
         }
@@ -61,7 +47,7 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
             return;
         }
 
-        $end = $this->dateTime->createDateTimeFromFormat('Y-m-d', $end);
+        $end = DateTime::createFromFormat('Y-m-d', $end, $this->getTimezone($entry));
         if (false === $end) {
             return;
         }
@@ -81,7 +67,7 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
         }
 
         try {
-            $from = $this->dateTime->createDateTime($from);
+            $from = new DateTime($from, $this->getTimezone($entry));
         } catch (\Exception $ex) {
             return;
         }
@@ -94,7 +80,7 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
         }
 
         try {
-            $to = $this->dateTime->createDateTime($to);
+            $to = new DateTime($to, $this->getTimezone($entry));
         } catch (\Exception $ex) {
             return;
         }

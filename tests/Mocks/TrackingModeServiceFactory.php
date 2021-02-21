@@ -9,9 +9,8 @@
 
 namespace App\Tests\Mocks;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Tests\Configuration\TestConfigLoader;
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Timesheet\TrackingMode\DefaultMode;
 use App\Timesheet\TrackingMode\DurationFixedBeginMode;
 use App\Timesheet\TrackingMode\DurationOnlyMode;
@@ -26,17 +25,16 @@ class TrackingModeServiceFactory extends AbstractMockFactory
             $mode = 'default';
         }
 
-        $dateTime = (new UserDateTimeFactoryFactory($this->getTestCase()))->create();
         $loader = new TestConfigLoader([]);
 
-        $configuration = new TimesheetConfiguration($loader, ['mode' => $mode]);
+        $configuration = new SystemConfiguration($loader, ['timesheet' => ['mode' => $mode]]);
 
         if (null === $modes) {
             $modes = [
-                new DefaultMode($dateTime, $configuration, (new RoundingServiceFactory($this->getTestCase()))->create()),
-                new PunchInOutMode($dateTime),
-                new DurationOnlyMode($dateTime, $configuration),
-                new DurationFixedBeginMode($dateTime, $configuration),
+                new DefaultMode((new RoundingServiceFactory($this->getTestCase()))->create()),
+                new PunchInOutMode(),
+                new DurationOnlyMode($configuration),
+                new DurationFixedBeginMode($configuration),
             ];
         }
 

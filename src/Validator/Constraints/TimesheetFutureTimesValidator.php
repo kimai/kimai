@@ -9,7 +9,7 @@
 
 namespace App\Validator\Constraints;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -18,11 +18,11 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 final class TimesheetFutureTimesValidator extends ConstraintValidator
 {
     /**
-     * @var TimesheetConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
 
-    public function __construct(TimesheetConfiguration $configuration)
+    public function __construct(SystemConfiguration $configuration)
     {
         $this->configuration = $configuration;
     }
@@ -41,14 +41,14 @@ final class TimesheetFutureTimesValidator extends ConstraintValidator
             throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
         }
 
-        if ($this->configuration->isAllowFutureTimes()) {
+        if ($this->configuration->isTimesheetAllowFutureTimes()) {
             return;
         }
 
         $now = new \DateTime('now', $timesheet->getBegin()->getTimezone());
 
         // allow configured default rounding time + 1 minute - see #1295
-        $allowedDiff = ($this->configuration->getDefaultRoundingBegin() * 60) + 60;
+        $allowedDiff = ($this->configuration->getTimesheetDefaultRoundingBegin() * 60) + 60;
         if (($now->getTimestamp() + $allowedDiff) < $timesheet->getBegin()->getTimestamp()) {
             $this->context->buildViolation('The begin date cannot be in the future.')
                 ->atPath('begin')

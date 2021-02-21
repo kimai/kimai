@@ -90,6 +90,17 @@ final class RolePermissionManager
         return \in_array($permission, $this->permissions[$role]);
     }
 
+    public function hasRolePermission(User $user, string $permission)
+    {
+        foreach ($user->getRoles() as $role) {
+            if ($this->hasPermission($role, $permission)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Only permissions which were registered through the Symfony configuration stack will be returned here.
      *

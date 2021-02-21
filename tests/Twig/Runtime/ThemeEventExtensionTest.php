@@ -12,16 +12,21 @@ namespace App\Tests\Twig\Runtime;
 use App\Entity\User;
 use App\Event\ThemeEvent;
 use App\Tests\Mocks\Security\CurrentUserFactory;
-use App\Twig\Runtime\ThemeEventExtension;
+use App\Twig\Runtime\ThemeExtension;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
- * @covers \App\Twig\Runtime\ThemeEventExtension
+ * @covers \App\Twig\Runtime\ThemeExtension
  */
 class ThemeEventExtensionTest extends TestCase
 {
-    protected function getSut(bool $hasListener = true): ThemeEventExtension
+    protected function getSut(bool $hasListener = true): ThemeExtension
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->method('hasListeners')->willReturn($hasListener);
@@ -29,20 +34,39 @@ class ThemeEventExtensionTest extends TestCase
 
         $user = (new CurrentUserFactory($this))->create(new User());
 
-        return new ThemeEventExtension($dispatcher, $user);
+        return new ThemeExtension($dispatcher);
+    }
+
+    protected function getEnvironment(): Environment
+    {
+        $mock = $this->getMockBuilder(UsernamePasswordToken::class)->onlyMethods(['getUser'])->disableOriginalConstructor()->getMock();
+        $mock->method('getUser')->willReturn(new User());
+        /** @var UsernamePasswordToken $token */
+        $token = $mock;
+
+        $tokenStorage = new TokenStorage();
+        $tokenStorage->setToken($token);
+
+        $app = new AppVariable();
+        $app->setTokenStorage($tokenStorage);
+
+        $environment = new Environment(new FilesystemLoader());
+        $environment->addGlobal('app', $app);
+
+        return $environment;
     }
 
     public function testTrigger()
     {
         $sut = $this->getSut();
-        $event = $sut->trigger('foo', []);
+        $event = $sut->trigger($this->getEnvironment(), 'foo', []);
         self::assertInstanceOf(ThemeEvent::class, $event);
     }
 
     public function testTriggerWithoutListener()
     {
         $sut = $this->getSut(false);
-        $event = $sut->trigger('foo', []);
+        $event = $sut->trigger($this->getEnvironment(), 'foo', []);
         self::assertInstanceOf(ThemeEvent::class, $event);
     }
 
@@ -50,6 +74,6 @@ class ThemeEventExtensionTest extends TestCase
     {
         $sut = $this->getSut();
         $values = $sut->getJavascriptTranslations();
-        self::assertCount(23, $values);
+        self::assertCount(24, $values);
     }
 }

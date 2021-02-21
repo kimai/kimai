@@ -94,6 +94,32 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('markdown_content')
                     ->defaultValue(false)
                 ->end()
+                ->scalarNode('duration_increment')
+                    ->defaultNull()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            if ($value !== null) {
+                                return ((int) $value) < 0;
+                            }
+
+                            return false;
+                        })
+                        ->thenInvalid('Duration increment is invalid')
+                    ->end()
+                ->end()
+                ->scalarNode('time_increment')
+                    ->defaultNull()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            if ($value !== null) {
+                                return ((int) $value) < 1;
+                            }
+
+                            return false;
+                        })
+                        ->thenInvalid('Time increment is invalid')
+                    ->end()
+                ->end()
                 ->arrayNode('rounding')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')

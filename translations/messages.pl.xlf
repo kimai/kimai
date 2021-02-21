@@ -290,7 +290,7 @@
       </trans-unit>
       <trans-unit id="label.team">
         <source>label.team</source>
-        <target>Zaspół</target>
+        <target state="translated">Zespół</target>
       </trans-unit>
       <trans-unit id="label.teamlead">
         <source>label.teamlead</source>
@@ -684,7 +684,7 @@
             -->
       <trans-unit id="stats.durationToday">
         <source>stats.durationToday</source>
-        <target>Pprzepracowane godziny dzisiaj</target>
+        <target state="translated">Przepracowane godziny dzisiaj</target>
       </trans-unit>
       <trans-unit id="stats.durationWeek">
         <source>stats.durationWeek</source>
@@ -1125,6 +1125,10 @@
       <trans-unit id="help.rate">
         <source>help.rate</source>
         <target>Stawka godzinowa do naliczenia</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Razem</target>
       </trans-unit>
     </body>
   </file>

@@ -10,7 +10,7 @@
 namespace App\Tests\Validator\Constraints;
 
 use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Validator\Constraints\TimesheetFutureTimes;
 use App\Validator\Constraints\TimesheetFutureTimesValidator;
@@ -31,13 +31,15 @@ class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
     protected function createMyValidator(bool $allowFutureTimes = false)
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new TimesheetConfiguration($loader, [
-            'rules' => [
-                'allow_future_times' => $allowFutureTimes,
-            ],
-            'rounding' => [
-                'default' => [
-                    'begin' => 1
+        $config = new SystemConfiguration($loader, [
+            'timesheet' => [
+                'rules' => [
+                    'allow_future_times' => $allowFutureTimes,
+                ],
+                'rounding' => [
+                    'default' => [
+                        'begin' => 1
+                    ]
                 ]
             ]
         ]);

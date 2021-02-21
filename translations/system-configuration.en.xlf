@@ -226,6 +226,22 @@
                 <source>first_weekday</source>
                 <target>First day of the week</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.duration_increment">
+                <source>label.timesheet.duration_increment</source>
+                <target>Minute selection for Duration</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.time_increment">
+                <source>label.timesheet.time_increment</source>
+                <target>Minute selection for From &amp; To</target>
+            </trans-unit>
+            <trans-unit id="increment_rounding">
+                <source>increment_rounding</source>
+                <target>Use configured value of the rounding rule</target>
+            </trans-unit>
+            <trans-unit id="off">
+                <source>off</source>
+                <target>Off</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

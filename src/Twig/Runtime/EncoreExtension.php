@@ -7,20 +7,15 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Twig;
+namespace App\Twig\Runtime;
 
 use Psr\Container\ContainerInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use Twig\Extension\RuntimeExtensionInterface;
 
-class EncoreExtension extends AbstractExtension implements ServiceSubscriberInterface
+final class EncoreExtension implements RuntimeExtensionInterface, ServiceSubscriberInterface
 {
-    /**
-     * @var EntrypointLookupInterface
-     */
-    private $encoreService;
     /**
      * @var string
      */
@@ -40,16 +35,6 @@ class EncoreExtension extends AbstractExtension implements ServiceSubscriberInte
     {
         return [
             EntrypointLookupInterface::class,
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
-    {
-        return [
-            new TwigFunction('encore_entry_css_source', [$this, 'getEncoreEntryCssSource']),
         ];
     }
 

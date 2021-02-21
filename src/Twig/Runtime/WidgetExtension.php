@@ -7,35 +7,23 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Twig;
+namespace App\Twig\Runtime;
 
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
-use InvalidArgumentException;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use Twig\Extension\RuntimeExtensionInterface;
 
-class WidgetExtension extends AbstractExtension
+final class WidgetExtension implements RuntimeExtensionInterface
 {
     /**
      * @var WidgetService
      */
-    protected $service;
+    private $service;
 
     public function __construct(WidgetService $service)
     {
         $this->service = $service;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
-    {
-        return [
-            new TwigFunction('render_widget', [$this, 'renderWidget'], ['is_safe' => ['html']]),
-        ];
     }
 
     /**
@@ -47,12 +35,12 @@ class WidgetExtension extends AbstractExtension
     public function renderWidget($widget, array $options = [])
     {
         if (!($widget instanceof WidgetInterface) && !\is_string($widget)) {
-            throw new InvalidArgumentException('Widget must either implement WidgetInterface or be a string');
+            throw new \InvalidArgumentException('Widget must either implement WidgetInterface or be a string');
         }
 
         if (\is_string($widget)) {
             if (!$this->service->hasWidget($widget)) {
-                throw new InvalidArgumentException(sprintf('Unknown widget "%s" requested', $widget));
+                throw new \InvalidArgumentException(sprintf('Unknown widget "%s" requested', $widget));
             }
 
             $widget = $this->service->getWidget($widget);

@@ -10,8 +10,9 @@
 namespace App\Tests\Validator\Constraints;
 
 use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
+use App\Timesheet\LockdownService;
 use App\Validator\Constraints\TimesheetLockdown;
 use App\Validator\Constraints\TimesheetLockdownValidator;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -46,15 +47,17 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         );
 
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new TimesheetConfiguration($loader, [
-            'rules' => [
-                'lockdown_period_start' => $start,
-                'lockdown_period_end' => $end,
-                'lockdown_grace_period' => $grace,
-            ],
+        $config = new SystemConfiguration($loader, [
+            'timesheet' => [
+                'rules' => [
+                    'lockdown_period_start' => $start,
+                    'lockdown_period_end' => $end,
+                    'lockdown_grace_period' => $grace,
+                ],
+            ]
         ]);
 
-        return new TimesheetLockdownValidator($auth, $config);
+        return new TimesheetLockdownValidator($auth, new LockdownService($config));
     }
 
     public function testConstraintIsInvalid()

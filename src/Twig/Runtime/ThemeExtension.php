@@ -9,37 +9,40 @@
 
 namespace App\Twig\Runtime;
 
+use App\Entity\User;
 use App\Event\ThemeEvent;
 use App\Event\ThemeJavascriptTranslationsEvent;
-use App\Security\CurrentUser;
+use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Twig\Environment;
 use Twig\Extension\RuntimeExtensionInterface;
 
-final class ThemeEventExtension implements RuntimeExtensionInterface
+final class ThemeExtension implements RuntimeExtensionInterface
 {
     /**
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
-    /**
-     * @var CurrentUser
-     */
-    private $user;
 
-    public function __construct(EventDispatcherInterface $dispatcher, CurrentUser $user)
+    public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->eventDispatcher = $dispatcher;
-        $this->user = $user;
     }
 
     /**
+     * @param Environment $environment
      * @param string $eventName
      * @param mixed|null $payload
      * @return ThemeEvent
      */
-    public function trigger(string $eventName, $payload = null): ThemeEvent
+    public function trigger(Environment $environment, string $eventName, $payload = null): ThemeEvent
     {
-        $themeEvent = new ThemeEvent($this->user->getUser(), $payload);
+        /** @var AppVariable $app */
+        $app = $environment->getGlobals()['app'];
+        /** @var User $user */
+        $user = $app->getUser();
+
+        $themeEvent = new ThemeEvent($user, $payload);
 
         if ($this->eventDispatcher->hasListeners($eventName)) {
             $this->eventDispatcher->dispatch($themeEvent, $eventName);

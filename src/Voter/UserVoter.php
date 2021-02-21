@@ -10,14 +10,16 @@
 namespace App\Voter;
 
 use App\Entity\User;
+use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
  * A voter to check permissions on user profiles.
  */
-class UserVoter extends AbstractVoter
+final class UserVoter extends Voter
 {
-    public const ALLOWED_ATTRIBUTES = [
+    private const ALLOWED_ATTRIBUTES = [
         'view',
         'edit',
         'roles',
@@ -28,6 +30,13 @@ class UserVoter extends AbstractVoter
         'api-token',
         'hourly-rate',
     ];
+
+    private $permissionManager;
+
+    public function __construct(RolePermissionManager $permissionManager)
+    {
+        $this->permissionManager = $permissionManager;
+    }
 
     /**
      * @param string $attribute
@@ -66,8 +75,10 @@ class UserVoter extends AbstractVoter
                 return false;
             }
 
-            return $this->hasRolePermission($user, 'delete_user');
-        } elseif ($attribute === 'password') {
+            return $this->permissionManager->hasRolePermission($user, 'delete_user');
+        }
+
+        if ($attribute === 'password') {
             if (!$subject->isInternalUser()) {
                 return false;
             }
@@ -84,6 +95,6 @@ class UserVoter extends AbstractVoter
 
         $permission .= '_profile';
 
-        return $this->hasRolePermission($user, $permission);
+        return $this->permissionManager->hasRolePermission($user, $permission);
     }
 }

@@ -22,6 +22,8 @@ PHP 8 compatibility forced to upgrade MANY libraries:
 ## [1.13](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
 
 - Deprecated `now` variable in export templates: create it yourself with `{% set now = create_date('now', app.user) %}`
+- Changed invoice filename generation (check if you use cronjob for invoices)
+- **BC break**: duration entered as plain numbers will now be treated as decimal duration in hours instead of seconds
 
 ## [1.12](https://github.com/kevinpapst/kimai2/releases/tag/1.12)
 
@@ -35,7 +37,7 @@ PHP 8 compatibility forced to upgrade MANY libraries:
 - Sessions are now stored in the database (all users have to re-login after upgrade)
 - New permissions: `lockdown_grace_timesheet`, `lockdown_override_timesheet`, `view_all_data`
 - Fixed team permissions on user queries: depending on your previous team & permission setup your users might see less data (SUPER_ADMINS see all data, but new: ADMINS only see all data if they own the `view_all_data` permission)
-- Markdown does not support headings any more, text like `# foo` is not converted to `<h1 id="foo">foo</h1>` anymore
+- Markdown does not support headings anymore, text like `# foo` is not converted to `<h1 id="foo">foo</h1>` anymore
 
 ### Developer
 

@@ -18,8 +18,6 @@ fos_rest:
         enabled: true
         map_exception_codes: true
         serializer_error_renderer: true
-        serialize_exceptions: false
-        exception_listener: false
         codes:
             'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': 400
             'App\Validator\ValidationFailedException': 400

@@ -51,7 +51,7 @@ class Tag
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=100, allowEmptyString=false)
+     * @Assert\Length(min=2, max=100, allowEmptyString=false, normalizer="trim")
      * @Assert\Regex(pattern="/,/",match=false,message="Tag name cannot contain comma")
      */
     private $name;
@@ -77,7 +77,7 @@ class Tag
         return $this->id;
     }
 
-    public function setName(string $tagName): Tag
+    public function setName(?string $tagName): Tag
     {
         $this->name = $tagName;
 

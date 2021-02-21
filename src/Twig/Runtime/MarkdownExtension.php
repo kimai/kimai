@@ -7,46 +7,40 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Twig;
+namespace App\Twig\Runtime;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Utils\Markdown;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
+use Twig\Extension\RuntimeExtensionInterface;
 
-/**
- * A twig extension to handle markdown content.
- */
-final class MarkdownExtension extends AbstractExtension
+final class MarkdownExtension implements RuntimeExtensionInterface
 {
     /**
      * @var Markdown
      */
     private $markdown;
     /**
-     * @var TimesheetConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
-
     /**
-     * @param Markdown $parser
+     * @var bool|null
      */
-    public function __construct(Markdown $parser, TimesheetConfiguration $configuration)
+    private $markdownEnabled;
+
+    public function __construct(Markdown $parser, SystemConfiguration $configuration)
     {
         $this->markdown = $parser;
         $this->configuration = $configuration;
     }
 
-    /**
-     * @return TwigFilter[]
-     */
-    public function getFilters()
+    private function isMarkdownEnabled(): bool
     {
-        return [
-            new TwigFilter('md2html', [$this, 'markdownToHtml'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
-            new TwigFilter('desc2html', [$this, 'timesheetContent'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
-            new TwigFilter('comment2html', [$this, 'commentContent'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
-        ];
+        if (null === $this->markdownEnabled) {
+            $this->markdownEnabled = $this->configuration->isTimesheetMarkdownEnabled();
+        }
+
+        return $this->markdownEnabled;
     }
 
     /**
@@ -66,7 +60,7 @@ final class MarkdownExtension extends AbstractExtension
             $content = trim(substr($content, 0, 100)) . ' &hellip;';
         }
 
-        if ($this->configuration->isMarkdownEnabled()) {
+        if ($this->isMarkdownEnabled()) {
             $content = $this->markdown->toHtml($content, false);
         } elseif ($fullLength) {
             $content = '<p>' . nl2br($content) . '</p>';
@@ -87,7 +81,7 @@ final class MarkdownExtension extends AbstractExtension
             return '';
         }
 
-        if ($this->configuration->isMarkdownEnabled()) {
+        if ($this->isMarkdownEnabled()) {
             return $this->markdown->toHtml($content, false);
         }
 

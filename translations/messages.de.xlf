@@ -84,6 +84,10 @@
         <source>sum.total</source>
         <target>Gesamt</target>
       </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Das Formular wurde geändert. Bitte klicken Sie "Speichern" um die Änderungen zu sichern oder "Schließen" um abzubrechen.</target>
+      </trans-unit>
       <!--
               Login / Security
             -->
@@ -547,6 +551,10 @@
       <trans-unit id="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
         <target>Dezimal Format für Export nutzen</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Browser Titel aktualisieren</target>
       </trans-unit>
       <!--
               User timesheet calendar

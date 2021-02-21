@@ -232,14 +232,16 @@
             <ul class="dropdown-menu dropdown-menu-right">
                 {%- apply spaceless -%}
                     {%- for icon,values in actions  %}
-                        {% if icon == 'divider' and values is null %}
+                        {% if 'divider' in icon and values is null %}
                             {% if not loop.last and divider is same as (false) %}
                                 <li class="divider"></li>
                             {% endif %}
                             {% set divider = true %}
                         {% else %}
                             {% if values is iterable %}
-                                {% set values = values|merge({'title': icon|trans({}, 'actions')}) %}
+                                {% if values['title'] is not defined %}
+                                    {% set values = values|merge({'title': icon|trans({}, 'actions')}) %}
+                                {% endif %}
                             {% else %}
                                 {% set values = {'url': values, 'title': icon|trans({}, 'actions')} %}
                             {% endif %}
@@ -301,6 +303,7 @@
                 {% set url = '#' %}
             {% endif %}
         {% else %}
+            {% set icon = values.icon ?? icon %}
             {% set disabled = values.disabled ?? false %}
             {% set url = values.url ?? '#' %}
             {% set onclick = values.onclick ?? null %}
@@ -429,26 +432,27 @@
         {% endif %}
         <tbody>
         {% for team in teams|sort((a, b) => a.name <=> b.name) %}
+            {% set users = team.users|filter(u => u.enabled) %}
+            {% set userTeamCount = users|length %}
             <tr{% if is_granted('edit', team) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_team_member', {'id': team.id}) }}"{% endif %}>
                 <td>
                     {{ team.name }}
                 </td>
                 <td class="avatars">
-                    {% set userTeamCount = team.users|length %}
                     {{ macro.user_avatar(team.teamlead, ('label.teamlead'|trans ~ ': ' ~ team.teamlead.displayName), 'teamlead') }}
                     {% set teamHiddenId = 'team_' ~ team.id ~ '_hiddenUser' ~ random() %}
                     {% set counter = 0  %}
-                    {% for user in team.users %}
+                    {% for user in users %}
                         {% if user != team.teamlead %}
                             {{ macro.user_avatar(user) }}
                             {% set counter = counter + 1 %}
                         {% endif %}
-                        {% if userTeamCount > 5 and counter == 4 and not loop.last %}
+                        {% if userTeamCount > 5 and counter == 4 and loop.index != userTeamCount %}
                             <a href="#" onclick="$('#{{ teamHiddenId }}').toggleClass('hidden');$(this).hide();return false;" class="badge">{{ 'label.plus_more'|trans({'%count%': (userTeamCount - 5)}) }}</a>
                             <span class="hidden" id="{{ teamHiddenId }}">
                             {% set counter = counter + 1 %}
                         {% endif %}
-                        {% if userTeamCount > 5 and counter != 4 and loop.last %}
+                        {% if userTeamCount > 5 and counter != 4 and loop.index == userTeamCount %}
                             </span>
                         {% endif %}
                     {% endfor %}

@@ -31,17 +31,30 @@ class WidgetRepository
     /**
      * @var array
      */
-    private $definitions = [];
+    private $definitions;
+    /**
+     * @var array
+     */
+    private $customDefinition;
 
     public function __construct(TimesheetRepository $repository, array $widgets)
     {
         $this->repository = $repository;
-        $this->definitions = array_merge($this->getDefaultWidgets(), $widgets);
+        $this->customDefinition = $widgets;
+    }
+
+    private function getDefinedWidgets(): array
+    {
+        if (null === $this->definitions) {
+            $this->definitions = array_merge($this->getDefaultWidgets(), $this->customDefinition);
+        }
+
+        return $this->definitions;
     }
 
     public function has(string $id): bool
     {
-        return isset($this->definitions[$id]) || isset($this->widgets[$id]);
+        return isset($this->getDefinedWidgets()[$id]) || isset($this->widgets[$id]);
     }
 
     public function registerWidget(WidgetInterface $widget): WidgetRepository
@@ -64,7 +77,7 @@ class WidgetRepository
         }
 
         // this code should ONLY be reached for internal (pre-registered) widgets
-        $this->registerWidget($this->create($id, $this->definitions[$id]));
+        $this->registerWidget($this->create($id, $this->getDefinedWidgets()[$id]));
 
         return $this->widgets[$id];
     }

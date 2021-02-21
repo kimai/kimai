@@ -9,7 +9,7 @@
 
 namespace App\Timesheet;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
@@ -20,15 +20,15 @@ final class TrackingModeService
      */
     private $modes = [];
     /**
-     * @var TimesheetConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
 
     /**
-     * @param TimesheetConfiguration $configuration
+     * @param SystemConfiguration $configuration
      * @param TrackingModeInterface[] $modes
      */
-    public function __construct(TimesheetConfiguration $configuration, iterable $modes)
+    public function __construct(SystemConfiguration $configuration, iterable $modes)
     {
         $this->configuration = $configuration;
         $this->modes = $modes;
@@ -44,7 +44,7 @@ final class TrackingModeService
 
     public function getActiveMode(): TrackingModeInterface
     {
-        $trackingMode = $this->configuration->getTrackingMode();
+        $trackingMode = $this->configuration->getTimesheetTrackingMode();
 
         foreach ($this->getModes() as $mode) {
             if ($mode->getId() === $trackingMode) {

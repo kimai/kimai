@@ -10,11 +10,25 @@
 namespace App\Configuration;
 
 /**
- * @internal will be deprecated soon, use SystemConfiguration instead
+ * @deprecated since 1.13, use SystemConfiguration instead
  */
 class TimesheetConfiguration implements SystemBundleConfiguration
 {
-    use StringAccessibleConfigTrait;
+    private $configuration;
+
+    public function __construct(SystemConfiguration $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    public function find(string $key)
+    {
+        if (strpos($key, $this->getPrefix() . '.') === false) {
+            $key = $this->getPrefix() . '.' . $key;
+        }
+
+        return $this->configuration->find($key);
+    }
 
     public function getPrefix(): string
     {
@@ -23,81 +37,81 @@ class TimesheetConfiguration implements SystemBundleConfiguration
 
     public function isAllowFutureTimes(): bool
     {
-        return (bool) $this->find('rules.allow_future_times');
+        return $this->configuration->isTimesheetAllowFutureTimes();
     }
 
     public function isAllowOverlappingRecords(): bool
     {
-        return (bool) $this->find('rules.allow_overlapping_records');
+        return $this->configuration->isTimesheetAllowOverlappingRecords();
     }
 
     public function getTrackingMode(): string
     {
-        return (string) $this->find('mode');
+        return $this->configuration->getTimesheetTrackingMode();
     }
 
     public function getDefaultBeginTime(): string
     {
-        return (string) $this->find('default_begin');
+        return $this->configuration->getTimesheetDefaultBeginTime();
     }
 
     public function isMarkdownEnabled(): bool
     {
-        return (bool) $this->find('markdown_content');
+        return $this->configuration->isTimesheetMarkdownEnabled();
     }
 
     public function getActiveEntriesHardLimit(): int
     {
-        return (int) $this->find('active_entries.hard_limit');
+        return $this->configuration->getTimesheetActiveEntriesHardLimit();
     }
 
     public function getActiveEntriesSoftLimit(): int
     {
-        return (int) $this->find('active_entries.soft_limit');
+        return $this->configuration->getTimesheetActiveEntriesSoftLimit();
     }
 
     public function getDefaultRoundingDays(): string
     {
-        return (string) $this->find('rounding.default.days');
+        return $this->configuration->getTimesheetDefaultRoundingDays();
     }
 
     public function getDefaultRoundingMode(): string
     {
-        return (string) $this->find('rounding.default.mode');
+        return $this->configuration->getTimesheetDefaultRoundingMode();
     }
 
     public function getDefaultRoundingBegin(): int
     {
-        return (int) $this->find('rounding.default.begin');
+        return $this->configuration->getTimesheetDefaultRoundingBegin();
     }
 
     public function getDefaultRoundingEnd(): int
     {
-        return (int) $this->find('rounding.default.end');
+        return $this->configuration->getTimesheetDefaultRoundingEnd();
     }
 
     public function getDefaultRoundingDuration(): int
     {
-        return (int) $this->find('rounding.default.duration');
+        return $this->configuration->getTimesheetDefaultRoundingDuration();
     }
 
     public function getLockdownPeriodStart(): string
     {
-        return (string) $this->find('rules.lockdown_period_start');
+        return $this->configuration->getTimesheetLockdownPeriodStart();
     }
 
     public function getLockdownPeriodEnd(): string
     {
-        return (string) $this->find('rules.lockdown_period_end');
+        return $this->configuration->getTimesheetLockdownPeriodEnd();
     }
 
     public function getLockdownGracePeriod(): string
     {
-        return (string) $this->find('rules.lockdown_grace_period');
+        return $this->configuration->getTimesheetLockdownGracePeriod();
     }
 
     public function isLockdownActive(): bool
     {
-        return !empty($this->find('rules.lockdown_period_start')) && !empty($this->find('rules.lockdown_period_end'));
+        return $this->configuration->isTimesheetLockdownActive();
     }
 }

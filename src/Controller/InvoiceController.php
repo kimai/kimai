@@ -251,12 +251,15 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/template", name="admin_invoice_template", methods={"GET", "POST"})
+     * @Route(path="/template/{page}", requirements={"page": "[1-9]\d*"}, defaults={"page": 1}, name="admin_invoice_template", methods={"GET", "POST"})
      * @Security("is_granted('manage_invoice_template')")
      */
-    public function listTemplateAction(): Response
+    public function listTemplateAction(int $page): Response
     {
-        $templates = $this->templateRepository->getPagerfantaForQuery(new BaseQuery());
+        $query = new BaseQuery();
+        $query->setPage($page);
+
+        $templates = $this->templateRepository->getPagerfantaForQuery($query);
 
         return $this->render('invoice/templates.html.twig', [
             'entries' => $templates,
@@ -405,6 +408,7 @@ final class InvoiceController extends AbstractController
             'action' => $this->generateUrl('invoice', []),
             'method' => 'GET',
             'include_user' => $this->isGranted('view_other_timesheet'),
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'attr' => [
                 'id' => 'invoice-print-form'
             ],

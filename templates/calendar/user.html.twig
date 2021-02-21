@@ -9,7 +9,7 @@
     <div class="row">
         {% set hasDragAndDrop = (dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) %}
         {% if hasDragAndDrop %}
-            <div class="hidden-xs col-sm-5 col-md-4 col-lg-3">
+            <div class="hidden-xs col-sm-5 col-md-4 col-lg-3 no-print">
                 {% for source in dragAndDrop|filter(s => s.entries|length > 0) %}
                     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
                         {% block box_title %}{{ source.title|trans }}{% endblock %}
@@ -32,7 +32,7 @@
             </div>
         {% endif %}
 
-        <div class="col-xs-12 {% if hasDragAndDrop %}col-sm-7 col-md-8 col-lg-9{% endif %}">
+        <div class="col-xs-12 {% if hasDragAndDrop %}col-sm-7 col-md-8 col-lg-9 col-print-12{% endif %}">
             {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
                 {% block box_body_class %}no-padding{% endblock %}
                 {% block box_body %}
@@ -181,7 +181,6 @@
             });
         };
 
-
         document.addEventListener('kimai.initialized', function(event) {
             // prevent multiple open popovers
             jQuery('html').on('click', function(e) {
@@ -215,6 +214,8 @@
                     right : 'month,agendaWeek,agendaDay'
                 },
                 eventLimit: {{ config.dayLimit }},
+                weekNumbersWithinDays: true,
+                weekNumberCalculation: 'ISO',
                 weekNumbers: {% if config.showWeekNumbers %}true{% else %}false{% endif %},
                 allDaySlot: false,
                 navLinks: true,
@@ -229,7 +230,8 @@
                 height: 'auto',
                 nowIndicator: true,
                 now: '{{ now|date_format('c') }}',
-                timezone: '{{ app.user.preferenceValue("timezone") }}',
+                {# see https://github.com/kevinpapst/kimai2/issues/2155 #}
+                timezone: '{{ app.user.timezone == 'UTC' ? 'GMT' : app.user.timezone }}',
                 weekends: {% if config.showWeekends %}true{% else %}false{% endif %},
                 businessHours: {
                     dow: [{{ config.businessDays|join(',') }}],

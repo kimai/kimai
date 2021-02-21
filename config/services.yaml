@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: ar|cs|de|de_CH|da|en|eo|es|eu|fi|fr|he|hu|it|ja|ko|nl|pl|pt_BR|ro|ru|sk|sv|tr|vi|zh_CN
+    app_locales: ar|cs|da|de|de_AT|de_CH|en|eo|es|eu|fi|fr|he|hu|it|ja|ko|nl|pl|pt|pt_BR|ro|ru|sk|sv|tr|vi|zh_CN
 
 services:
     # default configuration for services in *this* file
@@ -49,18 +49,6 @@ services:
     App\Configuration\LanguageFormattings:
         arguments: ['%kimai.languages%']
 
-    App\Configuration\TimesheetConfiguration:
-        arguments:
-            $settings: '%kimai.timesheet%'
-
-    App\Configuration\CalendarConfiguration:
-        arguments:
-            $settings: '%kimai.calendar%'
-
-    App\Configuration\FormConfiguration:
-        arguments:
-            $settings: '%kimai.defaults%'
-
     App\Configuration\SystemConfiguration:
         arguments:
             $settings: '%kimai.config%'
@@ -93,6 +81,9 @@ services:
     App\Utils\FileHelper:
         arguments:
             $dataDir: '%kimai.data_dir%'
+
+    App\API\Serializer\ValidationFailedExceptionErrorHandler:
+        arguments: ['@translator.default', '@fos_rest.serializer.flatten_exception_handler']
 
     # ================================================================================
     # DATABASE
