@@ -48,7 +48,7 @@ jobs:
             -   name: Run migrations on SQLite
                 run: |
                     bin/console doctrine:database:create -n
-                    bin/console doctrine:migrations:sync-metadata-storage -n
+#                    bin/console doctrine:migrations:sync-metadata-storage -n
                     bin/console doctrine:migrations:migrate -n
                     bin/console doctrine:migrations:migrate first -n
                 env:
