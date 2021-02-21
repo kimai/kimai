@@ -6,10 +6,10 @@ on:
             - master
 jobs:
     tests:
-        runs-on: ubuntu-latest
+        runs-on: "ubuntu-20.04"
         strategy:
             matrix:
-                php: ['7.3']
+                php: ['7.4']
 
         name: Coverage - PHP ${{ matrix.php }}
         steps:
