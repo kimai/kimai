@@ -20,7 +20,6 @@
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.2",
         "composer/package-versions-deprecated": "^1.8",
-        "doctrine/annotations": "1.11.2",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
@@ -159,6 +158,7 @@
             "@kimai:tests-integration"
         ],
         "kimai:code-lint":  [
+            "composer validate --strict",
             "bin/console lint:yaml config --parse-tags",
             "bin/console lint:twig templates --show-deprecations",
             "bin/console lint:xliff translations",
