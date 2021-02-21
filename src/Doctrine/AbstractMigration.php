@@ -31,6 +31,19 @@ abstract class AbstractMigration extends BaseAbstractMigration
         return 'kimai2_' . $name;
     }
 
+    public function isTransactional(): bool
+    {
+        if ($this->isPlatformSqlite()) {
+            // does fail if we use transactions, as tables are re-created and foreign keys would fail
+            return false;
+        }
+
+        return false;
+
+        // @see https://github.com/doctrine/migrations/issues/1104
+        // return true;
+    }
+
     /**
      * Whether we should deactivate foreign key support for SQLite.
      * This is required, if columns are changed.

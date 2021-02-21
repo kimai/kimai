@@ -31,16 +31,6 @@ final class Version20200125123942 extends AbstractMigration
         return false;
     }
 
-    public function isTransactional(): bool
-    {
-        if ($this->isPlatformSqlite()) {
-            // does fail if we use transactions, as tables are re-created and foreign keys would fail
-            return false;
-        }
-
-        return true;
-    }
-
     public function up(Schema $schema): void
     {
         $users = $schema->getTable('kimai2_users');
