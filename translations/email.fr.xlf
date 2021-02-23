@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target>Ceci est un courriel généré automatiquement. Merci de ne pas répondre ; l’adresse ne sera pas lu.</target>
+        <target>Ceci est un courriel généré automatiquement. Merci de ne pas répondre ; l’adresse ne sera pas lue.</target>
       </trans-unit>
       <trans-unit id="registration.subject">
         <source>registration.subject</source>
