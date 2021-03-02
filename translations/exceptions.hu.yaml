@@ -1,0 +1,9 @@
+access.denied: 'Belépés megtagadva'
+http_error.description: 'Hoppá! Hiba történt.'
+http_error.suggestion: "\nEgy váratlan hiba történt, kérlek próbáld újra.\nLehetséges, hogy egy bug-ot találtál, ha a hiba nem szűnik meg miután újra próbáltad \nértesítsd a rendszergazdát\n"
+http_error.title: Hiba
+http_error_403.description: 'Az oldal hozzáférése korlátozott.'
+http_error_403.suggestion: "\nElnézést, de nincs jogosultságod az oldal megtekintéséhez.\nKérlek beszélj a rendszergazdával, ha szerinted ez egy hiba.\n"
+http_error_404.description: 'Hoppá! Az oldal nem található.'
+http_error_404.suggestion: "\nAz oldal nem található.\nVisszatérhetsz a kezdőlapra, és újra megbróbálhatod.\n"
+stacktrace: 'Egy probléma adódott'

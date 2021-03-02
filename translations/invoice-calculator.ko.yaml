@@ -1,0 +1,8 @@
+activity: '활동: 활동 당 하나의 항목'
+date: '일자: 일자 당 하나의 항목 (시작 날짜 사용)'
+default: '기본 값: 시간 기록 당 하나의 항목'
+label.invoice_calculator: '총합 계산하기'
+project: '프로젝트: 프로젝트 당 하나의 항목'
+short: '시간: 기록 요약하기, 항목의 총합'
+user: '사용자: 사용자 당 하나의 항목'
+weekly: 'Weekly: one entry per week (uses start date)'

@@ -1,0 +1,60 @@
+Ceil: '进一取整法: 开始时间, 结束时间以及持续时间都将取整处理'
+Closest: '最近值: 数学取整至最近值'
+Default: 标准：开始时间会向下取整，结束时间和持续时间会向上取整
+Floor: 'Floor: 开始时间，结束时间和持续时间会向下取整'
+Friday: 周五
+Monday: 周一
+Saturday: 周六
+Sunday: 周日
+Thursday: 周四
+Tuesday: 周二
+Wednesday: 周三
+branding: 品牌
+calendar: 日历
+first_weekday: 'First day of the week'
+form_customer: 创建客户-默认值
+form_user: 用户—默认值
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Invoices
+label.calendar.businessHours.begin: 正常工作时间的开始时间（将被高亮）
+label.calendar.businessHours.end: 正常工作时间的结束时间（将被高亮）
+label.calendar.slot_duration: '周和日查看的空隙持续时间（格式：时:分:秒）'
+label.calendar.visibleHours.begin: 可见时间范围的开始时间
+label.calendar.visibleHours.end: 可见时间范围的结束时间
+label.calendar.week_numbers: 显示周数字
+label.calendar.weekends: 显示周末
+label.invoice.number_format: 'Invoice number format'
+label.simple_form: 'Simple search'
+label.theme.autocomplete_chars: 开启自动完成需达到的最少字母数
+label.theme.branding.company: 公司
+label.theme.branding.logo: '标识 (图片链接，在登录界面替换公司)'
+label.theme.branding.mini: 小标识（折叠侧面菜单）
+label.theme.branding.title: 浏览器名称
+label.theme.markdown_content: 在描述区和评论区允许更改格式。
+label.theme.tags_create: 'Tags: use auto-complete search and allow tag creation'
+label.timesheet.active_entries.hard_limit: 允许可同时运行的时间条目数量
+label.timesheet.active_entries.soft_limit: 展示警告信息的运行时间条目数量
+label.timesheet.default_begin: 'Default start-time (not used in all timetracking modes)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 时间追踪模式
+label.timesheet.mode_default: '[默认] 开始时间和结束时间可编辑'
+label.timesheet.mode_duration_fixed_begin: '[持续时间] 可配置的固定开始时间，只有持续时间可以更改'
+label.timesheet.mode_duration_only: '[持续时间]用持续时间输入栏代替结束时间'
+label.timesheet.mode_punch: '[打卡钟] 用户可以开始或停止记录，但是不能编辑时间或持续时间'
+label.timesheet.rounding.default.begin: '开始时间以分钟取整 (0 = 不活跃)'
+label.timesheet.rounding.default.days: 取整模式适用时一周工作天数
+label.timesheet.rounding.default.duration: '持续时间以分钟取整 (0 = 不活跃)'
+label.timesheet.rounding.default.end: '结束时间以分钟取整 (0 = 不活跃)'
+label.timesheet.rounding.default.mode: 取整模式
+label.timesheet.rules.allow_future_times: 在未来允许时间条目
+label.timesheet.rules.allow_overlapping_records: 'Allow overlapping time entries'
+label.timesheet.rules.lockdown_grace_period: 'Lockdown grace period end (PHP relative date to lockdown period end)'
+label.timesheet.rules.lockdown_period_end: 'Lockdown period end (PHP relative date to now)'
+label.timesheet.rules.lockdown_period_start: 'Lockdown period start (PHP relative date to now)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 时间取整
+subtitle: 修改您的时间追踪器的全球设置
+theme: 主题
+timesheet: 时间表
+title: 设置

@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'Activitatea are access limitat, deoarece permisiunile echipei sunt setate pentru proiect și/sau pentru client.'
+team.create_default: 'Crează o echipă nouă pentru a limita accesul'
+team.project_visibility_inherited: 'Accesul la acest proiect este limitat, deoarece permisiunile echipei sunt setate pentru client.'
+team.visibility_global: 'Vizibil pentru toată lumea, deoarece încă nu a fost selectată nicio echipă.'
+team.visibility_restricted: 'Vizibil numai pentru următoarele echipe și pentru toți administratorii.'
+teams.customer_access: 'Acordă access la clienți'
+teams.project_access: 'Acordă acces la proiecte'
+teams.title: Echipe

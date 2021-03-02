@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'Met resterend budget'
+default-internal.pdf.twig: 'Met interne tarieven'
+default.pdf.twig: Standaard

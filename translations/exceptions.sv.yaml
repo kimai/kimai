@@ -1,0 +1,9 @@
+access.denied: 'Åtkomst nekad'
+http_error.description: 'Oj! Ett fel uppstod.'
+http_error.suggestion: "\nEtt oväntat fel inträffade, försök igen.\nOm problemet kvarstår efter att du försökt igen, kontakta din administratör.\nDu kan ha hittat en bugg."
+http_error.title: Fel
+http_error_403.description: "\nDen här sidan är begränsad.\n"
+http_error_403.suggestion: "\nTyvärr har du inte tillräckligt med behörigheter för att se den här sidan.\nVar vänlig och kontakta din administratör om du tycker att det här är ett fel."
+http_error_404.description: 'Oj! Sidan hittades inte'
+http_error_404.suggestion: "\nVi kunde inte hitta sidan du letade efter.\nUnder tiden kan du återvända till din dashboard och börja om.\n"
+stacktrace: 'Ett problem uppstod här'

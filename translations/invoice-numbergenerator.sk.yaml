@@ -1,0 +1,3 @@
+date: Dátum
+default: 'Configured format'
+label.invoice_number_generator: 'Generátor čísiel faktúr'

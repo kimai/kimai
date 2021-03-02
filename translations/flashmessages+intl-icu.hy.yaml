@@ -1,0 +1,13 @@
+action.delete.error: 'Entry could not be deleted: %reason%'
+action.delete.success: 'Entry was deleted'
+action.update.error: __action.update.error
+action.update.success: 'Saved changes'
+action.upload.error: 'The file could not be uploaded or saved: %reason%'
+invoice.first_template: 'Please create an invoice template first'
+timesheet.locked.warning: __timesheet.locked.warning
+timesheet.start.error: 'Time recording could not be started'
+timesheet.start.exceeded_limit: 'The limit of active time records has been reached, please stop at least one running time measurement first.'
+timesheet.start.success: 'Time recording was started'
+timesheet.stop.error: 'Time recording could not be stopped'
+timesheet.stop.success: 'Time recording was stopped'
+warning: __warning

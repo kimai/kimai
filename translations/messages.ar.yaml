@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Allowed character: A-Z and _'
+ROLE_ADMIN: مدير
+ROLE_SUPER_ADMIN: 'مسؤول النظام'
+ROLE_TEAMLEAD: 'قائد الفريق'
+ROLE_USER: المستخدم
+'This is a mandatory field': إلزامي
+action.back: رجوع
+action.close: أغلق
+action.delete: حذف
+action.edit: تعديل
+action.reset: 'اعاده تعيين'
+action.save: إحفظ
+active.entries: __active.entries
+admin_activity.short_stats: __admin_activity.short_stats
+admin_activity.title: أنشطة
+admin_customer.short_stats: __admin_customer.short_stats
+admin_customer.title: زبون
+admin_entity.delete_confirm: 'سيتم حذف هذه البيانات أيضًا! بدلاً من ذلك، يُمكنك تحديد مُدخل لِيتم نقل جميع البيانات إليه:'
+admin_invoice_template.title: 'قالب الفاتورة'
+admin_project.short_stats: __admin_project.short_stats
+admin_project.title: مشاريع
+admin_timesheet.title: 'الجداول الزمنية'
+admin_user.short_stats: __admin_user.short_stats
+admin_user.title: المستخدم
+agendaDay: Day
+agendaWeek: Week
+attachments: ملفات
+both: 'على حد سواء'
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Preview
+button.preview_print: 'Print preview'
+button.print: طباعة
+button.xlsx: Excel
+calendar.title: __calendar.title
+cancel: 'إلغاء الأمر'
+confirm: تاكيد
+confirm.delete: 'هل تريد حقًا حذفها؟'
+create: أنتج
+dashboard.all: 'جميع المستخدمين'
+dashboard.subtitle: مرحباً!
+dashboard.title: 'لوحة القيادة'
+delete.not_in_use: 'يُمكِن حذف هذا العنصر بشكلٍ آمن.'
+entryState.all: الكل
+entryState.exported: __entryState.exported
+entryState.not_exported: __entryState.not_exported
+entryState.running: نشطة
+entryState.stopped: توقف
+error.no_comments_found: 'لم تكن هناك أيّة تعليقات نُشِرت حتّى الآن.'
+error.no_entries_found: 'لا يوجد بيانات'
+export.clear_all: __export.clear_all
+export.date_copyright: __export.date_copyright
+export.document_title: __export.document_title
+export.filter: __export.filter
+export.full_list: __export.full_list
+export.mark_all: __export.mark_all
+export.page_of: __export.page_of
+export.period: __export.period
+export.subtitle: __export.subtitle
+export.summary: __export.summary
+export.title: __export.title
+help.batch_meta_fields: 'Fields that are to be updated must first be activated by clicking on the associated checkbox.'
+help.fixedRate: 'Each time record gets the same value, regardless of its duration'
+help.rate: 'السعر بالساعة الذي سيتم دفعه'
+help.rate_internal: 'التكاليف الداخلية (إذا لم يتم تحديد هذا، يتم استخدام المعدل العادي)'
+invoice.due_days: 'هدف الدفع'
+invoice.filter: __invoice.filter
+invoice.from: من
+invoice.number: 'رقم الفاتورة'
+invoice.service_date: 'تاريخ الخدمة'
+invoice.signature_customer: 'التأكيد: تاريخ / اسم العميل / التوقيع'
+invoice.signature_user: 'التأكيد: تاريخ / اسم استشاري / التوقيع'
+invoice.subtotal: 'حاصل الجمع'
+invoice.tax: ضريبة
+invoice.title: الفواتير
+invoice.to: إلى
+invoice.total: مجموع
+invoice.total_working_time: 'المدة الإجمالية'
+invoice_print: فاتورة
+label.actions: خيارات
+label.active: نشيط
+label.activity: نشاط
+label.address: عنوان
+label.alias: اسم
+label.amount: كمية
+label.api_token: 'كلمة مرور API'
+label.api_token_repeat: 'كرر كلمة مرور API'
+label.appendTags: 'Append tags'
+label.avatar: 'صورة الملف الشخصي'
+label.batch_meta_fields: 'Additional fields'
+label.begin: من
+label.billable: 'قابل للفوترة'
+label.budget: ميزانية
+label.calendar.initial_view: 'Initial calendar view'
+label.color: Color
+label.comment: تعليق
+label.company: 'اسم الشركة'
+label.contact: اتصل
+label.country: بلد
+label.create_more: 'إنشاء بيانات أخرى'
+label.currency: العملة
+label.customer: العميل
+label.date: تاريخ
+label.daterange: 'Time range'
+label.decimalDuration: 'Display duration as decimal number'
+label.description: وصف
+label.due_days: 'شروط الدفع في أيام'
+label.duration: 'المدة الزمنية'
+label.email: 'البريد الإلكتروني'
+label.end: إلى
+label.endtime: النهاية
+label.entryState: السجلات
+label.exported: Exported
+label.fax: فاكس
+label.fixedRate: 'معدل ثابت'
+label.globalsOnly: 'Only global'
+label.homepage: 'الصفحة الرئيسية'
+label.hourlyRate: بالساعة
+label.hourly_rate: بالساعة
+label.hours: ساعات
+label.id: ID
+label.invoice_bank_account: 'حساب البنك'
+label.invoice_tax_number: 'رقم ضريبة القيمة المضافة:'
+label.language: اللغة
+label.lastLogin: 'Last login'
+label.login.initial_view: 'Initial view after login'
+label.logout: الخروج
+label.mark_as_exported: 'Mark as exported'
+label.mobile: 'التليفون المحمول'
+label.my_team_projects: 'Team projects & budgets'
+label.my_teams: فرقي
+label.name: اسم
+label.number: حساب
+label.orderDate: __label.orderDate
+label.orderNumber: 'رقم الطلب'
+label.pageSize: 'حجم الصفحة'
+label.password: 'كلمه السر'
+label.password_repeat: 'اعد كلمة السر'
+label.payment_terms: 'شروط الدفع'
+label.phone: هاتف
+label.plus_more: __label.plus_more
+label.progress: Progress
+label.project: مشروع
+label.project_end: __label.project_end
+label.project_start: __label.project_start
+label.rate: معدل
+label.rate_internal: 'المعدل الداخلي'
+label.recalculate_rates: 'أعد حساب المعدلات'
+label.replaceTags: 'Replace tags'
+label.required_version: 'Compatible with'
+label.roles: وظيفة
+label.skin: Kimai-Theme
+label.starttime: ابدأ
+label.status: Status
+label.tag: الوسوم
+label.tags: الوسوم
+label.team: الفريق
+label.teamlead: 'قائد الفريق'
+label.template: قالب
+label.theme.collapsed_sidebar: 'تبديل حالة صفحة الشريط الجانبي الأيسر في صفحة (فتح أو طي)'
+label.theme.layout: 'العرض: تخطيط'
+label.timeBudget: 'الميزانية الزمنية'
+label.timesheet.daily_stats: 'Show daily stats in timesheet'
+label.timesheet.export_decimal: 'Use decimal duration in export'
+label.timezone: 'المنطقة الزمنية'
+label.title: عنوان
+label.toggle_dropdown: 'عرض القائمة'
+label.total_rate: 'السعر الكلي'
+label.unit_price: 'سعر الوحدة'
+label.user: المستخدم
+label.user_profile: ملفي
+label.username: 'اسم المستخدم'
+label.vat: ضريبة
+label.vat_id: __label.vat_id
+label.version: Version
+label.visible: مرئي
+login_required: 'إذن مفقود. إعادة التوجيه لتسجيل الدخول؟'
+menu.admin: الادارة
+menu.admin_activity: أنشطة
+menu.admin_customer: زبون
+menu.admin_project: مشاريع
+menu.admin_team: الفِرق
+menu.admin_timesheet: 'الجداول الزمنية'
+menu.admin_user: المستخدم
+menu.doctor: طبيب
+menu.export: تصدير
+menu.homepage: 'لوحة القيادة'
+menu.invoice: الفواتير
+menu.logout: الخروج
+menu.plugin: الإضافات
+menu.reporting: الإبلاغ
+menu.system: النظام
+menu.system_configuration: الإعدادات
+menu.tags: الوسوم
+menu.timesheet: أوقاتي
+modal.columns.description: 'عند حفظ الخانات غير المحددة سيتم إخفاؤها وسيتم تخزين هذا الإعداد في ملف تعريف ارتباط المتصفح. إذا قمت بحذف ملفات تعريف الارتباط الخاصة بك ، سيتم عكس الإعدادات.'
+modal.columns.title: 'تغيير عرض الخانة'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Month
+more.info.link: 'معلومات أخرى'
+my.profile: 'ملف التعريف الخاص بي'
+'no': لا
+placeholder.type_message: 'اكتب رسالتك...'
+profile.about_me: عني
+profile.api-token: API
+profile.first_entry: 'العمل منذ'
+profile.password: 'كلمه السر'
+profile.preferences: تفضيلات
+profile.registration_date: __profile.registration_date
+profile.roles: الأدوار
+profile.settings: 'الملف الشخصي'
+profile.teams: __profile.teams
+profile.title: 'ملف تعريفي للمستخدم'
+rates.empty: 'لم يتم تكوين أي رسوم حتى الآن.'
+rates.title: رسوم
+recent.activities: __recent.activities
+recent.activities.format: '%activity% في %project% ل %customer%'
+search: بحث
+stats.activeRecordings: 'سجلات نشطة'
+stats.activityTotal: 'عدد الأنشطة'
+stats.amountMonth: 'الإيرادات هذا الشهر'
+stats.amountToday: 'الإيرادات اليوم'
+stats.amountTotal: 'إجمالي الإيرادات'
+stats.amountWeek: 'الإيرادات هذا الأسبوع'
+stats.amountYear: 'الإيرادات هذا العام'
+stats.customerTotal: 'عدد العملاء'
+stats.durationMonth: 'ساعات العمل هذا الشهر'
+stats.durationToday: 'ساعات العمل اليوم'
+stats.durationTotal: 'مجموع ساعات العمل'
+stats.durationWeek: 'ساعات العمل هذا الأسبوع'
+stats.durationYear: 'ساعات العمل هذا العام'
+stats.percentUsed: __stats.percentUsed
+stats.percentUsedLeft: __stats.percentUsedLeft
+stats.projectTotal: 'عدد المشاريع'
+stats.userActiveMonth: 'المستخدمون النشطون هذا الشهر'
+stats.userActiveToday: 'المستخدمون النشطون اليوم'
+stats.userActiveTotal: 'المستخدمين النشطين على الإطلاق'
+stats.userActiveWeek: 'المستخدمون النشطون هذا الأسبوع'
+stats.userActiveYear: 'المستخدمون النشطون هذا العام'
+stats.userTotal: 'عدد المستخدمين'
+stats.workingTimeMonth: __stats.workingTimeMonth
+stats.workingTimeToday: __stats.workingTimeToday
+stats.workingTimeWeek: __stats.workingTimeWeek
+stats.workingTimeYear: __stats.workingTimeYear
+stats.yourWorkingHours: 'My working hours'
+status.new: __status.new
+status.paid: __status.paid
+status.pending: __status.pending
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Time Tracking'
+timesheet.all: 'عرض كل السجلات'
+timesheet.edit: 'تعديل السجل'
+timesheet.start: 'إنشاء سجل زمني جديد'
+timesheet.title: أوقاتي
+update_multiple: '%action% %count% مُدخل؟'
+upload: رفع
+user_permissions.title: 'User permissions'
+user_role.title: __user_role.title
+'yes': نعم

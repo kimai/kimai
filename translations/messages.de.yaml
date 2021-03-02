@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Erlaubte Zeichen: A-Z und _'
+ROLE_ADMIN: Administrator
+ROLE_SUPER_ADMIN: System-Admin
+ROLE_TEAMLEAD: Teamleiter
+ROLE_USER: Benutzer
+'This is a mandatory field': Pflichtfeld
+action.back: Zurück
+action.close: Schließen
+action.delete: Löschen
+action.edit: Bearbeiten
+action.reset: Zurücksetzen
+action.save: Speichern
+active.entries: 'Ihre aktiven Zeitmessungen'
+admin_activity.short_stats: "\nMomentan existieren für die Tätigkeit %activity% im Projekt %project% für den Kunden %customer%\ninsgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.\n"
+admin_activity.title: Tätigkeiten
+admin_customer.short_stats: "\nMomentan existieren für den Kunden %customer% insgesamt %project% Projekte mit %activity%\nTätigkeiten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen.\n"
+admin_customer.title: Kunden
+admin_entity.delete_confirm: "\nDiese Daten werden ebenfalls mit gelöscht!\nAlternativ können Sie einen Eintrag auswählen, auf den alle existierenden Daten umgebucht werden:\n"
+admin_invoice_template.title: Rechnungsvorlagen
+admin_project.short_stats: "\nMomentan existieren für das Projekt %project% des Kunden %customer% insgesamt %activities%\nTätigkeiten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.\n"
+admin_project.title: Projekte
+admin_timesheet.title: Zeiterfassung
+admin_user.short_stats: "\nMomentan existieren für den Benutzer %user% insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.\n"
+admin_user.title: Benutzer
+agendaDay: Tag
+agendaWeek: Woche
+attachments: Dateien
+both: Beides
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Vorschau
+button.preview_print: 'Druck Vorschau'
+button.print: Drucken
+button.xlsx: Excel
+calendar.title: Kalender
+cancel: Abbrechen
+confirm: Bestätigen
+confirm.delete: 'Wollen Sie das wirklich löschen?'
+create: Erstellen
+dashboard.all: 'Alle Benutzer'
+dashboard.subtitle: Willkommen!
+dashboard.title: Dashboard
+delete.not_in_use: 'Dieses Element kann sicher gelöscht werden.'
+entryState.all: Alle
+entryState.exported: Abgerechnet
+entryState.not_exported: Offen
+entryState.running: Laufende
+entryState.stopped: Beendete
+error.no_comments_found: 'Es wurden noch keine Kommentare abgegeben.'
+error.no_entries_found: 'Anhand ihrer ausgewählten Filter wurden keine Einträge gefunden.'
+export.clear_all: 'Alle angezeigten Einträge als offen markieren?'
+export.date_copyright: 'Erstellt %date% mit %kimai%'
+export.document_title: 'Export von Zeiten'
+export.filter: 'Daten für Export filtern'
+export.full_list: 'Vollständige Auflistung'
+export.mark_all: 'Alle angezeigten Einträge als abgerechnet markieren?'
+export.page_of: 'Seite %page% von %pages%'
+export.period: Zeitraum
+export.subtitle: 'Exportieren Sie aufgezeichnete Zeiten in verschiedene Zielformate'
+export.summary: Zusammenfassung
+export.title: Export
+help.batch_meta_fields: 'Felder die aktualisiert werden sollen, müssen zunächst durch einen Klick auf die zugehörige Checkbox freigeschaltet werden.'
+help.fixedRate: 'Jeder Zeiteintrag bekommt den gleichen Wert, unabhängig von seiner Dauer'
+help.rate: 'Zu berechnender Stundensatz'
+help.rate_internal: 'Interner Verrechnungswert (wenn dieser nicht angegeben ist, wird der normale Satz verwendet)'
+invoice.due_days: Zahlungsziel
+invoice.filter: 'Rechnungsdaten filtern'
+invoice.from: Von
+invoice.number: Rechnungsnummer
+invoice.service_date: Leistungsdatum
+invoice.signature_customer: 'Leistungsbestätigung: Datum / Name Kunde / Unterschrift'
+invoice.signature_user: 'Leistungsbestätigung: Datum / Name Berater / Unterschrift'
+invoice.subtotal: 'Rechnungsbetrag (netto)'
+invoice.tax: Umsatzsteuer
+invoice.title: Rechnungen
+invoice.to: An
+invoice.total: Rechnungsendbetrag
+invoice.total_working_time: Gesamtdauer
+invoice_print: Rechnung
+label.actions: Aktionen
+label.active: Aktiv
+label.activity: Tätigkeit
+label.address: Adresse
+label.alias: Name
+label.amount: Anzahl
+label.api_token: 'API Passwort'
+label.api_token_repeat: 'API Passwort wiederholen'
+label.appendTags: 'Schlagworte hinzufügen'
+label.avatar: Profilbild
+label.batch_meta_fields: 'Zusätzliche Felder'
+label.begin: Von
+label.billable: Abrechenbar
+label.budget: Budget
+label.calendar.initial_view: 'Initiale Darstellung des Kalenders'
+label.color: Farbe
+label.comment: Kommentar
+label.company: Unternehmensbezeichnung
+label.contact: Kontakt
+label.country: Land
+label.create_more: 'Weitere Einträge erstellen'
+label.currency: Währung
+label.customer: Kunde
+label.date: Datum
+label.daterange: Zeitraum
+label.decimalDuration: 'Dauer als Dezimalzahl anzeigen'
+label.description: Beschreibung
+label.due_days: 'Zahlungsziel in Tagen'
+label.duration: Dauer
+label.email: E-Mail
+label.end: Bis
+label.endtime: Ende
+label.entryState: Zeiten
+label.exported: Exportiert
+label.fax: Fax
+label.fixedRate: Festbetrag
+label.globalsOnly: 'Nur globale'
+label.homepage: Homepage
+label.hourlyRate: Stundenlohn
+label.hourly_rate: Stundenlohn
+label.hours: Stunden
+label.id: ID
+label.invoice_bank_account: Bankverbindung
+label.invoice_tax_number: 'USt-IdNr.:'
+label.language: Sprache
+label.lastLogin: 'Letzte Anmeldung'
+label.login.initial_view: 'Initiale Ansicht nach Anmeldung'
+label.logout: Abmelden
+label.mark_as_exported: 'Als exportiert markieren'
+label.mobile: Handy
+label.my_team_projects: 'Team Projekte & Budgets'
+label.my_teams: 'Meine Teams'
+label.name: Name
+label.number: Kundennummer
+label.orderDate: Bestelldatum
+label.orderNumber: Bestellnummer
+label.pageSize: Ergebnisse
+label.password: Passwort
+label.password_repeat: 'Passwort wiederholen'
+label.payment_terms: Zahlungsinformationen
+label.phone: Telefon
+label.plus_more: '+%count% weitere'
+label.progress: Fortschritt
+label.project: Projekt
+label.project_end: 'Projekt Ende'
+label.project_start: 'Projekt Start'
+label.rate: Lohn
+label.rate_internal: 'Interner Lohn'
+label.recalculate_rates: 'Preise neu berechnen'
+label.replaceTags: 'Schlagworte ersetzen'
+label.required_version: 'Kompatibel mit'
+label.roles: Rolle
+label.skin: 'Darstellung: Farben'
+label.starttime: Beginn
+label.status: Status
+label.tag: Schlagworte
+label.tags: Schlagworte
+label.team: Team
+label.teamlead: Teamleiter
+label.template: Vorlage
+label.theme.collapsed_sidebar: 'Minimiert die linke Navigationsleiste'
+label.theme.layout: 'Darstellung: Layout'
+label.timeBudget: Zeit-Budget
+label.timesheet.daily_stats: 'Tägliche Statistiken im Timesheet anzeigen'
+label.timesheet.export_decimal: 'Dezimal Format für Export nutzen'
+label.timezone: Zeitzone
+label.title: Titel
+label.toggle_dropdown: 'Menü anzeigen'
+label.total_rate: Gesamtpreis
+label.unit_price: Einzelbetrag
+label.user: Benutzer
+label.user_profile: 'Mein Profil'
+label.username: Benutzer
+label.vat: Umsatzsteuer
+label.vat_id: Umsatzsteuer-ID
+label.version: Version
+label.visible: Sichtbar
+login_required: 'Fehlende Berechtigung. Zur Anmeldung wechseln?'
+menu.admin: Administration
+menu.admin_activity: Tätigkeiten
+menu.admin_customer: Kunden
+menu.admin_project: Projekte
+menu.admin_team: Teams
+menu.admin_timesheet: Zeiterfassung
+menu.admin_user: Benutzer
+menu.doctor: Doktor
+menu.export: Export
+menu.homepage: Dashboard
+menu.invoice: Rechnungen
+menu.logout: Abmelden
+menu.plugin: Erweiterungen
+menu.reporting: Berichte
+menu.system: System
+menu.system_configuration: Einstellungen
+menu.tags: Schlagworte
+menu.timesheet: 'Meine Zeiten'
+modal.columns.description: 'Beim Speichern werden die nicht ausgewählten Spalten ausgeblendet und diese Einstellungen in einem Browser Cookie hinterlegt. Sollten Sie Ihre Cookies löschen, werden die Einstellungen rückgängig gemacht.'
+modal.columns.title: 'Ändere Spalten-Sichtbarkeit'
+modal.dirty: 'Das Formular wurde geändert. Bitte klicken Sie "Speichern" um die Änderungen zu sichern oder "Schließen" um abzubrechen.'
+month: Monat
+more.info.link: 'Mehr Infos'
+my.profile: 'Mein Profil'
+'no': Nein
+placeholder.type_message: 'Schreibe Deine Nachricht...'
+profile.about_me: 'Über mich'
+profile.api-token: API
+profile.first_entry: 'Arbeitet seit'
+profile.password: Passwort
+profile.preferences: Einstellungen
+profile.registration_date: 'Registriert am'
+profile.roles: Rollen
+profile.settings: Profil
+profile.teams: Teams
+profile.title: Benutzerprofil
+rates.empty: 'Es wurden noch keine Gebühren hinterlegt.'
+rates.title: Gebühren
+recent.activities: 'Eine ihrer letzten Tätigkeiten neustarten'
+recent.activities.format: '%activity% in %project% für %customer%'
+search: Suchen
+stats.activeRecordings: 'Aktive Zeitmessungen'
+stats.activityTotal: 'Anzahl Tätigkeiten'
+stats.amountMonth: 'Umsatz diesen Monat'
+stats.amountToday: 'Umsatz heute'
+stats.amountTotal: 'Umsatz total'
+stats.amountWeek: 'Umsatz diese Woche'
+stats.amountYear: 'Umsatz dieses Jahr'
+stats.customerTotal: 'Anzahl Kunden'
+stats.durationMonth: 'Arbeitszeit diesen Monat'
+stats.durationToday: 'Arbeitszeit heute'
+stats.durationTotal: 'Arbeitszeit total'
+stats.durationWeek: 'Arbeitszeit diese Woche'
+stats.durationYear: 'Arbeitszeit dieses Jahr'
+stats.percentUsed: '%percent%% verwendet'
+stats.percentUsedLeft: '%percent%% verwendet (noch %left% offen)'
+stats.projectTotal: 'Anzahl Projekte'
+stats.userActiveMonth: 'Aktive Benutzer diesen Monat'
+stats.userActiveToday: 'Aktive Benutzer heute'
+stats.userActiveTotal: 'Aktive Benutzer jemals'
+stats.userActiveWeek: 'Aktive Benutzer diese Woche'
+stats.userActiveYear: 'Aktive Benutzer dieses Jahr'
+stats.userTotal: 'Anzahl Benutzer'
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: 'Heute, %day%'
+stats.workingTimeWeek: 'Kalenderwoche %week%'
+stats.workingTimeYear: 'Gesamtes Jahr %year%'
+stats.yourWorkingHours: 'Meine Arbeitszeiten'
+status.new: Neu
+status.paid: Bezahlt
+status.pending: Ausstehend
+sum.total: Gesamt
+theme.update_browser_title: 'Browser Titel aktualisieren'
+time_tracking: Zeiterfassung
+timesheet.all: 'Alle Einträge anzeigen'
+timesheet.edit: 'Eintrag bearbeiten'
+timesheet.start: 'Neue Zeitmessung starten'
+timesheet.title: 'Meine Zeiten'
+update_multiple: '%action% von %count% Einträgen?'
+upload: Hochladen
+user_permissions.title: 'Benutzer Berechtigungen'
+user_role.title: 'Benutzer Rolle'
+'yes': Ja

@@ -1,0 +1,4 @@
+plugin.marketplace: 'Magasin de Kimai'
+plugin.none_installed: 'Aucune extension d''installée pour le moment.'
+plugins.subtitle: 'Les extensions permettent d''étendre les fonctionnalités de Kimai'
+plugins.title: Extensions

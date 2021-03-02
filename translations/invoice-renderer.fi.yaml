@@ -1,0 +1,19 @@
+Docx: 'Microsoft Word (Docx)'
+Html: 'HTML (tulostukseen selaimen kautta)'
+Ods: 'Open Office (Taulukkolaskenta)'
+Pdf: PDF
+Xls: 'Microsoft Excel (Xls)'
+Xlsx: 'Microsoft Excel (Xlsx)'
+company: Lasku
+default: Lasku
+default-pdf: Lasku
+freelancer: Freelancer
+help.upload: 'Huomioitavaa: olemassa olevat tiedostot korvataan. Sallitut tiedosto tyypit on: DOCX, ODS, XLSX.'
+javascript: JSON
+label.invoice_renderer: Lasku
+open-spreadsheet: Lasku
+programmatic: 'Jatko käsittelyä varten'
+spreadsheet: Lasku
+text: Teksti
+timesheet: Työajanseuranta
+xml: XML

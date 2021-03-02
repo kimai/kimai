@@ -1,0 +1,8 @@
+activity: 'Activity: one entry per activity'
+date: 'Date: one entry per day (uses start date)'
+default: 'إدخال واحد لكل قياس في الوقت نفسه (افتراضي)'
+label.invoice_calculator: 'حساب المجموع'
+project: 'Project: one entry per project'
+short: 'الساعات اضيفت - دخول واحد فقط'
+user: 'تم تجميع المستخدم - إدخال واحد لكل مستخدم'
+weekly: 'Weekly: one entry per week (uses start date)'

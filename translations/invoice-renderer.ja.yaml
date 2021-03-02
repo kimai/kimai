@@ -1,0 +1,20 @@
+Docx: 'Microsoft Word (Docx)'
+Html: 'HTML (for printing via Browser)'
+Ods: 'Open Office (Spreadsheet)'
+Pdf: PDF
+Xls: 'Microsoft Excel (Xls)'
+Xlsx: 'Microsoft Excel (Xlsx)'
+company: 企業の請求書
+default: '請求書 (デフォルト)'
+default-pdf: Invoice
+freelancer: フリーランサー
+help.upload: 'Attention: existing files will be overwritten. Allowed file types are: DOCX, ODS, XLSX.'
+javascript: JSON
+label.invoice_renderer: 請求書
+open-spreadsheet: 'Calc スプレッドシート'
+programmatic: 'For further processing'
+spreadsheet: Excel
+text: Text
+timesheet: タイムシート
+xml: XML
+export: データのエクスポート

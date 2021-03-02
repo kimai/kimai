@@ -1,0 +1,262 @@
+'Allowed character: A-Z and _': 'Dozwolone znaki: A-Z oraz _'
+ROLE_ADMIN: Administrator
+ROLE_SUPER_ADMIN: System-Admin
+ROLE_TEAMLEAD: Teamleader
+ROLE_USER: Użytkownik
+'This is a mandatory field': Obowiązkowe
+action.back: Wstecz
+action.close: Zamknij
+action.delete: Usuń
+action.edit: Edytuj
+action.reset: Resetuj
+action.save: Zapisz
+active.entries: 'Twoje aktywne pomiary czasu'
+admin_activity.short_stats: "\nObecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activities% czynności\noraz %records% wpisów czasu, które sumują się do łącznej długości %duration% .\t\t\n\t\t "
+admin_activity.title: Czynności
+admin_customer.short_stats: "\nObecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activity% czynności\noraz %records% wpisów czasu, które sumują się do łącznej długości %duration% .\n"
+admin_customer.title: Klient
+admin_entity.delete_confirm: "\nTe dane zostaną równiez usuniętę!\nAlternatywnie, możesz wybrać zapis do którego dane zostaną przesunięte:\n"
+admin_invoice_template.title: 'Wzorzec faktury'
+admin_project.short_stats: "\nObecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activities% czynności\noraz %records% wpisów czasu, które sumują się do łącznej długości %duration% .\n"
+admin_project.title: Projekty
+admin_timesheet.title: Ewidencje
+admin_user.short_stats: "\nObecnie użytkownik %user% ma %records% wpisów czasu które sumują się do łacznej długości %duration% .\n"
+admin_user.title: Użytkownik
+agendaDay: Dzień
+agendaWeek: Tydzień
+attachments: Załaczniki
+both: Obydwa
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Podgląd
+button.preview_print: 'Podgląd wydruku'
+button.print: Drukuj
+button.xlsx: Excel
+calendar.title: Kalendarz
+cancel: Anuluj
+confirm: Potwierdź
+confirm.delete: 'Czy naprawdę chcesz usunąć ?'
+create: Utwórz
+dashboard.all: 'Wszyscy użytkownicy'
+dashboard.subtitle: 'Witaj !'
+dashboard.title: Pulpit
+delete.not_in_use: 'Pozycja może zostać bezpiecznie usunięta.'
+entryState.all: Wszystkie
+entryState.exported: Odznaczone
+entryState.not_exported: Otwarte
+entryState.running: Aktywne
+entryState.stopped: Zatrzymane
+error.no_comments_found: 'Nie ma jeszcze komentarzy.'
+error.no_entries_found: 'Nie znaleziono wpisów o tych kryteriach.'
+export.clear_all: 'Oznaczyć wszystkie widoczne wpisy jako otwarte ?'
+export.date_copyright: 'Utworzono %date% za pomocą %kimai%'
+export.document_title: 'Lista wydatków'
+export.filter: 'Filtruj dane do eksportu'
+export.full_list: 'Pełna lista'
+export.mark_all: 'Oznaczyć wszystkie widoczne wpisy jako oznaczone?'
+export.page_of: 'Strona %page% z %pages%'
+export.period: Okres
+export.subtitle: 'Export ewidencji do róznych formatów'
+export.summary: Łącznie
+export.title: Export
+help.batch_meta_fields: 'Pola, które mają być aktualizowane, należy najpierw aktywować, klikając odpowiednie pole wyboru.'
+help.fixedRate: 'Za każdym razem rekord uzyskuje tę samą wartość, niezależnie od czasu jego trwania'
+help.rate: 'Stawka godzinowa do naliczenia'
+help.rate_internal: 'Koszty wewnętrzne (jeśli nie określono tego, stosuje się normalną stawkę)'
+invoice.due_days: 'Data płatności'
+invoice.filter: 'Filtruj po dacie faktury'
+invoice.from: Wystawca
+invoice.number: 'Faktura numer'
+invoice.service_date: 'Data wykonania'
+invoice.signature_customer: 'Odebrano: Data / Osoba upoważniona do odbioru / Podpis'
+invoice.signature_user: 'Wystawiono: Data /Osoba upoważniona do wystawienia / Podpis'
+invoice.subtotal: 'Suma częściowa'
+invoice.tax: Vat
+invoice.title: Faktury
+invoice.to: Odbiorca
+invoice.total: Łącznie
+invoice.total_working_time: 'Łącznie czas'
+invoice_print: Faktura
+label.actions: Działania
+label.active: Aktywny
+label.activity: Aktywność
+label.address: Adres
+label.alias: Nazwa
+label.amount: Ilość
+label.api_token: 'hasło API'
+label.api_token_repeat: 'powtórz hasło API'
+label.appendTags: 'Dodaj tagi'
+label.avatar: 'Zdjęcie profilowe'
+label.batch_meta_fields: 'Dodatkowe pola'
+label.begin: Od
+label.billable: Płatne
+label.budget: Budżet
+label.calendar.initial_view: 'Początkowy wygląd kalendarza'
+label.color: Kolor
+label.comment: Komentarz
+label.company: 'Nazwa firmy'
+label.contact: Kontakt
+label.country: Kraj
+label.create_more: 'Utwórz więcej wpisów'
+label.currency: Waluta
+label.customer: Klient
+label.date: Data
+label.daterange: 'Zakres czasu'
+label.decimalDuration: 'Wyświetlaj czas trwania jako liczbę dziesiętną'
+label.description: Opis
+label.due_days: 'Termin płatności w dniach'
+label.duration: 'Czas trwania'
+label.email: Email
+label.end: Do
+label.endtime: Koniec
+label.entryState: Wpisy
+label.exported: Wyeksportowane
+label.fax: Fax
+label.fixedRate: 'Stała stawka'
+label.globalsOnly: 'Tylko ogólne'
+label.homepage: 'Strona WWW'
+label.hourlyRate: 'Stawka godzinowa'
+label.hourly_rate: 'Stawka godzinowa'
+label.hours: Godziny
+label.id: ID
+label.invoice_bank_account: 'Konto bankowe'
+label.invoice_tax_number: 'NR NIP:'
+label.language: Język
+label.lastLogin: 'Ostatnie logowanie'
+label.login.initial_view: 'Początkowy widok po zalogowaniu'
+label.logout: Wyloguj
+label.mark_as_exported: 'Oznacz jako wyeksportowana'
+label.mobile: Tel.Komórkowy
+label.my_team_projects: 'Budżety zespołu projektowego & '
+label.my_teams: 'Moje zespoły'
+label.name: Nazwa
+label.number: Konto
+label.orderDate: 'Data zamówienia'
+label.orderNumber: 'Numer zamówienia'
+label.pageSize: 'Rozmiar strony'
+label.password: Hasło
+label.password_repeat: 'Powtórz hasło'
+label.payment_terms: 'Warunki płatności'
+label.phone: Telefon
+label.plus_more: '+%count% więcej'
+label.progress: Postęp
+label.project: Projekt
+label.project_end: 'Koniec projektu'
+label.project_start: 'Start projektu'
+label.rate: Stawka
+label.rate_internal: 'Stawka wewnętrzna'
+label.recalculate_rates: 'Przelicz stawki'
+label.replaceTags: 'Zamień tagi'
+label.required_version: 'Kompatybilny z '
+label.roles: Rola
+label.skin: 'Wyświetlanie: Kolory'
+label.starttime: Początek
+label.status: Status
+label.tag: Tagi
+label.tags: Tagi
+label.team: Zespół
+label.teamlead: 'Zarządzanie zespołem'
+label.template: Wzorzec
+label.theme.collapsed_sidebar: 'Zminimalizuj lewy sidebar'
+label.theme.layout: 'Wyświetlanie: układ'
+label.timeBudget: 'Budżet czasu'
+label.timesheet.daily_stats: 'Pokaż dzienne statystyki w ewidencji'
+label.timesheet.export_decimal: 'Użyj dziesiętnego czasu trwania podczas eksportu'
+label.timezone: 'Strefa czasowa'
+label.title: Tytuł
+label.toggle_dropdown: 'Pokaż menu'
+label.total_rate: 'Cena całkowita'
+label.unit_price: 'Cena jednostkowa'
+label.user: Użytkownik
+label.user_profile: 'Mój profil'
+label.username: Użytkownik
+label.vat: Vat
+label.vat_id: NIP
+label.version: Wersja
+label.visible: Widoczne
+login_required: 'Brak uprawnień. Przekierować na stronę logowania ?'
+menu.admin: Administracja
+menu.admin_activity: Aktywności
+menu.admin_customer: Klienci
+menu.admin_project: Projekty
+menu.admin_team: Zespoły
+menu.admin_timesheet: Ewidencje
+menu.admin_user: Użytkownicy
+menu.doctor: Diagnostyka
+menu.export: Export
+menu.homepage: Pulpit
+menu.invoice: Faktury
+menu.logout: Wyloguj
+menu.plugin: Wtyczki
+menu.reporting: Raportowanie
+menu.system: System
+menu.system_configuration: Ustawienia
+menu.tags: Tagi
+menu.timesheet: 'Moje czasy'
+modal.columns.description: 'Po zapisaniu kolumny nie zaznaczone będą ukryte a to ustawienie przechowywane w cookie przeglądarki. Po usunięciu cookie ustawienia będa przywrócone do domyślnych.'
+modal.columns.title: 'Ukryj - pokaż kolumny'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Miesiąc
+more.info.link: 'Wiecej informacji'
+my.profile: 'Mój profil'
+'no': Nie
+placeholder.type_message: 'Wpisz swoją wiadomość...'
+profile.about_me: 'O mnie'
+profile.api-token: API
+profile.first_entry: Utworzony
+profile.password: Hasło
+profile.preferences: Preferencje
+profile.registration_date: Zarejestrowano
+profile.roles: Role
+profile.settings: Profil
+profile.teams: Zespoły
+profile.title: 'Profil użytkownika'
+rates.empty: 'Opłaty nie zostały jeszcze ustalone.'
+rates.title: Opłaty
+recent.activities: 'Uruchom ponownie jedną z ostatnich aktywności'
+recent.activities.format: '%activity% w %project% dla %customer%'
+search: Szukaj
+stats.activeRecordings: 'Aktywne wpisy'
+stats.activityTotal: Działania
+stats.amountMonth: 'Przychód w tym miesiącu'
+stats.amountToday: 'Przychód dzisiaj'
+stats.amountTotal: 'Łącznie przychód'
+stats.amountWeek: 'Przychód w tym tygodniu'
+stats.amountYear: 'Przychód w tym roku'
+stats.customerTotal: Klienci
+stats.durationMonth: 'Przepracowane godziny w tym miesiącu'
+stats.durationToday: 'Przepracowane godziny dzisiaj'
+stats.durationTotal: 'Łacznie przepracowanych godzin'
+stats.durationWeek: 'Przepracowane godziny w tym tygodniu'
+stats.durationYear: 'Przepracowane godziny w tym roku'
+stats.percentUsed: '%percent%% użyty'
+stats.percentUsedLeft: '%percent%% zużyte (%left% wciąż pozostało)'
+stats.projectTotal: Projekty
+stats.userActiveMonth: 'Aktywni użytkownicy w tym miesiącu'
+stats.userActiveToday: 'Aktywni użytkownicy dzisiaj'
+stats.userActiveTotal: 'Kiedykolwiek aktywni użytkownicy'
+stats.userActiveWeek: 'Aktywni użytkownicy w tym tygodniu'
+stats.userActiveYear: 'Aktywni użytkownicy w tym roku'
+stats.userTotal: Użytkownicy
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: 'Dzisiaj, %day%'
+stats.workingTimeWeek: 'Tydzień kalendarzowy %week%'
+stats.workingTimeYear: 'Rok %year%'
+stats.yourWorkingHours: 'Moje przepracowane godziny'
+status.new: Nowy
+status.paid: Zapłacone
+status.pending: 'W oczekiwaniu'
+sum.total: Razem
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Śledzenie czasu'
+timesheet.all: 'Pokaż wszystkie wpisy'
+timesheet.edit: 'Edytuj rekord'
+timesheet.start: 'Utwórz nową wpis czasu pracy'
+timesheet.title: 'Moje czasy'
+update_multiple: '%action% %count% wpisy?'
+upload: Pobierz
+user_permissions.title: 'Uprawnienia użytkownika'
+user_role.title: 'Role użytkownika'
+'yes': Tak
+label.invoice_salutation: "\nDziękujemy za skorzystanie z naszych usług\n\nZapraszamy ponownie !\n"

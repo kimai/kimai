@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'Med återstående budget'
+default-internal.pdf.twig: 'Med interna kostnader'
+default.pdf.twig: Standard

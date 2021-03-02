@@ -1,0 +1,13 @@
+action.delete.error: 'Post kunde inte raderas: %reason%'
+action.delete.success: 'Denna post är borttagen'
+action.update.error: 'Ändringar kunde inte sparas: %reason%'
+action.update.success: 'Ändringarna har sparats'
+action.upload.error: 'The file could not be uploaded or saved: %reason%'
+invoice.first_template: 'Du måste skapa din första fakturamall innan du kan fortsätta'
+timesheet.locked.warning: 'Du håller på att ändra en exporterad post'
+timesheet.start.error: 'Tidsinspelning kunde inte startas'
+timesheet.start.exceeded_limit: 'Gränsen för aktiva tidsinspelningar har uppnåtts, var god stoppa minst en tidsinspelning först.'
+timesheet.start.success: 'Tidsredovisningen har startat'
+timesheet.stop.error: 'Tidsredovisningen kunde inte stoppas'
+timesheet.stop.success: 'Tidsredovisningen har stoppats'
+warning: Varning

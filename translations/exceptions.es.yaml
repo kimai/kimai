@@ -1,0 +1,9 @@
+access.denied: 'Acceso denegado'
+http_error.description: 'Se produjo un error'
+http_error.suggestion: 'Ocurrió un error inesperado; intente de nuevo lo que estaba haciendo. Es posible que haya encontrado un problema de software; contacte al personal administrativo si el problema persiste.'
+http_error.title: Error
+http_error_403.description: 'La página está restringida'
+http_error_403.suggestion: 'No tiene permisos suficientes para acceder a esta página. Hable con el personal administrativo si considera que esto se debe a un error.'
+http_error_404.description: 'No se encontró la página'
+http_error_404.suggestion: "\nNo encontramos lo que buscaba.\nPero, puede volver al panel principal e intentar de nuevo.\n"
+stacktrace: 'El problema ocurrió aquí'

@@ -1,0 +1,9 @@
+access.denied: '접근 거부 '
+http_error.description: '오류 발생'
+http_error.suggestion: "\n예상치 못했던 오류 발생했습니다, 다시 시도하십시오.\n아마도 버그가 발견되었을 수 있습니다, 다시 시도한 이후에도 문제가 발생한다면,\n관리자에게 연락을 취하십시오.\n"
+http_error.title: '오류 '
+http_error_403.description: '페이지 제한됨'
+http_error_403.suggestion: "\n죄송하지만, 이 페이지를 볼 수 있는 권한이 없습니다. \n이것이 오류라고 생각되면 관리자에게 문의하십시오.\n"
+http_error_404.description: '페이지를 찾을 수 없음'
+http_error_404.suggestion: "\n찾고 계신 페이지를 찾을 수 없습니다.\n그러나 대시 보드로 돌아가서 다시 시작할 수 있습니다.\n"
+stacktrace: '문제 발생 '

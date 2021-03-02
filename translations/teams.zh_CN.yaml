@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'The activity has limited access, because team permissions are set for the project and/or customer.'
+team.create_default: __team.create_default
+team.project_visibility_inherited: 'The project has limited access, because team permissions are set for the customer.'
+team.visibility_global: 'Visible to everyone, as no team was assigned yet.'
+team.visibility_restricted: __team.visibility_restricted
+teams.customer_access: 授予访问客户权限
+teams.project_access: 授予访问项目权限
+teams.title: 团队

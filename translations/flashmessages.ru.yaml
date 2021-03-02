@@ -1,0 +1,13 @@
+action.delete.error: 'Ошибка - Запись не была удалена: %reason%'
+action.delete.success: 'Запись успешно удалена'
+action.update.error: 'Изменения не могут быть сохранены: %reason%'
+action.update.success: 'Изменения успешно сохранены'
+action.upload.error: 'Файл не может быть загружен или сохранен: %reason%'
+invoice.first_template: 'Прежде чем Вы сможете продолжить, необходимо создать первый образец счет-фактуры'
+timesheet.locked.warning: 'Вы изменяете выгруженную запись'
+timesheet.start.error: 'Ошибка - Хронометраж не был начат'
+timesheet.start.exceeded_limit: 'Достигнут лимит активных записей, пожалуйста, сначала остановите как минимум одно измерение.'
+timesheet.start.success: 'Хронометраж начат'
+timesheet.stop.error: 'Ошибка - Хронометраж не был остановлен'
+timesheet.stop.success: 'Хронометраж остановлен'
+warning: Предупреждение

@@ -1,0 +1,4 @@
+plugin.marketplace: 'Kimai marketplace'
+plugin.none_installed: 'Nie masz jeszcze żadnych zainstalowanych wtyczek.'
+plugins.subtitle: 'Możesz rozszerzyć funkcjonalność Kimai przy pomocy wtyczek'
+plugins.title: Wtyczki

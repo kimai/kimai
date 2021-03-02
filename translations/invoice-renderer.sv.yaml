@@ -1,0 +1,20 @@
+Docx: 'Microsoft Word (Docx)'
+Html: 'HTML (for printing via Browser)'
+Ods: 'Open Office (Spreadsheet)'
+Pdf: PDF
+Xls: 'Microsoft Excel (Xls)'
+Xlsx: 'Microsoft Excel (Xlsx)'
+company: Företagsfaktura
+default: 'Faktura (standard)'
+default-pdf: Invoice
+freelancer: Frilansare
+help.upload: 'Obs: redan exsiterande filer kommer att skrivas över. Tillåtna fil typer är: DOCX, ODS, XLSX.'
+javascript: JSON
+label.invoice_renderer: Fakturadokument
+open-spreadsheet: 'Beräkna kalkylbladet'
+programmatic: 'For further processing'
+spreadsheet: Excel
+text: Text
+timesheet: Tidrapport
+xml: XML
+export: 'Exportera data'

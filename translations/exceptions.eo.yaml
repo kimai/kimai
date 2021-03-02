@@ -1,0 +1,9 @@
+access.denied: 'Aliro malpermesita'
+http_error.description: 'Io estas malĝusta'
+http_error.suggestion: "\nGrava eraro okazis, bv. provi denove.\nEble vi trovis programan problemon, bv. kontakti vian administranton se la problemo persistos.\n"
+http_error.title: Eraro
+http_error_403.description: 'La paĝo estas limigite alirebla'
+http_error_403.suggestion: "\nPardonon, sed vi ne havas sufiĉajn rajtojn por vidi tiun ĉi paĝon.\nBv. paroli kun via administranto se vi pensas ke tio estas eraro.\n"
+http_error_404.description: 'La paĝo ne estas trovita'
+http_error_404.suggestion: "\nNi ne trovis la paĝon kiun vi serĉis.\nBv. reveni al via panelo kaj komenci denove.\n"
+stacktrace: 'La problemo okazis ĉi tie'

@@ -1,0 +1,23 @@
+activity: 'Lọc hoạt động'
+back: 'Trở lại'
+copy: 'Tạo bản sao'
+create-activity: 'Tạo hoạt động'
+create-project: 'Tạo dự án'
+create-timesheet: 'Tạo bảng chấm công'
+create-timesheet-multiuser: __create-timesheet-multiuser
+customer: 'Lọc khách hàng'
+details: Hiện
+download: 'Tải xuống'
+edit: Sửa
+home: 'Trang chủ'
+invoice.paid: 'Đã thanh toán hóa đơn'
+invoice.pending: 'Chờ thanh toán'
+permissions: 'Phân quyền nhóm'
+profile-stats: 'Hồ sơ'
+project: 'Lọc dự án'
+repeat: 'Bắt đầu lại'
+report: 'Báo cáo'
+settings: 'Sở thích'
+stop: Dừng
+timesheet: 'Bảng chấm công'
+trash: Xóa

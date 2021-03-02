@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'With remaining budget'
+default-internal.pdf.twig: 'With internal rates'
+default.pdf.twig: Standard

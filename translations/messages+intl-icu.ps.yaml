@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Allowed character: A-Z and _'
+ROLE_ADMIN: Administrator
+ROLE_SUPER_ADMIN: System-Admin
+ROLE_TEAMLEAD: Teamlead
+ROLE_USER: User
+'This is a mandatory field': Mandatory
+action.back: __action.back
+action.close: __action.close
+action.delete: __action.delete
+action.edit: __action.edit
+action.reset: __action.reset
+action.save: __action.save
+active.entries: __active.entries
+admin_activity.short_stats: __admin_activity.short_stats
+admin_activity.title: __admin_activity.title
+admin_customer.short_stats: __admin_customer.short_stats
+admin_customer.title: __admin_customer.title
+admin_entity.delete_confirm: __admin_entity.delete_confirm
+admin_invoice_template.title: __admin_invoice_template.title
+admin_project.short_stats: __admin_project.short_stats
+admin_project.title: __admin_project.title
+admin_timesheet.title: __admin_timesheet.title
+admin_user.short_stats: __admin_user.short_stats
+admin_user.title: __admin_user.title
+agendaDay: Day
+agendaWeek: Week
+attachments: Files
+both: Both
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Preview
+button.preview_print: 'Print preview'
+button.print: Print
+button.xlsx: Excel
+calendar.title: __calendar.title
+cancel: Cancel
+confirm: Confirm
+confirm.delete: __confirm.delete
+create: __create
+dashboard.all: 'All users'
+dashboard.subtitle: __dashboard.subtitle
+dashboard.title: __dashboard.title
+delete.not_in_use: __delete.not_in_use
+entryState.all: All
+entryState.exported: __entryState.exported
+entryState.not_exported: __entryState.not_exported
+entryState.running: Active
+entryState.stopped: Stopped
+error.no_comments_found: __error.no_comments_found
+error.no_entries_found: __error.no_entries_found
+export.clear_all: __export.clear_all
+export.date_copyright: __export.date_copyright
+export.document_title: __export.document_title
+export.filter: __export.filter
+export.full_list: __export.full_list
+export.mark_all: __export.mark_all
+export.page_of: __export.page_of
+export.period: __export.period
+export.subtitle: __export.subtitle
+export.summary: __export.summary
+export.title: __export.title
+help.batch_meta_fields: 'Fields that are to be updated must first be activated by clicking on the associated checkbox.'
+help.fixedRate: 'Each time record gets the same value, regardless of its duration'
+help.rate: 'Hourly rate to be charged'
+help.rate_internal: 'Internal costs (if this is not specified, the normal rate is used)'
+invoice.due_days: __invoice.due_days
+invoice.filter: __invoice.filter
+invoice.from: __invoice.from
+invoice.number: __invoice.number
+invoice.service_date: __invoice.service_date
+invoice.signature_customer: __invoice.signature_customer
+invoice.signature_user: __invoice.signature_user
+invoice.subtotal: __invoice.subtotal
+invoice.tax: __invoice.tax
+invoice.title: __invoice.title
+invoice.to: __invoice.to
+invoice.total: __invoice.total
+invoice.total_working_time: __invoice.total_working_time
+invoice_print: Invoice
+label.actions: Actions
+label.active: Active
+label.activity: __label.activity
+label.address: __label.address
+label.alias: Name
+label.amount: __label.amount
+label.api_token: 'API password'
+label.api_token_repeat: 'Repeat API password'
+label.appendTags: 'Append tags'
+label.avatar: 'Profile image'
+label.batch_meta_fields: 'Additional fields'
+label.begin: From
+label.billable: Billable
+label.budget: __label.budget
+label.calendar.initial_view: 'Initial calendar view'
+label.color: Color
+label.comment: __label.comment
+label.company: 'Company name'
+label.contact: __label.contact
+label.country: __label.country
+label.create_more: 'Create further entries'
+label.currency: __label.currency
+label.customer: __label.customer
+label.date: __label.date
+label.daterange: 'Time range'
+label.decimalDuration: 'Display duration as decimal number'
+label.description: __label.description
+label.due_days: 'Payment term in days'
+label.duration: __label.duration
+label.email: __label.email
+label.end: To
+label.endtime: End
+label.entryState: Records
+label.exported: Exported
+label.fax: __label.fax
+label.fixedRate: __label.fixedRate
+label.globalsOnly: 'Only global'
+label.homepage: __label.homepage
+label.hourlyRate: __label.hourlyRate
+label.hourly_rate: 'Hourly rate'
+label.hours: __label.hours
+label.id: __label.id
+label.invoice_bank_account: __label.invoice_bank_account
+label.invoice_tax_number: 'VAT no.:'
+label.language: Language
+label.lastLogin: 'Last login'
+label.login.initial_view: 'Initial view after login'
+label.logout: Logout
+label.mark_as_exported: 'Mark as exported'
+label.mobile: __label.mobile
+label.my_team_projects: 'Team projects & budgets'
+label.my_teams: __label.my_teams
+label.name: __label.name
+label.number: __label.number
+label.orderDate: __label.orderDate
+label.orderNumber: __label.orderNumber
+label.pageSize: 'Page size'
+label.password: Password
+label.password_repeat: 'Repeat password'
+label.payment_terms: __label.payment_terms
+label.phone: __label.phone
+label.plus_more: __label.plus_more
+label.progress: Progress
+label.project: __label.project
+label.project_end: __label.project_end
+label.project_start: __label.project_start
+label.rate: __label.rate
+label.rate_internal: __label.rate_internal
+label.recalculate_rates: 'Recalculate rates'
+label.replaceTags: 'Replace tags'
+label.required_version: 'Compatible with'
+label.roles: Role
+label.skin: 'Display: colors'
+label.starttime: Begin
+label.status: Status
+label.tag: Tags
+label.tags: Tags
+label.team: __label.team
+label.teamlead: __label.teamlead
+label.template: Template
+label.theme.collapsed_sidebar: 'Minimize the left sidebar'
+label.theme.layout: 'Display: layout'
+label.timeBudget: __label.timeBudget
+label.timesheet.daily_stats: 'Show daily stats in timesheet'
+label.timesheet.export_decimal: 'Use decimal duration in export'
+label.timezone: __label.timezone
+label.title: Title
+label.toggle_dropdown: __label.toggle_dropdown
+label.total_rate: __label.total_rate
+label.unit_price: __label.unit_price
+label.user: __label.user
+label.user_profile: 'My profile'
+label.username: __label.username
+label.vat: Tax
+label.vat_id: __label.vat_id
+label.version: Version
+label.visible: __label.visible
+login_required: 'Missing permission. Redirect to login?'
+menu.admin: Administration
+menu.admin_activity: __menu.admin_activity
+menu.admin_customer: Customers
+menu.admin_project: __menu.admin_project
+menu.admin_team: Teams
+menu.admin_timesheet: Timesheets
+menu.admin_user: Users
+menu.doctor: __menu.doctor
+menu.export: __menu.export
+menu.homepage: Dashboard
+menu.invoice: Invoices
+menu.logout: __menu.logout
+menu.plugin: Plugins
+menu.reporting: Reporting
+menu.system: System
+menu.system_configuration: Settings
+menu.tags: __menu.tags
+menu.timesheet: 'My times'
+modal.columns.description: __modal.columns.description
+modal.columns.title: __modal.columns.title
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Month
+more.info.link: __more.info.link
+my.profile: __my.profile
+'no': __no
+placeholder.type_message: __placeholder.type_message
+profile.about_me: __profile.about_me
+profile.api-token: __profile.api-token
+profile.first_entry: __profile.first_entry
+profile.password: __profile.password
+profile.preferences: __profile.preferences
+profile.registration_date: __profile.registration_date
+profile.roles: __profile.roles
+profile.settings: Profile
+profile.teams: __profile.teams
+profile.title: 'User profile'
+rates.empty: __rates.empty
+rates.title: __rates.title
+recent.activities: __recent.activities
+recent.activities.format: __recent.activities.format
+search: __search
+stats.activeRecordings: 'Active records'
+stats.activityTotal: Activities
+stats.amountMonth: __stats.amountMonth
+stats.amountToday: 'Revenue today'
+stats.amountTotal: __stats.amountTotal
+stats.amountWeek: 'Revenue this week'
+stats.amountYear: 'Revenue this year'
+stats.customerTotal: Customers
+stats.durationMonth: __stats.durationMonth
+stats.durationToday: 'Working hours today'
+stats.durationTotal: __stats.durationTotal
+stats.durationWeek: 'Working hours this week'
+stats.durationYear: 'Working hours this year'
+stats.percentUsed: __stats.percentUsed
+stats.percentUsedLeft: __stats.percentUsedLeft
+stats.projectTotal: Projects
+stats.userActiveMonth: 'Active users this month'
+stats.userActiveToday: 'Active users today'
+stats.userActiveTotal: 'Active users ever'
+stats.userActiveWeek: 'Active users this week'
+stats.userActiveYear: 'Active users this year'
+stats.userTotal: Users
+stats.workingTimeMonth: __stats.workingTimeMonth
+stats.workingTimeToday: __stats.workingTimeToday
+stats.workingTimeWeek: __stats.workingTimeWeek
+stats.workingTimeYear: __stats.workingTimeYear
+stats.yourWorkingHours: 'My working hours'
+status.new: __status.new
+status.paid: __status.paid
+status.pending: __status.pending
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: __time_tracking
+timesheet.all: __timesheet.all
+timesheet.edit: __timesheet.edit
+timesheet.start: __timesheet.start
+timesheet.title: __timesheet.title
+update_multiple: __update_multiple
+upload: __upload
+user_permissions.title: 'User permissions'
+user_role.title: __user_role.title
+'yes': __yes

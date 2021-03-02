@@ -1,0 +1,3 @@
+date: Fecha
+default: 'Configured format'
+label.invoice_number_generator: 'Generador de número de factura'

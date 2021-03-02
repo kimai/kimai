@@ -1,0 +1,3 @@
+date: Päivämäärä
+default: 'Määritetty muoto'
+label.invoice_number_generator: 'Laskunumero Generaattori'

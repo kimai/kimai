@@ -1,0 +1,8 @@
+activity: 'Aktivität: ein Eintrag pro Aktivität'
+date: 'Datum: ein Eintrag pro Tag (verwendet Startdatum)'
+default: 'Standard: ein Eintrag pro Zeitmessung'
+label.invoice_calculator: 'Summen Berechnung'
+project: 'Projekt: ein Eintrag pro Projekt'
+short: 'Stunden: Einträge aufsummiert, nur ein Eintrag'
+user: 'Benutzer: ein Eintrag pro Benutzer'
+weekly: 'Wöchentlich: ein Eintrag pro Woche (verwendet Startdatum)'

@@ -1,0 +1,60 @@
+Ceil: '천장 함수 : 시작, 종료 및 지속 시간 올림'
+Closest: '근접값: 가장 가까운 수로 수학적인 반올림'
+Default: '표준: 시작 시간은 내림, 종료 및 지속 시간은 올림'
+Floor: '바닥 함수 : 시작, 종료 및 지속 시간 내림'
+Friday: 금요일
+Monday: 월요일
+Saturday: 토요일
+Sunday: 일요일
+Thursday: 목요일
+Tuesday: 화요일
+Wednesday: 수요일
+branding: 브랜딩
+calendar: 캘린더
+first_weekday: '매주 첫날'
+form_customer: '고객 생성—기본 값'
+form_user: '사용자—기본 값'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: 인보이스
+label.calendar.businessHours.begin: '정상 근무 시간의 시작 (강조됨)'
+label.calendar.businessHours.end: '정상 근무 시간의 종료 (강조됨)'
+label.calendar.slot_duration: '주간 - 일간 보기를 위한 슬롯 기간 (format: hh : mm : ss)'
+label.calendar.visibleHours.begin: '가시화 시간의 시작 범위 '
+label.calendar.visibleHours.end: '가시화 시간의 종료 범위'
+label.calendar.week_numbers: '주수 디스프레이'
+label.calendar.weekends: '주간 디스플레이'
+label.invoice.number_format: '인보이스 번호 포맷'
+label.simple_form: '간단한 검색'
+label.theme.autocomplete_chars: '자동 완성을 시작할 최소 문자 수'
+label.theme.branding.company: 회사
+label.theme.branding.logo: '로고 (이미지 URL, 로그인 화면에서 회사 대체)'
+label.theme.branding.mini: '미니 로고(접힌 사이드바)'
+label.theme.branding.title: '브라우저 제목'
+label.theme.markdown_content: '설명 및 코멘트에서 마크 다운 형식화 허용'
+label.theme.tags_create: '태그: 자동 완성 검색 사용 및 태그 생성 허용'
+label.timesheet.active_entries.hard_limit: '허용되는 동시 실행 시간 항목 수'
+label.timesheet.active_entries.soft_limit: '경고가 표시되는 실행 시간 항목 수'
+label.timesheet.default_begin: '기본 시작 시간 (모든 시간 추적 모드에서 사용되지 않음)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: '타임트래킹 모드 '
+label.timesheet.mode_default: '[초기값] 시작과 종료 시간을 편집 가능 '
+label.timesheet.mode_duration_fixed_begin: '[지속시간] 구성 가능한 고정 시작 시간. 지속된 시간만 변경할 수 있습니다'
+label.timesheet.mode_duration_only: '[지속시간] 종료시간을 지속 시간 입력 필드로 대체'
+label.timesheet.mode_punch: '[시간-시계] 사용자는 기록을 시작 및 중지 할 수 있지만, 시간 또는 기간을 편집 할 수는 없음'
+label.timesheet.rounding.default.begin: '시작 시간의 분 단위 반올림 (0 = 비활성화)'
+label.timesheet.rounding.default.days: '반올림이 적용될 요일'
+label.timesheet.rounding.default.duration: '지속 시간의 분 단위 반올림 (0 = 비활성화)'
+label.timesheet.rounding.default.end: '종료 시간의 분 단위 반올림 (0 = 비활성화)'
+label.timesheet.rounding.default.mode: '반올림 모드'
+label.timesheet.rules.allow_future_times: '향후 시간 입력 허용'
+label.timesheet.rules.allow_overlapping_records: '겹치는 시간 항목 허용'
+label.timesheet.rules.lockdown_grace_period: '잠금 유예 기간 종료 (잠금 기간 종료까지의 PHP 상대 날짜)'
+label.timesheet.rules.lockdown_period_end: '잠금 기간 종료 (현재까지의 PHP 상대 날짜)'
+label.timesheet.rules.lockdown_period_start: '잠금 기간 시작 (현재까지의 PHP 상대 날짜)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: '시간 반올림'
+subtitle: '타임 트래커의 글로벌 구성 변경'
+theme: 테마
+timesheet: 타임시트
+title: '설정 '

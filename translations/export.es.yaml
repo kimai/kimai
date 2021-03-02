@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'Con presupuesto remanente'
+default-internal.pdf.twig: 'Con tasas internas'
+default.pdf.twig: Estándar

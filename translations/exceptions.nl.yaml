@@ -1,0 +1,9 @@
+access.denied: 'Toegang geweigerd'
+http_error.description: 'Oeps! Er is iets fout gegaan.'
+http_error.suggestion: "\nEen kritieke fout trad op. Probeer alstublieft opnieuw.\nMogelijk vond u een software probleem. Neem contact op met uw administrator wanneer het probleem zich blijft voortdoen.\n"
+http_error.title: Fout
+http_error_403.description: 'Deze pagina is niet toegankelijk'
+http_error_403.suggestion: "\nHet spijt ons maar u heeft onvoldoende rechten om deze pagina te zien.\nSpreek met uw beheerder als u denkt dat dit een vergissing is.\n"
+http_error_404.description: 'Oeps! Webpagina niet gevonden.'
+http_error_404.suggestion: "\nWe konden de pagina die u zocht niet vinden.\nKeer alstublieft terug naar het overzicht en begin opnieuw.\n"
+stacktrace: 'Hier deed het probleem zich voor'

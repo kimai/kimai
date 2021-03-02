@@ -1,0 +1,8 @@
+activity: 'Tevékenységenként csoportosítva - egy bejegyzés tevékenységenként'
+date: 'Date: one entry per day (uses start date)'
+default: 'Bejegyzés alapján - Egy bejegyzés időmérésenként (alapértelmezett)'
+label.invoice_calculator: 'Összeg számítása'
+project: 'Project: one entry per project'
+short: 'Idők összeadva - csak egy bejegyzés'
+user: 'Felhasználónként csoportosítva - egy bejegyzés felhasználónként'
+weekly: 'Weekly: one entry per week (uses start date)'

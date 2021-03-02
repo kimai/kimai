@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'С оставшимся бюджетом'
+default-internal.pdf.twig: 'С внутренними ставками'
+default.pdf.twig: Стандартный

@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Allowed character: A-Z and _'
+ROLE_ADMIN: Administrator
+ROLE_SUPER_ADMIN: System-Admin
+ROLE_TEAMLEAD: Teamlead
+ROLE_USER: User
+'This is a mandatory field': Mandatory
+action.back: Back
+action.close: Close
+action.delete: Delete
+action.edit: Edit
+action.reset: Reset
+action.save: Save
+active.entries: 'Your active time measurements'
+admin_activity.short_stats: "\nCurrently the activity %activity% in the project %project% for the customer %customer%\nhas %records% time-records, which sum up to a total of %duration%.\n"
+admin_activity.title: Activities
+admin_customer.short_stats: "\nCurrently the customer %customer% has %project% projects with %activity% activities, which sum up\nin %records% time-records to a total of %duration%.\n"
+admin_customer.title: Customer
+admin_entity.delete_confirm: "\nThis data will be deleted as well!\nAlternatively, you can select an entry to which all data will be transferred:\n"
+admin_invoice_template.title: 'Invoice template'
+admin_project.short_stats: "\nCurrently the project %project% for the customer %customer% has %activities%\nactivities and %records% time-records, which sum up to a total of %duration%.\n"
+admin_project.title: Projects
+admin_timesheet.title: Timesheets
+admin_user.short_stats: "\nCurrently the user %user% has %records% time-records which sum up to a total of %duration%.\n"
+admin_user.title: User
+agendaDay: Day
+agendaWeek: Week
+attachments: Files
+both: Both
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Preview
+button.preview_print: 'Print preview'
+button.print: Print
+button.xlsx: Excel
+calendar.title: Calendar
+cancel: Cancel
+confirm: Confirm
+confirm.delete: 'Do you really want to delete it?'
+create: Create
+dashboard.all: 'All users'
+dashboard.subtitle: Welcome!
+dashboard.title: Dashboard
+delete.not_in_use: 'This item can be safely deleted.'
+entryState.all: All
+entryState.exported: Cleared
+entryState.not_exported: Open
+entryState.running: Active
+entryState.stopped: Stopped
+error.no_comments_found: 'There were no comments posted yet.'
+error.no_entries_found: 'No entries were found based on your selected filters.'
+export.clear_all: 'Mark all shown records as open?'
+export.date_copyright: 'Created %date% with %kimai%'
+export.document_title: 'Export of timesheets'
+export.filter: 'Filter data for export'
+export.full_list: 'Full list'
+export.mark_all: 'Mark all shown records as cleared?'
+export.page_of: 'Page %page% of %pages%'
+export.period: Period
+export.subtitle: 'Export timesheet data to various formats'
+export.summary: Summary
+export.title: Export
+help.batch_meta_fields: 'Fields that are to be updated must first be activated by clicking on the associated checkbox.'
+help.fixedRate: 'Each time record gets the same value, regardless of its duration'
+help.rate: 'Hourly rate to be charged'
+help.rate_internal: 'Internal costs (if this is not specified, the normal rate is used)'
+invoice.due_days: 'Payment target'
+invoice.filter: 'Filter invoice data'
+invoice.from: From
+invoice.number: 'Invoice number'
+invoice.service_date: 'Service date'
+invoice.signature_customer: 'Confirmation: Date / Customer''s name / Signature'
+invoice.signature_user: 'Confirmation: Date / Consultant''s name / Signature'
+invoice.subtotal: Subtotal
+invoice.tax: Tax
+invoice.title: Invoices
+invoice.to: To
+invoice.total: Total
+invoice.total_working_time: 'Total duration'
+invoice_print: Invoice
+label.actions: Actions
+label.active: Active
+label.activity: Activity
+label.address: Address
+label.alias: Name
+label.amount: Quantity
+label.api_token: 'API password'
+label.api_token_repeat: 'Repeat API password'
+label.appendTags: 'Append tags'
+label.avatar: 'Profile image'
+label.batch_meta_fields: 'Additional fields'
+label.begin: From
+label.billable: Billable
+label.budget: Budget
+label.calendar.initial_view: 'Initial calendar view'
+label.color: Color
+label.comment: Comment
+label.company: 'Company name'
+label.contact: Contact
+label.country: Country
+label.create_more: 'Create further entries'
+label.currency: Currency
+label.customer: Customer
+label.date: Date
+label.daterange: 'Time range'
+label.decimalDuration: 'Display duration as decimal number'
+label.description: Description
+label.due_days: 'Payment term in days'
+label.duration: Duration
+label.email: Email
+label.end: To
+label.endtime: End
+label.entryState: Records
+label.exported: Exported
+label.fax: Fax
+label.fixedRate: 'Fixed rate'
+label.globalsOnly: 'Only global'
+label.homepage: Homepage
+label.hourlyRate: 'Hourly rate'
+label.hourly_rate: 'Hourly rate'
+label.hours: Hours
+label.id: ID
+label.invoice_bank_account: 'Bank account'
+label.invoice_tax_number: 'VAT no.:'
+label.language: Language
+label.lastLogin: 'Last login'
+label.login.initial_view: 'Initial view after login'
+label.logout: Logout
+label.mark_as_exported: 'Mark as exported'
+label.mobile: Mobile
+label.my_team_projects: 'Team projects & budgets'
+label.my_teams: 'My teams'
+label.name: Name
+label.number: Account
+label.orderDate: 'Order date'
+label.orderNumber: 'Order number'
+label.pageSize: 'Page size'
+label.password: Password
+label.password_repeat: 'Repeat password'
+label.payment_terms: 'Terms of payment'
+label.phone: Phone
+label.plus_more: '+%count% more'
+label.progress: Progress
+label.project: Project
+label.project_end: 'Project end'
+label.project_start: 'Project start'
+label.rate: Rate
+label.rate_internal: 'Internal rate'
+label.recalculate_rates: 'Recalculate rates'
+label.replaceTags: 'Replace tags'
+label.required_version: 'Compatible with'
+label.roles: Role
+label.skin: 'Display: colors'
+label.starttime: Begin
+label.status: Status
+label.tag: Tags
+label.tags: Tags
+label.team: Team
+label.teamlead: Teamlead
+label.template: Template
+label.theme.collapsed_sidebar: 'Minimize the left sidebar'
+label.theme.layout: 'Display: layout'
+label.timeBudget: 'Time budget'
+label.timesheet.daily_stats: 'Show daily stats in timesheet'
+label.timesheet.export_decimal: 'Use decimal duration in export'
+label.timezone: Timezone
+label.title: Title
+label.toggle_dropdown: 'Show menu'
+label.total_rate: 'Total price'
+label.unit_price: 'Unit price'
+label.user: User
+label.user_profile: 'My profile'
+label.username: User
+label.vat: Tax
+label.vat_id: VAT-ID
+label.version: Version
+label.visible: Visible
+login_required: 'Missing permission. Redirect to login?'
+menu.admin: Administration
+menu.admin_activity: Activities
+menu.admin_customer: Customers
+menu.admin_project: Projects
+menu.admin_team: Teams
+menu.admin_timesheet: Timesheets
+menu.admin_user: Users
+menu.doctor: Doctor
+menu.export: Export
+menu.homepage: Dashboard
+menu.invoice: Invoices
+menu.logout: Logout
+menu.plugin: Plugins
+menu.reporting: Reporting
+menu.system: System
+menu.system_configuration: Settings
+menu.tags: Tags
+menu.timesheet: 'My times'
+modal.columns.description: 'Upon saving the un-checked columns will be hidden and this setting will be stored in a browser cookie. If you delete your cookies, the settings will be reversed.'
+modal.columns.title: 'Change column visibility'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Month
+more.info.link: 'More info'
+my.profile: 'My profile'
+'no': 'No'
+placeholder.type_message: 'Type your message...'
+profile.about_me: 'About me'
+profile.api-token: API
+profile.first_entry: 'Working since'
+profile.password: Password
+profile.preferences: Preferences
+profile.registration_date: 'Registered at'
+profile.roles: Roles
+profile.settings: Profile
+profile.teams: Teams
+profile.title: 'User profile'
+rates.empty: 'No fees have been configured yet.'
+rates.title: Fees
+recent.activities: 'Restart one of your last activities'
+recent.activities.format: '%activity% in %project% for %customer%'
+search: Search
+stats.activeRecordings: 'Active records'
+stats.activityTotal: Activities
+stats.amountMonth: 'Revenue this month'
+stats.amountToday: 'Revenue today'
+stats.amountTotal: 'Total revenue'
+stats.amountWeek: 'Revenue this week'
+stats.amountYear: 'Revenue this year'
+stats.customerTotal: Customers
+stats.durationMonth: 'Working hours this month'
+stats.durationToday: 'Working hours today'
+stats.durationTotal: 'Working hours total'
+stats.durationWeek: 'Working hours this week'
+stats.durationYear: 'Working hours this year'
+stats.percentUsed: '%percent%% used'
+stats.percentUsedLeft: '%percent%% used (%left% are still open)'
+stats.projectTotal: Projects
+stats.userActiveMonth: 'Active users this month'
+stats.userActiveToday: 'Active users today'
+stats.userActiveTotal: 'Active users ever'
+stats.userActiveWeek: 'Active users this week'
+stats.userActiveYear: 'Active users this year'
+stats.userTotal: Users
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: 'Today, %day%'
+stats.workingTimeWeek: 'Calendar week %week%'
+stats.workingTimeYear: 'Full year %year%'
+stats.yourWorkingHours: 'My working hours'
+status.new: New
+status.paid: Paid
+status.pending: Pending
+sum.total: Total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Time Tracking'
+timesheet.all: 'Show all records'
+timesheet.edit: 'Edit record'
+timesheet.start: 'Create new time-record'
+timesheet.title: 'My times'
+update_multiple: '%action% %count% entries?'
+upload: Upload
+user_permissions.title: 'User permissions'
+user_role.title: 'User role'
+'yes': 'Yes'

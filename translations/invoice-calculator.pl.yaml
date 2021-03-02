@@ -1,0 +1,8 @@
+activity: 'Aktywność: Jedna pozycja per aktywność'
+date: 'Data: Jedna pozycja dla dnia (używa daty startu)'
+default: 'Domyślne: Jedna pozycja dla jednego zapisu czasu'
+label.invoice_calculator: 'Łączne wyliczenie'
+project: 'Projekt: Jedna pozycja dla projektu'
+short: 'Godzinowy: Wpisy cżąstkowe sumowane , pojedyńcza pozycja dla całości'
+user: 'Użytkownik: Jedna pozycja per użytkownika'
+weekly: 'Weekly: one entry per week (uses start date)'

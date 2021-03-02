@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'L''activité est à accès limité car des autorisations d''équipe sont définies pour le projet et/ou le client.'
+team.create_default: 'Créer une nouvelle équipe pour limiter l''accès'
+team.project_visibility_inherited: 'Le projet est à accès limité car des autorisations d''équipe sont définies pour le client.'
+team.visibility_global: 'Visible par tout le monde, comme aucune équipe n''a encore été assignée.'
+team.visibility_restricted: 'Visible uniquement par les équipes suivantes et tous les administrateurs.'
+teams.customer_access: 'Accorder l''accès aux clients'
+teams.project_access: 'Accorder l''accès aux projets'
+teams.title: Équipes

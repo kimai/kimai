@@ -1,0 +1,4 @@
+report_monthly_users: 'Maandoverzicht voor alle gebruikers'
+report_user_month: 'Maandoverzicht voor één gebruiker'
+report_user_week: 'Weekoverzicht voor één gebruiker'
+reporting.title: Rapportage

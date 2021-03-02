@@ -1,0 +1,3 @@
+date: Date
+default: 'Data (implicit)'
+label.invoice_number_generator: 'Generator de numere de factură'

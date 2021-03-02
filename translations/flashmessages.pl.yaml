@@ -1,0 +1,13 @@
+action.delete.error: 'Nie mozna usunąć wpisu: %reason%'
+action.delete.success: 'Wpis został usunięty'
+action.update.error: 'Nie mozna zapisać zmian: %reason%'
+action.update.success: 'Zapisano zmiany'
+action.upload.error: 'Nie można przesłać lub zapisać pliku: %reason%'
+invoice.first_template: 'Należy utworzyć pierwszy wzorzec faktury aby kontynuować'
+timesheet.locked.warning: 'Edytujesz wyeksportowany rekord'
+timesheet.start.error: 'Nie można uruchomić rejestrowania czasu'
+timesheet.start.exceeded_limit: 'Limit aktywnych jednoczesnych pomiarów czasu został osiągnięty , proszę zatrzymać przynajmniej jedną aktywność.'
+timesheet.start.success: 'Rejestrowanie czasu uruchomione'
+timesheet.stop.error: 'Nie mozna zatrzymać rejestrowania czasu'
+timesheet.stop.success: 'Rejestrowanie czasu zatrzymane'
+warning: Uwaga

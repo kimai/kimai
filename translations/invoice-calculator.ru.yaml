@@ -1,0 +1,8 @@
+activity: 'Activity: one entry per activity'
+date: 'Date: one entry per day (uses start date)'
+default: 'Почасовая основа (стандартная)'
+label.invoice_calculator: 'Суммарный учет'
+project: 'Project: one entry per project'
+short: 'Почасовая основа - сокращенная версия (только одна запись)'
+user: 'User: one entry per user'
+weekly: 'Weekly: one entry per week (uses start date)'

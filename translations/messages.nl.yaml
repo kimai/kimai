@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Toegestaan karakter: A-Z en _'
+ROLE_ADMIN: Beheerder
+ROLE_SUPER_ADMIN: Systeembeheerder
+ROLE_TEAMLEAD: Leidinggevende
+ROLE_USER: Gebruiker
+'This is a mandatory field': 'Dit is een verplicht veld'
+action.back: Vorige
+action.close: Sluiten
+action.delete: Verwijderen
+action.edit: Bewerken
+action.reset: Reset
+action.save: Opslaan
+active.entries: 'Uw lopende tijden'
+admin_activity.short_stats: "\nDe activiteit %activity% in het project %project% voor de klant %customer% telt %records% geregistreerde tijden met een totale duur van %duration%.\n"
+admin_activity.title: Activiteiten
+admin_customer.short_stats: "\nMomenteel heeft %customer% %project% projecten met %activity% activiteiten, wat opgeteld %records% geregistreerde tijden met een totale duur van %duration% opleverd.\n"
+admin_customer.title: Klanten
+admin_entity.delete_confirm: 'Deze gegevens zullen ook worden verwijderd! U kunt ook een invoer selecteren waarnaar alle gegevens worden overgedragen:'
+admin_invoice_template.title: Factuursjabloon
+admin_project.short_stats: "\nHet project %project% voor klant %customer% telt %activities% activiteiten en %records% geregistreerde tijden met een totale duur van %duration%.\n"
+admin_project.title: Projecten
+admin_timesheet.title: Prestaties
+admin_user.short_stats: "\n%user% heeft %records% geregistreerde tijden met een totale duur van %duration%.\n"
+admin_user.title: Gebruikers
+agendaDay: Dag
+agendaWeek: Week
+attachments: Bestanden
+both: Beiden
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Voorbeeld
+button.preview_print: Afdrukvoorbeeld
+button.print: Afdrukken
+button.xlsx: Excel
+calendar.title: Agenda
+cancel: Annuleren
+confirm: Bevestigen
+confirm.delete: 'Weet u zeker dat u het wilt verwijderen?'
+create: creëer
+dashboard.all: 'Alle Gebruikers'
+dashboard.subtitle: Welkom!
+dashboard.title: Overzicht
+delete.not_in_use: 'Dit item kan zonder problemen verwijderd worden.'
+entryState.all: Alles
+entryState.exported: Gefactureerd
+entryState.not_exported: 'Niet gefactureerd'
+entryState.running: Lopend
+entryState.stopped: Gestopt
+error.no_comments_found: 'Er zijn nog geen opmerkingen geplaatst.'
+error.no_entries_found: 'De door u gekozen filter geeft geen resultaten.'
+export.clear_all: 'De weergegeven tijden markeren als niet gefactureerd?'
+export.date_copyright: 'Gemaakt op %date% met %kimai%'
+export.document_title: 'Lijst van uitgaven'
+export.filter: 'Filter gegevens voor export'
+export.full_list: 'Volledige lijst'
+export.mark_all: 'De weergegeven tijden markeren als gefactureerd?'
+export.page_of: 'Pagina %page% van %pages%'
+export.period: Periode
+export.subtitle: 'Exporteer prestaties in verschillende bestandsformaten'
+export.summary: Samenvatting
+export.title: Exporteren
+help.batch_meta_fields: 'Velden die moeten worden bijgewerkt, moeten eerst worden geactiveerd door op het bijbehorende selectievakje te klikken.'
+help.fixedRate: 'Elke tijdsinvoer krijgt dezelfde waarde, ongeacht de duur ervan'
+help.rate: 'Te berekenen uurtarief'
+help.rate_internal: 'Interne kosten (indien dit niet wordt gespecificeerd, wordt het normale tarief gebruikt)'
+invoice.due_days: Vervaldatum
+invoice.filter: 'Filter op factuurdatum'
+invoice.from: Van
+invoice.number: Factuurnummer
+invoice.service_date: Ontvangstdatum
+invoice.signature_customer: 'Bevestiging: Datum / Naam cliënt / Handtekening'
+invoice.signature_user: 'Bevestiging: Datum / Naam consultant / Handtekening'
+invoice.subtotal: 'Subtotaal (MvH)'
+invoice.tax: BTW
+invoice.title: 'Facturen maken'
+invoice.to: Aan
+invoice.total: Totaal
+invoice.total_working_time: Totaalduur
+invoice_print: Factuur
+label.actions: Acties
+label.active: Actief
+label.activity: Activiteit
+label.address: Adres
+label.alias: Naam
+label.amount: Aantal
+label.api_token: 'API wachtwoord'
+label.api_token_repeat: 'Herhaal API wachtwoord'
+label.appendTags: 'Voeg labels toe'
+label.avatar: Profielfoto
+label.batch_meta_fields: 'Aanvullende velden'
+label.begin: Van
+label.billable: Declarabel
+label.budget: Budget
+label.calendar.initial_view: 'Standaard agendaweergave'
+label.color: Kleur
+label.comment: Opmerking
+label.company: Bedrijfsnaam
+label.contact: Contact
+label.country: Land
+label.create_more: 'Meer items aanmaken'
+label.currency: Valuta
+label.customer: Klant
+label.date: Datum
+label.daterange: Tijdsbestek
+label.decimalDuration: 'Toon decimale tijdsduur'
+label.description: Beschrijving
+label.due_days: 'Betaaltermijn in dagen'
+label.duration: Duur
+label.email: E-mail
+label.end: Tot
+label.endtime: Einde
+label.entryState: Tijden
+label.exported: Gefactureerd
+label.fax: Fax
+label.fixedRate: 'Vast bedrag'
+label.globalsOnly: 'Enkel algemene'
+label.homepage: Website
+label.hourlyRate: Uurtarief
+label.hourly_rate: Uurtarief
+label.hours: Uren
+label.id: ID
+label.invoice_bank_account: Bankrekening
+label.invoice_tax_number: 'BTW-nr.:'
+label.language: Taal
+label.lastLogin: 'Laatste login'
+label.login.initial_view: 'Weergeven na aanmelding'
+label.logout: Uitloggen
+label.mark_as_exported: 'Markeer als gefactureerd'
+label.mobile: Mobiel
+label.my_team_projects: 'Team projecten'
+label.my_teams: 'Mijn Teams'
+label.name: Naam
+label.number: Rekening
+label.orderDate: Besteldatum
+label.orderNumber: Dossiernummer
+label.pageSize: 'Aantal per pagina'
+label.password: Wachtwoord
+label.password_repeat: 'Herhaal Wachtwoord'
+label.payment_terms: Betalingsvoorwaarden
+label.phone: Telefoon
+label.plus_more: '+%count% meer'
+label.progress: Voortgang
+label.project: Project
+label.project_end: 'Project eind'
+label.project_start: 'Project start'
+label.rate: Tarief
+label.rate_internal: 'Intern tarief'
+label.recalculate_rates: 'Tarieven herberekenen'
+label.replaceTags: 'Vervang labels'
+label.required_version: 'Compatibel met'
+label.roles: Rechten
+label.skin: Kleurenschema
+label.starttime: Begin
+label.status: Status
+label.tag: Label
+label.tags: Labels
+label.team: Team
+label.teamlead: Teamleider
+label.template: Sjabloon
+label.theme.collapsed_sidebar: 'Minimaliseer het linkermenu'
+label.theme.layout: 'Weergave: indeling'
+label.timeBudget: Tijdsbudget
+label.timesheet.daily_stats: 'Geef het dagtotaal weer in "Mijn tijden"'
+label.timesheet.export_decimal: 'Gebruik decimale duur bij export'
+label.timezone: Tijdzone
+label.title: Titel
+label.toggle_dropdown: 'Toon menu'
+label.total_rate: Totaalprijs
+label.unit_price: Eenheidsprijs
+label.user: Gebruiker
+label.user_profile: 'Mijn profiel'
+label.username: Gebruikersnaam
+label.vat: BTW
+label.vat_id: Btw-nummer
+label.version: Versie
+label.visible: Zichtbaar
+login_required: 'Ontbrekende rechten. Terug naar het aanmeldscherm?'
+menu.admin: Beheer
+menu.admin_activity: Activiteiten
+menu.admin_customer: Klanten
+menu.admin_project: Projecten
+menu.admin_team: Teams
+menu.admin_timesheet: Prestaties
+menu.admin_user: Gebruikers
+menu.doctor: Dokter
+menu.export: Exporteren
+menu.homepage: Overzicht
+menu.invoice: Facturen
+menu.logout: Afmelden
+menu.plugin: Plugins
+menu.reporting: Rapportage
+menu.system: Systeem
+menu.system_configuration: Instellingen
+menu.tags: Labels
+menu.timesheet: 'Mijn tijden'
+modal.columns.description: 'Deze instellingen worden opgeslagen in een cookie. Als u uw cookies wist, verdwijnt uw kolomselectie.'
+modal.columns.title: 'Selecteer zichtbare kolommen'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Maand
+more.info.link: 'Meer informatie'
+my.profile: 'Mijn profiel'
+'no': Nee
+placeholder.type_message: 'Typ uw bericht...'
+profile.about_me: 'Over mezelf'
+profile.api-token: API
+profile.first_entry: 'Aan het werk sinds'
+profile.password: Wachtwoord
+profile.preferences: Voorkeuren
+profile.registration_date: 'Geregistreerd op'
+profile.roles: Rollen
+profile.settings: Profiel
+profile.teams: Teams
+profile.title: 'Mijn profiel'
+rates.empty: 'Er zijn nog geen kosten geconfigureerd.'
+rates.title: Kosten
+recent.activities: "\nHerstart een van uw laatste activiteiten\n"
+recent.activities.format: '%activity% in %project% voor %customer%'
+search: Zoeken
+stats.activeRecordings: 'Lopende tijden'
+stats.activityTotal: Activiteiten
+stats.amountMonth: 'Omzet deze maand'
+stats.amountToday: 'Omzet vandaag'
+stats.amountTotal: 'Totale omzet'
+stats.amountWeek: 'Omzet deze week'
+stats.amountYear: 'Omzet dit jaar'
+stats.customerTotal: Klanten
+stats.durationMonth: 'Geregistreerde tijden deze maand'
+stats.durationToday: 'Geregistreerde tijden vandaag'
+stats.durationTotal: 'Totale geregistreerde tijden'
+stats.durationWeek: 'Geregistreerde tijden deze week'
+stats.durationYear: 'Geregistreerde tijden dit jaar'
+stats.percentUsed: '%percent%% gebruikt'
+stats.percentUsedLeft: '%percent%% gebruikt (nog %left% over)'
+stats.projectTotal: Projecten
+stats.userActiveMonth: 'Actieve gebruikers deze maand'
+stats.userActiveToday: 'Actieve gebruikers vandaag'
+stats.userActiveTotal: 'Actieve gebruikers ooit'
+stats.userActiveWeek: 'Actieve gebruikers deze week'
+stats.userActiveYear: 'Actieve gebruikers dit jaar'
+stats.userTotal: Gebruikers
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: 'Vandaag, %day%'
+stats.workingTimeWeek: 'Kalenderweek %week%'
+stats.workingTimeYear: 'Volledig jaar %year%'
+stats.yourWorkingHours: 'Mijn werktijden'
+status.new: Nieuw
+status.paid: Betaald
+status.pending: 'In afwachting van'
+sum.total: Totaal
+theme.update_browser_title: 'Update browser title'
+time_tracking: Tijdregistratie
+timesheet.all: 'Naar "Mijn tijden"'
+timesheet.edit: 'Tijden bewerken'
+timesheet.start: 'Nieuwe teller starten'
+timesheet.title: 'Mijn tijden'
+update_multiple: '%action% %count% boekingen?'
+upload: Upload
+user_permissions.title: Gebruikersrechten
+user_role.title: gebruikersrol
+'yes': Ja

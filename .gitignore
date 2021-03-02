@@ -4,6 +4,8 @@
 
 .idea/
 .DS_Store
+/nbproject/*
+.github
 
 # for symfony local webserver
 php.ini
@@ -69,4 +71,3 @@ translations/branding.en.xlf
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-/nbproject/*

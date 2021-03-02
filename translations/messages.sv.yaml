@@ -1,0 +1,263 @@
+'Allowed character: A-Z and _': 'Allowed character: A-Z and _'
+ROLE_ADMIN: Administratör
+ROLE_SUPER_ADMIN: System-Admin
+ROLE_TEAMLEAD: Teamledare
+ROLE_USER: Användare
+'This is a mandatory field': 'Detta är ett obligatoriskt fält'
+action.back: Tillbaka
+action.close: Stäng
+action.delete: 'Ta bort'
+action.edit: Ändra
+action.reset: __action.reset
+action.save: Spara
+active.entries: 'Dina aktiva tidsmätningar'
+admin_activity.short_stats: "\nFör närvarande har aktiviteten %activity% i projektet %project% för kunden %customer%\nhar %records% tidrapporter, vilket summeras till %duration%.\n"
+admin_activity.title: Aktiviteter
+admin_customer.short_stats: "\nFör närvarande har kunden %customer% %project% projekt med %activities% aktiviteter,\nmed %records% tidrapporter som summeras till %duration%.\n"
+admin_customer.title: Kunder
+admin_entity.delete_confirm: "\nDenna data kommer också att raderas!\nAlternativt kan du välja en post som alla data ska överföras till:\n"
+admin_invoice_template.title: Fakturamall
+admin_project.short_stats: "Projektet %project% för kunden %customer% har för närvarande %activities% \naktiviteter och %records% tidrapporter, som summeras till %duration%.\n"
+admin_project.title: Projekt
+admin_timesheet.title: Tidrapporter
+admin_user.short_stats: "\nFör närvarande har användaren %user% %records% tidrapporter som summeras till %duration%.\n"
+admin_user.title: Användare
+agendaDay: Dag
+agendaWeek: Vecka
+attachments: Filer
+both: båda
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Preview
+button.preview_print: 'Print preview'
+button.print: 'Skriv ut'
+button.xlsx: Excel
+calendar.title: Kalender
+cancel: Avbryt
+confirm: Bekräfta
+confirm.delete: 'Vill du verkligen ta bort detta?'
+create: Skapa
+dashboard.all: 'Alla användare'
+dashboard.subtitle: Välkommen!
+dashboard.title: Dashboard
+delete.not_in_use: 'Det här objektet kan raderas säkert.'
+entryState.all: Alla
+entryState.exported: Rensad
+entryState.not_exported: Öppen
+entryState.running: Aktiv
+entryState.stopped: Stoppad
+error.no_comments_found: 'Det finns inga kommentarer uppladdade ännu.'
+error.no_entries_found: 'Inga poster hittades baserat på dina valda filter.'
+export.clear_all: 'Markera alla visade poster som öppna?'
+export.date_copyright: 'Skapad %date% med %kimai%'
+export.document_title: 'Export av tidrapporter'
+export.filter: __export.filter
+export.full_list: 'Full lista'
+export.mark_all: 'Markera alla visade poster som rensade?'
+export.page_of: 'Sida %page% av %pages%'
+export.period: Period
+export.subtitle: 'Exportera tidrapport till olika format'
+export.summary: Sammanfattning
+export.title: Exportera
+help.batch_meta_fields: 'Fields that are to be updated must first be activated by clicking on the associated checkbox.'
+help.fixedRate: 'Each time record gets the same value, regardless of its duration'
+help.rate: 'Timpris som ska debiteras'
+help.rate_internal: 'Interna kostnader (om detta inte specificeras så kommer normala priset att användas)'
+invoice.due_days: Förfallodatum
+invoice.filter: __invoice.filter
+invoice.from: Från
+invoice.number: Fakturanummer
+invoice.service_date: Arbetstillfälle
+invoice.signature_customer: 'Bekräftelse: Datum / Kundens namn / Signatur'
+invoice.signature_user: 'Bekräftelse: Datum / Säljarens namn / Signatur'
+invoice.subtotal: Nettobelopp
+invoice.tax: Moms
+invoice.title: Fakturor
+invoice.to: Till
+invoice.total: Totalt
+invoice.total_working_time: 'Total arbetstid'
+invoice_print: Faktura
+label.actions: Åtgärd
+label.active: Aktiv
+label.activity: Aktivitet
+label.address: Adress
+label.alias: Namn
+label.amount: Antal
+label.api_token: 'API lösenord'
+label.api_token_repeat: 'Upprepa API lösenord'
+label.appendTags: 'Append tags'
+label.avatar: Profilbild
+label.batch_meta_fields: 'Additional fields'
+label.begin: Från
+label.billable: Billable
+label.budget: Budget
+label.calendar.initial_view: 'Initial kalendervy'
+label.color: Color
+label.comment: Kommentar
+label.company: Företagsnamn
+label.contact: Kontakt
+label.country: Land
+label.create_more: 'Skapa ytterligare poster'
+label.currency: Valuta
+label.customer: Kund
+label.date: Datum
+label.daterange: Tidsintervall
+label.decimalDuration: 'Display duration as decimal number'
+label.description: Beskrivning
+label.due_days: 'Betalningsperiod i dagar'
+label.duration: Varaktighet
+label.email: E-post
+label.end: till
+label.endtime: Slutet
+label.entryState: Post
+label.exported: Exporterad
+label.fax: Fax
+label.fixedRate: 'Fast pris'
+label.globalsOnly: 'Endast globalt'
+label.homepage: Hemsida
+label.hourlyRate: Timpris
+label.hourly_rate: Timpris
+label.hours: Timmar
+label.id: ID
+label.invoice_bank_account: Bankkonto
+label.invoice_tax_number: 'VAT nr.:'
+label.language: Språk
+label.lastLogin: 'Last login'
+label.login.initial_view: 'Initial vy efter inloggning'
+label.logout: 'Logga ut'
+label.mark_as_exported: 'Mark as exported'
+label.mobile: Mobil
+label.my_team_projects: 'Team projects & budgets'
+label.my_teams: __label.my_teams
+label.name: Namn
+label.number: Konto
+label.orderDate: __label.orderDate
+label.orderNumber: Ordernummer
+label.pageSize: Pappersstorlek
+label.password: Lösenord
+label.password_repeat: 'Upprepa lösenord'
+label.payment_terms: Betalningsvillkor
+label.phone: Telefon
+label.plus_more: __label.plus_more
+label.progress: Progress
+label.project: Projekt
+label.project_end: __label.project_end
+label.project_start: __label.project_start
+label.rate: Pris
+label.rate_internal: 'Internt värde'
+label.recalculate_rates: 'Omberäkna priser'
+label.replaceTags: 'Replace tags'
+label.required_version: 'Kompatibel med'
+label.roles: Roll
+label.skin: Kimai-Tema
+label.starttime: Början
+label.status: Status
+label.tag: Taggar
+label.tags: Taggar
+label.team: Lag
+label.teamlead: Lagledare
+label.template: Mail
+label.theme.collapsed_sidebar: 'Minimera vänster sidofält'
+label.theme.layout: 'Skärm: layout'
+label.timeBudget: Tidsbudget
+label.timesheet.daily_stats: 'Visa daglig statistik i tidtabell'
+label.timesheet.export_decimal: 'Use decimal duration in export'
+label.timezone: Timezon
+label.title: Titel
+label.toggle_dropdown: 'Visa meny'
+label.total_rate: Belopp
+label.unit_price: Enhetspris
+label.user: Användare
+label.user_profile: 'Min profil'
+label.username: Username
+label.vat: Moms
+label.vat_id: __label.vat_id
+label.version: Version
+label.visible: Synlig
+login_required: 'Behörighet saknas. Omdirigera till inloggning?'
+menu.admin: Administration
+menu.admin_activity: Aktiviteter
+menu.admin_customer: Kund
+menu.admin_project: Projekt
+menu.admin_team: Lag
+menu.admin_timesheet: Tidsschema
+menu.admin_user: Användare
+menu.doctor: Doktor
+menu.export: Exportera
+menu.homepage: Dashboard
+menu.invoice: Fakturor
+menu.logout: 'Logga ut'
+menu.plugin: Plugins
+menu.reporting: Rapportera
+menu.system: System
+menu.system_configuration: Systeminställningar
+menu.tags: Taggar
+menu.timesheet: 'Min tidsredovisning'
+modal.columns.description: 'När du sparar de kolumner som inte är markerade kommer de att döljas och den här inställningen lagras i en webbläsarkaka. Om du tar bort dina cookies kommer inställningarna att återställas.'
+modal.columns.title: 'Ändra kolumnns synlighet'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Månad
+more.info.link: 'Mer info'
+my.profile: 'Min profil'
+'no': Nej
+placeholder.type_message: __placeholder.type_message
+profile.about_me: 'Om mig'
+profile.api-token: API
+profile.first_entry: 'Arbetat sedan'
+profile.password: Lösenord
+profile.preferences: Inställningar
+profile.registration_date: __profile.registration_date
+profile.roles: Roller
+profile.settings: Profil
+profile.teams: __profile.teams
+profile.title: Användarprofil
+rates.empty: 'Inga avgifter har konfigurerats ännu.'
+rates.title: Avgifter
+recent.activities: 'Starta om en av dina senaste aktiviteter'
+recent.activities.format: '%activity% i %project% för %customer%'
+search: Sök
+stats.activeRecordings: 'Aktiva poster'
+stats.activityTotal: 'Antal aktiviter'
+stats.amountMonth: 'Intäkter denna månad'
+stats.amountToday: 'Intäkter idag'
+stats.amountTotal: 'Inkomster totalt'
+stats.amountWeek: 'Intäkter denna vecka'
+stats.amountYear: 'Intäkter i år'
+stats.customerTotal: 'Antal kunder'
+stats.durationMonth: 'Arbetstimmar denna månaden'
+stats.durationToday: 'Arbetstimmar idag'
+stats.durationTotal: 'Arbetstid totalt'
+stats.durationWeek: 'Arbetstimmar denna veckan'
+stats.durationYear: 'Arbetstimmar detta året'
+stats.percentUsed: __stats.percentUsed
+stats.percentUsedLeft: __stats.percentUsedLeft
+stats.projectTotal: 'Antal projekt'
+stats.userActiveMonth: 'Aktiva användare den här månaden'
+stats.userActiveToday: 'Aktiva användare idag'
+stats.userActiveTotal: 'Aktiva användare någonsin'
+stats.userActiveWeek: 'Aktiva användare den här veckan'
+stats.userActiveYear: 'Aktiva användare i år'
+stats.userTotal: 'Antal användare'
+stats.workingTimeMonth: __stats.workingTimeMonth
+stats.workingTimeToday: __stats.workingTimeToday
+stats.workingTimeWeek: __stats.workingTimeWeek
+stats.workingTimeYear: __stats.workingTimeYear
+stats.yourWorkingHours: 'My working hours'
+status.new: __status.new
+status.paid: __status.paid
+status.pending: __status.pending
+sum.total: Total
+theme.update_browser_title: 'Update browser title'
+time_tracking: Tidsredovisning
+timesheet.all: 'Visa alla Poster'
+timesheet.edit: 'Ändra post'
+timesheet.start: 'Skapa ny tidrapport'
+timesheet.title: 'Mina tidsredovisningar'
+update_multiple: __update_multiple
+upload: 'Ladda upp'
+user_permissions.title: 'User permissions'
+user_role.title: __user_role.title
+'yes': Ja
+profile.tab_monthly: 'Årlig statistik'
+label.now: 'aktuell tid'

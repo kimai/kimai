@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'İzin verilen karakterler: A-Z ve _'
+ROLE_ADMIN: Yönetici
+ROLE_SUPER_ADMIN: Sistem-Yöneticisi
+ROLE_TEAMLEAD: 'Takım lideri'
+ROLE_USER: Kullanıcı
+'This is a mandatory field': Zorunlu
+action.back: Geri
+action.close: Kapat
+action.delete: Sil
+action.edit: Düzenle
+action.reset: Sıfırla
+action.save: Kaydet
+active.entries: 'Aktif zaman ölçümleriniz'
+admin_activity.short_stats: 'Şu anda %project% projesindeki %activity% etkinliği %customer% müşterisi için %records% kayda sahip, toplamı %duration%.'
+admin_activity.title: Etkinlikler
+admin_customer.short_stats: 'Şu anda %customer% müşterisi %project% projeye ve %activity% etkinliğe sahip, %records% adet kayıt ve toplam %duration%.'
+admin_customer.title: Müşteri
+admin_entity.delete_confirm: "\nBu veriler de silinecek!\nBunun yerine, bu verilerin aktarılacağı kaydı seçebilirsiniz:\n"
+admin_invoice_template.title: 'Fatura şablonu'
+admin_project.short_stats: 'Şu anda %project% projesi %customer% müşterisi için %activities% etkinliğe ve %records% kayda sahip, toplamı %duration%.'
+admin_project.title: Projeler
+admin_timesheet.title: Çizelgeler
+admin_user.short_stats: "\nŞu anda %user% kullanıcısı %records% adet kayda sahip, toplamı %duration%.\n"
+admin_user.title: Kullanıcı
+agendaDay: Gün
+agendaWeek: Hafta
+attachments: Dosyalar
+both: İkisi
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Önizleme
+button.preview_print: 'Baskı ön izleme'
+button.print: Yazdır
+button.xlsx: Excel
+calendar.title: Takvim
+cancel: İptal
+confirm: Onayla
+confirm.delete: 'Silmek istiyor musunuz?'
+create: Oluştur
+dashboard.all: 'Tüm kullanıcılar'
+dashboard.subtitle: Hoşgeldiniz!
+dashboard.title: 'Kontrol paneli'
+delete.not_in_use: 'Bu öğe güvenle silinebilir.'
+entryState.all: Tümü
+entryState.exported: Temizlendi
+entryState.not_exported: Aktarılmadı
+entryState.running: Aktif
+entryState.stopped: Durduruldu
+error.no_comments_found: 'Henüz gönderilmiş bir yorum yok.'
+error.no_entries_found: 'Filtrelerinize uygun kayıt bulunamadı.'
+export.clear_all: 'Gösterilen tüm kayıtları aktarılmadı olarak işaretle?'
+export.date_copyright: '%date% tarihinde %kimai% ile oluşturuldu'
+export.document_title: 'Masraf listesi'
+export.filter: 'Dışa aktarma için veriyi filtrele'
+export.full_list: 'Tam liste'
+export.mark_all: 'Gösterilen tüm kayıtları temizlendi olarak işaretle?'
+export.page_of: 'Sayfa %page% toplam %pages%'
+export.period: Dönem
+export.subtitle: 'Çizelgeyi farklı biçimlerde dışa aktar'
+export.summary: Özet
+export.title: 'Dışa aktar'
+help.batch_meta_fields: 'Güncellenecek alanlar önce ilgili onay kutusuna tıklanarak etkinleştirilmelidir.'
+help.fixedRate: 'Süresi ne olursa olsun her kayıt aynı değeri alır'
+help.rate: 'Alınacak saatlik ücret'
+help.rate_internal: 'Dahili maliyetler (bu belirtilmemişse, normal ücret kullanılır)'
+invoice.due_days: 'Ödeme hedefi'
+invoice.filter: 'Fatura verilerini filtrele'
+invoice.from: Başlangıç
+invoice.number: 'Fatura numarası'
+invoice.service_date: 'Servis tarihi'
+invoice.signature_customer: 'Onay: Tarih / Müşteri / İmza'
+invoice.signature_user: 'Onay: Tarih / Danışman / İmza'
+invoice.subtotal: 'Alt toplam'
+invoice.tax: Vergi
+invoice.title: Faturalar
+invoice.to: Bitiş
+invoice.total: Toplam
+invoice.total_working_time: 'Toplam süre'
+invoice_print: Fatura
+label.actions: Hareketler
+label.active: Aktif
+label.activity: Etkinlik
+label.address: Adres
+label.alias: Ad
+label.amount: Mİktar
+label.api_token: 'API parolası'
+label.api_token_repeat: 'API parolasını tekrarla'
+label.appendTags: 'Etiketleri ekle'
+label.avatar: 'Profil resmi'
+label.batch_meta_fields: 'Ek alanlar'
+label.begin: Başlangıç
+label.billable: Faturalandırılabilir
+label.budget: Bütçe
+label.calendar.initial_view: 'İlk takvim görünümü'
+label.color: Renk
+label.comment: Yorum
+label.company: 'Şirket adı'
+label.contact: İletişim
+label.country: Ülke
+label.create_more: 'Kayıtlar oluşturmaya devam et'
+label.currency: 'Para birimi'
+label.customer: Müşteri
+label.date: Tarih
+label.daterange: 'Zaman aralığı'
+label.decimalDuration: 'Süreyi ondalık sayı olarak göster'
+label.description: Açıklama
+label.due_days: 'Ödeme vadesi gün olarak'
+label.duration: Süre
+label.email: Eposta
+label.end: Bitiş
+label.endtime: Bitiş
+label.entryState: Kayıtlar
+label.exported: Aktarıldı
+label.fax: Faks
+label.fixedRate: 'Sabit ücret'
+label.globalsOnly: 'Yalnızca genel'
+label.homepage: Anasayfa
+label.hourlyRate: 'Saatlik ücret'
+label.hourly_rate: 'Saatlik ücret'
+label.hours: Saatler
+label.id: ID
+label.invoice_bank_account: 'Banka hesabı'
+label.invoice_tax_number: 'Vergi no:'
+label.language: Dil
+label.lastLogin: 'Son oturum açma'
+label.login.initial_view: 'Giriş sonrası ilk görünüm'
+label.logout: Çıkış
+label.mark_as_exported: 'Aktarıldı olarak işaretle'
+label.mobile: Cep
+label.my_team_projects: 'Takım projeleri ve bütçeleri'
+label.my_teams: Takımlarım
+label.name: Ad
+label.number: Hesap
+label.orderDate: 'Sipariş tarihi'
+label.orderNumber: 'Sipariş numarası'
+label.pageSize: 'Sayfa büyüklüğü'
+label.password: Parola
+label.password_repeat: 'Parolayı tekrarla'
+label.payment_terms: 'Ödeme vadeleri'
+label.phone: Telefon
+label.plus_more: '+%count% devamı'
+label.progress: Aşama
+label.project: Proje
+label.project_end: 'Proje bitişi'
+label.project_start: 'Proje başlangıcı'
+label.rate: Ücret
+label.rate_internal: 'Dahili ücret'
+label.recalculate_rates: 'Ücretleri yeniden hesapla'
+label.replaceTags: 'Etiketleri değiştir'
+label.required_version: 'Şununla uyumlu'
+label.roles: Rol
+label.skin: 'Ekran: renkler'
+label.starttime: Başlangıç
+label.status: Durum
+label.tag: Etiketler
+label.tags: Etiketler
+label.team: Takım
+label.teamlead: 'Takım lideri'
+label.template: Şablon
+label.theme.collapsed_sidebar: 'Kenar çubuğunu küçült'
+label.theme.layout: 'Ekran: düzen'
+label.timeBudget: 'Zaman bütçesi'
+label.timesheet.daily_stats: 'Çizelgede günlük istatistikleri göster'
+label.timesheet.export_decimal: 'Dışa aktarmada ondalık süre kullan'
+label.timezone: 'Saat dilim'
+label.title: Başlık
+label.toggle_dropdown: 'Menüyü göster'
+label.total_rate: 'Toplam fiyat'
+label.unit_price: 'Birim fiyat'
+label.user: Kullanıcı
+label.user_profile: Profilim
+label.username: Kullanıcı
+label.vat: Vergi
+label.vat_id: 'KDV kimlik numarası'
+label.version: Versiyon
+label.visible: Görünür
+login_required: 'İzin gerekli. Giriş sayfasına git?'
+menu.admin: Yönetim
+menu.admin_activity: Etkinlikler
+menu.admin_customer: Müşteriler
+menu.admin_project: Projeler
+menu.admin_team: Takımlar
+menu.admin_timesheet: Çizelgeler
+menu.admin_user: Kullanıcılar
+menu.doctor: Doktor
+menu.export: 'Dışarı aktar'
+menu.homepage: 'Kontrol paneli'
+menu.invoice: Faturalar
+menu.logout: Çıkış
+menu.plugin: Eklentiler
+menu.reporting: Raporlama
+menu.system: Sistem
+menu.system_configuration: Ayarlar
+menu.tags: Etiketler
+menu.timesheet: Çizelgem
+modal.columns.description: 'Seçili olmayan sütunları kaydettiğinizde sütunlar gizlenir ve bu tarayıcı çerezlerinde saklanır. Çerezlerinizi temizlediğinizde ayarlarınız geri yüklenir.'
+modal.columns.title: 'Sütün görünürlüğünü değiştir'
+modal.dirty: 'Form değişti. Değişiklikleri kaydetmek için "Kaydet" düğmesine, veya iptal etmek için "Kapat" düğmesine tıklayın.'
+month: Ay
+more.info.link: 'Daha fazla'
+my.profile: Profilim
+'no': Hayır
+placeholder.type_message: 'Mesajınızı yazın...'
+profile.about_me: Hakkımda
+profile.api-token: API
+profile.first_entry: 'Şu günden beri çalışıyor'
+profile.password: Parola
+profile.preferences: Ayarlar
+profile.registration_date: 'Kayıt tarihi'
+profile.roles: Roller
+profile.settings: Profil
+profile.teams: Takımlar
+profile.title: 'Kullanıcı profili'
+rates.empty: 'Henüz hiçbir ücret yapılandırılmadı.'
+rates.title: Ücretler
+recent.activities: 'Son etkinliklerinizden birini yeniden başlat'
+recent.activities.format: '%customer% için %project% projede %activity% etkinlik'
+search: Ara
+stats.activeRecordings: 'Aktif kayıtlar'
+stats.activityTotal: Etkinlikler
+stats.amountMonth: 'Ayın geliri'
+stats.amountToday: 'Günün geliri'
+stats.amountTotal: 'Toplam gelir'
+stats.amountWeek: 'Haftanın geliri'
+stats.amountYear: 'Yılın geliri'
+stats.customerTotal: Müşteriler
+stats.durationMonth: 'Ayın çalışma saatleri'
+stats.durationToday: 'Bugünün çalışma saatleri'
+stats.durationTotal: 'Toplam çalışma saati'
+stats.durationWeek: 'Haftanın çalışma saatleri'
+stats.durationYear: 'Yılın çalışma saatleri'
+stats.percentUsed: '%%percent% kullanıldı'
+stats.percentUsedLeft: '%%percent% kullanıldı (%left% hala açık)'
+stats.projectTotal: Projeler
+stats.userActiveMonth: 'Ayın aktif kullanıcıları'
+stats.userActiveToday: 'Bugünkü aktif kullanıcılar'
+stats.userActiveTotal: 'Tüm aktif kullanıcılar'
+stats.userActiveWeek: 'Haftanın aktif kullanıcıları'
+stats.userActiveYear: 'Yılın aktif kullanıcıları'
+stats.userTotal: Kullanıcılar
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: 'Bugün, %day%'
+stats.workingTimeWeek: 'Takvim haftası %week%'
+stats.workingTimeYear: 'Tam yıl %year%'
+stats.yourWorkingHours: 'Çalışma saatlerim'
+status.new: Yeni
+status.paid: Ödendi
+status.pending: Bekliyor
+sum.total: Toplam
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Zaman İzleme'
+timesheet.all: 'Tüm kayıtları göster'
+timesheet.edit: 'Kaydı düzenle'
+timesheet.start: 'Yeni kayıt oluştur'
+timesheet.title: Çizelgem
+update_multiple: '%count% kaydı %action%?'
+upload: 'Karşıya yükle'
+user_permissions.title: 'Kullanıcı izinleri'
+user_role.title: 'Kullanıcı rolü'
+'yes': Evet

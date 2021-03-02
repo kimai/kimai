@@ -1,0 +1,4 @@
+plugin.marketplace: 'Tienda de Kimai'
+plugin.none_installed: 'Aún no tiene ningún complemento instalado.'
+plugins.subtitle: 'Puede mejorar la funcionalidad de Kimai con complementos'
+plugins.title: Complementos

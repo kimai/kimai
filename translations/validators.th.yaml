@@ -1,0 +1,137 @@
+'A PHP extension caused the upload to fail.': 'PHP extension เกี่ยวกับการอัปโหลดมีปัญหา'
+'An empty file is not allowed.': ไม่อนุญาตให้ใช้ไฟล์ว่าง
+'Cannot write temporary file to disk.': 'ไม่สามารถเขียน temp ไฟล์ลงดิสก์ได้'
+'Each element of this collection should satisfy its own set of constraints.': สมากชิกแต่ละตัวในคอเล็กชั่นควรเป็นไปตามเซ็ตข้อจำกัดของคอเล็กชั่น
+'End date must not be earlier then start date.': 'End date must not be earlier then start date.'
+Error: เกิดข้อผิดพลาด
+'Invalid card number.': หมายเลขบัตรไม่ถูกต้อง
+'No file was uploaded.': ไม่มีไฟล์ใดถูกอัปโหลด
+'No temporary folder was configured in php.ini.': 'ไม่พบไฟล์ temp ควรจะกำหนดใน php.ini'
+'One or more of the given values is invalid.': มีบางค่าที่ส่งมาไม่ถูกต้อง
+'Please choose a valid date interval.': กรุณณากรอกช่วงวันที่ที่ถูกต้อง
+'Please enter a number.': กรุณากรอกตัวเลข
+'Please enter a percentage value.': กรุณากรอกค่าเปอร์เซ็นต์
+'Please enter a valid URL.': 'กรุณากรอก URL ที่ถูกต้อง'
+'Please enter a valid birthdate.': กรุณากรอกวันเดือนปีเกิดที่ถูกต้อง
+'Please enter a valid date and time.': กรุณณากรอกค่าเวลาและวันที่ที่ถูกต้อง
+'Please enter a valid date.': กรุณณากรอกค่าวันที่ที่ถูกต้อง
+'Please enter a valid email address.': กรุณากรอกที่อยู่อีเมล์ที่ถูกต้อง
+'Please enter a valid money amount.': กรุณากรอกจำนวนเงินที่ถูกต้อง
+'Please enter a valid search term.': กรุณากรอกคำค้นหาที่ถูกต้อง
+'Please enter a valid time.': กรุณากรอกค่าเวลาที่ถูกต้อง
+'Please enter a valid week.': กรุณากรอกค่าสัปดาห์ที่ถูกต้อง
+'Please enter an integer.': กรุณากรอกตัวเลขจำนวนเต็ม
+'Please provide a valid phone number.': กรุณากรอกเบอร์โทรศัพท์ที่ถูกต้อง
+'Please select a valid color.': กรุณาเลือกค่าสีที่ถูกต้อง
+'Please select a valid country.': กรุณาเลือกประเทศที่ถูกต้อง
+'Please select a valid currency.': กรุุณาเลิอกค่าสกุลเงินที่ถูกต้อง
+'Please select a valid file.': กรุณาเลือกไฟล์ที่ถูกต้อง
+'Please select a valid language.': กรุณาเลือกภาษาที่ถูกต้อง
+'Please select a valid locale.': กรุณาเลือกท้องถิ่นที่ถูกต้อง
+'Please select a valid option.': กรุณาเลือกตัวเลือกที่ถูกต้อง
+'Please select a valid range.': กรุณาเลือกค่าช่วงที่ถูกต้อง
+'Please select a valid timezone.': กรุณาเลือกค่าเขตเวลาที่ถูกต้อง
+'The CSRF token is invalid. Please try to resubmit the form.': 'CSRF token ไม่ถูกต้อง กรุณาลองส่งแบบฟอร์มใหม่'
+'The begin date cannot be in the future.': 'The begin date cannot be in the future.'
+'The checkbox has an invalid value.': 'Checkbox มีค่าที่ไม่ถูกต้อง'
+'The collection is invalid.': คอเล็กชั่นไม่ถูกต้อง
+'The file could not be found.': ไม่พบไฟล์
+'The file could not be uploaded.': ไม่สามารถอัปโหลดไฟล์ได้
+'The file is not readable.': ไฟล์ไม่อยู่ในสถานะที่สามารถอ่านได้
+'The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.': 'ไฟล์ใหญ่เกิน ({{ size }} {{ suffix }}) อนุญาตให้ใหญ่ที่สุดได้ไม่เกิน {{ limit }} {{ suffix }}'
+'The file is too large.': ขนาดไฟล์ใหญ่เกินไป
+'The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.': 'ขนาดไฟล์ใหญ่เกินไป อนุญาตให้ไฟล์ขนาดใหญ่ได้ไม่เกิน {{ limit }} {{ suffix }}'
+'The file was only partially uploaded.': อัปโหลดไฟล์ได้เพียงบางส่วนเท่านั้น
+'The given value is not a valid time.': 'The given value is not a valid time.'
+'The hidden field is invalid.': 'ค่า Hidden field ไม่ถูกต้อง'
+'The host could not be resolved.': ไม่สามารถแก้ไขชื่อโฮสต์
+'The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.': 'ความสูงของภาพเกินขนาด ({{ height }}px) อนุญาตให้สูงได้มากที่สุด {{ max_height }}px'
+'The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.': 'ความสูงของภาพไม่ได้ขนาด ({{ height }}px) อนุญาตให้สูงอย่างน้อยที่สุด {{ min_height }}px'
+'The image is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented images are not allowed.': 'ภาพนี้เป็นแนวนอน ({{ width }}x{{ height }}px) ไม่อนุญาตภาพที่เป็นแนวนอน'
+'The image is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented images are not allowed.': 'ภาพนี้เป็นแนวตั้ง ({{ width }}x{{ height }}px) ไม่อนุญาตภาพที่เป็นแนวตั้ง'
+'The image is square ({{ width }}x{{ height }}px). Square images are not allowed.': 'รูปภาพเป็นจุตรัส ({{ width }}x{{ height }}px) ไม่อนุญาตภาพที่เป็นสี่เหลี่ยมจตุรัส'
+'The image ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.': 'สัดส่วนของภาพใหญ่เกิน ({{ ratio }}) สามารถมีขนาดใหญ่ที่สุดได้ {{ max_ratio }}'
+'The image ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.': 'สัดส่วนของภาพเล็กเกิน ({{ ratio }}) สามารถมีขนาดเล็กที่สุดได้ {{ min_ratio }}'
+'The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.': 'ความกว้างของภาพเกินขนาด ({{ width }}px) อนุญาตให้กว้างได้มากที่สุด {{ max_width }}px'
+'The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.': 'ความกว้างของภาพไม่ได้ขนาด ({{ width }}px) อนุญาตให้สั้นที่สุด {{ min_width }}px'
+'The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.': 'Mime type ของไฟล์ไม่ถูกต้อง ({{ type }}) Mime types ที่อนุญาตคือ {{ types }}'
+'The number of elements in this collection should be a multiple of {{ compared_value }}.': 'จำนวนของสมาชิกในคอเล็กชั่นควรเป็นพหุคูณของ {{ compared_value }}'
+'The password is invalid.': รหัสผ่านไม่ถูกต้อง
+'The selected choice is invalid.': ตัวเลือกที่เลิอกไม่ถูกต้อง
+'The size of the image could not be detected.': ไม่สามารถตรวจสอบขนาดไฟล์ของภาพได้
+'The two values should be equal.': ค่าทั้งสองค่าควรจะเหมือนกัน
+'The uploaded file was too large. Please try to upload a smaller file.': 'ไฟล์ที่อัพโหลดมีขนาดใหญ่เกินไป กรุณาลองอัพโหลดใหม่อีกครั้งด้วยไฟล์ที่มีขนาดเล็กลง'
+'The value you selected is not a valid choice.': คุณเลือกค่าที่ไม่ตรงกับตัวเลือก
+'The values do not match.': ค่าทั้งสองไม่ตรงกัน
+'This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.': 'รหัสสำหรับระบุธุรกิจนี้ (BIC) ไม่เกี่ยวข้องกับ IBAN {{ iban }}'
+'This collection should contain exactly {{ limit }} element.|This collection should contain exactly {{ limit }} elements.': 'คอเล็กชั่นนี้ควรจะมีสมาชิก {{ limit }} เท่านั้น'
+'This collection should contain only unique elements.': คอเล็กชั่นนี้ควรมีเฉพาะสมาชิกที่ไม่ซ้ำกันเท่านั้น
+'This collection should contain {{ limit }} element or less.|This collection should contain {{ limit }} elements or less.': 'คอเล็กชั่นนี้ไม่ควรมีสมาชิกเกิน {{ limit }}'
+'This collection should contain {{ limit }} element or more.|This collection should contain {{ limit }} elements or more.': 'คอเล็กชั่นนี้ควรจะประกอบไปด้วยอย่างน้อย {{ limit }} สมาชิก'
+'This field is missing.': ฟิลด์นี้จะหายไป
+'This field was not expected.': ฟิลด์นี้ที่ไม่ได้คาดหวัง
+'This file is not a valid image.': ไฟล์นี้ไม่ใช่ไฟล์รูปภาพ
+'This form should not contain extra fields.': 'ฟอร์มนี้ไม่ควรมี extra fields'
+'This invoice document cannot be used, please rename the file and upload it again.': 'This invoice document cannot be used, please rename the file and upload it again.'
+'This is not a valid Business Identifier Code (BIC).': 'นี่ไม่ถูกต้องตามรหัสสำหรับระบุธุรกิจนี้ (BIC)'
+'This is not a valid IP address.': 'ค่าของ IP ไม่ถูกต้อง'
+'This is not a valid International Bank Account Number (IBAN).': 'นี่ไม่ถูกต้องตาม International Bank Account Number (IBAN)'
+'This is not a valid UUID.': 'นี่ไม่ใช่ UUID ที่ถูกต้อง'
+'This password has been leaked in a data breach, it must not be used. Please use another password.': 'รหัสผ่านนี้ได้เคยรั่วไหลออกไปโดยถูกการละเมิดข้อมูล ซึ่งไม่ควรนำกลับมาใช้ กรุณาใช้รหัสผ่านอื่น'
+'This period is locked, please choose a later date.': 'This period is locked, please choose a later date.'
+'This value does not match the expected {{ charset }} charset.': 'ค่านี้ไม่ตรงกับการเข้ารหัส {{ charset }}'
+'This value is already used.': ค่านี้ถูกใช้งานไปแล้ว
+'This value is neither a valid ISBN-10 nor a valid ISBN-13.': 'ค่านี้ไม่ถูกต้องตามทั้ง ISBN-10 และ ISBN-13'
+'This value is not a valid HTML5 color.': 'ค่านี้ไม่ใช่ค่าที่ถูกต้องของค่าสี HTML5'
+'This value is not a valid ISBN-10.': 'ค่านี้ไม่ถูกต้องตาม ISBN-10'
+'This value is not a valid ISBN-13.': 'ค่านี้ไม่ถูกต้องตาม ISBN-13'
+'This value is not a valid ISSN.': 'ค่านี้ไม่ถุกต้องตาม ISSN'
+'This value is not a valid International Securities Identification Number (ISIN).': 'ค่า​รหัสหลักทรัพย์สากล (ISIN) ไม่ถูกต้อง'
+'This value is not a valid URL.': 'ค่าของ URL ไม่ถูกต้อง'
+'This value is not a valid country.': ค่าของประเทศไม่ถูกต้อง
+'This value is not a valid currency.': ค่านี้ไม่ถูกต้องตามสกุลเงิน
+'This value is not a valid date.': ค่าของวันที่ไม่ถูกต้อง
+'This value is not a valid datetime.': ค่าของวันที่และเวลาไม่ถูกต้อง
+'This value is not a valid email address.': ค่าของอีเมล์ไม่ถูกต้อง
+'This value is not a valid hostname.': ค่าโฮสต์เนมไม่ถูกต้อง
+'This value is not a valid language.': ค่าของภาษาไม่ถูกต้อง
+'This value is not a valid locale.': 'ค่าของภูมิภาค (Locale) ไม่ถูกต้อง'
+'This value is not a valid role.': 'This value is not a valid role.'
+'This value is not a valid time.': ค่าของเวลาไม่ถูกต้อง
+'This value is not a valid timezone.': ค่าเขตเวลาไม่ถูกต้อง
+'This value is not valid.': ค่านี้ไม่ถูกต้อง
+'This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.': 'ค่านี้ยาวเกินไป ควรจะมีแค่ {{ limit }} ตัวอักษรหรือน้อยกว่านั้น'
+'This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.': 'ค่านี้สั้นเกินไป ควรจะมี {{ limit }} ตัวอักษรหรือมากกว่านั้น'
+'This value should be a multiple of {{ compared_value }}.': 'ค่านี้ควรเป็น {{ compared_value }} หลายตัว'
+'This value should be a valid number.': ค่าของตัวเลขไม่ถูกต้อง
+'This value should be between {{ min }} and {{ max }}.': 'ค่านี้ควรอยู่ระหว่าง {{ min }} ถึง {{ max }}'
+'This value should be blank.': ควรจะเป็นค่าว่าง
+'This value should be either negative or zero.': ค่านี้ควรเป็นค่าลบหรือค่าศูนย์
+'This value should be either positive or zero.': ค่านี้ควรเป็นค่าบวกหรือค่าศูนย์
+'This value should be equal to {{ compared_value }}.': 'ค่านี้ไม่ตรงกับ {{ compared_value }}'
+'This value should be false.': 'ค่านี้ควรจะเป็น false'
+'This value should be greater than or equal to {{ compared_value }}.': 'ค่านี้ควรจะมากกว่าหรือตรงกับ {{ compared_value }}'
+'This value should be greater than {{ compared_value }}.': 'ค่านี้ควรจะมากกว่า {{ compared_value }}'
+'This value should be identical to {{ compared_value_type }} {{ compared_value }}.': 'ค่านี้ควรจะเหมือนกันกับ {{ compared_value_type }} {{ compared_value }}'
+'This value should be less than or equal to {{ compared_value }}.': 'ค่านี้ควรจะน้อยกว่าหรือเท่ากับ {{ compared_value }}'
+'This value should be less than {{ compared_value }}.': 'ค่านี้ควรจะน้อยกว่า {{ compared_value }}'
+'This value should be negative.': ค่านี้ควรเป็นค่าลบ
+'This value should be null.': 'ค่านี้ควรเป็นค่า null'
+'This value should be of type {{ type }}.': 'ค่านี้ควรจะเป็นชนิด {{ type }}'
+'This value should be positive.': ค่านี้ควรเป็นค่าบวก
+'This value should be the user''s current password.': ค่านี้ควรจะเป็นรหัสผ่านปัจจุบันของผู้ใช้
+'This value should be true.': 'ค่านี้ควรจะเป็น true'
+'This value should be valid JSON.': 'ค่านี้ควรอยู่ในรูปแบบ JSON ที่ถูกต้อง'
+'This value should be {{ limit }} or less.': 'ค่านี้ควรจะเป็น {{ limit }} หรือน้อยกว่านั้น'
+'This value should be {{ limit }} or more.': 'ค่านี้ควรจะมี {{ limit }} หรือมากกว่านั้น'
+'This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }} characters.': 'ค่านี้ควรจะมีความยาว {{ limit }} ตัวอักษร'
+'This value should not be blank.': ค่านี้ไม่ควรเป็นค่าว่าง
+'This value should not be equal to {{ compared_value }}.': 'ค่านี้ไม่ควรเท่ากันกับ {{ compared_value }}'
+'This value should not be identical to {{ compared_value_type }} {{ compared_value }}.': 'ค่านี้ไม่ควรเหมือนกันกับ {{ compared_value_type }} {{ compared_value }}'
+'This value should not be null.': 'ค่านี้ไม่ควรเป็นค่า null'
+'This value should satisfy at least one of the following constraints:': 'ค่านี้ควรเป็นไปตามข้อจำกัดอย่างน้อยหนึ่งข้อจากข้อจำกัดเหล่านี้:'
+'Unsupported card type or invalid card number.': 'ไม่รู้จักประเภทของบัตร หรือหมายเลขบัตรไม่ถูกต้อง'
+'You already have an entry for this time.': 'You already have an entry for this time.'
+'You must select at least one user or team.': 'You must select at least one user or team.'
+'You must select at least {{ limit }} choice.|You must select at least {{ limit }} choices.': 'คุณต้องเลือกอย่างน้อย {{ limit }} ตัวเลือก'
+'You must select at most {{ limit }} choice.|You must select at most {{ limit }} choices.': 'คุณเลือกได้มากที่สุด {{ limit }} ตัวเลือก'

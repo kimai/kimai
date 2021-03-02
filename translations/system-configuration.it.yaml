@@ -1,0 +1,60 @@
+Ceil: 'Massimo: Inizio, fine e durata saranno arrotondati per eccesso'
+Closest: 'Più vicino: arrotondamento matematico al valore più vicino'
+Default: 'Standard: L''inizio sarà arrotondato per difetto e la durata per eccesso'
+Floor: 'Minimo: Inizio, fine e durata saranno arrotondati per difetto'
+Friday: Venerdì
+Monday: Lunedì
+Saturday: Sabato
+Sunday: Domenica
+Thursday: Giovedì
+Tuesday: Martedì
+Wednesday: Mercoledì
+branding: Branding
+calendar: Calendario
+first_weekday: 'First day of the week'
+form_customer: 'Creazione clienti - valori di default'
+form_user: 'Valori utente di default'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Invoices
+label.calendar.businessHours.begin: 'Inizio del normale orario di lavoro (verrà evidenziato)'
+label.calendar.businessHours.end: 'Fine del normale orario di lavoro (verrà evidenziato)'
+label.calendar.slot_duration: 'Grandezza griglia per viste settimanale e giornaliera'
+label.calendar.visibleHours.begin: 'Inizio intervallo di tempo visibile'
+label.calendar.visibleHours.end: 'Fine intervallo di tempo visibile'
+label.calendar.week_numbers: 'Visualizza numero della settimana'
+label.calendar.weekends: 'Visualizza fine settimana'
+label.invoice.number_format: 'Invoice number format'
+label.simple_form: 'Simple search'
+label.theme.autocomplete_chars: 'Numero minimo di caratteri per iniziare l''autocompletamento'
+label.theme.branding.company: Azienda
+label.theme.branding.logo: 'Logo (URL immagine, login screen)'
+label.theme.branding.mini: 'Mini Logo (barra laterale)'
+label.theme.branding.title: 'Titolo mostrato nel browser'
+label.theme.markdown_content: 'Permetti la formattazione con markdown in descrizione e commenti'
+label.theme.tags_create: 'Tags: use auto-complete search and allow tag creation'
+label.timesheet.active_entries.hard_limit: 'Numero di attività simultanee permesse'
+label.timesheet.active_entries.soft_limit: 'Numero di attività in corso per cui visualizzare un avvertimento'
+label.timesheet.default_begin: 'Default start-time (not used in all timetracking modes)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'Modalità di tracciamento del tempo'
+label.timesheet.mode_default: '[Default] permetti modifica dell''orario di inizio e fine'
+label.timesheet.mode_duration_fixed_begin: '[Durata] Orario di inizio fisso configurabile, durata modificabile'
+label.timesheet.mode_duration_only: '[Durata] Sostituisci orario fine attività con la sua durata'
+label.timesheet.mode_punch: '[Orologio] utenti possono solo utilizzare start e stop e non possono modificare la durata'
+label.timesheet.rounding.default.begin: 'Arrotondamento dell''orario di inizio in minuti (0 = disattivato)'
+label.timesheet.rounding.default.days: 'Giorni della settimana per applicazione arrotondamento'
+label.timesheet.rounding.default.duration: 'Arrotondamento della durata in minuti (0 = disattivato)'
+label.timesheet.rounding.default.end: 'Arrotondamento dell''orario di fine in minuti (0 = disattivato)'
+label.timesheet.rounding.default.mode: 'Modalità di arrotondamento'
+label.timesheet.rules.allow_future_times: 'Permetti inserimenti dati nel futuro'
+label.timesheet.rules.allow_overlapping_records: 'Allow overlapping time entries'
+label.timesheet.rules.lockdown_grace_period: 'Lockdown grace period end (PHP relative date to lockdown period end)'
+label.timesheet.rules.lockdown_period_end: 'Lockdown period end (PHP relative date to now)'
+label.timesheet.rules.lockdown_period_start: 'Lockdown period start (PHP relative date to now)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'Arrotondamento orario'
+subtitle: 'Cambia le impostazioni globali di tracciamento del tempo'
+theme: Tema
+timesheet: 'Scheda attività'
+title: Impostazioni

@@ -1,0 +1,60 @@
+Ceil: 'Округление к большему: начало, конец и продолжительность будут округлены к большему'
+Closest: 'Ближайшее: математическое округление до ближайшего значения'
+Default: 'Стандартно: начало будет округлено к меньшему, конец и продолжительность к верхнему'
+Floor: 'Округление к меньшему: начало, конец и продолжительность будут округлены к меньшему'
+Friday: Пятница
+Monday: Понедельник
+Saturday: Суббота
+Sunday: Воскресенье
+Thursday: Четверг
+Tuesday: Вторник
+Wednesday: Среда
+branding: Брендинг
+calendar: Календарь
+first_weekday: 'Первый день недели'
+form_customer: 'Создать клиента — значения по умолчанию'
+form_user: 'Пользователь — значения по умолчанию'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Счета
+label.calendar.businessHours.begin: 'Начало нормального рабочего времени (будет подсвечено)'
+label.calendar.businessHours.end: 'Конец нормального рабочего времени (будет подсвечено)'
+label.calendar.slot_duration: 'Длительность слота для просмотра в течение недели и дня (формат: чч:мм:сс)'
+label.calendar.visibleHours.begin: 'Начало видимого диапазона времени'
+label.calendar.visibleHours.end: 'Конец видимого диапазона времени'
+label.calendar.week_numbers: 'Отображать номера недель'
+label.calendar.weekends: 'Отображать выходные'
+label.invoice.number_format: 'Формат номера счёта'
+label.simple_form: 'Простой поиск'
+label.theme.autocomplete_chars: 'Минимальное количество букв для старта автозавершения'
+label.theme.branding.company: Компания
+label.theme.branding.logo: 'Лого (ссылка на картинку, замещает компанию на странице авторизации)'
+label.theme.branding.mini: 'Мини лого (свернутая боковая панель)'
+label.theme.branding.title: 'Заголовок окна браузера'
+label.theme.markdown_content: 'Разрешить markdown-форматирование в описаниях и комментариях'
+label.theme.tags_create: 'Тэги: использовать автозавершение поиска и разрешить создание тэга'
+label.timesheet.active_entries.hard_limit: 'Разрешенное количество одновременно запущенных таймеров'
+label.timesheet.active_entries.soft_limit: 'Количество запущенных таймеров, после которого отображается предупреждение'
+label.timesheet.default_begin: 'Время запуска по умолчанию (не используется во всех режимах составления расписания)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'Режим счетчика времени'
+label.timesheet.mode_default: '[По умолчанию] время начала и конца можно редактировать'
+label.timesheet.mode_duration_fixed_begin: '[Длительность] фиксирование время начала, только длительность может быть изменена'
+label.timesheet.mode_duration_only: '[Длительность] заменять конечное время из поля длительности'
+label.timesheet.mode_punch: '[Часы] пользователь может начинать и останавливать записи, но не может изменять время или длительность'
+label.timesheet.rounding.default.begin: 'Округление времени старта в минутах (0 = деактивировано)'
+label.timesheet.rounding.default.days: 'Дни недели, когда будет применяться округление'
+label.timesheet.rounding.default.duration: 'Округление длительности в минутах (0 = деактивировано)'
+label.timesheet.rounding.default.end: 'Округление времени окончания в минутах (0 = деактивировано)'
+label.timesheet.rounding.default.mode: 'Режим округления'
+label.timesheet.rules.allow_future_times: 'Разрешить временные значения в будущем'
+label.timesheet.rules.allow_overlapping_records: 'Разрешить перекрывать время записей'
+label.timesheet.rules.lockdown_grace_period: 'Конец льготного периода блокировки (PHP относительная дата окончания периода блокировки)'
+label.timesheet.rules.lockdown_period_end: 'Конец периода блокировки (PHP относительная дата на данный момент)'
+label.timesheet.rules.lockdown_period_start: 'Зафиксировать период старта (Относительная дата PHP до настоящего времени)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'Округление времени'
+subtitle: 'Редактирование глобальных параметров вашего счетчика времени'
+theme: Тема
+timesheet: Расписание
+title: Настройки

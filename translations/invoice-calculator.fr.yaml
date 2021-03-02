@@ -1,0 +1,8 @@
+activity: 'Groupe d''activités - une entrée par activité'
+date: 'Date: one entry per day (uses start date)'
+default: 'Tarifs horaires (par defaut)'
+label.invoice_calculator: 'Calcul du total'
+project: 'Project: one entry per project'
+short: 'Tarifs horaires particuliers (seulement pour un enregistrement)'
+user: 'Groupe d''utilisateurs - une entrée par utilisateur'
+weekly: 'Weekly: one entry per week (uses start date)'

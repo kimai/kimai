@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Caractere permitido: A-Z e _'
+ROLE_ADMIN: Administrador
+ROLE_SUPER_ADMIN: 'Administrador do Sistema'
+ROLE_TEAMLEAD: 'Líder da equipe'
+ROLE_USER: Usuário
+'This is a mandatory field': Obrigatório
+action.back: Voltar
+action.close: Fechar
+action.delete: Deletar
+action.edit: Editar
+action.reset: Restaurar
+action.save: Salvar
+active.entries: 'Suas medições de tempo ativo'
+admin_activity.short_stats: "\nAtualmente o %project% para o cliente %customer% tem %activities%\natividades e %records% registros de tempo, que contam até um total de %duration%.\n"
+admin_activity.title: Atividades
+admin_customer.short_stats: "\nAtualmente o %project% para o cliente %customer% tem %activities%\natividades e %records% registros de tempo, que contam até um total de %duration%.\n"
+admin_customer.title: Cliente
+admin_entity.delete_confirm: "\nEsses dados também serão excluídos!\nAlternativamente, você pode selecionar um registro para qual todos os dados serão transferidos:\n"
+admin_invoice_template.title: 'Modelo de fatura'
+admin_project.short_stats: "\nAtualmente o %project% para o cliente %customer% tem %activities%\natividades e %records% registros de tempo, que contam até um total de %duration%.\n"
+admin_project.title: Projetos
+admin_timesheet.title: 'Quadro de Horários'
+admin_user.short_stats: "\nAtualmente o usuário %user% possuí %records% registros de tempo, que contam até um total de %duration%.\n"
+admin_user.title: Usuário
+agendaDay: Dia
+agendaWeek: Semana
+attachments: Arquivos
+both: Ambos
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Visualizar
+button.preview_print: 'Visualização de impressão'
+button.print: Imprimir
+button.xlsx: Excel
+calendar.title: Calendário
+cancel: Cancelar
+confirm: Confirmar
+confirm.delete: 'Você realmente quer deletar?'
+create: Criar
+dashboard.all: 'Todos usuários'
+dashboard.subtitle: 'Bem vindo!'
+dashboard.title: Dashboard
+delete.not_in_use: 'Esse registro pode ser excluído com segurança.'
+entryState.all: Tudo
+entryState.exported: Desmarcado
+entryState.not_exported: Aberto
+entryState.running: Ativos
+entryState.stopped: Parado
+error.no_comments_found: 'Não houve nenhum comentários postados ainda.'
+error.no_entries_found: 'Não foram encontradas entradas com base nos filtros selecionados.'
+export.clear_all: 'Marcar todos os registros mostrados como aberto?'
+export.date_copyright: 'Criado %date% com %kimai%'
+export.document_title: 'Lista de despesas'
+export.filter: 'Filtrar dados para exportação'
+export.full_list: 'Lista completa'
+export.mark_all: 'Marcar todos os registros mostrados como resolvido?'
+export.page_of: 'Página %page% de %pages%'
+export.period: Período
+export.subtitle: 'Exportar dados do quadro de horários para vários formatos'
+export.summary: Sumário
+export.title: Exportar
+help.batch_meta_fields: 'Os campos a serem atualizados devem primeiro ser ativados clicando na caixa de seleção associada.'
+help.fixedRate: 'Cada registro de cada vez recebe o mesmo valor, independentemente de sua duração'
+help.rate: 'Taxa horária a ser cobrada'
+help.rate_internal: 'Custos internos (se isso não for especificado, a taxa normal é usada)'
+invoice.due_days: 'Alvo de pagamento'
+invoice.filter: 'Filtrar dados da fatura'
+invoice.from: De
+invoice.number: 'Número da Fatura'
+invoice.service_date: 'Data de serviço'
+invoice.signature_customer: 'Confirmação: Data / Nome do Cliente / Assinatura'
+invoice.signature_user: 'Confirmação: Data / Nome do Consultor / Assinatura'
+invoice.subtotal: Subtotal
+invoice.tax: Imposto
+invoice.title: Faturas
+invoice.to: Para
+invoice.total: Total
+invoice.total_working_time: 'Duração Total'
+invoice_print: Fatura
+label.actions: Ações
+label.active: Ativo
+label.activity: Atividade
+label.address: Endereço
+label.alias: Nome
+label.amount: Quantidade
+label.api_token: 'Senha API'
+label.api_token_repeat: 'Repita Senha da API'
+label.appendTags: 'Tags de apêndice'
+label.avatar: 'Imagem de perfil'
+label.batch_meta_fields: 'Campos adicionais'
+label.begin: De
+label.billable: Faturável
+label.budget: Despesas
+label.calendar.initial_view: 'Vista inicial do calendário'
+label.color: Cor
+label.comment: Comentário
+label.company: 'Nome da Empresa'
+label.contact: Contato
+label.country: País
+label.create_more: 'Criar outras entradas'
+label.currency: Moeda
+label.customer: Cliente
+label.date: Data
+label.daterange: 'Intervalo de tempo'
+label.decimalDuration: 'Duração da exibição como número decimal'
+label.description: Descrição
+label.due_days: 'Prazo de pagamento em dias'
+label.duration: Duração
+label.email: E-mail
+label.end: Para
+label.endtime: Fim
+label.entryState: Registros
+label.exported: Exportado
+label.fax: Fax
+label.fixedRate: 'Taxa fixa'
+label.globalsOnly: 'Somente global'
+label.homepage: 'Pagina inicial'
+label.hourlyRate: 'Taxa horária'
+label.hourly_rate: 'Taxa horária'
+label.hours: Horas
+label.id: ID
+label.invoice_bank_account: 'Conta Bancária'
+label.invoice_tax_number: 'VAT no. (Imposto Britânico):'
+label.language: Linguagem
+label.lastLogin: 'Último login'
+label.login.initial_view: 'Visualização inicial após o login'
+label.logout: Sair
+label.mark_as_exported: 'Marca como exportada'
+label.mobile: Celular
+label.my_team_projects: 'Projetos e orçamentos da equipe'
+label.my_teams: 'Minhas equipes'
+label.name: Nome
+label.number: Conta
+label.orderDate: 'Data do pedido'
+label.orderNumber: 'Número do pedido'
+label.pageSize: 'Tamanho do papel'
+label.password: Senha
+label.password_repeat: 'Repita a Senha'
+label.payment_terms: 'Termos de pagamento'
+label.phone: Telefone
+label.plus_more: '+%count% mais'
+label.progress: Progresso
+label.project: Projeto
+label.project_end: 'Fim do projeto'
+label.project_start: 'Início do projeto'
+label.rate: Taxa
+label.rate_internal: 'Taxa interna'
+label.recalculate_rates: 'Taxas de recalculação'
+label.replaceTags: 'Substituir tags'
+label.required_version: 'Compatível com'
+label.roles: Função
+label.skin: 'Tema Kimai'
+label.starttime: Início
+label.status: Status
+label.tag: Tags
+label.tags: Tags
+label.team: Equipe
+label.teamlead: 'Liderança de equipe'
+label.template: Modelo
+label.theme.collapsed_sidebar: 'Alterna o estado da barra lateral esquerda no carregamento da página (abrir ou recolher)'
+label.theme.layout: 'Exibição: layout'
+label.timeBudget: 'Orçamento de tempo'
+label.timesheet.daily_stats: 'Mostrar estatísticas diárias no quadro de horários'
+label.timesheet.export_decimal: 'Use a duração decimal na exportação'
+label.timezone: 'Fuso horário'
+label.title: Título
+label.toggle_dropdown: 'Mostrar menu'
+label.total_rate: 'Preço Total'
+label.unit_price: 'Preço unitário'
+label.user: Usuário
+label.user_profile: 'Meu Perfil'
+label.username: 'Nome de usuário'
+label.vat: Imposto
+label.vat_id: IVA-ID
+label.version: Versão
+label.visible: Visível
+login_required: 'Permissão ausente. Redirecionar para o login?'
+menu.admin: Administração
+menu.admin_activity: Atividades
+menu.admin_customer: Clientes
+menu.admin_project: Projetos
+menu.admin_team: Times
+menu.admin_timesheet: 'Quadro de Horários'
+menu.admin_user: Usuário
+menu.doctor: Doutor
+menu.export: Exportar
+menu.homepage: Painel
+menu.invoice: Faturas
+menu.logout: Sair
+menu.plugin: Plugins
+menu.reporting: Reportando
+menu.system: Sistema
+menu.system_configuration: Configurações
+menu.tags: Tags
+menu.timesheet: 'Meus tempos'
+modal.columns.description: 'Ao salvar, as colunas desmarcadas serão ocultadas e essa configuração será armazenada em um cookie do navegador. Se você excluir seus cookies, as configurações serão invertidas.'
+modal.columns.title: 'Alterar a visibilidade da coluna'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Mês
+more.info.link: 'Mais Informações'
+my.profile: 'Meu perfil'
+'no': Não
+placeholder.type_message: 'Digite sua mensagem...'
+profile.about_me: 'Sobre mim'
+profile.api-token: API
+profile.first_entry: 'Trabalhando desde'
+profile.password: Senha
+profile.preferences: Preferências
+profile.registration_date: 'Registrado em'
+profile.roles: Papéis
+profile.settings: Perfil
+profile.teams: Equipes
+profile.title: 'Perfil do Usuário'
+rates.empty: 'Nenhuma taxa foi configurada ainda.'
+rates.title: Taxas
+recent.activities: 'Reiniciar uma das suas últimas atividades'
+recent.activities.format: '%activity% no %project% para %customer%'
+search: Procurar
+stats.activeRecordings: 'Registros ativos'
+stats.activityTotal: 'Quantidade de atividades'
+stats.amountMonth: 'Receita este mês'
+stats.amountToday: 'Receita hoje'
+stats.amountTotal: 'Receita total'
+stats.amountWeek: 'Receita esta semana'
+stats.amountYear: 'Receita este ano'
+stats.customerTotal: 'Quantidade de clientes'
+stats.durationMonth: 'Horas de trabalho este mês'
+stats.durationToday: 'Horas de trabalho hoje'
+stats.durationTotal: 'Total de horas de trabalho'
+stats.durationWeek: 'Horas de trabalho esta semana'
+stats.durationYear: 'Horas de trabalho este ano'
+stats.percentUsed: '%percent%% usado'
+stats.percentUsedLeft: '%percent%% usado (%left% ainda estão abertos)'
+stats.projectTotal: 'Quantidade de projetos'
+stats.userActiveMonth: 'Usuários ativos este mês'
+stats.userActiveToday: 'Usuários ativos hoje'
+stats.userActiveTotal: 'Usuários ativos total'
+stats.userActiveWeek: 'Usuários ativos nesta semana'
+stats.userActiveYear: 'Usuários ativos este ano'
+stats.userTotal: 'Quantidade de usuários'
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: 'Hoje, %day%'
+stats.workingTimeWeek: 'Semana do calendário %week%'
+stats.workingTimeYear: 'Ano inteiro %year%'
+stats.yourWorkingHours: 'Seu horário de trabalho'
+status.new: Novo
+status.paid: Pago
+status.pending: Pendente
+sum.total: Total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Acompanhamento de tempo'
+timesheet.all: 'Mostrar todos os registros'
+timesheet.edit: 'Editar Gravação'
+timesheet.start: 'Criar novo registro de tempo'
+timesheet.title: 'Meus Tempos'
+update_multiple: '%action% %count% entradas?'
+upload: Enviar
+user_permissions.title: 'Permissões do usuário'
+user_role.title: 'Função do usuário'
+'yes': Sim

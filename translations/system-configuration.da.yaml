@@ -1,0 +1,60 @@
+Ceil: 'Ceil: start, slut, og varighed rundes op'
+Closest: 'Tætteste: matematisk afrunding til nærmeste værdi'
+Default: 'Standard: start rundes ned, og slut rundes op'
+Floor: 'Floor: start, slut, og varighed rundes ned'
+Friday: Fredag
+Monday: Mandag
+Saturday: Lørdag
+Sunday: Søndag
+Thursday: Torsdag
+Tuesday: Tirsdag
+Wednesday: Onsdag
+branding: Markedsføring
+calendar: Kalender
+first_weekday: 'First day of the week'
+form_customer: 'Opret standardværdier for kunder'
+form_user: 'Standardværdier for brugere'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Invoices
+label.calendar.businessHours.begin: 'Starttid for normale arbejdstider (fremhæves)'
+label.calendar.businessHours.end: 'Sluttid for normale arbejdstider (fremhæves)'
+label.calendar.slot_duration: 'Pladsvarighed for uge- og dagstilstande (format: hh:mm:ss)'
+label.calendar.visibleHours.begin: 'Start for synligt tidsinterval'
+label.calendar.visibleHours.end: 'Slut for synligt tidsinterval'
+label.calendar.week_numbers: 'Vis ugenumre'
+label.calendar.weekends: 'Vis weekender'
+label.invoice.number_format: 'Invoice number format'
+label.simple_form: 'Simple search'
+label.theme.autocomplete_chars: 'Minimum antal af bogstaver for at starte autofulførelse'
+label.theme.branding.company: Firma
+label.theme.branding.logo: 'Logo (Billede URL, erstatter firmalogoet i loginskærmen)'
+label.theme.branding.mini: 'Mini Logo (sammenfoldet sidebar)'
+label.theme.branding.title: 'Browser Titel'
+label.theme.markdown_content: 'Tillad markdownformattering i beskrivelser og kommentarer'
+label.theme.tags_create: 'Tags: use auto-complete search and allow tag creation'
+label.timesheet.active_entries.hard_limit: 'Tilladt antal af samtidigt kørende tidsregistreringer'
+label.timesheet.active_entries.soft_limit: 'Antal af kørende tidsregistreringer fra hvilket en advarsel vises'
+label.timesheet.default_begin: 'Default start-time (not used in all timetracking modes)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: Tidstrackingstilstand
+label.timesheet.mode_default: '[Standard] start- og sluttider kan redigeres'
+label.timesheet.mode_duration_fixed_begin: '[Varighed] konfigurerbar fast starttid, kun varighed kan ændres'
+label.timesheet.mode_duration_only: '[Varighed] erstatter sluttiden med et inputfelt til varighed'
+label.timesheet.mode_punch: '[Ur] bruger kan starte og stoppe registreringer, men kan ikke redigere tid eller varighed'
+label.timesheet.rounding.default.begin: 'Afrunding af starttid i minutter (0 = deaktiveret)'
+label.timesheet.rounding.default.days: 'Ugedage når afrunding er anvendt'
+label.timesheet.rounding.default.duration: 'Afrunding af varighed i minutter (0 = deaktiveret)'
+label.timesheet.rounding.default.end: 'Afrunding af sluttid i minutter (0 = deaktiveret)'
+label.timesheet.rounding.default.mode: Afrundingstilstand
+label.timesheet.rules.allow_future_times: 'Tillad tidsindlæg i fremtiden'
+label.timesheet.rules.allow_overlapping_records: 'Allow overlapping time entries'
+label.timesheet.rules.lockdown_grace_period: 'Lockdown grace period end (PHP relative date to lockdown period end)'
+label.timesheet.rules.lockdown_period_end: 'Lockdown period end (PHP relative date to now)'
+label.timesheet.rules.lockdown_period_start: 'Lockdown period start (PHP relative date to now)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: Tidsafrunding
+subtitle: 'Skift globale konfigureringer for din tidstracker'
+theme: Tema
+timesheet: Timeseddel
+title: Indstillinger

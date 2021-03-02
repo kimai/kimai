@@ -1,0 +1,9 @@
+access.denied: 'O acesso foi negado'
+http_error.description: 'Algo está errado'
+http_error.suggestion: 'Um erro crítico ocorreu, por favor tente novamente. Você pode ter encontrado um problema de software, entre em contato com o administrador se o problema persistir.'
+http_error.title: Erro
+http_error_403.description: 'Esta página é restrita'
+http_error_403.suggestion: 'Desculpe, mas você não tem permissões suficientes para ver esta página. Por favor, fale com seu administrador se achar que isso é um erro.'
+http_error_404.description: 'Página não encontrada'
+http_error_404.suggestion: 'Não conseguimos encontrar a página que você está buscando. Por favor, volte ao seu painel e comece de novo.'
+stacktrace: 'Um problema ocorreu aqui'

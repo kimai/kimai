@@ -1,0 +1,9 @@
+access.denied: アクセスが拒否されました
+http_error.description: エラーが発生しました。
+http_error.suggestion: "\n予期せぬエラーが発生しました。再試行してください。\nバグが存在する可能性があります。\nもし再試行しても問題が残るようでしたら、サーバーの管理者に連絡してください。\n"
+http_error.title: エラー
+http_error_403.description: このページへのアクセスは制限されています。
+http_error_403.suggestion: "\n残念ながら、あなたはこのページを表示するのに十分な権限をお持ちではありません。\nもしもエラーの可能性があるようでしたら、サーバーの管理者に連絡してください。\n"
+http_error_404.description: ページが見付かりませんでした。
+http_error_404.suggestion: "\nお探しのページを見付けることができませんでした。\nしばらくしてから、ダッシュボードからやり直してください。\n"
+stacktrace: ここで問題が発生しました

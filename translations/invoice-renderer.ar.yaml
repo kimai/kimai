@@ -1,0 +1,20 @@
+Docx: 'Microsoft Word (Docx)'
+Html: 'HTML (for printing via Browser)'
+Ods: 'Open Office (Spreadsheet)'
+Pdf: PDF
+Xls: 'Microsoft Excel (Xls)'
+Xlsx: 'Microsoft Excel (Xlsx)'
+company: 'فاتورة الشركة'
+default: 'الفاتورة (افتراضي)'
+default-pdf: Invoice
+freelancer: مستقل
+help.upload: 'Attention: existing files will be overwritten. Allowed file types are: DOCX, ODS, XLSX.'
+javascript: JSON
+label.invoice_renderer: 'مستند الفاتورة'
+open-spreadsheet: 'احسب جدول البيانات'
+programmatic: 'For further processing'
+spreadsheet: إكسيل
+text: Text
+timesheet: 'ورقة التوقيت'
+xml: XML
+export: 'تصدير البيانات'

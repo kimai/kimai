@@ -1,0 +1,9 @@
+access.denied: 'Acesso Negado'
+http_error.description: 'Um erro ocorreu'
+http_error.suggestion: 'Um erro inesperado aconteceu, favor tente novamente. Se deparou com um bug, favor contatar o administrador caso o problema se repita novamente.'
+http_error.title: Erro
+http_error_403.description: 'Esta página é restrita'
+http_error_403.suggestion: 'Desculpe, não tem permissões suficientes para ver esta página. Por favor, fale com o seu administrador se acha que isso é um erro.'
+http_error_404.description: 'Página não encontrada'
+http_error_404.suggestion: 'Não conseguimos encontrar a página que está a procurar. Por favor retorne ao dashboard e começe novamente.'
+stacktrace: 'Um problema ocorreu'

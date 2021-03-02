@@ -1,0 +1,9 @@
+access.denied: 'Käyttö estetty'
+http_error.description: 'Jokin meni pieleen'
+http_error.suggestion: "\nKriittinen virhe, yritä uudelleen.\nOlet saattanut löytää ohjelmistoon liittyvän ongelman, ota yhteyttä järjestelmänvalvojaan mikäli ongelma jatkuu.\n"
+http_error.title: Virhe
+http_error_403.description: 'Sivun käyttö on rajoitettu'
+http_error_403.suggestion: "\nPahoittelut, mutta sinulla ei ole riittäviä oikeuksia tarkastella tätä sivua.\nKeskustele järjestelmänvalvojasi kanssa, jos luulet että tässä on virhe.\n"
+http_error_404.description: 'Sivua ei löytynyt'
+http_error_404.suggestion: "\nHakemaasi sivua ei löytynyt.\nPalaa takaisin ohjauspaneeliin ja aloita alusta.\n"
+stacktrace: 'Ongelma tapahtui täällä'

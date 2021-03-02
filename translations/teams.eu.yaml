@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'The activity has limited access, because team permissions are set for the project and/or customer.'
+team.create_default: 'Talde berria sortu bahimenak mugatzeko'
+team.project_visibility_inherited: 'Proiektuak talde bati emandako bahimen mugak ditu.'
+team.visibility_global: 'Denontzat agerikoa. Talde bahimenik gabe.'
+team.visibility_restricted: 'Soilik ondorengo talde eta administratzaileei bahimendua.'
+teams.customer_access: 'Bezeroen kudeaketa bahimendu'
+teams.project_access: 'Proiektuen kudeaketa bahimendu'
+teams.title: Taldeak

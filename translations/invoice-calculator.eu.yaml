@@ -1,0 +1,8 @@
+activity: 'Jarduerak: bakoitzeko sarrera bat'
+date: 'Data: eguneko sarrera bat (hasierako egunetik aurrera)'
+default: 'Defektuz: erregistroko sarrera bat'
+label.invoice_calculator: Batuketa
+project: 'Proiektuak: bakoitzeko sarrera bat'
+short: 'Orduak: sarrera guztien batura'
+user: 'Erabiltzaileak: bakoitzeko sarrera bat'
+weekly: 'Weekly: one entry per week (uses start date)'

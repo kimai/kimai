@@ -1,0 +1,23 @@
+activity: '필터 활동들'
+back: 뒤로
+copy: '복사 생성'
+create-activity: '활동 생성 '
+create-project: '프로젝트 생성 '
+create-timesheet: '타임시트 생성 '
+create-timesheet-multiuser: '여러 사용자의 경우'
+customer: '필터 고객들 '
+details: 보이기
+download: 다운로드
+edit: '편집 '
+home: '홈페이지 '
+invoice.paid: '인보이스 지불'
+invoice.pending: '결제 대기 중'
+permissions: '팀 승인 '
+profile-stats: 통계
+project: '필터 프로젝트들 '
+repeat: 재시작
+report: '보고 '
+settings: '설정 '
+stop: 정지
+timesheet: 타임시트
+trash: '삭제 '

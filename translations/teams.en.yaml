@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'The activity has limited access, because team permissions are set for the project and/or customer.'
+team.create_default: 'Create a new team to limit access'
+team.project_visibility_inherited: 'The project has limited access, because team permissions are set for the customer.'
+team.visibility_global: 'Visible to everyone, as no team was assigned yet.'
+team.visibility_restricted: 'Only visible to the following teams and all admins.'
+teams.customer_access: 'Grant access to customers'
+teams.project_access: 'Grant access to projects'
+teams.title: Teams

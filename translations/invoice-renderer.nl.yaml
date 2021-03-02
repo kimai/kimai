@@ -1,0 +1,19 @@
+Docx: 'Microsoft Word (Docx)'
+Html: 'HTML (voor afdrukken via de Browser)'
+Ods: 'Open Office (Spreadsheet)'
+Pdf: PDF
+Xls: 'Microsoft Excel (Xls)'
+Xlsx: 'Microsoft Excel (Xlsx)'
+company: Bedrijfsfactuur
+default: Factuur
+default-pdf: Factuur
+freelancer: Freelancer
+help.upload: 'Attentie: Bestaande bestanden zullen overschreven worden. Toegestaande bestandstypes zijn: DOCX, ODS, XLSX.'
+javascript: JSON
+label.invoice_renderer: Factuurdocument
+open-spreadsheet: Factuur
+programmatic: 'Voor verdere verwerking'
+spreadsheet: Factuur
+text: Text
+timesheet: Tijdsregistratie
+xml: XML

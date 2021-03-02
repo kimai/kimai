@@ -1,0 +1,13 @@
+action.delete.error: 'Ezin izan da sarrera ezabatu: %reason%'
+action.delete.success: 'Sarrera ezabatua!'
+action.update.error: 'Azken aldaketak ezin izan dira gorde!! %reason%'
+action.update.success: 'Aldaketak gordeta'
+action.upload.error: 'The file could not be uploaded or saved: %reason%'
+invoice.first_template: 'Faktura eredu bat sortu behar duzu lehendabizi.'
+timesheet.locked.warning: 'Exportatutako sarrera bat aldatzen zaude'
+timesheet.start.error: 'Ezin izan da denbora abiarazi.'
+timesheet.start.exceeded_limit: 'Sarrera aktibo muga gainditu da. Jarrai nahi bazenu, gelditu beti sarreraren bat lehendabizi'
+timesheet.start.success: 'Denbora abiarazi da!'
+timesheet.stop.error: 'Ezin izan da denbora gelditu'
+timesheet.stop.success: 'Denbora gelditu da!'
+warning: Adi!

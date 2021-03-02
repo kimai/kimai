@@ -1,0 +1,60 @@
+Ceil: 'Tavan: başlangıç, bitiş ve süre yukarı yuvarlanacak'
+Closest: 'En yakın: en yakın değere matematiksel yuvarlama'
+Default: 'Standart: başlangıç aşağı, bitiş ve süre yukarı yuvarlanacak'
+Floor: 'Taban: başlangıç, bitiş ve süre aşağı yuvarlanacak'
+Friday: Cuma
+Monday: Pazartesi
+Saturday: Cumartesi
+Sunday: Pazar
+Thursday: Perşembe
+Tuesday: Salı
+Wednesday: Çarşamba
+branding: Marka
+calendar: Takvim
+first_weekday: 'Haftanın ilk günü'
+form_customer: 'Müşteri oluştur—öntanımlı değerler'
+form_user: 'Kullanıcı—öntanımlı değerler'
+increment_rounding: 'Yuvarlama kuralının yapılandırılan değerini kullan'
+invoice: Faturalar
+label.calendar.businessHours.begin: 'Normal mesai saati başlangıcı (vurgulanacak)'
+label.calendar.businessHours.end: 'Normal mesai saati bitişi (vurgulanacak)'
+label.calendar.slot_duration: 'Hafta ve gün görünümü için dilim süresi (biçim: ss:dd:ss)'
+label.calendar.visibleHours.begin: 'Görünür zaman aralığı başlangıcı'
+label.calendar.visibleHours.end: 'Görünür zaman aralığı bitişi'
+label.calendar.week_numbers: 'Hafta numaralarını göster'
+label.calendar.weekends: 'Hafta sonlarını göster'
+label.invoice.number_format: 'Fatura numarası biçimi'
+label.simple_form: 'Basit arama'
+label.theme.autocomplete_chars: 'Otomatik tamamlama için gerekli en az harf adedi'
+label.theme.branding.company: Şirket
+label.theme.branding.logo: 'Logo (Resim URL''si, giriş ekranındaki şirketin yerini alır)'
+label.theme.branding.mini: 'Küçük Logo (daraltılmış kenar çubuğu)'
+label.theme.branding.title: 'Tarayıcı Başlığı'
+label.theme.markdown_content: 'Yorum ve açıklamalarda markdown biçimine izin ver'
+label.theme.tags_create: 'Etiketler: aramada otomatik tamamlama kullan ve etiket oluşturmaya izin ver'
+label.timesheet.active_entries.hard_limit: 'İzin verilen eşzamanlı zaman kaydı sayısı'
+label.timesheet.active_entries.soft_limit: 'Bir uyarı görüntülenmeden önce çalışan zaman çizelgesi kayıtlarının sayısı'
+label.timesheet.default_begin: 'Öntanımlı başlangıç zamanı (tüm zaman izleme modlarında kullanılmaz)'
+label.timesheet.duration_increment: 'Süre için dakika seçimi'
+label.timesheet.mode: 'Zaman izleme modu'
+label.timesheet.mode_default: '[Öntanımlı] başlangıç ve bitiş zamanları düzenlenebilir'
+label.timesheet.mode_duration_fixed_begin: '[Süre] ayarlanabilir sabit başlangıç saati, yalnızca süre değiştirilebilir'
+label.timesheet.mode_duration_only: '[Süre] bitiş zamanını, süre alanıyla değiştirir'
+label.timesheet.mode_punch: '[Zaman saati] kullanıcı kayıtları başlatıp durdurabilir, ancak zamanı veya süreyi düzenleyemez'
+label.timesheet.rounding.default.begin: 'Başlangıç zamanının dakika cinsinden yuvarlanması (0 = devre dışı)'
+label.timesheet.rounding.default.days: 'Yuvarlamanın uygulanacağı haftanın günleri'
+label.timesheet.rounding.default.duration: 'Sürenin dakika cinsinden yuvarlanması (0 = devre dışı)'
+label.timesheet.rounding.default.end: 'Bitiş zamanının dakika cinsinden yuvarlanması (0 = devre dışı)'
+label.timesheet.rounding.default.mode: 'Yuvarlama modu'
+label.timesheet.rules.allow_future_times: 'Gelecekteki zaman kayıtlarına izin ver'
+label.timesheet.rules.allow_overlapping_records: 'Çakışan zaman kayıtlarına izin ver'
+label.timesheet.rules.lockdown_grace_period: 'Kilitleme geçiş dönemi bitişi (Kilitleme dönemi bitişine göre PHP tarihi)'
+label.timesheet.rules.lockdown_period_end: 'Kilitleme dönemi bitişi (Şimdiye göre PHP tarihi)'
+label.timesheet.rules.lockdown_period_start: 'Kilitleme dönemi başlangıcı (Şimdiye göre PHP tarihi)'
+label.timesheet.time_increment: 'Başlangıç & Bitiş için dakika seçimi'
+'off': Kapalı
+rounding: 'Zaman yuvarlama'
+subtitle: 'Zaman izleyicinizin genel yapılandırma ayarlarını değiştirin'
+theme: Tema
+timesheet: 'Zaman çizelgesi'
+title: Ayarlar

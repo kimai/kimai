@@ -1,0 +1,8 @@
+activity: 'Activity: one entry per activity'
+date: 'Date: one entry per day (uses start date)'
+default: 'Default: one entry per time record'
+label.invoice_calculator: 'Sum calculation'
+project: 'Project: one entry per project'
+short: 'Hours: records summed up, one entry total'
+user: 'User: one entry per user'
+weekly: 'Weekly: one entry per week (uses start date)'

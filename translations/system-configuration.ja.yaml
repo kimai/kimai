@@ -1,0 +1,60 @@
+Ceil: 'Ceil: begin, end and duration will be rounded up'
+Closest: 'Closest: mathematical rounding to the nearest value'
+Default: 'Standard: begin will be rounded down, end and duration up'
+Floor: 'Floor: begin, end and duration will be rounded down'
+Friday: Friday
+Monday: Monday
+Saturday: Saturday
+Sunday: Sunday
+Thursday: Thursday
+Tuesday: Tuesday
+Wednesday: Wednesday
+branding: Branding
+calendar: カレンダー
+first_weekday: 'First day of the week'
+form_customer: 得意先を追加する時のデフォルト値
+form_user: 'User—default values'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Invoices
+label.calendar.businessHours.begin: 業務時間の開始時刻（ハイライト表示）
+label.calendar.businessHours.end: 業務時間の終了時刻（ハイライト表示）
+label.calendar.slot_duration: 'Slot duration for week- and day view (format: hh:mm:ss)'
+label.calendar.visibleHours.begin: 表示可能な時間帯の開始時刻
+label.calendar.visibleHours.end: 表示可能な時間帯の終了時刻
+label.calendar.week_numbers: 週番号を表示する
+label.calendar.weekends: 週末を表示する
+label.invoice.number_format: 'Invoice number format'
+label.simple_form: 'Simple search'
+label.theme.autocomplete_chars: 'Minimum number of letters to start auto-completion'
+label.theme.branding.company: Company
+label.theme.branding.logo: 'Logo (Image URL, replaces the company in login screen)'
+label.theme.branding.mini: 'Mini Logo (collapsed sidebar)'
+label.theme.branding.title: 'Browser Title'
+label.theme.markdown_content: 'Markdown 形式で説明とコメントを書けるようにする'
+label.theme.tags_create: 'Tags: use auto-complete search and allow tag creation'
+label.timesheet.active_entries.hard_limit: 同じ期間内に同時進行のものとして記録可能とする明細の上限数
+label.timesheet.active_entries.soft_limit: 同時進行の明細記録がこちらの数を超える場合に警告を表示する
+label.timesheet.default_begin: 'Default start-time (not used in all timetracking modes)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'タイムトラッキング モード'
+label.timesheet.mode_default: '[デフォルト] 開始日時と終了日時を入力する'
+label.timesheet.mode_duration_fixed_begin: '[経過時間] 開始日時（固定）を事前に設定して、ユーザーは経過時間のみを入力可能とする'
+label.timesheet.mode_duration_only: '[経過時間] 終了日時の代わりに経過時間を入力する'
+label.timesheet.mode_punch: '[タイムレコーダー] ユーザーは開始日時と終了日時を打刻できるが、それぞれの日時や経過時間を編集することはできない'
+label.timesheet.rounding.default.begin: 'Rounding of the start time in minutes (0 = deactivated)'
+label.timesheet.rounding.default.days: 'Days of the week when rounding will be applied'
+label.timesheet.rounding.default.duration: 'Rounding of the duration in minutes (0 = deactivated)'
+label.timesheet.rounding.default.end: 'Rounding of the end time in minutes (0 = deactivated)'
+label.timesheet.rounding.default.mode: 'Rounding mode'
+label.timesheet.rules.allow_future_times: 未来時間の入力を許容する
+label.timesheet.rules.allow_overlapping_records: 'Allow overlapping time entries'
+label.timesheet.rules.lockdown_grace_period: 'Lockdown grace period end (PHP relative date to lockdown period end)'
+label.timesheet.rules.lockdown_period_end: 'Lockdown period end (PHP relative date to now)'
+label.timesheet.rules.lockdown_period_start: 'Lockdown period start (PHP relative date to now)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'Time rounding'
+subtitle: タイムトラッカーの共通設定を変更します。
+theme: テーマ
+timesheet: タイムシート
+title: 設定

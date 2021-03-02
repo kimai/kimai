@@ -1,0 +1,8 @@
+activity: 'Activity: one entry per activity'
+date: 'Date: one entry per day (uses start date)'
+default: 'Tariffa oraria (default)'
+label.invoice_calculator: 'Calcolo somma'
+project: 'Project: one entry per project'
+short: 'Tariffa oraria - versione breve (solo 1 riga)'
+user: 'User: one entry per user'
+weekly: 'Weekly: one entry per week (uses start date)'

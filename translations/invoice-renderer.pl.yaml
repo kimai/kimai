@@ -1,0 +1,20 @@
+Docx: 'Microsoft Word (Docx)'
+Html: 'HTML (for printing via Browser)'
+Ods: 'Open Office (Spreadsheet)'
+Pdf: PDF
+Xls: 'Microsoft Excel (Xls)'
+Xlsx: 'Microsoft Excel (Xlsx)'
+company: 'Faktura firmowa'
+default: 'Faktura (domyślnie)'
+default-pdf: Invoice
+freelancer: Freelancer(zlecenie)
+help.upload: 'Attention: existing files will be overwritten. Allowed file types are: DOCX, ODS, XLSX.'
+javascript: JSON
+label.invoice_renderer: 'Dokument Faktury'
+open-spreadsheet: 'Calc Spreadsheet'
+programmatic: 'For further processing'
+spreadsheet: Excel
+text: Text
+timesheet: Ewidencja
+xml: XML
+export: 'Export danych'

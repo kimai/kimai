@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'Vrátane zostávajúceho rozpočtu'
+default-internal.pdf.twig: 'Vrátane interných nákladov'
+default.pdf.twig: Štandard

@@ -1,0 +1,4 @@
+report_monthly_users: 'Kuukausi näkymä kaikille käyttäjille'
+report_user_month: 'Kuukausi näkymä yhdelle käyttäjälle'
+report_user_week: 'Viikko näkymä yhdelle käyttäjälle'
+reporting.title: Raportointi

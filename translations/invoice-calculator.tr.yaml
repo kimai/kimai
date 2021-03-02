@@ -1,0 +1,8 @@
+activity: 'Aktivite: her aktivite için bir kayıt'
+date: 'Tarih: her gün için bir kayıt (başlangıç tarihini kullanır)'
+default: 'Varsayılan: her zaman kaydı için bir kayıt'
+label.invoice_calculator: 'Toplam hesabı'
+project: 'Proje: her proje için bir kayıt'
+short: 'Saat: toplamı kaydeder, tamamı için bir kayıt'
+user: 'Kullanıcı: her kullanıcı için bir kayıt'
+weekly: 'Weekly: one entry per week (uses start date)'

@@ -1,0 +1,61 @@
+Ceil: 'Ceil:začiatok, koniec a trvanie bude zaokrúhlené'
+Closest: 'Najbližšie: matematické zaokrúhľovanie k najbližšej hodnote'
+Default: 'Štandardné: začiatok sa zaokrúhli nadol, koniec a trvanie nahor'
+Floor: 'Zem: začiatok, koniec a trvanie sa zaokrúhlia nadol'
+Friday: Piatok
+Monday: Pondelok
+Saturday: Sobota
+Sunday: Nedela
+Thursday: Štvrtok
+Tuesday: Utorok
+Wednesday: Streda
+branding: 'Označenie firmy'
+calendar: Kalendár
+first_weekday: 'Prvý deň v týždni'
+form_customer: 'Vytvorte predvolené hodnoty zákazníka'
+form_user: 'Užívateľ-východzie nastavenia'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Faktúry
+label.calendar.businessHours.begin: 'Začiatjk bežnej pracovnej doby (bude zvýraznený)'
+label.calendar.businessHours.end: 'Koniec bežnej pracovnej doby (bude zvýraznený)'
+label.calendar.slot_duration: 'Trvanie slotu pre týždňové- a denné zobrazenie (formát: hh:mm:ss)'
+label.calendar.visibleHours.begin: 'Začiatok viditeľného časového obdobia'
+label.calendar.visibleHours.end: 'Koniec viditeľného časového obdobia'
+label.calendar.week_numbers: 'Zobrazit čísla týždňa'
+label.calendar.weekends: 'Zobraziť víkendy'
+label.invoice.number_format: 'Formát čísla faktúry'
+label.simple_form: 'Jednoduché vyhľadávanie'
+label.theme.autocomplete_chars: 'Minimálny počet znakov na začiatok automatického doplnenia'
+label.theme.branding.company: Spoločnosť
+label.theme.branding.logo: 'Logo (web link na obrázok nahrádza spoločnosť pri prihlasovacej obrazovke)'
+label.theme.branding.mini: 'Mini Logo (zbalený postranný panel)'
+label.theme.branding.title: 'Názov prehliadača'
+label.theme.markdown_content: 'Povoliť formátovanie poznámok v popiskoch a komentároch'
+label.theme.tags_create: 'Značky: použi automatické doplňovanie vyhľadávania a povoľ vytváranie značiek'
+label.timesheet.active_entries.hard_limit: 'Povolený počet súčasne prebiehajúcich časových záznamov'
+label.timesheet.active_entries.soft_limit: 'Počet spustených časových záznamov, po ktorých sa zobrazí upozornenie'
+label.timesheet.default_begin: 'Predvolený čas spustenia (nepoužíva sa vo všetkých režimoch sledovania času)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'Režim časovania'
+label.timesheet.mode_default: 'Predvolené: akceptovať dátum začiatku a konca'
+label.timesheet.mode_duration_fixed_begin: '[Dľžka trvania] nastaviteľný fixný čas spustenia, možnosť upraviť iba časovú dĺžku'
+label.timesheet.mode_duration_only: 'Iba Trvanie: nahradí pole dátumu ukončenia vstupom s trvaním'
+label.timesheet.mode_punch: '[Time-clock] užívatel môže spustiť a zastaviť záznamy, ale nie upravovat časy ani dobu trvania'
+label.timesheet.rounding.default.begin: 'Zaokrúhlenie začiatku času v minútach (0 = deaktivovaný)'
+label.timesheet.rounding.default.days: 'Dni v týždni kedy bude zaokrúhlenie použité'
+label.timesheet.rounding.default.duration: 'Zaokrúhlenie trvania v minútach (0 = deaktivovaný)'
+label.timesheet.rounding.default.end: 'Zaokrúhlenie času ukončenia v minútach (0 = deaktivovaný)'
+label.timesheet.rounding.default.mode: 'Mód zaokrúhlenia'
+label.timesheet.rules.allow_future_times: 'Povoliť časové záznamy v budúcnosti'
+label.timesheet.rules.allow_overlapping_records: 'Povoľ prekrývajúce sa časy'
+label.timesheet.rules.lockdown_grace_period: 'Koniec ochrannej doby ohraničenia (PHP relatívny dátum konca ohraničenia)'
+label.timesheet.rules.lockdown_period_end: 'Koniec ohraničeného termínu (PHP realtívny čas do teraz)'
+label.timesheet.rules.lockdown_period_start: 'Začiatok ohraničeného času (PHP relatívny čas do teraz)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'Zaokrúhlenie času'
+subtitle: 'Zmena globálnych konfigurácií vášho sledovača času'
+theme: Vzhľad
+timesheet: 'Pracovný výkaz'
+title: Nastavenia
+label.timesheet.markdown_content: 'Povoliť Markdown v popisoch časového rozvrhu'

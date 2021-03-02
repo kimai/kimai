@@ -1,0 +1,8 @@
+activity: 'activiteiten gegroepeerd – één invoer per activiteit'
+date: 'Eén invoer per dag (gebruikt de startdatum)'
+default: 'Invoerafhankelijk – één invoer per tijdmeting (standaard)'
+label.invoice_calculator: 'Som berekening'
+project: 'Eén invoer per project'
+short: 'Uren opgeteld – slechts één invoer'
+user: 'gebruikers gegroepeerd – één invoer per gebruiker'
+weekly: 'Wekelijks: Eén invoer per week (gebruikt de startdatum)'

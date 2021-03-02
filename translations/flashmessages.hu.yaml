@@ -1,0 +1,13 @@
+action.delete.error: 'A bejegyzést nem lehet törölni a következő okból: %reason%'
+action.delete.success: 'Bejegyzés törölve'
+action.update.error: 'A változtatásokat nem lehet elmenteni a következő okból: %reason%'
+action.update.success: 'Változtatások sikeresen elmentve'
+action.upload.error: 'A fájlt nem lehetett feltölteni vagy menteni ezért: %reason%'
+invoice.first_template: 'Létre kell hoznod az első számla sablonodat mielőtt folytatnád'
+timesheet.locked.warning: 'Egy már exportált rögzítést szerkesztesz'
+timesheet.start.error: 'Az idő rögzítését nem lehet elindítani a következő okból'
+timesheet.start.exceeded_limit: 'A rögzítések maximális számát elérted, előbb állíts le egy jelenlegi rögzítést.'
+timesheet.start.success: 'Idő rögzítése elindítva'
+timesheet.stop.error: 'Az idő rögzítését nem lehet leállítani a következő okból'
+timesheet.stop.success: 'Idő rögzítése leállítva'
+warning: Figyelmeztetés

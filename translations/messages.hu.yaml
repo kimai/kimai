@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Mengedett karakterek: A-Z és _'
+ROLE_ADMIN: Adminisztrátor
+ROLE_SUPER_ADMIN: 'Rendszer adminisztrátor'
+ROLE_TEAMLEAD: Vezető
+ROLE_USER: Felhasználó
+'This is a mandatory field': Kötelező
+action.back: Vissza
+action.close: Bezárás
+action.delete: Törlés
+action.edit: Szerkesztés
+action.reset: Visszaállítás
+action.save: Mentés
+active.entries: 'Jelenleg futó rögzítéseid'
+admin_activity.short_stats: "\nA %customer% ügyfélhez és %project% projekthez tartozó %activities% tevékenységhez\nkapcsolódik %records% időbejegyzés, ami összesen %duration%.\n"
+admin_activity.title: Tevékenységek
+admin_customer.short_stats: "\nA %customer% ügyfélhez kapcsolódik %project% projekt, %activities% tevékenység \nés %records% időbejegyzés, ami összesen %duration%.\n"
+admin_customer.title: Ügyfél
+admin_entity.delete_confirm: "\nEzek az adatok és törlésre kerülnek!\nEsetleg válassz egy másik elemet, ahova ezek az adatok áthelyezésre kerülnek:\n"
+admin_invoice_template.title: 'Számla sablon'
+admin_project.short_stats: "\nA %customer% ügyfélhez tartozó %project% projekthez kapcsolódik %activities% tevékenység \nés %records% időbejegyzés, ami összesen %duration%.\n"
+admin_project.title: Projektek
+admin_timesheet.title: 'Rögzített órák'
+admin_user.short_stats: "\nA %user% felhasnálóhoz kapcsolódik %records% időbejegyzés, ami összesen %duration%.\n"
+admin_user.title: Felhasználó
+agendaDay: Nap
+agendaWeek: Hét
+attachments: Fájlok
+both: Mindkettő
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Előnézet
+button.preview_print: 'Nyomtatási előnézet'
+button.print: Nyomtatás
+button.xlsx: Excel
+calendar.title: Naptár
+cancel: Mégse
+confirm: Alkalmaz
+confirm.delete: 'Biztos vagy benne, hogy törölni szerenéd?'
+create: Létrehozás
+dashboard.all: 'Minden felhasználó'
+dashboard.subtitle: Üdv!
+dashboard.title: Kezdőlap
+delete.not_in_use: 'Ez az elem biztonságosan törölhető.'
+entryState.all: Összes
+entryState.exported: Lezárva
+entryState.not_exported: Nyitott
+entryState.running: Folyamatban
+entryState.stopped: Megállítva
+error.no_comments_found: 'Még nincsenek hozzászólások.'
+error.no_entries_found: 'Nem található bejegyzés a kiválasztott szűrők alapján.'
+export.clear_all: 'Az összes megjelenített rögzítés megjelölése nyitottként?'
+export.date_copyright: 'Készült: %date% A %kimai% segítségével'
+export.document_title: 'Kiadások listája'
+export.filter: 'Adat szűrés exportáláshoz'
+export.full_list: 'Teljes lista'
+export.mark_all: 'Az összes megjelenített rögzítés megjelölése lezártként?'
+export.page_of: '%page%/%pages%'
+export.period: 'Exportált időszak'
+export.subtitle: 'Rögzített órák exportálása különböző formátumokba'
+export.summary: Összefoglaló
+export.title: Exportálás
+help.batch_meta_fields: 'A frissítésre váró mezőket először aktválni kell a hozzárendelt jelölő kockára klikkelve.'
+help.fixedRate: 'Minden alkalommal a felvétel ugyanazt az értéket kapja, függetlenül a terjedelmétől'
+help.rate: 'Óránként számolt bér'
+help.rate_internal: 'Belső kiadások (ha nincs beállítva, a normál bér lesz használva)'
+invoice.due_days: 'Fizetési határidő'
+invoice.filter: 'Számla adat szűrő'
+invoice.from: 'Feladó:'
+invoice.number: 'Számla száma'
+invoice.service_date: 'Teljesítés időpontja'
+invoice.signature_customer: 'Dátum, Megbízó, Aláírás'
+invoice.signature_user: 'Dátum, Megbízott, Aláírás'
+invoice.subtotal: Részösszeg
+invoice.tax: Áfa
+invoice.title: Számlák
+invoice.to: 'Címzett:'
+invoice.total: Végösszeg
+invoice.total_working_time: 'Teljes munkaidő'
+invoice_print: Számla
+label.actions: Műveletek
+label.active: Aktív
+label.activity: Tevékenység
+label.address: Cím
+label.alias: Név
+label.amount: Mennyiség
+label.api_token: 'API jelszó'
+label.api_token_repeat: 'API jelszó ismétlese'
+label.appendTags: 'Címkék megnyitása'
+label.avatar: Profilkép
+label.batch_meta_fields: 'További mezők'
+label.begin: Kezdés
+label.billable: Számlázható
+label.budget: Költségvetés
+label.calendar.initial_view: 'Alapértelmezett naptár nézet'
+label.color: Szín
+label.comment: Megjegyzés
+label.company: 'Cég neve'
+label.contact: Kapcsolat
+label.country: Ország
+label.create_more: 'Új bejegyzés hozzáadása'
+label.currency: Pénznem
+label.customer: Ügyfél
+label.date: Dátum
+label.daterange: Időtartam
+label.decimalDuration: 'Mutasd a terjedelmet tizedes számmal'
+label.description: Leírás
+label.due_days: 'Teljesítési idő'
+label.duration: Időtartam
+label.email: Email
+label.end: Befejezés
+label.endtime: Befejezés
+label.entryState: Rögzítések
+label.exported: Exportált
+label.fax: Fax
+label.fixedRate: 'Fix bér'
+label.globalsOnly: 'Csak a globálisakat'
+label.homepage: Honlap
+label.hourlyRate: Órabér
+label.hourly_rate: Órabér
+label.hours: Órák
+label.id: ID
+label.invoice_bank_account: Bankszámlaszám
+label.invoice_tax_number: 'Adószám:'
+label.language: Nyelv
+label.lastLogin: 'Utolsó bejelentkezés'
+label.login.initial_view: 'Bejelentkezés után megjelenített nézet'
+label.logout: Kijelentkezés
+label.mark_as_exported: 'Megjelőlés exportáltként'
+label.mobile: Mobil
+label.my_team_projects: 'Csoport projektjei & költségvetése'
+label.my_teams: Csoportjaim
+label.name: Név
+label.number: Adószám
+label.orderDate: 'Rendelési dátum'
+label.orderNumber: 'Megbízás száma'
+label.pageSize: Oldalméret
+label.password: Jelszó
+label.password_repeat: 'Jelsző ismétlése'
+label.payment_terms: 'Fizetési feltételek'
+label.phone: Telefonszám
+label.plus_more: '+%count% több'
+label.progress: Haladás
+label.project: Projekt
+label.project_end: 'Projekt vége'
+label.project_start: 'Projekt kezdete'
+label.rate: Bér
+label.rate_internal: 'Belső bér'
+label.recalculate_rates: 'Bérek újraszámlálása'
+label.replaceTags: 'Címkék cseréje'
+label.required_version: 'Támogatott verzió'
+label.roles: Szerepkör
+label.skin: 'Kimai téma'
+label.starttime: Kezdés
+label.status: Állapot
+label.tag: Címkék
+label.tags: Címkék
+label.team: Csoport
+label.teamlead: Csoportvezető
+label.template: Sablon
+label.theme.collapsed_sidebar: 'A bal oldali oldalsáv automatikus elrejtése'
+label.theme.layout: 'Megjelenítés: elrendezés'
+label.timeBudget: 'Meghatározott időkeret'
+label.timesheet.daily_stats: 'Napi statisztika megjelenítése a rögzített óráknál'
+label.timesheet.export_decimal: 'Használj tizedes terjedelmet exportálásban'
+label.timezone: Időzóna
+label.title: Beosztás
+label.toggle_dropdown: 'Menü megjelenítése'
+label.total_rate: 'Teljes ár'
+label.unit_price: Egységár
+label.user: Felhasználó
+label.user_profile: Profilom
+label.username: Felhasználónév
+label.vat: Áfa
+label.vat_id: ÁFA-ID
+label.version: Verzió
+label.visible: Látható
+login_required: 'Hiányzó jogosultság. Átirányítás a kezdőlapra?'
+menu.admin: Adminisztráció
+menu.admin_activity: Tevékenységek
+menu.admin_customer: Ügyfelek
+menu.admin_project: Projektek
+menu.admin_team: Csoportok
+menu.admin_timesheet: 'Rögzített órák'
+menu.admin_user: Felhasználók
+menu.doctor: Doktor
+menu.export: Exportálás
+menu.homepage: Kezdőlap
+menu.invoice: Számlák
+menu.logout: Kijelentkezés
+menu.plugin: Bővítmények
+menu.reporting: Jelentések
+menu.system: Rendszer
+menu.system_configuration: 'Rendszer beállítások'
+menu.tags: Címkék
+menu.timesheet: 'Rögzített órák'
+modal.columns.description: 'A megjelenítendő oszlopok egy böngésző sütiben lesznek tárolva. Ha törlöd az oldalhoz tartozó sütiket, akkor ez a beállítás visszaáll az alapértelmezett értékre.'
+modal.columns.title: 'Megjelenítendő oszlopok kiválasztása'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Hónap
+more.info.link: 'További információ'
+my.profile: Profilom
+'no': Nem
+placeholder.type_message: 'Üzenet írása...'
+profile.about_me: Rólam
+profile.api-token: API
+profile.first_entry: 'Munka kezdete'
+profile.password: Jelszó
+profile.preferences: Beállítások
+profile.registration_date: 'Regisztrált ekkor'
+profile.roles: Szerepkörök
+profile.settings: Profil
+profile.teams: Csapatok
+profile.title: 'Felhasználói profil'
+rates.empty: 'A díjakat még nem határozták meg.'
+rates.title: Díjak
+recent.activities: 'Egyik korábbi rögzítésed újraindítása'
+recent.activities.format: '%activity% tevékenység %project% projekt %customer% ügyfél'
+search: Keresés
+stats.activeRecordings: 'Aktív rögzítések'
+stats.activityTotal: Tevékenység
+stats.amountMonth: 'E havi bevvétel'
+stats.amountToday: 'Mai bevétel'
+stats.amountTotal: 'Összes bevétel'
+stats.amountWeek: 'Eheti bevétel'
+stats.amountYear: 'Idei bevétel'
+stats.customerTotal: Ügyfél
+stats.durationMonth: 'E havi munkaórák'
+stats.durationToday: 'Mai munkaórák'
+stats.durationTotal: 'Összes munkaórák'
+stats.durationWeek: 'Eheti munkaórák'
+stats.durationYear: 'Idei munkaórák'
+stats.percentUsed: '%percent%% használatban'
+stats.percentUsedLeft: '%percent%% használatban (%left% még elérhető)'
+stats.projectTotal: Projekt
+stats.userActiveMonth: 'E havi aktív felhasználók'
+stats.userActiveToday: 'Mai aktív felhasználók'
+stats.userActiveTotal: 'Összes aktjv felhasználó'
+stats.userActiveWeek: 'Eheti aktív felhasználók'
+stats.userActiveYear: 'Idei aktív felhasználók'
+stats.userTotal: Felhasználó
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: 'Ma, %day%'
+stats.workingTimeWeek: 'Naptári hét %week%'
+stats.workingTimeYear: 'Teljes év %year%'
+stats.yourWorkingHours: Munkaóráid
+status.new: Új
+status.paid: Fizetve
+status.pending: Függőben
+sum.total: Teljes
+theme.update_browser_title: 'Update browser title'
+time_tracking: Időrögzítő
+timesheet.all: 'Összes rögzítés megjelenítése'
+timesheet.edit: 'Bejegyzés szerkesztése'
+timesheet.start: 'Új rögzítés indítása'
+timesheet.title: 'Rögzített órák'
+update_multiple: '%action% %count% bejegyzést?'
+upload: Feltöltés
+user_permissions.title: 'Felhasználói engedélyek'
+user_role.title: 'Felhasználói szerep'
+'yes': Igen

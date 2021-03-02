@@ -1,0 +1,13 @@
+action.delete.error: 'A entrada não pode ser apagada: %reason%'
+action.delete.success: 'A entrada foi apagada'
+action.update.error: 'As alterações não puderam ser salvas: %reason%'
+action.update.success: 'Alterações salvas com sucesso'
+action.upload.error: 'O ficheiro não pôde ser carregado ou gravado: %reason%'
+invoice.first_template: 'Precisa criar a sua primeira fatura modelo antes de prosseguir'
+timesheet.locked.warning: 'Está a editar um registo exportado'
+timesheet.start.error: 'A gravação de tempo não pôde ser iniciada'
+timesheet.start.exceeded_limit: 'O limite de registos de tempo ativos foi atingido, por favor, pare pelo menos uma medição de tempo de execução primeiro.'
+timesheet.start.success: 'A gravação de tempo foi iniciada'
+timesheet.stop.error: 'A gravação de tempo não pôde ser interrompida'
+timesheet.stop.success: 'A gravação de tempo foi interrompida'
+warning: Aviso

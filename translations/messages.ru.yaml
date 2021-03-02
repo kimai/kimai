@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Разрешены символы: A-Z и _'
+ROLE_ADMIN: Администратор
+ROLE_SUPER_ADMIN: 'Системный администратор'
+ROLE_TEAMLEAD: 'Руководитель группы'
+ROLE_USER: Пользователь
+'This is a mandatory field': 'Обязательное поле'
+action.back: Назад
+action.close: Закрыто
+action.delete: Удалить
+action.edit: Редактировать
+action.reset: Сбросить
+action.save: Сохранить
+active.entries: 'Ваши измерения активного времени'
+admin_activity.short_stats: "\nНа данный момент для деятельности %activity% в проекте %project% клиента %customer% существует\nвсего временных записей %records%, общая продолжительность которых составляет %duration%.\n"
+admin_activity.title: Деятельность
+admin_customer.short_stats: "\nНа данный момент для деятельности %activity% в проекте %project% клиента %customer% существует\nвсего временных записей %records%, общая продолжительность которых составляет %duration%.\n"
+admin_customer.title: Клиенты
+admin_entity.delete_confirm: 'Эти данные будут удалены! Вы можете выбрать запись, в которую будут перенесены все данные:'
+admin_invoice_template.title: 'Образцы счетов'
+admin_project.short_stats: "\nНа данный момент для проекта %project% клиента %customer% существует всего %activities%\nактивностей и %records% временных записей, общая продолжительность которых составляет %duration%.\n"
+admin_project.title: Проекты
+admin_timesheet.title: 'Учет рабочего времени сотрудников'
+admin_user.short_stats: "\nНа данный момент для пользователя %user% существует всего временных записей %records%, общая продолжительность которых составляет %duration%.\n"
+admin_user.title: Пользователь
+agendaDay: День
+agendaWeek: Неделя
+attachments: Файлы
+both: Оба
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Предпросмотр
+button.preview_print: 'Распечатать предпросмотр'
+button.print: Печать
+button.xlsx: Excel
+calendar.title: Календарь
+cancel: Отмена
+confirm: Подтвердить
+confirm.delete: 'Вы действительно хотите удалить?'
+create: Создать
+dashboard.all: 'Все пользователи'
+dashboard.subtitle: 'Добро пожаловать!'
+dashboard.title: 'Панель управления'
+delete.not_in_use: 'Этот элемент можно безопасно удалить.'
+entryState.all: Все
+entryState.exported: Очищенно
+entryState.not_exported: Открыто
+entryState.running: Текущие
+entryState.stopped: Завершенные
+error.no_comments_found: 'Комментариев еще нет.'
+error.no_entries_found: 'По выбранному фильтру записи не найдены.'
+export.clear_all: 'Отметить все показанные записи как открытые?'
+export.date_copyright: 'Создано %date% с %kimai%'
+export.document_title: 'Экспортировать табели учета рабочего времени'
+export.filter: 'Фильтровать данные для экспорта'
+export.full_list: 'Полный перечень'
+export.mark_all: 'Отметить все показанные записи как очищенные?'
+export.page_of: 'Страница %page% из %pages%'
+export.period: Период
+export.subtitle: 'Экспортировать данные табеля учёта рабочего времени в различные форматы'
+export.summary: Тема
+export.title: Экспорт
+help.batch_meta_fields: 'Поля перед их обновлением должны быть сначала активированы нажатием на соответствующий флажок.'
+help.fixedRate: 'Каждая временная запись получает одно и то же значение, независимо от ее продолжительности'
+help.rate: 'Почасовая ставка, подлежащая оплате'
+help.rate_internal: 'внутренние затраты (если не указаны, используется обычная ставка)'
+invoice.due_days: 'Дата оплаты'
+invoice.filter: 'Фильтровать данные счетов'
+invoice.from: С
+invoice.number: 'Номер счета'
+invoice.service_date: 'Дата выполненной работы'
+invoice.signature_customer: 'Подтверждение: Дата / Имя клиента / Подпись'
+invoice.signature_user: 'Подтверждение: Дата / Имя консультанта / Подпись'
+invoice.subtotal: 'Сумма счета оплаты (нетто)'
+invoice.tax: НДС
+invoice.title: 'Бланки счета'
+invoice.to: До
+invoice.total: 'Конечная сумма расчета'
+invoice.total_working_time: 'Общая длительность'
+invoice_print: счет
+label.actions: Действия
+label.active: 'Активный профиль'
+label.activity: Активность
+label.address: Адресса
+label.alias: Имя
+label.amount: Количество
+label.api_token: 'API Пароль'
+label.api_token_repeat: 'API Пароль повторить'
+label.appendTags: 'Добавить тэги'
+label.avatar: 'Изображение профиля'
+label.batch_meta_fields: 'Дополнительные поля'
+label.begin: С
+label.billable: Платный
+label.budget: Бюджет
+label.calendar.initial_view: 'Первоначальный вид календаря'
+label.color: Цвет
+label.comment: Комментарий
+label.company: 'Название компании'
+label.contact: Контакт
+label.country: Страна
+label.create_more: 'Cоздать новые записи'
+label.currency: Валюта
+label.customer: Клиент
+label.date: Дата
+label.daterange: 'Временной интервал'
+label.decimalDuration: 'Длительность отображения в виде десятичного числа'
+label.description: Описание
+label.due_days: 'Дата оплаты - дни'
+label.duration: Продолжительность
+label.email: Email
+label.end: До
+label.endtime: Окончание
+label.entryState: Записи
+label.exported: Экспортировано
+label.fax: Факс
+label.fixedRate: 'фиксированная ставка'
+label.globalsOnly: 'только глобальные'
+label.homepage: 'Персональная страница'
+label.hourlyRate: 'Почасовая оплата'
+label.hourly_rate: 'Почасовая оплата'
+label.hours: Часы
+label.id: ID
+label.invoice_bank_account: 'Банковский счет'
+label.invoice_tax_number: 'VAT номер.:'
+label.language: Язык
+label.lastLogin: 'Последний вход'
+label.login.initial_view: 'Первоначальный вид после входа в систему'
+label.logout: Выйти
+label.mark_as_exported: 'Пометить как выгруженное'
+label.mobile: 'Мобильный телефон'
+label.my_team_projects: 'Командные проекты& бюджеты'
+label.my_teams: 'Мои команды'
+label.name: Имя
+label.number: 'Клиентский номер'
+label.orderDate: 'Дата заказа'
+label.orderNumber: 'Номер заказа'
+label.pageSize: Количество
+label.password: Пароль
+label.password_repeat: 'Повторить пароль'
+label.payment_terms: 'Информация о выплате'
+label.phone: Телефон
+label.plus_more: '+%count% еще'
+label.progress: Прогресс
+label.project: Проект
+label.project_end: 'Проект закончен'
+label.project_start: 'Проект начат'
+label.rate: 'Заработная плата'
+label.rate_internal: 'Внутренняя ставка'
+label.recalculate_rates: 'Пересчитать ставки'
+label.replaceTags: 'Заменить тэги'
+label.required_version: 'Совместим с'
+label.roles: Позиция
+label.skin: Kimai-Theme
+label.starttime: Начало
+label.status: Статус
+label.tag: Тэг
+label.tags: Тэги
+label.team: Команда
+label.teamlead: руководство
+label.template: Шаблон
+label.theme.collapsed_sidebar: 'Управление статусом левой панели навигации (скрыта или открыта)'
+label.theme.layout: 'отображение: формат'
+label.timeBudget: 'бюджет времени'
+label.timesheet.daily_stats: 'Показать дневную статистику в таблице'
+label.timesheet.export_decimal: 'Использовать десятичную продолжительность при экспорте'
+label.timezone: 'Временная зона'
+label.title: Должность
+label.toggle_dropdown: 'Отобразить меню'
+label.total_rate: 'Общая стоимость'
+label.unit_price: 'Удельная цена'
+label.user: Пользователь
+label.user_profile: 'Мой Профиль'
+label.username: 'Имя пользователя'
+label.vat: 'Налог НДС'
+label.vat_id: 'НДС-идентификационный номер'
+label.version: Версия
+label.visible: Видимость
+login_required: 'Недостаточно прав. Перенаправить на страницу авторизации?'
+menu.admin: Администрирование
+menu.admin_activity: Активность
+menu.admin_customer: Клиенты
+menu.admin_project: Проекты
+menu.admin_team: Команды
+menu.admin_timesheet: 'Время работы сотрудников'
+menu.admin_user: Пользователи
+menu.doctor: Доктор
+menu.export: Экспорт
+menu.homepage: 'Панель управления'
+menu.invoice: Счета
+menu.logout: Выйти
+menu.plugin: Дополнения
+menu.reporting: отчет
+menu.system: Система
+menu.system_configuration: Настройки
+menu.tags: Тэги
+menu.timesheet: 'Учет времени'
+modal.columns.description: 'При сохранении не выбранные столбцы будут скрыты и данные установки будет сохранены в браузере „cookie“. При удалении cookies, Ваши установки изменятся.'
+modal.columns.title: 'Изменить видимость столбцов'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Месяц
+more.info.link: Подробнее
+my.profile: 'Мой профиль'
+'no': Нет
+placeholder.type_message: 'Ввести сообщение...'
+profile.about_me: 'Обо мне'
+profile.api-token: API
+profile.first_entry: 'Первая запись'
+profile.password: Пароль
+profile.preferences: Настройки
+profile.registration_date: Зарегистрирован
+profile.roles: 'Роли / Задачи'
+profile.settings: Профиль
+profile.teams: Команды
+profile.title: 'Имя пользователя'
+rates.empty: 'сборы не были настроены.'
+rates.title: сборы
+recent.activities: 'Перезапустить один из последних видов деятельности'
+recent.activities.format: '%activity% в %project% для %customer%'
+search: Поиск
+stats.activeRecordings: 'Активные временные записи'
+stats.activityTotal: 'Объем деятельности'
+stats.amountMonth: 'Оборот этого месяца'
+stats.amountToday: 'Оборот за сегодня'
+stats.amountTotal: 'Итоговый оборот'
+stats.amountWeek: 'Оборот этой недели'
+stats.amountYear: 'Оборот этого года'
+stats.customerTotal: 'Количество клиентов'
+stats.durationMonth: 'Отработано за этот месяц'
+stats.durationToday: 'Отработано сегодня'
+stats.durationTotal: 'Отработано всего'
+stats.durationWeek: 'Отработано за эту неделю'
+stats.durationYear: 'Отработано за этот год'
+stats.percentUsed: '%percent%% использовано'
+stats.percentUsedLeft: '%percent%% использовано (%left% остаются открытыми)'
+stats.projectTotal: 'Количество проектов'
+stats.userActiveMonth: 'Активные пользователи в этом месяце'
+stats.userActiveToday: 'Активные пользователи сегодня'
+stats.userActiveTotal: 'Всего активных пользователей'
+stats.userActiveWeek: 'Активные пользователи на этой неделе'
+stats.userActiveYear: 'Активные пользователи за этот год'
+stats.userTotal: 'Количество пользователей'
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: 'Сегодня, %day%'
+stats.workingTimeWeek: 'Неделя календаря %week%'
+stats.workingTimeYear: 'Полный год %year%'
+stats.yourWorkingHours: 'Мои отработанные часы'
+status.new: Новый
+status.paid: Оплачено
+status.pending: 'В ожидании'
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Учет времени'
+timesheet.all: 'Отобразить все записи'
+timesheet.edit: 'Редактировать запись'
+timesheet.start: 'Начать новый хронометраж'
+timesheet.title: 'Учет времени'
+update_multiple: '%action% %count% записи(ей)?'
+upload: Загрузить
+user_permissions.title: 'Права пользователя'
+user_role.title: 'Роль пользователя'
+'yes': Да

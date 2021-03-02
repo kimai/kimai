@@ -1,0 +1,13 @@
+action.delete.error: 'Elemento ne povis esti forigita: %reason%'
+action.delete.success: 'Elemento estis forigita'
+action.update.error: 'Ŝanĝoj ne povas esti konservitaj: %reason%'
+action.update.success: 'Konservitaj ŝanĝoj'
+action.upload.error: 'The file could not be uploaded or saved: %reason%'
+invoice.first_template: 'Vi devas krei vian unuan fakturan ŝablonon antaŭ ol vi povas daŭrigi'
+timesheet.locked.warning: 'Vi redaktas eksportitan registraĵon.'
+timesheet.start.error: 'Temporegistrado ne povas komenĉiĝi'
+timesheet.start.exceeded_limit: 'La limo de aktivaj temporegistradoj estas atingita, unue bv. ĉesigi almenaŭ unu nuntempan tempo-mezuradon.'
+timesheet.start.success: 'Temporegistrado komenciĝis'
+timesheet.stop.error: 'Temporegistrado ne povas esti haltigita'
+timesheet.stop.success: 'Temporegistrado haltigita'
+warning: Averto

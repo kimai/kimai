@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'A tevékenység korlátolt hozzáférésű, mivel csoport engedélyek vannak beállítva a projektnek és/vagy a kliensnek.'
+team.create_default: 'Új csoport készítése a jogosultságok korlátozására'
+team.project_visibility_inherited: 'A projekt korlátolt hozzáférésű, mivel csoport engedélyek vannak beállítva a kliensnek.'
+team.visibility_global: 'Mindenki számára látható, mivel még nem lett csoport hozzárendelve.'
+team.visibility_restricted: 'Csak a következő csoportok és adminisztrátorok láthatják.'
+teams.customer_access: 'Jogosultság az ügyfelek eléréséhez'
+teams.project_access: 'Jogosultság a projektek eléréséhez'
+teams.title: Csoportok

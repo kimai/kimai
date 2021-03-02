@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'Aktivita má obmedzený prístup, nakoľko tímové oprávnenia sú nastavené pre projekt alebo zákazníka.'
+team.create_default: 'Vytvoriť nový tím na obmedzenie prístupu'
+team.project_visibility_inherited: 'Projekt má limitovaný prístup, nakoľko tímové povolenia sú nastavená na zákazníka.'
+team.visibility_global: 'Viditeľné pre všetkých nakoľko nebol priradený žiadny tím.'
+team.visibility_restricted: 'Viditeľné iba pre nasledovné tímy a všetkých adminov.'
+teams.customer_access: 'Povolený zákazníci'
+teams.project_access: 'Povolené projekty'
+teams.title: Tímy

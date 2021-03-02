@@ -1,0 +1,13 @@
+action.delete.error: 'Eintrag konnte nicht gelöscht werden: %reason%'
+action.delete.success: 'Eintrag wurde gelöscht'
+action.update.error: 'Änderungen konnten nicht gespeichert werden: %reason%'
+action.update.success: 'Änderungen gespeichert'
+action.upload.error: 'Die Datei konnte nicht hochgeladen bzw. gespeichert werden: %reason%'
+invoice.first_template: 'Bitte legen Sie zunächst eine Rechnungsvorlage an'
+timesheet.locked.warning: 'Sie bearbeiten einen exportierten Eintrag'
+timesheet.start.error: 'Zeitmessung konnte nicht gestartet werden'
+timesheet.start.exceeded_limit: 'Das Limit aktiver Zeitmessungen wurde erreicht, bitte stoppen Sie mindestens eine laufende Zeitmessung.'
+timesheet.start.success: 'Zeitmessung wurde gestartet'
+timesheet.stop.error: 'Zeitmessung konnte nicht gestoppt werden'
+timesheet.stop.success: 'Zeitmessung wurde gestoppt'
+warning: Warnung

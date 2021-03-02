@@ -1,0 +1,13 @@
+action.delete.error: 'No se pudo eliminar el registro: %reason%'
+action.delete.success: 'Registro eliminado'
+action.update.error: 'No se pudieron guardar los cambios: %reason%'
+action.update.success: 'Cambios guardados'
+action.upload.error: 'No se pudo cargar ni guardar el archivo: %reason%'
+invoice.first_template: 'Debe crear una plantilla de factura primero'
+timesheet.locked.warning: 'Está editando un registro exportado'
+timesheet.start.error: 'No se pudo iniciar el registro de tiempo'
+timesheet.start.exceeded_limit: 'Se ha alcanzado el limite de registro activos, por favor detenga uno de los registros en marcha primero.'
+timesheet.start.success: 'Registro de tiempo iniciado'
+timesheet.stop.error: 'No se pudo detener el registro del tiempo'
+timesheet.stop.success: 'El registro de tiempo ha sido detenido'
+warning: Atención

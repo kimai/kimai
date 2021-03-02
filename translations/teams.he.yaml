@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'לפעילות יש גישה מוגבלת, כיוון שמוגדרות הרשאות קבוצתיות למיזם ו/או ללקוח.'
+team.create_default: 'צור צוות חדש להגבלת הגישה'
+team.project_visibility_inherited: 'לפרויקט יש גישה מוגבלת מכיוון שמוגדרות הרשאות צוות עבור הלקוח.'
+team.visibility_global: 'ניתן לצפיה עבור כולם מכיוון שאף צוות לא הוקצה עדין.'
+team.visibility_restricted: 'ניתן לצפיה עבור הצוותים הבאים ומנהלי מערכת.'
+teams.customer_access: 'הענק גישה ללקוחות'
+teams.project_access: 'הענק גישה לפרויקטים'
+teams.title: צוותים

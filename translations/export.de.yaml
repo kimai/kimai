@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'Inkl. Restbudget'
+default-internal.pdf.twig: 'Inkl. interner Kosten'
+default.pdf.twig: Standard

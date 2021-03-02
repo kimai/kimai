@@ -1,0 +1,23 @@
+activity: 'Filtrer aktiviteter'
+back: Tilbage
+copy: Kopier
+create-activity: 'Opret aktivitet'
+create-project: 'Opret projekt'
+create-timesheet: 'Opret timeseddel'
+create-timesheet-multiuser: __create-timesheet-multiuser
+customer: 'Filtrer kunder'
+details: Show
+download: Download
+edit: Redigér
+home: Hjem
+invoice.paid: 'Invoice paid'
+invoice.pending: 'Waiting for payment'
+permissions: 'Hold tilladelser'
+profile-stats: Profil
+project: 'Filtrer projekter'
+repeat: 'Start igen'
+report: Rapportér
+settings: Indstillinger
+stop: Stop
+timesheet: Timeseddel
+trash: Slet

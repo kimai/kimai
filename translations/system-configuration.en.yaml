@@ -1,0 +1,60 @@
+Ceil: 'Ceil: begin, end and duration will be rounded up'
+Closest: 'Closest: mathematical rounding to the nearest value'
+Default: 'Standard: begin will be rounded down, end and duration up'
+Floor: 'Floor: begin, end and duration will be rounded down'
+Friday: Friday
+Monday: Monday
+Saturday: Saturday
+Sunday: Sunday
+Thursday: Thursday
+Tuesday: Tuesday
+Wednesday: Wednesday
+branding: Branding
+calendar: Calendar
+first_weekday: 'First day of the week'
+form_customer: 'Create customer—default values'
+form_user: 'User—default values'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Invoices
+label.calendar.businessHours.begin: 'Start of normal business hours (will be highlighted)'
+label.calendar.businessHours.end: 'End of normal business hours (will be highlighted)'
+label.calendar.slot_duration: 'Slot duration for week- and day view (format: hh:mm:ss)'
+label.calendar.visibleHours.begin: 'Start of visible time range'
+label.calendar.visibleHours.end: 'End of visible time range'
+label.calendar.week_numbers: 'Display week numbers'
+label.calendar.weekends: 'Display weekends'
+label.invoice.number_format: 'Invoice number format'
+label.simple_form: 'Simple search'
+label.theme.autocomplete_chars: 'Minimum number of letters to start auto-completion'
+label.theme.branding.company: Company
+label.theme.branding.logo: 'Logo (Image URL, replaces the company in login screen)'
+label.theme.branding.mini: 'Mini Logo (collapsed sidebar)'
+label.theme.branding.title: 'Browser Title'
+label.theme.markdown_content: 'Allow markdown-formattings in descriptions and comments'
+label.theme.tags_create: 'Tags: use auto-complete search and allow tag creation'
+label.timesheet.active_entries.hard_limit: 'Permitted number of simultaneously running time entries'
+label.timesheet.active_entries.soft_limit: 'Number of running time entries from which a warning is displayed'
+label.timesheet.default_begin: 'Default start-time (not used in all timetracking modes)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'Timetracking mode'
+label.timesheet.mode_default: '[Default] start and end times can be edited'
+label.timesheet.mode_duration_fixed_begin: '[Duration] configurable fixed start-time, only duration can be changed'
+label.timesheet.mode_duration_only: '[Duration] replaces the end time with a duration input-field'
+label.timesheet.mode_punch: '[Time-clock] user can start and stop records, but not edit the times or duration'
+label.timesheet.rounding.default.begin: 'Rounding of the start time in minutes (0 = deactivated)'
+label.timesheet.rounding.default.days: 'Days of the week when rounding will be applied'
+label.timesheet.rounding.default.duration: 'Rounding of the duration in minutes (0 = deactivated)'
+label.timesheet.rounding.default.end: 'Rounding of the end time in minutes (0 = deactivated)'
+label.timesheet.rounding.default.mode: 'Rounding mode'
+label.timesheet.rules.allow_future_times: 'Allow time entries in the future'
+label.timesheet.rules.allow_overlapping_records: 'Allow overlapping time entries'
+label.timesheet.rules.lockdown_grace_period: 'Lockdown grace period end (PHP relative date to lockdown period end)'
+label.timesheet.rules.lockdown_period_end: 'Lockdown period end (PHP relative date to now)'
+label.timesheet.rules.lockdown_period_start: 'Lockdown period start (PHP relative date to now)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'Time rounding'
+subtitle: 'Change global configurations of your time-tracker'
+theme: Theme
+timesheet: Timesheet
+title: Settings

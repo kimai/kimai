@@ -1,0 +1,8 @@
+activity: 'アクティビティでグループ化 - アクティビティごとに 1 行出力します'
+date: 'Date: one entry per day (uses start date)'
+default: '明細基準 - 時間を記録した個々の明細を出力します (デフォルト)'
+label.invoice_calculator: 合計の計算方法
+project: 'Project: one entry per project'
+short: '時間の積算 - 結果を 1 行に集約します'
+user: 'ユーザーでグループ化 - ユーザーごとに 1 行出力します'
+weekly: 'Weekly: one entry per week (uses start date)'

@@ -1,0 +1,13 @@
+action.delete.error: 'Merkintää ei voitu poistaa: %reason%'
+action.delete.success: 'Merkintä poistettiin'
+action.update.error: 'Muutoksia ei voitu tallentaa: %reason%'
+action.update.success: 'Muutokset tallennettu'
+action.upload.error: 'Tiedostoa ei voitu siirtää tai tallentaa: %reason%'
+invoice.first_template: 'Luo ensin laskumalli'
+timesheet.locked.warning: 'Olet muokkaamassa vietyä tietuetta'
+timesheet.start.error: 'Ajan tallennusta ei voitu aloittaa'
+timesheet.start.exceeded_limit: 'Aktiivisten aikamerkintöjen raja on täynnä. Lopeta vähintään yksi käynnissä oleva ajan tallennus ensiksi.'
+timesheet.start.success: 'Ajan tallennus aloitettu'
+timesheet.stop.error: 'Ajan tallennusta ei voitu pysäyttää'
+timesheet.stop.success: 'Ajan tallennus pysäytetty'
+warning: Varoitus

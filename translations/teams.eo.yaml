@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'The activity has limited access, because team permissions are set for the project and/or customer.'
+team.create_default: 'Krei novan teamon por limigi aliron'
+team.project_visibility_inherited: 'La projekto havas limigitan aliron ĉar teamaj permesoj estas agorditaj por la kliento.'
+team.visibility_global: 'Videbla por ĉiuj, ĉar ankoraŭ neniu teamo estis asignita.'
+team.visibility_restricted: 'Videbla nur por la jenaj teamoj kaj ĉiuj administrantoj.'
+teams.customer_access: 'Doni aliron al klientoj'
+teams.project_access: 'Doni aliron al projektoj'
+teams.title: Teamoj

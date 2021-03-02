@@ -1,0 +1,60 @@
+Ceil: 'Techo: El inicio, final y la duración se redondearán hacia arriba'
+Closest: 'Más próximo: redondeo matemático al valor más próximo'
+Default: 'Estándar: el inicio se redondeará hacia abajo, el final y la duración hacia arriba'
+Floor: 'Suelo: el inicio, final y la duración se redondearán hacia abajo'
+Friday: Viernes
+Monday: Lunes
+Saturday: Sábado
+Sunday: Domingo
+Thursday: Jueves
+Tuesday: Martes
+Wednesday: Miércoles
+branding: Marca
+calendar: Calendario
+first_weekday: 'Primer día de la semana'
+form_customer: 'Crear cliente. Valores predeterminados'
+form_user: 'Valores predeterminados. Usuario'
+increment_rounding: 'Usar el valor configurado para la regla de redondeo'
+invoice: Facturas
+label.calendar.businessHours.begin: 'Inicio del horario comercial normal (se destacará)'
+label.calendar.businessHours.end: 'Fin del horario comercial normal (se destacará)'
+label.calendar.slot_duration: 'Slot duration for week- and day view (format: hh:mm:ss)'
+label.calendar.visibleHours.begin: 'Inicio del intervalo de tiempo visible'
+label.calendar.visibleHours.end: 'Final del intervalo de tiempo visible'
+label.calendar.week_numbers: 'Mostrar números de semana'
+label.calendar.weekends: 'Mostrar fines de semana'
+label.invoice.number_format: 'Formato de números de factura'
+label.simple_form: 'Búsqueda sencilla'
+label.theme.autocomplete_chars: 'Número mínimo de letras para iniciar la compleción automática'
+label.theme.branding.company: Empresa
+label.theme.branding.logo: 'Logo (URL de imagen; sustituye a la empresa en la pantalla de acceso)'
+label.theme.branding.mini: 'Mini logo (barra lateral contraída)'
+label.theme.branding.title: 'Título del navegador'
+label.theme.markdown_content: 'Permitir formato markdown en descripciones y comentarios'
+label.theme.tags_create: 'Etiquetas: utilizar búsqueda de compleción automática y permitir crear etiquetas'
+label.timesheet.active_entries.hard_limit: 'Número máximo de registros activos simultáneos permitidos'
+label.timesheet.active_entries.soft_limit: 'Número de registros activos simultáneos para que se muestre una advertencia'
+label.timesheet.default_begin: 'Tiempo de inicio por defecto (no se usa en todos los modos de seguimiento de tiempo)'
+label.timesheet.duration_increment: 'Selección de minuto para la Duración'
+label.timesheet.mode: 'Modo de seguimiento de tiempo'
+label.timesheet.mode_default: 'Los tiempos [predeterminados] de inicio y fin pueden editarse'
+label.timesheet.mode_duration_fixed_begin: '[Duración] tiempo de inicio fijo configurable, solo se puede editar la duración'
+label.timesheet.mode_duration_only: '[Duración] reemplaza el campo de hora de finalización por un campo de duración'
+label.timesheet.mode_punch: '[Reloj de control] el usuario puede iniciar y detener registros, pero no editar los tiempos o la duración'
+label.timesheet.rounding.default.begin: 'Redondeo de la hora de inicio en minutos (0 = desactivado)'
+label.timesheet.rounding.default.days: 'Días de la semana en los que se aplicará redondeo'
+label.timesheet.rounding.default.duration: 'Redondeo de la duración en minutos (0 = desactivado)'
+label.timesheet.rounding.default.end: 'Redondeo de la hora de finalización en minutos (0 = desactivado)'
+label.timesheet.rounding.default.mode: 'Modo de redondeo'
+label.timesheet.rules.allow_future_times: 'Permitir registros de tiempo en el futuro'
+label.timesheet.rules.allow_overlapping_records: 'Permitir registros de tiempo traslapados'
+label.timesheet.rules.lockdown_grace_period: 'Final de período de gracia de cierre (fecha relativa PHP hasta el final del período de cierre)'
+label.timesheet.rules.lockdown_period_end: 'Final de período de cierre (fecha relativa PHP hasta hoy)'
+label.timesheet.rules.lockdown_period_start: 'Inicio de período de cierre (fecha relativa PHP hasta hoy)'
+label.timesheet.time_increment: 'Selección de minuto para De & Para'
+'off': 'Off'
+rounding: 'Redondeo de tiempos'
+subtitle: 'Cambia las configuraciones globales de tu gestor de tiempo'
+theme: Tema
+timesheet: 'Parte de horas'
+title: Configuración

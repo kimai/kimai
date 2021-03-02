@@ -1,0 +1,4 @@
+report_monthly_users: 'Vue par mois pour tous les utilisateurs'
+report_user_month: 'Vue par mois pour un utilisateur'
+report_user_week: 'Vue par semaine pour un utilisateur'
+reporting.title: Reporting

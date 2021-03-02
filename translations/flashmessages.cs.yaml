@@ -1,0 +1,13 @@
+action.delete.error: 'Záznam nelze smazat: %reason%'
+action.delete.success: 'Záznam byl smazán'
+action.update.error: 'Změny nelze uložit: %reason%'
+action.update.success: 'Změny uložené'
+action.upload.error: 'The file could not be uploaded or saved: %reason%'
+invoice.first_template: 'Než budete moci pokračovat, musíte si vytvořit první šablonu faktury'
+timesheet.locked.warning: 'Upravujete exportovaný záznam'
+timesheet.start.error: 'Záznam času nele začít'
+timesheet.start.exceeded_limit: 'Bylo dosaženo limitu aktivních časových záznamů, nejprve prosím zastavte alespoň jednu aktivitu.'
+timesheet.start.success: 'Záznam času začalo'
+timesheet.stop.error: 'Záznam času nelez zastavit'
+timesheet.stop.success: 'Záznam času zastaven'
+warning: Varování

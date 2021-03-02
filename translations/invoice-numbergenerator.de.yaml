@@ -1,0 +1,3 @@
+date: Datum
+default: 'Konfiguriertes Format'
+label.invoice_number_generator: Rechnungsnummern-Generator

@@ -1,0 +1,8 @@
+activity: 活动：每次活动一个条目
+date: 日期：每天一个条目（用户开始日期）
+default: 默认：每次记录一个条目
+label.invoice_calculator: 总和计算
+project: 项目：每个项目一个条目
+short: 时间：记录总和，只有一个条目
+user: 用户：每个用户一个条目
+weekly: 'Weekly: one entry per week (uses start date)'

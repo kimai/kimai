@@ -1,0 +1,13 @@
+action.delete.error: 'لا يمكن حذف المشاركة:٪ السبب٪'
+action.delete.success: 'Entry was deleted successful'
+action.update.error: 'لا يمكن حفظ التغييرات:٪ السبب٪'
+action.update.success: 'تم حفظ التغييرات بنجاح'
+action.upload.error: 'The file could not be uploaded or saved: %reason%'
+invoice.first_template: 'يجب عليك إنشاء فاتورة النموذج الأولى قبل المتابعة'
+timesheet.locked.warning: __timesheet.locked.warning
+timesheet.start.error: 'تعذر بدء تسجيل الوقت'
+timesheet.start.exceeded_limit: 'The limit of active time records has been reached, please stop at least one running time measurement first.'
+timesheet.start.success: 'بدأ تسجيل الوقت'
+timesheet.stop.error: 'تعذر إيقاف تسجيل الوقت'
+timesheet.stop.success: 'تم إيقاف تسجيل الوقت'
+warning: تحذير

@@ -1,0 +1,8 @@
+activity: 'Aktivitet: ét indlæg per aktivitet'
+date: 'Dato: ét indlæg per dag (bruger startdato)'
+default: 'Standard: ét indlæg per tidsregistrering'
+label.invoice_calculator: 'Summér beregning'
+project: 'Projekt: ét indlæg per projekt'
+short: 'Timer: tidsregistreringer summeret, ét indlæg i alt'
+user: 'Bruger: ét indlæg per bruger'
+weekly: 'Weekly: one entry per week (uses start date)'

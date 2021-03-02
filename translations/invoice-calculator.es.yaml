@@ -1,0 +1,8 @@
+activity: 'Actividades: una posición por actividad'
+date: 'Fecha: una posición por día (en base a la fecha de inicio)'
+default: 'Por defecto: una posición para cada registro'
+label.invoice_calculator: 'Cálculo de suma'
+project: 'Proyecto: una posición por proyecto'
+short: 'Horas: suma total de horas de todos los registros en una sola posición'
+user: 'Usuarios: una posición por usuario'
+weekly: 'Weekly: one entry per week (uses start date)'

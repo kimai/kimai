@@ -1,0 +1,262 @@
+'Allowed character: A-Z and _': 'Allowed character: A-Z and _'
+ROLE_ADMIN: Administrator
+ROLE_SUPER_ADMIN: System-Admin
+ROLE_TEAMLEAD: Holdleder
+ROLE_USER: Bruger
+'This is a mandatory field': Obligatorisk
+action.back: Tilbage
+action.close: Luk
+action.delete: Slet
+action.edit: Redigér
+action.reset: Nulstil
+action.save: Gem
+active.entries: 'Dine aktive tidsregistreringer'
+admin_activity.short_stats: "\nPå nuværende tidspunkt har aktiviteten %activity% i projektet %project% for kunden %customer%\n%records% tidsregistreringer, i alt %duration%.\n"
+admin_activity.title: Aktiviteter
+admin_customer.short_stats: "\nPå nuværende tidspunkt har kunden %customer% %project% projekter med %activity% aktiviteter, med i alt\n%records% tidsregistreringer på i alt %duration%.\n"
+admin_customer.title: Kunde
+admin_entity.delete_confirm: "\nDette data vil også blive slettet!\nAlternativt kan du vælge et indlæg hvortil data skal flyttes til:\n"
+admin_invoice_template.title: Faturaskabelon
+admin_project.short_stats: "\nPå nuværende tidspunkt har projektet %project% for kunden %customer% %activities%\naktiviteter og %records% tidsregistreringer, i alt %duration%.\n"
+admin_project.title: Projekter
+admin_timesheet.title: Timesedler
+admin_user.short_stats: "\nPå nuværende tidspunkt har bruger %user% %records% tidsregistreringer på i alt %duration%.\n"
+admin_user.title: Bruger
+agendaDay: Dag
+agendaWeek: Uge
+attachments: Files
+both: Begge
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Forhåndsvisning
+button.preview_print: 'Print preview'
+button.print: Print
+button.xlsx: Excel
+calendar.title: Kalender
+cancel: Annullér
+confirm: Bekræft
+confirm.delete: 'Er du sikker på at du vil slette denne?'
+create: Opret
+dashboard.all: 'Alle brugere'
+dashboard.subtitle: Velkommen!
+dashboard.title: Dashboard
+delete.not_in_use: 'Denne artikel kan slettes sikkert.'
+entryState.all: Alle
+entryState.exported: Ryddet
+entryState.not_exported: Åben
+entryState.running: Aktiv
+entryState.stopped: Stoppet
+error.no_comments_found: __error.no_comments_found
+error.no_entries_found: 'Ingen indlæg baseret på dine valgte filtre blev fundet.'
+export.clear_all: 'Markér alle viste registreringer som åben?'
+export.date_copyright: 'Oprettet %date% med %kimai%'
+export.document_title: 'Liste af udgifter'
+export.filter: 'Filtrer data til eksport'
+export.full_list: 'Fuld liste'
+export.mark_all: 'Markér alle viste registreringer som ryddet?'
+export.page_of: 'Side %page% af %pages%'
+export.period: Priode
+export.subtitle: 'Eksporter timeseddeldata til diverse formater'
+export.summary: Opsummering
+export.title: Eksporter
+help.batch_meta_fields: 'Fields that are to be updated must first be activated by clicking on the associated checkbox.'
+help.fixedRate: 'Each time record gets the same value, regardless of its duration'
+help.rate: 'Hourly rate to be charged'
+help.rate_internal: 'Internal costs (if this is not specified, the normal rate is used)'
+invoice.due_days: Forfaldsdato
+invoice.filter: 'Filtrer fakturadata'
+invoice.from: Fra
+invoice.number: Fakturanummer
+invoice.service_date: Ydelsesdato
+invoice.signature_customer: 'Bekræft: Dato / Kundenavn / Underskrift'
+invoice.signature_user: 'Bekræft: Dato / Konsulentnavn / Underskrift'
+invoice.subtotal: Subtotal
+invoice.tax: Skat
+invoice.title: Fakturaer
+invoice.to: Til
+invoice.total: 'I alt'
+invoice.total_working_time: 'Total varighed'
+invoice_print: Faktura
+label.actions: Handlinger
+label.active: Aktiv
+label.activity: Aktivitet
+label.address: Adresse
+label.alias: Navn
+label.amount: Antal
+label.api_token: 'API kodeord'
+label.api_token_repeat: 'Gentag API kodeord'
+label.appendTags: 'Tilføj etiketter'
+label.avatar: Profilbillede
+label.batch_meta_fields: 'Additional fields'
+label.begin: Fra
+label.billable: Billable
+label.budget: Budget
+label.calendar.initial_view: 'Startsvisning for kalender'
+label.color: Farve
+label.comment: Kommentar
+label.company: 'Firma navn'
+label.contact: Kontakt
+label.country: Land
+label.create_more: 'Opret yderligere indlæg'
+label.currency: Valuta
+label.customer: Kunde
+label.date: Dato
+label.daterange: Tidsinterval
+label.decimalDuration: 'Display duration as decimal number'
+label.description: Beskrivelse
+label.due_days: 'Betalingsfrist i dage'
+label.duration: Varighed
+label.email: Email
+label.end: Til
+label.endtime: Slut
+label.entryState: Registreringer
+label.exported: Eksporteret
+label.fax: Fax
+label.fixedRate: 'Fast sats'
+label.globalsOnly: 'Kun globalt'
+label.homepage: Hjemmeside
+label.hourlyRate: Timesats
+label.hourly_rate: Timesats
+label.hours: Timer
+label.id: ID
+label.invoice_bank_account: Bankkonto
+label.invoice_tax_number: 'VAT no.:'
+label.language: Sprog
+label.lastLogin: 'Last login'
+label.login.initial_view: 'Startsvisning efter login'
+label.logout: 'Log ud'
+label.mark_as_exported: 'Markér som eksporteret'
+label.mobile: Mobil
+label.my_team_projects: 'Team Projekter & budgetter'
+label.my_teams: 'Mine hold'
+label.name: Navn
+label.number: Bruger
+label.orderDate: Ordredato
+label.orderNumber: Ordrenummer
+label.pageSize: Sidestørrelse
+label.password: Kodeord
+label.password_repeat: 'Gentag kodeord'
+label.payment_terms: Købsbetingelser
+label.phone: Telefon
+label.plus_more: '+%count% mere'
+label.progress: Fremskridt
+label.project: Projekt
+label.project_end: __label.project_end
+label.project_start: __label.project_start
+label.rate: Sats
+label.rate_internal: __label.rate_internal
+label.recalculate_rates: 'Recalculate rates'
+label.replaceTags: 'Erstat etiketter'
+label.required_version: 'Kompatibel with'
+label.roles: Rolle
+label.skin: Kimai-Tema
+label.starttime: Start
+label.status: Status
+label.tag: Etiket
+label.tags: Etiketter
+label.team: Hold
+label.teamlead: Holdleder
+label.template: Skabelon
+label.theme.collapsed_sidebar: 'Minimér venstre sidebar'
+label.theme.layout: 'Display: layout'
+label.timeBudget: Tidsbudget
+label.timesheet.daily_stats: 'Vis daglig statistik i timeseddel'
+label.timesheet.export_decimal: 'Use decimal duration in export'
+label.timezone: Tidszone
+label.title: Titel
+label.toggle_dropdown: 'Vis menu'
+label.total_rate: 'Total pris'
+label.unit_price: Enhedspris
+label.user: Bruger
+label.user_profile: 'Min profil'
+label.username: Brugernavn
+label.vat: Skat
+label.vat_id: VAT-ID
+label.version: Version
+label.visible: Synlig
+login_required: 'Mangler tilladelse. Omdiriger til login?'
+menu.admin: Administration
+menu.admin_activity: Aktiviteter
+menu.admin_customer: Kunder
+menu.admin_project: Projekter
+menu.admin_team: Hold
+menu.admin_timesheet: Timesedler
+menu.admin_user: Brugere
+menu.doctor: Fejlsøgning
+menu.export: Eksporter
+menu.homepage: Dashboard
+menu.invoice: Fakturaer
+menu.logout: 'Log ud'
+menu.plugin: Plugins
+menu.reporting: Reporting
+menu.system: System
+menu.system_configuration: Indstillinger
+menu.tags: Etiketter
+menu.timesheet: 'Min timeseddel'
+modal.columns.description: 'Når der gemmes, vil alle umarkerede kolonner blive skjult, og denne indstilling vil blive gemt i en cookie. Hvis du sletter dine cookies, vil denne indstilling blive ændret tilbage.'
+modal.columns.title: 'Ændr kolonne synlighed'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Måned
+more.info.link: 'Mere info'
+my.profile: 'Min profil'
+'no': Nej
+placeholder.type_message: __placeholder.type_message
+profile.about_me: 'Om mig'
+profile.api-token: API
+profile.first_entry: 'Arbejdet siden'
+profile.password: Kodeord
+profile.preferences: Indstillinger
+profile.registration_date: __profile.registration_date
+profile.roles: Roller
+profile.settings: Profil
+profile.teams: Hold
+profile.title: 'Bruger profil'
+rates.empty: __rates.empty
+rates.title: __rates.title
+recent.activities: 'Genstart en af dine sidste aktiviteter'
+recent.activities.format: '%activity% i %project% for %customer%'
+search: Søg
+stats.activeRecordings: 'Aktive tidsregistreringer'
+stats.activityTotal: Aktiviteter
+stats.amountMonth: 'Løn denne måned'
+stats.amountToday: 'Løn i dag'
+stats.amountTotal: 'Løn i alt'
+stats.amountWeek: 'Løn denne uge'
+stats.amountYear: 'Løn dette år'
+stats.customerTotal: Kunder
+stats.durationMonth: 'Arbejdstimer denne måned'
+stats.durationToday: 'Arbejdstimer i dag'
+stats.durationTotal: 'Arbejdstimer i alt'
+stats.durationWeek: 'Arbejdstimer denne uge'
+stats.durationYear: 'Arbejdstimer dette år'
+stats.percentUsed: '%percent%% brugt'
+stats.percentUsedLeft: '%percent%% brugt (%left% tilbage)'
+stats.projectTotal: Projekter
+stats.userActiveMonth: 'Aktive brugere denne måned'
+stats.userActiveToday: 'Aktive brugere i dag'
+stats.userActiveTotal: 'Aktive brugere i alt'
+stats.userActiveWeek: 'Aktive brugere denne uge'
+stats.userActiveYear: 'Aktive brugere dette år'
+stats.userTotal: Brugere
+stats.workingTimeMonth: __stats.workingTimeMonth
+stats.workingTimeToday: __stats.workingTimeToday
+stats.workingTimeWeek: __stats.workingTimeWeek
+stats.workingTimeYear: __stats.workingTimeYear
+stats.yourWorkingHours: 'Mine arbejdstimer'
+status.new: __status.new
+status.paid: __status.paid
+status.pending: __status.pending
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: Tidsregistrering
+timesheet.all: 'Vis alle tidsregistreringer'
+timesheet.edit: 'Redigér tidsregistrering'
+timesheet.start: 'Opret ny tidsregistrering'
+timesheet.title: 'Min timeseddel'
+update_multiple: '%action% %count% indlæg?'
+upload: __upload
+user_permissions.title: 'Bruger tilladelser'
+user_role.title: 'Bruger rolle'
+'yes': Ja
+'Tilladte karaktere: A-Z and _': 'Tilladte karaktere: A-Z and _'

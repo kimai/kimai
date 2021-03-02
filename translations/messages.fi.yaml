@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Sallitut merkit: A-Z and _'
+ROLE_ADMIN: 'Järjestelmän valvoja'
+ROLE_SUPER_ADMIN: 'Järjestelmän ylläpitäjä'
+ROLE_TEAMLEAD: 'Tiimin esimies'
+ROLE_USER: Käyttäjä
+'This is a mandatory field': Pakollinen
+action.back: Takaisin
+action.close: Sulje
+action.delete: Poista
+action.edit: Muokkaa
+action.reset: Resetoi
+action.save: Tallenna
+active.entries: 'Sinun aktiiviset ajan mittaukset'
+admin_activity.short_stats: "\nTällä hetkellä työtehtävällä %activity% projektissa %project% asiakkaalle %customer%\non %records% aikamerkintää, joiden kesto on yhteensä %duration%.\n"
+admin_activity.title: Työtehtävät
+admin_customer.short_stats: "\nTällä hetkellä asiakkaalla %customer% on %project% projektia joissa %activity% työtehtävää, joissa on yhteensä\n%records% aikamerkintää eli kesto yhteensä %duration%.\n"
+admin_customer.title: Asiakas
+admin_entity.delete_confirm: "\nMyös tämä data poistetaan!\nVaihtoehtoisesti, voit valita kirjauksen mihin kaikki data siirretään:\n"
+admin_invoice_template.title: 'Lasku malli'
+admin_project.short_stats: "\nTällä hetkellä projektilla %project% asiakkaalle %customer% on %activities%\ntyötehtävää ja %records% aikamerkintää, joiden kesto on yhteensä %duration%.\n"
+admin_project.title: Projektit
+admin_timesheet.title: Tuntilomakkeet
+admin_user.short_stats: "\nTällä hetkellä käyttäjällä %user% on %records% aikamerkintää mikä on yhteensä %duration%.\n"
+admin_user.title: Käyttäjä
+agendaDay: Päivä
+agendaWeek: Viikko
+attachments: Tiedostot
+both: Molemmat
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Esikatselu
+button.preview_print: 'Tulosta esikatselu'
+button.print: Tulosta
+button.xlsx: Excel
+calendar.title: Kalenteri
+cancel: Peruuta
+confirm: Vahvista
+confirm.delete: 'Haluatko varmasti poistaa sen?'
+create: Luo
+dashboard.all: 'Kaikki käyttäjät'
+dashboard.subtitle: Tervetuloa!
+dashboard.title: Ohjauspaneeli
+delete.not_in_use: 'Tämä kohde voidaan turvallisesti poistaa.'
+entryState.all: Kaikki
+entryState.exported: Selvitetyt
+entryState.not_exported: 'Auki olevat'
+entryState.running: Aktiiviset
+entryState.stopped: Pysäytetty
+error.no_comments_found: 'Kommentteja ei ole vielä lähetetty.'
+error.no_entries_found: 'Valituilla suodattimilla ei löytynyt merkintöjä.'
+export.clear_all: 'Merkitäänkö kaikki näytetyt tiedot avoimiksi?'
+export.date_copyright: 'Luotu %date% sovelluksella %kimai%'
+export.document_title: 'Tuntilomakkeiden vienti'
+export.filter: 'Suodata vietävät tiedot'
+export.full_list: 'Koko lista'
+export.mark_all: 'Merkitäänkö kaikki näytetyt tiedot selvitetyiksi?'
+export.page_of: 'Sivu %page% / %pages%'
+export.period: Aika
+export.subtitle: 'Vie tuntilomake eri tiedostomuodoissa'
+export.summary: Yhteenveto
+export.title: Vie
+help.batch_meta_fields: 'Fields that are to be updated must first be activated by clicking on the associated checkbox.'
+help.fixedRate: 'Jokainen aikamerkintä saa saman arvon, riippumatta sen kestosta'
+help.rate: 'Muutettava tunti hinta'
+help.rate_internal: 'Sisäiset kulut (käytetään normaali hintoja, jos tätä ei ole määritetty)'
+invoice.due_days: Maksutavoite
+invoice.filter: 'Suodata laskutustiedot'
+invoice.from: Alkaen
+invoice.number: 'Laskun numero'
+invoice.service_date: Huoltopäivä
+invoice.signature_customer: 'Vahvistus: Päivämäärä / Asiakkaan nimi / Allekirjoitus'
+invoice.signature_user: 'Vahvistus: Päivämäärä / Käsittelijän nimi / Allekirjoitus'
+invoice.subtotal: Välisumma
+invoice.tax: Vero
+invoice.title: Laskut
+invoice.to: Saakka
+invoice.total: Yhteensä
+invoice.total_working_time: 'Kesto yhteensä'
+invoice_print: Lasku
+label.actions: Toiminnot
+label.active: Aktiivinen
+label.activity: Työtehtävä
+label.address: Osoite
+label.alias: Nimi
+label.amount: Määrä
+label.api_token: 'API salasana'
+label.api_token_repeat: 'Toista API salasana'
+label.appendTags: 'Lisää tunnisteita'
+label.avatar: Profiilikuva
+label.batch_meta_fields: 'Additional fields'
+label.begin: Alkaen
+label.billable: Laskutettava
+label.budget: Budjetti
+label.calendar.initial_view: 'Aloitus kalenterinäkymä'
+label.color: Väri
+label.comment: Kommentti
+label.company: 'Yrityksen nimi'
+label.contact: Yhteystiedot
+label.country: Maa
+label.create_more: 'Luo lisää merkintöjä'
+label.currency: Valuutta
+label.customer: Asiakas
+label.date: Päivämäärä
+label.daterange: Aikaväli
+label.decimalDuration: 'Näytä kesto desimaalilukuna'
+label.description: Kuvaus
+label.due_days: 'Maksuehto päivinä'
+label.duration: Kesto
+label.email: Sähköposti
+label.end: Saakka
+label.endtime: Lopetus
+label.entryState: Merkinnät
+label.exported: Viety
+label.fax: Faksi
+label.fixedRate: 'Kiinteä korko'
+label.globalsOnly: 'Vain globaali'
+label.homepage: Kotisivu
+label.hourlyRate: 'Tunti hinta'
+label.hourly_rate: 'Tunti hinta'
+label.hours: Tunnit
+label.id: ID
+label.invoice_bank_account: Pankkitili
+label.invoice_tax_number: 'VAT no.:'
+label.language: Kieli
+label.lastLogin: 'Viimeksi kirjautunut'
+label.login.initial_view: 'Aloitus näkymä kirjautumisen jälkeen'
+label.logout: 'Kirjaudu ulos'
+label.mark_as_exported: 'Merkitse viedyksi'
+label.mobile: Matkapuhelin
+label.my_team_projects: 'Tiimin projektit ja budjetit'
+label.my_teams: 'Omat tiimit'
+label.name: Nimi
+label.number: Tili
+label.orderDate: 'Tilauksen päivämäärä'
+label.orderNumber: Tilausnumero
+label.pageSize: 'Sivun koko'
+label.password: Salasana
+label.password_repeat: 'Toista salasana'
+label.payment_terms: Maksuehdot
+label.phone: Puhelin
+label.plus_more: '+%count% lisää'
+label.progress: Edistyminen
+label.project: Projekti
+label.project_end: 'Projektin lopetus'
+label.project_start: 'Projektin aloitus'
+label.rate: Hinta
+label.rate_internal: 'Sisäinen hinta'
+label.recalculate_rates: 'Laske hinnat uudelleen'
+label.replaceTags: 'Vaihda tunnisteet'
+label.required_version: 'Yhteensopiva versio'
+label.roles: Rooli
+label.skin: 'Näyttö: värit'
+label.starttime: Aloitus
+label.status: Tila
+label.tag: Tunnisteet
+label.tags: Tunnisteet
+label.team: Tiimi
+label.teamlead: Tiimipäällikkö
+label.template: Malli
+label.theme.collapsed_sidebar: 'Pienennä vasen sivupalkki'
+label.theme.layout: 'Näyttö: asettelu'
+label.timeBudget: 'Aika budjetti'
+label.timesheet.daily_stats: 'Näytä päivätilastot tuntilomakkeessa'
+label.timesheet.export_decimal: 'Käytä desimaalitarkkuutta viennissä'
+label.timezone: Aikavyöhyke
+label.title: Otsikko
+label.toggle_dropdown: 'Näytä valikko'
+label.total_rate: Kokonaishinta
+label.unit_price: Yksikköhinta
+label.user: Käyttäjä
+label.user_profile: 'Oma profiili'
+label.username: Käyttäjä
+label.vat: Vero
+label.vat_id: VAT-ID
+label.version: Versio
+label.visible: Näkyvillä
+login_required: 'Puuttuvat oikeudet. Uudelleen ohjataanko kirjautumiseen?'
+menu.admin: Hallinta
+menu.admin_activity: Työtehtävät
+menu.admin_customer: Asiakkaat
+menu.admin_project: Projektit
+menu.admin_team: Tiimit
+menu.admin_timesheet: Työajanseurannat
+menu.admin_user: Käyttäjät
+menu.doctor: 'Järjestelmän kunto'
+menu.export: Vie
+menu.homepage: Ohjauspaneeli
+menu.invoice: Laskut
+menu.logout: 'Kirjaudu ulos'
+menu.plugin: Liitännäiset
+menu.reporting: Raportointi
+menu.system: Järjestelmä
+menu.system_configuration: Asetukset
+menu.tags: Tunnisteet
+menu.timesheet: 'Omat työajat'
+modal.columns.description: 'Tallentamisen jälkeen merkitsemättömät sarakkeet piilotetaan ja nämä asetukset tallennetaan selaimen evästeeseen. Jos poistat evästeesi, asetukset palautuvat alkuperäisiksi.'
+modal.columns.title: 'Muuta sarakkeen näkyvyyttä'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Kuukausi
+more.info.link: Lisätietoa
+my.profile: 'Oma profiili'
+'no': Ei
+placeholder.type_message: 'Kirjoita viesti...'
+profile.about_me: 'Tietoa minusta'
+profile.api-token: API
+profile.first_entry: 'Työskennellyt alkaen'
+profile.password: Salasana
+profile.preferences: Asetukset
+profile.registration_date: Rekisteröitynyt
+profile.roles: Roolit
+profile.settings: Profiili
+profile.teams: Tiimit
+profile.title: Käyttäjäprofiili
+rates.empty: 'Hintoja ei ole vielä asetettu.'
+rates.title: Hinnat
+recent.activities: 'Aloita uudelleen yksi viimeisimmistä työtehtävistäsi'
+recent.activities.format: '%activity% projektissa %project% asiakkaalle %customer%'
+search: Etsi
+stats.activeRecordings: 'Aktiivisia merkintöjä'
+stats.activityTotal: Työtehtäviä
+stats.amountMonth: 'Tulot tässä kuussa'
+stats.amountToday: 'Tulot tänään'
+stats.amountTotal: 'Tulot yhteensä'
+stats.amountWeek: 'Tulot tällä viikolla'
+stats.amountYear: 'Tulot tänä vuonna'
+stats.customerTotal: Asiakkaita
+stats.durationMonth: 'Työaika tässä kuussa'
+stats.durationToday: 'Työaika tänään'
+stats.durationTotal: 'Työtunteja yhteensä'
+stats.durationWeek: 'Työaika tällä viikolla'
+stats.durationYear: 'Työaika tänä vuonna'
+stats.percentUsed: '%percent%% käytetty'
+stats.percentUsedLeft: '%percent%% käytetty (%left% on vielä auki)'
+stats.projectTotal: Projekteja
+stats.userActiveMonth: 'Aktiivisia käyttäjiä tässä kuussa'
+stats.userActiveToday: 'Aktiivisia käyttäjiä tänään'
+stats.userActiveTotal: 'Aktiivisia käyttäjiä yhteensä'
+stats.userActiveWeek: 'Aktiivisa käyttäjiä tällä viikolla'
+stats.userActiveYear: 'Aktiivisia käyttäjiä tänä vuonna'
+stats.userTotal: Käyttäjiä
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: 'Tänään, %day%'
+stats.workingTimeWeek: 'Kalenteri viikko %week%'
+stats.workingTimeYear: 'Koko vuosi %year%'
+stats.yourWorkingHours: 'Omat työajat'
+status.new: Uusi
+status.paid: Maksettu
+status.pending: Odottaa
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: Työajanseuranta
+timesheet.all: 'Näytä kaikki merkinnät'
+timesheet.edit: 'Muokkaa tietuetta'
+timesheet.start: 'Luo uusi aikamerkintä'
+timesheet.title: 'Omat ajat'
+update_multiple: '%action% %count% tapahtumaa?'
+upload: 'Siirrä palvelimelle'
+user_permissions.title: 'Käyttäjän oikeudet'
+user_role.title: 'Käyttäjän rooli'
+'yes': Kyllä

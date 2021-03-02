@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'Kalan bütçe ile'
+default-internal.pdf.twig: 'Dahili ücretlerle'
+default.pdf.twig: Standart

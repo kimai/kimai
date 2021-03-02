@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'Die Tätigkeit ist nur eingeschränkt sichtbar, da Team Berechtigungen für das Projekt und/oder den Kunden gesetzt sind.'
+team.create_default: 'Erstelle ein neues Team um den Zugriff zu beschränken'
+team.project_visibility_inherited: 'Das Projekt ist nur eingeschränkt sichtbar, da Team Berechtigungen für den Kunden gesetzt sind.'
+team.visibility_global: 'Sichtbar für alle Benutzer, da bisher noch kein Team zugewiesen wurde.'
+team.visibility_restricted: 'Nur sichtbar für die folgenden Teams und alle Administratoren.'
+teams.customer_access: 'Zugriff auf Kunden gewähren'
+teams.project_access: 'Zugriff auf Projekte gewähren'
+teams.title: Teams

@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'תווים מותרים: A-Z ו־_'
+ROLE_ADMIN: הנהלה
+ROLE_SUPER_ADMIN: 'הנהלת מערכת'
+ROLE_TEAMLEAD: 'הובלת צוותים'
+ROLE_USER: משתמשים
+'This is a mandatory field': חובה
+action.back: חזור
+action.close: סגור
+action.delete: מחק
+action.edit: ערוך
+action.reset: אפס
+action.save: שמור
+active.entries: 'מדדי זמני הפעילות שלך'
+admin_activity.short_stats: "\nכרגע, הפעילות %activity% בפרויקט %project% ללקוח %customer%\nיש %records% רשומות זמן, שמסתכמות לסך הכל %duration%.\n"
+admin_activity.title: פעילויות
+admin_customer.short_stats: "\nכרגע, ללקוח %customer% יש %project% פרויקטים עם %activity% פעילויות, שמסתכמות\nב %records% רשומות זמן לסך הכל %duration%.\n"
+admin_customer.title: לקוח
+admin_entity.delete_confirm: "\nהנתון הזה גם כן ימחק!\nלחילופין, אתה יכול לבחור רשומה שאליה כל הנתונים יעברו:\n"
+admin_invoice_template.title: 'תבנית חשבונית'
+admin_project.short_stats: "\nכרגע, הפרויקט %project% ללקוח %customer% יש %activities%\nפעילויות ו %records% רשומות זמן, שמסתכמות לסך הכל %duration%.\n"
+admin_project.title: פרויקטים
+admin_timesheet.title: 'גיליון שעות'
+admin_user.short_stats: 'כרגע למשתמש %user% יש %records% רשומות זמן שמסתכמות לכדי %duration% סך הכול.'
+admin_user.title: משתמש
+agendaDay: יום
+agendaWeek: שבוע
+attachments: Files
+both: הכל
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: 'תצוגה מקדימה'
+button.preview_print: 'תצוגת הדפסה'
+button.print: הדפס
+button.xlsx: Excel
+calendar.title: 'לוח שנה'
+cancel: בטל
+confirm: אשר
+confirm.delete: 'אתה באמת מעוניין למחוק?'
+create: צור
+dashboard.all: 'כל המשתמשים'
+dashboard.subtitle: 'ברוך הבא!'
+dashboard.title: דשבורד
+delete.not_in_use: 'האובייקט הזה יכול להימחק בביטחה.'
+entryState.all: הכל
+entryState.exported: כן
+entryState.not_exported: לא
+entryState.running: פעילה
+entryState.stopped: 'לא פעילה'
+error.no_comments_found: 'לא נרשמו הערות עדיין.'
+error.no_entries_found: 'לא נמצאו רשומות על בסיס הסינונים שבחרת.'
+export.clear_all: 'סמן את כל הרשומות כפתוחות?'
+export.date_copyright: 'נוצר ב %date%'
+export.document_title: 'ייצא גיליון שעות'
+export.filter: 'סנן נתונים לייצוא'
+export.full_list: 'רשימה מלאה'
+export.mark_all: 'נקה את כל הרשומות המסומנות?'
+export.page_of: 'דף %page% מתוך %pages%'
+export.period: תקופה
+export.subtitle: 'ייצא גיליון שעות עבודה במספר פורמטים'
+export.summary: סיכום
+export.title: ייצא
+help.batch_meta_fields: 'שדות שיש לעדכן צריכים קודם להיות פעילים על ידי סימון התיבה המשויכת'
+help.fixedRate: 'כל רשומה מקבלת את אותו ערך, ללא קשר למשך הזמן'
+help.rate: 'תעריף שעתי לחיוב'
+help.rate_internal: 'עלות פנימית. אם לא מצוין ערך, ילקח התעריף הרגיל'
+invoice.due_days: 'יעד לתשלום'
+invoice.filter: 'סנן נתוני חשבונית'
+invoice.from: התחלה
+invoice.number: 'מספר חשבונית'
+invoice.service_date: 'תאריך שירות'
+invoice.signature_customer: 'אישור: Date / שם הלקוח / חתימה'
+invoice.signature_user: 'אישור: תאריך / שם העובד / חתימה'
+invoice.subtotal: 'סכום ביניים'
+invoice.tax: מס
+invoice.title: חשבוניות
+invoice.to: סיום
+invoice.total: 'סך הכל'
+invoice.total_working_time: 'משך זמן עבודה כולל'
+invoice_print: חשבונית
+label.actions: פעולות
+label.active: פעיל
+label.activity: פעילות
+label.address: כתובת
+label.alias: שם
+label.amount: כמות
+label.api_token: 'סיסמת API'
+label.api_token_repeat: 'אימות סיסמת API'
+label.appendTags: 'הוסף תגיות'
+label.avatar: 'תמונת פרופיל'
+label.batch_meta_fields: 'שדות נוספים'
+label.begin: התחלה
+label.billable: להחזר
+label.budget: תקציב
+label.calendar.initial_view: 'החל תצוגת לוח שנה'
+label.color: צבע
+label.comment: הערה
+label.company: 'שם חברה'
+label.contact: 'איש קשר'
+label.country: מדינה
+label.create_more: 'צור רשומות נוספות'
+label.currency: מטבע
+label.customer: לקוח
+label.date: תאריך
+label.daterange: 'טווח זמן'
+label.decimalDuration: 'הצג משך זמן עם נקודה עשרונית'
+label.description: תיאור
+label.due_days: 'ימים לתשלום'
+label.duration: 'משך זמן'
+label.email: אימייל
+label.end: סיום
+label.endtime: סיום
+label.entryState: 'מצב רשומה'
+label.exported: ייצוא
+label.fax: פקס
+label.fixedRate: 'תעריף קבוע'
+label.globalsOnly: 'רק גלובלי'
+label.homepage: 'דף הבית'
+label.hourlyRate: 'תעריף שעתי'
+label.hourly_rate: 'תעריף שעתי'
+label.hours: שעות
+label.id: מזהה
+label.invoice_bank_account: 'חשבון בנק'
+label.invoice_tax_number: 'מספר מע''''מ:'
+label.language: שפה
+label.lastLogin: 'כניסה אחרונה'
+label.login.initial_view: 'החל תצוגה לאחר התחברות'
+label.logout: התנתקות
+label.mark_as_exported: 'סמן לייצוא'
+label.mobile: 'טלפון נייד'
+label.my_team_projects: 'פרויקטים ותקציבים לצוות'
+label.my_teams: 'הצוותים שלי'
+label.name: שם
+label.number: חשבון
+label.orderDate: 'תאריך הזמנה'
+label.orderNumber: 'מספר הזמנה'
+label.pageSize: 'גודל דף'
+label.password: סיסמה
+label.password_repeat: 'אימות סיסמה'
+label.payment_terms: 'תנאי תשלום'
+label.phone: טלפון
+label.plus_more: '+%count% נוספים'
+label.progress: התקדמות
+label.project: פרויקט
+label.project_end: 'סיום פרויקט'
+label.project_start: 'תחילת פרויקט'
+label.rate: תעריף
+label.rate_internal: 'תעריף פנימי'
+label.recalculate_rates: 'חישוב תעריפים מחדש'
+label.replaceTags: 'החלף תגיות'
+label.required_version: 'תואם ל־'
+label.roles: תפקיד
+label.skin: צבע
+label.starttime: התחלה
+label.status: סטטוס
+label.tag: תגיות
+label.tags: תגיות
+label.team: צוות
+label.teamlead: 'ראש צוות'
+label.template: תבנית
+label.theme.collapsed_sidebar: 'מזער את התפריט השמאלי'
+label.theme.layout: 'הצג: פריסה'
+label.timeBudget: 'תקציב זמן'
+label.timesheet.daily_stats: 'הראה סטטיסטיקות יומיות בגיליון השעות'
+label.timesheet.export_decimal: 'ייצא משך זמן עם נקודה עשרונית'
+label.timezone: 'אזור זמן'
+label.title: תואר
+label.toggle_dropdown: 'הראה תפריט'
+label.total_rate: 'מחיר כולל'
+label.unit_price: 'מחיר יחידה'
+label.user: משתמש
+label.user_profile: 'הפרופיל שלי'
+label.username: 'שם משתמש'
+label.vat: 'מע''''מ'
+label.vat_id: 'מזהה מע''''מ'
+label.version: גרסה
+label.visible: לתצוגה
+login_required: 'חסרה הרשאה. התחבר מחדש?'
+menu.admin: ניהול
+menu.admin_activity: פעילויות
+menu.admin_customer: לקוחות
+menu.admin_project: פרויקטים
+menu.admin_team: צוותים
+menu.admin_timesheet: 'גיליון שעות'
+menu.admin_user: משתמשים
+menu.doctor: דוקטור
+menu.export: 'ייצוא נתונים'
+menu.homepage: דשבורד
+menu.invoice: חשבוניות
+menu.logout: התנתקות
+menu.plugin: תוספות
+menu.reporting: דיווח
+menu.system: מערכת
+menu.system_configuration: הגדרות
+menu.tags: תגיות
+menu.timesheet: 'השעות שלי'
+modal.columns.description: 'לאחר השמירה, כל העמודות הלא מסומנות יהיו מוסתרות. הגדרה זו תישמר בעוגיה בדפדפן. אם תמחק עוגיות מהדפדפן שלך, הגדרה זו תתבטל.'
+modal.columns.title: 'שנה הצגת עמודות'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: חודש
+more.info.link: 'מידע נוסף'
+my.profile: 'הפרופיל שלי'
+'no': לא
+placeholder.type_message: 'נא להקליד את ההודעה שלך…'
+profile.about_me: 'על עצמי'
+profile.api-token: API
+profile.first_entry: 'תחילת עבודה'
+profile.password: סיסמה
+profile.preferences: העדפות
+profile.registration_date: 'מועד הרישום'
+profile.roles: תפקידים
+profile.settings: פרופיל
+profile.teams: צוותים
+profile.title: 'פרופיל משתמש'
+rates.empty: 'לא הוגדרו עדיין עמלות.'
+rates.title: עמלות
+recent.activities: 'אתחל את אחת הפעילויות האחרונות שלך'
+recent.activities.format: '%activity% ב %project% עבור %customer%'
+search: חפש
+stats.activeRecordings: 'רשומות פעילות'
+stats.activityTotal: פעילויות
+stats.amountMonth: 'הכנסות החודש'
+stats.amountToday: 'הכנסות היום'
+stats.amountTotal: 'סך הכל הכנסות'
+stats.amountWeek: 'הכנסות השבוע'
+stats.amountYear: 'הכנסות השנה'
+stats.customerTotal: לקוחות
+stats.durationMonth: 'שעות עבודה החודש'
+stats.durationToday: 'שעות עבודה היום'
+stats.durationTotal: 'סך הכל שעות עבודה'
+stats.durationWeek: 'שעות עבודה השבוע'
+stats.durationYear: 'שעות עבודה השנה'
+stats.percentUsed: '%percent%% בשימוש'
+stats.percentUsedLeft: '%percent%% בשימוש (%left% עדין פתוחות)'
+stats.projectTotal: פרויקטים
+stats.userActiveMonth: 'משתמשים פעילים החודש'
+stats.userActiveToday: 'משתמשים פעילים היום'
+stats.userActiveTotal: 'משתמשים פעילים'
+stats.userActiveWeek: 'משתמשים פעילים השבוע'
+stats.userActiveYear: 'משתמשים פעילים השנה'
+stats.userTotal: משתמשים
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: 'היום, %day%'
+stats.workingTimeWeek: 'שבוע מספר %week%'
+stats.workingTimeYear: 'שנת %year% במלואה'
+stats.yourWorkingHours: 'שעות העבודה שלי'
+status.new: חדש
+status.paid: שולם
+status.pending: ממתין
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'שעות עבודה'
+timesheet.all: 'הצג את כל הרשומות'
+timesheet.edit: 'ערוך רשומה'
+timesheet.start: 'צור רשומת זמן חדשה'
+timesheet.title: 'השעות שלי'
+update_multiple: '%action% %count% רשומות?'
+upload: העלה
+user_permissions.title: 'הרשאות משתמש'
+user_role.title: 'תפקיד משתמש'
+'yes': כן

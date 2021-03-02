@@ -1,0 +1,13 @@
+action.delete.error: 'Kayıt silinemedi: %reason%'
+action.delete.success: 'Kayıt silindi'
+action.update.error: 'Değişiklikler kaydedilemedİ: %reason%'
+action.update.success: 'Değişiklikler kaydedildi'
+action.upload.error: 'Dosya karşıya yüklenemedi veya kaydedilemedi: %reason%'
+invoice.first_template: 'Devam edebilmek için fatura şablonu oluşturmanız gereklidir'
+timesheet.locked.warning: 'Dışa aktarılan bir kaydı düzenliyorsunuz'
+timesheet.start.error: 'Zaman kaydı başlatılamadı'
+timesheet.start.exceeded_limit: 'Etkin zaman kayıtlarının sınırına ulaşıldı, lütfen önce en az bir çalışan zaman ölçümünü durdurun.'
+timesheet.start.success: 'Zaman kaydı başlatıldı'
+timesheet.stop.error: 'Zaman kaydı durdurulamadı'
+timesheet.stop.success: 'Zaman kaydı durduruldu'
+warning: Uyarı

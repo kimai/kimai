@@ -1,0 +1,271 @@
+'Allowed character: A-Z and _': 'Allowed character: A-Z and _'
+ROLE_ADMIN: Správce
+ROLE_SUPER_ADMIN: Systémový-Admin
+ROLE_TEAMLEAD: 'Vedoucí skupiny'
+ROLE_USER: Uživatel
+'This is a mandatory field': 'Toto pole je povinné'
+action.back: Zpět
+action.close: Zavřít
+action.delete: Odstranit
+action.edit: Upravit
+action.reset: Restart
+action.save: Uložit
+active.entries: 'Vaše aktivní měření času'
+admin_activity.short_stats: "\nAktuální aktivita %activity% v projektu %project% pro zákazníka %customer%\nmá %records% časový záznam, který je celkem %duration%.\n"
+admin_activity.title: Aktivity
+admin_customer.short_stats: "\nV současné době zákazník %customer% má %project% projekt s %activity% činnosti, které shrnují\nv %records% časovém záznamu celkem %duration%.\n"
+admin_customer.title: Zákazník
+admin_entity.delete_confirm: "\nTato data budou smazána!\nNebo můžete data prenést do jiného záznamu:\n"
+admin_invoice_template.title: 'Šablona faktury'
+admin_project.short_stats: "\nV současné době je projekt %project% pro zákazníka %customer% má %activities%\nčinnosti a %records% časový záznam, což je celkem %duration%.\n"
+admin_project.title: Projekt
+admin_timesheet.title: 'Pracovní výkaz'
+admin_user.short_stats: "\nV současné době uživatel %user% má %records% časových záznamů, které činí celkem %duration%.\n"
+admin_user.title: Uživatel
+agendaDay: Den
+agendaWeek: Týden
+attachments: Files
+both: Oba
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Preview
+button.preview_print: 'Print preview'
+button.print: Tisk
+button.xlsx: Excel
+calendar.title: Kalendář
+cancel: Zrušit
+confirm: Potvrdit
+confirm.delete: 'Opravdu to chcete smazat?'
+create: Vytvořit
+dashboard.all: 'Všichni uživatelé'
+dashboard.subtitle: Vítejte!
+dashboard.title: Nástěnka
+delete.not_in_use: 'Tuto položku lze bezpečně smazat.'
+entryState.all: Vše
+entryState.exported: Vymazáno
+entryState.not_exported: Otevřít
+entryState.running: Začít
+entryState.stopped: Zastavit
+error.no_comments_found: __error.no_comments_found
+error.no_entries_found: 'Na základě vybraných dat nebyly nalezeny žádné záznamy.'
+export.clear_all: 'Označit všechny zobrazené záznamy jako otevřené?'
+export.date_copyright: 'Vytvořeno %date% s %kimai%'
+export.document_title: 'Seznam výdajů'
+export.filter: __export.filter
+export.full_list: 'Plnžý seznam'
+export.mark_all: 'Označit všechny zobrazené záznamy jako odstraněné?'
+export.page_of: 'Stránka %page% z %pages%'
+export.period: Období
+export.subtitle: 'Exportovat odpracovanou dobu do různých formátů'
+export.summary: Souhrn
+export.title: Export
+help.batch_meta_fields: 'Fields that are to be updated must first be activated by clicking on the associated checkbox.'
+help.fixedRate: 'Each time record gets the same value, regardless of its duration'
+help.rate: 'Hourly rate to be charged'
+help.rate_internal: 'Internal costs (if this is not specified, the normal rate is used)'
+invoice.due_days: 'Platební metoda'
+invoice.filter: __invoice.filter
+invoice.from: Z
+invoice.number: 'Číslo faktury'
+invoice.service_date: 'Datum vyhotovení'
+invoice.signature_customer: 'Potvrzení: Datum / Zákazník / Podpis'
+invoice.signature_user: 'Potvrzení: Datum / Jméno / Podpis'
+invoice.subtotal: Mezisoučet
+invoice.tax: Daň
+invoice.title: Faktura
+invoice.to: Do
+invoice.total: Celkem
+invoice.total_working_time: 'Celková doba trvání'
+invoice_print: Faktura
+label.actions: Akce
+label.active: Aktivní
+label.activity: Aktivity
+label.address: Adresa
+label.alias: Jméno
+label.amount: Množství
+label.api_token: 'API heslo'
+label.api_token_repeat: 'Potvrdit API heslo'
+label.appendTags: 'Append tags'
+label.avatar: 'Profilový obrázek'
+label.batch_meta_fields: 'Additional fields'
+label.begin: Začít
+label.billable: Billable
+label.budget: Rozpočet
+label.calendar.initial_view: 'Počáteční zobrazení kalendáře'
+label.color: Barva
+label.comment: Poznámka
+label.company: 'Jméno společnosti'
+label.contact: Kontakt
+label.country: Země
+label.create_more: 'Vytvořit další položku'
+label.currency: Měna
+label.customer: Zákazník
+label.date: Datum
+label.daterange: 'Časový rozsah'
+label.decimalDuration: 'Display duration as decimal number'
+label.description: Popis
+label.due_days: 'Doba splatnosti ve dnech'
+label.duration: 'Doba trvání'
+label.email: Email
+label.end: Ukončit
+label.endtime: Konec
+label.entryState: Záznami
+label.exported: Exportováno
+label.fax: Fax
+label.fixedRate: 'Fixní sazba'
+label.globalsOnly: 'Pouze globální'
+label.homepage: 'Domácí stránka'
+label.hourlyRate: 'Hodinová mzda'
+label.hourly_rate: 'Hodinová mzda'
+label.hours: Hodin
+label.id: ID
+label.invoice_bank_account: 'Bankovní účet'
+label.invoice_tax_number: 'DIČ:'
+label.language: Jazyk
+label.lastLogin: 'Last login'
+label.login.initial_view: 'Počáteční zobrazení po přihlášení'
+label.logout: 'Odhlásit se'
+label.mark_as_exported: 'Mark as exported'
+label.mobile: 'Mobilní telefon'
+label.my_team_projects: 'Team projects & budgets'
+label.my_teams: __label.my_teams
+label.name: Jméno
+label.number: Účet
+label.orderDate: __label.orderDate
+label.orderNumber: 'Číslo objednávky'
+label.pageSize: 'Velikost stránky'
+label.password: Heslo
+label.password_repeat: 'Potvrzení hesla'
+label.payment_terms: 'Platební podmínky'
+label.phone: Telefon
+label.plus_more: __label.plus_more
+label.progress: Progress
+label.project: Projekt
+label.project_end: __label.project_end
+label.project_start: __label.project_start
+label.rate: Sazba
+label.rate_internal: __label.rate_internal
+label.recalculate_rates: 'Recalculate rates'
+label.replaceTags: 'Replace tags'
+label.required_version: 'Kompatibilní s'
+label.roles: Funkce
+label.skin: Kimai-Vzhled
+label.starttime: Začátek
+label.status: Status
+label.tag: Štítek
+label.tags: Štítek
+label.team: Team
+label.teamlead: 'Vedoucí teamu'
+label.template: Šablona
+label.theme.collapsed_sidebar: 'Zmenšit postranní panel'
+label.theme.layout: 'Display: layout'
+label.timeBudget: 'Hodinový rozpočet'
+label.timesheet.daily_stats: 'Zobrazit denní statistiky v pracovním výkaze'
+label.timesheet.export_decimal: 'Use decimal duration in export'
+label.timezone: 'Časové pásmo'
+label.title: Title
+label.toggle_dropdown: 'Zobrazit menu'
+label.total_rate: 'Celková cena'
+label.unit_price: 'Jednotková cena'
+label.user: Uživatel
+label.user_profile: 'Můj profil'
+label.username: 'Uživatelské jméno'
+label.vat: Daň
+label.vat_id: __label.vat_id
+label.version: Verze
+label.visible: Viditelné
+login_required: 'Missing permission. Redirect to login?'
+menu.admin: Správa
+menu.admin_activity: Aktivity
+menu.admin_customer: Zákazníci
+menu.admin_project: Projekty
+menu.admin_team: Skupiny
+menu.admin_timesheet: 'Pracovní výkaz'
+menu.admin_user: Uživatelé
+menu.doctor: __menu.doctor
+menu.export: Export
+menu.homepage: Nástěnka
+menu.invoice: Faktury
+menu.logout: 'Odhlásit se'
+menu.plugin: Doplňky
+menu.reporting: Reporting
+menu.system: Systém
+menu.system_configuration: Nastavení
+menu.tags: Štítky
+menu.timesheet: 'Moje časy'
+modal.columns.description: 'Po uložení budou nezaškrtnuté sloupce skryté a toto nastavení bude uloženo do souboru cookie prohlížeče. Pokud cookies smažete, nastavení se zruší.'
+modal.columns.title: 'Změnit viditelnost sloubce'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Měsíc
+more.info.link: 'Více informací'
+my.profile: __my.profile
+'no': Ne
+placeholder.type_message: __placeholder.type_message
+profile.about_me: 'O mně'
+profile.api-token: API
+profile.first_entry: 'Začátek práce'
+profile.password: Heslo
+profile.preferences: Předvolby
+profile.registration_date: __profile.registration_date
+profile.roles: Úloha
+profile.settings: Profil
+profile.teams: Skupina
+profile.title: 'Profil uživatele'
+rates.empty: __rates.empty
+rates.title: __rates.title
+recent.activities: 'Restartujte jednu z vašich posledních aktivit'
+recent.activities.format: '%activity% v %project% pro %customer%'
+search: __search
+stats.activeRecordings: 'Aktivní evidence'
+stats.activityTotal: Činnosti
+stats.amountMonth: 'Příjem tento měsíc'
+stats.amountToday: 'Příjem dnes'
+stats.amountTotal: 'Celkový příjem'
+stats.amountWeek: 'Příjem tento týden'
+stats.amountYear: 'Přjem tento rok'
+stats.customerTotal: Zákazníci
+stats.durationMonth: 'Pracovní doba tento měsíc'
+stats.durationToday: 'Pracovní doba dnes'
+stats.durationTotal: 'Pracovní doba celkem'
+stats.durationWeek: 'Pracovní doba tento týden'
+stats.durationYear: 'Pracovní doba tento rok'
+stats.percentUsed: __stats.percentUsed
+stats.percentUsedLeft: __stats.percentUsedLeft
+stats.projectTotal: Projekty
+stats.userActiveMonth: 'Aktivní uživatelé tento měsíc'
+stats.userActiveToday: 'Aktivní uživatelé dnes'
+stats.userActiveTotal: 'Aktivní uživatelé celkem'
+stats.userActiveWeek: 'Aktivní uživatelé tento týden'
+stats.userActiveYear: 'Aktivní uživatelé tento rok'
+stats.userTotal: Uživatel
+stats.workingTimeMonth: __stats.workingTimeMonth
+stats.workingTimeToday: __stats.workingTimeToday
+stats.workingTimeWeek: __stats.workingTimeWeek
+stats.workingTimeYear: __stats.workingTimeYear
+stats.yourWorkingHours: 'My working hours'
+status.new: __status.new
+status.paid: __status.paid
+status.pending: __status.pending
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Sledování času'
+timesheet.all: 'Zobrazit všechny záznamy'
+timesheet.edit: 'Upravit záznam'
+timesheet.start: 'Vytvořit nový časový záznam'
+timesheet.title: 'Moje časy'
+update_multiple: __update_multiple
+upload: __upload
+user_permissions.title: 'User permissions'
+user_role.title: __user_role.title
+'yes': Ano
+timesheet.subtitle: 'Upravit moje časové záznami'
+profile.subtitle: 'Upravit mé nastavení'
+calendar.subtitle: 'Zobrazení a správa pracovního výkazu v kalendáři'
+admin_timesheet.subtitle: 'Záznamy všech uživatelů'
+admin_project.subtitle: 'Projekt kombinuje aktivity pro zákazníka do skupiny'
+admin_activity.subtitle: 'Úlohy, které lze vybrat pro časové záznamy'
+admin_customer.subtitle: 'Vaši zákazníci jsou základem pro vytváření projektů a aktivit'
+admin_user.subtitle: 'Všichni registrovaní uživatelé vaší instalace Kimai'
+admin_invoice_template.subtitle: 'Spravujte své šablony faktur, které lze použít k exportu dat.'
+invoice.preview: 'Toto je náhled dat, která se zobrazí ve vašem fakturačním dokladu.'

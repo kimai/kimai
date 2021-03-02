@@ -1,0 +1,8 @@
+activity: 'Hoạt động: một mục nhập cho mỗi hoạt động'
+date: 'Ngày: một mục nhập mỗi ngày (sử dụng ngày bắt đầu)'
+default: 'Mặc định: một mục cho mỗi bản'
+label.invoice_calculator: 'Tính tổng'
+project: 'Dự án: một mục nhập cho mỗi dự án'
+short: 'Giờ: tổng hợp bản ghi, một mục nhập cho mỗi giờ'
+user: 'Người dùng: một mục nhập cho mỗi người dùng'
+weekly: 'Weekly: one entry per week (uses start date)'

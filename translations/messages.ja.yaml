@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Allowed character: A-Z and _'
+ROLE_ADMIN: 管理者
+ROLE_SUPER_ADMIN: システム管理者
+ROLE_TEAMLEAD: チームリーダー
+ROLE_USER: ユーザー
+'This is a mandatory field': 必須
+action.back: 戻る
+action.close: 閉じる
+action.delete: 削除する
+action.edit: 編集する
+action.reset: __action.reset
+action.save: 保存する
+active.entries: 進行中の時間記録のプロセス
+admin_activity.short_stats: "\nこれは %activity% アクティビティです。得意先が %customer% である %project% プロジェクトに所属しています。\n%records% 件の時間が記録されています。合計すると %duration% になります。\n"
+admin_activity.title: アクティビティ
+admin_customer.short_stats: "\nこれは得意先 %customer% です。%project% 個のプロジェクトと、その配下に %activity% 個のアクティビティが登録されており、\nすべて合わせて %records% 件の時間が記録されています。合計すると %duration% になります。\n"
+admin_customer.title: 得意先
+admin_entity.delete_confirm: "\nこちらのデータも同時に削除されます！\n代替手段として、明細を指定してそちらに全データを付け替えることも可能です:\n"
+admin_invoice_template.title: 請求書のテンプレート
+admin_project.short_stats: "\nこれは %project% プロジェクトです。得意先は %customer% です。%activities% 個の\nアクティビティが登録されており、%records% 件の時間が記録されています。合計すると %duration% になります。\n"
+admin_project.title: プロジェクト
+admin_timesheet.title: タイムシート
+admin_user.short_stats: "\nこの %user% ユーザーには %records% 件の時間が記録されています。合計すると %duration% になります。\n"
+admin_user.title: ユーザー
+agendaDay: 日
+agendaWeek: 週
+attachments: Files
+both: 両方
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Preview
+button.preview_print: 'Print preview'
+button.print: 出力
+button.xlsx: Excel
+calendar.title: カレンダー
+cancel: キャンセル
+confirm: 適用する
+confirm.delete: 本当に削除してもよろしいですか？
+create: 新規作成
+dashboard.all: 全ユーザーの統計情報
+dashboard.subtitle: ようこそ！
+dashboard.title: ダッシュボード
+delete.not_in_use: このアイテムは安全に削除できます。
+entryState.all: すべて
+entryState.exported: 処理済
+entryState.not_exported: 未処理
+entryState.running: 活動中
+entryState.stopped: 停止
+error.no_comments_found: __error.no_comments_found
+error.no_entries_found: 指定されたフィルタ条件に該当する明細は見付かりませんでした。
+export.clear_all: すべての記録を未処理の状態にしますか？
+export.date_copyright: '%kimai% で %date% に作成されました'
+export.document_title: 費用のリスト
+export.filter: __export.filter
+export.full_list: 完全なリスト
+export.mark_all: すべての記録を清算済の状態にしますか？
+export.page_of: '%page% / %pages% ページ'
+export.period: 期間
+export.subtitle: タイムシートのデータを種々のフォーマットにエクスポートします。
+export.summary: 合計
+export.title: エクスポート
+help.batch_meta_fields: 'Fields that are to be updated must first be activated by clicking on the associated checkbox.'
+help.fixedRate: 'Each time record gets the same value, regardless of its duration'
+help.rate: 'Hourly rate to be charged'
+help.rate_internal: 'Internal costs (if this is not specified, the normal rate is used)'
+invoice.due_days: 支払期日
+invoice.filter: __invoice.filter
+invoice.from: From
+invoice.number: 請求書番号
+invoice.service_date: サービス日
+invoice.signature_customer: 'ご確認: 日付 / 貴方 / 署名'
+invoice.signature_user: 'ご確認: 日付 / 当方 / 署名'
+invoice.subtotal: 小計
+invoice.tax: 税
+invoice.title: 請求書
+invoice.to: To
+invoice.total: 合計
+invoice.total_working_time: 合計期間
+invoice_print: 請求書
+label.actions: アクション
+label.active: 有効
+label.activity: アクティビティ
+label.address: 住所
+label.alias: 名前
+label.amount: 量
+label.api_token: 'API パスワード'
+label.api_token_repeat: 'API パスワード（再入力）'
+label.appendTags: 'Append tags'
+label.avatar: プロフィール画像
+label.batch_meta_fields: 'Additional fields'
+label.begin: From
+label.billable: Billable
+label.budget: 予算
+label.calendar.initial_view: カレンダー表示の初期状態
+label.color: 色
+label.comment: コメント
+label.company: 会社名
+label.contact: コンタクト
+label.country: 国
+label.create_more: 未来時間の明細を作成する
+label.currency: 通貨
+label.customer: 得意先
+label.date: 日付
+label.daterange: 期間
+label.decimalDuration: 'Display duration as decimal number'
+label.description: 説明
+label.due_days: 支払期日
+label.duration: 期間
+label.email: Email
+label.end: To
+label.endtime: 終了
+label.entryState: 記録プロセスの状態
+label.exported: エクスポートの有無
+label.fax: Fax
+label.fixedRate: 固定給
+label.globalsOnly: グローバルオンリー
+label.homepage: ホームページ
+label.hourlyRate: 時間給
+label.hourly_rate: 時間給
+label.hours: 時間
+label.id: ID
+label.invoice_bank_account: 銀行口座
+label.invoice_tax_number: 'VAT (付加価値税) no.:'
+label.language: 言語
+label.lastLogin: 'Last login'
+label.login.initial_view: ログイン後に表示するページ
+label.logout: ログアウト
+label.mark_as_exported: 'Mark as exported'
+label.mobile: 携帯電話
+label.my_team_projects: 'Team projects & budgets'
+label.my_teams: __label.my_teams
+label.name: 名前
+label.number: 口座
+label.orderDate: __label.orderDate
+label.orderNumber: 注文番号
+label.pageSize: '1 ページあたりの表示件数'
+label.password: パスワード
+label.password_repeat: パスワード（再入力）
+label.payment_terms: 支払条件
+label.phone: 電話
+label.plus_more: __label.plus_more
+label.progress: Progress
+label.project: プロジェクト
+label.project_end: __label.project_end
+label.project_start: __label.project_start
+label.rate: 給与
+label.rate_internal: __label.rate_internal
+label.recalculate_rates: 'Recalculate rates'
+label.replaceTags: 'Replace tags'
+label.required_version: 適合するもの
+label.roles: ロール
+label.skin: 'Kimai テーマ'
+label.starttime: 開始
+label.status: Status
+label.tag: タグ
+label.tags: タグ
+label.team: __label.team
+label.teamlead: __label.teamlead
+label.template: テンプレート
+label.theme.collapsed_sidebar: 左のサイドバーを最小化する
+label.theme.layout: 'Display: layout'
+label.timeBudget: タイム・バジェット（時間予算）
+label.timesheet.daily_stats: タイムシートに日次の統計情報を表示する
+label.timesheet.export_decimal: 'Use decimal duration in export'
+label.timezone: タイムゾーン
+label.title: タイトル
+label.toggle_dropdown: メニューを表示する
+label.total_rate: 合計金額
+label.unit_price: 単価
+label.user: ユーザー
+label.user_profile: プロフィール
+label.username: ユーザー名
+label.vat: 税
+label.vat_id: __label.vat_id
+label.version: バージョン
+label.visible: 公開する
+login_required: 'Missing permission. Redirect to login?'
+menu.admin: 管理
+menu.admin_activity: アクティビティ
+menu.admin_customer: 得意先
+menu.admin_project: プロジェクト
+menu.admin_team: Teams
+menu.admin_timesheet: タイムシート
+menu.admin_user: ユーザー
+menu.doctor: __menu.doctor
+menu.export: エクスポート
+menu.homepage: ダッシュボード
+menu.invoice: 請求書
+menu.logout: ログアウト
+menu.plugin: プラグイン
+menu.reporting: Reporting
+menu.system: システム
+menu.system_configuration: 設定
+menu.tags: タグ
+menu.timesheet: タイムシート
+modal.columns.description: '保存すると、チェックされていない列が非表示になります。この設定はブラウザの Cookie に保存されます。Cookie を削除すると、設定は初期化されます。'
+modal.columns.title: 列の公開状態を変更する
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: 月
+more.info.link: もっと見る
+my.profile: __my.profile
+'no': いいえ
+placeholder.type_message: __placeholder.type_message
+profile.about_me: あなたについて
+profile.api-token: API
+profile.first_entry: 登録日
+profile.password: パスワード
+profile.preferences: 個人設定
+profile.registration_date: __profile.registration_date
+profile.roles: ロール
+profile.settings: プロフィール
+profile.teams: __profile.teams
+profile.title: プロフィール
+rates.empty: __rates.empty
+rates.title: __rates.title
+recent.activities: 最後のアクティビティを再度行う
+recent.activities.format: '得意先 %customer% - %project% プロジェクト - %activity% アクティビティ'
+search: __search
+stats.activeRecordings: 進行中の時間記録のプロセス数
+stats.activityTotal: アクティビティ数の合計
+stats.amountMonth: 今月の収入
+stats.amountToday: 今日の収入
+stats.amountTotal: 収入の合計
+stats.amountWeek: 今週の収入
+stats.amountYear: 今年の収入
+stats.customerTotal: 得意先数の合計
+stats.durationMonth: 今月の活動時間
+stats.durationToday: 今日の活動時間
+stats.durationTotal: 活動時間の合計
+stats.durationWeek: 今週の活動時間
+stats.durationYear: 今年の活動時間
+stats.percentUsed: __stats.percentUsed
+stats.percentUsedLeft: __stats.percentUsedLeft
+stats.projectTotal: プロジェクト数の合計
+stats.userActiveMonth: 今月活動したユーザー数
+stats.userActiveToday: 今日活動したユーザー数
+stats.userActiveTotal: これまでに活動した全ユーザー数
+stats.userActiveWeek: 今週活動したユーザー数
+stats.userActiveYear: 今年活動したユーザー数
+stats.userTotal: ユーザー数の合計
+stats.workingTimeMonth: __stats.workingTimeMonth
+stats.workingTimeToday: __stats.workingTimeToday
+stats.workingTimeWeek: __stats.workingTimeWeek
+stats.workingTimeYear: __stats.workingTimeYear
+stats.yourWorkingHours: 勤務時間
+status.new: __status.new
+status.paid: __status.paid
+status.pending: __status.pending
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: タイムトラッキング
+timesheet.all: すべての記録を見る
+timesheet.edit: 明細を編集する
+timesheet.start: 新たに時間の記録を始める
+timesheet.title: タイムシート
+update_multiple: __update_multiple
+upload: __upload
+user_permissions.title: 'User permissions'
+user_role.title: __user_role.title
+'yes': はい

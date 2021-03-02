@@ -1,0 +1,60 @@
+Ceil: 'Supérieur : l''heure de début, de fin et la durée seront arrondies au supérieur'
+Closest: 'Au plus proche : arrondi mathématique à la valeur la plus proche'
+Default: 'Standard : l''heure de début sera arrondie à l''inférieur, l''heure de fin et la durée au supérieur'
+Floor: 'Inférieur : l''heure de début, de fin et la durée seront arrondies à l''inférieur'
+Friday: Vendredi
+Monday: Lundi
+Saturday: Samedi
+Sunday: Dimanche
+Thursday: Jeudi
+Tuesday: Mardi
+Wednesday: Mercredi
+branding: Identité
+calendar: Calendrier
+first_weekday: 'Premier jour de la semaine'
+form_customer: 'Créer un client : Valeurs par défaut'
+form_user: 'Utilisateur : Valeurs par défaut'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Factures
+label.calendar.businessHours.begin: 'Début des horaires normaux de travail (en surbrillance )'
+label.calendar.businessHours.end: 'Fin des horaires normaux de travail (en surbrillance)'
+label.calendar.slot_duration: 'Durée de a vue en semaine et en jour (format : hh:mm:ss)'
+label.calendar.visibleHours.begin: 'Début de l''intervalle de temps visible'
+label.calendar.visibleHours.end: 'Fin de l''intervalle de temps visible'
+label.calendar.week_numbers: 'Afficher les numéros de semaine'
+label.calendar.weekends: 'Afficher les week-ends'
+label.invoice.number_format: 'Format du numéro de facture'
+label.simple_form: 'Recherche simple'
+label.theme.autocomplete_chars: 'Nombre minimum de lettres pour commencer l''auto-complétion'
+label.theme.branding.company: Société
+label.theme.branding.logo: 'Logo (URL de l''image, remplace le nom de la société sur l''écran de connexion)'
+label.theme.branding.mini: 'Mini logo (barre latérale masquée)'
+label.theme.branding.title: 'Titre de la page (onglet du navigateur)'
+label.theme.markdown_content: 'Autoriser le formatage markdown dans les descriptions et commentaires'
+label.theme.tags_create: 'Mots-clés : Utiliser la recherche avec auto-complétion et autoriser la création de mots-clés'
+label.timesheet.active_entries.hard_limit: 'Nombre autorisé de relevés d''activité simultanées'
+label.timesheet.active_entries.soft_limit: 'Nombre de relevés de temps d''activité à partir duquel un message d''avertissement est affiché'
+label.timesheet.default_begin: 'Heure de début par défaut (non utilisé dans tous les modes de suivi du temps)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'Mode de suivi du temps'
+label.timesheet.mode_default: '[Par défaut] les horaires de début et de fin peuvent êtres modifiés'
+label.timesheet.mode_duration_fixed_begin: '[Durée] heure de début fixe configurable, seule la durée peut-être modifiée'
+label.timesheet.mode_duration_only: '[Durée] remplace l''heure de fin par une saisie de la durée'
+label.timesheet.mode_punch: '[Temps-réel] l''utilisateur peut démarrer et arrêter des enregistrements, mais ne peut pas modifier les heures ou la durée'
+label.timesheet.rounding.default.begin: 'Arrondir l''heure de début en minutes (0 = désactivé)'
+label.timesheet.rounding.default.days: 'Jours de la semaine ou l''arrondi sera appliqué'
+label.timesheet.rounding.default.duration: 'Arrondir la durée en minutes (0 = désactivé)'
+label.timesheet.rounding.default.end: 'Arrondir l''heure de fin en minutes (0 = désactivé)'
+label.timesheet.rounding.default.mode: 'Mode d''arrondi'
+label.timesheet.rules.allow_future_times: 'Autoriser la saisie d''activités futures'
+label.timesheet.rules.allow_overlapping_records: 'Autoriser le chevauchement des heures'
+label.timesheet.rules.lockdown_grace_period: 'Verrouiller la période de fin (Date relative a la période de fin PHP)'
+label.timesheet.rules.lockdown_period_end: 'Verrouiller la période de fin (Date relative au présent en PHP)'
+label.timesheet.rules.lockdown_period_start: 'Verrouiller la période de début (Date relative au présent en PHP)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'Arrondi des heures'
+subtitle: 'Modifiez la configuration générale de votre service de suivi du temps'
+theme: Thème
+timesheet: 'Fiche de temps'
+title: Paramètres

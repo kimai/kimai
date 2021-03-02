@@ -1,0 +1,9 @@
+access.denied: 'Accès refusé'
+http_error.description: 'Une erreur s''est produite'
+http_error.suggestion: 'Une erreur inattendue s''est produite, veuillez réessayer. Vous avez peut-être rencontré sur un problème logiciel, merci de contacter votre administrateur si le problème persiste.'
+http_error.title: Erreur
+http_error_403.description: 'L''accès à cette page est restreint'
+http_error_403.suggestion: 'Désolé, mais vous n''avez pas les autorisations suffisantes pour voir cette page. Si vous pensez qu''il s''agit d''une anomalie, veuillez contacter votre administrateur.'
+http_error_404.description: 'Page introuvable'
+http_error_404.suggestion: "\nNous n'avons pas trouvé la page que vous cherchiez.\nEn attendant, vous pouvez retourner à votre tableau de bord et reprendre.\n"
+stacktrace: 'Le problème est survenu ici'

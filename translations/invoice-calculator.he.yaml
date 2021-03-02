@@ -1,0 +1,8 @@
+activity: 'פעילות: רשומה אחת לפעילות'
+date: 'תאריך: רשומה אחת ליום (תאריך ההתחלה)'
+default: 'ברירת מחדל: רשומה אחת לכל רשומת זמן עבודה'
+label.invoice_calculator: 'סכום מחושב'
+project: 'פרויקט: רשומה אחת לפרויקט'
+short: 'שעות: רשומות מסוכמות, סך הכל רשומה אחת'
+user: 'משתמש: רשומה אחת למשתמש'
+weekly: 'Weekly: one entry per week (uses start date)'

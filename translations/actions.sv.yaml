@@ -1,0 +1,23 @@
+activity: 'Filtrera aktiviter'
+back: Tillbaka
+copy: 'Skapa kopia'
+create-activity: 'Skapa aktivitet'
+create-project: 'Skapa projekt'
+create-timesheet: 'Skapa tidrapport'
+create-timesheet-multiuser: __create-timesheet-multiuser
+customer: 'Filtrera kunder'
+details: Show
+download: Download
+edit: Ändra
+home: Hemsida
+invoice.paid: 'Invoice paid'
+invoice.pending: 'Waiting for payment'
+permissions: __permissions
+profile-stats: Statistik
+project: 'Filtrera projekt'
+repeat: 'Starta igen'
+report: Rapportera
+settings: Inställningar
+stop: Stopp
+timesheet: Tidrapport
+trash: 'Ta bort'

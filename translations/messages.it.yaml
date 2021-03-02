@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Caratteri permessi: A-Z and _'
+ROLE_ADMIN: Amministratore
+ROLE_SUPER_ADMIN: 'Amministratore di sistema'
+ROLE_TEAMLEAD: Teamleader
+ROLE_USER: Utente
+'This is a mandatory field': Richiesto
+action.back: Indietro
+action.close: Chiudi
+action.delete: Cancella
+action.edit: Modifica
+action.reset: Ripristina
+action.save: Salva
+active.entries: 'Le tue attività recenti'
+admin_activity.short_stats: "\nAttualmente le attività %activity% nel progetto %project% del cliente %customer%\nconta %records% registrazioni, con una durata totale di %duration%.\n"
+admin_activity.title: Attività
+admin_customer.short_stats: "\nAttualmente il cliente %customer% conta %project% progetti con %activity% activities, e\n%records% registrazioni con una durata totale di %duration%.\n"
+admin_customer.title: Cliente
+admin_entity.delete_confirm: "\nI dati saranno cancellati\nIn alternativa è possibile selezionare una voce in cui trasferirli:\n"
+admin_invoice_template.title: 'Template Fatture'
+admin_project.short_stats: "\nAttualmente il progetto %project% del cliente %customer% conta %activities%\nattività e %records% registrazioni, con una durata totale di %duration%.\n"
+admin_project.title: Progetti
+admin_timesheet.title: Registrazioni
+admin_user.short_stats: "\nAttualmente l'utente %user% ha %records% registrazioni per una durata totale di %duration%.\n"
+admin_user.title: Utente
+agendaDay: Giorno
+agendaWeek: Settimana
+attachments: Files
+both: Entrambe
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Anteprima
+button.preview_print: 'Anteprima di stampa'
+button.print: Stampa
+button.xlsx: Excel
+calendar.title: Calendario
+cancel: Annulla
+confirm: Conferma
+confirm.delete: 'Sicuro di cancellare?'
+create: Crea
+dashboard.all: 'Tutti gli utenti'
+dashboard.subtitle: Benvenuto!
+dashboard.title: 'Pannello di controllo'
+delete.not_in_use: 'L''oggetto può essere cancellato.'
+entryState.all: Tutti
+entryState.exported: Rendicontate
+entryState.not_exported: 'Non rendicontate'
+entryState.running: Attiva
+entryState.stopped: Terminata
+error.no_comments_found: 'Non ci sono commenti fino''ora.'
+error.no_entries_found: 'Nessuna informazione trovata.'
+export.clear_all: 'Imposta tutte le voci come disponibili?'
+export.date_copyright: 'Creato %date% con %kimai%'
+export.document_title: 'Esportazione delle schede attività'
+export.filter: 'Filtra dati da esportare'
+export.full_list: 'Lista completa'
+export.mark_all: 'Imposta tutte le voci come rendicontate?'
+export.page_of: 'Pagina %page% di %pages%'
+export.period: Periodo
+export.subtitle: 'Esporta schede attività in vari formati'
+export.summary: Sommario
+export.title: Esporta
+help.batch_meta_fields: 'Prima di aggiornare i campi è necessario attivarli cliccando sul checkbox corrisopondente'
+help.fixedRate: 'Ogni record ha lo stesso valore, indipendentemente dalla sua durata'
+help.rate: 'Tariffa oraria da addebitare'
+help.rate_internal: 'Costi interni (se questo non è specificato, è utilizzata la tariffa oraria)'
+invoice.due_days: 'Tipo di pagamento'
+invoice.filter: 'Filtra per data fattura'
+invoice.from: Da
+invoice.number: 'Numero di fattura'
+invoice.service_date: 'Data di servizio'
+invoice.signature_customer: 'Accettazopme: Data / Nome Cliente / Firma'
+invoice.signature_user: 'Accettazione: Data / Nome Professionista / Firma'
+invoice.subtotal: Subtotale
+invoice.tax: Tasse
+invoice.title: Fatture
+invoice.to: A
+invoice.total: Totale
+invoice.total_working_time: 'Durata totale'
+invoice_print: Fattura
+label.actions: Azione
+label.active: Attivo
+label.activity: Attività
+label.address: Indirizzo
+label.alias: Nome
+label.amount: Quantità
+label.api_token: 'API password'
+label.api_token_repeat: 'Ripeti API password'
+label.appendTags: 'Aggiungi tags'
+label.avatar: 'Immagine di profilo'
+label.batch_meta_fields: 'Campi aggiuntivi'
+label.begin: Da
+label.billable: Fatturabile
+label.budget: Budget
+label.calendar.initial_view: 'Vista iniziale calendario'
+label.color: Colore
+label.comment: Commento
+label.company: Azienda
+label.contact: Contatto
+label.country: Paese
+label.create_more: 'Aggiungi informazioni'
+label.currency: Valuta
+label.customer: Cliente
+label.date: Data
+label.daterange: 'Intervallo temporale'
+label.decimalDuration: 'Mostra durata come numero decimale'
+label.description: Descrizione
+label.due_days: 'Scadenza pagamento'
+label.duration: Durata
+label.email: Email
+label.end: A
+label.endtime: Fine
+label.entryState: 'Stato Registrazione'
+label.exported: Esportate
+label.fax: Fax
+label.fixedRate: 'Tasso fisso'
+label.globalsOnly: 'Solo globale'
+label.homepage: Homepage
+label.hourlyRate: 'Tariffa oraria'
+label.hourly_rate: 'Tariffa oraria'
+label.hours: Ore
+label.id: ID
+label.invoice_bank_account: 'Conto bancario'
+label.invoice_tax_number: 'P.IVA no.:'
+label.language: Lingua
+label.lastLogin: 'Ultimo login'
+label.login.initial_view: 'Vista iniziale dopo accesso'
+label.logout: Disconnetti
+label.mark_as_exported: 'Segna come esportato'
+label.mobile: Cellulare
+label.my_team_projects: 'Progetti del gruppo & budgets'
+label.my_teams: 'I miei gruppi'
+label.name: Nome
+label.number: Account
+label.orderDate: 'Data ordine'
+label.orderNumber: 'Numero d''ordine'
+label.pageSize: 'Formato pagina'
+label.password: Password
+label.password_repeat: 'Ripeti password'
+label.payment_terms: 'Condizioni di pagamento'
+label.phone: Telefono
+label.plus_more: '+%count% in più'
+label.progress: Progressi
+label.project: Progetto
+label.project_end: 'Fine progetto'
+label.project_start: 'Inizio progetto'
+label.rate: Tariffa
+label.rate_internal: 'Costo interno'
+label.recalculate_rates: 'Ricalcola tariffe'
+label.replaceTags: 'Sostituisci tags'
+label.required_version: 'Compatibile con'
+label.roles: Permessi
+label.skin: Kimai-Theme
+label.starttime: Inizio
+label.status: Stato
+label.tag: Tags
+label.tags: Tags
+label.team: Gruppo
+label.teamlead: Capogruppo
+label.template: Modello
+label.theme.collapsed_sidebar: 'Auto collassa la sidebar di sinistra'
+label.theme.layout: 'Visualizza layout'
+label.timeBudget: 'Tempo budget'
+label.timesheet.daily_stats: 'Mostra statistiche giornaliere nelle schede attività'
+label.timesheet.export_decimal: 'Usa durata decimale nell''esportazione'
+label.timezone: 'Fuso orario'
+label.title: 'Titolo (Sig., Dott., ecc.)'
+label.toggle_dropdown: 'Mostra menù'
+label.total_rate: 'Prezzo totale'
+label.unit_price: 'Costo unitario'
+label.user: Utente
+label.user_profile: 'Il mio profilo'
+label.username: Username
+label.vat: Tasse
+label.vat_id: P.IVA
+label.version: Versione
+label.visible: Visibile
+login_required: 'Permessi insufficenti. Ridirezionare all''accesso?'
+menu.admin: Amministrazione
+menu.admin_activity: Attività
+menu.admin_customer: Clienti
+menu.admin_project: Progetti
+menu.admin_team: Gruppi
+menu.admin_timesheet: Registrazioni
+menu.admin_user: Utenti
+menu.doctor: Diagnostica
+menu.export: Esporta
+menu.homepage: 'Pannello di Controllo'
+menu.invoice: Fatture
+menu.logout: Disconnetti
+menu.plugin: Plugins
+menu.reporting: Rapporti
+menu.system: Sistema
+menu.system_configuration: Impostazioni
+menu.tags: Tags
+menu.timesheet: Registrazioni
+modal.columns.description: 'Salvando, le colonne non selezionate saranno nascoste e questo verrà salvato nei cookie. Cancellando i cookie, i settaggi saranno ripristinati.'
+modal.columns.title: 'Cambia visibilità colonna'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Mese
+more.info.link: 'Più info'
+my.profile: 'Il mio profilo'
+'no': 'No'
+placeholder.type_message: 'Scrivi quì il tuo messaggio...'
+profile.about_me: 'Su di me'
+profile.api-token: API
+profile.first_entry: 'Profilo registrato il'
+profile.password: Password
+profile.preferences: Preferenze
+profile.registration_date: 'Registrato il'
+profile.roles: Permessi
+profile.settings: Profilo
+profile.teams: Gruppi
+profile.title: 'Profilo utente'
+rates.empty: 'Voce tasse, non configurata.'
+rates.title: Tasse
+recent.activities: 'Riavvia una delle tue ultime attività'
+recent.activities.format: '%activity% nel %project% di %customer%'
+search: Cerca
+stats.activeRecordings: 'Totale registrazioni attive'
+stats.activityTotal: 'Conteggio attività'
+stats.amountMonth: 'Reddito mensile'
+stats.amountToday: 'Entrate odierne'
+stats.amountTotal: 'Totale reddito'
+stats.amountWeek: 'Entrate settimanali'
+stats.amountYear: 'Entrate annuali'
+stats.customerTotal: 'Conteggio clienti'
+stats.durationMonth: 'Ore mensili'
+stats.durationToday: 'Ore di lavoro odierne'
+stats.durationTotal: 'Totale ore'
+stats.durationWeek: 'Ore lavorate questa settimana'
+stats.durationYear: 'Ore lavorate quest''anno'
+stats.percentUsed: '%percent%% utilizzata'
+stats.percentUsedLeft: '%percent%% utilizzata (%left% ancora disponibili)'
+stats.projectTotal: 'Conteggio progetti'
+stats.userActiveMonth: 'Utenti attivi questo mese'
+stats.userActiveToday: 'Utenti attivi oggi'
+stats.userActiveTotal: 'Totale utenti attivi'
+stats.userActiveWeek: 'Untenti attivi settimanali'
+stats.userActiveYear: 'Untenti attivi annuali'
+stats.userTotal: 'Conteggio utenti'
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: 'Oggi, %day%'
+stats.workingTimeWeek: 'Settimana numero %week%'
+stats.workingTimeYear: 'Anno intero %year%'
+stats.yourWorkingHours: 'Il mio orario lavorativo'
+status.new: Nuovo
+status.paid: Pagato
+status.pending: 'In sospeso'
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Time Tracking'
+timesheet.all: 'Mostra tutte le registrazioni'
+timesheet.edit: 'Modifica registrazione'
+timesheet.start: 'Crea una nuova registrazione'
+timesheet.title: Registrazioni
+update_multiple: '%action% %count% inserimenti?'
+upload: Carica
+user_permissions.title: 'Permessi utente'
+user_role.title: 'Ruolo utente'
+'yes': Si

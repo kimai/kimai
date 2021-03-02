@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Permesitaj signoj: A-Z kaj _'
+ROLE_ADMIN: Administranto
+ROLE_SUPER_ADMIN: 'Sistema administranto'
+ROLE_TEAMLEAD: Teamgvidanto
+ROLE_USER: Uzanto
+'This is a mandatory field': Deviga
+action.back: Reen
+action.close: Fermi
+action.delete: Forigi
+action.edit: Redakti
+action.reset: Restartigi
+action.save: Konservi
+active.entries: 'Viaj aktivaj tempomezuroj'
+admin_activity.short_stats: "\nNun la aktivaĵo %activity% en la projekto %project% por la kliento %customer%\nhavas %records% temporegistraĵojn, kiuj sumiĝas al tuto de %duration%.\n"
+admin_activity.title: Aktivaĵoj
+admin_customer.short_stats: "\nNun la kliento %customer% havas %project% projektojn kun %activity% aktivaĵojn, kiuj sumiĝas en\n%records% temporegistraĵoj al tuto de %duration%.\n"
+admin_customer.title: Kliento
+admin_entity.delete_confirm: "\nAnkaŭ tiuj ĉi datumoj estos forigitaj!\nAlternative, vi povas elekti elementon al kiu ĉiuj datumoj estos translokigitaj:\n"
+admin_invoice_template.title: Fakturŝablono
+admin_project.short_stats: "\nNun la projekto %project% por la kliento %customer% havas %activities%\naktivaĵojn kaj %records% temporegistraĵojn, kiuj sumiĝas al tuto de %duration%.\n"
+admin_project.title: Projektoj
+admin_timesheet.title: Temposlipoj
+admin_user.short_stats: "\nNun la uzanto %user% havas %records% temporegistraĵojn kiuj sumiĝas al tuto de %duration%.\n"
+admin_user.title: Uzanto
+agendaDay: Tago
+agendaWeek: Semajno
+attachments: Dosieroj
+both: Ambaŭ
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Antaŭrigardo
+button.preview_print: 'Antaŭrigardi printaĵon'
+button.print: Printi
+button.xlsx: Excel
+calendar.title: Kalendaro
+cancel: Nuligi
+confirm: Konfirmi
+confirm.delete: 'Ĉu vi vere volas forigi tion ĉi?'
+create: Krei
+dashboard.all: 'Ĉiuj uzantoj'
+dashboard.subtitle: Bonvenon!
+dashboard.title: Panelo
+delete.not_in_use: 'Tiu ĉi ero povas esti sekure forigita.'
+entryState.all: Ĉiuj
+entryState.exported: Malplenigita
+entryState.not_exported: Malfermi
+entryState.running: Aktiva
+entryState.stopped: Haltigita
+error.no_comments_found: 'Ankoraŭ ne estas komentoj.'
+error.no_entries_found: 'Neniuj elementoj estis trovitaj surbaze de elektitaj filtriloj.'
+export.clear_all: 'Ĉu marki ĉiujn montritajn registraĵojn kiel malfermitajn?'
+export.date_copyright: 'Kreita je la %date% per %kimai%'
+export.document_title: 'Listo de temposlipoj'
+export.filter: 'Filtri datumojn por eksporto'
+export.full_list: 'Plena listo'
+export.mark_all: 'Ĉu marki ĉiujn montritajn registraĵojn kiel malplenigitajn?'
+export.page_of: 'Paĝo %page% de %pages%'
+export.period: Periodo
+export.subtitle: 'Eksporti temposlipajn datumojn al diversaj dosierformoj'
+export.summary: Resumo
+export.title: Eksporti
+help.batch_meta_fields: 'Fields that are to be updated must first be activated by clicking on the associated checkbox.'
+help.fixedRate: 'Each time record gets the same value, regardless of its duration'
+help.rate: 'Hourly rate to be charged'
+help.rate_internal: 'Internal costs (if this is not specified, the normal rate is used)'
+invoice.due_days: Pagcelo
+invoice.filter: 'Filtri fakturajn datumojn'
+invoice.from: De
+invoice.number: Fakturnumero
+invoice.service_date: Servo-dato
+invoice.signature_customer: 'Konfirmo: Dato / Nomo de kliento / Subskribo'
+invoice.signature_user: 'Konfirmo: Dato / Nomo de konsilisto / Subskribo'
+invoice.subtotal: Subtotalo
+invoice.tax: Imposto
+invoice.title: Fakturoj
+invoice.to: Al
+invoice.total: Entute
+invoice.total_working_time: 'Tuta daŭro'
+invoice_print: Fakturo
+label.actions: Aktivaĵoj
+label.active: Activa
+label.activity: Aktivaĵo
+label.address: Adreso
+label.alias: Nomo
+label.amount: Kvanto
+label.api_token: API-pasvorto
+label.api_token_repeat: 'Ripetu API-pasvorton'
+label.appendTags: 'Postglui etikedojn'
+label.avatar: Profilbildo
+label.batch_meta_fields: 'Additional fields'
+label.begin: De
+label.billable: Billable
+label.budget: Buĝeto
+label.calendar.initial_view: 'Komenca kalendara vido'
+label.color: Koloro
+label.comment: Komento
+label.company: 'Nomo de kompanio'
+label.contact: Kontakto
+label.country: Lando
+label.create_more: 'Krei pliajn elementojn'
+label.currency: Valuto
+label.customer: Kliento
+label.date: Dato
+label.daterange: Tempoperiodo
+label.decimalDuration: 'Montri daŭron kiel dekuman nombron'
+label.description: Priskribo
+label.due_days: 'Limdato en tagoj por pagi'
+label.duration: Daŭro
+label.email: Retadreso
+label.end: Al
+label.endtime: Fino
+label.entryState: Registraĵoj
+label.exported: Eksportita
+label.fax: Fakso
+label.fixedRate: 'Fiksita kotizo'
+label.globalsOnly: 'Nur mallokaj'
+label.homepage: Hejmpaĝo
+label.hourlyRate: 'Hora kotizo'
+label.hourly_rate: 'Hora kotizo'
+label.hours: Horoj
+label.id: ID
+label.invoice_bank_account: Bankokonto
+label.invoice_tax_number: 'AVI-nr-o:'
+label.language: Lingvo
+label.lastLogin: 'Lasta ensaluto'
+label.login.initial_view: 'Komenca vido post ensaluto'
+label.logout: Elsaluti
+label.mark_as_exported: 'Marki eksportita'
+label.mobile: Poŝtelefono
+label.my_team_projects: 'Teamaj projektoj & buĝetoj'
+label.my_teams: 'Miaj teamoj'
+label.name: Nomo
+label.number: Konto
+label.orderDate: Mendodato
+label.orderNumber: Mendonumero
+label.pageSize: 'Grandeco de la paĝo'
+label.password: Pasvorto
+label.password_repeat: 'Ripetu pasvorton'
+label.payment_terms: 'Kondiĉoj de pago'
+label.phone: Telefono
+label.plus_more: '+%count% pli'
+label.progress: Progreso
+label.project: Projekto
+label.project_end: 'Fino de projekto'
+label.project_start: 'Komenco de projekto'
+label.rate: Kotizo
+label.rate_internal: __label.rate_internal
+label.recalculate_rates: 'Recalculate rates'
+label.replaceTags: 'Anstataŭigi etikedojn'
+label.required_version: 'Kongrua kun'
+label.roles: Rolo
+label.skin: 'Montri: koloroj'
+label.starttime: Komenco
+label.status: Stato
+label.tag: Etikedoj
+label.tags: Etikedoj
+label.team: Teamo
+label.teamlead: Teamgvidanto
+label.template: Ŝablono
+label.theme.collapsed_sidebar: 'Minimumigi la maldekstran flankpanelon'
+label.theme.layout: 'Montri: aspektigo'
+label.timeBudget: Tempobuĝeto
+label.timesheet.daily_stats: 'Montri tagan statistikon en la temposlipo'
+label.timesheet.export_decimal: 'Uzi dekuman daŭron en eksporto'
+label.timezone: Horzono
+label.title: Titolo
+label.toggle_dropdown: 'Montri menuon'
+label.total_rate: 'Tuta prezo'
+label.unit_price: 'Unuopa prezo'
+label.user: Uzanto
+label.user_profile: 'Mia profilo'
+label.username: Uzanto
+label.vat: Imposto
+label.vat_id: AVI-ID
+label.version: Versio
+label.visible: Videbla
+login_required: 'Mankas permeso. Redirekti al ensaluto?'
+menu.admin: Administrado
+menu.admin_activity: Aktivaĵoj
+menu.admin_customer: Klientoj
+menu.admin_project: Projektoj
+menu.admin_team: Teamoj
+menu.admin_timesheet: Temposlipoj
+menu.admin_user: Uzantoj
+menu.doctor: Sistem-sano
+menu.export: Eksporto
+menu.homepage: Panelo
+menu.invoice: Fakturoj
+menu.logout: Elsaluti
+menu.plugin: Kromprogramoj
+menu.reporting: Reporting
+menu.system: Sistemo
+menu.system_configuration: Agordoj
+menu.tags: Etikedoj
+menu.timesheet: 'Miaj tempoj'
+modal.columns.description: 'Post la koservado, la neelektitaj kolumnoj estos kaŝitaj kaj tiu ĉi agordo estos konservita en retumila kuketo. Se vi forigos viajn kuketojn, la agordoj estos restarigitaj.'
+modal.columns.title: 'Ŝanĝi videblecon de kolumnoj'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Monato
+more.info.link: 'Pliaj informoj'
+my.profile: 'Mia profilo'
+'no': Ne
+placeholder.type_message: __placeholder.type_message
+profile.about_me: 'Pri mi'
+profile.api-token: API
+profile.first_entry: 'Laboras ekde'
+profile.password: Pasvorto
+profile.preferences: Agordoj
+profile.registration_date: __profile.registration_date
+profile.roles: Roloj
+profile.settings: Profilo
+profile.teams: Teamoj
+profile.title: 'Profilo de uzanto'
+rates.empty: 'Ankoraŭ neniuj kotizoj estas agorditaj.'
+rates.title: Kotizoj
+recent.activities: 'Restartigi unu de viaj lastaj aktivaĵoj'
+recent.activities.format: '%activity% en %project% por %customer%'
+search: Serĉi
+stats.activeRecordings: 'Aktivaj registraĵoj'
+stats.activityTotal: Aktivaĵoj
+stats.amountMonth: 'Enspezoj ĉi-monate'
+stats.amountToday: 'Enspezoj hodiaŭ'
+stats.amountTotal: 'Enspezoj entute'
+stats.amountWeek: 'Enspezoj ĉi-semajne'
+stats.amountYear: 'Enspezoj ĉi-jare'
+stats.customerTotal: Klientoj
+stats.durationMonth: 'Laborhoroj ĉi-monate'
+stats.durationToday: 'Laborhoroj hodiaŭ'
+stats.durationTotal: 'Laborhoroj entute'
+stats.durationWeek: 'Laborhoroj ĉi-semajne'
+stats.durationYear: 'Laborhoroj ĉi-jare'
+stats.percentUsed: '%percent%% uzitaj'
+stats.percentUsedLeft: '%percent%% uzitaj (%left% estas daŭre malfermitaj)'
+stats.projectTotal: Projektoj
+stats.userActiveMonth: 'Aktivaj uzantoj ĉi-monate'
+stats.userActiveToday: 'Aktivaj uzantoj hodiaŭ'
+stats.userActiveTotal: 'Aktivaj uzantoj entute'
+stats.userActiveWeek: 'Aktivaj uzantoj ĉi-semajne'
+stats.userActiveYear: 'Aktivaj uzantoj ĉi-jare'
+stats.userTotal: Uzantoj
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: __stats.workingTimeToday
+stats.workingTimeWeek: __stats.workingTimeWeek
+stats.workingTimeYear: __stats.workingTimeYear
+stats.yourWorkingHours: 'Miaj laborhoroj'
+status.new: Nova
+status.paid: Pagita
+status.pending: Pritraktota
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: Temporegistrado
+timesheet.all: 'Montri ĉiujn registraĵojn'
+timesheet.edit: 'Redakti la registraĵon'
+timesheet.start: 'Krei novan temporegistraĵon'
+timesheet.title: 'Miaj tempoj'
+update_multiple: '%action% %count% elementojn?'
+upload: Alŝuti
+user_permissions.title: Uzantpermesoj
+user_role.title: Uzantrolo
+'yes': Jes

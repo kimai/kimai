@@ -1,0 +1,9 @@
+access.denied: 'Acces interzis'
+http_error.description: 'Există o problemă'
+http_error.suggestion: "\nA apărut o eroare critică, te rog să încerci din nou.\nTe rog contactează administratorul dacă problema persistă.\n"
+http_error.title: Eroare
+http_error_403.description: 'Accesul la pagina aceasta este restricționat'
+http_error_403.suggestion: "\nÎmi pare rău, dar nu ai suficiente permisiuni ca să vezi această pagină.\nTe rog să vorbești cu administratorul dacă crezi că e o greșeală.\n"
+http_error_404.description: 'Nu am găsit pagina'
+http_error_404.suggestion: "\nNu am putut găsi pagina pe care o cauți.\nTe rog să te întorci la panoul de control și să încerci din nou.\n"
+stacktrace: 'Problema a aăarut aici'

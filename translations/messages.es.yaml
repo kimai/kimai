@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Caracteres permitidos: A-Z y _'
+ROLE_ADMIN: Administrador
+ROLE_SUPER_ADMIN: 'Administrador del sistema'
+ROLE_TEAMLEAD: Supervisor
+ROLE_USER: Usuario
+'This is a mandatory field': Requerido
+action.back: Atrás
+action.close: Cerrar
+action.delete: Eliminar
+action.edit: Editar
+action.reset: Restablecer
+action.save: Guardar
+active.entries: 'Los cálculos de su tiempo activo'
+admin_activity.short_stats: "\nActualmente la actividad %activity% en el proyecto %project% para el cliente %customer%\ntiene %records% registros, para un total de %duration%.\n"
+admin_activity.title: Actividades
+admin_customer.short_stats: 'Actualmente el cliente %customer% tiene %project% proyectos con %activity% actividades, para un total de %records% registros que suman %duration%.'
+admin_customer.title: Cliente
+admin_entity.delete_confirm: '¡Estos datos también se eliminarán! Como alternativa, puede seleccionar un registro al que se le transferirán todos los datos:'
+admin_invoice_template.title: 'Plantilla de factura'
+admin_project.short_stats: "\nActualmente el proyecto %project% para el cliente %customer% tiene %activities%\nactividades y %records% registros, para un total de %duration%.\n"
+admin_project.title: Proyectos
+admin_timesheet.title: 'Partes de horas'
+admin_user.short_stats: "\nActualmente el usuario %user% tiene %records% registros para un total de %duration%.\n"
+admin_user.title: Usuario
+agendaDay: Dia
+agendaWeek: Semana
+attachments: Archivos
+both: Ambos
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: 'Vista previa'
+button.preview_print: 'Imprimir previamente'
+button.print: Imprimir
+button.xlsx: Excel
+calendar.title: Calendario
+cancel: Cancelar
+confirm: Confirmar
+confirm.delete: 'Está seguro que desea proceder con la eliminación?'
+create: Crear
+dashboard.all: 'Todos los usuarios'
+dashboard.subtitle: ¡Bienvenido!
+dashboard.title: 'Página principal'
+delete.not_in_use: 'Este elemento puede eliminarse de forma segura.'
+entryState.all: Todos
+entryState.exported: Tratado
+entryState.not_exported: Abierto
+entryState.running: Activos
+entryState.stopped: Detenidos
+error.no_comments_found: 'No hay comentarios publicados aún.'
+error.no_entries_found: 'No se encontraron registros en función de los filtros seleccionados.'
+export.clear_all: '¿Marcar todos los registros a la vista como abiertos?'
+export.date_copyright: 'Creado el %date% con %kimai%'
+export.document_title: 'Exportación de partes de horas'
+export.filter: 'Filtrar datos para exportar'
+export.full_list: 'Lista completa'
+export.mark_all: '¿Marcar todos los registros a la vista como tratados?'
+export.page_of: 'Página %page% de %pages%'
+export.period: Período
+export.subtitle: 'Exportar la información de los partes de horas en varios formatos'
+export.summary: Resumen
+export.title: Exportar
+help.batch_meta_fields: 'Los campos que se actualizarán deben activarse primero mediante la casilla correspondiente.'
+help.fixedRate: 'Cada registro de tiempo obtiene el mismo valor, independientemente de su duración'
+help.rate: 'Se cobrará una tarifa por hora'
+help.rate_internal: 'Costes internos (si no se especifica, se utiliza la tarifa normal)'
+invoice.due_days: 'Fecha de vencimiento'
+invoice.filter: 'Filtrar datos de factura'
+invoice.from: De
+invoice.number: 'Número de factura'
+invoice.service_date: 'Fecha de servicio'
+invoice.signature_customer: 'Confirmación: Fecha / Nombre del cliente / Firma'
+invoice.signature_user: 'Confirmación: Fecha / Nombre del consultor / Firma'
+invoice.subtotal: Subtotal
+invoice.tax: Impuesto
+invoice.title: Facturas
+invoice.to: Para
+invoice.total: Total
+invoice.total_working_time: 'Duración total'
+invoice_print: Factura
+label.actions: Acciones
+label.active: Activo
+label.activity: Actividad
+label.address: Dirección
+label.alias: Nombre
+label.amount: Cantidad
+label.api_token: 'Contraseña de API'
+label.api_token_repeat: 'Repetir contraseña de API'
+label.appendTags: 'Agregar etiquetas'
+label.avatar: 'Imagen de perfil'
+label.batch_meta_fields: 'Campos adicionales'
+label.begin: De
+label.billable: Facturable
+label.budget: Presupuesto
+label.calendar.initial_view: 'Vista inicial del calendario'
+label.color: Color
+label.comment: Comentario
+label.company: 'Nombre de empresa'
+label.contact: Contacto
+label.country: Pais
+label.create_more: 'Crear más registros'
+label.currency: Moneda
+label.customer: Cliente
+label.date: Fecha
+label.daterange: 'Rango de tiempo'
+label.decimalDuration: 'Mostrar duración como número decimal'
+label.description: Descripción
+label.due_days: 'Plazo de pago en días'
+label.duration: Duración
+label.email: 'Correo electrónico'
+label.end: Para
+label.endtime: Final
+label.entryState: Registros
+label.exported: Exportado
+label.fax: Fax
+label.fixedRate: 'Tarifa fija'
+label.globalsOnly: 'Solo globales'
+label.homepage: 'Sitio web'
+label.hourlyRate: 'Tarifa por hora'
+label.hourly_rate: 'Tarifa por hora'
+label.hours: Horas
+label.id: ID
+label.invoice_bank_account: 'Cuenta bancaria'
+label.invoice_tax_number: 'CIF/NIF:'
+label.language: Idioma
+label.lastLogin: 'Último acceso'
+label.login.initial_view: 'Vista inicial al entrar'
+label.logout: Salir
+label.mark_as_exported: 'Marcar como exportado'
+label.mobile: Móvil
+label.my_team_projects: 'Proyectos de equipo & presupuestos'
+label.my_teams: 'Mis equipos'
+label.name: Nombre
+label.number: Cuenta
+label.orderDate: 'Fecha de pedido'
+label.orderNumber: 'Número de pedido'
+label.pageSize: 'Tamaño de página'
+label.password: Contraseña
+label.password_repeat: 'Repetir contraseña'
+label.payment_terms: 'Condiciones de pago'
+label.phone: Teléfono
+label.plus_more: '+%count% más'
+label.progress: Progreso
+label.project: Proyecto
+label.project_end: 'Fin del proyecto'
+label.project_start: 'Empieza proyecto'
+label.rate: Tarifa
+label.rate_internal: 'Tasa interna'
+label.recalculate_rates: 'Recalcular tarifas'
+label.replaceTags: 'Reemplazar etiquetas'
+label.required_version: 'Compatible con'
+label.roles: Rol
+label.skin: 'Vista: colores'
+label.starttime: Inicio
+label.status: Situación
+label.tag: Etiquetas
+label.tags: Etiquetas
+label.team: Equipo
+label.teamlead: Supervisor
+label.template: Plantilla
+label.theme.collapsed_sidebar: 'Minimiza la barra lateral izquierda'
+label.theme.layout: 'Vista: disposición'
+label.timeBudget: 'Bolsa de horas'
+label.timesheet.daily_stats: 'Mostrar estadísticas diarias en los partes de horas'
+label.timesheet.export_decimal: 'Uso decimal duracion en exportar'
+label.timezone: 'Huso horario'
+label.title: Puesto
+label.toggle_dropdown: 'Mostrar menú'
+label.total_rate: 'Tarifa aplicada'
+label.unit_price: 'Precio unitario'
+label.user: Usuario
+label.user_profile: 'Mi perfil'
+label.username: 'Nombre de usuario'
+label.vat: Impuesto
+label.vat_id: 'Id. de IVA'
+label.version: Versión
+label.visible: Visible
+login_required: 'Falta de permisos. ¿Redirigir para iniciar sesión?'
+menu.admin: Administración
+menu.admin_activity: Actividades
+menu.admin_customer: Clientes
+menu.admin_project: Proyectos
+menu.admin_team: Equipos
+menu.admin_timesheet: 'Partes de horas'
+menu.admin_user: Usuarios
+menu.doctor: Doctor
+menu.export: Exportar
+menu.homepage: 'Página principal'
+menu.invoice: Facturas
+menu.logout: Salir
+menu.plugin: Complementos
+menu.reporting: Reportando
+menu.system: Sistema
+menu.system_configuration: Configuración
+menu.tags: Etiquetas
+menu.timesheet: 'Mis horas'
+modal.columns.description: 'Las columnas sin seleccionar se ocultarán al guardar la configuración, la cual se guardará en una «cookie» del navegador. Si elimina las «cookies», se restablecerá a la configuración predeterminada.'
+modal.columns.title: 'Cambiar vista de columna'
+modal.dirty: 'El formulario ha cambiado. Por favor pulsa "Guardar" para guardar los cambios o "Cerrar" para cancelar.'
+month: Mes
+more.info.link: 'Más información'
+my.profile: 'Mi perfil'
+'no': 'No'
+placeholder.type_message: 'Escriba su mensaje…'
+profile.about_me: 'Acerca de mi'
+profile.api-token: API
+profile.first_entry: 'Activo desde'
+profile.password: Contraseña
+profile.preferences: Preferencias
+profile.registration_date: 'Registrado el'
+profile.roles: Roles
+profile.settings: Perfil
+profile.teams: Equipos
+profile.title: Perfil
+rates.empty: 'No se han configurado honorarios aún.'
+rates.title: Honorarios
+recent.activities: 'Retome una de sus últimas actividades'
+recent.activities.format: '%activity% en %project% para %customer%'
+search: Buscar
+stats.activeRecordings: 'Partes activos'
+stats.activityTotal: 'Cantidad total de actividades'
+stats.amountMonth: 'Ingresos este mes'
+stats.amountToday: 'Ingresos hoy'
+stats.amountTotal: 'Total de ingresos'
+stats.amountWeek: 'Ingresos esta semana'
+stats.amountYear: 'Ingresos este año'
+stats.customerTotal: 'Cantidad total de clientes'
+stats.durationMonth: 'Horas trabajadas este mes'
+stats.durationToday: 'Horas trabajadas hoy'
+stats.durationTotal: 'Total de horas trabajadas'
+stats.durationWeek: 'Horas trabajadas esta semana'
+stats.durationYear: 'Horas trabajadas este año'
+stats.percentUsed: '%percent%% utilizado'
+stats.percentUsedLeft: '%percent%% utilizado (quedan %left%)'
+stats.projectTotal: 'Cantidad total de proyectos'
+stats.userActiveMonth: 'Usuarios activos este mes'
+stats.userActiveToday: 'Usuarios activos hoy'
+stats.userActiveTotal: 'Total de usuarios activos'
+stats.userActiveWeek: 'Usuarios activos esta semana'
+stats.userActiveYear: 'Usuarios activos este año'
+stats.userTotal: 'Cantidad total de usuarios'
+stats.workingTimeMonth: '%month% de %year%'
+stats.workingTimeToday: 'Hoy, %day%'
+stats.workingTimeWeek: 'Semana de calendario %week%'
+stats.workingTimeYear: 'Año %year% completo'
+stats.yourWorkingHours: 'Tus horas trabajadas'
+status.new: Nuevo
+status.paid: Pagado
+status.pending: Pendiente
+sum.total: Total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Control de Tiempo'
+timesheet.all: 'Ver todos los registros'
+timesheet.edit: 'Editar registro'
+timesheet.start: 'Crear nuevo registro'
+timesheet.title: 'Mis horas'
+update_multiple: '¿%action% %count% entradas?'
+upload: Cargar
+user_permissions.title: 'Permisos de usuario'
+user_role.title: 'Rol de usuario'
+'yes': Si

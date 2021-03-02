@@ -1,0 +1,4 @@
+report_monthly_users: 'Monthly view for all users'
+report_user_month: 'Monthly view for one user'
+report_user_week: 'Weekly view for one user'
+reporting.title: Reporting

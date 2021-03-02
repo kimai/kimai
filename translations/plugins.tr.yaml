@@ -1,0 +1,4 @@
+plugin.marketplace: 'Kimai market'
+plugin.none_installed: 'Henüz kurulu eklentiniz bulunmamaktadır.'
+plugins.subtitle: 'Kimai''ye eklentilerle yeni özellikler ekleyebilirsiniz'
+plugins.title: Eklentiler

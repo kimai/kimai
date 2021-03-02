@@ -1,0 +1,20 @@
+Docx: 'Microsoft Word (Docx)'
+Html: 'HTML (for printing via Browser)'
+Ods: 'Open Office (Spreadsheet)'
+Pdf: PDF
+Xls: 'Microsoft Excel (Xls)'
+Xlsx: 'Microsoft Excel (Xlsx)'
+company: 'Firemní faktura'
+default: 'Faktura (výchozí)'
+default-pdf: Invoice
+freelancer: Živnostník
+help.upload: 'Attention: existing files will be overwritten. Allowed file types are: DOCX, ODS, XLSX.'
+javascript: JSON
+label.invoice_renderer: Faktura
+open-spreadsheet: 'Výpočetní tabulka'
+programmatic: 'For further processing'
+spreadsheet: Tabulka
+text: Text
+timesheet: 'Pracovní výkaz'
+xml: XML
+export: 'Export dat'

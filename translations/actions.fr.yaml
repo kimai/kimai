@@ -1,0 +1,23 @@
+activity: 'Filtrer les activités'
+back: Retour
+copy: 'Créer une copie'
+create-activity: 'Créer une activité'
+create-project: 'Créer un projet'
+create-timesheet: 'Créer une fiche de temps'
+create-timesheet-multiuser: 'Pour plusieurs utilisateurs'
+customer: 'Filtrer les clients'
+details: Afficher
+download: Télécharger
+edit: Modifier
+home: Accueil
+invoice.paid: 'Facture payée'
+invoice.pending: 'En attente de paiement'
+permissions: 'Autorisations de l''équipe'
+profile-stats: Statistiques
+project: 'Filtrer les projets'
+repeat: Reprendre
+report: Signaler
+settings: Préférences
+stop: Arrêter
+timesheet: 'Fiches de temps'
+trash: Supprimer

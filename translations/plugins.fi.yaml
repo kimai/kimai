@@ -1,0 +1,4 @@
+plugin.marketplace: 'Kimai kauppa'
+plugin.none_installed: 'Sinulla ei ole asennettuja liitännäisiä.'
+plugins.subtitle: 'Voit parantaa Kimain toimintoja liitännäisillä'
+plugins.title: Liitännäiset

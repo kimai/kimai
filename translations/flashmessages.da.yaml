@@ -1,0 +1,13 @@
+action.delete.error: 'Indlæg kunne ikke slettes: %reason%'
+action.delete.success: 'Indlæg slettet'
+action.update.error: 'Ændringer kunne ikke gemmes: %reason%'
+action.update.success: 'Ændringer gemt'
+action.upload.error: 'The file could not be uploaded or saved: %reason%'
+invoice.first_template: 'Du skal lave en fakturaskabelon før du kan fortsætte'
+timesheet.locked.warning: 'Du redigerer en eksporteret tidsregistrering'
+timesheet.start.error: 'Tidsregistrering kunne ikke startes'
+timesheet.start.exceeded_limit: 'Grænsen for aktive tidsregistreringsinstanser er nået, stop mindst én aktiv tidsregistrering først.'
+timesheet.start.success: 'Tidsregistrering startet'
+timesheet.stop.error: 'Tidsregistrering kunne ikke stoppes'
+timesheet.stop.success: 'Tidsregistrering stoppet'
+warning: Advarsel

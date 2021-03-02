@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'De activiteit heeft beperkte toegang, omdat de teamrechten voor het project en/of de klant zijn ingesteld.'
+team.create_default: 'Maak een nieuw team aan om de toegang te beperken'
+team.project_visibility_inherited: 'Het project heeft beperkte toegang, omdat de teamrechten voor de klant zijn ingesteld.'
+team.visibility_global: 'Zichtbaar voor iedereen, want er was nog geen team toegewezen.'
+team.visibility_restricted: 'Alleen zichtbaar voor de volgende teams en alle beheerders.'
+teams.customer_access: 'Toegang verlenen tot klanten'
+teams.project_access: 'Toegang verlenen tot projecten'
+teams.title: Teams

@@ -1,0 +1,60 @@
+Ceil: 'Supren: komenco, fino kaj daŭro estos rondigitaj supren'
+Closest: 'Plej proksimen: matematika rondigo ĝis la plej proksima valoro'
+Default: 'Defaŭlte: komenco estos rondigita suben, fino kaj daŭro supren'
+Floor: 'Suben: komenco, fino kaj daŭro estos rondigitaj suben'
+Friday: Vendredo
+Monday: Lundo
+Saturday: Sabato
+Sunday: Dimanĉo
+Thursday: Ĵaŭdo
+Tuesday: Mardo
+Wednesday: Merkredo
+branding: Varmarkado
+calendar: Kalendaro
+first_weekday: 'First day of the week'
+form_customer: 'Krei defaŭltajn valorojn de kliento'
+form_user: 'Defaŭltaj valoroj de uzanto'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Fakturoj
+label.calendar.businessHours.begin: 'Komenco de normalaj laborhoroj (estos emfazita)'
+label.calendar.businessHours.end: 'Fino de normalaj laborhoroj (estos emfazita)'
+label.calendar.slot_duration: 'Daŭro de tempo-bloko por semajna kaj taga vidoj (formo: hh:mm:ss)'
+label.calendar.visibleHours.begin: 'Komenco de videbla tempoperiodo'
+label.calendar.visibleHours.end: 'Fino de videbla tempoperiodo'
+label.calendar.week_numbers: 'Montri semajnajn nombrojn'
+label.calendar.weekends: 'Montri semajnfinojn'
+label.invoice.number_format: 'Formo de faktura numero'
+label.simple_form: 'Simpla serĉo'
+label.theme.autocomplete_chars: 'Minimuma nombro de literoj por komenci aŭtomatan kompletigon'
+label.theme.branding.company: Kompanio
+label.theme.branding.logo: 'Emblemo (URL de bildo, anstataŭigas la kompanion en ensaluta ekrano)'
+label.theme.branding.mini: 'Eta emblemo (maletendita flankpanelo)'
+label.theme.branding.title: 'Retumila titolo'
+label.theme.markdown_content: 'Permesi formatadom per Markdown en priskriboj kaj komentoj'
+label.theme.tags_create: 'Etikedoj: uzi aŭtomate kompletigitan serĉadon kaj permesi krei etikedojn'
+label.timesheet.active_entries.hard_limit: 'Permesita nombro de samtempaj ŝaltitaj tempaj registraĵoj'
+label.timesheet.active_entries.soft_limit: 'Nombro de samtempaj ŝaltitaj tempaj registraĵoj de kiuj atentigo estas montrita'
+label.timesheet.default_begin: 'Defaŭlta komenca tempo (ne uzita en ĉiuj temporegistraj reĝimoj)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'Temporegistra reĝimo'
+label.timesheet.mode_default: '[Defaŭlte] komenca kaj fina tempoj povas esti redaktitaj'
+label.timesheet.mode_duration_fixed_begin: '[Daŭro] agordebla fiksita komenca tempo, nur daŭro povas esti ŝanĝita'
+label.timesheet.mode_duration_only: '[Daŭro] anstataŭigas la finan tempon per enig-kampo por daŭro'
+label.timesheet.mode_punch: '[Tempo-mezurado] uzanto povas komenci kaj fini registraĵojn, sed ne redakti tempojn aŭ daŭron'
+label.timesheet.rounding.default.begin: 'Rondigo de komenca tempo en minutoj (0 = malaktivigita)'
+label.timesheet.rounding.default.days: 'Tagoj de la semajno kiam la rondigo estos aplikata'
+label.timesheet.rounding.default.duration: 'Rondigo de daŭro en minutoj (0 = malaktivigita)'
+label.timesheet.rounding.default.end: 'Rondigo de fina tempo en minutoj (0 = malaktivigita)'
+label.timesheet.rounding.default.mode: 'Rondiga reĝimo'
+label.timesheet.rules.allow_future_times: 'Permesi tempajn registraĵojn en estonto'
+label.timesheet.rules.allow_overlapping_records: 'Allow overlapping time entries'
+label.timesheet.rules.lockdown_grace_period: 'Lockdown grace period end (PHP relative date to lockdown period end)'
+label.timesheet.rules.lockdown_period_end: 'Lockdown period end (PHP relative date to now)'
+label.timesheet.rules.lockdown_period_start: 'Lockdown period start (PHP relative date to now)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'Rondigo de tempo'
+subtitle: 'Ŝanĝi ĝeneralajn agordojn de via tempospurilo'
+theme: Etoso
+timesheet: Temposlipo
+title: Agordoj

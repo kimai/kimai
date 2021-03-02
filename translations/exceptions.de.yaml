@@ -1,0 +1,9 @@
+access.denied: 'Der Zugriff wurde verweigert'
+http_error.description: 'Etwas läuft falsch'
+http_error.suggestion: "\nEin kritischer Fehler ist aufgetreten.\nMöglicherweise haben Sie einen Software Fehler gefunden, kontaktieren Sie bitte ihren Administrator wenn der Fehler bestehen bleibt.\n"
+http_error.title: Fehler
+http_error_403.description: 'Seite ist geschützt'
+http_error_403.suggestion: "\nEntschuldigung, Sie haben nicht genügend Berechtigungen um diese Seite zu sehen.\nBitte sprechen Sie mit ihrem Administrator wenn Sie dies für einen Fehler halten.\n"
+http_error_404.description: 'Seite wurde nicht gefunden'
+http_error_404.suggestion: "\nWir konnten die angeforderte Seite leider nicht finden.\nBitte wechseln Sie zu ihrem Dashboard und starten von vorne.\n"
+stacktrace: 'Das Problem ist hier passiert'

@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'The activity has limited access, because team permissions are set for the project and/or customer.'
+team.create_default: 'Crea un nuovo gruppo per limitare l''accesso'
+team.project_visibility_inherited: 'Progetto con accesso limitato perchè i permessi di gruppo sono impostati per i clienti.'
+team.visibility_global: 'Visibile a chiunque, in assenza del gruppo assegnato.'
+team.visibility_restricted: 'Visibile solo ai seguenti gruppi e a tutti gli amministratori.'
+teams.customer_access: 'Concedi accesso ai clienti'
+teams.project_access: 'Concedi accesso ai progetti'
+teams.title: Gruppo

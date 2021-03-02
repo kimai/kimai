@@ -1,0 +1,13 @@
+action.delete.error: 'לא ניתן למחוק את הרשומה: %reason%'
+action.delete.success: 'הרשומה נמחקה'
+action.update.error: 'לא ניתן לשמור את השינויים: %reason%'
+action.update.success: 'השינויים נשמרו'
+action.upload.error: 'לא ניתן להעלות או לשמור את הקובץ: %reason%'
+invoice.first_template: 'אנא צור קודם תבנית חשבונית'
+timesheet.locked.warning: 'אתה עורך רשומה שכבר יוצאה'
+timesheet.start.error: 'לא ניתן להתחיל הקלטת זמן'
+timesheet.start.exceeded_limit: 'הגעת למגבלת כמות רשומות זמן פעילות. אנא עצור לפחות רשומת זמן אחת.'
+timesheet.start.success: 'הקלטת זמן החלה'
+timesheet.stop.error: 'לא ניתן לעצור הקלטת זמן'
+timesheet.stop.success: 'הקלטת זמן נעצרה'
+warning: אזהרה

@@ -1,0 +1,8 @@
+activity: 'Työtehtävä: yksi merkintä työtehtävää kohden'
+date: 'Päivämäärä: yksi merkintä päivää kohden (käyttää aloitus päivämäärää)'
+default: 'Oletus: yksi merkintä kirjattua aikaa kohden'
+label.invoice_calculator: 'Summan laskenta'
+project: 'Projekti: yksi merkintä projektia kohden'
+short: 'Tunnit: kirjatut ajat yhteenlaskettuna, yksi merkintä yhteensä'
+user: 'Käyttäjä: yksi merkintä käyttäjää kohden'
+weekly: 'Viikko: yksi merkintä viikkoa kohden (käyttää aloitus päivämäärää)'

@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'The activity has limited access, because team permissions are set for the project and/or customer.'
+team.create_default: 'Skapa ett nytt arbetslag för att begränsa tillgång'
+team.project_visibility_inherited: 'Projektet har begränsad tillgång, eftersom arbetslags behörigheter är inställda för kunden.'
+team.visibility_global: 'Synlig för alla, efter som inget arbetslag är tilldelat än.'
+team.visibility_restricted: 'Bara synlig för följande arbetslag och alla administratörer.'
+teams.customer_access: 'Tillåt åtkomst till kunder'
+teams.project_access: 'Tillåt åtkomst till projekt'
+teams.title: Arbetslag

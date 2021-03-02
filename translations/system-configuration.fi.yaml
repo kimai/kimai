@@ -1,0 +1,60 @@
+Ceil: 'Katto: alku, loppu ja kesto pyöristetään ylöspäin'
+Closest: 'Lähin: matemaattinen pyöristys lähimpään arvoon'
+Default: 'Vakio: alku pyöristetään alaspäin, loppu ja kesto ylöspäin'
+Floor: 'Pohja: alku, loppu ja kesto pyöristetään alaspäin'
+Friday: Perjantai
+Monday: Maanantai
+Saturday: Lauantai
+Sunday: Sunnuntai
+Thursday: Torstai
+Tuesday: Tiistai
+Wednesday: Keskiviikko
+branding: Brändi
+calendar: Kalenteri
+first_weekday: 'Viikon ensimmäinen päivä'
+form_customer: 'Luo asiakas—oletus arvot'
+form_user: 'Käyttäjä—oletus arvot'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Laskut
+label.calendar.businessHours.begin: 'Normaalin työajan alku (korostetaan)'
+label.calendar.businessHours.end: 'Normaalin työajan loppu (korostetaan)'
+label.calendar.slot_duration: 'Paikan kesto viikko- ja päivänäkymälle (muoto: hh:mm:ss)'
+label.calendar.visibleHours.begin: 'Näkyvän aikajakson alku'
+label.calendar.visibleHours.end: 'Näkyvän aikajakson loppu'
+label.calendar.week_numbers: 'Näytä viikkonumero'
+label.calendar.weekends: 'Näytä viikonloput'
+label.invoice.number_format: 'Laskun numeromuotoilu'
+label.simple_form: 'Yksinkertainen haku'
+label.theme.autocomplete_chars: 'Minimi määrä kirjaimia ennen automaattisen täyttämisen aloitusta'
+label.theme.branding.company: Yritys
+label.theme.branding.logo: 'Logo (Image URL, korvaa yrityksen logon sisäänkirjauksessa)'
+label.theme.branding.mini: 'Mini Logo (piilotettu sivupalkki)'
+label.theme.branding.title: 'Selaimen otsikko'
+label.theme.markdown_content: 'Salli markdown-muotoilu kuvauksissa ja kommenteissa'
+label.theme.tags_create: 'Tunnisteet: käytä automaattista täyttöä haussa ja salli tunnisteiden luominen'
+label.timesheet.active_entries.hard_limit: 'Sallittu määrä samanaikaisesti suoritettavia aikamerkintöjä'
+label.timesheet.active_entries.soft_limit: 'Aikamerkintöjen määrä joista näytetään varoitus'
+label.timesheet.default_begin: 'Oletus aloitusaika (ei käytetä kaikissa aikataulun seurantatiloissa)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'Työaikaseurannan tila'
+label.timesheet.mode_default: '[Oletus] aloitus- ja lopetusaikoja voidaan muuttaa'
+label.timesheet.mode_duration_fixed_begin: '[Kesto] konfiguroitava kiinteä aloitusaika, vain kestoa voidaan muuttaa'
+label.timesheet.mode_duration_only: '[Kesto] korvaa lopetusajan syötetyllä kestolla'
+label.timesheet.mode_punch: '[Ajan tallennus] käyttäjä voi aloittaa ja lopettaa ajan tallentamisen, mutta ei muokata aikoja tai kestoa'
+label.timesheet.rounding.default.begin: 'Aloitusajan pyöristäminen minuutteina (0 = ei aktiivinen)'
+label.timesheet.rounding.default.days: 'Viikonpäivät, jolloin pyöristetään'
+label.timesheet.rounding.default.duration: 'Keston pyöristys minuutteina (0 = deaktivoitu)'
+label.timesheet.rounding.default.end: 'Lopetusajan pyöristäminen minuutteina (0 = ei aktiivinen)'
+label.timesheet.rounding.default.mode: Pyöristystapa
+label.timesheet.rules.allow_future_times: 'Salli aikamerkinnät tulevaisuudessa'
+label.timesheet.rules.allow_overlapping_records: 'Salli päällekkäiset aikamerkinnät'
+label.timesheet.rules.lockdown_grace_period: 'Lukituksen armoajan päättymisaika (relatiivisesta PHP päivämäärästä lukituksen päättymiseen)'
+label.timesheet.rules.lockdown_period_end: 'Lukituksen päättymisaika (relatiivisesta PHP päivämäärästä tähän hetkeen)'
+label.timesheet.rules.lockdown_period_start: 'Lukituksen alkamisaika (relatiivisesta PHP päivämäärästä tähän hetkeen)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'Ajan pyöristys'
+subtitle: 'Muuta työajanhallintasi globaaleja asetuksia'
+theme: Teema
+timesheet: Työajanseuranta
+title: Asetukset

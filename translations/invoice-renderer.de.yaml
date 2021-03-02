@@ -1,0 +1,19 @@
+Docx: 'Microsoft Word (Docx)'
+Html: 'HTML (zum Drucken via Browser)'
+Ods: 'Open Office (Tabelle)'
+Pdf: PDF
+Xls: 'Microsoft Excel (Xls)'
+Xlsx: 'Microsoft Excel (Xlsx)'
+company: Rechnung
+default: Rechnung
+default-pdf: Rechnung
+freelancer: 'Einzelnes Leistungsdatum'
+help.upload: 'Achtung: existierende Dateien werden übschrieben. Erlaubte Dateitypen sind: DOCX, ODS, XLSX'
+javascript: JSON
+label.invoice_renderer: Rechnungsdokument
+open-spreadsheet: Rechnung
+programmatic: 'Zur Weiterverarbeitung'
+spreadsheet: Rechnung
+text: Text
+timesheet: Stundenzettel
+xml: XML

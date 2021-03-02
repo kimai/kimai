@@ -1,0 +1,20 @@
+Docx: 'Microsoft Word (Docx)'
+Html: 'HTML (for printing via Browser)'
+Ods: 'Open Office (Spreadsheet)'
+Pdf: PDF
+Xls: 'Microsoft Excel (Xls)'
+Xlsx: 'Microsoft Excel (Xlsx)'
+company: '회사 인보이스'
+default: '인보이스 (초기값)'
+default-pdf: Invoice
+freelancer: 프리랜서
+help.upload: 'Attention: existing files will be overwritten. Allowed file types are: DOCX, ODS, XLSX.'
+javascript: JSON
+label.invoice_renderer: '인보이스 문서'
+open-spreadsheet: '스프레트시트 '
+programmatic: 'For further processing'
+spreadsheet: 엑세
+text: Text
+timesheet: 타임시트
+xml: XML
+export: '데이터 내보내기'

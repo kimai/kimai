@@ -1,0 +1,137 @@
+'A PHP extension caused the upload to fail.': '某个 PHP 扩展造成上传失败。'
+'An empty file is not allowed.': 不允许使用空文件。
+'Cannot write temporary file to disk.': 临时文件写入磁盘失败。
+'Each element of this collection should satisfy its own set of constraints.': 该集合内的每个元素需符合元素本身规定的约束。
+'End date must not be earlier then start date.': 结束日期必须早于开始日期。
+Error: 错误
+'Invalid card number.': 无效的信用卡号。
+'No file was uploaded.': 没有上传任何文件。
+'No temporary folder was configured in php.ini.': 'php.ini 里没有配置临时文件目录。'
+'One or more of the given values is invalid.': 一个或者多个给定的值无效。
+'Please choose a valid date interval.': 请选择有效的日期间隔。
+'Please enter a number.': 请输入数字。
+'Please enter a percentage value.': 请输入百分比值。
+'Please enter a valid URL.': 请输入有效的网址。
+'Please enter a valid birthdate.': 请输入有效的生日日期。
+'Please enter a valid date and time.': 请输入有效的日期与时间。
+'Please enter a valid date.': 请输入有效的日期。
+'Please enter a valid email address.': 请输入有效的电子邮件地址。
+'Please enter a valid money amount.': 请输入正确的金额。
+'Please enter a valid search term.': 请输入有效的搜索词。
+'Please enter a valid time.': 请输入有效的时间。
+'Please enter a valid week.': 请输入有效的星期。
+'Please enter an integer.': 请输入整数。
+'Please provide a valid phone number.': 请提供有效的手机号码。
+'Please select a valid color.': 请选择有效的颜色。
+'Please select a valid country.': 请选择有效的国家。
+'Please select a valid currency.': 请选择有效的货币。
+'Please select a valid file.': 请选择有效的文件。
+'Please select a valid language.': 请选择有效的语言。
+'Please select a valid locale.': 请选择有效的语言环境。
+'Please select a valid option.': 请选择有效的选项。
+'Please select a valid range.': 请选择有效的范围。
+'Please select a valid timezone.': 请选择有效的时区。
+'The CSRF token is invalid. Please try to resubmit the form.': 'CSRF 验证符无效， 请重新提交.'
+'The begin date cannot be in the future.': 开始日期不能是未来的某一日期。
+'The checkbox has an invalid value.': 无效的选框值。
+'The collection is invalid.': 集合无效。
+'The file could not be found.': 文件未找到。
+'The file could not be uploaded.': 无法上传此文件。
+'The file is not readable.': 文件不可读。
+'The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.': '文件太大 ({{ size }} {{ suffix }})。文件大小不可以超过 {{ limit }} {{ suffix }} 。'
+'The file is too large.': 文件太大。
+'The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.': '文件太大，文件大小不可以超过 {{ limit }} {{ suffix }}。 '
+'The file was only partially uploaded.': 该文件的上传不完整。
+'The given value is not a valid time.': 'The given value is not a valid time.'
+'The hidden field is invalid.': 隐藏字段无效。
+'The host could not be resolved.': 主机名无法解析。
+'The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.': '图片太高 ({{ height }}px)，最大高度为 {{ max_height }}px 。'
+'The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.': '图片高度不够 ({{ height }}px)，最小高度为 {{ min_height }}px 。'
+'The image is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented images are not allowed.': '图片是横向的 ({{ width }}x{{ height }}px)。不允许使用横向的图片。'
+'The image is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented images are not allowed.': '图片是纵向的 ({{ width }}x{{ height }}px)。不允许使用纵向的图片。'
+'The image is square ({{ width }}x{{ height }}px). Square images are not allowed.': '图片是方形的 ({{ width }}x{{ height }}px)。不允许使用方形的图片。'
+'The image ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.': '图片宽高比太大 ({{ ratio }})。允许的最大宽高比为 {{ max_ratio }}。'
+'The image ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.': '图片宽高比太小 ({{ ratio }})。允许的最大宽高比为 {{ min_ratio }}。'
+'The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.': '图片太宽 ({{ width }}px)，最大宽度为 {{ max_width }}px 。'
+'The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.': '图片宽度不够 ({{ width }}px)，最小宽度为 {{ min_width }}px 。'
+'The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.': '无效的文件类型 ({{ type }}) 。允许的文件类型有 {{ types }} 。'
+'The number of elements in this collection should be a multiple of {{ compared_value }}.': '该集合内的元素数量得是 {{ compared_value }} 的倍数。'
+'The password is invalid.': 密码无效。
+'The selected choice is invalid.': 所选的选项无效。
+'The size of the image could not be detected.': 不能解析图片大小。
+'The two values should be equal.': 这两个变量的值应该相等。
+'The uploaded file was too large. Please try to upload a smaller file.': '上传文件太大， 请重新尝试上传一个较小的文件.'
+'The value you selected is not a valid choice.': 选定变量的值不是有效的选项。
+'The values do not match.': 数值不匹配。
+'This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.': '此业务标识符代码（BIC）与IBAN {{ iban }} 无关。'
+'This collection should contain exactly {{ limit }} element.|This collection should contain exactly {{ limit }} elements.': '该集合应包含 {{ limit }} 个元素 element 。'
+'This collection should contain only unique elements.': 该集合应仅包含独一无二的元素。
+'This collection should contain {{ limit }} element or less.|This collection should contain {{ limit }} elements or less.': '该集合最多包含 {{ limit }} 个元素。'
+'This collection should contain {{ limit }} element or more.|This collection should contain {{ limit }} elements or more.': '该集合最少应包含 {{ limit }} 个元素。'
+'This field is missing.': 此字段缺失。
+'This field was not expected.': 此字段是多余的。
+'This file is not a valid image.': 该文件不是有效的图片。
+'This form should not contain extra fields.': 该表单中不可有额外字段.
+'This invoice document cannot be used, please rename the file and upload it again.': 'This invoice document cannot be used, please rename the file and upload it again.'
+'This is not a valid Business Identifier Code (BIC).': 这不是有效的业务标识符代码（BIC)。
+'This is not a valid IP address.': 该值不是有效的IP地址。
+'This is not a valid International Bank Account Number (IBAN).': 该值不是有效的国际银行帐号（IBAN）。
+'This is not a valid UUID.': 这不是有效的UUID。
+'This password has been leaked in a data breach, it must not be used. Please use another password.': 此密码已被泄露，切勿使用。请更换密码。
+'This period is locked, please choose a later date.': 'This period is locked, please choose a later date.'
+'This value does not match the expected {{ charset }} charset.': '该值不符合 {{ charset }} 编码。'
+'This value is already used.': 该值已经被使用。
+'This value is neither a valid ISBN-10 nor a valid ISBN-13.': '该值不是有效的国际标准书号（ISBN-10 或 ISBN-13）。'
+'This value is not a valid HTML5 color.': '该数值不是个有效的 HTML5 颜色。'
+'This value is not a valid ISBN-10.': 该值不是有效的10位国际标准书号（ISBN-10）。
+'This value is not a valid ISBN-13.': 该值不是有效的13位国际标准书号（ISBN-13）。
+'This value is not a valid ISSN.': 该值不是有效的国际标准期刊号（ISSN）。
+'This value is not a valid International Securities Identification Number (ISIN).': '该数值不是有效的国际证券识别码 （ISIN）。'
+'This value is not a valid URL.': '该值不是一个有效的 URL 。'
+'This value is not a valid country.': 该值不是有效的国家名。
+'This value is not a valid currency.': 该值不是有效的货币名（currency）。
+'This value is not a valid date.': 该值不是一个有效的日期（date）。
+'This value is not a valid datetime.': 该值不是一个有效的日期时间（datetime）。
+'This value is not a valid email address.': 该值不是一个有效的邮件地址。
+'This value is not a valid hostname.': 该数值不是有效的主机名称。
+'This value is not a valid language.': 该值不是有效的语言名。
+'This value is not a valid locale.': 该值不是有效的区域值（locale）。
+'This value is not a valid role.': 此值不是有效角色。
+'This value is not a valid time.': 该值不是一个有效的时间。
+'This value is not a valid timezone.': 无效时区。
+'This value is not valid.': '该变量值无效 。'
+'This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.': '字符串太长，长度不可超过 {{ limit }} 个字符。'
+'This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.': '字符串太短，长度不可少于 {{ limit }} 个字符。'
+'This value should be a multiple of {{ compared_value }}.': '此值应为 {{ compared_value }} 的倍数。'
+'This value should be a valid number.': 该值应该为有效的数字。
+'This value should be between {{ min }} and {{ max }}.': '该数值应在 {{ min }} 和 {{ max }} 之间。'
+'This value should be blank.': 该变量值应为空。
+'This value should be either negative or zero.': 数值应是负数，或为零。
+'This value should be either positive or zero.': 数值应是正数，或为零。
+'This value should be equal to {{ compared_value }}.': '该值应等于 {{ compared_value }} 。'
+'This value should be false.': '该变量的值应为 false 。'
+'This value should be greater than or equal to {{ compared_value }}.': '该值应大于或等于 {{ compared_value }} 。'
+'This value should be greater than {{ compared_value }}.': '该值应大于 {{ compared_value }} 。'
+'This value should be identical to {{ compared_value_type }} {{ compared_value }}.': '该值应与 {{ compared_value_type }} {{ compared_value }} 相同。'
+'This value should be less than or equal to {{ compared_value }}.': '该值应小于或等于 {{ compared_value }} 。'
+'This value should be less than {{ compared_value }}.': '该值应小于 {{ compared_value }} 。'
+'This value should be negative.': 数值应为负数。
+'This value should be null.': '该变量应为空 null 。'
+'This value should be of type {{ type }}.': '该变量的类型应为 {{ type }} 。'
+'This value should be positive.': 数值应为正数。
+'This value should be the user''s current password.': 该变量的值应为用户当前的密码。
+'This value should be true.': '该变量的值应为 true 。'
+'This value should be valid JSON.': 该值应该是有效的JSON。
+'This value should be {{ limit }} or less.': '这个变量的值应该小于或等于 {{ limit }}。'
+'This value should be {{ limit }} or more.': '该变量的值应该大于或等于 {{ limit }}。'
+'This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }} characters.': '该变量应为 {{ limit }} 个字符。'
+'This value should not be blank.': 该变量不应为空。
+'This value should not be equal to {{ compared_value }}.': '该值不应先等于 {{ compared_value }} 。'
+'This value should not be identical to {{ compared_value_type }} {{ compared_value }}.': '该值不应与 {{ compared_value_type }} {{ compared_value }} 相同。'
+'This value should not be null.': '该变量不应为 null 。'
+'This value should satisfy at least one of the following constraints:': 该数值需符合以下其中一个约束：
+'Unsupported card type or invalid card number.': 不支持的信用卡类型或无效的信用卡号。
+'You already have an entry for this time.': 'You already have an entry for this time.'
+'You must select at least one user or team.': 'You must select at least one user or team.'
+'You must select at least {{ limit }} choice.|You must select at least {{ limit }} choices.': '您至少要选择 {{ limit }} 个选项。'
+'You must select at most {{ limit }} choice.|You must select at most {{ limit }} choices.': '您最多能选择 {{ limit }} 个选项。'

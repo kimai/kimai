@@ -1,0 +1,9 @@
+access.denied: 'Erişim engellendi'
+http_error.description: 'Ups! Bir hata oluştu'
+http_error.suggestion: "\nBeklenmeyen bir hata oluştu, tekrar deneyin.\nBir hata bulmuş olabilirsiniz, tekrar denediğiniz hata devam ederse\nyöneticiyle iletişime geçiniz.\n"
+http_error.title: Hata
+http_error_403.description: 'Bu sayfaya erişim kısıtlı'
+http_error_403.suggestion: "\nÖzür dileriz, bu sayfayı görmeye izniniz yok.\nHata olduğunu düşünüyorsanız yöneticiyle iletişime geçiniz.\n"
+http_error_404.description: 'Sayfa bulunamadı'
+http_error_404.suggestion: "\nErişmeye çalıştığınız sayfayı bulamadık.\nBu arada, kontrol panelinize geri dönüp tekrar başlayabilirsiniz.\n"
+stacktrace: 'Burada bir problem oluştu'

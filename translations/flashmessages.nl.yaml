@@ -1,0 +1,13 @@
+action.delete.error: 'De invoer kon niet worden verwijderd: %reason%'
+action.delete.success: 'De invoer is succesvol verwijderd'
+action.update.error: 'De wijzigingen konden niet worden opgeslagen: %reason%'
+action.update.success: 'De wijzigingen zijn succesvol opgeslagen'
+action.upload.error: 'Het bestand kan niet worden geüpload of opgeslagen: %reason%'
+invoice.first_template: 'U moet eerst een factuursjabloon maken'
+timesheet.locked.warning: 'U bewerkt een geëxporteerd item'
+timesheet.start.error: 'De teller kon niet worden gestart: %reason%'
+timesheet.start.exceeded_limit: 'U heeft het maximumaantal lopende tellers bereikt. Stop eerst minstens één teller.'
+timesheet.start.success: 'De teller is gestart'
+timesheet.stop.error: 'De teller kon niet worden gestopt: %reason%'
+timesheet.stop.success: 'De teller is gestopt'
+warning: Waarschuwing

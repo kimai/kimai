@@ -1,0 +1,9 @@
+access.denied: 'Sarrera eragotzia'
+http_error.description: 'Zeozer txarto irten da'
+http_error.suggestion: "\nUstegabeko arazo bat suertatu da. Berriro saiatu, mesedez.\nArazoak jarraituko balu, teknikari edo arduradun batekin harremantetan jarri, mesedez.\n"
+http_error.title: Arazoa
+http_error_403.description: 'Sarrera mugatua'
+http_error_403.suggestion: "\nOrrialde hau ikusteko baimen nahikorik ez duzu.\n"
+http_error_404.description: 'Ez dugu bilatzen duzun orrialdea aurkitu!'
+http_error_404.suggestion: "\nEz dugu bilatzen duzuna aurkitzen.\nOrrialde nagusira itzuli eta berriro saiatu, mesedez.\n"
+stacktrace: 'Arazoak hemen du jatorria'

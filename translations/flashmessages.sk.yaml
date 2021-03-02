@@ -1,0 +1,13 @@
+action.delete.error: 'Záznam sa nepodarilo odstrániť: %reason%'
+action.delete.success: 'Položka bola úspešne vymazaná'
+action.update.error: 'Zmeny sa nepodarilo uložiť: %reason%'
+action.update.success: 'Uloženie prebehlo úpešne'
+action.upload.error: 'Súbor nebolo možné nahrať alebo uložiť: %reason%'
+invoice.first_template: 'Pred pokračovaním musíte vytvoriť svoju prvú faktúru so šablónou'
+timesheet.locked.warning: 'Upravujete exportovaný záznam'
+timesheet.start.error: 'Nahrávanie času nebolo možné spustiť: %reason%'
+timesheet.start.exceeded_limit: 'Dosiahla sa hranica záznamov aktívneho času, najskôr zastavte aspoň jedno meranie času.'
+timesheet.start.success: 'Začalo sa nahrávanie času'
+timesheet.stop.error: 'Nahrávanie času nebolo možné zastaviť: %reason%'
+timesheet.stop.success: 'Nahrávanie času zastavené'
+warning: Upozornenie

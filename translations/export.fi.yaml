@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'Jäljellä olevalla budjetilla'
+default-internal.pdf.twig: 'Sisäisillä hinnoilla'
+default.pdf.twig: Standardi

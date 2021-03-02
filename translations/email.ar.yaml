@@ -1,0 +1,10 @@
+automated_email_dont_answer: 'هذا بريد آلي. رجاء لاترد، بريدك لن يقرء.'
+button_copy_url_to_browser: __button_copy_url_to_browser
+registration.button: 'فعل حسابك'
+registration.intro: __registration.intro
+registration.subject: 'فعل حسابك'
+registration.title: 'مرحبا %username%'
+reset.button: __reset.button
+reset.intro: __reset.intro
+reset.subject: __reset.subject
+reset.title: __reset.title

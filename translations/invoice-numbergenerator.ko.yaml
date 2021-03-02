@@ -1,0 +1,3 @@
+date: 날짜
+default: 'Configured format'
+label.invoice_number_generator: 인보이스번호-생성기

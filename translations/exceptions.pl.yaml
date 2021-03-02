@@ -1,0 +1,9 @@
+access.denied: 'Dostęp zabroniony'
+http_error.description: 'Coś poszło nie tak'
+http_error.suggestion: "\nWystapił bład krytyczny , porsze spróbuj ponownie.\nJeżeli znalazłeś błąd w oprogramowaniu, proszę skontaktuj sie z administratorem gdy bład się powtórzy.\n"
+http_error.title: Bład
+http_error_403.description: 'Strona jest zastrzeżona'
+http_error_403.suggestion: "\nPrzepraszmy ale nie masz wystarczających uprawnień aby oglądać tą stronę.\nProszę zwrócić się do administratora jezeli sądzisz że powinieneś miec takie uprawnienia.\n"
+http_error_404.description: 'Strona nnie znaleziona'
+http_error_404.suggestion: "\nNie mogliśmy odnależć strony której szukałeś.\nProszę powrócić do swojego pulpitu i spróbować jeszcze raz.\n"
+stacktrace: 'Problem wystąpił tutaj'

@@ -1,0 +1,9 @@
+access.denied: 'Adgang nægtet'
+http_error.description: 'Noget gik galt'
+http_error.suggestion: "\nEn kritisk fejl opstod, prøv venligst igen.\nDu har muligvis fundet en softwarefejl, kontakt venligst din administrator hvis problemet fortsætter.\n"
+http_error.title: Fejl
+http_error_403.description: 'Siden er begrænset.'
+http_error_403.suggestion: "\nBeklager, men du har ikke tilladelse til at se denne side.\nKontakt din administrator hvis du mener, at dette er en fejl.\n"
+http_error_404.description: 'Side ikke fundet'
+http_error_404.suggestion: "\nVi kunne ikke finde siden du leder efter.\nGå venligst tilbage til dit dashboard og start forfra.\n"
+stacktrace: 'Problemet opstod her'

@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'Kun restanta buĝeto'
+default-internal.pdf.twig: 'With internal rates'
+default.pdf.twig: Kutima

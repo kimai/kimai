@@ -1,0 +1,8 @@
+activity: 'Aktivity - jedna položka na činnosť'
+date: 'Date: one entry per day (uses start date)'
+default: 'Default - jeden záznam v období'
+label.invoice_calculator: 'Výpočet fakturácie'
+project: 'Project: one entry per project'
+short: 'Počet hodín - súčet hodín, iba jeden záznam'
+user: 'Používateľ - jedna položka na používateľa'
+weekly: 'Weekly: one entry per week (uses start date)'

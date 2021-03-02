@@ -1,0 +1,267 @@
+'Allowed character: A-Z and _': 'Povolené znaky: A-Z a _'
+ROLE_ADMIN: Administrator
+ROLE_SUPER_ADMIN: System-Admin
+ROLE_TEAMLEAD: 'Vedenie tímu'
+ROLE_USER: User
+'This is a mandatory field': 'Povinný údaj'
+action.back: Späť
+action.close: Zavrieť
+action.delete: Vymazať
+action.edit: Upraviť
+action.reset: Resetovať
+action.save: Uložiť
+active.entries: 'Máte %count% aktívny záznam | Máte %count% aktívnych záznamov'
+admin_activity.short_stats: "\nMomentálne činnosť %activity% v projekte %project% pre zákazníka %customer%\nmá %records% časových záznamov, ktoré sa započítavajú do celkového počtu %duration%.\nTieto časové záznamy budú tiež vymazané!\nPrípadne môžete vybrať aktivitu, do ktorej sa prenesú všetky existujúce položky:\n"
+admin_activity.title: Činnosti
+admin_customer.short_stats: "\nV súčasnosti zákazník %customer% má %project% projektov s %activity% činnosti, ktoré sa počítajú\nv %records% časových záznamov do celkového počtu %duration%.\nTieto projekty, aktivity a časové záznamy budú tiež vymazané!\nPrípadne môžete vybrať zákazníka, ktorému sa prenesú všetky údaje:\n"
+admin_customer.title: Zákazník
+admin_entity.delete_confirm: 'Tieto údaje budú tiež odstránené! Prípadne môžete zvoliť záznam, do ktorého sa prenesú všetky údaje:'
+admin_invoice_template.title: 'Šablóna faktúry'
+admin_project.short_stats: "\nV súčasnosti projekt %project% pre zákazníka %customer% má %activities%\nčinnosti a %records% časových záznamov, ktoré sa započítavajú do celkového počtu %duration%.\nTieto aktivity a časové záznamy budú tiež vymazané!\nAlternatívne môžete vybrať projekt, do ktorého sa prenesú všetky existujúce aktivity a položky:\n"
+admin_project.title: Projekty
+admin_timesheet.title: 'Pracovné výkazy'
+admin_user.short_stats: 'Momentálny používateľ %user% má %records% časových záznamov, ktoré sa počítajú do celkového počtu %duration%.'
+admin_user.title: Používateľ
+agendaDay: Deň
+agendaWeek: Týždeň
+attachments: Prílohy
+both: Oba
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Náhľad
+button.preview_print: 'Náhľad tlače'
+button.print: Tlačiť
+button.xlsx: Excel
+calendar.title: Kalendár
+cancel: Zrušiť
+confirm: Potvrdiť
+confirm.delete: 'Naozaj chcete odstrániť?'
+create: Vytvoriť
+dashboard.all: 'Všetci používatelia'
+dashboard.subtitle: Vitajte!
+dashboard.title: Prehľad
+delete.not_in_use: 'Túto položku možno bezpečne odstrániť.'
+entryState.all: Všetko
+entryState.exported: Vymazané
+entryState.not_exported: Otvorené
+entryState.running: Aktívny
+entryState.stopped: Zastavený
+error.no_comments_found: 'Nebolí nájdené žiadne komentáre.'
+error.no_entries_found: 'Neboli nájdené žiadne položky.'
+export.clear_all: 'Označiť všetky zobrazené záznamy ako otvorené?'
+export.date_copyright: 'Vytvorené %date%'
+export.document_title: 'Prehľad výkonov'
+export.filter: 'Filtrovať dáta pre export'
+export.full_list: 'Úplný zoznam'
+export.mark_all: 'Označiť všetky zobrazené záznamy ako exportované?'
+export.page_of: 'Stránka %page% z %pages%'
+export.period: Perióda
+export.subtitle: 'Exportujte údaje časového záznamu do rôznych formátov'
+export.summary: Zhrnutie
+export.title: Export
+help.batch_meta_fields: 'Polia, ktoré sa majú aktualizovať, je potrebné najskôr aktivovať kliknutím na príslušné začiarkavacie políčko.'
+help.fixedRate: 'Každý časový záznam dostane rovnakú hodnotu bez ohľadu na jeho trvanie'
+help.rate: 'Bude účtovaná hodinová sadzba'
+help.rate_internal: 'Interné náklady (ak nie je uvedené, použije sa bežná sadzba)'
+invoice.due_days: 'Lehota splatnosti'
+invoice.filter: 'Filtrovať dáta faktúr'
+invoice.from: Od
+invoice.number: 'Číslo faktúry'
+invoice.service_date: 'Dátum dodania'
+invoice.signature_customer: 'Potvrdenie: Dátum / Meno Zákazníka / Podpis'
+invoice.signature_user: 'Potvrdenie: Dátum / Meno Konzultanta / Podpis'
+invoice.subtotal: Medzisúčet
+invoice.tax: Daň
+invoice.title: Faktúry
+invoice.to: Do
+invoice.total: Súčet
+invoice.total_working_time: 'Celkové trvanie'
+invoice_print: Faktúra
+label.actions: Činnosti
+label.active: Aktívny
+label.activity: Činnosti
+label.address: Adresa
+label.alias: Meno
+label.amount: Množstvo
+label.api_token: 'API heslo'
+label.api_token_repeat: 'Zopakujte API heslo'
+label.appendTags: 'Pridať značky'
+label.avatar: 'Profilový obrázok'
+label.batch_meta_fields: 'Ďalšie polia'
+label.begin: Od
+label.billable: Zúčtovateľný
+label.budget: Rozpočet
+label.calendar.initial_view: 'Počiatočné zobrazenie kalendára'
+label.color: Farba
+label.comment: Poznámka
+label.company: 'Meno spoločnosti'
+label.contact: Kontakt
+label.country: Štát
+label.create_more: 'Vytvoriť ďalšie'
+label.currency: Mena
+label.customer: Zákazník
+label.date: Dátum
+label.daterange: Rozpätie
+label.decimalDuration: 'Zobraziť trvanie ako desatinné číslo'
+label.description: Popis
+label.due_days: 'Platobná lehota v dňoch'
+label.duration: Trvanie
+label.email: Email
+label.end: Do
+label.endtime: Koniec
+label.entryState: Záznamy
+label.exported: Započítané
+label.fax: Fax
+label.fixedRate: 'Pevne stanovená sadzba'
+label.globalsOnly: 'Iba globálne'
+label.homepage: 'Web stránka'
+label.hourlyRate: 'Hodinová sadzba'
+label.hourly_rate: 'Hodinová sadzba'
+label.hours: Hodiny
+label.id: ID
+label.invoice_bank_account: 'Bankový účet'
+label.invoice_tax_number: 'DPH:'
+label.language: Jazyk
+label.lastLogin: 'Posledné prihlásenie'
+label.login.initial_view: 'Počiatočné zobrazenie po prihlásení'
+label.logout: 'Odhlásiť sa'
+label.mark_as_exported: 'Označiť ako exportované'
+label.mobile: Mobil
+label.my_team_projects: 'Moje tímové & projekty'
+label.my_teams: 'Moje tímy'
+label.name: Meno
+label.number: Účet
+label.orderDate: 'Dátum objednávky'
+label.orderNumber: 'Číslo objednávky'
+label.pageSize: 'Veľkosť stránky'
+label.password: Heslo
+label.password_repeat: 'Zopakujte heslo'
+label.payment_terms: 'Platobné podmienky'
+label.phone: Telefón
+label.plus_more: '+%count% viac'
+label.progress: 'Stav postupu'
+label.project: Projekt
+label.project_end: 'Koniec projektu'
+label.project_start: 'Začiatok projektu'
+label.rate: Sadzba
+label.rate_internal: __label.rate_internal
+label.recalculate_rates: 'Prepočítať sadzby'
+label.replaceTags: 'Zmeniť značky'
+label.required_version: 'Potrebná verzia'
+label.roles: Rola
+label.skin: 'Farebná téma'
+label.starttime: Začiatok
+label.status: Stav
+label.tag: Značka
+label.tags: Značky
+label.team: Tím
+label.teamlead: Teamleader
+label.template: Šablóna
+label.theme.collapsed_sidebar: 'Minimalizovať bočný panel'
+label.theme.layout: 'Displej: rozloženie'
+label.timeBudget: 'Časový rozpočet'
+label.timesheet.daily_stats: 'Zobraziť denné štatistiky v prehľade'
+label.timesheet.export_decimal: 'Use decimal duration in export'
+label.timezone: 'Časové pásmo'
+label.title: Titul
+label.toggle_dropdown: 'Zobraziť menu'
+label.total_rate: 'Celková cena'
+label.unit_price: 'Jednotková cena'
+label.user: Používateľ
+label.user_profile: 'Môj profil'
+label.username: 'Prihlasovacie meno'
+label.vat: DIČ
+label.vat_id: 'IČ DPH'
+label.version: Verzia
+label.visible: Viditeľný
+login_required: 'Nedostatočné oprávnenia. Presmerovať na prihlásenie?'
+menu.admin: Administrácia
+menu.admin_activity: Činnosti
+menu.admin_customer: Zákazníci
+menu.admin_project: Projekty
+menu.admin_team: Tímy
+menu.admin_timesheet: 'Pracovné výkazy'
+menu.admin_user: Používateľ
+menu.doctor: Sys-Doktor
+menu.export: Export
+menu.homepage: Prehľad
+menu.invoice: Faktúry
+menu.logout: 'Odhlásiť sa'
+menu.plugin: Doplnky
+menu.reporting: Ohlasovanie
+menu.system: Systém
+menu.system_configuration: Nastavenia
+menu.tags: Značky
+menu.timesheet: 'Moje časy'
+modal.columns.description: 'Po uložení budú nezaškrtnuté stĺpce skryté a toto nastavenie bude uložené v súbore cookie prehliadača.'
+modal.columns.title: 'Zmeniť zobrazenie stĺpca'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Mesiac
+more.info.link: 'Viac informácií'
+my.profile: 'Môj profil'
+'no': Nie
+placeholder.type_message: 'Napíšte vašu správu...'
+profile.about_me: 'O mne'
+profile.api-token: API
+profile.first_entry: 'Pracuje u nás od'
+profile.password: Heslo
+profile.preferences: Preferencie
+profile.registration_date: 'Registrovaný na'
+profile.roles: Role
+profile.settings: Profil
+profile.teams: Tímy
+profile.title: 'Užívateľský profil'
+rates.empty: 'Zatiaľ neboli nakonfigurované žiadne poplatky.'
+rates.title: Poplatky
+recent.activities: "\nReštartujte poslednú zaznamenanú aktivitu | Reštartujte jednu z vašich %count% posledných aktivít\n"
+recent.activities.format: '%activity% v %project% pre %customer%'
+search: Hľadať
+stats.activeRecordings: 'Aktívne záznamy'
+stats.activityTotal: 'Počet aktivít'
+stats.amountMonth: 'Príjmy tento mesiac'
+stats.amountToday: 'Príjmy dnes'
+stats.amountTotal: 'Celkové príjmy'
+stats.amountWeek: 'Príjmy tento týždeň'
+stats.amountYear: 'Príjmy tento rok'
+stats.customerTotal: 'Počet zákazníkov'
+stats.durationMonth: 'Pracovný čas tento mesiac'
+stats.durationToday: 'Pracovný čas dnes'
+stats.durationTotal: 'Celkový pracovný čas'
+stats.durationWeek: 'Pracovný čas tento týždeň'
+stats.durationYear: 'Pracovný čas tento rok'
+stats.percentUsed: '%percent%% minutých'
+stats.percentUsedLeft: '%percent%% minutých (%left% zostáva)'
+stats.projectTotal: 'Počet projektov'
+stats.userActiveMonth: 'Aktívni používatelia mesiac'
+stats.userActiveToday: 'Aktívni používatelia dnes'
+stats.userActiveTotal: 'Aktívni používatelia'
+stats.userActiveWeek: 'Aktívni používatelia týždeň'
+stats.userActiveYear: 'Aktívni používatelia rok'
+stats.userTotal: 'Počet používateľov'
+stats.workingTimeMonth: __stats.workingTimeMonth
+stats.workingTimeToday: 'Dnes, %deň%'
+stats.workingTimeWeek: 'Kalendárny týždeň %week%'
+stats.workingTimeYear: 'Celý rok %year%'
+stats.yourWorkingHours: 'Moje pracovné hodiny'
+status.new: Nový
+status.paid: Platený
+status.pending: __status.pending
+sum.total: Súčet
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Sledovanie času'
+timesheet.all: 'Zobraziť všetky záznamy'
+timesheet.edit: 'Upraviť záznam'
+timesheet.start: 'Vytvoriť nový časový záznam'
+timesheet.title: 'Moje časy'
+update_multiple: '%action% %count% záznamov?'
+upload: Nahrať
+user_permissions.title: 'Pridelené oprávnenia'
+user_role.title: 'Rola užívateľa'
+'yes': Áno
+browser.title: 'Profect s.r.o. - Sledovanie času'
+confirm.delete_message: 'Vymazanie musíte potvrdiť, pretože sú prepojené objekty, ktoré budú tiež vymazané.'
+dashboard.admin: Administrátor
+admin_project.delete_confirm: "\nV súčasnosti projekt %project% pre zákazníka %customer% má %activities%\nčinnosti a %records% časových záznamov, ktoré sa započítavajú do celkového počtu %duration%.\nTieto aktivity a časové záznamy budú tiež vymazané!\nAlternatívne môžete vybrať projekt, do ktorého sa prenesú všetky existujúce aktivity a položky:\n"
+admin_customer.delete_confirm: "\nV súčasnosti zákazník %customer% má %project% projektov s %activity% činnosti, ktoré sa počítajú\nv %records% časových záznamov do celkového počtu %duration%.\nTieto projekty, aktivity a časové záznamy budú tiež vymazané!\nPrípadne môžete vybrať zákazníka, ktorému sa prenesú všetky údaje:\n"
+admin_user.delete_confirm: "\nMomentálny používateľ %user% má %records% časových záznamov, ktoré sa počítajú do celkového počtu %duration%.\nTieto časové záznamy budú tiež vymazané!\n"

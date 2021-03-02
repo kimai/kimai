@@ -1,0 +1,13 @@
+action.delete.error: 'L''entrée n''a pas pu être supprimée : %reason%'
+action.delete.success: 'L''entrée a été supprimée'
+action.update.error: 'Les modifications n''ont pas pu êtres enregistrées : %reason%'
+action.update.success: 'Modifications enregistrées'
+action.upload.error: 'Le fichier n''a pas pu être mis en ligne ou enregistré : %reason%'
+invoice.first_template: 'Vous devez créer votre premier modèle de facture avant de continuer'
+timesheet.locked.warning: 'Vous modifiez un enregistrement que vous avez exporté'
+timesheet.start.error: 'Le chronométrage ne peut pas être lancé'
+timesheet.start.exceeded_limit: 'La limite d''enregistrement du temps d''activité a été atteinte, veuillez arrêter au moins un enregistrement.'
+timesheet.start.success: 'Le chronométrage a commencé'
+timesheet.stop.error: 'Le chronomètre ne peut pas être arrêté'
+timesheet.stop.success: 'Le chronomètre a été arrêté'
+warning: Avertissement

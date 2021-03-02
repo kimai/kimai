@@ -1,0 +1,9 @@
+access.denied: 'Prístup odmietnutý'
+http_error.description: 'Vyskytla sa chyba'
+http_error.suggestion: "\nVyskytla sa neočakávaná chyba, skúste to znova.\nMožno ste našli chybu, preto v prípade problému kontaktujte správcu\nak to nenaskočí, keď ste to znova vyskúšali.\n"
+http_error.title: Chyba
+http_error_403.description: 'Táto stránka je obmedzená'
+http_error_403.suggestion: "\nJe nám ľúto, ale nemáte dostatočné povolenia na zobrazenie tejto stránky.\nAk si myslíte, že ide o chybu, obráťte sa na svojho správcu.\n"
+http_error_404.description: 'Stránka nenájdená'
+http_error_404.suggestion: "\nNenašli sme stránku, ktorú ste hľadali.\nMedzitým sa môžete vrátiť na dashboard a začať znova.\n"
+stacktrace: 'Vyskytol sa problém'

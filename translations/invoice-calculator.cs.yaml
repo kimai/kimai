@@ -1,0 +1,8 @@
+activity: 'Aktivity: jeden záznam na aktivitu'
+date: 'Datum: jeden záznam na den (používá počáteční datum)'
+default: 'Výchozí: jeden záznam na časový záznam'
+label.invoice_calculator: 'Výpočet hodnoty'
+project: 'Projekty: jeden záznam na projekt'
+short: 'Hodiny: součty záznamů, celkem jedna položka'
+user: 'Uživatel: jeden záznam na uživatele'
+weekly: 'Weekly: one entry per week (uses start date)'

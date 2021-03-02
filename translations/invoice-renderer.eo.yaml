@@ -1,0 +1,20 @@
+Docx: 'Microsoft Word (Docx)'
+Html: 'HTML (for printing via Browser)'
+Ods: 'Open Office (Spreadsheet)'
+Pdf: PDF
+Xls: 'Microsoft Excel (Xls)'
+Xlsx: 'Microsoft Excel (Xlsx)'
+company: 'Fakturo de kompanio'
+default: 'Fakturo (defaŭlte)'
+default-pdf: Invoice
+freelancer: 'Sendependa laboristo'
+help.upload: 'Atentu: ekzistantaj dosieroj estos anstataŭigitaj. Permesitaj tipoj de dosieroj estas: DOCX, ODS, XLSX.'
+javascript: JSON
+label.invoice_renderer: 'Faktura dokumento'
+open-spreadsheet: 'Calc kalkultabelilo'
+programmatic: 'For further processing'
+spreadsheet: Excel
+text: Text
+timesheet: Temposlipo
+xml: XML
+export: 'Eksporto de datumoj'

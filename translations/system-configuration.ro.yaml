@@ -1,0 +1,60 @@
+Ceil: 'Plafon: începutul, sfârșitul și durata vor fi rotunjite în sus'
+Closest: 'Cel mai apropiat: rotunjirea matematică la cea mai apropiată valoare'
+Default: 'Standard: începutul va fi rotunjit în jos, sfârșitul și durata vor fi rotunjite în sus'
+Floor: 'Nivel: începutul, sfârșitul și durata vor fi rotunjite în jos'
+Friday: Vineri
+Monday: Luni
+Saturday: Sâmbătă
+Sunday: Duminică
+Thursday: Joi
+Tuesday: Marți
+Wednesday: Miercuri
+branding: Branding
+calendar: Calendar
+first_weekday: 'Prima zi din săptămână'
+form_customer: 'Creaza valorile implicite pentru client'
+form_user: 'Valori implicite pentru utilizator'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Facturi
+label.calendar.businessHours.begin: 'Începutul programului normal de lucru (va fi evidențiat)'
+label.calendar.businessHours.end: 'Sfârșitul programului normal de lucru (va fi evidențiat)'
+label.calendar.slot_duration: 'Durata slotului pentru vizualizarea săptămânii și a zilei (format: hh:mm:ss)'
+label.calendar.visibleHours.begin: 'Începutul intervalului de timp vizibil'
+label.calendar.visibleHours.end: 'Sfârșitul intervalului de timp vizibil'
+label.calendar.week_numbers: 'Afiseaza numarul saptamanii'
+label.calendar.weekends: 'Afiseaza sfarsitul de saptamana'
+label.invoice.number_format: 'Formatul numărului facturii'
+label.simple_form: 'Căutare simplă'
+label.theme.autocomplete_chars: 'Numarul minim de litere pentru care incepe auto-completarea'
+label.theme.branding.company: Firma
+label.theme.branding.logo: 'Logo (URL-ul imaginii, înlocuiește compania în ecranul de conectare)'
+label.theme.branding.mini: 'Mini Logo (sidebar restrâns)'
+label.theme.branding.title: 'Titlu browser'
+label.theme.markdown_content: 'Permite formatarea marcajelor în descrieri și comentarii'
+label.theme.tags_create: 'Etichete: permite auto-completarea in campul de cautare si crearea etichetelor'
+label.timesheet.active_entries.hard_limit: 'Numarul permis de inregistrari care ruleaza simultan'
+label.timesheet.active_entries.soft_limit: 'Numarul inregistrarilor active simultan pentru care este afisat un avertisment'
+label.timesheet.default_begin: 'Ora de pornire implicită (nu este utilizată în toate modurile de cronometrare)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'Mod de contorizare a timpului'
+label.timesheet.mode_default: '[Default] permite editarea timpilor de pornire si de oprire'
+label.timesheet.mode_duration_fixed_begin: '[Duration] ora de pornire fixă este configurabilă. Doar durata poate fi modificată'
+label.timesheet.mode_duration_only: '[Duration] înlocuiește ora de sfârșit cu un câmp de intrare de durată'
+label.timesheet.mode_punch: '[Time-clock] utilizatorul poate porni și opri înregistrările, dar nu poate modifica orele sau durata'
+label.timesheet.rounding.default.begin: 'Rotunjirea timpului de pornire în minute (0 = dezactivat)'
+label.timesheet.rounding.default.days: 'Zilele săptămânii când se va aplica rotunjirea'
+label.timesheet.rounding.default.duration: 'Rotunjirea duratei în minute (0 = dezactivată)'
+label.timesheet.rounding.default.end: 'Rotunjirea timpului final în minute (0 = dezactivat)'
+label.timesheet.rounding.default.mode: 'Mod de rotunjire'
+label.timesheet.rules.allow_future_times: 'Permite inredistrarile de timp in viitor'
+label.timesheet.rules.allow_overlapping_records: 'Permite suprapunerea intrărilor de timp'
+label.timesheet.rules.lockdown_grace_period: 'Perioadă de blocare (Perioadă PHP relativă)'
+label.timesheet.rules.lockdown_period_end: 'Perioadă de blocare (Perioadă PHP relativă)'
+label.timesheet.rules.lockdown_period_start: 'Perioadă de blocare (Perioadă PHP relativă)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'Rotunjirea timpului'
+subtitle: 'Schimba configurarile globale ale sistemului de pontaj'
+theme: Tema
+timesheet: Pontaj
+title: Setari

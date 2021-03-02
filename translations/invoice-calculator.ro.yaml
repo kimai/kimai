@@ -1,0 +1,8 @@
+activity: 'Activitate: o intrare pentru fiecare activitate'
+date: 'Data: câte o intrare pe zi (se folosește data de pornire)'
+default: 'Implicit: o intrare pentru fiecare înregistrare'
+label.invoice_calculator: 'Calcularea sumelor'
+project: 'Proiect: o intrare pentru fiecare proiect'
+short: 'Ore: se adună înregistrările, o intrare în total'
+user: 'Utilizator: o intrare pentru fiecare utilizator'
+weekly: 'Weekly: one entry per week (uses start date)'

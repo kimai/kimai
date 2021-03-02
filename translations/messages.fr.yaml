@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Caractères autorisés : A-Z et _'
+ROLE_ADMIN: Administrateur
+ROLE_SUPER_ADMIN: 'Administrateur système'
+ROLE_TEAMLEAD: 'Chef d''équipe'
+ROLE_USER: Utilisateur
+'This is a mandatory field': Obligatoire
+action.back: Retour
+action.close: Fermer
+action.delete: Supprimer
+action.edit: Modifier
+action.reset: Réinitialiser
+action.save: Enregistrer
+active.entries: 'Vos releves de périodes d''activités'
+admin_activity.short_stats: "\nActuellement, l'activité %activity% du projet %project% pour le client %customer%\npossède %records% fiches de temps qui comptent pour un total de %duration%.\n"
+admin_activity.title: Activités
+admin_customer.short_stats: "\nActuellement le client %customer% est associé à %project% projets avec %activity% activités, \nqui regroupent %records% fiches de temps pour un total de %duration%.\n"
+admin_customer.title: Clients
+admin_entity.delete_confirm: 'Ces données seront également supprimées ! Vous pouvez toutefois sélectionner une entrée vers laquelle toutes les données seront transférées :'
+admin_invoice_template.title: 'Modèle de facture'
+admin_project.short_stats: "\nActuellement, le projet %project% pour le client %customer% comprend %activités% \net %enregistrements% de durées, pour un total de %duration%. \n"
+admin_project.title: Projets
+admin_timesheet.title: 'Fiches de temps'
+admin_user.short_stats: "\nActuellement l'usager %user% a %records% fiches de temps pour une durée totale de %duration%. \n"
+admin_user.title: Utilisateur
+agendaDay: Jour
+agendaWeek: Semaine
+attachments: Fichiers
+both: 'Les deux'
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Aperçu
+button.preview_print: 'Aperçu avant impression'
+button.print: Imprimer
+button.xlsx: Excel
+calendar.title: Calendrier
+cancel: Annuler
+confirm: Confirmer
+confirm.delete: 'Êtes-vous sûr de vouloir le supprimer ?'
+create: Créer
+dashboard.all: 'Tous les utilisateurs'
+dashboard.subtitle: 'Bienvenue !'
+dashboard.title: 'Tableau de bord'
+delete.not_in_use: 'Cette entrée peut être supprimée en toute sécurité.'
+entryState.all: Tout
+entryState.exported: Fermé
+entryState.not_exported: Ouvert
+entryState.running: Actif
+entryState.stopped: Arrêté
+error.no_comments_found: 'Aucun commentaire n''a été publié pour l''instant.'
+error.no_entries_found: 'Aucune entrée n''a été trouvée avec les filtres sélectionnés.'
+export.clear_all: 'Marquer tous les enregistrements affichés comme ouverts ?'
+export.date_copyright: 'Généré le %date% avec %kimai%'
+export.document_title: 'Export des fiches de temps'
+export.filter: 'Filtrer les données pour l''exportation'
+export.full_list: 'Liste complète'
+export.mark_all: 'Marquer tous les enregistrements affichés comme fermés ?'
+export.page_of: 'Page %page% sur %pages%'
+export.period: Periode
+export.subtitle: 'Exporter les fiches de temps en différents formats'
+export.summary: Résumé
+export.title: Export
+help.batch_meta_fields: 'Champs qui doivent d''abord être mis à jour en cliquant sur la case à cocher associée.'
+help.fixedRate: 'Chaque enregistrement a la même valeur, quelle que soit sa durée'
+help.rate: 'Taux horaire à appliquer'
+help.rate_internal: 'Coûts internes (si cela n’est pas spécifié, le taux normal est utilisé)'
+invoice.due_days: Échéance
+invoice.filter: 'Filtrer les données de facturation'
+invoice.from: De
+invoice.number: 'N° de facture'
+invoice.service_date: 'Date du service'
+invoice.signature_customer: 'Pour certification : Date / Nom du client / Signature'
+invoice.signature_user: 'Pour certification : Date / Nom du consultant / Signature'
+invoice.subtotal: 'Total HT'
+invoice.tax: Taxe
+invoice.title: Factures
+invoice.to: À
+invoice.total: 'Total TTC'
+invoice.total_working_time: 'Durée totale'
+invoice_print: Facture
+label.actions: Actions
+label.active: Actif
+label.activity: Activité
+label.address: Addresse
+label.alias: Nom
+label.amount: Quantité
+label.api_token: 'Mot de passe de l''API'
+label.api_token_repeat: 'Répéter le mot de passe de l''API'
+label.appendTags: 'Ajouter des mots-clés'
+label.avatar: 'Photo de profil'
+label.batch_meta_fields: 'Champs additionnels'
+label.begin: De
+label.billable: Facturable
+label.budget: Budget
+label.calendar.initial_view: 'Vue par défaut du calendrier'
+label.color: Couleur
+label.comment: Commentaire
+label.company: 'Nom de la société'
+label.contact: Contact
+label.country: Pays
+label.create_more: 'Créer des entrées supplémentaires'
+label.currency: Devise
+label.customer: Client
+label.date: Date
+label.daterange: 'Plage horaire'
+label.decimalDuration: 'Afficher la durée sous forme de nombre décimal'
+label.description: Description
+label.due_days: 'Délai de paiement en jours'
+label.duration: Durée
+label.email: Courriel
+label.end: À
+label.endtime: Fin
+label.entryState: Enregistrements
+label.exported: Exporté
+label.fax: Fax
+label.fixedRate: 'Taux fixe'
+label.globalsOnly: 'Uniquement global'
+label.homepage: 'Page d''accueil'
+label.hourlyRate: 'Taux horaire'
+label.hourly_rate: 'Taux horaire'
+label.hours: Heures
+label.id: Identifiant
+label.invoice_bank_account: 'Compte bancaire'
+label.invoice_tax_number: 'N° de TVA :'
+label.language: Langue
+label.lastLogin: 'Dernière connexion'
+label.login.initial_view: 'Vue par défaut après connexion'
+label.logout: 'Se déconnecter'
+label.mark_as_exported: 'Marquer comme exporté'
+label.mobile: Mobile
+label.my_team_projects: 'Projets d’équipe & budgets'
+label.my_teams: 'Mes équipes'
+label.name: Nom
+label.number: Compte
+label.orderDate: 'Date de commande'
+label.orderNumber: 'Numéro de commande'
+label.pageSize: 'Taille de la page'
+label.password: 'Mot de passe'
+label.password_repeat: 'Répéter le mot de passe'
+label.payment_terms: 'Modalités de paiement'
+label.phone: Téléphone
+label.plus_more: '+%count% de plus'
+label.progress: Progression
+label.project: Projet
+label.project_end: 'Fin du projet'
+label.project_start: 'Début du projet'
+label.rate: Taux
+label.rate_internal: 'Taux interne'
+label.recalculate_rates: 'Recalculer les taux'
+label.replaceTags: 'Remplacer les mots-clés'
+label.required_version: 'Compatible avec'
+label.roles: Rôle
+label.skin: 'Affichage : Couleurs'
+label.starttime: Début
+label.status: État
+label.tag: Mot-clé
+label.tags: Mots-clés
+label.team: Équipe
+label.teamlead: 'Chef d''équipe'
+label.template: Modèle
+label.theme.collapsed_sidebar: 'Réduire la barre latérale de gauche'
+label.theme.layout: 'Affichage : Disposition'
+label.timeBudget: 'Budget temps'
+label.timesheet.daily_stats: 'Voir les statistiques journalières dans la fiche des temps'
+label.timesheet.export_decimal: 'Utiliser la durée décimale à l’exportation'
+label.timezone: 'Fuseau horaire'
+label.title: Titre
+label.toggle_dropdown: 'Afficher le menu'
+label.total_rate: 'Prix total'
+label.unit_price: 'Prix unitaire'
+label.user: Utilisateur
+label.user_profile: 'Mon profil'
+label.username: Identifiant
+label.vat: TVA
+label.vat_id: 'ID de TVA'
+label.version: Version
+label.visible: Visible
+login_required: 'Autorisation manquante. Rediriger vers la connexion ?'
+menu.admin: Administration
+menu.admin_activity: Activités
+menu.admin_customer: Clients
+menu.admin_project: Projets
+menu.admin_team: Équipes
+menu.admin_timesheet: 'Fiches de temps'
+menu.admin_user: Utilisateurs
+menu.doctor: 'État des services'
+menu.export: Export
+menu.homepage: 'Tableau de bord'
+menu.invoice: Factures
+menu.logout: 'Se déconnecter'
+menu.plugin: Extensions
+menu.reporting: Rapports
+menu.system: Système
+menu.system_configuration: Paramètres
+menu.tags: Mots-clés
+menu.timesheet: 'Mes fiches de temps'
+modal.columns.description: 'Lors de l''enregistrement, les colonnes non cochées seront masquées. Ces paramètres seront stockés dans un cookie du navigateur. Si vous supprimez vos cookies, ils seront réinitialisés.'
+modal.columns.title: 'Modifier la visibilité des colonnes'
+modal.dirty: 'Le formulaire a été modifié. Veuillez cliquer sur « Enregistrer » pour enregistrer les modifications ou sur « Fermer ».'
+month: Mois
+more.info.link: 'Plus d''informations'
+my.profile: 'Mon profil'
+'no': Non
+placeholder.type_message: 'Tapez votre message…'
+profile.about_me: 'À propos de moi'
+profile.api-token: API
+profile.first_entry: 'Activités suivies depuis'
+profile.password: 'Mot de passe'
+profile.preferences: Préférences
+profile.registration_date: 'Inscrit à'
+profile.roles: Rôles
+profile.settings: Profil
+profile.teams: Équipes
+profile.title: 'Profil de l''utilisateur'
+rates.empty: 'Aucune taxe n''a été configuré pour le moment.'
+rates.title: Taxes
+recent.activities: 'Reprendre une de vos récentes activités'
+recent.activities.format: '%activity% dans %project% pour %customer%'
+search: Rechercher
+stats.activeRecordings: 'Enregistrements actifs'
+stats.activityTotal: Activités
+stats.amountMonth: 'Revenu du mois'
+stats.amountToday: 'Revenu du jour'
+stats.amountTotal: 'Revenu total'
+stats.amountWeek: 'Revenu de la semaine'
+stats.amountYear: 'Revenu de l''année'
+stats.customerTotal: Clients
+stats.durationMonth: 'Heures travaillées ce mois'
+stats.durationToday: 'Heures travaillées aujourd''hui'
+stats.durationTotal: 'Total des heures travaillées'
+stats.durationWeek: 'Heures travaillées cette semaine'
+stats.durationYear: 'Heures travaillées cette année'
+stats.percentUsed: '%percent%% utilisé'
+stats.percentUsedLeft: '%percent%% utilisé (%left% toujours disponible)'
+stats.projectTotal: Projets
+stats.userActiveMonth: 'Utilisateurs actifs ce mois'
+stats.userActiveToday: 'Utilisateurs actifs aujourd''hui'
+stats.userActiveTotal: 'Nombre total d''utilisateurs actifs'
+stats.userActiveWeek: 'Utilisateurs actifs cette semaine'
+stats.userActiveYear: 'Utilisateurs actifs cette année'
+stats.userTotal: Utilisateurs
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: 'Aujourd’hui, %day%'
+stats.workingTimeWeek: 'Semaine civile %week%'
+stats.workingTimeYear: 'Année complète %year%'
+stats.yourWorkingHours: 'Mes heures travaillées'
+status.new: Nouveau
+status.paid: Payé
+status.pending: 'En attente'
+sum.total: Total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Suivi du temps'
+timesheet.all: 'Voir tous les enregistrements'
+timesheet.edit: 'Modifier l''enregistrement'
+timesheet.start: 'Créer une nouvelle fiche de temps'
+timesheet.title: 'Mes fiches de temps'
+update_multiple: '%action% %count% entrées ?'
+upload: Téléverser
+user_permissions.title: 'Autorisations de l''utilisateur'
+user_role.title: 'Rôle de l''utilisateur'
+'yes': Oui

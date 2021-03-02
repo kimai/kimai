@@ -1,0 +1,9 @@
+access.denied: 拒绝访问
+http_error.description: 未知问题
+http_error.suggestion: "\n出现严重错误，请重试。可能出现软件问题，若无法解决，请联系管理员。 \n"
+http_error.title: 错误
+http_error_403.description: 页面受限
+http_error_403.suggestion: "抱歉您没有权限访问该页。如有疑问请联系管理员。 \n"
+http_error_404.description: 无法找到该页
+http_error_404.suggestion: "\n无法找到该页。请返回控制主页并重新开始。\n"
+stacktrace: 此处出现问题

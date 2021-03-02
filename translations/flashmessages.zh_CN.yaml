@@ -1,0 +1,13 @@
+action.delete.error: '无法删除条目: %reason%'
+action.delete.success: 条目已被删除
+action.update.error: '更改无法保存: %reason%'
+action.update.success: 保存更改
+action.upload.error: 'The file could not be uploaded or saved: %reason%'
+invoice.first_template: 您必须先创立一个自己的发票模板
+timesheet.locked.warning: 您正在编辑导出的记录
+timesheet.start.error: 时间记录无法开始
+timesheet.start.exceeded_limit: 活动时间记录已达到限制，请先停止至少一次运行时间测量
+timesheet.start.success: 时间记录开始
+timesheet.stop.error: 无法终止时间记录
+timesheet.stop.success: 时间记录终止
+warning: 警告

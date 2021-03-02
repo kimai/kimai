@@ -1,0 +1,8 @@
+activity: 'Aktivitet grupperad - en post per aktivitet'
+date: 'Datum grupperad - en post per dag (använder start datum)'
+default: 'Ingångsbaserad - en mätning per gång (standard)'
+label.invoice_calculator: 'Kalkylerad summa'
+project: 'Projekt grupperad - en post per projekt'
+short: 'Timmar summerade - endast en post'
+user: 'Användargrupp - En post per användare'
+weekly: 'Weekly: one entry per week (uses start date)'

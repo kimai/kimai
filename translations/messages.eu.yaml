@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Bahimentutako hizkia: A-Z eta _'
+ROLE_ADMIN: Administratzailea
+ROLE_SUPER_ADMIN: 'Sistema Administratzailea'
+ROLE_TEAMLEAD: 'Talde Burua'
+ROLE_USER: Erabiltzailea
+'This is a mandatory field': Beharrezkoa!
+action.back: Atzera
+action.close: Itxi
+action.delete: Ezabatu
+action.edit: Editatu
+action.reset: Berrezarri
+action.save: Gorde
+active.entries: 'Zure denbora aktiboaren kalkuluak'
+admin_activity.short_stats: "\n%customer% bezeroarentzako %project% proiektuak\n%records% sarrera ditu, guztizko %duration% iraupenarekin.\n"
+admin_activity.title: Jarduerak
+admin_customer.short_stats: "\n%customer% bezeroak %project% proiektu ditu %activity% jardurerarekin, %records% sarrera, %duration%-ko guztizko luzerarekin.\nDen-dena ezabatzear zaude!\n"
+admin_customer.title: Bezeroak
+admin_entity.delete_confirm: "\nKontuz! Datuak ezabatzear zaude.\nEzabatu beharrean, beste nonbait gorde nahi?\n"
+admin_invoice_template.title: 'Faktura eredua'
+admin_project.short_stats: "\n%customer% bezeroarentzako %project% proiektuak, %activities% jarduera eta\n%records% sarrera ditu, guztizko %duration% iraupenarekin.\n"
+admin_project.title: Proiektuak
+admin_timesheet.title: 'Ordu taula'
+admin_user.short_stats: "\n%user% erabiltzailea %records% sarrera ditu, guztizko %duration% iraupenarekin.\n"
+admin_user.title: Erabiltzailea
+agendaDay: Eguna
+agendaWeek: Astea
+attachments: Atxikipenak
+both: Biak
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Aurrebista
+button.preview_print: 'Print preview'
+button.print: Inprimatu
+button.xlsx: Excel
+calendar.title: Egutegia
+cancel: Ezeztatu
+confirm: Baieztatu
+confirm.delete: 'Ziur ezabatu nahi duzula?'
+create: Sortu
+dashboard.all: 'Erabiltzaile guztiak'
+dashboard.subtitle: 'Ongi etorri!'
+dashboard.title: 'Orri nagusia'
+delete.not_in_use: 'Erabilera gabeko elementua. Ezabatu?'
+entryState.all: Denak
+entryState.exported: Prozesaua
+entryState.not_exported: Irekia
+entryState.running: Aktiboak
+entryState.stopped: Geldituak
+error.no_comments_found: 'Ez dago iruzkinik'
+error.no_entries_found: 'Ez da emaitzarik aurkitu (aukeratutako filtroekin)'
+export.clear_all: 'Ageriko sarrera guztiak irekitzat eman?'
+export.date_copyright: '%date%-n sortua %kimai%-ren bitartez'
+export.document_title: 'Gastu zerrenda'
+export.filter: 'Exportatzeko datuak filtratu'
+export.full_list: 'Zerrenda osoa'
+export.mark_all: 'Ageriko sarrera guztiak prozesatutzat eman?'
+export.page_of: '%pages%-tik %page%. orrialdea '
+export.period: Garaia
+export.subtitle: 'Ordu taulak hainbat formatutan exportatu'
+export.summary: Laburpena
+export.title: Exportar
+help.batch_meta_fields: 'Fields that are to be updated must first be activated by clicking on the associated checkbox.'
+help.fixedRate: 'Each time record gets the same value, regardless of its duration'
+help.rate: 'Hourly rate to be charged'
+help.rate_internal: 'Internal costs (if this is not specified, the normal rate is used)'
+invoice.due_days: 'Epe bukaera data'
+invoice.filter: 'Faktura datuak filtratu'
+invoice.from: Nork
+invoice.number: 'Faktura zenbakia'
+invoice.service_date: 'Zerbitzu data'
+invoice.signature_customer: 'Baieztapena: Data / Bezeroaren Izena / Sinadura'
+invoice.signature_user: 'Baieztapena: Data / Ornitzailearen Izena / Sinadura'
+invoice.subtotal: 'Azpi Totala'
+invoice.tax: Zerga
+invoice.title: Fakturak
+invoice.to: Nori
+invoice.total: GUZTIRA
+invoice.total_working_time: 'Guztizko Iraupena'
+invoice_print: Faktura
+label.actions: Ekintzak
+label.active: Actibo
+label.activity: Jarduera
+label.address: Helbidea
+label.alias: Izena
+label.amount: Kopurua
+label.api_token: 'API pasahitza'
+label.api_token_repeat: 'API pasahitza errepikatu'
+label.appendTags: 'Append tags'
+label.avatar: 'Profil irudia'
+label.batch_meta_fields: 'Additional fields'
+label.begin: Hasi
+label.billable: Billable
+label.budget: Aurrekontua
+label.calendar.initial_view: 'Egutegiaren hasierako bista'
+label.color: Kolorea
+label.comment: Iruzkina
+label.company: Enpresa
+label.contact: Kontaktua
+label.country: Herrialdea
+label.create_more: 'Gehiago sortu'
+label.currency: Txanpoia
+label.customer: Bezeroa
+label.date: Data
+label.daterange: 'Denbora tartea'
+label.decimalDuration: 'Display duration as decimal number'
+label.description: Deskribapena
+label.due_days: 'Epea egunetan'
+label.duration: Iraupena
+label.email: Emaila
+label.end: Bukatu
+label.endtime: 'Bukaera denbora'
+label.entryState: Sarrerak
+label.exported: Exportatua
+label.fax: Fax-a
+label.fixedRate: 'Tarifa finkoa'
+label.globalsOnly: 'Globalak soilik'
+label.homepage: 'Web Orrialdea'
+label.hourlyRate: 'Orduko tarifa'
+label.hourly_rate: 'Orduko tarifa'
+label.hours: Orduak
+label.id: ID
+label.invoice_bank_account: 'Kontu Korronte Zenbakia'
+label.invoice_tax_number: 'CIF/NIF.:'
+label.language: Hizkuntza
+label.lastLogin: 'Last login'
+label.login.initial_view: 'Sarrerako bista'
+label.logout: Irten
+label.mark_as_exported: 'Exportatutzat markatu'
+label.mobile: Mugikorra
+label.my_team_projects: 'Proiektuak eta aurrekontuak'
+label.my_teams: 'Nire lan taldeak'
+label.name: Izena
+label.number: Kontua
+label.orderDate: 'Agindu data'
+label.orderNumber: 'Agindu zenbakia'
+label.pageSize: 'Orrialde tamaina'
+label.password: Pasahitza
+label.password_repeat: 'Pasahitza errepikatu'
+label.payment_terms: 'Ordainketa Baldintzak'
+label.phone: Telefonoa
+label.plus_more: '+%count% gehiago'
+label.progress: Egoera
+label.project: Proiektua
+label.project_end: 'Proiektu bukaera'
+label.project_start: 'Proiektu hasiera'
+label.rate: Tarifa
+label.rate_internal: __label.rate_internal
+label.recalculate_rates: 'Recalculate rates'
+label.replaceTags: 'Replace tags'
+label.required_version: 'Ondorengoekin bateragarria'
+label.roles: Rola
+label.skin: Kimai-gaia
+label.starttime: 'Hasiera denbora'
+label.status: Status
+label.tag: Etiketak
+label.tags: Etiketak
+label.team: Taldea
+label.teamlead: 'Talde Leaderra'
+label.template: Eredua
+label.theme.collapsed_sidebar: 'Ezkerraldeko gunea txikitu'
+label.theme.layout: 'Display: layout'
+label.timeBudget: Ordu-poltsa
+label.timesheet.daily_stats: 'Eguneroko estatistikak erakutsi ordu taulan'
+label.timesheet.export_decimal: 'Use decimal duration in export'
+label.timezone: 'Ordu zona'
+label.title: Tituloa
+label.toggle_dropdown: 'Menua erakutsi'
+label.total_rate: 'Erabilitako Tarifa'
+label.unit_price: 'Unitateko Prezioa'
+label.user: Erabiltzailea
+label.user_profile: 'Nire kontua'
+label.username: 'Erabiltzaile izena'
+label.vat: Zerga
+label.vat_id: 'Zerga ID-a'
+label.version: Bertsioa
+label.visible: Agerikoa
+login_required: 'Jarraitzeko baimen nahikorik ez. Saioa (ber)hasi behar duzu.'
+menu.admin: Admin
+menu.admin_activity: Jarduerak
+menu.admin_customer: Bezeroak
+menu.admin_project: Proiektuak
+menu.admin_team: 'Lan Taldeak'
+menu.admin_timesheet: 'Ordu taula'
+menu.admin_user: Erabiltzaileak
+menu.doctor: Medikua
+menu.export: Exportatu
+menu.homepage: 'Orrialde nagusia'
+menu.invoice: Fakturak
+menu.logout: 'Saioa bukatu'
+menu.plugin: Pluginak
+menu.reporting: Reporting
+menu.system: Sistema
+menu.system_configuration: Konfigurazioa
+menu.tags: Etiketak
+menu.timesheet: 'Nire orduak'
+modal.columns.description: 'Aukeratu gabeko zutabeak izkutatuko dira'
+modal.columns.title: 'Zutabe bista aldatu'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Hilabetea
+more.info.link: 'Gehigo ikusi...'
+my.profile: 'Nire kontua'
+'no': Ez
+placeholder.type_message: __placeholder.type_message
+profile.about_me: 'Niri buruz'
+profile.api-token: API
+profile.first_entry: 'Honez gero aktibo'
+profile.password: Pasahitza
+profile.preferences: Hobespenak
+profile.registration_date: __profile.registration_date
+profile.roles: Rolak
+profile.settings: Aukerak
+profile.teams: Taldeak
+profile.title: Profila
+rates.empty: __rates.empty
+rates.title: __rates.title
+recent.activities: 'Aurrejo jarduera bati berrekin'
+recent.activities.format: '%activity% jarduera %project% proiektuan %customer% bezeroarentzako'
+search: Bilatu
+stats.activeRecordings: 'Sarrera aktiboak'
+stats.activityTotal: 'Jarduerak GUZTIRA'
+stats.amountMonth: 'Hilabeteko diru sarrera'
+stats.amountToday: 'Gaurko diru sarrea'
+stats.amountTotal: 'Diru sarrera GUZTIRA'
+stats.amountWeek: 'Asteko diru sarrera'
+stats.amountYear: 'Urteko diru sarrera'
+stats.customerTotal: 'Bezeroak GUZTIRA'
+stats.durationMonth: 'Hilabeteko lan orduak'
+stats.durationToday: 'Gaurko lan orduak'
+stats.durationTotal: 'Lan orduak GUZTIRA'
+stats.durationWeek: 'Asteko lan orduak'
+stats.durationYear: 'Urteko lan orduak'
+stats.percentUsed: '%%percent% erabilia'
+stats.percentUsedLeft: '%%percent% erabilia (%%left% faltan)'
+stats.projectTotal: 'Proiektuak GUZTIRA'
+stats.userActiveMonth: 'Erabiltzaile aktiboak hilabete hontan'
+stats.userActiveToday: 'Erabiltzaile aktiboak gaur'
+stats.userActiveTotal: 'Erabiltzaile aktiboak GUZTIRA'
+stats.userActiveWeek: 'Erabiltzaile aktiboak aste hontan'
+stats.userActiveYear: 'Erabiltzaile aktiboak urte hontan'
+stats.userTotal: 'Erabiltzaileak GUZTIRA'
+stats.workingTimeMonth: __stats.workingTimeMonth
+stats.workingTimeToday: __stats.workingTimeToday
+stats.workingTimeWeek: __stats.workingTimeWeek
+stats.workingTimeYear: __stats.workingTimeYear
+stats.yourWorkingHours: 'Zure lan orduak'
+status.new: __status.new
+status.paid: __status.paid
+status.pending: __status.pending
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Denbora jarraipena'
+timesheet.all: 'Sarrera guztiak ikusi'
+timesheet.edit: Aldatu
+timesheet.start: 'Sarrera berria sortu'
+timesheet.title: 'Nire orduak'
+update_multiple: '%action% %count% sarrera?'
+upload: __upload
+user_permissions.title: 'Erabiltzaile bahimenak'
+user_role.title: 'Erabiltzaile rola'
+'yes': Bai

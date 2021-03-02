@@ -1,0 +1,3 @@
+date: Дата
+default: 'Configured format'
+label.invoice_number_generator: 'Генератор номеров счета'

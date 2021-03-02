@@ -1,0 +1,13 @@
+action.delete.error: 'A entrada não pode ser excluída: %reason%'
+action.delete.success: 'A entrada foi excluída com sucesso'
+action.update.error: 'As alterações não puderam ser salvas: %reason%'
+action.update.success: 'Alterações salvas com sucesso'
+action.upload.error: 'O arquivo não pôde ser carregado ou salvo: %reason%'
+invoice.first_template: 'Você precisa criar sua primeira fatura modelo antes de prosseguir'
+timesheet.locked.warning: 'Você está editando um registro exportado'
+timesheet.start.error: 'A gravação de tempo não pôde ser iniciada'
+timesheet.start.exceeded_limit: 'O limite de registros de tempo ativos foi atingido, por favor, pare pelo menos uma medição de tempo de execução primeiro.'
+timesheet.start.success: 'A gravação de tempo foi iniciada'
+timesheet.stop.error: 'A gravação de tempo não pôde ser interrompida'
+timesheet.stop.success: 'A gravação de tempo foi interrompida'
+warning: Aviso

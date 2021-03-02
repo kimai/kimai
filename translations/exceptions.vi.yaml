@@ -1,0 +1,9 @@
+access.denied: 'Truy cập đã bị từ chối'
+http_error.description: 'Có cái gì đó không đúng'
+http_error.suggestion: "\nXảy ra lỗi nghiêm trọng, vui lòng thử lại.\nBạn có thể đã tìm thấy sự cố phần mềm, vui lòng liên hệ với quản trị viên của bạn nếu sự cố vẫn còn.\n"
+http_error.title: Lỗi
+http_error_403.description: 'Trang bị hạn chế'
+http_error_403.suggestion: "\nXin lỗi, nhưng bạn không có đủ quyền để xem trang này.\n\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_Vui lòng nói chuyện với quản trị viên của bạn nếu bạn nghĩ rằng đây là một lỗi.\n"
+http_error_404.description: 'Không tìm thấy trang'
+http_error_404.suggestion: "\nChúng tôi không thể tìm thấy trang bạn đang tìm kiếm.\nVui lòng quay lại bảng điều khiển của bạn và bắt đầu lại.\n"
+stacktrace: 'Vấn đề xảy ra ở đây'

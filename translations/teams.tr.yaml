@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'Takım izinleri proje ve/veya müşteri için ayarlandığından etkinlik sınırlı erişime sahip.'
+team.create_default: 'Erişimi sınırlandırmak için yeni bir takım oluştur'
+team.project_visibility_inherited: 'Takım izinleri müşteri için ayarlandığından proje sınırlı erişime sahip.'
+team.visibility_global: 'Henüz bir takım atanmadığından herkes tarafından görülebilir.'
+team.visibility_restricted: 'Yalnızca aşağıdaki takımlar ve tüm yöneticiler tarafından görülebilir.'
+teams.customer_access: 'Müşterilere erişim ver'
+teams.project_access: 'Projelere erişim ver'
+teams.title: Takımlar

@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'עם תקציב נותר'
+default-internal.pdf.twig: 'עם תעריפים פנימיים'
+default.pdf.twig: סטנדרטי

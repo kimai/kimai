@@ -1,0 +1,60 @@
+Ceil: 'Ceil: início, fim e duração serão arredondados'
+Closest: 'Mais próximo: arredondamento matemático ao valor mais próximo'
+Default: 'Padrão: o início será arredondado para baixo, fim e duração para cima'
+Floor: 'Piso: início, fim e duração serão arredondados para baixo'
+Friday: Sexta
+Monday: Segunda
+Saturday: Sábado
+Sunday: Domingo
+Thursday: Quinta
+Tuesday: Terça
+Wednesday: Quarta
+branding: Marca
+calendar: Calendário
+first_weekday: 'Primeiro dia da semana'
+form_customer: 'Criar cliente - Valores padrões'
+form_user: 'Usuário - Valores padrões'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Faturas
+label.calendar.businessHours.begin: 'Início do horário comercial normal (será destacado)'
+label.calendar.businessHours.end: 'Fim do horário comercial normal (será destacado)'
+label.calendar.slot_duration: 'Duração do slot para a exibição da semana e do dia (formato: hh:mm:ss)'
+label.calendar.visibleHours.begin: 'Início do intervalo de tempo visível'
+label.calendar.visibleHours.end: 'Fim do intervalo de tempo visível'
+label.calendar.week_numbers: 'Mostrar números de semanas'
+label.calendar.weekends: 'Mostrar fins de semana'
+label.invoice.number_format: 'Formato de número de fatura'
+label.simple_form: 'Pesquisa simples'
+label.theme.autocomplete_chars: 'Número mínimo de letras para iniciar a conclusão automática'
+label.theme.branding.company: Empresa
+label.theme.branding.logo: 'Logotipo (URL de imagem, substitui a empresa na tela de login)'
+label.theme.branding.mini: 'Mini Logotipo (barra lateral colapsada)'
+label.theme.branding.title: 'Título do navegador'
+label.theme.markdown_content: 'Permitir tags no formato markdown em descrições e comentários'
+label.theme.tags_create: 'Tags: use pesquisa completa automática e permita a criação de tags'
+label.timesheet.active_entries.hard_limit: 'Número permitido de entradas de tempo de execução simultâneas'
+label.timesheet.active_entries.soft_limit: 'Número de entradas de tempo de execução a partir das quais um aviso é exibido'
+label.timesheet.default_begin: 'Tempo de partida padrão (não usado em todos os modos de rastreamento de tempo)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'Modo de rastreamento de tempo'
+label.timesheet.mode_default: '[Default] horários de início e fim podem ser editados'
+label.timesheet.mode_duration_fixed_begin: '[Duration] Tempo de início fixo configurável, somente a duração pode ser mudada'
+label.timesheet.mode_duration_only: '[Duration] substituir o horário final por um campo de entrada de duração'
+label.timesheet.mode_punch: '[Time-clock] usuário pode iniciar e parar registros, mas não editar os tempos ou duração'
+label.timesheet.rounding.default.begin: 'Arredondamento do tempo de início em minutos (0 = desativado)'
+label.timesheet.rounding.default.days: 'Dias da semana em que o arredondamento será aplicado'
+label.timesheet.rounding.default.duration: 'Arredondamento da duração em minutos (0 = desativado)'
+label.timesheet.rounding.default.end: 'Arredondamento do tempo final em minutos (0 = desativado)'
+label.timesheet.rounding.default.mode: 'Modo de arredondamento'
+label.timesheet.rules.allow_future_times: 'Permitir entradas de tempo no futuro'
+label.timesheet.rules.allow_overlapping_records: 'Permitir entradas de tempo sobrepostas'
+label.timesheet.rules.lockdown_grace_period: 'Fim do período de carência de bloqueio (data relativa PHP ao fim do período de bloqueio)'
+label.timesheet.rules.lockdown_period_end: 'Fim do período de bloqueio (data relativa PHP até agora)'
+label.timesheet.rules.lockdown_period_start: 'Início do período de bloqueio (data relativa PHP até agora)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'Arredondamento do tempo'
+subtitle: 'Alterar as configurações globais do seu rastreador de tempo'
+theme: Tema
+timesheet: Horário
+title: Configurações

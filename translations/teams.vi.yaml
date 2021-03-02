@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'The activity has limited access, because team permissions are set for the project and/or customer.'
+team.create_default: 'Tạo một nhóm mới để giới hạn quyền truy cập'
+team.project_visibility_inherited: 'Dự án có quyền truy cập hạn chế, vì quyền của nhóm được đặt cho khách hàng.'
+team.visibility_global: 'Hiển thị cho mọi người, vì chưa có nhóm nào được chỉ định.'
+team.visibility_restricted: 'Chỉ hiển thị cho các nhóm sau và tất cả quản trị viên.'
+teams.customer_access: 'Cấp quyền truy cập vào khách hàng'
+teams.project_access: 'Cấp quyền truy cập vào các dự án'
+teams.title: Nhóm

@@ -1,0 +1,9 @@
+access.denied: 'Access was denied'
+http_error.description: 'Something is wrong'
+http_error.suggestion: "\nA critical error occurred, please try again.\nYou may have found a software problem, please contact your administrator if the problem persists.\n"
+http_error.title: __http_error.title
+http_error_403.description: 'Page is restricted'
+http_error_403.suggestion: __http_error_403.suggestion
+http_error_404.description: 'Page not found'
+http_error_404.suggestion: "\nWe could not find the page you were looking for.\nPlease return to your dashboard and start over.\n"
+stacktrace: 'The problem occured here'

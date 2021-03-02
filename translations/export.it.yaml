@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'Con il budget rimasto'
+default-internal.pdf.twig: 'Con i costi interni'
+default.pdf.twig: Standard

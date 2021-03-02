@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': '可用字母: A-Z 以及 _'
+ROLE_ADMIN: 管理员
+ROLE_SUPER_ADMIN: 系统-管理
+ROLE_TEAMLEAD: 团队负责人
+ROLE_USER: 用户
+'This is a mandatory field': 必选
+action.back: 返回
+action.close: 关闭
+action.delete: 删除
+action.edit: 编辑
+action.reset: 重设
+action.save: 保存
+active.entries: 您的活跃时间测量
+admin_activity.short_stats: "\n目前活动 %activity% 在项目里 %project% 对于客户 %customer%\n有 %records% 时间记录, 总体共计 %duration%.\n"
+admin_activity.title: 活动
+admin_customer.short_stats: "\n目前客户 %customer% 有 %project% 项目有 %activity% 活动, 总体共计 %records% 时间记录共计 %duration%.\n"
+admin_customer.title: 客户
+admin_entity.delete_confirm: "\n该项数据也将被删除!\n或者，您可以选择一项条目将所有数据传输过去：\n"
+admin_invoice_template.title: 发票模板
+admin_project.short_stats: "\n目前项目 %project% 对于客户 %customer% 有 %activities%\n活动 以及 %records% 时间记录, 总体共计 %duration%.\n"
+admin_project.title: 项目
+admin_timesheet.title: 时间表
+admin_user.short_stats: "\n目前该用户 %user% 有 %records% 时间记录 总体共计 %duration%.\n"
+admin_user.title: 用户
+agendaDay: 日
+agendaWeek: 周
+attachments: 文件
+both: 都有
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: 预审
+button.preview_print: 打印预览
+button.print: 打印
+button.xlsx: Excel
+calendar.title: 日历
+cancel: 取消
+confirm: 确认
+confirm.delete: 请问您是否确认删除此项？
+create: 创建
+dashboard.all: 所有用户
+dashboard.subtitle: 欢迎!
+dashboard.title: 控制主页
+delete.not_in_use: 该事项可以被安全删除。
+entryState.all: 所有
+entryState.exported: 已清除
+entryState.not_exported: 打开
+entryState.running: 活跃
+entryState.stopped: 已停止
+error.no_comments_found: 尚无评论。
+error.no_entries_found: 基于您所选的筛选项未找到相应条目。
+export.clear_all: 请问是否要将所有展示过的记录标注为打开？
+export.date_copyright: '创建了 %date% 与 %kimai%'
+export.document_title: 支出清单
+export.filter: 过滤数据以输出
+export.full_list: 完整清单
+export.mark_all: 请问是否要将所有展示过的记录标注为已清除？
+export.page_of: '页码 %page% 的 %pages%'
+export.period: 时间区间
+export.subtitle: 以多种格式输出时间表数据
+export.summary: 总结
+export.title: 输出
+help.batch_meta_fields: 'Fields that are to be updated must first be activated by clicking on the associated checkbox.'
+help.fixedRate: 'Each time record gets the same value, regardless of its duration'
+help.rate: 'Hourly rate to be charged'
+help.rate_internal: 'Internal costs (if this is not specified, the normal rate is used)'
+invoice.due_days: 支付对象
+invoice.filter: 筛选发票信息
+invoice.from: 始于
+invoice.number: 发票数
+invoice.service_date: 服务日期
+invoice.signature_customer: '确认： 日期 / 客户姓名 / 签名'
+invoice.signature_user: '确认： 日期 / 顾问姓名 / 签名'
+invoice.subtotal: 小计
+invoice.tax: 税费
+invoice.title: 发票
+invoice.to: 至
+invoice.total: 总计
+invoice.total_working_time: 总体持续时间
+invoice_print: 发票
+label.actions: 行动
+label.active: 有效
+label.activity: 活动
+label.address: 地址
+label.alias: 名字
+label.amount: 数量
+label.api_token: API密码
+label.api_token_repeat: 再次输入API密码
+label.appendTags: 附加标签
+label.avatar: 资料照片
+label.batch_meta_fields: 'Additional fields'
+label.begin: 始于
+label.billable: Billable
+label.budget: 预算
+label.calendar.initial_view: 初始日历查看
+label.color: 颜色
+label.comment: 评论
+label.company: 公司名称
+label.contact: 联系人
+label.country: 国家
+label.create_more: 创建更多条目
+label.currency: 货币
+label.customer: 客户
+label.date: 日期
+label.daterange: 时间区间
+label.decimalDuration: 'Display duration as decimal number'
+label.description: 描述
+label.due_days: 付款方式（天)
+label.duration: 持续时间
+label.email: 电子邮件
+label.end: 至
+label.endtime: 结束
+label.entryState: 记录
+label.exported: 已输出
+label.fax: 传真号码
+label.fixedRate: 固定时薪
+label.globalsOnly: 仅用于全球
+label.homepage: 主页
+label.hourlyRate: 每小时收费
+label.hourly_rate: 每小时收费
+label.hours: 小时数
+label.id: ID
+label.invoice_bank_account: 银行账户
+label.invoice_tax_number: '增值税票号:'
+label.language: 语言
+label.lastLogin: 'Last login'
+label.login.initial_view: 登录后初始查看
+label.logout: 退出
+label.mark_as_exported: 标注为已输出
+label.mobile: 手机号码
+label.my_team_projects: '团队项目 & 预算'
+label.my_teams: 我的团队
+label.name: 名称
+label.number: 账户
+label.orderDate: 订单日期
+label.orderNumber: 订单编号
+label.pageSize: 页面大小
+label.password: 密码
+label.password_repeat: 再次输入密码
+label.payment_terms: 付款条件
+label.phone: 电话号码
+label.plus_more: '+%count% 更多'
+label.progress: 进展
+label.project: 项目
+label.project_end: 项目结束
+label.project_start: 项目开始
+label.rate: 费用
+label.rate_internal: __label.rate_internal
+label.recalculate_rates: 'Recalculate rates'
+label.replaceTags: 替换标签
+label.required_version: 可兼容
+label.roles: 角色
+label.skin: Kimai-主题
+label.starttime: 开始
+label.status: 状态
+label.tag: 标签
+label.tags: 标签
+label.team: 团队
+label.teamlead: 团队领导
+label.template: 模板
+label.theme.collapsed_sidebar: 最小化左侧侧栏
+label.theme.layout: '显示: 布局'
+label.timeBudget: 时间预算
+label.timesheet.daily_stats: 在时间表中展示每日状态
+label.timesheet.export_decimal: 'Use decimal duration in export'
+label.timezone: 时区
+label.title: 职位
+label.toggle_dropdown: 展示菜单
+label.total_rate: 总价
+label.unit_price: 单价
+label.user: 用户
+label.user_profile: 我的资料
+label.username: 用户
+label.vat: 税费
+label.vat_id: 增值税-ID
+label.version: 版本
+label.visible: 可见
+login_required: 无许可。重新登录？
+menu.admin: 管理
+menu.admin_activity: 活动
+menu.admin_customer: 客户
+menu.admin_project: 项目
+menu.admin_team: 团队
+menu.admin_timesheet: 时间表
+menu.admin_user: 用户
+menu.doctor: 医生
+menu.export: 输出
+menu.homepage: 控制主页
+menu.invoice: 发票
+menu.logout: 退出
+menu.plugin: 插件
+menu.reporting: 报告
+menu.system: 系统
+menu.system_configuration: 设置
+menu.tags: 标签
+menu.timesheet: 我的时间
+modal.columns.description: '保存后，未选中的列将被隐藏，并且此设置将存储在浏览器缓冲内容中。 如果删除缓冲内容，则该设置将被撤消。'
+modal.columns.title: 改变列的可见性
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: 月
+more.info.link: 更多信息
+my.profile: 我的资料
+'no': 否
+placeholder.type_message: 输入您的消息...
+profile.about_me: 关于我
+profile.api-token: API
+profile.first_entry: 自什么时候开始工作
+profile.password: 密码
+profile.preferences: 偏好
+profile.registration_date: __profile.registration_date
+profile.roles: 角色
+profile.settings: 资料
+profile.teams: 团队
+profile.title: 用户资料
+rates.empty: __rates.empty
+rates.title: __rates.title
+recent.activities: 重启一项您的最后活动
+recent.activities.format: '%activity% 在 %project% 对于 %customer%'
+search: 搜索
+stats.activeRecordings: 有效记录
+stats.activityTotal: 活动
+stats.amountMonth: 本月收入
+stats.amountToday: 今日收入
+stats.amountTotal: 总收入
+stats.amountWeek: 本周收入
+stats.amountYear: 今年收入
+stats.customerTotal: 客户
+stats.durationMonth: 本月工作时长
+stats.durationToday: 今日工作时长
+stats.durationTotal: 总工作时长
+stats.durationWeek: 本周工作时长
+stats.durationYear: 本年工作时长
+stats.percentUsed: '%percent%% 已用'
+stats.percentUsedLeft: '%percent%% 已用 (%left% 仍然可用)'
+stats.projectTotal: 项目
+stats.userActiveMonth: 本月有效用户
+stats.userActiveToday: 今日有效用户
+stats.userActiveTotal: 所有有效用户
+stats.userActiveWeek: 本周有效用户
+stats.userActiveYear: 今年有效用户
+stats.userTotal: 用户
+stats.workingTimeMonth: '%month% %year%'
+stats.workingTimeToday: __stats.workingTimeToday
+stats.workingTimeWeek: __stats.workingTimeWeek
+stats.workingTimeYear: __stats.workingTimeYear
+stats.yourWorkingHours: 我的工作时长
+status.new: __status.new
+status.paid: __status.paid
+status.pending: __status.pending
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 时间追踪
+timesheet.all: 显示所有记录
+timesheet.edit: 编辑记录
+timesheet.start: 创建新的时间记录
+timesheet.title: 我的时间
+update_multiple: '%action% %count% 条目?'
+upload: 上传
+user_permissions.title: 用户许可
+user_role.title: 用户角色
+'yes': 是

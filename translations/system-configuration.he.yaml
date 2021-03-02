@@ -1,0 +1,60 @@
+Ceil: 'עיגול מעלה: התחלה, סיום ומשך זמן העבודה יעוגלו כלפי מעלה'
+Closest: 'הכי קרוב: עיגול מתמטי לערך הכי קרוב'
+Default: 'סטנדרטי: זמן התחלה יעוגל מטה, סיום ומשך זמן העבודה יעוגלו מעלה'
+Floor: 'עיגול מטה: התחלה, סיום ומשך זמן העבודה יעוגלו כלפי מטה'
+Friday: שישי
+Monday: שני
+Saturday: שבת
+Sunday: ראשון
+Thursday: חמישי
+Tuesday: שלישי
+Wednesday: רביעי
+branding: מיתוג
+calendar: 'לוח שנה'
+first_weekday: 'היום הראשון בשבוע'
+form_customer: 'צור ערכי ברירת מחדל ללקוח'
+form_user: 'ערכי ברירת מחדל למשתמש'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: חשבוניות
+label.calendar.businessHours.begin: 'תחילת שעות עבודה רגילות (יודגשו)'
+label.calendar.businessHours.end: 'סיום שעות עבודה רגילות (יודגשו)'
+label.calendar.slot_duration: 'משך זמן העבודה בתצוגת שבוע ויום (פורמט: hh:mm:ss)'
+label.calendar.visibleHours.begin: 'תחילת טווח זמן'
+label.calendar.visibleHours.end: 'סיום טווח זמן'
+label.calendar.week_numbers: 'הצג מספרי שבוע'
+label.calendar.weekends: 'הצג סופי שבוע'
+label.invoice.number_format: 'פורמט מספר חשבונית'
+label.simple_form: 'חיפוש פשוט'
+label.theme.autocomplete_chars: 'מספר תווים מינימלי כדי להתחיל השלמה אוטומטית'
+label.theme.branding.company: חברה
+label.theme.branding.logo: 'לוגו (לינק לתמונה, מחליף את שם החברה בדף הכניסה)'
+label.theme.branding.mini: 'מיני לוגו (תפריט צידי ממוזער)'
+label.theme.branding.title: 'כותרת הדפדפן'
+label.theme.markdown_content: 'אפשר עיצוב בתיאורים ובהערות'
+label.theme.tags_create: 'השתמש בהשלמה אוטומטית בחיפוש ואפשר יצירת תגיות'
+label.timesheet.active_entries.hard_limit: 'כמות מותרת לרשומות זמן פעילות במקביל'
+label.timesheet.active_entries.soft_limit: 'מספר רשומות זמן פעילות במקביל להצגת אזהרה'
+label.timesheet.default_begin: 'זמן התחלה ברירת מחדל (לא בשימוש בכל מצבי הפעולה)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'שיטת דיווח שעות'
+label.timesheet.mode_default: '[ברירת מחדל] ניתן לערוך התחלה וסיום'
+label.timesheet.mode_duration_fixed_begin: '[רק משך זמן עבודה] זמן התחלה קבוע ניתן להגדרה, רק משך זמן העבודה ניתן לשינוי'
+label.timesheet.mode_duration_only: '[התחלה ומשך זמן עבודה] מחליף את שעת הסיום במשך זמן העבודה'
+label.timesheet.mode_punch: '[שעון] המשתמש יכול לבחור התחלה וסיום, אבל לא את משך זמן העבודה'
+label.timesheet.rounding.default.begin: 'עיגול זמן ההתחלה בדקות (0 = לא מופעל)'
+label.timesheet.rounding.default.days: 'ימי השבוע כאשר עיגול מופעל'
+label.timesheet.rounding.default.duration: 'עיגול משך זמן העבודה בדקות (0 = לא מופעל)'
+label.timesheet.rounding.default.end: 'עיגול זמן הסיום בדקות (0 = לא מופעל)'
+label.timesheet.rounding.default.mode: 'שיטת עיגול ערכים'
+label.timesheet.rules.allow_future_times: 'אפשר רשומות זמן עתידיות'
+label.timesheet.rules.allow_overlapping_records: 'לאפשר רשומות בזמנים חופפים'
+label.timesheet.rules.lockdown_grace_period: 'סיום תקופת חסד לנעילה (תאריך PHP יחסי למועד סיום תקופת הנעילה)'
+label.timesheet.rules.lockdown_period_end: 'סיום תקופת נעילה (תאריך PHP ביחס לעכשיו)'
+label.timesheet.rules.lockdown_period_start: 'התחלת תקופת נעילה (תאריך PHP ביחס לעכשיו)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'עיגול זמנים'
+subtitle: 'שנה הגדרות גלובליות'
+theme: 'ערכת עיצוב'
+timesheet: 'גיליון שעות'
+title: הגדרות

@@ -1,0 +1,10 @@
+automated_email_dont_answer: __automated_email_dont_answer
+button_copy_url_to_browser: '如果该按钮无效，请复制 & 以下URL并粘贴到浏览器中: %url%'
+registration.button: __registration.button
+registration.intro: __registration.intro
+registration.subject: 激活您的账户
+registration.title: '欢迎 %username%'
+reset.button: __reset.button
+reset.intro: ...您忘记了密码吗？别担心：Kimai将帮助您创建一个新的：
+reset.subject: 重置您的密码
+reset.title: __reset.title

@@ -1,0 +1,13 @@
+action.delete.error: 'Le informazioni non possono essere cancellate: %reason%'
+action.delete.success: 'Informazioni cancellate'
+action.update.error: 'I cambiamenti non possono essere salvati: %reason%'
+action.update.success: 'Salvataggio avvenuto'
+action.upload.error: 'The file could not be uploaded or saved: %reason%'
+invoice.first_template: 'Crea un modello di fatturazione per continuare'
+timesheet.locked.warning: 'Stai modificando attività già esportate'
+timesheet.start.error: 'La registrazione non può essere avviata'
+timesheet.start.exceeded_limit: 'Il limite delle registrazioni attivabili è stato raggiunto, cortesemente interrompere almeno una registrazione attiva.'
+timesheet.start.success: 'Registrazione avviata'
+timesheet.stop.error: 'La registrazione non può essere fermata'
+timesheet.stop.success: 'La registrazione é stata fermata'
+warning: Avvertimento

@@ -1,0 +1,13 @@
+action.delete.error: '明細を削除できませんでした: %reason%'
+action.delete.success: 明細を削除しました
+action.update.error: '変更を保存できませんでした: %reason%'
+action.update.success: 変更を保存しました
+action.upload.error: 'The file could not be uploaded or saved: %reason%'
+invoice.first_template: 事前に請求書のテンプレートを作成する必要があります
+timesheet.locked.warning: エクスポート済の記録を編集しようとしています。
+timesheet.start.error: 時間の記録を開始できませんでした
+timesheet.start.exceeded_limit: 時間記録プロセスの制限数に到達しました。先にいずれかの実行中の記録プロセスを終了させてください。
+timesheet.start.success: 時間の記録を開始しました
+timesheet.stop.error: 時間の記録を終了できませんでした
+timesheet.stop.success: 時間の記録を終了しました
+warning: 警告

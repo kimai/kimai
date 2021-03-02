@@ -1,0 +1,60 @@
+Ceil: 'W górę: poczatek , koniec i długośc bedą zaokrąglane w górę'
+Closest: 'Najbliższy: matematyczne zaokraglanie do najbliższej wartości'
+Default: 'Standart: poczatek będzie zaokraglany w doł , koniec i długość w górę'
+Floor: 'W dół: poczatek , koniec i długośc będą zaokraglane w dół'
+Friday: Piatek
+Monday: Poniedziałek
+Saturday: Sobota
+Sunday: Niedziela
+Thursday: Czwartek
+Tuesday: Wtorek
+Wednesday: Środa
+branding: Branding
+calendar: Kalendarz
+first_weekday: 'Pierwszy dzień tygodnia'
+form_customer: 'Utwórz ustawienia domyślne dla klientów'
+form_user: 'Ustawienia domyślne dla użytkowników'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Faktury
+label.calendar.businessHours.begin: 'Poczatek normalnych godzin pracy (będzie wyrózniony)'
+label.calendar.businessHours.end: 'Koniec normalnych godzin pracy (będzie wyrózniony)'
+label.calendar.slot_duration: 'Przedział czasowy dla widoku dziennego i tygodniowego (format: gg:mm:ss)'
+label.calendar.visibleHours.begin: 'Początek widocznego zakresu czasu'
+label.calendar.visibleHours.end: 'Koniec widocznego zakresu czasu'
+label.calendar.week_numbers: 'Wyświetlaj nimery tygodnia'
+label.calendar.weekends: 'Wyświetlaj weekendy'
+label.invoice.number_format: 'Format numeru faktury'
+label.simple_form: 'Proste wyszukiwanie'
+label.theme.autocomplete_chars: 'Minimalna ilość liter do auto-uzupełniania'
+label.theme.branding.company: Firma
+label.theme.branding.logo: 'Logo (URL grafiki, zamienia logo na stronie logowania)'
+label.theme.branding.mini: 'Mini Logo (obniżona ramka)'
+label.theme.branding.title: 'Tytuł przeglądarki'
+label.theme.markdown_content: 'Zezwalaj na rozszerzone formatowanie w opisach i komentarzach'
+label.theme.tags_create: 'Tagi: użyj automatycznego wyszukiwania i zezwól na tworzenie tagów'
+label.timesheet.active_entries.hard_limit: 'Dozwolona maksymalna ilość jednoczesnych czynności (pomiarów)'
+label.timesheet.active_entries.soft_limit: 'Ilość jednoczesnych czynności (pomiarów) po której zostanie wyświetlone ostrzeżenie'
+label.timesheet.default_begin: 'Domyślny czas rozpoczęcia (nie używany we wszystkich trybach śledzenia czasu)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'Tryb rejestrowania czasu'
+label.timesheet.mode_default: '[Domyślnie] Czasy początku i końca moga być edytowane'
+label.timesheet.mode_duration_fixed_begin: '[Czas trwania] Konfigurowalny ustalony czas początku, możliwa zmiana jedynie długości trwania'
+label.timesheet.mode_duration_only: '[Czas trwania] Zamienia czas końca na długość trwania (pole edycyjne) '
+label.timesheet.mode_punch: '[Stoper] Uzytkownik może utuchomić i zatrzymać pomiar, bez mozliwości edycji czasów poczatku , końca czy też długości trwania'
+label.timesheet.rounding.default.begin: 'Zaokrąglanie czasu startu w minutach (0 = nieaktywne)'
+label.timesheet.rounding.default.days: 'Dni tygodnia w których zaokrąglanie czasu będzie stosowane'
+label.timesheet.rounding.default.duration: 'Zaokrąglenie długości czasu trwania w minutach (0 = nieaktywne)'
+label.timesheet.rounding.default.end: 'Zaokrąglenie czasu końca w minutach (0 = nieaktywne)'
+label.timesheet.rounding.default.mode: 'Tryb zaokraglania czasu'
+label.timesheet.rules.allow_future_times: 'Zezwalaj na przyszłe wpisy czasu'
+label.timesheet.rules.allow_overlapping_records: 'Zezwalaj na nakładające się wpisy czasu'
+label.timesheet.rules.lockdown_grace_period: 'Koniec okresu prolongaty blokady (względna data PHP do końca okresu blokady)'
+label.timesheet.rules.lockdown_period_end: 'Początek okresu blokady (względna data PHP do teraz)'
+label.timesheet.rules.lockdown_period_start: 'Początek okresu blokady (względna data PHP do teraz)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'Zaokraglanie czasu'
+subtitle: 'Ustawienia globalne serwisu rejestrowania'
+theme: Kompozycja
+timesheet: Ewidencje
+title: Ustawienia

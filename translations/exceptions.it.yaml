@@ -1,0 +1,9 @@
+access.denied: 'Accesso rifiutato'
+http_error.description: 'Errore imprevisto'
+http_error.suggestion: "\nErrore imprevisto, riprova per favore.\nSe il problema persiste, contatta per favore l'amministratore.\n"
+http_error.title: Errore
+http_error_403.description: 'Pagina con restrizione all''accesso'
+http_error_403.suggestion: "\nNon hai i permessi per vedere questa pagina.\nContatta l'amministratore se pensi che questo sia un problema.\n"
+http_error_404.description: 'Pagina non trovata'
+http_error_404.suggestion: "\nLa pagina che cerchi non é stata trovata.\nRicomincia dalla Dashboard.\n"
+stacktrace: 'Controlla il problema'

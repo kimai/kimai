@@ -1,0 +1,13 @@
+action.delete.error: 'Nu am putut șterge înregistrarea: %reason%'
+action.delete.success: 'Intrarea a fost ștearsă'
+action.update.error: 'Modificările nu pot fi salvate: %reason%'
+action.update.success: 'Modificările au fost salvate'
+action.upload.error: 'Acest fișier nu a putut fi încărcat sau salvat'
+invoice.first_template: ' Înainte de a începe trebuie să creezi cel puțin un șablon pentru facturi'
+timesheet.locked.warning: 'Editezi o înregistrare care a fost exportată'
+timesheet.start.error: 'Nu am putut porni înregistrarea timpului'
+timesheet.start.exceeded_limit: 'A fost atinsă limita inregistrărilor active. Te rog ca prima dată să oprești cel putin o înregistrare activă.'
+timesheet.start.success: 'A pornit înregistrarea timpului'
+timesheet.stop.error: 'Nu am putut opri înregistrarea timpului'
+timesheet.stop.success: 'Înregistrarea timpului a fost oprită'
+warning: Atenție

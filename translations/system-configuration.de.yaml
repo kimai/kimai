@@ -1,0 +1,60 @@
+Ceil: 'Ceil: Start, Ende und Dauer werden nach oben gerundet'
+Closest: 'Closest: Mathematische Rundung zum nächsten Wert'
+Default: 'Standard: Start wird nach unten, Ende und Dauer nach oben gerundet'
+Floor: 'Floor: Start, Ende und Dauer werden nach unten gerundet'
+Friday: Freitag
+Monday: Montag
+Saturday: Samstag
+Sunday: Sonntag
+Thursday: Donnerstag
+Tuesday: Dienstag
+Wednesday: Mittwoch
+branding: Markendarstellung
+calendar: Kalender
+first_weekday: 'Erster Tag der Woche'
+form_customer: 'Kunden anlegen - Standard Werte'
+form_user: 'Benutzer - Standard Werte'
+increment_rounding: 'Verwende konfigurierten Wert der Rundungsregel'
+invoice: Rechnungen
+label.calendar.businessHours.begin: 'Start der üblichen Arbeitszeit (wird optisch hervorgehoben)'
+label.calendar.businessHours.end: 'Ende der üblichen Arbeitszeit (wird optisch hervorgehoben)'
+label.calendar.slot_duration: 'Slotdauer für Wochen- und Tagesansicht (Format: hh:mm:ss)'
+label.calendar.visibleHours.begin: 'Start des sichtbaren Zeitbereichs'
+label.calendar.visibleHours.end: 'Ende des sichtbaren Zeitbereichs'
+label.calendar.week_numbers: 'Kalenderwochen anzeigen'
+label.calendar.weekends: 'Wochenenden anzeigen'
+label.invoice.number_format: 'Rechnungsnummer Format'
+label.simple_form: 'Einfache Suche'
+label.theme.autocomplete_chars: 'Minimale Anzahl Buchstaben für den Start der Autovervollständigung'
+label.theme.branding.company: Unternehmen
+label.theme.branding.logo: 'Logo (Bild URL, ersetzt das Unternehmen im Anmeldebildschirm)'
+label.theme.branding.mini: 'Mini Logo (zugeklappte Seitenleiste)'
+label.theme.branding.title: 'Browser Titel'
+label.theme.markdown_content: 'Erlaube Markdown-Formatierungen in Beschreibungen und Kommentaren'
+label.theme.tags_create: 'Schlagworte: Suche per Auto-Complete und Erstellung von Schlagworten erlauben'
+label.timesheet.active_entries.hard_limit: 'Erlaubte Anzahl an gleichzeitig laufenden Zeiteinträgen'
+label.timesheet.active_entries.soft_limit: 'Anzahl an laufenden Zeiteinträgen ab denen einen Warnung angezeigt wird'
+label.timesheet.default_begin: 'Standard Startzeit (wird nicht in jedem Zeiterfassungs Modus verwendet)'
+label.timesheet.duration_increment: 'Minuten Auswahl für Dauer'
+label.timesheet.mode: 'Zeiterfassungs Modus'
+label.timesheet.mode_default: '[Standard] Start- und Endzeiten können bearbeitet werden'
+label.timesheet.mode_duration_fixed_begin: '[Dauer] Konfigurierbare feste Startzeit, nur Dauer kann geändert werden'
+label.timesheet.mode_duration_only: '[Dauer] ersetzt den Endzeitpunkt durch ein Eingabefeld für Dauer'
+label.timesheet.mode_punch: '[Stechuhr] Benutzer kann Aufzeichnungen starten und stoppen, aber weder Zeiten noch Dauer bearbeiten'
+label.timesheet.rounding.default.begin: 'Rundung des Startzeitpunkts in Minuten (0 = deaktiviert)'
+label.timesheet.rounding.default.days: 'Tage der Woche an denen gerundet wird'
+label.timesheet.rounding.default.duration: 'Rundung der Dauer in Minuten (0 = deaktiviert)'
+label.timesheet.rounding.default.end: 'Rundung des Endzeitpunkts in Minuten (0 = deaktiviert)'
+label.timesheet.rounding.default.mode: Rundungsmodus
+label.timesheet.rules.allow_future_times: 'Erlaube Zeiteinträge in der Zukunft'
+label.timesheet.rules.allow_overlapping_records: 'Erlaube überlappende Zeiteinträge'
+label.timesheet.rules.lockdown_grace_period: 'Übergangsfrist für gesperrten Zeitraum (relatives PHP Datumsformat ab Enddatum)'
+label.timesheet.rules.lockdown_period_end: 'Ende des gesperrten Zeitraums (relatives PHP Datumsformat)'
+label.timesheet.rules.lockdown_period_start: 'Start des gesperrten Zeitraums (relatives PHP Datumsformat)'
+label.timesheet.time_increment: 'Minuten Auswahl für Von & Bis'
+'off': Aus
+rounding: Zeitenrundung
+subtitle: 'Globale Einstellungen ihrer Zeiterfassung ändern'
+theme: Darstellung
+timesheet: Zeiterfassung
+title: Einstellungen

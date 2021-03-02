@@ -1,0 +1,262 @@
+'Allowed character: A-Z and _': '허용되는 문자: A-Z 그리고 _'
+ROLE_ADMIN: 관리자
+ROLE_SUPER_ADMIN: '시스템 관리'
+ROLE_TEAMLEAD: 팀장
+ROLE_USER: 사용자
+'This is a mandatory field': '필수 항목'
+action.back: '뒤로 가기'
+action.close: 닫기
+action.delete: 삭제
+action.edit: 편집
+action.reset: 재설정
+action.save: 저장
+active.entries: '활동 시간 측정 '
+admin_activity.short_stats: "\n현재의 %activity%활동 %project%프로젝트의 %customer%고객\n%records% 시간기록에 의해 책정된 총합%duration%.\n"
+admin_activity.title: 활동
+admin_customer.short_stats: "\n현재 %customer%고객은 %activity% 업무가 포함된 %project% 프로젝트를 가지고 있으며,\n이 프로젝트는 %records%기록에서 총%duration%시간을 계산합니다.\n"
+admin_customer.title: 고객
+admin_entity.delete_confirm: "\n이 데이터도 삭제됩니다!\n또는 모든 데이터가 전송될 항목을 선택할 수 있습니다:\n"
+admin_invoice_template.title: '청구서 템플릿'
+admin_project.short_stats: "\n현재의 %project%프로젝트 %customer%고객을 위한 %activities%활동과 \n%records% 시간기록에 의해 책정된 총합 %duration%.\n"
+admin_project.title: 프로젝트
+admin_timesheet.title: '시간 기록표'
+admin_user.short_stats: "\n현재 %user%사용자는 %records%시간기록을 계산하여 %duration%의 총합을 가진다.\n"
+admin_user.title: '사용자 '
+agendaDay: 일
+agendaWeek: 주
+attachments: 파일
+both: '둘 다'
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: 미리보기
+button.preview_print: '인쇄 미리보기'
+button.print: 인쇄
+button.xlsx: Excel
+calendar.title: 달력
+cancel: 취소
+confirm: 확인
+confirm.delete: '삭제 하시겠습니까?'
+create: 생성
+dashboard.all: '모든 사용자'
+dashboard.subtitle: 환영합니다!
+dashboard.title: 대시보드
+delete.not_in_use: '이 항목은 안전하게 삭제될 수 있습니다.'
+entryState.all: 모두
+entryState.exported: 청구됨
+entryState.not_exported: 미결제
+entryState.running: '활성됨 '
+entryState.stopped: 멈춤
+error.no_comments_found: '아직 코멘트가 생성되지 않았습니다.'
+error.no_entries_found: '선택한 필터를 기반으로 한 항목을 찾을 수 없습니다.'
+export.clear_all: '선택한 모든 항목을 미결제로 표시하시겠습니까?'
+export.date_copyright: '생성 %date% 의 %kimai%'
+export.document_title: '비용 목록'
+export.filter: '내보낼 정보 필터링'
+export.full_list: '전체 목록'
+export.mark_all: '선택한 모든 항목을 청구됨으로 표시하시겠습니까?'
+export.page_of: '%page% 쪽 의 %pages% 쪽'
+export.period: 기간
+export.subtitle: '타임시트 다양한 포맷으로 내보내기'
+export.summary: 요약
+export.title: 내보내기
+help.batch_meta_fields: '먼저 관련 선택란을 클릭하여 업데이트 할 필드를 활성화해야합니다.'
+help.fixedRate: '기간에 관계없이 각 시간 기록은 동일한 값을 얻음'
+help.rate: '청구되는 시간당 비용'
+help.rate_internal: '내부 비용 (지정되지 않은 경우 일반 요율이 사용됨)'
+invoice.due_days: '지불 대상'
+invoice.filter: '인보이스 정보 필터링'
+invoice.from: '드림 '
+invoice.number: '청구서 번호'
+invoice.service_date: '서비스 일자'
+invoice.signature_customer: '확정: 일자/ 고객 성명 / 서명'
+invoice.signature_user: '확정: 일자 / 상담자 성명 / 서명'
+invoice.subtotal: 소계
+invoice.tax: 세금
+invoice.title: 인보이스
+invoice.to: 귀하
+invoice.total: 총합
+invoice.total_working_time: '총 기간'
+invoice_print: 인보이스
+label.actions: 적용
+label.active: 활동
+label.activity: 업무
+label.address: 주소
+label.alias: 이름
+label.amount: 수량
+label.api_token: 'API 비밀번호'
+label.api_token_repeat: 'API 비밀번호 재확인'
+label.appendTags: '태그 추가'
+label.avatar: '프로필 사진'
+label.batch_meta_fields: '추가 필드'
+label.begin: 시작
+label.billable: '청구 가능한'
+label.budget: 예산
+label.calendar.initial_view: '달력 초기화면'
+label.color: 색
+label.comment: 코멘트
+label.company: 회사명
+label.contact: 연락
+label.country: 국가
+label.create_more: '추가 항목 생성'
+label.currency: 통화
+label.customer: 고객
+label.date: 일자
+label.daterange: '시간 범위'
+label.decimalDuration: '십진수로 기간 표시'
+label.description: '업무 보고'
+label.due_days: '지불 기간'
+label.duration: 소요시간
+label.email: 이메일
+label.end: 종료
+label.endtime: 종료
+label.entryState: 기록
+label.exported: 내보내기
+label.fax: 팩스
+label.fixedRate: 고정값
+label.globalsOnly: '글로벌 그룹만 해당'
+label.homepage: 홈페이지
+label.hourlyRate: '시간당 비용 '
+label.hourly_rate: '시간당 비용'
+label.hours: 시간
+label.id: 아이디
+label.invoice_bank_account: '계좌 번호'
+label.invoice_tax_number: '부가가치세(VAT) 번호:'
+label.language: 언어
+label.lastLogin: '지난 로그인'
+label.login.initial_view: '로그인 후 초기화면'
+label.logout: 나가기
+label.mark_as_exported: '내보낸 것으로 표시'
+label.mobile: 휴대폰
+label.my_team_projects: '팀 프로젝트들 & 예산들'
+label.my_teams: '나의 팀들'
+label.name: '이름 '
+label.number: 고객번호
+label.orderDate: '주문 일자'
+label.orderNumber: '주문 번호'
+label.pageSize: '페이지 수'
+label.password: 암호
+label.password_repeat: 암호확인
+label.payment_terms: '지불 정보'
+label.phone: 전화
+label.plus_more: '+%계산% 더'
+label.progress: 진행
+label.project: 프로젝트
+label.project_end: '프로젝트 종료'
+label.project_start: '프로젝트 시작'
+label.rate: 비용
+label.rate_internal: '내부 수익률'
+label.recalculate_rates: '비용 재계산'
+label.replaceTags: '태그 교체'
+label.required_version: 호환되는
+label.roles: '역할 '
+label.skin: '디스플레이: 색상'
+label.starttime: 시작
+label.status: 상태
+label.tag: 태그
+label.tags: 태그
+label.team: '팀 '
+label.teamlead: 팀리드
+label.template: 템플릿
+label.theme.collapsed_sidebar: '왼쪽 사이드바 최소화'
+label.theme.layout: '디스플레이: 레이아웃'
+label.timeBudget: '예상 시간'
+label.timesheet.daily_stats: '일일통계 보기'
+label.timesheet.export_decimal: '내보내기에서 소수점 지속시간 사용'
+label.timezone: 표준시간대
+label.title: 제목
+label.toggle_dropdown: 메뉴보기
+label.total_rate: 총액
+label.unit_price: 단가
+label.user: 사용자
+label.user_profile: '나의 프로필'
+label.username: '사용자 이름'
+label.vat: '부가 가치세'
+label.vat_id: '부가가치세 아이디'
+label.version: 버전
+label.visible: 보기
+login_required: '권한이 없습니다. 로그인으로 되돌아 가겠습니까?'
+menu.admin: 관리
+menu.admin_activity: 업무
+menu.admin_customer: 고객
+menu.admin_project: 프로젝트
+menu.admin_team: 팀
+menu.admin_timesheet: 시간기록표
+menu.admin_user: 사용자
+menu.doctor: 박사
+menu.export: 내보내기
+menu.homepage: 대시보드
+menu.invoice: 청구서
+menu.logout: 나가기
+menu.plugin: 플러그인
+menu.reporting: 리포팅
+menu.system: 시스템
+menu.system_configuration: 설정
+menu.tags: 태그
+menu.timesheet: '나의 근무시간'
+modal.columns.description: '확인하지 않은 열을 저장하면 브라우저 쿠키에 저장됩니다. 쿠키를 삭제하면 설정이 취소됩니다.'
+modal.columns.title: '열 표시 변경하기'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: 월
+more.info.link: 더보기
+my.profile: '내 프로필'
+'no': 아니오
+placeholder.type_message: '메시지 입력...'
+profile.about_me: '나의 정보'
+profile.api-token: API
+profile.first_entry: '업무 시작일'
+profile.password: 암호
+profile.preferences: 설정
+profile.registration_date: '에 등록'
+profile.roles: '역할 '
+profile.settings: 프로필
+profile.teams: 팀
+profile.title: '사용자 프로필'
+rates.empty: '아직 수수료가 계산되지 않았습니다.'
+rates.title: 수수료
+recent.activities: '지난 활동 재개'
+recent.activities.format: '%customer%를 위한 %project%의 %activity%'
+search: 찾기
+stats.activeRecordings: '활성화 기록'
+stats.activityTotal: '활동 합계'
+stats.amountMonth: '이번 달 수익'
+stats.amountToday: '오늘 수익'
+stats.amountTotal: '총 수익'
+stats.amountWeek: '이번 주 수익'
+stats.amountYear: '올해 수익'
+stats.customerTotal: '총 고객수'
+stats.durationMonth: '이번 달 근무시간'
+stats.durationToday: '오늘 근무시간'
+stats.durationTotal: '총 근무시간'
+stats.durationWeek: '이번 주 근무시간'
+stats.durationYear: '올해 근무시간'
+stats.percentUsed: '%percent%% 사용됨'
+stats.percentUsedLeft: '%percent%% 사용 (아직 %left% 남음)'
+stats.projectTotal: '프로젝트 합계'
+stats.userActiveMonth: '이번 달 활성화 사용자'
+stats.userActiveToday: '오늘 활성화 사용자'
+stats.userActiveTotal: '항시 활성화 사용자'
+stats.userActiveWeek: '이번 주 활성화 사용자'
+stats.userActiveYear: '올해 활성화 사용자'
+stats.userTotal: '사용자 합계'
+stats.workingTimeMonth: '%month%월 %year%년'
+stats.workingTimeToday: '오늘, %day%'
+stats.workingTimeWeek: '주차별 달력 %week%'
+stats.workingTimeYear: '한 해 %year%년'
+stats.yourWorkingHours: '근무시간 '
+status.new: 새
+status.paid: 지불
+status.pending: 보류
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: '타임 트래킹'
+timesheet.all: '모든 타임시트 보기'
+timesheet.edit: '기록 편집하기'
+timesheet.start: '새로운 타임시트 생성하기 '
+timesheet.title: '나의 업무시간'
+update_multiple: '%액션% %계산% 항목?'
+upload: 업로드
+user_permissions.title: '사용자 권한'
+user_role.title: '사용자 역할'
+'yes': 예
+invoice.preview: '인보이스에 표시되는 정보의 미리보기'

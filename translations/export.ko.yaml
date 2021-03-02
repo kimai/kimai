@@ -1,0 +1,3 @@
+default-budget.pdf.twig: '남은 예산'
+default-internal.pdf.twig: '내부 수익률'
+default.pdf.twig: 기준

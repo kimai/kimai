@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: '프로젝트 및 / 또는 고객에 대해 팀 권한이 설정되어 있으므로, 활동에 제한된 액세스 권한이 있습니다.'
+team.create_default: '액세스를 제한 할 새 팀 만들기'
+team.project_visibility_inherited: '고객에게 팀 권한이 설정되어 있기 때문에, 프로젝트는 제한된 액세스 권한을 갖습니다.'
+team.visibility_global: '아직 팀이 지정되지 않았으므로, 모든 사람에게 표시됩니다.'
+team.visibility_restricted: '다음 팀과 모든 관리자에게만 표시됩니다.'
+teams.customer_access: '고객에 대한 액세스 권한 부여'
+teams.project_access: '프로젝트에 대한 액세스 권한 부여'
+teams.title: 팀

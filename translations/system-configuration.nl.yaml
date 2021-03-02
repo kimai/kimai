@@ -1,0 +1,60 @@
+Ceil: 'Plafond: begin, einde en duur worden naar boven afgerond'
+Closest: 'Dichtstbijzijnde: wiskundige afronding op de dichtstbijzijnde waarde'
+Default: 'Standaard: begin wordt naar beneden afgerond, einde en duur naar boven'
+Floor: 'Vloer: begin, einde en duur worden naar beneden afgerond'
+Friday: Vrijdag
+Monday: Maandag
+Saturday: Zaterdag
+Sunday: Zondag
+Thursday: Donderdag
+Tuesday: Dinsdag
+Wednesday: Woensdag
+branding: Merknaam
+calendar: Kalender
+first_weekday: 'Eerste dag van de week'
+form_customer: 'Maak standaard klant waardens aan'
+form_user: Gebruiker—standaardwaarden
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Facturen
+label.calendar.businessHours.begin: 'Begin van de normale kantooruren (zal worden gemarkeerd)'
+label.calendar.businessHours.end: 'Einde van de normale kantooruren (zal worden gemarkeerd)'
+label.calendar.slot_duration: 'Slotduur voor week- en dagweergave (formaat: hh:mm:ss)'
+label.calendar.visibleHours.begin: 'Begin van zichtbaar tijdsbereik'
+label.calendar.visibleHours.end: 'Einde zichtbaar tijdsbestek'
+label.calendar.week_numbers: 'Toon weeknummers'
+label.calendar.weekends: 'Toon weekenden'
+label.invoice.number_format: 'Formaat factuurnummer'
+label.simple_form: 'Eenvoudige zoekopdracht'
+label.theme.autocomplete_chars: 'Minimum aantal letters om de auto-completion te starten'
+label.theme.branding.company: Bedrijf
+label.theme.branding.logo: 'Logo (Afbeelding URL, vervangt het bedrijf in het inlogscherm)'
+label.theme.branding.mini: 'Mini Logo (ingeklapte zijbalk)'
+label.theme.branding.title: 'Browser Titel'
+label.theme.markdown_content: 'Sta markdown-opmaak toe in beschrijvingen en opmerkingen'
+label.theme.tags_create: 'Labels: Gebruik autocomplete zoekfunctie en laat het aanmaken van labels toe'
+label.timesheet.active_entries.hard_limit: 'Toegestane aantal gelijktijdige tijdregistratie opnames'
+label.timesheet.active_entries.soft_limit: 'Aantal gelijktijdige tijdregistratie opnames wanneer een waarschuwing wordt weergegeven'
+label.timesheet.default_begin: 'Standaard starttijd (wordt niet in alle tijdsregistratiemodus gebruikt)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'Tijdsregistratie modus'
+label.timesheet.mode_default: '[Standaard] Start- en eindtijden kunnen aangepast worden'
+label.timesheet.mode_duration_fixed_begin: '[Tijdsduur] vaste starttijd, alleen de duur kan worden gewijzigd'
+label.timesheet.mode_duration_only: '[Tijdsduur] vervangt de eindtijd door een invoerveld voor de tijdsduur'
+label.timesheet.mode_punch: '[Tijdklok] De gebruiker kan opnames starten en stoppen, maar kan tijd of duur niet bewerken'
+label.timesheet.rounding.default.begin: 'Afronding van de starttijd in minuten (0 = gedeactiveerd)'
+label.timesheet.rounding.default.days: 'Dagen van de week waarop de afronding zal worden toegepast'
+label.timesheet.rounding.default.duration: 'Afronding van de duur in minuten (0 = gedeactiveerd)'
+label.timesheet.rounding.default.end: 'Afronding van de eindtijd in minuten (0 = gedeactiveerd)'
+label.timesheet.rounding.default.mode: Afrondingsmodus
+label.timesheet.rules.allow_future_times: 'Sta tijdinvoer in de toekomst toe'
+label.timesheet.rules.allow_overlapping_records: 'Sta overlappende tijdinvoer toe'
+label.timesheet.rules.lockdown_grace_period: 'Einde van gratieperiode voor blokkering (PHP relatieve datum ten opzichte van nu)'
+label.timesheet.rules.lockdown_period_end: 'Einde van blokkeringsperiode (PHP relatieve datum ten opzichte van nu)'
+label.timesheet.rules.lockdown_period_start: 'Begin van blokkeringsperiode (PHP relatieve datum ten opzichte van nu)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: Tijdafronding
+subtitle: 'Wijzig de algemene instellingen van uw tijdregistratie'
+theme: Thema
+timesheet: Tijdregistratie
+title: Instellingen

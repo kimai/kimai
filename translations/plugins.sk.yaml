@@ -1,0 +1,6 @@
+plugin.marketplace: 'Kimai obchod'
+plugin.none_installed: 'Ešte nemáte nainštalovaný plugin.'
+plugins.subtitle: 'Funkciu Kimai môžete vylepšiť pomocou zásuvných modulov'
+plugins.title: Rozšírenia
+label.version: Verzia
+label.required_version: 'Kompatibilné s'

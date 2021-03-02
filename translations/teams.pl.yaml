@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'Działanie ma ograniczony dostęp, ponieważ uprawnienia zespołu są ustawione dla projektu i/lub klienta.'
+team.create_default: 'Utwórz nowy zespól w celu ograniczenia dostępu'
+team.project_visibility_inherited: 'Dostęp do projektu ograniczony uprawnieniami zespołu do klienta.'
+team.visibility_global: 'Widoczne dla wszystkich ponieważ nie został jeszcze przydzielony zespół.'
+team.visibility_restricted: 'Widoczne tylko dla poniższych zespołow oraz wszystkich administratorów.'
+teams.customer_access: 'Zezwól na dostęp do danych klientów'
+teams.project_access: 'Zezwól na dostęp do projektu'
+teams.title: Zespoły

@@ -1,0 +1,4 @@
+plugin.marketplace: 'Kimai marketplace'
+plugin.none_installed: __plugin.none_installed
+plugins.subtitle: __plugins.subtitle
+plugins.title: __plugins.title

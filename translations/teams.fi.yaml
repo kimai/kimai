@@ -1,0 +1,8 @@
+team.activity_visibility_inherited: 'Työtehtävällä on rajoitettu käyttöoikeus, koska tiimin käyttöoikeudet on asetettu projektille ja/tai asiakkaalle'
+team.create_default: 'Luo uusi tiimi käytön rajoittamiseksi'
+team.project_visibility_inherited: 'Projektilla on rajoitettu käyttöoikeus, koska tiimin käyttöoikeudet on asetettu asiakkaalle.'
+team.visibility_global: 'Näkyy kaikille, koska tiimiä ei ole vielä määritetty'
+team.visibility_restricted: 'Näkyy vain seuraaville tiimeille ja ylläpitäjille.'
+teams.customer_access: 'Myönnä pääsy asiakkaisiin'
+teams.project_access: 'Myönnä pääsy projekteihin'
+teams.title: Tiimit

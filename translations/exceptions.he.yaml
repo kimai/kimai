@@ -1,0 +1,9 @@
+access.denied: 'הגישה נדחתה'
+http_error.description: 'משהוא לא טוב קרה'
+http_error.suggestion: "\nהתרחשה שגיאה קריטית. אנא נסה שוב.\nיתכן שמצאת באג בתוכנה. אנא פנה למנהל המערכת שלך.\n"
+http_error.title: שגיאה
+http_error_403.description: 'הגישה לדף מוגבלת'
+http_error_403.suggestion: "\nמצטערים, אך אין לך מספיק הרשאות כדי לצפות בדף.\nאנא פנה למנהל המערכת שלך אם לדעתך זו שגיאה.\n"
+http_error_404.description: 'הדף לא נמצא'
+http_error_404.suggestion: "\nלא הצלחנו למצוא את הדף שאתה מחפש.\nאנא חזור לדף הבית שלך והתחל מחדש.\n"
+stacktrace: 'הבעיה התרחשה כאן'

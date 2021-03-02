@@ -1,0 +1,20 @@
+Docx: 'Microsoft Word (Docx)'
+Html: 'HTML (for printing via Browser)'
+Ods: 'Open Office (Spreadsheet)'
+Pdf: PDF
+Xls: 'Microsoft Excel (Xls)'
+Xlsx: 'Microsoft Excel (Xlsx)'
+company: 公司发票
+default: 发票（默认）
+default-pdf: Invoice
+freelancer: 兼职人员
+help.upload: 'Attention: existing files will be overwritten. Allowed file types are: DOCX, ODS, XLSX.'
+javascript: JSON
+label.invoice_renderer: 发票文件
+open-spreadsheet: 电子表格
+programmatic: 'For further processing'
+spreadsheet: Excel表格
+text: Text
+timesheet: 时间表
+xml: XML
+export: 数据输出

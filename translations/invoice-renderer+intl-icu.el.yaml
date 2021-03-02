@@ -1,0 +1,19 @@
+Docx: 'Microsoft Word (Docx)'
+Html: 'HTML (for printing via Browser)'
+Ods: 'Open Office (Spreadsheet)'
+Pdf: PDF
+Xls: 'Microsoft Excel (Xls)'
+Xlsx: 'Microsoft Excel (Xlsx)'
+company: Invoice
+default: Invoice
+default-pdf: Invoice
+freelancer: 'Single service date'
+help.upload: 'Attention: existing files will be overwritten. Allowed file types are: DOCX, ODS, XLSX.'
+javascript: JSON
+label.invoice_renderer: __label.invoice_renderer
+open-spreadsheet: Invoice
+programmatic: 'For further processing'
+spreadsheet: Invoice
+text: Text
+timesheet: Timesheet
+xml: XML

@@ -1,0 +1,3 @@
+default-budget.pdf.twig: 'Với ngân sách còn lại'
+default-internal.pdf.twig: 'Với giá nội bộ'
+default.pdf.twig: 'Tiêu chuẩn'

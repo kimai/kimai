@@ -1,0 +1,261 @@
+'Allowed character: A-Z and _': 'Cho phép ký tự: A-Z và _'
+ROLE_ADMIN: 'Người quản lý'
+ROLE_SUPER_ADMIN: 'Quản trị hệ thống'
+ROLE_TEAMLEAD: 'Quản lý nhóm'
+ROLE_USER: 'Người dùng'
+'This is a mandatory field': 'Bắt buộc'
+action.back: 'Trở lại'
+action.close: Đóng
+action.delete: 'Xóa bỏ'
+action.edit: 'Biên tập'
+action.reset: 'Cài lại'
+action.save: Lưu
+active.entries: 'Đo thời gian hoạt động của bạn'
+admin_activity.short_stats: "\nHiện đang hoạt động %activity% trong dự án %project% với khách hàng %customer%\ncó %records% thời gian lưu, tổng cộng lên đến tổng số %duration%.\n"
+admin_activity.title: 'Hoạt động'
+admin_customer.short_stats: "\nCurrently the customer %customer% has %project% projects with %activity% activities, which sum up\nin %records% time-records to a total of %duration%.\n"
+admin_customer.title: 'Khách hàng'
+admin_entity.delete_confirm: "\nDữ liệu này cũng sẽ bị xóa!\n\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_Ngoài ra, bạn có thể chọn một mục nhập mà tất cả dữ liệu sẽ được chuyển đến:\n"
+admin_invoice_template.title: 'Mẫu hóa đơn'
+admin_project.short_stats: "\nHiện tại dự án %project% cho khách hàng %customer% với %activities%\nhành động và %records% thời gian lưu, tổng cộng lên đến tổng số %duration%.\n"
+admin_project.title: 'Dự án'
+admin_timesheet.title: 'Bảng chấm công'
+admin_user.short_stats: "\nCurrently the user %user% has %records% time-records which sum up to a total of %duration%.\n"
+admin_user.title: 'Người dùng'
+agendaDay: Ngày
+agendaWeek: Tuần
+attachments: 'Các tập tin'
+both: 'Cả hai'
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: 'Xem trước'
+button.preview_print: 'Xem thử bản in'
+button.print: In
+button.xlsx: Excel
+calendar.title: Lịch
+cancel: 'Hủy bỏ'
+confirm: 'Xác nhận'
+confirm.delete: 'Bạn có thực sự muốn xóa nó?'
+create: Tạo
+dashboard.all: 'Tất cả người dùng'
+dashboard.subtitle: 'Chào mừng bạn!'
+dashboard.title: 'Bảng điều khiển'
+delete.not_in_use: 'Mục này có thể được xóa một cách an toàn.'
+entryState.all: 'Tất cả'
+entryState.exported: 'Dọn dẹp'
+entryState.not_exported: Mở
+entryState.running: 'Hoạt động'
+entryState.stopped: Ngừng
+error.no_comments_found: 'Chưa có bình luận nào được đăng.'
+error.no_entries_found: 'Không có mục nào được tìm thấy dựa trên các bộ lọc đã chọn của bạn.'
+export.clear_all: 'Đánh dấu tất cả các hồ sơ được hiển thị là mở?'
+export.date_copyright: 'Tạo %date% với %kimai%'
+export.document_title: 'Xuất bảng chấm công'
+export.filter: 'Lọc dữ liệu để xuất'
+export.full_list: 'Danh sách đầy đủ'
+export.mark_all: 'Đánh dấu tất cả các hồ sơ được hiển thị là đã xóa?'
+export.page_of: 'Trang %page% của %pages%'
+export.period: 'Giai đoạn'
+export.subtitle: 'Xuất dữ liệu bảng chấm công sang các định dạng khác nhau'
+export.summary: 'Tóm lược'
+export.title: Xuất
+help.batch_meta_fields: 'Fields that are to be updated must first be activated by clicking on the associated checkbox.'
+help.fixedRate: 'Mỗi bản ghi thời gian có cùng giá trị, bất kể thời lượng của nó'
+help.rate: 'Tỷ lệ hàng giờ được tính phí'
+help.rate_internal: 'Chi phí nội bộ (nếu không được chỉ định, tỷ lệ thông thường được sử dụng)'
+invoice.due_days: 'Mục tiêu thanh toán'
+invoice.filter: 'Lọc dữ liệu hóa đơn'
+invoice.from: Từ
+invoice.number: 'Số hóa đơn'
+invoice.service_date: 'Ngày phục vụ'
+invoice.signature_customer: 'Xác nhận: Ngày / Tên khách hàng / Chữ ký'
+invoice.signature_user: 'Xác nhận: Ngày / Tên Người Tư vấn / Chữ ký'
+invoice.subtotal: 'Tổng phụ'
+invoice.tax: Thuế
+invoice.title: 'Hóa đơn'
+invoice.to: Đến
+invoice.total: Tổng
+invoice.total_working_time: 'Tổng thời gian'
+invoice_print: 'Hóa đơn'
+label.actions: 'Hành động'
+label.active: 'Kích hoạt'
+label.activity: 'Hoạt động'
+label.address: 'Địa chỉ'
+label.alias: Tên
+label.amount: 'Số lượng'
+label.api_token: 'Mật khẩu API'
+label.api_token_repeat: 'Lặp lại mật khẩu API'
+label.appendTags: 'Nối các thẻ'
+label.avatar: 'Hình ảnh hồ sơ cá nhân'
+label.batch_meta_fields: 'Additional fields'
+label.begin: Từ
+label.billable: Billable
+label.budget: 'Ngân sách'
+label.calendar.initial_view: 'Cấu hình xem lịch'
+label.color: 'Màu sắc'
+label.comment: 'Bình luận'
+label.company: 'Tên công ty'
+label.contact: 'Liên hệ'
+label.country: 'Quốc gia'
+label.create_more: 'Tạo các mục tiếp theo'
+label.currency: 'Tiền tệ'
+label.customer: 'khách hàng'
+label.date: Ngày
+label.daterange: 'Phạm vi thời gian'
+label.decimalDuration: 'Thời lượng hiển thị dưới dạng số thập phân'
+label.description: 'Sự miêu tả'
+label.due_days: 'Thời hạn thanh toán tính bằng ngày'
+label.duration: 'Thời lượng'
+label.email: E-mail
+label.end: Đến
+label.endtime: 'Kết thúc'
+label.entryState: 'Hồ sơ'
+label.exported: 'Xuất khẩu'
+label.fax: Fax
+label.fixedRate: 'Tỷ lệ cố định'
+label.globalsOnly: 'Chỉ toàn cầu'
+label.homepage: 'Trang chủ'
+label.hourlyRate: 'Tỷ lệ hàng giờ'
+label.hourly_rate: 'Tỷ lệ hàng giờ'
+label.hours: Giờ
+label.id: ID
+label.invoice_bank_account: 'Ngày đặt hàng...'
+label.invoice_tax_number: 'VAT no.:'
+label.language: 'Ngôn ngữ'
+label.lastLogin: 'Lần đăng nhập cuôi'
+label.login.initial_view: 'Chế độ xem ban đầu sau khi đăng nhập'
+label.logout: 'Đăng xuất'
+label.mark_as_exported: 'Đánh dấu là đã xuất'
+label.mobile: 'Di động'
+label.my_team_projects: 'Dự án nhóm & ngân sách'
+label.my_teams: 'Nhóm của tôi'
+label.name: Tên
+label.number: 'Tài khoản'
+label.orderDate: 'Ngày đặt hàng'
+label.orderNumber: 'Số thứ tự'
+label.pageSize: 'Kích thước trang'
+label.password: 'Mật khẩu'
+label.password_repeat: 'Lặp lại mật khẩu'
+label.payment_terms: 'Điều khoản thanh toán'
+label.phone: 'Số điện thoại'
+label.plus_more: '+%count% hơn'
+label.progress: 'Phát triển'
+label.project: 'Dự án'
+label.project_end: 'Kết thúc dự án'
+label.project_start: 'Dự án bắt đầu'
+label.rate: 'Tỷ lệ'
+label.rate_internal: 'Tỷ lệ nội bộ'
+label.recalculate_rates: 'Recalculate rates'
+label.replaceTags: 'Thay thế thẻ'
+label.required_version: 'Tương thích với'
+label.roles: 'Vai trò'
+label.skin: 'Hiển thị: màu sắc'
+label.starttime: 'Bắt đầu'
+label.status: 'Trạng thái'
+label.tag: Thẻ
+label.tags: Thẻ
+label.team: Nhóm
+label.teamlead: 'Đồng đội'
+label.template: 'Bản mẫu'
+label.theme.collapsed_sidebar: 'Thu nhỏ thanh bên trái'
+label.theme.layout: 'Hiển thị: bố cục'
+label.timeBudget: 'Ngân sách thời gian'
+label.timesheet.daily_stats: 'Hiển thị số liệu thống kê hàng ngày trong bảng chấm công'
+label.timesheet.export_decimal: 'Sử dụng thời lượng thập phân khi xuất'
+label.timezone: 'Múi giờ'
+label.title: 'Tiêu đề'
+label.toggle_dropdown: 'Hiển thị menu'
+label.total_rate: 'Tổng giá'
+label.unit_price: 'Đơn giá'
+label.user: 'Người dùng'
+label.user_profile: 'Thông tin của tôi'
+label.username: 'Người dùng'
+label.vat: Thuế
+label.vat_id: VAT-ID
+label.version: 'Phiên bản'
+label.visible: 'Có thể nhìn thấy'
+login_required: 'Thiếu sự cho phép. Chuyển hướng để đăng nhập?'
+menu.admin: 'Quản trị'
+menu.admin_activity: 'Hoạt động'
+menu.admin_customer: 'Khách hàng'
+menu.admin_project: 'Dự án'
+menu.admin_team: Đội
+menu.admin_timesheet: 'Bảng chấm công'
+menu.admin_user: 'Người dùng'
+menu.doctor: 'Bác sĩ'
+menu.export: Xuất
+menu.homepage: 'Bảng điều khiển'
+menu.invoice: 'Hóa đơn'
+menu.logout: 'Đăng xuất'
+menu.plugin: 'Ứng dụng bổ sung'
+menu.reporting: Reporting
+menu.system: 'Hệ thống'
+menu.system_configuration: 'Cài đặt'
+menu.tags: Thẻ
+menu.timesheet: 'Bảng chấm công'
+modal.columns.description: 'Khi lưu các cột chưa được kiểm tra sẽ bị ẩn và cài đặt này sẽ được lưu trong cookie trình duyệt. Nếu bạn xóa cookie, các cài đặt sẽ trở về mặc định.'
+modal.columns.title: 'Thay đổi mức độ hiển thị của cột'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Tháng
+more.info.link: 'Thêm thông tin'
+my.profile: 'Thông tin của tôi'
+'no': Không
+placeholder.type_message: __placeholder.type_message
+profile.about_me: 'Về tôi'
+profile.api-token: API
+profile.first_entry: 'Làm việc từ'
+profile.password: 'Mật khẩu'
+profile.preferences: 'Sở thích'
+profile.registration_date: __profile.registration_date
+profile.roles: 'Vai trò'
+profile.settings: 'Hồ sơ'
+profile.teams: Nhóm
+profile.title: 'Thông tin người dùng'
+rates.empty: 'Không có phí đã được cấu hình.'
+rates.title: 'Lệ phí'
+recent.activities: 'Khởi động lại một trong những hoạt động cuối cùng của bạn'
+recent.activities.format: '%activity% trong %project% của %customer%'
+search: 'Tìm kiếm'
+stats.activeRecordings: 'Hồ sơ hoạt động'
+stats.activityTotal: 'Hoạt động'
+stats.amountMonth: 'Doanh thu tháng này'
+stats.amountToday: 'Doanh thu hôm nay'
+stats.amountTotal: 'Tổng doanh thu'
+stats.amountWeek: 'Doanh thu tuần này'
+stats.amountYear: 'Doanh thu năm nay'
+stats.customerTotal: 'Khách hàng'
+stats.durationMonth: 'Giờ làm việc trong tháng này'
+stats.durationToday: 'Giờ làm việc hôm nay'
+stats.durationTotal: 'Tổng số giờ làm việc'
+stats.durationWeek: 'Giờ làm việc trong tuần này'
+stats.durationYear: 'Giờ làm việc năm nay'
+stats.percentUsed: '%percent%% đã sử dụng'
+stats.percentUsedLeft: '%percent%% đã sử dụng (%left% vẫn đang mở)'
+stats.projectTotal: 'Dự án'
+stats.userActiveMonth: 'Người dùng tích cực trong tháng này'
+stats.userActiveToday: 'Người dùng tích cực ngày hôm nays'
+stats.userActiveTotal: 'Người dùng tích cực'
+stats.userActiveWeek: 'Người dùng tích cực trong tuần này'
+stats.userActiveYear: 'Người dùng tích cực trong năm nay'
+stats.userTotal: 'Người dùng'
+stats.workingTimeMonth: __stats.workingTimeMonth
+stats.workingTimeToday: __stats.workingTimeToday
+stats.workingTimeWeek: __stats.workingTimeWeek
+stats.workingTimeYear: __stats.workingTimeYear
+stats.yourWorkingHours: 'Giờ làm việc của tôi'
+status.new: Mới
+status.paid: 'Đã thanh toán'
+status.pending: 'Đang chờ xử lý'
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Theo dõi thời gian'
+timesheet.all: 'Hiển thị tất cả các hồ sơ'
+timesheet.edit: 'Chỉnh sửa hồ sơ'
+timesheet.start: 'Tạo bản ghi thời gian mới'
+timesheet.title: 'Bảng chấm công'
+update_multiple: '%action% %count% entries?'
+upload: 'Tải lên'
+user_permissions.title: 'Quyền Người dùng'
+user_role.title: 'Vai trò người dùng'
+'yes': Đúng

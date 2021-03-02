@@ -1,0 +1,262 @@
+'Allowed character: A-Z and _': 'Caractere permise: A-Z and _'
+ROLE_ADMIN: Administrator
+ROLE_SUPER_ADMIN: System-Admin
+ROLE_TEAMLEAD: 'Șef de echipă'
+ROLE_USER: Utilizator
+'This is a mandatory field': 'Acest câmp este obligatoriu'
+action.back: Înapoi
+action.close: Închide
+action.delete: Șterge
+action.edit: Editează
+action.reset: Reset
+action.save: Salvează
+active.entries: 'Înregistrările tale active'
+admin_activity.short_stats: "\nActivitatea %activity% din proiectul %project% pentru clientul %customer%\nare %records% înregistraări, cu o durată totală de %duration%.\n"
+admin_activity.title: Activități
+admin_customer.short_stats: "\nClientul %customer% are %project% proiecte cu %activity% activități, care au\n%records% înregistrări, cu o durată totală de %duration%.\n"
+admin_customer.title: Client
+admin_entity.delete_confirm: "\nAceste date vor fi, de asemenea, șterse!\nSau poti selecta o intrare către care vor fi transferate toate datele:\n"
+admin_invoice_template.title: 'Macheta factură'
+admin_project.short_stats: "\nProiectul %project% pentru clientul %customer% are %activities% activități\nși %records% înregistrări, cu durata totală de %duration%.\n"
+admin_project.title: Proiecte
+admin_timesheet.title: Pontaje
+admin_user.short_stats: "\nUtilizatorul %user% are %records% înregistrări cu o durată totală de %duration%.\n"
+admin_user.title: Utilizator
+agendaDay: Zi
+agendaWeek: Săptămâna
+attachments: Fișiere
+both: Ambele
+button.csv: CSV
+button.ods: ODS
+button.pdf: PDF
+button.preview: Previzualizare
+button.preview_print: Printează
+button.print: Tipărește
+button.xlsx: Excel
+calendar.title: Calendar
+cancel: Anulare
+confirm: Confirm
+confirm.delete: 'Ești sigur că vrei să îl ștergi?'
+create: Creează
+dashboard.all: 'Toți utilizatorii'
+dashboard.subtitle: 'Bine ai venit!'
+dashboard.title: 'Panou de control'
+delete.not_in_use: 'Acest element poate fi șters fără probleme.'
+entryState.all: Toate
+entryState.exported: Eliminat
+entryState.not_exported: Deschis
+entryState.running: Active
+entryState.stopped: Oprit
+error.no_comments_found: 'Încă nu au fost publicate comentarii.'
+error.no_entries_found: 'Nu am găsit intrări care să corespundă cu filtrele selectate.'
+export.clear_all: 'Marcați toate înregistrările afișate ca fiind deschise?'
+export.date_copyright: 'Creat în %date% cu %kimai%'
+export.document_title: 'Lista cheltuielilor'
+export.filter: 'Filtrează datele pentru export'
+export.full_list: 'Lista completă'
+export.mark_all: 'Marcați toate înregistrările afișate ca fiind șterse?'
+export.page_of: 'Pagina %page% din %pages%'
+export.period: Perioada
+export.subtitle: 'Exportă datele în mai multe formate'
+export.summary: Sumar
+export.title: Export
+help.batch_meta_fields: 'Câmpurile care trebuiesc actualizate trebuie să fie activate mai întâi prin verificarea casetei aferente.'
+help.fixedRate: 'Fiecare înregistrare primește aceeași valoare, neținând cont de durata acesteia'
+help.rate: 'Rată orară pentru a fi taxat'
+help.rate_internal: 'Preț intern (dacă nu e specificat se folosește prețul normal)'
+invoice.due_days: 'Termen de plată'
+invoice.filter: 'Filtrează datele de facturare'
+invoice.from: 'De la'
+invoice.number: 'Număr factură'
+invoice.service_date: 'Data service'
+invoice.signature_customer: 'Confirmare: Data / Numele clientului / Semnătura'
+invoice.signature_user: 'Confirmare: Data / Numele consultantului / Semnătura'
+invoice.subtotal: Subtotal
+invoice.tax: Taxa
+invoice.title: Facturi
+invoice.to: Pentru
+invoice.total: Total
+invoice.total_working_time: 'Durata totală'
+invoice_print: Factura
+label.actions: Acțiuni
+label.active: Activ
+label.activity: Activitate
+label.address: Addresa
+label.alias: Nume
+label.amount: Cantitate
+label.api_token: 'Parola API'
+label.api_token_repeat: 'Reintrodu parola API'
+label.appendTags: 'Adaugă etichete'
+label.avatar: 'Imagine de profil'
+label.batch_meta_fields: 'Câmpuri adiționale'
+label.begin: 'De la'
+label.billable: Facturabil
+label.budget: Buget
+label.calendar.initial_view: 'Vizualizare inițială a calendarului'
+label.color: Culoare
+label.comment: Comentariu
+label.company: 'Numele firmei'
+label.contact: Contact
+label.country: Țara
+label.create_more: 'Crează intrări noi'
+label.currency: Moneda
+label.customer: Client
+label.date: Data
+label.daterange: 'Interval de timp'
+label.decimalDuration: 'Afișează durata ca număr zecimal'
+label.description: Descriere
+label.due_days: 'Termen de plată în zile'
+label.duration: Durata
+label.email: Email
+label.end: 'Până la'
+label.endtime: Sfârșit
+label.entryState: Înregistrări
+label.exported: Exportat
+label.fax: Fax
+label.fixedRate: 'Tarif fix'
+label.globalsOnly: 'Doar global'
+label.homepage: 'Pagina de pornire'
+label.hourlyRate: 'Tarif orar'
+label.hourly_rate: 'Tarif orar'
+label.hours: Ore
+label.id: ID
+label.invoice_bank_account: 'Cont bancar'
+label.invoice_tax_number: 'Nr. TVA:'
+label.language: Limba
+label.lastLogin: 'Ultima autentificare'
+label.login.initial_view: 'Vizualizare inițială după autentificare'
+label.logout: Deconectare
+label.mark_as_exported: 'Marcheză ca exportat'
+label.mobile: 'Nr. telefon mobil'
+label.my_team_projects: 'Bugetul proiectelor echipei &'
+label.my_teams: 'Echipele mele'
+label.name: Nume
+label.number: Cont
+label.orderDate: 'Data comenzii'
+label.orderNumber: 'Număr comandă'
+label.pageSize: 'Dimensiune pagină'
+label.password: Parola
+label.password_repeat: 'Repetă parola'
+label.payment_terms: 'Termeni de plată'
+label.phone: Telefon
+label.plus_more: '+%count% mai mult'
+label.progress: Progres
+label.project: Proiect
+label.project_end: 'Terminare proiect'
+label.project_start: 'Pornire proiect'
+label.rate: Tarif
+label.rate_internal: 'Preț intern'
+label.recalculate_rates: 'Recalculează valorile'
+label.replaceTags: 'Înlocuiește etichetele'
+label.required_version: 'Compatibil cu'
+label.roles: Rol
+label.skin: 'Afișare: culori'
+label.starttime: Începe
+label.status: Stare
+label.tag: Etichete
+label.tags: Etichete
+label.team: Echipa
+label.teamlead: 'Șef de echipă'
+label.template: Macheta
+label.theme.collapsed_sidebar: 'Minimizați bara laterală din stânga'
+label.theme.layout: 'Afișare: aranjare'
+label.timeBudget: 'Buget de timp'
+label.timesheet.daily_stats: 'Afișează statisticile zilnice referitoare la pontaj'
+label.timesheet.export_decimal: 'Utilizați durata zecimală la export'
+label.timezone: 'Zona de timp'
+label.title: Titlu
+label.toggle_dropdown: 'Arată meniul'
+label.total_rate: 'Preț total'
+label.unit_price: 'Preț unitar'
+label.user: Utilizator
+label.user_profile: 'Profilul meu'
+label.username: Utilizator
+label.vat: Taxa
+label.vat_id: 'ID TVA'
+label.version: Versiune
+label.visible: Vizibil
+login_required: 'Permisiuni insuficiente. Să te redirecționez la pagina de login?'
+menu.admin: Administrare
+menu.admin_activity: Activități
+menu.admin_customer: Clienți
+menu.admin_project: Proiecte
+menu.admin_team: Echipe
+menu.admin_timesheet: Pontaje
+menu.admin_user: Utilizatori
+menu.doctor: Doctor
+menu.export: Export
+menu.homepage: 'Panou de control'
+menu.invoice: Facturi
+menu.logout: Deconectare
+menu.plugin: Plugin-uri
+menu.reporting: Raportare
+menu.system: Sistem
+menu.system_configuration: Setări
+menu.tags: Etichete
+menu.timesheet: 'Pontajul meu'
+modal.columns.description: 'După salvare, coloanele ne-selectate vor fi ascunse. Setările vor fi stocate într-un cookie de browser. Daca ștergi cookie-urile, setările vor fi pierdute.'
+modal.columns.title: 'Modifică vizibilitatea coloanelor'
+modal.dirty: 'The form has changed. Please click "Save" to save the changes or "Close" to cancel.'
+month: Luna
+more.info.link: 'Mai multe informații'
+my.profile: 'Profilul meu'
+'no': Nu
+placeholder.type_message: 'Scrie mesajul tău...'
+profile.about_me: 'Despre mine'
+profile.api-token: API
+profile.first_entry: 'Lucrez de la'
+profile.password: Parola
+profile.preferences: Preferințe
+profile.registration_date: 'Înregistrat la'
+profile.roles: Roluri
+profile.settings: Profil
+profile.teams: Echipe
+profile.title: 'Profilul utilizatorului'
+rates.empty: 'Încă nu au fost configurate tarifele.'
+rates.title: Tarife
+recent.activities: 'Repornește una din activitățile recente'
+recent.activities.format: '%activity% în %project% pentru %customer%'
+search: Caută
+stats.activeRecordings: 'Înregistrari active'
+stats.activityTotal: Activități
+stats.amountMonth: 'Încasări în aceasta lună'
+stats.amountToday: 'Încasări pe ziua de azi'
+stats.amountTotal: 'Total încasări'
+stats.amountWeek: 'Încasări în această săptămână'
+stats.amountYear: 'Încasări în acest an'
+stats.customerTotal: Clienți
+stats.durationMonth: 'Ore lucrate luna aceasta'
+stats.durationToday: 'Ore lucrate azi'
+stats.durationTotal: 'Număr total de ore lucrate'
+stats.durationWeek: 'Ore lucrate săptămâna aceasta'
+stats.durationYear: 'Ore lucrate anul aceasta'
+stats.percentUsed: '%percent%% utilizat'
+stats.percentUsedLeft: '%percent%% utilizat (%left% sunt încă deschise)'
+stats.projectTotal: Proiecte
+stats.userActiveMonth: 'Utilizatori activi luna aceasta'
+stats.userActiveToday: 'Utilizatori activi azi'
+stats.userActiveTotal: 'Total utilizatori activi'
+stats.userActiveWeek: 'Utilizatori activi săptămâna aceasta'
+stats.userActiveYear: 'Utilizatori activi anul acesta'
+stats.userTotal: Utilizatrori
+stats.workingTimeMonth: '%lună% %an%'
+stats.workingTimeToday: 'Astăzi, %day%'
+stats.workingTimeWeek: 'Calendar pe săptămână %week%'
+stats.workingTimeYear: 'An întreg'
+stats.yourWorkingHours: 'Numărul meu de ore lucrate'
+status.new: Nou
+status.paid: Plătită
+status.pending: 'În așteptare'
+sum.total: __sum.total
+theme.update_browser_title: 'Update browser title'
+time_tracking: 'Contorizarea timpului'
+timesheet.all: 'Arată toate înregistrările'
+timesheet.edit: 'Modifică înregistrarea'
+timesheet.start: 'Crează o nouă înregistrare'
+timesheet.title: 'Pontajele mele'
+update_multiple: '%action% %count% intrări?'
+upload: Încarcă
+user_permissions.title: 'Permisiuni utilizator'
+user_role.title: 'Rol utilizator'
+'yes': Da
+invoice.subtitle: 'Crează facturi din înregistrările de pontaj.'

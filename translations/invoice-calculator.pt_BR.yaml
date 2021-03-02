@@ -1,0 +1,8 @@
+activity: 'Atividade agrupada - uma entrada por atividade'
+date: 'Date: one entry per day (uses start date)'
+default: 'Baseado em entrada - uma entrada por medição de tempo (padrão)'
+label.invoice_calculator: 'Cálculo da soma'
+project: 'Project: one entry per project'
+short: 'Horas adicionadas - apenas uma entrada'
+user: 'Agrupado pelo usuário - uma entrada por usuário'
+weekly: 'Weekly: one entry per week (uses start date)'

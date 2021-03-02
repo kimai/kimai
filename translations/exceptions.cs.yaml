@@ -1,0 +1,9 @@
+access.denied: 'Přístup byl odepřen'
+http_error.description: 'Vyskytla se chyba.'
+http_error.suggestion: "\nDošlo k neočekávané chybě, zkuste to znovu.\nPokud se chyba vyskytuje opakovaně, kontaktujte svého správce.\n"
+http_error.title: Chyba
+http_error_403.description: 'Tato stránka má omezený přístup.'
+http_error_403.suggestion: "\nLitujeme, nemáte dostatečná oprávnění k zobrazení této stránky.\nPokud se jedná o chybu, kontaktujte svého správce.\n"
+http_error_404.description: 'Stránka neexistuje.'
+http_error_404.suggestion: "\nNenašli jsme stránku, kterou jste hledali.\nMůžete se vrátit na Nástěnku a začít znovu.\n"
+stacktrace: 'K problému došlo zde'

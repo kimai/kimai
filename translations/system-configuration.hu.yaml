@@ -1,0 +1,60 @@
+Ceil: 'Ceil: begin, end and duration will be rounded up'
+Closest: 'Closest: mathematical rounding to the nearest value'
+Default: 'Standard: begin will be rounded down, end and duration up'
+Floor: 'Floor: begin, end and duration will be rounded down'
+Friday: Friday
+Monday: Monday
+Saturday: Saturday
+Sunday: Sunday
+Thursday: Thursday
+Tuesday: Tuesday
+Wednesday: Wednesday
+branding: Branding
+calendar: Naptár
+first_weekday: 'First day of the week'
+form_customer: 'Új ügyfél alapértelmezett értékei'
+form_user: 'Felhasználó—alapértelmezett értékek'
+increment_rounding: 'Use configured value of the rounding rule'
+invoice: Számlák
+label.calendar.businessHours.begin: 'Rendes munkaidő kezdete(ki lesz emelve)'
+label.calendar.businessHours.end: 'Rendes munkaidő vége(ki lesz emelve)'
+label.calendar.slot_duration: 'Slot duration for week- and day view (format: hh:mm:ss)'
+label.calendar.visibleHours.begin: 'Látható időtartam kezdete'
+label.calendar.visibleHours.end: 'Látható időtartam vége'
+label.calendar.week_numbers: 'Mutasd a hetek'
+label.calendar.weekends: 'Mutasd a'
+label.invoice.number_format: 'Invoice number format'
+label.simple_form: 'Simple search'
+label.theme.autocomplete_chars: 'A legkevesebb betű az automata-kiegészítő indításához'
+label.theme.branding.company: Company
+label.theme.branding.logo: 'Logo (Image URL, replaces the company in login screen)'
+label.theme.branding.mini: 'Mini Logo (collapsed sidebar)'
+label.theme.branding.title: 'Browser Title'
+label.theme.markdown_content: 'Engedélyezz markdown-formázást leírásokban és hozzászólásokban'
+label.theme.tags_create: 'Címkék: használj automata kiegészítőt és engedélyezd a címke létrehozást'
+label.timesheet.active_entries.hard_limit: 'Egyszerre futtatható rögzítések száma'
+label.timesheet.active_entries.soft_limit: 'Figyelmeztetés megjelenítése ennyi rögzítés elérésekor'
+label.timesheet.default_begin: 'Default start-time (not used in all timetracking modes)'
+label.timesheet.duration_increment: 'Minute selection for Duration'
+label.timesheet.mode: 'Időmérő mód'
+label.timesheet.mode_default: '"Alapértelmezett mód" - a kezdeti és vég időpontok szerkeszthetőek'
+label.timesheet.mode_duration_fixed_begin: '"Alapértelmezett fix kezdés" mód - konfigurálható fix kezdeti-idő, csak a terjedelem változtatható'
+label.timesheet.mode_duration_only: '"Csak időtartam" mód - a befejezés mezőt kicseréli időtartamra'
+label.timesheet.mode_punch: '"Ökölcsapás" mód - a felhasználó elindíthat és leállíthat felvételeket, de nem szerkesztheti az időt vagy a hosszt'
+label.timesheet.rounding.default.begin: 'Rounding of the start time in minutes (0 = deactivated)'
+label.timesheet.rounding.default.days: 'Days of the week when rounding will be applied'
+label.timesheet.rounding.default.duration: 'Rounding of the duration in minutes (0 = deactivated)'
+label.timesheet.rounding.default.end: 'Rounding of the end time in minutes (0 = deactivated)'
+label.timesheet.rounding.default.mode: 'Rounding mode'
+label.timesheet.rules.allow_future_times: 'Jövőbeli rögzítések engedélyezése'
+label.timesheet.rules.allow_overlapping_records: 'Engedélyezd az átfedő rögzítéseket'
+label.timesheet.rules.lockdown_grace_period: 'Lezárási kegyelmi időszak vége (PHP dátuma relatív a lezárási időszak végéhez)'
+label.timesheet.rules.lockdown_period_end: 'Lezárási időszak vége (PHP dátuma relatív a jelenlegihez)'
+label.timesheet.rules.lockdown_period_start: 'Lezárási időszak kezdete (PHP dátuma relatív a jelenlegihez)'
+label.timesheet.time_increment: 'Minute selection for From & To'
+'off': 'Off'
+rounding: 'Time rounding'
+subtitle: 'Az időrögzítő globális beállításainak a módosítása'
+theme: Téma
+timesheet: 'Rögzített órák'
+title: 'Rendszer beállítások'
