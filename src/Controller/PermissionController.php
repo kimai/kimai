@@ -160,7 +160,7 @@ final class PermissionController extends AbstractController
 
         $dispatcher->dispatch($event);
 
-        return $this->render('user/permissions.html.twig', [
+        return $this->render('permission/permissions.html.twig', [
             'token' => $csrfTokenManager->refreshToken(self::TOKEN_NAME)->getValue(),
             'roles' => array_values($roles),
             'sorted' => $event->getPermissions(),
@@ -196,7 +196,7 @@ final class PermissionController extends AbstractController
             return $this->redirectToRoute('admin_user_permissions');
         }
 
-        return $this->render('user/edit_role.html.twig', [
+        return $this->render('permission/edit_role.html.twig', [
             'form' => $form->createView(),
             'role' => $role,
         ]);

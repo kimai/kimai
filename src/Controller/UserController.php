@@ -144,13 +144,10 @@ final class UserController extends AbstractController
             $editForm->get('create_more')->setData(true);
         }
 
-        return $this->render(
-            'user/edit.html.twig',
-            [
-                'user' => $user,
-                'form' => $editForm->createView()
-            ]
-        );
+        return $this->render('user/create.html.twig', [
+            'user' => $user,
+            'form' => $editForm->createView()
+        ]);
     }
 
     /**
