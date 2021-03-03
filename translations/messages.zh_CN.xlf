@@ -73,7 +73,7 @@
       </trans-unit>
       <trans-unit id="label.password_repeat">
         <source>label.password_repeat</source>
-        <target>再次输入密码</target>
+        <target state="translated">确认密码</target>
       </trans-unit>
       <trans-unit id="label.logout">
         <source>label.logout</source>
@@ -1036,6 +1036,18 @@
       <trans-unit id="upload">
         <source>upload</source>
         <target>上传</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>表格已更改。请点击 "保存 "以保存更改，或点击 "关闭 "以取消更改。</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>汇总</target>
+      </trans-unit>
+      <trans-unit id="rates.title">
+        <source>rates.title</source>
+        <target state="translated">费用</target>
       </trans-unit>
     </body>
   </file>

@@ -1049,6 +1049,18 @@
         <source>label.batch_meta_fields</source>
         <target>שדות נוספים</target>
       </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>עדכן כותרת דפדפן</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>הטופס השתנה. נא ללחץ על "שמירה" כדי לשמור את השינויים או על "סגירה" כדי לבטל.</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>סך הכל</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

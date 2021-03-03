@@ -1062,6 +1062,18 @@
         <source>stats.workingTimeMonth</source>
         <target>%month% %year%</target>
       </trans-unit>
+      <trans-unit id="stats.workingTimeWeek">
+        <source>stats.workingTimeWeek</source>
+        <target>Kalendara semajno %week%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeToday">
+        <source>stats.workingTimeToday</source>
+        <target>Hodiaŭ, %day%</target>
+      </trans-unit>
+      <trans-unit id="placeholder.type_message">
+        <source>placeholder.type_message</source>
+        <target>Tajpi vian mesaĝon…</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
