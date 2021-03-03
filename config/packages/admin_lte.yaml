@@ -7,7 +7,7 @@ admin_lte:
         # default image for missing user avatar images
         default_avatar: build/images/default_avatar.png
         # the color skin
-        skin: skin-green
+        skin: skin-blue
         # if activated, the boxed_layout will be deactivated
         fixed_layout: true
         # boxed layout (true) or full-screen (false)
