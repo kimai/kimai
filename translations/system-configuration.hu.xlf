@@ -118,6 +118,10 @@
         <source>label.calendar.businessHours.begin</source>
         <target>Rendes munkaidő kezdete(ki lesz emelve)</target>
       </trans-unit>
+      <trans-unit id="branding">
+        <source>branding</source>
+        <target>Arculat</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
