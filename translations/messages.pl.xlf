@@ -1076,7 +1076,7 @@
       </trans-unit>
       <trans-unit id="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
-        <target>%miesiąc% %rok%</target>
+        <target>%month% %year%</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
