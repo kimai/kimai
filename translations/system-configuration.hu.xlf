@@ -122,6 +122,10 @@
         <source>branding</source>
         <target>Arculat</target>
       </trans-unit>
+      <trans-unit id="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target>Logó (Kép link, kicseréli a logót a bejelentkezési képernyőn)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
