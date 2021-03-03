@@ -1,38 +1,38 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="it" datatype="plaintext" original="teams.en.xlf">
+  <file source-language="en" target-language="cs" datatype="plaintext" original="teams.en.xlf">
     <body>
       <trans-unit id="teams.title">
         <source>teams.title</source>
-        <target>Gruppi</target>
+        <target>Týmy</target>
       </trans-unit>
       <trans-unit id="teams.project_access">
         <source>teams.project_access</source>
-        <target>Concedi accesso ai progetti</target>
+        <target>Schválit přístup k projektům</target>
       </trans-unit>
       <trans-unit id="teams.customer_access">
         <source>teams.customer_access</source>
-        <target>Concedi accesso ai clienti</target>
+        <target>Schválit přístup k zákazníkům</target>
       </trans-unit>
       <trans-unit id="team.visibility_global">
         <source>team.visibility_global</source>
-        <target>Visibile a chiunque, in assenza del gruppo assegnato.</target>
+        <target>Viditelné pro všechny, jelikož nebyl přiřazen žádnému týmu.</target>
       </trans-unit>
       <trans-unit id="team.visibility_restricted">
         <source>team.visibility_restricted</source>
-        <target>Visibile solo ai seguenti gruppi e a tutti gli amministratori.</target>
+        <target>Viditelné pouze následujícím týmům a všem adminům.</target>
       </trans-unit>
       <trans-unit id="team.project_visibility_inherited">
         <source>team.project_visibility_inherited</source>
-        <target>Progetto con accesso limitato perchè i permessi di gruppo sono impostati per i clienti.</target>
-      </trans-unit>
-      <trans-unit id="team.create_default">
-        <source>team.create_default</source>
-        <target>Crea un nuovo gruppo per limitare l'accesso</target>
+        <target>Projekt má limitován přístup, protože oprávnění týmu jsou nastavena na zákazníka.</target>
       </trans-unit>
       <trans-unit id="team.activity_visibility_inherited">
         <source>team.activity_visibility_inherited</source>
-        <target>L'attività ha un accesso limitato, perché le autorizzazioni del gruppo sono impostate per il progetto e/o il cliente.</target>
+        <target>Aktivita má limitovaný přístup, protože oprávnění týmu jsou nastavena na projekt a/nebo zákazníka.</target>
+      </trans-unit>
+      <trans-unit id="team.create_default">
+        <source>team.create_default</source>
+        <target>Vytvořit nový tým k omezenému přístupu</target>
       </trans-unit>
     </body>
   </file>

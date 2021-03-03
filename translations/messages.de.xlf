@@ -86,7 +86,7 @@
       </trans-unit>
       <trans-unit id="modal.dirty">
         <source>modal.dirty</source>
-        <target>Das Formular wurde geändert. Bitte klicken Sie "Speichern" um die Änderungen zu sichern oder "Schließen" um abzubrechen.</target>
+        <target>Das Formular wurde geändert. Bitte klicken Sie „Speichern“, um die Änderungen zu sichern oder „Schließen“, um abzubrechen.</target>
       </trans-unit>
       <!--
               Login / Security
@@ -109,11 +109,11 @@
       </trans-unit>
       <trans-unit id="label.api_token">
         <source>label.api_token</source>
-        <target>API Passwort</target>
+        <target>API-Passwort</target>
       </trans-unit>
       <trans-unit id="label.api_token_repeat">
         <source>label.api_token_repeat</source>
-        <target>API Passwort wiederholen</target>
+        <target>API-Passwort wiederholen</target>
       </trans-unit>
       <trans-unit id="login_required">
         <source>login_required</source>
@@ -122,7 +122,7 @@
       <!--
               Menu / Navbar items
             -->
-      <trans-unit id="menu.homepage">
+      <trans-unit id="menu.homepage" approved="yes">
         <source>menu.homepage</source>
         <target>Dashboard</target>
       </trans-unit>
