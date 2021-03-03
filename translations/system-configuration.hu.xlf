@@ -130,6 +130,102 @@
         <source>label.theme.branding.company</source>
         <target>Cég név</target>
       </trans-unit>
+      <trans-unit id="first_weekday">
+        <source>first_weekday</source>
+        <target>Hét első napja</target>
+      </trans-unit>
+      <trans-unit id="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target>Számla szám formátum</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>Bejegyzés hossza heti és napi nézetben (formátum: hh:mm:ss)</target>
+      </trans-unit>
+      <trans-unit id="label.simple_form">
+        <source>label.simple_form</source>
+        <target>Egyszerű keresés</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>Alapértelmezett kezdési idő (nem használja minden időmérő mód)</target>
+      </trans-unit>
+      <trans-unit id="Floor">
+        <source>Floor</source>
+        <target>Lefele: kezdés, befejezés és időtartam is lefele lesz kerekítve</target>
+      </trans-unit>
+      <trans-unit id="Default">
+        <source>Default</source>
+        <target>Standard: kezdés lefele lesz kerekítve, befejezés és időtartam felfele</target>
+      </trans-unit>
+      <trans-unit id="Closest">
+        <source>Closest</source>
+        <target>Legközelebbi: matematikai kerekítés, a legközelebbi értékre</target>
+      </trans-unit>
+      <trans-unit id="Ceil">
+        <source>Ceil</source>
+        <target>Felfele: kezdés, befejezés és időtartam is felfele lesz kerekítve</target>
+      </trans-unit>
+      <trans-unit id="Sunday">
+        <source>Sunday</source>
+        <target>Vasárnap</target>
+      </trans-unit>
+      <trans-unit id="Saturday">
+        <source>Saturday</source>
+        <target>Szombat</target>
+      </trans-unit>
+      <trans-unit id="Friday">
+        <source>Friday</source>
+        <target>Péntek</target>
+      </trans-unit>
+      <trans-unit id="Thursday">
+        <source>Thursday</source>
+        <target>Csütörtök</target>
+      </trans-unit>
+      <trans-unit id="Wednesday">
+        <source>Wednesday</source>
+        <target>Szerda</target>
+      </trans-unit>
+      <trans-unit id="Tuesday">
+        <source>Tuesday</source>
+        <target>Kedd</target>
+      </trans-unit>
+      <trans-unit id="Monday">
+        <source>Monday</source>
+        <target>Hétfő</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target>Hét napjai, amikor a kerekítés alkalmazva lesz</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target>Kerekítési mód</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target>Időtartam kerekítése, perc (0=kikapcsolva)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target>Kezdési idő kerekítése, perc (0 = kikapcsolva)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>Befejezési idő kerekítése, perc (0 = kikapcsolva)</target>
+      </trans-unit>
+      <trans-unit id="rounding">
+        <source>rounding</source>
+        <target>Idő kerekítés</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target>Böngésző címsor</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target>Kis logó (összecsukott oldalsávnál)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
