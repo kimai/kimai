@@ -8,15 +8,15 @@
       </trans-unit>
       <trans-unit id="invoice.tax">
         <source>invoice.tax</source>
-        <target>Umsatzsteuer</target>
+        <target>Mehrwertsteuer</target>
       </trans-unit>
       <trans-unit id="menu.homepage">
         <source>menu.homepage</source>
-        <target>Instrumententafel</target>
+        <target state="translated">Dashboard</target>
       </trans-unit>
       <trans-unit id="label.api_token_repeat">
         <source>label.api_token_repeat</source>
-        <target>AP-Passwort wiederholen</target>
+        <target>API-Passwort wiederholen</target>
       </trans-unit>
       <trans-unit id="label.api_token">
         <source>label.api_token</source>
