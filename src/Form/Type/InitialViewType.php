@@ -32,7 +32,6 @@ class InitialViewType extends AbstractType
         'admin_customer' => 'menu.admin_customer',
         'admin_project' => 'menu.admin_project',
         'admin_activity' => 'menu.admin_activity',
-        'reporting' => 'menu.reporting',
     ];
 
     protected const ROUTE_PERMISSION = [
@@ -46,7 +45,6 @@ class InitialViewType extends AbstractType
         'admin_customer' => 'view_customer',
         'admin_project' => 'view_project',
         'admin_activity' => 'view_activity',
-        'reporting' => 'view_reporting',
     ];
 
     /**
