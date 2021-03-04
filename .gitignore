@@ -2,8 +2,10 @@
 # some hosters require a htaccess to change the PHP version
 .htaccess
 
+# IDEs
 .idea/
 .DS_Store
+/nbproject/
 
 # for symfony local webserver
 php.ini
@@ -69,4 +71,3 @@ translations/branding.en.xlf
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-/nbproject/*

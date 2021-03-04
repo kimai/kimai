@@ -56,7 +56,9 @@
                     var month = this.data.datasets[0].monthData[element._index];
                     var formattedMonth = moment(month).format('{{ stat_date_format }}');
                     var reportUrl = '{{ path('report_user_month', {'user': user.id, 'date': 'XXXXX'})|raw }}'.replace('XXXXX', formattedMonth);
-                    document.location = reportUrl;
+                    {% if user.enabled %}
+                            document.location = reportUrl;
+                    {% endif %}
                 }
             {% endif %}
             };
