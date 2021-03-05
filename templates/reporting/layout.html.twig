@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% import "reporting/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'reporting.title'|trans({}, 'reporting') }}{% endblock %}
+{% block page_title %}{{ 'menu.reporting'|trans }}{% endblock %}
 {% block page_subtitle %}{% block report_title %}{% endblock %}{% endblock %}
 {% block page_actions %}{{ actions.reporting() }}{% endblock %}
 
