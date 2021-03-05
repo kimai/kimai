@@ -12,7 +12,7 @@ namespace App\Event;
 use App\Entity\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
-final class ThemeEvent extends Event
+class ThemeEvent extends Event
 {
     public const JAVASCRIPT = 'app.theme.javascript';
     public const STYLESHEET = 'app.theme.css';
@@ -25,29 +25,24 @@ final class ThemeEvent extends Event
     /**
      * @var User|null
      */
-    protected $user;
+    private $user;
     /**
      * @var string
      */
-    protected $content = '';
+    private $content = '';
     /**
      * @var mixed
      */
-    protected $payload = null;
+    protected $payload;
 
-    public function __construct(?User $user = null, $payload = null)
+    public function __construct(User $user, $payload = null)
     {
         $this->user = $user;
         $this->payload = $payload;
     }
 
-    /**
-     * @deprecated since 1.0
-     */
-    public function getUser(): ?User
+    public function getUser(): User
     {
-        @trigger_error('Using ThemeEvent::getUser() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
         return $this->user;
     }
 

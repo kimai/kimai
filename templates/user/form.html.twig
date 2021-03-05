@@ -1,6 +1,7 @@
 {% extends 'user/layout.html.twig' %}
 
-{% block main %}
+{% block profile_content %}
+
     {{ form_start(form) }}
     {% for section in sections %}
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}

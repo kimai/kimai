@@ -61,6 +61,7 @@ final class ReportingController extends AbstractController
 
     private function canSelectUser(): bool
     {
+        // also found in App\EventSubscriber\Actions\UserSubscriber
         if (!$this->isGranted('view_other_timesheet')) {
             return false;
         }
