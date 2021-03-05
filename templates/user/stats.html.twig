@@ -174,7 +174,7 @@
 {% macro profile_box_vertical(user, stats) %}
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_body_class %}box-profile{% endblock %}
+        {% block box_body_class %}box-profile box-user-profile{% endblock %}
         {% block box_body %}
             <div class="text-center">
                 {{ widgets.user_avatar(user) }}
@@ -219,7 +219,7 @@
     {% set event = trigger('user.profile_background', {'color': color, 'font': color|font_contrast, 'user': user, 'image': null}) %}
     {% set config = event.payload %}
 
-    <div class="box box-widget widget-user">
+    <div class="box box-widget widget-user box-user-profile">
         <div class="widget-user-header" style="{% if config.image is not null %}background: url('{{ config.image }}') center center;{% else %}background-color: {{ config.color }}{% endif %}">
             <h3 class="widget-user-username" style="color: {{ config.font }}">
                 {{ widgets.username(user) }}
