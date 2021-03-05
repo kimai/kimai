@@ -10,7 +10,7 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Entity\User;
-use App\Event\ActionsEvent;
+use App\Event\PageActionsEvent;
 
 class UserSubscriber extends AbstractActionsSubscriber
 {
@@ -21,7 +21,7 @@ class UserSubscriber extends AbstractActionsSubscriber
         ];
     }
 
-    public function onActions(ActionsEvent $event)
+    public function onActions(PageActionsEvent $event)
     {
         $payload = $event->getPayload();
 

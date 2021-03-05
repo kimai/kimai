@@ -10,7 +10,7 @@
 namespace App\Twig\Runtime;
 
 use App\Entity\User;
-use App\Event\ActionsEvent;
+use App\Event\PageActionsEvent;
 use App\Event\ThemeEvent;
 use App\Event\ThemeJavascriptTranslationsEvent;
 use Symfony\Bridge\Twig\AppVariable;
@@ -58,7 +58,7 @@ final class ThemeExtension implements RuntimeExtensionInterface
             $payload['actions'] = [];
         }
 
-        $themeEvent = new ActionsEvent($user, $payload);
+        $themeEvent = new PageActionsEvent($user, $payload, $action);
 
         $eventName = 'actions.' . $action;
 

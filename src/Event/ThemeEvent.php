@@ -35,13 +35,13 @@ class ThemeEvent extends Event
      */
     protected $payload;
 
-    public function __construct(User $user, $payload = null)
+    public function __construct(?User $user = null, $payload = null)
     {
         $this->user = $user;
         $this->payload = $payload;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
