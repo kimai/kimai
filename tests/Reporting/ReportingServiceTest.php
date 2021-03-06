@@ -7,41 +7,31 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Twig;
+namespace App\Tests\Reporting;
 
 use App\Entity\User;
-use App\Twig\ReportingExtension;
+use App\Event\ReportingEvent;
+use App\Reporting\ReportingService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Twig\TwigFunction;
 
 /**
- * @covers \App\Twig\ReportingExtension
+ * @covers \App\Reporting\ReportingService
  */
-class ReportingExtensionTest extends TestCase
+class ReportingServiceTest extends TestCase
 {
-    protected function getSut(bool $isGranted = false): ReportingExtension
+    protected function getSut(bool $isGranted = false): ReportingService
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $dispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) {
+            $this->assertInstanceOf(ReportingEvent::class, $event);
+        });
+
         $security = $this->createMock(AuthorizationCheckerInterface::class);
-        $security->method('isGranted')->willReturn($isGranted);
+        $security->expects($this->any())->method('isGranted')->willReturn($isGranted);
 
-        return new ReportingExtension($dispatcher, $security);
-    }
-
-    public function testGetFunctions()
-    {
-        $sut = $this->getSut();
-        $functions = ['available_reports'];
-        $twigFunctions = $sut->getFunctions();
-        $this->assertCount(\count($functions), $twigFunctions);
-        $i = 0;
-        /** @var TwigFunction $function */
-        foreach ($twigFunctions as $function) {
-            $this->assertInstanceOf(TwigFunction::class, $function);
-            $this->assertEquals($functions[$i++], $function->getName());
-        }
+        return new ReportingService($dispatcher, $security);
     }
 
     public function testGetAvailableReports()
