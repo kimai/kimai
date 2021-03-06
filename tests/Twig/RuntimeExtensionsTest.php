@@ -37,7 +37,7 @@ class RuntimeExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $expected = ['trigger', 'javascript_translations', 'timesheet_exporter', 'active_timesheets', 'encore_entry_css_source', 'render_widget'];
+        $expected = ['trigger', 'javascript_translations', 'timesheet_exporter', 'active_timesheets', 'encore_entry_css_source', 'render_widget', 'available_reports'];
         $i = 0;
 
         $sut = new RuntimeExtensions();

@@ -7,18 +7,14 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Twig;
+namespace App\Reporting;
 
 use App\Entity\User;
 use App\Event\ReportingEvent;
-use App\Reporting\Report;
-use App\Reporting\ReportInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
 
-final class ReportingExtension extends AbstractExtension
+final class ReportingService
 {
     /**
      * @var EventDispatcherInterface
@@ -33,16 +29,6 @@ final class ReportingExtension extends AbstractExtension
     {
         $this->dispatcher = $dispatcher;
         $this->security = $security;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
-    {
-        return [
-            new TwigFunction('available_reports', [$this, 'getAvailableReports'], []),
-        ];
     }
 
     /**
