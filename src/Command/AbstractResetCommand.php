@@ -9,6 +9,7 @@
 
 namespace App\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -27,16 +28,21 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * feel like it is necessary, so I "cheat" with:
  * @codeCoverageIgnore
  */
-class ResetCommand extends Command
+abstract class AbstractResetCommand extends Command
 {
     /**
      * @var string
      */
     private $environment;
+    /**
+     * @var EntityManagerInterface
+     */
+    protected $entityManager;
 
-    public function __construct(string $kernelEnvironment)
+    public function __construct(string $kernelEnvironment, EntityManagerInterface $entityManager)
     {
         $this->environment = $kernelEnvironment;
+        $this->entityManager = $entityManager;
         parent::__construct();
     }
 
@@ -46,11 +52,11 @@ class ResetCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('kimai:reset-dev')
+            ->setName('kimai:reset-' . $this->getEnvName())
             ->setDescription('Resets the dev environment')
             ->setHelp(
                 <<<EOT
-    This command will drop and re-create the database and its schemas, load development fixtures and clear the cache.
+    This command will drop and re-create the database and its schemas, load data and clear the cache.
     Use the <info>-n</info> switch to skip the question.
 EOT
             )
@@ -81,7 +87,8 @@ EOT
         if ($this->askConfirmation($input, $output, 'Do you want to create the database y/N ?')) {
             try {
                 $command = $this->getApplication()->find('doctrine:database:create');
-                $command->run(new ArrayInput([]), $output);
+                $options = ['--if-not-exists' => true];
+                $command->run(new ArrayInput($options), $output);
             } catch (Exception $ex) {
                 $io->error('Failed to create database: ' . $ex->getMessage());
 
@@ -130,12 +137,9 @@ EOT
         }
 
         try {
-            $command = $this->getApplication()->find('doctrine:fixtures:load');
-            $cmdInput = new ArrayInput([]);
-            $cmdInput->setInteractive(false);
-            $command->run($cmdInput, $output);
+            $this->loadData($input, $output);
         } catch (Exception $ex) {
-            $io->error('Failed to import fixtures: ' . $ex->getMessage());
+            $io->error('Failed to import data: ' . $ex->getMessage());
 
             return 6;
         }
@@ -173,4 +177,8 @@ EOT
 
         return $questionHelper->ask($input, $output, $question);
     }
+
+    abstract protected function getEnvName(): string;
+
+    abstract protected function loadData(InputInterface $input, OutputInterface $output): void;
 }
