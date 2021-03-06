@@ -74,7 +74,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
     protected function assertHasProfileBox(HttpKernelBrowser $client, string $username)
     {
-        $profileBox = $client->getCrawler()->filter('div.box-body.box-profile');
+        $profileBox = $client->getCrawler()->filter('div.box-user-profile');
         $this->assertEquals(1, $profileBox->count());
         $profileAvatar = $profileBox->filter('img.img-circle');
         $this->assertEquals(1, $profileAvatar->count());
@@ -87,8 +87,7 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringContainsString('<h3 class="box-title">About me</h3>', $content);
-        $this->assertStringContainsString('<td class="text-nowrap pull-right">' . $username . '</td>', $content);
+        $this->assertStringContainsString('About me', $content);
     }
 
     public function getTabTestData()

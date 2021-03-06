@@ -394,7 +394,7 @@ class Configuration implements ConfigurationInterface
                     ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "kimai.timesheet.active_entries.soft_limit" instead.')
                 ->end()
                 ->scalarNode('box_color')
-                    ->defaultValue('green')
+                    ->defaultValue('blue')
                     ->setDeprecated('The node "%node%" at path "%path%" was removed, please delete it from your config.')
                 ->end()
                 ->scalarNode('select_type')
