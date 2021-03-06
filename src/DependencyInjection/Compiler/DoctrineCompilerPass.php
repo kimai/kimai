@@ -23,7 +23,6 @@ class DoctrineCompilerPass implements CompilerPassInterface
      */
     private $allowedEngines = [
         'mysql' => 'mysql',
-        'mysqli' => 'mysql',
         'sqlite' => 'sqlite',
     ];
 

@@ -29,6 +29,7 @@ class RuntimeExtensions extends AbstractExtension
     {
         return [
             new TwigFunction('trigger', [ThemeExtension::class, 'trigger'], ['needs_environment' => true]),
+            new TwigFunction('actions', [ThemeExtension::class, 'actions']),
             new TwigFunction('javascript_translations', [ThemeExtension::class, 'getJavascriptTranslations']),
             new TwigFunction('timesheet_exporter', [ExporterExtension::class, 'getTimesheetExporter']),
             new TwigFunction('active_timesheets', [TimesheetExtension::class, 'activeEntries']),

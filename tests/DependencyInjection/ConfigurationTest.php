@@ -340,7 +340,7 @@ class ConfigurationTest extends TestCase
             ],
             'theme' => [
                 'active_warning' => 3,
-                'box_color' => 'green',
+                'box_color' => 'blue',
                 'select_type' => 'selectpicker',
                 'auto_reload_datatable' => false,
                 'show_about' => true,
