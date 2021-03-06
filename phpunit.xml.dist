@@ -35,7 +35,7 @@
             - composer tests
             - change back to "false"
         -->
-        <env name="BOOTSTRAP_RESET_DATABASE" value="false"/>
+        <env name="BOOTSTRAP_RESET_DATABASE" value="true"/>
     </php>
 
     <testsuites>
