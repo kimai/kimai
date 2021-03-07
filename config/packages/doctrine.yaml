@@ -13,8 +13,7 @@ doctrine:
             default:
                 # existing migrations will fail if the schema filter is activated
                 #schema_filter: ~^(?!(bundle_migration_|kimai2_sessions))~
-                # Removing "resolve:" would fail eg. SQLite URLs
-                url: '%env(resolve:DATABASE_URL)%'
+                url: '%env(DATABASE_URL)%'
                 driver: 'pdo_mysql'
                 # this setting prevents automatic database detection and finds a lot of false-negatives on doctrine:migrations:diff
                 # for null columns with MariaDB. Each migration tries to convert EVERY nullable column.

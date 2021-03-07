@@ -28,7 +28,7 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: none
-                    extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql, zip, gd, ldap
+                    extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
             -   run: |
                     composer install --no-progress
                     composer require laminas/laminas-ldap
@@ -40,17 +40,17 @@ jobs:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai
                     APP_ENV: dev
                     MAILER_URL: null://localhost
+            -   name: Run integration tests
+                run: composer kimai:tests-integration
+                env:
+                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai
+                    APP_ENV: dev
+                    MAILER_URL: null://localhost
             -   name: Run migrations on MySQL
                 run: |
                     bin/console doctrine:database:create --if-not-exists -n
                     bin/console doctrine:migrations:migrate -n
                     bin/console doctrine:migrations:migrate first -n
-                env:
-                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai
-                    APP_ENV: dev
-                    MAILER_URL: null://localhost
-            -   name: Run integration tests
-                run: composer kimai:tests-integration
                 env:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai
                     APP_ENV: dev

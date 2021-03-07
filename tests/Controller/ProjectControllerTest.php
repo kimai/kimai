@@ -476,10 +476,9 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertHasFlashDeleteSuccess($client);
         $this->assertHasNoEntriesWithFilter($client);
 
-        // SQLIte does not necessarly support onCascade delete, so these timesheet will stay after deletion
-        // $em->clear();
-        // $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        // $this->assertEquals(0, count($timesheets));
+        $em->clear();
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(0, \count($timesheets));
 
         $this->request($client, '/admin/project/1/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());
