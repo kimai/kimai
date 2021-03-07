@@ -15,7 +15,7 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
-use App\Tests\DataFixtures\TimesheetFixture;
+use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -153,7 +153,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $begin = new \DateTime('first day of this month');
         $end = new \DateTime('last day of this month');
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setUser($this->getUserByRole(User::ROLE_TEAMLEAD))
             ->setAmount(20)
@@ -218,7 +218,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $begin = new \DateTime('first day of this month');
         $end = new \DateTime('last day of this month');
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setUser($this->getUserByRole(User::ROLE_TEAMLEAD))
             ->setAmount(20)
@@ -276,7 +276,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $begin = new \DateTime('first day of this month');
         $end = new \DateTime('last day of this month');
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setUser($this->getUserByRole(User::ROLE_ADMIN))
             ->setAmount(20)

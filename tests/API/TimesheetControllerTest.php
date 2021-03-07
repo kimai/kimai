@@ -17,7 +17,7 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
-use App\Tests\DataFixtures\TimesheetFixture;
+use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 use App\Timesheet\DateTimeFactory;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +37,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
      */
     protected function importFixtureForUser(string $role): array
     {
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setFixedRate(true)
             ->setHourlyRate(true)
@@ -87,7 +87,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->importFixtureForUser(User::ROLE_USER);
         $em = $this->getEntityManager();
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setFixedRate(true)
             ->setHourlyRate(true)
@@ -112,7 +112,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setFixedRate(true)
             ->setHourlyRate(true)
@@ -214,7 +214,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setExported(true)
             ->setAmount(7)
@@ -526,7 +526,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setFixedRate(true)
             ->setHourlyRate(true)
@@ -668,7 +668,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $start = new \DateTime('-10 days');
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setFixedRate(true)
             ->setHourlyRate(true)
@@ -699,7 +699,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $start = new \DateTime('-10 days');
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setFixedRate(true)
             ->setHourlyRate(true)
@@ -727,7 +727,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $start = new \DateTime('-10 days');
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setFixedRate(true)
             ->setHourlyRate(true)
@@ -775,7 +775,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $start = new \DateTime('-10 days');
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setFixedRate(true)
             ->setHourlyRate(true)
@@ -796,7 +796,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setFixedRate(true)
             ->setHourlyRate(true)
@@ -948,7 +948,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $start = new \DateTime('-10 days');
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setFixedRate(true)
             ->setHourlyRate(true)

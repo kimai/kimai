@@ -23,7 +23,7 @@ use App\Repository\UserRepository;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
-use App\Tests\DataFixtures\TimesheetFixture;
+use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\KernelTestTrait;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -208,7 +208,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $fixture->setAmount(1);
         $projects = $this->importFixture($fixture);
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByName(UserFixtures::USERNAME_SUPER_ADMIN));
         $fixture->setAmount(20);
         $fixture->setStartDate($start);

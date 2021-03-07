@@ -18,8 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Command used to execute all the basic application bootstrapping AFTER "composer install" was executed.
  *
  * This command is NOT used during runtime and only meant for developers on their local machines.
- * I am too lazy to think about how this could be tested ... and this is one of the rare edge cases where I don't
- * feel like it is necessary, so I "cheat" with:
+ * This is one of the cases where I don't feel like it is necessary to add tests, so lets "cheat" with:
  * @codeCoverageIgnore
  */
 class ResetDevelopmentCommand extends AbstractResetCommand

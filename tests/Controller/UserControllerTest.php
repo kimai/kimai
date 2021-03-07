@@ -11,7 +11,7 @@ namespace App\Tests\Controller;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Tests\DataFixtures\TimesheetFixture;
+use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
  * @group integration
@@ -169,7 +169,7 @@ class UserControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setUser($user);
         $fixture->setAmount(10);
         $this->importFixture($fixture);
@@ -207,7 +207,7 @@ class UserControllerTest extends ControllerBaseTest
 
         $this->assertNotEquals($userNew->getId(), $user->getId());
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setUser($user);
         $fixture->setAmount(10);
         $this->importFixture($fixture);

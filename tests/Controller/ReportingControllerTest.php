@@ -10,7 +10,7 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
-use App\Tests\DataFixtures\TimesheetFixture;
+use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
  * @group integration
@@ -44,7 +44,7 @@ class ReportingControllerTest extends ControllerBaseTest
 
     protected function importReportingFixture(string $role)
     {
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setAmount(50);
         $fixture->setAmountRunning(10);
         $fixture->setUser($this->getUserByRole($role));

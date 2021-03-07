@@ -12,7 +12,7 @@ namespace App\Tests\Controller;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Tests\DataFixtures\TimesheetFixture;
+use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -60,7 +60,7 @@ class ExportControllerTest extends ControllerBaseTest
         $user = $this->getUserByRole(User::ROLE_USER);
 
         $begin = new \DateTime('first day of this month');
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setUser($user)
             ->setAmount(20)
@@ -74,7 +74,7 @@ class ExportControllerTest extends ControllerBaseTest
 
         $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setUser($teamlead)
             ->setAmount(2)
@@ -119,7 +119,7 @@ class ExportControllerTest extends ControllerBaseTest
         $user = $this->getUserByRole(User::ROLE_USER);
 
         // these should be ignored, becuase teamlead and user do NOT share a team!
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setUser($user)
             ->setAmount(20)
@@ -135,7 +135,7 @@ class ExportControllerTest extends ControllerBaseTest
 
         $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setUser($teamlead)
             ->setAmount(2)
@@ -210,7 +210,7 @@ class ExportControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
 
         $begin = new \DateTime('first day of this month');
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture
             ->setUser($this->getUserByRole(User::ROLE_USER))
             ->setAmount(20)

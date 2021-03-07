@@ -16,7 +16,7 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
-use App\Tests\DataFixtures\TimesheetFixture;
+use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
@@ -122,7 +122,7 @@ class ActivityControllerTest extends ControllerBaseTest
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setActivities($em->getRepository(Activity::class)->findAll());
         $fixture->setUser($this->getUserByRole(User::ROLE_ADMIN));
@@ -322,7 +322,7 @@ class ActivityControllerTest extends ControllerBaseTest
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setAmount(10);
         $this->importFixture($fixture);
@@ -363,7 +363,7 @@ class ActivityControllerTest extends ControllerBaseTest
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setAmount(10);
         $this->importFixture($fixture);

@@ -13,7 +13,7 @@ use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
-use App\Tests\DataFixtures\TimesheetFixture;
+use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Timesheet\Util;
 
 /**
@@ -61,7 +61,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setAmountRunning(3);
         $fixture->setUser($user);
@@ -97,7 +97,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $start = new \DateTime('first day of this month');
 
         $em = $this->getEntityManager();
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
@@ -107,7 +107,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             $timesheet->setMetaField((new TimesheetMeta())->setName('feature')->setValue('timetracking'));
         });
         $this->importFixture($fixture);
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setAmountRunning(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -134,12 +134,12 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $em = $this->getEntityManager();
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setAmount(7);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($fixture);
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setAmount(3);
         $fixture->setUser($this->getUserByRole(User::ROLE_TEAMLEAD));
         $fixture->setStartDate(new \DateTime('-10 days'));
@@ -267,7 +267,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
         $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
         $fixture->setStartDate('2017-05-01');
@@ -312,7 +312,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_TEAMLEAD);
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
         $this->importFixture($fixture);
@@ -351,7 +351,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_TEAMLEAD);
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
         $this->importFixture($fixture);

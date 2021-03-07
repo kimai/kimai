@@ -19,7 +19,7 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\RepositoryException;
 use App\Repository\TimesheetRepository;
-use App\Tests\DataFixtures\TimesheetFixture;
+use App\Tests\DataFixtures\TimesheetFixtures;
 use Pagerfanta\Pagerfanta;
 
 /**
@@ -53,7 +53,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
 
-        $fixtures = new TimesheetFixture();
+        $fixtures = new TimesheetFixtures();
         $fixtures->setUser($user);
         $fixtures->setAmount(1);
 
@@ -85,7 +85,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
 
-        $fixture = new TimesheetFixture();
+        $fixture = new TimesheetFixtures();
         $fixture->setUser($user);
         $fixture->setAmountRunning(1);
         $timesheets = $this->importFixture($fixture);

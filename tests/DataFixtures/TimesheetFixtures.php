@@ -22,7 +22,7 @@ use Faker\Factory;
 /**
  * Defines the sample data to load in during controller tests.
  */
-final class TimesheetFixture implements TestFixture
+final class TimesheetFixtures implements TestFixture
 {
     /**
      * @var User
@@ -87,28 +87,28 @@ final class TimesheetFixture implements TestFixture
         }
     }
 
-    public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions): TimesheetFixture
+    public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions): TimesheetFixtures
     {
         $this->allowEmptyDescriptions = $allowEmptyDescriptions;
 
         return $this;
     }
 
-    public function setExported(bool $exported): TimesheetFixture
+    public function setExported(bool $exported): TimesheetFixtures
     {
         $this->exported = $exported;
 
         return $this;
     }
 
-    public function setFixedRate(bool $fixedRate): TimesheetFixture
+    public function setFixedRate(bool $fixedRate): TimesheetFixtures
     {
         $this->fixedRate = $fixedRate;
 
         return $this;
     }
 
-    public function setHourlyRate(bool $hourlyRate): TimesheetFixture
+    public function setHourlyRate(bool $hourlyRate): TimesheetFixtures
     {
         $this->hourlyRate = $hourlyRate;
 
@@ -117,9 +117,9 @@ final class TimesheetFixture implements TestFixture
 
     /**
      * @param string|\DateTime $date
-     * @return TimesheetFixture
+     * @return TimesheetFixtures
      */
-    public function setStartDate($date): TimesheetFixture
+    public function setStartDate($date): TimesheetFixtures
     {
         if ($date instanceof \DateTime) {
             $date = $date->format('Y-m-d');
@@ -129,21 +129,21 @@ final class TimesheetFixture implements TestFixture
         return $this;
     }
 
-    public function setAmountRunning(int $amount): TimesheetFixture
+    public function setAmountRunning(int $amount): TimesheetFixtures
     {
         $this->running = $amount;
 
         return $this;
     }
 
-    public function setAmount(int $amount): TimesheetFixture
+    public function setAmount(int $amount): TimesheetFixtures
     {
         $this->amount = $amount;
 
         return $this;
     }
 
-    public function setUser(User $user): TimesheetFixture
+    public function setUser(User $user): TimesheetFixtures
     {
         $this->user = $user;
 
@@ -152,9 +152,9 @@ final class TimesheetFixture implements TestFixture
 
     /**
      * @param Activity[] $activities
-     * @return TimesheetFixture
+     * @return TimesheetFixtures
      */
-    public function setActivities(array $activities): TimesheetFixture
+    public function setActivities(array $activities): TimesheetFixtures
     {
         $this->activities = $activities;
 
@@ -163,16 +163,16 @@ final class TimesheetFixture implements TestFixture
 
     /**
      * @param Project[] $projects
-     * @return TimesheetFixture
+     * @return TimesheetFixtures
      */
-    public function setProjects(array $projects): TimesheetFixture
+    public function setProjects(array $projects): TimesheetFixtures
     {
         $this->projects = $projects;
 
         return $this;
     }
 
-    public function setUseTags(bool $useTags): TimesheetFixture
+    public function setUseTags(bool $useTags): TimesheetFixtures
     {
         $this->useTags = $useTags;
 
@@ -181,9 +181,9 @@ final class TimesheetFixture implements TestFixture
 
     /**
      * @param string[] $tags
-     * @return TimesheetFixture
+     * @return TimesheetFixtures
      */
-    public function setTags(array $tags): TimesheetFixture
+    public function setTags(array $tags): TimesheetFixtures
     {
         $this->tags = $tags;
 
@@ -194,9 +194,9 @@ final class TimesheetFixture implements TestFixture
      * Will be called prior to persisting the object.
      *
      * @param callable $callback
-     * @return TimesheetFixture
+     * @return TimesheetFixtures
      */
-    public function setCallback(callable $callback): TimesheetFixture
+    public function setCallback(callable $callback): TimesheetFixtures
     {
         $this->callback = $callback;
 
