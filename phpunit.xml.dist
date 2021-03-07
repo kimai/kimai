@@ -22,8 +22,7 @@
         ALTER USER `kimai2_test`@127.0.0.1 IDENTIFIED BY "kimai2_test";
         GRANT execute,select,insert,update,delete,create,alter,drop,index,references ON `kimai2_test`.* TO kimai2_test@127.0.0.1;
         -->
-        <env name="DATABASE_URL" value="mysql://kimai2_test:kimai2_test@127.0.0.1:3306/kimai2_test" force="true"/>
-        <!--env name="DATABASE_URL" value="sqlite:///%kernel.project_dir%/var/data/kimai_test.sqlite" force="true"/-->
+        <env name="DATABASE_URL" value="mysql://kimai2_test:kimai2_test@127.0.0.1:3306/kimai2_test"/>
         <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost(:[0-9]+)?$"/>
         <env name="MAILER_URL" value="null://null"/>
 
