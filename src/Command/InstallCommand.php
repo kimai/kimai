@@ -24,6 +24,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Command used to do the basic installation steps for Kimai.
+ *
+ * @codeCoverageIgnore
  */
 final class InstallCommand extends Command
 {
