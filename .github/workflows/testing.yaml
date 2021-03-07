@@ -45,14 +45,5 @@ jobs:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai
                     APP_ENV: dev
                     MAILER_URL: null://localhost
-            -   name: Run migrations on SQLite
-                run: |
-                    bin/console doctrine:database:create -n
-                    bin/console doctrine:migrations:migrate -n
-                    bin/console doctrine:migrations:migrate first -n
-                env:
-                    DATABASE_URL: sqlite:///%kernel.project_dir%/var/data/kimai_migrations.sqlite
-                    APP_ENV: dev
-                    MAILER_URL: null://localhost
             -   name: Run integration tests
                 run: composer kimai:tests-integration

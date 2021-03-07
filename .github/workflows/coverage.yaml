@@ -18,7 +18,7 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: pcov
-                    extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql, zip, gd, ldap
+                    extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
             -   run: |
                     composer install --no-progress
                     composer require laminas/laminas-ldap
