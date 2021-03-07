@@ -16,14 +16,13 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Timesheet\Util;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
  * Defines the sample data to load in during controller tests.
  */
-final class TimesheetFixtures extends Fixture
+final class TimesheetFixture implements TestFixture
 {
     /**
      * @var User
@@ -88,28 +87,28 @@ final class TimesheetFixtures extends Fixture
         }
     }
 
-    public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions): TimesheetFixtures
+    public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions): TimesheetFixture
     {
         $this->allowEmptyDescriptions = $allowEmptyDescriptions;
 
         return $this;
     }
 
-    public function setExported(bool $exported): TimesheetFixtures
+    public function setExported(bool $exported): TimesheetFixture
     {
         $this->exported = $exported;
 
         return $this;
     }
 
-    public function setFixedRate(bool $fixedRate): TimesheetFixtures
+    public function setFixedRate(bool $fixedRate): TimesheetFixture
     {
         $this->fixedRate = $fixedRate;
 
         return $this;
     }
 
-    public function setHourlyRate(bool $hourlyRate): TimesheetFixtures
+    public function setHourlyRate(bool $hourlyRate): TimesheetFixture
     {
         $this->hourlyRate = $hourlyRate;
 
@@ -118,9 +117,9 @@ final class TimesheetFixtures extends Fixture
 
     /**
      * @param string|\DateTime $date
-     * @return TimesheetFixtures
+     * @return TimesheetFixture
      */
-    public function setStartDate($date): TimesheetFixtures
+    public function setStartDate($date): TimesheetFixture
     {
         if ($date instanceof \DateTime) {
             $date = $date->format('Y-m-d');
@@ -130,21 +129,21 @@ final class TimesheetFixtures extends Fixture
         return $this;
     }
 
-    public function setAmountRunning(int $amount): TimesheetFixtures
+    public function setAmountRunning(int $amount): TimesheetFixture
     {
         $this->running = $amount;
 
         return $this;
     }
 
-    public function setAmount(int $amount): TimesheetFixtures
+    public function setAmount(int $amount): TimesheetFixture
     {
         $this->amount = $amount;
 
         return $this;
     }
 
-    public function setUser(User $user): TimesheetFixtures
+    public function setUser(User $user): TimesheetFixture
     {
         $this->user = $user;
 
@@ -153,9 +152,9 @@ final class TimesheetFixtures extends Fixture
 
     /**
      * @param Activity[] $activities
-     * @return TimesheetFixtures
+     * @return TimesheetFixture
      */
-    public function setActivities(array $activities): TimesheetFixtures
+    public function setActivities(array $activities): TimesheetFixture
     {
         $this->activities = $activities;
 
@@ -164,16 +163,16 @@ final class TimesheetFixtures extends Fixture
 
     /**
      * @param Project[] $projects
-     * @return TimesheetFixtures
+     * @return TimesheetFixture
      */
-    public function setProjects(array $projects): TimesheetFixtures
+    public function setProjects(array $projects): TimesheetFixture
     {
         $this->projects = $projects;
 
         return $this;
     }
 
-    public function setUseTags(bool $useTags): TimesheetFixtures
+    public function setUseTags(bool $useTags): TimesheetFixture
     {
         $this->useTags = $useTags;
 
@@ -182,9 +181,9 @@ final class TimesheetFixtures extends Fixture
 
     /**
      * @param string[] $tags
-     * @return TimesheetFixtures
+     * @return TimesheetFixture
      */
-    public function setTags(array $tags): TimesheetFixtures
+    public function setTags(array $tags): TimesheetFixture
     {
         $this->tags = $tags;
 
@@ -195,9 +194,9 @@ final class TimesheetFixtures extends Fixture
      * Will be called prior to persisting the object.
      *
      * @param callable $callback
-     * @return TimesheetFixtures
+     * @return TimesheetFixture
      */
-    public function setCallback(callable $callback): TimesheetFixtures
+    public function setCallback(callable $callback): TimesheetFixture
     {
         $this->callback = $callback;
 
@@ -205,10 +204,13 @@ final class TimesheetFixtures extends Fixture
     }
 
     /**
-     * {@inheritdoc}
+     * @param ObjectManager $manager
+     * @return Timesheet[]
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): array
     {
+        $created = [];
+
         $activities = $this->activities;
         if (empty($activities)) {
             $activities = $this->getAllActivities($manager);
@@ -221,6 +223,12 @@ final class TimesheetFixtures extends Fixture
 
         $faker = Factory::create();
         $user = $this->user;
+
+        $tags = $this->getTagObjectList();
+        foreach ($tags as $tag) {
+            $manager->persist($tag);
+            $manager->flush();
+        }
 
         for ($i = 0; $i < $this->amount; $i++) {
             $description = $faker->text;
@@ -239,8 +247,6 @@ final class TimesheetFixtures extends Fixture
                 $project = $projects[array_rand($projects)];
             }
 
-            $tags = $this->getTagObjectList($i);
-
             $timesheet = $this->createTimesheetEntry(
                 $user,
                 $activity,
@@ -254,6 +260,7 @@ final class TimesheetFixtures extends Fixture
                 \call_user_func($this->callback, $timesheet);
             }
             $manager->persist($timesheet);
+            $created[] = $timesheet;
         }
 
         for ($i = 0; $i < $this->running; $i++) {
@@ -263,8 +270,6 @@ final class TimesheetFixtures extends Fixture
             if (null === $project) {
                 $project = $projects[array_rand($projects)];
             }
-
-            $tags = $this->getTagObjectList($i);
 
             $timesheet = $this->createTimesheetEntry(
                 $user,
@@ -280,24 +285,32 @@ final class TimesheetFixtures extends Fixture
                 \call_user_func($this->callback, $timesheet);
             }
             $manager->persist($timesheet);
+            $created[] = $timesheet;
         }
 
         $manager->flush();
+
+        return $created;
     }
 
-    protected function getTagObjectList(int $cnt): array
+    private function getTagObjectList(): array
     {
         if (true === $this->useTags) {
-            $tagObject = new Tag();
-            $tagObject->setName($this->tags[($cnt % \count($this->tags))]);
+            $all = [];
+            foreach ($this->tags as $tagName) {
+                $tagObject = new Tag();
+                $tagObject->setName($tagName);
 
-            return [$tagObject];
+                $all[] = $tagObject;
+            }
+
+            return $all;
         }
 
         return [];
     }
 
-    protected function getDateTime(int $i): \DateTime
+    private function getDateTime(int $i): \DateTime
     {
         $start = \DateTime::createFromFormat('Y-m-d', $this->startDate);
         $start->modify("+ $i days");
@@ -310,7 +323,7 @@ final class TimesheetFixtures extends Fixture
      * @param ObjectManager $manager
      * @return array<int|string, Activity>
      */
-    protected function getAllActivities(ObjectManager $manager): array
+    private function getAllActivities(ObjectManager $manager): array
     {
         $all = [];
         /** @var Activity[] $entries */
@@ -326,7 +339,7 @@ final class TimesheetFixtures extends Fixture
      * @param ObjectManager $manager
      * @return array<int|string, Project>
      */
-    protected function getAllProjects(ObjectManager $manager): array
+    private function getAllProjects(ObjectManager $manager): array
     {
         $all = [];
         /** @var Project[] $entries */

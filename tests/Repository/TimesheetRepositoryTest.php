@@ -19,7 +19,7 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\RepositoryException;
 use App\Repository\TimesheetRepository;
-use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\DataFixtures\TimesheetFixture;
 use Pagerfanta\Pagerfanta;
 
 /**
@@ -53,7 +53,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
 
-        $fixtures = new TimesheetFixtures();
+        $fixtures = new TimesheetFixture();
         $fixtures->setUser($user);
         $fixtures->setAmount(1);
 
@@ -85,12 +85,12 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
 
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setUser($user);
         $fixture->setAmountRunning(1);
-        $this->importFixture($fixture);
+        $timesheets = $this->importFixture($fixture);
 
-        $timesheet = $repository->find(1);
+        $timesheet = $timesheets[0];
         $this->assertInstanceOf(Timesheet::class, $timesheet);
         $this->assertNull($timesheet->getEnd());
 
@@ -123,7 +123,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
 
         $this->assertNull($timesheet->getId());
         $repository->save($timesheet);
-        $this->assertEquals(1, $timesheet->getId());
+        $this->assertNotNull($timesheet->getId());
     }
 
     public function testSaveWithTags()
@@ -156,11 +156,11 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
 
         $this->assertNull($timesheet->getId());
         $repository->save($timesheet);
-        $this->assertEquals(1, $timesheet->getId());
+        $this->assertNotNull($timesheet->getId());
         $this->assertEquals(2, $timesheet->getTags()->count());
         $this->assertEquals('Travel', $timesheet->getTags()->get(0)->getName());
-        $this->assertEquals(1, $timesheet->getTags()->get(0)->getId());
+        $this->assertNotNull($timesheet->getTags()->get(0)->getId());
         $this->assertEquals('Picture', $timesheet->getTags()->get(1)->getName());
-        $this->assertEquals(2, $timesheet->getTags()->get(1)->getId());
+        $this->assertNotNull($timesheet->getTags()->get(1)->getId());
     }
 }

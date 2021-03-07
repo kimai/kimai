@@ -14,6 +14,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
 use App\Entity\ProjectRate;
+use App\Entity\RateInterface;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\ProjectRateRepository;
@@ -29,6 +30,20 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 class ProjectControllerTest extends APIControllerBaseTest
 {
     use RateControllerTestTrait;
+
+    /**
+     * @param ProjectRate $rate
+     * @param bool $isCollection
+     * @return string
+     */
+    protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
+    {
+        if ($isCollection) {
+            return $this->getRateUrl($rate->getProject()->getId());
+        }
+
+        return $this->getRateUrl($rate->getProject()->getId(), $rate->getId());
+    }
 
     protected function getRateUrl($id = '1', $rateId = null): string
     {
@@ -139,15 +154,32 @@ class ProjectControllerTest extends APIControllerBaseTest
         $em->persist($project);
 
         $em->flush();
+
+        return [$customer, $customer2, $customer3];
     }
 
     /**
      * @dataProvider getCollectionTestData
      */
-    public function testGetCollectionWithParams($url, $parameters, $expected)
+    public function testGetCollectionWithParams($url, $customer, $parameters, $expected)
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->loadProjectTestData($client);
+        $imports = $this->loadProjectTestData($client);
+
+        $customerId = $customer !== null ? $imports[$customer]->getId() : null;
+
+        if ($customerId !== null) {
+            if (\array_key_exists('customer', $parameters)) {
+                $parameters['customer'] = $customerId;
+            } elseif (\array_key_exists('customers', $parameters)) {
+                if (stripos($parameters['customers'], ',') !== false) {
+                    $parameters['customers'] = $customerId . ',' . $customerId;
+                } else {
+                    $parameters['customers'] = (string) $customerId;
+                }
+            }
+        }
+
         $this->assertAccessIsGranted($client, $url, 'GET', $parameters);
         $result = json_decode($client->getResponse()->getContent(), true);
 
@@ -156,29 +188,30 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         for ($i = 0; $i < \count($expected); $i++) {
             $project = $result[$i];
-            $compare = $expected[$i];
             self::assertApiResponseTypeStructure('ProjectCollection', $project);
-            $this->assertEquals($compare[1], $project['customer']);
+            if ($customerId !== null) {
+                $this->assertEquals($customerId, $project['customer']);
+            }
         }
     }
 
     public function getCollectionTestData()
     {
         // if you wonder why: SQLite does case-sensitive ordering, so "Title" > "fifth”
-        yield ['/api/projects', [], [[true, 1], [false, 1], [false, 3]]];
-        yield ['/api/projects', ['customer' => '1'], [[true, 1], [false, 1]]];
-        yield ['/api/projects', ['customer' => '1', 'visible' => VisibilityInterface::SHOW_VISIBLE], [[true, 1], [false, 1]]];
-        yield ['/api/projects', ['customer' => '1', 'visible' => VisibilityInterface::SHOW_BOTH], [[true, 1], [false, 1], [false, 1]]];
-        yield ['/api/projects', ['customer' => '1', 'visible' => VisibilityInterface::SHOW_HIDDEN], [[false, 1]]];
+        yield ['/api/projects', null, [], [[true, 1], [false, 1], [false, 3]]];
+        yield ['/api/projects', 0, ['customer' => '1'], [[true, 1], [false, 1]]];
+        yield ['/api/projects', 0, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_VISIBLE], [[true, 1], [false, 1]]];
+        yield ['/api/projects', 0, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_BOTH], [[true, 1], [false, 1], [false, 1]]];
+        yield ['/api/projects', 0, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_HIDDEN], [[false, 1]]];
         // customer is invisible, so nothing should be returned
-        yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_VISIBLE], []];
-        yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
-        yield ['/api/projects', ['customer' => '2', 'customers' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
-        yield ['/api/projects', ['customer' => '2', 'customers' => '2,2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_VISIBLE], []];
+        yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', 1, ['customer' => '2', 'customers' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', 1, ['customer' => '2', 'customers' => '2,2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
         // customer is invisible, so nothing should be returned
-        yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
-        yield ['/api/projects', ['customers' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
-        yield ['/api/projects', ['customers' => '2,2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
+        yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
+        yield ['/api/projects', 1, ['customers' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
+        yield ['/api/projects', 1, ['customers' => '2,2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
     }
 
     public function testGetEntity()
@@ -207,8 +240,9 @@ class ProjectControllerTest extends APIControllerBaseTest
             ->setEnd($endDate)
         ;
         $em->persist($project);
+        $em->flush();
 
-        $this->assertAccessIsGranted($client, '/api/projects/2');
+        $this->assertAccessIsGranted($client, '/api/projects/' . $project->getId());
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
@@ -216,8 +250,8 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $expected = [
             'parentTitle' => 'first one',
-            'customer' => 2,
-            'id' => 2,
+            'customer' => $customer->getId(),
+            'id' => $project->getId(),
             'name' => 'first',
             'orderNumber' => null,
             // make sure the timezone is properly applied in serializer (see #1858)

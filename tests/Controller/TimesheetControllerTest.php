@@ -13,7 +13,7 @@ use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
-use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\DataFixtures\TimesheetFixture;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 
 /**
@@ -51,7 +51,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $start = new \DateTime('first day of this month');
 
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setAmount(5);
         $fixture->setAmountRunning(2);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -87,7 +87,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $start = new \DateTime('first day of this month');
 
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
@@ -97,7 +97,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             $timesheet->setMetaField((new TimesheetMeta())->setName('feature')->setValue('timetracking'));
         });
         $this->importFixture($fixture);
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setAmount(5);
         $fixture->setAmountRunning(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -123,7 +123,7 @@ class TimesheetControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser();
 
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate(new \DateTime('-10 days'));
@@ -181,7 +181,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertNull($timesheet->getEnd());
         $this->assertEquals('Testing is fun!', $timesheet->getDescription());
@@ -218,7 +218,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
         $this->assertEquals($expectedDuration, $timesheet->getDuration());
@@ -293,7 +293,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
         $this->assertEquals(50, $timesheet->getRate());
@@ -327,7 +327,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
         $this->assertEquals(50, $timesheet->getRate());
@@ -381,7 +381,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $begin = new \DateTime('2018-08-02T20:00:00');
         $end = new \DateTime('2018-08-02T20:30:00');
 
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setCallback(function (Timesheet $timesheet) use ($begin, $end) {
             $timesheet->setBegin($begin);
             $timesheet->setEnd($end);
@@ -428,7 +428,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
         $this->assertEquals(800, $timesheet->getRate());
@@ -446,13 +446,14 @@ class TimesheetControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser();
 
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setAmount(10);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate('2017-05-01');
-        $this->importFixture($fixture);
+        $timesheets = $this->importFixture($fixture);
+        $id = $timesheets[0]->getId();
 
-        $this->request($client, '/timesheet/1/edit');
+        $this->request($client, '/timesheet/' . $id . '/edit');
 
         $response = $client->getResponse();
         $this->assertTrue($response->isSuccessful());
@@ -478,7 +479,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->find($id);
         $this->assertEquals('foo-bar', $timesheet->getDescription());
     }
 
@@ -487,7 +488,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $user = $this->getUserByRole(User::ROLE_USER);
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setAmount(10);
         $fixture->setUser($user);
         $this->importFixture($fixture);
@@ -525,7 +526,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
         $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setAmount(10);
         $fixture->setUser($user);
         $this->importFixture($fixture);

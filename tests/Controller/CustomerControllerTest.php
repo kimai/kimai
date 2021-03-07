@@ -10,13 +10,14 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Customer;
+use App\Entity\CustomerComment;
 use App\Entity\CustomerMeta;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
-use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\DataFixtures\TimesheetFixture;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
@@ -176,9 +177,12 @@ class CustomerControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-msg');
         self::assertStringContainsString('Blah foo bar', $node->html());
         $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.confirmation-link');
-        self::assertEquals($this->createUrl('/admin/customer/1/comment_delete'), $node->attr('href'));
+        self::assertStringEndsWith('/comment_delete', $node->attr('href'));
 
-        $this->request($client, '/admin/customer/1/comment_delete');
+        $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
+        $id = $comments[0]->getId();
+
+        $this->request($client, '/admin/customer/' . $id . '/comment_delete');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#comments_box .box-body');
@@ -202,12 +206,15 @@ class CustomerControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text a.btn.active');
         self::assertEquals(0, $node->count());
 
-        $this->request($client, '/admin/customer/1/comment_pin');
+        $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
+        $id = $comments[0]->getId();
+
+        $this->request($client, '/admin/customer/' . $id . '/comment_pin');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
         self::assertEquals(1, $node->count());
-        self::assertEquals($this->createUrl('/admin/customer/1/comment_pin'), $node->attr('href'));
+        self::assertEquals($this->createUrl('/admin/customer/' . $id . '/comment_pin'), $node->attr('href'));
     }
 
     public function testCreateDefaultTeamAction()
@@ -278,7 +285,7 @@ class CustomerControllerTest extends ControllerBaseTest
                 'name' => 'Test Customer',
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/2/details'));
+        $this->assertIsRedirect($client, '/details');
         $client->followRedirect();
         $this->assertHasFlashSuccess($client);
     }
@@ -352,22 +359,24 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1);
-        $this->importFixture($fixture);
+        $customers = $this->importFixture($fixture);
+        $customer = $customers[0];
+        $id = $customer->getId();
 
-        $this->request($client, '/admin/customer/2/edit');
+        $this->request($client, '/admin/customer/' . $id . '/edit');
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->request($client, '/admin/customer/2/delete');
+        $this->request($client, '/admin/customer/' . $id . '/delete');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/customer/2/delete'), $form->getUri());
+        $this->assertStringEndsWith($this->createUrl('/admin/customer/' . $id . '/delete'), $form->getUri());
         $client->submit($form);
 
         $client->followRedirect();
         $this->assertHasDataTable($client);
         $this->assertHasFlashSuccess($client);
 
-        $this->request($client, '/admin/customer/2/edit');
+        $this->request($client, '/admin/customer/' . $id . '/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());
     }
 
@@ -376,7 +385,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $em = $this->getEntityManager();
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setAmount(10);
         $this->importFixture($fixture);
@@ -415,13 +424,15 @@ class CustomerControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $em = $this->getEntityManager();
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setAmount(10);
         $this->importFixture($fixture);
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1)->setIsVisible(true);
-        $this->importFixture($fixture);
+        $customers = $this->importFixture($fixture);
+        $customer = $customers[0];
+        $id = $customer->getId();
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         $this->assertEquals(10, \count($timesheets));
@@ -438,7 +449,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertStringEndsWith($this->createUrl('/admin/customer/1/delete'), $form->getUri());
         $client->submit($form, [
             'form' => [
-                'customer' => 2
+                'customer' => $id
             ]
         ]);
 
@@ -452,7 +463,7 @@ class CustomerControllerTest extends ControllerBaseTest
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
-            $this->assertEquals(2, $entry->getProject()->getCustomer()->getId());
+            $this->assertEquals($id, $entry->getProject()->getCustomer()->getId());
         }
 
         $this->request($client, '/admin/customer/1/edit');

@@ -9,6 +9,7 @@
 
 namespace App\Tests\API;
 
+use App\Entity\Tag;
 use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,14 +20,19 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 class TagControllerTest extends APIControllerBaseTest
 {
-    protected function importTagFixtures(HttpKernelBrowser $client): void
+    /**
+     * @param HttpKernelBrowser $client
+     * @return Tag[]
+     */
+    protected function importTagFixtures(): array
     {
         $tagList = ['Test', 'Administration', 'Support', '#2018-001', '#2018-002', '#2018-003', 'Development',
             'Marketing', 'First Level Support', 'Bug Fixing'];
 
         $fixture = new TagFixtures();
         $fixture->setTagArray($tagList);
-        $this->importFixture($fixture);
+
+        return $this->importFixture($fixture);
     }
 
     public function testIsSecure()
@@ -37,7 +43,7 @@ class TagControllerTest extends APIControllerBaseTest
     public function testGetCollection()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importTagFixtures($client);
+        $this->importTagFixtures();
         $this->assertAccessIsGranted($client, '/api/tags');
         $result = json_decode($client->getResponse()->getContent(), true);
 
@@ -50,7 +56,7 @@ class TagControllerTest extends APIControllerBaseTest
     public function testEmptyCollection()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importTagFixtures($client);
+        $this->importTagFixtures();
         $query = ['name' => 'nothing'];
         $this->assertAccessIsGranted($client, '/api/tags', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -63,7 +69,7 @@ class TagControllerTest extends APIControllerBaseTest
     public function testPostAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->importTagFixtures($client);
+        $this->importTagFixtures();
         $data = [
             'name' => 'foo',
             'color' => '#000FFF'
@@ -81,7 +87,7 @@ class TagControllerTest extends APIControllerBaseTest
     public function testPostActionWithValidationErrors()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->importTagFixtures($client);
+        $this->importTagFixtures();
         $data = [
             'name' => '1',
             'color' => '11231231231',
@@ -95,7 +101,7 @@ class TagControllerTest extends APIControllerBaseTest
     public function testPostActionWithInvalidUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importTagFixtures($client);
+        $this->importTagFixtures();
         $data = [
             'name' => 'foo',
         ];
@@ -110,7 +116,7 @@ class TagControllerTest extends APIControllerBaseTest
     public function testPartOfEntries()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importTagFixtures($client);
+        $this->importTagFixtures();
         $query = ['name' => 'in'];
         $this->assertAccessIsGranted($client, '/api/tags', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -127,9 +133,10 @@ class TagControllerTest extends APIControllerBaseTest
     public function testDeleteAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->importTagFixtures($client);
+        $tags = $this->importTagFixtures();
+        $id = $tags[0]->getId();
 
-        $this->request($client, '/api/tags/1', 'DELETE');
+        $this->request($client, '/api/tags/' . $id, 'DELETE');
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
         $this->assertEmpty($client->getResponse()->getContent());
@@ -142,6 +149,6 @@ class TagControllerTest extends APIControllerBaseTest
 
     public function testDeleteActionWithUnknownTimesheet()
     {
-        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/tags/255');
+        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/tags/' . PHP_INT_MAX);
     }
 }

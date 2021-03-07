@@ -11,7 +11,7 @@ namespace App\Tests\Controller;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\DataFixtures\TimesheetFixture;
 
 /**
  * @group integration
@@ -98,7 +98,7 @@ class UserControllerTest extends ControllerBaseTest
 
     public function testCreateAction()
     {
-        $username = '亚历山德拉';
+        $username = '亚历山德拉' . uniqid();
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/create');
         $form = $client->getCrawler()->filter('form[name=user_create]')->form();
@@ -169,7 +169,7 @@ class UserControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setUser($user);
         $fixture->setAmount(10);
         $this->importFixture($fixture);
@@ -207,7 +207,7 @@ class UserControllerTest extends ControllerBaseTest
 
         $this->assertNotEquals($userNew->getId(), $user->getId());
 
-        $fixture = new TimesheetFixtures();
+        $fixture = new TimesheetFixture();
         $fixture->setUser($user);
         $fixture->setAmount(10);
         $this->importFixture($fixture);

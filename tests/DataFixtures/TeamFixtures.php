@@ -12,14 +12,13 @@ namespace App\Tests\DataFixtures;
 use App\Entity\Customer;
 use App\Entity\Team;
 use App\Entity\User;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
  * Defines the sample data to load in during controller tests.
  */
-final class TeamFixtures extends Fixture
+final class TeamFixtures implements TestFixture
 {
     /**
      * @var int
@@ -89,10 +88,13 @@ final class TeamFixtures extends Fixture
     }
 
     /**
-     * {@inheritdoc}
+     * @param ObjectManager $manager
+     * @return Team[]
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): array
     {
+        $created = [];
+
         $faker = Factory::create();
         $user = $this->getAllUsers($manager);
         $customer = $this->getAllCustomers($manager);
@@ -131,9 +133,12 @@ final class TeamFixtures extends Fixture
                 \call_user_func($this->callback, $team);
             }
             $manager->persist($team);
+            $created[] = $team;
         }
 
         $manager->flush();
+
+        return $created;
     }
 
     /**

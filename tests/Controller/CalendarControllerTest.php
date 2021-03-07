@@ -11,7 +11,7 @@ namespace App\Tests\Controller;
 
 use App\Configuration\SystemConfiguration;
 use App\Tests\Configuration\TestConfigLoader;
-use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\DataFixtures\TimesheetFixture;
 
 /**
  * @group integration
@@ -26,7 +26,7 @@ class CalendarControllerTest extends ControllerBaseTest
     public function testCalendarAction()
     {
         $client = $this->getClientForAuthenticatedUser();
-        $fixtures = new TimesheetFixtures($this->getUserByRole(), 10);
+        $fixtures = new TimesheetFixture($this->getUserByRole(), 10);
         $fixtures->setStartDate(new \DateTime('-6 month'));
         $this->importFixture($fixtures);
 

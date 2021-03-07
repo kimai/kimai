@@ -13,7 +13,7 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Tests\DataFixtures\TeamFixtures;
-use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\DataFixtures\TimesheetFixture;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
@@ -51,7 +51,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
 
         foreach ($dates as $start) {
-            $fixture = new TimesheetFixtures();
+            $fixture = new TimesheetFixture();
             $fixture->setAmount(10);
             $fixture->setUser($this->getUserByRole(User::ROLE_USER));
             $fixture->setStartDate($start);
