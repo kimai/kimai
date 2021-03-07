@@ -143,6 +143,7 @@ class InvoiceControllerTest extends ControllerBaseTest
     public function testCreateAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
 
         $fixture = new InvoiceTemplateFixtures();
         $templates = $this->importFixture($fixture);
@@ -156,7 +157,10 @@ class InvoiceControllerTest extends ControllerBaseTest
             ->setAmount(20)
             ->setStartDate($begin)
         ;
-        $this->importFixture($fixture);
+        $timesheets = $this->importFixture($fixture);
+        foreach ($timesheets as $timesheet) {
+            $this->assertFalse($timesheet->isExported());
+        }
 
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -198,7 +202,8 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertEquals(1, $node->count());
         $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
 
-        $timesheets = $this->getEntityManager()->getRepository(Timesheet::class)->findAll();
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertCount(20, $timesheets);
         /** @var Timesheet $timesheet */
         foreach ($timesheets as $timesheet) {
             $this->assertTrue($timesheet->isExported());
