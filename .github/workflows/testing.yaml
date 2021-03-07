@@ -36,6 +36,10 @@ jobs:
                 run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
             -   name: Run unit tests
                 run: composer kimai:tests-unit
+                env:
+                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai
+                    APP_ENV: dev
+                    MAILER_URL: null://localhost
             -   name: Run migrations on MySQL
                 run: |
                     bin/console doctrine:database:create --if-not-exists -n
@@ -47,3 +51,7 @@ jobs:
                     MAILER_URL: null://localhost
             -   name: Run integration tests
                 run: composer kimai:tests-integration
+                env:
+                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai
+                    APP_ENV: dev
+                    MAILER_URL: null://localhost
