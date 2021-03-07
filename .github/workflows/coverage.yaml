@@ -37,7 +37,7 @@ jobs:
             -   name: Run tests
                 run: vendor/bin/phpunit tests/ --coverage-clover=coverage.xml
                 env:
-                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai
+                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
                     APP_ENV: dev
                     MAILER_URL: null://localhost
                     TEST_WITH_BUNDLES: 1
