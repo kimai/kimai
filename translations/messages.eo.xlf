@@ -1126,6 +1126,10 @@
         <source>sum.total</source>
         <target>Entute</target>
       </trans-unit>
+      <trans-unit id="stats.workingTimeYear">
+        <source>stats.workingTimeYear</source>
+        <target>Tuta jaro %year%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
