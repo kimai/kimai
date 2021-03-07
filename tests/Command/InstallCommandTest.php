@@ -48,6 +48,7 @@ class InstallCommandTest extends KernelTestCase
         $commandTester->setInputs(['no']);
         $commandTester->execute([
             'command' => $command->getName(),
+            '--no-interaction' => true
         ]);
 
         $result = $commandTester->getDisplay();
