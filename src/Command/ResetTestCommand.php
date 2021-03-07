@@ -44,7 +44,7 @@ class ResetTestCommand extends AbstractResetCommand
         $this->entityManager->persist($activity);
 
         $customer = new Customer();
-        $customer->setNumber(1);
+        $customer->setNumber('1');
         $customer->setComment('Test comment');
         $customer->setContact('Test');
         $customer->setAddress('Test');

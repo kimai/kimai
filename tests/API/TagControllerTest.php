@@ -13,7 +13,6 @@ use App\Entity\Tag;
 use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
@@ -21,7 +20,6 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 class TagControllerTest extends APIControllerBaseTest
 {
     /**
-     * @param HttpKernelBrowser $client
      * @return Tag[]
      */
     protected function importTagFixtures(): array
