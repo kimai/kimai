@@ -16,7 +16,6 @@ use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
@@ -144,8 +143,6 @@ class InvoiceControllerTest extends ControllerBaseTest
     public function testCreateAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        /** @var EntityManager $em */
-        $em = $this->getEntityManager();
 
         $fixture = new InvoiceTemplateFixtures();
         $templates = $this->importFixture($fixture);
@@ -201,7 +198,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertEquals(1, $node->count());
         $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
 
-        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $timesheets = $this->getEntityManager()->getRepository(Timesheet::class)->findAll();
         /** @var Timesheet $timesheet */
         foreach ($timesheets as $timesheet) {
             $this->assertTrue($timesheet->isExported());
@@ -390,7 +387,6 @@ class InvoiceControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $this->getEntityManager();
         $fixture = new InvoiceTemplateFixtures();
         $template = $this->importFixture($fixture);
         $id = $template[0]->getId();
@@ -402,7 +398,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSuccess($client);
 
-        $this->assertEquals(0, $em->getRepository(InvoiceTemplate::class)->count([]));
+        $this->assertEquals(0, $this->getEntityManager()->getRepository(InvoiceTemplate::class)->count([]));
     }
 
     public function testUploadDocumentAction()

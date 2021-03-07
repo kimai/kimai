@@ -227,8 +227,8 @@ final class TimesheetFixtures implements TestFixture
         $tags = $this->getTagObjectList();
         foreach ($tags as $tag) {
             $manager->persist($tag);
-            $manager->flush();
         }
+        $manager->flush();
 
         for ($i = 0; $i < $this->amount; $i++) {
             $description = $faker->text;
