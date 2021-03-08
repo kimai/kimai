@@ -8,7 +8,7 @@
     'title': {'class': 'hidden-xs text-nowrap', 'orderBy': false},
     'company': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
     'vat_id': {'class': 'hidden-xs hidden-sm text-nowrap', 'orderBy': false},
-    'vat': {'class': 'hidden-xs hidden-sm hidden-md text-nowrap', 'orderBy': false},
+    'tax_rate': {'class': 'hidden-xs hidden-sm hidden-md text-nowrap', 'orderBy': false},
     'due_days': {'class': 'hidden-xs hidden-sm hidden-md text-nowrap', 'orderBy': false},
     'address': {'class': 'hidden', 'orderBy': false},
     'contact': {'class': 'hidden', 'orderBy': false},
@@ -39,7 +39,7 @@
             <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'company') }}">{{ entry.company }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'vat_id') }}">{{ entry.vatId }}</td>
-            <td class="{{ tables.data_table_column_class(tableName, columns, 'vat') }}">{{ entry.vat }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'tax_rate') }}">{{ entry.vat }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'due_days') }}">{{ entry.dueDays }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'address') }}">{{ entry.address|nl2br }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'contact') }}">{{ entry.contact|nl2br }}</td>

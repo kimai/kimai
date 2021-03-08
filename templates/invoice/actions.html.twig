@@ -77,19 +77,8 @@
 
 {% macro invoice_listing(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {} %}
-
-    {% if is_granted('view_invoice') %}
-        {% set actions = actions|merge({'back': path('invoice')}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'visibility': '#modal_invoices'}) %}
-
-    {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.invoice_details', {'actions': actions, 'view': view}) %}
-    {{ widgets.page_actions(actions) }}
+    {% set event = actions(app.user, 'invoice_details', {'view': view}) %}
+    {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 
 {% macro invoice_upload(view) %}

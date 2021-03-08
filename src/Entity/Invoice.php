@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Export\Annotation as Exporter;
 use App\Invoice\InvoiceModel;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -21,10 +22,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\UniqueConstraint(columns={"invoice_filename"})
  *      }
  * )
+ * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
  * @UniqueEntity("invoiceNumber")
  * @UniqueEntity("invoiceFilename")
  *
- * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
+ * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "total", "tax", "currency", "vat", "dueDays", "dueDate", "user", "invoiceFilename"})
+ * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
+ * @Exporter\Expose("dueDate", label="invoice.due_days", type="datetime", exp="object.getDueDate() === null ? null : object.getDueDate()")
+ * @Exporter\Expose("user", label="label.username", type="string", exp="object.getUser() === null ? null : object.getUser().getDisplayName()")
  */
 class Invoice
 {
@@ -35,6 +40,8 @@ class Invoice
     /**
      * @var int|null
      *
+     * @Exporter\Expose(label="label.id", type="integer")
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -43,6 +50,8 @@ class Invoice
 
     /**
      * @var string
+     *
+     * @Exporter\Expose(label="invoice.number", type="string")
      *
      * @ORM\Column(name="invoice_number", type="string", length=50, nullable=false)
      * @Assert\NotNull()
@@ -70,6 +79,8 @@ class Invoice
     /**
      * @var \DateTime
      *
+     * @Exporter\Expose(label="label.date", type="datetime")
+     *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      * @Assert\NotNull()
      */
@@ -85,6 +96,8 @@ class Invoice
     /**
      * @var float
      *
+     * @Exporter\Expose(label="label.total_rate", type="float")
+     *
      * @ORM\Column(name="total", type="float", nullable=false)
      * @Assert\NotNull()
      */
@@ -93,6 +106,8 @@ class Invoice
     /**
      * @var float
      *
+     * @Exporter\Expose(label="invoice.tax", type="float")
+     *
      * @ORM\Column(name="tax", type="float", nullable=false)
      * @Assert\NotNull()
      */
@@ -100,6 +115,8 @@ class Invoice
 
     /**
      * @var string
+     *
+     * @Exporter\Expose(label="label.currency", type="string")
      *
      * @ORM\Column(name="currency", type="string", length=3, nullable=false)
      * @Assert\NotNull()
@@ -110,6 +127,8 @@ class Invoice
     /**
      * @var int
      *
+     * @Exporter\Expose(label="label.due_days", type="integer")
+     *
      * @ORM\Column(name="due_days", type="integer", length=3, nullable=false)
      * @Assert\NotNull()
      * @Assert\Range(min = 0, max = 999)
@@ -118,6 +137,8 @@ class Invoice
 
     /**
      * @var float
+     *
+     * @Exporter\Expose(label="label.tax_rate", type="float")
      *
      * @ORM\Column(name="vat", type="float", nullable=false)
      * @Assert\NotNull()
@@ -128,6 +149,8 @@ class Invoice
     /**
      * @var string
      *
+     * @Exporter\Expose(label="label.status", type="string")
+     *
      * @ORM\Column(name="status", type="string", length=20, nullable=false)
      * @Assert\NotNull()
      */
@@ -135,6 +158,8 @@ class Invoice
 
     /**
      * @var string
+     *
+     * @Exporter\Expose(label="file", type="string")
      *
      * @ORM\Column(name="invoice_filename", type="string", length=150, nullable=false)
      * @Assert\NotNull()
