@@ -204,7 +204,7 @@ class InvoiceRepository extends EntityRepository
                 $searchAnd->add(
                     $qb->expr()->orX(
                         $qb->expr()->like('customer.name', ':searchTerm'),
-                        $qb->expr()->like('customer.company', ':searchTerm'),
+                        $qb->expr()->like('customer.company', ':searchTerm')
                     )
                 );
                 $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
