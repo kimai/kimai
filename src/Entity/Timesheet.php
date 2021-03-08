@@ -740,7 +740,6 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         }
 
         $this->exported = false;
-        $this->invoice = null;
 
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
