@@ -185,4 +185,45 @@ class ProjectTest extends TestCase
             self::assertEquals($item[1], $column->getType());
         }
     }
+
+    public function testClone()
+    {
+        $customer = new Customer();
+        $customer->setName('prj-customer');
+        $customer->setVatId('DE-0123456789');
+
+        $sut = new Project();
+        $sut->setName('foo');
+        $sut->setOrderNumber('1234567890');
+        $sut->setBudget(123.45);
+        $sut->setTimeBudget(12345);
+        $sut->setVisible(false);
+        $sut->setEnd(new \DateTime());
+        $sut->setColor('#ccc');
+
+        $sut->setCustomer($customer);
+
+        $team = new Team();
+        $sut->addTeam($team);
+
+        $meta = new ProjectMeta();
+        $meta->setName('blabla');
+        $meta->setValue('1234567890');
+        $meta->setIsVisible(false);
+        $meta->setIsRequired(true);
+        $sut->setMetaField($meta);
+
+        $clone = clone $sut;
+
+        foreach ($sut->getMetaFields() as $metaField) {
+            $cloneMeta = $clone->getMetaField($metaField->getName());
+            self::assertEquals($cloneMeta->getValue(), $metaField->getValue());
+        }
+        self::assertEquals($clone->getBudget(), $sut->getBudget());
+        self::assertEquals($clone->getTimeBudget(), $sut->getTimeBudget());
+        self::assertEquals($clone->getEnd(), $sut->getEnd());
+        self::assertEquals($clone->getColor(), $sut->getColor());
+        self::assertEquals('DE-0123456789', $clone->getCustomer()->getVatId());
+        self::assertEquals('prj-customer', $clone->getCustomer()->getName());
+    }
 }

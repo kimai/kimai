@@ -158,4 +158,45 @@ class ActivityTest extends TestCase
             self::assertEquals($item[1], $column->getType());
         }
     }
+
+    public function testClone()
+    {
+        $sut = new Activity();
+        $sut->setName('activity1111');
+        $sut->setComment('DE-0123456789');
+
+        $project = new Project();
+        $project->setName('foo');
+        $project->setOrderNumber('1234567890');
+        $project->setBudget(123.45);
+        $project->setTimeBudget(12345);
+        $project->setVisible(false);
+        $project->setEnd(new \DateTime());
+        $project->setColor('#ccc');
+
+        $sut->setProject($project);
+
+        $team = new Team();
+        $sut->addTeam($team);
+
+        $meta = new ActivityMeta();
+        $meta->setName('blabla');
+        $meta->setValue('1234567890');
+        $meta->setIsVisible(false);
+        $meta->setIsRequired(true);
+        $sut->setMetaField($meta);
+
+        $clone = clone $sut;
+
+        foreach ($sut->getMetaFields() as $metaField) {
+            $cloneMeta = $clone->getMetaField($metaField->getName());
+            self::assertEquals($cloneMeta->getValue(), $metaField->getValue());
+        }
+        self::assertEquals($clone->getBudget(), $sut->getBudget());
+        self::assertEquals($clone->getTimeBudget(), $sut->getTimeBudget());
+        self::assertEquals($clone->getComment(), $sut->getComment());
+        self::assertEquals($clone->getColor(), $sut->getColor());
+        self::assertEquals('DE-0123456789', $clone->getComment());
+        self::assertEquals('activity1111', $clone->getName());
+    }
 }
