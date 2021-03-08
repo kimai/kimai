@@ -20,6 +20,7 @@ use App\Form\Model\DateRange;
 class TimesheetQuery extends ActivityQuery implements BillableInterface
 {
     use BillableTrait;
+    use DateRangeTrait;
 
     public const STATE_ALL = 1;
     public const STATE_RUNNING = 2;
@@ -49,10 +50,6 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
      * @var \DateTime|null
      */
     private $modifiedAfter;
-    /**
-     * @var DateRange
-     */
-    protected $dateRange;
     /**
      * @var iterable
      */
@@ -226,42 +223,6 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
         if (\in_array($exported, [self::STATE_ALL, self::STATE_EXPORTED, self::STATE_NOT_EXPORTED], true)) {
             $this->exported = $exported;
         }
-
-        return $this;
-    }
-
-    public function getBegin(): ?\DateTime
-    {
-        return $this->dateRange->getBegin();
-    }
-
-    public function setBegin(\DateTime $begin): TimesheetQuery
-    {
-        $this->dateRange->setBegin($begin);
-
-        return $this;
-    }
-
-    public function getEnd(): ?\DateTime
-    {
-        return $this->dateRange->getEnd();
-    }
-
-    public function setEnd(\DateTime $end): TimesheetQuery
-    {
-        $this->dateRange->setEnd($end);
-
-        return $this;
-    }
-
-    public function getDateRange(): DateRange
-    {
-        return $this->dateRange;
-    }
-
-    public function setDateRange(DateRange $dateRange): TimesheetQuery
-    {
-        $this->dateRange = $dateRange;
 
         return $this;
     }

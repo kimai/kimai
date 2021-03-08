@@ -11,6 +11,9 @@ namespace App\Repository\Query;
 
 use App\Entity\InvoiceTemplate;
 
+/**
+ * Find items (eg timesheets) for creating a new invoice.
+ */
 class InvoiceQuery extends TimesheetQuery
 {
     /**
