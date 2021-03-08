@@ -318,6 +318,13 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @ORM\OneToMany(targetEntity="App\Entity\TimesheetMeta", mappedBy="timesheet", cascade={"persist"})
      */
     private $meta;
+    /**
+     * @var Invoice|null
+     *
+     * @ ORM\ManyToOne(targetEntity="App\Entity\Invoice")
+     * @ ORM\JoinColumn(onDelete="SET NULL", nullable=true)
+     */
+    private $invoice;
 
     public function __construct()
     {
@@ -685,6 +692,16 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         return $this->modifiedAt;
     }
 
+    public function getInvoice(): ?Invoice
+    {
+        return $this->invoice;
+    }
+
+    public function setInvoice(?Invoice $invoice): void
+    {
+        $this->invoice = $invoice;
+    }
+
     /**
      * @return Collection|MetaTableTypeInterface[]
      */
@@ -744,6 +761,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
             $timesheet->$k = $v;
         }
 
+        $timesheet->invoice = null;
         $timesheet->meta = new ArrayCollection();
 
         /** @var TimesheetMeta $meta */
@@ -768,6 +786,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         }
 
         $this->exported = false;
+        $this->invoice = null;
 
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
