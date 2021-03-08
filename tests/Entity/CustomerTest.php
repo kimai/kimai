@@ -211,4 +211,35 @@ class CustomerTest extends TestCase
             self::assertEquals($item[1], $column->getType());
         }
     }
+
+    public function testClone()
+    {
+        $sut = new Customer();
+        $sut->setName('mycustomer');
+        $sut->setVatId('DE-0123456789');
+        $sut->setTimeBudget(123456);
+        $sut->setBudget(1234.56);
+
+        $team = new Team();
+        $sut->addTeam($team);
+
+        $meta = new CustomerMeta();
+        $meta->setName('blabla');
+        $meta->setValue('1234567890');
+        $meta->setIsVisible(false);
+        $meta->setIsRequired(true);
+        $sut->setMetaField($meta);
+
+        $clone = clone $sut;
+
+        foreach ($sut->getMetaFields() as $metaField) {
+            $cloneMeta = $clone->getMetaField($metaField->getName());
+            self::assertEquals($cloneMeta->getValue(), $metaField->getValue());
+        }
+        self::assertEquals($clone->getBudget(), $sut->getBudget());
+        self::assertEquals($clone->getTimeBudget(), $sut->getTimeBudget());
+        self::assertEquals($clone->getColor(), $sut->getColor());
+        self::assertEquals('DE-0123456789', $clone->getVatId());
+        self::assertEquals('mycustomer', $clone->getName());
+    }
 }
