@@ -12,6 +12,9 @@ namespace App\Export;
 use App\Entity\MetaTableTypeInterface;
 use App\Invoice\InvoiceItemInterface;
 
+/**
+ * Will be merged with InvoiceItemInterface in 2.0
+ */
 interface ExportItemInterface extends InvoiceItemInterface
 {
     /**
@@ -20,6 +23,11 @@ interface ExportItemInterface extends InvoiceItemInterface
      * @return bool
      */
     public function isExported(): bool;
+
+    // will be activated with 2.0
+    /*
+    public function setIsExported(): void;
+    */
 
     /**
      * Returns the named meta field or null.
