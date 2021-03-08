@@ -45,9 +45,4 @@ final class Version20200705152310 extends AbstractMigration
         $timesheet->dropColumn('category');
         $timesheet->dropColumn('modified_at');
     }
-
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
 }

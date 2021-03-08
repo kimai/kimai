@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target>Falls der Button nicht funktioniert, kopieren Sie bitte die folgende URL in ihren Browser: %url%</target>
+        <target>Falls der Button nicht funktioniert, kopieren Sie bitte die folgende URL in Ihren Browser: %url%</target>
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target>Das kann passieren ...</target>
+        <target>Das kann passieren …</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>

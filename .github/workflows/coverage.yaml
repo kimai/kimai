@@ -6,7 +6,17 @@ on:
             - master
 jobs:
     tests:
-        runs-on: "ubuntu-20.04"
+        runs-on: ubuntu-latest
+        services:
+            mysql:
+                image: mysql:5.7
+                env:
+                    MYSQL_ALLOW_EMPTY_PASSWORD: false
+                    MYSQL_ROOT_PASSWORD: kimai
+                    MYSQL_DATABASE: kimai
+                ports:
+                    - 3306/tcp
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         strategy:
             matrix:
                 php: ['7.4']
@@ -18,7 +28,7 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: pcov
-                    extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql, zip, gd, ldap
+                    extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
             -   run: |
                     composer install --no-progress
                     composer require laminas/laminas-ldap
@@ -27,6 +37,9 @@ jobs:
             -   name: Run tests
                 run: vendor/bin/phpunit tests/ --coverage-clover=coverage.xml
                 env:
+                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
+                    APP_ENV: dev
+                    MAILER_URL: null://localhost
                     TEST_WITH_BUNDLES: 1
             -   name: Upload code coverage
                 uses: codecov/codecov-action@v1

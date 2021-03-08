@@ -26,11 +26,6 @@ final class Version20190706224219 extends AbstractMigration
         return 'Creates several indices to improve speed for default queries.';
     }
 
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
-
     public function up(Schema $schema): void
     {
         $timesheet = $schema->getTable('kimai2_timesheet');

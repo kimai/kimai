@@ -108,6 +108,9 @@
     "exsyst/swagger": {
         "version": "v0.4.1"
     },
+    "ezyang/htmlpurifier": {
+        "version": "v4.13.0"
+    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
         "recipe": {
@@ -627,6 +630,9 @@
     "symfony/polyfill-php80": {
         "version": "v1.17.1"
     },
+    "symfony/polyfill-uuid": {
+        "version": "v1.22.0"
+    },
     "symfony/postmark-mailer": {
         "version": "4.4",
         "recipe": {
@@ -722,6 +728,9 @@
             "version": "3.3",
             "ref": "f75ac166398e107796ca94cc57fa1edaa06ec47f"
         }
+    },
+    "symfony/uid": {
+        "version": "v5.2.3"
     },
     "symfony/validator": {
         "version": "v4.0.3"

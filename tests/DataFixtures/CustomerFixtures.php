@@ -10,14 +10,13 @@
 namespace App\Tests\DataFixtures;
 
 use App\Entity\Customer;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
  * Defines the sample data to load in during controller tests.
  */
-final class CustomerFixtures extends Fixture
+final class CustomerFixtures implements TestFixture
 {
     /**
      * @var int
@@ -65,10 +64,13 @@ final class CustomerFixtures extends Fixture
     }
 
     /**
-     * {@inheritdoc}
+     * @param ObjectManager $manager
+     * @return Customer[]
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): array
     {
+        $created = [];
+
         $faker = Factory::create();
 
         for ($i = 0; $i < $this->amount; $i++) {
@@ -92,8 +94,11 @@ final class CustomerFixtures extends Fixture
                 \call_user_func($this->callback, $customer);
             }
             $manager->persist($customer);
+            $created[] = $customer;
         }
 
         $manager->flush();
+
+        return $created;
     }
 }

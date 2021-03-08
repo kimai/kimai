@@ -26,11 +26,6 @@ final class Version20190729162655 extends AbstractMigration
         return 'Adds missing foreign keys on tag table';
     }
 
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
-
     public function up(Schema $schema): void
     {
         $timesheetTags = $schema->getTable('kimai2_timesheet_tags');

@@ -26,11 +26,6 @@ final class Version20200125123942 extends AbstractMigration
         return 'Adds a column to the user table to identify authenticator';
     }
 
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
-
     public function up(Schema $schema): void
     {
         $users = $schema->getTable('kimai2_users');

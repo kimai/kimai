@@ -8,23 +8,23 @@
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target>Questa è una e-mail auto generate. Per cortesia non rispondete.</target>
+        <target>Questa è un'e-mail generata automaticamente. Si prega di non rispondere; l'indirizzo non verrà letto.</target>
       </trans-unit>
       <trans-unit id="registration.subject">
         <source>registration.subject</source>
-        <target>Attivate il vostro account</target>
+        <target>Attiva il tuo account</target>
       </trans-unit>
       <trans-unit id="registration.title">
         <source>registration.title</source>
-        <target>Benvenuto %username%</target>
+        <target>Benvenuto/a %username%</target>
       </trans-unit>
       <trans-unit id="registration.button">
         <source>registration.button</source>
-        <target>Attivate il vostro account</target>
+        <target>Attiva il tuo account</target>
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>Vi siete registrati con l'email %email%. Ora bisogna provvedere ad attivare l'account prima che il collegamento scada.</target>
+        <target>Ti sei registrato/a con l'indirizzo %email%. Ora bisogna provvedere ad attivare l'account prima che il collegamento scada.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target>Questo può succedere ...</target>
+        <target>Quello può succedere…</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target>... Password dimenticata ? Non preoccuparti: Kimai ti aiuterà a crearne una nuova:</target>
+        <target>… password dimenticata? Non preoccuparti: Kimai ti aiuterà a crearne una nuova:</target>
       </trans-unit>
     </body>
   </file>

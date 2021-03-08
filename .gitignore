@@ -23,7 +23,6 @@ translations/branding.en.xlf
 
 /var/data/*
 !/var/data/.gitkeep
-!/var/data/kimai_test.sqlite
 /var/coverage/
 /var/cache/*
 !var/cache/.gitkeep

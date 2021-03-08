@@ -26,11 +26,6 @@ final class Version20191024100951 extends AbstractMigration
         return 'Adds the order_date column to the projects table';
     }
 
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
-
     public function up(Schema $schema): void
     {
         $projects = $schema->getTable('kimai2_projects');

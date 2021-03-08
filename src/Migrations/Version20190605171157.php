@@ -26,11 +26,6 @@ final class Version20190605171157 extends AbstractMigration
         return 'Creates the budget columns on: customer, project, activity';
     }
 
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
-
     public function up(Schema $schema): void
     {
         $customers = $schema->getTable('kimai2_customers');

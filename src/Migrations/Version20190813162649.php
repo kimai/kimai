@@ -26,11 +26,6 @@ final class Version20190813162649 extends AbstractMigration
         return 'Changing column sizes to prevent index length errors';
     }
 
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
-
     public function up(Schema $schema): void
     {
         $activity = $schema->getTable('kimai2_activities');

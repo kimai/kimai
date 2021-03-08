@@ -26,11 +26,6 @@ final class Version20191116110124 extends AbstractMigration
         return 'New Vat ID columns and invoice template improvements';
     }
 
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
-
     public function up(Schema $schema): void
     {
         $customers = $schema->getTable('kimai2_customers');

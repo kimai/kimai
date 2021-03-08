@@ -24,6 +24,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Command used to do the basic installation steps for Kimai.
+ *
+ * @codeCoverageIgnore
  */
 final class InstallCommand extends Command
 {
@@ -156,10 +158,7 @@ final class InstallCommand extends Command
             throw new \Exception('Skipped database creation, aborting installation');
         }
 
-        $options = [];
-        if ($this->connection->getDatabasePlatform()->getName() !== 'sqlite') {
-            $options = ['--if-not-exists' => true];
-        }
+        $options = ['--if-not-exists' => true];
 
         $command = $this->getApplication()->find('doctrine:database:create');
         $result = $command->run(new ArrayInput($options), $output);

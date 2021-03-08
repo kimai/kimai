@@ -26,11 +26,6 @@ final class Version20191108151534 extends AbstractMigration
         return 'Adds the user roles and role permissions table';
     }
 
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
-
     public function up(Schema $schema): void
     {
         $roles = $schema->createTable('kimai2_roles');

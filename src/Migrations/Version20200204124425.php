@@ -26,11 +26,6 @@ final class Version20200204124425 extends AbstractMigration
         return 'Adds language and decimal_duration column to invoice template table';
     }
 
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
-
     public function up(Schema $schema): void
     {
         $invoiceTemplates = $schema->getTable('kimai2_invoice_templates');

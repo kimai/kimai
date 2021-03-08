@@ -7,11 +7,11 @@
             -->
       <trans-unit id="time_tracking">
         <source>time_tracking</source>
-        <target>Time Tracking</target>
+        <target>Monitoraggio del tempo</target>
       </trans-unit>
       <trans-unit id="yes">
         <source>yes</source>
-        <target>Si</target>
+        <target>Sì</target>
       </trans-unit>
       <trans-unit id="no">
         <source>no</source>
@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="confirm.delete">
         <source>confirm.delete</source>
-        <target>Sicuro di cancellare?</target>
+        <target>Sicuro/a di cancellare?</target>
       </trans-unit>
       <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
@@ -101,11 +101,11 @@
       </trans-unit>
       <trans-unit id="label.api_token">
         <source>label.api_token</source>
-        <target>API password</target>
+        <target>Password API</target>
       </trans-unit>
       <trans-unit id="label.api_token_repeat">
         <source>label.api_token_repeat</source>
-        <target>Ripeti API password</target>
+        <target>Ripeti password API</target>
       </trans-unit>
       <trans-unit id="login_required">
         <source>login_required</source>
@@ -116,7 +116,7 @@
             -->
       <trans-unit id="menu.homepage">
         <source>menu.homepage</source>
-        <target>Pannello di Controllo</target>
+        <target>Pannello di controllo</target>
       </trans-unit>
       <trans-unit id="menu.admin">
         <source>menu.admin</source>
@@ -180,7 +180,7 @@
       </trans-unit>
       <trans-unit id="menu.tags">
         <source>menu.tags</source>
-        <target>Tags</target>
+        <target>Etichette</target>
       </trans-unit>
       <trans-unit id="menu.doctor">
         <source>menu.doctor</source>
@@ -262,11 +262,11 @@
       </trans-unit>
       <trans-unit id="label.tag">
         <source>label.tag</source>
-        <target>Tags</target>
+        <target>Etichette</target>
       </trans-unit>
       <trans-unit id="label.tags">
         <source>label.tags</source>
-        <target>Tags</target>
+        <target>Etichette</target>
       </trans-unit>
       <trans-unit id="label.hourlyRate">
         <source>label.hourlyRate</source>
@@ -458,11 +458,11 @@
       </trans-unit>
       <trans-unit id="label.replaceTags">
         <source>label.replaceTags</source>
-        <target>Sostituisci tags</target>
+        <target>Sostituisci etichette</target>
       </trans-unit>
       <trans-unit id="label.appendTags">
         <source>label.appendTags</source>
-        <target>Aggiungi tags</target>
+        <target>Aggiungi etichette</target>
       </trans-unit>
       <!--
               User profile
@@ -1112,11 +1112,23 @@
       </trans-unit>
       <trans-unit id="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
-        <target>Prima di aggiornare i campi è necessario attivarli cliccando sul checkbox corrisopondente</target>
+        <target>Prima di aggiornare i campi è necessario attivarli cliccando sulla casella di controllo corrisopondente.</target>
       </trans-unit>
       <trans-unit id="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
         <target>Campi aggiuntivi</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Aggiorna il titolo del browser</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>La forma è cambiata. Fai clic su «Salva» per salvare le modifiche o su «Chiudi» per annullarle.</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Totale</target>
       </trans-unit>
     </body>
   </file>

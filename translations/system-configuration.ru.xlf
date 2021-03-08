@@ -226,6 +226,10 @@
         <source>label.timesheet.rules.lockdown_period_start</source>
         <target>Зафиксировать период старта (Относительная дата PHP до настоящего времени)</target>
       </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>Выключено</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
