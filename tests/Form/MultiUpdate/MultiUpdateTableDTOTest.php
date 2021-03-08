@@ -28,6 +28,7 @@ class MultiUpdateTableDTOTest extends TestCase
         self::assertEmpty($sut->getEntities());
         self::assertEquals(['' => ''], $sut->getActions());
         self::assertNull($sut->getAction());
+        self::assertFalse($sut->hasAction());
     }
 
     public function testSetterAndGetter()
@@ -35,6 +36,7 @@ class MultiUpdateTableDTOTest extends TestCase
         $sut = new MultiUpdateTableDTO();
 
         self::assertInstanceOf(MultiUpdateTableDTO::class, $sut->addUpdate('foo'));
+        self::assertTrue($sut->hasAction());
         self::assertInstanceOf(MultiUpdateTableDTO::class, $sut->addDelete('bar'));
         self::assertInstanceOf(MultiUpdateTableDTO::class, $sut->addAction('test', 'hello/world'));
         self::assertEquals(

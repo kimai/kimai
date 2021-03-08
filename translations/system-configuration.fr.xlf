@@ -226,6 +226,22 @@
         <source>invoice</source>
         <target>Factures</target>
       </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>Désactivé</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Utiliser la valeur configurée de la règle d'arrondi</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Sélection des minutes pour Du et Au</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Sélection des minutes pour la durée</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

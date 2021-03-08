@@ -38,7 +38,6 @@ class UserControllerTest extends ControllerBaseTest
             'search search-toggle visible-xs-inline' => '#',
             'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/user/export'),
-            'permissions' => $this->createUrl('/admin/permissions'),
             'create' => $this->createUrl('/admin/user/create'),
             'help' => 'https://www.kimai.org/documentation/users.html'
         ]);
@@ -99,7 +98,7 @@ class UserControllerTest extends ControllerBaseTest
 
     public function testCreateAction()
     {
-        $username = '亚历山德拉';
+        $username = '亚历山德拉' . uniqid();
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/create');
         $form = $client->getCrawler()->filter('form[name=user_create]')->form();
@@ -116,17 +115,6 @@ class UserControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode($username) . '/edit'));
         $client->followRedirect();
-
-        $expectedTabs = ['#settings', '#password', '#api-token', '#teams', '#roles'];
-
-        $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
-        $this->assertEquals(\count($expectedTabs), $tabs->count());
-        $foundTabs = [];
-        /** @var \DOMElement $tab */
-        foreach ($tabs->filter('a') as $tab) {
-            $foundTabs[] = $tab->getAttribute('href');
-        }
-        $this->assertEmpty(array_diff($expectedTabs, $foundTabs));
 
         $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
         $this->assertEquals($username, $form->get('user_edit[alias]')->getValue());
@@ -200,10 +188,56 @@ class UserControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertHasFlashDeleteSuccess($client);
 
-        // SQLIte does not necessarly support onCascade delete, so these timesheet will stay after deletion
-        // $em->clear();
-        // $timesheets = $em->getRepository(Timesheet::class)->count([]);
-        // $this->assertEquals(0, $timesheets);
+        $em->clear();
+        $timesheets = $em->getRepository(Timesheet::class)->count([]);
+        $this->assertEquals(0, $timesheets);
+
+        $this->request($client, '/admin/user/' . $user->getId() . '/edit');
+        $this->assertFalse($client->getResponse()->isSuccessful());
+    }
+
+    public function testDeleteActionWithUserReplacementAndTimesheetEntries()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $em = $this->getEntityManager();
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $userNew = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $this->assertNotEquals($userNew->getId(), $user->getId());
+
+        $fixture = new TimesheetFixtures();
+        $fixture->setUser($user);
+        $fixture->setAmount(10);
+        $this->importFixture($fixture);
+
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(10, \count($timesheets));
+        foreach ($timesheets as $timesheet) {
+            $this->assertEquals($user->getId(), $timesheet->getUser()->getId());
+        }
+
+        $this->request($client, '/admin/user/' . $user->getId() . '/delete');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=form]')->form();
+        $this->assertStringEndsWith($this->createUrl('/admin/user/' . $user->getId() . '/delete'), $form->getUri());
+        $client->submit($form, [
+            'form' => [
+                'user' => $userNew->getId()
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/user/'));
+        $client->followRedirect();
+        $this->assertHasFlashDeleteSuccess($client);
+
+        $em->clear();
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(10, \count($timesheets));
+        foreach ($timesheets as $timesheet) {
+            $this->assertEquals($userNew->getId(), $timesheet->getUser()->getId());
+        }
 
         $this->request($client, '/admin/user/' . $user->getId() . '/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());

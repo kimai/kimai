@@ -20,22 +20,17 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 /**
  * Allows dynamic injection of theme related options.
  */
-class ThemeOptionsSubscriber implements EventSubscriberInterface
+final class ThemeOptionsSubscriber implements EventSubscriberInterface
 {
     /**
      * @var TokenStorageInterface
      */
-    protected $storage;
-
+    private $storage;
     /**
      * @var ContextHelper
      */
-    protected $helper;
+    private $helper;
 
-    /**
-     * @param TokenStorageInterface $storage
-     * @param ContextHelper $helper
-     */
     public function __construct(TokenStorageInterface $storage, ContextHelper $helper)
     {
         $this->storage = $storage;
@@ -52,17 +47,23 @@ class ThemeOptionsSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param KernelEvent $event
-     */
-    public function setThemeOptions(KernelEvent $event)
+    public function setThemeOptions(KernelEvent $event): void
     {
-        if (!$this->canHandleEvent($event)) {
+        // Ignore sub-requests
+        if (!$event->isMasterRequest()) {
             return;
         }
 
-        /** @var User $user */
+        // ignore events like the toolbar where we do not have a token
+        if (null === $this->storage->getToken()) {
+            return;
+        }
+
         $user = $this->storage->getToken()->getUser();
+
+        if (!($user instanceof User)) {
+            return;
+        }
 
         /** @var UserPreference $ref */
         foreach ($user->getPreferences() as $ref) {
@@ -89,27 +90,5 @@ class ThemeOptionsSubscriber implements EventSubscriberInterface
                     break;
             }
         }
-    }
-
-    /**
-     * @param KernelEvent $event
-     * @return bool
-     */
-    protected function canHandleEvent(KernelEvent $event): bool
-    {
-        // Ignore sub-requests
-        if (!$event->isMasterRequest()) {
-            return false;
-        }
-
-        // ignore events like the toolbar where we do not have a token
-        if (null === $this->storage->getToken()) {
-            return false;
-        }
-
-        /** @var User $user */
-        $user = $this->storage->getToken()->getUser();
-
-        return ($user instanceof User);
     }
 }

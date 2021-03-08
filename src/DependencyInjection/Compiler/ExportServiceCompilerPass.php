@@ -11,6 +11,7 @@ namespace App\DependencyInjection\Compiler;
 
 use App\Export\Renderer\HtmlRenderer;
 use App\Export\Renderer\HtmlRendererFactory;
+use App\Export\Renderer\PDFRenderer;
 use App\Export\Renderer\PdfRendererFactory;
 use App\Export\ServiceExport;
 use App\Kernel;
@@ -42,6 +43,11 @@ class ExportServiceCompilerPass implements CompilerPassInterface
             $definition->addMethodCall('addTimesheetExporter', [new Reference($id)]);
         }
 
+        $taggedRepository = $container->findTaggedServiceIds(Kernel::TAG_EXPORT_REPOSITORY);
+        foreach ($taggedRepository as $id => $tags) {
+            $definition->addMethodCall('addExportRepository', [new Reference($id)]);
+        }
+
         $path = \dirname(\dirname(\dirname(__DIR__))) . DIRECTORY_SEPARATOR;
         foreach ($container->getParameter('kimai.export.documents') as $exportPath) {
             if (!is_dir($path . $exportPath)) {
@@ -67,7 +73,7 @@ class ExportServiceCompilerPass implements CompilerPassInterface
 
                 $serviceId = 'exporter_renderer.' . str_replace('.', '_', $tplName);
 
-                $factoryDefinition = new Definition(HtmlRenderer::class);
+                $factoryDefinition = new Definition(PDFRenderer::class);
                 $factoryDefinition->addArgument($tplName);
                 $factoryDefinition->addArgument($tplName);
                 $factoryDefinition->setFactory([new Reference(PdfRendererFactory::class), 'create']);

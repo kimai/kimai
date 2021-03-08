@@ -80,7 +80,14 @@
                 <source>rates.title</source>
                 <target>Fees</target>
             </trans-unit>
-
+            <trans-unit id="sum.total">
+                <source>sum.total</source>
+                <target>Total</target>
+            </trans-unit>
+            <trans-unit id="modal.dirty">
+                <source>modal.dirty</source>
+                <target>The form has changed. Please click "Save" to save the changes or "Close" to cancel.</target>
+            </trans-unit>
             <!--
               Login / Security
             -->
@@ -553,7 +560,10 @@
                 <source>label.timesheet.export_decimal</source>
                 <target>Use decimal duration in export</target>
             </trans-unit>
-
+            <trans-unit id="theme.update_browser_title">
+                <source>theme.update_browser_title</source>
+                <target>Update browser title</target>
+            </trans-unit>
             <!--
               User timesheet calendar
             -->

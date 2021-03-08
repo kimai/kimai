@@ -14,10 +14,10 @@ import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiReducedClickHandler extends KimaiPlugin {
 
-    _addClickHandler(selector, callback)  {
+    _addClickHandler(selector, callback) {
         jQuery('body').on('click', selector, function(event) {
             // just in case an inner element is editable, than this should not be triggered
-            if (event.target.parentNode.isContentEditable || event.target.isContentEditable) {
+            if (event.target.parentNode.isContentEditable || event.target.isContentEditable) {
                 return;
             }
 

@@ -94,6 +94,32 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('markdown_content')
                     ->defaultValue(false)
                 ->end()
+                ->scalarNode('duration_increment')
+                    ->defaultNull()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            if ($value !== null) {
+                                return ((int) $value) < 0;
+                            }
+
+                            return false;
+                        })
+                        ->thenInvalid('Duration increment is invalid')
+                    ->end()
+                ->end()
+                ->scalarNode('time_increment')
+                    ->defaultNull()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            if ($value !== null) {
+                                return ((int) $value) < 1;
+                            }
+
+                            return false;
+                        })
+                        ->thenInvalid('Time increment is invalid')
+                    ->end()
+                ->end()
                 ->arrayNode('rounding')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
@@ -368,7 +394,7 @@ class Configuration implements ConfigurationInterface
                     ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "kimai.timesheet.active_entries.soft_limit" instead.')
                 ->end()
                 ->scalarNode('box_color')
-                    ->defaultValue('green')
+                    ->defaultValue('blue')
                     ->setDeprecated('The node "%node%" at path "%path%" was removed, please delete it from your config.')
                 ->end()
                 ->scalarNode('select_type')

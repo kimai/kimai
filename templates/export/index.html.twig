@@ -40,8 +40,10 @@
             {{ form_row(form.customers) }}
             {{ form_row(form.projects) }}
             {{ form_row(form.activities) }}
-            {{ form_row(form.users) }}
             {{ form_row(form.tags) }}
+            {% if form.users is defined %}
+                {{ form_row(form.users) }}
+            {% endif %}
             {{ form_row(form.exported) }}
             {{ form_row(form.state) }}
             {{ form_row(form.markAsExported) }}
@@ -114,7 +116,11 @@
                         <br>
                         <small>{{ widgets.label_customer(entry.project.customer) }}</small>
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">
+                        {% if entry.activity is not null %}
+                            {{ widgets.label_activity(entry.activity) }}
+                        {% endif %}
+                    </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">
                         {{ entry.description|desc2html }}
                     </td>
@@ -289,13 +295,13 @@
             });
 
             $('body').on('click', '#export-buttons .startExportBtn', function() {
-                $('#type').val($(this).attr('data-type'));
+                $('#renderer').val($(this).attr('data-type'));
                 var $form = $("#export-form");
                 var prevAction = $form.attr('action');
                 var prevMethod = $form.attr('method');
                 $form.attr('target', '_blank').attr('method', 'POST').attr('action', '{{ path('export_data') }}');
                 $form.submit();
-                $('#type').val('');
+                $('#renderer').val('');
                 $form.removeAttr('target').attr('action', prevAction).attr('method', prevMethod);
             });
         });

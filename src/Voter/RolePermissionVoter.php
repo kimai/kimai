@@ -11,13 +11,22 @@ namespace App\Voter;
 
 use App\Entity\Activity;
 use App\Entity\User;
+use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
  * A voter to check the free-configurable permission from "kimai.permissions".
  */
-class RolePermissionVoter extends AbstractVoter
+final class RolePermissionVoter extends Voter
 {
+    private $permissionManager;
+
+    public function __construct(RolePermissionManager $permissionManager)
+    {
+        $this->permissionManager = $permissionManager;
+    }
+
     /**
      * @param string $attribute
      * @param mixed $subject
@@ -30,7 +39,7 @@ class RolePermissionVoter extends AbstractVoter
             return false;
         }
 
-        return $this->isRegisteredPermission($attribute);
+        return $this->permissionManager->isRegisteredPermission($attribute);
     }
 
     /**
@@ -47,6 +56,6 @@ class RolePermissionVoter extends AbstractVoter
             return false;
         }
 
-        return $this->hasRolePermission($user, $attribute);
+        return $this->permissionManager->hasRolePermission($user, $attribute);
     }
 }

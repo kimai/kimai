@@ -27,7 +27,7 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
         $this->setTitle('stats.yourWorkingHours');
 
         $this->setOptions([
-            'year' => (new DateTime('now'))->format('Y'),
+            'year' => (new DateTime('now'))->format('o'),
             'week' => (new DateTime('now'))->format('W'),
             'type' => 'bar',
         ]);
@@ -38,7 +38,7 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
         $this->setOption('user', $user);
         $now = new DateTime('now', new \DateTimeZone($user->getTimezone()));
         $this->setOptions([
-            'year' => $now->format('Y'),
+            'year' => $now->format('o'),
             'week' => $now->format('W'),
         ]);
     }
@@ -63,6 +63,14 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
         return $now;
     }
 
+    private function getLastWeekInYear($year): int
+    {
+        $lastWeekInYear = new DateTime();
+        $lastWeekInYear->setISODate($year, 53);
+
+        return $lastWeekInYear->format('W') === '53' ? 53 : 52;
+    }
+
     public function getData(array $options = [])
     {
         $options = $this->getOptions($options);
@@ -77,10 +85,21 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
         $weekBegin = $this->getDate($timezone, $options['year'], $options['week'], 1, 0, 0, 0);
         $weekEnd = $this->getDate($timezone, $options['year'], $options['week'], 7, 23, 59, 59);
 
+        $lastWeekInYear = $this->getLastWeekInYear($options['year']);
+        $lastWeekInLastYear = $this->getLastWeekInYear($options['year'] - 1);
+
+        $thisMonth = clone $weekBegin;
+        if ((int) $options['week'] === 1) {
+            $thisMonth = (new DateTime('now', $timezone))->setISODate($options['year'], $options['week'], 7)->setTime(0, 0, 0);
+        }
+
         return [
             'begin' => clone $weekBegin,
             'end' => clone $weekEnd,
             'stats' => $this->repository->getDailyStats($user, $weekBegin, $weekEnd),
+            'thisMonth' => $thisMonth,
+            'lastWeekInYear' => $lastWeekInYear,
+            'lastWeekInLastYear' => $lastWeekInLastYear,
             'day' => $this->repository->getStatistic(
                 'duration',
                 new DateTime('00:00:00', $timezone),

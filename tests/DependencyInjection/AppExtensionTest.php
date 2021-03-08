@@ -56,7 +56,6 @@ class AppExtensionTest extends TestCase
                     ],
                 ],
                 'data_dir' => '/tmp/',
-                'plugin_dir' => '/tmp/', // still here, to make sure that this value is NOT applied!
                 'timesheet' => [],
                 'saml' => [
                     'connection' => []
@@ -154,7 +153,7 @@ class AppExtensionTest extends TestCase
             ],
             'kimai.theme' => [
                 'active_warning' => 3,
-                'box_color' => 'green',
+                'box_color' => 'blue',
                 'select_type' => 'selectpicker',
                 'show_about' => true,
                 'chart' => [
@@ -208,6 +207,8 @@ class AppExtensionTest extends TestCase
                     'lockdown_grace_period' => null,
                 ],
                 'default_begin' => 'now',
+                'duration_increment' => null,
+                'time_increment' => null,
             ],
             'kimai.timesheet.rates' => [],
             'kimai.timesheet.rounding' => [
@@ -323,6 +324,21 @@ class AppExtensionTest extends TestCase
         $minConfig['kimai']['timesheet']['mode'] = 'punch';
 
         $this->extension->load($minConfig, $container = $this->getContainer());
+    }
+
+    /**
+     * @expectedDeprecation Changing the plugin directory via "kimai.plugin_dir" is not supported since 1.9
+     * @group legacy
+     */
+    public function testChangingPluginsIsIgnoredAndTriggersDeprecation()
+    {
+        $minConfig = $this->getMinConfig();
+        $minConfig['kimai']['plugin_dir'] = '/tmp/';
+        $expected = realpath(__DIR__ . '/../../') . '/var/plugins';
+
+        $this->extension->load($minConfig, $container = $this->getContainer());
+
+        $this->assertEquals($expected, $container->getParameter('kimai.plugin_dir'), 'Invalid config: kimai.plugin_dir');
     }
 
     public function testLdapDefaultValues()

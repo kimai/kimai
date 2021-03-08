@@ -9,7 +9,7 @@
 
 namespace App\Timesheet;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\TimesheetCreatePostEvent;
@@ -27,6 +27,7 @@ use App\Event\TimesheetUpdatePostEvent;
 use App\Event\TimesheetUpdatePreEvent;
 use App\Repository\TimesheetRepository;
 use App\Security\AccessDeniedException;
+use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Validator\ValidationException;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
@@ -42,7 +43,7 @@ final class TimesheetService
      */
     private $repository;
     /**
-     * @var TimesheetConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
     /**
@@ -63,7 +64,7 @@ final class TimesheetService
     private $validator;
 
     public function __construct(
-        TimesheetConfiguration $configuration,
+        SystemConfiguration $configuration,
         TimesheetRepository $repository,
         TrackingModeService $service,
         EventDispatcherInterface $dispatcher,
@@ -148,6 +149,7 @@ final class TimesheetService
         $this->repository->begin();
         try {
             $this->validateTimesheet($timesheet);
+            $this->fixTimezone($timesheet);
 
             $this->dispatcher->dispatch(new TimesheetCreatePreEvent($timesheet));
             $this->repository->save($timesheet);
@@ -186,6 +188,8 @@ final class TimesheetService
             $this->stopActiveEntries($timesheet);
         }
         */
+
+        $this->fixTimezone($timesheet);
 
         $this->dispatcher->dispatch(new TimesheetUpdatePreEvent($timesheet));
         $this->repository->save($timesheet);
@@ -264,6 +268,21 @@ final class TimesheetService
     }
 
     /**
+     * Makes sure, that the timesheet record has the timezone of the user.
+     *
+     * This fixes #1442 and prevents a wrong time if a teamlead edits the
+     * timesheet for an employee living in another timezone.
+     *
+     * @param Timesheet $timesheet
+     */
+    private function fixTimezone(Timesheet $timesheet)
+    {
+        if (null !== ($timezone = $timesheet->getTimezone()) && $timezone !== $timesheet->getUser()->getTimezone()) {
+            $timesheet->setTimezone($timesheet->getUser()->getTimezone());
+        }
+    }
+
+    /**
      * Stops active records if more than allowed are running for the timesheet user.
      *
      * The given $timesheet will be ignored and not stopped (assuming it is the latest one that was re-started).
@@ -275,7 +294,7 @@ final class TimesheetService
      */
     private function stopActiveEntries(Timesheet $timesheet): int
     {
-        $hardLimit = $this->configuration->getActiveEntriesHardLimit();
+        $hardLimit = $this->configuration->getTimesheetActiveEntriesHardLimit();
         $activeEntries = $this->repository->getActiveEntries($timesheet->getUser());
 
         if (empty($activeEntries)) {
@@ -295,5 +314,10 @@ final class TimesheetService
         }
 
         return $counter;
+    }
+
+    public function getActiveTrackingMode(): TrackingModeInterface
+    {
+        return $this->trackingModeService->getActiveMode();
     }
 }

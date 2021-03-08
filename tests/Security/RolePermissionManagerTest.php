@@ -9,6 +9,7 @@
 
 namespace App\Tests\Security;
 
+use App\Entity\User;
 use App\Repository\RolePermissionRepository;
 use App\Security\RolePermissionManager;
 use PHPUnit\Framework\TestCase;
@@ -89,11 +90,17 @@ class RolePermissionManagerTest extends TestCase
             'USER_ROLE' => ['foo', 'bar']
         ]);
 
+        $user = new User();
+        $user->addRole('TEST_ROLE');
+        $user->addRole('FFOOOOOO');
+
         self::assertTrue($sut->isRegisteredPermission('foo'));
         self::assertTrue($sut->isRegisteredPermission('bar'));
         self::assertEquals(['role_permissions', 'view_user', 'create_user', 'foo2', 'foo', 'bar'], array_values($sut->getPermissions()));
 
         self::assertTrue($sut->hasPermission('TEST_ROLE', 'foo2'));
+        self::assertTrue($sut->hasRolePermission($user, 'foo2'));
+        self::assertFalse($sut->hasRolePermission($user, 'foo'));
         self::assertFalse($sut->hasPermission('TEST_ROLE', 'foo'));
         self::assertFalse($sut->hasPermission('USER_ROLE', 'foo'));
         self::assertTrue($sut->hasPermission('USER_ROLE', 'bar'));

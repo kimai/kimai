@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class UserEnvironmentSubscriber implements EventSubscriberInterface
+final class UserEnvironmentSubscriber implements EventSubscriberInterface
 {
     /**
      * @var TokenStorageInterface
@@ -40,20 +40,22 @@ class UserEnvironmentSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function prepareEnvironment(RequestEvent $event)
+    public function prepareEnvironment(RequestEvent $event): void
     {
+        // ignore sub-requests
         if (!$event->isMasterRequest()) {
             return;
         }
 
-        if (null === $this->storage->getToken()) {
+        // the locale depends on the request, not on the user configuration
+        \Locale::setDefault($event->getRequest()->getLocale());
+
+        // ignore events like the toolbar where we do not have a token
+        if (null === ($token = $this->storage->getToken())) {
             return;
         }
 
-        $user = $this->storage->getToken()->getUser();
-
-        // the locale depends on the request, not on the user configuration
-        \Locale::setDefault($event->getRequest()->getLocale());
+        $user = $token->getUser();
 
         if ($user instanceof User) {
             date_default_timezone_set($user->getTimezone());

@@ -14,6 +14,7 @@ use App\Security\CurrentUser;
 use DateTimeZone;
 
 /**
+ * @codeCoverageIgnore
  * @deprecated will be removed with 2.0
  */
 class UserDateTimeFactory extends DateTimeFactory

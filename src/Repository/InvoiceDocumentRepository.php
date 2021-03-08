@@ -28,6 +28,9 @@ final class InvoiceDocumentRepository
         }
     }
 
+    /**
+     * @CloudRequired
+     */
     public function addDirectory(string $directory)
     {
         $this->documentDirs[] = $directory;
@@ -35,6 +38,9 @@ final class InvoiceDocumentRepository
         return $this;
     }
 
+    /**
+     * @CloudRequired
+     */
     public function removeDirectory(string $directory)
     {
         if (($key = array_search($directory, $this->documentDirs)) !== false) {
@@ -45,7 +51,7 @@ final class InvoiceDocumentRepository
     }
 
     /**
-     * @deprecated since 1.10 - will be removed with 2.0 - use getCustomInvoiceDirectory() instead
+     * @deprecated since 1.10 - will be removed with 2.0 - use getUploadDirectory() instead
      */
     public function getCustomInvoiceDirectory(): string
     {

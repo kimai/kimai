@@ -10,6 +10,7 @@
 namespace App\Utils;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\String\UnicodeString;
 
 final class FileHelper
 {
@@ -28,6 +29,9 @@ final class FileHelper
         $this->filesystem = new Filesystem();
     }
 
+    /**
+     * @CloudRequired
+     */
     public function setDataDirectory(string $directory)
     {
         $this->dataDir = $directory;
@@ -67,5 +71,21 @@ final class FileHelper
     public function removeFile(string $filename)
     {
         $this->filesystem->remove($filename);
+    }
+
+    public static function convertToAsciiFilename(string $filename): string
+    {
+        $filename = new UnicodeString($filename);
+        $filename = (string) $filename->collapseWhitespace()->trim()->replace(PHP_EOL, '')->replace(' ', '_');
+
+        $dangerousCharacters = ['"', "'", '&', '/', '\\', '?', '#', '%'];
+        $filename = str_replace($dangerousCharacters, ' ', $filename);
+
+        $filename = new UnicodeString($filename);
+        $filename = (string) $filename->collapseWhitespace()->replace(' ', '_')->ascii()->trim();
+        $filename = preg_replace('/[^a-zA-Z0-9\x7f-\xff\-]++/', ' ', $filename);
+        $filename = str_replace(' ', '_', trim($filename));
+
+        return $filename;
     }
 }

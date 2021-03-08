@@ -10,11 +10,11 @@
 namespace App;
 
 use App\DependencyInjection\AppExtension;
-use App\DependencyInjection\Compiler\DoctrineCompilerPass;
 use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
 use App\DependencyInjection\Compiler\WidgetCompilerPass;
+use App\Export\ExportRepositoryInterface;
 use App\Export\RendererInterface as ExportRendererInterface;
 use App\Export\TimesheetExportInterface;
 use App\Invoice\CalculatorInterface as InvoiceCalculator;
@@ -50,6 +50,7 @@ class Kernel extends BaseKernel
     public const TAG_WIDGET = 'widget';
     public const TAG_WIDGET_RENDERER = 'widget.renderer';
     public const TAG_EXPORT_RENDERER = 'export.renderer';
+    public const TAG_EXPORT_REPOSITORY = 'export.repository';
     public const TAG_INVOICE_RENDERER = 'invoice.renderer';
     public const TAG_INVOICE_NUMBER_GENERATOR = 'invoice.number_generator';
     public const TAG_INVOICE_CALCULATOR = 'invoice.calculator';
@@ -74,6 +75,7 @@ class Kernel extends BaseKernel
     {
         $container->registerForAutoconfiguration(TimesheetCalculator::class)->addTag(self::TAG_TIMESHEET_CALCULATOR);
         $container->registerForAutoconfiguration(ExportRendererInterface::class)->addTag(self::TAG_EXPORT_RENDERER);
+        $container->registerForAutoconfiguration(ExportRepositoryInterface::class)->addTag(self::TAG_EXPORT_REPOSITORY);
         $container->registerForAutoconfiguration(InvoiceRendererInterface::class)->addTag(self::TAG_INVOICE_RENDERER);
         $container->registerForAutoconfiguration(NumberGeneratorInterface::class)->addTag(self::TAG_INVOICE_NUMBER_GENERATOR);
         $container->registerForAutoconfiguration(InvoiceCalculator::class)->addTag(self::TAG_INVOICE_CALCULATOR);
@@ -195,7 +197,6 @@ class Kernel extends BaseKernel
         $loader->load($confDir . '/services-*' . self::CONFIG_EXTS, 'glob');
         $loader->load($confDir . '/services_' . $this->environment . self::CONFIG_EXTS, 'glob');
 
-        $container->addCompilerPass(new DoctrineCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new TwigContextCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new InvoiceServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new ExportServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);

@@ -10,6 +10,7 @@
 namespace App\Tests\Timesheet\TrackingMode;
 
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Timesheet\TrackingMode\AbstractTrackingMode;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,14 @@ abstract class AbstractTrackingModeTest extends TestCase
      */
     abstract protected function createSut();
 
+    protected function createTimesheet(): Timesheet
+    {
+        $timesheet = new Timesheet();
+        $timesheet->setUser(new User());
+
+        return $timesheet;
+    }
+
     protected function assertDefaultBegin(Timesheet $timesheet)
     {
         self::assertNull($timesheet->getBegin());
@@ -33,7 +42,7 @@ abstract class AbstractTrackingModeTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $timesheet = new Timesheet();
+        $timesheet = $this->createTimesheet();
 
         self::assertNull($timesheet->getBegin());
         self::assertNull($timesheet->getEnd());
@@ -48,7 +57,7 @@ abstract class AbstractTrackingModeTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $timesheet = new Timesheet();
+        $timesheet = $this->createTimesheet();
         $request = new Request([
             'begin' => '2017-07-23',
         ]);
@@ -65,7 +74,7 @@ abstract class AbstractTrackingModeTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $timesheet = new Timesheet();
+        $timesheet = $this->createTimesheet();
         $request = new Request([
             'begin' => '2017-07-23',
             'end' => '2017-07-23',
@@ -85,7 +94,7 @@ abstract class AbstractTrackingModeTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $timesheet = new Timesheet();
+        $timesheet = $this->createTimesheet();
         $request = new Request([
             'begin' => '10x0-99-99',
             'end' => '2017-07-23',
@@ -102,7 +111,7 @@ abstract class AbstractTrackingModeTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $timesheet = new Timesheet();
+        $timesheet = $this->createTimesheet();
         $request = new Request([
             'begin' => '2017-07-23',
             'end' => '20xx-07-23',
@@ -120,7 +129,7 @@ abstract class AbstractTrackingModeTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $timesheet = new Timesheet();
+        $timesheet = $this->createTimesheet();
         $request = new Request([
             'from' => '2018-05-23 21:47:55',
         ]);
@@ -136,7 +145,7 @@ abstract class AbstractTrackingModeTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $timesheet = new Timesheet();
+        $timesheet = $this->createTimesheet();
         $request = new Request([
             'from' => '2018-05-23 21:47:55',
             'to' => '2018-05-24 01:11:11',
@@ -156,7 +165,7 @@ abstract class AbstractTrackingModeTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $timesheet = new Timesheet();
+        $timesheet = $this->createTimesheet();
         $request = new Request([
             'begin' => '2017-07-23',
             'end' => '2017-07-23',
@@ -178,7 +187,7 @@ abstract class AbstractTrackingModeTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $timesheet = new Timesheet();
+        $timesheet = $this->createTimesheet();
         $request = new Request([
             'from' => '2018-xx-23 21:47:55',
             'to' => '2018-05-24 01:11:11',
@@ -195,7 +204,7 @@ abstract class AbstractTrackingModeTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $timesheet = new Timesheet();
+        $timesheet = $this->createTimesheet();
         $request = new Request([
             'from' => '2018-05-23 21:47:55',
             'to' => '2018-xx-24 01:11:11',

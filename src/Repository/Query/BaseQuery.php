@@ -117,6 +117,8 @@ class BaseQuery
     }
 
     /**
+     * By setting the current user, you activate (team) permission checks.
+     *
      * @param User $user
      * @return self
      */

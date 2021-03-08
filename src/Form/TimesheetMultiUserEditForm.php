@@ -20,7 +20,6 @@ class TimesheetMultiUserEditForm extends TimesheetAdminEditForm
     {
         $options['allow_begin_datetime'] = true;
         $options['allow_end_datetime'] = true;
-        $options['allow_duration'] = false;
         $options['include_user'] = false;
 
         parent::buildForm($builder, $options);

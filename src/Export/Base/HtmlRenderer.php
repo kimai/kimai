@@ -108,6 +108,8 @@ class HtmlRenderer
             'query' => $query,
             'summaries' => $summary,
             'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectRepository),
+            // @deprecated since 1.3, will be removed with 2.0
+            'metaColumns' => $timesheetMetaFields,
             'timesheetMetaFields' => $timesheetMetaFields,
             'customerMetaFields' => $customerMetaFields,
             'projectMetaFields' => $projectMetaFields,

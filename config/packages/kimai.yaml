@@ -29,6 +29,14 @@ kimai:
         # This setting can be changed through the Administration screen
         # markdown_content: false
 
+        # Configures the duration drop-down select.
+        # null = use rounding rules, 0 = deactivate, every other number is used as minute/step increment
+        # duration_increment: ~
+
+        # Configures the minute select for begin and end date-time.
+        # null = use rounding rules, every number > 0 is used as minute/step increment
+        # time_increment: ~
+
         # The time-tracking mode that should be used.
         # See https://www.kimai.org/documentation/timesheet.html#tracking-modes
         # mode: default
@@ -231,6 +239,11 @@ kimai:
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         de:
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date: 'd.m.Y'
+            date_time: 'd.m. H:i'
+        de_AT:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'

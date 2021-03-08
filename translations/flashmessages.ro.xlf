@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ro" datatype="plaintext" original="flashmessages.en.xlf">
     <header>
@@ -52,6 +52,10 @@
       <trans-unit id="invoice.first_template">
         <source>invoice.first_template</source>
         <target> Înainte de a începe trebuie să creezi cel puțin un șablon pentru facturi</target>
+      </trans-unit>
+      <trans-unit id="action.upload.error">
+        <source>action.upload.error</source>
+        <target>Acest fișier nu a putut fi încărcat sau salvat</target>
       </trans-unit>
     </body>
   </file>

@@ -27,10 +27,10 @@ It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Do
 ### Requirements
 
 - PHP 7.2.9 or higher
-- Database (MySQL/MariaDB, SQLite for development)
+- MariaDB or MySQL
 - Webserver (nginx, Apache)
 - A modern browser
-- [Other libraries](https://www.kimai.org/download/)
+- Some PHP extensions, see [composer.json](composer.json) or [here](https://www.kimai.org/download/)
 
 ### About
 
@@ -47,7 +47,6 @@ user specific rates, advanced search & filtering, money and time budgets with re
 - [Docker](https://www.kimai.org/documentation/docker.html) - containerized
 - [Development](https://www.kimai.org/documentation/installation.html#development-installation) - on your local machine 
 - [1-click installer](https://www.kimai.org/documentation/installation.html#hosting-and-1-click-installations) - hosted environments 
-- [FTP](https://www.kimai.org/documentation/installation.html#ftp-installation) - unfortunately still widely used ;-)
 
 ### Updating Kimai
 

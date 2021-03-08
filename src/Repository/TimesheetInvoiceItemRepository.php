@@ -36,16 +36,22 @@ final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInter
     }
 
     /**
-     * @param Timesheet[] $invoiceItems
+     * @param InvoiceItemInterface[] $invoiceItems
      */
     public function setExported(array $invoiceItems)
     {
+        $timesheets = [];
+
         foreach ($invoiceItems as $item) {
-            if (!$item instanceof Timesheet) {
-                throw new \InvalidArgumentException('TimesheetInvoiceItemRepository only supports Timesheet entities');
+            if ($item instanceof Timesheet) {
+                $timesheets[] = $item;
             }
         }
 
-        $this->repository->setExported($invoiceItems);
+        if (empty($timesheets)) {
+            return;
+        }
+
+        $this->repository->setExported($timesheets);
     }
 }

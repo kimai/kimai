@@ -25,7 +25,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -35,7 +34,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * @Route(path="/profile")
  * @Security("is_granted('view_own_profile') or is_granted('view_other_profile')")
  */
-class ProfileController extends AbstractController
+final class ProfileController extends AbstractController
 {
     /**
      * @var EventDispatcherInterface
@@ -50,11 +49,10 @@ class ProfileController extends AbstractController
      */
     private $teams;
 
-    public function __construct(UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher, TeamRepository $teams)
+    public function __construct(UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher)
     {
         $this->encoder = $encoder;
         $this->dispatcher = $dispatcher;
-        $this->teams = $teams;
     }
 
     /**
@@ -104,7 +102,11 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile_edit', ['username' => $profile->getUsername()]);
         }
 
-        return $this->getProfileView($profile, 'settings', $form);
+        return $this->render('user/profile.html.twig', [
+            'tab' => 'settings',
+            'user' => $profile,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -129,7 +131,11 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile_password', ['username' => $profile->getUsername()]);
         }
 
-        return $this->getProfileView($profile, 'password', null, $form);
+        return $this->render('user/profile.html.twig', [
+            'tab' => 'password',
+            'user' => $profile,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -154,7 +160,11 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUsername()]);
         }
 
-        return $this->getProfileView($profile, 'api-token', null, null, null, $form);
+        return $this->render('user/api-token.html.twig', [
+            'tab' => 'api-token',
+            'user' => $profile,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -163,10 +173,18 @@ class ProfileController extends AbstractController
      */
     public function rolesAction(User $profile, Request $request)
     {
+        $isSuperAdmin = $profile->isSuperAdmin();
+
         $form = $this->createRolesForm($profile);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // fix that a super admin cannot remove this role from himself.
+            // would be a massive problem, in case that there is only one super-admin account existing
+            if ($isSuperAdmin && !$profile->isSuperAdmin() && $profile->getId() === $this->getUser()->getId()) {
+                $profile->setSuperAdmin(true);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($profile);
             $entityManager->flush();
@@ -176,7 +194,11 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile_roles', ['username' => $profile->getUsername()]);
         }
 
-        return $this->getProfileView($profile, 'roles', null, null, $form);
+        return $this->render('user/profile.html.twig', [
+            'tab' => 'roles',
+            'user' => $profile,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -198,7 +220,11 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile_teams', ['username' => $profile->getUsername()]);
         }
 
-        return $this->getProfileView($profile, 'teams', null, null, null, null, $form);
+        return $this->render('user/profile.html.twig', [
+            'tab' => 'teams',
+            'user' => $profile,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -280,45 +306,6 @@ class ProfileController extends AbstractController
             'user' => $profile,
             'form' => $form->createView(),
             'sections' => $sections
-        ]);
-    }
-
-    protected function getProfileView(
-        User $user,
-        string $tab,
-        FormInterface $editForm = null,
-        FormInterface $pwdForm = null,
-        FormInterface $rolesForm = null,
-        FormInterface $apiTokenForm = null,
-        FormInterface $teamsForm = null
-    ): Response {
-        $forms = [];
-
-        if ($this->isGranted('edit', $user)) {
-            $editForm = $editForm ?: $this->createEditForm($user);
-            $forms['settings'] = $editForm->createView();
-        }
-        if ($this->isGranted('password', $user)) {
-            $pwdForm = $pwdForm ?: $this->createPasswordForm($user);
-            $forms['password'] = $pwdForm->createView();
-        }
-        if ($this->isGranted('api-token', $user)) {
-            $apiTokenForm = $apiTokenForm ?: $this->createApiTokenForm($user);
-            $forms['api-token'] = $apiTokenForm->createView();
-        }
-        if ($this->isGranted('teams', $user) && $this->teams->count([]) > 0) {
-            $teamsForm = $teamsForm ?: $this->createTeamsForm($user);
-            $forms['teams'] = $teamsForm->createView();
-        }
-        if ($this->isGranted('roles', $user)) {
-            $rolesForm = $rolesForm ?: $this->createRolesForm($user);
-            $forms['roles'] = $rolesForm->createView();
-        }
-
-        return $this->render('user/profile.html.twig', [
-            'tab' => $tab,
-            'user' => $user,
-            'forms' => $forms
         ]);
     }
 

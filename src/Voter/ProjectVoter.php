@@ -12,17 +12,19 @@ namespace App\Voter;
 use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
+use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
  * A voter to check permissions on Projects.
  */
-class ProjectVoter extends AbstractVoter
+final class ProjectVoter extends Voter
 {
     /**
      * support rules based on the given project
      */
-    public const ALLOWED_ATTRIBUTES = [
+    private const ALLOWED_ATTRIBUTES = [
         'view',
         'edit',
         'budget',
@@ -32,6 +34,13 @@ class ProjectVoter extends AbstractVoter
         'comments_create',
         'details',
     ];
+
+    private $permissionManager;
+
+    public function __construct(RolePermissionManager $permissionManager)
+    {
+        $this->permissionManager = $permissionManager;
+    }
 
     /**
      * @param string $attribute
@@ -65,7 +74,7 @@ class ProjectVoter extends AbstractVoter
             return false;
         }
 
-        if ($this->hasRolePermission($user, $attribute . '_project')) {
+        if ($this->permissionManager->hasRolePermission($user, $attribute . '_project')) {
             return true;
         }
 
@@ -74,8 +83,8 @@ class ProjectVoter extends AbstractVoter
             return false;
         }
 
-        $hasTeamleadPermission = $this->hasRolePermission($user, $attribute . '_teamlead_project');
-        $hasTeamPermission = $this->hasRolePermission($user, $attribute . '_team_project');
+        $hasTeamleadPermission = $this->permissionManager->hasRolePermission($user, $attribute . '_teamlead_project');
+        $hasTeamPermission = $this->permissionManager->hasRolePermission($user, $attribute . '_team_project');
 
         if (!$hasTeamleadPermission && !$hasTeamPermission) {
             return false;

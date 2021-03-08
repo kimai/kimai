@@ -20,7 +20,6 @@ use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
-use App\Timesheet\TrackingMode\TrackingModeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
@@ -101,8 +100,7 @@ class TimesheetTeamController extends TimesheetAbstractController
         $entry->setUser($this->getUser());
         $this->service->prepareNewTimesheet($entry, $request);
 
-        $mode = $this->getTrackingMode();
-        $createForm = $this->getMultiUserCreateForm($entry, $mode);
+        $createForm = $this->getMultiUserCreateForm($entry);
         $createForm->handleRequest($request);
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
@@ -150,8 +148,10 @@ class TimesheetTeamController extends TimesheetAbstractController
         ]);
     }
 
-    protected function getMultiUserCreateForm(MultiUserTimesheet $entry, TrackingModeInterface $mode): FormInterface
+    protected function getMultiUserCreateForm(MultiUserTimesheet $entry): FormInterface
     {
+        $mode = $this->getTrackingMode();
+
         return $this->createForm(TimesheetMultiUserEditForm::class, $entry, [
             'action' => $this->generateUrl('admin_timesheet_create_multiuser'),
             'include_rate' => $this->isGranted('edit_rate', $entry),
@@ -160,6 +160,10 @@ class TimesheetTeamController extends TimesheetAbstractController
             'allow_begin_datetime' => $mode->canEditBegin(),
             'allow_end_datetime' => $mode->canEditEnd(),
             'allow_duration' => $mode->canEditDuration(),
+            'duration_minutes' => $this->configuration->getTimesheetIncrementDuration(),
+            'begin_minutes' => $this->configuration->getTimesheetIncrementBegin(),
+            'end_minutes' => $this->configuration->getTimesheetIncrementEnd(),
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'customer' => true,
         ]);
     }

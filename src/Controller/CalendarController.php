@@ -17,6 +17,7 @@ use App\Calendar\TimesheetEntry;
 use App\Configuration\SystemConfiguration;
 use App\Event\CalendarDragAndDropSourceEvent;
 use App\Event\CalendarGoogleSourceEvent;
+use App\Event\RecentActivityEvent;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\TrackingModeService;
 use App\Utils\Color;
@@ -88,7 +89,7 @@ class CalendarController extends AbstractController
      */
     private function getDragAndDropResources(TimesheetRepository $repository): array
     {
-        $sources = [];
+        $event = new CalendarDragAndDropSourceEvent($this->getUser());
 
         try {
             $data = $repository->getRecentActivities(
@@ -97,25 +98,23 @@ class CalendarController extends AbstractController
                 10
             );
 
+            $recentActivity = new RecentActivityEvent($this->getUser(), $data);
+            $this->dispatcher->dispatch($recentActivity);
+
             $entries = [];
             $colorHelper = new Color();
-            foreach ($data as $timesheet) {
+            foreach ($recentActivity->getRecentActivities() as $timesheet) {
                 $entries[] = new TimesheetEntry($timesheet, $colorHelper->getTimesheetColor($timesheet));
             }
 
-            $sources[] = new RecentActivitiesSource($entries);
+            $event->addSource(new RecentActivitiesSource($entries));
         } catch (\Exception $ex) {
             $this->logException($ex);
         }
 
-        $event = new CalendarDragAndDropSourceEvent($this->getUser());
         $this->dispatcher->dispatch($event);
 
-        foreach ($event->getSources() as $source) {
-            $sources[] = $source;
-        }
-
-        return $sources;
+        return $event->getSources();
     }
 
     private function getGoogleSources(SystemConfiguration $configuration): ?Google

@@ -10,7 +10,7 @@
 namespace App\Tests\Validator\Constraints;
 
 use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Repository\TimesheetRepository;
 use App\Validator\Constraints\TimesheetOverlapping;
@@ -32,9 +32,11 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
     protected function createMyValidator(bool $allowOverlappingRecords = false, bool $hasRecords = true)
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new TimesheetConfiguration($loader, [
-            'rules' => [
-                'allow_overlapping_records' => $allowOverlappingRecords,
+        $config = new SystemConfiguration($loader, [
+            'timesheet' => [
+                'rules' => [
+                    'allow_overlapping_records' => $allowOverlappingRecords,
+                ],
             ],
         ]);
         $repository = $this->createMock(TimesheetRepository::class);

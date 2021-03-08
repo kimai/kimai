@@ -1,111 +1,31 @@
 {% extends 'base.html.twig' %}
 {% import "user/actions.html.twig" as actions %}
+{% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{% if not user.alias is empty %}{{ user.alias }}{% else %}{{ user.username }}{% endif %}{% endblock %}
-{% block page_subtitle %}{% if not user.alias is empty %}{{ user.username }}{% endif %}{% endblock %}
+{% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.user(user, tab) }}{% endblock %}
+{% block page_icon %}{{ 'user'|icon }}{% endblock %}
 
 {% block main %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
+            {% block profile_intro %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {{ widgets.user_avatar(user, false, 'avatar-md') }}
+                        {{ user.displayName }}
+                        {% if user.title is not empty %} &ndash; {{ user.title }} {% endif %}
+                    </div>
+                </div>
+            {% endblock %}
             {% block profile_content %}{% endblock %}
         </div>
-
-        <div class="col-md-4">
-
-            {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-                {% import "macros/widgets.html.twig" as widgets %}
-                {% block box_body_class %}box-profile{% endblock %}
-                {% block box_body %}
-                    <div class="text-center">
-                        {{ widgets.user_avatar(user) }}
-                        <h3 class="profile-username">{{ widgets.username(user) }}</h3>
-                        <p class="text-muted">{{ user.title }}</p>
-                    </div>
-                    {% set seeOwnRate = is_granted('view_rate_own_timesheet') %}
-
-                    <table class="table">
-                        <tr>
-                            <th>{{ 'stats.durationMonth'|trans }}</th>
-                            <td class="text-nowrap pull-right">{{ stats.durationThisMonth|duration }}</td>
-                        </tr>
-                        {% if seeOwnRate %}
-                        <tr>
-                            <th>{{ 'stats.amountMonth'|trans }}</th>
-                            {# TODO which currency shall we use here? #}
-                            <td class="text-nowrap pull-right">{{ stats.amountThisMonth|money }}</td>
-                        </tr>
-                        {% endif %}
-                        <tr>
-                            <th>{{ 'stats.durationTotal'|trans }}</th>
-                            <td class="text-nowrap pull-right">{{ stats.durationTotal|duration }}</td>
-                        </tr>
-                        {% if seeOwnRate %}
-                        <tr>
-                            <th>{{ 'stats.amountTotal'|trans }}</th>
-                            {# TODO which currency shall we use here? #}
-                            <td class="text-nowrap pull-right">{{ stats.amountTotal|money }}</td>
-                        </tr>
-                        {% endif %}
-                    </table>
-                {% endblock %}
-            {% endembed %}
-
-            {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-                {% block box_title %}{{ 'profile.about_me'|trans }}{% endblock %}
-                {% block box_body %}
-                    {# colors = purple, blue, aqua, red, green #}
-                    <table class="table no-border">
-                        <tr>
-                            <th>{{ 'label.id'|trans }}</th>
-                            <td class="text-nowrap pull-right">{{ user.id }}</td>
-                        </tr>
-                        <tr>
-                            <th>{{ 'label.username'|trans }}</th>
-                            <td class="text-nowrap pull-right">{{ user.username }}</td>
-                        </tr>
-                        <tr>
-                            <th>{{ 'profile.first_entry'|trans }}</th>
-                            <td class="text-nowrap pull-right">{{ stats.firstEntry|date_short }}</td>
-                        </tr>
-                        <tr>
-                            <th>{{ 'profile.registration_date'|trans }}</th>
-                            <td class="text-nowrap pull-right">{{ user.registeredAt|date_short }}</td>
-                        </tr>
-                        {% if is_granted('hourly-rate', user) %}
-                        <tr>
-                            <th>{{ 'label.hourlyRate'|trans }}</th>
-                            <td class="text-nowrap pull-right">{{ user.preferenceValue('hourly_rate') }}</td>
-                        </tr>
-                        {% endif %}
-                    </table>
-                {% endblock %}
-            {% endembed %}
-
-            {% if user.teams is not empty and (is_granted('teams', user) or (app.user == user and is_granted('view_team_member'))) %}
-                {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-                    {% import "macros/widgets.html.twig" as widgets %}
-                    {% block box_title %}{{ 'label.my_teams'|trans }}{% endblock %}
-                    {% block box_tools %}
-                        {% if is_granted('roles', user) %}
-                            <a class="btn-box-tool" href="{{ path('user_profile_teams', {'username': user.username}) }}"><i class="{{ 'edit'|icon }}"></i></a>
-                        {% endif %}    
-                    {% endblock %}
-                    {% block box_body %}
-                        {{ widgets.team_list(user.teams) }}
-                    {% endblock %}
-                {% endembed %}
-            {% endif %}
-
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+            <div class="hidden-xs">
+            {% set event = actions(app.user, 'user', {'view': tab, 'user': user}) %}
+            {{ widgets.list_group_actions(event.actions, app.request.requestUri) }}
+            </div>
+            {% block profile_navbar %}{% endblock %}
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.teamUpdate', true);
-        });
-    </script>
 {% endblock %}

@@ -46,6 +46,8 @@ trait RendererTrait
             }
 
             $id = $customerId . '_' . $projectId;
+            $type = $exportItem->getType();
+            $category = $exportItem->getCategory();
 
             if (!isset($summary[$id])) {
                 $summary[$id] = [
@@ -53,6 +55,24 @@ trait RendererTrait
                     'project' => $projectName,
                     'activities' => [],
                     'currency' => $currency,
+                    'rate' => 0,
+                    'rate_internal' => 0,
+                    'duration' => 0,
+                    'type' => [],
+                    'types' => [],
+                ];
+            }
+
+            if (!isset($summary[$id]['type'][$type])) {
+                $summary[$id]['type'][$type] = [
+                    'rate' => 0,
+                    'rate_internal' => 0,
+                    'duration' => 0,
+                ];
+            }
+
+            if (!isset($summary[$id]['types'][$type][$category])) {
+                $summary[$id]['types'][$type][$category] = [
                     'rate' => 0,
                     'rate_internal' => 0,
                     'duration' => 0,
@@ -75,12 +95,23 @@ trait RendererTrait
             }
 
             $summary[$id]['rate'] += $exportItem->getRate();
+            $summary[$id]['type'][$type]['rate'] += $exportItem->getRate();
+            $summary[$id]['types'][$type][$category]['rate'] += $exportItem->getRate();
+
             if (method_exists($exportItem, 'getInternalRate')) {
                 $summary[$id]['rate_internal'] += $exportItem->getInternalRate();
+                $summary[$id]['type'][$type]['rate_internal'] += $exportItem->getInternalRate();
+                $summary[$id]['types'][$type][$category]['rate_internal'] += $exportItem->getInternalRate();
             } else {
                 $summary[$id]['rate_internal'] += $exportItem->getRate();
+                $summary[$id]['type'][$type]['rate_internal'] += $exportItem->getRate();
+                $summary[$id]['types'][$type][$category]['rate_internal'] += $exportItem->getRate();
             }
+
             $summary[$id]['duration'] += $duration;
+            $summary[$id]['type'][$type]['duration'] += $duration;
+            $summary[$id]['types'][$type][$category]['duration'] += $duration;
+
             $summary[$id]['activities'][$activityId]['rate'] += $exportItem->getRate();
             $summary[$id]['activities'][$activityId]['duration'] += $duration;
         }

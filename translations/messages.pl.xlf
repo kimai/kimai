@@ -290,7 +290,7 @@
       </trans-unit>
       <trans-unit id="label.team">
         <source>label.team</source>
-        <target>Zaspół</target>
+        <target state="translated">Zespół</target>
       </trans-unit>
       <trans-unit id="label.teamlead">
         <source>label.teamlead</source>
@@ -684,7 +684,7 @@
             -->
       <trans-unit id="stats.durationToday">
         <source>stats.durationToday</source>
-        <target>Pprzepracowane godziny dzisiaj</target>
+        <target state="translated">Przepracowane godziny dzisiaj</target>
       </trans-unit>
       <trans-unit id="stats.durationWeek">
         <source>stats.durationWeek</source>
@@ -1037,6 +1037,102 @@
       <trans-unit id="upload">
         <source>upload</source>
         <target>Pobierz</target>
+      </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>Pola, które mają być aktualizowane, należy najpierw aktywować, klikając odpowiednie pole wyboru.</target>
+      </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>Dodatkowe pola</target>
+      </trans-unit>
+      <trans-unit id="status.paid">
+        <source>status.paid</source>
+        <target>Zapłacone</target>
+      </trans-unit>
+      <trans-unit id="status.pending">
+        <source>status.pending</source>
+        <target>W oczekiwaniu</target>
+      </trans-unit>
+      <trans-unit id="status.new">
+        <source>status.new</source>
+        <target>Nowy</target>
+      </trans-unit>
+      <trans-unit id="label.status">
+        <source>label.status</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="label.decimalDuration">
+        <source>label.decimalDuration</source>
+        <target>Wyświetlaj czas trwania jako liczbę dziesiętną</target>
+      </trans-unit>
+      <trans-unit id="button.preview_print">
+        <source>button.preview_print</source>
+        <target>Podgląd wydruku</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeYear">
+        <source>stats.workingTimeYear</source>
+        <target>Rok %year%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeMonth">
+        <source>stats.workingTimeMonth</source>
+        <target>%month% %year%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeWeek">
+        <source>stats.workingTimeWeek</source>
+        <target>Tydzień kalendarzowy %week%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeToday">
+        <source>stats.workingTimeToday</source>
+        <target>Dzisiaj, %day%</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.export_decimal">
+        <source>label.timesheet.export_decimal</source>
+        <target>Użyj dziesiętnego czasu trwania podczas eksportu</target>
+      </trans-unit>
+      <trans-unit id="label.lastLogin">
+        <source>label.lastLogin</source>
+        <target>Ostatnie logowanie</target>
+      </trans-unit>
+      <trans-unit id="profile.registration_date">
+        <source>profile.registration_date</source>
+        <target>Zarejestrowano</target>
+      </trans-unit>
+      <trans-unit id="help.fixedRate">
+        <source>help.fixedRate</source>
+        <target>Za każdym razem rekord uzyskuje tę samą wartość, niezależnie od czasu jego trwania</target>
+      </trans-unit>
+      <trans-unit id="label.billable">
+        <source>label.billable</source>
+        <target>Płatne</target>
+      </trans-unit>
+      <trans-unit id="placeholder.type_message">
+        <source>placeholder.type_message</source>
+        <target>Wpisz swoją wiadomość...</target>
+      </trans-unit>
+      <trans-unit id="label.recalculate_rates">
+        <source>label.recalculate_rates</source>
+        <target>Przelicz stawki</target>
+      </trans-unit>
+      <trans-unit id="help.rate_internal">
+        <source>help.rate_internal</source>
+        <target>Koszty wewnętrzne (jeśli nie określono tego, stosuje się normalną stawkę)</target>
+      </trans-unit>
+      <trans-unit id="label.rate_internal">
+        <source>label.rate_internal</source>
+        <target>Stawka wewnętrzna</target>
+      </trans-unit>
+      <trans-unit id="help.rate">
+        <source>help.rate</source>
+        <target>Stawka godzinowa do naliczenia</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Razem</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Formularz uległ zmianie. Prosimy, kliknij "Zapisz", by zapisać zmiany, lub "Zamknij", by je anulować.</target>
       </trans-unit>
     </body>
   </file>

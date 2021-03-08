@@ -35,7 +35,7 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer
      */
     protected function saveSpreadsheet(Spreadsheet $spreadsheet): string
     {
-        $filename = tempnam(sys_get_temp_dir(), 'kimai-export-xlsx');
+        $filename = @tempnam(sys_get_temp_dir(), 'kimai-export-xlsx');
         if (false === $filename) {
             throw new \Exception('Could not open temporary file');
         }

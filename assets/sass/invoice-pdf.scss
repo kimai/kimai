@@ -11,7 +11,7 @@ body {
     margin: 0;
     padding: 0;
 }
-table, tr, td, p {
+table, tr, td, th, p, h1, h2, h3, h4, h5 {
     padding: 0;
     margin: 0;
 }
@@ -24,6 +24,15 @@ td {
 }
 p {
     margin-bottom: 12px;
+}
+.text-small {
+    font-size: 7pt;
+}
+.padding-left {
+    padding-left: 15px;
+}
+.text-center {
+    text-align: center;
 }
 .text-right {
     text-align: right;
@@ -40,20 +49,21 @@ p {
 .wrapper {
     margin: 4px;
 }
+table {
+    width: 100%;
+    border-spacing: 0;
+}
 table.addresses, p {
     line-height: 14pt;
 }
 /* The address table */
 table.addresses {
-    width: 100%;
     margin-bottom: 30px;
 }
 /* The PDF header */
 table.header {
-    border-spacing: 0;
     padding-bottom: 4px;
-    border-bottom: 1px solid #ccc;
-    width: 100%;
+    border-bottom: 1px solid #999;
 }
 table.header .title {
     font-weight: normal;
@@ -61,11 +71,9 @@ table.header .title {
 }
 /* The PDF footer */
 table.footer {
-    border-spacing: 0;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #999;
     font-size: 80%;
     padding-top: 8px;
-    width: 100%;
     line-height: 14px;
 }
 table.footer td {
@@ -73,7 +81,6 @@ table.footer td {
 }
 /* The invoice items list */
 table.items {
-    width: 100%;
     border-collapse: collapse;
     margin-top: 50px;
     margin-bottom: 60px;
@@ -88,7 +95,7 @@ table.items tbody td.first {
 }
 table.items thead th.last,
 table.items tbody td.last,
-table.items tfoot td.last{
+table.items tfoot td.last {
     padding-right: 0;
 }
 

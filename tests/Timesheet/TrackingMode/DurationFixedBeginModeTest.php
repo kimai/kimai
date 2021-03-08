@@ -9,10 +9,10 @@
 
 namespace App\Tests\Timesheet\TrackingMode;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Timesheet\TrackingMode\DurationFixedBeginMode;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,10 +25,9 @@ class DurationFixedBeginModeTest extends TestCase
     protected function createSut()
     {
         $loader = new TestConfigLoader([]);
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create();
-        $configuration = new TimesheetConfiguration($loader, ['default_begin' => '13:47']);
+        $configuration = new SystemConfiguration($loader, ['timesheet' => ['default_begin' => '13:47']]);
 
-        return new DurationFixedBeginMode($dateTime, $configuration);
+        return new DurationFixedBeginMode($configuration);
     }
 
     public function testDefaultValues()
@@ -57,7 +56,7 @@ class DurationFixedBeginModeTest extends TestCase
 
     public function testCreateWithoutBeginInjectsBegin()
     {
-        $timesheet = new Timesheet();
+        $timesheet = (new Timesheet())->setUser(new User());
         $request = new Request();
 
         $sut = $this->createSut();

@@ -1,51 +1,235 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="sk" datatype="plaintext" original="system-configuration.en.xlf">
-        <body>
-            <trans-unit id="title">
-                <source>title</source>
-                <target>Nastavenia</target>
-            </trans-unit>
-            <trans-unit id="subtitle">
-                <source>subtitle</source>
-                <target>Zmena globálnych konfigurácií vášho sledovača času</target>
-            </trans-unit>
-            <trans-unit id="timesheet">
-                <source>timesheet</source>
-                <target>Pracovný výkaz</target>
-            </trans-unit>
-            <trans-unit id="form_customer">
-                <source>form_customer</source>
-                <target>Vytvorte predvolené hodnoty zákazníka</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.markdown_content">
-                <source>label.timesheet.markdown_content</source>
-                <target>Povoliť Markdown v popisoch časového rozvrhu</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode">
-                <source>label.timesheet.mode</source>
-                <target>Režim časovania</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_default">
-                <source>label.timesheet.mode_default</source>
-                <target>Predvolené: akceptovať dátum začiatku a konca</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_duration_only">
-                <source>label.timesheet.mode_duration_only</source>
-                <target>Iba Trvanie: nahradí pole dátumu ukončenia vstupom s trvaním</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rules.allow_future_times">
-                <source>label.timesheet.rules.allow_future_times</source>
-                <target>Povoliť časové záznamy v budúcnosti</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.active_entries.hard_limit">
-                <source>label.timesheet.active_entries.hard_limit</source>
-                <target>Povolený počet súčasne prebiehajúcich časových záznamov</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.active_entries.soft_limit">
-                <source>label.timesheet.active_entries.soft_limit</source>
-                <target>Počet spustených časových záznamov, po ktorých sa zobrazí upozornenie</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="sk" datatype="plaintext" original="system-configuration.en.xlf">
+    <body>
+      <trans-unit id="title">
+        <source>title</source>
+        <target>Nastavenia</target>
+      </trans-unit>
+      <trans-unit id="subtitle">
+        <source>subtitle</source>
+        <target>Zmena globálnych konfigurácií vášho sledovača času</target>
+      </trans-unit>
+      <trans-unit id="timesheet">
+        <source>timesheet</source>
+        <target>Pracovný výkaz</target>
+      </trans-unit>
+      <trans-unit id="form_customer">
+        <source>form_customer</source>
+        <target>Vytvorte predvolené hodnoty zákazníka</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.markdown_content">
+        <source>label.timesheet.markdown_content</source>
+        <target>Povoliť Markdown v popisoch časového rozvrhu</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode">
+        <source>label.timesheet.mode</source>
+        <target>Režim časovania</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_default">
+        <source>label.timesheet.mode_default</source>
+        <target>Predvolené: akceptovať dátum začiatku a konca</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_duration_only">
+        <source>label.timesheet.mode_duration_only</source>
+        <target>Iba Trvanie: nahradí pole dátumu ukončenia vstupom s trvaním</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_future_times">
+        <source>label.timesheet.rules.allow_future_times</source>
+        <target>Povoliť časové záznamy v budúcnosti</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.active_entries.hard_limit">
+        <source>label.timesheet.active_entries.hard_limit</source>
+        <target>Povolený počet súčasne prebiehajúcich časových záznamov</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.active_entries.soft_limit">
+        <source>label.timesheet.active_entries.soft_limit</source>
+        <target>Počet spustených časových záznamov, po ktorých sa zobrazí upozornenie</target>
+      </trans-unit>
+      <trans-unit id="Closest">
+        <source>Closest</source>
+        <target>Najbližšie: matematické zaokrúhľovanie k najbližšej hodnote</target>
+      </trans-unit>
+      <trans-unit id="Ceil">
+        <source>Ceil</source>
+        <target>Ceil:začiatok, koniec a trvanie bude zaokrúhlené</target>
+      </trans-unit>
+      <trans-unit id="Sunday">
+        <source>Sunday</source>
+        <target>Nedela</target>
+      </trans-unit>
+      <trans-unit id="Saturday">
+        <source>Saturday</source>
+        <target>Sobota</target>
+      </trans-unit>
+      <trans-unit id="Friday">
+        <source>Friday</source>
+        <target>Piatok</target>
+      </trans-unit>
+      <trans-unit id="Thursday">
+        <source>Thursday</source>
+        <target>Štvrtok</target>
+      </trans-unit>
+      <trans-unit id="Wednesday">
+        <source>Wednesday</source>
+        <target>Streda</target>
+      </trans-unit>
+      <trans-unit id="Tuesday">
+        <source>Tuesday</source>
+        <target>Utorok</target>
+      </trans-unit>
+      <trans-unit id="Monday">
+        <source>Monday</source>
+        <target>Pondelok</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target>Dni v týždni kedy bude zaokrúhlenie použité</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target>Mód zaokrúhlenia</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target>Zaokrúhlenie trvania v minútach (0 = deaktivovaný)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>Zaokrúhlenie času ukončenia v minútach (0 = deaktivovaný)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target>Zaokrúhlenie začiatku času v minútach (0 = deaktivovaný)</target>
+      </trans-unit>
+      <trans-unit id="rounding">
+        <source>rounding</source>
+        <target>Zaokrúhlenie času</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target>Názov prehliadača</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target>Mini Logo (zbalený postranný panel)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.company">
+        <source>label.theme.branding.company</source>
+        <target>Spoločnosť</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target>Logo (web link na obrázok nahrádza spoločnosť pri prihlasovacej obrazovke)</target>
+      </trans-unit>
+      <trans-unit id="branding">
+        <source>branding</source>
+        <target>Označenie firmy</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>Trvanie slotu pre týždňové- a denné zobrazenie (formát: hh:mm:ss)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target>Koniec viditeľného časového obdobia</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target>Začiatok viditeľného časového obdobia</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target>Koniec bežnej pracovnej doby (bude zvýraznený)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target>Začiatjk bežnej pracovnej doby (bude zvýraznený)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.weekends">
+        <source>label.calendar.weekends</source>
+        <target>Zobraziť víkendy</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.week_numbers">
+        <source>label.calendar.week_numbers</source>
+        <target>Zobrazit čísla týždňa</target>
+      </trans-unit>
+      <trans-unit id="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target>Minimálny počet znakov na začiatok automatického doplnenia</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target>Koniec ochrannej doby ohraničenia (PHP relatívny dátum konca ohraničenia)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target>Koniec ohraničeného termínu (PHP realtívny čas do teraz)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target>Začiatok ohraničeného času (PHP relatívny čas do teraz)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+        <source>label.timesheet.rules.allow_overlapping_records</source>
+        <target>Povoľ prekrývajúce sa časy</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_punch">
+        <source>label.timesheet.mode_punch</source>
+        <target>[Time-clock] užívatel môže spustiť a zastaviť záznamy, ale nie upravovat časy ani dobu trvania</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+        <source>label.timesheet.mode_duration_fixed_begin</source>
+        <target>[Dľžka trvania] nastaviteľný fixný čas spustenia, možnosť upraviť iba časovú dĺžku</target>
+      </trans-unit>
+      <trans-unit id="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target>Značky: použi automatické doplňovanie vyhľadávania a povoľ vytváranie značiek</target>
+      </trans-unit>
+      <trans-unit id="label.theme.markdown_content">
+        <source>label.theme.markdown_content</source>
+        <target>Povoliť formátovanie poznámok v popiskoch a komentároch</target>
+      </trans-unit>
+      <trans-unit id="calendar">
+        <source>calendar</source>
+        <target>Kalendár</target>
+      </trans-unit>
+      <trans-unit id="theme">
+        <source>theme</source>
+        <target>Vzhľad</target>
+      </trans-unit>
+      <trans-unit id="form_user">
+        <source>form_user</source>
+        <target>Užívateľ-východzie nastavenia</target>
+      </trans-unit>
+      <trans-unit id="invoice">
+        <source>invoice</source>
+        <target>Faktúry</target>
+      </trans-unit>
+      <trans-unit id="Floor">
+        <source>Floor</source>
+        <target>Zem: začiatok, koniec a trvanie sa zaokrúhlia nadol</target>
+      </trans-unit>
+      <trans-unit id="Default">
+        <source>Default</source>
+        <target>Štandardné: začiatok sa zaokrúhli nadol, koniec a trvanie nahor</target>
+      </trans-unit>
+      <trans-unit id="first_weekday">
+        <source>first_weekday</source>
+        <target>Prvý deň v týždni</target>
+      </trans-unit>
+      <trans-unit id="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target>Formát čísla faktúry</target>
+      </trans-unit>
+      <trans-unit id="label.simple_form">
+        <source>label.simple_form</source>
+        <target>Jednoduché vyhľadávanie</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>Predvolený čas spustenia (nepoužíva sa vo všetkých režimoch sledovania času)</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

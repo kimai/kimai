@@ -29,14 +29,18 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
     public function getValidData()
     {
         return [
-            ['99s'],
             ['2h'],
             ['38m'],
+            ['99s'],
             ['2h38m'],
+            ['2h38s'],
+            ['2m38s'],
             ['2h38m17s'],
             ['1h96m137s'],
             [''],
             ['0'],
+            ['1.2'],
+            ['2,3'],
             [null],
             [0],
             [11257200],
@@ -64,6 +68,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
     {
         $constraint = new Duration();
         $this->validator->validate($input, $constraint);
+        $this->validator->validate(strtoupper($input), $constraint);
         $this->assertNoViolation();
     }
 
@@ -71,7 +76,12 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
     {
         return [
             ['13-13'],
-            ['13.13'],
+            ['2m3m'],
+            ['2s3s'],
+            ['2h3h'],
+            ['2m3h'],
+            ['2s3h'],
+            ['2s3m'],
             ['3127::00'],
             ['3127:00:'],
             [':3127:00'],
@@ -92,10 +102,27 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($input, $constraint);
 
-        $expectedFormat = \is_string($input) ? '"' . $input . '"' : $input;
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ value }}', '"' . $input . '"')
+            ->setCode(Regex::REGEX_FAILED_ERROR)
+            ->assertRaised();
+    }
+
+    /**
+     * @dataProvider getInvalidData
+     * @param mixed $input
+     */
+    public function testValidationErrorUpperCase($input)
+    {
+        $input = strtoupper($input);
+        $constraint = new Duration([
+            'message' => 'myMessage',
+        ]);
+
+        $this->validator->validate($input, $constraint);
 
         $this->buildViolation('myMessage')
-            ->setParameter('{{ value }}', $expectedFormat)
+            ->setParameter('{{ value }}', '"' . $input . '"')
             ->setCode(Regex::REGEX_FAILED_ERROR)
             ->assertRaised();
     }

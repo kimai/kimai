@@ -74,7 +74,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
     protected function assertHasProfileBox(HttpKernelBrowser $client, string $username)
     {
-        $profileBox = $client->getCrawler()->filter('div.box-body.box-profile');
+        $profileBox = $client->getCrawler()->filter('div.box-user-profile');
         $this->assertEquals(1, $profileBox->count());
         $profileAvatar = $profileBox->filter('img.img-circle');
         $this->assertEquals(1, $profileAvatar->count());
@@ -87,38 +87,25 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringContainsString('<h3 class="box-title">About me</h3>', $content);
-        $this->assertStringContainsString('<td class="text-nowrap pull-right">' . $username . '</td>', $content);
+        $this->assertStringContainsString('About me', $content);
     }
 
     public function getTabTestData()
     {
-        $userTabs = ['#settings', '#password', '#api-token'];
-
         return [
-            [User::ROLE_USER, UserFixtures::USERNAME_USER, ['#settings', '#password', '#api-token']],
-            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_SUPER_ADMIN, array_merge($userTabs, ['#teams', '#roles'])],
+            [User::ROLE_USER, UserFixtures::USERNAME_USER],
+            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_SUPER_ADMIN],
         ];
     }
 
     /**
      * @dataProvider getTabTestData
      */
-    public function testEditActionTabs($role, $username, $expectedTabs)
+    public function testEditActionTabs($role, $username)
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, '/profile/' . $username . '/edit');
         $this->assertTrue($client->getResponse()->isSuccessful());
-
-        $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
-        $this->assertEquals(\count($expectedTabs), $tabs->count());
-        $foundTabs = [];
-
-        /** @var \DOMElement $tab */
-        foreach ($tabs->filter('a') as $tab) {
-            $foundTabs[] = $tab->getAttribute('href');
-        }
-        $this->assertEmpty(array_diff($expectedTabs, $foundTabs));
     }
 
     public function testIndexActionWithDifferentUsername()

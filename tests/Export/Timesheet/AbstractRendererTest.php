@@ -27,13 +27,11 @@ use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\TimesheetExportInterface;
 use App\Repository\Query\TimesheetQuery;
-use App\Twig\DateExtensions;
+use App\Twig\LocaleFormatExtensions;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -45,7 +43,6 @@ abstract class AbstractRendererTest extends KernelTestCase
      */
     protected function getAbstractRenderer(string $classname)
     {
-        $requestStack = new RequestStack();
         $languages = [
             'en' => [
                 'date' => 'Y.m.d',
@@ -54,12 +51,8 @@ abstract class AbstractRendererTest extends KernelTestCase
             ]
         ];
 
-        $request = new Request();
-        $request->setLocale('en');
-        $requestStack->push($request);
-
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dateExtension = new DateExtensions($requestStack, new LanguageFormattings($languages));
+        $dateExtension = new LocaleFormatExtensions(new LanguageFormattings($languages));
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
@@ -78,11 +71,14 @@ abstract class AbstractRendererTest extends KernelTestCase
     {
         $customer = new Customer();
         $customer->setName('Customer Name');
+        $customer->setNumber('A-0123456789');
+        $customer->setVatId('DE-9876543210');
         $customer->setMetaField((new CustomerMeta())->setName('customer-foo')->setValue('customer-bar')->setIsVisible(true));
 
         $project = new Project();
         $project->setName('project name');
         $project->setCustomer($customer);
+        $project->setOrderNumber('ORDER-123');
         $project->setMetaField((new ProjectMeta())->setName('project-bar')->setValue('project-bar')->setIsVisible(true));
         $project->setMetaField((new ProjectMeta())->setName('project-foo2')->setValue('project-foo2')->setIsVisible(true));
 

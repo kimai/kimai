@@ -345,6 +345,15 @@ class ImportTimesheetCommand extends Command
                 } else {
                     $begin = new \DateTime($record['Date'] . ' ' . $record['From'], $timezone);
                     $end = new \DateTime($record['Date'] . ' ' . $record['To'], $timezone);
+
+                    // fix dates, which are running over midnight
+                    if ($end < $begin) {
+                        if ($duration > 0) {
+                            $end = (new \DateTime())->setTimezone($timezone)->setTimestamp($begin->getTimestamp() + $duration);
+                        } else {
+                            $end->add(new \DateInterval('P1D'));
+                        }
+                    }
                 }
 
                 $timesheet = new Timesheet();

@@ -31,22 +31,19 @@
                 {% if not customer.visible %}
                     <tr>
                         <th>{{ 'label.visible'|trans }}</th>
-                        <td>
-                            {{ widgets.label_boolean(customer.visible) }}
-                        </td>
+                        <td>{{ widgets.label_boolean(customer.visible) }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.address is not empty %}
                     <tr>
                         <th>{{ 'label.address'|trans }}</th>
-                        <td>
-                            {{ customer.address|nl2br }}
-
-                            {% if customer.country is not empty %}
-                                <br>
-                                {{ customer.country|country }}
-                            {% endif %}
-                        </td>
+                        <td>{{ customer.address|nl2br }}</td>
+                    </tr>
+                {% endif %}
+                {% if customer.country is not empty %}
+                    <tr>
+                        <th>{{ 'label.country'|trans }}</th>
+                        <td>{{ customer.country|country }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.contact is not empty %}
@@ -88,7 +85,7 @@
                 {% if customer.timezone is not empty %}
                     <tr>
                         <th>{{ 'label.timezone'|trans }}</th>
-                        <td><span data-toggle="tooltip" data-placement="top" title="{{ customer.timezone }}">{{ now|date_time }}</span></td>
+                        <td>{{ now|date_full }} ({{ customer.timezone }})</td>
                     </tr>
                 {% endif %}
                 {% if customer.currency is not empty %}

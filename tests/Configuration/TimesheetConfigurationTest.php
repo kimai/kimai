@@ -9,13 +9,14 @@
 
 namespace App\Tests\Configuration;
 
+use App\Configuration\SystemConfiguration;
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Configuration;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Configuration\TimesheetConfiguration
- * @covers \App\Configuration\StringAccessibleConfigTrait
+ * @group legacy
  */
 class TimesheetConfigurationTest extends TestCase
 {
@@ -28,7 +29,9 @@ class TimesheetConfigurationTest extends TestCase
     {
         $loader = new TestConfigLoader($loaderSettings);
 
-        return new TimesheetConfiguration($loader, $settings);
+        $config = new SystemConfiguration($loader, ['timesheet' => $settings]);
+
+        return new TimesheetConfiguration($config);
     }
 
     protected function getDefaultSettings()
@@ -74,6 +77,7 @@ class TimesheetConfigurationTest extends TestCase
     public function testDefaultWithoutLoader()
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
+
         $this->assertEquals(99, $sut->getActiveEntriesHardLimit());
         $this->assertEquals(15, $sut->getActiveEntriesSoftLimit());
         $this->assertFalse($sut->isAllowFutureTimes());
@@ -84,6 +88,12 @@ class TimesheetConfigurationTest extends TestCase
         $this->assertEquals('', $sut->getLockdownPeriodStart());
         $this->assertEquals('', $sut->getLockdownPeriodEnd());
         $this->assertEquals('', $sut->getLockdownGracePeriod());
+        $this->assertEquals('', $sut->isAllowOverlappingRecords());
+        $this->assertEquals('', $sut->getDefaultRoundingDays());
+        $this->assertEquals('', $sut->getDefaultRoundingMode());
+        $this->assertEquals(0, $sut->getDefaultRoundingBegin());
+        $this->assertEquals(0, $sut->getDefaultRoundingEnd());
+        $this->assertEquals(0, $sut->getDefaultRoundingDuration());
     }
 
     public function testDefaultWithLoader()
@@ -91,8 +101,8 @@ class TimesheetConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), $this->getDefaultLoaderSettings());
         $this->assertEquals(7, $sut->getActiveEntriesHardLimit());
         $this->assertEquals(3, $sut->getActiveEntriesSoftLimit());
-        $this->assertEquals(true, $sut->isAllowFutureTimes());
-        $this->assertEquals(true, $sut->isMarkdownEnabled());
+        $this->assertTrue($sut->isAllowFutureTimes());
+        $this->assertTrue($sut->isMarkdownEnabled());
         $this->assertEquals('default', $sut->getTrackingMode());
         $this->assertEquals('07:00', $sut->getDefaultBeginTime());
         $this->assertTrue($sut->isLockdownActive());
@@ -112,8 +122,8 @@ class TimesheetConfigurationTest extends TestCase
     public function testFindByKey()
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
-        $this->assertEquals(false, $sut->find('rules.allow_future_times'));
-        $this->assertEquals(false, $sut->find('timesheet.rules.allow_future_times'));
+        $this->assertFalse($sut->find('rules.allow_future_times'));
+        $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
     }
 
     public function testUnknownConfigAreImported()
@@ -121,7 +131,6 @@ class TimesheetConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('timesheet.foo')->setValue('hello'),
         ]);
-        $this->assertTrue($sut->has('foo'));
         $this->assertEquals('hello', $sut->find('foo'));
     }
 }

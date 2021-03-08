@@ -20,12 +20,18 @@ class Duration extends Regex
     public function __construct($options = null)
     {
         $patterns = [
+            // decimal times (can be separated by comma or dot, depending on the locale)
             '[0-9]{1,}',
+            '[0-9]{1,}[,.]{1}[0-9]{1,}',
+            // ASP.NET style time spans - https://momentjs.com/docs/#/durations/
             '[0-9]{1,}:[0-9]{1,}:[0-9]{1,}',
             '[0-9]{1,}:[0-9]{1,}',
-            '[0-9]{1,}[hmsHMS]{1}',
-            '[0-9]{1,}[hmsHMS]{1}[0-9]{1,}[hmsHMS]{1}',
-            '[0-9]{1,}[hmsHMS]{1}[0-9]{1,}[hmsHMS]{1}[0-9]{1,}[hmsHMS]{1}',
+            // https://en.wikipedia.org/wiki/ISO_8601#Time_intervals
+            '[0-9]{1,}[hHmMsS]{1}',
+            '[0-9]{1,}[hH]{1}[0-9]{1,}[mM]{1}',
+            '[0-9]{1,}[hHmM]{1}[0-9]{1,}[sS]{1}',
+            '[0-9]{1,}[mM]{1}[0-9]{1,}[sS]{1}',
+            '[0-9]{1,}[hH]{1}[0-9]{1,}[mM]{1}[0-9]{1,}[sS]{1}',
         ];
         $options['pattern'] = '/^' . implode('$|^', $patterns) . '$/';
 

@@ -19,7 +19,7 @@ use App\Event\UserPreferenceDisplayEvent;
 use App\Export\ExportItemInterface;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
-use App\Twig\DateExtensions;
+use App\Twig\LocaleFormatExtensions;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
@@ -47,7 +47,7 @@ abstract class AbstractSpreadsheetRenderer
     public const RATE_FORMAT = self::RATE_FORMAT_LEFT;
 
     /**
-     * @var DateExtensions
+     * @var LocaleFormatExtensions
      */
     protected $dateExtension;
     /**
@@ -90,9 +90,14 @@ abstract class AbstractSpreadsheetRenderer
         'project-meta' => [],
         'activity-meta' => [],
         'user-meta' => [],
+        'type' => [],
+        'category' => [],
+        'customer_number' => [],
+        'customer_vat' => [],
+        'order_number' => [],
     ];
 
-    public function __construct(TranslatorInterface $translator, DateExtensions $dateExtension, EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter)
+    public function __construct(TranslatorInterface $translator, LocaleFormatExtensions $dateExtension, EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter)
     {
         $this->translator = $translator;
         $this->dateExtension = $dateExtension;
@@ -501,6 +506,78 @@ abstract class AbstractSpreadsheetRenderer
                     return \count($userPreferences);
                 }
             ];
+        }
+
+        if (isset($columns['type']) && !isset($columns['type']['render'])) {
+            $columns['type']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $sheet->setCellValueByColumnAndRow($column, $row, $entity->getType());
+            };
+        }
+
+        if (isset($columns['category']) && !isset($columns['category']['render'])) {
+            $columns['category']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $sheet->setCellValueByColumnAndRow($column, $row, $entity->getCategory());
+            };
+        }
+
+        if (isset($columns['customer_number'])) {
+            if (!isset($columns['customer_number']['header'])) {
+                $columns['customer_number']['header'] = function (Worksheet $sheet, $row, $column) {
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.number'));
+
+                    return 1;
+                };
+            }
+
+            if (!isset($columns['customer_number']['render'])) {
+                $columns['customer_number']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                    $customerId = '';
+                    if (null !== $entity->getProject()) {
+                        $customerId = $entity->getProject()->getCustomer()->getNumber();
+                    }
+                    $sheet->setCellValueByColumnAndRow($column, $row, $customerId);
+                };
+            }
+        }
+
+        if (isset($columns['customer_vat']) && !isset($columns['customer_vat']['render'])) {
+            if (!isset($columns['customer_vat']['header'])) {
+                $columns['customer_vat']['header'] = function (Worksheet $sheet, $row, $column) {
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.vat_id'));
+
+                    return 1;
+                };
+            }
+
+            if (!isset($columns['customer_vat']['render'])) {
+                $columns['customer_vat']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                    $customerVat = '';
+                    if (null !== $entity->getProject()) {
+                        $customerVat = $entity->getProject()->getCustomer()->getVatId();
+                    }
+                    $sheet->setCellValueByColumnAndRow($column, $row, $customerVat);
+                };
+            }
+        }
+
+        if (isset($columns['order_number']) && !isset($columns['order_number']['render'])) {
+            if (!isset($columns['order_number']['header'])) {
+                $columns['order_number']['header'] = function (Worksheet $sheet, $row, $column) {
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.orderNumber'));
+
+                    return 1;
+                };
+            }
+
+            if (!isset($columns['order_number']['render'])) {
+                $columns['order_number']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                    $orderNumber = '';
+                    if (null !== $entity->getProject()) {
+                        $orderNumber = $entity->getProject()->getOrderNumber();
+                    }
+                    $sheet->setCellValueByColumnAndRow($column, $row, $orderNumber);
+                };
+            }
         }
 
         if (!$showRates) {

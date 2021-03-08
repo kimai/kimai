@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ro" datatype="plaintext" original="messages.en.xlf">
     <header>
@@ -657,7 +657,7 @@
       </trans-unit>
       <trans-unit id="stats.durationYear">
         <source>stats.durationYear</source>
-        <target>Ore lucrate luna aceasta</target>
+        <target>Ore lucrate anul aceasta</target>
       </trans-unit>
       <trans-unit id="stats.durationTotal">
         <source>stats.durationTotal</source>
@@ -793,7 +793,7 @@
       </trans-unit>
       <trans-unit id="invoice.due_days">
         <source>invoice.due_days</source>
-        <target>Ținta de plată</target>
+        <target>Termen de plată</target>
       </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>
@@ -907,7 +907,6 @@
         <source>export.date_copyright</source>
         <target>Creat în %date% cu %kimai%</target>
       </trans-unit>
-
       <trans-unit id="active.entries">
         <source>active.entries</source>
         <target>Înregistrările tale active</target>
@@ -971,6 +970,90 @@
       <trans-unit id="label.globalsOnly">
         <source>label.globalsOnly</source>
         <target>Doar global</target>
+      </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>Câmpurile care trebuiesc actualizate trebuie să fie activate mai întâi prin verificarea casetei aferente.</target>
+      </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>Câmpuri adiționale</target>
+      </trans-unit>
+      <trans-unit id="status.paid">
+        <source>status.paid</source>
+        <target>Plătită</target>
+      </trans-unit>
+      <trans-unit id="status.pending">
+        <source>status.pending</source>
+        <target>În așteptare</target>
+      </trans-unit>
+      <trans-unit id="status.new">
+        <source>status.new</source>
+        <target>Nou</target>
+      </trans-unit>
+      <trans-unit id="label.status">
+        <source>label.status</source>
+        <target>Stare</target>
+      </trans-unit>
+      <trans-unit id="button.preview_print">
+        <source>button.preview_print</source>
+        <target>Printează</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeYear">
+        <source>stats.workingTimeYear</source>
+        <target>An întreg</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeMonth">
+        <source>stats.workingTimeMonth</source>
+        <target>%lună% %an%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeWeek">
+        <source>stats.workingTimeWeek</source>
+        <target>Calendar pe săptămână %week%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeToday">
+        <source>stats.workingTimeToday</source>
+        <target>Astăzi, %day%</target>
+      </trans-unit>
+      <trans-unit id="label.lastLogin">
+        <source>label.lastLogin</source>
+        <target>Ultima autentificare</target>
+      </trans-unit>
+      <trans-unit id="profile.registration_date">
+        <source>profile.registration_date</source>
+        <target>Înregistrat la</target>
+      </trans-unit>
+      <trans-unit id="help.fixedRate">
+        <source>help.fixedRate</source>
+        <target>Fiecare înregistrare primește aceeași valoare, neținând cont de durata acesteia</target>
+      </trans-unit>
+      <trans-unit id="label.billable">
+        <source>label.billable</source>
+        <target>Facturabil</target>
+      </trans-unit>
+      <trans-unit id="placeholder.type_message">
+        <source>placeholder.type_message</source>
+        <target>Scrie mesajul tău...</target>
+      </trans-unit>
+      <trans-unit id="label.recalculate_rates">
+        <source>label.recalculate_rates</source>
+        <target>Recalculează valorile</target>
+      </trans-unit>
+      <trans-unit id="help.rate_internal">
+        <source>help.rate_internal</source>
+        <target>Preț intern (dacă nu e specificat se folosește prețul normal)</target>
+      </trans-unit>
+      <trans-unit id="label.rate_internal">
+        <source>label.rate_internal</source>
+        <target>Preț intern</target>
+      </trans-unit>
+      <trans-unit id="help.rate">
+        <source>help.rate</source>
+        <target>Rată orară pentru a fi taxat</target>
+      </trans-unit>
+      <trans-unit id="menu.reporting">
+        <source>menu.reporting</source>
+        <target>Raportare</target>
       </trans-unit>
     </body>
   </file>

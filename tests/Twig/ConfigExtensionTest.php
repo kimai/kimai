@@ -9,7 +9,7 @@
 
 namespace App\Tests\Twig;
 
-use App\Configuration\ThemeConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Twig\ConfigExtension;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +23,7 @@ class ConfigExtensionTest extends TestCase
     protected function getSut(array $settings, array $loaderSettings = []): ConfigExtension
     {
         $loader = new TestConfigLoader($loaderSettings);
-        $config = new ThemeConfiguration($loader, $settings);
+        $config = new SystemConfiguration($loader, ['theme' => $settings]);
 
         return new ConfigExtension($config);
     }

@@ -181,13 +181,71 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertNull($timesheet->getEnd());
         $this->assertEquals('Testing is fun!', $timesheet->getDescription());
         $this->assertEquals(0, $timesheet->getRate());
         $this->assertNull($timesheet->getHourlyRate());
         $this->assertNull($timesheet->getFixedRate());
+    }
+
+    /**
+     * @dataProvider getTestDataForDurationValues
+     */
+    public function testCreateActionWithDurationValues($begin, $end, $duration, $expectedDuration, $expectedEnd)
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/timesheet/create');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'description' => 'Testing is fun!',
+                'begin' => $begin,
+                'end' => $end,
+                'duration' => $duration,
+                'project' => 1,
+                'activity' => 1,
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $em = $this->getEntityManager();
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
+        $this->assertEquals($expectedDuration, $timesheet->getDuration());
+        $this->assertEquals($expectedEnd, $timesheet->getEnd()->format('Y-m-d H:i:s'));
+        $this->assertEquals('Testing is fun!', $timesheet->getDescription());
+    }
+
+    public function getTestDataForDurationValues()
+    {
+        // duration is ignored, because end is set and the duration might come from a rounding rule (by default seconds are rounded down with 1)
+        yield ['2018-12-31 00:00:00', '2018-12-31 02:10:10', '01:00', 7800, '2018-12-31 02:10:00'];
+        yield ['2018-12-31 00:00:00', '2018-12-31 02:09:59', '01:00', 7740, '2018-12-31 02:09:00'];
+        // if seconds are given, they are first rounded up (default for duration rounding is 1)
+        yield ['2018-12-31 00:00:00', null, '01:00', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '01:00:10', 3660, '2018-12-31 01:01:00'];
+        yield ['2018-12-31 00:00:00', null, '1h', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '1h10m', 4200, '2018-12-31 01:10:00'];
+        yield ['2018-12-31 00:00:00', null, '1h10s', 3660, '2018-12-31 01:01:00'];
+        yield ['2018-12-31 00:00:00', null, '60m', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '60M1s', 3660, '2018-12-31 01:01:00'];
+        yield ['2018-12-31 00:00:00', null, '3600s', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '59m60s', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '1', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '1,0', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '1.0', 3600, '2018-12-31 01:00:00'];
+        yield ['2018-12-31 00:00:00', null, '1.5', 5400, '2018-12-31 01:30:00'];
+        yield ['2018-12-31 00:00:00', null, '1,25', 4500, '2018-12-31 01:15:00'];
     }
 
     public function testCreateActionShowsMetaFields()
@@ -235,7 +293,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
         $this->assertEquals(50, $timesheet->getRate());
@@ -269,7 +327,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
         $this->assertEquals(50, $timesheet->getRate());
@@ -320,8 +378,6 @@ class TimesheetControllerTest extends ControllerBaseTest
             ]
         ]);
 
-        $client = $this->getClientForAuthenticatedUser();
-
         $begin = new \DateTime('2018-08-02T20:00:00');
         $end = new \DateTime('2018-08-02T20:30:00');
 
@@ -331,7 +387,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             $timesheet->setEnd($end);
         });
         $fixture->setAmount(1);
-        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
+        $fixture->setUser($this->getUserByRole(User::ROLE_SUPER_ADMIN));
         $this->importFixture($fixture);
 
         // create a second entry that is overlapping - should fail due to the changed config above
@@ -372,7 +428,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
         $this->assertEquals(800, $timesheet->getRate());
@@ -394,9 +450,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $fixture->setAmount(10);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate('2017-05-01');
-        $this->importFixture($fixture);
+        $timesheets = $this->importFixture($fixture);
+        $id = $timesheets[0]->getId();
 
-        $this->request($client, '/timesheet/1/edit');
+        $this->request($client, '/timesheet/' . $id . '/edit');
 
         $response = $client->getResponse();
         $this->assertTrue($response->isSuccessful());
@@ -422,7 +479,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->find($id);
         $this->assertEquals('foo-bar', $timesheet->getDescription());
     }
 

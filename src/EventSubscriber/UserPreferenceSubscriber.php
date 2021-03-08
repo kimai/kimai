@@ -28,20 +28,20 @@ use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Range;
 
-class UserPreferenceSubscriber implements EventSubscriberInterface
+final class UserPreferenceSubscriber implements EventSubscriberInterface
 {
     /**
      * @var EventDispatcherInterface
      */
-    protected $eventDispatcher;
+    private $eventDispatcher;
     /**
      * @var AuthorizationCheckerInterface
      */
-    protected $voter;
+    private $voter;
     /**
      * @var SystemConfiguration
      */
-    protected $configuration;
+    private $configuration;
 
     public function __construct(EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter, SystemConfiguration $formConfig)
     {
@@ -57,43 +57,23 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
         ];
     }
 
-    private function getDefaultTheme(): ?string
-    {
-        return $this->configuration->getUserDefaultTheme();
-    }
-
-    private function getDefaultCurrency(): string
-    {
-        return $this->configuration->getUserDefaultCurrency();
-    }
-
-    private function getDefaultLanguage(): string
-    {
-        return $this->configuration->getUserDefaultLanguage();
-    }
-
-    private function getDefaultTimezone(): string
-    {
-        $timezone = $this->configuration->getUserDefaultTimezone();
-        if (null === $timezone) {
-            $timezone = date_default_timezone_get();
-        }
-
-        return $timezone;
-    }
-
     /**
      * @param User $user
      * @return UserPreference[]
      */
     public function getDefaultPreferences(User $user)
     {
+        $timezone = $this->configuration->getUserDefaultTimezone();
+        if (null === $timezone) {
+            $timezone = date_default_timezone_get();
+        }
+
         $enableHourlyRate = false;
         $hourlyRateOptions = [];
 
         if ($this->voter->isGranted('hourly-rate', $user)) {
             $enableHourlyRate = true;
-            $hourlyRateOptions = ['currency' => $this->getDefaultCurrency()];
+            $hourlyRateOptions = ['currency' => $this->configuration->getUserDefaultCurrency()];
         }
 
         return [
@@ -119,14 +99,14 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
 
             (new UserPreference())
                 ->setName(UserPreference::TIMEZONE)
-                ->setValue($this->getDefaultTimezone())
+                ->setValue($timezone)
                 ->setOrder(200)
                 ->setSection('locale')
                 ->setType(TimezoneType::class),
 
             (new UserPreference())
                 ->setName(UserPreference::LOCALE)
-                ->setValue($this->getDefaultLanguage())
+                ->setValue($this->configuration->getUserDefaultLanguage())
                 ->setOrder(250)
                 ->setSection('locale')
                 ->setType(LanguageType::class),
@@ -140,7 +120,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
 
             (new UserPreference())
                 ->setName(UserPreference::SKIN)
-                ->setValue($this->getDefaultTheme())
+                ->setValue($this->configuration->getUserDefaultTheme())
                 ->setOrder(400)
                 ->setSection('theme')
                 ->setType(SkinType::class),
@@ -156,6 +136,13 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setName('theme.collapsed_sidebar')
                 ->setValue(false)
                 ->setOrder(500)
+                ->setSection('theme')
+                ->setType(CheckboxType::class),
+
+            (new UserPreference())
+                ->setName('theme.update_browser_title')
+                ->setValue(true)
+                ->setOrder(550)
                 ->setSection('theme')
                 ->setType(CheckboxType::class),
 

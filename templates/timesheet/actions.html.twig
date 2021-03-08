@@ -60,12 +60,12 @@
         {% endif %}
     {% endif %}
 
-    {% if view != 'index' %}
+    {% if view != 'index' and view != 'custom' %}
         {% set actions = actions|merge({'back': options.back|default(path('timesheet'))}) %}
     {% endif %}
 
     {% set event = trigger('actions.timesheet', {'actions': actions, 'view': view, 'timesheet': timesheet}) %}
-    {% if view == 'index' %}
+    {% if view == 'index' or view == 'custom' %}
         {{ widgets.table_actions(event.payload.actions) }}
     {% else %}
         {{ widgets.entity_actions(event.payload.actions) }}

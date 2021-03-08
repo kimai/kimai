@@ -29,11 +29,15 @@ abstract class ControllerBaseTest extends WebTestCase
 
     protected function tearDown(): void
     {
+        $this->clearConfigCache();
+        parent::tearDown();
+    }
+
+    protected function clearConfigCache()
+    {
         /** @var ConfigurationRepository $repository */
         $repository = static::$kernel->getContainer()->get(ConfigurationRepository::class);
         $repository->clearCache();
-
-        parent::tearDown();
     }
 
     protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER): HttpKernelBrowser
