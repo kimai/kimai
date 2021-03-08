@@ -9,21 +9,25 @@
 
 namespace App\Tests\API;
 
+use App\Entity\Team;
 use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
  */
 class TeamControllerTest extends APIControllerBaseTest
 {
-    protected function importTeamFixtures(HttpKernelBrowser $client): void
+    /**
+     * @return Team[]
+     */
+    protected function importTeamFixtures(): array
     {
         $fixture = new TeamFixtures();
         $fixture->setAmount(1);
-        $this->importFixture($fixture);
+
+        return $this->importFixture($fixture);
     }
 
     public function testIsSecure()
@@ -50,7 +54,7 @@ class TeamControllerTest extends APIControllerBaseTest
     public function testGetCollection()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->importTeamFixtures($client);
+        $this->importTeamFixtures();
         $this->assertAccessIsGranted($client, '/api/teams');
         $result = json_decode($client->getResponse()->getContent(), true);
 
@@ -63,8 +67,10 @@ class TeamControllerTest extends APIControllerBaseTest
     public function testGetEntity()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->importTeamFixtures($client);
-        $this->assertAccessIsGranted($client, '/api/teams/2');
+        $teams = $this->importTeamFixtures();
+        $id = $teams[0]->getId();
+
+        $this->assertAccessIsGranted($client, '/api/teams/' . $id);
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
@@ -178,8 +184,9 @@ class TeamControllerTest extends APIControllerBaseTest
     public function testDeleteAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->importTeamFixtures($client);
-        $this->assertAccessIsGranted($client, '/api/teams/2');
+        $teams = $this->importTeamFixtures();
+        $id = $teams[0]->getId();
+        $this->assertAccessIsGranted($client, '/api/teams/' . $id);
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
