@@ -15,6 +15,7 @@ use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\CustomerRate;
 use App\Entity\Project;
+use App\Entity\RateInterface;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\CustomerRateRepository;
@@ -28,6 +29,20 @@ use Symfony\Component\HttpFoundation\Response;
 class CustomerControllerTest extends APIControllerBaseTest
 {
     use RateControllerTestTrait;
+
+    /**
+     * @param CustomerRate $rate
+     * @param bool $isCollection
+     * @return string
+     */
+    protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
+    {
+        if ($isCollection) {
+            return $this->getRateUrl($rate->getCustomer()->getId());
+        }
+
+        return $this->getRateUrl($rate->getCustomer()->getId(), $rate->getId());
+    }
 
     protected function getRateUrl($id = '1', $rateId = null): string
     {

@@ -12,9 +12,9 @@ namespace App\Tests\Doctrine;
 use App\Doctrine\UTCDateTimeType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
-use Doctrine\DBAL\Platforms\SqlitePlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,9 +24,9 @@ class UTCDateTimeTypeTest extends TestCase
 {
     public function testGetUtc()
     {
-        Type::overrideType(Type::DATETIME, UTCDateTimeType::class);
+        Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
         /** @var UTCDateTimeType $type */
-        $type = Type::getType(Type::DATETIME);
+        $type = Type::getType(Types::DATETIME_MUTABLE);
 
         $this->assertInstanceOf(UTCDateTimeType::class, $type);
         $utc = $type::getUtc();
@@ -39,9 +39,9 @@ class UTCDateTimeTypeTest extends TestCase
      */
     public function testConvertToDatabaseValue(AbstractPlatform $platform)
     {
-        Type::overrideType(Type::DATETIME, UTCDateTimeType::class);
+        Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
         /** @var UTCDateTimeType $type */
-        $type = Type::getType(Type::DATETIME);
+        $type = Type::getType(Types::DATETIME_MUTABLE);
 
         $result = $type->convertToDatabaseValue(null, $platform);
         $this->assertNull($result);
@@ -67,9 +67,9 @@ class UTCDateTimeTypeTest extends TestCase
      */
     public function testConvertToPHPValue(AbstractPlatform $platform)
     {
-        Type::overrideType(Type::DATETIME, UTCDateTimeType::class);
+        Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
         /** @var UTCDateTimeType $type */
-        $type = Type::getType(Type::DATETIME);
+        $type = Type::getType(Types::DATETIME_MUTABLE);
 
         $result = $type->convertToPHPValue(null, $platform);
         $this->assertNull($result);
@@ -89,9 +89,9 @@ class UTCDateTimeTypeTest extends TestCase
     {
         $this->expectException(ConversionException::class);
 
-        Type::overrideType(Type::DATETIME, UTCDateTimeType::class);
+        Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
         /** @var UTCDateTimeType $type */
-        $type = Type::getType(Type::DATETIME);
+        $type = Type::getType(Types::DATETIME_MUTABLE);
 
         $type->convertToPHPValue('201xx01-17 13:30:00', $platform);
     }
@@ -101,9 +101,9 @@ class UTCDateTimeTypeTest extends TestCase
      */
     public function testRequiresSQLCommentHint(AbstractPlatform $platform)
     {
-        Type::overrideType(Type::DATETIME, UTCDateTimeType::class);
+        Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
         /** @var UTCDateTimeType $type */
-        $type = Type::getType(Type::DATETIME);
+        $type = Type::getType(Types::DATETIME_MUTABLE);
         self::assertTrue($type->requiresSQLCommentHint($platform));
     }
 
@@ -111,7 +111,6 @@ class UTCDateTimeTypeTest extends TestCase
     {
         return [
             [new MySqlPlatform()],
-            [new SqlitePlatform()],
         ];
     }
 }

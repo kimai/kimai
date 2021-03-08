@@ -104,12 +104,6 @@ services:
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
 
-    # make sure, that sqlite supports foreign keys and cascade deletes
-    App\Doctrine\SqliteSessionInitSubscriber:
-        class: App\Doctrine\SqliteSessionInitSubscriber
-        tags:
-            - { name: doctrine.event_listener, event: postConnect }
-
     # store and retrieve sessions in and from database
     App\Security\SessionHandler:
         arguments:

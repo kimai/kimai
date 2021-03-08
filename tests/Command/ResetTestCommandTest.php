@@ -9,29 +9,30 @@
 
 namespace App\Tests\Command;
 
-use App\Command\ResetCommand;
+use App\Command\ResetTestCommand;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
- * @covers \App\Command\ResetCommand
+ * @covers \App\Command\ResetTestCommand
  * @group integration
  */
-class ResetCommandTest extends KernelTestCase
+class ResetTestCommandTest extends KernelTestCase
 {
     public function testCommandName()
     {
         $kernel = self::bootKernel();
         $application = new Application($kernel);
-        $application->add(new ResetCommand('test'));
+        $application->add(new ResetTestCommand('test', $this->createMock(EntityManagerInterface::class)));
 
-        $command = $application->find('kimai:reset-dev');
-        self::assertInstanceOf(ResetCommand::class, $command);
+        $command = $application->find('kimai:reset-test');
+        self::assertInstanceOf(ResetTestCommand::class, $command);
     }
 
     public function testCommandNameIsNotEnabledInProd()
     {
-        $command = new ResetCommand('prod');
+        $command = new ResetTestCommand('prod', $this->createMock(EntityManagerInterface::class));
         self::assertFalse($command->isEnabled());
     }
 }
