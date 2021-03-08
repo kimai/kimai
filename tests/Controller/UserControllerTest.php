@@ -98,7 +98,7 @@ class UserControllerTest extends ControllerBaseTest
 
     public function testCreateAction()
     {
-        $username = '亚历山德拉';
+        $username = '亚历山德拉' . uniqid();
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/create');
         $form = $client->getCrawler()->filter('form[name=user_create]')->form();
@@ -188,10 +188,9 @@ class UserControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertHasFlashDeleteSuccess($client);
 
-        // SQLIte does not necessarly support onCascade delete, so these timesheet will stay after deletion
-        // $em->clear();
-        // $timesheets = $em->getRepository(Timesheet::class)->count([]);
-        // $this->assertEquals(0, $timesheets);
+        $em->clear();
+        $timesheets = $em->getRepository(Timesheet::class)->count([]);
+        $this->assertEquals(0, $timesheets);
 
         $this->request($client, '/admin/user/' . $user->getId() . '/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());

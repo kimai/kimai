@@ -38,13 +38,6 @@ class TagRepositoryTest extends AbstractRepositoryTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(7, \count($result));
-        $this->assertEquals(1, $result[0]);
-        $this->assertEquals(3, $result[1]);
-        $this->assertEquals(4, $result[2]);
-        $this->assertEquals(5, $result[3]);
-        $this->assertEquals(6, $result[4]);
-        $this->assertEquals(7, $result[5]);
-        $this->assertEquals(11, $result[6]);
     }
 
     public function testFindNoIds()

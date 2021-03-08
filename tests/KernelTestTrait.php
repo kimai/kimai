@@ -11,9 +11,7 @@ namespace App\Tests;
 
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
-use Doctrine\Common\DataFixtures\Loader;
+use App\Tests\DataFixtures\TestFixture;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -31,15 +29,9 @@ trait KernelTestTrait
         return $this::$container->get('doctrine.orm.entity_manager');
     }
 
-    protected function importFixture(Fixture $fixture)
+    protected function importFixture(TestFixture $fixture): array
     {
-        $em = $this::$container->get('doctrine.orm.entity_manager');
-
-        $loader = new Loader();
-        $loader->addFixture($fixture);
-
-        $executor = new ORMExecutor($em, null);
-        $executor->execute($loader->getFixtures(), true);
+        return $fixture->load($this->getEntityManager());
     }
 
     protected function getUserByName(string $username): ?User
