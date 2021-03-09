@@ -55,29 +55,29 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     }
 
     /**
-     * Whether we should deactivate foreign key support for SQLite.
-     * This is required, if columns are changed.
-     * SQLite will drop the table and all referenced data, if we don't deactivate this.
-     *
-     * @return bool
+     * @deprecated since 1.14 - will be removed with 2.0
      */
     protected function isSupportingForeignKeys(): bool
     {
+        @trigger_error('isSupportingForeignKeys() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+
         return true;
     }
 
+    /**
+     * @deprecated since 1.14 - will be removed with 2.0
+     */
     protected function deactivateForeignKeysOnSqlite()
     {
-        if ($this->isPlatformSqlite() && !$this->isSupportingForeignKeys()) {
-            $this->addSql('PRAGMA foreign_keys = OFF;');
-        }
+        @trigger_error('deactivateForeignKeysOnSqlite() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
     }
 
+    /**
+     * @deprecated since 1.14 - will be removed with 2.0
+     */
     private function activateForeignKeysOnSqlite()
     {
-        if ($this->isPlatformSqlite() && !$this->isSupportingForeignKeys()) {
-            $this->addSql('PRAGMA foreign_keys = ON;');
-        }
+        @trigger_error('activateForeignKeysOnSqlite() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
     }
 
     /**
@@ -87,16 +87,6 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     public function preUp(Schema $schema): void
     {
         $this->abortIfPlatformNotSupported();
-        $this->deactivateForeignKeysOnSqlite();
-    }
-
-    /**
-     * @param Schema $schema
-     * @throws DBALException
-     */
-    public function postUp(Schema $schema): void
-    {
-        $this->activateForeignKeysOnSqlite();
     }
 
     /**
@@ -106,16 +96,6 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     public function preDown(Schema $schema): void
     {
         $this->abortIfPlatformNotSupported();
-        $this->deactivateForeignKeysOnSqlite();
-    }
-
-    /**
-     * @param Schema $schema
-     * @throws DBALException
-     */
-    public function postDown(Schema $schema): void
-    {
-        $this->activateForeignKeysOnSqlite();
     }
 
     /**
@@ -126,25 +106,22 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     protected function abortIfPlatformNotSupported()
     {
         $platform = $this->getPlatform();
-        if (!\in_array($platform, ['sqlite', 'mysql'])) {
+        if (!$this->isPlatformMysql()) {
             $this->abortIf(true, 'Unsupported database platform: ' . $platform);
         }
     }
 
     /**
-     * @return bool
-     * @throws DBALException
+     * @deprecated since 1.14 - will be removed with 2.0
      */
-    protected function isPlatformSqlite()
+    protected function isPlatformSqlite(): bool
     {
+        @trigger_error('isPlatformSqlite() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+
         return ($this->getPlatform() === 'sqlite');
     }
 
-    /**
-     * @return bool
-     * @throws DBALException
-     */
-    protected function isPlatformMysql()
+    protected function isPlatformMysql(): bool
     {
         return ($this->getPlatform() === 'mysql');
     }
@@ -173,19 +150,12 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     }
 
     /**
-     * we do it via addSql instead of $schema->getTable($users)->dropIndex()
-     * otherwise the commands will be executed as last ones.
-     *
-     * @param string $indexName
-     * @param string $tableName
-     * @throws DBALException
+     * @deprecated since 1.14 - will be removed with 2.0
      */
     protected function addSqlDropIndex($indexName, $tableName)
     {
-        $dropSql = 'DROP INDEX ' . $indexName;
-        if (!$this->isPlatformSqlite()) {
-            $dropSql .= ' ON ' . $tableName;
-        }
-        $this->addSql($dropSql);
+        @trigger_error('addSqlDropIndex() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+
+        $this->addSql('DROP INDEX ' . $indexName . ' ON ' . $tableName);
     }
 }

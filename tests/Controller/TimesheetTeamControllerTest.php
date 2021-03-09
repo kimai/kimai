@@ -192,7 +192,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertNull($timesheet->getEnd());
         $this->assertEquals('Testing is fun!', $timesheet->getDescription());
@@ -271,9 +271,10 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture->setAmount(10);
         $fixture->setUser($user);
         $fixture->setStartDate('2017-05-01');
-        $this->importFixture($fixture);
+        $timesheets = $this->importFixture($fixture);
+        $id = $timesheets[0]->getId();
 
-        $this->request($client, '/team/timesheet/1/edit');
+        $this->request($client, '/team/timesheet/' . $id . '/edit');
 
         $response = $client->getResponse();
         $this->assertTrue($response->isSuccessful());
@@ -300,7 +301,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->find($id);
         $this->assertEquals('foo-bar', $timesheet->getDescription());
         $this->assertEquals($teamlead->getId(), $timesheet->getUser()->getId());
     }

@@ -100,6 +100,11 @@ class CsvRendererTest extends AbstractRendererTest
             19 => '',
             20 => 'project-foo2',
             21 => 'activity-bar',
+            22 => 'timesheet',
+            23 => 'work',
+            24 => 'A-0123456789',
+            25 => 'DE-9876543210',
+            26 => 'ORDER-123',
         ];
 
         self::assertEquals(7, \count($all));

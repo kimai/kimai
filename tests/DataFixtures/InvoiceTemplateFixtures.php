@@ -10,28 +10,22 @@
 namespace App\Tests\DataFixtures;
 
 use App\Entity\InvoiceTemplate;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
  * Defines the sample data to load in during controller tests.
  */
-class InvoiceFixtures extends Fixture
+class InvoiceTemplateFixtures implements TestFixture
 {
     /**
-     * {@inheritdoc}
-     */
-    public function load(ObjectManager $manager)
-    {
-        $this->loadInvoiceTemplates($manager);
-    }
-
-    /**
      * @param ObjectManager $manager
+     * @return InvoiceTemplate[]
      */
-    private function loadInvoiceTemplates(ObjectManager $manager)
+    public function load(ObjectManager $manager): array
     {
+        $created = [];
+
         $faker = Factory::create();
 
         $template = new InvoiceTemplate();
@@ -58,5 +52,9 @@ class InvoiceFixtures extends Fixture
 
         $manager->persist($template);
         $manager->flush();
+
+        $created[] = $template;
+
+        return $created;
     }
 }

@@ -26,21 +26,6 @@ final class Version20191113132640 extends AbstractMigration
         return 'Fixes foreign keys on tag table';
     }
 
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
-
-    public function isTransactional(): bool
-    {
-        if ($this->isPlatformSqlite()) {
-            // does fail if we use transactions, as tables are re-created and foreign keys would fail
-            return false;
-        }
-
-        return true;
-    }
-
     public function up(Schema $schema): void
     {
         $timesheetTags = $schema->getTable('kimai2_timesheet_tags');

@@ -26,21 +26,6 @@ final class Version20191116110124 extends AbstractMigration
         return 'New Vat ID columns and invoice template improvements';
     }
 
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
-
-    public function isTransactional(): bool
-    {
-        if ($this->isPlatformSqlite()) {
-            // does fail if we use transactions, as tables are re-created and foreign keys would fail
-            return false;
-        }
-
-        return true;
-    }
-
     public function up(Schema $schema): void
     {
         $customers = $schema->getTable('kimai2_customers');
