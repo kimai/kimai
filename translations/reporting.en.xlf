@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="report_project_view">
                 <source>report_project_view</source>
-                <target>Project View</target>
+                <target>Project overview</target>
             </trans-unit>
         </body>
     </file>
