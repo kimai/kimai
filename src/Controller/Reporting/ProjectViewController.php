@@ -25,10 +25,7 @@ final class ProjectViewController extends AbstractController
      */
     public function __invoke(Request $request, ProjectViewService $service)
     {
-        $query = new ProjectViewQuery();
-        $query->setBegin($this->getDateTimeFactory()->getStartOfWeek());
-        $query->setEnd($this->getDateTimeFactory()->getEndOfWeek());
-        $query->setUser($this->getUser());
+        $query = new ProjectViewQuery($this->getDateTimeFactory()->createDateTime(), $this->getUser());
 
         $form = $this->createForm(ProjectViewForm::class, $query, [
             'action' => $this->generateUrl('report_project_view')

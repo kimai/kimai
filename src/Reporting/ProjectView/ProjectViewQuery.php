@@ -20,13 +20,9 @@ final class ProjectViewQuery
      */
     private $customer;
     /**
-     * @var DateTime|null
+     * @var DateTime
      */
-    private $begin;
-    /**
-     * @var DateTime|null
-     */
-    private $end;
+    private $today;
     /**
      * @var User|null
      */
@@ -40,34 +36,15 @@ final class ProjectViewQuery
      */
     private $includeNoWork = false;
 
-    public function getBegin(): ?DateTime
+    public function __construct(DateTime $today, User $user)
     {
-        return $this->begin;
-    }
-
-    public function setBegin(DateTime $begin): void
-    {
-        $this->begin = $begin;
-    }
-
-    public function getEnd(): ?DateTime
-    {
-        return $this->end;
-    }
-
-    public function setEnd(DateTime $end): void
-    {
-        $this->end = $end;
+        $this->today = $today;
+        $this->user = $user;
     }
 
     public function getUser(): ?User
     {
         return $this->user;
-    }
-
-    public function setUser(User $user): void
-    {
-        $this->user = $user;
     }
 
     public function isIncludeNoBudget(): bool
@@ -98,5 +75,10 @@ final class ProjectViewQuery
     public function setCustomer(Customer $customer): void
     {
         $this->customer = $customer;
+    }
+
+    public function getToday(): DateTime
+    {
+        return $this->today;
     }
 }
