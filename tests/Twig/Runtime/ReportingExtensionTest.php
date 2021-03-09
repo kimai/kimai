@@ -38,6 +38,6 @@ class ReportingExtensionTest extends TestCase
         $sut = $this->getSut(true);
         $reports = $sut->getAvailableReports(new User());
 
-        $this->assertCount(3, $reports);
+        $this->assertCount(4, $reports);
     }
 }

@@ -14,28 +14,54 @@
                     <th>{{'label.name'|trans}}</th>
                     <th class="text-nowrap text-right">{{ 'daterangepicker.today'|trans({}, 'daterangepicker') }}</th>
                     <th class="text-nowrap text-right">{{ 'agendaWeek'|trans }}</th>
-                    <th class="text-nowrap text-right" style="width: 200px">{{ 'stats.durationTotal'|trans }}</th>
+                    <th class="text-nowrap text-right">{{ 'month'|trans }}</th>
+                    <th class="text-nowrap text-right">{{ 'stats.durationTotal'|trans }}</th>
+                    <th class="text-nowrap text-center" style="min-width: 200px">{{ 'label.timeBudget'|trans }}</th>
+                    <th class="text-nowrap text-center" colspan="2">{{ 'entryState.not_exported'|trans }}</th>
                     <th class="text-nowrap text-center">{{ 'label.project_end'|trans }}</th>
                     <th>{{'label.comment'|trans}}</th>
                 </tr>
-                {% for entry in entries|sort((a, b) => a.0.name <=> b.0.name) %}
-                    {% set project = entry.0 %}
+                {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
                     <tr>
-                        <td>{{ project.name }}</td>
-                        <td class="text-nowrap text-right">{{ entry.today|duration }}</td>
-                        <td class="text-nowrap text-right">{{ entry.week|duration }}</td>
-                        {% if project.timeBudget > 0 %}
-                        <td class="text-nowrap">
-                            {{ progress.progressbar(project.timeBudget, entry.total|default(0), entry.total|duration ~ ' / ' ~ project.timeBudget|duration, '') }}
-                        </td>
-                        {% else %}
-                        <td class="text-nowrap text-right">
-                            {{ entry.total|duration }}
-                        </td>
-                        {% endif %}
-                        <td class="text-nowrap text-center">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
-                        <td>{{ project.comment }}</td>
+                        <th colspan="10">{{ widgets.label_customer(mapping.customer) }}</th>
                     </tr>
+                    {% for entry in mapping.projects|sort((a, b) => a.project.name <=> b.project.name) %}
+                        {% set project = entry.project %}
+                        <tr>
+                            <td>{{ widgets.label_project(project) }}</td>
+                            <td class="text-nowrap text-right">{{ entry.durationDay|duration }}</td>
+                            <td class="text-nowrap text-right">{{ entry.durationWeek|duration }}</td>
+                            <td class="text-nowrap text-right">{{ entry.durationMonth|duration }}</td>
+                            <td class="text-nowrap text-right">
+                                {{ entry.durationTotal|duration }}
+                            </td>
+                            <td class="text-nowrap">
+                                {% if project.timeBudget > 0 %}
+                                    {{ progress.progressbar(project.timeBudget, entry.durationTotal|default(0), entry.durationTotal|duration ~ ' / ' ~ project.timeBudget|duration, '') }}
+                                {% endif %}
+                            </td>
+                            <td class="text-nowrap text-right">
+                                {% if is_granted('create_export') %}
+                                    <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
+                                        {{ entry.notExportedDuration|duration }}
+                                    </a>
+                                {% else %}
+                                    {{ entry.notExportedDuration|duration }}
+                                {% endif %}
+                            </td>
+                            <td class="text-nowrap text-right">
+                                {% if is_granted('view_invoice') %}
+                                    <a href="{{ path('invoice', {'customer': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
+                                        {{ entry.notExportedRate|money(project.customer.currency) }}
+                                    </a>
+                                {% else %}
+                                    {{ entry.notExportedRate|money(project.customer.currency) }}
+                                {% endif %}
+                            </td>
+                            <td class="text-nowrap text-center">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
+                            <td>{{ project.comment }}</td>
+                        </tr>
+                    {% endfor %}
                 {% endfor %}
             </table>
         {% endblock %}
