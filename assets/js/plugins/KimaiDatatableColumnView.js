@@ -44,7 +44,7 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         });
         for (let checkbox of this.modal.querySelectorAll('form input[type=checkbox]')) {
             checkbox.addEventListener('click', function () {
-                self.changeVisibility(checkbox.getAttribute('name'));
+                self.changeVisibility(checkbox.getAttribute('name'), checkbox.checked);
             });
         }
     }
@@ -70,7 +70,7 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         jQuery(this.modal).modal('toggle');
     }
 
-    changeVisibility(columnName) {
+    changeVisibility(columnName, checked) {
         const table = document.getElementById('datatable_' + this.id).getElementsByClassName('dataTable')[0];
         let column = 0;
         let foundColumn = false;
@@ -79,6 +79,11 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
                 foundColumn = true;
                 break;
             }
+
+            if (columnElement.getAttribute('colspan') !== null) {
+                console.log('Tables with colspans are not supported!');
+            }
+
             column++;
         }
 
@@ -87,7 +92,15 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         }
 
         for (let rowElement of table.getElementsByTagName('tr')) {
-            rowElement.children[column].classList.toggle('hidden');
+            if (rowElement.children[column] === undefined) {
+                continue;
+            }
+
+            if (checked) {
+                rowElement.children[column].classList.remove('hidden');
+            } else {
+                rowElement.children[column].classList.add('hidden');
+            }
         }
     }
 
