@@ -4,10 +4,12 @@
 
 {% block report %}
 
+    {% set hasData = entries|length > 0 %}
+
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/progressbar.html.twig" as progress %}
         {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_body_class %}project-view-reporting-box no-padding table-responsive{% endblock %}
+        {% block box_body_class %}project-view-reporting-box {% if hasData %}no-padding{% endif %} table-responsive{% endblock %}
         {% block box_before %}
             {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': 'project-view-form'}}) }}
         {% endblock %}
@@ -18,70 +20,74 @@
             {{ form_widget(form) }}
         {% endblock %}
         {% block box_body %}
-            <table class="table table-bordered table-hover dataTable">
-                <tr>
-                    <th>{{'label.name'|trans}}</th>
-                    <th class="text-nowrap text-right">{{ 'daterangepicker.today'|trans({}, 'daterangepicker') }}</th>
-                    <th class="text-nowrap text-right">{{ 'agendaWeek'|trans }}</th>
-                    <th class="text-nowrap text-right">{{ 'month'|trans }}</th>
-                    <th class="hidden-md hidden-sm hidden-xs text-nowrap text-right">{{ 'stats.durationTotal'|trans }}</th>
-                    <th class="text-nowrap text-center" style="min-width: 200px">{{ 'label.timeBudget'|trans }}</th>
-                    <th class="text-nowrap text-center" style="min-width: 200px">{{ 'label.budget'|trans }}</th>
-                    <th class="hidden-sm hidden-xs text-nowrap text-center" colspan="2">{{ 'entryState.not_exported'|trans }}</th>
-                    <th class="hidden-md hidden-sm hidden-xs text-nowrap text-center">{{ 'label.project_end'|trans }}</th>
-                    <th class="hidden-md hidden-sm hidden-xs">{{'label.comment'|trans}}</th>
-                </tr>
-                {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
-                    {% if is_granted('budget', mapping.customer) %}
-                        <tr>
-                            <th colspan="11">{{ widgets.label_customer(mapping.customer) }}</th>
-                        </tr>
-                        {% for entry in mapping.projects|sort((a, b) => a.project.name <=> b.project.name) %}
-                            {% set project = entry.project %}
-                            {% set currency = project.customer.currency %}
-                            {% if is_granted('budget', project) %}
-                                <tr{% if is_granted('view', project) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': project.id}) }}"{% endif %}>
-                                    <td>{{ widgets.label_project(project) }}</td>
-                                    <td class="text-nowrap text-right">{{ entry.durationDay|duration }}</td>
-                                    <td class="text-nowrap text-right">{{ entry.durationWeek|duration }}</td>
-                                    <td class="text-nowrap text-right">{{ entry.durationMonth|duration }}</td>
-                                    <td class="hidden-md hidden-sm hidden-xs text-nowrap text-right">{{ entry.durationTotal|duration }}</td>
-                                    <td class="text-nowrap">
-                                        {% if project.timeBudget > 0 %}
-                                            {{ progress.progressbar(project.timeBudget, entry.durationTotal|default(0), entry.durationTotal|duration ~ ' / ' ~ project.timeBudget|duration, '') }}
-                                        {% endif %}
-                                    </td>
-                                    <td class="text-nowrap">
-                                        {% if project.budget > 0 %}
-                                            {{ progress.progressbar(project.budget, entry.rateTotal|default(0), entry.rateTotal|money(currency) ~ ' / ' ~ project.budget|money(currency), '') }}
-                                        {% endif %}
-                                    </td>
-                                    <td class="hidden-sm hidden-xs text-nowrap text-right">
-                                        {% if is_granted('create_export') %}
-                                            <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
+            {% if not hasData %}
+                {{ widgets.nothing_found() }}
+            {% else %}
+                <table class="table table-bordered table-hover dataTable">
+                    <tr>
+                        <th>{{'label.name'|trans}}</th>
+                        <th class="text-nowrap text-right">{{ 'daterangepicker.today'|trans({}, 'daterangepicker') }}</th>
+                        <th class="text-nowrap text-right">{{ 'agendaWeek'|trans }}</th>
+                        <th class="text-nowrap text-right">{{ 'month'|trans }}</th>
+                        <th class="hidden-md hidden-sm hidden-xs text-nowrap text-right">{{ 'stats.durationTotal'|trans }}</th>
+                        <th class="text-nowrap text-center" style="min-width: 200px">{{ 'label.timeBudget'|trans }}</th>
+                        <th class="text-nowrap text-center" style="min-width: 200px">{{ 'label.budget'|trans }}</th>
+                        <th class="hidden-sm hidden-xs text-nowrap text-center" colspan="2">{{ 'entryState.not_exported'|trans }}</th>
+                        <th class="hidden-md hidden-sm hidden-xs text-nowrap text-center">{{ 'label.project_end'|trans }}</th>
+                        <th class="hidden-md hidden-sm hidden-xs">{{'label.comment'|trans}}</th>
+                    </tr>
+                    {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
+                        {% if is_granted('budget', mapping.customer) %}
+                            <tr>
+                                <th colspan="11">{{ widgets.label_customer(mapping.customer) }}</th>
+                            </tr>
+                            {% for entry in mapping.projects|sort((a, b) => a.project.name <=> b.project.name) %}
+                                {% set project = entry.project %}
+                                {% set currency = project.customer.currency %}
+                                {% if is_granted('budget', project) %}
+                                    <tr{% if is_granted('view', project) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': project.id}) }}"{% endif %}>
+                                        <td>{{ widgets.label_project(project) }}</td>
+                                        <td class="text-nowrap text-right">{{ entry.durationDay|duration }}</td>
+                                        <td class="text-nowrap text-right">{{ entry.durationWeek|duration }}</td>
+                                        <td class="text-nowrap text-right">{{ entry.durationMonth|duration }}</td>
+                                        <td class="hidden-md hidden-sm hidden-xs text-nowrap text-right">{{ entry.durationTotal|duration }}</td>
+                                        <td class="text-nowrap">
+                                            {% if project.timeBudget > 0 %}
+                                                {{ progress.progressbar(project.timeBudget, entry.durationTotal|default(0), entry.durationTotal|duration ~ ' / ' ~ project.timeBudget|duration, '') }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-nowrap">
+                                            {% if project.budget > 0 %}
+                                                {{ progress.progressbar(project.budget, entry.rateTotal|default(0), entry.rateTotal|money(currency) ~ ' / ' ~ project.budget|money(currency), '') }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="hidden-sm hidden-xs text-nowrap text-right">
+                                            {% if is_granted('create_export') %}
+                                                <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
+                                                    {{ entry.notExportedDuration|duration }}
+                                                </a>
+                                            {% else %}
                                                 {{ entry.notExportedDuration|duration }}
-                                            </a>
-                                        {% else %}
-                                            {{ entry.notExportedDuration|duration }}
-                                        {% endif %}
-                                    </td>
-                                    <td class="hidden-sm hidden-xs text-nowrap text-right">
-                                        {% if is_granted('view_invoice') %}
-                                            <a href="{{ path('invoice', {'customer': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
+                                            {% endif %}
+                                        </td>
+                                        <td class="hidden-sm hidden-xs text-nowrap text-right">
+                                            {% if is_granted('view_invoice') %}
+                                                <a href="{{ path('invoice', {'customer': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
+                                                    {{ entry.notExportedRate|money(currency) }}
+                                                </a>
+                                            {% else %}
                                                 {{ entry.notExportedRate|money(currency) }}
-                                            </a>
-                                        {% else %}
-                                            {{ entry.notExportedRate|money(currency) }}
-                                        {% endif %}
-                                    </td>
-                                    <td class="hidden-md hidden-sm hidden-xs text-nowrap text-center">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
-                                    <td class="hidden-md hidden-sm hidden-xs">{{ project.comment }}</td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %}
-            </table>
+                                            {% endif %}
+                                        </td>
+                                        <td class="hidden-md hidden-sm hidden-xs text-nowrap text-center">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
+                                        <td class="hidden-md hidden-sm hidden-xs">{{ project.comment }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            {% endif %}
         {% endblock %}
     {% endembed %}
 
