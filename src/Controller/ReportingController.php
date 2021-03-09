@@ -14,8 +14,6 @@ use App\Reporting\MonthByUser;
 use App\Reporting\MonthByUserForm;
 use App\Reporting\MonthlyUserList;
 use App\Reporting\MonthlyUserListForm;
-use App\Reporting\ProjectView\ProjectViewQuery;
-use App\Reporting\ProjectView\ProjectViewService;
 use App\Reporting\WeekByUser;
 use App\Reporting\WeekByUserForm;
 use App\Repository\Query\UserQuery;
@@ -135,36 +133,6 @@ final class ReportingController extends AbstractController
             'current' => $start,
             'next' => $nextMonth,
             'previous' => $previousMonth,
-        ]);
-    }
-
-    /**
-     * @Route(path="/project_view", name="report_project_view", methods={"GET","POST"})
-     * @Security("is_granted('budget_project')")
-     */
-    public function projectView(Request $request, ProjectViewService $service)
-    {
-        $start = $this->getDateTimeFactory()->getStartOfWeek();
-        $end = $this->getDateTimeFactory()->getEndOfWeek();
-
-        $query = new ProjectViewQuery();
-        $query->setBegin($start);
-        $query->setEnd($end);
-        $query->setUser($this->getUser());
-
-        $entries = $service->getProjectView($query);
-
-        $byCustomer = [];
-        foreach ($entries as $entry) {
-            $customer = $entry->getProject()->getCustomer();
-            if (!isset($byCustomer[$customer->getId()])) {
-                $byCustomer[$customer->getId()] = ['customer' => $customer, 'projects' => []];
-            }
-            $byCustomer[$customer->getId()]['projects'][] = $entry;
-        }
-
-        return $this->render('reporting/project_view.html.twig', [
-            'entries' => $byCustomer,
         ]);
     }
 

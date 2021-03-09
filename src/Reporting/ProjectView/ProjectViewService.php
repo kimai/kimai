@@ -83,6 +83,7 @@ final class ProjectViewService
             ->addSelect('(' . $notExportedDuration->getDQL() . ') as notExportedDuration')
             ->addSelect('(' . $notExportedRate->getDQL() . ') as notExportedRate')
             ->addSelect('SUM(t.duration) AS total')
+            ->addSelect('SUM(t.rate) AS totalRate')
             ->leftJoin('p.customer', 'c')
             ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
             ->andWhere($qb->expr()->eq('p.visible', true))
@@ -91,6 +92,11 @@ final class ProjectViewService
             ->addGroupBy('c')
             ->addGroupBy('t.project')
         ;
+
+        if ($query->getCustomer() !== null) {
+            $qb->andWhere($qb->expr()->eq('c', ':customer'));
+            $qb->setParameter('customer', $query->getCustomer()->getId());
+        }
 
         if (!$query->isIncludeNoWork()) {
             $qb->andHaving($qb->expr()->gt('total', 0));
@@ -126,6 +132,7 @@ final class ProjectViewService
             $entity->setDurationWeek($res['week'] ?? 0);
             $entity->setDurationMonth($res['month'] ?? 0);
             $entity->setDurationTotal($res['total'] ?? 0);
+            $entity->setRateTotal($res['totalRate'] ?? 0);
             $entity->setNotExportedRate($res['notExportedRate'] ?? 0);
             $entity->setNotExportedDuration($res['notExportedDuration'] ?? 0);
 

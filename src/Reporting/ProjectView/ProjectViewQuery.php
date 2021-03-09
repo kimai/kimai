@@ -9,11 +9,16 @@
 
 namespace App\Reporting\ProjectView;
 
+use App\Entity\Customer;
 use App\Entity\User;
 use DateTime;
 
 final class ProjectViewQuery
 {
+    /**
+     * @var Customer
+     */
+    private $customer;
     /**
      * @var DateTime
      */
@@ -83,5 +88,15 @@ final class ProjectViewQuery
     public function setIncludeNoWork(bool $includeNoWork): void
     {
         $this->includeNoWork = $includeNoWork;
+    }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(Customer $customer): void
+    {
+        $this->customer = $customer;
     }
 }

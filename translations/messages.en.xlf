@@ -1150,6 +1150,14 @@
                 <source>help.batch_meta_fields</source>
                 <target>Fields that are to be updated must first be activated by clicking on the associated checkbox.</target>
             </trans-unit>
+            <trans-unit id="label.includeNoWork">
+                <source>label.includeNoWork</source>
+                <target>Show entries without bookings</target>
+            </trans-unit>
+            <trans-unit id="label.includeNoBudget">
+                <source>label.includeNoBudget</source>
+                <target>Show entries without budget</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
