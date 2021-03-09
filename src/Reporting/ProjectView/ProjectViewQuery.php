@@ -16,19 +16,19 @@ use DateTime;
 final class ProjectViewQuery
 {
     /**
-     * @var Customer
+     * @var Customer|null
      */
     private $customer;
     /**
-     * @var DateTime
+     * @var DateTime|null
      */
     private $begin;
     /**
-     * @var DateTime
+     * @var DateTime|null
      */
     private $end;
     /**
-     * @var User
+     * @var User|null
      */
     private $user;
     /**

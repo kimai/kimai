@@ -38,22 +38,22 @@ final class ProjectViewService
         $end = $query->getEnd();
         $user = $query->getUser();
 
-        $startingDateQueryBuilder = $this->timesheetRepository->createQueryBuilder('t1');
-        $startingDateQueryBuilder
+        $dayDuration = $this->timesheetRepository->createQueryBuilder('t1');
+        $dayDuration
             ->select('SUM(t1.duration)')
             ->andWhere('t1.project = p')
             ->andWhere('DATE(t1.begin) = :starting_date')
         ;
 
-        $weekQueryBuilder = $this->timesheetRepository->createQueryBuilder('t2');
-        $weekQueryBuilder
+        $weekDuration = $this->timesheetRepository->createQueryBuilder('t2');
+        $weekDuration
             ->select('SUM(t2.duration)')
             ->andWhere('t2.project = p')
             ->andWhere('DATE(t2.begin) BETWEEN :start_date AND :end_date')
         ;
 
-        $monthQueryBuilder = $this->timesheetRepository->createQueryBuilder('t3');
-        $monthQueryBuilder
+        $monthDuration = $this->timesheetRepository->createQueryBuilder('t3');
+        $monthDuration
             ->select('SUM(t3.duration) as monthDuration')
             ->andWhere('t3.project = p')
             ->andWhere('DATE(t3.begin) BETWEEN :start_month AND :end_month')
@@ -77,9 +77,9 @@ final class ProjectViewService
         $qb
             ->select('p AS project')
             ->addSelect('c')
-            ->addSelect('(' . $startingDateQueryBuilder->getDQL() . ') AS today')
-            ->addSelect('(' . $weekQueryBuilder->getDQL() . ') AS week')
-            ->addSelect('(' . $monthQueryBuilder->getDQL() . ') AS month')
+            ->addSelect('(' . $dayDuration->getDQL() . ') AS today')
+            ->addSelect('(' . $weekDuration->getDQL() . ') AS week')
+            ->addSelect('(' . $monthDuration->getDQL() . ') AS month')
             ->addSelect('(' . $notExportedDuration->getDQL() . ') as notExportedDuration')
             ->addSelect('(' . $notExportedRate->getDQL() . ') as notExportedRate')
             ->addSelect('SUM(t.duration) AS total')
@@ -121,7 +121,7 @@ final class ProjectViewService
             ->setParameter('end_month', $endMonth)
             ->setParameter('exported', false, Types::BOOLEAN)
         ;
-        //dd($qb->getQuery()->getSQL());
+
         $result = $qb->getQuery()->getResult();
 
         $stats = [];

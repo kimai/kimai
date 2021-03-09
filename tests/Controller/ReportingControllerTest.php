@@ -22,11 +22,6 @@ class ReportingControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecured('/reporting');
     }
 
-    public function testProjectViewIsSecure()
-    {
-        $this->assertUrlIsSecured('/reporting/project_view');
-    }
-
     public function testWeekByUserIsSecure()
     {
         $this->assertUrlIsSecured('/reporting/week_by_user');
@@ -85,13 +80,6 @@ class ReportingControllerTest extends ControllerBaseTest
         self::assertStringContainsString('<div class="box-body user-month-reporting-box', $client->getResponse()->getContent());
         $select = $client->getCrawler()->filterXPath("//select[@id='user']");
         self::assertEquals(0, $select->count());
-    }
-
-    public function testProjectViewReport()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/reporting/project_view');
-        self::assertStringContainsString('<div class="box-body project-view-reporting-box', $client->getResponse()->getContent());
     }
 
     public function testMonthlyUsersReport()
