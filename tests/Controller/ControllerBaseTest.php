@@ -168,6 +168,9 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertAccessIsGranted(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [])
     {
         $this->request($client, $url, $method, $parameters);
+        if (!$client->getResponse()->isSuccessful()) {
+            dd($client->getResponse()->getContent());
+        }
         self::assertTrue($client->getResponse()->isSuccessful());
     }
 
