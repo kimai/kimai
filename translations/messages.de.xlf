@@ -1130,6 +1130,14 @@
         <source>help.batch_meta_fields</source>
         <target>Felder die aktualisiert werden sollen, müssen zunächst durch einen Klick auf die zugehörige Checkbox freigeschaltet werden.</target>
       </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Einträge ohne Buchungen anzeigen</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Einträge ohne Budget anzeigen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

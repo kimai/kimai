@@ -21,6 +21,7 @@ use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
+use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
@@ -77,7 +78,7 @@ class ProjectRepository extends EntityRepository
         return $this->count([]);
     }
 
-    public function getProjectStatistics(Project $project, ?\DateTime $begin = null, ?\DateTime $end = null): ProjectStatistic
+    public function getProjectStatistics(Project $project, ?DateTime $begin = null, ?DateTime $end = null): ProjectStatistic
     {
         $stats = new ProjectStatistic($project);
 
@@ -127,7 +128,7 @@ class ProjectRepository extends EntityRepository
         return $stats;
     }
 
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    public function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
     {
         // make sure that all queries without a user see all projects
         if (null === $user && empty($teams)) {
@@ -203,7 +204,7 @@ class ProjectRepository extends EntityRepository
         $qb->andWhere($qb->expr()->eq('c.visible', ':customer_visible'));
 
         if (!$query->isIgnoreDate()) {
-            $now = new \DateTime();
+            $now = new DateTime();
             $qb->andWhere(
                 $qb->expr()->andX(
                     $qb->expr()->orX(

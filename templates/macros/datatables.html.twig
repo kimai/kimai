@@ -46,62 +46,58 @@
         {% set orderBy = false %}
         {% set order = false %}
     {% endif %}
-    {% set striped = options.striped|default(true) %}
+    {% set striped = options.striped ?? true %}
+    {% set bordered = options.bordered ?? false %}
     {% set reloadEvent = options.reload|default('') %}
     {% set translationDomain = options.translationDomain|default('messages') %}
-    {# |default does not work here, as the prefix might be an empty string #}
-    {% set translationPrefix = 'label.' %}
-    {% if options.translationPrefix is defined %}
-        {% set translationPrefix = options.translationPrefix %}
-    {% endif %}
+    {% set translationPrefix = options.translationPrefix ?? 'label.' %}
+    {% set boxClass = options.boxClass ?? 'box box-'  ~ admin_lte_context.widget.type ~ ' data_table' %}
 
     {% import _self as macro %}
-    <div class="box box-{{ admin_lte_context.widget.type }} data_table" id="datatable_{{ tableName }}">
+    <div class="{{ boxClass }}" id="datatable_{{ tableName }}">
         <div class="box-body no-padding">
             <div class="dataTables_wrapper form-inline dt-bootstrap">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <table class="table {% if striped %}table-striped {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}" id="dt_{{ tableName }}">
-                            <thead>
-                                <tr>
-                                {%- for title, headerOptions in columns -%}
-                                    {% if not headerOptions is iterable %}
-                                        {% set headerOptions = {'class': headerOptions} %}
-                                    {% endif %}
-                                    {% if not headerOptions.orderBy is defined %}
-                                        {% if orderBy is same as(false) %}
-                                            {% set headerOptions = headerOptions|merge({'orderBy': false}) %}
-                                        {% else %}
-                                            {% set headerOptions = headerOptions|merge({'orderBy': title}) %}
-                                        {% endif %}
-                                    {% endif %}
-                                    {% set headerClass = macro.data_table_column_class(tableName, columns, title) %}
-                                    {% if title != 'actions' and not headerOptions.orderBy is same as(false) %}
-                                        {% if orderBy == headerOptions.orderBy %}
-                                            {% set headerClass = headerClass ~ ' sortable sorting_' ~ (order) %}
-                                        {% else %}
-                                            {% set headerClass = headerClass ~ ' sortable sorting' %}
-                                        {% endif %}
-                                    {% endif %}
-                                    {% set headerTitle = '' %}
-                                    {% if headerOptions.title is defined %}
-                                        {% set headerTitle = headerOptions.title %}
-                                    {% elseif title is not empty and title != 'actions' %}
-                                        {% set headerTitle = (translationPrefix ~ title)|trans({}, translationDomain) %}
-                                    {% endif %}
-                                    <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" {% endif %}class="{{ headerClass }}">
-                                        {% if headerOptions.html_before is defined %}
-                                            {{ headerOptions.html_before|raw }}
-                                        {% endif %}
-                                        {{ headerTitle }}
-                                        {% if headerOptions.html_after is defined %}
-                                            {{ headerOptions.html_after|raw }}
-                                        {% endif %}
-                                    </th>
-                                {%- endfor -%}
-                                </tr>
-                            </thead>
-                            <tbody>
+                <table class="table {% if striped %}table-striped {% endif %}{% if bordered %}table-bordered {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}" id="dt_{{ tableName }}">
+                    <thead>
+                        <tr>
+                        {%- for title, headerOptions in columns -%}
+                            {% if not headerOptions is iterable %}
+                                {% set headerOptions = {'class': headerOptions} %}
+                            {% endif %}
+                            {% if not headerOptions.orderBy is defined %}
+                                {% if orderBy is same as(false) %}
+                                    {% set headerOptions = headerOptions|merge({'orderBy': false}) %}
+                                {% else %}
+                                    {% set headerOptions = headerOptions|merge({'orderBy': title}) %}
+                                {% endif %}
+                            {% endif %}
+                            {% set headerClass = macro.data_table_column_class(tableName, columns, title) %}
+                            {% if title != 'actions' and not headerOptions.orderBy is same as(false) %}
+                                {% if orderBy == headerOptions.orderBy %}
+                                    {% set headerClass = headerClass ~ ' sortable sorting_' ~ (order) %}
+                                {% else %}
+                                    {% set headerClass = headerClass ~ ' sortable sorting' %}
+                                {% endif %}
+                            {% endif %}
+                            {% set headerTitle = '' %}
+                            {% if headerOptions.title is defined %}
+                                {% set headerTitle = headerOptions.title %}
+                            {% elseif title is not empty and title != 'actions' %}
+                                {% set headerTitle = (translationPrefix ~ title)|trans({}, translationDomain) %}
+                            {% endif %}
+                            <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" {% endif %}class="{{ headerClass }}">
+                                {% if headerOptions.html_before is defined %}
+                                    {{ headerOptions.html_before|raw }}
+                                {% endif %}
+                                {{ headerTitle }}
+                                {% if headerOptions.html_after is defined %}
+                                    {{ headerOptions.html_after|raw }}
+                                {% endif %}
+                            </th>
+                        {%- endfor -%}
+                        </tr>
+                    </thead>
+                    <tbody>
 {% endmacro %}
 
 {% macro data_table_column_class(name, columns, column) %}
@@ -185,10 +181,8 @@
 {% endmacro %}
 
 {% macro data_table_footer(entries, route, multi_update_form) %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
