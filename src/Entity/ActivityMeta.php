@@ -49,6 +49,9 @@ class ActivityMeta implements MetaTableTypeInterface
         return $this;
     }
 
+    /**
+     * @return Activity|null
+     */
     public function getEntity(): ?EntityWithMetaFields
     {
         return $this->activity;
