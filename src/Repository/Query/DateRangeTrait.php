@@ -20,6 +20,10 @@ trait DateRangeTrait
 
     public function getBegin(): ?\DateTime
     {
+        if (null === $this->dateRange) {
+            return null;
+        }
+
         return $this->dateRange->getBegin();
     }
 
@@ -30,6 +34,10 @@ trait DateRangeTrait
 
     public function getEnd(): ?\DateTime
     {
+        if (null === $this->dateRange) {
+            return null;
+        }
+
         return $this->dateRange->getEnd();
     }
 
