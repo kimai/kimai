@@ -52,8 +52,15 @@ final class ProjectViewService
             ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
             ->andWhere($qb->expr()->eq('p.visible', true))
             ->andWhere($qb->expr()->eq('c.visible', true))
+            ->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->isNull('p.end'),
+                    $qb->expr()->gte('p.end', ':project_end')
+                )
+            )
             ->addGroupBy('p')
             ->addGroupBy('t.project')
+            ->setParameter('project_end', $today, Types::DATETIME_MUTABLE)
         ;
 
         if ($query->getCustomer() !== null) {
@@ -66,7 +73,12 @@ final class ProjectViewService
         }
 
         if (!$query->isIncludeNoBudget()) {
-            $qb->andWhere($qb->expr()->gt('p.timeBudget', 0));
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->gt('p.timeBudget', 0),
+                    $qb->expr()->gt('p.budget', 0)
+                )
+            );
         }
 
         $this->repository->addPermissionCriteria($qb, $user);
