@@ -72,6 +72,10 @@
                 <source>attachments</source>
                 <target>Files</target>
             </trans-unit>
+            <trans-unit id="file">
+                <source>file</source>
+                <target>File</target>
+            </trans-unit>
             <trans-unit id="rates.empty">
                 <source>rates.empty</source>
                 <target>No fees have been configured yet.</target>
@@ -640,6 +644,10 @@
             <trans-unit id="label.vat_id">
                 <source>label.vat_id</source>
                 <target>VAT-ID</target>
+            </trans-unit>
+            <trans-unit id="label.tax_rate">
+                <source>label.tax_rate</source>
+                <target>Tax rate</target>
             </trans-unit>
             <trans-unit id="label.contact">
                 <source>label.contact</source>

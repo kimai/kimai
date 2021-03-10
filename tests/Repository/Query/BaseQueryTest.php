@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
+use App\Form\Model\DateRange;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\ProjectQuery;
@@ -63,12 +64,12 @@ class BaseQueryTest extends TestCase
         self::assertNull($sut->getSearchTerm());
     }
 
-    protected function assertBaseQuery(BaseQuery $sut, $orderBy = 'id')
+    protected function assertBaseQuery(BaseQuery $sut, $orderBy = 'id', $order = BaseQuery::ORDER_ASC)
     {
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, $orderBy);
-        $this->assertOrder($sut);
+        $this->assertOrder($sut, $order);
         $this->assertTeams($sut);
     }
 
@@ -274,5 +275,30 @@ class BaseQueryTest extends TestCase
         $sut->setProjects([99]);
         $this->assertEquals(99, $sut->getProject());
         $this->assertEquals([99], $sut->getProjects());
+    }
+
+    protected function assertDateRangeTrait($sut)
+    {
+        self::assertNull($sut->getBegin());
+        self::assertNull($sut->getEnd());
+
+        $dateRange = new DateRange();
+        $sut->setDateRange($dateRange);
+
+        self::assertSame($dateRange, $sut->getDateRange());
+        self::assertNull($sut->getBegin());
+        self::assertNull($sut->getEnd());
+
+        $begin = new \DateTime('2013-11-23 13:45:07');
+        $end = new \DateTime('2014-01-01 23:45:11');
+        $dateRange->setBegin($begin);
+        $dateRange->setEnd($end);
+
+        self::assertSame($begin, $sut->getDateRange()->getBegin());
+        /* @phpstan-ignore-next-line */
+        self::assertSame($begin, $sut->getBegin());
+        self::assertSame($end, $sut->getDateRange()->getEnd());
+        /* @phpstan-ignore-next-line */
+        self::assertSame($end, $sut->getEnd());
     }
 }
