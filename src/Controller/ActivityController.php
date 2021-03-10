@@ -231,6 +231,10 @@ final class ActivityController extends AbstractController
                 $this->repository->saveActivity($activity);
                 $this->flashSuccess('action.update.success');
 
+                if ($this->isGranted('view', $activity)) {
+                    return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
+                }
+
                 return $this->redirectToRoute('admin_activity');
             } catch (Exception $ex) {
                 $this->flashUpdateException($ex);
