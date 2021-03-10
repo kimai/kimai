@@ -88,8 +88,6 @@ class UserSubscriber extends AbstractActionsSubscriber
             $actions['trash'] = ['url' => $this->path('admin_user_delete', ['id' => $user->getId()]), 'class' => 'modal-ajax-form'];
         }
 
-        $payload['actions'] = array_merge($payload['actions'], $actions);
-
-        $event->setPayload($payload);
+        $event->setActions($actions);
     }
 }

@@ -26,6 +26,7 @@ class TimesheetQueryTest extends BaseQueryTest
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, 'begin');
         $this->assertOrder($sut, TimesheetQuery::ORDER_DESC);
+        $this->assertDateRangeTrait($sut);
 
         $this->assertUser($sut);
         $this->assertUsers($sut);

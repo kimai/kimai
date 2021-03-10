@@ -12,8 +12,12 @@ namespace App\Controller;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
+use App\Export\Spreadsheet\AnnotatedObjectExporter;
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\InvoiceDocumentUploadForm;
 use App\Form\InvoiceTemplateForm;
+use App\Form\Toolbar\InvoiceArchiveForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
 use App\Form\Toolbar\InvoiceToolbarSimpleForm;
 use App\Invoice\ServiceInvoice;
@@ -21,6 +25,7 @@ use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\InvoiceTemplateRepository;
 use App\Repository\Query\BaseQuery;
+use App\Repository\Query\InvoiceArchiveQuery;
 use App\Repository\Query\InvoiceQuery;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -236,18 +241,46 @@ final class InvoiceController extends AbstractController
             $invoice = $this->invoiceRepository->find($id);
         }
 
-        $query = new InvoiceQuery();
-        $query->setOrderBy('date');
+        $query = new InvoiceArchiveQuery();
         $query->setPage($page);
         $query->setCurrentUser($this->getUser());
+
+        $form = $this->getArchiveToolbarForm($query);
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
+
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
 
         $invoices = $this->invoiceRepository->getPagerfantaForQuery($query);
 
         return $this->render('invoice/listing.html.twig', [
             'entries' => $invoices,
             'query' => $query,
+            'toolbarForm' => $form->createView(),
             'download' => $invoice,
         ]);
+    }
+
+    /**
+     * @Route(path="/export", name="invoice_export", methods={"GET"})
+     */
+    public function exportAction(Request $request, AnnotatedObjectExporter $exporter)
+    {
+        $query = new InvoiceArchiveQuery();
+        $query->setCurrentUser($this->getUser());
+
+        $form = $this->getArchiveToolbarForm($query);
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
+
+        $entries = $this->invoiceRepository->getInvoicesForQuery($query);
+
+        $spreadsheet = $exporter->export(Invoice::class, $entries);
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-invoices');
+
+        return $writer->getFileResponse($spreadsheet);
     }
 
     /**
@@ -411,6 +444,18 @@ final class InvoiceController extends AbstractController
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'attr' => [
                 'id' => 'invoice-print-form'
+            ],
+        ]);
+    }
+
+    private function getArchiveToolbarForm(InvoiceArchiveQuery $query): FormInterface
+    {
+        return $this->createForm(InvoiceArchiveForm::class, $query, [
+            'action' => $this->generateUrl('admin_invoice_list', []),
+            'method' => 'GET',
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
+            'attr' => [
+                'id' => 'invoice-archive-form'
             ],
         ]);
     }
