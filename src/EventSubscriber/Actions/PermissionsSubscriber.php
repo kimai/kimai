@@ -24,7 +24,7 @@ class PermissionsSubscriber extends AbstractActionsSubscriber
     {
         // the "create role" page
         if (!$event->isIndexView() && $this->isGranted('role_permissions')) {
-            $event->addBack($this->path('admin_user_permissions'));
+            //$event->addBack($this->path('admin_user_permissions'));
         }
 
         if ($this->isGranted('role_permissions')) {

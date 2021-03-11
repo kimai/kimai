@@ -44,7 +44,7 @@ class TagSubscriber extends AbstractActionsSubscriber
         }
 
         if (!$event->isIndexView() && $this->isGranted('view_tag')) {
-            $event->addAction('back', ['url' => $this->path('tags')]);
+            //$event->addBack($this->path('tags'));
         }
 
         if ($id === null) {
