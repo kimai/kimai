@@ -45,7 +45,6 @@ class RuntimeExtensionsTest extends TestCase
             'active_timesheets',
             'encore_entry_css_source',
             'render_widget',
-            'available_reports'
         ];
 
         $i = 0;
