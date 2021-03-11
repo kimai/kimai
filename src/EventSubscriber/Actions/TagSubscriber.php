@@ -25,48 +25,43 @@ class TagSubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
-        if (!isset($payload['tag'])) {
+        if (!\is_array($payload) || !\array_key_exists('tag', $payload)) {
             return;
         }
 
-        // tag is an array[id, name, color, amount]
         $tag = $payload['tag'];
-        $view = $payload['view'];
-
         $id = null;
         $name = null;
 
         if (\is_array($tag)) {
+            // tag can be either and array (on index page => [id, name, color, amount]) ...
             $id = $tag['id'];
             $name = $tag['name'];
         } elseif ($tag instanceof Tag) {
+            // ...or an entity on detail page
             $id = $tag->getId();
             $name = $tag->getName();
+        }
+
+        if (!$event->isIndexView() && $this->isGranted('view_tag')) {
+            $event->addAction('back', ['url' => $this->path('tags')]);
         }
 
         if ($id === null) {
             return;
         }
 
-        $actions = $event->getActions();
-
         if ($this->isGranted('manage_tag')) {
-            $class = ($view === 'edit' ? '' : 'modal-ajax-form');
-            $actions['edit'] = ['url' => $this->path('tags_edit', ['id' => $id]), 'class' => $class];
+            $class = ($event->isView('edit') ? '' : 'modal-ajax-form');
+            $event->addAction('edit', ['url' => $this->path('tags_edit', ['id' => $id]), 'class' => $class]);
         }
-
-        $filters = [];
 
         if ($this->isGranted('view_other_timesheet')) {
-            $filters['timesheet'] = ['title' => 'timesheet', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['tags' => $name])];
+            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['tags' => $name])]);
         }
 
-        if (\count($filters) > 0) {
-            $actions['filter'] = ['children' => $filters];
-        }
-
-        if ($view === 'index' && $this->isGranted('delete_tag')) {
-            $actions['trash'] = [
+        if ($event->isIndexView() && $this->isGranted('delete_tag')) {
+            $event->addAction('trash', [
                 'url' => $this->path('delete_tag', ['id' => $id]),
                 'class' => 'api-link',
                 'attr' => [
@@ -76,9 +71,7 @@ class TagSubscriber extends AbstractActionsSubscriber
                     'data-msg-error' => 'action.delete.error',
                     'data-msg-success' => 'action.delete.success'
                 ]
-            ];
+            ]);
         }
-
-        $event->setActions($actions);
     }
 }

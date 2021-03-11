@@ -25,7 +25,7 @@ class UserSubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
-        if (!isset($payload['user'])) {
+        if (!\is_array($payload) || !\array_key_exists('user', $payload)) {
             return;
         }
 
@@ -36,58 +36,47 @@ class UserSubscriber extends AbstractActionsSubscriber
             return;
         }
 
-        $actions = $event->getActions();
-
         if ($this->isGranted('view', $user)) {
-            $actions['profile-stats'] = ['icon' => 'avatar', 'url' => $this->path('user_profile', ['username' => $user->getUsername()]), 'translation_domain' => 'actions'];
+            $event->addAction('profile-stats', ['icon' => 'avatar', 'url' => $this->path('user_profile', ['username' => $user->getUsername()]), 'translation_domain' => 'actions']);
+            $event->addDivider();
         }
 
-        if (\count($actions) > 0) {
-            $actions['divider'] = null;
-        }
-
-        $subActions = [];
         if ($this->isGranted('edit', $user)) {
-            $subActions['edit'] = ['url' => $this->path('user_profile_edit', ['username' => $user->getUsername()]), 'title' => 'edit', 'translation_domain' => 'actions'];
+            $event->addActionToSubmenu('edit', 'edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUsername()]), 'title' => 'edit', 'translation_domain' => 'actions']);
         }
         if ($this->isGranted('preferences', $user)) {
-            $subActions['settings'] = ['url' => $this->path('user_profile_preferences', ['username' => $user->getUsername()]), 'title' => 'settings', 'translation_domain' => 'actions'];
+            $event->addActionToSubmenu('edit', 'settings', ['url' => $this->path('user_profile_preferences', ['username' => $user->getUsername()]), 'title' => 'settings', 'translation_domain' => 'actions']);
         }
         if ($this->isGranted('password', $user)) {
-            $subActions['password'] = ['url' => $this->path('user_profile_password', ['username' => $user->getUsername()]), 'title' => 'profile.password'];
+            $event->addActionToSubmenu('edit', 'password', ['url' => $this->path('user_profile_password', ['username' => $user->getUsername()]), 'title' => 'profile.password']);
         }
         if ($this->isGranted('api-token', $user)) {
-            $subActions['api-token'] = ['url' => $this->path('user_profile_api_token', ['username' => $user->getUsername()]), 'title' => 'profile.api-token'];
+            $event->addActionToSubmenu('edit', 'api-token', ['url' => $this->path('user_profile_api_token', ['username' => $user->getUsername()]), 'title' => 'profile.api-token']);
         }
         if ($this->isGranted('teams', $user)) {
-            $subActions['teams'] = ['url' => $this->path('user_profile_teams', ['username' => $user->getUsername()]), 'title' => 'profile.teams'];
+            $event->addActionToSubmenu('edit', 'teams', ['url' => $this->path('user_profile_teams', ['username' => $user->getUsername()]), 'title' => 'profile.teams']);
         }
         if ($this->isGranted('roles', $user)) {
-            $subActions['roles'] = ['url' => $this->path('user_profile_roles', ['username' => $user->getUsername()]), 'title' => 'profile.roles'];
+            $event->addActionToSubmenu('edit', 'roles', ['url' => $this->path('user_profile_roles', ['username' => $user->getUsername()]), 'title' => 'profile.roles']);
         }
 
-        if (\count($subActions) > 0) {
-            $actions['edit'] = ['children' => $subActions, 'title' => 'edit'];
-            $actions['divider2'] = null;
+        if ($event->hasSubmenu('edit')) {
+            $event->addDivider();
         }
 
         $viewOther = $this->isGranted('view_other_timesheet');
         if ($this->isGranted('view_reporting')) {
             if ($viewOther || ($event->getUser()->getId() === $user->getId())) {
-                $actions['menu.reporting'] = ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'icon' => 'reporting'];
+                $event->addAction('menu.reporting', ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'icon' => 'reporting']);
             }
         }
 
         if ($viewOther && $user->isEnabled()) {
-            $actions['timesheet'] = $this->path('admin_timesheet', ['users[]' => $user->getId()]);
+            $event->addAction('timesheet', ['url' => $this->path('admin_timesheet', ['users[]' => $user->getId()])]);
         }
 
-        $view = $payload['view'] ?? null;
-
-        if ($view === 'index' && $this->isGranted('delete', $user)) {
-            $actions['trash'] = ['url' => $this->path('admin_user_delete', ['id' => $user->getId()]), 'class' => 'modal-ajax-form'];
+        if ($event->isIndexView() && $this->isGranted('delete', $user)) {
+            $event->addAction('trash', ['url' => $this->path('admin_user_delete', ['id' => $user->getId()]), 'class' => 'modal-ajax-form']);
         }
-
-        $event->setActions($actions);
     }
 }
