@@ -84,11 +84,6 @@ class PageActionsEvent extends ThemeEvent
         return \array_key_exists('children', $this->payload['actions'][$submenu]);
     }
 
-    public function addSubmenu(string $submenu, array $children): void
-    {
-        $this->payload['actions'][$submenu] = ['children' => $children];
-    }
-
     public function addActionToSubmenu(string $submenu, string $key, array $action): void
     {
         if (\array_key_exists($submenu, $this->payload['actions'])) {
@@ -116,11 +111,6 @@ class PageActionsEvent extends ThemeEvent
         if (\array_key_exists($key, $this->payload['actions'])) {
             unset($this->payload['actions'][$key]);
         }
-    }
-
-    public function setActions(array $actions): void
-    {
-        $this->payload['actions'] = $actions;
     }
 
     public function addDivider(): void
@@ -168,11 +158,11 @@ class PageActionsEvent extends ThemeEvent
     public function countActions(?string $submenu = null): int
     {
         if ($submenu !== null) {
-            if (!$this->hasAction($submenu)) {
+            if (!$this->hasSubmenu($submenu)) {
                 return 0;
             }
 
-            return \count($this->payload['actions'][$submenu]);
+            return \count($this->payload['actions'][$submenu]['children']);
         }
 
         return \count($this->payload['actions']);
