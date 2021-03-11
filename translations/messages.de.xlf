@@ -366,7 +366,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Schreibe Deine Nachricht...</target>
+        <target>Schreibe deine Nachricht …</target>
       </trans-unit>
       <trans-unit id="label.billable">
         <source>label.billable</source>
