@@ -1,7 +1,11 @@
 {% macro timesheets(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
+    {% set actions = {
+        'search': {'class': 'search-toggle visible-xs-inline'},
+        'visibility': {'modal': '#modal_timesheet'}
+    } %}
+
     {% if is_granted('export_own_timesheet') %}
         {% set exporterIds = timesheet_exporter() %}
         {% if exporterIds|length == 1 %}
@@ -14,7 +18,7 @@
             {% set actions = actions|merge({'download': {'children': children}}) %}
         {% endif %}
     {% endif %}
-    {% set actions = actions|merge({'visibility': {'modal': '#modal_timesheet'}}) %}
+
     {% if is_granted('create_own_timesheet') %}
         {% set actions = actions|merge({'create': {'url': path('timesheet_create'), 'class': 'modal-ajax-form'}}) %}
     {% endif %}
@@ -29,6 +33,10 @@
     {%- apply spaceless -%}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set actions = {} %}
+
+    {% if view != 'index' and view != 'custom' %}
+        {% set actions = actions|merge({'back': options.back|default(path('timesheet'))}) %}
+    {% endif %}
 
     {% if timesheet.id is not empty %}
         {% if not timesheet.end and is_granted('stop', timesheet) %}
@@ -60,15 +68,11 @@
         {% endif %}
     {% endif %}
 
-    {% if view != 'index' and view != 'custom' %}
-        {% set actions = actions|merge({'back': options.back|default(path('timesheet'))}) %}
-    {% endif %}
-
     {% set event = trigger('actions.timesheet', {'actions': actions, 'view': view, 'timesheet': timesheet}) %}
     {% if view == 'index' or view == 'custom' %}
         {{ widgets.table_actions(event.payload.actions) }}
     {% else %}
-        {{ widgets.entity_actions(event.payload.actions) }}
+        {{ widgets.page_actions(event.payload.actions) }}
     {% endif %}
     {%- endapply -%}
 {% endmacro %}
@@ -76,9 +80,10 @@
 {% macro timesheets_multi_update(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    {% set actions = {} %}
-    {% set actions = actions|merge({'back': path('timesheet')}) %}
-    {% set actions = actions|merge({'help': {'url': 'timesheet.html'|docu_link, 'target': '_blank'}}) %}
+    {% set actions = {
+        'back': {'url': path('timesheet')},
+        'help': {'url': 'timesheet.html'|docu_link, 'target': '_blank'}
+    } %}
 
     {% set event = trigger('actions.timesheets_multi_update', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
