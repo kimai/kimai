@@ -263,9 +263,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $team2->tick();
 
         $client->submit($form);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
-        $client->followRedirect();
-        $this->assertHasDataTable($client);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/' . $id . '/details'));
 
         /** @var Activity $activity */
         $activity = $em->getRepository(Activity::class)->find($id);

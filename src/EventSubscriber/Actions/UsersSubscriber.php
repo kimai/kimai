@@ -29,7 +29,7 @@ class UsersSubscriber extends AbstractActionsSubscriber
         $event->addQuickExport($this->path('user_export'));
 
         if ($this->isGranted('create_user')) {
-            $event->addCreate($this->path('admin_user_create'));
+            $event->addCreate($this->path('admin_user_create'), false);
         }
 
         $event->addHelp($this->documentationLink('users.html'));

@@ -23,12 +23,13 @@ class PageActionsEventTest extends TestCase
         $user = new User();
         $user->setAlias('foo');
 
-        $sut = new PageActionsEvent($user, [], 'foo');
+        $sut = new PageActionsEvent($user, [], 'foo', 'bar');
+        $this->assertSame('bar', $sut->getView());
         $this->assertSame($user, $sut->getUser());
         $this->assertEquals([], $sut->getActions());
         $this->assertEquals(['actions' => []], $sut->getPayload());
 
-        $sut = new PageActionsEvent($user, ['hello' => 'world'], 'foo');
+        $sut = new PageActionsEvent($user, ['hello' => 'world'], 'foo', 'bar');
         $this->assertSame($user, $sut->getUser());
         $this->assertEquals([], $sut->getActions());
         $this->assertEquals(['hello' => 'world', 'actions' => []], $sut->getPayload());
@@ -36,7 +37,7 @@ class PageActionsEventTest extends TestCase
 
     public function testSetActions()
     {
-        $sut = new PageActionsEvent(new User(), ['hello' => 'world'], 'foo');
+        $sut = new PageActionsEvent(new User(), ['hello' => 'world'], 'foo', 'bar');
         $sut->setActions(['foo' => ['url' => 'bar']]);
         $this->assertEquals(['foo' => ['url' => 'bar']], $sut->getActions());
         $this->assertEquals(['hello' => 'world', 'actions' => ['foo' => ['url' => 'bar']]], $sut->getPayload());
