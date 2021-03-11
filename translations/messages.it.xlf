@@ -318,7 +318,7 @@
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>Email</target>
+        <target>E-mail</target>
       </trans-unit>
       <trans-unit id="label.team">
         <source>label.team</source>
@@ -334,7 +334,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Scrivi quì il tuo messaggio...</target>
+        <target>Scrivi il tuo messaggio…</target>
       </trans-unit>
       <trans-unit id="label.billable">
         <source>label.billable</source>
@@ -1129,6 +1129,22 @@
       <trans-unit id="sum.total">
         <source>sum.total</source>
         <target>Totale</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Mostra le voci senza budget</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Mostra le voci senza prenotazioni</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Aliquota fiscale</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>File</target>
       </trans-unit>
     </body>
   </file>
