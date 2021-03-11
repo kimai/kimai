@@ -6,26 +6,10 @@
 
 {% macro team(team, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {} %}
-    {% if team.id is not empty %}
-        {% if is_granted('edit', team) %}
-            {% set class = '' %}
-            {% set actions = actions|merge({'edit': {'url': path('admin_team_edit', {'id': team.id}), 'class': class}}) %}
-            {% if is_granted('create_team') %}
-                {% set actions = actions|merge({'copy': {'url': path('team_duplicate', {'id': team.id})}}) %}
-            {% endif %}
-        {% endif %}
-    {% endif %}
-
-    {% if view == 'index' and is_granted('delete', team) %}
-        {% set actions = actions|merge({'trash': {'url': path('delete_team', {'id' : team.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.teamDelete kimai.teamUpdate', 'data-method': 'DELETE', 'data-question': 'confirm.delete', 'data-msg-error': 'action.delete.error', 'data-msg-success': 'action.delete.success'}}}) %}
-    {% endif %}
-
-    {% set event = trigger('actions.team', {'actions': actions, 'view': view, 'team': team}) %}
+    {% set event = actions(app.user, 'team', view, {'team': team}) %}
     {% if view == 'index' %}
-        {{ widgets.table_actions(event.payload.actions) }}
+        {{ widgets.table_actions(event.actions) }}
     {% else %}
-        {{ widgets.page_actions(event.payload.actions) }}
+        {{ widgets.page_actions(event.actions) }}
     {% endif %}
 {% endmacro %}
