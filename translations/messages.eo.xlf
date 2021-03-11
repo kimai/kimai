@@ -1130,6 +1130,22 @@
         <source>stats.workingTimeYear</source>
         <target>Tuta jaro %year%</target>
       </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Montri elementojn sen rezervoj</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Montri elementojn sen buĝeto</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Imposta procento</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Dosiero</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
