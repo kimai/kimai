@@ -1,16 +1,7 @@
 {% macro teams(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
-
-    {% if is_granted('create_team') %}
-        {% set actions = actions|merge({'create': {'url': path('admin_team_create')}}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'help': {'url': 'teams.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.teams', {'actions': actions, 'view': view}) %}
-    {{ widgets.page_actions(event.payload.actions) }}
+    {% set event = actions(app.user, 'teams', view) %}
+    {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 
 {% macro team(team, view) %}
@@ -35,6 +26,6 @@
     {% if view == 'index' %}
         {{ widgets.table_actions(event.payload.actions) }}
     {% else %}
-        {{ widgets.entity_actions(event.payload.actions) }}
+        {{ widgets.page_actions(event.payload.actions) }}
     {% endif %}
 {% endmacro %}
