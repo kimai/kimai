@@ -22,18 +22,14 @@ class CustomersSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event)
     {
-        $actions = $event->getActions();
-
-        $actions['search'] = ['class' => 'search-toggle visible-xs-inline'];
-        $actions['visibility'] = ['modal' => '#modal_customer_admin'];
-        $actions['download'] = ['url' => $this->path('customer_export'), 'class' => 'toolbar-action'];
+        $event->addSearchToggle();
+        $event->addColumnToggle('#modal_customer_admin');
+        $event->addQuickExport($this->path('customer_export'));
 
         if ($this->isGranted('create_customer')) {
-            $actions['create'] = ['url' => $this->path('admin_customer_create'), 'class' => 'modal-ajax-form'];
+            $event->addCreate($this->path('admin_customer_create'));
         }
 
-        $actions['help'] = ['url' => $this->documentationLink('customer.html'), 'target' => '_blank'];
-
-        $event->setActions($actions);
+        $event->addHelp($this->documentationLink('customer.html'));
     }
 }

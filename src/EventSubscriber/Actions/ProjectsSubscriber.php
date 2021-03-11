@@ -22,23 +22,14 @@ class ProjectsSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event)
     {
-        $payload = $event->getPayload();
-
-        if (!isset($payload['view'])) {
-            return;
-        }
-
-        $actions = $event->getActions();
-        $actions['search'] = ['class' => 'search-toggle visible-xs-inline'];
-        $actions['visibility'] = ['modal' => '#modal_project_admin'];
-        $actions['download'] = ['url' => $this->path('project_export'), 'class' => 'toolbar-action'];
+        $event->addSearchToggle();
+        $event->addColumnToggle('#modal_project_admin');
+        $event->addQuickExport($this->path('project_export'));
 
         if ($this->isGranted('create_project')) {
-            $actions['create'] = ['url' => $this->path('admin_project_create'), 'class' => 'modal-ajax-form'];
+            $event->addCreate($this->path('admin_project_create'));
         }
 
-        $actions['help'] = ['url' => $this->documentationLink('project.html'), 'target' => '_blank'];
-
-        $event->setActions($actions);
+        $event->addHelp($this->documentationLink('project.html'));
     }
 }

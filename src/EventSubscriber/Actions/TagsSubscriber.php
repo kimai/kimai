@@ -22,22 +22,12 @@ class TagsSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event)
     {
-        $payload = $event->getPayload();
-
-        if (!isset($payload['view'])) {
-            return;
-        }
-
-        $actions = $event->getActions();
-
-        $actions['search'] = ['class' => 'search-toggle visible-xs-inline'];
+        $event->addSearchToggle();
 
         if ($this->isGranted('manage_tag')) {
-            $actions['create'] = ['url' => $this->path('tags_create'), 'class' => 'modal-ajax-form'];
+            $event->addCreate($this->path('tags_create'));
         }
 
-        $actions['help'] = ['url' => $this->documentationLink('tags.html'), 'target' => '_blank'];
-
-        $event->setActions($actions);
+        $event->addHelp($this->documentationLink('tags.html'));
     }
 }

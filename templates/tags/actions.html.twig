@@ -1,12 +1,12 @@
 {% macro tags(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'tags', {'view': view}) %}
+    {% set event = actions(app.user, 'tags', view) %}
     {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 
 {% macro tag(tag, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'tag', {'view': view, 'tag': tag}) %}
+    {% set event = actions(app.user, 'tag', view, {'tag': tag}) %}
     {% if view == 'index' or view == 'custom' %}
         {{ widgets.table_actions(event.actions) }}
     {% else %}

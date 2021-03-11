@@ -11,23 +11,25 @@ namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
 
-class InvoiceArchiveSubscriber extends AbstractActionsSubscriber
+class ActivitiesSubscriber extends AbstractActionsSubscriber
 {
     public static function getSubscribedEvents(): array
     {
         return [
-            'actions.invoice_details' => ['onActions', 1000],
+            'actions.activities' => ['onActions', 1000],
         ];
     }
 
     public function onActions(PageActionsEvent $event)
     {
-        if ($this->isGranted('view_invoice')) {
-            $event->addBack($this->path('invoice'));
-        }
         $event->addSearchToggle();
-        $event->addColumnToggle('#modal_invoices');
-        $event->addQuickExport($this->path('invoice_export'));
-        $event->addHelp($this->documentationLink('invoices.html'));
+        $event->addColumnToggle('#modal_activity_admin');
+        $event->addQuickExport($this->path('activity_export'));
+
+        if ($this->isGranted('create_activity')) {
+            $event->addCreate($this->path('admin_activity_create'));
+        }
+
+        $event->addHelp($this->documentationLink('activity.html'));
     }
 }

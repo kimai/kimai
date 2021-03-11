@@ -14,6 +14,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+/**
+ * Base class for all listeners, which adds the pages default toolbars.
+ */
 abstract class AbstractActionsSubscriber implements EventSubscriberInterface
 {
     private $auth;

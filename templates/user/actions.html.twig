@@ -35,7 +35,7 @@
 
 {% macro user(user, view, options) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'user', {'view': view, 'user': user}) %}
+    {% set event = actions(app.user, 'user', view, {'user': user}) %}
     {% if view == 'index' %}
         {{ widgets.table_actions(event.actions) }}
     {% else %}
