@@ -42,7 +42,7 @@
       </trans-unit>
       <trans-unit id="delete.not_in_use">
         <source>delete.not_in_use</source>
-        <target state="translated">Bu öğe güvenle silinebilir.</target>
+        <target state="translated">Bu öge güvenle silinebilir.</target>
       </trans-unit>
       <trans-unit id="cancel">
         <source>cancel</source>
@@ -1120,6 +1120,22 @@
       <trans-unit id="theme.update_browser_title">
         <source>theme.update_browser_title</source>
         <target>Tarayıcı başlığını güncelle</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Bütçesiz kayıtları göster</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Rezervasyonsuz kayıtları göster</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Vergi oranı</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Dosya</target>
       </trans-unit>
     </body>
   </file>
