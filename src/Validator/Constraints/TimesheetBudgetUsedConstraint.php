@@ -19,11 +19,6 @@ final class TimesheetBudgetUsedConstraint extends TimesheetConstraint
     public $messageRate = 'The budget is completely used.';
     public $messageTime = 'The budget is completely used.';
 
-    public function getTargets()
-    {
-        return self::CLASS_CONSTRAINT;
-    }
-
     public function validatedBy()
     {
         return TimesheetBudgetUsedValidator::class;

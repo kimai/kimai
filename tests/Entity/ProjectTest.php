@@ -41,6 +41,8 @@ class ProjectTest extends TestCase
         self::assertFalse($sut->hasColor());
         self::assertEquals(0.0, $sut->getBudget());
         self::assertEquals(0, $sut->getTimeBudget());
+        self::assertFalse($sut->hasBudget());
+        self::assertFalse($sut->hasTimeBudget());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());
         self::assertNull($sut->getMetaField('foo'));
@@ -95,9 +97,11 @@ class ProjectTest extends TestCase
 
         self::assertInstanceOf(Project::class, $sut->setBudget(12345.67));
         self::assertEquals(12345.67, $sut->getBudget());
+        self::assertTrue($sut->hasBudget());
 
         self::assertInstanceOf(Project::class, $sut->setTimeBudget(937321));
         self::assertEquals(937321, $sut->getTimeBudget());
+        self::assertTrue($sut->hasTimeBudget());
     }
 
     public function testMetaFields()
