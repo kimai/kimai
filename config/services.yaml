@@ -132,7 +132,7 @@ services:
             $roundingModes: !tagged timesheet.rounding_mode
             $rules: '%kimai.timesheet.rounding%'
 
-    App\Timesheet\Calculator\RateCalculator:
+    App\Timesheet\RateService:
         arguments: ['%kimai.timesheet.rates%']
 
     App\Timesheet\TrackingModeService:
