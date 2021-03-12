@@ -86,50 +86,56 @@ class CustomerRepository extends EntityRepository
      */
     public function getCustomerStatistics(Customer $customer)
     {
-        $stats = new CustomerStatistic();
-
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
-            ->addSelect('COUNT(t.id) as recordAmount')
-            ->addSelect('SUM(t.duration) as recordDuration')
-            ->addSelect('SUM(t.rate) as recordRate')
-            ->addSelect('SUM(t.internalRate) as recordInternalRate')
             ->from(Timesheet::class, 't')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
+            ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('SUM(t.duration) as duration')
+            ->addSelect('SUM(t.rate) as rate')
+            ->addSelect('SUM(t.internalRate) as internal_rate')
             ->andWhere('p.customer = :customer')
+            ->setParameter('customer', $customer)
         ;
-        $timesheetResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
 
-        if (isset($timesheetResult[0])) {
-            $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
-            $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
-            $stats->setRecordRate($timesheetResult[0]['recordRate']);
-            $stats->setRecordInternalRate($timesheetResult[0]['recordInternalRate']);
+        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
+
+        $stats = new CustomerStatistic();
+
+        if (null !== $timesheetResult) {
+            $stats->setRecordAmount($timesheetResult['amount']);
+            $stats->setRecordDuration($timesheetResult['duration']);
+            $stats->setRecordRate($timesheetResult['rate']);
+            $stats->setRecordInternalRate($timesheetResult['internal_rate']);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
-            ->select('COUNT(a.id) as activityAmount')
+            ->select('COUNT(a.id) as amount')
             ->from(Activity::class, 'a')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 'a.project = p.id')
             ->andWhere('a.project = p.id')
             ->andWhere('p.customer = :customer')
+            ->setParameter('customer', $customer)
         ;
-        $activityResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
 
-        if (isset($activityResult[0])) {
-            $stats->setActivityAmount($activityResult[0]['activityAmount']);
+        $activityResult = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $activityResult) {
+            $stats->setActivityAmount($activityResult['amount']);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('COUNT(p.id) as projectAmount')
+        $qb->select('COUNT(p.id) as amount')
             ->from(Project::class, 'p')
             ->andWhere('p.customer = :customer')
+            ->setParameter('customer', $customer)
         ;
-        $projectResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
 
-        if (isset($projectResult[0])) {
-            $stats->setProjectAmount($projectResult[0]['projectAmount']);
+        $projectResult = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $projectResult) {
+            $stats->setProjectAmount($projectResult['amount']);
         }
 
         return $stats;

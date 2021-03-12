@@ -93,26 +93,26 @@ class ActivityRepository extends EntityRepository
      */
     public function getActivityStatistics(Activity $activity)
     {
-        $stats = new ActivityStatistic();
-
         $qb = $this->getEntityManager()->createQueryBuilder();
-
         $qb
-            ->addSelect('COUNT(t.id) as recordAmount')
-            ->addSelect('SUM(t.duration) as recordDuration')
-            ->addSelect('SUM(t.rate) as recordRate')
-            ->addSelect('SUM(t.internalRate) as recordInternalRate')
             ->from(Timesheet::class, 't')
+            ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('SUM(t.duration) as duration')
+            ->addSelect('SUM(t.rate) as rate')
+            ->addSelect('SUM(t.internalRate) as internal_rate')
             ->where('t.activity = :activity')
+            ->setParameter('activity', $activity)
         ;
 
-        $timesheetResult = $qb->getQuery()->execute(['activity' => $activity], Query::HYDRATE_ARRAY);
+        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
 
-        if (isset($timesheetResult[0])) {
-            $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
-            $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
-            $stats->setRecordRate($timesheetResult[0]['recordRate']);
-            $stats->setRecordInternalRate($timesheetResult[0]['recordInternalRate']);
+        $stats = new ActivityStatistic();
+
+        if (null !== $timesheetResult) {
+            $stats->setRecordAmount($timesheetResult['amount']);
+            $stats->setRecordDuration($timesheetResult['duration']);
+            $stats->setRecordRate($timesheetResult['rate']);
+            $stats->setRecordInternalRate($timesheetResult['internal_rate']);
         }
 
         return $stats;
