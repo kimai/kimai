@@ -103,7 +103,7 @@ class ProjectRepository extends EntityRepository
 
         $timesheetResult = $qb->getQuery()->getOneOrNullResult();
 
-        $stats = new ProjectStatistic($project);
+        $stats = new ProjectStatistic();
 
         if (null !== $timesheetResult) {
             $stats->setRecordAmount($timesheetResult['amount']);

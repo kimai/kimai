@@ -70,7 +70,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         }
 
         $duration = $timesheet->getDuration();
-        if (null === $duration) {
+        if (null === $duration || 0 === $duration) {
             $duration = $timesheet->getEnd()->getTimestamp() - $timesheet->getBegin()->getTimestamp();
         }
 

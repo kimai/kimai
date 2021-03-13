@@ -37,6 +37,5 @@ class ProjectStatisticTest extends TestCase
         self::assertEquals(13, $sut->getActivityAmount());
         self::assertEquals(7654, $sut->getRecordAmount());
         self::assertEquals(826, $sut->getRecordDuration());
-        self::assertSame($project, $sut->getProject());
     }
 }
