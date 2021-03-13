@@ -9,7 +9,6 @@
 
 namespace App\Tests\Model;
 
-use App\Entity\Project;
 use App\Model\ProjectStatistic;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +19,7 @@ class ProjectStatisticTest extends TestCase
 {
     public function testDefaultValues()
     {
-        $sut = new ProjectStatistic(new Project());
+        $sut = new ProjectStatistic();
         self::assertEquals(0, $sut->getActivityAmount());
         self::assertEquals(0, $sut->getRecordAmount());
         self::assertEquals(0, $sut->getRecordDuration());
@@ -28,8 +27,7 @@ class ProjectStatisticTest extends TestCase
 
     public function testSetter()
     {
-        $project = new Project();
-        $sut = new ProjectStatistic($project);
+        $sut = new ProjectStatistic();
         $sut->setRecordAmount(7654);
         $sut->setRecordDuration(826);
         $sut->setActivityAmount(13);
