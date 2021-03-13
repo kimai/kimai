@@ -36,7 +36,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
  */
 class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator(bool $isAllowed = false, ?ActivityStatistic $activityStatistic = null, ?ProjectStatistic $projectStatistic = null, ?CustomerStatistic $customerStatistic = null)
+    protected function createValidator(bool $isAllowed = false, ?ActivityStatistic $activityStatistic = null, ?ProjectStatistic $projectStatistic = null, ?CustomerStatistic $customerStatistic = null, ?array $rawData = null)
     {
         $configuration = $this->createMock(SystemConfiguration::class);
         $configuration->method('isTimesheetAllowOverbookingBudget')->willReturn($isAllowed);
@@ -54,6 +54,10 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $activityRepository->method('getActivityStatistics')->willReturn($activityStatistic);
 
         $timesheetRepository = $this->createMock(TimesheetRepository::class);
+        if (null !== $rawData) {
+            $timesheetRepository->method('getRawData')->willReturn($rawData);
+        }
+
         $rateService = new RateService([], $timesheetRepository);
 
         return new TimesheetBudgetUsedValidator($configuration, $customerRepository, $projectRepository, $activityRepository, $timesheetRepository, $rateService);
@@ -147,12 +151,45 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
     public function getViolationTestData()
     {
         return [
+            // activity violations
             [1230, null, null, null, null, null, 3600, null, null, null, null, null, '00:20', '00:39', '01:00', 'activity', '+3600 seconds'],
-            [null, 1001, null, null, null, null, null, 1000, null, null, null, null, '€1,001.00', '€0.00', '€1,000.00', 'activity', '+3600 seconds'],
+            [null, 1001, null, null, null, null, null, 1000.0, null, null, null, null, '€1,001.00', '€0.00', '€1,000.00', 'activity', '+3600 seconds'],
+
+            // no violations
+            [1230, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [null, 1001, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [1230, 1001, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [1230, null, null, null, null, null, 4600, null, null, null, null, null, null, null, null, null, '+3600 seconds', ['activity' => 1, 'project' => 1, 'customer' => 1, 'rate' => 1, 'duration' => 1000]],
+            [null, 1002, null, null, null, null, null, 1000.0, null, null, null, null, null, null, null, null, '+3600 seconds', ['activity' => 1, 'project' => 1, 'customer' => 1, 'rate' => 1, 'duration' => 1000]],
+
+            // project violations
             [null, null, 1230, null, null, null, null, null, 3600, null, null, null, '00:20', '00:39', '01:00', 'project', '+3600 seconds'],
-            [null, null, null, 1001, null, null, null, null, null, 1000, null, null, '€1,001.00', '€0.00', '€1,000.00', 'project', '+3600 seconds'],
+            [null, null, null, 1001, null, null, null, null, null, 1000.0, null, null, '€1,001.00', '€0.00', '€1,000.00', 'project', '+3600 seconds'],
+
+            // no violations
+            [null, null, 1230, null, null, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [null, null, null, 1001, null, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [null, null, 1230, 1001, null, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+
+            [1230, null, 1230, null, null, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [1230, 1001, 1230, null, null, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [null, 1001, null, 1001, null, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [null, 1001, 1230, 1001, null, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [1230, 1001, 1230, 1001, null, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+
+            // customer violations
             [null, null, null, null, 1230, null, null, null, null, null, 3600, null, '00:20', '00:39', '01:00', 'customer', '+3600 seconds'],
-            [null, null, null, null, null, 1001, null, null, null, null, null, 1000, '€1,001.00', '€0.00', '€1,000.00', 'customer', '+3600 seconds'],
+            [null, null, null, null, null, 1001, null, null, null, null, null, 1000.0, '€1,001.00', '€0.00', '€1,000.00', 'customer', '+3600 seconds'],
+
+            // no violations
+            [null, null, null, null, 1230, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [null, null, null, null, null, 1001, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [null, null, null, null, 1230, 1001, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [1230, null, 1230, null, 1230, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [1230, 1001, 1230, null, null, 1001, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [null, 1001, null, 1001, 1230, 1001, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [null, 1001, 1230, 1001, 1230, null, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
+            [1230, 1001, 1230, 1001, null, 1001, null, null, null, null, null, null, null, null, null, null, '+3600 seconds'],
         ];
     }
 
@@ -167,16 +204,17 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         ?int $customerDuration,
         ?int $customerRate,
         ?int $activityTimeBudget,
-        ?int $activityBudget,
+        ?float $activityBudget,
         ?int $projectTimeBudget,
-        ?int $projectBudget,
+        ?float $projectBudget,
         ?int $customerTimeBudget,
-        ?int $customerBudget,
-        string $used,
-        string $free,
-        string $budget,
-        string $path,
-        string $duration
+        ?float $customerBudget,
+        ?string $used,
+        ?string $free,
+        ?string $budget,
+        ?string $path,
+        string $duration,
+        array $rawData = []
     ) {
         $activityStatistic = new ActivityStatistic();
         if ($activityDuration !== null) {
@@ -202,7 +240,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             $customerStatistic->setRecordRate($customerRate);
         }
 
-        $this->validator = $this->createValidator(false, $activityStatistic, $projectStatistic, $customerStatistic);
+        $this->validator = $this->createValidator(false, $activityStatistic, $projectStatistic, $customerStatistic, $rawData);
         $this->validator->initialize($this->context);
 
         $activity = new Activity();
@@ -241,15 +279,38 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setProject($project);
         $timesheet->setActivity($activity);
 
+        if (!empty($rawData)) {
+            $activity = $this->createMock(Activity::class);
+            $activity->method('getId')->willReturn(1);
+            if ($activityTimeBudget !== null) {
+                $activity->method('getTimeBudget')->willReturn($activityTimeBudget);
+            }
+            if ($activityBudget !== null) {
+                $activity->method('getBudget')->willReturn($activityBudget);
+            }
+
+            $timesheet = $this->createMock(Timesheet::class);
+            $timesheet->method('getId')->willReturn(1);
+            $timesheet->method('getBegin')->willReturn($begin);
+            $timesheet->method('getEnd')->willReturn($end);
+            $timesheet->method('getUser')->willReturn(new User());
+            $timesheet->method('getProject')->willReturn($project);
+            $timesheet->method('getActivity')->willReturn($activity);
+        }
+
         $this->validator->validate($timesheet, new TimesheetBudgetUsedConstraint());
 
-        $this->buildViolation('The budget is completely used.')
-            ->atPath('property.path.' . $path)
-            ->setParameters([
-                '%used%' => $used,
-                '%budget%' => $budget,
-                '%free%' => $free
-            ])
-            ->assertRaised();
+        if (null === $used && null === $budget && null === $free && $path === null) {
+            $this->assertNoViolation();
+        } else {
+            $this->buildViolation('The budget is completely used.')
+                ->atPath('property.path.' . $path)
+                ->setParameters([
+                    '%used%' => $used,
+                    '%budget%' => $budget,
+                    '%free%' => $free
+                ])
+                ->assertRaised();
+        }
     }
 }
