@@ -26,6 +26,8 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
+    'budget': {'class': 'hidden-xs hidden-sm hidden', 'title': 'label.budget'|trans},
+    'timeBudget': {'class': 'hidden-xs hidden-sm hidden', 'title': 'label.timeBudget'|trans},
     'team': {'class': 'text-center w-min', 'orderBy': false},
     'visible': {'class': 'text-center hidden w-min'},
     'actions': {'class': 'actions alwaysVisible'},
@@ -69,6 +71,8 @@
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">{{ entry.budget|money(entry.currency) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">{{ entry.timeBudget|duration }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">{{ widgets.badge_team_access(entry.teams) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.customer(entry, 'index') }}</td>

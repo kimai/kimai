@@ -455,6 +455,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                     'hourlyRate' => 100,
                     'begin' => '2020-02-18 01:00',
                     'end' => '2020-02-18 02:10',
+                    'duration' => '01:10',
                     'project' => 1,
                     'activity' => $activity->getId(),
                 ]
