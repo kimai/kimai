@@ -148,6 +148,11 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
     {
         return [
             [1230, null, null, null, null, null, 3600, null, null, null, null, null, '00:20', '00:39', '01:00', 'activity', '+3600 seconds'],
+            [null, 1001, null, null, null, null, null, 1000, null, null, null, null, '€1,001.00', '€0.00', '€1,000.00', 'activity', '+3600 seconds'],
+            [null, null, 1230, null, null, null, null, null, 3600, null, null, null, '00:20', '00:39', '01:00', 'project', '+3600 seconds'],
+            [null, null, null, 1001, null, null, null, null, null, 1000, null, null, '€1,001.00', '€0.00', '€1,000.00', 'project', '+3600 seconds'],
+            [null, null, null, null, 1230, null, null, null, null, null, 3600, null, '00:20', '00:39', '01:00', 'customer', '+3600 seconds'],
+            [null, null, null, null, null, 1001, null, null, null, null, null, 1000, '€1,001.00', '€0.00', '€1,000.00', 'customer', '+3600 seconds'],
         ];
     }
 
@@ -247,6 +252,4 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             ])
             ->assertRaised();
     }
-
-    // FIXME add tests!!!
 }
