@@ -459,7 +459,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                     'activity' => $activity->getId(),
                 ]
             ],
-            ['#timesheet_edit_form_activity'],
+            ['#timesheet_edit_form_activity']
         );
     }
 
