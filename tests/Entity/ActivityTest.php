@@ -38,6 +38,8 @@ class ActivityTest extends TestCase
         self::assertFalse($sut->hasColor());
         $this->assertEquals(0.0, $sut->getBudget());
         $this->assertEquals(0, $sut->getTimeBudget());
+        self::assertFalse($sut->hasBudget());
+        self::assertFalse($sut->hasTimeBudget());
         $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
         $this->assertEquals(0, $sut->getMetaFields()->count());
         $this->assertNull($sut->getMetaField('foo'));
@@ -68,9 +70,11 @@ class ActivityTest extends TestCase
 
         $this->assertInstanceOf(Activity::class, $sut->setBudget(12345.67));
         $this->assertEquals(12345.67, $sut->getBudget());
+        self::assertTrue($sut->hasBudget());
 
         $this->assertInstanceOf(Activity::class, $sut->setTimeBudget(937321));
         $this->assertEquals(937321, $sut->getTimeBudget());
+        self::assertTrue($sut->hasTimeBudget());
 
         $this->assertTrue($sut->isGlobal());
         $this->assertInstanceOf(Activity::class, $sut->setProject(new Project()));

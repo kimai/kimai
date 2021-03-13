@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\ActivityRate;
 use App\Entity\CustomerRate;
+use App\Entity\Project;
 use App\Entity\ProjectRate;
 use App\Entity\RateInterface;
 use App\Entity\Team;
@@ -26,7 +27,9 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
 use DateInterval;
 use DateTime;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
 use InvalidArgumentException;
@@ -44,6 +47,27 @@ class TimesheetRepository extends EntityRepository
     public const STATS_QUERY_AMOUNT = 'amount';
     public const STATS_QUERY_ACTIVE = 'active';
     public const STATS_QUERY_MONTHLY = 'monthly';
+
+    public function getRawData(Timesheet $id): array
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->select([
+                't.rate',
+                't.duration',
+                't.hourlyRate',
+                'IDENTITY(p.customer) as customer',
+                'IDENTITY(t.project) as project',
+                'IDENTITY(t.activity) as activity',
+                'IDENTITY(t.user) as user'
+            ])
+            ->leftJoin(Project::class, 'p', Join::WITH, 'p.id = t.project')
+            ->andWhere('t.id = :id')
+            ->setParameter('id', $id)
+        ;
+
+        return $qb->getQuery()->getSingleResult(AbstractQuery::HYDRATE_ARRAY);
+    }
 
     /**
      * @param mixed $id

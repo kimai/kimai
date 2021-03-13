@@ -538,6 +538,11 @@ class Customer implements EntityWithMetaFields
         return $this->budget;
     }
 
+    public function hasBudget(): bool
+    {
+        return $this->budget > 0.00;
+    }
+
     public function setTimeBudget(int $seconds): Customer
     {
         $this->timeBudget = $seconds;
@@ -548,6 +553,11 @@ class Customer implements EntityWithMetaFields
     public function getTimeBudget(): int
     {
         return $this->timeBudget;
+    }
+
+    public function hasTimeBudget(): bool
+    {
+        return $this->timeBudget > 0;
     }
 
     /**

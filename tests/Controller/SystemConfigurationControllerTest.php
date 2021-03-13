@@ -101,6 +101,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                     ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
                     ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
+                    ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => false],
                     ['name' => 'timesheet.rules.lockdown_period_start', 'value' => null],
                     ['name' => 'timesheet.rules.lockdown_period_end', 'value' => null],
                     ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => null],
@@ -136,6 +137,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                         ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
                         ['name' => 'timesheet.rules.allow_future_times', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => 1],
+                        ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => 1],
                         ['name' => 'timesheet.rules.lockdown_period_start', 'value' => 'first day of last month'],
                         ['name' => 'timesheet.rules.lockdown_period_end', 'value' => 'first day of last month'],
                         ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => '+10 days'],
@@ -146,8 +148,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             ],
             [
                 '#system_configuration_form_timesheet_configuration_0_value', // mode
-                '#system_configuration_form_timesheet_configuration_7_value', // hard_limit
-                '#system_configuration_form_timesheet_configuration_8_value', // soft_limit
+                '#system_configuration_form_timesheet_configuration_8_value', // hard_limit
+                '#system_configuration_form_timesheet_configuration_9_value', // soft_limit
             ],
             true
         );
