@@ -92,6 +92,7 @@ final class ActivityController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'metaColumns' => $this->findMetaColumns($query),
+            'defaultCurrency' => $this->configuration->getCustomerDefaultCurrency()
         ]);
     }
 

@@ -62,7 +62,10 @@ class UserTeamProjects extends SimpleWidget implements AuthorizedWidget, UserWid
 
         foreach ($projects as $id => $project) {
             if ($project->getBudget() > 0 || $project->getTimeBudget() > 0) {
-                $stats[] = $this->repository->getProjectStatistics($project);
+                $stats[] = [
+                    'project' => $project,
+                    'stats' => $this->repository->getProjectStatistics($project),
+                ];
             }
         }
 
