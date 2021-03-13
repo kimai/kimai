@@ -131,6 +131,11 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (bool) $this->find('timesheet.rules.allow_future_times');
     }
 
+    public function isTimesheetAllowOverbookingBudget(): bool
+    {
+        return (bool) $this->find('timesheet.rules.allow_overbooking_budget');
+    }
+
     public function isTimesheetAllowOverlappingRecords(): bool
     {
         return (bool) $this->find('timesheet.rules.allow_overlapping_records');

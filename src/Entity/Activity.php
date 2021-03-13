@@ -268,6 +268,11 @@ class Activity implements EntityWithMetaFields
         return $this->budget;
     }
 
+    public function hasBudget(): bool
+    {
+        return $this->budget > 0.00;
+    }
+
     public function setTimeBudget(int $seconds): Activity
     {
         $this->timeBudget = $seconds;
@@ -278,6 +283,11 @@ class Activity implements EntityWithMetaFields
     public function getTimeBudget(): int
     {
         return $this->timeBudget;
+    }
+
+    public function hasTimeBudget(): bool
+    {
+        return $this->timeBudget > 0;
     }
 
     /**
