@@ -22,7 +22,9 @@ use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\Rate;
 use App\Timesheet\RateService;
+use App\Timesheet\RateServiceInterface;
 use App\Validator\Constraints\TimesheetBudgetUsedConstraint;
 use App\Validator\TimesheetBudgetUsedValidator;
 use DateTime;
@@ -36,7 +38,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
  */
 class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator(bool $isAllowed = false, ?ActivityStatistic $activityStatistic = null, ?ProjectStatistic $projectStatistic = null, ?CustomerStatistic $customerStatistic = null, ?array $rawData = null)
+    protected function createValidator(bool $isAllowed = false, ?ActivityStatistic $activityStatistic = null, ?ProjectStatistic $projectStatistic = null, ?CustomerStatistic $customerStatistic = null, ?array $rawData = null, ?Rate $rate = null)
     {
         $configuration = $this->createMock(SystemConfiguration::class);
         $configuration->method('isTimesheetAllowOverbookingBudget')->willReturn($isAllowed);
@@ -58,7 +60,12 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             $timesheetRepository->method('getRawData')->willReturn($rawData);
         }
 
-        $rateService = new RateService([], $timesheetRepository);
+        if ($rate !== null) {
+            $rateService = $this->createMock(RateServiceInterface::class);
+            $rateService->method('calculate')->willReturn($rate);
+        } else {
+            $rateService = new RateService([], $timesheetRepository);
+        }
 
         return new TimesheetBudgetUsedValidator($configuration, $customerRepository, $projectRepository, $activityRepository, $timesheetRepository, $rateService);
     }
@@ -68,6 +75,16 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
+    }
+
+    public function testConstraintWithPreExistingViolation()
+    {
+        $this->validator = $this->createValidator();
+        $this->validator->initialize($this->context);
+        $this->context->addViolation('FOOOOOOOOO');
+
+        $this->validator->validate(new Timesheet(), new TimesheetBudgetUsedConstraint());
+        $this->buildViolation('FOOOOOOOOO')->assertRaised();
     }
 
     public function testTargetIsInvalid()
@@ -166,6 +183,8 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             'a_h' => [3601, null, null, null, null, null,       3600, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
             'a_g' => [null, 1002.0, null, null, null, null,     null, 1000.0, null, null, null, null,   '1,002.00', '0.00', '1,000.00', 'activity',     '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
             'a_g1' => [null, 1002.0, null, null, null, null,     null, 1000.0, null, null, null, null,   null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
+            // nothing changed => no violation
+            'a_x1' => [3600, 1000.0, null, null, null, null,     3600, 1000.0, null, null, null, null,   null, null, null, null,                         '+3600 seconds',    ['rate' => 1000.0, 'duration' => 3600], new Rate(1000.0, 0.00)],
 
             // project: violations
             'p_j' => [null, null, 1230, null, null, null,       null, null, 3600, null, null, null,     '00:20', '00:39', '01:00', 'project',           '+3600 seconds'],
@@ -233,7 +252,8 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         ?string $budget,
         ?string $path,
         string $duration,
-        array $rawData = []
+        array $rawData = [],
+        ?Rate $rate = null
     ) {
         $activityStatistic = new ActivityStatistic();
         if ($activityDuration !== null) {
@@ -349,7 +369,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             $timesheet->setActivity($activity);
         }
 
-        $this->validator = $this->createValidator(false, $activityStatistic, $projectStatistic, $customerStatistic, $rawData);
+        $this->validator = $this->createValidator(false, $activityStatistic, $projectStatistic, $customerStatistic, $rawData, $rate);
         $this->validator->initialize($this->context);
 
         $this->validator->validate($timesheet, new TimesheetBudgetUsedConstraint());

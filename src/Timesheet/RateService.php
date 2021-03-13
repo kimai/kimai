@@ -17,7 +17,7 @@ use App\Repository\TimesheetRepository;
 /**
  * Implementation to calculate the rate for a timesheet record.
  */
-final class RateService
+final class RateService implements RateServiceInterface
 {
     /**
      * @var array

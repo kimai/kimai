@@ -15,7 +15,7 @@ use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
-use App\Timesheet\RateService;
+use App\Timesheet\RateServiceInterface;
 use App\Utils\Duration;
 use App\Utils\LocaleHelper;
 use App\Validator\Constraints\TimesheetBudgetUsedConstraint;
@@ -32,7 +32,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
     private $rateService;
     private $configuration;
 
-    public function __construct(SystemConfiguration $configuration, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TimesheetRepository $timesheetRepository, RateService $rateService)
+    public function __construct(SystemConfiguration $configuration, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TimesheetRepository $timesheetRepository, RateServiceInterface $rateService)
     {
         $this->configuration = $configuration;
         $this->customerRepository = $customerRepository;
@@ -60,12 +60,12 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             return;
         }
 
-        // we can only work with stopped entries
-        if (null === $timesheet->getEnd() || null === $timesheet->getUser() || null === $timesheet->getProject()) {
+        if ($this->context->getViolations()->count() > 0) {
             return;
         }
 
-        if ($this->context->getViolations()->count() > 0) {
+        // we can only work with stopped entries
+        if (null === $timesheet->getEnd() || null === $timesheet->getUser() || null === $timesheet->getProject()) {
             return;
         }
 
