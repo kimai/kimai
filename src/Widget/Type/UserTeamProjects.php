@@ -46,12 +46,13 @@ class UserTeamProjects extends SimpleWidget implements AuthorizedWidget, UserWid
         /** @var User $user */
         $user = $options['user'];
         $projects = [];
+        $now = new \DateTime('now', new \DateTimeZone($user->getTimezone()));
 
         /** @var Team $team */
         foreach ($user->getTeams() as $team) {
             /** @var Project $project */
             foreach ($team->getProjects() as $project) {
-                if (!$project->isVisible() || !$project->getCustomer()->isVisible()) {
+                if (!$project->isVisibleAtDate($now)) {
                     continue;
                 }
                 $projects[$project->getId()] = $project;
