@@ -10,9 +10,9 @@
         <source>support</source>
         <target>Support</target>
       </trans-unit>
-      <trans-unit id="website">
+      <trans-unit id="website" approved="yes">
         <source>website</source>
-        <target>Startseite</target>
+        <target>Homepage</target>
       </trans-unit>
       <trans-unit id="help">
         <source>help</source>
