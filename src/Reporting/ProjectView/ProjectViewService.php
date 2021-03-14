@@ -90,7 +90,7 @@ final class ProjectViewService
             $entity = new ProjectViewModel();
             $entity->setProject($res['project']);
             $entity->setDurationTotal($res['totalDuration'] ?? 0);
-            $entity->setRateTotal($res['totalRate'] ?? 0);
+            $entity->setRateTotal($res['totalRate'] ?? 0.00);
 
             $projectViews[$entity->getProject()->getId()] = $entity;
         }

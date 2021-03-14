@@ -34,9 +34,9 @@ final class ProjectViewModel
      */
     private $durationTotal = 0;
     /**
-     * @var int
+     * @var float
      */
-    private $rateTotal = 0;
+    private $rateTotal = 0.00;
     /**
      * @var int
      */
@@ -116,12 +116,12 @@ final class ProjectViewModel
         $this->notExportedRate = $notExportedRate;
     }
 
-    public function getRateTotal(): int
+    public function getRateTotal(): float
     {
         return $this->rateTotal;
     }
 
-    public function setRateTotal(int $rateTotal): void
+    public function setRateTotal(float $rateTotal): void
     {
         $this->rateTotal = $rateTotal;
     }
