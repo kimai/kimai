@@ -20,9 +20,12 @@ use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
 use App\Form\Type\ThemeLayoutType;
+use App\Reporting\ReportingService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -30,24 +33,17 @@ use Symfony\Component\Validator\Constraints\Range;
 
 final class UserPreferenceSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var EventDispatcherInterface
-     */
     private $eventDispatcher;
-    /**
-     * @var AuthorizationCheckerInterface
-     */
     private $voter;
-    /**
-     * @var SystemConfiguration
-     */
     private $configuration;
+    private $reportingService;
 
-    public function __construct(EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter, SystemConfiguration $formConfig)
+    public function __construct(EventDispatcherInterface $eventDispatcher, AuthorizationCheckerInterface $voter, SystemConfiguration $systemConfiguration, ReportingService $reportingService)
     {
-        $this->eventDispatcher = $dispatcher;
+        $this->eventDispatcher = $eventDispatcher;
         $this->voter = $voter;
-        $this->configuration = $formConfig;
+        $this->configuration = $systemConfiguration;
+        $this->reportingService = $reportingService;
     }
 
     public static function getSubscribedEvents(): array
@@ -152,6 +148,24 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOrder(600)
                 ->setSection('behaviour')
                 ->setType(CalendarViewType::class),
+
+            (new UserPreference())
+                ->setName('reporting.initial_view')
+                ->setValue(ReportingService::DEFAULT_VIEW)
+                ->setOrder(650)
+                ->setSection('behaviour')
+                ->setOptions([
+                    'translation_domain' => 'reporting',
+                    'choice_loader' => new CallbackChoiceLoader(function () use ($user) {
+                        $choices = [];
+                        foreach ($this->reportingService->getAvailableReports($user) as $report) {
+                            $choices[$report->getLabel()] = $report->getId();
+                        }
+
+                        return $choices;
+                    })
+                ])
+                ->setType(ChoiceType::class),
 
             (new UserPreference())
                 ->setName('login.initial_view')
