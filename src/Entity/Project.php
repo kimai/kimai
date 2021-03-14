@@ -529,6 +529,21 @@ class Project implements EntityWithMetaFields
         return $this->teams;
     }
 
+    public function isVisibleAtDate(\DateTime $dateTime): bool
+    {
+        if (!$this->isVisible()) {
+            return false;
+        }
+        if ($this->getCustomer() !== null && !$this->getCustomer()->isVisible()) {
+            return false;
+        }
+        if ($this->getEnd() !== null && $dateTime > $this->getEnd()) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * @return string
      */
