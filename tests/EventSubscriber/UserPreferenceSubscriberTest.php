@@ -14,7 +14,6 @@ use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\EventSubscriber\UserPreferenceSubscriber;
-use App\Reporting\ReportingService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -115,8 +114,6 @@ class UserPreferenceSubscriberTest extends TestCase
         $eventMock = $this->createMock(EventDispatcherInterface::class);
         $formConfigMock = $this->createMock(SystemConfiguration::class);
 
-        $reportingService = new ReportingService($eventMock, $authMock);
-
-        return new UserPreferenceSubscriber($eventMock, $authMock, $formConfigMock, $reportingService);
+        return new UserPreferenceSubscriber($eventMock, $authMock, $formConfigMock);
     }
 }
