@@ -79,12 +79,6 @@
 
 {% macro timesheets_multi_update(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {
-        'back': {'url': path('timesheet')},
-        'help': {'url': 'timesheet.html'|docu_link, 'target': '_blank'}
-    } %}
-
-    {% set event = trigger('actions.timesheets_multi_update', {'actions': actions, 'view': view}) %}
-    {{ widgets.page_actions(event.payload.actions) }}
+    {% set event = actions(app.user, 'timesheets_multi_update', view) %}
+    {{ widgets.page_actions(event.actions) }}
 {% endmacro %}

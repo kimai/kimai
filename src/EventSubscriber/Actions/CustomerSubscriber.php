@@ -25,10 +25,6 @@ class CustomerSubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
-        if (!\is_array($payload) || !\array_key_exists('customer', $payload)) {
-            return;
-        }
-
         /** @var Customer $customer */
         $customer = $payload['customer'];
 

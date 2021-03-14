@@ -25,10 +25,6 @@ class TeamSubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
-        if (!\is_array($payload) || !\array_key_exists('team', $payload)) {
-            return;
-        }
-
         /** @var Team $team */
         $team = $payload['team'];
 

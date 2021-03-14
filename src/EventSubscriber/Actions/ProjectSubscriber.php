@@ -25,10 +25,6 @@ class ProjectSubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
-        if (!\is_array($payload) || !\array_key_exists('project', $payload)) {
-            return;
-        }
-
         /** @var Project $project */
         $project = $payload['project'];
 

@@ -25,10 +25,6 @@ class ActivitySubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
-        if (!\is_array($payload) || !\array_key_exists('activity', $payload)) {
-            return;
-        }
-
         /** @var Activity $activity */
         $activity = $payload['activity'];
 

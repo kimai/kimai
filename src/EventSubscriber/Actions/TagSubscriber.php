@@ -25,10 +25,6 @@ class TagSubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
-        if (!\is_array($payload) || !\array_key_exists('tag', $payload)) {
-            return;
-        }
-
         $tag = $payload['tag'];
         $id = null;
         $name = null;

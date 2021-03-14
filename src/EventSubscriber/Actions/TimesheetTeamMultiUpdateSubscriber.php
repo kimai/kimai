@@ -10,24 +10,19 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
-use App\Plugin\Plugin;
 
-class PluginSubscriber extends AbstractActionsSubscriber
+class TimesheetTeamMultiUpdateSubscriber extends AbstractActionsSubscriber
 {
     public static function getSubscribedEvents(): array
     {
         return [
-            'actions.plugin' => ['onActions', 1000],
+            'actions.timesheets_team_multi_update' => ['onActions', 1000],
         ];
     }
 
     public function onActions(PageActionsEvent $event)
     {
-        $payload = $event->getPayload();
-
-        /** @var Plugin $plugin */
-        $plugin = $payload['plugin'];
-
-        $event->addAction('home', ['url' => $plugin->getMetadata()->getHomepage(), 'target' => '_blank']);
+        $event->addBack($this->path('admin_timesheet'));
+        $event->addHelp($this->documentationLink('timesheet.html'));
     }
 }
