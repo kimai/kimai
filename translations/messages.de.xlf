@@ -1146,6 +1146,14 @@
         <source>label.includeNoBudget</source>
         <target>Einträge ohne Budget anzeigen</target>
       </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Nicht exportiert</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Nicht abgerechnet</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

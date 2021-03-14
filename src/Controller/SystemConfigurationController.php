@@ -270,6 +270,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
+                        ->setName('timesheet.rules.allow_overbooking_budget')
+                        ->setType(CheckboxType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
                         ->setName('timesheet.rules.lockdown_period_start')
                         ->setOptions(['help' => $lockdownStartHelp])
                         ->setType(TextType::class)

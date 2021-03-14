@@ -34,6 +34,10 @@
                 <source>The given value is not a valid time.</source>
                 <target>Der eingetragene Wert ist keine gültige Uhrzeit.</target>
             </trans-unit>
+            <trans-unit id="The budget is completely used.">
+                <source>The budget is completely used.</source>
+                <target>Das Budget ist aufgebraucht. Von den vorhandenen %budget% wurden bisher %used% gebucht, noch nutzbar sind %free%.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

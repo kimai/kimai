@@ -14,6 +14,7 @@ use App\Reporting\MonthByUser;
 use App\Reporting\MonthByUserForm;
 use App\Reporting\MonthlyUserList;
 use App\Reporting\MonthlyUserListForm;
+use App\Reporting\ReportingService;
 use App\Reporting\WeekByUser;
 use App\Reporting\WeekByUserForm;
 use App\Repository\Query\UserQuery;
@@ -54,9 +55,33 @@ final class ReportingController extends AbstractController
      *
      * @return Response
      */
-    public function defaultReport(): Response
+    public function defaultReport(ReportingService $reportingService): Response
     {
-        return $this->redirectToRoute('report_user_week');
+        $user = $this->getUser();
+        $route = null;
+
+        $defaultReport = $user->getPreferenceValue('reporting.initial_view', ReportingService::DEFAULT_VIEW);
+        $allReports = $reportingService->getAvailableReports($user);
+
+        foreach ($allReports as $report) {
+            if ($report->getId() === $defaultReport) {
+                $route = $report->getRoute();
+                break;
+            }
+        }
+
+        // fallback, if the configured report could not be found
+        // eg. when it was deleted or replaced by an enhanced version with a new id
+        if ($route === null && \count($allReports) > 0) {
+            $report = $allReports[array_keys($allReports)[0]];
+            $route = $report->getRoute();
+        }
+
+        if ($route === null) {
+            throw $this->createNotFoundException('Unknown default report');
+        }
+
+        return $this->redirectToRoute($route);
     }
 
     private function canSelectUser(): bool

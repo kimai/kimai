@@ -66,6 +66,10 @@
                 <source>label.timesheet.rules.allow_future_times</source>
                 <target>Allow time entries in the future</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+                <source>label.timesheet.rules.allow_overbooking_budget</source>
+                <target>Allow overbooking of stored budgets</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.rules.allow_overlapping_records">
                 <source>label.timesheet.rules.allow_overlapping_records</source>
                 <target>Allow overlapping time entries</target>

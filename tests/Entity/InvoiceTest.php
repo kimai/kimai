@@ -23,6 +23,7 @@ use App\Entity\UserPreference;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
+use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use PHPUnit\Framework\TestCase;
@@ -159,11 +160,22 @@ class InvoiceTest extends TestCase
 
         $model->setCalculator($calculator);
 
-        $numberGenerator = new DateNumberGenerator();
+        $numberGenerator = $this->getNumberGeneratorSut();
         $numberGenerator->setModel($model);
 
         $model->setNumberGenerator($numberGenerator);
 
         return $model;
+    }
+
+    private function getNumberGeneratorSut()
+    {
+        $repository = $this->createMock(InvoiceRepository::class);
+        $repository
+            ->expects($this->any())
+            ->method('hasInvoice')
+            ->willReturn(false);
+
+        return new DateNumberGenerator($repository);
     }
 }

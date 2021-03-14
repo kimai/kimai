@@ -9,44 +9,21 @@
 
 namespace App\Model;
 
-use App\Entity\Project;
-
 class ProjectStatistic extends TimesheetCountedStatistic
 {
-    /**
-     * @var Project
-     */
-    private $project;
     /**
      * @var int
      */
     private $activityAmount = 0;
 
-    public function __construct(Project $project)
-    {
-        $this->project = $project;
-    }
-
-    public function getProject(): Project
-    {
-        return $this->project;
-    }
-
-    /**
-     * @return int
-     */
-    public function getActivityAmount()
+    public function getActivityAmount(): int
     {
         return $this->activityAmount;
     }
 
-    /**
-     * @param int $activityAmount
-     * @return ProjectStatistic
-     */
-    public function setActivityAmount($activityAmount)
+    public function setActivityAmount(int $activityAmount): ProjectStatistic
     {
-        $this->activityAmount = (int) $activityAmount;
+        $this->activityAmount = $activityAmount;
 
         return $this;
     }

@@ -15,6 +15,7 @@ use App\Entity\Project;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
+use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use PHPUnit\Framework\TestCase;
 
@@ -29,7 +30,7 @@ class InvoiceFilenameTest extends TestCase
         $template = new InvoiceTemplate();
 
         $model = new InvoiceModel(new DebugFormatter());
-        $model->setNumberGenerator(new DateNumberGenerator());
+        $model->setNumberGenerator($this->getNumberGeneratorSut());
         $model->setTemplate($template);
         $model->setCustomer($customer);
 
@@ -70,5 +71,16 @@ class InvoiceFilenameTest extends TestCase
         $customer->setCompany('\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n");
         $sut = new InvoiceFilename($model);
         self::assertEquals($datePrefix . '-ss_n_--Demo_ProjecT1', $sut->getFilename());
+    }
+
+    private function getNumberGeneratorSut()
+    {
+        $repository = $this->createMock(InvoiceRepository::class);
+        $repository
+            ->expects($this->any())
+            ->method('hasInvoice')
+            ->willReturn(false);
+
+        return new DateNumberGenerator($repository);
     }
 }
