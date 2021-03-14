@@ -4,16 +4,16 @@
 {% block report_title %}{{ 'report_project_view'|trans({}, 'reporting') }}{% endblock %}
 
 {% set columns = {
-    'name':             {'class': 'alwaysVisible'},
-    'today':            {'class': 'text-nowrap text-right', 'title': 'daterangepicker.today'|trans({}, 'daterangepicker')},
-    'week':             {'class': 'text-nowrap text-right', 'title': 'agendaWeek'|trans},
-    'month':            {'class': 'text-nowrap text-right', 'title': 'month'|trans},
-    'durationTotal':    {'class': 'hidden-md hidden-sm hidden-xs text-nowrap text-right', 'title': 'stats.durationTotal'|trans},
+    'name':             {'class': 'alwaysVisible w-min'},
+    'today':            {'class': 'text-nowrap text-center w-min', 'title': 'daterangepicker.today'|trans({}, 'daterangepicker')},
+    'week':             {'class': 'text-nowrap text-center w-min', 'title': 'agendaWeek'|trans},
+    'month':            {'class': 'text-nowrap text-center w-min', 'title': 'month'|trans},
+    'durationTotal':    {'class': 'hidden-md hidden-sm hidden-xs text-nowrap text-center w-min', 'title': 'label.total'|trans},
     'timeBudget':       {'class': 'text-nowrap', 'title': 'label.timeBudget'|trans},
     'budget':           {'class': 'text-nowrap', 'title': 'label.budget'|trans},
-    'stateDuration':    {'class': 'hidden-sm hidden-xs text-nowrap text-right', 'title': 'entryState.not_exported'|trans},
-    'stateMoney':       {'class': 'hidden-sm hidden-xs text-nowrap text-right', 'title': 'entryState.not_exported'|trans},
-    'projectEnd':       {'class': 'hidden-md hidden-sm hidden-xs hidden text-nowrap text-center', 'title': 'label.project_end'|trans},
+    'stateDuration':    {'class': 'hidden-sm hidden-xs text-nowrap text-center w-min', 'title': 'label.not_exported'|trans},
+    'stateMoney':       {'class': 'hidden-sm hidden-xs text-nowrap text-center w-min', 'title': 'label.not_invoiced'|trans},
+    'projectEnd':       {'class': 'hidden-md hidden-sm hidden-xs hidden text-nowrap text-center  w-min', 'title': 'label.project_end'|trans},
     'comment':          {'class': 'hidden-md hidden-sm hidden-xs hidden', 'title': 'label.comment'|trans},
 } %}
 {% set tableName = 'project_view_reporting' %}

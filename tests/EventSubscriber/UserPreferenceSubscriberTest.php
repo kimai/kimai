@@ -23,6 +23,23 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class UserPreferenceSubscriberTest extends TestCase
 {
+    public const EXPECTED_PREFERENCES = [
+        'hourly_rate',
+        'internal_rate',
+        'timezone',
+        'language',
+        'first_weekday',
+        'skin',
+        'theme.layout',
+        'theme.collapsed_sidebar',
+        'theme.update_browser_title',
+        'calendar.initial_view',
+         'reporting.initial_view',
+         'login.initial_view',
+         'timesheet.daily_stats',
+         'timesheet.export_decimal',
+    ];
+
     public function testGetSubscribedEvents()
     {
         $events = UserPreferenceSubscriber::getSubscribedEvents();
@@ -40,7 +57,11 @@ class UserPreferenceSubscriberTest extends TestCase
         self::assertSame($user, $event->getUser());
 
         $prefs = $sut->getDefaultPreferences($user);
-        self::assertCount(13, $prefs);
+        foreach ($prefs as $pref) {
+            $this->assertTrue(\in_array($pref->getName(), self::EXPECTED_PREFERENCES), 'Unknown user preference: ' . $pref->getName());
+        }
+
+        self::assertCount(\count(self::EXPECTED_PREFERENCES), $prefs);
 
         foreach ($prefs as $pref) {
             switch ($pref->getName()) {
@@ -70,7 +91,7 @@ class UserPreferenceSubscriberTest extends TestCase
         // TODO test merging values
         $sut->loadUserPreferences($event);
         $prefs = $event->getUser()->getPreferences();
-        self::assertCount(13, $prefs);
+        self::assertCount(\count(self::EXPECTED_PREFERENCES), $prefs);
 
         foreach ($prefs as $pref) {
             switch ($pref->getName()) {
