@@ -1,5 +1,0 @@
-{% macro doctor(view) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'doctor', view) %}
-    {{ widgets.page_actions(event.actions) }}
-{% endmacro %}
