@@ -685,9 +685,9 @@
         <source>label.mobile</source>
         <target>Mobiltelefon</target>
       </trans-unit>
-      <trans-unit id="label.homepage">
+      <trans-unit id="label.homepage" approved="yes">
         <source>label.homepage</source>
-        <target>Startseite</target>
+        <target>Homepage</target>
       </trans-unit>
       <trans-unit id="label.timezone">
         <source>label.timezone</source>
