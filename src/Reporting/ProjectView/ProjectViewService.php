@@ -66,7 +66,12 @@ final class ProjectViewService
         }
 
         if (!$query->isIncludeNoBudget()) {
-            $qb->andWhere($qb->expr()->gt('p.timeBudget', 0));
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->gt('p.budget', 0),
+                    $qb->expr()->gt('p.timeBudget', 0),
+                )
+            );
         }
 
         $this->repository->addPermissionCriteria($qb, $user);
