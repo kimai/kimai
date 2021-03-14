@@ -683,11 +683,11 @@
       </trans-unit>
       <trans-unit id="label.mobile">
         <source>label.mobile</source>
-        <target>Handy</target>
+        <target>Mobiltelefon</target>
       </trans-unit>
       <trans-unit id="label.homepage">
         <source>label.homepage</source>
-        <target>Homepage</target>
+        <target>Startseite</target>
       </trans-unit>
       <trans-unit id="label.timezone">
         <source>label.timezone</source>
