@@ -69,7 +69,7 @@ final class ProjectViewService
             $qb->andWhere(
                 $qb->expr()->orX(
                     $qb->expr()->gt('p.budget', 0),
-                    $qb->expr()->gt('p.timeBudget', 0),
+                    $qb->expr()->gt('p.timeBudget', 0)
                 )
             );
         }
