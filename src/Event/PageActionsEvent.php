@@ -144,9 +144,13 @@ class PageActionsEvent extends ThemeEvent
         $this->addAction('back', ['url' => $url, 'translation_domain' => 'actions']);
     }
 
-    public function addDelete(string $url): void
+    public function addDelete(string $url, bool $remoteConfirm = true): void
     {
-        $this->addAction('trash', ['url' => $url, 'class' => 'modal-ajax-form text-red']);
+        if ($remoteConfirm) {
+            $this->addAction('trash', ['url' => $url, 'class' => 'modal-ajax-form text-red']);
+        } else {
+            $this->addAction('trash', ['url' => $url, 'class' => 'confirmation-link text-red', 'attr' => ['data-question' => 'confirm.delete']]);
+        }
     }
 
     public function addColumnToggle(string $modal): void

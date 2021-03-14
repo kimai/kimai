@@ -21,31 +21,6 @@
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
 
-{% macro invoice_templates(view) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {} %}
-    {% if is_granted('view_invoice') %}
-        {% set actions = actions|merge({'back': path('invoice')}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'visibility': '#modal_invoice_template'}) %}
-
-    {% if is_granted('manage_invoice_template') %}
-        {% set actions = actions|merge({'create': {'url': path('admin_invoice_template_create'), 'class': 'modal-ajax-form'}}) %}
-    {% endif %}
-
-    {% if is_granted('upload_invoice_template') %}
-        {# File upload does not work in a modal right now #}
-        {% set actions = actions|merge({'upload': {'url': path('admin_invoice_document_upload')}}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.invoice_templates', {'actions': actions, 'view': 'index'}) %}
-    {{ widgets.page_actions(actions) }}
-{% endmacro %}
-
 {% macro invoice(invoice, view, options) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
@@ -82,29 +57,18 @@
 
 {% macro invoice_upload(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
+    {% set event = actions(app.user, 'invoice_upload', view) %}
+    {{ widgets.page_actions(event.actions) }}
+{% endmacro %}
 
-    {% set actions = {} %}
-    {% if view == 'index' and is_granted('manage_invoice_template') %}
-        {% set actions = actions|merge({'back': path('admin_invoice_template')}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.invoice_upload', {'actions': actions, 'view': 'index'}) %}
-    {{ widgets.page_actions(actions) }}
+{% macro invoice_templates(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set event = actions(app.user, 'invoice_templates', view) %}
+    {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 
 {% macro invoice_template(template, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {} %}
-    
-    {% if is_granted('manage_invoice_template') %}
-        {% set actions = actions|merge({'edit': {'url': path('admin_invoice_template_edit', {'id' : template.id}), 'class': 'modal-ajax-form'}}) %}
-        {% set actions = actions|merge({'copy': path('admin_invoice_template_copy', {'id' : template.id})}) %}
-        {% set actions = actions|merge({'trash': {'url': path('admin_invoice_template_delete', {'id' : template.id}), 'class': 'confirmation-link', 'attr': {'data-question': 'confirm.delete'}}}) %}
-    {% endif %}
-
-    {% set event = trigger('actions.invoice_template', {'actions': actions, 'view': view, 'template': template}) %}
-    {{ widgets.table_actions(event.payload.actions) }}
+    {% set event = actions(app.user, 'invoice_template', view, {'template': template}) %}
+    {{ widgets.table_actions(event.actions) }}
 {% endmacro %}
