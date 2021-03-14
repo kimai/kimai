@@ -25,10 +25,6 @@ class UserSubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
-        if (!\is_array($payload) || !\array_key_exists('user', $payload)) {
-            return;
-        }
-
         /** @var User $user */
         $user = $payload['user'];
 
