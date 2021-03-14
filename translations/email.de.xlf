@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target>Falls der Button nicht funktioniert, kopieren Sie bitte die folgende URL in Ihren Browser: %url%</target>
+        <target>Falls der Knopf nicht funktioniert, kopieren Sie bitte die folgende URL in Ihren Browser: %url%</target>
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target>... Du hast also Dein Passwort vergessen? Keine Sorge: Kimai wird Dir dabei helfen ein neues zu erstellen:</target>
+        <target>… Du hast also dein Passwort vergessen? Keine Sorge: Kimai wird dir dabei helfen, ein neues zu erstellen:</target>
       </trans-unit>
     </body>
   </file>
