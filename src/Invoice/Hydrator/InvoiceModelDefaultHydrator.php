@@ -21,13 +21,28 @@ class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         $total = $model->getCalculator()->getTotal();
         $subtotal = $model->getCalculator()->getSubtotal();
         $formatter = $model->getFormatter();
+        $entries = $model->getCalculator()->getEntries();
 
-        return [
+        $begin = null;
+        if ($model->getQuery()->getBegin() !== null) {
+            $begin = $model->getQuery()->getBegin();
+        } elseif (!empty($entries)) {
+            $begin = $entries[0];
+        }
+
+        $end = null;
+        if ($model->getQuery()->getEnd() !== null) {
+            $end = $model->getQuery()->getEnd();
+        } elseif (!empty($entries)) {
+            $end = array_keys($entries)[\count($entries) - 1];
+        }
+
+        $values = [
             'invoice.due_date' => $formatter->getFormattedDateTime($model->getDueDate()),
             'invoice.date' => $formatter->getFormattedDateTime($model->getInvoiceDate()),
             'invoice.number' => $model->getInvoiceNumber(),
             'invoice.currency' => $currency,
-            'invoice.language' => $model->getTemplate()->getLanguage(),                            // since 1.9
+            'invoice.language' => $model->getTemplate()->getLanguage(), // since 1.9
             'invoice.currency_symbol' => $formatter->getCurrencySymbol($currency),
             'invoice.vat' => $model->getCalculator()->getVat(),
             'invoice.tax' => $formatter->getFormattedMoney($tax, $currency),
@@ -52,20 +67,41 @@ class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'template.contact' => $model->getTemplate()->getContact(),
             'template.payment_details' => $model->getTemplate()->getPaymentDetails(),
 
-            'query.begin' => $formatter->getFormattedDateTime($model->getQuery()->getBegin()),
-            'query.day' => $model->getQuery()->getBegin()->format('d'),                             // @deprecated
-            'query.month' => $formatter->getFormattedMonthName($model->getQuery()->getBegin()),     // @deprecated
-            'query.month_number' => $model->getQuery()->getBegin()->format('m'),                    // @deprecated
-            'query.year' => $model->getQuery()->getBegin()->format('Y'),                            // @deprecated
-            'query.begin_day' => $model->getQuery()->getBegin()->format('d'),
-            'query.begin_month' => $formatter->getFormattedMonthName($model->getQuery()->getBegin()),
-            'query.begin_month_number' => $model->getQuery()->getBegin()->format('m'),
-            'query.begin_year' => $model->getQuery()->getBegin()->format('Y'),
-            'query.end' => $formatter->getFormattedDateTime($model->getQuery()->getEnd()),          // since 1.9
-            'query.end_day' => $model->getQuery()->getEnd()->format('d'),                           // since 1.9
-            'query.end_month' => $formatter->getFormattedMonthName($model->getQuery()->getEnd()),   // since 1.9
-            'query.end_month_number' => $model->getQuery()->getEnd()->format('m'),                  // since 1.9
-            'query.end_year' => $model->getQuery()->getEnd()->format('Y'),                          // since 1.9
+            'query.begin' => '',
+            'query.day' => '',                  // @deprecated
+            'query.month' => '',                // @deprecated
+            'query.month_number' => '',         // @deprecated
+            'query.year' => '',                 // @deprecated
+            'query.begin_day' => '',
+            'query.begin_month' => '',
+            'query.begin_month_number' => '',
+            'query.begin_year' => '',
+            'query.end' => '',                  // since 1.9
+            'query.end_day' => '',              // since 1.9
+            'query.end_month' => '',            // since 1.9
+            'query.end_month_number' => '',     // since 1.9
+            'query.end_year' => '',             // since 1.9
         ];
+
+        if ($begin !== null) {
+            $values = array_merge($values, [
+                'query.begin' => $formatter->getFormattedDateTime($begin),
+                'query.day' => $begin->format('d'),                             // @deprecated
+                'query.month' => $formatter->getFormattedMonthName($begin),     // @deprecated
+                'query.month_number' => $begin->format('m'),                    // @deprecated
+                'query.year' => $begin->format('Y'),                            // @deprecated
+                'query.begin_day' => $begin->format('d'),
+                'query.begin_month' => $formatter->getFormattedMonthName($begin),
+                'query.begin_month_number' => $begin->format('m'),
+                'query.begin_year' => $begin->format('Y'),
+                'query.end' => $formatter->getFormattedDateTime($end),          // since 1.9
+                'query.end_day' => $end->format('d'),                           // since 1.9
+                'query.end_month' => $formatter->getFormattedMonthName($end),   // since 1.9
+                'query.end_month_number' => $end->format('m'),                  // since 1.9
+                'query.end_year' => $end->format('Y'),                          // since 1.9
+            ]);
+        }
+
+        return $values;
     }
 }

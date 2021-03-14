@@ -24,7 +24,7 @@ class ReportingServiceTest extends TestCase
     protected function getSut(bool $isGranted = false): ReportingService
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $dispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) {
+        $dispatcher->expects($this->exactly($isGranted ? 1 : 0))->method('dispatch')->willReturnCallback(function ($event) {
             $this->assertInstanceOf(ReportingEvent::class, $event);
         });
 
