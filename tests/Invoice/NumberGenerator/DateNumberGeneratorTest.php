@@ -11,6 +11,7 @@ namespace App\Tests\Invoice\NumberGenerator;
 
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
+use App\Repository\InvoiceRepository;
 use App\Tests\Invoice\DebugFormatter;
 use PHPUnit\Framework\TestCase;
 
@@ -19,12 +20,47 @@ use PHPUnit\Framework\TestCase;
  */
 class DateNumberGeneratorTest extends TestCase
 {
+    private function getSut(bool $hasInitialInvoice, bool $followingInvoices)
+    {
+        $repository = $this->createMock(InvoiceRepository::class);
+        $repository
+            ->expects($this->any())
+            ->method('hasInvoice')
+            ->willReturnCallback(function ($number) use ($hasInitialInvoice, $followingInvoices) {
+                if (stripos($number, '-') === false) {
+                    return $hasInitialInvoice;
+                }
+
+                return $followingInvoices;
+            });
+
+        return new DateNumberGenerator($repository);
+    }
+
     public function testGetInvoiceNumber()
     {
-        $sut = new DateNumberGenerator();
+        $sut = $this->getSut(false, false);
         $sut->setModel(new InvoiceModel(new DebugFormatter()));
 
         $this->assertEquals(date('ymd'), $sut->getInvoiceNumber());
+        $this->assertEquals('date', $sut->getId());
+    }
+
+    public function testGetInvoiceNumberWithExisting()
+    {
+        $sut = $this->getSut(true, false);
+        $sut->setModel(new InvoiceModel(new DebugFormatter()));
+
+        $this->assertEquals(date('ymd-01'), $sut->getInvoiceNumber());
+        $this->assertEquals('date', $sut->getId());
+    }
+
+    public function testGetInvoiceNumberWithManyExisting()
+    {
+        $sut = $this->getSut(true, true);
+        $sut->setModel(new InvoiceModel(new DebugFormatter()));
+
+        $this->assertEquals(date('ymd-99'), $sut->getInvoiceNumber());
         $this->assertEquals('date', $sut->getId());
     }
 }
