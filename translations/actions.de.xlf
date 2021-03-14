@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit id="home">
         <source>home</source>
-        <target>Startseite</target>
+        <target>Homepage</target>
       </trans-unit>
       <trans-unit id="create-project">
         <source>create-project</source>
