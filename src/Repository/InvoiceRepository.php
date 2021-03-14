@@ -40,6 +40,20 @@ class InvoiceRepository extends EntityRepository
         $entityManager->flush();
     }
 
+    public function hasInvoice(string $invoiceNumber): bool
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('count(i.id) as counter')
+            ->from(Invoice::class, 'i')
+            ->andWhere($qb->expr()->eq('i.invoiceNumber', ':number'))
+            ->setParameter('number', $invoiceNumber)
+        ;
+
+        $counter = (int) $qb->getQuery()->getSingleScalarResult();
+
+        return $counter > 0;
+    }
+
     private function getCounterFor(\DateTime $start, \DateTime $end, ?Customer $customer = null): int
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
