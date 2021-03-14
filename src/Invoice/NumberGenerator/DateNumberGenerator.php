@@ -11,17 +11,27 @@ namespace App\Invoice\NumberGenerator;
 
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGeneratorInterface;
+use App\Repository\InvoiceRepository;
 
 /**
  * Class DateNumberGenerator generates the invoice number based on the current day.
- * It will create duplicate IDs if you create multiple invoices per day.
+ * It will create duplicate IDs if you create more then 99 invoices per day.
  */
-class DateNumberGenerator implements NumberGeneratorInterface
+final class DateNumberGenerator implements NumberGeneratorInterface
 {
     /**
      * @var InvoiceModel
      */
-    protected $model;
+    private $model;
+    /**
+     * @var InvoiceRepository
+     */
+    private $repository;
+
+    public function __construct(InvoiceRepository $repository)
+    {
+        $this->repository = $repository;
+    }
 
     /**
      * @return string
@@ -44,6 +54,17 @@ class DateNumberGenerator implements NumberGeneratorInterface
      */
     public function getInvoiceNumber(): string
     {
-        return date('ymd', $this->model->getInvoiceDate()->getTimestamp());
+        $loops = 0;
+        $increaseBy = 0;
+
+        $result = date('ymd', $this->model->getInvoiceDate()->getTimestamp());
+
+        // in the case that someone configured a weird format, that should not result in an endless loop
+        while ($this->repository->hasInvoice($result) && $loops++ < 99) {
+            $suffix = str_pad((string) ++$increaseBy, 2, '0', STR_PAD_LEFT);
+            $result = date('ymd', $this->model->getInvoiceDate()->getTimestamp()) . '-' . $suffix;
+        }
+
+        return $result;
     }
 }

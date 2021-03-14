@@ -92,7 +92,7 @@ class ServiceInvoiceTest extends TestCase
         $sut = $this->getSut([]);
 
         $sut->addCalculator(new DefaultCalculator());
-        $sut->addNumberGenerator(new DateNumberGenerator());
+        $sut->addNumberGenerator($this->getNumberGeneratorSut());
         $sut->addRenderer(
             new TwigRenderer(
                 $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock()
@@ -132,7 +132,7 @@ class ServiceInvoiceTest extends TestCase
 
         $sut = $this->getSut([]);
         $sut->addCalculator(new DefaultCalculator());
-        $sut->addNumberGenerator(new DateNumberGenerator());
+        $sut->addNumberGenerator($this->getNumberGeneratorSut());
 
         $model = $sut->createModel($query);
 
@@ -152,10 +152,21 @@ class ServiceInvoiceTest extends TestCase
 
         $sut = $this->getSut([]);
         $sut->addCalculator(new DefaultCalculator());
-        $sut->addNumberGenerator(new DateNumberGenerator());
+        $sut->addNumberGenerator($this->getNumberGeneratorSut());
 
         $model = $sut->createModel($query);
 
         self::assertEquals('de', $model->getTemplate()->getLanguage());
+    }
+
+    private function getNumberGeneratorSut()
+    {
+        $repository = $this->createMock(InvoiceRepository::class);
+        $repository
+            ->expects($this->any())
+            ->method('hasInvoice')
+            ->willReturn(false);
+
+        return new DateNumberGenerator($repository);
     }
 }
