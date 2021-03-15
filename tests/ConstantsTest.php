@@ -21,11 +21,11 @@ class ConstantsTest extends TestCase
     {
         $version = Constants::VERSION;
         $versionParts = explode('.', $version);
+        $major = (int) $versionParts[0];
+        $minor = (int) $versionParts[1];
+        $patch = isset($versionParts[2]) ? (int) $versionParts[2] : 0;
 
-        $expectedId = $versionParts[0] * 10000 + $versionParts[1] * 100;
-        if (isset($versionParts[2])) {
-            $expectedId += (int) $versionParts[2];
-        }
+        $expectedId = $major * 10000 + $minor * 100 + $patch;
 
         self::assertEquals('1.14', Constants::VERSION, 'Invalid release number');
         self::assertEquals('dev', Constants::STATUS, 'Invalid status');
