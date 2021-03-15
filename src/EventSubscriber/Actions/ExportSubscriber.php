@@ -13,11 +13,9 @@ use App\Event\PageActionsEvent;
 
 class ExportSubscriber extends AbstractActionsSubscriber
 {
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.export' => ['onActions', 1000],
-        ];
+        return 'export';
     }
 
     public function onActions(PageActionsEvent $event): void

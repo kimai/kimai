@@ -14,11 +14,9 @@ use App\Event\PageActionsEvent;
 
 class InvoiceTemplateSubscriber extends AbstractActionsSubscriber
 {
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.invoice_template' => ['onActions', 1000],
-        ];
+        return 'invoice_template';
     }
 
     public function onActions(PageActionsEvent $event): void

@@ -13,11 +13,9 @@ use App\Event\PageActionsEvent;
 
 class PermissionsSubscriber extends AbstractActionsSubscriber
 {
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.user_permissions' => ['onActions', 1000],
-        ];
+        return 'user_permissions';
     }
 
     public function onActions(PageActionsEvent $event): void

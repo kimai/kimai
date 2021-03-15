@@ -13,11 +13,9 @@ use App\Event\PageActionsEvent;
 
 class ActivitiesSubscriber extends AbstractActionsSubscriber
 {
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.activities' => ['onActions', 1000],
-        ];
+        return 'activities';
     }
 
     public function onActions(PageActionsEvent $event): void

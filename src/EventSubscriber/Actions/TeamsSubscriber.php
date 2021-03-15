@@ -13,11 +13,9 @@ use App\Event\PageActionsEvent;
 
 class TeamsSubscriber extends AbstractActionsSubscriber
 {
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.teams' => ['onActions', 1000],
-        ];
+        return 'teams';
     }
 
     public function onActions(PageActionsEvent $event): void

@@ -14,11 +14,9 @@ use App\Event\PageActionsEvent;
 
 class TagSubscriber extends AbstractActionsSubscriber
 {
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.tag' => ['onActions', 1000],
-        ];
+        return 'tag';
     }
 
     public function onActions(PageActionsEvent $event): void

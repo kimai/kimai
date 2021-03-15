@@ -24,11 +24,9 @@ class ReportingSubscriber extends AbstractActionsSubscriber
         $this->reportingService = $reportingService;
     }
 
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.reporting' => ['onActions', 1000],
-        ];
+        return 'reporting';
     }
 
     public function onActions(PageActionsEvent $event): void

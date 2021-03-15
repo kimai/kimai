@@ -13,11 +13,9 @@ use App\Event\PageActionsEvent;
 
 class SystemConfigurationSubscriber extends AbstractActionsSubscriber
 {
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.system_configuration' => ['onActions', 1000],
-        ];
+        return 'system_configuration';
     }
 
     public function onActions(PageActionsEvent $event): void

@@ -13,11 +13,9 @@ use App\Event\PageActionsEvent;
 
 class TimesheetTeamMultiUpdateSubscriber extends AbstractActionsSubscriber
 {
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.timesheets_team_multi_update' => ['onActions', 1000],
-        ];
+        return 'timesheets_team_multi_update';
     }
 
     public function onActions(PageActionsEvent $event): void

@@ -14,11 +14,9 @@ use App\Event\PageActionsEvent;
 
 class PluginsSubscriber extends AbstractActionsSubscriber
 {
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.plugins' => ['onActions', 1000],
-        ];
+        return 'plugins';
     }
 
     public function onActions(PageActionsEvent $event): void
