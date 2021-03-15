@@ -11,21 +11,26 @@ namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
 
-class CalendarSubscriber extends AbstractActionsSubscriber
+class TimesheetsSubscriber extends AbstractTimesheetsSubscriber
 {
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.calendar' => ['onActions', 1000],
-        ];
+        return 'timesheets';
     }
 
     public function onActions(PageActionsEvent $event): void
     {
+        $event->addSearchToggle();
+        $event->addColumnToggle('#modal_timesheet');
+
+        if ($this->isGranted('export_own_timesheet')) {
+            $this->addExporter($event, 'timesheet_export');
+        }
+
         if ($this->isGranted('create_own_timesheet')) {
             $event->addCreate($this->path('timesheet_create'));
         }
 
-        $event->addHelp($this->documentationLink('calendar.html'));
+        $event->addHelp($this->documentationLink('timesheet.html'));
     }
 }

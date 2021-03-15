@@ -11,18 +11,15 @@ namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
 
-class TimesheetMultiUpdateSubscriber extends AbstractActionsSubscriber
+class TimesheetTeamSubscriber extends AbstractTimesheetSubscriber
 {
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.timesheets_multi_update' => ['onActions', 1000],
-        ];
+        return 'timesheet_team';
     }
 
     public function onActions(PageActionsEvent $event): void
     {
-        $event->addBack($this->path('timesheet'));
-        $event->addHelp($this->documentationLink('timesheet.html'));
+        $this->timesheetActions($event, 'admin_timesheet', 'admin_timesheet_edit');
     }
 }

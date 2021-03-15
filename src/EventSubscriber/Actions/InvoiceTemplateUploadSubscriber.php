@@ -20,7 +20,7 @@ class InvoiceTemplateUploadSubscriber extends AbstractActionsSubscriber
         ];
     }
 
-    public function onActions(PageActionsEvent $event)
+    public function onActions(PageActionsEvent $event): void
     {
         if ($event->isIndexView() && $this->isGranted('manage_invoice_template')) {
             $event->addBack($this->path('admin_invoice_template'));

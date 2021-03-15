@@ -20,7 +20,7 @@ class UsersSubscriber extends AbstractActionsSubscriber
         ];
     }
 
-    public function onActions(PageActionsEvent $event)
+    public function onActions(PageActionsEvent $event): void
     {
         $event->addSearchToggle();
         if ($event->isIndexView()) {

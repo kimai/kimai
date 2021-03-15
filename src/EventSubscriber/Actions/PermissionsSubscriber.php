@@ -20,7 +20,7 @@ class PermissionsSubscriber extends AbstractActionsSubscriber
         ];
     }
 
-    public function onActions(PageActionsEvent $event)
+    public function onActions(PageActionsEvent $event): void
     {
         // the "create role" page
         if (!$event->isIndexView() && $this->isGranted('role_permissions')) {

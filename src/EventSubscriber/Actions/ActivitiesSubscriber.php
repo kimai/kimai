@@ -20,7 +20,7 @@ class ActivitiesSubscriber extends AbstractActionsSubscriber
         ];
     }
 
-    public function onActions(PageActionsEvent $event)
+    public function onActions(PageActionsEvent $event): void
     {
         $event->addSearchToggle();
         $event->addColumnToggle('#modal_activity_admin');

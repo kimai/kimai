@@ -20,7 +20,7 @@ class SystemConfigurationSubscriber extends AbstractActionsSubscriber
         ];
     }
 
-    public function onActions(PageActionsEvent $event)
+    public function onActions(PageActionsEvent $event): void
     {
         $event->addHelp($this->documentationLink('configurations.html'));
     }

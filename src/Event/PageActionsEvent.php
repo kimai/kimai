@@ -60,6 +60,13 @@ class PageActionsEvent extends ThemeEvent
     {
         $actions = $this->payload['actions'];
 
+        // move documentation to end of list
+        if (\array_key_exists('help', $actions)) {
+            $help = $actions['help'];
+            unset($actions['help']);
+            $actions += ['help' => $help];
+        }
+
         // move trash to end of list
         if (\array_key_exists('trash', $actions)) {
             $delete = $actions['trash'];

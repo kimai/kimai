@@ -21,7 +21,7 @@ class TagSubscriber extends AbstractActionsSubscriber
         ];
     }
 
-    public function onActions(PageActionsEvent $event)
+    public function onActions(PageActionsEvent $event): void
     {
         $payload = $event->getPayload();
 
