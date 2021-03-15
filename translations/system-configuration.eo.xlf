@@ -242,6 +242,10 @@
         <source>first_weekday</source>
         <target>Unua tago de la semajno</target>
       </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>Permesi tromendadon de konservitaj buĝetoj</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
