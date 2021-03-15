@@ -94,6 +94,10 @@
                 <source>invoice.paid</source>
                 <target>Invoice paid</target>
             </trans-unit>
+            <trans-unit id="filter">
+                <source>filter</source>
+                <target>Filter data</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

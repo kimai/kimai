@@ -410,9 +410,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $team2->tick();
 
         $client->submit($form);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
-        $client->followRedirect();
-        $this->assertHasDataTable($client);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
 
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);

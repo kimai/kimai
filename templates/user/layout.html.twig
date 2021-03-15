@@ -22,7 +22,7 @@
         </div>
         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
             <div class="hidden-xs">
-            {% set event = actions(app.user, 'user', {'view': tab, 'user': user}) %}
+            {% set event = actions(app.user, 'user', tab, {'user': user}) %}
             {{ widgets.list_group_actions(event.actions, app.request.requestUri) }}
             </div>
             {% block profile_navbar %}{% endblock %}

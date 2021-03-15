@@ -2,7 +2,6 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "export/actions.html.twig" as actions %}
 
 {% set columns = {
     'date': {'class': 'alwaysVisible text-nowrap', 'orderBy': false},
@@ -21,7 +20,10 @@
 
 {% block page_title %}{{ 'export.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'export.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.export((preview_show ? 'preview' : 'index')) }}{% endblock %}
+{% block page_actions %}
+    {% set event = actions(app.user, 'export', (preview_show ? 'preview' : 'index')) %}
+    {{ widgets.page_actions(event.actions) }}
+{% endblock %}
 
 {% block main_before %}
     {{ tables.data_table_column_modal(tableName, columns) }}

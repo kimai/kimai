@@ -34,10 +34,10 @@ class UserPreferenceSubscriberTest extends TestCase
         'theme.collapsed_sidebar',
         'theme.update_browser_title',
         'calendar.initial_view',
-         'reporting.initial_view',
-         'login.initial_view',
-         'timesheet.daily_stats',
-         'timesheet.export_decimal',
+        'reporting.initial_view',
+        'login.initial_view',
+        'timesheet.daily_stats',
+        'timesheet.export_decimal',
     ];
 
     public function testGetSubscribedEvents()
@@ -67,6 +67,7 @@ class UserPreferenceSubscriberTest extends TestCase
             switch ($pref->getName()) {
                 case UserPreference::HOURLY_RATE:
                 case UserPreference::INTERNAL_RATE:
+                case 'reporting.initial_view':
                     self::assertTrue($pref->isEnabled());
                     break;
 
@@ -97,6 +98,7 @@ class UserPreferenceSubscriberTest extends TestCase
             switch ($pref->getName()) {
                 case UserPreference::HOURLY_RATE:
                 case UserPreference::INTERNAL_RATE:
+                case 'reporting.initial_view':
                     self::assertFalse($pref->isEnabled());
                 break;
 
@@ -109,7 +111,7 @@ class UserPreferenceSubscriberTest extends TestCase
     protected function getSubscriber(bool $seeHourlyRate)
     {
         $authMock = $this->createMock(AuthorizationCheckerInterface::class);
-        $authMock->expects($this->once())->method('isGranted')->willReturn($seeHourlyRate);
+        $authMock->method('isGranted')->willReturn($seeHourlyRate);
 
         $eventMock = $this->createMock(EventDispatcherInterface::class);
         $formConfigMock = $this->createMock(SystemConfiguration::class);

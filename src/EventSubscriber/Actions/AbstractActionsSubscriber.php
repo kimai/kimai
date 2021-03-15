@@ -10,10 +10,14 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Constants;
+use App\Event\PageActionsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+/**
+ * Base class for all listeners, which adds the pages default toolbars.
+ */
 abstract class AbstractActionsSubscriber implements EventSubscriberInterface
 {
     private $auth;
@@ -38,5 +42,22 @@ abstract class AbstractActionsSubscriber implements EventSubscriberInterface
     protected function documentationLink(string $url): string
     {
         return Constants::HOMEPAGE . '/documentation/' . $url;
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'actions.' . static::getActionName() => ['onActions', 1000],
+        ];
+    }
+
+    public static function getActionName(): string
+    {
+        throw new \Exception('You need to overwrite getActionName() or getSubscribedEvents() in ' . static::class);
+    }
+
+    public function onActions(PageActionsEvent $event): void
+    {
+        // non abstract - so the usage is completely optional
     }
 }

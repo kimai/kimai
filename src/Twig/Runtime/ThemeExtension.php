@@ -52,13 +52,9 @@ final class ThemeExtension implements RuntimeExtensionInterface
         return $themeEvent;
     }
 
-    public function actions(User $user, string $action, array $payload): ThemeEvent
+    public function actions(User $user, string $action, string $view, array $payload = []): ThemeEvent
     {
-        if (!\array_key_exists('actions', $payload)) {
-            $payload['actions'] = [];
-        }
-
-        $themeEvent = new PageActionsEvent($user, $payload, $action);
+        $themeEvent = new PageActionsEvent($user, $payload, $action, $view);
 
         $eventName = 'actions.' . $action;
 

@@ -61,6 +61,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
             $timezone = date_default_timezone_get();
         }
 
+        $enableDefaultReport = $this->voter->isGranted('view_reporting');
         $enableHourlyRate = false;
         $hourlyRateOptions = [];
 
@@ -151,6 +152,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setValue(ReportingService::DEFAULT_VIEW)
                 ->setOrder(650)
                 ->setSection('behaviour')
+                ->setEnabled($enableDefaultReport)
                 ->setType(ReportType::class),
 
             (new UserPreference())

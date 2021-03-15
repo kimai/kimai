@@ -136,6 +136,10 @@ final class ProjectController extends AbstractController
                 $this->projectService->updateProject($project);
                 $this->flashSuccess('action.update.success');
 
+                if ($this->isGranted('view', $project)) {
+                    return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+                }
+
                 return $this->redirectToRoute('admin_project');
             } catch (\Exception $ex) {
                 $this->flashUpdateException($ex);

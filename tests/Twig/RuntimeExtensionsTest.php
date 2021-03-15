@@ -41,11 +41,9 @@ class RuntimeExtensionsTest extends TestCase
             'trigger',
             'actions',
             'javascript_translations',
-            'timesheet_exporter',
             'active_timesheets',
             'encore_entry_css_source',
             'render_widget',
-            'available_reports'
         ];
 
         $i = 0;
