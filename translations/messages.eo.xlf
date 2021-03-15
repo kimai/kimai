@@ -1146,6 +1146,14 @@
         <source>file</source>
         <target>Dosiero</target>
       </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Ne fakturita</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Ne eksportita</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
