@@ -142,6 +142,10 @@ final class CustomerController extends AbstractController
                 $this->repository->saveCustomer($customer);
                 $this->flashSuccess('action.update.success');
 
+                if ($this->isGranted('view', $customer)) {
+                    return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
+                }
+
                 return $this->redirectToRoute('admin_customer');
             } catch (\Exception $ex) {
                 $this->flashUpdateException($ex);

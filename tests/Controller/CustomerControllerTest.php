@@ -344,9 +344,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $team2->tick();
 
         $client->submit($form);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/'));
-        $client->followRedirect();
-        $this->assertHasDataTable($client);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
 
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);

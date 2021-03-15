@@ -13,25 +13,19 @@ use App\Event\PageActionsEvent;
 
 class InvoiceArchiveSubscriber extends AbstractActionsSubscriber
 {
-    public static function getSubscribedEvents(): array
+    public static function getActionName(): string
     {
-        return [
-            'actions.invoice_details' => ['onActions', 1000],
-        ];
+        return 'invoice_details';
     }
 
-    public function onActions(PageActionsEvent $event)
+    public function onActions(PageActionsEvent $event): void
     {
-        $actions = $event->getActions();
-
         if ($this->isGranted('view_invoice')) {
-            $actions['back'] = ['url' => $this->path('invoice'), 'translation_domain' => 'actions'];
+            $event->addBack($this->path('invoice'));
         }
-
-        $actions['visibility'] = '#modal_invoices';
-        $actions['download'] = ['url' => $this->path('invoice_export'), 'class' => 'toolbar-action'];
-        $actions['help'] = ['url' => $this->documentationLink('invoices.html'), 'target' => '_blank'];
-
-        $event->setActions($actions);
+        $event->addSearchToggle();
+        $event->addColumnToggle('#modal_invoices');
+        $event->addQuickExport($this->path('invoice_export'));
+        $event->addHelp($this->documentationLink('invoices.html'));
     }
 }

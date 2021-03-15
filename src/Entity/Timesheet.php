@@ -367,6 +367,11 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         return $this->end;
     }
 
+    public function isRunning(): bool
+    {
+        return $this->end === null;
+    }
+
     /**
      * @param DateTime $end
      * @return Timesheet

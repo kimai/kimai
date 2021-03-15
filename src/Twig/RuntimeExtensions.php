@@ -10,9 +10,7 @@
 namespace App\Twig;
 
 use App\Twig\Runtime\EncoreExtension;
-use App\Twig\Runtime\ExporterExtension;
 use App\Twig\Runtime\MarkdownExtension;
-use App\Twig\Runtime\ReportingExtension;
 use App\Twig\Runtime\ThemeExtension;
 use App\Twig\Runtime\TimesheetExtension;
 use App\Twig\Runtime\WidgetExtension;
@@ -31,11 +29,9 @@ class RuntimeExtensions extends AbstractExtension
             new TwigFunction('trigger', [ThemeExtension::class, 'trigger'], ['needs_environment' => true]),
             new TwigFunction('actions', [ThemeExtension::class, 'actions']),
             new TwigFunction('javascript_translations', [ThemeExtension::class, 'getJavascriptTranslations']),
-            new TwigFunction('timesheet_exporter', [ExporterExtension::class, 'getTimesheetExporter']),
             new TwigFunction('active_timesheets', [TimesheetExtension::class, 'activeEntries']),
             new TwigFunction('encore_entry_css_source', [EncoreExtension::class, 'getEncoreEntryCssSource']),
             new TwigFunction('render_widget', [WidgetExtension::class, 'renderWidget'], ['is_safe' => ['html']]),
-            new TwigFunction('available_reports', [ReportingExtension::class, 'getAvailableReports'], []),
         ];
     }
 
