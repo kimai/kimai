@@ -1,52 +1,13 @@
 {% macro invoices(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {'visibility': '#modal_invoice'} %}
-
-    {% if is_granted('history_invoice') %}
-        {% set actions = actions|merge({'list': path('admin_invoice_list')}) %}
-    {% endif %}
-
-    {% if is_granted('manage_invoice_template') %}
-        {% set actions = actions|merge({'invoice-template': path('admin_invoice_template')}) %}
-    {% endif %}
-
-    {% if is_granted('system_configuration') %}
-        {% set actions = actions|merge({'settings': {'url': path('system_configuration_section', {'section': 'invoice'}), 'class': 'modal-ajax-form'}}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.invoices', {'actions': actions, 'view': view}) %}
-    {{ widgets.page_actions(event.payload.actions) }}
+    {% set event = actions(app.user, 'invoices', view) %}
+    {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 
-{% macro invoice(invoice, view, options) %}
+{% macro invoice(invoice, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {} %}
-
-    {% if is_granted('history_invoice') %}
-        {% if invoice.new %}
-            {% set actions = actions|merge({'invoice.pending': path('admin_invoice_status', {'id': invoice.id, 'status': 'pending'})}) %}
-        {% elseif invoice.pending %}
-            {% set actions = actions|merge({'invoice.paid': path('admin_invoice_status', {'id': invoice.id, 'status': 'paid'})}) %}
-        {% endif %}
-
-        {% set actions = actions|merge({'download': {'url': path('admin_invoice_download', {'id': invoice.id}), 'target': '_blank'}}) %}
-        {% set actions = actions|merge({'trash': {'url': path('admin_invoice_delete', {'id' : invoice.id}), 'class': 'confirmation-link', 'attr': {'data-question': 'confirm.delete'}}}) %}
-    {% endif %}
-
-    {% if options.back is defined %}
-        {% set actions = actions|merge({'back': options.back}) %}
-    {% endif %}
-
-    {% set event = trigger('actions.invoice', {'actions': actions, 'invoice': invoice}) %}
-    {% if view == 'index' or view == 'custom' %}
-        {{ widgets.table_actions(event.payload.actions) }}
-    {% else %}
-        {{ widgets.entity_actions(event.payload.actions) }}
-    {% endif %}
+    {% set event = actions(app.user, 'invoice', view, {'invoice': invoice}) %}
+    {{ widgets.table_actions(event.actions) }}
 {% endmacro %}
 
 {% macro invoice_listing(view) %}
