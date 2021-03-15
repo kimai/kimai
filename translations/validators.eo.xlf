@@ -34,6 +34,10 @@
         <source>You must select at least one user or team.</source>
         <target>Vi devas elekti almenaŭ unu uzanton aŭ teamon.</target>
       </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>La buĝeto estas elĉerpita. El la disponebla %budget%, %used% estis uzita ĝis nun, kaj %free% ankoraŭ restas uzebla.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
