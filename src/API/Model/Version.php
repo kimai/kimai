@@ -30,6 +30,16 @@ class Version
      */
     protected $version = Constants::VERSION;
     /**
+     * Kimai Version, as integer eg. "19"
+     *
+     * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="integer")
+     */
+    protected $versionId = Constants::VERSION_ID;
+    /**
      * Candidate: either "prod" or "dev"
      *
      * @var string
