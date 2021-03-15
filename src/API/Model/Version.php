@@ -34,7 +34,7 @@ class Version
      *
      * Follows the same logic as PHP_VERSION_ID, see https://www.php.net/manual/de/function.phpversion.php
      *
-     * @var string
+     * @var int
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
