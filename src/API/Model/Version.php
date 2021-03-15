@@ -20,7 +20,7 @@ use JMS\Serializer\Annotation as Serializer;
 class Version
 {
     /**
-     * Kimai Version, eg. "1.9"
+     * Kimai Version, eg. "1.14"
      *
      * @var string
      *
@@ -30,7 +30,9 @@ class Version
      */
     protected $version = Constants::VERSION;
     /**
-     * Kimai Version, as integer eg. "19"
+     * Kimai Version as integer, eg. 11400
+     *
+     * Follows the same logic as PHP_VERSION_ID, see https://www.php.net/manual/de/function.phpversion.php
      *
      * @var string
      *
