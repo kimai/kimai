@@ -18,6 +18,10 @@
         <source>report_project_view</source>
         <target>Projekta superrigardo</target>
       </trans-unit>
+      <trans-unit id="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>Komenca raporto</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
