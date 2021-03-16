@@ -148,4 +148,22 @@ EOD;
         $sut = new SamlController($this->getAuth(), $this->getSystemConfiguration(false));
         $sut->metadataAction();
     }
+
+    public function testLogoutActionThrowsExceptionOnDisabledSaml()
+    {
+        $this->expectException(NotFoundHttpException::class);
+        $this->expectExceptionMessage('SAML deactivated');
+
+        $sut = new SamlController($this->getAuth(), $this->getSystemConfiguration(false));
+        $sut->logoutAction();
+    }
+
+    public function testAcsActionThrowsExceptionOnDisabledSaml()
+    {
+        $this->expectException(NotFoundHttpException::class);
+        $this->expectExceptionMessage('SAML deactivated');
+
+        $sut = new SamlController($this->getAuth(), $this->getSystemConfiguration(false));
+        $sut->assertionConsumerServiceAction();
+    }
 }
