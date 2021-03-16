@@ -4,16 +4,16 @@
 {% block report_title %}{{ 'report_project_view'|trans({}, 'reporting') }}{% endblock %}
 
 {% set columns = {
-    'name':             {'class': 'alwaysVisible w-min'},
-    'today':            {'class': 'text-center hw-min', 'title': 'stats.durationToday'|trans},
-    'week':             {'class': 'text-center hw-min', 'title': 'stats.durationWeek'|trans},
-    'month':            {'class': 'text-center hw-min', 'title': 'stats.durationMonth'|trans},
-    'durationTotal':    {'class': 'hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationTotal'|trans},
-    'timeBudget':       {'title': 'label.timeBudget'|trans},
-    'budget':           {'title': 'label.budget'|trans},
+    'name':             {'class': 'alwaysVisible'},
+    'today':            {'class': 'hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationToday'|trans},
+    'week':             {'class': 'hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationWeek'|trans},
+    'month':            {'class': 'hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationMonth'|trans},
+    'durationTotal':    {'class': 'text-center hw-min', 'title': 'stats.durationTotal'|trans},
+    'timeBudget':       {'class': 'hidden-xs', 'title': 'label.timeBudget'|trans},
+    'budget':           {'class': 'hidden-xs', 'title': 'label.budget'|trans},
     'stateDuration':    {'class': 'hidden-sm hidden-xs text-center hw-min', 'title': 'label.not_exported'|trans},
     'stateMoney':       {'class': 'hidden-sm hidden-xs text-center hw-min', 'title': 'label.not_invoiced'|trans},
-    'projectEnd':       {'class': 'hidden-md hidden-sm hidden-xs hidden text-nowrap text-center  w-min', 'title': 'label.project_end'|trans},
+    'projectEnd':       {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_end'|trans},
     'comment':          {'class': 'hidden-md hidden-sm hidden-xs hidden', 'title': 'label.comment'|trans},
     'actions':          {'class': 'actions alwaysVisible'},
 } %}
