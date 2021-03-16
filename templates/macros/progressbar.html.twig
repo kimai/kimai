@@ -21,15 +21,19 @@
     {% endif %}
 
     <div class="progress-group">
-        <span class="progress-text">{{ title }}{% if percentReached >= 0 and subTitle is not empty %} &ndash; {{ percentReached|number_format(2) }}%{% endif %}</span>
-        <span class="progress-number">
-            {% if percentReached >= 0 and subTitle is empty %}
-                {{ percentReached|number_format(2) }}%
-            {% elseif subTitle is not empty %}
-                {{ subTitle }}
-            {% endif %}
-        </span>
-
+        <div class="progress-title">
+            <span class="progress-text">
+                {{ title }}
+                {% if percentReached >= 0 and subTitle is not empty %} &ndash; {{ percentReached|number_format(2) }}%{% endif %}
+            </span>
+            <span class="progress-number">
+                {% if percentReached >= 0 and subTitle is empty %}
+                    {{ percentReached|number_format(2) }}%
+                {% elseif subTitle is not empty %}
+                    {{ subTitle }}
+                {% endif %}
+            </span>
+        </div>
         <div class="progress">
             <div class="progress-bar {{ class }}" role="progressbar" aria-valuenow="{{ width }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ width }}%"></div>
         </div>
