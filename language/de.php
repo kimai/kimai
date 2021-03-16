@@ -457,6 +457,7 @@ Wählen Sie ein anderes Tabellenpräfix oder löschen Sie die existierenden Tabe
         'times' => 'Zeiten',
         'expenses' => 'Auslagen',
         'reverse_order' => 'Ältere Einträge zuerst',
+        'grouped_entries' => 'Gruppierte Einträge',
         'time_period' => 'Zeitraum',
         'duration_unit' => 'Std.',
         'cleared' => 'Abgerechnet',

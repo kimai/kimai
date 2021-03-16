@@ -33,7 +33,11 @@
                     </li>
                     <li>
                         <label for="reverse_order"><?php echo $this->translate('export_extension:reverse_order') ?>:</label>
-                        <input type="checkbox" value="true" name="reverse_order" id="reverse_order"/>
+                        <input type="checkbox" value="true" name="reverse_order" id="reverse_order" <?php if ($this->prefs['reverse_order']): ?> checked="checked" <?php endif; ?>/>
+                    </li>
+                    <li>
+                        <label for="grouped_entries"><?php echo $this->translate('export_extension:grouped_entries') ?>:</label>
+                        <input type="checkbox" value="true" name="grouped_entries" id="grouped_entries" <?php if ($this->prefs['grouped_entries']): ?> checked="checked" <?php endif; ?>/>
                     </li>
                     <li>
                         <?php echo $this->translate('export_extension:dl_hint') ?>

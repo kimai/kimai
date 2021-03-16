@@ -63,6 +63,7 @@ include 'private_db_layer_mysql.php';
  * @param int $filter_type (-1 show time and expenses, 0: only show time entries, 1: only show expenses)
  * @param bool $limitCommentSize should comments be cut off, when they are too long
  * @param int $filter_refundable
+ * @param bool $groupedEntries
  * @return array with time recordings and expenses chronologically sorted
  */
 function export_get_data(
@@ -78,7 +79,8 @@ function export_get_data(
     $filter_cleared = -1,
     $filter_type = -1,
     $limitCommentSize = true,
-    $filter_refundable = -1
+    $filter_refundable = -1,
+    $groupedEntries = false
 ) {
     global $expense_ext_available;
     $database = Kimai_Registry::getDatabase();
@@ -94,7 +96,11 @@ function export_get_data(
             $activities,
             $limit,
             $reverse_order,
-            $filter_cleared
+            $filter_cleared,
+            0,
+            0,
+            false,
+            $groupedEntries
         );
     }
 
@@ -160,7 +166,9 @@ function export_get_data(
             if ($timeSheetEntries[$timeSheetEntries_index]['end'] != 0) {
                 // active recordings will be omitted
                 $arr['type'] = 'timeSheet';
-                $arr['id'] = $timeSheetEntries[$timeSheetEntries_index]['timeEntryID'];
+                if (isset($timeSheetEntries[$timeSheetEntries_index]['timeEntryID'])) {
+                    $arr['id'] = $timeSheetEntries[$timeSheetEntries_index]['timeEntryID'];
+                }
                 $arr['time_in'] = $timeSheetEntries[$timeSheetEntries_index]['start'];
                 $arr['time_out'] = $timeSheetEntries[$timeSheetEntries_index]['end'];
                 $arr['duration'] = $timeSheetEntries[$timeSheetEntries_index]['duration'];

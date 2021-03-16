@@ -33,6 +33,7 @@ switch ($axAction) {
             'download_pdf' => 1,
             'customer_new_page' => 0,
             'reverse_order' => 0,
+            'grouped_entries' => 0,
             'pdf_format' => 'export_pdf',
             'time_type' => 'dec_time'
         ];
@@ -45,6 +46,7 @@ switch ($axAction) {
     case 'XLS':
         $defaults = [
             'reverse_order' => 0,
+            'grouped_entries' => 0,
         ];
         $prefs = $database->user_get_preferences_by_prefix('ki_export.xls.');
         $view->assign('prefs', array_merge($defaults, $prefs));
@@ -57,6 +59,7 @@ switch ($axAction) {
             'column_delimiter' => ',',
             'quote_char' => '"',
             'reverse_order' => 0,
+            'grouped_entries' => 0,
         ];
         $prefs = $database->user_get_preferences_by_prefix('ki_export.csv.');
         $view->assign('prefs', array_merge($defaults, $prefs));
@@ -68,6 +71,7 @@ switch ($axAction) {
         $defaults = [
             'print_summary' => 1,
             'reverse_order' => 0,
+            'grouped_entries' => 0,
         ];
         $prefs = $database->user_get_preferences_by_prefix('ki_export.print.');
         $view->assign('prefs', array_merge($defaults, $prefs));

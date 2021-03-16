@@ -2675,6 +2675,7 @@ class Kimai_Database_Mysql
      * @param int $startRows
      * @param int $limitRows
      * @param bool $countOnly
+     * @param bool $groupedEntries
      * @return array
      */
     public function get_timeSheet(
@@ -2689,7 +2690,8 @@ class Kimai_Database_Mysql
         $filterCleared = null,
         $startRows = 0,
         $limitRows = 0,
-        $countOnly = false
+        $countOnly = false,
+        $groupedEntries = false
     ) {
         // -1 for disabled, 0 for only not cleared entries
         if (!is_numeric($filterCleared)) {
@@ -2735,27 +2737,62 @@ class Kimai_Database_Mysql
             $limit = '';
         }
 
-        $select = 'SELECT timeSheet.*, 
-            status.status,
-            customer.name AS customerName, customer.customerID as customerID,
-            activity.name AS activityName,
-            project.name AS projectName, project.comment AS projectComment,
-            user.name AS userName, user.alias AS userAlias ';
+        if ($groupedEntries) {
+            $query = "SELECT
+                DATE_FORMAT(FROM_UNIXTIME(`start`), '%Y-%m-%d') AS `aggrDate`,
+                MIN(`start`) AS `start`,
+                MAX(`end`) AS `end`,
+                SUM(`duration`) AS `duration`,
+                GROUP_CONCAT(DISTINCT `userID`) AS `userID`,
+                `projectID`,
+                `activityID`,
+                GROUP_CONCAT(`description` SEPARATOR '\\n') AS `description`,
+                GROUP_CONCAT(`timeSheet`.`comment` SEPARATOR ', ') AS `comment`,
+                `commentType`,
+                `cleared`,
+                GROUP_CONCAT(`location` SEPARATOR ', ') AS `location`,
+                GROUP_CONCAT(`trackingNumber` SEPARATOR ', ') AS `trackingNumber`,
+                `rate`,
+                `fixedRate`,
+                `timeSheet`.`budget`,
+                MIN(`timeSheet`.`approved`) as `approved`,
+                `statusID`,
+                MIN(`billable`) as `billable`,
+                `customer`.`name` AS `customerName`, `customer`.`customerID` as `customerID`,
+                `activity`.`name` AS `activityName`,
+                `project`.`name` AS `projectName`, `project`.`comment` AS `projectComment`,
+                `user`.`name` AS `userName`, `user`.`alias` AS `userAlias`
+                FROM `${p}timeSheet` AS `timeSheet`
+                    JOIN `${p}projects` AS `project` USING (`projectID`) 
+                    JOIN `${p}customers` AS `customer` USING (`customerID`) 
+                    JOIN `${p}activities` AS `activity` USING (`activityID`) 
+                    JOIN `${p}users` AS `user` USING (`userID`) "
+                    . (count($whereClauses) > 0 ? ' WHERE ' : ' ') . implode(' AND ', $whereClauses) .
+                    ' GROUP BY `aggrDate`, `projectID`, `activityID`, `rate`, `fixedRate`' .
+                    ' ORDER BY `start` ' . ($reverse_order ? 'ASC ' : 'DESC ') . $limit . ';';
+        } else {
+            $select = 'SELECT timeSheet.*, 
+                status.status,
+                customer.name AS customerName, customer.customerID as customerID,
+                activity.name AS activityName,
+                project.name AS projectName, project.comment AS projectComment,
+                user.name AS userName, user.alias AS userAlias ';
 
-        if ($countOnly) {
-            $select = 'SELECT COUNT(*) AS total';
-            $limit = '';
-        }
+            if ($countOnly) {
+                $select = 'SELECT COUNT(*) AS total';
+                $limit = '';
+            }
 
-        $query = "$select
+            $query = "$select
                 FROM ${p}timeSheet AS timeSheet
                 JOIN ${p}projects AS project USING (projectID)
                 JOIN ${p}customers AS customer USING (customerID)
-                JOIN ${p}users AS user USING(userID)
-                JOIN ${p}statuses AS status USING(statusID)
-                JOIN ${p}activities AS activity USING(activityID) "
-                 . (count($whereClauses) > 0 ? ' WHERE ' : ' ') . implode(' AND ', $whereClauses) .
-                 ' ORDER BY start ' . ($reverse_order ? 'ASC ' : 'DESC ') . $limit . ';';
+                JOIN ${p}users AS user USING (userID)
+                JOIN ${p}statuses AS status USING (statusID)
+                JOIN ${p}activities AS activity USING (activityID) "
+                . (count($whereClauses) > 0 ? ' WHERE ' : ' ') . implode(' AND ', $whereClauses) .
+                ' ORDER BY start ' . ($reverse_order ? 'ASC ' : 'DESC ') . $limit . ';';
+        }
 
         $result = $this->conn->Query($query);
 
@@ -2775,7 +2812,10 @@ class Kimai_Database_Mysql
         $this->conn->MoveFirst();
         while (!$this->conn->EndOfSeek()) {
             $row = $this->conn->Row();
-            $arr[$i]['timeEntryID'] = $row->timeEntryID;
+
+            if (!$groupedEntries) {
+                $arr[$i]['timeEntryID'] = $row->timeEntryID;
+            }
 
             // Start time should not be less than the selected start time. This would confuse the user.
             if ($start && $row->start <= $start) {

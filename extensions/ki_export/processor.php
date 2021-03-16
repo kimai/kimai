@@ -55,6 +55,7 @@ if ($axAction === 'export_csv' ||
     $default_location = strip_tags($_REQUEST['default_location']);
 
     $reverse_order = isset($_REQUEST['reverse_order']);
+    $grouped_entries = isset($_REQUEST['grouped_entries']);
 
     $filter_cleared = $_REQUEST['filter_cleared'];
     $filter_refundable = $_REQUEST['filter_refundable'];
@@ -197,7 +198,8 @@ switch ($axAction) {
     case 'export_html':
         $database->user_set_preferences([
             'print_summary' => isset($_REQUEST['print_summary']) ? 1 : 0,
-            'reverse_order' => isset($_REQUEST['reverse_order']) ? 1 : 0
+            'reverse_order' => isset($_REQUEST['reverse_order']) ? 1 : 0,
+            'grouped_entries' => isset($_REQUEST['grouped_entries']) ? 1 : 0
         ], 'ki_export.print.');
 
         $exportData = export_get_data(
@@ -213,7 +215,8 @@ switch ($axAction) {
             $filter_cleared,
             $filter_type,
             false,
-            $filter_refundable
+            $filter_refundable,
+            $grouped_entries
         );
         $timeSum = 0;
         $wageSum = 0;
@@ -298,7 +301,8 @@ switch ($axAction) {
     case 'export_xls':
 
         $database->user_set_preferences([
-            'reverse_order' => isset($_REQUEST['reverse_order']) ? 1 : 0
+            'reverse_order' => isset($_REQUEST['reverse_order']) ? 1 : 0,
+            'grouped_entries' => isset($_REQUEST['grouped_entries']) ? 1 : 0
         ], 'ki_export.xls.');
 
         $exportData = export_get_data(
@@ -314,7 +318,8 @@ switch ($axAction) {
             $filter_cleared,
             $filter_type,
             false,
-            $filter_refundable
+            $filter_refundable,
+            $grouped_entries
         );
         $view->assign('exportData', count($exportData) > 0 ? $exportData : 0);
 
@@ -332,7 +337,8 @@ switch ($axAction) {
         $database->user_set_preferences([
             'column_delimiter' => $_REQUEST['column_delimiter'],
             'quote_char' => $_REQUEST['quote_char'],
-            'reverse_order' => isset($_REQUEST['reverse_order']) ? 1 : 0
+            'reverse_order' => isset($_REQUEST['reverse_order']) ? 1 : 0,
+            'grouped_entries' => isset($_REQUEST['grouped_entries']) ? 1 : 0
         ], 'ki_export.csv.');
 
         $exportData = export_get_data(
@@ -348,13 +354,15 @@ switch ($axAction) {
             $filter_cleared,
             $filter_type,
             false,
-            $filter_refundable
+            $filter_refundable,
+            $grouped_entries
         );
         $column_delimiter = $_REQUEST['column_delimiter'];
         $quote_char = $_REQUEST['quote_char'];
 
+        header('Content-Encoding: UTF-8');
         header('Content-Disposition:attachment;filename=export.csv');
-        header('Content-Type: text/csv');
+        header('Content-Type: text/csv; charset=UTF-8');
 
         $row = [];
 
@@ -503,6 +511,7 @@ switch ($axAction) {
             'download_pdf' => isset($_REQUEST['download_pdf']) ? 1 : 0,
             'customer_new_page' => isset($_REQUEST['customer_new_page']) ? 1 : 0,
             'reverse_order' => isset($_REQUEST['reverse_order']) ? 1 : 0,
+            'grouped_entries' => isset($_REQUEST['grouped_entries']) ? 1 : 0,
             'time_type' => 'dec_time',
             'pdf_format' => 'export_pdf'
         ], 'ki_export.pdf.');
@@ -520,7 +529,8 @@ switch ($axAction) {
             $filter_cleared,
             $filter_type,
             false,
-            $filter_refundable
+            $filter_refundable,
+            $grouped_entries
         );
 
         $orderedExportData = [];
@@ -556,6 +566,7 @@ switch ($axAction) {
             'download_pdf' => isset($_REQUEST['download_pdf']) ? 1 : 0,
             'customer_new_page' => isset($_REQUEST['customer_new_page']) ? 1 : 0,
             'reverse_order' => isset($_REQUEST['reverse_order']) ? 1 : 0,
+            'grouped_entries' => isset($_REQUEST['grouped_entries']) ? 1 : 0,
             'pdf_format' => 'export_pdf2'
         ], 'ki_export.pdf.');
 
@@ -572,7 +583,8 @@ switch ($axAction) {
             $filter_cleared,
             $filter_type,
             false,
-            $filter_refundable
+            $filter_refundable,
+            $grouped_entries
         );
 
         // sort data into new array, where first dimension is customer and second dimension is project
