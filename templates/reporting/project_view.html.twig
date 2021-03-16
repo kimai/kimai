@@ -31,6 +31,7 @@
         {% import "macros/progressbar.html.twig" as progress %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% import "macros/datatables.html.twig" as tables %}
+        {% import "project/actions.html.twig" as projectActions %}
         {% block box_body_class %}project-view-reporting-box {% if hasData %}no-padding{% endif %} table-responsive{% endblock %}
         {% block box_before %}
             {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': 'project-view-form'}}) }}
@@ -96,9 +97,7 @@
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'projectEnd') }}">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ project.comment }}</td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
-                                            {% if is_granted('view', project) %}
-                                                <a class="btn btn-default btn-sm" href="{{ path('project_details', {'id': project.id}) }}">{{ widgets.icon('details') }}</a>
-                                            {% endif %}
+                                            {{ projectActions.project(project, 'custom') }}
                                         </td>
                                     </tr>
                                 {% endif %}
