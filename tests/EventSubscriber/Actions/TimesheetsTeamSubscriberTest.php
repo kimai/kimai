@@ -12,6 +12,8 @@ namespace App\Tests\EventSubscriber\Actions;
 use App\EventSubscriber\Actions\TimesheetsTeamSubscriber;
 
 /**
+ * @covers \App\EventSubscriber\Actions\AbstractActionsSubscriber
+ * @covers \App\EventSubscriber\Actions\AbstractTimesheetsSubscriber
  * @covers \App\EventSubscriber\Actions\TimesheetsTeamSubscriber
  */
 class TimesheetsTeamSubscriberTest extends AbstractActionsSubscriberTest
