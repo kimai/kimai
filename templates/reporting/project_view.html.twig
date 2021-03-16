@@ -5,16 +5,17 @@
 
 {% set columns = {
     'name':             {'class': 'alwaysVisible w-min'},
-    'today':            {'class': 'text-nowrap text-center w-min', 'title': 'daterangepicker.today'|trans({}, 'daterangepicker')},
-    'week':             {'class': 'text-nowrap text-center w-min', 'title': 'agendaWeek'|trans},
-    'month':            {'class': 'text-nowrap text-center w-min', 'title': 'month'|trans},
-    'durationTotal':    {'class': 'hidden-md hidden-sm hidden-xs text-nowrap text-center w-min', 'title': 'label.total'|trans},
+    'today':            {'class': 'text-center hw-min', 'title': 'stats.durationToday'|trans},
+    'week':             {'class': 'text-center hw-min', 'title': 'stats.durationWeek'|trans},
+    'month':            {'class': 'text-center hw-min', 'title': 'stats.durationMonth'|trans},
+    'durationTotal':    {'class': 'hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationTotal'|trans},
     'timeBudget':       {'class': 'text-nowrap', 'title': 'label.timeBudget'|trans},
     'budget':           {'class': 'text-nowrap', 'title': 'label.budget'|trans},
-    'stateDuration':    {'class': 'hidden-sm hidden-xs text-nowrap text-center w-min', 'title': 'label.not_exported'|trans},
-    'stateMoney':       {'class': 'hidden-sm hidden-xs text-nowrap text-center w-min', 'title': 'label.not_invoiced'|trans},
+    'stateDuration':    {'class': 'hidden-sm hidden-xs text-center hw-min', 'title': 'label.not_exported'|trans},
+    'stateMoney':       {'class': 'hidden-sm hidden-xs text-center hw-min', 'title': 'label.not_invoiced'|trans},
     'projectEnd':       {'class': 'hidden-md hidden-sm hidden-xs hidden text-nowrap text-center  w-min', 'title': 'label.project_end'|trans},
     'comment':          {'class': 'hidden-md hidden-sm hidden-xs hidden', 'title': 'label.comment'|trans},
+    'actions':          {'class': 'actions alwaysVisible'},
 } %}
 {% set tableName = 'project_view_reporting' %}
 
@@ -51,14 +52,14 @@
 
                     {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
                         {% if is_granted('budget', mapping.customer) %}
-                            <tr>
-                                <th colspan="11">{{ widgets.label_customer(mapping.customer) }}</th>
+                            <tr class="summary">
+                                <td colspan="11">{{ widgets.label_customer(mapping.customer) }}</td>
                             </tr>
                             {% for entry in mapping.projects|sort((a, b) => a.project.name <=> b.project.name) %}
                                 {% set project = entry.project %}
                                 {% set currency = project.customer.currency %}
                                 {% if is_granted('budget', project) %}
-                                    <tr{% if is_granted('view', project) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': project.id}) }}"{% endif %}>
+                                    <tr>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_project(project) }}</td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'today') }}">{{ entry.durationDay|duration }}</td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'week') }}">{{ entry.durationWeek|duration }}</td>
@@ -94,6 +95,11 @@
                                         </td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'projectEnd') }}">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ project.comment }}</td>
+                                        <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
+                                            {% if is_granted('view', project) %}
+                                                <a class="btn btn-default btn-sm" href="{{ path('project_details', {'id': project.id}) }}">{{ widgets.icon('details') }}</a>
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}
