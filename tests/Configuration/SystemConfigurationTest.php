@@ -91,7 +91,11 @@ class SystemConfigurationTest extends TestCase
                     ]
                 ],
                 'weekends' => true,
-            ]
+            ],
+            'saml' => [
+                'activate' => false,
+                'title' => 'Fantastic OAuth login'
+            ],
         ];
     }
 
@@ -135,14 +139,17 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('RUB', $sut->find('defaults.customer.currency'));
         $this->assertTrue($sut->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(7, $sut->find('timesheet.active_entries.hard_limit'));
+        $this->assertFalse($sut->isSamlActive());
     }
 
     public function testDefaultWithMixedConfigs()
     {
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('timesheet.rules.allow_future_times')->setValue(''),
+            (new Configuration())->setName('saml.activate')->setValue(true),
         ]);
         $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
+        $this->assertTrue($sut->isSamlActive());
     }
 
     public function testUnknownConfigs()

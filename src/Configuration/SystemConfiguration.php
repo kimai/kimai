@@ -23,6 +23,13 @@ class SystemConfiguration implements SystemBundleConfiguration
         return $repository->getConfiguration();
     }
 
+    // ========== SAML configurations ==========
+
+    public function isSamlActive(): bool
+    {
+        return (bool) $this->find('saml.activate');
+    }
+
     // ========== Calendar configurations ==========
 
     public function getCalendarBusinessDays(): array
