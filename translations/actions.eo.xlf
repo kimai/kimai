@@ -94,6 +94,10 @@
         <source>create-timesheet-multiuser</source>
         <target>Por pluraj uzantoj</target>
       </trans-unit>
+      <trans-unit id="filter">
+        <source>filter</source>
+        <target>Filtri datumojn</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
