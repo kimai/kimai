@@ -94,6 +94,10 @@
         <source>create-timesheet-multiuser</source>
         <target>Birden çok kullanıcı için</target>
       </trans-unit>
+      <trans-unit id="filter">
+        <source>filter</source>
+        <target>Verileri filtrele</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
