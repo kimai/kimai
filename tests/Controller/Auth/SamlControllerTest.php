@@ -7,15 +7,18 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Saml\Controller;
+namespace App\Tests\Controller\Auth;
 
-use App\Saml\Controller\SamlController;
+use App\Configuration\SystemConfiguration;
+use App\Controller\Auth\SamlController;
+use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Saml\SamlAuthFactory;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Util\Xml;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -23,9 +26,35 @@ use Symfony\Component\Security\Core\Security;
  */
 class SamlControllerTest extends TestCase
 {
+    /**
+     * @param array $settings
+     * @param array $loaderSettings
+     * @return SystemConfiguration
+     */
+    protected function getSystemConfigurationMock(array $settings, array $loaderSettings = [])
+    {
+        $loader = new TestConfigLoader($loaderSettings);
+
+        return new SystemConfiguration($loader, $settings);
+    }
+
+    protected function getDefaultSettings(bool $activated = true)
+    {
+        return [
+            'saml' => [
+                'activate' => $activated,
+            ]
+        ];
+    }
+
     protected function getAuth()
     {
         return (new SamlAuthFactory($this))->create();
+    }
+
+    protected function getSystemConfiguration(bool $activated = true)
+    {
+        return $this->getSystemConfigurationMock($this->getDefaultSettings($activated), []);
     }
 
     public function testAssertionConsumerServiceAction()
@@ -34,7 +63,7 @@ class SamlControllerTest extends TestCase
         $this->expectExceptionMessage('You must configure the check path in your firewall.');
 
         $oauth = $this->getAuth();
-        $sut = new SamlController($oauth);
+        $sut = new SamlController($oauth, $this->getSystemConfiguration());
         $sut->assertionConsumerServiceAction();
     }
 
@@ -44,7 +73,7 @@ class SamlControllerTest extends TestCase
         $this->expectExceptionMessage('You must configure the logout path in your firewall.');
 
         $oauth = $this->getAuth();
-        $sut = new SamlController($oauth);
+        $sut = new SamlController($oauth, $this->getSystemConfiguration());
         $sut->logoutAction();
     }
 
@@ -75,7 +104,7 @@ class SamlControllerTest extends TestCase
 EOD;
 
         $oauth = $this->getAuth();
-        $sut = new SamlController($oauth);
+        $sut = new SamlController($oauth, $this->getSystemConfiguration());
         $result = $sut->metadataAction();
 
         self::assertInstanceOf(Response::class, $result);
@@ -98,7 +127,25 @@ EOD;
         $request->attributes->set(Security::AUTHENTICATION_ERROR, new \Exception('My test error'));
 
         $oauth = $this->getAuth();
-        $sut = new SamlController($oauth);
+        $sut = new SamlController($oauth, $this->getSystemConfiguration());
         $sut->loginAction($request);
+    }
+
+    public function testLoginActionThrowsExceptionOnDisabledSaml()
+    {
+        $this->expectException(NotFoundHttpException::class);
+        $this->expectExceptionMessage('SAML deactivated');
+
+        $sut = new SamlController($this->getAuth(), $this->getSystemConfiguration(false));
+        $sut->loginAction(new Request());
+    }
+
+    public function testMetadataActionThrowsExceptionOnDisabledSaml()
+    {
+        $this->expectException(NotFoundHttpException::class);
+        $this->expectExceptionMessage('SAML deactivated');
+
+        $sut = new SamlController($this->getAuth(), $this->getSystemConfiguration(false));
+        $sut->metadataAction();
     }
 }
