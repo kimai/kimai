@@ -1143,6 +1143,14 @@
         <source>file</source>
         <target>Fichier</target>
       </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Non facturé</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Non exporté</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
