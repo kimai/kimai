@@ -907,7 +907,7 @@
       </trans-unit>
       <trans-unit id="invoice.due_days">
         <source>invoice.due_days</source>
-        <target>Tipo di pagamento</target>
+        <target>Scadenza pagamento</target>
       </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>
@@ -1145,6 +1145,14 @@
       <trans-unit id="file">
         <source>file</source>
         <target>File</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Non fatturato</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Non esportato</target>
       </trans-unit>
     </body>
   </file>
