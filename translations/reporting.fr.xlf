@@ -18,6 +18,10 @@
         <source>report_project_view</source>
         <target>Aperçu du projet</target>
       </trans-unit>
+      <trans-unit id="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>Rapport initial</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
