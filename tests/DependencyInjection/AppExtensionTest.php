@@ -169,7 +169,6 @@ class AppExtensionTest extends TestCase
                     'title' => null,
                     'translation' => null,
                 ],
-                'auto_reload_datatable' => false,
                 'autocomplete_chars' => 3,
                 'tags_create' => true,
                 'calendar' => [

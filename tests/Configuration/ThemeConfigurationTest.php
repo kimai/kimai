@@ -47,7 +47,6 @@ class ThemeConfigurationTest extends TestCase
                 'company' => null,
                 'title' => null,
             ],
-            'auto_reload_datatable' => false,
             'tags_create' => true,
         ];
     }
@@ -61,7 +60,6 @@ class ThemeConfigurationTest extends TestCase
     public function testConfigs()
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
-        $this->assertFalse($sut->isAutoReloadDatatable());
         $this->assertTrue($sut->isAllowTagCreation());
         $this->assertNull($sut->getTitle());
     }

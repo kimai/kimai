@@ -61,14 +61,12 @@ class ConfigExtensionTest extends TestCase
                 'company' => null,
                 'title' => null,
             ],
-            'auto_reload_datatable' => false,
         ];
     }
 
     public function testPrefix()
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
-        self::assertFalse($sut->getThemeConfig('auto_reload_datatable'));
         self::assertEquals(3, $sut->getThemeConfig('active_warning'));
         self::assertEquals('green', $sut->getThemeConfig('box_color'));
     }
