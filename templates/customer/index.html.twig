@@ -9,7 +9,7 @@
     'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
     'number': {'class': 'hidden-xs hidden-sm hidden'},
     'company': {'class': 'hidden-xs hidden-sm hidden'},
-    'vat_id': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': 'vatId'},
+    'vat_id': {'class': 'hidden-xs hidden-sm hidden'},
     'contact': {'class': 'hidden-xs hidden-sm hidden'},
     'address': {'class': 'hidden-xs hidden-sm hidden'},
     'country': {'class': 'hidden-xs hidden-sm hidden'},
@@ -26,8 +26,8 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'budget': {'class': 'hidden-xs hidden-sm hidden text-center w-min', 'title': 'label.budget'|trans},
-    'timeBudget': {'class': 'hidden-xs hidden-sm hidden text-center w-min', 'title': 'label.timeBudget'|trans},
+    'budget': {'class': 'hidden-xs hidden-sm hidden text-center w-min'},
+    'timeBudget': {'class': 'hidden-xs hidden-sm hidden text-center w-min'},
     'team': {'class': 'text-center w-min', 'orderBy': false},
     'visible': {'class': 'text-center hidden w-min'},
     'actions': {'class': 'actions alwaysVisible'},
