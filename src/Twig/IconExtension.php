@@ -25,6 +25,8 @@ final class IconExtension extends AbstractExtension
         'avatar' => 'fas fa-user',
         'back' => 'fas fa-long-arrow-alt-left',
         'barcode' => 'fas fa-barcode',
+        'bookmark' => 'far fa-star',
+        'bookmarked' => 'fas fa-star',
         'calendar' => 'far fa-calendar-alt',
         'clock' => 'far fa-clock',
         'comment' => 'far fa-comment',
