@@ -9,6 +9,7 @@
 
 namespace App\Repository\Query;
 
+use App\Entity\Bookmark;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Utils\SearchTerm;
@@ -78,6 +79,14 @@ class BaseQuery
      * @var SearchTerm|null
      */
     private $searchTerm;
+    /**
+     * @var Bookmark
+     */
+    private $bookmark;
+    /**
+     * @var string|null
+     */
+    private $name;
 
     /**
      * @param Team[] $teams
@@ -272,6 +281,32 @@ class BaseQuery
         }
 
         return $this;
+    }
+
+    public function setBookmark(Bookmark $bookmark): void
+    {
+        $this->bookmark = $bookmark;
+    }
+
+    public function getBookmark(): ?Bookmark
+    {
+        return $this->bookmark;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getName(): string
+    {
+        if (null !== $this->name) {
+            return $this->name;
+        }
+
+        $shortClass = explode('\\', static::class);
+
+        return strtolower(array_pop($shortClass));
     }
 
     public function copyTo(BaseQuery $query): BaseQuery
