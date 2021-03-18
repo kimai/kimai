@@ -11,6 +11,7 @@
         {% block modal_body %}{% endblock %}
         {% block modal_footer %}{% endblock %}
     {% endembed %}
+    {% block page_search %}{% endblock %}
 {% endblock %}
 
 {% block page_content_start %}
@@ -251,7 +252,6 @@
 {% endblock %}
 
 {% block breadcrumb %}
-    {% block page_search %}{% endblock %}
     {% block page_actions %}{% endblock %}
 {% endblock %}
 

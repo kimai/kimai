@@ -60,7 +60,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiDateTimePicker('input[data-datetimepicker="on"]'));
         kimai.registerPlugin(new KimaiDatePicker('input[data-datepickerenable="on"]'));
         kimai.registerPlugin(new KimaiDatatable('section.content', 'table.dataTable'));
-        kimai.registerPlugin(new KimaiToolbar('form.header-search', 'toolbar-action'));
+        kimai.registerPlugin(new KimaiToolbar('form.searchform', 'toolbar-action'));
         kimai.registerPlugin(new KimaiSelectDataAPI('select[data-related-select]'));
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));

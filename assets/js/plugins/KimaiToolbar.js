@@ -32,32 +32,8 @@ export default class KimaiToolbar extends KimaiPlugin {
         this._registerPagination(formSelector, EVENT);
         this._registerSortableTables(formSelector, EVENT);
         this._registerAlternativeSubmitActions(formSelector, this.actionClass);
-        this._registerSearchButtons(formSelector);
 
-        jQuery('body')
-            // prevent that the dropdown closes, when a form input is changed - eg. a select option was clicked
-            .on('click', formSelector + ' .dropdown-menu', function (event) {
-                event.stopPropagation();
-            })
-            // prevent that a click into the search field will close the dropdown
-            .on('click', '.select2-search__field', function (event) {
-                event.stopPropagation();
-            })
-            // prevent that the dropdown closes when a optgroup header is clicked
-            .on('click', '.select2-results__group', function (event) {
-                event.stopPropagation();
-            })
-            // prevent that a click into a daterangepicker will close the dropdown
-            .on('click', '.daterangepicker', function (event) {
-                event.stopPropagation();
-            })
-            // prevent that clicks in the dropdown elements, but outside of elements will close the dropdown (eg border besides the search field)
-            .on('click', '.select2-container', function (event) {
-                event.stopPropagation();
-            })
-        ;
-
-        // Reset the page if filter values are changed, otherwise we might end up with a limited set of data, 
+        // Reset the page if filter values are changed, otherwise we might end up with a limited set of data,
         // which does not support the given page - and it would be just wrong to stay in the same page
         jQuery(formSelector +' input').change(function (event) {
             switch (event.target.id) {
@@ -95,38 +71,6 @@ export default class KimaiToolbar extends KimaiPlugin {
                 self.triggerChange();
             }
         });
-
-        // close all open selectpicker upon choosing any dropdown option
-        jQuery(formSelector + ' select.selectpicker').on('change', function(event) {
-            jQuery('.bootstrap-select.open').removeClass('open');
-        });
-        
-    }
-
-    /**
-     * The search toggle button is not part of this component, but it is directly connected to it.
-     * @private
-     */
-    _registerSearchButtons(formSelector) {
-        jQuery('body')
-            // only for mobile experience currently: show the search form field
-            .on('click', '.btn-search.search-toggle', function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-                jQuery(formSelector).parent('section').toggleClass('search-open');
-                jQuery(formSelector).toggleClass('hidden-xs');
-                jQuery(formSelector + ' input#searchTerm').dropdown('toggle');
-                jQuery(formSelector + ' input#searchTerm').focus();
-            })
-            // hide the search form field
-            .on('click', formSelector + ' a.search-cancel', function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-                jQuery(formSelector).parent('section').toggleClass('search-open');
-                jQuery(formSelector + ' input#searchTerm').dropdown('toggle');
-                jQuery(formSelector).toggleClass('hidden-xs');
-            })
-        ;
     }
 
     /**
@@ -175,10 +119,14 @@ export default class KimaiToolbar extends KimaiPlugin {
             if ($header.hasClass('sorting_desc')) {
                 order = 'ASC';
             }
-            jQuery(formSelector + ' input#orderBy').val(orderBy);
-            jQuery(formSelector + ' input#order').val(order);
-            // triggers the page reset - see below
-            jQuery(formSelector + ' input#order').trigger('change');
+
+            jQuery(formSelector + ' #orderBy').val(orderBy);
+            jQuery(formSelector + ' #order').val(order);
+
+            // re-render the selectboxes
+            jQuery(formSelector + ' #orderBy').trigger('change');
+            jQuery(formSelector + ' #order').trigger('change');
+
             // triggers the datatable reload - search for the event name
             EVENT.trigger('filter-change');
         });
@@ -206,13 +154,6 @@ export default class KimaiToolbar extends KimaiPlugin {
 
     }
     
-    hide() {
-        const toggle = jQuery(this.getSelector() + ' #searchTerm.dropdown-toggle');
-        if (toggle.parent().hasClass('open')) {
-            toggle.dropdown('toggle');
-        }
-    }
-
     /**
      * Triggers an event, that everyone can listen for.
      */

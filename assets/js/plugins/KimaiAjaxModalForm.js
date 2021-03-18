@@ -152,7 +152,6 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         });
         // -----------------------------------------------------------------------
 
-        this.getContainer().getPlugin('toolbar').hide();
         remoteModal.modal('show');
 
         // the new form that was loaded via ajax

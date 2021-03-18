@@ -65,7 +65,7 @@ export default class KimaiDatatable extends KimaiPlugin {
         // remove the empty fields to prevent errors
         let formData = jQuery(toolbarSelector + ' :input')
             .filter(function(index, element) {
-                return jQuery(element).val() != '';
+                return jQuery(element).val() !== '';
             })
             .serialize();
 
