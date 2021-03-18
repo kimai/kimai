@@ -95,7 +95,7 @@ class PageActionsEventTest extends TestCase
         $this->assertEquals(8, $sut->countActions());
 
         $expected = [
-            'search' => ['class' => 'search-toggle visible-xs-inline'],
+            'search' => ['modal' => '#modal_search'],
             'divider0' => null,
             'back' => ['url' => 'foo1', 'translation_domain' => 'actions'],
             'visibility' => ['modal' => '#foo2'],
