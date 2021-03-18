@@ -307,12 +307,36 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
+    protected function addOrder(FormBuilderInterface $builder)
+    {
+        $builder->add('order', ChoiceType::class, [
+            'label' => 'label.order',
+            'choices' => [
+                'label.asc' => BaseQuery::ORDER_ASC,
+                'label.desc' => BaseQuery::ORDER_DESC
+            ]
+        ]);
+    }
+
     protected function addHiddenOrderBy(FormBuilderInterface $builder, array $allowedColumns)
     {
         $builder->add('orderBy', HiddenType::class, [
             'constraints' => [
                 new Choice(['choices' => $allowedColumns])
             ]
+        ]);
+    }
+
+    protected function addOrderBy(FormBuilderInterface $builder, array $allowedColumns)
+    {
+        $all = [];
+        foreach ($allowedColumns as $id => $name) {
+            $label = \is_int($id) ? 'label.' . $name : $id;
+            $all[$label] = $name;
+        }
+        $builder->add('orderBy', ChoiceType::class, [
+            'label' => 'label.orderBy',
+            'choices' => $all
         ]);
     }
 
