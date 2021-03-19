@@ -7,7 +7,9 @@
     {{ encore_entry_link_tags('app') }}
     {{ encore_entry_script_tags('app') }}
     {% block styles %}{% endblock %}
-    {% block document_title %}{% endblock %}
+    {% if block('document_title') is defined %}
+        <title>{{ block('document_title') }}</title>
+    {% endif %}
 </head>
 <body class="pad export_print">
 <div class="wrapper">
