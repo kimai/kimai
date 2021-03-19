@@ -306,7 +306,7 @@ class BaseQuery
 
         $shortClass = explode('\\', static::class);
 
-        return strtolower(array_pop($shortClass));
+        return array_pop($shortClass);
     }
 
     public function copyTo(BaseQuery $query): BaseQuery

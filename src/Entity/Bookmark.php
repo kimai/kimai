@@ -24,6 +24,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Bookmark
 {
+    public const SEARCH_DEFAULT = 'search-default';
+    public const COLUMN_VISIBILITY = 'column-visibility';
+    public const TIMESHEET = 'timesheet';
+
     /**
      * @var int|null
      * @ORM\Column(name="id", type="integer")
@@ -38,6 +42,13 @@ class Bookmark
      * @Assert\NotNull()
      */
     private $user;
+    /**
+     * @var string
+     * @ORM\Column(name="type", type="string", length=20, nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2, max=20, allowEmptyString=false)
+     */
+    private $type;
     /**
      * @var string
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
@@ -74,6 +85,16 @@ class Bookmark
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
     }
 
     public function setContent(array $content): void

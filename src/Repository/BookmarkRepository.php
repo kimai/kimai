@@ -41,8 +41,12 @@ class BookmarkRepository extends EntityRepository
         }
     }
 
-    public function getDefault(User $user, string $name): ?Bookmark
+    public function getSearchDefaultOptions(User $user, string $name): ?Bookmark
     {
-        return $this->findOneBy(['user' => $user->getId(), 'name' => $name]);
+        return $this->findOneBy([
+            'user' => $user->getId(),
+            'type' => Bookmark::SEARCH_DEFAULT,
+            'name' => substr($name, 0, 50)
+        ]);
     }
 }

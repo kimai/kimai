@@ -180,10 +180,9 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             throw new \InvalidArgumentException('handleSearchForm() requires an instanceof BaseQuery as form data');
         }
 
-        $queryId = $data->getName() . '__DEFAULT__';
         /** @var BookmarkRepository $bookmarkRepo */
         $bookmarkRepo = $this->getDoctrine()->getRepository(Bookmark::class);
-        $bookmark = $bookmarkRepo->getDefault($this->getUser(), $queryId);
+        $bookmark = $bookmarkRepo->getSearchDefaultOptions($this->getUser(), $data->getName());
 
         $submitData = $request->query->all();
 
@@ -228,8 +227,9 @@ abstract class AbstractController extends BaseAbstractController implements Serv
 
             if ($bookmark === null) {
                 $bookmark = new Bookmark();
+                $bookmark->setType(Bookmark::SEARCH_DEFAULT);
                 $bookmark->setUser($this->getUser());
-                $bookmark->setName(substr($queryId, 0, 50));
+                $bookmark->setName(substr($data->getName(), 0, 50));
             }
 
             $bookmark->setContent($params);

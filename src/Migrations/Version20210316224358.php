@@ -31,6 +31,7 @@ final class Version20210316224358 extends AbstractMigration
         $bookmarks = $schema->createTable('kimai2_bookmarks');
         $bookmarks->addColumn('id', 'integer', ['length' => 11, 'autoincrement' => true, 'notnull' => true]);
         $bookmarks->addColumn('user_id', 'integer', ['length' => 11, 'notnull' => true]);
+        $bookmarks->addColumn('type', 'string', ['length' => 20, 'notnull' => true]);
         $bookmarks->addColumn('name', 'string', ['length' => 50, 'notnull' => true]);
         $bookmarks->addColumn('content', 'text', ['notnull' => true]);
         $bookmarks->addForeignKeyConstraint('kimai2_users', ['user_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_4016EF25A76ED395');
