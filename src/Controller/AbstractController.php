@@ -199,6 +199,13 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             return true;
         }
 
+        // clean up parameters from unknown values
+        foreach ($submitData as $name => $values) {
+            if (!$form->has($name)) {
+                unset($submitData[$name]);
+            }
+        }
+
         $form->submit($submitData, false);
 
         if (!$form->isValid()) {
