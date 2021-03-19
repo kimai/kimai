@@ -76,7 +76,7 @@ final class CustomerController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        if ($this->updateSearchBookmark($form, $request)) {
+        if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute('admin_customer');
         }
 

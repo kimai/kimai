@@ -173,7 +173,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return new LocaleFormats($this->container->get(LanguageFormattings::class), $locale);
     }
 
-    protected function updateSearchBookmark(FormInterface $form, Request $request): bool
+    protected function handleSearch(FormInterface $form, Request $request): bool
     {
         $data = $form->getData();
         if (!($data instanceof BaseQuery)) {

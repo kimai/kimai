@@ -55,7 +55,7 @@ final class TeamController extends AbstractController
         $query->setCurrentUser($this->getUser());
 
         $form = $this->getToolbarForm($query);
-        if ($this->updateSearchBookmark($form, $request)) {
+        if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute('admin_team');
         }
 

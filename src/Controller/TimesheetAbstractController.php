@@ -80,7 +80,7 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function index(TimesheetQuery $query, Request $request, string $route, string $renderTemplate, string $location): Response
     {
         $form = $this->getToolbarForm($query);
-        if ($this->updateSearchBookmark($form, $request)) {
+        if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute($route);
         }
 
