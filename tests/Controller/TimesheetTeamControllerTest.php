@@ -73,7 +73,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'state' => 1,
             'users' => [$user->getId()],
@@ -119,7 +119,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'location:homeoffice foobar',
         ]);
@@ -150,7 +150,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/team/timesheet/export/print'));
         $client->submit($form, [
             'state' => 1,

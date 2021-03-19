@@ -50,7 +50,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/user/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'hourly_rate:35 tony',
             'role' => 'ROLE_TEAMLEAD',
@@ -83,7 +83,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/user/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/user/export'));
         $client->submit($form, [
             'searchTerm' => 'hourly_rate:35 tony',

@@ -62,7 +62,7 @@ class TeamControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/teams/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'foo',
         ]);

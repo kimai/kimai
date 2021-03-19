@@ -67,7 +67,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'state' => 1,
             'pageSize' => 25,
@@ -113,7 +113,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'location:homeoffice foobar',
         ]);
@@ -138,7 +138,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/export/print'));
         $client->submit($form, [
             'state' => 1,
