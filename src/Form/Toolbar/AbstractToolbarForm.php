@@ -300,6 +300,8 @@ abstract class AbstractToolbarForm extends AbstractType
 
     protected function addHiddenOrder(FormBuilderInterface $builder)
     {
+        @trigger_error('addHiddenOrder() is deprecated and will be removed with 2.0, use the new search modal instead', E_USER_DEPRECATED);
+
         $builder->add('order', HiddenType::class, [
             'constraints' => [
                 new Choice(['choices' => [BaseQuery::ORDER_ASC, BaseQuery::ORDER_DESC]])
@@ -320,6 +322,8 @@ abstract class AbstractToolbarForm extends AbstractType
 
     protected function addHiddenOrderBy(FormBuilderInterface $builder, array $allowedColumns)
     {
+        @trigger_error('addHiddenOrderBy() is deprecated and will be removed with 2.0, use the new search modal instead', E_USER_DEPRECATED);
+
         $builder->add('orderBy', HiddenType::class, [
             'constraints' => [
                 new Choice(['choices' => $allowedColumns])

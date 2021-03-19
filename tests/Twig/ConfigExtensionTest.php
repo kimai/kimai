@@ -70,4 +70,13 @@ class ConfigExtensionTest extends TestCase
         self::assertEquals(3, $sut->getThemeConfig('active_warning'));
         self::assertEquals('green', $sut->getThemeConfig('box_color'));
     }
+
+    /**
+     * @group legacy
+     */
+    public function testDeprecation()
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        self::assertFalse($sut->getThemeConfig('auto_reload_datatable'));
+    }
 }

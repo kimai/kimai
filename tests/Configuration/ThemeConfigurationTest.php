@@ -71,5 +71,6 @@ class ThemeConfigurationTest extends TestCase
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
         $this->assertEquals('', $sut->getSelectPicker());
+        $this->assertFalse($sut->isAutoReloadDatatable());
     }
 }
