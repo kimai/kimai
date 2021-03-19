@@ -45,7 +45,11 @@ class TimesheetTeamController extends TimesheetAbstractController
      */
     public function indexAction($page, Request $request)
     {
-        return $this->index($page, $request, 'timesheet-team/index.html.twig', TimesheetMetaDisplayEvent::TEAM_TIMESHEET);
+        $query = new TimesheetQuery();
+        $query->setPage($page);
+        $query->setName('TeamTimesListing');
+
+        return $this->index($query, $request, 'admin_timesheet', 'timesheet-team/index.html.twig', TimesheetMetaDisplayEvent::TEAM_TIMESHEET);
     }
 
     /**

@@ -13,6 +13,7 @@ use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,11 @@ class TimesheetController extends TimesheetAbstractController
      */
     public function indexAction($page, Request $request)
     {
-        return $this->index($page, $request, 'timesheet/index.html.twig', TimesheetMetaDisplayEvent::TIMESHEET);
+        $query = new TimesheetQuery();
+        $query->setPage($page);
+        $query->setName('MyTimesListing');
+
+        return $this->index($query, $request, 'timesheet', 'timesheet/index.html.twig', TimesheetMetaDisplayEvent::TIMESHEET);
     }
 
     /**
