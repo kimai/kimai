@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Configuration\LanguageFormattings;
 use App\Entity\Bookmark;
 use App\Entity\User;
+use App\Repository\BookmarkRepository;
 use App\Repository\Query\BaseQuery;
 use App\Timesheet\DateTimeFactory;
 use App\Utils\LocaleFormats;
@@ -180,6 +181,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         }
 
         $queryId = $data->getName() . '__DEFAULT__';
+        /** @var BookmarkRepository $bookmarkRepo */
         $bookmarkRepo = $this->getDoctrine()->getRepository(Bookmark::class);
         $bookmark = $bookmarkRepo->getDefault($this->getUser(), $queryId);
 
@@ -220,7 +222,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             }
 
             $bookmark->setContent($params);
-            $this->getDoctrine()->getRepository(Bookmark::class)->saveBookmark($bookmark);
+            $bookmarkRepo->saveBookmark($bookmark);
 
             return true;
         }
