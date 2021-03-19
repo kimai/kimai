@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "team/actions.html.twig" as actions %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/toolbar.html.twig" as toolbar %}
+{% import "macros/search.html.twig" as search %}
+{% import "team/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'teams.title'|trans({}, 'teams') }}{% endblock %}
-{% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
+{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.teams('index') }}{% endblock %}
 
 {% block main %}

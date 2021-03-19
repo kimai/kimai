@@ -77,24 +77,11 @@ abstract class TimesheetAbstractController extends AbstractController
         return $this->service->getActiveTrackingMode();
     }
 
-    protected function index($page, Request $request, string $renderTemplate, string $location): Response
+    protected function index(TimesheetQuery $query, Request $request, string $route, string $renderTemplate, string $location): Response
     {
-        $query = new TimesheetQuery();
-        $query->setPage($page);
-
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
-        }
-
-        if (null !== $query->getBegin()) {
-            $query->getBegin()->setTime(0, 0, 0);
-        }
-        if (null !== $query->getEnd()) {
-            $query->getEnd()->setTime(23, 59, 59);
+        if ($this->updateSearchBookmark($form, $request)) {
+            return $this->redirectToRoute($route);
         }
 
         $tags = $query->getTags(true);
@@ -486,11 +473,7 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    /**
-     * @param TimesheetQuery $query
-     * @return FormInterface
-     */
-    protected function getToolbarForm(TimesheetQuery $query)
+    protected function getToolbarForm(TimesheetQuery $query): FormInterface
     {
         return $this->createForm(TimesheetToolbarForm::class, $query, [
             'action' => $this->generateUrl($this->getTimesheetRoute(), [

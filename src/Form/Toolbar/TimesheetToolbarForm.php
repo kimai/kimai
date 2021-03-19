@@ -41,8 +41,8 @@ class TimesheetToolbarForm extends AbstractToolbarForm
         $this->addExportStateChoice($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
-        $this->addHiddenOrder($builder);
-        $this->addHiddenOrderBy($builder, TimesheetQuery::TIMESHEET_ORDER_ALLOWED);
+        $this->addOrder($builder);
+        $this->addOrderBy($builder, TimesheetQuery::TIMESHEET_ORDER_ALLOWED);
     }
 
     /**

@@ -10,11 +10,15 @@
 namespace App\Controller;
 
 use App\Configuration\LanguageFormattings;
+use App\Entity\Bookmark;
 use App\Entity\User;
+use App\Repository\Query\BaseQuery;
 use App\Timesheet\DateTimeFactory;
 use App\Utils\LocaleFormats;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\DataCollectorTranslator;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -166,5 +170,61 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     protected function getLocaleFormats(string $locale): LocaleFormats
     {
         return new LocaleFormats($this->container->get(LanguageFormattings::class), $locale);
+    }
+
+    protected function updateSearchBookmark(FormInterface $form, Request $request): bool
+    {
+        $data = $form->getData();
+        if (!($data instanceof BaseQuery)) {
+            throw new \InvalidArgumentException('handleSearchForm() requires an instanceof BaseQuery as form data');
+        }
+
+        $queryId = $data->getName() . '__DEFAULT__';
+        $bookmarkRepo = $this->getDoctrine()->getRepository(Bookmark::class);
+        $bookmark = $bookmarkRepo->getDefault($this->getUser(), $queryId);
+
+        $submitData = $request->query->all();
+        if ($bookmark !== null) {
+            $data->setBookmark($bookmark);
+            $submitData = array_merge($bookmark->getContent(), $submitData);
+        }
+
+        if ($bookmark !== null && $request->query->has('removeDefaultQuery')) {
+            if ($request->query->has('removeDefaultQuery')) {
+                $bookmarkRepo->deleteBookmark($bookmark);
+            }
+
+            return true;
+        }
+
+        $form->submit($submitData, false);
+
+        if (!$form->isValid()) {
+            $data->resetByFormError($form->getErrors());
+        }
+
+        if ($request->query->has('setDefaultQuery')) {
+            $params = [];
+            foreach ($form->all() as $name => $child) {
+                $params[$name] = $child->getViewData();
+            }
+
+            if (isset($params['page'])) {
+                unset($params['page']);
+            }
+
+            if ($bookmark === null) {
+                $bookmark = new Bookmark();
+                $bookmark->setUser($this->getUser());
+                $bookmark->setName(substr($queryId, 0, 50));
+            }
+
+            $bookmark->setContent($params);
+            $this->getDoctrine()->getRepository(Bookmark::class)->saveBookmark($bookmark);
+
+            return true;
+        }
+
+        return false;
     }
 }

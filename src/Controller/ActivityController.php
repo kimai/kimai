@@ -31,7 +31,6 @@ use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\TeamRepository;
 use Exception;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -77,14 +76,10 @@ final class ActivityController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->updateSearchBookmark($form, $request)) {
+            return $this->redirectToRoute('admin_activity');
         }
 
-        /* @var $entries Pagerfanta */
         $entries = $this->repository->getPagerfantaForQuery($query);
 
         return $this->render('activity/index.html.twig', [

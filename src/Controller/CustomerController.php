@@ -76,11 +76,8 @@ final class CustomerController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->updateSearchBookmark($form, $request)) {
+            return $this->redirectToRoute('admin_customer');
         }
 
         $entries = $this->repository->getPagerfantaForQuery($query);
