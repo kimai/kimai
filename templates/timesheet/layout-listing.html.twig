@@ -48,7 +48,7 @@
     'actions': {'class': 'actions alwaysVisible'},
 }) %}
 
-{% block page_search %}{{ search.searchModal(dataTableResult.searchView) }}{% endblock %}
+{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
 
 {% block main_before %}
     {{ tables.data_table_column_modal(tableName, columns) }}

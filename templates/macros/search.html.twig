@@ -1,7 +1,7 @@
 {% macro searchModal(form) %}
+    {% form_theme form 'form/search-form.html.twig' %}
     <div class="modal fade" id="modal_search" tabindex="-1" role="dialog" aria-labelledby="modal_search_label">
         <div class="modal-dialog" role="document">
-            {% form_theme form 'form/search-form.html.twig' %}
             {{ form_start(form, {'attr': {'class': 'form-narrow searchform'}}) }}
             <div class="modal-content">
                 <div class="modal-header">
