@@ -35,7 +35,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_user_admin', 7);
         $this->assertPageActions($client, [
-            'search search-toggle visible-xs-inline' => '#',
+            'search' => '#',
             'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/user/export'),
             'create' => $this->createUrl('/admin/user/create'),

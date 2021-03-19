@@ -39,7 +39,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         // there are no records by default in the test database
         $this->assertHasNoEntriesWithFilter($client);
         $this->assertPageActions($client, [
-            'search search-toggle visible-xs-inline' => '#',
+            'search' => '#',
             'toolbar-action exporter-csv' => $this->createUrl('/timesheet/export/csv'),
             'toolbar-action exporter-print' => $this->createUrl('/timesheet/export/print'),
             'toolbar-action exporter-pdf' => $this->createUrl('/timesheet/export/pdf'),

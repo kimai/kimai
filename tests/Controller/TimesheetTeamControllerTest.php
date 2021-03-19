@@ -41,7 +41,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
 
         $this->assertPageActions($client, [
-            'search search-toggle visible-xs-inline' => '#',
+            'search' => '#',
             'toolbar-action exporter-csv' => $this->createUrl('/team/timesheet/export/csv'),
             'toolbar-action exporter-print' => $this->createUrl('/team/timesheet/export/print'),
             'toolbar-action exporter-pdf' => $this->createUrl('/team/timesheet/export/pdf'),

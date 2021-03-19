@@ -41,7 +41,7 @@ class TeamControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/teams/');
         $this->assertPageActions($client, [
-            'search search-toggle visible-xs-inline' => '#',
+            'search' => '#',
             'create' => $this->createUrl('/admin/teams/create'),
             'help' => 'https://www.kimai.org/documentation/teams.html'
         ]);
