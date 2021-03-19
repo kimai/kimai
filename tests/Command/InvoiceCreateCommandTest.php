@@ -182,10 +182,12 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--set-exported' => null, '--customer' => 1, '--template' => 'Invoice', '--start' => '2020-01-01', '--end' => '2020-03-01']);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('+----+----------+-------+------------- Created 1 invoice(s) --------------------------------------+', $output);
-        $this->assertStringContainsString('| ID | Customer | Total | Filename                                                                |', $output);
-        $this->assertStringContainsString('+----+----------+-------+-------------------------------------------------------------------------+', $output);
-        $this->assertStringContainsString('| Test     | 0 EUR | /', $output);
+        $this->assertStringContainsString('Created 1 invoice(s)', $output);
+        $this->assertStringContainsString('| ID', $output);
+        $this->assertStringContainsString('| Customer', $output);
+        $this->assertStringContainsString('| Total', $output);
+        $this->assertStringContainsString('| Filename', $output);
+        $this->assertStringContainsString('0 EUR', $output);
         $this->assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.html |', $output);
     }
 
