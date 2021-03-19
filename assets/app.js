@@ -92,6 +92,7 @@ require('./sass/app.scss');
 require('./js/KimaiWebLoader.js');
 global.KimaiPaginatedBoxWidget = require('./js/widgets/KimaiPaginatedBoxWidget').default;
 global.KimaiReloadPageWidget = require('./js/widgets/KimaiReloadPageWidget').default;
+global.KimaiCookies = require('./js/widgets/KimaiCookies').default;
 
 // ------ Autocomplete for tags only ------
 require('jquery-ui/ui/widgets/autocomplete');
