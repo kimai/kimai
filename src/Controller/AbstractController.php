@@ -186,20 +186,21 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         $bookmark = $bookmarkRepo->getDefault($this->getUser(), $queryId);
 
         $submitData = $request->query->all();
-        if ($bookmark !== null) {
-            $data->setBookmark($bookmark);
-            $submitData = array_merge($bookmark->getContent(), $submitData);
-        }
 
+        // remove bookmark
         if ($bookmark !== null && $request->query->has('removeDefaultQuery')) {
-            if ($request->query->has('removeDefaultQuery')) {
-                $bookmarkRepo->deleteBookmark($bookmark);
-            }
+            $bookmarkRepo->deleteBookmark($bookmark);
 
             return true;
         }
 
-        // clean up parameters from unknown values
+        // apply bookmark ONLY if search form was not submitted manually
+        if ($bookmark !== null && !$request->query->has('performSearch')) {
+            $data->setBookmark($bookmark);
+            $submitData = array_merge($bookmark->getContent(), $submitData);
+        }
+
+        // clean up parameters from unknown search values
         foreach ($submitData as $name => $values) {
             if (!$form->has($name)) {
                 unset($submitData[$name]);
@@ -218,8 +219,11 @@ abstract class AbstractController extends BaseAbstractController implements Serv
                 $params[$name] = $child->getViewData();
             }
 
-            if (isset($params['page'])) {
-                unset($params['page']);
+            $filter = ['page', 'setDefaultQuery', 'removeDefaultQuery', 'performSearch'];
+            foreach ($filter as $name) {
+                if (isset($params[$name])) {
+                    unset($params[$name]);
+                }
             }
 
             if ($bookmark === null) {
