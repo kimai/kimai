@@ -1,5 +1,5 @@
 {% macro toolbar(form, collapsible, displayInitial) %}
-    {% deprecated 'The macro "toolbar" is deprecated since 1.2 and will be removed with 2.0, use dropDownSearch() instead' %}
+    {% deprecated 'The macro "toolbar" is deprecated since 1.2 and will be removed with 2.0, use search.searchModal() instead' %}
     <div class="toolbar no-print">
         {% if collapsible %}<div class="collapse{% if displayInitial %} collapse.show in{% endif %}" id="{{ collapsible }}">{% endif %}
             {{ form_start(form, { 'attr': {'class': 'navbar-form'}}) }}
