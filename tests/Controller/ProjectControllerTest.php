@@ -66,7 +66,7 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/project/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
@@ -108,7 +108,7 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/project/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/project/export'));
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',

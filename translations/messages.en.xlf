@@ -60,6 +60,26 @@
                 <source>search</source>
                 <target>Search</target>
             </trans-unit>
+            <trans-unit id="label.searchTerm">
+                <source>label.searchTerm</source>
+                <target>Search term</target>
+            </trans-unit>
+            <trans-unit id="label.set_as_default">
+                <source>label.set_as_default</source>
+                <target>Save as default setting</target>
+            </trans-unit>
+            <trans-unit id="label.asc">
+                <source>label.asc</source>
+                <target>Ascending</target>
+            </trans-unit>
+            <trans-unit id="label.desc">
+                <source>label.desc</source>
+                <target>Descending</target>
+            </trans-unit>
+            <trans-unit id="label.orderBy">
+                <source>label.orderBy</source>
+                <target>Order by</target>
+            </trans-unit>
             <trans-unit id="my.profile">
                 <source>my.profile</source>
                 <target>My profile</target>

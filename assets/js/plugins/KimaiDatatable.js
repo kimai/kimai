@@ -48,12 +48,8 @@ export default class KimaiDatatable extends KimaiPlugin {
             document.addEventListener(eventName, handle);
         }
 
-        if (this.getConfiguration('autoReloadDatatable')) {
-            document.addEventListener('toolbar-change', handle);
-        } else {
-            document.addEventListener('pagination-change', handle);
-            document.addEventListener('filter-change', handle);
-        }
+        document.addEventListener('pagination-change', handle);
+        document.addEventListener('filter-change', handle);
     }
 
     reloadDatatable() {
@@ -69,7 +65,7 @@ export default class KimaiDatatable extends KimaiPlugin {
         // remove the empty fields to prevent errors
         let formData = jQuery(toolbarSelector + ' :input')
             .filter(function(index, element) {
-                return jQuery(element).val() != '';
+                return jQuery(element).val() !== '';
             })
             .serialize();
 

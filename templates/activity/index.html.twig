@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/toolbar.html.twig" as toolbar %}
+{% import "macros/search.html.twig" as search %}
 {% import "activity/actions.html.twig" as actions %}
 
 {% set columns = {
@@ -25,7 +25,7 @@
 {% set tableName = 'activity_admin' %}
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
-{% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
+{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.activities('index') }}{% endblock %}
 
 {% block main_before %}

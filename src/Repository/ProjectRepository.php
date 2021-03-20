@@ -271,6 +271,12 @@ class ProjectRepository extends EntityRepository
             case 'customer':
                 $orderBy = 'c.name';
                 break;
+            case 'project_start':
+                $orderBy = 'p.start';
+                break;
+            case 'project_end':
+                $orderBy = 'p.end';
+                break;
             default:
                 $orderBy = 'p.' . $orderBy;
                 break;

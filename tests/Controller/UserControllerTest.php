@@ -35,7 +35,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_user_admin', 7);
         $this->assertPageActions($client, [
-            'search search-toggle visible-xs-inline' => '#',
+            'search' => '#',
             'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/user/export'),
             'create' => $this->createUrl('/admin/user/create'),
@@ -50,7 +50,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/user/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'hourly_rate:35 tony',
             'role' => 'ROLE_TEAMLEAD',
@@ -83,7 +83,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/user/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/user/export'));
         $client->submit($form, [
             'searchTerm' => 'hourly_rate:35 tony',

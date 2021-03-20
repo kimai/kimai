@@ -229,7 +229,16 @@ class CustomerRepository extends EntityRepository
             ->from(Customer::class, 'c')
         ;
 
-        $qb->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
+        $orderBy = $query->getOrderBy();
+        switch ($orderBy) {
+            case 'vat_id':
+                $orderBy = 'c.vatId';
+                break;
+            default:
+                $orderBy = 'c.' . $orderBy;
+                break;
+        }
+        $qb->orderBy($orderBy, $query->getOrder());
 
         if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));

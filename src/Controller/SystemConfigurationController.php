@@ -429,14 +429,6 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('theme.tags_create')
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
-                    // TODO should that be configurable per user?
-                    /*
-                    (new Configuration())
-                        ->setName('theme.auto_reload_datatable')
-                        ->setLabel('theme.auto_reload_datatable') // TODO translation
-                        ->setType(CheckboxType::class)
-                        ->setTranslationDomain('system-configuration'),
-                    */
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_CALENDAR)
