@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("invoiceNumber")
  * @UniqueEntity("invoiceFilename")
  *
- * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "total", "tax", "currency", "vat", "dueDays", "dueDate", "user", "invoiceFilename"})
+ * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "user", "invoiceFilename"})
  * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @Exporter\Expose("dueDate", label="invoice.due_days", type="datetime", exp="object.getDueDate() === null ? null : object.getDueDate()")
  * @Exporter\Expose("user", label="label.username", type="string", exp="object.getUser() === null ? null : object.getUser().getDisplayName()")
@@ -173,11 +173,18 @@ class Invoice
     private $localized = false;
 
     /**
+     * @var float
+     *
+     * @Exporter\Expose(label="invoice.subtotal", type="float")
+     *
      * @ORM\Column(type="float")
+     * @Assert\NotNull()
      */
     private $subtotal;
 
     /**
+     * @var \DateTime
+     *
      * @ORM\Column(type="date", nullable=true)
      */
     private $payment_date;
