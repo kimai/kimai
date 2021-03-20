@@ -172,6 +172,16 @@ class Invoice
      */
     private $localized = false;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $subtotal;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $payment_date;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -242,6 +252,7 @@ class Invoice
     {
         $this->customer = $model->getCustomer();
         $this->user = $model->getUser();
+        $this->subtotal = $model->getCalculator()->getSubtotal();
         $this->total = $model->getCalculator()->getTotal();
         $this->tax = $model->getCalculator()->getTax();
         $this->invoiceNumber = $model->getInvoiceNumber();
@@ -317,5 +328,29 @@ class Invoice
     public function getInvoiceFilename(): ?string
     {
         return $this->invoiceFilename;
+    }
+
+    public function getSubtotal(): ?float
+    {
+        return $this->subtotal;
+    }
+
+    public function setSubtotal(float $subtotal): self
+    {
+        $this->subtotal = $subtotal;
+
+        return $this;
+    }
+
+    public function getPaymentDate(): ?\DateTimeInterface
+    {
+        return $this->payment_date;
+    }
+
+    public function setPaymentDate(?\DateTimeInterface $payment_date): self
+    {
+        $this->payment_date = $payment_date;
+
+        return $this;
     }
 }
