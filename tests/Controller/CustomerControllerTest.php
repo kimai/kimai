@@ -60,7 +60,7 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/customer/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
@@ -92,7 +92,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/customer/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/customer/export'));
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',

@@ -88,14 +88,10 @@ final class ProjectController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_project');
         }
 
-        /* @var $entries Pagerfanta */
         $entries = $this->repository->getPagerfantaForQuery($query);
 
         return $this->render('project/index.html.twig', [

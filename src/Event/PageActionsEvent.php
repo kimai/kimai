@@ -128,7 +128,7 @@ class PageActionsEvent extends ThemeEvent
 
     public function addSearchToggle(): void
     {
-        $this->addAction('search', ['class' => 'search-toggle visible-xs-inline']);
+        $this->addAction('search', ['modal' => '#modal_search']);
     }
 
     public function addQuickExport(string $url): void

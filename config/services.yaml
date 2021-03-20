@@ -240,3 +240,8 @@ services:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Invoice']
+
+    App\Repository\BookmarkRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Bookmark']

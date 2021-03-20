@@ -23,6 +23,7 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
         jQuery('[data-toggle="tooltip"]').tooltip();
         // activate all form plugins
         this.getContainer().getPlugin('form').activateForm('.content-wrapper form', 'body');
+        this.getContainer().getPlugin('form').activateForm('form.searchform', 'body');
     }
 
     /**

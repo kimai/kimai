@@ -39,7 +39,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         // there are no records by default in the test database
         $this->assertHasNoEntriesWithFilter($client);
         $this->assertPageActions($client, [
-            'search search-toggle visible-xs-inline' => '#',
+            'search' => '#',
             'toolbar-action exporter-csv' => $this->createUrl('/timesheet/export/csv'),
             'toolbar-action exporter-print' => $this->createUrl('/timesheet/export/print'),
             'toolbar-action exporter-pdf' => $this->createUrl('/timesheet/export/pdf'),
@@ -67,7 +67,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'state' => 1,
             'pageSize' => 25,
@@ -113,7 +113,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'location:homeoffice foobar',
         ]);
@@ -138,7 +138,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/export/print'));
         $client->submit($form, [
             'state' => 1,

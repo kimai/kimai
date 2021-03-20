@@ -343,7 +343,6 @@ class ConfigurationTest extends TestCase
                 'active_warning' => 3,
                 'box_color' => 'blue',
                 'select_type' => 'selectpicker',
-                'auto_reload_datatable' => false,
                 'show_about' => true,
                 'chart' => [
                     'background_color' => '#3c8dbc',

@@ -55,7 +55,7 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         for (let checkbox of form.querySelectorAll('input[type=checkbox]')) {
             settings[checkbox.getAttribute('name')] = checkbox.checked;
         }
-        Cookies.set(form.getAttribute('name'), JSON.stringify(settings), {expires: 365});
+        Cookies.set(form.getAttribute('name'), JSON.stringify(settings), {expires: 365, SameSite: 'Strict'});
         jQuery(this.modal).modal('toggle');
     }
 

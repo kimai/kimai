@@ -6,3 +6,10 @@ form fieldset {
         background-color: $highlight-bg;
     }
 }
+
+/* To be used with .form-horizontal - to reduce the space between rows, eg. used in the search modals */
+form.form-narrow {
+    .form-group {
+        margin: 0 0 5px 0;
+    }
+}

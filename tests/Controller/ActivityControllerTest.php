@@ -59,7 +59,7 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/activity/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
@@ -102,7 +102,7 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/activity/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/activity/export'));
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',

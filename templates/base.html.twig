@@ -11,6 +11,7 @@
         {% block modal_body %}{% endblock %}
         {% block modal_footer %}{% endblock %}
     {% endembed %}
+    {% block page_search %}{% endblock %}
 {% endblock %}
 
 {% block page_content_start %}
@@ -251,7 +252,6 @@
 {% endblock %}
 
 {% block breadcrumb %}
-    {% block page_search %}{% endblock %}
     {% block page_actions %}{% endblock %}
 {% endblock %}
 
@@ -280,7 +280,6 @@
                     locale: '{{ app.request.locale }}',
                     first_dow_iso: {{ iso_day_by_name(app.user.firstDayOfWeek) }},
                     twentyFourHours: {{ 'true'|hour24('false') }},
-                    autoReloadDatatable: {% if theme_config('auto_reload_datatable') %}true{% else %}false{% endif %},
                     autoComplete: {{ theme_config('autocomplete_chars') }},
                     defaultColor: '{{ constant('App\\Constants::DEFAULT_COLOR') }}',
                     updateBrowserTitle: {% if app.user.preferenceValue('theme.update_browser_title') %}true{% else %}false{% endif %}

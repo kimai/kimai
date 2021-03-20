@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/toolbar.html.twig" as toolbar %}
+{% import "macros/search.html.twig" as search %}
 
 {% if not showSummary is defined %}
     {% set showSummary = false %}
@@ -48,7 +48,7 @@
     'actions': {'class': 'actions alwaysVisible'},
 }) %}
 
-{% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
+{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
 
 {% block main_before %}
     {{ tables.data_table_column_modal(tableName, columns) }}
