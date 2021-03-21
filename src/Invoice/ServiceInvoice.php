@@ -249,6 +249,7 @@ final class ServiceInvoice
                 break;
 
             case Invoice::STATUS_PENDING:
+                $invoice->setPaymentDate(null);
                 $invoice->setIsPending();
                 break;
 
