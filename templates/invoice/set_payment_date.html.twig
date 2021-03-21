@@ -1,0 +1,18 @@
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+
+{% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
+
+{% block main %}
+    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formOptions = {
+        'title': (invoice.id is null ? 'create'|trans : 'edit'|trans({}, 'actions')),
+        'form': form,
+        'back': path('admin_project')
+    } %}
+    {% embed formEditTemplate with formOptions %}
+        {% block form_body %}
+            {{ form_row(form.paymentDate) }}
+            {{ form_widget(form) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
