@@ -11,14 +11,8 @@ namespace App\Form;
 
 use App\Entity\Customer;
 use App\Entity\Invoice;
-use App\Entity\Project;
-use App\Form\Type\CustomerType;
 use App\Form\Type\DateTimePickerType;
-use App\Repository\CustomerRepository;
-use App\Repository\Query\CustomerFormTypeQuery;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
