@@ -10,7 +10,7 @@
 namespace App\Form;
 
 use App\Entity\Invoice;
-use App\Form\Type\DateTimePickerType;
+use App\Form\Type\DatePickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,10 +28,9 @@ class InvoicePaymentDateForm extends AbstractType
         ];
 
         $builder
-            ->add('paymentDate', DateTimePickerType::class, array_merge($dateTimeOptions, [
+            ->add('paymentDate', DatePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.paymentDate',
                 'required' => true,
-                'time_increment' => 30,
             ]));
     }
 
