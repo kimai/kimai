@@ -17,7 +17,7 @@ use App\Export\Spreadsheet\AnnotatedObjectExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\InvoiceDocumentUploadForm;
-use App\Form\InvoiceSetPaymentDateForm;
+use App\Form\InvoicePaymentDateForm;
 use App\Form\InvoiceTemplateForm;
 use App\Form\Toolbar\InvoiceArchiveForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
@@ -238,7 +238,7 @@ final class InvoiceController extends AbstractController
             $form->handleRequest($request);
 
             if (!$form->isSubmitted() || !$form->isValid()) {
-                return $this->render('invoice/set_payment_date.html.twig', [
+                return $this->render('invoice/payment_date_edit.html.twig', [
                     'invoice' => $invoice,
                     'form' => $form->createView()
                 ]);
@@ -533,7 +533,7 @@ final class InvoiceController extends AbstractController
      */
     private function createPaymentDateForm(Invoice $invoice, Request $request): FormInterface
     {
-        return $this->createForm(InvoiceSetPaymentDateForm::class, $invoice, [
+        return $this->createForm(InvoicePaymentDateForm::class, $invoice, [
             'action' => $request->getUri(),
             'method' => 'POST',
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
