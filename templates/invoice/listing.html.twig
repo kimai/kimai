@@ -42,7 +42,13 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.customer) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'invoice_number') }}">{{ widgets.label(entry.invoiceNumber, 'default') }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'due_date') }}">{{ macros.invoice_due_date(entry) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'payment_date') }}">{{ macros.invoice_payment_date(entry) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'payment_date') }}">
+                    {% if entry.paymentDate and entry.paid %}
+                        {{ widgets.label(entry.paymentDate|date_short, 'primary') }}
+                    {% else %}
+                        &ndash;
+                    {% endif %}
+                </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'status') }}">{{ macros.invoice_status(entry) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'subtotal') }}">{{ entry.subtotal|money(entry.currency) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'tax') }}">{{ entry.tax|money(entry.currency) }}</td>

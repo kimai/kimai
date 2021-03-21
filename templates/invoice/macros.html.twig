@@ -23,12 +23,3 @@
         {{ widgets.label(invoice.dueDate|date_short, 'primary') }}
     {% endif %}
 {% endmacro %}
-
-{% macro invoice_payment_date(invoice) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-    {% if invoice.paymentDate and invoice.paid %}
-        {{ widgets.label(invoice.paymentDate|date_short, 'primary') }}
-    {% else %}
-        {{ widgets.label('', 'primary') }}
-    {% endif %}
-{% endmacro %}

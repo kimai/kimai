@@ -173,16 +173,6 @@ class Invoice
     private $localized = false;
 
     /**
-     * @var float
-     *
-     * @Exporter\Expose(label="invoice.subtotal", type="float")
-     *
-     * @ORM\Column(type="float")
-     * @Assert\NotNull()
-     */
-    private $subtotal;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
@@ -259,7 +249,6 @@ class Invoice
     {
         $this->customer = $model->getCustomer();
         $this->user = $model->getUser();
-        $this->subtotal = $model->getCalculator()->getSubtotal();
         $this->total = $model->getCalculator()->getTotal();
         $this->tax = $model->getCalculator()->getTax();
         $this->invoiceNumber = $model->getInvoiceNumber();
@@ -339,16 +328,13 @@ class Invoice
         return $this->invoiceFilename;
     }
 
+    /**
+     * @Exporter\Expose(label="invoice.subtotal", type="float", name="subtotal")
+     * @return float|null
+     */
     public function getSubtotal(): ?float
     {
-        return $this->subtotal;
-    }
-
-    public function setSubtotal(float $subtotal): self
-    {
-        $this->subtotal = $subtotal;
-
-        return $this;
+        return $this->total - $this->tax;
     }
 
     public function getPaymentDate(): ?\DateTime

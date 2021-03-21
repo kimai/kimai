@@ -31,6 +31,7 @@ class InvoicePaymentDateForm extends AbstractType
             ->add('paymentDate', DateTimePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.paymentDate',
                 'required' => true,
+                'time_increment' => 30,
             ]));
     }
 
@@ -42,7 +43,6 @@ class InvoicePaymentDateForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => Invoice::class,
             'timezone' => date_default_timezone_get(),
-            'time_increment' => 1,
             'attr' => [
                 'data-form-event' => 'kimai.invoiceUpdate'
             ],

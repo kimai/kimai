@@ -537,7 +537,6 @@ final class InvoiceController extends AbstractController
             'action' => $request->getUri(),
             'method' => 'POST',
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
-            'time_increment' => 15,
         ]);
     }
 }
