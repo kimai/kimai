@@ -283,6 +283,7 @@ class Invoice
 
     public function setIsNew(): Invoice
     {
+        $this->setPaymentDate(null);
         $this->status = self::STATUS_NEW;
 
         return $this;
@@ -295,6 +296,7 @@ class Invoice
 
     public function setIsPending(): Invoice
     {
+        $this->setPaymentDate(null);
         $this->status = self::STATUS_PENDING;
 
         return $this;

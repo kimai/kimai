@@ -233,7 +233,7 @@ final class InvoiceController extends AbstractController
      */
     public function changeStatusAction(Invoice $invoice, string $status, Request $request): Response
     {
-        if ($status == Invoice::STATUS_PAID) {
+        if ($status === Invoice::STATUS_PAID) {
             $form = $this->createPaymentDateForm($invoice, $request);
             $form->handleRequest($request);
 
