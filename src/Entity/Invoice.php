@@ -349,12 +349,12 @@ class Invoice
         return $this;
     }
 
-    public function getPaymentDate(): ?\DateTimeInterface
+    public function getPaymentDate(): ?\DateTime
     {
         return $this->payment_date;
     }
 
-    public function setPaymentDate(?\DateTimeInterface $payment_date): self
+    public function setPaymentDate(?\DateTime $payment_date): self
     {
         $this->payment_date = $payment_date;
 
