@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("invoiceNumber")
  * @UniqueEntity("invoiceFilename")
  *
- * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "user", "invoiceFilename"})
+ * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename"})
  * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @Exporter\Expose("dueDate", label="invoice.due_days", type="datetime", exp="object.getDueDate() === null ? null : object.getDueDate()")
  * @Exporter\Expose("user", label="label.username", type="string", exp="object.getUser() === null ? null : object.getUser().getDisplayName()")
@@ -175,9 +175,11 @@ class Invoice
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="date", nullable=true)
+     * * @Exporter\Expose(label="label.date", type="datetime")
+     *
+     * @ORM\Column(name="payment_date", type="date", nullable=true)
      */
-    private $payment_date;
+    private $paymentDate;
 
     public function getId(): ?int
     {
@@ -339,12 +341,12 @@ class Invoice
 
     public function getPaymentDate(): ?\DateTime
     {
-        return $this->payment_date;
+        return $this->paymentDate;
     }
 
-    public function setPaymentDate(?\DateTime $payment_date): self
+    public function setPaymentDate(?\DateTime $paymentDate): self
     {
-        $this->payment_date = $payment_date;
+        $this->paymentDate = $paymentDate;
 
         return $this;
     }
