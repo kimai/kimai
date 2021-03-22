@@ -22,9 +22,7 @@ class InvoicesSubscriber extends AbstractActionsSubscriber
     {
         $event->addColumnToggle('#modal_invoice');
 
-        if ($this->isGranted('history_invoice')) {
-            $event->addAction('list', ['url' => $this->path('admin_invoice_list')]);
-        }
+        $event->addAction('list', ['url' => $this->path('admin_invoice_list')]);
 
         if ($this->isGranted('manage_invoice_template')) {
             $event->addAction('invoice-template', ['url' => $this->path('admin_invoice_template')]);
