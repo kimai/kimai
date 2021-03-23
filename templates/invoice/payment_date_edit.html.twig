@@ -7,7 +7,7 @@
     {% set formOptions = {
         'title': (invoice.id is null ? 'create'|trans : 'edit'|trans({}, 'actions')),
         'form': form,
-        'back': path('admin_project')
+        'back': path('admin_invoice_list')
     } %}
     {% embed formEditTemplate with formOptions %}
         {% block form_body %}
