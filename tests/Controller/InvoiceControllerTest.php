@@ -320,6 +320,14 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->request($client, '/invoice/change-status/' . $id . '/paid');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $data = ['invoice_payment_date_form' => ['paymentDate' => 'invalid']];
+        $this->request($client, '/invoice/change-status/' . $id . '/paid', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $data = ['invoice_payment_date_form' => ['paymentDate' => date_format(new \DateTime(), 'Y-m-d')]];
+        $this->request($client, '/invoice/change-status/' . $id . '/paid', 'POST', [], json_encode($data));
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
