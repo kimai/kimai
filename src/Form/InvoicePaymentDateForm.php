@@ -29,7 +29,7 @@ class InvoicePaymentDateForm extends AbstractType
 
         $builder
             ->add('paymentDate', DatePickerType::class, array_merge($dateTimeOptions, [
-                'label' => 'label.paymentDate',
+                'label' => 'invoice.payment_date',
                 'required' => true,
             ]));
     }

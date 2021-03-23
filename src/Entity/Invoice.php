@@ -175,7 +175,7 @@ class Invoice
     /**
      * @var \DateTime
      *
-     * * @Exporter\Expose(label="label.date", type="datetime")
+     * @Exporter\Expose(label="invoice.payment_date", type="datetime")
      *
      * @ORM\Column(name="payment_date", type="date", nullable=true)
      */
