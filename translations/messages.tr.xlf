@@ -1145,6 +1145,26 @@
         <source>label.not_exported</source>
         <target>Dışa aktarılmadı</target>
       </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Sıralama ölçütü</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Azalan</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Artan</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Öntanımlı ayar olarak kaydet</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Arama terimi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
