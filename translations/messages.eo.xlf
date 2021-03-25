@@ -1154,6 +1154,26 @@
         <source>label.not_exported</source>
         <target>Ne eksportita</target>
       </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Malkreskante</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Kreskante</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Konservi kiel aprioron</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Serĉvorto</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Ordigi laŭ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
