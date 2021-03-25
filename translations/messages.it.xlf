@@ -70,7 +70,7 @@
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>
-        <target>Files</target>
+        <target>File</target>
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
@@ -1153,6 +1153,26 @@
       <trans-unit id="label.not_exported">
         <source>label.not_exported</source>
         <target>Non esportato</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Ordina per</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Decrescente</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Ascendente</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Salva come impostazione predefinita</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Termine di ricerca</target>
       </trans-unit>
     </body>
   </file>
