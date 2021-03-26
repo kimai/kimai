@@ -10,6 +10,7 @@
 namespace App\Tests\Invoice;
 
 use App\Configuration\LanguageFormattings;
+use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
 use App\Entity\InvoiceTemplate;
@@ -113,8 +114,11 @@ class ServiceInvoiceTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Cannot create invoice model without template');
 
+        $query = new InvoiceQuery();
+        $query->setCustomers([new Customer()]);
+
         $sut = $this->getSut([]);
-        $sut->createModel(new InvoiceQuery());
+        $sut->createModel($query);
     }
 
     /**
@@ -128,6 +132,7 @@ class ServiceInvoiceTest extends TestCase
         self::assertNull($template->getLanguage());
 
         $query = new InvoiceQuery();
+        $query->setCustomers([new Customer()]);
         $query->setTemplate($template);
 
         $sut = $this->getSut([]);
@@ -148,6 +153,7 @@ class ServiceInvoiceTest extends TestCase
         self::assertEquals('de', $template->getLanguage());
 
         $query = new InvoiceQuery();
+        $query->setCustomers([new Customer()]);
         $query->setTemplate($template);
 
         $sut = $this->getSut([]);

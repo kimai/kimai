@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/datatables.html.twig" as tables %}
+{% import "macros/toolbar.html.twig" as toolbar %}
 {% import "invoice/actions.html.twig" as actions %}
 
 {% set columns = {
-    'date': {'class': 'alwaysVisible', 'orderBy': false},
-    'user': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
+    'date': {'class': 'alwaysVisible w-min', 'orderBy': false},
     'project': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
-    'description': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
-    'unit_price': {'class': 'hidden-xs text-center', 'orderBy': false},
-    'amount': {'class': 'text-center', 'orderBy': false},
-    'duration': {'class': 'hidden-xs text-center', 'orderBy': false},
-    'total_rate': {'class': 'text-right alwaysVisible', 'orderBy': false},
+    'description': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
+    'user': {'class': 'hidden-xs hidden-sm w-min', 'orderBy': false},
+    'unit_price': {'class': 'hidden-xs text-center w-min', 'orderBy': false},
+    'amount': {'class': 'text-center w-min', 'orderBy': false},
+    'duration': {'class': 'hidden-xs text-center w-min', 'orderBy': false},
+    'total_rate': {'class': 'text-right alwaysVisible w-min', 'orderBy': false},
 } %}
 
 {% set tableName = 'invoice' %}
@@ -28,6 +28,7 @@
 
     {% if is_granted('create_invoice') %}
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+            {% import "macros/search.html.twig" as search %}
             {% form_theme form '@AdminLTE/layout/form-theme-horizontal.html.twig' %}
             {% block box_title %}{{ 'invoice.filter'|trans }}{% endblock %}
             {% block box_before %}{{ form_start(form) }}{% endblock %}
@@ -37,7 +38,7 @@
                     {{ form_row(form.searchTerm) }}
                 {% endif %}
                 {{ form_row(form.daterange) }}
-                {{ form_row(form.customer) }}
+                {{ form_row(form.customers) }}
                 {{ form_row(form.projects) }}
                 {% if form.activities is defined %}
                     {{ form_row(form.activities) }}
@@ -55,13 +56,7 @@
                 {{ form_row(form.markAsExported) }}
             {% endblock %}
             {% block box_footer%}
-                {% set createAttr = {'class': 'btn btn-success'} %}
-                {% if not is_granted('history_invoice') %}
-                    {% set createAttr = createAttr|merge({'formtarget': '_blank'}) %}
-                {% endif %}
-                {{ form_widget(form.create, {'attr': createAttr}) }}
-                {{ form_widget(form.print) }}
-                {{ form_widget(form.preview) }}
+                {{ search.searchButton(form) }}
             {% endblock %}
             {% block box_after %}{{ form_end(form) }}{% endblock %}
         {% endembed %}
@@ -69,66 +64,177 @@
         {{ widgets.callout('danger', 'http_error_403.suggestion'|trans({}, 'exceptions')) }}
     {% endif %}
 
-    {% if model is not null %}
-        {% if model.calculator is empty or model.calculator.entries is empty %}
+    {% if searched %}
+        {% set showEmpty = true %}
+        {% for model in models %
+            {% if showEmpty %}
+                {% set showEmpty = model.calculator is empty or model.calculator.entries is empty %}
+            {% endif %}
+        {% endfor %}
+        {% if showEmpty %}
             {{ widgets.nothing_found() }}
-        {% else %}
-            {% set isDecimal = model.template.decimalDuration|default(false) %}
-            {% set entries = model.calculator.entries %}
-            {% set currency = model.currency %}
-            {{ tables.datatable_header(tableName, columns, query, {}) }}
-            {% for entry in entries %}
-                {% set amount = entry.amount %}
-                {% set duration = entry.duration|duration(isDecimal) %}
-                {% set rate = 0 %}
-                {% if entry.fixedRate is not null %}
-                    {% set rate = entry.fixedRate %}
-                {% elseif entry.hourlyRate is not null %}
-                    {% set rate = entry.hourlyRate %}
-                {% endif %}
-                <tr>
-                    <td class="text-nowrap">{{ entry.begin|date_short }}</td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.label_user(entry.user) }}</td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
-                        {{ widgets.label_project(entry.project) }}
-                        {% if entry.activity is not null %}
-                        <br>
-                        <small>
-                            {{ widgets.label_activity(entry.activity) }}
-                        </small>
-                        {% endif %}
-                    </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">
-                        {% if entry.description is not empty %}
-                            {{ entry.description|desc2html }}
-                        {% endif %}
-                    </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-center">{{ rate|money(currency) }}</td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }} text-center text-nowrap">{{ amount }}</td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-center text-nowrap" data-duration="{{ entry.duration }}">{{ duration }}</td>
-                    <td class="text-right text-nowrap">{{ entry.rate|money(currency) }}</td>
-                </tr>
-            {% endfor %}
-            <tr>
-                <th></th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'user') }}"></th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'project') }}"></th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'description') }}"></th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}"></th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'amount') }}"></th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-center text-nowrap">{{ model.calculator.timeWorked|duration(isDecimal) }}</th>
-                <th class="text-right text-nowrap">{{ model.calculator.total|money(currency) }}</th>
-            </tr>
-            {{ tables.data_table_footer(entries) }}
         {% endif %}
     {% endif %}
+
+    {% if models|length > 0 %}
+        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+            {% import "macros/widgets.html.twig" as widgets %}
+            {% import '@AdminLTE/Macros/buttons.html.twig' as button %}
+            {% block box_title %}
+                {{ 'button.preview'|trans }}: {{ 'invoice.title'|trans }}
+            {% endblock %}
+            {% block box_body_class %}no-padding{% endblock %}
+            {% block box_footer %}
+                <a href="#" onclick="return saveAllInvoices(this);" class="btn btn-primary" id="create_all_invoices">
+                    {{ 'action.save_all'|trans }}
+                </a>
+            {% endblock %}
+            {% block box_body %}
+                <table class="table table-striped table-hover dataTable">
+                    <thead>
+                        <tr>
+                            <th>{{ 'label.customer'|trans }}</th>
+                            <th class="w-min text-center actions"></th>
+                            <th class="w-min text-center hidden-xs">{{ 'label.duration'|trans }}</th>
+                            <th class="w-min text-right hidden-xs">{{ 'label.total_rate'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for model in models %}
+                            {% set isDecimal = model.template.decimalDuration|default(false) %}
+                            {% set currency = model.currency %}
+                            <tr>
+                                <td>
+                                    {{ widgets.label_customer(model.customer) }}
+                                </td>
+                                <td class="w-min text-center">
+                                    {{ widgets.action_button('show', {'url': '#invoice_preview_details_' ~ model.customer.id, 'title': 'timesheet.all'|trans, 'class': 'btn btn-sm hidden-xs hidden-sm'}, 'link') }}
+                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'class': 'btn btn-sm', 'attr': {'data-href': path('invoice_preview', {'customer': model.customer.id, 'template': model.template.id})}}, 'success') }}
+                                    {{ widgets.action_button('save', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'class': 'btn btn-sm', 'attr': {'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id})}}, 'primary') }}
+                                </td>
+                                <td class="w-min text-center hidden-xs">
+                                    {{ model.calculator.timeWorked|duration(isDecimal) }}
+                                </td>
+                                <td class="w-min text-right hidden-xs">
+                                    <span title="{{ 'label.vat'|trans }}: {{ model.calculator.tax|money(currency) }}" data-toggle="tooltip">{{ model.calculator.total|money(currency) }}</span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endblock %}
+        {% endembed %}
+
+        {% for model in models %}
+            {% set isEmptyModel = model.calculator is empty or model.calculator.entries is empty %}
+            {% if not isEmptyModel %}
+                {% set customer = model.query.customers[0] %}
+                {% set isDecimal = model.template.decimalDuration|default(false) %}
+                {% set entries = model.calculator.entries %}
+                {% set currency = model.currency %}
+
+                {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+                    {% import "macros/widgets.html.twig" as widgets %}
+                    {% import "macros/datatables.html.twig" as tables %}
+                    {% block box_title %}
+                        <span id="invoice_preview_details_{{ customer.id }}">{{ widgets.label_customer(customer) }}</span>
+                        <small>{{ 'label.duration'|trans }}: {{ model.calculator.timeWorked|duration() }}, {{ 'label.total_rate'|trans }}: {{ model.calculator.total|money(currency) }}</small>
+                    {% endblock %}
+                    {% block box_body_class %}invoice-preview-box no-padding{% endblock %}
+                    {% block box_body %}
+                        {{ tables.datatable_header(tableName, columns, model.query, {'boxClass': ''}) }}
+                        {% set itemsAmount = entries|length %}
+                        {% if limit_preview %}
+                            {% set entries = entries|slice(0, 100) %}
+                        {% endif %}
+                        {% for entry in entries %}
+                            {% set amount = entry.amount %}
+                            {% set duration = entry.duration|duration(isDecimal) %}
+                            {% set rate = 0 %}
+                            {% if entry.fixedRate is not null %}
+                                {% set rate = entry.fixedRate %}
+                            {% elseif entry.hourlyRate is not null %}
+                                {% set rate = entry.hourlyRate %}
+                            {% endif %}
+                            <tr>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
+                                    {{ widgets.label_project(entry.project) }}
+                                    {% if entry.activity is not null %}
+                                    <br>
+                                    <small>
+                                        {{ widgets.label_activity(entry.activity) }}
+                                    </small>
+                                    {% endif %}
+                                </td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">
+                                    {% if entry.description is not empty %}
+                                        {{ entry.description|desc2html }}
+                                    {% endif %}
+                                </td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.label_user(entry.user) }}</td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}">{{ rate|money(currency) }}</td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }}">{{ amount }}</td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}" data-duration="{{ entry.duration }}">{{ duration }}</td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">{{ entry.rate|money(currency) }}</td>
+                            </tr>
+                        {% endfor %}
+                        {% if limit_preview and itemsAmount > 100 %}
+                            <tr class="warning">
+                                <td colspan="8">&raquo; {{ 'preview.skipped_rows'|trans({'%rows%': (itemsAmount - 100)}) }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr class="summary">
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}"></td>
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}"></td>
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}"></td>
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}"></td>
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}"></td>
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }}"></td>
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ model.calculator.timeWorked|duration(isDecimal) }}</td>
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">{{ model.calculator.total|money(currency) }}</td>
+                        </tr>
+                        {{ tables.data_table_footer(entries) }}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
+        {% endfor %}
+
+    {% endif %}
+
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    {% set formId = form.vars.attr.id %}
+    {% set formSelector = 'form#' ~ formId %}
+
     <script type="text/javascript">
+
+        function singleInvoice(link)
+        {
+            let formPlugin = kimai.getPlugin('form');
+            let data = formPlugin.getFormData(document.getElementById('{{ formId }}'));
+            let uri = formPlugin.convertFormDataToQueryString(data);
+            let baseUrl = link.getAttribute('data-href');
+            link.href = baseUrl + '?' + uri;
+
+            return true;
+        }
+
+        function saveAllInvoices(link)
+        {
+            let formPlugin = kimai.getPlugin('form');
+            let data = formPlugin.getFormData(document.getElementById('{{ formId }}'));
+            let uri = formPlugin.convertFormDataToQueryString(data);
+            link.href = '{{ path('invoice') }}?createInvoice=true&' + uri;
+
+            return true;
+        }
+
         document.addEventListener('kimai.initialized', function() {
             KimaiReloadPageWidget.create('kimai.systemConfigUpdate', true);
         });
+
     </script>
 {% endblock %}
