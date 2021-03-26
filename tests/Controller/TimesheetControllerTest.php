@@ -82,7 +82,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_timesheet', 7);
 
         // make sure the recording css class exist on tr for targeting running record rows
-        $node = $client->getCrawler()->filter('section.content div#datatable_timesheet table.table-striped tbody tr.recording');
+        $node = $client->getCrawler()->filter('section.content div.datatable_timesheet table.table-striped tbody tr.recording');
         self::assertEquals(2, $node->count());
     }
 
