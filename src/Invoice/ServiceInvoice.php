@@ -509,7 +509,7 @@ final class ServiceInvoice
                 if ($tmpBegin === null) {
                     $tmpBegin = $entry->getBegin();
                 } else {
-                    $tmpBegin = max($entry->getBegin(), $tmpBegin);
+                    $tmpBegin = min($entry->getBegin(), $tmpBegin);
                 }
             }
 
