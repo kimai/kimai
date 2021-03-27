@@ -27,6 +27,7 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
 use DateInterval;
 use DateTime;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
@@ -34,7 +35,6 @@ use Doctrine\ORM\QueryBuilder;
 use Exception;
 use InvalidArgumentException;
 use Pagerfanta\Pagerfanta;
-use PDO;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Timesheet>
@@ -837,15 +837,15 @@ class TimesheetRepository extends EntityRepository
         }
 
         if ($query->isExported()) {
-            $qb->andWhere('t.exported = :exported')->setParameter('exported', true, PDO::PARAM_BOOL);
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', true, Types::BOOLEAN);
         } elseif ($query->isNotExported()) {
-            $qb->andWhere('t.exported = :exported')->setParameter('exported', false, PDO::PARAM_BOOL);
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', false, Types::BOOLEAN);
         }
 
         if ($query->isBillable()) {
-            $qb->andWhere('t.billable = :billable')->setParameter('billable', true, PDO::PARAM_BOOL);
+            $qb->andWhere('t.billable = :billable')->setParameter('billable', true, Types::BOOLEAN);
         } elseif ($query->isNotBillable()) {
-            $qb->andWhere('t.billable = :billable')->setParameter('billable', false, PDO::PARAM_BOOL);
+            $qb->andWhere('t.billable = :billable')->setParameter('billable', false, Types::BOOLEAN);
         }
 
         if (null !== $query->getModifiedAfter()) {
@@ -942,7 +942,7 @@ class TimesheetRepository extends EntityRepository
             ->groupBy('a.id', 'p.id')
             ->orderBy('maxid', 'DESC')
             ->setMaxResults($limit)
-            ->setParameter('visible', true, PDO::PARAM_BOOL)
+            ->setParameter('visible', true, Types::BOOLEAN)
         ;
 
         if (null !== $user) {
@@ -974,7 +974,7 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param Timesheet[] $timesheets
+     * @param Timesheet[]|int[] $timesheets
      */
     public function setExported(array $timesheets)
     {
@@ -987,7 +987,7 @@ class TimesheetRepository extends EntityRepository
                 ->update(Timesheet::class, 't')
                 ->set('t.exported', ':exported')
                 ->where($qb->expr()->in('t.id', ':ids'))
-                ->setParameter('exported', true, PDO::PARAM_BOOL)
+                ->setParameter('exported', true, Types::BOOLEAN)
                 ->setParameter('ids', $timesheets)
                 ->getQuery()
                 ->execute();

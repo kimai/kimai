@@ -71,35 +71,38 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
     }
 
     changeVisibility(columnName, checked) {
-        const table = document.getElementById('datatable_' + this.id).getElementsByClassName('dataTable')[0];
-        let column = 0;
-        let foundColumn = false;
-        for (let columnElement of table.getElementsByTagName('th')) {
-            if (columnElement.getAttribute('data-field') === columnName) {
-                foundColumn = true;
-                break;
+        const tables = document.getElementsByClassName('datatable_' + this.id);
+        for (let tableBox of tables) {
+            let column = 0;
+            let foundColumn = false;
+            let table = tableBox.getElementsByClassName('dataTable')[0];
+            for (let columnElement of table.getElementsByTagName('th')) {
+                if (columnElement.getAttribute('data-field') === columnName) {
+                    foundColumn = true;
+                    break;
+                }
+
+                if (columnElement.getAttribute('colspan') !== null) {
+                    console.log('Tables with colspans are not supported!');
+                }
+
+                column++;
             }
 
-            if (columnElement.getAttribute('colspan') !== null) {
-                console.log('Tables with colspans are not supported!');
+            if (!foundColumn) {
+                return;
             }
 
-            column++;
-        }
+            for (let rowElement of table.getElementsByTagName('tr')) {
+                if (rowElement.children[column] === undefined) {
+                    continue;
+                }
 
-        if (!foundColumn) {
-            return;
-        }
-
-        for (let rowElement of table.getElementsByTagName('tr')) {
-            if (rowElement.children[column] === undefined) {
-                continue;
-            }
-
-            if (checked) {
-                rowElement.children[column].classList.remove('hidden');
-            } else {
-                rowElement.children[column].classList.add('hidden');
+                if (checked) {
+                    rowElement.children[column].classList.remove('hidden');
+                } else {
+                    rowElement.children[column].classList.add('hidden');
+                }
             }
         }
     }

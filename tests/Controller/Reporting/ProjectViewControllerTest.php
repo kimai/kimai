@@ -54,7 +54,7 @@ class ProjectViewControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/reporting/project_view');
         self::assertStringContainsString('<div class="box-body project-view-reporting-box', $client->getResponse()->getContent());
-        $rows = $client->getCrawler()->filterXPath("//table[@id='dt_project_view_reporting']/tbody/tr");
+        $rows = $client->getCrawler()->filterXPath("//table[contains(@class, 'dataTable')]/tbody/tr[not(@class='summary')]");
         self::assertGreaterThan(0, $rows->count());
     }
 }

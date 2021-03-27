@@ -53,11 +53,10 @@
     {% set translationPrefix = options.translationPrefix ?? 'label.' %}
     {% set boxClass = options.boxClass ?? 'box box-'  ~ admin_lte_context.widget.type ~ ' data_table' %}
 
-    {% import _self as macro %}
-    <div class="{{ boxClass }}" id="datatable_{{ tableName }}">
+    <div class="{{ boxClass }} datatable_{{ tableName }}">
         <div class="box-body no-padding">
             <div class="dataTables_wrapper form-inline dt-bootstrap">
-                <table class="table {% if striped %}table-striped {% endif %}{% if bordered %}table-bordered {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}" id="dt_{{ tableName }}">
+                <table class="table {% if striped %}table-striped {% endif %}{% if bordered %}table-bordered {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}">
                     <thead>
                         <tr>
                         {%- for title, headerOptions in columns -%}
@@ -71,7 +70,7 @@
                                     {% set headerOptions = headerOptions|merge({'orderBy': title}) %}
                                 {% endif %}
                             {% endif %}
-                            {% set headerClass = macro.data_table_column_class(tableName, columns, title) %}
+                            {% set headerClass = _self.data_table_column_class(tableName, columns, title) %}
                             {% if title != 'actions' and not headerOptions.orderBy is same as(false) %}
                                 {% if orderBy == headerOptions.orderBy %}
                                     {% set headerClass = headerClass ~ ' sortable sorting_' ~ (order) %}

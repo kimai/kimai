@@ -208,7 +208,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertDataTableRowCount(HttpKernelBrowser $client, string $id, int $count)
     {
-        $node = $client->getCrawler()->filter('section.content div#' . $id . ' table.table-striped tbody tr:not(.summary)');
+        $node = $client->getCrawler()->filter('section.content div.' . $id . ' table.table-striped tbody tr:not(.summary)');
         self::assertEquals($count, $node->count());
     }
 
@@ -346,7 +346,7 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param HttpKernelBrowser $client
      * @param string $url
      */
-    protected function assertIsRedirect(HttpKernelBrowser $client, $url = null)
+    protected function assertIsRedirect(HttpKernelBrowser $client, $url = null, $endsWith = true)
     {
         self::assertTrue($client->getResponse()->isRedirect(), 'Response is not a redirect');
         if (null === $url) {
@@ -354,7 +354,19 @@ abstract class ControllerBaseTest extends WebTestCase
         }
 
         self::assertTrue($client->getResponse()->headers->has('Location'), 'Could not find "Location" header');
-        self::assertStringEndsWith($url, $client->getResponse()->headers->get('Location'), 'Redirect URL does not match');
+        if ($endsWith) {
+            self::assertStringEndsWith(
+                $url,
+                $client->getResponse()->headers->get('Location'),
+                'Redirect URL does not match'
+            );
+        } else {
+            self::assertStringContainsString(
+                $url,
+                $client->getResponse()->headers->get('Location'),
+                'Redirect URL does not match'
+            );
+        }
     }
 
     protected function assertExcelExportResponse(HttpKernelBrowser $client, string $prefix)

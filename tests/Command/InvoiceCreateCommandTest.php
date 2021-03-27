@@ -18,7 +18,6 @@ use App\Invoice\ServiceInvoice;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceTemplateRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
@@ -69,7 +68,6 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
         $this->application->add(new InvoiceCreateCommand(
             $container->get(ServiceInvoice::class),
-            $container->get(TimesheetRepository::class),
             $container->get(CustomerRepository::class),
             $container->get(ProjectRepository::class),
             $container->get(InvoiceTemplateRepository::class),
