@@ -391,6 +391,10 @@
         <source>action.save</source>
         <target>Speichern</target>
       </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Alle Speichern</target>
+      </trans-unit>
       <trans-unit id="action.reset">
         <source>action.reset</source>
         <target>Zurücksetzen</target>
@@ -1040,6 +1044,10 @@
       <trans-unit id="status.paid">
         <source>status.paid</source>
         <target>Bezahlt</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Überspringe Vorschau von %rows% weiteren Zeilen ...</target>
       </trans-unit>
       <!--
               Export

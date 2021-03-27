@@ -50,6 +50,10 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
 
         $extendedOptions = ['class' => 'selectpicker'];
 
+        if ($options['multiple']) {
+            $extendedOptions['size'] = 1;
+        }
+
         if (false !== $options['width']) {
             $extendedOptions['data-width'] = $options['width'];
         }

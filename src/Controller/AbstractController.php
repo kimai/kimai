@@ -209,10 +209,8 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         $form->submit($submitData, false);
 
         if (!$form->isValid()) {
-            $data->resetByFormError($form->getErrors());
-        }
-
-        if ($request->query->has('setDefaultQuery')) {
+            $data->resetByFormError($form->getErrors(true));
+        } elseif ($request->query->has('setDefaultQuery')) {
             $params = [];
             foreach ($form->all() as $name => $child) {
                 $params[$name] = $child->getViewData();

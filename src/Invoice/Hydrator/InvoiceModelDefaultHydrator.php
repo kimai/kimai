@@ -21,21 +21,9 @@ class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         $total = $model->getCalculator()->getTotal();
         $subtotal = $model->getCalculator()->getSubtotal();
         $formatter = $model->getFormatter();
-        $entries = $model->getCalculator()->getEntries();
 
-        $begin = null;
-        if ($model->getQuery()->getBegin() !== null) {
-            $begin = $model->getQuery()->getBegin();
-        } elseif (!empty($entries)) {
-            $begin = $entries[0];
-        }
-
-        $end = null;
-        if ($model->getQuery()->getEnd() !== null) {
-            $end = $model->getQuery()->getEnd();
-        } elseif (!empty($entries)) {
-            $end = array_keys($entries)[\count($entries) - 1];
-        }
+        $begin = $model->getQuery()->getBegin();
+        $end = $model->getQuery()->getEnd();
 
         $values = [
             'invoice.due_date' => $formatter->getFormattedDateTime($model->getDueDate()),

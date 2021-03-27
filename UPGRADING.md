@@ -8,6 +8,13 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [1.14](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
+
+**New database tables and fields: don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+Permission changes:
+- `history_invoice` - removed permission entirely
+
 ## [1.13](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
 
 - Deprecated `now` variable in export templates: create it yourself with `{% set now = create_date('now', app.user) %}`

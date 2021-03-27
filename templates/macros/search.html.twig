@@ -11,44 +11,51 @@
                     </h4>
                 </div>
                 <div class="modal-body">
+                    {% set orderHasError = form.orderBy.vars.errors|length > 0 or form.order.vars.errors|length > 0 %}
                     {% set orderBy = form_widget(form.orderBy) %}
                     {% set order = form_widget(form.order) %}
                     {{ form(form) }}
-                    <div class="form-group">
+                    <div class="form-group{% if orderHasError %} has-error{% endif %}">
                         {{ form_label(form.orderBy) }}
                         <div class="col-sm-5 col-xs-5">
                             {{ orderBy|raw }}
+                            {{ form_errors(form.orderBy) }}
                         </div>
                         <div class="col-sm-4 col-xs-3">
                             {{ order|raw }}
+                            {{ form_errors(form.order) }}
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="btn-toolbar pull-left" role="toolbar">
-                        <div class="btn-group">
-                            <button type="submit" name="performSearch" value="performSearch" class="btn btn-primary pull-left" data-type="submit">{{ 'search'|trans }}</button>
-                        </div>
-                        <div class="btn-group">
-                            {% if form.vars.data.bookmark %}
-                                <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-default" title="{{ 'label.set_as_default'|trans }}"><i class="{{ 'bookmarked'|icon }}"></i></button>
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="?removeDefaultQuery={{ form.vars.data.bookmark.name }}" id="removeDefaultQuery">{{ 'action.delete'|trans }}</a>
-                                    </li>
-                                </ul>
-                            {% else %}
-                                <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-default" title="{{ 'label.set_as_default'|trans }}"><i class="{{ 'bookmark'|icon }}"></i></button>
-                            {% endif %}
-                        </div>
+                        {{ _self.searchButton(form) }}
                     </div>
                     <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">{{ 'action.close'|trans }}</button>
                 </div>
             </div>
             {{ form_end(form) }}
         </div>
+    </div>
+{% endmacro %}
+
+{% macro searchButton(form) %}
+    <div class="btn-group">
+        <button type="submit" name="performSearch" value="performSearch" class="btn btn-primary pull-left" data-type="submit">{{ 'search'|trans }}</button>
+    </div>
+    <div class="btn-group">
+        {% if form.vars.data.bookmark %}
+            <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-default" title="{{ 'label.set_as_default'|trans }}"><i class="{{ 'bookmarked'|icon }}"></i></button>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="?removeDefaultQuery={{ form.vars.data.bookmark.name }}" id="removeDefaultQuery">{{ 'action.delete'|trans }}</a>
+                </li>
+            </ul>
+        {% else %}
+            <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-default" title="{{ 'label.set_as_default'|trans }}"><i class="{{ 'bookmark'|icon }}"></i></button>
+        {% endif %}
     </div>
 {% endmacro %}

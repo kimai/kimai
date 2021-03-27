@@ -6,14 +6,14 @@
 {% import "invoice/macros.html.twig" as macros %}
 
 {% set columns = {
-    'date': {'class': 'alwaysVisible text-nowrap', 'orderBy': false},
+    'date': {'class': 'alwaysVisible w-min', 'orderBy': false},
     'user': {'class': 'hidden-xs hidden-sm text-nowrap hidden', 'orderBy': false},
     'customer': {'class': 'hidden-xs hidden-sm text-nowrap', 'orderBy': false},
-    'invoice_number': {'class': 'hidden-xs hidden-sm text-nowrap', 'title': 'invoice.number'|trans, 'orderBy': false},
-    'due_date': {'class': 'hidden-xs text-nowrap', 'title': 'invoice.due_days'|trans, 'orderBy': false},
-    'status': {'class': 'text-center alwaysVisible text-nowrap', 'orderBy': false},
-    'tax': {'class': 'hidden-xs text-center text-nowrap hidden', 'title': 'invoice.tax'|trans, 'orderBy': false},
-    'total_rate': {'class': 'hidden-xs text-center text-nowrap', 'orderBy': false},
+    'invoice_number': {'class': 'hidden-xs hidden-sm text-center w-min', 'title': 'invoice.number'|trans, 'orderBy': false},
+    'due_date': {'class': 'hidden-xs text-center w-min', 'title': 'invoice.due_days'|trans, 'orderBy': false},
+    'status': {'class': 'text-center alwaysVisible w-min', 'orderBy': false},
+    'tax': {'class': 'hidden-xs text-center w-min hidden', 'title': 'invoice.tax'|trans, 'orderBy': false},
+    'total_rate': {'class': 'hidden-xs text-right w-min', 'orderBy': false},
     'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
 } %}
 

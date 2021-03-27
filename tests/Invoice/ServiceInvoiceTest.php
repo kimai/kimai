@@ -10,10 +10,14 @@
 namespace App\Tests\Invoice;
 
 use App\Configuration\LanguageFormattings;
+use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
 use App\Entity\InvoiceTemplate;
+use App\Entity\Project;
+use App\Entity\Timesheet;
 use App\Invoice\Calculator\DefaultCalculator;
+use App\Invoice\InvoiceItemRepositoryInterface;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\TwigRenderer;
 use App\Invoice\ServiceInvoice;
@@ -93,11 +97,8 @@ class ServiceInvoiceTest extends TestCase
 
         $sut->addCalculator(new DefaultCalculator());
         $sut->addNumberGenerator($this->getNumberGeneratorSut());
-        $sut->addRenderer(
-            new TwigRenderer(
-                $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock()
-            )
-        );
+        $twig = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
+        $sut->addRenderer(new TwigRenderer($twig));
 
         $this->assertEquals(1, \count($sut->getCalculator()));
         $this->assertInstanceOf(DefaultCalculator::class, $sut->getCalculatorByName('default'));
@@ -113,8 +114,11 @@ class ServiceInvoiceTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Cannot create invoice model without template');
 
+        $query = new InvoiceQuery();
+        $query->setCustomers([new Customer()]);
+
         $sut = $this->getSut([]);
-        $sut->createModel(new InvoiceQuery());
+        $sut->createModel($query);
     }
 
     /**
@@ -124,10 +128,10 @@ class ServiceInvoiceTest extends TestCase
     {
         $template = new InvoiceTemplate();
         $template->setNumberGenerator('date');
-
         self::assertNull($template->getLanguage());
 
         $query = new InvoiceQuery();
+        $query->setCustomers([new Customer()]);
         $query->setTemplate($template);
 
         $sut = $this->getSut([]);
@@ -139,6 +143,30 @@ class ServiceInvoiceTest extends TestCase
         self::assertEquals('en', $model->getTemplate()->getLanguage());
     }
 
+    /**
+     * @group legacy
+     */
+    public function testFindInvoiceItemsWithoutCustomer()
+    {
+        $sut = $this->getSut([]);
+
+        $query = new InvoiceQuery();
+
+        $items = $sut->findInvoiceItems($query);
+        self::assertEquals([], $items);
+    }
+
+    public function testFindInvoiceItemsWithCustomer()
+    {
+        $sut = $this->getSut([]);
+
+        $query = new InvoiceQuery();
+        $query->setCustomers([new Customer(), new Customer()]);
+
+        $items = $sut->findInvoiceItems($query);
+        self::assertEquals([], $items);
+    }
+
     public function testCreateModelUsesTemplateLanguage()
     {
         $template = new InvoiceTemplate();
@@ -148,6 +176,7 @@ class ServiceInvoiceTest extends TestCase
         self::assertEquals('de', $template->getLanguage());
 
         $query = new InvoiceQuery();
+        $query->setCustomers([new Customer()]);
         $query->setTemplate($template);
 
         $sut = $this->getSut([]);
@@ -157,6 +186,74 @@ class ServiceInvoiceTest extends TestCase
         $model = $sut->createModel($query);
 
         self::assertEquals('de', $model->getTemplate()->getLanguage());
+    }
+
+    public function testBeginAndEndDateFallback()
+    {
+        $timezone = new \DateTimeZone('Europe/Vienna');
+        $customer = new Customer();
+        $project = new Project();
+        $project->setCustomer($customer);
+
+        $timesheet1 = new Timesheet();
+        $timesheet1->setProject($project);
+        $timesheet1->setBegin(new \DateTime('2011-01-27 12:12:12', $timezone));
+        $timesheet1->setEnd(new \DateTime('2020-01-27 12:12:12', $timezone));
+
+        $timesheet2 = new Timesheet();
+        $timesheet2->setProject($project);
+        $timesheet2->setBegin(new \DateTime('2010-01-27 08:24:33', $timezone));
+        $timesheet2->setEnd(new \DateTime('2019-01-27 12:12:12', $timezone));
+
+        $timesheet3 = new Timesheet();
+        $timesheet3->setProject($project);
+        $timesheet3->setBegin(new \DateTime('2019-01-27 12:12:12', $timezone));
+        $timesheet3->setEnd(new \DateTime('2020-01-07 12:12:12', $timezone));
+
+        $timesheet4 = new Timesheet();
+        $timesheet4->setProject($project);
+        $timesheet4->setBegin(new \DateTime('2020-01-27 10:12:12', $timezone));
+        $timesheet4->setEnd(new \DateTime('2020-11-27 11:12:12', $timezone));
+
+        $timesheet5 = new Timesheet();
+        $timesheet5->setProject($project);
+        $timesheet5->setBegin(new \DateTime('2012-01-27 12:12:12', $timezone));
+        $timesheet5->setEnd(new \DateTime('2018-01-27 12:12:12', $timezone));
+
+        $repo = $this->createMock(InvoiceItemRepositoryInterface::class);
+        $repo->method('getInvoiceItemsForQuery')->willReturn([
+            $timesheet1,
+            $timesheet2,
+            $timesheet3,
+            $timesheet4,
+            $timesheet5,
+        ]);
+
+        $template = new InvoiceTemplate();
+        $template->setNumberGenerator('date');
+        $template->setLanguage('de');
+
+        self::assertEquals('de', $template->getLanguage());
+
+        $query = new InvoiceQuery();
+        $query->setCustomers([new Customer(), $customer]);
+        $query->setTemplate($template);
+        self::assertNull($query->getBegin());
+        self::assertNull($query->getEnd());
+
+        $sut = $this->getSut([]);
+        $sut->addCalculator(new DefaultCalculator());
+        $sut->addNumberGenerator($this->getNumberGeneratorSut());
+
+        $sut->addInvoiceItemRepository($repo);
+
+        $sut->createModels($query);
+
+        self::assertNotNull($query->getBegin());
+        self::assertNotNull($query->getEnd());
+
+        self::assertEquals('2010-01-27T00:00:00+0100', $query->getBegin()->format(DATE_ISO8601));
+        self::assertEquals('2020-11-27T23:59:59+0100', $query->getEnd()->format(DATE_ISO8601));
     }
 
     private function getNumberGeneratorSut()
