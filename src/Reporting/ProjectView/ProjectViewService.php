@@ -87,8 +87,7 @@ final class ProjectViewService
 
         $projectViews = [];
         foreach ($result as $res) {
-            $entity = new ProjectViewModel();
-            $entity->setProject($res['project']);
+            $entity = new ProjectViewModel($res['project']);
             $entity->setDurationTotal($res['totalDuration'] ?? 0);
             $entity->setRateTotal($res['totalRate'] ?? 0.00);
 
@@ -162,6 +161,25 @@ final class ProjectViewService
         foreach ($result as $row) {
             $projectViews[$row['id']]->setNotExportedDuration($row['duration']);
             $projectViews[$row['id']]->setNotExportedRate($row['rate']);
+        }
+
+        // values for the all time (not exported and billable)
+        $qb = $this->timesheetRepository->createQueryBuilder('t');
+        $qb
+            ->select('IDENTITY(t.project) AS id, SUM(t.duration) AS duration, SUM(t.rate) AS rate')
+            ->andWhere($qb->expr()->in('t.project', ':project'))
+            ->andWhere('t.exported = :exported')
+            ->andWhere('t.billable = :billable')
+            ->groupBy('t.project')
+            ->setParameter('exported', false, Types::BOOLEAN)
+            ->setParameter('billable', true, Types::BOOLEAN)
+            ->setParameter('project', array_values($projectIds))
+        ;
+
+        $result = $qb->getQuery()->getScalarResult();
+        foreach ($result as $row) {
+            $projectViews[$row['id']]->setNotBilledDuration($row['duration']);
+            $projectViews[$row['id']]->setNotBilledRate($row['rate']);
         }
 
         return array_values($projectViews);

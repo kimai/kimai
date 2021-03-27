@@ -32,7 +32,7 @@
         {% import "macros/widgets.html.twig" as widgets %}
         {% import "macros/datatables.html.twig" as tables %}
         {% import "project/actions.html.twig" as projectActions %}
-        {% block box_body_class %}project-view-reporting-box {% if hasData %}no-padding{% endif %} table-responsive{% endblock %}
+        {% block box_body_class %}project-view-reporting-box {% if hasData %}no-padding{% endif %}{% endblock %}
         {% block box_before %}
             {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': 'project-view-form'}}) }}
         {% endblock %}
@@ -52,7 +52,6 @@
                 {{ tables.datatable_header(tableName, columns, null, {'bordered': true, 'striped': false, 'boxClass': ''}) }}
 
                     {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
-                        {% if is_granted('budget', mapping.customer) %}
                             <tr class="summary">
                                 <td colspan="11">{{ widgets.label_customer(mapping.customer) }}</td>
                             </tr>
@@ -60,7 +59,7 @@
                                 {% set project = entry.project %}
                                 {% set currency = project.customer.currency %}
                                 {% if is_granted('budget', project) %}
-                                    <tr>
+                                    <tr{% if is_granted('view', project) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': project.id}) }}"{% endif %}>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_project(project) }}</td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'today') }}">{{ entry.durationDay|duration }}</td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'week') }}">{{ entry.durationWeek|duration }}</td>
@@ -87,11 +86,11 @@
                                         </td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'stateMoney') }}">
                                             {% if is_granted('view_invoice') %}
-                                                <a href="{{ path('invoice', {'customer': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
-                                                    {{ entry.notExportedRate|money(currency) }}
+                                                <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
+                                                    {{ entry.notBilledRate|money(currency) }}
                                                 </a>
                                             {% else %}
-                                                {{ entry.notExportedRate|money(currency) }}
+                                                {{ entry.notBilledRate|money(currency) }}
                                             {% endif %}
                                         </td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'projectEnd') }}">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
@@ -102,7 +101,6 @@
                                     </tr>
                                 {% endif %}
                             {% endfor %}
-                        {% endif %}
                     {% endfor %}
                 {{ tables.data_table_footer(entries) }}
             {% endif %}
