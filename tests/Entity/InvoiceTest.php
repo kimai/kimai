@@ -52,6 +52,7 @@ class InvoiceTest extends TestCase
         self::assertFalse($sut->isPending());
         self::assertFalse($sut->isPaid());
         self::assertFalse($sut->isOverdue());
+        self::assertNull($sut->getPaymentDate());
     }
 
     public function testSetterAndGetter()
@@ -75,6 +76,15 @@ class InvoiceTest extends TestCase
         self::assertFalse($sut->isPaid());
         self::assertFalse($sut->isOverdue());
 
+        $paymentDate = new \DateTime();
+        $sut->setPaymentDate($paymentDate);
+        self::assertEquals($paymentDate, $sut->getPaymentDate());
+        $sut->setIsPending();
+        self::assertNull($sut->getPaymentDate());
+        $sut->setPaymentDate($paymentDate);
+        $sut->setIsNew();
+        self::assertNull($sut->getPaymentDate());
+
         $sut->setModel($this->getInvoiceModel($date));
         self::assertTrue($sut->isOverdue());
 
@@ -86,6 +96,7 @@ class InvoiceTest extends TestCase
         self::assertNull($sut->getId());
         self::assertNull($sut->getInvoiceFilename());
         self::assertEquals(date('ymd', $date->getTimestamp()), $sut->getInvoiceNumber());
+        self::assertEquals(293.27, $sut->getSubtotal());
         self::assertEquals(55.72, $sut->getTax());
         self::assertEquals(348.99, $sut->getTotal());
         self::assertNotNull($sut->getUser());

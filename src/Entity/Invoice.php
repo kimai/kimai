@@ -26,10 +26,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("invoiceNumber")
  * @UniqueEntity("invoiceFilename")
  *
- * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "total", "tax", "currency", "vat", "dueDays", "dueDate", "user", "invoiceFilename"})
+ * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename"})
  * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @Exporter\Expose("dueDate", label="invoice.due_days", type="datetime", exp="object.getDueDate() === null ? null : object.getDueDate()")
  * @Exporter\Expose("user", label="label.username", type="string", exp="object.getUser() === null ? null : object.getUser().getDisplayName()")
+ * @Exporter\Expose("paymentDate", label="invoice.payment_date", type="date", exp="object.getPaymentDate() === null ? null : object.getPaymentDate()")
  */
 class Invoice
 {
@@ -172,6 +173,13 @@ class Invoice
      */
     private $localized = false;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="payment_date", type="date", nullable=true)
+     */
+    private $paymentDate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -265,6 +273,7 @@ class Invoice
 
     public function setIsNew(): Invoice
     {
+        $this->setPaymentDate(null);
         $this->status = self::STATUS_NEW;
 
         return $this;
@@ -277,6 +286,7 @@ class Invoice
 
     public function setIsPending(): Invoice
     {
+        $this->setPaymentDate(null);
         $this->status = self::STATUS_PENDING;
 
         return $this;
@@ -317,5 +327,26 @@ class Invoice
     public function getInvoiceFilename(): ?string
     {
         return $this->invoiceFilename;
+    }
+
+    /**
+     * @Exporter\Expose(label="invoice.subtotal", type="float", name="subtotal")
+     * @return float|null
+     */
+    public function getSubtotal(): ?float
+    {
+        return $this->total - $this->tax;
+    }
+
+    public function getPaymentDate(): ?\DateTime
+    {
+        return $this->paymentDate;
+    }
+
+    public function setPaymentDate(?\DateTime $paymentDate): Invoice
+    {
+        $this->paymentDate = $paymentDate;
+
+        return $this;
     }
 }
