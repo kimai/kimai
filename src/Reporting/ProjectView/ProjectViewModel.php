@@ -45,15 +45,23 @@ final class ProjectViewModel
      * @var float
      */
     private $notExportedRate = 0.00;
+    /**
+     * @var int
+     */
+    private $notBilledDuration = 0;
+    /**
+     * @var float
+     */
+    private $notBilledRate = 0.00;
 
-    public function getProject(): ?Project
-    {
-        return $this->project;
-    }
-
-    public function setProject(Project $project): void
+    public function __construct(Project $project)
     {
         $this->project = $project;
+    }
+
+    public function getProject(): Project
+    {
+        return $this->project;
     }
 
     public function getDurationDay(): int
@@ -114,6 +122,26 @@ final class ProjectViewModel
     public function setNotExportedRate(float $notExportedRate): void
     {
         $this->notExportedRate = $notExportedRate;
+    }
+
+    public function getNotBilledDuration(): int
+    {
+        return $this->notBilledDuration;
+    }
+
+    public function setNotBilledDuration(int $notBilledDuration): void
+    {
+        $this->notBilledDuration = $notBilledDuration;
+    }
+
+    public function getNotBilledRate(): float
+    {
+        return $this->notBilledRate;
+    }
+
+    public function setNotBilledRate(float $notBilledRate): void
+    {
+        $this->notBilledRate = $notBilledRate;
     }
 
     public function getRateTotal(): float

@@ -20,9 +20,10 @@ class ProjectViewModelTest extends TestCase
 {
     public function testDefaults()
     {
-        $sut = new ProjectViewModel();
+        $project = new Project();
+        $sut = new ProjectViewModel($project);
 
-        self::assertNull($sut->getProject());
+        self::assertSame($project, $sut->getProject());
         self::assertEquals(0, $sut->getDurationDay());
         self::assertEquals(0, $sut->getDurationMonth());
         self::assertEquals(0, $sut->getDurationTotal());
@@ -34,11 +35,7 @@ class ProjectViewModelTest extends TestCase
 
     public function testSetterGetter()
     {
-        $sut = new ProjectViewModel();
-
-        $project = new Project();
-        $sut->setProject($project);
-        self::assertSame($project, $sut->getProject());
+        $sut = new ProjectViewModel(new Project());
 
         $sut->setDurationDay(123456789);
         $sut->setDurationMonth(23456789);
