@@ -26,6 +26,7 @@ fos_rest:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': 404
             'App\API\NotFoundException': 404
+            'Pagerfanta\Exception\OutOfRangeCurrentPageException': 404
     body_listener:
         enabled: true
         decoders:
