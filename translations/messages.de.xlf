@@ -953,6 +953,10 @@
         <source>invoice.due_days</source>
         <target>Zahlungsziel</target>
       </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Zahlungsdatum</target>
+      </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>
         <target>Von</target>

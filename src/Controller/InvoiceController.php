@@ -17,6 +17,7 @@ use App\Export\Spreadsheet\AnnotatedObjectExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\InvoiceDocumentUploadForm;
+use App\Form\InvoicePaymentDateForm;
 use App\Form\InvoiceTemplateForm;
 use App\Form\Toolbar\InvoiceArchiveForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
@@ -228,10 +229,22 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/change-status/{id}/{status}", name="admin_invoice_status", methods={"GET"})
+     * @Route(path="/change-status/{id}/{status}", name="admin_invoice_status", methods={"GET", "POST"})
      */
-    public function changeStatusAction(Invoice $invoice, string $status): Response
+    public function changeStatusAction(Invoice $invoice, string $status, Request $request): Response
     {
+        if ($status === Invoice::STATUS_PAID) {
+            $form = $this->createPaymentDateForm($invoice, $request);
+            $form->handleRequest($request);
+
+            if (!$form->isSubmitted() || !$form->isValid()) {
+                return $this->render('invoice/payment_date_edit.html.twig', [
+                    'invoice' => $invoice,
+                    'form' => $form->createView()
+                ]);
+            }
+        }
+
         try {
             $this->service->changeInvoiceStatus($invoice, $status);
             $this->flashSuccess('action.update.success');
@@ -510,6 +523,19 @@ final class InvoiceController extends AbstractController
         return $this->createForm(InvoiceTemplateForm::class, $template, [
             'action' => $url,
             'method' => 'POST'
+        ]);
+    }
+
+    private function createPaymentDateForm(Invoice $invoice, Request $request): FormInterface
+    {
+        if (null === $invoice->getPaymentDate()) {
+            $invoice->setPaymentDate($this->getDateTimeFactory()->createDateTime());
+        }
+
+        return $this->createForm(InvoicePaymentDateForm::class, $invoice, [
+            'action' => $request->getUri(),
+            'method' => 'POST',
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
         ]);
     }
 }
