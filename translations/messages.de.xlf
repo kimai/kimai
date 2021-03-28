@@ -955,7 +955,7 @@
       </trans-unit>
       <trans-unit id="invoice.payment_date">
         <source>invoice.payment_date</source>
-        <target>Payment date</target>
+        <target>Zahlungsdatum</target>
       </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>

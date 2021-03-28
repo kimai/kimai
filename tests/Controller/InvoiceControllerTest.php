@@ -322,12 +322,27 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->request($client, '/invoice/change-status/' . $id . '/paid');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $data = ['invoice_payment_date_form' => ['paymentDate' => 'invalid']];
-        $this->request($client, '/invoice/change-status/' . $id . '/paid', 'POST', [], json_encode($data));
+        $this->assertHasValidationError(
+            $client,
+            '/invoice/change-status/' . $id . '/paid',
+            'form[name=invoice_payment_date_form]',
+            [
+                'invoice_payment_date_form' => [
+                    'paymentDate' => 'invalid'
+                ]
+            ],
+            ['#invoice_payment_date_form_paymentDate']
+        );
+
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $data = ['invoice_payment_date_form' => ['paymentDate' => date_format(new \DateTime(), 'Y-m-d')]];
-        $this->request($client, '/invoice/change-status/' . $id . '/paid', 'POST', [], json_encode($data));
+        $form = $client->getCrawler()->filter('form[name=invoice_payment_date_form]')->form();
+        $client->submit($form, [
+            'invoice_payment_date_form' => [
+                'paymentDate' => (new \DateTime())->format('Y-m-d')
+            ]
+        ]);
+
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());

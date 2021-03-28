@@ -526,13 +526,12 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Invoice $invoice
-     * @param Request $request
-     * @return FormInterface
-     */
     private function createPaymentDateForm(Invoice $invoice, Request $request): FormInterface
     {
+        if (null === $invoice->getPaymentDate()) {
+            $invoice->setPaymentDate($this->getDateTimeFactory()->createDateTime());
+        }
+
         return $this->createForm(InvoicePaymentDateForm::class, $invoice, [
             'action' => $request->getUri(),
             'method' => 'POST',
