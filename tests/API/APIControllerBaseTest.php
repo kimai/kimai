@@ -120,17 +120,10 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             sprintf('The secure URL %s is not protected for role %s', $url, $role)
         );
 
-        $expected = [
+        $this->assertApiException($client->getResponse(), [
             'code' => 403,
             'message' => 'Access denied.'
-        ];
-
-        self::assertEquals(403, $client->getResponse()->getStatusCode());
-
-        self::assertEquals(
-            $expected,
-            json_decode($client->getResponse()->getContent(), true)
-        );
+        ]);
     }
 
     protected function request(HttpKernelBrowser $client, string $url, $method = 'GET', array $parameters = [], string $content = null): Crawler
@@ -144,23 +137,15 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, $url, $method);
-
-        $expected = [
+        $this->assertApiException($client->getResponse(), [
             'code' => 404,
             'message' => 'Not found'
-        ];
-
-        self::assertEquals(404, $client->getResponse()->getStatusCode());
-
-        self::assertEquals(
-            $expected,
-            json_decode($client->getResponse()->getContent(), true)
-        );
+        ]);
     }
 
     protected function assertNotFoundForDelete(HttpKernelBrowser $client, string $url)
     {
-        return $this->assertExceptionForMethod($client, $url, 'DELETE', [], [
+        $this->assertExceptionForMethod($client, $url, 'DELETE', [], [
             'code' => 404,
             'message' => 'Not found'
         ]);
@@ -168,7 +153,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
     protected function assertEntityNotFoundForDelete(string $role, string $url)
     {
-        return $this->assertExceptionForDeleteAction($role, $url, [], [
+        $this->assertExceptionForDeleteAction($role, $url, [], [
             'code' => 404,
             'message' => 'Not found'
         ]);
@@ -176,7 +161,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
     protected function assertEntityNotFoundForPatch(string $role, string $url, array $data)
     {
-        return $this->assertExceptionForPatchAction($role, $url, $data, [
+        $this->assertExceptionForPatchAction($role, $url, $data, [
             'code' => 404,
             'message' => 'Not found'
         ]);
@@ -184,7 +169,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
     protected function assertEntityNotFoundForPost(string $role, string $url, array $data, ?string $message = null)
     {
-        return $this->assertExceptionForPostAction($role, $url, $data, [
+        $this->assertExceptionForPostAction($role, $url, $data, [
             'code' => 404,
             'message' => $message ?? 'Not found'
         ]);
@@ -208,15 +193,14 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     protected function assertExceptionForMethod(HttpKernelBrowser $client, string $url, string $method, array $data, array $expectedErrors)
     {
         $this->request($client, $url, $method, [], json_encode($data));
-        $response = $client->getResponse();
+        $this->assertApiException($client->getResponse(), $expectedErrors);
+    }
+
+    protected function assertApiException(Response $response, array $expectedErrors)
+    {
         self::assertFalse($response->isSuccessful());
-
-        self::assertEquals($expectedErrors['code'], $client->getResponse()->getStatusCode());
-
-        self::assertEquals(
-            $expectedErrors,
-            json_decode($client->getResponse()->getContent(), true)
-        );
+        self::assertEquals($expectedErrors['code'], $response->getStatusCode());
+        self::assertEquals($expectedErrors, json_decode($response->getContent(), true));
     }
 
     protected function assertExceptionForRole(string $role, string $url, string $method, array $data, array $expectedErrors)
@@ -225,11 +209,9 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         $this->assertExceptionForMethod($client, $url, $method, $data, $expectedErrors);
     }
 
-    protected function assertApiException(Response $response, string $message)
+    protected function assertApi500Exception(Response $response, string $message)
     {
-        self::assertFalse($response->isSuccessful());
-        self::assertEquals(500, $response->getStatusCode());
-        self::assertEquals(['code' => 500, 'message' => $message], json_decode($response->getContent(), true));
+        $this->assertApiException($response, ['code' => 500, 'message' => $message]);
     }
 
     protected function assertApiAccessDenied(HttpKernelBrowser $client, string $url, string $message)
@@ -240,10 +222,10 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
     protected function assertApiResponseAccessDenied(Response $response, string $message)
     {
-        self::assertFalse($response->isSuccessful());
-        self::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $expected = ['code' => Response::HTTP_FORBIDDEN, 'message' => $message];
-        self::assertEquals($expected, json_decode($response->getContent(), true));
+        $this->assertApiException($response, [
+            'code' => Response::HTTP_FORBIDDEN,
+            'message' => $message
+        ]);
     }
 
     /**

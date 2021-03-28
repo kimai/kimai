@@ -177,6 +177,25 @@ class TimesheetControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
+    public function testGetCollectionWithQueryFailsWith404OnOutOfRangedPage()
+    {
+        $modifiedAfter = new \DateTime('-1 hour');
+        $begin = new \DateTime('first day of this month');
+        $begin->setTime(0, 0, 0);
+        $end = new \DateTime('last day of this month');
+        $end->setTime(23, 59, 59);
+
+        $query = [
+            'page' => 19,
+            'size' => 50,
+        ];
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importFixtureForUser(User::ROLE_USER);
+        $this->request($client, '/api/timesheets', 'GET', $query);
+        $this->assertApiException($client->getResponse(), ['code' => 404, 'message' => 'Page "19" does not exist. The currentPage must be inferior to "1"']);
+    }
+
     public function testGetCollectionWithSingleParamsQuery()
     {
         $begin = new \DateTime('first day of this month');
@@ -760,7 +779,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $id = $timesheets[0]->getId();
         $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
 
-        $this->assertApiException($client->getResponse(), 'Timesheet entry already stopped');
+        $this->assertApi500Exception($client->getResponse(), 'Timesheet entry already stopped');
     }
 
     public function testStopThrowsNotFound()
