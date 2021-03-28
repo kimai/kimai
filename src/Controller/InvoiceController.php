@@ -229,7 +229,7 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/change-status/{id}/{status}", name="admin_invoice_status", methods={"GET", "POST"}
+     * @Route(path="/change-status/{id}/{status}", name="admin_invoice_status", methods={"GET", "POST"})
      */
     public function changeStatusAction(Invoice $invoice, string $status, Request $request): Response
     {
