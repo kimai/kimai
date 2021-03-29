@@ -226,6 +226,22 @@
         <source>label.theme.branding.mini</source>
         <target>Kis logó (összecsukott oldalsávnál)</target>
       </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>Kikapcsolva</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Kerekítési szabálynak megfelelő érték használata</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Perc kiválasztása Kezdéshez és Befejezéshez</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Perc kiválasztása Időtartamhoz</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

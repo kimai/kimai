@@ -1074,6 +1074,106 @@
         <source>placeholder.type_message</source>
         <target>Tajpi vian mesaĝon…</target>
       </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>Ĝisdatigotaj kampoj devas unue esti aktivigitaj per alklakoj de la rilataj elektobutonoj.</target>
+      </trans-unit>
+      <trans-unit id="help.rate">
+        <source>help.rate</source>
+        <target>Hora kotizo fakturota</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>La formularo estas ŝanĝita. Bonvolu alklaki "Konservi" por konservi la ŝanĝojn aŭ "Fermi" por nuligi.</target>
+      </trans-unit>
+      <trans-unit id="help.fixedRate">
+        <source>help.fixedRate</source>
+        <target>Ĉiu temporegistraĵo ricevos la saman valoron, sendepende de sia daŭro</target>
+      </trans-unit>
+      <trans-unit id="help.rate_internal">
+        <source>help.rate_internal</source>
+        <target>Internaj kostoj (se ĉi tio ne estas specifita, uziĝos la normala kotizo)</target>
+      </trans-unit>
+      <trans-unit id="label.recalculate_rates">
+        <source>label.recalculate_rates</source>
+        <target>Rekalkulki kotizojn</target>
+      </trans-unit>
+      <trans-unit id="label.billable">
+        <source>label.billable</source>
+        <target>Fakturebla</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Ĝisdatigi retumilan titolon</target>
+      </trans-unit>
+      <trans-unit id="menu.reporting">
+        <source>menu.reporting</source>
+        <target>Raportado</target>
+      </trans-unit>
+      <trans-unit id="label.rate_internal">
+        <source>label.rate_internal</source>
+        <target>Interna kotizo</target>
+      </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>Pliaj kampoj</target>
+      </trans-unit>
+      <trans-unit id="profile.registration_date">
+        <source>profile.registration_date</source>
+        <target>Registrita ĉe</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Entute</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeYear">
+        <source>stats.workingTimeYear</source>
+        <target>Tuta jaro %year%</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Montri elementojn sen rezervoj</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Montri elementojn sen buĝeto</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Imposta procento</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Dosiero</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Ne fakturita</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Ne eksportita</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Malkreskante</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Kreskante</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Konservi kiel aprioron</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Serĉvorto</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Ordigi laŭ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

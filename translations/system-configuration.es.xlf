@@ -234,6 +234,10 @@
         <source>label.timesheet.rounding.default.end</source>
         <target>Redondeo de la hora de finalización en minutos (0 = desactivado)</target>
       </trans-unit>
+      <trans-unit id="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>Unidad mínima de tiempo para las vistas semanal y diaria (formato: hh:mm:ss)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
