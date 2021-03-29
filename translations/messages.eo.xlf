@@ -1174,6 +1174,18 @@
         <source>label.orderBy</source>
         <target>Ordigi laŭ</target>
       </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Pretersaltis antaŭrigardon de %row% pliaj vicoj…</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Dato de pago</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Konservi ĉion</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
