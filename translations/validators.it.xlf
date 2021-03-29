@@ -1,15 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="it" datatype="plaintext" original="validators.en.xlf">
-        <body>
-            <trans-unit id="This value is not a valid role.">
-                <source>This value is not a valid role.</source>
-                <target>Questo valore non é valido.</target>
-            </trans-unit>
-            <trans-unit id="End date must not be earlier then start date.">
-                <source>End date must not be earlier then start date.</source>
-                <target>La data di fine non può essere prima di quella iniziale.</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="it" datatype="plaintext" original="validators.en.xlf">
+    <body>
+      <trans-unit id="This value is not a valid role.">
+        <source>This value is not a valid role.</source>
+        <target>Questo valore non è un ruolo valido.</target>
+      </trans-unit>
+      <trans-unit id="End date must not be earlier then start date.">
+        <source>End date must not be earlier then start date.</source>
+        <target>La data di fine non può essere prima di quella iniziale.</target>
+      </trans-unit>
+      <trans-unit id="You must select at least one user or team.">
+        <source>You must select at least one user or team.</source>
+        <target>Devi selezionare almeno un utente o una squadra.</target>
+      </trans-unit>
+      <trans-unit id="The begin date cannot be in the future.">
+        <source>The begin date cannot be in the future.</source>
+        <target>La data di inizio non può essere futura.</target>
+      </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>Il budget è esaurito. Del %budget% disponibile, %used% è stato prenotato finora, %free% può ancora essere utilizzato.</target>
+      </trans-unit>
+      <trans-unit id="The given value is not a valid time.">
+        <source>The given value is not a valid time.</source>
+        <target>Il valore fornito non è un orario valido.</target>
+      </trans-unit>
+      <trans-unit id="You already have an entry for this time.">
+        <source>You already have an entry for this time.</source>
+        <target>Hai già una voce per questo periodo.</target>
+      </trans-unit>
+      <trans-unit id="This period is locked, please choose a later date.">
+        <source>This period is locked, please choose a later date.</source>
+        <target>Questo periodo è bloccato, scegli una data successiva.</target>
+      </trans-unit>
+      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
+        <target>Questo documento di fattura non può essere utilizzato, rinomina il file e caricalo di nuovo.</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

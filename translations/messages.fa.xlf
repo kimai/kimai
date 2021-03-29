@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fa" datatype="plaintext" original="messages.en.xlf">
+    <body>
+      <!--
+              Global template keys
+            -->
+      <trans-unit id="time_tracking">
+        <source>time_tracking</source>
+        <target>رهگیری زمان</target>
+      </trans-unit>
+      <trans-unit id="yes">
+        <source>yes</source>
+        <target>بله</target>
+      </trans-unit>
+      <trans-unit id="no">
+        <source>no</source>
+        <target>خیر</target>
+      </trans-unit>
+      <trans-unit id="both">
+        <source>both</source>
+        <target>هر دو</target>
+      </trans-unit>
+      <trans-unit id="This is a mandatory field">
+        <source>This is a mandatory field</source>
+        <target>اجباری</target>
+      </trans-unit>
+      <trans-unit id="create">
+        <source>create</source>
+        <target>ساختن</target>
+      </trans-unit>
+      <trans-unit id="confirm.delete">
+        <source>confirm.delete</source>
+        <target>شما قطعا قصد دارید این را حذف کنید؟</target>
+      </trans-unit>
+      <trans-unit id="admin_entity.delete_confirm">
+        <source>admin_entity.delete_confirm</source>
+        <target>این داده به خوبی پاک خواهد شد! متناوبا، از سوی دیگر شما میتوانید یک ورودی را انتخاب نمایید که تمام داده ها به آن ترجمه شوند:</target>
+      </trans-unit>
+      <trans-unit id="delete.not_in_use">
+        <source>delete.not_in_use</source>
+        <target>این آیتم به صورت امن می تواند حذف شود.</target>
+      </trans-unit>
+      <trans-unit id="cancel">
+        <source>cancel</source>
+        <target>لغو</target>
+      </trans-unit>
+      <trans-unit id="confirm">
+        <source>confirm</source>
+        <target>تایید</target>
+      </trans-unit>
+      <trans-unit id="upload">
+        <source>upload</source>
+        <target>بارگزاری</target>
+      </trans-unit>
+      <trans-unit id="search">
+        <source>search</source>
+        <target>جستجو</target>
+      </trans-unit>
+      <trans-unit id="my.profile">
+        <source>my.profile</source>
+        <target>پروفایل من</target>
+      </trans-unit>
+      <trans-unit id="update_multiple">
+        <source>update_multiple</source>
+        <target state="translated">%action% %count% ورودی ها؟</target>
+      </trans-unit>
+      <trans-unit id="attachments">
+        <source>attachments</source>
+        <target>فایل ها</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>فایل</target>
+      </trans-unit>
+      <trans-unit id="rates.empty">
+        <source>rates.empty</source>
+        <target>فایلی هنوز تنظیم نشده است.</target>
+      </trans-unit>
+      <trans-unit id="rates.title">
+        <source>rates.title</source>
+        <target>هزینه ها</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>جمع</target>
+      </trans-unit>
+      <!--
+              Login / Security
+            -->
+      <trans-unit id="label.password">
+        <source>label.password</source>
+        <target>رمز عبور</target>
+      </trans-unit>
+      <trans-unit id="label.password_repeat">
+        <source>label.password_repeat</source>
+        <target>تکرار رمز عبور</target>
+      </trans-unit>
+      <trans-unit id="label.logout">
+        <source>label.logout</source>
+        <target>خروج</target>
+      </trans-unit>
+      <trans-unit id="label.user_profile">
+        <source>label.user_profile</source>
+        <target>پروفایل من</target>
+      </trans-unit>
+      <trans-unit id="label.api_token">
+        <source>label.api_token</source>
+        <target>پسورد API</target>
+      </trans-unit>
+      <trans-unit id="label.api_token_repeat">
+        <source>label.api_token_repeat</source>
+        <target>ریست پسورد API</target>
+      </trans-unit>
+      <trans-unit id="login_required">
+        <source>login_required</source>
+        <target>مجوز را گم کرده. به صفحه ورود انتقال دهد؟</target>
+      </trans-unit>
+      <!--
+              Menu / Navbar items
+            -->
+      <trans-unit id="menu.homepage">
+        <source>menu.homepage</source>
+        <target>داشبرد</target>
+      </trans-unit>
+      <trans-unit id="menu.admin">
+        <source>menu.admin</source>
+        <target>مدیریت</target>
+      </trans-unit>
+      <trans-unit id="menu.system">
+        <source>menu.system</source>
+        <target>سیستم</target>
+      </trans-unit>
+      <trans-unit id="menu.logout">
+        <source>menu.logout</source>
+        <target>خروج</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

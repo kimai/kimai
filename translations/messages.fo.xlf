@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fo" datatype="plaintext" original="messages.en.xlf">
+    <body>
+      <!--
+              Global template keys
+            -->
+      <trans-unit id="time_tracking">
+        <source>time_tracking</source>
+        <target>Tíð Sporing</target>
+      </trans-unit>
+      <trans-unit id="yes">
+        <source>yes</source>
+        <target>Ja</target>
+      </trans-unit>
+      <trans-unit id="no">
+        <source>no</source>
+        <target>Nei</target>
+      </trans-unit>
+      <trans-unit id="both">
+        <source>both</source>
+        <target>Bæði</target>
+      </trans-unit>
+      <trans-unit id="This is a mandatory field">
+        <source>This is a mandatory field</source>
+        <target>Kravt</target>
+      </trans-unit>
+      <trans-unit id="create">
+        <source>create</source>
+        <target>Stovna</target>
+      </trans-unit>
+      <trans-unit id="confirm.delete">
+        <source>confirm.delete</source>
+        <target>Er tú vís/ur í, at tú vilt sletta hetta?</target>
+      </trans-unit>
+      <trans-unit id="label.user_profile">
+        <source>label.user_profile</source>
+        <target>Mín vangi</target>
+      </trans-unit>
+      <trans-unit id="label.api_token">
+        <source>label.api_token</source>
+        <target>API loyniorð</target>
+      </trans-unit>
+      <trans-unit id="label.api_token_repeat">
+        <source>label.api_token_repeat</source>
+        <target>Endurtak API loyniorð</target>
+      </trans-unit>
+      <trans-unit id="menu.logout">
+        <source>menu.logout</source>
+        <target>Logga av</target>
+      </trans-unit>
+      <trans-unit id="menu.timesheet">
+        <source>menu.timesheet</source>
+        <target>Mínar tíðir</target>
+      </trans-unit>
+      <trans-unit id="menu.invoice">
+        <source>menu.invoice</source>
+        <target>Fakturar</target>
+      </trans-unit>
+      <trans-unit id="menu.export">
+        <source>menu.export</source>
+        <target>Útflyt</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_customer">
+        <source>menu.admin_customer</source>
+        <target>Kundar</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_project">
+        <source>menu.admin_project</source>
+        <target>Verkætlanir</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_user">
+        <source>menu.admin_user</source>
+        <target>Brúkarar</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_team">
+        <source>menu.admin_team</source>
+        <target>Bólkar</target>
+      </trans-unit>
+      <trans-unit id="menu.plugin">
+        <source>menu.plugin</source>
+        <target>Ískoytisforrit</target>
+      </trans-unit>
+      <trans-unit id="menu.system_configuration">
+        <source>menu.system_configuration</source>
+        <target>Stillingar</target>
+      </trans-unit>
+      <trans-unit id="menu.doctor">
+        <source>menu.doctor</source>
+        <target>Lækni</target>
+      </trans-unit>
+      <!--
+              Error templates
+            -->
+      <trans-unit id="error.no_comments_found">
+        <source>error.no_comments_found</source>
+        <target>Ongar viðmerkingar eru sendar út enn.</target>
+      </trans-unit>
+      <!--
+              General labels
+            -->
+      <trans-unit id="label.date">
+        <source>label.date</source>
+        <target>Dato</target>
+      </trans-unit>
+      <trans-unit id="label.starttime">
+        <source>label.starttime</source>
+        <target>Byrja</target>
+      </trans-unit>
+      <trans-unit id="label.endtime">
+        <source>label.endtime</source>
+        <target>Enda</target>
+      </trans-unit>
+      <trans-unit id="label.duration">
+        <source>label.duration</source>
+        <target>Tíðarlongd</target>
+      </trans-unit>
+      <trans-unit id="label.user">
+        <source>label.user</source>
+        <target>Brúkari</target>
+      </trans-unit>
+      <trans-unit id="label.username">
+        <source>label.username</source>
+        <target>Brúkari</target>
+      </trans-unit>
+      <trans-unit id="label.description">
+        <source>label.description</source>
+        <target>Frágreiðing</target>
+      </trans-unit>
+      <trans-unit id="label.name">
+        <source>label.name</source>
+        <target>Navn</target>
+      </trans-unit>
+      <trans-unit id="label.comment">
+        <source>label.comment</source>
+        <target>Viðmerking</target>
+      </trans-unit>
+      <trans-unit id="label.id">
+        <source>label.id</source>
+        <target>ID</target>
+      </trans-unit>
+      <trans-unit id="label.visible">
+        <source>label.visible</source>
+        <target>Sjónligur</target>
+      </trans-unit>
+      <trans-unit id="label.budget">
+        <source>label.budget</source>
+        <target>Fíggjarætlan</target>
+      </trans-unit>
+      <trans-unit id="label.timeBudget">
+        <source>label.timeBudget</source>
+        <target>Tíðarætlan</target>
+      </trans-unit>
+      <trans-unit id="label.activity">
+        <source>label.activity</source>
+        <target>Virksemi</target>
+      </trans-unit>
+      <trans-unit id="label.project">
+        <source>label.project</source>
+        <target>Verkætlan</target>
+      </trans-unit>
+      <trans-unit id="label.tag">
+        <source>label.tag</source>
+        <target>Frámerkir</target>
+      </trans-unit>
+      <trans-unit id="label.tags">
+        <source>label.tags</source>
+        <target>Frámerkir</target>
+      </trans-unit>
+      <trans-unit id="label.hourlyRate">
+        <source>label.hourlyRate</source>
+        <target>Tímaprísur</target>
+      </trans-unit>
+      <trans-unit id="label.hourly_rate">
+        <source>label.hourly_rate</source>
+        <target>Tímaprísur</target>
+      </trans-unit>
+      <trans-unit id="label.skin">
+        <source>label.skin</source>
+        <target>Vís: litir</target>
+      </trans-unit>
+      <trans-unit id="label.theme.layout">
+        <source>label.theme.layout</source>
+        <target>Vís: uppseting</target>
+      </trans-unit>
+      <trans-unit id="label.hours">
+        <source>label.hours</source>
+        <target>Tímar</target>
+      </trans-unit>
+      <trans-unit id="label.rate">
+        <source>label.rate</source>
+        <target>Prísur</target>
+      </trans-unit>
+      <trans-unit id="label.rate_internal">
+        <source>label.rate_internal</source>
+        <target>Innanhýsis tímaprísur</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

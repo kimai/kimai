@@ -1,26 +1,26 @@
 <?xml version='1.0' encoding='utf-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="it" datatype="plaintext" original="reporting.en.xlf">
+  <file source-language="en" target-language="eo" datatype="plaintext" original="reporting.en.xlf">
     <body>
       <trans-unit id="report_user_week">
         <source>report_user_week</source>
-        <target>Vista settimanale per un utente</target>
+        <target>Semajna vido por unu uzanto</target>
       </trans-unit>
       <trans-unit id="report_user_month">
         <source>report_user_month</source>
-        <target>Vista mensile per un utente</target>
+        <target>Monata vido por unu uzanto</target>
       </trans-unit>
       <trans-unit id="report_monthly_users">
         <source>report_monthly_users</source>
-        <target>Vista mensile di tutti gli utenti</target>
-      </trans-unit>
-      <trans-unit id="reporting.initial_view">
-        <source>reporting.initial_view</source>
-        <target>Rapporto iniziale</target>
+        <target>Monata vido por ĉiuj uzantoj</target>
       </trans-unit>
       <trans-unit id="report_project_view">
         <source>report_project_view</source>
-        <target>Panoramica del progetto</target>
+        <target>Projekta superrigardo</target>
+      </trans-unit>
+      <trans-unit id="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>Komenca raporto</target>
       </trans-unit>
     </body>
   </file>
