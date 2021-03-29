@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="confirm.delete">
         <source>confirm.delete</source>
-        <target state="translated">Silmek istiyor musunuz?</target>
+        <target state="translated">Gerçekten silmek istiyor musunuz?</target>
       </trans-unit>
       <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="dashboard.subtitle">
         <source>dashboard.subtitle</source>
-        <target state="translated">Hoşgeldiniz!</target>
+        <target state="translated">Hoş geldiniz!</target>
       </trans-unit>
       <trans-unit id="dashboard.all">
         <source>dashboard.all</source>
@@ -1164,6 +1164,18 @@
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
         <target>Arama terimi</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>%rows% satırın ön izlemesi atlandı ...</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Ödeme tarihi</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Tümünü kaydet</target>
       </trans-unit>
     </body>
   </file>
