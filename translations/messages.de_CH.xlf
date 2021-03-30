@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="menu.homepage">
         <source>menu.homepage</source>
-        <target state="translated">Dashboard</target>
+        <target state="translated">Instrumententafel</target>
       </trans-unit>
       <trans-unit id="label.api_token_repeat">
         <source>label.api_token_repeat</source>
@@ -712,7 +712,7 @@
       </trans-unit>
       <trans-unit id="dashboard.title">
         <source>dashboard.title</source>
-        <target>Dashboard</target>
+        <target>Instrumententafel</target>
       </trans-unit>
       <trans-unit id="action.back">
         <source>action.back</source>
@@ -1061,6 +1061,46 @@
       <trans-unit id="file">
         <source>file</source>
         <target>Datei</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Nicht abgerechnet</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Nicht exportiert</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Überspringe Vorschau von %rows% weiteren Zeilen …</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Zahlungsdatum</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Alle speichern</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Sortieren nach</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Absteigend</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Aufsteigend</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Als Standard-Einstellung speichern</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Suchbegriff</target>
       </trans-unit>
     </body>
   </file>
