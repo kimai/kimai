@@ -1174,6 +1174,18 @@
         <source>label.searchTerm</source>
         <target>Termine di ricerca</target>
       </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Anteprima ignorata di %rows% più righe…</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Data di pagamento</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Salva tutto</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
