@@ -479,6 +479,98 @@
         <source>search</source>
         <target>Leita</target>
       </trans-unit>
+      <trans-unit id="admin_invoice_template.title">
+        <source>admin_invoice_template.title</source>
+        <target>Vørurokningar skapilón</target>
+      </trans-unit>
+      <trans-unit id="invoice.title">
+        <source>invoice.title</source>
+        <target>Vørurokningar</target>
+      </trans-unit>
+      <trans-unit id="button.preview">
+        <source>button.preview</source>
+        <target>Undansýning</target>
+      </trans-unit>
+      <trans-unit id="button.preview_print">
+        <source>button.preview_print</source>
+        <target>Undansýning av prenti</target>
+      </trans-unit>
+      <trans-unit id="button.print">
+        <source>button.print</source>
+        <target>Prenta</target>
+      </trans-unit>
+      <trans-unit id="invoice_print">
+        <source>invoice_print</source>
+        <target>Vørurokning</target>
+      </trans-unit>
+      <trans-unit id="label.due_days">
+        <source>label.due_days</source>
+        <target>Gjaldsstøða í døgum</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Gjaldsdagur</target>
+      </trans-unit>
+      <trans-unit id="invoice.number">
+        <source>invoice.number</source>
+        <target>Vørurokningarnummar</target>
+      </trans-unit>
+      <trans-unit id="label.unit_price">
+        <source>label.unit_price</source>
+        <target>Eindarprísur</target>
+      </trans-unit>
+      <trans-unit id="label.payment_terms">
+        <source>label.payment_terms</source>
+        <target>Gjaldsháttur</target>
+      </trans-unit>
+      <trans-unit id="label.orderNumber">
+        <source>label.orderNumber</source>
+        <target>Bíleggingarnummar</target>
+      </trans-unit>
+      <trans-unit id="label.orderDate">
+        <source>label.orderDate</source>
+        <target>Bíleggingardato</target>
+      </trans-unit>
+      <trans-unit id="label.invoice_bank_account">
+        <source>label.invoice_bank_account</source>
+        <target>Bankakonta</target>
+      </trans-unit>
+      <trans-unit id="label.decimalDuration">
+        <source>label.decimalDuration</source>
+        <target>Vís tíðarskeiði sum desimal tølum</target>
+      </trans-unit>
+      <trans-unit id="status.new">
+        <source>status.new</source>
+        <target>Nýtt</target>
+      </trans-unit>
+      <trans-unit id="active.entries">
+        <source>active.entries</source>
+        <target>Títt virkna tíðaryvirlit</target>
+      </trans-unit>
+      <trans-unit id="recent.activities">
+        <source>recent.activities</source>
+        <target>Endurbyrja títt síðst virkna virksemi</target>
+      </trans-unit>
+      <trans-unit id="timesheet.start">
+        <source>timesheet.start</source>
+        <target>Upprætta eina nýggja tíðarinntøppan</target>
+      </trans-unit>
+      <trans-unit id="label.pageSize">
+        <source>label.pageSize</source>
+        <target>Stødd av síðu</target>
+      </trans-unit>
+      <trans-unit id="entryState.running">
+        <source>entryState.running</source>
+        <target>Virkin</target>
+      </trans-unit>
+      <trans-unit id="entryState.stopped">
+        <source>entryState.stopped</source>
+        <target>Steðga</target>
+      </trans-unit>
+      <trans-unit id="menu.tags">
+        <source>menu.tags</source>
+        <target>Frámerki</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
