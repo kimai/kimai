@@ -109,7 +109,19 @@ export default class KimaiFormSelect extends KimaiPlugin {
             theme: "bootstrap",
             matcher: matcher
         }};
-        jQuery(selector + ' ' + elementSelector).select2(options);
+
+        const templateResultFunc = function (state) {
+            console.log(state);
+            return jQuery('<span><span style="background-color:'+state.id+'; width: 20px; height: 20px; display: inline-block; margin-right: 10px;">&nbsp;</span>' + state.text + '</span>');
+        };
+
+        let optionsColor = {...options, ...{
+            templateSelection: templateResultFunc,
+            templateResult: templateResultFunc
+        }};
+
+        jQuery(selector + ' ' + elementSelector + ':not([data-renderer=color])').select2(options);
+        jQuery(selector + ' ' + elementSelector + '[data-renderer=color]').select2(optionsColor);
 
         jQuery('body').on('reset', 'form', function(event){
             setTimeout(function() {
