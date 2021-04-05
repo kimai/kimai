@@ -40,6 +40,10 @@ class ColorChoicesValidator extends ConstraintValidator
                 $code = $color[1];
             }
 
+            if (empty($name)) {
+                $name = $code;
+            }
+
             if (!\is_string($code) || 1 !== preg_match('/^#[0-9a-fA-F]{6}$/i', $code)) {
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('{{ value }}', $this->formatValue($code))

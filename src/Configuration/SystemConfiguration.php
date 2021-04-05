@@ -258,6 +258,9 @@ class SystemConfiguration implements SystemBundleConfiguration
 
         $colors = [];
         foreach ($config as $item) {
+            if (empty($item)) {
+                continue;
+            }
             $item = explode('|', $item);
             $key = $item[0];
             $value = $key;
