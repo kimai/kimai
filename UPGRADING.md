@@ -10,6 +10,8 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.14](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
 
+**CRITICAL BC break**: SQLite support was removed. If you are using SQLite, you have to [read this blog post](https://www.kimai.org/blog/2021/sqlite-and-ftp-support-removed/) and migrate to MySQL/MariaDB first!
+
 **New database tables and fields: don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
 Permission changes:

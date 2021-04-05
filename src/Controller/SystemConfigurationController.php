@@ -14,6 +14,7 @@ use App\Event\SystemConfigurationEvent;
 use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration as SystemConfigurationModel;
 use App\Form\SystemConfigurationForm;
+use App\Form\Type\ArrayToCommaStringType;
 use App\Form\Type\DateTimeTextType;
 use App\Form\Type\DayTimeType;
 use App\Form\Type\LanguageType;
@@ -25,6 +26,7 @@ use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
 use App\Repository\ConfigurationRepository;
 use App\Validator\Constraints\AllowedHtmlTags;
+use App\Validator\Constraints\ColorChoices;
 use App\Validator\Constraints\DateTimeFormat;
 use App\Validator\Constraints\TimeFormat;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -428,6 +430,19 @@ final class SystemConfigurationController extends AbstractController
                         ->setName('theme.tags_create')
                         ->setLabel('theme.tags_create')
                         ->setType(CheckboxType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('theme.colors_limited')
+                        ->setLabel('theme.colors_limited')
+                        ->setType(CheckboxType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('theme.color_choices')
+                        ->setRequired(false)
+                        ->setLabel('theme.color_choices')
+                        ->setType(ArrayToCommaStringType::class)
+                        ->setOptions(['help' => 'help.theme.color_choices'])
+                        ->setConstraints([new ColorChoices()])
                         ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel())
