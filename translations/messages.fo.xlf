@@ -571,6 +571,14 @@
         <source>menu.tags</source>
         <target>Frámerki</target>
       </trans-unit>
+      <trans-unit id="rates.title">
+        <source>rates.title</source>
+        <target>Avgjøld</target>
+      </trans-unit>
+      <trans-unit id="attachments">
+        <source>attachments</source>
+        <target>Fílur</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
