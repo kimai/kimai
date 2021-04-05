@@ -20,7 +20,7 @@ class KernelTest extends TestCase
     public function testBuild()
     {
         $sut = new Kernel('test', false);
-        $this->assertEquals($sut->getCacheDir(), realpath(__DIR__ . '/../var/cache/test'));
-        $this->assertEquals($sut->getLogDir(), realpath(__DIR__ . '/../var/log'));
+        self::assertStringEndsWith('var/cache/test', $sut->getCacheDir());
+        self::assertStringEndsWith('var/log', $sut->getLogDir());
     }
 }

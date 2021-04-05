@@ -25,11 +25,11 @@ class Constants
     /**
      * The current release status, either "stable" or "dev"
      */
-    public const STATUS = 'dev';
+    public const STATUS = 'stable';
     /**
      * The software name
      */
-    public const SOFTWARE = 'Kimai 2';
+    public const SOFTWARE = 'Kimai';
     /**
      * The release name, will only change for new major version
      */
