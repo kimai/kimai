@@ -1,4 +1,3 @@
-<h1 align="center">Kimai 2 - online time-tracker</h1>
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/kimai/images/master/repository-header.png" alt="Kimai logo">
@@ -13,33 +12,34 @@
     <a href="https://www.bountysource.com/teams/kimai2"><img alt="Bountysource" src="https://img.shields.io/bountysource/team/kimai2/activity"></a>
 </p>
 
+<h1 align="center">Kimai - time-tracker</h1>
+
 Kimai is a free, open source and online time-tracking software designed for small businesses and freelancers. 
 It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Doctrine, AdminLTE, Webpack, ES6 etc.
 
 ## Introduction
 
 - [Home](https://www.kimai.org) - The house of Kimai
-- [Blog](https://www.kimai.org/blog/) - Get the latest news
-- [Documentation](https://www.kimai.org/documentation/) - Learn how to use
-- [Translations](https://www.kimai.org/documentation/translations.html) - Kimai in your language
-- [Migration](https://www.kimai.org/documentation/migration-v1.html) - Import data from v1 
+- [Blog](https://www.kimai.org/blog/) - Read the latest news
+- [Documentation](https://www.kimai.org/documentation/) - Learn how to use it
+- [Translations](https://hosted.weblate.org/projects/kimai/#languages) - Kimai in your language
+- [Migration](https://www.kimai.org/documentation/migration-v1.html) - Import data from Kimai 1 
 
 ### Requirements
 
 - PHP 7.2.9 or higher
 - MariaDB or MySQL
 - Webserver (nginx, Apache)
-- A modern browser
 - Some PHP extensions, see [composer.json](composer.json) or [here](https://www.kimai.org/download/)
 
 ### About
 
-This is the new version of the open source timetracker Kimai. It is stable and production ready, ships
-with most advanced features from Kimai 1 and many new ones, including but not limited to: 
+This is the new version of the open source time-tracker Kimai. It is stable and production ready, ships
+with many advanced features, including but not limited to: 
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
-authentication via SAML/LDAP/Database, customizable role permissions, responsive and ready for your mobile device, 
-user specific rates, advanced search & filtering, money and time budgets with report, support for plugins and many more.
+authentication via SAML/LDAP/Database, customizable role and team permissions, responsive and ready for your mobile device, 
+user specific rates, advanced search & filtering, money and time budgets, multiple reports, support for plugins and many more.
 
 ## Installation
 
@@ -68,9 +68,8 @@ It is open for changes and input from the community, your [ideas and questions](
 > The master branch is always deployable, release tags are only snapshots of the current development version.
 
 Release versions will be created on a regular base (approx. one release every 4-8 weeks).
-Every code change, whether it's a new feature or a bug fix, will be done on the master branch. 
-Kimai is actively developed in my spare time and I put my effort into the software instead of backporting changes for old versions.
-The only exception is a critical security issue, which I would fix in the latest stable version as well. 
+Every code change, whether it's a new feature or a bugfix, will be done on the master branch. 
+Kimai is actively developed in my spare time, I put my effort into the software instead of backporting changes.
 
 ## Credits
 

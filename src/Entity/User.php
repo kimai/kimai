@@ -67,7 +67,7 @@ class User extends BaseUser implements UserInterface
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
-    public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    //public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     public const DEFAULT_ROLE = self::ROLE_USER;
     public const DEFAULT_LANGUAGE = Constants::DEFAULT_LOCALE;
@@ -367,6 +367,11 @@ class User extends BaseUser implements UserInterface
             $language = User::DEFAULT_LANGUAGE;
         }
         $this->setPreferenceValue(UserPreference::LOCALE, $language);
+    }
+
+    public function isFirstDayOfWeekSunday(): bool
+    {
+        return $this->getFirstDayOfWeek() === 'sunday';
     }
 
     public function getFirstDayOfWeek(): string
