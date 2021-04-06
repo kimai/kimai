@@ -316,7 +316,8 @@ abstract class AbstractToolbarForm extends AbstractType
             'choices' => [
                 'label.asc' => BaseQuery::ORDER_ASC,
                 'label.desc' => BaseQuery::ORDER_DESC
-            ]
+            ],
+            'search' => false,
         ]);
     }
 
@@ -340,7 +341,8 @@ abstract class AbstractToolbarForm extends AbstractType
         }
         $builder->add('orderBy', ChoiceType::class, [
             'label' => 'label.orderBy',
-            'choices' => $all
+            'choices' => $all,
+            'search' => false,
         ]);
     }
 
