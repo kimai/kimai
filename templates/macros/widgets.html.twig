@@ -147,7 +147,7 @@
 {% endmacro %}
 
 {% macro badge(title, color) %}
-    <span class="badge" style="background-color:{{ color }}">{{ title }}</span>
+    <span class="badge" style="background-color:{{ color }}; color:{{ color|font_contrast }}">{{ title }}</span>
 {% endmacro %}
 
 {% macro alert(type, description, title, icon) %}
