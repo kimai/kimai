@@ -43,17 +43,20 @@ final class SamlController extends AbstractController
         $session = $request->getSession();
         $authErrorKey = Security::AUTHENTICATION_ERROR;
 
+        $error = null;
+
         if ($request->attributes->has($authErrorKey)) {
             $error = $request->attributes->get($authErrorKey);
         } elseif (null !== $session && $session->has($authErrorKey)) {
             $error = $session->get($authErrorKey);
             $session->remove($authErrorKey);
-        } else {
-            $error = null;
         }
 
         if ($error) {
-            throw new \RuntimeException($error->getMessage());
+            if (\is_object($error) && method_exists($error, 'getMessage')) {
+                $error = $error->getMessage();
+            }
+            throw new \RuntimeException($error);
         }
 
         $this->oneLoginAuth->login($session->get('_security.main.target_path'));
