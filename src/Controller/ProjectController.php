@@ -99,6 +99,7 @@ final class ProjectController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'metaColumns' => $this->findMetaColumns($query),
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -271,6 +272,9 @@ final class ProjectController extends AbstractController
         $query->setPageSize(5);
         $query->addProject($project);
         $query->setExcludeGlobals(true);
+        $query->setShowBoth();
+        $query->addOrderGroup('visible', ActivityQuery::ORDER_DESC);
+        $query->addOrderGroup('name', ActivityQuery::ORDER_ASC);
 
         /* @var $entries Pagerfanta */
         $entries = $activityRepository->getPagerfantaForQuery($query);
@@ -279,6 +283,7 @@ final class ProjectController extends AbstractController
             'project' => $project,
             'activities' => $entries,
             'page' => $page,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -330,7 +335,8 @@ final class ProjectController extends AbstractController
             'stats' => $stats,
             'team' => $defaultTeam,
             'teams' => $teams,
-            'rates' => $rates
+            'rates' => $rates,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 

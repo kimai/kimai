@@ -503,3 +503,18 @@
     </script>
     {% endif %}
 {% endmacro %}
+
+{# To be used mainly in <tr class="{{ class_customer_row(customer, now) }}"> #}
+{% macro class_customer_row(customer, now) %}
+    {%- if not customer.visible %}warning{% endif -%}
+{% endmacro %}
+
+{# To be used mainly in <tr class="{{ class_project_row(project, now) }}"> #}
+{% macro class_project_row(project, now) %}
+    {%- if not project.visible or (project.end is not null and project.end < now) %}warning{% endif -%}
+{% endmacro %}
+
+{# To be used mainly in <tr class="{{ class_activity_row(activity, now) }}"> #}
+{% macro class_activity_row(activity, now) %}
+    {%- if not activity.visible %}warning{% endif -%}
+{% endmacro %}

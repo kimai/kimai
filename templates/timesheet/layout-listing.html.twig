@@ -59,7 +59,7 @@
     {% if entries.count == 0 %}
         {{ widgets.nothing_found('kimai.timesheetUpdate') }}
     {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'striped': not showSummary, 'reload': 'kimai.timesheetUpdate'}) }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.timesheetUpdate'}) }}
 
         {% set checkOverlappingDesc = false %}
         {% set checkOverlappingAsc = false %}

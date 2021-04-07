@@ -44,7 +44,13 @@
         {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.projectUpdate kimai.projectTeamUpdate'}) }}
 
         {% for entry in entries %}
-            <tr{% if is_granted('view', entry) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': entry.id}) }}"{% endif %}>
+            {% set class = widgets.class_project_row(entry, now) %}
+            {% set dataHref = '' %}
+            {% if is_granted('view', entry) %}
+                {% set class = class ~ ' alternative-link open-edit' %}
+                {% set dataHref = path('project_details', {'id': entry.id}) %}
+            {% endif %}
+            <tr class="{{ class }}" data-href="{{ dataHref }}">
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_color_dot('project', true, entry.name, null, entry.color) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.customer) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
