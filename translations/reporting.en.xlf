@@ -10,6 +10,10 @@
                 <source>report_user_month</source>
                 <target>Monthly view for one user</target>
             </trans-unit>
+            <trans-unit id="report_weekly_users">
+                <source>report_weekly_users</source>
+                <target>Weekly view for all users</target>
+            </trans-unit>
             <trans-unit id="report_monthly_users">
                 <source>report_monthly_users</source>
                 <target>Monthly view for all users</target>

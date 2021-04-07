@@ -27,7 +27,7 @@
             {% endif %}
             {{ form_widget(form.date) }}
         {% endblock %}
-        {% block box_body_class %}user-month-reporting-box table-responsive{% if hasData %} no-padding{% endif %}{% endblock %}
+        {% block box_body_class %}{{ box_id }} table-responsive{% if hasData %} no-padding{% endif %}{% endblock %}
         {% block box_body %}
             {% if not hasData %}
                 {{ widgets.nothing_found() }}
