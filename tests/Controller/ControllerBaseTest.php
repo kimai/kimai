@@ -187,7 +187,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasDataTable(HttpKernelBrowser $client)
     {
-        self::assertStringContainsString('<table class="table table-striped table-hover dataTable" role="grid" data-reload-event="', $client->getResponse()->getContent());
+        self::assertStringContainsString('<table class="table table-hover dataTable" role="grid" data-reload-event="', $client->getResponse()->getContent());
     }
 
     /**
@@ -208,7 +208,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertDataTableRowCount(HttpKernelBrowser $client, string $id, int $count)
     {
-        $node = $client->getCrawler()->filter('section.content div.' . $id . ' table.table-striped tbody tr:not(.summary)');
+        $node = $client->getCrawler()->filter('section.content div.' . $id . ' table.dataTable tbody tr:not(.summary)');
         self::assertEquals($count, $node->count());
     }
 
