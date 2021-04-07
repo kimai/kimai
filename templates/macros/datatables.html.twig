@@ -46,7 +46,7 @@
         {% set orderBy = false %}
         {% set order = false %}
     {% endif %}
-    {% set striped = options.striped ?? true %}
+    {% set striped = options.striped ?? false %}
     {% set bordered = options.bordered ?? false %}
     {% set reloadEvent = options.reload|default('') %}
     {% set translationDomain = options.translationDomain|default('messages') %}
@@ -145,40 +145,6 @@
 {% endapply %}
 {% endmacro %}
 
-{% macro data_table_header_options(name, columns, options) %}
-    {% deprecated 'The macro "data_table_header_options()" is deprecated since 1.3 and will be removed with 2.0, use "datatable_header()" instead' %}
-    {% set skipStripped = options.skipStripped|default(false) %}
-    {% set reloadEvent = options.reloadEvent|default('') %}
-    {% set translationDomain = options.translationDomain|default('messages') %}
-    {# |default does not work here, as the prefix might be an empty string #}
-    {% set translationPrefix = 'label.' %}
-    {% if options.translationPrefix is defined %}
-        {% set translationPrefix = options.translationPrefix %}
-    {% endif %}
-
-    {% import _self as macro %}
-    <div class="box box-{{ admin_lte_context.widget.type }} data_table" id="datatable_{{ name }}">
-        <div class="box-body no-padding">
-            <div class="dataTables_wrapper form-inline dt-bootstrap">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <table class="table {% if not skipStripped %}table-striped {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}">
-                            <thead>
-                            <tr>
-                                {%- for title, class in columns -%}
-                                    <th data-field="{{ title }}" class="{{ macro.data_table_column_class(name, columns, title) }}">{% if title is not empty and title != 'actions' %}{{ (translationPrefix ~ title)|trans({}, translationDomain) }}{% endif %}</th>
-                                {%- endfor -%}
-                            </tr>
-                            </thead>
-                            <tbody>
-{% endmacro %}
-
-{% macro data_table_header(name, columns, skipStripped, reloadEvent) %}
-    {% deprecated 'The macro "data_table_header()" is deprecated since 1.3 and will be removed with 2.0, use "datatable_header()" instead' %}
-    {% import _self as macro %}
-    {{ macro.data_table_header_options(name, columns, {'skipStripped': skipStripped, 'reloadEvent': reloadEvent}) }}
-{% endmacro %}
-
 {% macro data_table_footer(entries, route, multi_update_form) %}
                 </tbody>
             </table>
@@ -199,7 +165,7 @@
 {% endif %}
 {% if route is not empty and entries is not null%}
 <div class="navigation text-center no-print">
-    {{ pagination(entries, { routeName: route }) }}
+    {{ pagination(entries, { routeName: route, 'css_container_class': 'pagination' }) }}
 </div>
 {% endif %}
 {% endmacro %}
@@ -219,4 +185,36 @@
 
 {% macro datatable_multiupdate_row(id) %}
     <input type="checkbox" name="id" value="{{ id }}" class="multi_update_single multiupdater">
+{% endmacro %}
+
+{% macro data_table_header(name, columns, skipStripped, reloadEvent) %}
+    {% deprecated 'The macro "data_table_header()" is deprecated since 1.3 and will be removed with 2.0, use "datatable_header()" instead' %}
+    {{ _self.data_table_header_options(name, columns, {'skipStripped': skipStripped, 'reloadEvent': reloadEvent}) }}
+{% endmacro %}
+
+{% macro data_table_header_options(name, columns, options) %}
+    {% deprecated 'The macro "data_table_header_options()" is deprecated since 1.3 and will be removed with 2.0, use "datatable_header()" instead' %}
+    {% set skipStripped = options.skipStripped|default(true) %}
+    {% set reloadEvent = options.reloadEvent|default('') %}
+    {% set translationDomain = options.translationDomain|default('messages') %}
+    {# |default does not work here, as the prefix might be an empty string #}
+    {% set translationPrefix = 'label.' %}
+    {% if options.translationPrefix is defined %}
+        {% set translationPrefix = options.translationPrefix %}
+    {% endif %}
+
+<div class="box box-{{ admin_lte_context.widget.type }} data_table" id="datatable_{{ name }}">
+    <div class="box-body no-padding">
+        <div class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table {% if not skipStripped %}table-striped {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}">
+                        <thead>
+                        <tr>
+                            {%- for title, class in columns -%}
+                                <th data-field="{{ title }}" class="{{ _self.data_table_column_class(name, columns, title) }}">{% if title is not empty and title != 'actions' %}{{ (translationPrefix ~ title)|trans({}, translationDomain) }}{% endif %}</th>
+                            {%- endfor -%}
+                        </tr>
+                        </thead>
+                        <tbody>
 {% endmacro %}

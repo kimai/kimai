@@ -272,20 +272,20 @@ class ActivityRepository extends EntityRepository
             ->leftJoin('p.customer', 'c')
         ;
 
-        $orderBy = $query->getOrderBy();
-        switch ($orderBy) {
-            case 'project':
-                $orderBy = 'p.name';
-                break;
-            case 'customer':
-                $orderBy = 'c.name';
-                break;
-            default:
-                $orderBy = 'a.' . $orderBy;
-                break;
+        foreach ($query->getOrderGroups() as $orderBy => $order) {
+            switch ($orderBy) {
+                case 'project':
+                    $orderBy = 'p.name';
+                    break;
+                case 'customer':
+                    $orderBy = 'c.name';
+                    break;
+                default:
+                    $orderBy = 'a.' . $orderBy;
+                    break;
+            }
+            $qb->addOrderBy($orderBy, $order);
         }
-
-        $qb->addOrderBy($orderBy, $query->getOrder());
 
         $where = $qb->expr()->andX();
 
