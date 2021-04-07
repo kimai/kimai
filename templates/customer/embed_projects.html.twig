@@ -27,15 +27,19 @@
                     <tr>
                         <th>{{ 'label.name'|trans }}</th>
                         <th class="hidden-xs">{{ 'label.comment'|trans }}</th>
+                        <th class="w-min text-center">{{ 'label.project_end'|trans }}</th>
+                        <th class="w-min text-center">{{ 'label.visible'|trans }}</th>
                         <th class="w-min text-center">{{ 'label.team'|trans }}</th>
                         <th class="actions"></th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for project in projects %}
-                    <tr>
+                    <tr class="{{ widgets.class_project_row(project, now) }}">
                         <td>{{ widgets.label_project(project) }}</td>
                         <td class="hidden-xs">{{ project.comment|comment2html }}</td>
+                        <td class="w-min text-center">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
+                        <td class="w-min text-center">{{ widgets.label_visible(project.visible) }}</td>
                         <td class="w-min text-center">{{ widgets.badge_team_access(project.teams) }}</td>
                         <td class="actions">{{ actions.project(project, 'custom') }}</td>
                     </tr>
