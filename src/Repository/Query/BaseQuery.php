@@ -215,13 +215,11 @@ class BaseQuery
 
     public function getOrderGroups(): array
     {
-        $order = $this->orderGroups;
-
-        if (empty($order) && !\array_key_exists($this->orderBy, $order)) {
-            $order[$this->orderBy] = $this->order;
+        if (empty($this->orderGroups)) {
+            return [$this->orderBy => $this->order];
         }
 
-        return $order;
+        return $this->orderGroups;
     }
 
     /**
