@@ -121,7 +121,7 @@ class BaseQueryTest extends TestCase
 
     protected function assertPage(BaseQuery $sut)
     {
-        self::assertEquals(BaseQuery::DEFAULT_PAGE, $sut->getPage());
+        self::assertEquals(1, $sut->getPage());
 
         $sut->setPage(42);
         self::assertEquals(42, $sut->getPage());

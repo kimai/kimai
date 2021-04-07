@@ -266,23 +266,23 @@ class ProjectRepository extends EntityRepository
             ->leftJoin('p.customer', 'c')
         ;
 
-        $orderBy = $query->getOrderBy();
-        switch ($orderBy) {
-            case 'customer':
-                $orderBy = 'c.name';
-                break;
-            case 'project_start':
-                $orderBy = 'p.start';
-                break;
-            case 'project_end':
-                $orderBy = 'p.end';
-                break;
-            default:
-                $orderBy = 'p.' . $orderBy;
-                break;
+        foreach ($query->getOrderGroups() as $orderBy => $order) {
+            switch ($orderBy) {
+                case 'customer':
+                    $orderBy = 'c.name';
+                    break;
+                case 'project_start':
+                    $orderBy = 'p.start';
+                    break;
+                case 'project_end':
+                    $orderBy = 'p.end';
+                    break;
+                default:
+                    $orderBy = 'p.' . $orderBy;
+                    break;
+            }
+            $qb->addOrderBy($orderBy, $order);
         }
-
-        $qb->addOrderBy($orderBy, $query->getOrder());
 
         if (!$query->isShowBoth()) {
             $qb
