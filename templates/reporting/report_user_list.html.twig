@@ -1,13 +1,13 @@
 {% extends 'reporting/layout.html.twig' %}
 
-{% block report_title %}{{ 'report_monthly_users'|trans({}, 'reporting') }}{% endblock %}
+{% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
 
 {% block report %}
 
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_before %}
-            {{ form_start(form, {'action': path('report_monthly_users'), 'attr': {'class': 'form-inline'}}) }}
+            {{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
         {% endblock %}
         {% block box_after %}
             {{ form_end(form) }}
@@ -15,7 +15,7 @@
         {% block box_title %}
             {{ form_widget(form.date) }}
         {% endblock %}
-        {% block box_body_class %}monthly-user-list-reporting-box table-responsive no-padding{% endblock %}
+        {% block box_body_class %}{{ box_id }} table-responsive no-padding{% endblock %}
         {% block box_body %}
             <table class="table table-bordered table-hover dataTable">
                 <tr>
@@ -29,19 +29,19 @@
                     {% endfor %}
                 </tr>
                 {% for userDay in rows %}
-                    {% set usersMonthDuration = 0 %}
+                    {% set usersTotalDuration = 0 %}
                     <tr class="user">
                         <td class="text-nowrap">
                             <strong>{{ widgets.username(userDay.user) }}</strong>
                         </td>
                         {% for day in userDay.days %}
                             {% if day.totalDuration > 0 %}
-                                {% set usersMonthDuration = usersMonthDuration + day.totalDuration %}
+                                {% set usersTotalDuration = usersTotalDuration + day.totalDuration %}
                             {% endif %}
                         {% endfor %}
                         <th class="text-nowrap text-center total">
-                            {% if usersMonthDuration > 0 %}
-                                {{ usersMonthDuration|duration }}
+                            {% if usersTotalDuration > 0 %}
+                                {{ usersTotalDuration|duration }}
                             {% endif %}
                         </th>
                         {% for day in userDay.days %}

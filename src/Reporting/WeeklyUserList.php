@@ -9,6 +9,6 @@
 
 namespace App\Reporting;
 
-final class MonthlyUserList extends AbstractUserList
+final class WeeklyUserList extends AbstractUserList
 {
 }
