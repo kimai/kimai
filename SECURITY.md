@@ -7,8 +7,8 @@ As announced in the [README](README.md) I only support the latest available rele
 | Version | Supported          |
 | ------- | ------------------ |
 | master  | :white_check_mark: |
-| 1.13    | :white_check_mark: |
-| < 1.13  | :x:                |
+| 1.14    | :white_check_mark: |
+| < 1.14  | :x:                |
 
 ## Reporting a Vulnerability
 
@@ -17,7 +17,7 @@ Please report any security related vulnerability in the [advisories section at G
 I will work as fast as I can to fix the problem and publish a bugfix release / security update. 
 Depending on the size of the required fixes, this might take a couple of hours or a couple of days.
 
-You can expect that your message will be answered ASAP, but please take into account that I am living in the timezone Europe/Berlin. 
+You can expect that your message will be answered ASAP, but please take into account that I am living in the timezone CET. 
 
 If your issue is valid and after I verified and fixed it, you will be mentioned in the release notes. 
 I am grateful for any (discrete) disclosure of vulnerabilities!

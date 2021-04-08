@@ -16,6 +16,7 @@ use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
 use App\Form\Type\MetaFieldsCollectionType;
+use App\Form\Type\TagsType;
 use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
@@ -121,8 +122,7 @@ class TimesheetEditForm extends AbstractType
             $descriptionOptions['attr'] = ['autofocus' => 'autofocus'];
         }
         $builder->add('description', DescriptionType::class, $descriptionOptions);
-
-        $this->addTags($builder);
+        $builder->add('tags', TagsType::class, ['required' => false]);
         $this->addRates($builder, $currency, $options);
         $this->addUser($builder, $options);
         $builder->add('metaFields', MetaFieldsCollectionType::class);
