@@ -92,7 +92,7 @@ final class MarkdownExtension implements RuntimeExtensionInterface
         $content = explode(PHP_EOL, $content);
         $result = $content[0];
 
-        if (\count($content) > 0 || $addHellip) {
+        if (\count($content) > 1 || $addHellip) {
             $result .= ' &hellip;';
         }
 
