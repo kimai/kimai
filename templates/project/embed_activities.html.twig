@@ -33,7 +33,7 @@
                     {% for activity in activities %}
                         <tr class="{{ widgets.class_activity_row(activity, now) }}">
                             <td>{{ widgets.label_activity(activity) }}</td>
-                            <td class="hidden-xs">{{ activity.comment|comment2html }}</td>
+                            <td class="hidden-xs">{{ activity.comment|comment1line(false) }}</td>
                             <td class="w-min text-center">{{ widgets.label_visible(activity.visible) }}</td>
                             <td class="w-min text-center">{{ widgets.badge_team_access(activity.teams) }}</td>
                             <td class="actions">{{ actions.activity(activity, 'custom') }}</td>
