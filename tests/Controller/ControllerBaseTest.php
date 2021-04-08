@@ -79,11 +79,7 @@ abstract class ControllerBaseTest extends WebTestCase
         return $client;
     }
 
-    /**
-     * @param string $url
-     * @return string
-     */
-    protected function createUrl($url)
+    protected function createUrl(string $url): string
     {
         return '/' . self::DEFAULT_LANGUAGE . '/' . ltrim($url, '/');
     }
