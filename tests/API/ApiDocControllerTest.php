@@ -56,13 +56,4 @@ class ApiDocControllerTest extends ControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
     }
-
-    /**
-     * @param string $url
-     * @return string
-     */
-    protected function createUrl($url)
-    {
-        return '/' . ltrim($url, '/');
-    }
 }
