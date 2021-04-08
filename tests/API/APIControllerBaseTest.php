@@ -60,21 +60,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         return $client;
     }
 
-    /**
-     * @param string $url
-     * @param bool $json
-     * @return string
-     */
-    protected function createUrl($url, $json = true)
+    protected function createUrl(string $url): string
     {
-        if ($json) {
-            if (stripos($url, '?') !== false) {
-                $url = str_replace('?', '.json?', $url);
-            } else {
-                $url .= '.json';
-            }
-        }
-
         return '/' . ltrim($url, '/');
     }
 
