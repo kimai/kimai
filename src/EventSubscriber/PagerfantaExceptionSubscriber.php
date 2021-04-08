@@ -38,7 +38,7 @@ final class PagerfantaExceptionSubscriber implements EventSubscriberInterface
         $throwable = $event->getThrowable();
 
         if ($throwable instanceof NotValidMaxPerPageException || $throwable instanceof OutOfRangeCurrentPageException) {
-            $notFoundHttpException = new NotFoundHttpException($throwable->getMessage(), $throwable);
+            $notFoundHttpException = new NotFoundHttpException($throwable->getMessage(), $throwable, $throwable->getCode());
             $event->setThrowable($notFoundHttpException);
         }
     }
