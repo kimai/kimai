@@ -37,6 +37,7 @@ class UserTest extends TestCase
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
         self::assertFalse($user->hasTeamAssignment());
         self::assertFalse($user->canSeeAllData());
+        self::assertFalse($user->isSmallLayout());
 
         $user->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
         self::assertEquals('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', $user->getAvatar());
