@@ -76,7 +76,7 @@ final class MarkdownExtension implements RuntimeExtensionInterface
      * @param bool $fullLength
      * @return string
      */
-    public function commentOneLiner(?string $content, bool $fullLength = false): string
+    public function commentOneLiner(?string $content, bool $fullLength = true): string
     {
         if (empty($content)) {
             return '';
