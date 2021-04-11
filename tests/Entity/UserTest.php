@@ -37,6 +37,7 @@ class UserTest extends TestCase
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
         self::assertFalse($user->hasTeamAssignment());
         self::assertFalse($user->canSeeAllData());
+        self::assertFalse($user->isSmallLayout());
 
         $user->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
         self::assertEquals('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', $user->getAvatar());
@@ -108,6 +109,11 @@ class UserTest extends TestCase
         self::assertNull($user->getPreferenceValue('test2'));
         $user->setPreferenceValue('test2', 'I like rain');
         self::assertEquals('I like rain', $user->getPreferenceValue('test2'));
+
+        $user->setPreferenceValue('theme.layout', 'boxed');
+        self::assertTrue($user->isSmallLayout());
+        $user->setPreferenceValue('theme.layout', '12345');
+        self::assertFalse($user->isSmallLayout());
     }
 
     public function testDisplayName()

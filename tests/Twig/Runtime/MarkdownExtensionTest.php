@@ -110,9 +110,20 @@ class MarkdownExtensionTest extends TestCase
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt',
             $sut->commentOneLiner(implode(PHP_EOL, ['Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt']), true)
         );
+
         $this->assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt &hellip;',
             $sut->commentOneLiner(implode(PHP_EOL, ['Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt', 'ssdf']), true)
+        );
+
+        $this->assertEquals(
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt',
+            $sut->commentOneLiner(implode(PHP_EOL, ['Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt']))
+        );
+
+        $this->assertEquals(
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt &hellip;',
+            $sut->commentOneLiner(implode(PHP_EOL, ['Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt', 'ssdf']))
         );
     }
 }

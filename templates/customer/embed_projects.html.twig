@@ -37,8 +37,14 @@
                 {% for project in projects %}
                     <tr class="{{ widgets.class_project_row(project, now) }}">
                         <td>{{ widgets.label_project(project) }}</td>
-                        <td class="hidden-xs">{{ project.comment|comment1line(false) }}</td>
-                        <td class="w-min text-center">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
+                        <td class="hidden-xs">{{ project.comment|comment1line(not app.user.smallLayout) }}</td>
+                        <td class="w-min text-center">
+                            {% if project.end is not null %}
+                                {{ project.end|date_short }}
+                            {% else %}
+                                &ndash;
+                            {% endif %}
+                        </td>
                         <td class="w-min text-center">{{ widgets.label_visible(project.visible) }}</td>
                         <td class="w-min text-center">{{ widgets.badge_team_access(project.teams) }}</td>
                         <td class="actions">{{ actions.project(project, 'custom') }}</td>
