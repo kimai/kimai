@@ -122,7 +122,16 @@ abstract class AbstractSpreadsheetRenderer
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $excelDate = Date::PHPToExcel($date);
+
+        if ($excelDate === false) {
+            $sheet->setCellValueByColumnAndRow($column, $row, $date);
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $excelDate);
+        // TODO why is that format hardcoded and does not depend on the users locale?
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::DATETIME_FORMAT);
     }
 
@@ -134,7 +143,15 @@ abstract class AbstractSpreadsheetRenderer
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $excelDate = Date::PHPToExcel($date);
+
+        if ($excelDate === false) {
+            $sheet->setCellValueByColumnAndRow($column, $row, $date);
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $excelDate);
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::TIME_FORMAT);
     }
 
@@ -146,7 +163,16 @@ abstract class AbstractSpreadsheetRenderer
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $excelDate = Date::PHPToExcel($date);
+
+        if ($excelDate === false) {
+            $sheet->setCellValueByColumnAndRow($column, $row, $date);
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $excelDate);
+        // TODO why is that format hardcoded and does not depend on the users locale?
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_YYYYMMDD2);
     }
 
