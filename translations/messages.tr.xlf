@@ -1159,7 +1159,7 @@
       </trans-unit>
       <trans-unit id="label.set_as_default">
         <source>label.set_as_default</source>
-        <target>Öntanımlı ayar olarak kaydet</target>
+        <target>Ayarı sık kullanılan arama olarak kaydet</target>
       </trans-unit>
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
@@ -1176,6 +1176,10 @@
       <trans-unit id="action.save_all">
         <source>action.save_all</source>
         <target>Tümünü kaydet</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Sık kullanılan aramayı sil</target>
       </trans-unit>
     </body>
   </file>
