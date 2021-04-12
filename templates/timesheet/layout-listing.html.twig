@@ -30,13 +30,6 @@
     'project': {'class': 'hidden-xs hidden-sm hidden-md'},
     'activity': {'class': 'hidden-xs hidden-sm'},
     'description': {'class': 'hidden-xs hidden-sm'},
-}) %}
-{% if canSeeUsername %}
-    {% set columns = columns|merge({
-        'username': {'class': 'hidden-xs', 'orderBy': false},
-    }) %}
-{% endif %}
-{% set columns = columns|merge({
     'tags': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
 }) %}
 {% for field in metaColumns %}
@@ -44,6 +37,11 @@
         ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
     }) %}
 {% endfor %}
+{% if canSeeUsername %}
+    {% set columns = columns|merge({
+        'username': {'class': 'hidden-xs', 'orderBy': false},
+    }) %}
+{% endif %}
 {% set columns = columns|merge({
     'exported': {'class': 'text-center hidden w-min', 'orderBy': false},
     'actions': {'class': 'actions alwaysVisible'},
@@ -150,19 +148,19 @@
                         {{ entry.description|nl2br }}
                     {% endif %}
                 </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
+
+                {% for field in metaColumns %}
+                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
+                        {{ tables.datatable_meta_column(entry, field) }}
+                    </td>
+                {% endfor %}
 
                 {% if canSeeUsername %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}">
                         {{ widgets.label_user(entry.user) }}
                     </td>
                 {% endif %}
-                
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
-                {% for field in metaColumns %}
-                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
-                        {{ tables.datatable_meta_column(entry, field) }}
-                    </td>
-                {% endfor %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}">
                     {{ widgets.label_boolean(entry.exported) }}
                 </td>
