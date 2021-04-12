@@ -245,10 +245,10 @@ class TimesheetRepository extends EntityRepository
                 return $this->getDailyStats($user, $begin, $end);
 
             case self::STATS_QUERY_DURATION:
-                $what = 'SUM(t.duration)';
+                $what = 'COALESCE(SUM(t.duration), 0)';
                 break;
             case self::STATS_QUERY_RATE:
-                $what = 'SUM(t.rate)';
+                $what = 'COALESCE(SUM(t.rate), 0)';
                 break;
             case self::STATS_QUERY_USER:
                 $what = 'COUNT(DISTINCT(t.user))';
@@ -271,10 +271,16 @@ class TimesheetRepository extends EntityRepository
      */
     protected function queryThisMonth($select, User $user)
     {
-        $begin = new DateTime('first day of this month 00:00:00');
-        $end = new DateTime('last day of this month 23:59:59');
+        try {
+            $timezone = new \DateTimeZone($user->getTimezone());
+            $begin = new DateTime('first day of this month 00:00:00', $timezone);
+            $end = new DateTime('last day of this month 23:59:59', $timezone);
 
-        return $this->queryTimeRange($select, $begin, $end, $user);
+            return $this->queryTimeRange($select, $begin, $end, $user);
+        } catch (\Exception $ex) {
+        }
+
+        return 0;
     }
 
     /**
@@ -326,8 +332,8 @@ class TimesheetRepository extends EntityRepository
         $durationTotal = $this->getStatistic(self::STATS_QUERY_DURATION, null, null, $user);
         $recordsTotal = $this->getStatistic(self::STATS_QUERY_AMOUNT, null, null, $user);
         $rateTotal = $this->getStatistic(self::STATS_QUERY_RATE, null, null, $user);
-        $amountMonth = $this->queryThisMonth('SUM(t.rate)', $user);
-        $durationMonth = $this->queryThisMonth('SUM(t.duration)', $user);
+        $amountMonth = $this->queryThisMonth('COALESCE(SUM(t.rate), 0)', $user);
+        $durationMonth = $this->queryThisMonth('COALESCE(SUM(t.duration), 0)', $user);
         $firstEntry = $this->getEntityManager()
             ->createQuery('SELECT MIN(t.begin) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
@@ -356,7 +362,7 @@ class TimesheetRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('SUM(t.rate) as rate, SUM(t.duration) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year')
+        $qb->select('COALESCE(SUM(t.rate), 0) as rate, COALESCE(SUM(t.duration), 0) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year')
             ->from(Timesheet::class, 't')
         ;
 

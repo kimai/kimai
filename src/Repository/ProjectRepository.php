@@ -84,9 +84,9 @@ class ProjectRepository extends EntityRepository
         $qb
             ->from(Timesheet::class, 't')
             ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('SUM(t.duration) as duration')
-            ->addSelect('SUM(t.rate) as rate')
-            ->addSelect('SUM(t.internalRate) as internal_rate')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
             ->andWhere('t.project = :project')
             ->setParameter('project', $project)
         ;

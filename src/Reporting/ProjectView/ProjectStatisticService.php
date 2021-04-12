@@ -9,14 +9,14 @@
 
 namespace App\Reporting\ProjectView;
 
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use Doctrine\DBAL\Types\Types;
-use Exception;
 
-final class ProjectViewService
+final class ProjectStatisticService
 {
     private $repository;
     private $timesheetRepository;
@@ -29,27 +29,17 @@ final class ProjectViewService
 
     /**
      * @param ProjectViewQuery $query
-     * @return ProjectViewModel[]
-     * @throws Exception
+     * @return Project[]
      */
-    public function getProjectView(ProjectViewQuery $query): array
+    public function findProjectsForView(ProjectViewQuery $query): array
     {
-        $factory = new DateTimeFactory($query->getToday()->getTimezone());
         $user = $query->getUser();
         $today = clone $query->getToday();
 
-        $begin = $factory->getStartOfWeek($today);
-        $end = $factory->getEndOfWeek($today);
-        $startMonth = (clone $begin)->modify('first day of this month');
-        $endMonth = (clone $begin)->modify('last day of this month');
-
         $qb = $this->repository->createQueryBuilder('p');
         $qb
-            ->select('p AS project')
-            ->addSelect('SUM(t.duration) AS totalDuration')
-            ->addSelect('SUM(t.rate) AS totalRate')
+            ->select('p')
             ->leftJoin('p.customer', 'c')
-            ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
             ->andWhere($qb->expr()->eq('p.visible', true))
             ->andWhere($qb->expr()->eq('c.visible', true))
             ->andWhere(
@@ -59,7 +49,6 @@ final class ProjectViewService
                 )
             )
             ->addGroupBy('p')
-            ->addGroupBy('t.project')
             ->setParameter('project_end', $today, Types::DATETIME_MUTABLE)
         ;
 
@@ -69,7 +58,11 @@ final class ProjectViewService
         }
 
         if (!$query->isIncludeNoWork()) {
-            $qb->andHaving($qb->expr()->gt('totalDuration', 0));
+            $qb
+                ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
+                ->addGroupBy('t.project')
+                ->andHaving($qb->expr()->gt('SUM(t.duration)', 0))
+            ;
         }
 
         if (!$query->isIncludeNoBudget()) {
@@ -83,23 +76,55 @@ final class ProjectViewService
 
         $this->repository->addPermissionCriteria($qb, $user);
 
-        $result = $qb->getQuery()->getResult();
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param ProjectViewRequest $request
+     * @return ProjectViewModel[]
+     */
+    public function getProjectView(ProjectViewRequest $request): array
+    {
+        $projects = $request->getProjects();
+        $factory = new DateTimeFactory(new \DateTimeZone($request->getUser()->getTimezone()));
+
+        $today = $request->getToday();
+        if (null === $today) {
+            $today = $factory->createDateTime();
+        }
+
+        $today = clone $today;
+
+        $begin = $factory->getStartOfWeek($today);
+        $end = $factory->getEndOfWeek($today);
+        $startMonth = (clone $begin)->modify('first day of this month');
+        $endMonth = (clone $begin)->modify('last day of this month');
 
         $projectViews = [];
-        foreach ($result as $res) {
-            $entity = new ProjectViewModel($res['project']);
-            $entity->setDurationTotal($res['totalDuration'] ?? 0);
-            $entity->setRateTotal($res['totalRate'] ?? 0.00);
-
-            $projectViews[$entity->getProject()->getId()] = $entity;
+        foreach ($projects as $project) {
+            $projectViews[$project->getId()] = new ProjectViewModel($project);
         }
 
         $projectIds = array_keys($projectViews);
 
+        $qb = $this->timesheetRepository->createQueryBuilder('t');
+        $qb
+            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration, COALESCE(SUM(t.rate), 0) AS rate')
+            ->andWhere($qb->expr()->in('t.project', ':project'))
+            ->groupBy('t.project')
+            ->setParameter('project', array_values($projectIds))
+        ;
+
+        $result = $qb->getQuery()->getScalarResult();
+        foreach ($result as $row) {
+            $projectViews[$row['id']]->setDurationTotal($row['duration']);
+            $projectViews[$row['id']]->setRateTotal($row['rate']);
+        }
+
         // values for today
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
-            ->select('IDENTITY(t.project) AS id, SUM(t.duration) AS duration')
+            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration')
             ->andWhere($qb->expr()->in('t.project', ':project'))
             ->andWhere('DATE(t.begin) = :starting_date')
             ->groupBy('t.project')
@@ -109,13 +134,13 @@ final class ProjectViewService
 
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
-            $projectViews[$row['id']]->setDurationDay($row['duration']);
+            $projectViews[$row['id']]->setDurationDay($row['duration'] ?? 0);
         }
 
         // values for the current week
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
-            ->select('IDENTITY(t.project) AS id, SUM(t.duration) AS duration')
+            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration')
             ->andWhere($qb->expr()->in('t.project', ':project'))
             ->andWhere('DATE(t.begin) BETWEEN :start_date AND :end_date')
             ->groupBy('t.project')
@@ -132,7 +157,7 @@ final class ProjectViewService
         // values for the current month
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
-            ->select('IDENTITY(t.project) AS id, SUM(t.duration) AS duration')
+            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration')
             ->andWhere($qb->expr()->in('t.project', ':project'))
             ->andWhere('DATE(t.begin) BETWEEN :start_month AND :end_month')
             ->groupBy('t.project')
@@ -146,10 +171,10 @@ final class ProjectViewService
             $projectViews[$row['id']]->setDurationMonth($row['duration']);
         }
 
-        // values for the all time (not exported)
+        // values for all time (not exported)
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
-            ->select('IDENTITY(t.project) AS id, SUM(t.duration) AS duration, SUM(t.rate) AS rate')
+            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration, COALESCE(SUM(t.rate), 0) AS rate')
             ->andWhere($qb->expr()->in('t.project', ':project'))
             ->andWhere('t.exported = :exported')
             ->groupBy('t.project')
@@ -163,10 +188,10 @@ final class ProjectViewService
             $projectViews[$row['id']]->setNotExportedRate($row['rate']);
         }
 
-        // values for the all time (not exported and billable)
+        // values for all time (not exported and billable)
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
-            ->select('IDENTITY(t.project) AS id, SUM(t.duration) AS duration, SUM(t.rate) AS rate')
+            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration, COALESCE(SUM(t.rate), 0) AS rate')
             ->andWhere($qb->expr()->in('t.project', ':project'))
             ->andWhere('t.exported = :exported')
             ->andWhere('t.billable = :billable')

@@ -10,30 +10,38 @@
 namespace App\Controller\Reporting;
 
 use App\Controller\AbstractController;
+use App\Reporting\ProjectView\ProjectStatisticService;
 use App\Reporting\ProjectView\ProjectViewForm;
 use App\Reporting\ProjectView\ProjectViewQuery;
-use App\Reporting\ProjectView\ProjectViewService;
+use App\Reporting\ProjectView\ProjectViewRequest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route(path="/reporting")
+ * @Security("is_granted('view_reporting')")
+ */
 final class ProjectViewController extends AbstractController
 {
     /**
-     * @Route(path="/reporting/project_view", name="report_project_view", methods={"GET","POST"})
-     * @Security("is_granted('view_reporting') and is_granted('budget_project')")
+     * @Route(path="/project_view", name="report_project_view", methods={"GET","POST"})
+     * @Security("is_granted('budget_project')")
      */
-    public function __invoke(Request $request, ProjectViewService $service)
+    public function __invoke(Request $request, ProjectStatisticService $service)
     {
-        $query = new ProjectViewQuery($this->getDateTimeFactory()->createDateTime(), $this->getUser());
+        $dateFactory = $this->getDateTimeFactory();
+        $user = $this->getUser();
 
+        $query = new ProjectViewQuery($dateFactory->createDateTime(), $user);
         $form = $this->createForm(ProjectViewForm::class, $query, [
             'action' => $this->generateUrl('report_project_view')
         ]);
-
         $form->submit($request->query->all(), false);
 
-        $entries = $service->getProjectView($query);
+        $projects = $service->findProjectsForView($query);
+        $request = new ProjectViewRequest($user, $projects, $query->getToday());
+        $entries = $service->getProjectView($request);
 
         $byCustomer = [];
         foreach ($entries as $entry) {
