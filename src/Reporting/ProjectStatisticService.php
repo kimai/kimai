@@ -7,10 +7,14 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Reporting\ProjectView;
+namespace App\Reporting;
 
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Entity\User;
+use App\Reporting\ProjectInactive\ProjectInactiveQuery;
+use App\Reporting\ProjectView\ProjectViewModel;
+use App\Reporting\ProjectView\ProjectViewQuery;
 use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
@@ -28,6 +32,46 @@ final class ProjectStatisticService
     }
 
     /**
+     * @param ProjectInactiveQuery $query
+     * @return Project[]
+     */
+    public function findInactiveProjects(ProjectInactiveQuery $query): array
+    {
+        $user = $query->getUser();
+        $lastChange = clone $query->getLastChange();
+        $now = new \DateTime('now', $lastChange->getTimezone());
+
+        $qb2 = $this->repository->createQueryBuilder('t1');
+        $qb2
+            ->select('1')
+            ->from(Timesheet::class, 't')
+            ->andWhere('p = t.project')
+            ->andWhere($qb2->expr()->gte('t.begin', ':begin'))
+        ;
+
+        $qb = $this->repository->createQueryBuilder('p');
+        $qb
+            ->select('p, c')
+            ->leftJoin('p.customer', 'c')
+            ->andWhere($qb->expr()->eq('p.visible', true))
+            ->andWhere($qb->expr()->eq('c.visible', true))
+            ->andWhere($qb->expr()->not($qb->expr()->exists($qb2)))
+            ->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->isNull('p.end'),
+                    $qb->expr()->gte('p.end', ':project_end')
+                )
+            )
+            ->setParameter('project_end', $now, Types::DATETIME_MUTABLE)
+            ->setParameter('begin', $lastChange, Types::DATETIME_MUTABLE)
+        ;
+
+        $this->repository->addPermissionCriteria($qb, $user);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * @param ProjectViewQuery $query
      * @return Project[]
      */
@@ -38,7 +82,7 @@ final class ProjectStatisticService
 
         $qb = $this->repository->createQueryBuilder('p');
         $qb
-            ->select('p')
+            ->select('p, c')
             ->leftJoin('p.customer', 'c')
             ->andWhere($qb->expr()->eq('p.visible', true))
             ->andWhere($qb->expr()->eq('c.visible', true))
@@ -49,6 +93,7 @@ final class ProjectStatisticService
                 )
             )
             ->addGroupBy('p')
+            ->addGroupBy('c')
             ->setParameter('project_end', $today, Types::DATETIME_MUTABLE)
         ;
 
@@ -80,15 +125,14 @@ final class ProjectStatisticService
     }
 
     /**
-     * @param ProjectViewRequest $request
+     * @param User $user
+     * @param Project[] $projects
+     * @param \DateTime|null $today
      * @return ProjectViewModel[]
      */
-    public function getProjectView(ProjectViewRequest $request): array
+    public function getProjectView(User $user, array $projects, ?\DateTime $today = null): array
     {
-        $projects = $request->getProjects();
-        $factory = new DateTimeFactory(new \DateTimeZone($request->getUser()->getTimezone()));
-
-        $today = $request->getToday();
+        $factory = new DateTimeFactory(new \DateTimeZone($user->getTimezone()));
         if (null === $today) {
             $today = $factory->createDateTime();
         }
@@ -109,7 +153,7 @@ final class ProjectStatisticService
 
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
-            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration, COALESCE(SUM(t.rate), 0) AS rate')
+            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration, COALESCE(SUM(t.rate), 0) AS rate, MAX(t.begin) as lastRecord')
             ->andWhere($qb->expr()->in('t.project', ':project'))
             ->groupBy('t.project')
             ->setParameter('project', array_values($projectIds))
@@ -119,6 +163,10 @@ final class ProjectStatisticService
         foreach ($result as $row) {
             $projectViews[$row['id']]->setDurationTotal($row['duration']);
             $projectViews[$row['id']]->setRateTotal($row['rate']);
+            if ($row['lastRecord'] !== null) {
+                // might be the wrong timezone
+                $projectViews[$row['id']]->setLastRecord($factory->createDateTime($row['lastRecord']));
+            }
         }
 
         // values for today

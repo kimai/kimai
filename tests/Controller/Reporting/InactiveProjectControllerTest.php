@@ -19,14 +19,14 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 /**
  * @group integration
  */
-class ProjectViewControllerTest extends ControllerBaseTest
+class InactiveProjectControllerTest extends ControllerBaseTest
 {
-    public function testProjectViewIsSecure()
+    public function testInactiveProjectIsSecure()
     {
-        $this->assertUrlIsSecured('/reporting/project_view');
+        $this->assertUrlIsSecured('/reporting/project_inactive');
     }
 
-    public function testProjectViewReport()
+    public function testInactiveProjectReport()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -52,8 +52,8 @@ class ProjectViewControllerTest extends ControllerBaseTest
         $timesheets->setUser($this->getUserByRole(User::ROLE_TEAMLEAD));
         $this->importFixture($timesheets);
 
-        $this->assertAccessIsGranted($client, '/reporting/project_view');
-        self::assertStringContainsString('<div class="box-body project_view_reporting-box', $client->getResponse()->getContent());
+        $this->assertAccessIsGranted($client, '/reporting/project_inactive');
+        self::assertStringContainsString('<div class="box-body inactive_project_reporting-box', $client->getResponse()->getContent());
         $rows = $client->getCrawler()->filterXPath("//table[contains(@class, 'dataTable')]/tbody/tr[not(@class='summary')]");
         self::assertGreaterThan(0, $rows->count());
     }

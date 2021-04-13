@@ -31,11 +31,14 @@ class ProjectViewModelTest extends TestCase
         self::assertEquals(0, $sut->getNotExportedDuration());
         self::assertEquals(0, $sut->getNotExportedRate());
         self::assertEquals(0, $sut->getRateTotal());
+        self::assertNull($sut->getLastRecord());
     }
 
     public function testSetterGetter()
     {
         $sut = new ProjectViewModel(new Project());
+
+        $date = new \DateTime();
 
         $sut->setDurationDay(123456789);
         $sut->setDurationMonth(23456789);
@@ -44,6 +47,7 @@ class ProjectViewModelTest extends TestCase
         $sut->setNotExportedDuration(56789);
         $sut->setNotExportedRate(6789);
         $sut->setRateTotal(789);
+        $sut->setLastRecord($date);
 
         self::assertEquals(123456789, $sut->getDurationDay());
         self::assertEquals(23456789, $sut->getDurationMonth());
@@ -52,5 +56,6 @@ class ProjectViewModelTest extends TestCase
         self::assertEquals(56789, $sut->getNotExportedDuration());
         self::assertEquals(6789, $sut->getNotExportedRate());
         self::assertEquals(789, $sut->getRateTotal());
+        self::assertSame($date, $sut->getLastRecord());
     }
 }

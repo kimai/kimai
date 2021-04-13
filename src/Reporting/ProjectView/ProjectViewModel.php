@@ -10,6 +10,7 @@
 namespace App\Reporting\ProjectView;
 
 use App\Entity\Project;
+use DateTime;
 
 final class ProjectViewModel
 {
@@ -53,6 +54,10 @@ final class ProjectViewModel
      * @var float
      */
     private $notBilledRate = 0.00;
+    /**
+     * @var DateTime|null
+     */
+    private $lastRecord;
 
     public function __construct(Project $project)
     {
@@ -152,5 +157,15 @@ final class ProjectViewModel
     public function setRateTotal(float $rateTotal): void
     {
         $this->rateTotal = $rateTotal;
+    }
+
+    public function getLastRecord(): ?DateTime
+    {
+        return $this->lastRecord;
+    }
+
+    public function setLastRecord(DateTime $lastRecord): void
+    {
+        $this->lastRecord = $lastRecord;
     }
 }
