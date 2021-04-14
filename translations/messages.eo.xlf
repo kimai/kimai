@@ -1164,7 +1164,7 @@
       </trans-unit>
       <trans-unit id="label.set_as_default">
         <source>label.set_as_default</source>
-        <target>Konservi kiel aprioron</target>
+        <target>Konservi kiel serĉan favoraton</target>
       </trans-unit>
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
@@ -1185,6 +1185,10 @@
       <trans-unit id="action.save_all">
         <source>action.save_all</source>
         <target>Konservi ĉion</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Forigi serĉan favoraton</target>
       </trans-unit>
     </body>
   </file>
