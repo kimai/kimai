@@ -10,6 +10,7 @@
 namespace App\Tests\Repository\Query;
 
 use App\Entity\Activity;
+use App\Entity\Bookmark;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
@@ -71,6 +72,7 @@ class BaseQueryTest extends TestCase
         $this->assertOrderBy($sut, $orderBy);
         $this->assertOrder($sut, $order);
         $this->assertTeams($sut);
+        $this->assertBookmark($sut);
     }
 
     private function getFormBuilder(string $name)
@@ -117,6 +119,16 @@ class BaseQueryTest extends TestCase
         self::assertInstanceOf(BaseQuery::class, $sut->setTeams([$team]));
         self::assertEquals(1, \count($sut->getTeams()));
         self::assertSame($team, $sut->getTeams()[0]);
+    }
+
+    protected function assertBookmark(BaseQuery $sut)
+    {
+        $bookmark = new Bookmark();
+        self::assertNull($sut->getBookmark());
+        self::assertFalse($sut->hasBookmark());
+        $sut->setBookmark($bookmark);
+        self::assertSame($bookmark, $sut->getBookmark());
+        self::assertTrue($sut->hasBookmark());
     }
 
     protected function assertPage(BaseQuery $sut)
