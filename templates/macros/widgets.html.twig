@@ -518,3 +518,8 @@
 {% macro class_activity_row(activity, now) %}
     {%- if not activity.visible %}warning{% endif -%}
 {% endmacro %}
+
+{# To be used mainly in <tr class="{{ class_user_row(user, now) }}"> #}
+{% macro class_user_row(user) %}
+    {%- if not user.enabled %}warning{% endif -%}
+{% endmacro %}
