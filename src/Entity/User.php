@@ -380,6 +380,11 @@ class User extends BaseUser implements UserInterface
         return $this->getPreferenceValue('theme.layout', 'fixed') === 'boxed';
     }
 
+    public function isExportDecimal(): bool
+    {
+        return (bool) $this->getPreferenceValue('timesheet.export_decimal', false);
+    }
+
     public function setTimezone(?string $timezone)
     {
         if ($timezone === null) {

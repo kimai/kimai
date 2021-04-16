@@ -38,6 +38,7 @@ class UserTest extends TestCase
         self::assertFalse($user->hasTeamAssignment());
         self::assertFalse($user->canSeeAllData());
         self::assertFalse($user->isSmallLayout());
+        self::assertFalse($user->isExportDecimal());
 
         $user->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
         self::assertEquals('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', $user->getAvatar());
@@ -114,6 +115,9 @@ class UserTest extends TestCase
         self::assertTrue($user->isSmallLayout());
         $user->setPreferenceValue('theme.layout', '12345');
         self::assertFalse($user->isSmallLayout());
+
+        $user->setPreferenceValue('timesheet.export_decimal', true);
+        self::assertTrue($user->isExportDecimal());
     }
 
     public function testDisplayName()
