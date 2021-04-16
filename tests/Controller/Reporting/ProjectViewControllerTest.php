@@ -28,7 +28,7 @@ class ProjectViewControllerTest extends ControllerBaseTest
 
     public function testProjectViewReport()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
         $customers = new CustomerFixtures();
         $customers->setIsVisible(true);
@@ -39,7 +39,7 @@ class ProjectViewControllerTest extends ControllerBaseTest
         $projects->setCustomers($customers);
         $projects->setAmount(2);
         $projects->setIsVisible(true);
-        $projects = $this->importFixture($projects);
+        $this->importFixture($projects);
 
         $activities = new ActivityFixtures();
         $activities->setAmount(5);

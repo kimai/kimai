@@ -39,7 +39,7 @@ class InactiveProjectControllerTest extends ControllerBaseTest
         $projects->setCustomers($customers);
         $projects->setAmount(2);
         $projects->setIsVisible(true);
-        $projects = $this->importFixture($projects);
+        $this->importFixture($projects);
 
         $activities = new ActivityFixtures();
         $activities->setAmount(5);
