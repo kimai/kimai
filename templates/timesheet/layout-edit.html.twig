@@ -88,6 +88,26 @@
                 </div>
             </div>
             {% endif %}
+            {% if form.metaFields is defined and form.metaFields is not empty %}
+                {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+                    {{ form_row(meta) }}
+                {% endfor %}
+            {% endif %}
+            {% if form.exported is defined or form.billable is defined %}
+                {% set ebLength = (form.exported is defined and form.billable is defined) ? 6 : 12 %}
+                <div class="row">
+                    {% if form.exported is defined %}
+                    <div class="col-md-{{ ebLength }}">
+                        {{ form_row(form.exported) }}
+                    </div>
+                    {% endif %}
+                    {% if form.billable is defined %}
+                    <div class="col-md-{{ ebLength }}">
+                        {{ form_row(form.billable) }}
+                    </div>
+                    {% endif %}
+                </div>
+            {% endif %}
             {{ form_widget(form) }}
         {% endblock %}
         {% block form_after %}

@@ -67,12 +67,12 @@
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'durationTotal') }}">{{ entry.durationTotal|duration }}</td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
                                             {% if project.timeBudget > 0 %}
-                                                {{ progress.progressbar(project.timeBudget, entry.durationTotal|default(0), entry.durationTotal|duration ~ ' / ' ~ project.timeBudget|duration, '') }}
+                                                {{ progress.progressbar(project.timeBudget, entry.billableDuration|default(0), entry.billableDuration|duration ~ ' / ' ~ project.timeBudget|duration, '') }}
                                             {% endif %}
                                         </td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">
                                             {% if project.budget > 0 %}
-                                                {{ progress.progressbar(project.budget, entry.rateTotal|default(0), entry.rateTotal|money(currency) ~ ' / ' ~ project.budget|money(currency), '') }}
+                                                {{ progress.progressbar(project.budget, entry.billableRate|default(0), entry.billableRate|money(currency) ~ ' / ' ~ project.budget|money(currency), '') }}
                                             {% endif %}
                                         </td>
                                         <td class="{{ tables.data_table_column_class(tableName, columns, 'stateDuration') }}">

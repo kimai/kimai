@@ -13,46 +13,18 @@ use App\Entity\Project;
 
 final class ProjectViewModel
 {
-    /**
-     * @var Project
-     */
     private $project;
-    /**
-     * @var int
-     */
     private $durationDay = 0;
-    /**
-     * @var int
-     */
     private $durationWeek = 0;
-    /**
-     * @var int
-     */
     private $durationMonth = 0;
-    /**
-     * @var int
-     */
     private $durationTotal = 0;
-    /**
-     * @var float
-     */
     private $rateTotal = 0.00;
-    /**
-     * @var int
-     */
     private $notExportedDuration = 0;
-    /**
-     * @var float
-     */
     private $notExportedRate = 0.00;
-    /**
-     * @var int
-     */
     private $notBilledDuration = 0;
-    /**
-     * @var float
-     */
     private $notBilledRate = 0.00;
+    private $noneBillableDuration = 0;
+    private $noneBillableRate = 0.00;
 
     public function __construct(Project $project)
     {
@@ -142,6 +114,36 @@ final class ProjectViewModel
     public function setNotBilledRate(float $notBilledRate): void
     {
         $this->notBilledRate = $notBilledRate;
+    }
+
+    public function getNoneBillableDuration(): int
+    {
+        return $this->noneBillableDuration;
+    }
+
+    public function setNoneBillableDuration(int $noneBillableDuration): void
+    {
+        $this->noneBillableDuration = $noneBillableDuration;
+    }
+
+    public function getNoneBillableRate(): float
+    {
+        return $this->noneBillableRate;
+    }
+
+    public function setNoneBillableRate(float $noneBillableRate): void
+    {
+        $this->noneBillableRate = $noneBillableRate;
+    }
+
+    public function getBillableDuration(): int
+    {
+        return $this->durationTotal - $this->noneBillableDuration;
+    }
+
+    public function getBillableRate(): float
+    {
+        return $this->rateTotal - $this->noneBillableRate;
     }
 
     public function getRateTotal(): float

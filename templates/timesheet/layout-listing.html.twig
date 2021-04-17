@@ -45,6 +45,7 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
+    'billable': {'class': 'text-center hidden w-min', 'orderBy': false},
     'exported': {'class': 'text-center hidden w-min', 'orderBy': false},
     'actions': {'class': 'actions alwaysVisible'},
 }) %}
@@ -163,6 +164,9 @@
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'billable') }}">
+                    {{ widgets.label_boolean(entry.billable) }}
+                </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}">
                     {{ widgets.label_boolean(entry.exported) }}
                 </td>

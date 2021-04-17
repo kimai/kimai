@@ -82,6 +82,7 @@ abstract class AbstractSpreadsheetRenderer
             'wrapText' => false,
         ],
         'exported' => [],
+        'billable' => [],
         'tags' => [],
         'hourlyRate' => [],
         'fixedRate' => [],
@@ -338,7 +339,14 @@ abstract class AbstractSpreadsheetRenderer
 
         if (isset($columns['exported']) && !isset($columns['exported']['render'])) {
             $columns['exported']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
-                $exported = $entity->isExported() ? 'entryState.exported' : 'entryState.not_exported';
+                $exported = $entity->isExported() ? 'yes' : 'no';
+                $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans($exported));
+            };
+        }
+
+        if (isset($columns['billable']) && !isset($columns['billable']['render'])) {
+            $columns['billable']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $exported = (method_exists($entity, 'isBillable') && !$entity->isBillable()) ? 'no' : 'yes';
                 $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans($exported));
             };
         }
