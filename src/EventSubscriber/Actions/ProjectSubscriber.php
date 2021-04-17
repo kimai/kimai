@@ -68,8 +68,8 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             $event->addAction('copy', ['url' => $this->path('admin_project_duplicate', ['id' => $project->getId()])]);
         }
 
-        if ($event->isIndexView() && $this->isGranted('delete', $project)) {
-            $event->addAction('trash', ['url' => $this->path('admin_project_delete', ['id' => $project->getId()]), 'class' => 'modal-ajax-form text-red']);
+        if ($this->isGranted('delete', $project)) {
+            $event->addDelete($this->path('admin_project_delete', ['id' => $project->getId()]));
         }
     }
 }

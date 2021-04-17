@@ -69,7 +69,7 @@ class CustomerSubscriber extends AbstractActionsSubscriber
         }
 
         if ($event->isIndexView() && $this->isGranted('delete', $customer)) {
-            $event->addAction('trash', ['url' => $this->path('admin_customer_delete', ['id' => $customer->getId()]), 'class' => 'modal-ajax-form text-red']);
+            $event->addDelete($this->path('admin_customer_delete', ['id' => $customer->getId()]));
         }
 
         if ($this->isGranted('view_reporting') && $this->isGranted('budget_project')) {
