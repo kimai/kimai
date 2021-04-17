@@ -376,7 +376,7 @@ final class CustomerController extends AbstractController
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.customerUpdate kimai.customerDelete',
+                    'data-form-event' => 'kimai.customerDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
                 ]

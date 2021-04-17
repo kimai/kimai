@@ -54,13 +54,13 @@
 
                 {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
                     <tr class="summary">
-                        <td colspan="11">{{ widgets.label_customer(mapping.customer) }}</td>
+                        <td colspan="{{ columns|length }}">{{ widgets.label_customer(mapping.customer) }}</td>
                     </tr>
                     {% for entry in mapping.projects|sort((a, b) => a.project.name <=> b.project.name) %}
                         {% set project = entry.project %}
                         {% set currency = project.customer.currency %}
                         {% if is_granted('budget', project) %}
-                            <tr{% if is_granted('view', project) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': project.id}) }}"{% endif %}>
+                            <tr {{ widgets.project_row_attr(project, now) }}>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_project(project) }}</td>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'lastRecord') }}">
                                     {% if entry.lastRecord is not null %}

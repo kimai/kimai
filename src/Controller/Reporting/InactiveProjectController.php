@@ -54,6 +54,7 @@ final class InactiveProjectController extends AbstractController
             'form' => $form->createView(),
             'title' => 'report_inactive_project',
             'tableName' => 'inactive_project_reporting',
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 }

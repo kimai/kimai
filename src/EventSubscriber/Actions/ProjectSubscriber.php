@@ -30,7 +30,7 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             return;
         }
 
-        if ($this->isGranted('view', $project)) {
+        if (!$event->isView('project_details') && $this->isGranted('view', $project)) {
             $event->addAction('details', ['url' => $this->path('project_details', ['id' => $project->getId()])]);
         }
 
@@ -68,7 +68,7 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             $event->addAction('copy', ['url' => $this->path('admin_project_duplicate', ['id' => $project->getId()])]);
         }
 
-        if ($this->isGranted('delete', $project)) {
+        if (($event->isIndexView() || $event->isView('customer_details')) && $this->isGranted('delete', $project)) {
             $event->addDelete($this->path('admin_project_delete', ['id' => $project->getId()]));
         }
     }

@@ -30,7 +30,7 @@ class CustomerSubscriber extends AbstractActionsSubscriber
             return;
         }
 
-        if ($this->isGranted('view', $customer)) {
+        if (!$event->isView('customer_details') && $this->isGranted('view', $customer)) {
             $event->addAction('details', ['url' => $this->path('customer_details', ['id' => $customer->getId()])]);
         }
 
