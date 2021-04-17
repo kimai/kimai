@@ -255,6 +255,23 @@ final class ProjectStatisticService
             $projectViews[$row['id']]->setNotBilledRate($row['rate']);
         }
 
+        // values for all time (none billable)
+        $qb = $this->timesheetRepository->createQueryBuilder('t');
+        $qb
+            ->select('IDENTITY(t.project) AS id, SUM(t.duration) AS duration, SUM(t.rate) AS rate')
+            ->andWhere($qb->expr()->in('t.project', ':project'))
+            ->andWhere('t.billable = :billable')
+            ->groupBy('t.project')
+            ->setParameter('billable', false, Types::BOOLEAN)
+            ->setParameter('project', array_values($projectIds))
+        ;
+
+        $result = $qb->getQuery()->getScalarResult();
+        foreach ($result as $row) {
+            $projectViews[$row['id']]->setNoneBillableDuration($row['duration']);
+            $projectViews[$row['id']]->setNoneBillableRate($row['rate']);
+        }
+
         return array_values($projectViews);
     }
 }

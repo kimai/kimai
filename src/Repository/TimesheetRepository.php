@@ -487,6 +487,7 @@ class TimesheetRepository extends EntityRepository
                         $results[$dateKey] = [
                             'rate' => 0,
                             'duration' => 0,
+                            'billable' => 0, // duration
                             'month' => $beginTmp->format('n'),
                             'year' => $beginTmp->format('Y'),
                             'day' => $beginTmp->format('j'),
@@ -502,6 +503,9 @@ class TimesheetRepository extends EntityRepository
 
                     $results[$dateKey]['rate'] += $rate;
                     $results[$dateKey]['duration'] += $duration;
+                    if ($result->isBillable()) {
+                        $results[$dateKey]['billable'] += $duration;
+                    }
                     $detailsId =
                         $result->getProject()->getCustomer()->getId()
                         . '_' . $result->getProject()->getId()
@@ -514,11 +518,15 @@ class TimesheetRepository extends EntityRepository
                             'activity' => $result->getActivity(),
                             'duration' => 0,
                             'rate' => 0,
+                            'billable' => 0, // duration
                         ];
                     }
 
                     $results[$dateKey]['details'][$detailsId]['duration'] += $duration;
                     $results[$dateKey]['details'][$detailsId]['rate'] += $rate;
+                    if ($result->isBillable()) {
+                        $results[$dateKey]['details'][$detailsId]['billable'] += $duration;
+                    }
                 }
 
                 $beginTmp = $newDateBegin;
@@ -568,6 +576,7 @@ class TimesheetRepository extends EntityRepository
             $dateTime->setDate($statRow['year'], $statRow['month'], $statRow['day']);
             $dateTime->setTime(0, 0, 0);
             $day = new Day($dateTime, (int) $statRow['duration'], (float) $statRow['rate']);
+            $day->setTotalDurationBillable($statRow['billable']);
             $day->setDetails($statRow['details']);
             $dateKey = $dateTime->format('Ymd');
             // make sure entries from other timezones are filtered
