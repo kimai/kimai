@@ -84,7 +84,7 @@ final class ProjectStatisticService
 
         $qb = $this->repository->createQueryBuilder('p');
         $qb
-            ->select('p, c')
+            ->select('p')
             ->leftJoin('p.customer', 'c')
             ->andWhere($qb->expr()->eq('p.visible', true))
             ->andWhere($qb->expr()->eq('c.visible', true))
@@ -95,7 +95,6 @@ final class ProjectStatisticService
                 )
             )
             ->addGroupBy('p')
-            ->addGroupBy('c')
             ->setParameter('project_end', $today, Types::DATETIME_MUTABLE)
         ;
 
@@ -107,7 +106,6 @@ final class ProjectStatisticService
         if (!$query->isIncludeNoWork()) {
             $qb
                 ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
-                ->addGroupBy('t.project')
                 ->andHaving($qb->expr()->gt('SUM(t.duration)', 0))
             ;
         }
