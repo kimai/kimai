@@ -1209,6 +1209,14 @@
                 <source>label.not_invoiced</source>
                 <target>Not billed</target>
             </trans-unit>
+            <trans-unit id="label.last_record_before">
+                <source>label.last_record_before</source>
+                <target>No time booking since</target>
+            </trans-unit>
+            <trans-unit id="label.last_record">
+                <source>label.last_record</source>
+                <target>Last entry</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

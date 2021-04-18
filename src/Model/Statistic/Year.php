@@ -23,25 +23,19 @@ class Year
      */
     protected $months = [];
 
-    /**
-     * @param string $year
-     */
-    public function __construct($year)
+    public function __construct(string $year)
     {
         $this->year = $year;
     }
 
-    /**
-     * @return string
-     */
-    public function getYear()
+    public function getYear(): string
     {
         return $this->year;
     }
 
     public function setMonth(Month $month): Year
     {
-        $this->months[(int) $month->getMonth()] = $month;
+        $this->months[$month->getMonthNumber()] = $month;
 
         return $this;
     }

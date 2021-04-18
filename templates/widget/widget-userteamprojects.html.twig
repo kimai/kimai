@@ -35,10 +35,10 @@
                             <td style="width:50%">
                                 {% if project.timeBudget is not empty and project.timeBudget > 0 %}
                                     {% set budgetLeft = project.timeBudget - stats.recordDuration %}
-                                    {{ progress.progressbar_small(project.timeBudget, stats.recordDuration, budgetLeft, budgetLeft|duration) }}
+                                    {{ progress.progressbar_small(project.timeBudget, stats.durationBillable, budgetLeft, budgetLeft|duration) }}
                                 {% elseif project.budget is not empty and project.budget > 0 %}
                                     {% set budgetLeft = project.budget - stats.recordRate %}
-                                    {{ progress.progressbar_small(project.budget, stats.recordRate, budgetLeft, budgetLeft|money(project.customer.currency)) }}
+                                    {{ progress.progressbar_small(project.budget, stats.rateBillable, budgetLeft, budgetLeft|money(project.customer.currency)) }}
                                 {% endif %}
                             </td>
                         </tr>

@@ -36,9 +36,9 @@
       <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
         <target>
-                    Diese Daten werden ebenfalls mit gelöscht!
-                    Alternativ können Sie einen Eintrag auswählen, auf den alle existierenden Daten umgebucht werden:
-                </target>
+            Diese Daten werden ebenfalls mit gelöscht!
+            Alternativ können Sie einen Eintrag auswählen, auf den alle existierenden Daten umgebucht werden:
+        </target>
       </trans-unit>
       <trans-unit id="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -1189,6 +1189,14 @@
       <trans-unit id="label.not_invoiced">
         <source>label.not_invoiced</source>
         <target>Nicht abgerechnet</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Keine Zeitbuchung mehr seit</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Letzter Eintrag</target>
       </trans-unit>
     </body>
   </file>

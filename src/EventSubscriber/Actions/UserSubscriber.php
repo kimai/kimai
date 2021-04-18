@@ -70,7 +70,7 @@ class UserSubscriber extends AbstractActionsSubscriber
         }
 
         if ($event->isIndexView() && $this->isGranted('delete', $user)) {
-            $event->addAction('trash', ['url' => $this->path('admin_user_delete', ['id' => $user->getId()]), 'class' => 'modal-ajax-form']);
+            $event->addDelete($this->path('admin_user_delete', ['id' => $user->getId()]));
         }
     }
 }

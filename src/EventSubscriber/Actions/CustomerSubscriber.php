@@ -30,7 +30,7 @@ class CustomerSubscriber extends AbstractActionsSubscriber
             return;
         }
 
-        if ($this->isGranted('view', $customer)) {
+        if (!$event->isView('customer_details') && $this->isGranted('view', $customer)) {
             $event->addAction('details', ['url' => $this->path('customer_details', ['id' => $customer->getId()])]);
         }
 
@@ -69,7 +69,7 @@ class CustomerSubscriber extends AbstractActionsSubscriber
         }
 
         if ($event->isIndexView() && $this->isGranted('delete', $customer)) {
-            $event->addAction('trash', ['url' => $this->path('admin_customer_delete', ['id' => $customer->getId()]), 'class' => 'modal-ajax-form text-red']);
+            $event->addDelete($this->path('admin_customer_delete', ['id' => $customer->getId()]));
         }
 
         if ($this->isGranted('view_reporting') && $this->isGranted('budget_project')) {

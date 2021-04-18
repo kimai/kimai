@@ -11,22 +11,13 @@ namespace App\Model;
 
 class TimesheetCountedStatistic
 {
-    /**
-     * @var int
-     */
-    protected $recordAmount = 0;
-    /**
-     * @var int
-     */
-    protected $recordDuration = 0;
-    /**
-     * @var float
-     */
-    protected $recordRate = 0.0;
-    /**
-     * @var float
-     */
-    protected $recordInternalRate = 0.0;
+    private $recordAmount = 0;
+    private $recordDuration = 0;
+    private $recordRate = 0.0;
+    private $recordInternalRate = 0.0;
+    private $recordAmountBillable = 0;
+    private $recordDurationBillable = 0;
+    private $recordRateBillable = 0.0;
 
     /**
      * Returns the total amount of included timesheet records.
@@ -110,5 +101,35 @@ class TimesheetCountedStatistic
         $this->recordInternalRate = (float) $recordInternalRate;
 
         return $this;
+    }
+
+    public function getRecordAmountBillable(): int
+    {
+        return $this->recordAmountBillable;
+    }
+
+    public function setRecordAmountBillable(int $recordAmount): void
+    {
+        $this->recordAmountBillable = $recordAmount;
+    }
+
+    public function getDurationBillable(): int
+    {
+        return $this->recordDurationBillable;
+    }
+
+    public function setDurationBillable(int $recordDuration): void
+    {
+        $this->recordDurationBillable = $recordDuration;
+    }
+
+    public function getRateBillable(): float
+    {
+        return $this->recordRateBillable;
+    }
+
+    public function setRateBillable(float $recordRate): void
+    {
+        $this->recordRateBillable = $recordRate;
     }
 }

@@ -64,9 +64,9 @@ class PDFRenderer
     {
         $decimal = false;
         if (null !== $query->getCurrentUser()) {
-            $decimal = (bool) $query->getCurrentUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+            $decimal = $query->getCurrentUser()->isExportDecimal();
         } elseif (null !== $query->getUser()) {
-            $decimal = (bool) $query->getUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+            $decimal = $query->getUser()->isExportDecimal();
         }
 
         return ['decimal' => $decimal];

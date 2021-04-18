@@ -22,6 +22,10 @@
                 <source>report_project_view</source>
                 <target>Project overview</target>
             </trans-unit>
+            <trans-unit id="report_inactive_project">
+                <source>report_inactive_project</source>
+                <target>Inactive projects</target>
+            </trans-unit>
             <trans-unit id="reporting.initial_view">
                 <source>reporting.initial_view</source>
                 <target>Initial report</target>

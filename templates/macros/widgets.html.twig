@@ -504,17 +504,105 @@
     {% endif %}
 {% endmacro %}
 
-{# To be used mainly in <tr class="{{ class_customer_row(customer, now) }}"> #}
+{#
+    To be used like this:
+    <tr class="{{ class_customer_row(customer, now) }}">
+#}
 {% macro class_customer_row(customer, now) %}
     {%- if not customer.visible %}warning{% endif -%}
 {% endmacro %}
 
-{# To be used mainly in <tr class="{{ class_project_row(project, now) }}"> #}
+{#
+    To be used like this:
+    <tr {{ customer_row_attr(customer, now) }}>
+#}
+{% macro customer_row_attr(customer, now) %}
+    {%- set class = _self.class_customer_row(customer, now) %}
+    {% set dataHref = '' %}
+    {% if is_granted('view', customer) %}
+        {% set class = class ~ ' alternative-link open-edit' %}
+        {% set dataHref = path('customer_details', {'id': customer.id}) %}
+    {% endif -%}
+    class="{{ class }}" data-href="{{ dataHref }}"
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr class="{{ class_project_row(project, now) }}">
+#}
 {% macro class_project_row(project, now) %}
     {%- if not project.visible or (project.end is not null and project.end < now) %}warning{% endif -%}
 {% endmacro %}
 
-{# To be used mainly in <tr class="{{ class_activity_row(activity, now) }}"> #}
+{#
+    To be used like this:
+    <tr {{ project_row_attr(project, now) }}>
+#}
+{% macro project_row_attr(project, now) %}
+    {%- set class = _self.class_project_row(project, now) %}
+    {% set dataHref = '' %}
+    {% if is_granted('view', project) %}
+        {% set class = class ~ ' alternative-link open-edit' %}
+        {% set dataHref = path('project_details', {'id': project.id}) %}
+    {% endif -%}
+    class="{{ class }}" data-href="{{ dataHref }}"
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr {{ class_activity_row(activity, now) }}>
+#}
 {% macro class_activity_row(activity, now) %}
     {%- if not activity.visible %}warning{% endif -%}
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr {{ activity_row_attr(activity, now) }}>
+#}
+{% macro activity_row_attr(activity, now) %}
+    {%- set class = _self.class_activity_row(activity, now) %}
+    {% set dataHref = '' %}
+    {% if is_granted('view', activity) %}
+        {% set class = class ~ ' alternative-link open-edit' %}
+        {% set dataHref = path('activity_details', {'id': activity.id}) %}
+    {% endif -%}
+    class="{{ class }}" data-href="{{ dataHref }}"
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr class="{{ class_user_row(user, now) }}">
+#}
+{% macro class_user_row(user) %}
+    {%- if not user.enabled %}warning{% endif -%}
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr {{ user_row_attr(user) }}>
+#}
+{% macro user_row_attr(user) %}
+    {%- set class = _self.class_user_row(user) %}
+    {% set dataHref = '' %}
+    {% if is_granted('view', user) %}
+        {% set class = class ~ ' alternative-link open-edit' %}
+        {% set dataHref = path('user_profile', {'username': user.username}) %}
+    {% endif -%}
+    class="{{ class }}" data-href="{{ dataHref }}"
+{% endmacro %}
+
+{# To be used mainly in <tr class="{{ class_user_row(user, now) }}"> #}
+{% macro short_stats_row(stats) %}
+    <div class="row">
+        {% set colLength = 12 / stats|length %}
+        {% for title, value in stats %}
+        <div class="col-sm-{{ colLength }} border-right">
+            <div class="description-block">
+                <h5 class="description-header">{{ value }}</h5>
+                <span class="description-text">{{ title }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 {% endmacro %}
