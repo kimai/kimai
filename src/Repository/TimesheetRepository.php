@@ -320,14 +320,7 @@ class TimesheetRepository extends EntityRepository
         return empty($result) ? 0 : $result;
     }
 
-    /**
-     * Fetch statistic data for one user.
-     *
-     * @param User $user
-     * @return TimesheetStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getUserStatistics(User $user)
+    public function getUserStatistics(User $user): TimesheetStatistic
     {
         $durationTotal = $this->getStatistic(self::STATS_QUERY_DURATION, null, null, $user);
         $recordsTotal = $this->getStatistic(self::STATS_QUERY_AMOUNT, null, null, $user);
@@ -358,42 +351,15 @@ class TimesheetRepository extends EntityRepository
      * @param DateTime|null $end
      * @return Year[]
      */
-    public function getMonthlyStats(User $user = null, ?DateTime $begin = null, ?DateTime $end = null)
+    public function getMonthlyStats(User $user = null, ?DateTime $begin = null, ?DateTime $end = null): array
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->select('COALESCE(SUM(t.rate), 0) as rate, COALESCE(SUM(t.duration), 0) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year')
-            ->from(Timesheet::class, 't')
-        ;
-
-        if (!empty($begin)) {
-            $qb->andWhere($qb->expr()->gte('t.begin', ':from'))
-                ->setParameter('from', $begin);
-        } else {
-            $qb->andWhere($qb->expr()->isNotNull('t.begin'));
-        }
-
-        if (!empty($end)) {
-            $qb->andWhere($qb->expr()->lte('t.end', ':to'))
-                ->setParameter('to', $end);
-        } else {
-            $qb->andWhere($qb->expr()->isNotNull('t.end'));
-        }
-
-        if (null !== $user) {
-            $qb->andWhere('t.user = :user')
-                ->setParameter('user', $user);
-        }
-
-        $qb
-            ->orderBy('year', 'DESC')
-            ->addOrderBy('month', 'ASC')
-            ->groupBy('year')
-            ->addGroupBy('month');
-
+        /** @var Year[] $years */
         $years = [];
+
+        $qb = $this->getMonthlyStatsQuery($user, $begin, $end, null);
         foreach ($qb->getQuery()->execute() as $statRow) {
             $curYear = $statRow['year'];
+            $curMonth = (int) $statRow['month'];
 
             if (!isset($years[$curYear])) {
                 $year = new Year($curYear);
@@ -404,13 +370,72 @@ class TimesheetRepository extends EntityRepository
                 $years[$curYear] = $year;
             }
 
-            $month = new Month($statRow['month']);
-            $month->setTotalDuration((int) $statRow['duration'])
-                ->setTotalRate((float) $statRow['rate']);
-            $years[$curYear]->setMonth($month);
+            $month = $years[$curYear]->getMonth($curMonth);
+            $month->setTotalDuration((int) $statRow['duration']);
+            $month->setTotalRate((float) $statRow['rate']);
+        }
+
+        $qb = $this->getMonthlyStatsQuery($user, $begin, $end, true);
+        foreach ($qb->getQuery()->execute() as $statRow) {
+            $curYear = $statRow['year'];
+            $curMonth = (int) $statRow['month'];
+
+            if (!isset($years[$curYear])) {
+                $year = new Year($curYear);
+                for ($i = 1; $i < 13; $i++) {
+                    $month = $i < 10 ? '0' . $i : (string) $i;
+                    $year->setMonth(new Month($month));
+                }
+                $years[$curYear] = $year;
+            }
+
+            $month = $years[$curYear]->getMonth($curMonth);
+            $month->setBillableDuration((int) $statRow['duration']);
+            $month->setBillableRate((float) $statRow['rate']);
         }
 
         return $years;
+    }
+
+    private function getMonthlyStatsQuery(User $user = null, ?DateTime $begin = null, ?DateTime $end = null, ?bool $billable = null): QueryBuilder
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->from(Timesheet::class, 't');
+        $qb->select('COALESCE(SUM(t.rate), 0) as rate, COALESCE(SUM(t.duration), 0) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year');
+
+        if (!empty($begin)) {
+            $qb->andWhere($qb->expr()->gte('t.begin', ':from'));
+            $qb->setParameter('from', $begin);
+        } else {
+            $qb->andWhere($qb->expr()->isNotNull('t.begin'));
+        }
+
+        if (!empty($end)) {
+            $qb->andWhere($qb->expr()->lte('t.end', ':to'));
+            $qb->setParameter('to', $end);
+        } else {
+            $qb->andWhere($qb->expr()->isNotNull('t.end'));
+        }
+
+        if (null !== $user) {
+            $qb->andWhere('t.user = :user');
+            $qb->setParameter('user', $user);
+        }
+
+        if (null !== $billable) {
+            $qb->andWhere('t.billable = :billable');
+            $qb->setParameter('billable', $billable);
+        }
+
+        $qb
+            ->orderBy('year', 'DESC')
+            ->addOrderBy('month', 'ASC')
+            ->groupBy('year')
+            ->addGroupBy('month')
+        ;
+
+        return $qb;
     }
 
     /**
