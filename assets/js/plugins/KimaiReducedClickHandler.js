@@ -42,6 +42,10 @@ export default class KimaiReducedClickHandler extends KimaiPlugin {
                 href = jQuery(this).attr('href');
             }
 
+            if (href === undefined || href === null || href === '') {
+                return;
+            }
+
             callback(href);
         });
     }

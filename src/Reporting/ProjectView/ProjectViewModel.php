@@ -10,49 +10,24 @@
 namespace App\Reporting\ProjectView;
 
 use App\Entity\Project;
+use DateTime;
 
 final class ProjectViewModel
 {
-    /**
-     * @var Project
-     */
     private $project;
-    /**
-     * @var int
-     */
+    private $timesheetCounter = 0;
     private $durationDay = 0;
-    /**
-     * @var int
-     */
     private $durationWeek = 0;
-    /**
-     * @var int
-     */
     private $durationMonth = 0;
-    /**
-     * @var int
-     */
     private $durationTotal = 0;
-    /**
-     * @var float
-     */
     private $rateTotal = 0.00;
-    /**
-     * @var int
-     */
     private $notExportedDuration = 0;
-    /**
-     * @var float
-     */
     private $notExportedRate = 0.00;
-    /**
-     * @var int
-     */
     private $notBilledDuration = 0;
-    /**
-     * @var float
-     */
     private $notBilledRate = 0.00;
+    private $billableDuration = 0;
+    private $billableRate = 0.00;
+    private $lastRecord;
 
     public function __construct(Project $project)
     {
@@ -62,6 +37,16 @@ final class ProjectViewModel
     public function getProject(): Project
     {
         return $this->project;
+    }
+
+    public function getTimesheetCounter(): int
+    {
+        return $this->timesheetCounter;
+    }
+
+    public function setTimesheetCounter(int $timesheetCounter): void
+    {
+        $this->timesheetCounter = $timesheetCounter;
     }
 
     public function getDurationDay(): int
@@ -144,6 +129,26 @@ final class ProjectViewModel
         $this->notBilledRate = $notBilledRate;
     }
 
+    public function getBillableDuration(): int
+    {
+        return $this->billableDuration;
+    }
+
+    public function setBillableDuration(int $billableDuration): void
+    {
+        $this->billableDuration = $billableDuration;
+    }
+
+    public function getBillableRate(): float
+    {
+        return $this->billableRate;
+    }
+
+    public function setBillableRate(float $billableRate): void
+    {
+        $this->billableRate = $billableRate;
+    }
+
     public function getRateTotal(): float
     {
         return $this->rateTotal;
@@ -152,5 +157,15 @@ final class ProjectViewModel
     public function setRateTotal(float $rateTotal): void
     {
         $this->rateTotal = $rateTotal;
+    }
+
+    public function getLastRecord(): ?DateTime
+    {
+        return $this->lastRecord;
+    }
+
+    public function setLastRecord(DateTime $lastRecord): void
+    {
+        $this->lastRecord = $lastRecord;
     }
 }

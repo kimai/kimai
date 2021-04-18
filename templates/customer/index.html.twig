@@ -48,16 +48,10 @@
     {% if entries.count == 0 %}
         {{ widgets.nothing_found('kimai.customerUpdate kimai.customerTeamUpdate') }}
     {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.customerUpdate kimai.customerTeamUpdate'}) }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.customerUpdate kimai.customerDelete kimai.customerTeamUpdate'}) }}
 
         {% for entry in entries %}
-            {% set class = widgets.class_customer_row(entry, now) %}
-            {% set dataHref = '' %}
-            {% if is_granted('view', entry) %}
-                {% set class = class ~ ' alternative-link open-edit' %}
-                {% set dataHref = path('customer_details', {'id': entry.id}) %}
-            {% endif %}
-            <tr class="{{ class }}" data-href="{{ dataHref }}">
+            <tr {{ widgets.customer_row_attr(entry, now) }}>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_color_dot('customer', true, entry.name, null, entry.color) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment1line }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'number') }}">{{ entry.number }}</td>

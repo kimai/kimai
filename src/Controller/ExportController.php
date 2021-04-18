@@ -16,7 +16,6 @@ use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\Query\ExportQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,26 +56,40 @@ class ExportController extends AbstractController
         $entries = [];
 
         $form = $this->getToolbarForm($query, 'GET');
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('export');
+        }
 
-        if ($form->isValid()) {
-            /** @var SubmitButton $previewButton */
-            $previewButton = $form->get('preview');
-            if ($previewButton->isClicked()) {
-                $showPreview = true;
-                $query->setPageSize($maxItemsPreview);
-                $entries = $this->getEntries($query);
+        $byCustomer = [];
+
+        if ($form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
+            $showPreview = true;
+            $entries = $this->getEntries($query);
+            foreach ($entries as $entry) {
+                $cid = $entry->getProject()->getCustomer()->getId();
+                if (!isset($byCustomer[$cid])) {
+                    $byCustomer[$cid] = [
+                        'customer' => $entry->getProject()->getCustomer(),
+                        'rate' => 0,
+                        'internalRate' => 0,
+                        'duration' => 0,
+                    ];
+                }
+                $byCustomer[$cid]['rate'] += $entry->getRate();
+                $byCustomer[$cid]['internalRate'] += $entry->getInternalRate();
+                $byCustomer[$cid]['duration'] += $entry->getDuration();
             }
         }
 
         return $this->render('export/index.html.twig', [
+            'by_customer' => $byCustomer,
             'query' => $query,
             'entries' => $entries,
             'form' => $form->createView(),
             'renderer' => $this->export->getRenderer(),
-            'preview_max' => $maxItemsPreview,
+            'preview_limit' => $maxItemsPreview,
             'preview_show' => $showPreview,
+            'decimal' => $this->getUser()->isExportDecimal(),
         ]);
     }
 

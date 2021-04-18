@@ -29,7 +29,8 @@ class ActivitySubscriber extends AbstractActionsSubscriber
         if ($activity->getId() === null) {
             return;
         }
-        if ($this->isGranted('view', $activity)) {
+
+        if (!$event->isView('activity_details') && $this->isGranted('view', $activity)) {
             $event->addAction('details', ['url' => $this->path('activity_details', ['id' => $activity->getId()])]);
         }
 
@@ -68,7 +69,7 @@ class ActivitySubscriber extends AbstractActionsSubscriber
             $event->addAction('create-timesheet', ['icon' => 'start', 'url' => $this->path('admin_timesheet_create', $parameters), 'class' => 'modal-ajax-form']);
         }
 
-        if ($event->isIndexView() && $this->isGranted('delete', $activity)) {
+        if (($event->isIndexView() || $event->isView('project_details')) && $this->isGranted('delete', $activity)) {
             $event->addDelete($this->path('admin_activity_delete', ['id' => $activity->getId()]));
         }
     }

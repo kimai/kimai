@@ -483,6 +483,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
                     'exported' => 'bool',
+                    'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
                     // TODO new fields: billable, category
@@ -503,6 +504,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
                     'exported' => 'bool',
+                    'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
                     // TODO new fields: billable, category
@@ -522,6 +524,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'user' => 'int',
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
+                    'exported' => 'bool',
+                    'billable' => 'bool',
                 ];
 
             case 'TimesheetCollectionFull':
@@ -538,6 +542,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'user' => 'int',
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
+                    'exported' => 'bool',
+                    'billable' => 'bool',
                 ];
 
             default:

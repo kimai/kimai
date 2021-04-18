@@ -53,8 +53,20 @@
                 tooltips: {
                     callbacks: {
                         label: function(tooltipItem, data) {
-                            return data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                        }
+                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                            return tooltipData['duration'];
+                        },
+                        afterTitle: function(tooltipItems, data) {
+                            return ' ';
+                        },
+                        beforeFooter: function(tooltipItems, data) {
+                            return ' ';
+                        },
+                        footer: function(tooltipItems, data) {
+                            var tooltipItem = tooltipItems[0];
+                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                            return '{{ 'label.billable'|trans }}: ' + tooltipData['billable'];
+                        },
                     }
                 }
                 {%- if user.enabled and is_granted('view_reporting') and (app.user.id == user.id or is_granted('view_other_timesheet')) -%}
@@ -95,8 +107,9 @@
                                     ],
                                     realData: [
                                         {% for month in yearStat.months %}
-                                        '{{ month.totalDuration|duration }}'
-                                        {% if not loop.last %},{% endif %}
+                                            {% set realDayData = {duration: month.totalDuration|duration, billable: month.billableDuration|duration} %}
+                                            {{ realDayData|json_encode|raw }}
+                                            {% if not loop.last %},{% endif %}
                                         {% endfor %}
                                     ],
                                     monthData: [

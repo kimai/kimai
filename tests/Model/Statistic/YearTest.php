@@ -21,10 +21,10 @@ class YearTest extends TestCase
     public function testDefaultValues()
     {
         $sut = new Year('1999');
-        $this->assertNull($sut->getMonth(1));
-        $this->assertEmpty($sut->getMonths());
-        $this->assertIsArray($sut->getMonths());
-        $this->assertEquals('1999', $sut->getYear());
+        self::assertNull($sut->getMonth(1));
+        self::assertEmpty($sut->getMonths());
+        self::assertIsArray($sut->getMonths());
+        self::assertEquals('1999', $sut->getYear());
     }
 
     public function testSetter()
@@ -34,15 +34,15 @@ class YearTest extends TestCase
         $sut->setMonth(new Month('01'));
         $sut->setMonth(new Month('02'));
         $sut->setMonth(new Month('03'));
-        $this->assertEquals(3, \count($sut->getMonths()));
+        self::assertEquals(3, \count($sut->getMonths()));
 
         $sut->setMonth(new Month('01'));
 
-        $this->assertEquals(3, \count($sut->getMonths()));
+        self::assertEquals(3, \count($sut->getMonths()));
 
-        $this->assertInstanceOf(Month::class, $sut->getMonth(1));
-        $this->assertInstanceOf(Month::class, $sut->getMonth(2));
-        $this->assertInstanceOf(Month::class, $sut->getMonth(3));
-        $this->assertNull($sut->getMonth(4));
+        self::assertInstanceOf(Month::class, $sut->getMonth(1));
+        self::assertInstanceOf(Month::class, $sut->getMonth(2));
+        self::assertInstanceOf(Month::class, $sut->getMonth(3));
+        self::assertNull($sut->getMonth(4));
     }
 }

@@ -199,12 +199,12 @@ abstract class ControllerBaseTest extends WebTestCase
 
     /**
      * @param HttpKernelBrowser $client
-     * @param string $id
+     * @param string $class
      * @param int $count
      */
-    protected function assertDataTableRowCount(HttpKernelBrowser $client, string $id, int $count)
+    protected function assertDataTableRowCount(HttpKernelBrowser $client, string $class, int $count)
     {
-        $node = $client->getCrawler()->filter('section.content div.' . $id . ' table.dataTable tbody tr:not(.summary)');
+        $node = $client->getCrawler()->filter('section.content div.' . $class . ' table.dataTable tbody tr:not(.summary)');
         self::assertEquals($count, $node->count());
     }
 

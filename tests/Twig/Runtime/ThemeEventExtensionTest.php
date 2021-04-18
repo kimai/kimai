@@ -76,4 +76,47 @@ class ThemeEventExtensionTest extends TestCase
         $values = $sut->getJavascriptTranslations();
         self::assertCount(24, $values);
     }
+
+    public function getProgressbarColors()
+    {
+        yield ['progress-bar-danger', 100, false];
+        yield ['progress-bar-danger', 91, false];
+        yield ['progress-bar-warning', 90, false];
+        yield ['progress-bar-warning', 80, false];
+        yield ['progress-bar-warning', 71, false];
+        yield ['progress-bar-success', 70, false];
+        yield ['progress-bar-success', 60, false];
+        yield ['progress-bar-success', 51, false];
+        yield ['progress-bar-primary', 50, false];
+        yield ['progress-bar-primary', 40, false];
+        yield ['progress-bar-primary', 31, false];
+        yield ['progress-bar-info', 30, false];
+        yield ['progress-bar-info', 20, false];
+        yield ['progress-bar-info', 10, false];
+        yield ['progress-bar-info', 0, false];
+        yield ['progress-bar-primary', 100, true];
+        yield ['progress-bar-primary', 91, true];
+        yield ['progress-bar-success', 90, true];
+        yield ['progress-bar-success', 80, true];
+        yield ['progress-bar-success', 71, true];
+        yield ['progress-bar-warning', 70, true];
+        yield ['progress-bar-warning', 60, true];
+        yield ['progress-bar-warning', 51, true];
+        yield ['progress-bar-danger', 50, true];
+        yield ['progress-bar-danger', 40, true];
+        yield ['progress-bar-danger', 31, true];
+        yield ['progress-bar-info', 30, true];
+        yield ['progress-bar-info', 20, true];
+        yield ['progress-bar-info', 10, true];
+        yield ['progress-bar-info', 0, true];
+    }
+
+    /**
+     * @dataProvider getProgressbarColors
+     */
+    public function testProgressbarClass(string $expected, int $percent, ?bool $reverseColors = false)
+    {
+        $sut = $this->getSut(false);
+        self::assertEquals($expected, $sut->getProgressbarClass($percent, $reverseColors));
+    }
 }
