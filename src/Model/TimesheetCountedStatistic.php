@@ -15,8 +15,9 @@ class TimesheetCountedStatistic
     private $recordDuration = 0;
     private $recordRate = 0.0;
     private $recordInternalRate = 0.0;
-    private $recordDurationNoneBillable = 0;
-    private $recordRateNoneBillable = 0.0;
+    private $recordAmountBillable = 0;
+    private $recordDurationBillable = 0;
+    private $recordRateBillable = 0.0;
 
     /**
      * Returns the total amount of included timesheet records.
@@ -81,26 +82,6 @@ class TimesheetCountedStatistic
         return $this;
     }
 
-    public function getDurationNoneBillable(): int
-    {
-        return $this->recordDurationNoneBillable;
-    }
-
-    public function setDurationNoneBillable(int $recordDuration): void
-    {
-        $this->recordDurationNoneBillable = $recordDuration;
-    }
-
-    public function getRateNoneBillable(): float
-    {
-        return $this->recordRateNoneBillable;
-    }
-
-    public function setRateNoneBillable(float $recordRate): void
-    {
-        $this->recordRateNoneBillable = $recordRate;
-    }
-
     /**
      * Returns the total internal rate of all included timesheet records.
      *
@@ -120,5 +101,35 @@ class TimesheetCountedStatistic
         $this->recordInternalRate = (float) $recordInternalRate;
 
         return $this;
+    }
+
+    public function getRecordAmountBillable(): int
+    {
+        return $this->recordAmountBillable;
+    }
+
+    public function setRecordAmountBillable(int $recordAmount): void
+    {
+        $this->recordAmountBillable = $recordAmount;
+    }
+
+    public function getDurationBillable(): int
+    {
+        return $this->recordDurationBillable;
+    }
+
+    public function setDurationBillable(int $recordDuration): void
+    {
+        $this->recordDurationBillable = $recordDuration;
+    }
+
+    public function getRateBillable(): float
+    {
+        return $this->recordRateBillable;
+    }
+
+    public function setRateBillable(float $recordRate): void
+    {
+        $this->recordRateBillable = $recordRate;
     }
 }

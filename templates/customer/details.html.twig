@@ -2,7 +2,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "customer/actions.html.twig" as actions %}
 
-{% block page_actions %}{{ actions.customer(customer, 'details') }}{% endblock %}
+{% block page_actions %}{{ actions.customer(customer, 'customer_details') }}{% endblock %}
 {% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
 
 {% block main %}
@@ -121,7 +121,7 @@
     {{ render(controller('App\\Controller\\CustomerController::projectsAction', {'customer': customer.id, 'page': 1})) }}
     
     {% if stats is not null %}
-        {{ include('customer/embed_budget.html.twig', {'customer': customer, 'stats': stats}) }}
+        {{ include('embeds/budgets.html.twig', {'entity': customer, 'stats': stats, 'currency': customer.currency}) }}
     {% endif %}
 
     {% if can_edit %}
@@ -150,7 +150,7 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.customerTeamUpdate kimai.customerUpdate kimai.teamUpdate kimai.projectTeamUpdate kimai.projectUpdate kimai.rateUpdate');
+            KimaiReloadPageWidget.create('kimai.customerTeamUpdate kimai.customerUpdate kimai.teamUpdate kimai.projectTeamUpdate kimai.rateUpdate');
         });
     </script>
 {% endblock %}

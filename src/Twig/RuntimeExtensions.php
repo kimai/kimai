@@ -28,6 +28,7 @@ class RuntimeExtensions extends AbstractExtension
         return [
             new TwigFunction('trigger', [ThemeExtension::class, 'trigger'], ['needs_environment' => true]),
             new TwigFunction('actions', [ThemeExtension::class, 'actions']),
+            new TwigFunction('progressbar_color', [ThemeExtension::class, 'getProgressbarClass']),
             new TwigFunction('javascript_translations', [ThemeExtension::class, 'getJavascriptTranslations']),
             new TwigFunction('active_timesheets', [TimesheetExtension::class, 'activeEntries']),
             new TwigFunction('encore_entry_css_source', [EncoreExtension::class, 'getEncoreEntryCssSource']),

@@ -1,0 +1,23 @@
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% import "macros/progressbar.html.twig" as progress %}
+    {% block box_title %}{{ 'label.timeBudget'|trans }}{% endblock %}
+    {% block box_attributes %}id="budget_box"{% endblock %}
+    {% block box_body %}
+        {{ progress.progressbar(stats.recordDuration, stats.durationBillable, 'label.billable'|trans, stats.durationBillable|duration ~ ' / ' ~ stats.recordDuration|duration, true) }}
+        {% if entity.timeBudget > 0 %}
+            {{ progress.progressbar(entity.timeBudget, stats.durationBillable, 'label.timeBudget'|trans, stats.durationBillable|duration ~ ' / ' ~ entity.timeBudget|duration) }}
+        {% endif %}
+    {% endblock %}
+{% endembed %}
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% import "macros/progressbar.html.twig" as progress %}
+    {% block box_title %}{{ 'label.budget'|trans }}{% endblock %}
+    {% block box_attributes %}id="budget_box"{% endblock %}
+    {% block box_body %}
+        {{ progress.progressbar(stats.recordRate, stats.rateBillable, 'label.billable'|trans, stats.rateBillable|money(currency) ~ ' / ' ~ stats.recordRate|money(currency), true) }}
+        {% if entity.budget > 0 %}
+            {{ progress.progressbar(entity.budget, stats.rateBillable, 'label.budget'|trans, stats.rateBillable|money(currency) ~ ' / ' ~ entity.budget|money(currency)) }}
+        {% endif %}
+        {{ progress.progressbar(stats.rateBillable, stats.recordInternalRate, 'label.rate_internal'|trans, stats.recordInternalRate|money(currency) ~ ' / ' ~ stats.rateBillable|money(currency)) }}
+    {% endblock %}
+{% endembed %}

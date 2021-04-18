@@ -18,6 +18,8 @@ use App\Reporting\ProjectView\ProjectViewQuery;
 use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
+use DateTime;
+use DateTimeZone;
 use Doctrine\DBAL\Types\Types;
 
 final class ProjectStatisticService
@@ -39,7 +41,7 @@ final class ProjectStatisticService
     {
         $user = $query->getUser();
         $lastChange = clone $query->getLastChange();
-        $now = new \DateTime('now', $lastChange->getTimezone());
+        $now = new DateTime('now', $lastChange->getTimezone());
 
         $qb2 = $this->repository->createQueryBuilder('t1');
         $qb2
@@ -127,12 +129,12 @@ final class ProjectStatisticService
     /**
      * @param User $user
      * @param Project[] $projects
-     * @param \DateTime|null $today
+     * @param DateTime|null $today
      * @return ProjectViewModel[]
      */
-    public function getProjectView(User $user, array $projects, ?\DateTime $today = null): array
+    public function getProjectView(User $user, array $projects, ?DateTime $today = null): array
     {
-        $factory = new DateTimeFactory(new \DateTimeZone($user->getTimezone()));
+        $factory = new DateTimeFactory(new DateTimeZone($user->getTimezone()));
         if (null === $today) {
             $today = $factory->createDateTime();
         }
@@ -153,7 +155,7 @@ final class ProjectStatisticService
 
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
-            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration, COALESCE(SUM(t.rate), 0) AS rate, MAX(t.begin) as lastRecord')
+            ->select('IDENTITY(t.project) AS id, COUNT(t.id) as amount, COALESCE(SUM(t.duration), 0) AS duration, COALESCE(SUM(t.rate), 0) AS rate, MAX(t.begin) as lastRecord')
             ->andWhere($qb->expr()->in('t.project', ':project'))
             ->groupBy('t.project')
             ->setParameter('project', array_values($projectIds))
@@ -163,6 +165,7 @@ final class ProjectStatisticService
         foreach ($result as $row) {
             $projectViews[$row['id']]->setDurationTotal($row['duration']);
             $projectViews[$row['id']]->setRateTotal($row['rate']);
+            $projectViews[$row['id']]->setTimesheetCounter($row['amount']);
             if ($row['lastRecord'] !== null) {
                 // might be the wrong timezone
                 $projectViews[$row['id']]->setLastRecord($factory->createDateTime($row['lastRecord']));
@@ -262,14 +265,14 @@ final class ProjectStatisticService
             ->andWhere($qb->expr()->in('t.project', ':project'))
             ->andWhere('t.billable = :billable')
             ->groupBy('t.project')
-            ->setParameter('billable', false, Types::BOOLEAN)
+            ->setParameter('billable', true, Types::BOOLEAN)
             ->setParameter('project', array_values($projectIds))
         ;
 
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
-            $projectViews[$row['id']]->setNoneBillableDuration($row['duration']);
-            $projectViews[$row['id']]->setNoneBillableRate($row['rate']);
+            $projectViews[$row['id']]->setBillableDuration($row['duration']);
+            $projectViews[$row['id']]->setBillableRate($row['rate']);
         }
 
         return array_values($projectViews);

@@ -15,6 +15,7 @@ use DateTime;
 final class ProjectViewModel
 {
     private $project;
+    private $timesheetCounter = 0;
     private $durationDay = 0;
     private $durationWeek = 0;
     private $durationMonth = 0;
@@ -24,8 +25,8 @@ final class ProjectViewModel
     private $notExportedRate = 0.00;
     private $notBilledDuration = 0;
     private $notBilledRate = 0.00;
-    private $noneBillableDuration = 0;
-    private $noneBillableRate = 0.00;
+    private $billableDuration = 0;
+    private $billableRate = 0.00;
     private $lastRecord;
 
     public function __construct(Project $project)
@@ -36,6 +37,16 @@ final class ProjectViewModel
     public function getProject(): Project
     {
         return $this->project;
+    }
+
+    public function getTimesheetCounter(): int
+    {
+        return $this->timesheetCounter;
+    }
+
+    public function setTimesheetCounter(int $timesheetCounter): void
+    {
+        $this->timesheetCounter = $timesheetCounter;
     }
 
     public function getDurationDay(): int
@@ -118,34 +129,24 @@ final class ProjectViewModel
         $this->notBilledRate = $notBilledRate;
     }
 
-    public function getNoneBillableDuration(): int
-    {
-        return $this->noneBillableDuration;
-    }
-
-    public function setNoneBillableDuration(int $noneBillableDuration): void
-    {
-        $this->noneBillableDuration = $noneBillableDuration;
-    }
-
-    public function getNoneBillableRate(): float
-    {
-        return $this->noneBillableRate;
-    }
-
-    public function setNoneBillableRate(float $noneBillableRate): void
-    {
-        $this->noneBillableRate = $noneBillableRate;
-    }
-
     public function getBillableDuration(): int
     {
-        return $this->durationTotal - $this->noneBillableDuration;
+        return $this->billableDuration;
+    }
+
+    public function setBillableDuration(int $billableDuration): void
+    {
+        $this->billableDuration = $billableDuration;
     }
 
     public function getBillableRate(): float
     {
-        return $this->rateTotal - $this->noneBillableRate;
+        return $this->billableRate;
+    }
+
+    public function setBillableRate(float $billableRate): void
+    {
+        $this->billableRate = $billableRate;
     }
 
     public function getRateTotal(): float

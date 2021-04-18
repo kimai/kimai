@@ -73,4 +73,26 @@ final class ThemeExtension implements RuntimeExtensionInterface
 
         return $event->getTranslations();
     }
+
+    public function getProgressbarClass(float $percent, ?bool $reverseColors = false): string
+    {
+        $colors = ['xl' => 'progress-bar-danger', 'l' => 'progress-bar-warning', 'm' => 'progress-bar-success', 's' => 'progress-bar-primary', 'e' => 'progress-bar-info'];
+        if (true === $reverseColors) {
+            $colors = ['s' => 'progress-bar-danger', 'm' => 'progress-bar-warning', 'l' => 'progress-bar-success', 'xl' => 'progress-bar-primary', 'e' => 'progress-bar-info'];
+        }
+
+        if ($percent > 90) {
+            $class = $colors['xl'];
+        } elseif ($percent > 70) {
+            $class = $colors['l'];
+        } elseif ($percent > 50) {
+            $class = $colors['m'];
+        } elseif ($percent > 30) {
+            $class = $colors['s'];
+        } else {
+            $class = $colors['e'];
+        }
+
+        return $class;
+    }
 }

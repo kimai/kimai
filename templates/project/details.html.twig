@@ -3,7 +3,7 @@
 {% import "project/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.project(project, 'details') }}{% endblock %}
+{% block page_actions %}{{ actions.project(project, 'project_details') }}{% endblock %}
 
 {% block main %}
     {% set can_edit = is_granted('edit', project) %}
@@ -36,7 +36,7 @@
                         </td>
                     </tr>
                 {% endif %}
-                <tr class="{{ widgets.class_customer_row(project.customer, now) }}">
+                <tr {{ widgets.customer_row_attr(project.customer, now) }}>
                     <th>{{ 'label.customer'|trans }}</th>
                     <td>
                         {{ widgets.label_customer(project.customer) }}
@@ -99,7 +99,7 @@
     {{ render(controller('App\\Controller\\ProjectController::activitiesAction', {'project': project.id, 'page': 1})) }}
 
     {% if stats is not null %}
-        {{ include('project/embed_budget.html.twig', {'project': project, 'stats': stats}) }}
+        {{ include('embeds/budgets.html.twig', {'entity': project, 'stats': stats, 'currency': project.customer.currency}) }}
     {% endif %}
 
     {% if can_edit %}
