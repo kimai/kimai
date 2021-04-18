@@ -29,7 +29,9 @@ final class InactiveProjectController extends AbstractController
         $user = $this->getUser();
 
         $query = new ProjectInactiveQuery($dateFactory->createDateTime('-1 year'), $user);
-        $form = $this->createForm(ProjectInactiveForm::class, $query);
+        $form = $this->createForm(ProjectInactiveForm::class, $query, [
+            'timezone' => $user->getTimezone()
+        ]);
         $form->submit($request->query->all(), false);
 
         $projects = $service->findInactiveProjects($query);

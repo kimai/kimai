@@ -578,6 +578,20 @@
     {%- if not user.enabled %}warning{% endif -%}
 {% endmacro %}
 
+{#
+    To be used like this:
+    <tr {{ user_row_attr(user) }}>
+#}
+{% macro user_row_attr(user) %}
+    {%- set class = _self.class_user_row(user) %}
+    {% set dataHref = '' %}
+    {% if is_granted('view', user) %}
+        {% set class = class ~ ' alternative-link open-edit' %}
+        {% set dataHref = path('user_profile', {'username': user.username}) %}
+    {% endif -%}
+    class="{{ class }}" data-href="{{ dataHref }}"
+{% endmacro %}
+
 {# To be used mainly in <tr class="{{ class_user_row(user, now) }}"> #}
 {% macro short_stats_row(stats) %}
     <div class="row">

@@ -216,13 +216,15 @@
         <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}"></td>
         <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}"></td>
         <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}"></td>
-        {% if canSeeUsername %}
-            <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}"></td>
-        {% endif %}
         <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}"></td>
         {% for field in metaColumns %}
             <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}"></td>
         {% endfor %}
+        {% if canSeeUsername %}
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}"></td>
+        {% endif %}
+        <td class="{{ tables.data_table_column_class(tableName, columns, 'billable') }}"></td>
+        <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}"></td>
         <td class="actions"></td>
     </tr>
 {% endmacro %}
