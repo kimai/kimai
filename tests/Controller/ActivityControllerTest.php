@@ -139,6 +139,8 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $node = $client->getCrawler()->filter('div.box#activity_details_box');
         self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#time_budget_box');
+        self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#budget_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#activity_rates_box');

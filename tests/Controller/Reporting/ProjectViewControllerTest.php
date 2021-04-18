@@ -21,14 +21,14 @@ use App\Tests\DataFixtures\TimesheetFixtures;
  */
 class ProjectViewControllerTest extends ControllerBaseTest
 {
-    public function testProjectViewIsSecure()
+    public function testReportIsSecure()
     {
         $this->assertUrlIsSecured('/reporting/project_view');
     }
 
-    public function testProjectViewReport()
+    public function testReport()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $customers = new CustomerFixtures();
         $customers->setIsVisible(true);
