@@ -38,6 +38,7 @@ class UserPreferenceSubscriberTest extends TestCase
         'login.initial_view',
         'timesheet.daily_stats',
         'timesheet.export_decimal',
+        'export.initial_time_range',
     ];
 
     public function testGetSubscribedEvents()

@@ -15,6 +15,7 @@ use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\Event\UserPreferenceEvent;
 use App\Form\Type\CalendarViewType;
+use App\Form\Type\ExportTimeRangeType;
 use App\Form\Type\FirstWeekDayType;
 use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
@@ -175,6 +176,14 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOrder(900)
                 ->setSection('behaviour')
                 ->setType(CheckboxType::class),
+
+            (new UserPreference())
+                ->setName('export.initial_time_range')
+                ->setValue(ExportTimeRangeType::DEFAULT_TIME_RANGE)
+                ->setOrder(950)
+                ->setSection('behaviour')
+                ->setType(ExportTimeRangeType::class)
+                ->setOptions(['help' => 'help.export.initial_time_range']),
         ];
     }
 

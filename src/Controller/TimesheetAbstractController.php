@@ -15,6 +15,7 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Event\TimesheetMetaDisplayEvent;
+use App\Export\InitialTimeRangeFactory;
 use App\Export\ServiceExport;
 use App\Form\MultiUpdate\MultiUpdateTable;
 use App\Form\MultiUpdate\MultiUpdateTableDTO;
@@ -57,19 +58,25 @@ abstract class TimesheetAbstractController extends AbstractController
      * @var SystemConfiguration
      */
     protected $configuration;
+    /**
+     * @var InitialTimeRangeFactory
+     */
+    protected $initialTimeRangeFactory;
 
     public function __construct(
         TimesheetRepository $repository,
         EventDispatcherInterface $dispatcher,
         ServiceExport $exportService,
         TimesheetService $timesheetService,
-        SystemConfiguration $configuration
+        SystemConfiguration $configuration,
+        InitialTimeRangeFactory $initialTimeRangeFactory
     ) {
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
         $this->exportService = $exportService;
         $this->service = $timesheetService;
         $this->configuration = $configuration;
+        $this->initialTimeRangeFactory = $initialTimeRangeFactory;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
@@ -216,18 +223,17 @@ abstract class TimesheetAbstractController extends AbstractController
         $form->setData($query);
         $form->submit($request->query->all(), false);
 
-        $factory = $this->getDateTimeFactory();
-
-        // by default the current month is exported, but it can be overwritten
+        // by default the current month is exported, but it can be overwritten - either by explicitly specifying start
+        // and end or in the user's preferences.
         // this should not be removed, otherwise we would export EVERY available record in the admin section
         // as the default toolbar query does neither limit the user nor the date-range!
         if (null === $query->getBegin()) {
-            $query->setBegin($factory->getStartOfMonth());
+            $query->setBegin($this->initialTimeRangeFactory->getStart($this->getUser()));
         }
         $query->getBegin()->setTime(0, 0, 0);
 
         if (null === $query->getEnd()) {
-            $query->setEnd($factory->getEndOfMonth());
+            $query->setEnd($this->initialTimeRangeFactory->getEnd($this->getUser()));
         }
         $query->getEnd()->setTime(23, 59, 59);
 

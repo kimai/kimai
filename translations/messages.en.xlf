@@ -1209,6 +1209,26 @@
                 <source>label.not_invoiced</source>
                 <target>Not billed</target>
             </trans-unit>
+            <trans-unit id="label.export.initial_time_range">
+                <source>label.export.initial_time_range</source>
+                <target>Export: Initial time range</target>
+            </trans-unit>
+            <trans-unit id="option_label.export.time_range.current_month">
+                <source>option_label.export.time_range.current_month</source>
+                <target>Current month</target>
+            </trans-unit>
+            <trans-unit id="option_label.export.time_range.current_year">
+                <source>option_label.export.time_range.current_year</source>
+                <target>Current year</target>
+            </trans-unit>
+            <trans-unit id="option_label.export.time_range.current_decade">
+                <source>option_label.export.time_range.current_decade</source>
+                <target>Current decade</target>
+            </trans-unit>
+            <trans-unit id="help.export.initial_time_range">
+                <source>help.export.initial_time_range</source>
+                <target>Default time range for the date picker in export and reporting forms</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

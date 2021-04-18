@@ -1190,6 +1190,26 @@
         <source>label.not_invoiced</source>
         <target>Nicht abgerechnet</target>
       </trans-unit>
+      <trans-unit id="label.export.initial_time_range">
+        <source>label.export.initial_time_range</source>
+        <target>Export: Initialer Zeitraum</target>
+      </trans-unit>
+      <trans-unit id="option_label.export.time_range.current_month">
+        <source>option_label.export.time_range.current_month</source>
+        <target>Aktueller Monat</target>
+      </trans-unit>
+      <trans-unit id="option_label.export.time_range.current_year">
+        <source>option_label.export.time_range.current_year</source>
+        <target>Aktuelles Jahr</target>
+      </trans-unit>
+      <trans-unit id="option_label.export.time_range.current_decade">
+        <source>option_label.export.time_range.current_decade</source>
+        <target>Aktuelle Dekade</target>
+      </trans-unit>
+      <trans-unit id="help.export.initial_time_range">
+        <source>help.export.initial_time_range</source>
+        <target>Standard-Zeitraum für die Datumsauswahl in Export- und Bericht-Formularen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

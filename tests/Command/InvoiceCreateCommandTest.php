@@ -14,6 +14,7 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\Project;
+use App\Export\InitialTimeRangeFactory;
 use App\Invoice\ServiceInvoice;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceTemplateRepository;
@@ -72,7 +73,8 @@ class InvoiceCreateCommandTest extends KernelTestCase
             $container->get(ProjectRepository::class),
             $container->get(InvoiceTemplateRepository::class),
             $container->get(UserRepository::class),
-            $container->get('event_dispatcher')
+            $container->get('event_dispatcher'),
+            $container->get(InitialTimeRangeFactory::class)
         ));
     }
 

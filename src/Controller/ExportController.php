@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\Timesheet;
+use App\Export\InitialTimeRangeFactory;
 use App\Export\ServiceExport;
 use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\Query\ExportQuery;
@@ -33,9 +34,15 @@ class ExportController extends AbstractController
      */
     private $export;
 
-    public function __construct(ServiceExport $export)
+    /**
+     * @var InitialTimeRangeFactory
+     */
+    private $initialTimeRangeFactory;
+
+    public function __construct(ServiceExport $export, InitialTimeRangeFactory $initialTimeRangeFactory)
     {
         $this->export = $export;
+        $this->initialTimeRangeFactory = $initialTimeRangeFactory;
     }
 
     /**
@@ -107,8 +114,7 @@ class ExportController extends AbstractController
 
     protected function getDefaultQuery(): ExportQuery
     {
-        $begin = $this->getDateTimeFactory()->getStartOfMonth();
-        $end = $this->getDateTimeFactory()->getEndOfMonth();
+        [$begin, $end] = $this->initialTimeRangeFactory->getRange($this->getUser());
 
         $query = new ExportQuery();
         $query->setOrder(ExportQuery::ORDER_ASC);

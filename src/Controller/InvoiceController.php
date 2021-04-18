@@ -13,6 +13,7 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
+use App\Export\InitialTimeRangeFactory;
 use App\Export\Spreadsheet\AnnotatedObjectExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
@@ -62,13 +63,23 @@ final class InvoiceController extends AbstractController
      * @var EventDispatcherInterface
      */
     private $dispatcher;
+    /**
+     * @var InitialTimeRangeFactory
+     */
+    private $initialTimeRangeFactory;
 
-    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $templateRepository, InvoiceRepository $invoiceRepository, EventDispatcherInterface $dispatcher)
-    {
+    public function __construct(
+        ServiceInvoice $service,
+        InvoiceTemplateRepository $templateRepository,
+        InvoiceRepository $invoiceRepository,
+        EventDispatcherInterface $dispatcher,
+        InitialTimeRangeFactory $initialTimeRangeFactory
+    ) {
         $this->service = $service;
         $this->templateRepository = $templateRepository;
         $this->invoiceRepository = $invoiceRepository;
         $this->dispatcher = $dispatcher;
+        $this->initialTimeRangeFactory = $initialTimeRangeFactory;
     }
 
     /**
@@ -183,9 +194,7 @@ final class InvoiceController extends AbstractController
 
     private function getDefaultQuery(): InvoiceQuery
     {
-        $factory = $this->getDateTimeFactory();
-        $begin = $factory->getStartOfMonth();
-        $end = $factory->getEndOfMonth();
+        [$begin, $end] = $this->initialTimeRangeFactory->getRange($this->getUser());
 
         $query = new InvoiceQuery();
         $query->setOrder(InvoiceQuery::ORDER_ASC);

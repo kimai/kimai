@@ -37,6 +37,15 @@ class DateTimeFactory
         return $this->timezone;
     }
 
+    public function getStartOfWeek(?DateTime $date = null): DateTime
+    {
+        if (null === $date) {
+            $date = $this->createDateTime('now');
+        }
+
+        return $this->createWeekDateTime($date->format('o'), $date->format('W'), 1, 0, 0, 0);
+    }
+
     public function getStartOfMonth(): DateTime
     {
         $date = $this->createDateTime('first day of this month');
@@ -45,13 +54,23 @@ class DateTimeFactory
         return $date;
     }
 
-    public function getStartOfWeek(?DateTime $date = null): DateTime
+    public function getStartOfYear(): DateTime
     {
-        if (null === $date) {
-            $date = $this->createDateTime('now');
-        }
+        $date = $this->createDateTime('first day of january this year');
+        $date->setTime(0, 0, 0);
 
-        return $this->createWeekDateTime($date->format('o'), $date->format('W'), 1, 0, 0, 0);
+        return $date;
+    }
+
+    public function getStartOfDecade(): DateTime
+    {
+        $date = $this->createDateTime('first day of january this year');
+        $decade = (int) (floor((int) $date->format('Y') / 10) * 10);
+
+        $date->setDate($decade, 1, 1);
+        $date->setTime(0, 0, 0);
+
+        return $date;
     }
 
     public function getEndOfWeek(?DateTime $date = null): DateTime
@@ -67,6 +86,29 @@ class DateTimeFactory
     {
         $date = $this->createDateTime('last day of this month');
         $date->setTime(23, 59, 59);
+
+        return $date;
+    }
+
+    public function getEndOfYear(): DateTime
+    {
+        $date = $this->createDateTime('last day of december this year');
+        $date->setTime(23, 59, 59);
+
+        return $date;
+    }
+
+    public function getEndOfDecade(): DateTime
+    {
+        // Create DateTime for first second of next decade
+        $date = $this->createDateTime('first day of january this year');
+        $nextDecade = (int) (ceil((int) $date->format('Y') / 10) * 10);
+
+        $date->setDate($nextDecade, 1, 1);
+        $date->setTime(0, 0, 0);
+
+        // Subtract a second to jump back to last second of current decade
+        $date->modify('-1 second');
 
         return $date;
     }

@@ -13,6 +13,7 @@ use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
+use App\Export\InitialTimeRangeFactory;
 use App\Invoice\ServiceInvoice;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceTemplateRepository;
@@ -63,6 +64,10 @@ class InvoiceCreateCommand extends Command
      * @var string|null
      */
     private $previewDirectory;
+    /**
+     * @var InitialTimeRangeFactory
+     */
+    private $initialTimeRangeFactory;
 
     public function __construct(
         ServiceInvoice $serviceInvoice,
@@ -70,7 +75,8 @@ class InvoiceCreateCommand extends Command
         ProjectRepository $projectRepository,
         InvoiceTemplateRepository $invoiceTemplateRepository,
         UserRepository $userRepository,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        InitialTimeRangeFactory $initialTimeRangeFactory
     ) {
         $this->serviceInvoice = $serviceInvoice;
         $this->customerRepository = $customerRepository;
@@ -78,6 +84,7 @@ class InvoiceCreateCommand extends Command
         $this->invoiceTemplateRepository = $invoiceTemplateRepository;
         $this->userRepository = $userRepository;
         $this->eventDispatcher = $eventDispatcher;
+        $this->initialTimeRangeFactory = $initialTimeRangeFactory;
         parent::__construct();
     }
 
@@ -199,7 +206,7 @@ class InvoiceCreateCommand extends Command
             }
         }
         if (!$start instanceof \DateTime) {
-            $start = $dateFactory->getStartOfMonth();
+            $start = $this->initialTimeRangeFactory->getStart($user);
         }
         $start->setTime(0, 0, 0);
 
@@ -214,7 +221,7 @@ class InvoiceCreateCommand extends Command
             }
         }
         if (!$end instanceof \DateTime) {
-            $end = $dateFactory->getEndOfMonth();
+            $end = $this->initialTimeRangeFactory->getEnd($user);
         }
         $end->setTime(23, 59, 59);
 
