@@ -10,17 +10,17 @@
 namespace App\Controller\Reporting;
 
 use App\Controller\AbstractController;
+use App\Reporting\ProjectInactive\ProjectInactiveForm;
+use App\Reporting\ProjectInactive\ProjectInactiveQuery;
 use App\Reporting\ProjectStatisticService;
-use App\Reporting\ProjectView\ProjectViewForm;
-use App\Reporting\ProjectView\ProjectViewQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class ProjectViewController extends AbstractController
+final class InactiveProjectController extends AbstractController
 {
     /**
-     * @Route(path="/reporting/project_view", name="report_project_view", methods={"GET","POST"})
+     * @Route(path="/reporting/project_inactive", name="report_project_inactive", methods={"GET","POST"})
      * @Security("is_granted('view_reporting') and is_granted('budget_project')")
      */
     public function __invoke(Request $request, ProjectStatisticService $service)
@@ -28,12 +28,14 @@ final class ProjectViewController extends AbstractController
         $dateFactory = $this->getDateTimeFactory();
         $user = $this->getUser();
 
-        $query = new ProjectViewQuery($dateFactory->createDateTime(), $user);
-        $form = $this->createForm(ProjectViewForm::class, $query);
+        $query = new ProjectInactiveQuery($dateFactory->createDateTime('-1 year'), $user);
+        $form = $this->createForm(ProjectInactiveForm::class, $query, [
+            'timezone' => $user->getTimezone()
+        ]);
         $form->submit($request->query->all(), false);
 
-        $projects = $service->findProjectsForView($query);
-        $entries = $service->getProjectView($user, $projects, $query->getToday());
+        $projects = $service->findInactiveProjects($query);
+        $entries = $service->getProjectView($user, $projects, $query->getLastChange());
 
         $byCustomer = [];
         foreach ($entries as $entry) {
@@ -47,8 +49,8 @@ final class ProjectViewController extends AbstractController
         return $this->render('reporting/project_view.html.twig', [
             'entries' => $byCustomer,
             'form' => $form->createView(),
-            'title' => 'report_project_view',
-            'tableName' => 'project_view_reporting',
+            'title' => 'report_inactive_project',
+            'tableName' => 'inactive_project_reporting',
             'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }

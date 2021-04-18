@@ -11,27 +11,14 @@ namespace App\Model\Statistic;
 
 use InvalidArgumentException;
 
-/**
- * Monthly statistics
- */
-class Month
+final class Month
 {
-    /**
-     * @var string
-     */
-    protected $month;
-    /**
-     * @var int
-     */
-    protected $totalDuration = 0;
-    /**
-     * @var float
-     */
-    protected $totalRate = 0.00;
+    private $month;
+    private $totalDuration = 0;
+    private $totalRate = 0.00;
+    private $billableDuration = 0;
+    private $billableRate = 0.00;
 
-    /**
-     * @param string $month
-     */
     public function __construct(string $month)
     {
         $monthNumber = (int) $month;
@@ -43,12 +30,14 @@ class Month
         $this->month = $month;
     }
 
-    /**
-     * @return string
-     */
-    public function getMonth()
+    public function getMonth(): string
     {
         return $this->month;
+    }
+
+    public function getMonthNumber(): int
+    {
+        return (int) $this->month;
     }
 
     public function getTotalDuration(): int
@@ -73,5 +62,25 @@ class Month
         $this->totalRate = $totalRate;
 
         return $this;
+    }
+
+    public function getBillableDuration(): int
+    {
+        return $this->billableDuration;
+    }
+
+    public function setBillableDuration(int $billableDuration): void
+    {
+        $this->billableDuration = $billableDuration;
+    }
+
+    public function getBillableRate(): float
+    {
+        return $this->billableRate;
+    }
+
+    public function setBillableRate(float $billableRate): void
+    {
+        $this->billableRate = $billableRate;
     }
 }

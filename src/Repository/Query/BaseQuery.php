@@ -304,6 +304,11 @@ class BaseQuery
         return $this->bookmark;
     }
 
+    public function hasBookmark(): bool
+    {
+        return null !== $this->bookmark;
+    }
+
     public function setName(string $name): void
     {
         $this->name = $name;

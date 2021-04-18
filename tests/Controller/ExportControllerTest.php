@@ -34,7 +34,7 @@ class ExportControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
-        $this->request($client, '/export/?preview=');
+        $this->request($client, '/export/?performSearch=performSearch');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);
@@ -83,13 +83,13 @@ class ExportControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
         $em->flush();
 
-        $this->request($client, '/export/?preview=');
+        $this->request($client, '/export/?performSearch=performSearch');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
         // +1 row for summary
-        $this->assertDataTableRowCount($client, 'datatable_export', 23);
+        $this->assertDataTableRowCount($client, 'datatable_export', 22);
 
         // assert export type buttons are available
         $expected = [
@@ -113,7 +113,6 @@ class ExportControllerTest extends ControllerBaseTest
     public function testIndexActionWithEntriesForTeamleadDoesNotShowUserWithoutTeam()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = $this->getEntityManager();
 
         $begin = new \DateTime('first day of this month');
         $user = $this->getUserByRole(User::ROLE_USER);
@@ -127,10 +126,10 @@ class ExportControllerTest extends ControllerBaseTest
         ;
         $this->importFixture($fixture);
 
-        $this->request($client, '/export/?preview=');
+        $this->request($client, '/export/?performSearch=performSearch');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        // make sure all existing records are displayed
+        // make sure existing records are not displayed
         $this->assertHasNoEntriesWithFilter($client);
 
         $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
@@ -143,13 +142,13 @@ class ExportControllerTest extends ControllerBaseTest
         ;
         $this->importFixture($fixture);
 
-        $this->request($client, '/export/?preview=');
+        $this->request($client, '/export/?performSearch=performSearch');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
         // +1 row for summary
-        $this->assertDataTableRowCount($client, 'datatable_export', 3);
+        $this->assertDataTableRowCount($client, 'datatable_export', 2);
 
         // assert export type buttons are available
         $expected = [

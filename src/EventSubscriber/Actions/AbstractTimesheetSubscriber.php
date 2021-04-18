@@ -47,7 +47,17 @@ abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
             }
 
             if ($event->isIndexView() && $this->isGranted('delete', $timesheet)) {
-                $event->addAction('trash', ['url' => $this->path('delete_timesheet', ['id' => $timesheet->getId()]), 'class' => 'api-link', 'attr' => ['data-event' => 'kimai.timesheetDelete kimai.timesheetUpdate', 'data-method' => 'DELETE', 'data-question' => 'confirm.delete', 'data-msg-error' => 'action.delete.error', 'data-msg-success' => 'action.delete.success']]);
+                $event->addAction('trash', [
+                    'url' => $this->path('delete_timesheet', ['id' => $timesheet->getId()]),
+                    'class' => 'api-link',
+                    'attr' => [
+                        'data-event' => 'kimai.timesheetDelete',
+                        'data-method' => 'DELETE',
+                        'data-question' => 'confirm.delete',
+                        'data-msg-error' => 'action.delete.error',
+                        'data-msg-success' => 'action.delete.success'
+                    ]
+                ]);
             }
         }
 

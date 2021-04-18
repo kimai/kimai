@@ -42,7 +42,7 @@
         {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.userUpdate'}) }}
 
         {% for entry in entries %}
-            <tr{% if is_granted('view', entry) %} class="open-edit alternative-link" data-href="{{ path('user_profile', {'username': entry.username}) }}"{% endif %}>
+            <tr {{ widgets.user_row_attr(entry) }}>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'avatar') }}">{{ widgets.user_avatar(entry) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'alias') }}">{{ widgets.username(entry) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>

@@ -22,9 +22,11 @@ class MonthTest extends TestCase
     public function testDefaultValues()
     {
         $sut = new Month('01');
-        $this->assertEquals('01', $sut->getMonth());
-        $this->assertEquals(0, $sut->getTotalDuration());
-        $this->assertEquals(0, $sut->getTotalRate());
+        self::assertSame('01', $sut->getMonth());
+        self::assertSame(0, $sut->getTotalDuration());
+        self::assertSame(0.0, $sut->getTotalRate());
+        self::assertSame(0, $sut->getBillableDuration());
+        self::assertSame(0.0, $sut->getBillableRate());
     }
 
     public function testAllowedMonths()
@@ -35,7 +37,7 @@ class MonthTest extends TestCase
         for ($i = 10; $i < 13; $i++) {
             new Month((string) $i);
         }
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testInvalidMonths()
@@ -47,8 +49,8 @@ class MonthTest extends TestCase
             } catch (Exception $e) {
                 $ex = $e;
             }
-            $this->assertInstanceOf(InvalidArgumentException::class, $ex);
-            $this->assertEquals(
+            self::assertInstanceOf(InvalidArgumentException::class, $ex);
+            self::assertEquals(
                 'Invalid month given. Expected 1-12, received "' . ((int) $month) . '".',
                 $ex->getMessage()
             );
@@ -60,8 +62,12 @@ class MonthTest extends TestCase
         $sut = new Month('01');
         $sut->setTotalDuration(999);
         $sut->setTotalRate(0.123456789);
+        $sut->setBillableDuration(123456);
+        $sut->setBillableRate(123.456789);
 
-        $this->assertEquals(999, $sut->getTotalDuration());
-        $this->assertEquals(0.123456789, $sut->getTotalRate());
+        self::assertSame(999, $sut->getTotalDuration());
+        self::assertSame(0.123456789, $sut->getTotalRate());
+        self::assertSame(123456, $sut->getBillableDuration());
+        self::assertSame(123.456789, $sut->getBillableRate());
     }
 }

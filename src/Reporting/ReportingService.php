@@ -50,6 +50,7 @@ final class ReportingService
             }
             if ($this->security->isGranted('budget_project')) {
                 $event->addReport(new Report('project_view', 'report_project_view', 'report_project_view', 'project'));
+                $event->addReport(new Report('inactive_projects', 'report_project_inactive', 'report_inactive_project', 'project'));
             }
 
             $this->dispatcher->dispatch($event);

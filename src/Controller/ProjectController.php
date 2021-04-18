@@ -420,7 +420,7 @@ final class ProjectController extends AbstractController
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.projectUpdate kimai.projectDelete',
+                    'data-form-event' => 'kimai.projectDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
                 ]

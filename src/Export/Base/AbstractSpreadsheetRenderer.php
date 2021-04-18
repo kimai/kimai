@@ -82,6 +82,7 @@ abstract class AbstractSpreadsheetRenderer
             'wrapText' => false,
         ],
         'exported' => [],
+        'billable' => [],
         'tags' => [],
         'hourlyRate' => [],
         'fixedRate' => [],
@@ -122,7 +123,16 @@ abstract class AbstractSpreadsheetRenderer
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $excelDate = Date::PHPToExcel($date);
+
+        if ($excelDate === false) {
+            $sheet->setCellValueByColumnAndRow($column, $row, $date);
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $excelDate);
+        // TODO why is that format hardcoded and does not depend on the users locale?
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::DATETIME_FORMAT);
     }
 
@@ -134,7 +144,15 @@ abstract class AbstractSpreadsheetRenderer
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $excelDate = Date::PHPToExcel($date);
+
+        if ($excelDate === false) {
+            $sheet->setCellValueByColumnAndRow($column, $row, $date);
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $excelDate);
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::TIME_FORMAT);
     }
 
@@ -146,7 +164,16 @@ abstract class AbstractSpreadsheetRenderer
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $excelDate = Date::PHPToExcel($date);
+
+        if ($excelDate === false) {
+            $sheet->setCellValueByColumnAndRow($column, $row, $date);
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $excelDate);
+        // TODO why is that format hardcoded and does not depend on the users locale?
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_YYYYMMDD2);
     }
 
@@ -338,7 +365,14 @@ abstract class AbstractSpreadsheetRenderer
 
         if (isset($columns['exported']) && !isset($columns['exported']['render'])) {
             $columns['exported']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
-                $exported = $entity->isExported() ? 'entryState.exported' : 'entryState.not_exported';
+                $exported = $entity->isExported() ? 'yes' : 'no';
+                $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans($exported));
+            };
+        }
+
+        if (isset($columns['billable']) && !isset($columns['billable']['render'])) {
+            $columns['billable']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $exported = (method_exists($entity, 'isBillable') && !$entity->isBillable()) ? 'no' : 'yes';
                 $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans($exported));
             };
         }
