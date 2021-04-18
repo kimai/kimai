@@ -17,15 +17,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/reporting")
- * @Security("is_granted('view_reporting')")
- */
 final class ProjectViewController extends AbstractController
 {
     /**
-     * @Route(path="/project_view", name="report_project_view", methods={"GET","POST"})
-     * @Security("is_granted('budget_project')")
+     * @Route(path="/reporting/project_view", name="report_project_view", methods={"GET","POST"})
+     * @Security("is_granted('view_reporting') and is_granted('budget_project')")
      */
     public function __invoke(Request $request, ProjectStatisticService $service)
     {
@@ -33,9 +29,7 @@ final class ProjectViewController extends AbstractController
         $user = $this->getUser();
 
         $query = new ProjectViewQuery($dateFactory->createDateTime(), $user);
-        $form = $this->createForm(ProjectViewForm::class, $query, [
-            'action' => $this->generateUrl('report_project_view')
-        ]);
+        $form = $this->createForm(ProjectViewForm::class, $query);
         $form->submit($request->query->all(), false);
 
         $projects = $service->findProjectsForView($query);

@@ -17,24 +17,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/reporting")
- * @Security("is_granted('view_reporting')")
- */
 final class InactiveProjectController extends AbstractController
 {
     /**
-     * @Route(path="/project_inactive", name="report_project_inactive", methods={"GET","POST"})
-     * @Security("is_granted('budget_project')")
+     * @Route(path="/reporting/project_inactive", name="report_project_inactive", methods={"GET","POST"})
+     * @Security("is_granted('view_reporting') and is_granted('budget_project')")
      */
     public function __invoke(Request $request, ProjectStatisticService $service)
     {
         $dateFactory = $this->getDateTimeFactory();
         $user = $this->getUser();
-        $defaultLastChange = $dateFactory->createDateTime('-1 year');
 
-        $query = new ProjectInactiveQuery(clone $defaultLastChange, $user);
-        $form = $this->createForm(ProjectInactiveForm::class, $query, []);
+        $query = new ProjectInactiveQuery($dateFactory->createDateTime('-1 year'), $user);
+        $form = $this->createForm(ProjectInactiveForm::class, $query);
         $form->submit($request->query->all(), false);
 
         $projects = $service->findInactiveProjects($query);
