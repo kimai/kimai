@@ -417,7 +417,7 @@
       </trans-unit>
       <trans-unit id="label.set_as_default">
         <source>label.set_as_default</source>
-        <target>Goym sum forsett stilling</target>
+        <target>Goym sum yndis leiti-stilling</target>
       </trans-unit>
       <trans-unit id="sum.total">
         <source>sum.total</source>
@@ -934,6 +934,54 @@
       <trans-unit id="delete.not_in_use">
         <source>delete.not_in_use</source>
         <target>Hesurin luturin kan trygt strikast.</target>
+      </trans-unit>
+      <trans-unit id="modal.columns.title">
+        <source>modal.columns.title</source>
+        <target>Broyt sjónligheit av súlu</target>
+      </trans-unit>
+      <trans-unit id="label.create_more">
+        <source>label.create_more</source>
+        <target>Stovna fleiri innlegg</target>
+      </trans-unit>
+      <trans-unit id="help.rate">
+        <source>help.rate</source>
+        <target>Tímaprísur ið skal broytast</target>
+      </trans-unit>
+      <trans-unit id="error.no_entries_found">
+        <source>error.no_entries_found</source>
+        <target>Eingi innlegg vóru funnin við valdu filtrunum.</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Oyðublaðið er broytt. Vinarliga trýst á "Goym" fyri at goym broytingarnar ella trýst á "Lat Aftur" fyri at angra.</target>
+      </trans-unit>
+      <trans-unit id="update_multiple">
+        <source>update_multiple</source>
+        <target>%action% %count% innlegg?</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Strika yndis-leiti fráðmerki</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Eingin rokning send</target>
+      </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>Teigar ið skulu dagførast mugu gerast virkinir við at trýsta á hjáliggjandi avkrossingarteig.</target>
+      </trans-unit>
+      <trans-unit id="export.mark_all">
+        <source>export.mark_all</source>
+        <target>Frámerk allar vístar skrásetingar sum ruddaðar?</target>
+      </trans-unit>
+      <trans-unit id="export.clear_all">
+        <source>export.clear_all</source>
+        <target>Frámerk allar vístar skrásetingar sum opnar?</target>
+      </trans-unit>
+      <trans-unit id="admin_entity.delete_confirm">
+        <source>admin_entity.delete_confirm</source>
+        <target>Hesar dátur verða eisini strikaðar! Um hetta ikki ynskist, so kanst tú velja, at flyta dáturnar til eitt av fylgjandi møguleikum:</target>
       </trans-unit>
     </body>
   </file>
