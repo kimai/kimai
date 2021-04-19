@@ -198,6 +198,7 @@
             let kimai = event.detail.kimai;
             let API = kimai.getPlugin('api');
             jQuery('{{ calendarSelector }}').fullCalendar({
+                themeSystem: 'bootstrap3',
                 defaultView: '{{ app.user.getPreferenceValue('calendar.initial_view') }}',
                 {% if google is not null %}
                 googleCalendarApiKey: '{{ google.apiKey }}',
@@ -429,7 +430,8 @@
                 {% endif %}
             {% endif %}
             });
-            jQuery('.fc-deleteButton-button').html('<span class="text-danger"><i class="{{ 'trash'|icon }} text-danger"></i> {{ 'action.delete'|trans }}</span>');
+            var trashBtn = jQuery('.fc-deleteButton-button');
+            trashBtn.html('<span class="text-danger"><i class="{{ 'trash'|icon }} text-danger"></i> ' + trashBtn.text() + '</span>');
         });
     </script>
 {% endblock %}

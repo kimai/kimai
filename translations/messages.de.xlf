@@ -597,7 +597,7 @@
       </trans-unit>
       <trans-unit id="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
-        <target>Wenn Sie Einträge löschen wollen, können Sie diese hierhin ziehen.</target>
+        <target>Wenn Sie einen Eintrag löschen wollen, müssen Sie ihn auf die Schaltfläche ziehen.</target>
       </trans-unit>
       <!--
         Admin: Timesheet
