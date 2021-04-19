@@ -112,8 +112,8 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
             ),
             'month' => $this->repository->getStatistic(
                 'duration',
-                (clone $weekBegin)->setDate($weekBegin->format('Y'), $weekBegin->format('n'), 1)->setTime(0, 0, 0),
-                (clone $weekBegin)->setDate($weekBegin->format('Y'), $weekBegin->format('n'), $weekBegin->format('t'))->setTime(23, 59, 59),
+                (clone $weekBegin)->setDate((int) $weekBegin->format('Y'), (int) $weekBegin->format('n'), 1)->setTime(0, 0, 0),
+                (clone $weekBegin)->setDate((int) $weekBegin->format('Y'), (int) $weekBegin->format('n'), (int) $weekBegin->format('t'))->setTime(23, 59, 59),
                 $user
             ),
             'year' => $this->repository->getStatistic(

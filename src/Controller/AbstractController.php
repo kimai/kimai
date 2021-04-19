@@ -165,7 +165,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             $user = $this->getUser();
         }
 
-        return new DateTimeFactory(new \DateTimeZone($user->getTimezone()), $user->isFirstDayOfWeekSunday());
+        return DateTimeFactory::createByUser($user);
     }
 
     protected function getLocaleFormats(string $locale): LocaleFormats
