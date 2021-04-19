@@ -66,7 +66,11 @@
             </trans-unit>
             <trans-unit id="label.set_as_default">
                 <source>label.set_as_default</source>
-                <target>Save as default setting</target>
+                <target>Save setting as search favourite</target>
+            </trans-unit>
+            <trans-unit id="label.remove_default">
+                <source>label.remove_default</source>
+                <target>Delete search favourite</target>
             </trans-unit>
             <trans-unit id="label.asc">
                 <source>label.asc</source>
@@ -1204,6 +1208,14 @@
             <trans-unit id="label.not_invoiced">
                 <source>label.not_invoiced</source>
                 <target>Not billed</target>
+            </trans-unit>
+            <trans-unit id="label.last_record_before">
+                <source>label.last_record_before</source>
+                <target>No time booking since</target>
+            </trans-unit>
+            <trans-unit id="label.last_record">
+                <source>label.last_record</source>
+                <target>Last entry</target>
             </trans-unit>
         </body>
     </file>

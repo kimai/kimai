@@ -87,6 +87,7 @@ final class CustomerController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'metaColumns' => $this->findMetaColumns($query),
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -248,6 +249,9 @@ final class CustomerController extends AbstractController
         $query->setPage($page);
         $query->setPageSize(5);
         $query->addCustomer($customer);
+        $query->setShowBoth();
+        $query->addOrderGroup('visible', ProjectQuery::ORDER_DESC);
+        $query->addOrderGroup('name', ProjectQuery::ORDER_ASC);
 
         /* @var $entries Pagerfanta */
         $entries = $projectRepository->getPagerfantaForQuery($query);
@@ -256,6 +260,7 @@ final class CustomerController extends AbstractController
             'customer' => $customer,
             'projects' => $entries,
             'page' => $page,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -313,8 +318,9 @@ final class CustomerController extends AbstractController
             'stats' => $stats,
             'team' => $defaultTeam,
             'teams' => $teams,
-            'now' => new \DateTime('now', $timezone),
-            'rates' => $rates
+            'customer_now' => new \DateTime('now', $timezone),
+            'rates' => $rates,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -370,7 +376,7 @@ final class CustomerController extends AbstractController
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.customerUpdate kimai.customerDelete',
+                    'data-form-event' => 'kimai.customerDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
                 ]

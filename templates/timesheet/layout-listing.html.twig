@@ -30,13 +30,6 @@
     'project': {'class': 'hidden-xs hidden-sm hidden-md'},
     'activity': {'class': 'hidden-xs hidden-sm'},
     'description': {'class': 'hidden-xs hidden-sm'},
-}) %}
-{% if canSeeUsername %}
-    {% set columns = columns|merge({
-        'username': {'class': 'hidden-xs', 'orderBy': false},
-    }) %}
-{% endif %}
-{% set columns = columns|merge({
     'tags': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
 }) %}
 {% for field in metaColumns %}
@@ -44,7 +37,14 @@
         ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
     }) %}
 {% endfor %}
+{% if canSeeUsername %}
+    {% set columns = columns|merge({
+        'username': {'class': 'hidden-xs', 'orderBy': false},
+    }) %}
+{% endif %}
 {% set columns = columns|merge({
+    'billable': {'class': 'text-center hidden w-min', 'orderBy': false},
+    'exported': {'class': 'text-center hidden w-min', 'orderBy': false},
     'actions': {'class': 'actions alwaysVisible'},
 }) %}
 
@@ -59,7 +59,7 @@
     {% if entries.count == 0 %}
         {{ widgets.nothing_found('kimai.timesheetUpdate') }}
     {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'striped': not showSummary, 'reload': 'kimai.timesheetUpdate'}) }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.timesheetUpdate kimai.timesheetDelete'}) }}
 
         {% set checkOverlappingDesc = false %}
         {% set checkOverlappingAsc = false %}
@@ -149,19 +149,26 @@
                         {{ entry.description|nl2br }}
                     {% endif %}
                 </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
+
+                {% for field in metaColumns %}
+                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
+                        {{ tables.datatable_meta_column(entry, field) }}
+                    </td>
+                {% endfor %}
 
                 {% if canSeeUsername %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}">
                         {{ widgets.label_user(entry.user) }}
                     </td>
                 {% endif %}
-                
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
-                {% for field in metaColumns %}
-                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
-                        {{ tables.datatable_meta_column(entry, field) }}
-                    </td>
-                {% endfor %}
+
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'billable') }}">
+                    {{ widgets.label_boolean(entry.billable) }}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}">
+                    {{ widgets.label_boolean(entry.exported) }}
+                </td>
                 <td class="actions">
                     {{ block('row_action') }}
                 </td>
@@ -209,13 +216,15 @@
         <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}"></td>
         <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}"></td>
         <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}"></td>
-        {% if canSeeUsername %}
-            <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}"></td>
-        {% endif %}
         <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}"></td>
         {% for field in metaColumns %}
             <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}"></td>
         {% endfor %}
+        {% if canSeeUsername %}
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}"></td>
+        {% endif %}
+        <td class="{{ tables.data_table_column_class(tableName, columns, 'billable') }}"></td>
+        <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}"></td>
         <td class="actions"></td>
     </tr>
 {% endmacro %}

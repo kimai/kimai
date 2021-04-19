@@ -42,13 +42,15 @@ final class ReportingService
         $event = new ReportingEvent($user);
 
         if ($this->security->isGranted('view_reporting')) {
-            $event->addReport(new Report(self::DEFAULT_VIEW, 'report_user_week', 'report_user_week'));
-            $event->addReport(new Report('month_by_user', 'report_user_month', 'report_user_month'));
-            if ($this->security->isGranted('budget_project')) {
-                $event->addReport(new Report('project_view', 'report_project_view', 'report_project_view'));
-            }
+            $event->addReport(new Report('week_by_user', 'report_user_week', 'report_user_week', 'user'));
+            $event->addReport(new Report('month_by_user', 'report_user_month', 'report_user_month', 'user'));
             if ($this->security->isGranted('view_other_timesheet')) {
-                $event->addReport(new Report('monthly_users_list', 'report_monthly_users', 'report_monthly_users'));
+                $event->addReport(new Report('weekly_users_list', 'report_weekly_users', 'report_weekly_users', 'user'));
+                $event->addReport(new Report('monthly_users_list', 'report_monthly_users', 'report_monthly_users', 'user'));
+            }
+            if ($this->security->isGranted('budget_project')) {
+                $event->addReport(new Report('project_view', 'report_project_view', 'report_project_view', 'project'));
+                $event->addReport(new Report('inactive_projects', 'report_project_inactive', 'report_inactive_project', 'project'));
             }
 
             $this->dispatcher->dispatch($event);

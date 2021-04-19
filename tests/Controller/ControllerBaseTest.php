@@ -79,11 +79,7 @@ abstract class ControllerBaseTest extends WebTestCase
         return $client;
     }
 
-    /**
-     * @param string $url
-     * @return string
-     */
-    protected function createUrl($url)
+    protected function createUrl(string $url): string
     {
         return '/' . self::DEFAULT_LANGUAGE . '/' . ltrim($url, '/');
     }
@@ -187,7 +183,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasDataTable(HttpKernelBrowser $client)
     {
-        self::assertStringContainsString('<table class="table table-striped table-hover dataTable" role="grid" data-reload-event="', $client->getResponse()->getContent());
+        self::assertStringContainsString('<table class="table table-hover dataTable" role="grid" data-reload-event="', $client->getResponse()->getContent());
     }
 
     /**
@@ -203,12 +199,12 @@ abstract class ControllerBaseTest extends WebTestCase
 
     /**
      * @param HttpKernelBrowser $client
-     * @param string $id
+     * @param string $class
      * @param int $count
      */
-    protected function assertDataTableRowCount(HttpKernelBrowser $client, string $id, int $count)
+    protected function assertDataTableRowCount(HttpKernelBrowser $client, string $class, int $count)
     {
-        $node = $client->getCrawler()->filter('section.content div.' . $id . ' table.table-striped tbody tr:not(.summary)');
+        $node = $client->getCrawler()->filter('section.content div.' . $class . ' table.dataTable tbody tr:not(.summary)');
         self::assertEquals($count, $node->count());
     }
 

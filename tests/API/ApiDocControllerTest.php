@@ -26,7 +26,7 @@ class ApiDocControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/doc');
-        $this->assertStringContainsString('<title>Kimai 2 - API Docs</title>', $client->getResponse()->getContent());
+        $this->assertStringContainsString('<title>Kimai - API Docs</title>', $client->getResponse()->getContent());
         $result = $client->getCrawler()->filter('script#swagger-data');
         $swaggerJson = json_decode($result->text(), true);
         $tags = [];
@@ -51,17 +51,13 @@ class ApiDocControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/doc.json');
-        $this->assertStringContainsString('"title":"Kimai 2 - API Docs"', $client->getResponse()->getContent());
+        $this->assertStringContainsString('"title":"Kimai - API Docs"', $client->getResponse()->getContent());
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
     }
 
-    /**
-     * @param string $url
-     * @return string
-     */
-    protected function createUrl($url)
+    protected function createUrl(string $url): string
     {
         return '/' . ltrim($url, '/');
     }

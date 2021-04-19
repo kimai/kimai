@@ -3,7 +3,7 @@
 {% import "activity/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.activity(activity, 'details') }}{% endblock %}
+{% block page_actions %}{{ actions.activity(activity, 'activity_details') }}{% endblock %}
 
 {% block main %}
     {% set can_edit = is_granted('edit', activity) %}
@@ -34,7 +34,7 @@
             {% endif %}
             <table class="table table-hover dataTable">
                 {% if not activity.visible %}
-                    <tr>
+                    <tr class="{{ widgets.class_activity_row(activity, now) }}">
                         <th>{{ 'label.visible'|trans }}</th>
                         <td colspan="3">
                             {{ widgets.label_boolean(activity.visible) }}
@@ -42,7 +42,7 @@
                     </tr>
                 {% endif %}
                 {% if not activity.global %}
-                    <tr>
+                    <tr {{ widgets.customer_row_attr(activity.project.customer, now) }}>
                         <th>{{ 'label.customer'|trans }}</th>
                         <td>
                             {{ widgets.label_customer(activity.project.customer) }}
@@ -54,7 +54,7 @@
                             {{ customerActions.customer(activity.project.customer, 'custom') }}
                         </td>
                     </tr>
-                    <tr>
+                    <tr {{ widgets.project_row_attr(activity.project, now) }}>
                         <th>{{ 'label.project'|trans }}</th>
                         <td>
                             {{ widgets.label_project(activity.project) }}
@@ -78,7 +78,11 @@
     {% endembed %}
 
     {% if stats is not null %}
-        {{ include('activity/embed_budget.html.twig', {'activity': activity, 'stats': stats}) }}
+        {% set currency = null %}
+        {% if activity.project is not null %}
+            {% set currency = activity.project.customer.currency %}
+        {% endif %}
+        {{ include('embeds/budgets.html.twig', {'entity': activity, 'stats': stats, 'currency': currency}) }}
     {% endif %}
 
     {% if can_edit %}
@@ -102,7 +106,7 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.activityUpdate kimai.teamUpdate kimai.activityTeamUpdate kimai.projectTeamUpdate kimai.customerTeamUpdate kimai.projectUpdate kimai.rateUpdate');
+            KimaiReloadPageWidget.create('kimai.activityUpdate kimai.teamUpdate kimai.activityTeamUpdate kimai.projectTeamUpdate kimai.customerTeamUpdate kimai.customerUpdate kimai.projectUpdate kimai.rateUpdate');
         });
     </script>
 {% endblock %}

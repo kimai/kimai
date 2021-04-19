@@ -241,7 +241,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @var bool
      *
      * @Serializer\Expose()
-     * @Serializer\Groups({"Entity"})
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="exported", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -249,6 +249,9 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     private $exported = false;
     /**
      * @var bool
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()

@@ -87,7 +87,8 @@ final class ActivityController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'metaColumns' => $this->findMetaColumns($query),
-            'defaultCurrency' => $this->configuration->getCustomerDefaultCurrency()
+            'defaultCurrency' => $this->configuration->getCustomerDefaultCurrency(),
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -138,6 +139,7 @@ final class ActivityController extends AbstractController
             'rates' => $rates,
             'team' => $defaultTeam,
             'teams' => $teams,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -309,7 +311,7 @@ final class ActivityController extends AbstractController
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.activityUpdate kimai.activityDelete',
+                    'data-form-event' => 'kimai.activityDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
                 ]

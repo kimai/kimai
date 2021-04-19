@@ -21,12 +21,12 @@ use App\Tests\DataFixtures\TimesheetFixtures;
  */
 class ProjectViewControllerTest extends ControllerBaseTest
 {
-    public function testProjectViewIsSecure()
+    public function testReportIsSecure()
     {
         $this->assertUrlIsSecured('/reporting/project_view');
     }
 
-    public function testProjectViewReport()
+    public function testReport()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -39,7 +39,7 @@ class ProjectViewControllerTest extends ControllerBaseTest
         $projects->setCustomers($customers);
         $projects->setAmount(2);
         $projects->setIsVisible(true);
-        $projects = $this->importFixture($projects);
+        $this->importFixture($projects);
 
         $activities = new ActivityFixtures();
         $activities->setAmount(5);
@@ -53,7 +53,7 @@ class ProjectViewControllerTest extends ControllerBaseTest
         $this->importFixture($timesheets);
 
         $this->assertAccessIsGranted($client, '/reporting/project_view');
-        self::assertStringContainsString('<div class="box-body project-view-reporting-box', $client->getResponse()->getContent());
+        self::assertStringContainsString('<div class="box-body project_view_reporting-box', $client->getResponse()->getContent());
         $rows = $client->getCrawler()->filterXPath("//table[contains(@class, 'dataTable')]/tbody/tr[not(@class='summary')]");
         self::assertGreaterThan(0, $rows->count());
     }

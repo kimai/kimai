@@ -1,4 +1,3 @@
-
 <p align="center">
     <img src="https://raw.githubusercontent.com/kimai/images/master/repository-header.png" alt="Kimai logo">
 </p>
@@ -19,22 +18,22 @@ It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Do
 
 ## Introduction
 
-- [Home](https://www.kimai.org) - The house of Kimai
+- [Home](https://www.kimai.org) - Kimai project homepage
 - [Blog](https://www.kimai.org/blog/) - Read the latest news
-- [Documentation](https://www.kimai.org/documentation/) - Learn how to use it
+- [Documentation](https://www.kimai.org/documentation/) - Learn how to use Kimai
 - [Translations](https://hosted.weblate.org/projects/kimai/#languages) - Kimai in your language
 - [Migration](https://www.kimai.org/documentation/migration-v1.html) - Import data from Kimai 1 
 
 ### Requirements
 
-- PHP 7.2.9 or higher
+- PHP 7.2.9 or higher ([PHP 8 not yet](https://github.com/kevinpapst/kimai2/pull/2158))
 - MariaDB or MySQL
 - Webserver (nginx, Apache)
 - Some PHP extensions, see [composer.json](composer.json) or [here](https://www.kimai.org/download/)
 
 ### About
 
-This is the new version of the open source time-tracker Kimai. It is stable and production ready, ships
+This is the new version of the open source time tracker Kimai. It is stable and production ready, ships
 with many advanced features, including but not limited to: 
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
@@ -50,7 +49,7 @@ user specific rates, advanced search & filtering, money and time budgets, multip
 
 ### Updating Kimai
 
-- [Update Kimai](https://www.kimai.org/documentation/updates.html) - the documentation
+- [Update Kimai](https://www.kimai.org/documentation/updates.html) - get the latest version
 - [UPGRADING guide](UPGRADING.md) - version specific steps
 
 ### Plugins

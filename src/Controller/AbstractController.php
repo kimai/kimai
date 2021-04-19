@@ -196,7 +196,9 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         // apply bookmark ONLY if search form was not submitted manually
         if ($bookmark !== null && !$request->query->has('performSearch')) {
             $data->setBookmark($bookmark);
-            $submitData = array_merge($bookmark->getContent(), $submitData);
+            if (!$request->query->has('setDefaultQuery')) {
+                $submitData = array_merge($bookmark->getContent(), $submitData);
+            }
         }
 
         // clean up parameters from unknown search values

@@ -2,7 +2,7 @@
     "name": "kevinpapst/kimai2",
     "license": "MIT",
     "type": "project",
-    "description": "Kimai Time-Tracking 2",
+    "description": "Kimai - Time Tracking",
     "authors": [
         {
             "name": "Kevin Papst",
@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.2.9",
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-json": "*",

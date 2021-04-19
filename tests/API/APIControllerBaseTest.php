@@ -60,21 +60,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         return $client;
     }
 
-    /**
-     * @param string $url
-     * @param bool $json
-     * @return string
-     */
-    protected function createUrl($url, $json = true)
+    protected function createUrl(string $url): string
     {
-        if ($json) {
-            if (stripos($url, '?') !== false) {
-                $url = str_replace('?', '.json?', $url);
-            } else {
-                $url .= '.json';
-            }
-        }
-
         return '/' . ltrim($url, '/');
     }
 
@@ -496,6 +483,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
                     'exported' => 'bool',
+                    'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
                     // TODO new fields: billable, category
@@ -516,6 +504,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
                     'exported' => 'bool',
+                    'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
                     // TODO new fields: billable, category
@@ -535,6 +524,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'user' => 'int',
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
+                    'exported' => 'bool',
+                    'billable' => 'bool',
                 ];
 
             case 'TimesheetCollectionFull':
@@ -551,6 +542,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'user' => 'int',
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
+                    'exported' => 'bool',
+                    'billable' => 'bool',
                 ];
 
             default:
