@@ -165,7 +165,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             $user = $this->getUser();
         }
 
-        return new DateTimeFactory(new \DateTimeZone($user->getTimezone()));
+        return DateTimeFactory::createByUser($user);
     }
 
     protected function getLocaleFormats(string $locale): LocaleFormats

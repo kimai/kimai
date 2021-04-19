@@ -440,6 +440,8 @@
         {{ value|nl2br }}
     {% elseif '\\EmailType' in type %}
         <a href="mailto:{{ value }}">{{ value }}</a>
+    {% elseif '\\UrlType' in type %}
+        <a href="{{ value }}" target="_blank">{{ value }}</a>
     {% else %}
         {{ value }}
     {% endif %}

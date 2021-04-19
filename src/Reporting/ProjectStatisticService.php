@@ -19,7 +19,6 @@ use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
-use DateTimeZone;
 use Doctrine\DBAL\Types\Types;
 
 final class ProjectStatisticService
@@ -132,7 +131,7 @@ final class ProjectStatisticService
      */
     public function getProjectView(User $user, array $projects, ?DateTime $today = null): array
     {
-        $factory = new DateTimeFactory(new DateTimeZone($user->getTimezone()));
+        $factory = DateTimeFactory::createByUser($user);
         if (null === $today) {
             $today = $factory->createDateTime();
         }
