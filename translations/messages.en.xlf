@@ -603,7 +603,10 @@
                 <source>calendar.title</source>
                 <target>Calendar</target>
             </trans-unit>
-
+            <trans-unit id="calendar.drag_and_drop.delete">
+                <source>calendar.drag_and_drop.delete</source>
+                <target>If you want to delete entries, you can drag them here.</target>
+            </trans-unit>
             <!--
               Admin: Timesheet
             -->
@@ -611,7 +614,6 @@
                 <source>admin_timesheet.title</source>
                 <target>Timesheets</target>
             </trans-unit>
-
             <!--
               Admin: Projects
             -->
