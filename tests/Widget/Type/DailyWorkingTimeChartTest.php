@@ -49,8 +49,8 @@ class DailyWorkingTimeChartTest extends TestCase
         self::assertInstanceOf(AbstractWidgetType::class, $sut);
         self::assertEquals('DailyWorkingTimeChart', $sut->getId());
         self::assertEquals('stats.yourWorkingHours', $sut->getTitle());
-        self::assertEquals('monday this week 00:00:00', $sut->getOption('begin', 'xxx'));
-        self::assertEquals('sunday this week 23:59:59', $sut->getOption('end', 'xxx'));
+        self::assertNull($sut->getOption('begin', 'xxx'));
+        self::assertNull($sut->getOption('end', 'xxx'));
         self::assertEquals('', $sut->getOption('color', 'xxx'));
         self::assertInstanceOf(User::class, $sut->getOption('user', 'xxx'));
         self::assertEquals('bar', $sut->getOption('type', 'xxx'));

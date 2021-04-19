@@ -294,12 +294,14 @@ final class ServiceInvoice
     private function getDateTimeFactory(InvoiceQuery $query): DateTimeFactory
     {
         $timezone = date_default_timezone_get();
+        $sunday = false;
 
-        if (null !== $query->getCurrentUser()) {
-            $timezone = $query->getCurrentUser()->getTimezone();
+        if (null !== ($user = $query->getCurrentUser())) {
+            $timezone = $user->getTimezone();
+            $sunday = $user->isFirstDayOfWeekSunday();
         }
 
-        return new DateTimeFactory(new \DateTimeZone($timezone));
+        return new DateTimeFactory(new \DateTimeZone($timezone), $sunday);
     }
 
     /**
