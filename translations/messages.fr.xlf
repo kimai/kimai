@@ -1165,7 +1165,7 @@
       </trans-unit>
       <trans-unit id="label.set_as_default">
         <source>label.set_as_default</source>
-        <target>Enregistrer comme paramètre par défaut</target>
+        <target>Enregistrer le paramètre comme favori de la recherche</target>
       </trans-unit>
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
@@ -1182,6 +1182,10 @@
       <trans-unit id="action.save_all">
         <source>action.save_all</source>
         <target>Tout enregistrer</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Supprimer le favori de recherche</target>
       </trans-unit>
     </body>
   </file>
