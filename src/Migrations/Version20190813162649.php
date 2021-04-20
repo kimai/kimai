@@ -26,21 +26,6 @@ final class Version20190813162649 extends AbstractMigration
         return 'Changing column sizes to prevent index length errors';
     }
 
-    protected function isSupportingForeignKeys(): bool
-    {
-        return false;
-    }
-
-    public function isTransactional(): bool
-    {
-        if ($this->isPlatformSqlite()) {
-            // does fail if we use transactions, as tables are re-created and foreign keys would fail
-            return false;
-        }
-
-        return true;
-    }
-
     public function up(Schema $schema): void
     {
         $activity = $schema->getTable('kimai2_activities');

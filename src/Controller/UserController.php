@@ -16,11 +16,12 @@ use App\Export\Spreadsheet\UserExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\Toolbar\UserToolbarForm;
+use App\Form\Type\UserType;
 use App\Form\UserCreateType;
+use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -76,14 +77,10 @@ final class UserController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_user');
         }
 
-        /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->getPagerfantaForQuery($query);
 
         $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::USERS);
@@ -142,13 +139,10 @@ final class UserController extends AbstractController
             $editForm->get('create_more')->setData(true);
         }
 
-        return $this->render(
-            'user/edit.html.twig',
-            [
-                'user' => $user,
-                'form' => $editForm->createView()
-            ]
-        );
+        return $this->render('user/create.html.twig', [
+            'user' => $user,
+            'form' => $editForm->createView()
+        ]);
     }
 
     /**
@@ -167,6 +161,16 @@ final class UserController extends AbstractController
                     'data-msg-error' => 'action.delete.error',
                 ]
             ])
+            ->add('user', UserType::class, [
+                'query_builder' => function (UserRepository $repo) use ($userToDelete) {
+                    $query = new UserFormTypeQuery();
+                    $query->addUserToIgnore($userToDelete);
+                    $query->setUser($this->getUser());
+
+                    return $repo->getQueryBuilderForFormType($query);
+                },
+                'required' => false,
+            ])
             ->setAction($this->generateUrl('admin_user_delete', ['id' => $userToDelete->getId()]))
             ->setMethod('POST')
             ->getForm();
@@ -174,23 +178,21 @@ final class UserController extends AbstractController
         $deleteForm->handleRequest($request);
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($userToDelete);
-            $entityManager->flush();
-
-            $this->flashSuccess('action.delete.success');
+            try {
+                $this->getRepository()->deleteUser($userToDelete, $deleteForm->get('user')->getData());
+                $this->flashSuccess('action.delete.success');
+            } catch (\Exception $ex) {
+                $this->flashDeleteException($ex);
+            }
 
             return $this->redirectToRoute('admin_user');
         }
 
-        return $this->render(
-            'user/delete.html.twig',
-            [
-                'user' => $userToDelete,
-                'stats' => $stats,
-                'form' => $deleteForm->createView(),
-            ]
-        );
+        return $this->render('user/delete.html.twig', [
+            'user' => $userToDelete,
+            'stats' => $stats,
+            'form' => $deleteForm->createView(),
+        ]);
     }
 
     /**

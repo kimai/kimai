@@ -23,10 +23,10 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
@@ -225,6 +225,7 @@ class ProjectController extends BaseApiController
         $project = $this->projectService->createNewProject();
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'date_format' => self::DATE_FORMAT,
             'include_budget' => $this->isGranted('budget', $project),
         ]);
@@ -290,6 +291,7 @@ class ProjectController extends BaseApiController
         $this->dispatcher->dispatch($event);
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'date_format' => self::DATE_FORMAT,
             'include_budget' => $this->isGranted('budget', $project),
         ]);

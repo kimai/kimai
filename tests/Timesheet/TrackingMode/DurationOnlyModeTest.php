@@ -9,10 +9,9 @@
 
 namespace App\Tests\Timesheet\TrackingMode;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Tests\Configuration\TestConfigLoader;
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Timesheet\TrackingMode\DurationOnlyMode;
 
 /**
@@ -29,10 +28,9 @@ class DurationOnlyModeTest extends AbstractTrackingModeTest
     protected function createSut()
     {
         $loader = new TestConfigLoader([]);
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create();
-        $configuration = new TimesheetConfiguration($loader, ['default_begin' => '13:45:37']);
+        $configuration = new SystemConfiguration($loader, ['timesheet' => ['default_begin' => '13:45:37']]);
 
-        return new DurationOnlyMode($dateTime, $configuration);
+        return new DurationOnlyMode($configuration);
     }
 
     public function testDefaultValues()

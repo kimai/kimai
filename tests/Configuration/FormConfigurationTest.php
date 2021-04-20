@@ -10,12 +10,12 @@
 namespace App\Tests\Configuration;
 
 use App\Configuration\FormConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Configuration;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Configuration\FormConfiguration
- * @covers \App\Configuration\StringAccessibleConfigTrait
  * @group legacy
  */
 class FormConfigurationTest extends TestCase
@@ -24,7 +24,7 @@ class FormConfigurationTest extends TestCase
     {
         $loader = new TestConfigLoader($loaderSettings);
 
-        return new FormConfiguration($loader, $settings);
+        return new FormConfiguration(new SystemConfiguration($loader, ['defaults' => $settings]));
     }
 
     protected function getDefaultSettings()
@@ -83,7 +83,7 @@ class FormConfigurationTest extends TestCase
         $this->assertEquals('RU', $sut->getUserDefaultLanguage());
         $this->assertEquals('black', $sut->getUserDefaultTheme());
         $this->assertEquals('Russia/Moscov', $sut->getUserDefaultTimezone());
-        $this->assertEquals('Russia/Moscov', $sut->offsetGet('defaults.user.timezone'));
+        $this->assertEquals('Russia/Moscov', $sut->find('defaults.user.timezone'));
     }
 
     public function testDefaultWithMixedConfigs()
@@ -109,8 +109,6 @@ class FormConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('defaults.customer.foobar')->setValue('hello'),
         ]);
-        $this->assertTrue($sut->has('customer.foobar'));
-        $this->assertFalse($sut->has('xxxx.foobar'));
         $this->assertEquals('hello', $sut->find('customer.foobar'));
     }
 }

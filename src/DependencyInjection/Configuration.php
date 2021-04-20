@@ -94,6 +94,32 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('markdown_content')
                     ->defaultValue(false)
                 ->end()
+                ->scalarNode('duration_increment')
+                    ->defaultNull()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            if ($value !== null) {
+                                return ((int) $value) < 0;
+                            }
+
+                            return false;
+                        })
+                        ->thenInvalid('Duration increment is invalid')
+                    ->end()
+                ->end()
+                ->scalarNode('time_increment')
+                    ->defaultNull()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            if ($value !== null) {
+                                return ((int) $value) < 1;
+                            }
+
+                            return false;
+                        })
+                        ->thenInvalid('Time increment is invalid')
+                    ->end()
+                ->end()
                 ->arrayNode('rounding')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
@@ -194,6 +220,9 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->booleanNode('allow_future_times')
+                            ->defaultTrue()
+                        ->end()
+                        ->booleanNode('allow_overbooking_budget')
                             ->defaultTrue()
                         ->end()
                         ->booleanNode('allow_overlapping_records')
@@ -368,21 +397,31 @@ class Configuration implements ConfigurationInterface
                     ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "kimai.timesheet.active_entries.soft_limit" instead.')
                 ->end()
                 ->scalarNode('box_color')
-                    ->defaultValue('green')
+                    ->defaultValue('blue')
                     ->setDeprecated('The node "%node%" at path "%path%" was removed, please delete it from your config.')
                 ->end()
                 ->scalarNode('select_type')
                     ->defaultValue('selectpicker')
                     ->setDeprecated()
                 ->end()
-                ->booleanNode('auto_reload_datatable')
-                    ->defaultFalse()
-                ->end()
                 ->booleanNode('tags_create')
                     ->defaultTrue()
                 ->end()
                 ->booleanNode('show_about')
                     ->defaultTrue()
+                ->end()
+                ->booleanNode('colors_limited')
+                    ->defaultTrue()
+                ->end()
+                ->scalarNode('color_choices')
+                    ->defaultValue(implode(',', [
+                        Constants::SOFTWARE . '|' . Constants::DEFAULT_COLOR, 'Silver|#c0c0c0', 'Gray|#808080', 'Black|#000000',
+                        'Maroon|#800000', 'Brown|#a52a2a', 'Red|#ff0000', 'Orange|#ffa500',
+                        'Gold|#ffd700', 'Yellow|#ffff00', 'Peach|#ffdab9', 'Khaki|#f0e68c',
+                        'Olive|#808000', 'Lime|#00ff00', 'Jelly|#9acd32', 'Green|#008000', 'Teal|#008080',
+                        'Aqua|#00ffff', 'LightBlue|#add8e6', 'DeepSky|#00bfff', 'Dodger|#1e90ff', 'Blue|#0000ff', 'Navy|#000080',
+                        'Purple|#800080', 'Fuchsia|#ff00ff', 'Violet|#ee82ee', 'Rose|#ffe4e1', 'Lavender|#E6E6FA'
+                    ]))
                 ->end()
                 ->arrayNode('chart')
                     ->addDefaultsIfNotSet()

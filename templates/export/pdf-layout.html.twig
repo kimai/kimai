@@ -1,18 +1,20 @@
 {% set showUserColumn = showUserColumn ?? true %}
 {% set showInternalRate = showInternalRate ?? false %}
-{% set showRateColumn = showRateColumn ?? true %}
+{% set showRateColumn = showRateColumn ?? is_granted('view_rate_other_timesheet') %}
 {% set showRateBudget = showRateBudget ?? false %}
 {% set showTimeBudget = showTimeBudget ?? false %}
+{% set showTotalSummary = showTotalSummary ?? true %}
+{% set now = create_date('now', app.user) %}
 {% set decimal = decimal ?? false %}
-{% if query.user %}
-    {# this is only triggered, if a user exports from his personal timesheet screen #}
+{# this is only triggered, if a user exports from his personal timesheet screen #}
+{% if query.user is not null %}
     {% set showUserColumn = false %}
-    {# if exporting via the admin screen, users without view_rate_own_timesheet might still see their own rates - maybe merge view_rate_own_timesheet and view_rate_other_timesheet into a new view_rate permission? #}
+    {# if exporting via the admin screen, users without view_rate_own_timesheet might still see their own rates #}
     {% set showRateColumn = is_granted('view_rate_own_timesheet') %}
 {% endif %}
 <html lang="{{ app.request.locale }}">
 <head>
-    {% block styles %}
+{% block styles %}
     <style>
         body {
             font-family: sans-serif;
@@ -70,7 +72,7 @@
             white-space: nowrap;
         }
     </style>
-    {% endblock %}
+{% endblock %}
 </head>
 <body>
 {% block pdf_footer %}
@@ -82,7 +84,7 @@
     {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
     {% if not showUserColumn and query.user %}
         &ndash;
-        {{ 'label.user'|trans }}: {{ query.user.displayName }} 
+        {{ 'label.user'|trans }}: {{ query.user.displayName }}
     {% endif %}
     </td>
     <td align="right">
@@ -132,29 +134,39 @@ mpdf-->
         {% set customerInternalRate = 0 %}
         {% set customerCurrency = null %}
         {% set customerCount = 0 %}
+        {% set multiCurrency = false %}
+        {% set totalDuration = 0 %}
+        {% set totalInternalRate = 0 %}
+        {% set totalRate = 0 %}
         {% for id, summary in summaries %}
+            {% set totalDuration = totalDuration + summary.duration %}
+            {% set totalInternalRate = totalInternalRate + summary.rate_internal %}
+            {% set totalRate = totalRate + summary.rate %}
+            {% if customerCurrency is not null and customerCurrency is not same as(summary.currency) %}
+                {% set multiCurrency = true %}
+            {% endif %}
             {% if customer is same as(null) %}
                 {% set customer = summary.customer %}
                 {% set customerCurrency = summary.currency %}
             {% endif %}
             {% if customer is not same as(summary.customer) %}
-                    <tr class="summary">
-                        <td colspan="2">
-                        </td>
-                        {% if showTimeBudget %}
-                            <td></td>
+                <tr class="summary">
+                    <td colspan="2">
+                    </td>
+                    {% if showTimeBudget %}
+                        <td></td>
+                    {% endif %}
+                    {% if showRateBudget %}
+                        <td></td>
+                    {% endif %}
+                    <td class="totals duration">{{ customerDuration|duration(decimal) }}</td>
+                    {% if showRateColumn %}
+                        {% if showInternalRate %}
+                            <td class="totals cost">{{ customerInternalRate|money(customerCurrency) }}</td>
                         {% endif %}
-                        {% if showRateBudget %}
-                            <td></td>
-                        {% endif %}
-                        <td class="totals duration">{{ customerDuration|duration(decimal) }}</td>
-                        {% if showRateColumn %}
-                            {% if showInternalRate %}
-                                <td class="totals cost">{{ customerInternalRate|money(customerCurrency) }}</td>
-                            {% endif %}
-                            <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
-                        {% endif %}
-                    </tr>
+                        <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                    {% endif %}
+                </tr>
                 {% set customerCurrency = summary.currency %}
                 {% set customer = summary.customer %}
                 {% set customerDuration = 0 %}
@@ -207,6 +219,26 @@ mpdf-->
                     <td class="totals cost">{{ customerInternalRate|money(customerCurrency) }}</td>
                 {% endif %}
                 <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+            {% endif %}
+        </tr>
+        {% endif %}
+        {% if showTotalSummary and not multiCurrency %}
+        <tr class="summary-total">
+            <td class="totals" colspan="2">
+                {{ 'sum.total'|trans }}
+            </td>
+            {% if showTimeBudget %}
+                <td></td>
+            {% endif %}
+            {% if showRateBudget %}
+                <td></td>
+            {% endif %}
+            <td class="totals duration">{{ totalDuration|duration(decimal) }}</td>
+            {% if showRateColumn %}
+                {% if showInternalRate %}
+                    <td class="totals cost">{{ totalInternalRate|money(customerCurrency) }}</td>
+                {% endif %}
+                <td class="totals cost">{{ totalRate|money(customerCurrency) }}</td>
             {% endif %}
         </tr>
         {% endif %}
@@ -268,15 +300,12 @@ mpdf-->
                 </td>
                 <td class="duration">{{ entry.duration|duration(decimal) }}</td>
                 {% if showRateColumn %}
-                    {% if is_granted('view_rate', entry) %}
-                        {% set rate = rate + entry.rate %}
-                        {% set rateInternal = rateInternal + entry.internalRate %}
-                        {% set entryRate = entry.rate|money(entry.project.customer.currency) %}
-                        {% set entryRateInternal = entry.internalRate|money(entry.project.customer.currency) %}
-                    {% else %}
-                        {% set entryRate = '&ndash;' %}
-                        {% set entryRateInternal = '&ndash;' %}
-                    {% endif %}
+                    {# no check for is_granted('view_rate', entry) because it is only available for timesheets,
+                       but maybe missing for other potential export repositories #}
+                    {% set rate = rate + entry.rate %}
+                    {% set rateInternal = rateInternal + entry.internalRate %}
+                    {% set entryRate = entry.rate|money(entry.project.customer.currency) %}
+                    {% set entryRateInternal = entry.internalRate|money(entry.project.customer.currency) %}
                     {% if showInternalRate %}
                         <td class="cost">{{ entryRateInternal }}</td>
                     {% endif %}

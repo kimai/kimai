@@ -38,7 +38,7 @@ final class XlsxRenderer extends AbstractSpreadsheetRenderer implements Renderer
      */
     protected function saveSpreadsheet(Spreadsheet $spreadsheet)
     {
-        $filename = tempnam(sys_get_temp_dir(), 'kimai-invoice-xlsx');
+        $filename = @tempnam(sys_get_temp_dir(), 'kimai-invoice-xlsx');
         if (false === $filename) {
             throw new \Exception('Could not open temporary file');
         }

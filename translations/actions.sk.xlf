@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>
-        <target>Pre viacero používateľov</target>
+        <target>Pre viac používateľov</target>
       </trans-unit>
       <trans-unit id="invoice.paid">
         <source>invoice.paid</source>

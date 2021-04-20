@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="about.en.xlf">
     <header>
@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="about.title">
         <source>about.title</source>
-        <target>אודות</target>
+        <target>על אודות Kimai</target>
       </trans-unit>
       <trans-unit id="support">
         <source>support</source>
@@ -19,11 +19,11 @@
       </trans-unit>
       <trans-unit id="help">
         <source>help</source>
-        <target>עזרה</target>
+        <target>תיעוד</target>
       </trans-unit>
       <trans-unit id="donate">
         <source>donate</source>
-        <target>תרומה</target>
+        <target>תרומה לעתיד של Kimai</target>
       </trans-unit>
       <trans-unit id="published_under">
         <source>published_under</source>

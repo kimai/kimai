@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
-{% import "macros/datatables.html.twig" as tables %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/toolbar.html.twig" as toolbar %}
+{% import "macros/datatables.html.twig" as tables %}
+{% import "macros/search.html.twig" as search %}
 {% import "user/actions.html.twig" as actions %}
 
 {% set columns = {
+    'avatar': {'class': 'alwaysVisible w-min', 'title': null, 'orderBy': false},
     'alias': {'class': 'alwaysVisible'},
-    'title': {'class': 'hidden-xs hidden-sm'},
+    'title': {'class': 'hidden-xs hidden-sm hidden'},
     'email': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
     'lastLogin': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
     'roles': {'class': 'hidden-sm', 'orderBy': false},
@@ -25,11 +26,12 @@
 {% set tableName = 'user_admin' %}
 
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
-{% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
+{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.users('index') }}{% endblock %}
+{% block page_icon %}{{ 'user'|icon }}{% endblock %}
 
 {% block main_before %}
-    {{ tables.data_table_column_modal(tableName, columns) }}
+    {{ tables.data_table_column_modal(tableName, columns, 'kimai.userUpdate') }}
 {% endblock %}
 
 {% block main %}
@@ -40,8 +42,9 @@
         {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.userUpdate'}) }}
 
         {% for entry in entries %}
-            <tr{% if is_granted('view', entry) %} class="open-edit alternative-link" data-href="{{ path('user_profile', {'username': entry.username}) }}"{% endif %}>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'alias') }}">{{ widgets.user_avatar(entry) }} {{ widgets.username(entry) }}</td>
+            <tr {{ widgets.user_row_attr(entry) }}>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'avatar') }}">{{ widgets.user_avatar(entry) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'alias') }}">{{ widgets.username(entry) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">{{ entry.email }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'lastLogin') }}">{% if entry.lastLogin is not null %}{{ entry.lastLogin|date_full }}{% endif %}</td>

@@ -10,7 +10,6 @@
 namespace App\Form\Type;
 
 use App\API\BaseApiController;
-use App\Timesheet\UserDateTimeFactory;
 use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -23,20 +22,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DateTimePickerType extends AbstractType
 {
-    /**
-     * @var LocaleSettings
-     */
-    protected $localeSettings;
+    private $localeSettings;
 
-    /**
-     * @var UserDateTimeFactory
-     */
-    protected $dateTime;
-
-    public function __construct(LocaleSettings $localeSettings, UserDateTimeFactory $dateTime)
+    public function __construct(LocaleSettings $localeSettings)
     {
         $this->localeSettings = $localeSettings;
-        $this->dateTime = $dateTime;
     }
 
     /**
@@ -46,7 +36,6 @@ class DateTimePickerType extends AbstractType
     {
         $dateTimePicker = $this->localeSettings->getDateTimePickerFormat();
         $dateTimeFormat = $this->localeSettings->getDateTimeTypeFormat();
-        $timezone = $this->dateTime->getTimezone()->getName();
 
         $resolver->setDefaults([
             'documentation' => [
@@ -60,8 +49,7 @@ class DateTimePickerType extends AbstractType
             'format' => $dateTimeFormat,
             'format_picker' => $dateTimePicker,
             'with_seconds' => false,
-            'model_timezone' => $timezone,
-            'view_timezone' => $timezone,
+            'time_increment' => 1,
         ]);
     }
 
@@ -72,6 +60,7 @@ class DateTimePickerType extends AbstractType
             'autocomplete' => 'off',
             'placeholder' => strtoupper($options['format']),
             'data-format' => $options['format_picker'],
+            'data-time-picker-increment' => $options['time_increment'],
         ]);
     }
 

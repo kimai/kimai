@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
-{% import "reporting/actions.html.twig" as actions %}
+{% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{{ 'reporting.title'|trans({}, 'reporting') }}{% endblock %}
+{% block page_title %}{{ 'menu.reporting'|trans }}{% endblock %}
 {% block page_subtitle %}{% block report_title %}{% endblock %}{% endblock %}
-{% block page_actions %}{{ actions.reporting() }}{% endblock %}
+{% block page_actions %}
+    {% set event = actions(app.user, 'reporting', 'index') %}
+    {{ widgets.page_actions(event.actions) }}
+{% endblock %}
 
 {% block main %}
     <div class="row">

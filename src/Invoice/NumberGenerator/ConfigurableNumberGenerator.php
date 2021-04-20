@@ -151,7 +151,7 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
 
             // for customer
             case 'cc':
-                $partialResult = $this->repository->getCounterForAllTime($invoiceDate, $this->model->getCustomer()) + $increaseBy;
+                $partialResult = $this->repository->getCounterForAllTime($this->model->getCustomer()) + $increaseBy;
                 break;
 
             case 'ccy':
@@ -168,7 +168,7 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
 
             // across all invoices
             case 'c':
-                $partialResult = $this->repository->getCounterForAllTime($invoiceDate) + $increaseBy;
+                $partialResult = $this->repository->getCounterForAllTime() + $increaseBy;
                 break;
 
             case 'cy':

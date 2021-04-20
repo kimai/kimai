@@ -11,18 +11,27 @@ namespace App\Voter;
 
 use App\Entity\Team;
 use App\Entity\User;
+use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class TeamVoter extends AbstractVoter
+final class TeamVoter extends Voter
 {
     /**
      * support rules based on the given $subject (here: Team)
      */
-    public const ALLOWED_ATTRIBUTES = [
+    private const ALLOWED_ATTRIBUTES = [
         'view',
         'edit',
         'delete',
     ];
+
+    private $permissionManager;
+
+    public function __construct(RolePermissionManager $permissionManager)
+    {
+        $this->permissionManager = $permissionManager;
+    }
 
     /**
      * @param string $attribute
@@ -56,6 +65,6 @@ class TeamVoter extends AbstractVoter
             return false;
         }
 
-        return $this->hasRolePermission($user, $attribute . '_team');
+        return $this->permissionManager->hasRolePermission($user, $attribute . '_team');
     }
 }

@@ -1,0 +1,129 @@
+{% extends 'reporting/layout.html.twig' %}
+{% import "macros/datatables.html.twig" as tables %}
+
+{% block report_title %}{{ (title|default('report_project_view'))|trans({}, 'reporting') }}{% endblock %}
+
+{% set columns = {
+    'name':             {'class': 'alwaysVisible'},
+    'lastRecord':       {'class': 'hidden text-center hw-min', 'title': 'label.last_record'|trans},
+    'today':            {'class': 'hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationToday'|trans},
+    'week':             {'class': 'hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationWeek'|trans},
+    'month':            {'class': 'hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationMonth'|trans},
+    'durationTotal':    {'class': 'text-center hw-min', 'title': 'stats.durationTotal'|trans},
+    'timeBudget':       {'class': 'hidden-xs', 'title': 'label.timeBudget'|trans},
+    'budget':           {'class': 'hidden-xs', 'title': 'label.budget'|trans},
+    'stateDuration':    {'class': 'hidden-sm hidden-xs text-center hw-min', 'title': 'label.not_exported'|trans},
+    'stateMoney':       {'class': 'hidden-sm hidden-xs text-center hw-min', 'title': 'label.not_invoiced'|trans},
+    'projectEnd':       {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_end'|trans},
+    'comment':          {'class': 'hidden-md hidden-sm hidden-xs hidden', 'title': 'label.comment'|trans},
+    'actions':          {'class': 'actions alwaysVisible'},
+} %}
+{% set tableName = tableName|default('project_view_reporting') %}
+
+{% block main_before %}
+    {{ tables.data_table_column_modal(tableName, columns) }}
+{% endblock %}
+
+{% block report %}
+
+    {% set hasData = entries|length > 0 %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/progressbar.html.twig" as progress %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% import "macros/datatables.html.twig" as tables %}
+        {% import "project/actions.html.twig" as projectActions %}
+        {% block box_body_class %}{{ tableName }}-box {% if hasData %}no-padding{% endif %}{% endblock %}
+        {% block box_before %}
+            {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': 'project-view-form'}}) }}
+        {% endblock %}
+        {% block box_after %}
+            {{ form_end(form) }}
+        {% endblock %}
+        {% block box_tools %}
+            {{ widgets.action_button('visibility', {'modal': ('#modal_' ~ tableName), 'class': 'btn-sm'}) }}
+        {% endblock %}
+        {% block box_title %}
+            {{ form_widget(form) }}
+        {% endblock %}
+        {% block box_body %}
+            {% if not hasData %}
+                {{ widgets.nothing_found() }}
+            {% else %}
+                {{ tables.datatable_header(tableName, columns, null, {'bordered': true, 'boxClass': ''}) }}
+
+                {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
+                    <tr class="summary">
+                        <td colspan="{{ columns|length }}">{{ widgets.label_customer(mapping.customer) }}</td>
+                    </tr>
+                    {% for entry in mapping.projects|sort((a, b) => a.project.name <=> b.project.name) %}
+                        {% set project = entry.project %}
+                        {% set currency = project.customer.currency %}
+                        {% if is_granted('budget', project) %}
+                            <tr {{ widgets.project_row_attr(project, now) }}>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_project(project) }}</td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'lastRecord') }}">
+                                    {% if entry.lastRecord is not null %}
+                                        {{ entry.lastRecord|date_short }}
+                                    {% else %}
+                                        &ndash;
+                                    {% endif %}
+                                </td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'today') }}">{{ entry.durationDay|duration }}</td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'week') }}">{{ entry.durationWeek|duration }}</td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'month') }}">{{ entry.durationMonth|duration }}</td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'durationTotal') }}">{{ entry.durationTotal|duration }}</td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
+                                    {% if project.timeBudget > 0 %}
+                                                {{ progress.progressbar(project.timeBudget, entry.billableDuration|default(0), entry.billableDuration|duration ~ ' / ' ~ project.timeBudget|duration, '') }}
+                                    {% endif %}
+                                </td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">
+                                    {% if project.budget > 0 %}
+                                                {{ progress.progressbar(project.budget, entry.billableRate|default(0), entry.billableRate|money(currency) ~ ' / ' ~ project.budget|money(currency), '') }}
+                                    {% endif %}
+                                </td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'stateDuration') }}">
+                                    {% if is_granted('create_export') %}
+                                        <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
+                                            {{ entry.notExportedDuration|duration }}
+                                        </a>
+                                    {% else %}
+                                        {{ entry.notExportedDuration|duration }}
+                                    {% endif %}
+                                </td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'stateMoney') }}">
+                                    {% if is_granted('view_invoice') %}
+                                        <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
+                                            {{ entry.notBilledRate|money(currency) }}
+                                        </a>
+                                    {% else %}
+                                        {{ entry.notBilledRate|money(currency) }}
+                                    {% endif %}
+                                </td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'projectEnd') }}">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ project.comment }}</td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
+                                    {{ projectActions.project(project, 'custom') }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {{ tables.data_table_footer(entries) }}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            $('#project-view-form').on('change', function(ev) {
+                $(this).submit();
+            });
+        });
+    </script>
+{% endblock %}

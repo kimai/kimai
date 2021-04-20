@@ -88,14 +88,10 @@ final class ProjectController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_project');
         }
 
-        /* @var $entries Pagerfanta */
         $entries = $this->repository->getPagerfantaForQuery($query);
 
         return $this->render('project/index.html.twig', [
@@ -103,6 +99,7 @@ final class ProjectController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'metaColumns' => $this->findMetaColumns($query),
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -135,6 +132,10 @@ final class ProjectController extends AbstractController
             try {
                 $this->projectService->updateProject($project);
                 $this->flashSuccess('action.update.success');
+
+                if ($this->isGranted('view', $project)) {
+                    return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+                }
 
                 return $this->redirectToRoute('admin_project');
             } catch (\Exception $ex) {
@@ -271,6 +272,9 @@ final class ProjectController extends AbstractController
         $query->setPageSize(5);
         $query->addProject($project);
         $query->setExcludeGlobals(true);
+        $query->setShowBoth();
+        $query->addOrderGroup('visible', ActivityQuery::ORDER_DESC);
+        $query->addOrderGroup('name', ActivityQuery::ORDER_ASC);
 
         /* @var $entries Pagerfanta */
         $entries = $activityRepository->getPagerfantaForQuery($query);
@@ -279,6 +283,7 @@ final class ProjectController extends AbstractController
             'project' => $project,
             'activities' => $entries,
             'page' => $page,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -330,7 +335,8 @@ final class ProjectController extends AbstractController
             'stats' => $stats,
             'team' => $defaultTeam,
             'teams' => $teams,
-            'rates' => $rates
+            'rates' => $rates,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -414,7 +420,7 @@ final class ProjectController extends AbstractController
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.projectUpdate kimai.projectDelete',
+                    'data-form-event' => 'kimai.projectDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
                 ]
@@ -523,7 +529,9 @@ final class ProjectController extends AbstractController
             'action' => $url,
             'method' => 'POST',
             'currency' => $currency,
-            'include_budget' => $this->isGranted('budget', $project)
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
+            'include_budget' => $this->isGranted('budget', $project),
+            'time_increment' => 15,
         ]);
     }
 }

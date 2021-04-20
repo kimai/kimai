@@ -14,7 +14,7 @@
     } %}
 
     {{ include(app.request.xmlHttpRequest ? 'default/_form_delete_modal.html.twig' : 'default/_form_delete.html.twig', {
-        'message': "admin_user.short_stats"|trans(params),
+        'message': ("admin_user.short_stats"|trans(params) ~ "admin_entity.delete_confirm"|trans),
         'form': form,
         'used': inUse,
         'back': path('admin_user')

@@ -20,6 +20,7 @@ use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\Calculator\RateCalculator;
+use App\Timesheet\RateService;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -46,7 +47,7 @@ class RateCalculatorTest extends TestCase
         $record->setActivity(new Activity());
         $record->setUser($this->getTestUser());
 
-        $sut = new RateCalculator([], $this->getRateRepositoryMock());
+        $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock()));
         $sut->calculate($record);
         $this->assertEquals(50, $record->getRate());
     }
@@ -62,7 +63,7 @@ class RateCalculatorTest extends TestCase
         $record->setActivity(new Activity());
         $record->setUser($this->getTestUser());
 
-        $sut = new RateCalculator([], $this->getRateRepositoryMock());
+        $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock()));
         $sut->calculate($record);
         $this->assertEquals(10, $record->getRate());
     }
@@ -173,7 +174,7 @@ class RateCalculatorTest extends TestCase
             $rates[] = $rate;
         }
 
-        $sut = new RateCalculator([], $this->getRateRepositoryMock($rates));
+        $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock($rates)));
         $sut->calculate($timesheet);
         $this->assertEquals($expectedRate, $timesheet->getRate());
         $this->assertEquals($expectedInternalRate, $timesheet->getInternalRate());
@@ -207,7 +208,7 @@ class RateCalculatorTest extends TestCase
 
         $this->assertEquals(0, $record->getRate());
 
-        $sut = new RateCalculator([], $this->getRateRepositoryMock());
+        $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock()));
         $sut->calculate($record);
         $this->assertEquals(0, $record->getRate());
     }
@@ -233,7 +234,7 @@ class RateCalculatorTest extends TestCase
 
         $record->setEnd($end);
 
-        $sut = new RateCalculator($rules, $this->getRateRepositoryMock());
+        $sut = new RateCalculator(new RateService($rules, $this->getRateRepositoryMock()));
         $sut->calculate($record);
 
         $this->assertEquals($expectedRate, $record->getRate());

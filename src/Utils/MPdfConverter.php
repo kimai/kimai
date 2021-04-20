@@ -10,6 +10,8 @@
 namespace App\Utils;
 
 use App\Constants;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 
@@ -25,6 +27,32 @@ class MPdfConverter implements HtmlToPdfConverter
         $this->cacheDirectory = $cacheDirectory;
     }
 
+    protected function sanitizeOptions(array $options): array
+    {
+        $configs = new ConfigVariables();
+        $fonts = new FontVariables();
+        $allowed = [
+            'mode', 'format', 'default_font_size', 'default_font', 'margin_left', 'margin_right', 'margin_top',
+            'margin_bottom', 'margin_header', 'margin_footer', 'orientation'
+        ];
+
+        $filtered = array_filter($options, function ($key) use ($allowed, $configs, $fonts) {
+            if (!\in_array($key, $allowed)) {
+                if (!\array_key_exists($key, $configs->getDefaults())) {
+                    return \array_key_exists($key, $fonts->getDefaults());
+                }
+            }
+
+            return true;
+        }, ARRAY_FILTER_USE_KEY);
+
+        if (\array_key_exists('tempDir', $filtered)) {
+            unset($filtered['tempDir']);
+        }
+
+        return $filtered;
+    }
+
     /**
      * @param string $html
      * @param array $options
@@ -33,7 +61,11 @@ class MPdfConverter implements HtmlToPdfConverter
      */
     public function convertToPdf(string $html, array $options = [])
     {
-        $options = array_merge($options, ['tempDir' => $this->cacheDirectory]);
+        $options = array_merge(
+            $this->sanitizeOptions($options),
+            ['tempDir' => $this->cacheDirectory, 'exposeVersion' => false]
+        );
+
         $mpdf = new Mpdf($options);
         $mpdf->creator = Constants::SOFTWARE;
 

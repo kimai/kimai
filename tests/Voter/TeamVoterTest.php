@@ -26,7 +26,7 @@ class TeamVoterTest extends AbstractVoterTest
     public function testVote(User $user, $subject, $attribute, $result)
     {
         $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
-        $sut = $this->getVoter(TeamVoter::class, $user);
+        $sut = $this->getVoter(TeamVoter::class);
 
         $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }

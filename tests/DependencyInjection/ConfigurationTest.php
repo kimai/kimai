@@ -18,11 +18,10 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
  */
 class ConfigurationTest extends TestCase
 {
-    protected function getMinConfig($dataDir = '/tmp/', $pluginDir = '/tmp/')
+    protected function getMinConfig($dataDir = '/tmp/')
     {
         return [
             'data_dir' => $dataDir,
-            'plugin_dir' => $pluginDir,
             'timesheet' => [],
         ];
     }
@@ -52,12 +51,17 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($this->getMinConfig('sdfsdfsdfds'), []);
     }
 
+    /**
+     * @expectedDeprecation Changing the plugin directory via "kimai.plugin_dir" is not supported since 1.9
+     * @group legacy
+     */
     public function testValidatePluginDir()
     {
-        $finalizedConfig = $this->getCompiledConfig($this->getMinConfig());
-        $finalizedConfig['plugin_dir'] = 'sdfsdfs';
+        $config = $this->getMinConfig();
+        $config['plugin_dir'] = '/tmp/';
 
-        $config = $this->getMinConfig('/tmp/', 'sdfsdfs');
+        $finalizedConfig = $this->getCompiledConfig($config);
+        $finalizedConfig['plugin_dir'] = '/tmp/';
 
         $this->assertConfig($config, $finalizedConfig);
     }
@@ -257,7 +261,6 @@ class ConfigurationTest extends TestCase
     {
         $fullDefaultConfig = [
             'data_dir' => '/tmp/',
-            'plugin_dir' => '/tmp/',
             'timesheet' => [
                 'default_begin' => 'now',
                 'mode' => 'default',
@@ -282,7 +285,10 @@ class ConfigurationTest extends TestCase
                     'lockdown_period_start' => null,
                     'lockdown_period_end' => null,
                     'lockdown_grace_period' => null,
+                    'allow_overbooking_budget' => true,
                 ],
+                'duration_increment' => null,
+                'time_increment' => null,
             ],
             'user' => [
                 'registration' => true,
@@ -335,9 +341,8 @@ class ConfigurationTest extends TestCase
             ],
             'theme' => [
                 'active_warning' => 3,
-                'box_color' => 'green',
+                'box_color' => 'blue',
                 'select_type' => 'selectpicker',
-                'auto_reload_datatable' => false,
                 'show_about' => true,
                 'chart' => [
                     'background_color' => '#3c8dbc',
@@ -356,7 +361,9 @@ class ConfigurationTest extends TestCase
                 'tags_create' => true,
                 'calendar' => [
                     'background_color' => '#d2d6de'
-                ]
+                ],
+                'colors_limited' => true,
+                'color_choices' => 'Kimai|#d2d6de,Silver|#c0c0c0,Gray|#808080,Black|#000000,Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,Gold|#ffd700,Yellow|#ffff00,Peach|#ffdab9,Khaki|#f0e68c,Olive|#808000,Lime|#00ff00,Jelly|#9acd32,Green|#008000,Teal|#008080,Aqua|#00ffff,LightBlue|#add8e6,DeepSky|#00bfff,Dodger|#1e90ff,Blue|#0000ff,Navy|#000080,Purple|#800080,Fuchsia|#ff00ff,Violet|#ee82ee,Rose|#ffe4e1,Lavender|#E6E6FA'
             ],
             'industry' => [
                 'translation' => null,

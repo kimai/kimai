@@ -23,8 +23,8 @@ class TagToolbarForm extends AbstractToolbarForm
         $this->addSearchTermInputField($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
-        $this->addHiddenOrder($builder);
-        $this->addHiddenOrderBy($builder, TagQuery::TAG_ORDER_ALLOWED);
+        $this->addOrder($builder);
+        $this->addOrderBy($builder, TagQuery::TAG_ORDER_ALLOWED);
     }
 
     /**

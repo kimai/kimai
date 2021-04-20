@@ -20,6 +20,7 @@ use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
@@ -93,26 +94,46 @@ class ActivityRepository extends EntityRepository
      */
     public function getActivityStatistics(Activity $activity)
     {
-        $stats = new ActivityStatistic();
-
         $qb = $this->getEntityManager()->createQueryBuilder();
-
         $qb
-            ->addSelect('COUNT(t.id) as recordAmount')
-            ->addSelect('SUM(t.duration) as recordDuration')
-            ->addSelect('SUM(t.rate) as recordRate')
-            ->addSelect('SUM(t.internalRate) as recordInternalRate')
             ->from(Timesheet::class, 't')
+            ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
             ->where('t.activity = :activity')
+            ->setParameter('activity', $activity)
         ;
 
-        $timesheetResult = $qb->getQuery()->execute(['activity' => $activity], Query::HYDRATE_ARRAY);
+        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
 
-        if (isset($timesheetResult[0])) {
-            $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
-            $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
-            $stats->setRecordRate($timesheetResult[0]['recordRate']);
-            $stats->setRecordInternalRate($timesheetResult[0]['recordInternalRate']);
+        $stats = new ActivityStatistic();
+
+        if (null !== $timesheetResult) {
+            $stats->setRecordAmount($timesheetResult['amount']);
+            $stats->setRecordDuration($timesheetResult['duration']);
+            $stats->setRecordRate($timesheetResult['rate']);
+            $stats->setRecordInternalRate($timesheetResult['internal_rate']);
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->from(Timesheet::class, 't')
+            ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->where('t.activity = :activity')
+            ->andWhere('t.billable = :billable')
+            ->setParameter('activity', $activity)
+            ->setParameter('billable', true, Types::BOOLEAN)
+        ;
+
+        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $timesheetResult) {
+            $stats->setDurationBillable($timesheetResult['duration']);
+            $stats->setRateBillable($timesheetResult['rate']);
+            $stats->setRecordAmountBillable($timesheetResult['amount']);
         }
 
         return $stats;
@@ -272,20 +293,20 @@ class ActivityRepository extends EntityRepository
             ->leftJoin('p.customer', 'c')
         ;
 
-        $orderBy = $query->getOrderBy();
-        switch ($orderBy) {
-            case 'project':
-                $orderBy = 'p.name';
-                break;
-            case 'customer':
-                $orderBy = 'c.name';
-                break;
-            default:
-                $orderBy = 'a.' . $orderBy;
-                break;
+        foreach ($query->getOrderGroups() as $orderBy => $order) {
+            switch ($orderBy) {
+                case 'project':
+                    $orderBy = 'p.name';
+                    break;
+                case 'customer':
+                    $orderBy = 'c.name';
+                    break;
+                default:
+                    $orderBy = 'a.' . $orderBy;
+                    break;
+            }
+            $qb->addOrderBy($orderBy, $order);
         }
-
-        $qb->addOrderBy($orderBy, $query->getOrder());
 
         $where = $qb->expr()->andX();
 

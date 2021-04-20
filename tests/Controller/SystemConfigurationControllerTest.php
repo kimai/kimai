@@ -89,7 +89,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals('default', $configService->find('timesheet.mode'));
-        $this->assertEquals(true, $configService->find('timesheet.rules.allow_future_times'));
+        $this->assertTrue($configService->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(1, $configService->find('timesheet.active_entries.hard_limit'));
         $this->assertEquals(1, $configService->find('timesheet.active_entries.soft_limit'));
 
@@ -101,6 +101,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                     ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
                     ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
+                    ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => false],
                     ['name' => 'timesheet.rules.lockdown_period_start', 'value' => null],
                     ['name' => 'timesheet.rules.lockdown_period_end', 'value' => null],
                     ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => null],
@@ -117,8 +118,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals('duration_only', $configService->find('timesheet.mode'));
-        $this->assertEquals(false, $configService->find('timesheet.rules.allow_future_times'));
-        $this->assertEquals(false, $configService->find('timesheet.rules.allow_overlapping_records'));
+        $this->assertFalse($configService->find('timesheet.rules.allow_future_times'));
+        $this->assertFalse($configService->find('timesheet.rules.allow_overlapping_records'));
         $this->assertEquals(99, $configService->find('timesheet.active_entries.hard_limit'));
         $this->assertEquals(77, $configService->find('timesheet.active_entries.soft_limit'));
     }
@@ -136,6 +137,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                         ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
                         ['name' => 'timesheet.rules.allow_future_times', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => 1],
+                        ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => 1],
                         ['name' => 'timesheet.rules.lockdown_period_start', 'value' => 'first day of last month'],
                         ['name' => 'timesheet.rules.lockdown_period_end', 'value' => 'first day of last month'],
                         ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => '+10 days'],
@@ -146,8 +148,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             ],
             [
                 '#system_configuration_form_timesheet_configuration_0_value', // mode
-                '#system_configuration_form_timesheet_configuration_7_value', // hard_limit
-                '#system_configuration_form_timesheet_configuration_8_value', // soft_limit
+                '#system_configuration_form_timesheet_configuration_8_value', // hard_limit
+                '#system_configuration_form_timesheet_configuration_9_value', // soft_limit
             ],
             true
         );
@@ -247,7 +249,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
         $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
-        $this->assertEquals(false, $configService->find('timesheet.markdown_content'));
+        $this->assertFalse($configService->find('timesheet.markdown_content'));
         $this->assertEquals('selectpicker', $configService->find('theme.select_type'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_theme]')->form();
@@ -267,7 +269,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals('selectpicker', $configService->find('theme.select_type'));
-        $this->assertEquals(true, $configService->find('timesheet.markdown_content'));
+        $this->assertTrue($configService->find('timesheet.markdown_content'));
     }
 
     public function testUpdateThemeConfigValidation()

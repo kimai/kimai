@@ -9,11 +9,8 @@
 
 namespace App\Tests\Timesheet\TrackingMode;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
-use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\RoundingServiceFactory;
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Timesheet\TrackingMode\DefaultMode;
 
 /**
@@ -32,11 +29,7 @@ class DefaultModeTest extends AbstractTrackingModeTest
      */
     protected function createSut()
     {
-        $loader = new TestConfigLoader([]);
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create();
-        $configuration = new TimesheetConfiguration($loader, ['default_begin' => '13:47']);
-
-        return new DefaultMode($dateTime, $configuration, (new RoundingServiceFactory($this))->create());
+        return new DefaultMode((new RoundingServiceFactory($this))->create());
     }
 
     public function testDefaultValues()
@@ -45,7 +38,7 @@ class DefaultModeTest extends AbstractTrackingModeTest
 
         self::assertTrue($sut->canEditBegin());
         self::assertTrue($sut->canEditEnd());
-        self::assertFalse($sut->canEditDuration());
+        self::assertTrue($sut->canEditDuration());
         self::assertTrue($sut->canUpdateTimesWithAPI());
         self::assertTrue($sut->canSeeBeginAndEndTimes());
         self::assertEquals('default', $sut->getId());

@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="tr" datatype="plaintext" original="reporting.en.xlf">
     <body>
-      <trans-unit id="reporting.title">
-        <source>reporting.title</source>
-        <target>Raporlama</target>
-      </trans-unit>
       <trans-unit id="report_user_week">
         <source>report_user_week</source>
         <target>Bir kullanıcı için haftalık görünüm</target>
@@ -17,6 +13,14 @@
       <trans-unit id="report_monthly_users">
         <source>report_monthly_users</source>
         <target>Tüm kullanıcılar için aylık görünüm</target>
+      </trans-unit>
+      <trans-unit id="report_project_view">
+        <source>report_project_view</source>
+        <target>Projeye genel bakış</target>
+      </trans-unit>
+      <trans-unit id="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>İlk rapor</target>
       </trans-unit>
     </body>
   </file>

@@ -37,6 +37,22 @@ td {
 }
 
 /* Profile */
+.avatar-xs {
+    width: 20px;
+    height: 20px;
+}
+.avatar-sm {
+    width: 25px;
+    height: 25px;
+}
+.avatar-md {
+    width: 30px;
+    height: 30px;
+}
+.avatar-lg {
+    width: 40px;
+    height: 40px;
+}
 .box-profile {
     img.img-circle {
         width: 100px;
@@ -64,4 +80,8 @@ th.w-min,
 td.w-min {
     width: 1%;
     white-space: nowrap;
+}
+table.dataTable thead > tr > th.hw-min {
+    width: 1%;
+    white-space: normal;
 }

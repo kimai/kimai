@@ -28,6 +28,7 @@ require('select2/dist/js/i18n/ja');
 require('select2/dist/js/i18n/ko');
 require('select2/dist/js/i18n/nl');
 require('select2/dist/js/i18n/pl');
+require('select2/dist/js/i18n/pt');
 require('select2/dist/js/i18n/pt-BR');
 require('select2/dist/js/i18n/ro');
 require('select2/dist/js/i18n/ru');
@@ -43,6 +44,7 @@ require('moment/locale/ar');
 require('moment/locale/cs');
 require('moment/locale/da');
 require('moment/locale/de');
+require('moment/locale/de-at');
 require('moment/locale/de-ch');
 require('moment/locale/eo');
 require('moment/locale/es');
@@ -56,6 +58,7 @@ require('moment/locale/ja');
 require('moment/locale/ko');
 require('moment/locale/nl');
 require('moment/locale/pl');
+require('moment/locale/pt');
 require('moment/locale/pt-br');
 require('moment/locale/ro');
 require('moment/locale/ru');
@@ -67,8 +70,11 @@ require('moment/locale/zh-cn');
 
 require('daterangepicker');
 
+/*
+"sortablejs": "^1.10",
 const Sortable = require('sortablejs/Sortable.min');
 global.Sortable = Sortable;
+*/
 
 // ------ AdminLTE framework ------
 require('./sass/bootstrap.scss');
@@ -89,6 +95,7 @@ require('./sass/app.scss');
 require('./js/KimaiWebLoader.js');
 global.KimaiPaginatedBoxWidget = require('./js/widgets/KimaiPaginatedBoxWidget').default;
 global.KimaiReloadPageWidget = require('./js/widgets/KimaiReloadPageWidget').default;
+global.KimaiCookies = require('./js/widgets/KimaiCookies').default;
 
 // ------ Autocomplete for tags only ------
 require('jquery-ui/ui/widgets/autocomplete');

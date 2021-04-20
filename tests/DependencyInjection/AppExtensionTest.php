@@ -56,7 +56,6 @@ class AppExtensionTest extends TestCase
                     ],
                 ],
                 'data_dir' => '/tmp/',
-                'plugin_dir' => '/tmp/', // still here, to make sure that this value is NOT applied!
                 'timesheet' => [],
                 'saml' => [
                     'connection' => []
@@ -154,7 +153,7 @@ class AppExtensionTest extends TestCase
             ],
             'kimai.theme' => [
                 'active_warning' => 3,
-                'box_color' => 'green',
+                'box_color' => 'blue',
                 'select_type' => 'selectpicker',
                 'show_about' => true,
                 'chart' => [
@@ -170,12 +169,13 @@ class AppExtensionTest extends TestCase
                     'title' => null,
                     'translation' => null,
                 ],
-                'auto_reload_datatable' => false,
                 'autocomplete_chars' => 3,
                 'tags_create' => true,
                 'calendar' => [
                     'background_color' => '#d2d6de',
                 ],
+                'colors_limited' => true,
+                'color_choices' => 'Kimai|#d2d6de,Silver|#c0c0c0,Gray|#808080,Black|#000000,Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,Gold|#ffd700,Yellow|#ffff00,Peach|#ffdab9,Khaki|#f0e68c,Olive|#808000,Lime|#00ff00,Jelly|#9acd32,Green|#008000,Teal|#008080,Aqua|#00ffff,LightBlue|#add8e6,DeepSky|#00bfff,Dodger|#1e90ff,Blue|#0000ff,Navy|#000080,Purple|#800080,Fuchsia|#ff00ff,Violet|#ee82ee,Rose|#ffe4e1,Lavender|#E6E6FA'
             ],
             'kimai.theme.select_type' => 'selectpicker',
             'kimai.theme.show_about' => true,
@@ -206,8 +206,11 @@ class AppExtensionTest extends TestCase
                     'lockdown_period_start' => null,
                     'lockdown_period_end' => null,
                     'lockdown_grace_period' => null,
+                    'allow_overbooking_budget' => true,
                 ],
                 'default_begin' => 'now',
+                'duration_increment' => null,
+                'time_increment' => null,
             ],
             'kimai.timesheet.rates' => [],
             'kimai.timesheet.rounding' => [
@@ -323,6 +326,21 @@ class AppExtensionTest extends TestCase
         $minConfig['kimai']['timesheet']['mode'] = 'punch';
 
         $this->extension->load($minConfig, $container = $this->getContainer());
+    }
+
+    /**
+     * @expectedDeprecation Changing the plugin directory via "kimai.plugin_dir" is not supported since 1.9
+     * @group legacy
+     */
+    public function testChangingPluginsIsIgnoredAndTriggersDeprecation()
+    {
+        $minConfig = $this->getMinConfig();
+        $minConfig['kimai']['plugin_dir'] = '/tmp/';
+        $expected = realpath(__DIR__ . '/../../') . '/var/plugins';
+
+        $this->extension->load($minConfig, $container = $this->getContainer());
+
+        $this->assertEquals($expected, $container->getParameter('kimai.plugin_dir'), 'Invalid config: kimai.plugin_dir');
     }
 
     public function testLdapDefaultValues()

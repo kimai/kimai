@@ -9,7 +9,7 @@
 
 namespace App\Validator\Constraints;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
 use App\Repository\TimesheetRepository;
 use Symfony\Component\Validator\Constraint;
@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 final class TimesheetOverlappingValidator extends ConstraintValidator
 {
     /**
-     * @var TimesheetConfiguration
+     * @var SystemConfiguration
      */
     private $configuration;
     /**
@@ -27,7 +27,7 @@ final class TimesheetOverlappingValidator extends ConstraintValidator
      */
     private $repository;
 
-    public function __construct(TimesheetConfiguration $configuration, TimesheetRepository $repository)
+    public function __construct(SystemConfiguration $configuration, TimesheetRepository $repository)
     {
         $this->configuration = $configuration;
         $this->repository = $repository;
@@ -55,7 +55,7 @@ final class TimesheetOverlappingValidator extends ConstraintValidator
             return;
         }
 
-        if ($this->configuration->isAllowOverlappingRecords()) {
+        if ($this->configuration->isTimesheetAllowOverlappingRecords()) {
             return;
         }
 

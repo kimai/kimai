@@ -2,7 +2,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "customer/actions.html.twig" as actions %}
 
-{% block page_actions %}{{ actions.customer(customer, 'details') }}{% endblock %}
+{% block page_actions %}{{ actions.customer(customer, 'customer_details') }}{% endblock %}
 {% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
 
 {% block main %}
@@ -29,24 +29,21 @@
             {% endif %}
             <table class="table table-hover dataTable">
                 {% if not customer.visible %}
-                    <tr>
+                    <tr class="{{ widgets.class_customer_row(customer, now) }}">
                         <th>{{ 'label.visible'|trans }}</th>
-                        <td>
-                            {{ widgets.label_boolean(customer.visible) }}
-                        </td>
+                        <td>{{ widgets.label_boolean(customer.visible) }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.address is not empty %}
                     <tr>
                         <th>{{ 'label.address'|trans }}</th>
-                        <td>
-                            {{ customer.address|nl2br }}
-
-                            {% if customer.country is not empty %}
-                                <br>
-                                {{ customer.country|country }}
-                            {% endif %}
-                        </td>
+                        <td>{{ customer.address|nl2br }}</td>
+                    </tr>
+                {% endif %}
+                {% if customer.country is not empty %}
+                    <tr>
+                        <th>{{ 'label.country'|trans }}</th>
+                        <td>{{ customer.country|country }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.contact is not empty %}
@@ -88,7 +85,7 @@
                 {% if customer.timezone is not empty %}
                     <tr>
                         <th>{{ 'label.timezone'|trans }}</th>
-                        <td><span data-toggle="tooltip" data-placement="top" title="{{ customer.timezone }}">{{ now|date_time }}</span></td>
+                        <td>{{ customer_now|date_full }} ({{ customer.timezone }})</td>
                     </tr>
                 {% endif %}
                 {% if customer.currency is not empty %}
@@ -124,7 +121,7 @@
     {{ render(controller('App\\Controller\\CustomerController::projectsAction', {'customer': customer.id, 'page': 1})) }}
     
     {% if stats is not null %}
-        {{ include('customer/embed_budget.html.twig', {'customer': customer, 'stats': stats}) }}
+        {{ include('embeds/budgets.html.twig', {'entity': customer, 'stats': stats, 'currency': customer.currency}) }}
     {% endif %}
 
     {% if can_edit %}
@@ -153,7 +150,7 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.customerTeamUpdate kimai.customerUpdate kimai.teamUpdate kimai.projectTeamUpdate kimai.projectUpdate kimai.rateUpdate');
+            KimaiReloadPageWidget.create('kimai.customerTeamUpdate kimai.customerUpdate kimai.teamUpdate kimai.projectTeamUpdate kimai.rateUpdate');
         });
     </script>
 {% endblock %}

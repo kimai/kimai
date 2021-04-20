@@ -29,7 +29,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
         }
 
         $this->addSearchTermInputField($builder);
-        $this->addDateRangeChoice($builder);
+        $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerMultiChoice($builder, $newOptions, true);
         $this->addProjectMultiChoice($builder, $newOptions, true, true);
         $this->addActivityMultiChoice($builder, [], true);
@@ -38,11 +38,12 @@ class TimesheetToolbarForm extends AbstractToolbarForm
             $this->addUsersChoice($builder);
         }
         $this->addTimesheetStateChoice($builder);
+        $this->addBillableChoice($builder);
         $this->addExportStateChoice($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
-        $this->addHiddenOrder($builder);
-        $this->addHiddenOrderBy($builder, TimesheetQuery::TIMESHEET_ORDER_ALLOWED);
+        $this->addOrder($builder);
+        $this->addOrderBy($builder, TimesheetQuery::TIMESHEET_ORDER_ALLOWED);
     }
 
     /**
@@ -55,6 +56,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
             'csrf_protection' => false,
             'include_user' => false,
             'ignore_date' => true,
+            'timezone' => date_default_timezone_get(),
         ]);
     }
 }

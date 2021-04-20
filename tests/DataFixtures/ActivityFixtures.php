@@ -11,14 +11,13 @@ namespace App\Tests\DataFixtures;
 
 use App\Entity\Activity;
 use App\Entity\Project;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
  * Defines the sample data to load in during controller tests.
  */
-final class ActivityFixtures extends Fixture
+final class ActivityFixtures implements TestFixture
 {
     /**
      * @var int
@@ -95,10 +94,13 @@ final class ActivityFixtures extends Fixture
     }
 
     /**
-     * {@inheritdoc}
+     * @param ObjectManager $manager
+     * @return Activity[]
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): array
     {
+        $created = [];
+
         $projects = $this->projects;
         if (empty($projects)) {
             $projects = $this->getAllProjects($manager);
@@ -126,16 +128,20 @@ final class ActivityFixtures extends Fixture
                 \call_user_func($this->callback, $activity);
             }
             $manager->persist($activity);
+
+            $created[] = $activity;
         }
 
         $manager->flush();
+
+        return $created;
     }
 
     /**
      * @param ObjectManager $manager
      * @return array<int|string, Project>
      */
-    protected function getAllProjects(ObjectManager $manager): array
+    private function getAllProjects(ObjectManager $manager): array
     {
         $all = [];
         /** @var Project[] $entries */

@@ -9,6 +9,7 @@
 
 namespace App\Repository\Query;
 
+use App\Entity\Bookmark;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Utils\SearchTerm;
@@ -23,6 +24,7 @@ class BaseQuery
     public const ORDER_DESC = 'DESC';
 
     public const DEFAULT_PAGESIZE = 50;
+    /** @deprecated since 1.14 */
     public const DEFAULT_PAGE = 1;
 
     /**
@@ -39,7 +41,7 @@ class BaseQuery
     public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
     private $defaults = [
-        'page' => self::DEFAULT_PAGE,
+        'page' => 1,
         'pageSize' => self::DEFAULT_PAGESIZE,
         'orderBy' => 'id',
         'order' => self::ORDER_ASC,
@@ -48,7 +50,7 @@ class BaseQuery
     /**
      * @var int
      */
-    private $page = self::DEFAULT_PAGE;
+    private $page = 1;
     /**
      * @var int
      */
@@ -61,6 +63,10 @@ class BaseQuery
      * @var string
      */
     private $order = self::ORDER_ASC;
+    /**
+     * @var array<string, string>
+     */
+    private $orderGroups = [];
     /**
      * @var string
      * @deprecated since 1.4, will be removed with 2.0
@@ -78,6 +84,14 @@ class BaseQuery
      * @var SearchTerm|null
      */
     private $searchTerm;
+    /**
+     * @var Bookmark
+     */
+    private $bookmark;
+    /**
+     * @var string|null
+     */
+    private $name;
 
     /**
      * @param Team[] $teams
@@ -117,6 +131,8 @@ class BaseQuery
     }
 
     /**
+     * By setting the current user, you activate (team) permission checks.
+     *
      * @param User $user
      * @return self
      */
@@ -141,7 +157,9 @@ class BaseQuery
      */
     public function setPage($page)
     {
-        $this->page = (int) $page;
+        if ($page !== null && (int) $page > 0) {
+            $this->page = (int) $page;
+        }
 
         return $this;
     }
@@ -169,13 +187,7 @@ class BaseQuery
         return $this->orderBy;
     }
 
-    /**
-     * You need to validate carefully if this value is used from a user-input.
-     *
-     * @param string $orderBy
-     * @return self
-     */
-    public function setOrderBy($orderBy)
+    public function setOrderBy(string $orderBy): self
     {
         $this->orderBy = $orderBy;
 
@@ -187,17 +199,27 @@ class BaseQuery
         return $this->order;
     }
 
-    /**
-     * @param string $order
-     * @return self
-     */
-    public function setOrder($order)
+    public function setOrder(string $order): self
     {
         if (\in_array($order, [self::ORDER_ASC, self::ORDER_DESC])) {
             $this->order = $order;
         }
 
         return $this;
+    }
+
+    public function addOrderGroup(string $orderBy, string $order): void
+    {
+        $this->orderGroups[$orderBy] = $order;
+    }
+
+    public function getOrderGroups(): array
+    {
+        if (empty($this->orderGroups)) {
+            return [$this->orderBy => $this->order];
+        }
+
+        return $this->orderGroups;
     }
 
     /**
@@ -270,6 +292,37 @@ class BaseQuery
         }
 
         return $this;
+    }
+
+    public function setBookmark(Bookmark $bookmark): void
+    {
+        $this->bookmark = $bookmark;
+    }
+
+    public function getBookmark(): ?Bookmark
+    {
+        return $this->bookmark;
+    }
+
+    public function hasBookmark(): bool
+    {
+        return null !== $this->bookmark;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getName(): string
+    {
+        if (null !== $this->name) {
+            return $this->name;
+        }
+
+        $shortClass = explode('\\', static::class);
+
+        return array_pop($shortClass);
     }
 
     public function copyTo(BaseQuery $query): BaseQuery

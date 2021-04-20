@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\ActivityRate;
 use App\Entity\CustomerRate;
+use App\Entity\Project;
 use App\Entity\ProjectRate;
 use App\Entity\RateInterface;
 use App\Entity\Team;
@@ -26,12 +27,14 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
 use DateInterval;
 use DateTime;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
 use InvalidArgumentException;
 use Pagerfanta\Pagerfanta;
-use PDO;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Timesheet>
@@ -44,6 +47,27 @@ class TimesheetRepository extends EntityRepository
     public const STATS_QUERY_AMOUNT = 'amount';
     public const STATS_QUERY_ACTIVE = 'active';
     public const STATS_QUERY_MONTHLY = 'monthly';
+
+    public function getRawData(Timesheet $id): array
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->select([
+                't.rate',
+                't.duration',
+                't.hourlyRate',
+                'IDENTITY(p.customer) as customer',
+                'IDENTITY(t.project) as project',
+                'IDENTITY(t.activity) as activity',
+                'IDENTITY(t.user) as user'
+            ])
+            ->leftJoin(Project::class, 'p', Join::WITH, 'p.id = t.project')
+            ->andWhere('t.id = :id')
+            ->setParameter('id', $id)
+        ;
+
+        return $qb->getQuery()->getSingleResult(AbstractQuery::HYDRATE_ARRAY);
+    }
 
     /**
      * @param mixed $id
@@ -221,10 +245,10 @@ class TimesheetRepository extends EntityRepository
                 return $this->getDailyStats($user, $begin, $end);
 
             case self::STATS_QUERY_DURATION:
-                $what = 'SUM(t.duration)';
+                $what = 'COALESCE(SUM(t.duration), 0)';
                 break;
             case self::STATS_QUERY_RATE:
-                $what = 'SUM(t.rate)';
+                $what = 'COALESCE(SUM(t.rate), 0)';
                 break;
             case self::STATS_QUERY_USER:
                 $what = 'COUNT(DISTINCT(t.user))';
@@ -247,10 +271,16 @@ class TimesheetRepository extends EntityRepository
      */
     protected function queryThisMonth($select, User $user)
     {
-        $begin = new DateTime('first day of this month 00:00:00');
-        $end = new DateTime('last day of this month 23:59:59');
+        try {
+            $timezone = new \DateTimeZone($user->getTimezone());
+            $begin = new DateTime('first day of this month 00:00:00', $timezone);
+            $end = new DateTime('last day of this month 23:59:59', $timezone);
 
-        return $this->queryTimeRange($select, $begin, $end, $user);
+            return $this->queryTimeRange($select, $begin, $end, $user);
+        } catch (\Exception $ex) {
+        }
+
+        return 0;
     }
 
     /**
@@ -290,20 +320,13 @@ class TimesheetRepository extends EntityRepository
         return empty($result) ? 0 : $result;
     }
 
-    /**
-     * Fetch statistic data for one user.
-     *
-     * @param User $user
-     * @return TimesheetStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getUserStatistics(User $user)
+    public function getUserStatistics(User $user): TimesheetStatistic
     {
         $durationTotal = $this->getStatistic(self::STATS_QUERY_DURATION, null, null, $user);
         $recordsTotal = $this->getStatistic(self::STATS_QUERY_AMOUNT, null, null, $user);
         $rateTotal = $this->getStatistic(self::STATS_QUERY_RATE, null, null, $user);
-        $amountMonth = $this->queryThisMonth('SUM(t.rate)', $user);
-        $durationMonth = $this->queryThisMonth('SUM(t.duration)', $user);
+        $amountMonth = $this->queryThisMonth('COALESCE(SUM(t.rate), 0)', $user);
+        $durationMonth = $this->queryThisMonth('COALESCE(SUM(t.duration), 0)', $user);
         $firstEntry = $this->getEntityManager()
             ->createQuery('SELECT MIN(t.begin) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
@@ -328,42 +351,15 @@ class TimesheetRepository extends EntityRepository
      * @param DateTime|null $end
      * @return Year[]
      */
-    public function getMonthlyStats(User $user = null, ?DateTime $begin = null, ?DateTime $end = null)
+    public function getMonthlyStats(User $user = null, ?DateTime $begin = null, ?DateTime $end = null): array
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->select('SUM(t.rate) as rate, SUM(t.duration) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year')
-            ->from(Timesheet::class, 't')
-        ;
-
-        if (!empty($begin)) {
-            $qb->andWhere($qb->expr()->gte('t.begin', ':from'))
-                ->setParameter('from', $begin);
-        } else {
-            $qb->andWhere($qb->expr()->isNotNull('t.begin'));
-        }
-
-        if (!empty($end)) {
-            $qb->andWhere($qb->expr()->lte('t.end', ':to'))
-                ->setParameter('to', $end);
-        } else {
-            $qb->andWhere($qb->expr()->isNotNull('t.end'));
-        }
-
-        if (null !== $user) {
-            $qb->andWhere('t.user = :user')
-                ->setParameter('user', $user);
-        }
-
-        $qb
-            ->orderBy('year', 'DESC')
-            ->addOrderBy('month', 'ASC')
-            ->groupBy('year')
-            ->addGroupBy('month');
-
+        /** @var Year[] $years */
         $years = [];
+
+        $qb = $this->getMonthlyStatsQuery($user, $begin, $end, null);
         foreach ($qb->getQuery()->execute() as $statRow) {
             $curYear = $statRow['year'];
+            $curMonth = (int) $statRow['month'];
 
             if (!isset($years[$curYear])) {
                 $year = new Year($curYear);
@@ -374,13 +370,72 @@ class TimesheetRepository extends EntityRepository
                 $years[$curYear] = $year;
             }
 
-            $month = new Month($statRow['month']);
-            $month->setTotalDuration((int) $statRow['duration'])
-                ->setTotalRate((float) $statRow['rate']);
-            $years[$curYear]->setMonth($month);
+            $month = $years[$curYear]->getMonth($curMonth);
+            $month->setTotalDuration((int) $statRow['duration']);
+            $month->setTotalRate((float) $statRow['rate']);
+        }
+
+        $qb = $this->getMonthlyStatsQuery($user, $begin, $end, true);
+        foreach ($qb->getQuery()->execute() as $statRow) {
+            $curYear = $statRow['year'];
+            $curMonth = (int) $statRow['month'];
+
+            if (!isset($years[$curYear])) {
+                $year = new Year($curYear);
+                for ($i = 1; $i < 13; $i++) {
+                    $month = $i < 10 ? '0' . $i : (string) $i;
+                    $year->setMonth(new Month($month));
+                }
+                $years[$curYear] = $year;
+            }
+
+            $month = $years[$curYear]->getMonth($curMonth);
+            $month->setBillableDuration((int) $statRow['duration']);
+            $month->setBillableRate((float) $statRow['rate']);
         }
 
         return $years;
+    }
+
+    private function getMonthlyStatsQuery(User $user = null, ?DateTime $begin = null, ?DateTime $end = null, ?bool $billable = null): QueryBuilder
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->from(Timesheet::class, 't');
+        $qb->select('COALESCE(SUM(t.rate), 0) as rate, COALESCE(SUM(t.duration), 0) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year');
+
+        if (!empty($begin)) {
+            $qb->andWhere($qb->expr()->gte('t.begin', ':from'));
+            $qb->setParameter('from', $begin);
+        } else {
+            $qb->andWhere($qb->expr()->isNotNull('t.begin'));
+        }
+
+        if (!empty($end)) {
+            $qb->andWhere($qb->expr()->lte('t.end', ':to'));
+            $qb->setParameter('to', $end);
+        } else {
+            $qb->andWhere($qb->expr()->isNotNull('t.end'));
+        }
+
+        if (null !== $user) {
+            $qb->andWhere('t.user = :user');
+            $qb->setParameter('user', $user);
+        }
+
+        if (null !== $billable) {
+            $qb->andWhere('t.billable = :billable');
+            $qb->setParameter('billable', $billable);
+        }
+
+        $qb
+            ->orderBy('year', 'DESC')
+            ->addOrderBy('month', 'ASC')
+            ->groupBy('year')
+            ->addGroupBy('month')
+        ;
+
+        return $qb;
     }
 
     /**
@@ -457,6 +512,7 @@ class TimesheetRepository extends EntityRepository
                         $results[$dateKey] = [
                             'rate' => 0,
                             'duration' => 0,
+                            'billable' => 0, // duration
                             'month' => $beginTmp->format('n'),
                             'year' => $beginTmp->format('Y'),
                             'day' => $beginTmp->format('j'),
@@ -472,6 +528,9 @@ class TimesheetRepository extends EntityRepository
 
                     $results[$dateKey]['rate'] += $rate;
                     $results[$dateKey]['duration'] += $duration;
+                    if ($result->isBillable()) {
+                        $results[$dateKey]['billable'] += $duration;
+                    }
                     $detailsId =
                         $result->getProject()->getCustomer()->getId()
                         . '_' . $result->getProject()->getId()
@@ -484,18 +543,22 @@ class TimesheetRepository extends EntityRepository
                             'activity' => $result->getActivity(),
                             'duration' => 0,
                             'rate' => 0,
+                            'billable' => 0, // duration
                         ];
                     }
 
                     $results[$dateKey]['details'][$detailsId]['duration'] += $duration;
                     $results[$dateKey]['details'][$detailsId]['rate'] += $rate;
+                    if ($result->isBillable()) {
+                        $results[$dateKey]['details'][$detailsId]['billable'] += $duration;
+                    }
                 }
 
                 $beginTmp = $newDateBegin;
 
                 // yes, we only want to compare the day, not the time
                 if ((int) $end->format('Ymd') < (int) $newDateBegin->format('Ymd')) {
-                    break 1;
+                    break;
                 }
             } while ($dateKey !== $dateKeyEnd);
         }
@@ -538,6 +601,7 @@ class TimesheetRepository extends EntityRepository
             $dateTime->setDate($statRow['year'], $statRow['month'], $statRow['day']);
             $dateTime->setTime(0, 0, 0);
             $day = new Day($dateTime, (int) $statRow['duration'], (float) $statRow['rate']);
+            $day->setTotalDurationBillable($statRow['billable']);
             $day->setDetails($statRow['details']);
             $dateKey = $dateTime->format('Ymd');
             // make sure entries from other timezones are filtered
@@ -813,15 +877,15 @@ class TimesheetRepository extends EntityRepository
         }
 
         if ($query->isExported()) {
-            $qb->andWhere('t.exported = :exported')->setParameter('exported', true, PDO::PARAM_BOOL);
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', true, Types::BOOLEAN);
         } elseif ($query->isNotExported()) {
-            $qb->andWhere('t.exported = :exported')->setParameter('exported', false, PDO::PARAM_BOOL);
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', false, Types::BOOLEAN);
         }
 
         if ($query->isBillable()) {
-            $qb->andWhere('t.billable = :billable')->setParameter('billable', true, PDO::PARAM_BOOL);
+            $qb->andWhere('t.billable = :billable')->setParameter('billable', true, Types::BOOLEAN);
         } elseif ($query->isNotBillable()) {
-            $qb->andWhere('t.billable = :billable')->setParameter('billable', false, PDO::PARAM_BOOL);
+            $qb->andWhere('t.billable = :billable')->setParameter('billable', false, Types::BOOLEAN);
         }
 
         if (null !== $query->getModifiedAfter()) {
@@ -918,7 +982,7 @@ class TimesheetRepository extends EntityRepository
             ->groupBy('a.id', 'p.id')
             ->orderBy('maxid', 'DESC')
             ->setMaxResults($limit)
-            ->setParameter('visible', true, PDO::PARAM_BOOL)
+            ->setParameter('visible', true, Types::BOOLEAN)
         ;
 
         if (null !== $user) {
@@ -950,24 +1014,28 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param Timesheet[] $timesheets
+     * @param Timesheet[]|int[] $timesheets
      */
     public function setExported(array $timesheets)
     {
         $em = $this->getEntityManager();
         $em->beginTransaction();
 
-        $qb = $em->createQueryBuilder();
-        $qb
-            ->update(Timesheet::class, 't')
-            ->set('t.exported', ':exported')
-            ->where($qb->expr()->in('t.id', ':ids'))
-            ->setParameter('exported', true, PDO::PARAM_BOOL)
-            ->setParameter('ids', $timesheets)
-            ->getQuery()
-            ->execute();
+        try {
+            $qb = $em->createQueryBuilder();
+            $qb
+                ->update(Timesheet::class, 't')
+                ->set('t.exported', ':exported')
+                ->where($qb->expr()->in('t.id', ':ids'))
+                ->setParameter('exported', true, Types::BOOLEAN)
+                ->setParameter('ids', $timesheets)
+                ->getQuery()
+                ->execute();
 
-        $em->commit();
+            $em->commit();
+        } catch (\Exception $ex) {
+            $em->rollback();
+        }
     }
 
     /**

@@ -12,17 +12,19 @@ namespace App\Voter;
 use App\Entity\Customer;
 use App\Entity\Team;
 use App\Entity\User;
+use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
  * A voter to check authorization on Customers.
  */
-class CustomerVoter extends AbstractVoter
+final class CustomerVoter extends Voter
 {
     /**
      * supported attributes/rules based on the given customer
      */
-    public const ALLOWED_ATTRIBUTES = [
+    private const ALLOWED_ATTRIBUTES = [
         'view',
         'create',
         'edit',
@@ -33,6 +35,13 @@ class CustomerVoter extends AbstractVoter
         'comments_create',
         'details',
     ];
+
+    private $permissionManager;
+
+    public function __construct(RolePermissionManager $permissionManager)
+    {
+        $this->permissionManager = $permissionManager;
+    }
 
     /**
      * @param string $attribute
@@ -66,7 +75,7 @@ class CustomerVoter extends AbstractVoter
             return false;
         }
 
-        if ($this->hasRolePermission($user, $attribute . '_customer')) {
+        if ($this->permissionManager->hasRolePermission($user, $attribute . '_customer')) {
             return true;
         }
 
@@ -75,8 +84,8 @@ class CustomerVoter extends AbstractVoter
             return false;
         }
 
-        $hasTeamleadPermission = $this->hasRolePermission($user, $attribute . '_teamlead_customer');
-        $hasTeamPermission = $this->hasRolePermission($user, $attribute . '_team_customer');
+        $hasTeamleadPermission = $this->permissionManager->hasRolePermission($user, $attribute . '_teamlead_customer');
+        $hasTeamPermission = $this->permissionManager->hasRolePermission($user, $attribute . '_team_customer');
 
         if (!$hasTeamleadPermission && !$hasTeamPermission) {
             return false;

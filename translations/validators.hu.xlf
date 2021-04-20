@@ -26,6 +26,14 @@
         <source>You must select at least one user or team.</source>
         <target>Legalább egy felhasználót vagy csoportot kell kiválasztani.</target>
       </trans-unit>
+      <trans-unit id="The given value is not a valid time.">
+        <source>The given value is not a valid time.</source>
+        <target>A megadott érték érvénytelen idő.</target>
+      </trans-unit>
+      <trans-unit id="You already have an entry for this time.">
+        <source>You already have an entry for this time.</source>
+        <target>Már rendelkezel bejegyzéssel erre az időre.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

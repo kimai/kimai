@@ -17,7 +17,11 @@ class Constants
     /**
      * The current release version
      */
-    public const VERSION = '1.11.1';
+    public const VERSION = '1.14';
+    /**
+     * The current release: major * 10000 + minor * 100 + patch
+     */
+    public const VERSION_ID = 11400;
     /**
      * The current release status, either "stable" or "dev"
      */
@@ -25,7 +29,7 @@ class Constants
     /**
      * The software name
      */
-    public const SOFTWARE = 'Kimai 2';
+    public const SOFTWARE = 'Kimai';
     /**
      * The release name, will only change for new major version
      */

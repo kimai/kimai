@@ -13,11 +13,8 @@ use App\Entity\Timesheet;
 use App\Export\ServiceExport;
 use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\Query\ExportQuery;
-use App\Repository\TimesheetRepository;
-use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,28 +28,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class ExportController extends AbstractController
 {
     /**
-     * @var TimesheetRepository
-     */
-    protected $timesheetRepository;
-
-    /**
      * @var ServiceExport
      */
-    protected $export;
-    /**
-     * @var UserDateTimeFactory
-     */
-    protected $dateFactory;
+    private $export;
 
-    /**
-     * @param TimesheetRepository $timesheet
-     * @param ServiceExport $export
-     */
-    public function __construct(TimesheetRepository $timesheet, ServiceExport $export, UserDateTimeFactory $dateTime)
+    public function __construct(ServiceExport $export)
     {
-        $this->timesheetRepository = $timesheet;
         $this->export = $export;
-        $this->dateFactory = $dateTime;
     }
 
     /**
@@ -67,26 +49,40 @@ class ExportController extends AbstractController
         $entries = [];
 
         $form = $this->getToolbarForm($query, 'GET');
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('export');
+        }
 
-        if ($form->isValid()) {
-            /** @var SubmitButton $previewButton */
-            $previewButton = $form->get('preview');
-            if ($previewButton->isClicked()) {
-                $showPreview = true;
-                $query->setPageSize($maxItemsPreview);
-                $entries = $this->getEntries($query);
+        $byCustomer = [];
+
+        if ($form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
+            $showPreview = true;
+            $entries = $this->getEntries($query);
+            foreach ($entries as $entry) {
+                $cid = $entry->getProject()->getCustomer()->getId();
+                if (!isset($byCustomer[$cid])) {
+                    $byCustomer[$cid] = [
+                        'customer' => $entry->getProject()->getCustomer(),
+                        'rate' => 0,
+                        'internalRate' => 0,
+                        'duration' => 0,
+                    ];
+                }
+                $byCustomer[$cid]['rate'] += $entry->getRate();
+                $byCustomer[$cid]['internalRate'] += $entry->getInternalRate();
+                $byCustomer[$cid]['duration'] += $entry->getDuration();
             }
         }
 
         return $this->render('export/index.html.twig', [
+            'by_customer' => $byCustomer,
             'query' => $query,
             'entries' => $entries,
             'form' => $form->createView(),
             'renderer' => $this->export->getRenderer(),
-            'preview_max' => $maxItemsPreview,
+            'preview_limit' => $maxItemsPreview,
             'preview_show' => $showPreview,
+            'decimal' => $this->getUser()->isExportDecimal(),
         ]);
     }
 
@@ -100,7 +96,7 @@ class ExportController extends AbstractController
         $form = $this->getToolbarForm($query, 'POST');
         $form->handleRequest($request);
 
-        $type = $query->getType();
+        $type = $query->getRenderer();
         if (null === $type) {
             throw $this->createNotFoundException('Missing export renderer');
         }
@@ -114,8 +110,9 @@ class ExportController extends AbstractController
         $entries = $this->getEntries($query);
         $response = $renderer->render($entries, $query);
 
+        // TODO check entries if user is allowed to update export state - see https://github.com/kevinpapst/kimai2/issues/1473
         if ($query->isMarkAsExported()) {
-            $this->timesheetRepository->setExported($entries);
+            $this->export->setExported($entries);
         }
 
         return $response;
@@ -123,8 +120,8 @@ class ExportController extends AbstractController
 
     protected function getDefaultQuery(): ExportQuery
     {
-        $begin = $this->dateFactory->createDateTime('first day of this month 00:00:00');
-        $end = $this->dateFactory->createDateTime('last day of this month 23:59:59');
+        $begin = $this->getDateTimeFactory()->getStartOfMonth();
+        $end = $this->getDateTimeFactory()->getEndOfMonth();
 
         $query = new ExportQuery();
         $query->setOrder(ExportQuery::ORDER_ASC);
@@ -150,14 +147,16 @@ class ExportController extends AbstractController
             $query->getEnd()->setTime(23, 59, 59);
         }
 
-        return $this->timesheetRepository->getTimesheetsForQuery($query, true);
+        return $this->export->getExportItems($query);
     }
 
     protected function getToolbarForm(ExportQuery $query, string $method): FormInterface
     {
         return $this->createForm(ExportToolbarForm::class, $query, [
             'action' => $this->generateUrl('export', []),
+            'include_user' => $this->isGranted('view_other_timesheet'),
             'method' => $method,
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'attr' => [
                 'id' => 'export-form'
             ]

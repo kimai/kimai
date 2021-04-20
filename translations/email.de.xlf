@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="button_copy_url_to_browser">
+      <trans-unit id="button_copy_url_to_browser" approved="yes">
         <source>button_copy_url_to_browser</source>
-        <target>Falls der Button nicht funktioniert, kopieren Sie bitte die folgende URL in ihren Browser: %url%</target>
+        <target>Falls der Button nicht funktioniert, kopieren Sie bitte die folgende URL in Ihren Browser: %url%</target>
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target>Das kann passieren ...</target>
+        <target>Das kann passieren …</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target>... Du hast also Dein Passwort vergessen? Keine Sorge: Kimai wird Dir dabei helfen ein neues zu erstellen:</target>
+        <target>… Du hast also dein Passwort vergessen? Keine Sorge: Kimai wird dir dabei helfen, ein neues zu erstellen:</target>
       </trans-unit>
     </body>
   </file>

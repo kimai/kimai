@@ -11,29 +11,18 @@ namespace App\Tests\Voter;
 
 use App\Entity\User;
 use App\Repository\RolePermissionRepository;
-use App\Security\AclDecisionManager;
 use App\Security\RolePermissionManager;
-use App\Voter\AbstractVoter;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 abstract class AbstractVoterTest extends TestCase
 {
-    /**
-     * @param string $voterClass
-     * @param User $user
-     * @return AbstractVoter
-     * @throws \ReflectionException
-     */
-    protected function getVoter(string $voterClass, User $user)
+    protected function getVoter(string $voterClass): Voter
     {
-        $isAuthenticated = empty($user->getRoles());
-        $accessManager = $this->getMockBuilder(AclDecisionManager::class)->disableOriginalConstructor()->getMock();
-        $accessManager->method('isFullyAuthenticated')->willReturn($isAuthenticated);
-
         $class = new \ReflectionClass($voterClass);
-        /** @var AbstractVoter $voter */
-        $voter = $class->newInstance($accessManager, $this->getRolePermissionManager());
-        self::assertInstanceOf(AbstractVoter::class, $voter);
+        /** @var Voter $voter */
+        $voter = $class->newInstance($this->getRolePermissionManager());
+        self::assertInstanceOf(Voter::class, $voter);
 
         return $voter;
     }

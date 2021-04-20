@@ -9,22 +9,6 @@
 
 namespace App\Reporting;
 
-final class MonthlyUserList
+final class MonthlyUserList extends AbstractUserList
 {
-    /**
-     * @var \DateTime
-     */
-    private $date;
-
-    public function getDate(): ?\DateTime
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTime $date): MonthlyUserList
-    {
-        $this->date = $date;
-
-        return $this;
-    }
 }

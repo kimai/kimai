@@ -22,6 +22,10 @@ final class UserFormTypeQuery extends BaseFormTypeQuery
      * @var User[]
      */
     private $includeUsers = [];
+    /**
+     * @var User[]
+     */
+    private $ignoredUsers = [];
 
     /**
      * Sets a list of users which must be included in the result always.
@@ -44,5 +48,28 @@ final class UserFormTypeQuery extends BaseFormTypeQuery
     public function getUsersAlwaysIncluded(): array
     {
         return $this->includeUsers;
+    }
+
+    /**
+     * Given user will be excluded from the result set.
+     *
+     * @param User $user
+     * @return $this
+     */
+    public function addUserToIgnore(User $user): UserFormTypeQuery
+    {
+        $this->ignoredUsers[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Returns the list of users that should not be loaded.
+     *
+     * @return User[]
+     */
+    public function getUsersToIgnore(): array
+    {
+        return $this->ignoredUsers;
     }
 }

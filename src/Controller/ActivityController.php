@@ -31,7 +31,6 @@ use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\TeamRepository;
 use Exception;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -77,14 +76,10 @@ final class ActivityController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_activity');
         }
 
-        /* @var $entries Pagerfanta */
         $entries = $this->repository->getPagerfantaForQuery($query);
 
         return $this->render('activity/index.html.twig', [
@@ -92,6 +87,8 @@ final class ActivityController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'metaColumns' => $this->findMetaColumns($query),
+            'defaultCurrency' => $this->configuration->getCustomerDefaultCurrency(),
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -142,6 +139,7 @@ final class ActivityController extends AbstractController
             'rates' => $rates,
             'team' => $defaultTeam,
             'teams' => $teams,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -231,6 +229,10 @@ final class ActivityController extends AbstractController
                 $this->repository->saveActivity($activity);
                 $this->flashSuccess('action.update.success');
 
+                if ($this->isGranted('view', $activity)) {
+                    return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
+                }
+
                 return $this->redirectToRoute('admin_activity');
             } catch (Exception $ex) {
                 $this->flashUpdateException($ex);
@@ -309,7 +311,7 @@ final class ActivityController extends AbstractController
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.activityUpdate kimai.activityDelete',
+                    'data-form-event' => 'kimai.activityDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
                 ]

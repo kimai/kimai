@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="confirm.delete">
         <source>confirm.delete</source>
-        <target>Êtes-vous sûr de vouloir le supprimer ?</target>
+        <target>Êtes-vous sûr·e de vouloir le supprimer ?</target>
       </trans-unit>
       <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
@@ -720,7 +720,7 @@
       </trans-unit>
       <trans-unit id="invoice.number">
         <source>invoice.number</source>
-        <target>N° de facture</target>
+        <target>Numéro de facture</target>
       </trans-unit>
       <trans-unit id="invoice.subtotal">
         <source>invoice.subtotal</source>
@@ -772,7 +772,7 @@
       </trans-unit>
       <trans-unit id="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
-        <target>N° de TVA :</target>
+        <target>No de TVA :</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
@@ -818,7 +818,7 @@
             -->
       <trans-unit id="active.entries">
         <source>active.entries</source>
-        <target>Vos releves de périodes d'activités</target>
+        <target>Vos relevés de périodes d'activités</target>
       </trans-unit>
       <trans-unit id="timesheet.all">
         <source>timesheet.all</source>
@@ -1053,7 +1053,7 @@
       </trans-unit>
       <trans-unit id="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
-        <target>Année complète %année%</target>
+        <target>Année complète %year%</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
@@ -1061,7 +1061,7 @@
       </trans-unit>
       <trans-unit id="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target>Semaine civile %semaine%</target>
+        <target>Semaine civile %week%</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
@@ -1114,6 +1114,62 @@
       <trans-unit id="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
         <target>Champs additionnels</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Total</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Le formulaire a été modifié. Veuillez cliquer sur « Enregistrer » pour enregistrer les modifications ou sur « Fermer ».</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Mettre à jour le titre du navigateur</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Afficher les entrées sans budget</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Afficher les entrées sans réservation</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Taux d’imposition</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Fichier</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Non facturé</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Non exporté</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Trier par</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Descendant</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Ascendant</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Enregistrer comme paramètre par défaut</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Terme de recherche</target>
       </trans-unit>
     </body>
   </file>

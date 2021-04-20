@@ -9,8 +9,8 @@
 
 namespace App\Validator\Constraints;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
+use App\Timesheet\LockdownService;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -18,19 +18,13 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetLockdownValidator extends ConstraintValidator
 {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
     private $auth;
-    /**
-     * @var TimesheetConfiguration
-     */
-    private $configuration;
+    private $lockdownService;
 
-    public function __construct(AuthorizationCheckerInterface $auth, TimesheetConfiguration $configuration)
+    public function __construct(AuthorizationCheckerInterface $auth, LockdownService $lockdownService)
     {
         $this->auth = $auth;
-        $this->configuration = $configuration;
+        $this->lockdownService = $lockdownService;
     }
 
     /**
@@ -47,40 +41,11 @@ final class TimesheetLockdownValidator extends ConstraintValidator
             throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
         }
 
-        $timesheetStart = $timesheet->getBegin();
-
-        if (null === $timesheetStart) {
+        if (!$this->lockdownService->isLockdownActive()) {
             return;
         }
 
-        if (!$this->configuration->isLockdownActive()) {
-            return;
-        }
-
-        $lockedStart = $this->configuration->getLockdownPeriodStart();
-        $lockedEnd = $this->configuration->getLockdownPeriodEnd();
-
-        $gracePeriod = $this->configuration->getLockdownGracePeriod();
-        if (!empty($gracePeriod)) {
-            $gracePeriod = $gracePeriod . ' ';
-        }
-
-        try {
-            $lockdownStart = new \DateTime($lockedStart, $timesheetStart->getTimezone());
-            $lockdownEnd = new \DateTime($lockedEnd, $timesheetStart->getTimezone());
-            $lockdownGrace = new \DateTime($gracePeriod . $lockdownEnd->format('Y-m-d'), $timesheetStart->getTimezone());
-        } catch (\Exception $ex) {
-            // should not happen, but ... if parsing of datetimes fails: skip validation
-            return;
-        }
-
-        // misconfiguration detected, skip validation
-        if ($lockdownEnd < $lockdownStart) {
-            return;
-        }
-
-        // validate only entries added before the end of lockdown period
-        if ($timesheetStart > $lockdownEnd) {
+        if (null === ($timesheetStart = $timesheet->getBegin())) {
             return;
         }
 
@@ -88,6 +53,8 @@ final class TimesheetLockdownValidator extends ConstraintValidator
         if ($this->auth->isGranted('lockdown_override_timesheet')) {
             return;
         }
+
+        $now = new \DateTime('now', $timesheetStart->getTimezone());
 
         if (!empty($constraint->now)) {
             if ($constraint->now instanceof \DateTime) {
@@ -100,21 +67,10 @@ final class TimesheetLockdownValidator extends ConstraintValidator
             }
         }
 
-        if (empty($now)) {
-            $now = new \DateTime('now', $timesheetStart->getTimezone());
-        }
+        $allowEditInGracePeriod = $this->auth->isGranted('lockdown_grace_timesheet');
 
-        // further validate entries inside of the most recent lockdown
-        if ($timesheetStart > $lockdownStart && $timesheetStart < $lockdownEnd) {
-            // if grace period is still in effect, validation succeeds
-            if ($now < $lockdownGrace) {
-                return;
-            }
-
-            // if user has special role, validation succeeds
-            if ($this->auth->isGranted('lockdown_grace_timesheet')) {
-                return;
-            }
+        if ($this->lockdownService->isEditable($timesheet, $now, $allowEditInGracePeriod)) {
+            return;
         }
 
         // raise a violation for all entries before the start of lockdown period

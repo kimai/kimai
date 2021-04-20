@@ -68,7 +68,8 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
             foreach ($row->getCellIterator() as $cell) {
                 $value = $cell->getValue();
                 $replacer = null;
-                if (stripos($value, '${') === false) {
+                $firstReplacerPos = stripos($value, '${');
+                if ($firstReplacerPos === false) {
                     continue;
                 }
 
@@ -86,15 +87,22 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                 }
 
                 // we can have mixed cell content, which makes it much more complicated
+                // templates can have a formula, which utilize the timesheet records content like this:
+                // =IF("${entry.category}"="work";"${entry.activity}";"")
+                $contentLooksLikeFormula = false;
                 foreach ($replacer as $key => $content) {
                     $searchKey = '${' . $key . '}';
                     if (stripos($value, $searchKey) === false) {
                         continue;
                     }
+                    if (\is_string($content) && $content[0] === '=') {
+                        $contentLooksLikeFormula = true;
+                    }
                     $value = str_replace($searchKey, $content, $value);
                 }
 
-                if (\is_string($value)) {
+                if ($contentLooksLikeFormula && $firstReplacerPos === 0) {
+                    // see https://github.com/kevinpapst/kimai2/pull/2054
                     $cell->setValueExplicit($value, DataType::TYPE_STRING);
                 } else {
                     $cell->setValue($value);

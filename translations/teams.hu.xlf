@@ -26,6 +26,14 @@
         <source>team.create_default</source>
         <target>Új csoport készítése a jogosultságok korlátozására</target>
       </trans-unit>
+      <trans-unit id="team.project_visibility_inherited">
+        <source>team.project_visibility_inherited</source>
+        <target>A projekt korlátolt hozzáférésű, mivel csoport engedélyek vannak beállítva a kliensnek.</target>
+      </trans-unit>
+      <trans-unit id="team.activity_visibility_inherited">
+        <source>team.activity_visibility_inherited</source>
+        <target>A tevékenység korlátolt hozzáférésű, mivel csoport engedélyek vannak beállítva a projektnek és/vagy a kliensnek.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

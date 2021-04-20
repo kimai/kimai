@@ -113,6 +113,9 @@ class AvatarService
         return $this->directory;
     }
 
+    /**
+     * @CloudRequired
+     */
     public function setStorageDirectory(string $directory)
     {
         $this->directory = realpath($directory);

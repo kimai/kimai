@@ -11,3 +11,8 @@ app.api:
     resource: '../src/API/'
     type: rest
     prefix: /api
+
+security:
+    resource: '../../src/Controller/Auth/'
+    type: annotation
+    prefix: /auth

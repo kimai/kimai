@@ -34,7 +34,7 @@ class ExportControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
-        $this->request($client, '/export/?preview=');
+        $this->request($client, '/export/?performSearch=performSearch');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);
@@ -83,29 +83,36 @@ class ExportControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
         $em->flush();
 
-        $this->request($client, '/export/?preview=');
+        $this->request($client, '/export/?performSearch=performSearch');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
         // +1 row for summary
-        $this->assertDataTableRowCount($client, 'datatable_export', 23);
+        $this->assertDataTableRowCount($client, 'datatable_export', 22);
 
         // assert export type buttons are available
-        $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default-internal.pdf.twig', 'default.pdf.twig', 'xlsx'];
+        $expected = [
+            'csv' => 'csv',
+            'default.html.twig' => 'default.html.twig',
+            'default-budget.pdf.twig' => 'default-budget.pdf.twig',
+            'default-internal.pdf.twig' => 'default-internal.pdf.twig',
+            'default.pdf.twig' => 'default.pdf.twig',
+            'xlsx' => 'xlsx'
+        ];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
-        $this->assertEquals(\count($expected), $node->count());
+        $this->assertGreaterThanOrEqual(\count($expected), $node->count());
         /** @var \DOMElement $button */
         foreach ($node->getIterator() as $button) {
             $type = $button->getAttribute('data-type');
-            $this->assertContains($type, $expected);
+            unset($expected[$type]);
         }
+        $this->assertEmpty($expected);
     }
 
     public function testIndexActionWithEntriesForTeamleadDoesNotShowUserWithoutTeam()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = $this->getEntityManager();
 
         $begin = new \DateTime('first day of this month');
         $user = $this->getUserByRole(User::ROLE_USER);
@@ -119,10 +126,10 @@ class ExportControllerTest extends ControllerBaseTest
         ;
         $this->importFixture($fixture);
 
-        $this->request($client, '/export/?preview=');
+        $this->request($client, '/export/?performSearch=performSearch');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        // make sure all existing records are displayed
+        // make sure existing records are not displayed
         $this->assertHasNoEntriesWithFilter($client);
 
         $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
@@ -135,23 +142,31 @@ class ExportControllerTest extends ControllerBaseTest
         ;
         $this->importFixture($fixture);
 
-        $this->request($client, '/export/?preview=');
+        $this->request($client, '/export/?performSearch=performSearch');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
         // +1 row for summary
-        $this->assertDataTableRowCount($client, 'datatable_export', 3);
+        $this->assertDataTableRowCount($client, 'datatable_export', 2);
 
         // assert export type buttons are available
-        $expected = ['csv', 'default.html.twig', 'default-budget.pdf.twig', 'default-internal.pdf.twig', 'default.pdf.twig', 'xlsx'];
+        $expected = [
+            'csv' => 'csv',
+            'default.html.twig' => 'default.html.twig',
+            'default-budget.pdf.twig' => 'default-budget.pdf.twig',
+            'default-internal.pdf.twig' => 'default-internal.pdf.twig',
+            'default.pdf.twig' => 'default.pdf.twig',
+            'xlsx' => 'xlsx'
+        ];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
-        $this->assertEquals(\count($expected), $node->count());
+        $this->assertGreaterThanOrEqual(\count($expected), $node->count());
         /** @var \DOMElement $button */
         foreach ($node->getIterator() as $button) {
             $type = $button->getAttribute('data-type');
-            $this->assertContains($type, $expected);
+            unset($expected[$type]);
         }
+        $this->assertEmpty($expected);
     }
 
     public function testExportActionWithMissingRenderer()
@@ -178,7 +193,7 @@ class ExportControllerTest extends ControllerBaseTest
         $node->setAttribute('method', 'POST');
 
         $client->submit($form, [
-            'type' => 'default'
+            'renderer' => 'default'
         ]);
 
         $response = $client->getResponse();
@@ -212,7 +227,7 @@ class ExportControllerTest extends ControllerBaseTest
 
         // don't add daterange to make sure the current month is the default range
         $client->submit($form, [
-            'type' => 'default.html.twig',
+            'renderer' => 'default.html.twig',
             'markAsExported' => 1
         ]);
 

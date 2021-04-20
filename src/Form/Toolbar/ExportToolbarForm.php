@@ -12,7 +12,6 @@ namespace App\Form\Toolbar;
 use App\Repository\Query\ExportQuery;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,30 +26,30 @@ class ExportToolbarForm extends AbstractToolbarForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addSearchTermInputField($builder);
+        $this->addBillableChoice($builder);
         $this->addExportStateChoice($builder);
         $this->addTimesheetStateChoice($builder);
-        $this->addUsersChoice($builder);
-        $this->addDateRangeChoice($builder);
+        if ($options['include_user']) {
+            $this->addUsersChoice($builder);
+        }
+        $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerMultiChoice($builder, ['start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true], true);
         $this->addProjectMultiChoice($builder, ['ignore_date' => true], true, true);
         $this->addActivityMultiChoice($builder, [], true);
-        $this->addExportType($builder);
+        $this->addExportRenderer($builder);
         $this->addTagInputField($builder);
         $builder->add('markAsExported', CheckboxType::class, [
             'label' => 'label.mark_as_exported',
             'required' => false,
-        ]);
-        $builder->add('preview', SubmitType::class, [
-            'label' => 'button.preview',
         ]);
     }
 
     /**
      * @param FormBuilderInterface $builder
      */
-    protected function addExportType(FormBuilderInterface $builder)
+    protected function addExportRenderer(FormBuilderInterface $builder)
     {
-        $builder->add('type', HiddenType::class, []);
+        $builder->add('renderer', HiddenType::class, []);
     }
 
     /**
@@ -61,6 +60,8 @@ class ExportToolbarForm extends AbstractToolbarForm
         $resolver->setDefaults([
             'data_class' => ExportQuery::class,
             'csrf_protection' => false,
+            'include_user' => true,
+            'timezone' => date_default_timezone_get(),
         ]);
     }
 }

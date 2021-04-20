@@ -10,11 +10,16 @@
 namespace App\Controller;
 
 use App\Configuration\LanguageFormattings;
+use App\Entity\Bookmark;
 use App\Entity\User;
+use App\Repository\BookmarkRepository;
+use App\Repository\Query\BaseQuery;
 use App\Timesheet\DateTimeFactory;
 use App\Utils\LocaleFormats;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\DataCollectorTranslator;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -160,11 +165,79 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             $user = $this->getUser();
         }
 
-        return new DateTimeFactory(new \DateTimeZone($user->getTimezone()));
+        return DateTimeFactory::createByUser($user);
     }
 
     protected function getLocaleFormats(string $locale): LocaleFormats
     {
         return new LocaleFormats($this->container->get(LanguageFormattings::class), $locale);
+    }
+
+    protected function handleSearch(FormInterface $form, Request $request): bool
+    {
+        $data = $form->getData();
+        if (!($data instanceof BaseQuery)) {
+            throw new \InvalidArgumentException('handleSearchForm() requires an instanceof BaseQuery as form data');
+        }
+
+        /** @var BookmarkRepository $bookmarkRepo */
+        $bookmarkRepo = $this->getDoctrine()->getRepository(Bookmark::class);
+        $bookmark = $bookmarkRepo->getSearchDefaultOptions($this->getUser(), $data->getName());
+
+        $submitData = $request->query->all();
+
+        // remove bookmark
+        if ($bookmark !== null && $request->query->has('removeDefaultQuery')) {
+            $bookmarkRepo->deleteBookmark($bookmark);
+
+            return true;
+        }
+
+        // apply bookmark ONLY if search form was not submitted manually
+        if ($bookmark !== null && !$request->query->has('performSearch')) {
+            $data->setBookmark($bookmark);
+            if (!$request->query->has('setDefaultQuery')) {
+                $submitData = array_merge($bookmark->getContent(), $submitData);
+            }
+        }
+
+        // clean up parameters from unknown search values
+        foreach ($submitData as $name => $values) {
+            if (!$form->has($name)) {
+                unset($submitData[$name]);
+            }
+        }
+
+        $form->submit($submitData, false);
+
+        if (!$form->isValid()) {
+            $data->resetByFormError($form->getErrors(true));
+        } elseif ($request->query->has('setDefaultQuery')) {
+            $params = [];
+            foreach ($form->all() as $name => $child) {
+                $params[$name] = $child->getViewData();
+            }
+
+            $filter = ['page', 'setDefaultQuery', 'removeDefaultQuery', 'performSearch'];
+            foreach ($filter as $name) {
+                if (isset($params[$name])) {
+                    unset($params[$name]);
+                }
+            }
+
+            if ($bookmark === null) {
+                $bookmark = new Bookmark();
+                $bookmark->setType(Bookmark::SEARCH_DEFAULT);
+                $bookmark->setUser($this->getUser());
+                $bookmark->setName(substr($data->getName(), 0, 50));
+            }
+
+            $bookmark->setContent($params);
+            $bookmarkRepo->saveBookmark($bookmark);
+
+            return true;
+        }
+
+        return false;
     }
 }

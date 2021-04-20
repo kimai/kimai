@@ -1,8 +1,8 @@
-{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'form': form, 'comments': comments, 'route_pin': route_pin|default(null), 'route_delete': route_delete|default(null)} %}
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'form': form, 'comments': comments, 'route_pin': route_pin|default(null), 'route_delete': route_delete|default(null), 'delete_by_user': delete_by_user|default(false)} %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_title %}{{ 'label.comment'|trans }}{% endblock %}
     {% block box_attributes %}id="comments_box"{% endblock %}
-    {% block box_body_class %}box-comments{% endblock %}
+    {% block box_body_class %}box-body-scrollable{% endblock %}
     {% block box_body %}
         {% set replacer = {} %}
         {% for pref in app.user.preferences %}
@@ -10,42 +10,52 @@
         {% endfor %}
         {% if comments|length == 0 %}
             {{ 'error.no_comments_found'|trans }}
-        {% endif %}
-        {% for comment in comments %}
-            <div class="box-comment">
-                {{ widgets.user_avatar(comment.createdBy, comment.createdAt|date_full, 'img-sm') }}
-                <div class="comment-text">
-                    <span class="username">
-                        {{ widgets.username(comment.createdBy) }}
-                        <span class="text-muted pull-right">
-                            {% if route_pin is not null %}
-                                <a href="{{ path(route_pin, {'id': comment.id}) }}" class="btn btn-default btn-xs {% if comment.pinned %}active{% endif %}"><i class="{{ 'pin'|icon }}"></i></a>
-                            {% elseif comment.pinned %}
-                                <i class="{{ 'pin'|icon }}"></i>
-                            {% endif %}
-                            {% if route_delete is not null %}
-                                <a href="{{ path(route_delete, {'id': comment.id}) }}" class="confirmation-link btn btn-default btn-xs" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
-                            {% endif %}
+        {% else %}
+            {% for comment in comments %}
+                <div class="direct-chat-msg">
+                    <div class="direct-chat-info clearfix">
+                        <span class="direct-chat-name pull-left">
+                            {{ widgets.username(comment.createdBy) }}
                         </span>
-                    </span>
-                    {{ comment.message|replace(replacer)|md2html }}
+                        <span class="direct-chat-timestamp pull-left">
+                            &nbsp;
+                            {{ comment.createdAt|date_full }}
+                            &nbsp;
+                        </span>
+                        <span class="pull-right">
+                        {% if route_pin is not null %}
+                            <a href="{{ path(route_pin, {'id': comment.id}) }}" class="btn btn-default btn-xs {% if comment.pinned %}active{% endif %}"><i class="{{ 'pin'|icon }}"></i></a>
+                        {% elseif comment.pinned %}
+                            <i class="{{ 'pin'|icon }}"></i>
+                        {% endif %}
+                        {% if route_delete is not null and ((not delete_by_user) or (delete_by_user and comment.createdBy.id == app.user.id)) %}
+                            <a href="{{ path(route_delete, {'id': comment.id}) }}" class="confirmation-link btn btn-default btn-xs" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
+                        {% endif %}
+                        </span>
+                    </div>
+                    {{ widgets.user_avatar(comment.createdBy, false, 'direct-chat-img img-sm') }}
+                    <div class="direct-chat-text">
+                        {{ comment.message|replace(replacer)|md2html }}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
     {% endblock %}
     {% block box_footer -%}
         {% if form is not null %}
             {{ form_start(form) }}
-            <div class="input-group">
-                {{ widgets.user_avatar(app.user, false, 'img-responsive img-sm') }}
-                <div class="img-push">
-                    {{ form_widget(form.message, {'attr': {'rows': '1', 'placeholder': 'placeholder.type_message'|trans}}) }}
-                </div>
-                <span class="input-group-btn">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_widget(form.message, {'attr': {'rows': '3', 'placeholder': 'placeholder.type_message'|trans, 'style': 'margin-bottom: 5px'}}) }}
                     <button type="submit" class="btn btn-default">
                         <i class="{{ 'comment'|icon }}"></i>
+                        {{ 'label.comment'|trans }}
                     </button>
-                </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                </div>
             </div>
             {{ form_widget(form) }}
             {{ form_end(form) }}

@@ -18,10 +18,9 @@ use App\Invoice\ServiceInvoice;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceTemplateRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Tests\DataFixtures\CustomerFixtures;
-use App\Tests\DataFixtures\InvoiceFixtures;
+use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\KernelTestTrait;
@@ -69,7 +68,6 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
         $this->application->add(new InvoiceCreateCommand(
             $container->get(ServiceInvoice::class),
-            $container->get(TimesheetRepository::class),
             $container->get(CustomerRepository::class),
             $container->get(ProjectRepository::class),
             $container->get(InvoiceTemplateRepository::class),
@@ -176,17 +174,19 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
     public function testCreateInvoice()
     {
-        $fixture = new InvoiceFixtures();
+        $fixture = new InvoiceTemplateFixtures();
         $this->importFixture($fixture);
 
         $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--set-exported' => null, '--customer' => 1, '--template' => 'Invoice', '--start' => '2020-01-01', '--end' => '2020-03-01']);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('+----+----------+-------+------------- Created 1 invoice(s) --------------------------------------+', $output);
-        $this->assertStringContainsString('| ID | Customer | Total | Filename                                                                |', $output);
-        $this->assertStringContainsString('+----+----------+-------+-------------------------------------------------------------------------+', $output);
-        $this->assertStringContainsString('| 1  | Test     | 0 EUR | /', $output);
-        $this->assertStringContainsString('/tests/_data/invoices/2020-001-test.html |', $output);
+        $this->assertStringContainsString('Created 1 invoice(s)', $output);
+        $this->assertStringContainsString('| ID', $output);
+        $this->assertStringContainsString('| Customer', $output);
+        $this->assertStringContainsString('| Total', $output);
+        $this->assertStringContainsString('| Filename', $output);
+        $this->assertStringContainsString('0 EUR', $output);
+        $this->assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.html |', $output);
     }
 
     protected function prepareFixtures(\DateTime $start)
@@ -201,22 +201,24 @@ class InvoiceCreateCommandTest extends KernelTestCase
             $meta->setValue('Invoice');
             $customer->setMetaField($meta);
         });
-        $this->importFixture($fixture);
+        $customer = $this->importFixture($fixture)[0];
 
         $fixture = new ProjectFixtures();
-        $fixture->setCustomers([$em->getRepository(Customer::class)->find(2)]);
+        $fixture->setCustomers([$customer]);
         $fixture->setAmount(1);
-        $this->importFixture($fixture);
+        $projects = $this->importFixture($fixture);
 
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByName(UserFixtures::USERNAME_SUPER_ADMIN));
         $fixture->setAmount(20);
         $fixture->setStartDate($start);
-        $fixture->setProjects([$em->getRepository(Project::class)->find(2)]);
+        $fixture->setProjects($projects);
         $this->importFixture($fixture);
 
-        $fixture = new InvoiceFixtures();
+        $fixture = new InvoiceTemplateFixtures();
         $this->importFixture($fixture);
+
+        return [$customer];
     }
 
     public function testCreateInvoiceByCustomer()
@@ -237,9 +239,10 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
 
-        $this->prepareFixtures($start);
+        $imports = $this->prepareFixtures($start);
+        $customer = $imports[0]->getId();
 
-        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => '2,1', '--template-meta' => 'template', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => $customer . ',1', '--template-meta' => 'template', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('Created 1 invoice(s) ', $output);

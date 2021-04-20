@@ -2,6 +2,8 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% extends 'export/layout.html.twig' %}
 
+{% block document_title %}{{ 'export.title'|trans }}{% endblock %}
+
 {% set showRateBudget = false %}
 {% set showTimeBudget = false %}
 {% for budget in budgets %}
@@ -57,12 +59,51 @@
 
 {% block javascripts %}
     <script type="text/javascript">
+        let initialized = false;
+
+        window.addEventListener('load', function() {
+            let config = KimaiCookies.get('kimai_html_export');
+            if (config !== undefined && config !== null) {
+                console.log(config);
+                for (const key in config) {
+                    let elName = key;
+                    let checked = config[key];
+                    let el = document.getElementById(elName);
+                    if (el === undefined || el === null) {
+                        el = document.getElementById('records-column-' + elName);
+                        if (el === undefined || el === null) {
+                            continue;
+                        }
+                    }
+                    if (checked !== el.checked) {
+                        el.click();
+                    }
+                }
+            }
+            initialized = true;
+        });
+
+        function saveVisibility()
+        {
+            if (!initialized) {
+                return;
+            }
+
+            const form = document.getElementsByTagName('form')[0];
+            let settings = {};
+            for (let checkbox of form.querySelectorAll('input[type=checkbox]')) {
+                settings[checkbox.getAttribute('name')] = checkbox.checked;
+            }
+            KimaiCookies.set('kimai_html_export', settings, {expires: 365, SameSite: 'Strict'});
+        }
         document.getElementById('summary-by-activities').addEventListener('click', function(event) {
             document.getElementById('summary-project').style.display = event.target.checked ? 'none' : 'table';
             document.getElementById('summary-activity').style.display = event.target.checked ? 'table' : 'none';
+            saveVisibility();
         });
         document.getElementById('summary-show').addEventListener('click', function(event) {
             document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
+            saveVisibility();
         });
         {% if showTimeBudget %}
         document.getElementById('summary-timeBudget').addEventListener('click', function(event) {
@@ -70,6 +111,7 @@
             for (var columnCell of cells) {
                 columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
             }
+            saveVisibility();
         });
         {% endif %}
         {% if showRateBudget %}
@@ -78,6 +120,7 @@
             for (var columnCell of cells) {
                 columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
             }
+            saveVisibility();
         });
         {% endif %}
         document.getElementById('summary-duration').addEventListener('click', function(event) {
@@ -85,24 +128,29 @@
             for (var columnCell of cells) {
                 columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
             }
+            saveVisibility();
         });
         document.getElementById('summary-rate').addEventListener('click', function(event) {
             var cells = document.getElementsByClassName('summary-rate');
             for (var columnCell of cells) {
                 columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
             }
+            saveVisibility();
         });
         document.getElementById('summary-rate-internal').addEventListener('click', function(event) {
             var cells = document.getElementsByClassName('summary-rate-internal');
             for (var columnCell of cells) {
                 columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
             }
+            saveVisibility();
         });
         document.getElementById('summary-show').addEventListener('click', function(event) {
             document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
+            saveVisibility();
         });
         document.getElementById('records-show').addEventListener('click', function(event) {
             document.getElementById('export-records').style.display = event.target.checked ? 'block' : 'none';
+            saveVisibility();
         });
         var columnCheckboxes = document.getElementsByClassName('column-visibility-changer');
         for (var checkbox of columnCheckboxes) {
@@ -111,6 +159,7 @@
                 for (var columnCell of cells) {
                     columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
                 }
+                saveVisibility();
             });
         }
     </script>
@@ -118,8 +167,6 @@
 
 {% block styles %}
     <style>
-        .items tr.summary {
-        }
         .items td.totals {
             font-weight: bold;
             text-align: right;
@@ -141,77 +188,81 @@
 {% block export %}
     <div class="row no-print toolbar">
         <div class="col-xs-12">
-            <form class="navbar-form">
-                <div class="form-group">
-                    {{ 'export.summary'|trans }}:
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="summary-show">
-                        <input type="checkbox" id="summary-show" name="summary-show" checked="checked">
-                        {{ 'label.visible'|trans }}
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="summary-by-activities">
-                        <input type="checkbox" id="summary-by-activities" name="summary-by-activities">
-                        {{ 'label.activity'|trans }}
-                    </label>
-                </div>
-                {% if showTimeBudget %}
-                <div class="form-group">
-                    <label class="control-label" for="summary-timeBudget">
-                        <input type="checkbox" id="summary-timeBudget" name="summary-timeBudget" checked>
-                        {{ 'label.timeBudget'|trans }}
-                    </label>
-                </div>
-                {% endif %}
-                {% if showRateBudget %}
-                <div class="form-group">
-                    <label class="control-label" for="summary-budget">
-                        <input type="checkbox" id="summary-budget" name="summary-budget" checked>
-                        {{ 'label.budget'|trans }}
-                    </label>
-                </div>
-                {% endif %}
-
-                <div class="form-group">
-                    <label class="control-label" for="summary-duration">
-                        <input type="checkbox" id="summary-duration" name="summary-duration" checked>
-                        {{ 'label.duration'|trans }}
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="summary-rate-internal">
-                        <input type="checkbox" id="summary-rate-internal" name="summary-rate-internal" checked>
-                        {{ 'label.rate_internal'|trans }}
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="summary-rate">
-                        <input type="checkbox" id="summary-rate" name="summary-rate" checked>
-                        {{ 'label.rate'|trans }}
-                    </label>
-                </div>
-            </form>
-
-            <form class="navbar-form">
-                <div class="form-group">
-                    {{ 'export.full_list'|trans }}:
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="records-show">
-                        <input type="checkbox" id="records-show" name="records-show" checked="checked">
-                        {{ 'label.visible'|trans }}
-                    </label>
-                </div>
-                {% for columnId, visibility in columns %}
-                    <div class="form-group">
-                        <label class="control-label" for="records-column-{{ columnId }}">
-                            <input type="checkbox" class="column-visibility-changer" id="records-column-{{ columnId }}" name="{{ columnId }}" {% if visibility %}checked="checked"{% endif %}>
-                            {{ columnTitles[columnId]|default('label.'~columnId)|trans }}
-                        </label>
+            <form class="form-inline">
+                <div class="row">
+                    <div class="col-xs-1">
+                        <div class="form-group">
+                            <label class="control-label" for="summary-show">
+                                <input type="checkbox" id="summary-show" name="summary-show" checked="checked">
+                                {{ 'export.summary'|trans }}
+                            </label>
+                        </div>
                     </div>
-                {% endfor %}
+                    <div class="col-xs-11">
+                        <div class="form-group">
+                            <label class="control-label" for="summary-by-activities">
+                                <input type="checkbox" id="summary-by-activities" name="summary-by-activities">
+                                {{ 'label.activity'|trans }}
+                            </label>
+                        </div>
+                        {% if showTimeBudget %}
+                        <div class="form-group">
+                            <label class="control-label" for="summary-timeBudget">
+                                <input type="checkbox" id="summary-timeBudget" name="summary-timeBudget" checked>
+                                {{ 'label.timeBudget'|trans }}
+                            </label>
+                        </div>
+                        {% endif %}
+                        {% if showRateBudget %}
+                        <div class="form-group">
+                            <label class="control-label" for="summary-budget">
+                                <input type="checkbox" id="summary-budget" name="summary-budget" checked>
+                                {{ 'label.budget'|trans }}
+                            </label>
+                        </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            <label class="control-label" for="summary-duration">
+                                <input type="checkbox" id="summary-duration" name="summary-duration" checked>
+                                {{ 'label.duration'|trans }}
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="summary-rate-internal">
+                                <input type="checkbox" id="summary-rate-internal" name="summary-rate-internal" checked>
+                                {{ 'label.rate_internal'|trans }}
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="summary-rate">
+                                <input type="checkbox" id="summary-rate" name="summary-rate" checked>
+                                {{ 'label.rate'|trans }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-1">
+                        <div class="form-group">
+                            <label class="control-label" for="records-show">
+                                <input type="checkbox" id="records-show" name="records-show" checked="checked">
+                                {{ 'export.full_list'|trans }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-xs-11">
+                        {% for columnId, visibility in columns %}
+                            <div class="form-group">
+                                <label class="control-label" for="records-column-{{ columnId }}">
+                                    <input type="checkbox" class="column-visibility-changer" id="records-column-{{ columnId }}" name="{{ columnId }}" {% if visibility %}checked="checked"{% endif %}>
+                                    {{ columnTitles[columnId]|default('label.'~columnId)|trans }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -451,7 +502,7 @@
                             {% endif %}
                         </td>
                         <td class="column-tags" {% if not columns.tags %}style="display: none"{% endif %}>
-                            {% if entry.tags is not empty %}
+                            {% if entry.tags is defined and entry.tags is not empty %}
                                 {{ entry.tagsAsArray|join(', ') }}
                             {% endif %}
                         </td>

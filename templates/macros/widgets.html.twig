@@ -3,28 +3,26 @@
 {% endmacro %}
 
 {%- macro page_actions(tools) -%}
-    {% import _self as macro %}
     <div class="breadcrumb">
         <div class="box-tools">
-            {{ macro.button_group(tools) }}
+            {{ _self.button_group(tools) }}
         </div>
     </div>
 {%- endmacro -%}
 
 {%- macro entity_actions(tools) -%}
-    {% import _self as macro %}
     <div class="breadcrumb">
         <div class="box-tools">
             <div class="btn-group">
             {% set actions = {} %}
             {%- for icon, values in tools  %}
                 {% if icon == 'back' %}
-                    {{ macro.action_button(icon, values) }}
+                    {{ _self.action_button(icon, values) }}
                 {% else %}
                     {% set actions = actions|merge({(icon): values}) %}
                 {% endif %}
             {% endfor %}
-            {{ macro.table_actions(actions, '') }}
+            {{ _self.table_actions(actions, '') }}
             </div>
         </div>
     </div>
@@ -35,21 +33,18 @@
 {% endmacro %}
 
 {% macro label_boolean(visible) %}
-    {% import _self as macro %}
     {% if visible %}
-        {{ macro.label('yes'|trans, 'success') }}
+        {{ _self.label('yes'|trans, 'success') }}
     {% else %}
-        {{ macro.label('no'|trans, 'default') }}
+        {{ _self.label('no'|trans, 'default') }}
     {% endif %}
 {% endmacro %}
 
 {% macro label_visible(visible) %}
-    {% import _self as macro %}
-    {{ macro.label_boolean(visible) }}
+    {{ _self.label_boolean(visible) }}
 {% endmacro %}
 
 {% macro label_role(role) %}
-    {% import _self as macro %}
     {% set color = 'primary' %}
     {% if role == 'ROLE_SUPER_ADMIN' %}
         {% set color = 'danger' %}
@@ -60,7 +55,7 @@
     {% elseif role == 'ROLE_USER' %}
         {% set color = 'gray' %}
     {% endif %}
-    {{ macro.label(role|trans, color) }}
+    {{ _self.label(role|trans, color) }}
 {% endmacro %}
 
 {% macro username(user) %}
@@ -68,13 +63,11 @@
 {% endmacro %}
 
 {% macro label_user(user) %}
-    {% import _self as macro %}
-    {{ macro.label(user.displayName, 'primary') }}
+    {{ _self.label(user.displayName, 'primary') }}
 {% endmacro %}
 
 {% macro label_team(team, class) %}
-    {% import _self as macro %}
-    {{ macro.label(team.name, class|default('primary')) }}
+    {{ _self.label(team.name, class|default('primary')) }}
 {% endmacro %}
 
 {% macro user_avatar(user, tooltip, class) %}
@@ -87,7 +80,6 @@
 {% endmacro %}
 
 {% macro label_activity(activity, url) %}
-    {% import _self as macro %}
     {% set isVisible = activity.visible %}
     {% set color = activity.color %}
     {% if color is empty and activity.project is not null %}
@@ -99,22 +91,19 @@
             {% set isVisible = activity.project.customer.visible %}
         {% endif %}
     {% endif %}
-    {{ macro.label_color_dot('activity', isVisible, activity.name, url, color) }}
+    {{ _self.label_color_dot('activity', isVisible, activity.name, url, color) }}
 {% endmacro %}
 
 {% macro label_project(project, url) %}
-    {% import _self as macro %}
     {% set isVisible = false %}
     {% if project.visible and project.customer.visible %}
         {% set isVisible = true %}
     {% endif %}
-    {{ macro.label_color_dot('project', isVisible, project.name, url, (project.color ?? project.customer.color)) }}
+    {{ _self.label_color_dot('project', isVisible, project.name, url, (project.color ?? project.customer.color)) }}
 {% endmacro %}
 
 {% macro label_customer(customer, url) %}
-    {% import _self as macro %}
-    {% set isVisible = customer.visible %}
-    {{ macro.label_color_dot('customer', isVisible, customer.name, url, customer.color) }}
+    {{ _self.label_color_dot('customer', customer.visible, customer.name, url, customer.color) }}
 {% endmacro %}
 
 {% macro label_color_dot(type, isVisible, name, url, color) %}
@@ -137,11 +126,10 @@
 {% endmacro %}
 
 {% macro badge_team_access(teams) %}
-    {% import _self as macro %}
     {% if teams|length > 0 %}
-        {{ macro.badge_counter(teams|length) }}
+        {{ _self.badge_counter(teams|length) }}
     {% else %}
-        {{ macro.icon('unlocked') }}
+        {{ _self.icon('unlocked') }}
     {% endif %}
 {% endmacro %}
 
@@ -159,7 +147,7 @@
 {% endmacro %}
 
 {% macro badge(title, color) %}
-    <span class="badge" style="background-color:{{ color }}">{{ title }}</span>
+    <span class="badge" style="background-color:{{ color }}; color:{{ color|font_contrast }}">{{ title }}</span>
 {% endmacro %}
 
 {% macro alert(type, description, title, icon) %}
@@ -218,7 +206,6 @@
 {% endmacro %}
 
 {% macro table_actions(actions, class) %}
-    {%- import _self as macro -%}
     {% if actions|length >= 1 %}
         {% if class is null %}
             {% set class = 'btn-sm' %}
@@ -232,14 +219,16 @@
             <ul class="dropdown-menu dropdown-menu-right">
                 {%- apply spaceless -%}
                     {%- for icon,values in actions  %}
-                        {% if icon == 'divider' and values is null %}
+                        {% if 'divider' in icon and values is null %}
                             {% if not loop.last and divider is same as (false) %}
                                 <li class="divider"></li>
                             {% endif %}
                             {% set divider = true %}
                         {% else %}
                             {% if values is iterable %}
-                                {% set values = values|merge({'title': icon|trans({}, 'actions')}) %}
+                                {% if values['title'] is not defined %}
+                                    {% set values = values|merge({'title': icon|trans({}, 'actions')}) %}
+                                {% endif %}
                             {% else %}
                                 {% set values = {'url': values, 'title': icon|trans({}, 'actions')} %}
                             {% endif %}
@@ -247,9 +236,17 @@
                                 {% set trash = values %}
                             {% else %}
                                 {% set divider = false %}
-                                <li>
-                                    {{ macro.action_button(icon, values, false) }}
-                                </li>
+                                {% if values.children is defined %}
+                                    {%- for childIcon, childValues in values.children %}
+                                        <li>
+                                            {{ _self.action_button(childIcon, childValues, false) }}
+                                        </li>
+                                    {% endfor %}
+                                {% else %}
+                                    <li>
+                                        {{ _self.action_button(icon, values, false) }}
+                                    </li>
+                                {% endif %}
                             {% endif %}
                         {% endif %}
                     {% endfor -%}
@@ -258,7 +255,7 @@
                             <li class="divider"></li>
                         {% endif %}
                         <li class="delete">
-                            {{ macro.action_button('trash', trash, false) }}
+                            {{ _self.action_button('trash', trash, false) }}
                         </li>
                     {% endif -%}
                 {% endapply %}
@@ -267,8 +264,37 @@
     {% endif %}
 {% endmacro %}
 
+{% macro list_group_actions(actions, highlightUrl) %}
+    {% if actions|length > 0 %}
+        <div class="list-group">
+        {% for icon, values in actions %}
+            {% if 'divider' in icon and values is null %}
+                </div><div class="list-group">
+            {# <a class="list-group-item disabled list-group-divider"></a> #}
+            {% else %}
+                {% if values is not iterable %}
+                    {% set values = {'url': values} %}
+                {% endif %}
+                {% if values['children'] is defined %}
+                    {{ _self.list_group_actions(values['children'], highlightUrl) }}
+                {% else %}
+                    {% if values['title'] is not defined %}
+                        {% set values = values|merge({'title': icon|trans({}, 'actions')}) %}
+                    {% endif %}
+                    {% set class = 'list-group-item' %}
+                    {% if highlightUrl == values.url %}
+                        {% set class = class ~ ' active' %}
+                    {% endif %}
+                    {% set values = values|merge({'class': class}) %}
+                    {{ _self.action_button(icon, values, false) }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
 {% macro action_button(icon, values, type) %}
-    {%- import _self as macro -%}
     {%- apply spaceless -%}
         {% set id = null %}
         {% set onclick = null %}
@@ -279,6 +305,7 @@
         {% set title = null %}
         {% set disabled = false %}
         {% set attr = {} %}
+        {% set translation_domain = 'messages' %}
         {% if type is same as (false) %}
             {% set class = "" %}
         {% elseif type is null %}
@@ -287,7 +314,7 @@
             {% set class = "btn btn-" ~ type ~ " btn-" ~ icon ~ " " %}
         {% endif %}
 
-        {% if not values is iterable %}
+        {% if values is not iterable %}
             {% set url = values %}
             {% if 'onclick:' in url %}
                 {% set onclick = url|replace({'onclick:': ''}) %}
@@ -301,6 +328,7 @@
                 {% set url = '#' %}
             {% endif %}
         {% else %}
+            {% set icon = values.icon ?? icon %}
             {% set disabled = values.disabled ?? false %}
             {% set url = values.url ?? '#' %}
             {% set onclick = values.onclick ?? null %}
@@ -311,6 +339,7 @@
             {% set title = values.title ?? null %}
             {% set class = class ~ ( values.class | default("")) %}
             {% set attr = values.attr ?? {} %}
+            {% set translation_domain = values.translation_domain ?? translation_domain %}
         {% endif %}
 
         {% if disabled is same as (true) %}
@@ -329,30 +358,33 @@
                     {{ ' ' ~ name }}={% if '"' in value %}'{{ value|raw }}'{% else %}"{{ value|raw }}"{% endif %}
                     {% endfor %}
                 {% endif %}
-        >{% if title is not null %}{{ title }}{% else %}{{ macro.icon(icon) }}{% endif %}</a>
+        >{% if title is not null %}{{ title|trans({}, translation_domain) }}{% else %}{{ _self.icon(icon) }}{% endif %}</a>
     {% endapply %}
 {% endmacro %}
 
 {% macro button_group(actions, type) %}
-    {%- import _self as macro -%}
     <div class="btn-group">
         {%- apply spaceless -%}
         {%- for icon,values in actions  %}
-            {% if values.children is defined %}
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        {{ macro.icon(icon) }}&nbsp;
-                        <span class="caret"></span>
-                        <span class="sr-only">{{ 'label.toggle_dropdown'|trans }}</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        {% for childIcon,childValues in values.children %}
-                            <li>{{ macro.action_button(childIcon, childValues, false) }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
+            {% if 'divider' in icon and values is null %}
+                {# what to do here ? #}
             {% else %}
-                {{ macro.action_button(icon, values, type) }}
+                {% if values.children is defined %}
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            {{ _self.icon(icon) }}&nbsp;
+                            <span class="caret"></span>
+                            <span class="sr-only">{{ 'label.toggle_dropdown'|trans }}</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            {% for childIcon,childValues in values.children %}
+                                <li>{{ _self.action_button(childIcon, childValues, false) }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% else %}
+                    {{ _self.action_button(icon, values, type) }}
+                {% endif %}
             {% endif %}
         {% endfor -%}
         {% endapply %}
@@ -408,12 +440,15 @@
         {{ value|nl2br }}
     {% elseif '\\EmailType' in type %}
         <a href="mailto:{{ value }}">{{ value }}</a>
+    {% elseif '\\UrlType' in type %}
+        <a href="{{ value }}" target="_blank">{{ value }}</a>
     {% else %}
         {{ value }}
     {% endif %}
 {% endmacro %}
 
-{% macro team_list(teams, showTitle) %}
+{% macro team_list(teams, showTitle, collapseAt) %}
+    {% set collapseAt = collapseAt ?? 5 %}
     {% if showTitle is null %}
         {% set showTitle = true %}
     {% endif %}
@@ -429,26 +464,27 @@
         {% endif %}
         <tbody>
         {% for team in teams|sort((a, b) => a.name <=> b.name) %}
+            {% set users = team.users|filter(u => u.enabled) %}
+            {% set userTeamCount = users|length %}
             <tr{% if is_granted('edit', team) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_team_member', {'id': team.id}) }}"{% endif %}>
                 <td>
                     {{ team.name }}
                 </td>
                 <td class="avatars">
-                    {% set userTeamCount = team.users|length %}
                     {{ macro.user_avatar(team.teamlead, ('label.teamlead'|trans ~ ': ' ~ team.teamlead.displayName), 'teamlead') }}
                     {% set teamHiddenId = 'team_' ~ team.id ~ '_hiddenUser' ~ random() %}
                     {% set counter = 0  %}
-                    {% for user in team.users %}
+                    {% for user in users %}
                         {% if user != team.teamlead %}
                             {{ macro.user_avatar(user) }}
                             {% set counter = counter + 1 %}
                         {% endif %}
-                        {% if userTeamCount > 5 and counter == 4 and not loop.last %}
-                            <a href="#" onclick="$('#{{ teamHiddenId }}').toggleClass('hidden');$(this).hide();return false;" class="badge">{{ 'label.plus_more'|trans({'%count%': (userTeamCount - 5)}) }}</a>
+                        {% if userTeamCount > collapseAt and counter == (collapseAt - 1) and loop.index != userTeamCount %}
+                            <a href="#" onclick="$('#{{ teamHiddenId }}').toggleClass('hidden');$(this).hide();return false;" class="badge">{{ 'label.plus_more'|trans({'%count%': (userTeamCount - collapseAt)}) }}</a>
                             <span class="hidden" id="{{ teamHiddenId }}">
                             {% set counter = counter + 1 %}
                         {% endif %}
-                        {% if userTeamCount > 5 and counter != 4 and loop.last %}
+                        {% if userTeamCount > collapseAt and counter != (collapseAt - 1) and loop.index == userTeamCount %}
                             </span>
                         {% endif %}
                     {% endfor %}
@@ -468,4 +504,107 @@
         });
     </script>
     {% endif %}
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr class="{{ class_customer_row(customer, now) }}">
+#}
+{% macro class_customer_row(customer, now) %}
+    {%- if not customer.visible %}warning{% endif -%}
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr {{ customer_row_attr(customer, now) }}>
+#}
+{% macro customer_row_attr(customer, now) %}
+    {%- set class = _self.class_customer_row(customer, now) %}
+    {% set dataHref = '' %}
+    {% if is_granted('view', customer) %}
+        {% set class = class ~ ' alternative-link open-edit' %}
+        {% set dataHref = path('customer_details', {'id': customer.id}) %}
+    {% endif -%}
+    class="{{ class }}" data-href="{{ dataHref }}"
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr class="{{ class_project_row(project, now) }}">
+#}
+{% macro class_project_row(project, now) %}
+    {%- if not project.visible or (project.end is not null and project.end < now) %}warning{% endif -%}
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr {{ project_row_attr(project, now) }}>
+#}
+{% macro project_row_attr(project, now) %}
+    {%- set class = _self.class_project_row(project, now) %}
+    {% set dataHref = '' %}
+    {% if is_granted('view', project) %}
+        {% set class = class ~ ' alternative-link open-edit' %}
+        {% set dataHref = path('project_details', {'id': project.id}) %}
+    {% endif -%}
+    class="{{ class }}" data-href="{{ dataHref }}"
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr {{ class_activity_row(activity, now) }}>
+#}
+{% macro class_activity_row(activity, now) %}
+    {%- if not activity.visible %}warning{% endif -%}
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr {{ activity_row_attr(activity, now) }}>
+#}
+{% macro activity_row_attr(activity, now) %}
+    {%- set class = _self.class_activity_row(activity, now) %}
+    {% set dataHref = '' %}
+    {% if is_granted('view', activity) %}
+        {% set class = class ~ ' alternative-link open-edit' %}
+        {% set dataHref = path('activity_details', {'id': activity.id}) %}
+    {% endif -%}
+    class="{{ class }}" data-href="{{ dataHref }}"
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr class="{{ class_user_row(user, now) }}">
+#}
+{% macro class_user_row(user) %}
+    {%- if not user.enabled %}warning{% endif -%}
+{% endmacro %}
+
+{#
+    To be used like this:
+    <tr {{ user_row_attr(user) }}>
+#}
+{% macro user_row_attr(user) %}
+    {%- set class = _self.class_user_row(user) %}
+    {% set dataHref = '' %}
+    {% if is_granted('view', user) %}
+        {% set class = class ~ ' alternative-link open-edit' %}
+        {% set dataHref = path('user_profile', {'username': user.username}) %}
+    {% endif -%}
+    class="{{ class }}" data-href="{{ dataHref }}"
+{% endmacro %}
+
+{# To be used mainly in <tr class="{{ class_user_row(user, now) }}"> #}
+{% macro short_stats_row(stats) %}
+    <div class="row">
+        {% set colLength = 12 / stats|length %}
+        {% for title, value in stats %}
+        <div class="col-sm-{{ colLength }} border-right">
+            <div class="description-block">
+                <h5 class="description-header">{{ value }}</h5>
+                <span class="description-text">{{ title }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 {% endmacro %}

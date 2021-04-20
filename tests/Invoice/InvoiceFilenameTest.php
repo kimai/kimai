@@ -15,6 +15,7 @@ use App\Entity\Project;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
+use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use PHPUnit\Framework\TestCase;
 
@@ -29,7 +30,7 @@ class InvoiceFilenameTest extends TestCase
         $template = new InvoiceTemplate();
 
         $model = new InvoiceModel(new DebugFormatter());
-        $model->setNumberGenerator(new DateNumberGenerator());
+        $model->setNumberGenerator($this->getNumberGeneratorSut());
         $model->setTemplate($template);
         $model->setCustomer($customer);
 
@@ -46,11 +47,11 @@ class InvoiceFilenameTest extends TestCase
         self::assertEquals($datePrefix . '-foo', $sut->getFilename());
         self::assertEquals($datePrefix . '-foo', (string) $sut);
 
-        $customer->setCompany('barß / laölala # ldksjf 123');
+        $customer->setCompany('barß / laölala #   ldksjf 123 MyAwesome GmbH');
         $sut = new InvoiceFilename($model);
 
-        self::assertEquals($datePrefix . '-barss_laolala_ldksjf123', $sut->getFilename());
-        self::assertEquals($datePrefix . '-barss_laolala_ldksjf123', (string) $sut);
+        self::assertEquals($datePrefix . '-barss_laolala_ldksjf_123_MyAwesome_GmbH', $sut->getFilename());
+        self::assertEquals($datePrefix . '-barss_laolala_ldksjf_123_MyAwesome_GmbH', (string) $sut);
 
         $customer->setCompany('까깨꺄꺠꺼께껴꼐꼬꽈sssss');
         $sut = new InvoiceFilename($model);
@@ -58,7 +59,7 @@ class InvoiceFilenameTest extends TestCase
 
         $customer->setCompany('\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n");
         $sut = new InvoiceFilename($model);
-        self::assertEquals($datePrefix . '-ss_n', $sut->getFilename());
+        self::assertEquals($datePrefix . '-ss_n_-', $sut->getFilename());
 
         $project = new Project();
         $project->setName('Demo ProjecT1');
@@ -69,6 +70,17 @@ class InvoiceFilenameTest extends TestCase
 
         $customer->setCompany('\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n");
         $sut = new InvoiceFilename($model);
-        self::assertEquals($datePrefix . '-ss_n-demo_projec_t1', $sut->getFilename());
+        self::assertEquals($datePrefix . '-ss_n_--Demo_ProjecT1', $sut->getFilename());
+    }
+
+    private function getNumberGeneratorSut()
+    {
+        $repository = $this->createMock(InvoiceRepository::class);
+        $repository
+            ->expects($this->any())
+            ->method('hasInvoice')
+            ->willReturn(false);
+
+        return new DateNumberGenerator($repository);
     }
 }

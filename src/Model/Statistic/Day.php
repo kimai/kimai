@@ -18,6 +18,10 @@ class Day
      */
     protected $totalDuration = 0;
     /**
+     * @var int|null
+     */
+    private $totalDurationBillable = 0;
+    /**
      * @var float
      */
     protected $totalRate = 0.00;
@@ -52,6 +56,16 @@ class Day
         $this->totalDuration = $seconds;
 
         return $this;
+    }
+
+    public function getTotalDurationBillable(): int
+    {
+        return $this->totalDurationBillable;
+    }
+
+    public function setTotalDurationBillable(int $seconds): void
+    {
+        $this->totalDurationBillable = $seconds;
     }
 
     public function getTotalRate(): float

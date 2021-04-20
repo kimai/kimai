@@ -18,8 +18,10 @@ use App\Form\Type\CalendarViewType;
 use App\Form\Type\FirstWeekDayType;
 use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
+use App\Form\Type\ReportType;
 use App\Form\Type\SkinType;
 use App\Form\Type\ThemeLayoutType;
+use App\Reporting\ReportingService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -28,26 +30,17 @@ use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Range;
 
-class UserPreferenceSubscriber implements EventSubscriberInterface
+final class UserPreferenceSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    protected $voter;
-    /**
-     * @var SystemConfiguration
-     */
-    protected $configuration;
+    private $eventDispatcher;
+    private $voter;
+    private $configuration;
 
-    public function __construct(EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter, SystemConfiguration $formConfig)
+    public function __construct(EventDispatcherInterface $eventDispatcher, AuthorizationCheckerInterface $voter, SystemConfiguration $systemConfiguration)
     {
-        $this->eventDispatcher = $dispatcher;
+        $this->eventDispatcher = $eventDispatcher;
         $this->voter = $voter;
-        $this->configuration = $formConfig;
+        $this->configuration = $systemConfiguration;
     }
 
     public static function getSubscribedEvents(): array
@@ -57,43 +50,24 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
         ];
     }
 
-    private function getDefaultTheme(): ?string
-    {
-        return $this->configuration->getUserDefaultTheme();
-    }
-
-    private function getDefaultCurrency(): string
-    {
-        return $this->configuration->getUserDefaultCurrency();
-    }
-
-    private function getDefaultLanguage(): string
-    {
-        return $this->configuration->getUserDefaultLanguage();
-    }
-
-    private function getDefaultTimezone(): string
-    {
-        $timezone = $this->configuration->getUserDefaultTimezone();
-        if (null === $timezone) {
-            $timezone = date_default_timezone_get();
-        }
-
-        return $timezone;
-    }
-
     /**
      * @param User $user
      * @return UserPreference[]
      */
     public function getDefaultPreferences(User $user)
     {
+        $timezone = $this->configuration->getUserDefaultTimezone();
+        if (null === $timezone) {
+            $timezone = date_default_timezone_get();
+        }
+
+        $enableDefaultReport = $this->voter->isGranted('view_reporting');
         $enableHourlyRate = false;
         $hourlyRateOptions = [];
 
         if ($this->voter->isGranted('hourly-rate', $user)) {
             $enableHourlyRate = true;
-            $hourlyRateOptions = ['currency' => $this->getDefaultCurrency()];
+            $hourlyRateOptions = ['currency' => $this->configuration->getUserDefaultCurrency()];
         }
 
         return [
@@ -119,14 +93,14 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
 
             (new UserPreference())
                 ->setName(UserPreference::TIMEZONE)
-                ->setValue($this->getDefaultTimezone())
+                ->setValue($timezone)
                 ->setOrder(200)
                 ->setSection('locale')
                 ->setType(TimezoneType::class),
 
             (new UserPreference())
                 ->setName(UserPreference::LOCALE)
-                ->setValue($this->getDefaultLanguage())
+                ->setValue($this->configuration->getUserDefaultLanguage())
                 ->setOrder(250)
                 ->setSection('locale')
                 ->setType(LanguageType::class),
@@ -140,7 +114,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
 
             (new UserPreference())
                 ->setName(UserPreference::SKIN)
-                ->setValue($this->getDefaultTheme())
+                ->setValue($this->configuration->getUserDefaultTheme())
                 ->setOrder(400)
                 ->setSection('theme')
                 ->setType(SkinType::class),
@@ -160,11 +134,26 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setType(CheckboxType::class),
 
             (new UserPreference())
+                ->setName('theme.update_browser_title')
+                ->setValue(true)
+                ->setOrder(550)
+                ->setSection('theme')
+                ->setType(CheckboxType::class),
+
+            (new UserPreference())
                 ->setName('calendar.initial_view')
                 ->setValue(CalendarViewType::DEFAULT_VIEW)
                 ->setOrder(600)
                 ->setSection('behaviour')
                 ->setType(CalendarViewType::class),
+
+            (new UserPreference())
+                ->setName('reporting.initial_view')
+                ->setValue(ReportingService::DEFAULT_VIEW)
+                ->setOrder(650)
+                ->setSection('behaviour')
+                ->setEnabled($enableDefaultReport)
+                ->setType(ReportType::class),
 
             (new UserPreference())
                 ->setName('login.initial_view')

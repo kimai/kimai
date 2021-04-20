@@ -10,13 +10,12 @@
 namespace App\Tests\DataFixtures;
 
 use App\Entity\Tag;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 /**
  * Defines the sample data to load in during controller tests.
  */
-final class TagFixtures extends Fixture
+final class TagFixtures implements TestFixture
 {
     /**
      * @var string[]
@@ -60,10 +59,13 @@ final class TagFixtures extends Fixture
     }
 
     /**
-     * {@inheritdoc}
+     * @param ObjectManager $manager
+     * @return Tag[]
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): array
     {
+        $created = [];
+
         foreach ($this->getTagArray() as $tagName) {
             $tag = $this->createTagEntry($tagName);
 
@@ -71,8 +73,11 @@ final class TagFixtures extends Fixture
                 \call_user_func($this->callback, $tag);
             }
             $manager->persist($tag);
+            $created[] = $tag;
         }
         $manager->flush();
+
+        return $created;
     }
 
     private function createTagEntry(string $tagName): Tag

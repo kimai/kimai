@@ -28,8 +28,8 @@ class ProjectToolbarForm extends AbstractToolbarForm
         $this->addVisibilityChoice($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
-        $this->addHiddenOrder($builder);
-        $this->addHiddenOrderBy($builder, ProjectQuery::PROJECT_ORDER_ALLOWED);
+        $this->addOrder($builder);
+        $this->addOrderBy($builder, ProjectQuery::PROJECT_ORDER_ALLOWED);
     }
 
     /**

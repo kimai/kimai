@@ -29,6 +29,14 @@ kimai:
         # This setting can be changed through the Administration screen
         # markdown_content: false
 
+        # Configures the duration drop-down select.
+        # null = use rounding rules, 0 = deactivate, every other number is used as minute/step increment
+        # duration_increment: ~
+
+        # Configures the minute select for begin and end date-time.
+        # null = use rounding rules, every number > 0 is used as minute/step increment
+        # time_increment: ~
+
         # The time-tracking mode that should be used.
         # See https://www.kimai.org/documentation/timesheet.html#tracking-modes
         # mode: default
@@ -98,7 +106,7 @@ kimai:
             CUSTOMERS_ALL_TEAM: ['view_team_customer','edit_team_customer','budget_team_customer','comments_team_customer','comments_create_team_customer','details_team_customer']
             CUSTOMERS_TEAMLEAD: ['view_teamlead_customer','budget_teamlead_customer','comments_teamlead_customer','comments_create_teamlead_customer','details_teamlead_customer']
             INVOICE: ['view_invoice','create_invoice']
-            INVOICE_ADMIN: ['manage_invoice_template','history_invoice']
+            INVOICE_ADMIN: ['manage_invoice_template']
             TIMESHEET: ['view_own_timesheet','start_own_timesheet','stop_own_timesheet','create_own_timesheet','edit_own_timesheet','export_own_timesheet','delete_own_timesheet']
             TIMESHEET_OTHER: ['view_other_timesheet','start_other_timesheet','stop_other_timesheet','create_other_timesheet','edit_other_timesheet','export_other_timesheet','delete_other_timesheet']
             PROFILE: ['view_own_profile','edit_own_profile','password_own_profile','preferences_own_profile','api-token_own_profile']
@@ -231,6 +239,11 @@ kimai:
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         de:
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date: 'd.m.Y'
+            date_time: 'd.m. H:i'
+        de_AT:
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'

@@ -1,0 +1,20 @@
+/*
+    make sure that the progressbar title does not wrap and does not need to be embedded in a container with white-space: nowrap
+    used for example in the project-overview report
+*/
+.progress-group {
+    .progress-title {
+        width: 100%;
+        white-space: nowrap;
+        .progress-text {
+            display: inline-block;
+            width: 1%;
+        }
+        .progress-number {
+            display: inline-block;
+            width: 98%;
+            text-align: right;
+            float: none;
+        }
+    }
+}

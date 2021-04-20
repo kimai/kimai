@@ -9,7 +9,7 @@
 
 namespace App\Tests\Twig;
 
-use App\Configuration\ThemeConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Twig\ConfigExtension;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +23,7 @@ class ConfigExtensionTest extends TestCase
     protected function getSut(array $settings, array $loaderSettings = []): ConfigExtension
     {
         $loader = new TestConfigLoader($loaderSettings);
-        $config = new ThemeConfiguration($loader, $settings);
+        $config = new SystemConfiguration($loader, ['theme' => $settings]);
 
         return new ConfigExtension($config);
     }
@@ -61,15 +61,22 @@ class ConfigExtensionTest extends TestCase
                 'company' => null,
                 'title' => null,
             ],
-            'auto_reload_datatable' => false,
         ];
     }
 
     public function testPrefix()
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
-        self::assertFalse($sut->getThemeConfig('auto_reload_datatable'));
         self::assertEquals(3, $sut->getThemeConfig('active_warning'));
         self::assertEquals('green', $sut->getThemeConfig('box_color'));
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testDeprecation()
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        self::assertFalse($sut->getThemeConfig('auto_reload_datatable'));
     }
 }

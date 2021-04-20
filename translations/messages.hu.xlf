@@ -147,7 +147,7 @@
             -->
       <trans-unit id="error.no_entries_found">
         <source>error.no_entries_found</source>
-        <target>Nem található bejegyzés</target>
+        <target>Nem található bejegyzés a kiválasztott szűrők alapján.</target>
       </trans-unit>
       <!--
               General labels
@@ -775,7 +775,7 @@
       </trans-unit>
       <trans-unit id="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
-        <target>Adószám</target>
+        <target>Adószám:</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
@@ -985,6 +985,150 @@
       <trans-unit id="login_required">
         <source>login_required</source>
         <target>Hiányzó jogosultság. Átirányítás a kezdőlapra?</target>
+      </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>A frissítésre váró mezőket először aktválni kell a hozzárendelt jelölő kockára klikkelve.</target>
+      </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>További mezők</target>
+      </trans-unit>
+      <trans-unit id="export.filter">
+        <source>export.filter</source>
+        <target>Adat szűrés exportáláshoz</target>
+      </trans-unit>
+      <trans-unit id="status.paid">
+        <source>status.paid</source>
+        <target>Fizetve</target>
+      </trans-unit>
+      <trans-unit id="status.pending">
+        <source>status.pending</source>
+        <target>Függőben</target>
+      </trans-unit>
+      <trans-unit id="status.new">
+        <source>status.new</source>
+        <target>Új</target>
+      </trans-unit>
+      <trans-unit id="label.status">
+        <source>label.status</source>
+        <target>Állapot</target>
+      </trans-unit>
+      <trans-unit id="label.decimalDuration">
+        <source>label.decimalDuration</source>
+        <target>Mutasd a terjedelmet tizedes számmal</target>
+      </trans-unit>
+      <trans-unit id="label.orderDate">
+        <source>label.orderDate</source>
+        <target>Rendelési dátum</target>
+      </trans-unit>
+      <trans-unit id="label.mark_as_exported">
+        <source>label.mark_as_exported</source>
+        <target>Megjelőlés exportáltként</target>
+      </trans-unit>
+      <trans-unit id="button.preview_print">
+        <source>button.preview_print</source>
+        <target>Nyomtatási előnézet</target>
+      </trans-unit>
+      <trans-unit id="button.preview">
+        <source>button.preview</source>
+        <target>Előnézet</target>
+      </trans-unit>
+      <trans-unit id="invoice.filter">
+        <source>invoice.filter</source>
+        <target>Számla adat szűrő</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft">
+        <source>stats.percentUsedLeft</source>
+        <target>%percent%% használatban (%left% még elérhető)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed">
+        <source>stats.percentUsed</source>
+        <target>%percent%% használatban</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeYear">
+        <source>stats.workingTimeYear</source>
+        <target>Teljes év %year%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeMonth">
+        <source>stats.workingTimeMonth</source>
+        <target>%month% %year%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeWeek">
+        <source>stats.workingTimeWeek</source>
+        <target>Naptári hét %week%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeToday">
+        <source>stats.workingTimeToday</source>
+        <target>Ma, %day%</target>
+      </trans-unit>
+      <trans-unit id="Allowed character: A-Z and _">
+        <source>Allowed character: A-Z and _</source>
+        <target>Mengedett karakterek: A-Z és _</target>
+      </trans-unit>
+      <trans-unit id="user_role.title">
+        <source>user_role.title</source>
+        <target>Felhasználói szerep</target>
+      </trans-unit>
+      <trans-unit id="user_permissions.title">
+        <source>user_permissions.title</source>
+        <target>Felhasználói engedélyek</target>
+      </trans-unit>
+      <trans-unit id="label.vat_id">
+        <source>label.vat_id</source>
+        <target>ÁFA-ID</target>
+      </trans-unit>
+      <trans-unit id="label.project_start">
+        <source>label.project_start</source>
+        <target>Projekt kezdete</target>
+      </trans-unit>
+      <trans-unit id="label.project_end">
+        <source>label.project_end</source>
+        <target>Projekt vége</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.export_decimal">
+        <source>label.timesheet.export_decimal</source>
+        <target>Használj tizedes terjedelmet exportálásban</target>
+      </trans-unit>
+      <trans-unit id="label.lastLogin">
+        <source>label.lastLogin</source>
+        <target>Utolsó bejelentkezés</target>
+      </trans-unit>
+      <trans-unit id="profile.teams">
+        <source>profile.teams</source>
+        <target>Csapatok</target>
+      </trans-unit>
+      <trans-unit id="profile.registration_date">
+        <source>profile.registration_date</source>
+        <target>Regisztrált ekkor</target>
+      </trans-unit>
+      <trans-unit id="label.appendTags">
+        <source>label.appendTags</source>
+        <target>Címkék megnyitása</target>
+      </trans-unit>
+      <trans-unit id="label.replaceTags">
+        <source>label.replaceTags</source>
+        <target>Címkék cseréje</target>
+      </trans-unit>
+      <trans-unit id="help.fixedRate">
+        <source>help.fixedRate</source>
+        <target>Minden alkalommal a felvétel ugyanazt az értéket kapja, függetlenül a terjedelmétől</target>
+      </trans-unit>
+      <trans-unit id="update_multiple">
+        <source>update_multiple</source>
+        <target>%action% %count% bejegyzést?</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Összes</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Böngésző cím frissítése</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Az űrlap megváltozott. A "Mentés" gombbal elmentheted a változtatásokat, a "Bezárás" gombbal elvetheted őket.</target>
       </trans-unit>
     </body>
   </file>

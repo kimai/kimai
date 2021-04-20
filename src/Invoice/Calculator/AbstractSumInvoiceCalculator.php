@@ -20,6 +20,17 @@ abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator imp
 {
     abstract protected function calculateSumIdentifier(InvoiceItemInterface $invoiceItem): string;
 
+    protected function calculateIdentifier(InvoiceItemInterface $entry): string
+    {
+        $prefix = $this->calculateSumIdentifier($entry);
+
+        if (null !== $entry->getFixedRate()) {
+            return $prefix . '_fixed_' . (string) $entry->getFixedRate();
+        }
+
+        return $prefix . '_hourly_' . (string) $entry->getHourlyRate();
+    }
+
     /**
      * @return InvoiceItem[]
      */
@@ -34,13 +45,7 @@ abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator imp
         $invoiceItems = [];
 
         foreach ($entries as $entry) {
-            $id = $this->calculateSumIdentifier($entry);
-
-            if (null !== $entry->getFixedRate()) {
-                $id = $id . '_fixed_' . (string) $entry->getFixedRate();
-            } else {
-                $id = $id . '_hourly_' . (string) $entry->getHourlyRate();
-            }
+            $id = $this->calculateIdentifier($entry);
 
             if (!isset($invoiceItems[$id])) {
                 $invoiceItems[$id] = new InvoiceItem();
