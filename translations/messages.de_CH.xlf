@@ -1096,11 +1096,15 @@
       </trans-unit>
       <trans-unit id="label.set_as_default">
         <source>label.set_as_default</source>
-        <target>Als Standard-Einstellung speichern</target>
+        <target>Einstellung als Suchfavorit speichern</target>
       </trans-unit>
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
         <target>Suchbegriff</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Suchfavorit löschen</target>
       </trans-unit>
     </body>
   </file>
