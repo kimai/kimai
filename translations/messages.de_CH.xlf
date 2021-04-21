@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="menu.homepage">
         <source>menu.homepage</source>
-        <target state="translated">Instrumententafel</target>
+        <target state="translated">Dashboard</target>
       </trans-unit>
       <trans-unit id="label.api_token_repeat">
         <source>label.api_token_repeat</source>
@@ -712,7 +712,7 @@
       </trans-unit>
       <trans-unit id="dashboard.title">
         <source>dashboard.title</source>
-        <target>Instrumententafel</target>
+        <target>Dashboard</target>
       </trans-unit>
       <trans-unit id="action.back">
         <source>action.back</source>
