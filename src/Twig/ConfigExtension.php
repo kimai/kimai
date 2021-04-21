@@ -42,6 +42,11 @@ final class ConfigExtension extends AbstractExtension
     public function getThemeConfig(string $name)
     {
         switch ($name) {
+            case 'auto_reload_datatable':
+                @trigger_error('The configuration auto_reload_datatable is deprecated and was removed with 1.4', E_USER_DEPRECATED);
+
+                return false;
+
             case 'soft_limit':
                 return $this->configuration->getTimesheetActiveEntriesSoftLimit();
 

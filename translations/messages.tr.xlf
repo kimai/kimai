@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="confirm.delete">
         <source>confirm.delete</source>
-        <target state="translated">Silmek istiyor musunuz?</target>
+        <target state="translated">Gerçekten silmek istiyor musunuz?</target>
       </trans-unit>
       <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
@@ -42,7 +42,7 @@
       </trans-unit>
       <trans-unit id="delete.not_in_use">
         <source>delete.not_in_use</source>
-        <target state="translated">Bu öğe güvenle silinebilir.</target>
+        <target state="translated">Bu öge güvenle silinebilir.</target>
       </trans-unit>
       <trans-unit id="cancel">
         <source>cancel</source>
@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="dashboard.subtitle">
         <source>dashboard.subtitle</source>
-        <target state="translated">Hoşgeldiniz!</target>
+        <target state="translated">Hoş geldiniz!</target>
       </trans-unit>
       <trans-unit id="dashboard.all">
         <source>dashboard.all</source>
@@ -1120,6 +1120,78 @@
       <trans-unit id="theme.update_browser_title">
         <source>theme.update_browser_title</source>
         <target>Tarayıcı başlığını güncelle</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Bütçesiz kayıtları göster</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Rezervasyonsuz kayıtları göster</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Vergi oranı</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Dosya</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Faturalandırılmadı</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Dışa aktarılmadı</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Sıralama ölçütü</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Azalan</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Artan</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Ayarı sık kullanılan arama olarak kaydet</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Arama terimi</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>%rows% satırın ön izlemesi atlandı ...</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Ödeme tarihi</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Tümünü kaydet</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Sık kullanılan aramayı sil</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Son kayıt</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>O zamandan beri rezervasyon yok</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Bir kaydı silmek istiyorsanız, onu düğmeye sürüklemelisiniz.</target>
       </trans-unit>
     </body>
   </file>

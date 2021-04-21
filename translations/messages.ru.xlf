@@ -199,7 +199,7 @@
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>Email</target>
+        <target>Эл. почта</target>
       </trans-unit>
       <trans-unit id="label.create_more">
         <source>label.create_more</source>

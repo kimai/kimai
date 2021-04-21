@@ -250,7 +250,7 @@
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>Email</target>
+        <target>E-mail</target>
       </trans-unit>
       <trans-unit id="label.create_more">
         <source>label.create_more</source>
@@ -1120,7 +1120,15 @@
       </trans-unit>
       <trans-unit id="sum.total">
         <source>sum.total</source>
-        <target>Teljes</target>
+        <target>Összes</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Böngésző cím frissítése</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Az űrlap megváltozott. A "Mentés" gombbal elmentheted a változtatásokat, a "Bezárás" gombbal elvetheted őket.</target>
       </trans-unit>
     </body>
   </file>

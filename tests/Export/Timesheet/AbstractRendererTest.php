@@ -71,11 +71,14 @@ abstract class AbstractRendererTest extends KernelTestCase
     {
         $customer = new Customer();
         $customer->setName('Customer Name');
+        $customer->setNumber('A-0123456789');
+        $customer->setVatId('DE-9876543210');
         $customer->setMetaField((new CustomerMeta())->setName('customer-foo')->setValue('customer-bar')->setIsVisible(true));
 
         $project = new Project();
         $project->setName('project name');
         $project->setCustomer($customer);
+        $project->setOrderNumber('ORDER-123');
         $project->setMetaField((new ProjectMeta())->setName('project-bar')->setValue('project-bar')->setIsVisible(true));
         $project->setMetaField((new ProjectMeta())->setName('project-foo2')->setValue('project-foo2')->setIsVisible(true));
 

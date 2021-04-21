@@ -91,7 +91,15 @@ class SystemConfigurationTest extends TestCase
                     ]
                 ],
                 'weekends' => true,
-            ]
+            ],
+            'saml' => [
+                'activate' => false,
+                'title' => 'Fantastic OAuth login'
+            ],
+            'theme' => [
+                'color_choices' => 'Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000',
+                'colors_limited' => true
+            ],
         ];
     }
 
@@ -110,6 +118,7 @@ class SystemConfigurationTest extends TestCase
             (new Configuration())->setName('timesheet.default_begin')->setValue('07:00'),
             (new Configuration())->setName('timesheet.active_entries.hard_limit')->setValue('7'),
             (new Configuration())->setName('timesheet.active_entries.soft_limit')->setValue('3'),
+            (new Configuration())->setName('theme.colors_limited')->setValue(false),
         ];
     }
 
@@ -126,6 +135,9 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('GBP', $sut->find('defaults.customer.currency'));
         $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(99, $sut->find('timesheet.active_entries.hard_limit'));
+        $this->assertTrue($sut->find('theme.colors_limited'));
+        $this->assertTrue($sut->isThemeColorsLimited());
+        $this->assertEquals(['Maroon' => '#800000', 'Brown' => '#a52a2a', 'Red' => '#ff0000', 'Orange' => '#ffa500', '#ffffff' => '#ffffff', '#000000' => '#000000'], $sut->getThemeColorChoices());
     }
 
     public function testDefaultWithLoader()
@@ -135,14 +147,20 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('RUB', $sut->find('defaults.customer.currency'));
         $this->assertTrue($sut->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(7, $sut->find('timesheet.active_entries.hard_limit'));
+        $this->assertFalse($sut->isSamlActive());
+        $this->assertFalse($sut->find('theme.colors_limited'));
     }
 
     public function testDefaultWithMixedConfigs()
     {
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('timesheet.rules.allow_future_times')->setValue(''),
+            (new Configuration())->setName('saml.activate')->setValue(true),
+            (new Configuration())->setName('theme.color_choices')->setValue(''),
         ]);
         $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
+        $this->assertTrue($sut->isSamlActive());
+        $this->assertNull($sut->getThemeColorChoices());
     }
 
     public function testUnknownConfigs()

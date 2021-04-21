@@ -82,6 +82,7 @@ abstract class AbstractSpreadsheetRenderer
             'wrapText' => false,
         ],
         'exported' => [],
+        'billable' => [],
         'tags' => [],
         'hourlyRate' => [],
         'fixedRate' => [],
@@ -90,6 +91,11 @@ abstract class AbstractSpreadsheetRenderer
         'project-meta' => [],
         'activity-meta' => [],
         'user-meta' => [],
+        'type' => [],
+        'category' => [],
+        'customer_number' => [],
+        'customer_vat' => [],
+        'order_number' => [],
     ];
 
     public function __construct(TranslatorInterface $translator, LocaleFormatExtensions $dateExtension, EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter)
@@ -117,7 +123,16 @@ abstract class AbstractSpreadsheetRenderer
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $excelDate = Date::PHPToExcel($date);
+
+        if ($excelDate === false) {
+            $sheet->setCellValueByColumnAndRow($column, $row, $date);
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $excelDate);
+        // TODO why is that format hardcoded and does not depend on the users locale?
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::DATETIME_FORMAT);
     }
 
@@ -129,7 +144,15 @@ abstract class AbstractSpreadsheetRenderer
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $excelDate = Date::PHPToExcel($date);
+
+        if ($excelDate === false) {
+            $sheet->setCellValueByColumnAndRow($column, $row, $date);
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $excelDate);
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::TIME_FORMAT);
     }
 
@@ -141,7 +164,16 @@ abstract class AbstractSpreadsheetRenderer
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $excelDate = Date::PHPToExcel($date);
+
+        if ($excelDate === false) {
+            $sheet->setCellValueByColumnAndRow($column, $row, $date);
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $excelDate);
+        // TODO why is that format hardcoded and does not depend on the users locale?
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_YYYYMMDD2);
     }
 
@@ -333,7 +365,14 @@ abstract class AbstractSpreadsheetRenderer
 
         if (isset($columns['exported']) && !isset($columns['exported']['render'])) {
             $columns['exported']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
-                $exported = $entity->isExported() ? 'entryState.exported' : 'entryState.not_exported';
+                $exported = $entity->isExported() ? 'yes' : 'no';
+                $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans($exported));
+            };
+        }
+
+        if (isset($columns['billable']) && !isset($columns['billable']['render'])) {
+            $columns['billable']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $exported = (method_exists($entity, 'isBillable') && !$entity->isBillable()) ? 'no' : 'yes';
                 $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans($exported));
             };
         }
@@ -501,6 +540,78 @@ abstract class AbstractSpreadsheetRenderer
                     return \count($userPreferences);
                 }
             ];
+        }
+
+        if (isset($columns['type']) && !isset($columns['type']['render'])) {
+            $columns['type']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $sheet->setCellValueByColumnAndRow($column, $row, $entity->getType());
+            };
+        }
+
+        if (isset($columns['category']) && !isset($columns['category']['render'])) {
+            $columns['category']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $sheet->setCellValueByColumnAndRow($column, $row, $entity->getCategory());
+            };
+        }
+
+        if (isset($columns['customer_number'])) {
+            if (!isset($columns['customer_number']['header'])) {
+                $columns['customer_number']['header'] = function (Worksheet $sheet, $row, $column) {
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.number'));
+
+                    return 1;
+                };
+            }
+
+            if (!isset($columns['customer_number']['render'])) {
+                $columns['customer_number']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                    $customerId = '';
+                    if (null !== $entity->getProject()) {
+                        $customerId = $entity->getProject()->getCustomer()->getNumber();
+                    }
+                    $sheet->setCellValueByColumnAndRow($column, $row, $customerId);
+                };
+            }
+        }
+
+        if (isset($columns['customer_vat']) && !isset($columns['customer_vat']['render'])) {
+            if (!isset($columns['customer_vat']['header'])) {
+                $columns['customer_vat']['header'] = function (Worksheet $sheet, $row, $column) {
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.vat_id'));
+
+                    return 1;
+                };
+            }
+
+            if (!isset($columns['customer_vat']['render'])) {
+                $columns['customer_vat']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                    $customerVat = '';
+                    if (null !== $entity->getProject()) {
+                        $customerVat = $entity->getProject()->getCustomer()->getVatId();
+                    }
+                    $sheet->setCellValueByColumnAndRow($column, $row, $customerVat);
+                };
+            }
+        }
+
+        if (isset($columns['order_number']) && !isset($columns['order_number']['render'])) {
+            if (!isset($columns['order_number']['header'])) {
+                $columns['order_number']['header'] = function (Worksheet $sheet, $row, $column) {
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.orderNumber'));
+
+                    return 1;
+                };
+            }
+
+            if (!isset($columns['order_number']['render'])) {
+                $columns['order_number']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                    $orderNumber = '';
+                    if (null !== $entity->getProject()) {
+                        $orderNumber = $entity->getProject()->getOrderNumber();
+                    }
+                    $sheet->setCellValueByColumnAndRow($column, $row, $orderNumber);
+                };
+            }
         }
 
         if (!$showRates) {

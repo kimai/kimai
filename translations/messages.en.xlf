@@ -60,6 +60,30 @@
                 <source>search</source>
                 <target>Search</target>
             </trans-unit>
+            <trans-unit id="label.searchTerm">
+                <source>label.searchTerm</source>
+                <target>Search term</target>
+            </trans-unit>
+            <trans-unit id="label.set_as_default">
+                <source>label.set_as_default</source>
+                <target>Save setting as search favourite</target>
+            </trans-unit>
+            <trans-unit id="label.remove_default">
+                <source>label.remove_default</source>
+                <target>Delete search favourite</target>
+            </trans-unit>
+            <trans-unit id="label.asc">
+                <source>label.asc</source>
+                <target>Ascending</target>
+            </trans-unit>
+            <trans-unit id="label.desc">
+                <source>label.desc</source>
+                <target>Descending</target>
+            </trans-unit>
+            <trans-unit id="label.orderBy">
+                <source>label.orderBy</source>
+                <target>Order by</target>
+            </trans-unit>
             <trans-unit id="my.profile">
                 <source>my.profile</source>
                 <target>My profile</target>
@@ -71,6 +95,10 @@
             <trans-unit id="attachments">
                 <source>attachments</source>
                 <target>Files</target>
+            </trans-unit>
+            <trans-unit id="file">
+                <source>file</source>
+                <target>File</target>
             </trans-unit>
             <trans-unit id="rates.empty">
                 <source>rates.empty</source>
@@ -371,6 +399,10 @@
                 <source>action.save</source>
                 <target>Save</target>
             </trans-unit>
+            <trans-unit id="action.save_all">
+                <source>action.save_all</source>
+                <target>Save all</target>
+            </trans-unit>
             <trans-unit id="action.reset">
                 <source>action.reset</source>
                 <target>Reset</target>
@@ -571,7 +603,10 @@
                 <source>calendar.title</source>
                 <target>Calendar</target>
             </trans-unit>
-
+            <trans-unit id="calendar.drag_and_drop.delete">
+                <source>calendar.drag_and_drop.delete</source>
+                <target>If you want to delete an entry, you must drag it onto the button.</target>
+            </trans-unit>
             <!--
               Admin: Timesheet
             -->
@@ -579,7 +614,6 @@
                 <source>admin_timesheet.title</source>
                 <target>Timesheets</target>
             </trans-unit>
-
             <!--
               Admin: Projects
             -->
@@ -640,6 +674,10 @@
             <trans-unit id="label.vat_id">
                 <source>label.vat_id</source>
                 <target>VAT-ID</target>
+            </trans-unit>
+            <trans-unit id="label.tax_rate">
+                <source>label.tax_rate</source>
+                <target>Tax rate</target>
             </trans-unit>
             <trans-unit id="label.contact">
                 <source>label.contact</source>
@@ -938,6 +976,10 @@
                 <source>invoice.due_days</source>
                 <target>Payment target</target>
             </trans-unit>
+            <trans-unit id="invoice.payment_date">
+                <source>invoice.payment_date</source>
+                <target>Payment date</target>
+            </trans-unit>
             <trans-unit id="invoice.from">
                 <source>invoice.from</source>
                 <target>From</target>
@@ -1030,7 +1072,10 @@
                 <source>status.paid</source>
                 <target>Paid</target>
             </trans-unit>
-
+            <trans-unit id="preview.skipped_rows">
+                <source>preview.skipped_rows</source>
+                <target>Skipped preview of %rows% more rows ...</target>
+            </trans-unit>
             <!--
               Export
             -->
@@ -1149,6 +1194,30 @@
             <trans-unit id="help.batch_meta_fields">
                 <source>help.batch_meta_fields</source>
                 <target>Fields that are to be updated must first be activated by clicking on the associated checkbox.</target>
+            </trans-unit>
+            <trans-unit id="label.includeNoWork">
+                <source>label.includeNoWork</source>
+                <target>Show entries without bookings</target>
+            </trans-unit>
+            <trans-unit id="label.includeNoBudget">
+                <source>label.includeNoBudget</source>
+                <target>Show entries without budget</target>
+            </trans-unit>
+            <trans-unit id="label.not_exported">
+                <source>label.not_exported</source>
+                <target>Not exported</target>
+            </trans-unit>
+            <trans-unit id="label.not_invoiced">
+                <source>label.not_invoiced</source>
+                <target>Not billed</target>
+            </trans-unit>
+            <trans-unit id="label.last_record_before">
+                <source>label.last_record_before</source>
+                <target>No time booking since</target>
+            </trans-unit>
+            <trans-unit id="label.last_record">
+                <source>label.last_record</source>
+                <target>Last entry</target>
             </trans-unit>
         </body>
     </file>

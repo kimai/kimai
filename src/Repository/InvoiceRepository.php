@@ -16,7 +16,7 @@ use App\Entity\User;
 use App\Repository\Loader\InvoiceLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
-use App\Repository\Query\InvoiceQuery;
+use App\Repository\Query\InvoiceArchiveQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
@@ -38,6 +38,20 @@ class InvoiceRepository extends EntityRepository
         $entityManager = $this->getEntityManager();
         $entityManager->remove($invoice);
         $entityManager->flush();
+    }
+
+    public function hasInvoice(string $invoiceNumber): bool
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('count(i.id) as counter')
+            ->from(Invoice::class, 'i')
+            ->andWhere($qb->expr()->eq('i.invoiceNumber', ':number'))
+            ->setParameter('number', $invoiceNumber)
+        ;
+
+        $counter = (int) $qb->getQuery()->getSingleScalarResult();
+
+        return $counter > 0;
     }
 
     private function getCounterFor(\DateTime $start, \DateTime $end, ?Customer $customer = null): int
@@ -91,7 +105,7 @@ class InvoiceRepository extends EntityRepository
         return $this->getCounterFor($start, $end, $customer);
     }
 
-    public function getCounterForAllTime(\DateTime $date, ?Customer $customer = null): int
+    public function getCounterForAllTime(?Customer $customer = null): int
     {
         if (null !== $customer) {
             return $this->count(['customer' => $customer]);
@@ -137,7 +151,7 @@ class InvoiceRepository extends EntityRepository
         $qb->setParameter('teams', $ids);
     }
 
-    private function getQueryBuilderForQuery(InvoiceQuery $query): QueryBuilder
+    private function getQueryBuilderForQuery(InvoiceArchiveQuery $query): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -146,10 +160,36 @@ class InvoiceRepository extends EntityRepository
             ->from(Invoice::class, 'i')
         ;
 
+        if ($query->getBegin() !== null) {
+            $qb->andWhere($qb->expr()->gte('i.createdAt', ':begin'));
+            $qb->setParameter('begin', $query->getBegin());
+        }
+
+        if ($query->getEnd() !== null) {
+            $qb->andWhere($qb->expr()->lte('i.createdAt', ':end'));
+            $qb->setParameter('end', $query->getEnd());
+        }
+
+        if ($query->hasCustomers()) {
+            $qb->andWhere($qb->expr()->in('i.customer', ':customer'));
+            $qb->setParameter('customer', $query->getCustomers());
+        }
+
+        if ($query->hasStatus()) {
+            $qb->andWhere($qb->expr()->in('i.status', ':status'));
+            $qb->setParameter('status', $query->getStatus());
+        }
+
         $orderBy = $query->getOrderBy();
         switch ($orderBy) {
             case 'date':
                 $orderBy = 'i.createdAt';
+                break;
+            case 'customer':
+                $orderBy = 'i.customer';
+                break;
+            case 'total':
+                $orderBy = 'i.total';
                 break;
         }
 
@@ -157,10 +197,42 @@ class InvoiceRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
+        if ($query->hasSearchTerm()) {
+            $qb->leftJoin('i.customer', 'customer');
+            $searchAnd = $qb->expr()->andX();
+            $searchTerm = $query->getSearchTerm();
+
+            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
+                $qb->leftJoin('customer.meta', 'meta');
+                $searchAnd->add(
+                    $qb->expr()->andX(
+                        $qb->expr()->eq('meta.name', ':metaName'),
+                        $qb->expr()->like('meta.value', ':metaValue')
+                    )
+                );
+                $qb->setParameter('metaName', $metaName);
+                $qb->setParameter('metaValue', '%' . $metaValue . '%');
+            }
+
+            if ($searchTerm->hasSearchTerm()) {
+                $searchAnd->add(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('customer.name', ':searchTerm'),
+                        $qb->expr()->like('customer.company', ':searchTerm')
+                    )
+                );
+                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
+            }
+
+            if ($searchAnd->count() > 0) {
+                $qb->andWhere($searchAnd);
+            }
+        }
+
         return $qb;
     }
 
-    public function countInvoicesForQuery(InvoiceQuery $query): int
+    public function countInvoicesForQuery(InvoiceArchiveQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb
@@ -173,7 +245,20 @@ class InvoiceRepository extends EntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
-    protected function getPaginatorForQuery(InvoiceQuery $query): PaginatorInterface
+    /**
+     * @param InvoiceArchiveQuery $query
+     * @return Invoice[]
+     */
+    public function getInvoicesForQuery(InvoiceArchiveQuery $query): iterable
+    {
+        // this is using the paginator internally, as it will load all joined entities into the working unit
+        // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
+        $paginator = $this->getPaginatorForQuery($query);
+
+        return $paginator->getAll();
+    }
+
+    protected function getPaginatorForQuery(InvoiceArchiveQuery $query): PaginatorInterface
     {
         $counter = $this->countInvoicesForQuery($query);
         $qb = $this->getQueryBuilderForQuery($query);
@@ -181,7 +266,7 @@ class InvoiceRepository extends EntityRepository
         return new LoaderPaginator(new InvoiceLoader($qb->getEntityManager()), $qb, $counter);
     }
 
-    public function getPagerfantaForQuery(InvoiceQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(InvoiceArchiveQuery $query): Pagerfanta
     {
         $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());

@@ -41,7 +41,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
 
         $this->assertPageActions($client, [
-            'search search-toggle visible-xs-inline' => '#',
+            'search' => '#',
             'toolbar-action exporter-csv' => $this->createUrl('/team/timesheet/export/csv'),
             'toolbar-action exporter-print' => $this->createUrl('/team/timesheet/export/print'),
             'toolbar-action exporter-pdf' => $this->createUrl('/team/timesheet/export/pdf'),
@@ -73,7 +73,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'state' => 1,
             'users' => [$user->getId()],
@@ -87,7 +87,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_timesheet_admin', 13);
 
         // make sure the recording css class exist on tr for targeting running record rows
-        $node = $client->getCrawler()->filter('section.content div#datatable_timesheet_admin table.table-striped tbody tr.recording');
+        $node = $client->getCrawler()->filter('section.content div.datatable_timesheet_admin table.dataTable tbody tr.recording');
         self::assertEquals(3, $node->count());
     }
 
@@ -119,7 +119,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'location:homeoffice foobar',
         ]);
@@ -150,7 +150,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/team/timesheet/export/print'));
         $client->submit($form, [
             'state' => 1,

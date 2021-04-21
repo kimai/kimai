@@ -60,7 +60,7 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/customer/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
@@ -92,7 +92,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/customer/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/customer/export'));
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
@@ -113,6 +113,8 @@ class CustomerControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#customer_details_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#project_list_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#time_budget_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#budget_box');
         self::assertEquals(1, $node->count());
@@ -344,9 +346,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $team2->tick();
 
         $client->submit($form);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/'));
-        $client->followRedirect();
-        $this->assertHasDataTable($client);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
 
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);

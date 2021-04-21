@@ -11,6 +11,7 @@
         {% block modal_body %}{% endblock %}
         {% block modal_footer %}{% endblock %}
     {% endembed %}
+    {% block page_search %}{% endblock %}
 {% endblock %}
 
 {% block page_content_start %}
@@ -132,8 +133,7 @@
             <ul class="dropdown-menu"
                 data-api="{{ path('active_timesheet') }}"
                 data-href="{{ path('stop_timesheet', {'id' : '000'}) }}"
-                data-icon="{{ 'stop-small'|icon }}"
-                data-format="{{ get_format_duration() }}">
+                data-icon="{{ 'stop-small'|icon }}">
                 <li class="header">
                     {{ 'active.entries'|trans }}
                 </li>
@@ -148,7 +148,7 @@
                                     <h4>
                                         <span>{{ entry.activity.name }}</span>
                                         <small>
-                                            <span data-title="true" data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}" data-format="{{ get_format_duration() }}">{{ entry|duration }}</span>
+                                            <span data-title="true" data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</span>
                                         </small>
                                     </h4>
                                     <p>{{ entry.project.name }} ({{ entry.project.customer.name }})</p>
@@ -251,7 +251,6 @@
 {% endblock %}
 
 {% block breadcrumb %}
-    {% block page_search %}{% endblock %}
     {% block page_actions %}{% endblock %}
 {% endblock %}
 
@@ -276,11 +275,11 @@
         window.addEventListener('load', function() {
             var loader = new KimaiWebLoader(
                 {
+                    formatDuration: '{{ get_format_duration() }}',
                     login: '{{ path('fos_user_security_login') }}',
                     locale: '{{ app.request.locale }}',
                     first_dow_iso: {{ iso_day_by_name(app.user.firstDayOfWeek) }},
                     twentyFourHours: {{ 'true'|hour24('false') }},
-                    autoReloadDatatable: {% if theme_config('auto_reload_datatable') %}true{% else %}false{% endif %},
                     autoComplete: {{ theme_config('autocomplete_chars') }},
                     defaultColor: '{{ constant('App\\Constants::DEFAULT_COLOR') }}',
                     updateBrowserTitle: {% if app.user.preferenceValue('theme.update_browser_title') %}true{% else %}false{% endif %}

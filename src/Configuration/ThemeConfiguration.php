@@ -23,7 +23,9 @@ class ThemeConfiguration implements SystemBundleConfiguration, \ArrayAccess
 
     public function isAutoReloadDatatable(): bool
     {
-        return (bool) $this->find('auto_reload_datatable');
+        @trigger_error('The configuration auto_reload_datatable is deprecated and was removed with 1.4', E_USER_DEPRECATED);
+
+        return false;
     }
 
     public function isAllowTagCreation(): bool

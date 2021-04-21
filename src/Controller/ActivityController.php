@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Activity\ActivityService;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
@@ -31,7 +32,6 @@ use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\TeamRepository;
 use Exception;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -58,12 +58,17 @@ final class ActivityController extends AbstractController
      * @var EventDispatcherInterface
      */
     private $dispatcher;
+    /**
+     * @var ActivityService
+     */
+    private $activityService;
 
-    public function __construct(ActivityRepository $repository, SystemConfiguration $configuration, EventDispatcherInterface $dispatcher)
+    public function __construct(ActivityRepository $repository, SystemConfiguration $configuration, EventDispatcherInterface $dispatcher, ActivityService $activityService)
     {
         $this->repository = $repository;
         $this->configuration = $configuration;
         $this->dispatcher = $dispatcher;
+        $this->activityService = $activityService;
     }
 
     /**
@@ -77,14 +82,10 @@ final class ActivityController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_activity');
         }
 
-        /* @var $entries Pagerfanta */
         $entries = $this->repository->getPagerfantaForQuery($query);
 
         return $this->render('activity/index.html.twig', [
@@ -92,6 +93,8 @@ final class ActivityController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'metaColumns' => $this->findMetaColumns($query),
+            'defaultCurrency' => $this->configuration->getCustomerDefaultCurrency(),
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -142,6 +145,7 @@ final class ActivityController extends AbstractController
             'rates' => $rates,
             'team' => $defaultTeam,
             'teams' => $teams,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -185,10 +189,7 @@ final class ActivityController extends AbstractController
      */
     public function createAction(Request $request, ?Project $project = null)
     {
-        $activity = new Activity();
-        if (null !== $project) {
-            $activity->setProject($project);
-        }
+        $activity = $this->activityService->createNewActivity($project);
 
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
@@ -198,7 +199,7 @@ final class ActivityController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->saveActivity($activity);
+                $this->activityService->saveNewActivity($activity);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_activity');
@@ -228,8 +229,12 @@ final class ActivityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->repository->saveActivity($activity);
+                $this->activityService->updateActivity($activity);
                 $this->flashSuccess('action.update.success');
+
+                if ($this->isGranted('view', $activity)) {
+                    return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
+                }
 
                 return $this->redirectToRoute('admin_activity');
             } catch (Exception $ex) {
@@ -284,7 +289,7 @@ final class ActivityController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->saveActivity($activity);
+                $this->activityService->updateActivity($activity);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
@@ -309,7 +314,7 @@ final class ActivityController extends AbstractController
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.activityUpdate kimai.activityDelete',
+                    'data-form-event' => 'kimai.activityDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
                 ]

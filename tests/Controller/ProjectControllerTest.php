@@ -66,7 +66,7 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/project/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
@@ -108,7 +108,7 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/project/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/project/export'));
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
@@ -147,6 +147,8 @@ class ProjectControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#project_details_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#activity_list_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#time_budget_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#budget_box');
         self::assertEquals(1, $node->count());
@@ -410,9 +412,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $team2->tick();
 
         $client->submit($form);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
-        $client->followRedirect();
-        $this->assertHasDataTable($client);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
 
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);

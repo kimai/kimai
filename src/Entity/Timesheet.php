@@ -166,8 +166,6 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     private $user;
     /**
-     * Activity
-     *
      * @var Activity
      *
      * @Serializer\Expose()
@@ -180,8 +178,6 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     private $activity;
     /**
-     * Project
-     *
      * @var Project
      *
      * @Serializer\Expose()
@@ -245,7 +241,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @var bool
      *
      * @Serializer\Expose()
-     * @Serializer\Groups({"Entity"})
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="exported", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -253,6 +249,9 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     private $exported = false;
     /**
      * @var bool
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
@@ -369,6 +368,11 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         $this->localizeDates();
 
         return $this->end;
+    }
+
+    public function isRunning(): bool
+    {
+        return $this->end === null;
     }
 
     /**
@@ -727,6 +731,13 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
             $timesheet->setMetaField(clone $meta);
         }
 
+        $timesheet->tags = new ArrayCollection();
+
+        /** @var Tag $tag */
+        foreach ($this->tags as $tag) {
+            $timesheet->addTag($tag);
+        }
+
         return $timesheet;
     }
 
@@ -734,7 +745,24 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     {
         if ($this->id) {
             $this->id = null;
-            $this->exported = false;
+        }
+
+        $this->exported = false;
+
+        $currentMeta = $this->meta;
+        $this->meta = new ArrayCollection();
+        /** @var TimesheetMeta $meta */
+        foreach ($currentMeta as $meta) {
+            $newMeta = clone $meta;
+            $newMeta->setEntity($this);
+            $this->setMetaField($newMeta);
+        }
+
+        $currentTags = $this->tags;
+        $this->tags = new ArrayCollection();
+        /** @var Tag $tag */
+        foreach ($currentTags as $tag) {
+            $this->addTag($tag);
         }
     }
 }

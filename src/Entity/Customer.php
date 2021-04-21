@@ -538,6 +538,11 @@ class Customer implements EntityWithMetaFields
         return $this->budget;
     }
 
+    public function hasBudget(): bool
+    {
+        return $this->budget > 0.00;
+    }
+
     public function setTimeBudget(int $seconds): Customer
     {
         $this->timeBudget = $seconds;
@@ -548,6 +553,11 @@ class Customer implements EntityWithMetaFields
     public function getTimeBudget(): int
     {
         return $this->timeBudget;
+    }
+
+    public function hasTimeBudget(): bool
+    {
+        return $this->timeBudget > 0;
     }
 
     /**
@@ -631,5 +641,28 @@ class Customer implements EntityWithMetaFields
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
+
+        $currentTeams = $this->teams;
+        $this->teams = new ArrayCollection();
+        /** @var Team $team */
+        foreach ($currentTeams as $team) {
+            $this->addTeam($team);
+        }
+
+        $currentMeta = $this->meta;
+        $this->meta = new ArrayCollection();
+        /** @var ProjectMeta $meta */
+        foreach ($currentMeta as $meta) {
+            $newMeta = clone $meta;
+            $newMeta->setEntity($this);
+            $this->setMetaField($newMeta);
+        }
     }
 }

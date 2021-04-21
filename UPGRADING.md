@@ -8,16 +8,25 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
-## [1.14](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
+## [1.15](https://github.com/kevinpapst/kimai2/releases/tag/1.15)
 
 **ATTENTION** This release bumps the minimum required PHP version to 7.3.
- 
- It might still work with `>=7.2.9` when using `composer install --ignore-platform-reqs` but without support!
+
+It might still work with `>=7.2.9` when using `composer install --ignore-platform-reqs` but without support!
 
 PHP 8 compatibility forced to upgrade MANY libraries:
 
 - Including but not limited to Gedmo v3 (which include BC breaks in definitions)
 - Including Doctrine DBAL in a newer version, that required PHP 7.3
+
+## [1.14](https://github.com/kevinpapst/kimai2/releases/tag/1.14)
+
+**CRITICAL BC break**: SQLite support was removed. If you are using SQLite, you have to [read this blog post](https://www.kimai.org/blog/2021/sqlite-and-ftp-support-removed/) and migrate to MySQL/MariaDB first!
+
+**New database tables and fields: don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+Permission changes:
+- `history_invoice` - removed permission entirely
 
 ## [1.13](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
 

@@ -6,8 +6,8 @@
 
 {% block main %}
     {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
-        'title': project.name,
+        'title': ('permissions'|trans({}, 'actions')) ~ ': ' ~ project.name,
         'form': form,
-        'back': path('admin_project')
+        'back': path('project_details', {'id': project.id})
     }) }}
 {% endblock %}

@@ -34,6 +34,10 @@
         <source>You must select at least one user or team.</source>
         <target>En az bir kullanıcı veya takım seçmelisiniz.</target>
       </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>Bütçe tükendi. Toplam kullanılabilir %budget% bütçeden, %used% şimdiye kadar rezerve edildi, %free% hala kullanılabilir.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

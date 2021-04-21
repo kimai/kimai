@@ -38,6 +38,8 @@ class ActivityTest extends TestCase
         self::assertFalse($sut->hasColor());
         $this->assertEquals(0.0, $sut->getBudget());
         $this->assertEquals(0, $sut->getTimeBudget());
+        self::assertFalse($sut->hasBudget());
+        self::assertFalse($sut->hasTimeBudget());
         $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
         $this->assertEquals(0, $sut->getMetaFields()->count());
         $this->assertNull($sut->getMetaField('foo'));
@@ -68,9 +70,11 @@ class ActivityTest extends TestCase
 
         $this->assertInstanceOf(Activity::class, $sut->setBudget(12345.67));
         $this->assertEquals(12345.67, $sut->getBudget());
+        self::assertTrue($sut->hasBudget());
 
         $this->assertInstanceOf(Activity::class, $sut->setTimeBudget(937321));
         $this->assertEquals(937321, $sut->getTimeBudget());
+        self::assertTrue($sut->hasTimeBudget());
 
         $this->assertTrue($sut->isGlobal());
         $this->assertInstanceOf(Activity::class, $sut->setProject(new Project()));
@@ -157,5 +161,46 @@ class ActivityTest extends TestCase
             self::assertEquals($item[0], $column->getLabel());
             self::assertEquals($item[1], $column->getType());
         }
+    }
+
+    public function testClone()
+    {
+        $sut = new Activity();
+        $sut->setName('activity1111');
+        $sut->setComment('DE-0123456789');
+
+        $project = new Project();
+        $project->setName('foo');
+        $project->setOrderNumber('1234567890');
+        $project->setBudget(123.45);
+        $project->setTimeBudget(12345);
+        $project->setVisible(false);
+        $project->setEnd(new \DateTime());
+        $project->setColor('#ccc');
+
+        $sut->setProject($project);
+
+        $team = new Team();
+        $sut->addTeam($team);
+
+        $meta = new ActivityMeta();
+        $meta->setName('blabla');
+        $meta->setValue('1234567890');
+        $meta->setIsVisible(false);
+        $meta->setIsRequired(true);
+        $sut->setMetaField($meta);
+
+        $clone = clone $sut;
+
+        foreach ($sut->getMetaFields() as $metaField) {
+            $cloneMeta = $clone->getMetaField($metaField->getName());
+            self::assertEquals($cloneMeta->getValue(), $metaField->getValue());
+        }
+        self::assertEquals($clone->getBudget(), $sut->getBudget());
+        self::assertEquals($clone->getTimeBudget(), $sut->getTimeBudget());
+        self::assertEquals($clone->getComment(), $sut->getComment());
+        self::assertEquals($clone->getColor(), $sut->getColor());
+        self::assertEquals('DE-0123456789', $clone->getComment());
+        self::assertEquals('activity1111', $clone->getName());
     }
 }

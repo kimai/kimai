@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/toolbar.html.twig" as toolbar %}
+{% import "macros/search.html.twig" as search %}
 {% import "customer/actions.html.twig" as actions %}
 
 {% set columns = {
@@ -9,7 +9,7 @@
     'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
     'number': {'class': 'hidden-xs hidden-sm hidden'},
     'company': {'class': 'hidden-xs hidden-sm hidden'},
-    'vat_id': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': 'vatId'},
+    'vat_id': {'class': 'hidden-xs hidden-sm hidden'},
     'contact': {'class': 'hidden-xs hidden-sm hidden'},
     'address': {'class': 'hidden-xs hidden-sm hidden'},
     'country': {'class': 'hidden-xs hidden-sm hidden'},
@@ -26,6 +26,8 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
+    'budget': {'class': 'hidden-xs hidden-sm hidden text-center w-min'},
+    'timeBudget': {'class': 'hidden-xs hidden-sm hidden text-center w-min'},
     'team': {'class': 'text-center w-min', 'orderBy': false},
     'visible': {'class': 'text-center hidden w-min'},
     'actions': {'class': 'actions alwaysVisible'},
@@ -34,7 +36,7 @@
 {% set tableName = 'customer_admin' %}
 
 {% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
-{% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
+{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.customers('index') }}{% endblock %}
 
 {% block main_before %}
@@ -46,12 +48,12 @@
     {% if entries.count == 0 %}
         {{ widgets.nothing_found('kimai.customerUpdate kimai.customerTeamUpdate') }}
     {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.customerUpdate kimai.customerTeamUpdate'}) }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.customerUpdate kimai.customerDelete kimai.customerTeamUpdate'}) }}
 
         {% for entry in entries %}
-            <tr{% if is_granted('view', entry) %} class="alternative-link open-edit" data-href="{{ path('customer_details', {'id': entry.id}) }}"{% endif %}>
+            <tr {{ widgets.customer_row_attr(entry, now) }}>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_color_dot('customer', true, entry.name, null, entry.color) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment1line }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'number') }}">{{ entry.number }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'company') }}">{{ entry.company }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'vat_id') }}">{{ entry.vatId }}</td>
@@ -69,6 +71,20 @@
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">
+                    {% if entry.hasBudget() %}
+                        {{ entry.budget|money(entry.currency) }}
+                    {% else %}
+                        &ndash;
+                    {% endif %}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
+                    {% if entry.hasBudget() %}
+                        {{ entry.timeBudget|duration }}
+                    {% else %}
+                        &ndash;
+                    {% endif %}
+                </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">{{ widgets.badge_team_access(entry.teams) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.customer(entry, 'index') }}</td>

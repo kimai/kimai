@@ -12,7 +12,6 @@ namespace App\Form\Toolbar;
 use App\Repository\Query\ExportQuery;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,6 +26,7 @@ class ExportToolbarForm extends AbstractToolbarForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addSearchTermInputField($builder);
+        $this->addBillableChoice($builder);
         $this->addExportStateChoice($builder);
         $this->addTimesheetStateChoice($builder);
         if ($options['include_user']) {
@@ -41,9 +41,6 @@ class ExportToolbarForm extends AbstractToolbarForm
         $builder->add('markAsExported', CheckboxType::class, [
             'label' => 'label.mark_as_exported',
             'required' => false,
-        ]);
-        $builder->add('preview', SubmitType::class, [
-            'label' => 'button.preview',
         ]);
     }
 

@@ -49,8 +49,8 @@ class DailyWorkingTimeChartTest extends TestCase
         self::assertInstanceOf(AbstractWidgetType::class, $sut);
         self::assertEquals('DailyWorkingTimeChart', $sut->getId());
         self::assertEquals('stats.yourWorkingHours', $sut->getTitle());
-        self::assertEquals('monday this week 00:00:00', $sut->getOption('begin', 'xxx'));
-        self::assertEquals('sunday this week 23:59:59', $sut->getOption('end', 'xxx'));
+        self::assertNull($sut->getOption('begin', 'xxx'));
+        self::assertNull($sut->getOption('end', 'xxx'));
         self::assertEquals('', $sut->getOption('color', 'xxx'));
         self::assertInstanceOf(User::class, $sut->getOption('user', 'xxx'));
         self::assertEquals('bar', $sut->getOption('type', 'xxx'));
@@ -109,9 +109,21 @@ class DailyWorkingTimeChartTest extends TestCase
         $repository = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->onlyMethods(['getDailyData'])->getMock();
         $repository->expects($this->once())->method('getDailyData')->willReturnCallback(function ($begin, $end, $user) use ($activity, $project) {
             return [
-                ['year' => $begin->format('Y'), 'month' => $begin->format('n'), 'day' => $begin->format('j'), 'rate' => 13.75, 'duration' => 1234, 'details' => [
-                    ['activity' => $activity, 'project' => $project]
-                ]]
+                [
+                    'year' => $begin->format('Y'),
+                    'month' => $begin->format('n'),
+                    'day' => $begin->format('j'),
+                    'rate' => 13.75,
+                    'duration' => 1234,
+                    'billable' => 1234,
+                    'details' => [
+                        [
+                            'activity' => $activity,
+                            'project' => $project,
+                            'billable' => 1234,
+                        ]
+                    ]
+                ]
             ];
         });
 

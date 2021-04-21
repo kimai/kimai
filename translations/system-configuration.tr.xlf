@@ -242,6 +242,10 @@
         <source>label.timesheet.duration_increment</source>
         <target>Süre için dakika seçimi</target>
       </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>Depolanan bütçeler için fazla rezervasyona izin ver</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

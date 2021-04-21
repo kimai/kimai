@@ -16,13 +16,14 @@
             {% block box_body %}
                 <table class="table table-hover dataTable" role="grid">
                     <tbody>
-                    {% for stats in projectStats|sort((a, b) => a.project.name <=> b.project.name) %}
-                        {% set project = stats.project %}
-                        <tr{% if is_granted('details', stats.project) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': stats.project.id}) }}"{% endif %}>
+                    {% for row in projectStats|sort((a, b) => a.project.name <=> b.project.name) %}
+                        {% set stats = row.stats %}
+                        {% set project = row.project %}
+                        <tr{% if is_granted('details', project) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': project.id}) }}"{% endif %}>
                             <td>
-                                {{ widgets.label_project(stats.project) }}
+                                {{ widgets.label_project(project) }}
                                 <br>
-                                <small>{{ widgets.label_customer(stats.project.customer) }}</small>
+                                <small>{{ widgets.label_customer(project.customer) }}</small>
                             </td>
                             <td class="hidden-xs hidden-sm hidden-md">
                                 {% for team in project.teams %}
@@ -34,10 +35,10 @@
                             <td style="width:50%">
                                 {% if project.timeBudget is not empty and project.timeBudget > 0 %}
                                     {% set budgetLeft = project.timeBudget - stats.recordDuration %}
-                                    {{ progress.progressbar_small(project.timeBudget, stats.recordDuration, budgetLeft, budgetLeft|duration) }}
+                                    {{ progress.progressbar_small(project.timeBudget, stats.durationBillable, budgetLeft, budgetLeft|duration) }}
                                 {% elseif project.budget is not empty and project.budget > 0 %}
                                     {% set budgetLeft = project.budget - stats.recordRate %}
-                                    {{ progress.progressbar_small(project.budget, stats.recordRate, budgetLeft, budgetLeft|money(project.customer.currency)) }}
+                                    {{ progress.progressbar_small(project.budget, stats.rateBillable, budgetLeft, budgetLeft|money(project.customer.currency)) }}
                                 {% endif %}
                             </td>
                         </tr>

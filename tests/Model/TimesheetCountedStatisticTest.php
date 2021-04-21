@@ -20,10 +20,13 @@ class TimesheetCountedStatisticTest extends TestCase
     public function testDefaultValues()
     {
         $sut = new TimesheetCountedStatistic();
-        self::assertEquals(0.0, $sut->getRecordRate());
-        self::assertEquals(0, $sut->getRecordDuration());
-        self::assertEquals(0, $sut->getRecordAmount());
-        self::assertEquals(0.0, $sut->getRecordInternalRate());
+        self::assertSame(0.0, $sut->getRecordRate());
+        self::assertSame(0, $sut->getRecordDuration());
+        self::assertSame(0, $sut->getRecordAmount());
+        self::assertSame(0.0, $sut->getRecordInternalRate());
+        self::assertSame(0, $sut->getDurationBillable());
+        self::assertSame(0.0, $sut->getRateBillable());
+        self::assertSame(0, $sut->getRecordAmountBillable());
     }
 
     public function testSetter()
@@ -34,9 +37,17 @@ class TimesheetCountedStatisticTest extends TestCase
         self::assertInstanceOf(TimesheetCountedStatistic::class, $sut->setRecordAmount(5));
         self::assertInstanceOf(TimesheetCountedStatistic::class, $sut->setRecordInternalRate(99.09));
 
-        self::assertEquals(23.97, $sut->getRecordRate());
-        self::assertEquals(21, $sut->getRecordDuration());
-        self::assertEquals(5, $sut->getRecordAmount());
-        self::assertEquals(99.09, $sut->getRecordInternalRate());
+        self::assertSame(23.97, $sut->getRecordRate());
+        self::assertSame(21, $sut->getRecordDuration());
+        self::assertSame(5, $sut->getRecordAmount());
+        self::assertSame(99.09, $sut->getRecordInternalRate());
+
+        $sut->setRateBillable(123.456);
+        $sut->setDurationBillable(1234);
+        $sut->setRecordAmountBillable(4321);
+
+        self::assertSame(123.456, $sut->getRateBillable());
+        self::assertSame(1234, $sut->getDurationBillable());
+        self::assertSame(4321, $sut->getRecordAmountBillable());
     }
 }

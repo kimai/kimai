@@ -50,6 +50,7 @@ require('moment/locale/eo');
 require('moment/locale/es');
 require('moment/locale/eu');
 require('moment/locale/fi');
+require('moment/locale/fo');
 require('moment/locale/fr');
 require('moment/locale/he');
 require('moment/locale/hu');
@@ -70,8 +71,11 @@ require('moment/locale/zh-cn');
 
 require('daterangepicker');
 
+/*
+"sortablejs": "^1.10",
 const Sortable = require('sortablejs/Sortable.min');
 global.Sortable = Sortable;
+*/
 
 // ------ AdminLTE framework ------
 require('./sass/bootstrap.scss');
@@ -92,6 +96,7 @@ require('./sass/app.scss');
 require('./js/KimaiWebLoader.js');
 global.KimaiPaginatedBoxWidget = require('./js/widgets/KimaiPaginatedBoxWidget').default;
 global.KimaiReloadPageWidget = require('./js/widgets/KimaiReloadPageWidget').default;
+global.KimaiCookies = require('./js/widgets/KimaiCookies').default;
 
 // ------ Autocomplete for tags only ------
 require('jquery-ui/ui/widgets/autocomplete');

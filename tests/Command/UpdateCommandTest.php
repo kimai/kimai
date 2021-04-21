@@ -57,7 +57,7 @@ class UpdateCommandTest extends KernelTestCase
         self::assertStringContainsString('[OK] Already at the latest version ("DoctrineMigrations\\', $result);
 
         self::assertStringContainsString(
-            sprintf('[OK] Congratulations! Successfully updated Kimai 2 to version %s (%s)', Constants::VERSION, Constants::STATUS),
+            sprintf('[OK] Congratulations! Successfully updated Kimai to version %s (%s)', Constants::VERSION, Constants::STATUS),
             $result
         );
 

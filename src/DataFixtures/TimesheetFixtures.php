@@ -40,7 +40,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
     public const TIMERANGE_RUNNING = 1047; // in minutes = 17:45 hours
     public const MIN_MINUTES_PER_ENTRY = 15;
     public const MAX_MINUTES_PER_ENTRY = 840; // 14h
-    public const MAX_DESCRIPTION_LENGTH = 500;
+    public const MAX_DESCRIPTION_LENGTH = 200;
 
     public const ADD_TAGS_MAX_ENTRIES = 10000;
     public const MAX_TAG_PER_ENTRY = 3;

@@ -23,6 +23,13 @@ class SystemConfiguration implements SystemBundleConfiguration
         return $repository->getConfiguration();
     }
 
+    // ========== SAML configurations ==========
+
+    public function isSamlActive(): bool
+    {
+        return (bool) $this->find('saml.activate');
+    }
+
     // ========== Calendar configurations ==========
 
     public function getCalendarBusinessDays(): array
@@ -131,6 +138,11 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (bool) $this->find('timesheet.rules.allow_future_times');
     }
 
+    public function isTimesheetAllowOverbookingBudget(): bool
+    {
+        return (bool) $this->find('timesheet.rules.allow_overbooking_budget');
+    }
+
     public function isTimesheetAllowOverlappingRecords(): bool
     {
         return (bool) $this->find('timesheet.rules.allow_overlapping_records');
@@ -227,5 +239,41 @@ class SystemConfiguration implements SystemBundleConfiguration
     public function getTimesheetIncrementEnd(): ?int
     {
         return $this->getIncrement('timesheet.time_increment', $this->getTimesheetDefaultRoundingEnd(), 0);
+    }
+
+    // ========== Theme configurations ==========
+
+    public function isThemeColorsLimited(): bool
+    {
+        return (bool) $this->find('theme.colors_limited');
+    }
+
+    public function getThemeColorChoices(): ?array
+    {
+        $config = $this->find('theme.color_choices');
+        if (empty($config)) {
+            return null;
+        }
+        $config = explode(',', $config);
+
+        $colors = [];
+        foreach ($config as $item) {
+            if (empty($item)) {
+                continue;
+            }
+            $item = explode('|', $item);
+            $key = $item[0];
+            $value = $key;
+            if (\count($item) > 1) {
+                $value = $item[1];
+            }
+
+            if (empty($key)) {
+                $key = $value;
+            }
+            $colors[$key] = $value;
+        }
+
+        return array_unique($colors);
     }
 }

@@ -49,7 +49,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "color", "visible", "comment"})
  * @Exporter\Expose("project", label="label.project", exp="object.getProject() === null ? null : object.getProject().getName()")
- * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
  */
 class Activity implements EntityWithMetaFields
 {
@@ -269,6 +268,11 @@ class Activity implements EntityWithMetaFields
         return $this->budget;
     }
 
+    public function hasBudget(): bool
+    {
+        return $this->budget > 0.00;
+    }
+
     public function setTimeBudget(int $seconds): Activity
     {
         $this->timeBudget = $seconds;
@@ -279,6 +283,11 @@ class Activity implements EntityWithMetaFields
     public function getTimeBudget(): int
     {
         return $this->timeBudget;
+    }
+
+    public function hasTimeBudget(): bool
+    {
+        return $this->timeBudget > 0;
     }
 
     /**
@@ -368,7 +377,22 @@ class Activity implements EntityWithMetaFields
     {
         if ($this->id) {
             $this->id = null;
-            $this->meta = new ArrayCollection();
+        }
+
+        $currentTeams = $this->teams;
+        $this->teams = new ArrayCollection();
+        /** @var Team $team */
+        foreach ($currentTeams as $team) {
+            $this->addTeam($team);
+        }
+
+        $currentMeta = $this->meta;
+        $this->meta = new ArrayCollection();
+        /** @var ProjectMeta $meta */
+        foreach ($currentMeta as $meta) {
+            $newMeta = clone $meta;
+            $newMeta->setEntity($this);
+            $this->setMetaField($newMeta);
         }
     }
 }

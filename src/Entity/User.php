@@ -12,9 +12,11 @@ namespace App\Entity;
 use App\Constants;
 use App\Export\Annotation as Exporter;
 use App\Utils\StringHelper;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use FOS\UserBundle\Model\User as BaseUser;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -67,7 +69,7 @@ class User extends BaseUser implements UserInterface
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
-    public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    //public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     public const DEFAULT_ROLE = self::ROLE_USER;
     public const DEFAULT_LANGUAGE = Constants::DEFAULT_LOCALE;
@@ -110,7 +112,7 @@ class User extends BaseUser implements UserInterface
     /**
      * Registration date for the user
      *
-     * @var \DateTime
+     * @var DateTime
      *
      * @Exporter\Expose(label="profile.registration_date", type="datetime")
      *
@@ -207,7 +209,7 @@ class User extends BaseUser implements UserInterface
     public function __construct()
     {
         parent::__construct();
-        $this->registeredAt = new \DateTime();
+        $this->registeredAt = new DateTime();
         $this->preferences = new ArrayCollection();
         $this->teams = new ArrayCollection();
     }
@@ -217,12 +219,12 @@ class User extends BaseUser implements UserInterface
         return $this->id;
     }
 
-    public function getRegisteredAt(): ?\DateTime
+    public function getRegisteredAt(): ?DateTime
     {
         return $this->registeredAt;
     }
 
-    public function setRegisteredAt(\DateTime $registeredAt): User
+    public function setRegisteredAt(DateTime $registeredAt): User
     {
         $this->registeredAt = $registeredAt;
 
@@ -369,9 +371,24 @@ class User extends BaseUser implements UserInterface
         $this->setPreferenceValue(UserPreference::LOCALE, $language);
     }
 
+    public function isFirstDayOfWeekSunday(): bool
+    {
+        return $this->getFirstDayOfWeek() === 'sunday';
+    }
+
     public function getFirstDayOfWeek(): string
     {
         return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY);
+    }
+
+    public function isSmallLayout(): bool
+    {
+        return $this->getPreferenceValue('theme.layout', 'fixed') === 'boxed';
+    }
+
+    public function isExportDecimal(): bool
+    {
+        return (bool) $this->getPreferenceValue('timesheet.export_decimal', false);
     }
 
     public function setTimezone(?string $timezone)
@@ -387,7 +404,7 @@ class User extends BaseUser implements UserInterface
      * @param mixed $default
      * @return bool|int|null|string
      */
-    public function getPreferenceValue($name, $default = null)
+    public function getPreferenceValue(string $name, $default = null)
     {
         $preference = $this->getPreference($name);
         if (null === $preference) {
@@ -480,7 +497,7 @@ class User extends BaseUser implements UserInterface
      * @internal immutable property that cannot be set by plugins
      * @param bool $canSeeAllData
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function initCanSeeAllData(bool $canSeeAllData): bool
     {

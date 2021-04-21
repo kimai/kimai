@@ -21,6 +21,8 @@ use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
+use DateTime;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
@@ -77,58 +79,80 @@ class ProjectRepository extends EntityRepository
         return $this->count([]);
     }
 
-    public function getProjectStatistics(Project $project, ?\DateTime $begin = null, ?\DateTime $end = null): ProjectStatistic
+    public function getProjectStatistics(Project $project, ?DateTime $begin = null, ?DateTime $end = null): ProjectStatistic
     {
-        $stats = new ProjectStatistic($project);
-
         $qb = $this->getEntityManager()->createQueryBuilder();
-
         $qb
             ->from(Timesheet::class, 't')
-            ->addSelect('COUNT(t.id) as recordAmount')
-            ->addSelect('SUM(t.duration) as recordDuration')
-            ->addSelect('SUM(t.rate) as recordRate')
-            ->addSelect('SUM(t.internalRate) as recordInternalRate')
+            ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
             ->andWhere('t.project = :project')
             ->setParameter('project', $project)
         ;
 
-        if (null !== $begin) {
-            $qb->andWhere($qb->expr()->gte('t.begin', ':begin'))
-                ->setParameter('begin', $begin);
-        }
+        // to calculate a budget at a certain point in time
         if (null !== $end) {
             $qb->andWhere($qb->expr()->lte('t.end', ':end'))
                 ->setParameter('end', $end);
         }
 
-        $timesheetResult = $qb->getQuery()->getArrayResult();
+        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
 
-        if (isset($timesheetResult[0])) {
-            $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
-            $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
-            $stats->setRecordRate($timesheetResult[0]['recordRate']);
-            $stats->setRecordInternalRate($timesheetResult[0]['recordInternalRate']);
+        $stats = new ProjectStatistic();
+
+        if (null !== $timesheetResult) {
+            $stats->setRecordAmount($timesheetResult['amount']);
+            $stats->setRecordDuration($timesheetResult['duration']);
+            $stats->setRecordRate($timesheetResult['rate']);
+            $stats->setRecordInternalRate($timesheetResult['internal_rate']);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('COUNT(a.id) as activityAmount')
+        $qb
+            ->from(Timesheet::class, 't')
+            ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->andWhere('t.project = :project')
+            ->andWhere('t.billable = :billable')
+            ->setParameter('project', $project)
+            ->setParameter('billable', true, Types::BOOLEAN)
+        ;
+
+        // to calculate a budget at a certain point in time
+        if (null !== $end) {
+            $qb->andWhere($qb->expr()->lte('t.end', ':end'))
+                ->setParameter('end', $end);
+        }
+
+        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $timesheetResult) {
+            $stats->setDurationBillable($timesheetResult['duration']);
+            $stats->setRateBillable($timesheetResult['rate']);
+            $stats->setRecordAmountBillable($timesheetResult['amount']);
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
             ->from(Activity::class, 'a')
+            ->select('COUNT(a.id) as amount')
             ->andWhere('a.project = :project')
             ->setParameter('project', $project)
         ;
-        $resultActivities = $qb->getQuery()->getArrayResult();
 
-        if (isset($resultActivities[0])) {
-            $resultActivities = $resultActivities[0];
+        $resultActivities = $qb->getQuery()->getOneOrNullResult();
 
-            $stats->setActivityAmount($resultActivities['activityAmount']);
+        if (null !== $resultActivities) {
+            $stats->setActivityAmount($resultActivities['amount']);
         }
 
         return $stats;
     }
 
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    public function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
     {
         // make sure that all queries without a user see all projects
         if (null === $user && empty($teams)) {
@@ -204,7 +228,7 @@ class ProjectRepository extends EntityRepository
         $qb->andWhere($qb->expr()->eq('c.visible', ':customer_visible'));
 
         if (!$query->isIgnoreDate()) {
-            $now = new \DateTime();
+            $now = new DateTime();
             $qb->andWhere(
                 $qb->expr()->andX(
                     $qb->expr()->orX(
@@ -265,17 +289,23 @@ class ProjectRepository extends EntityRepository
             ->leftJoin('p.customer', 'c')
         ;
 
-        $orderBy = $query->getOrderBy();
-        switch ($orderBy) {
-            case 'customer':
-                $orderBy = 'c.name';
-                break;
-            default:
-                $orderBy = 'p.' . $orderBy;
-                break;
+        foreach ($query->getOrderGroups() as $orderBy => $order) {
+            switch ($orderBy) {
+                case 'customer':
+                    $orderBy = 'c.name';
+                    break;
+                case 'project_start':
+                    $orderBy = 'p.start';
+                    break;
+                case 'project_end':
+                    $orderBy = 'p.end';
+                    break;
+                default:
+                    $orderBy = 'p.' . $orderBy;
+                    break;
+            }
+            $qb->addOrderBy($orderBy, $order);
         }
-
-        $qb->addOrderBy($orderBy, $query->getOrder());
 
         if (!$query->isShowBoth()) {
             $qb

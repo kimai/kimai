@@ -59,7 +59,7 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/activity/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
@@ -102,7 +102,7 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/activity/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/activity/export'));
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
@@ -138,6 +138,8 @@ class ActivityControllerTest extends ControllerBaseTest
         self::assertHasProgressbar($client);
 
         $node = $client->getCrawler()->filter('div.box#activity_details_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#time_budget_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#budget_box');
         self::assertEquals(1, $node->count());
@@ -263,9 +265,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $team2->tick();
 
         $client->submit($form);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
-        $client->followRedirect();
-        $this->assertHasDataTable($client);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/' . $id . '/details'));
 
         /** @var Activity $activity */
         $activity = $em->getRepository(Activity::class)->find($id);

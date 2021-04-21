@@ -1,19 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="eo" datatype="plaintext" original="validators.en.xlf">
-        <body>
-            <trans-unit id="This value is not a valid role.">
-                <source>This value is not a valid role.</source>
-                <target>Tiu ĉi valoro ne estas valida rolo.</target>
-            </trans-unit>
-            <trans-unit id="End date must not be earlier then start date.">
-                <source>End date must not be earlier then start date.</source>
-                <target>Fina dato devas esti ne pli frua ol la komenca dato.</target>
-            </trans-unit>
-            <trans-unit id="The begin date cannot be in the future.">
-                <source>The begin date cannot be in the future.</source>
-                <target>La komenca dato ne povas esti en la estonteco.</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="eo" datatype="plaintext" original="validators.en.xlf">
+    <body>
+      <trans-unit id="This value is not a valid role.">
+        <source>This value is not a valid role.</source>
+        <target>Tiu ĉi valoro ne estas valida rolo.</target>
+      </trans-unit>
+      <trans-unit id="End date must not be earlier then start date.">
+        <source>End date must not be earlier then start date.</source>
+        <target>Fina dato devas esti ne pli frua ol la komenca dato.</target>
+      </trans-unit>
+      <trans-unit id="The begin date cannot be in the future.">
+        <source>The begin date cannot be in the future.</source>
+        <target>La komenca dato ne povas esti en la estonteco.</target>
+      </trans-unit>
+      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
+        <target>Ĉi tiu faktura dokumento ne estas uzebla; bonvolu renomi la dosieron kaj alŝuti ĝin denove.</target>
+      </trans-unit>
+      <trans-unit id="You already have an entry for this time.">
+        <source>You already have an entry for this time.</source>
+        <target>Vi jam havas elementon por ĉi tiu tempo.</target>
+      </trans-unit>
+      <trans-unit id="This period is locked, please choose a later date.">
+        <source>This period is locked, please choose a later date.</source>
+        <target>Ĉi tiu periodo estas ŝlosita; bonvolu elekti postan daton.</target>
+      </trans-unit>
+      <trans-unit id="The given value is not a valid time.">
+        <source>The given value is not a valid time.</source>
+        <target>La donita valoro ne estas valida tempo.</target>
+      </trans-unit>
+      <trans-unit id="You must select at least one user or team.">
+        <source>You must select at least one user or team.</source>
+        <target>Vi devas elekti almenaŭ unu uzanton aŭ teamon.</target>
+      </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>La buĝeto estas elĉerpita. El la disponebla %budget%, %used% estis uzita ĝis nun, kaj %free% ankoraŭ restas uzebla.</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

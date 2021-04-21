@@ -18,7 +18,6 @@ use App\Invoice\ServiceInvoice;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceTemplateRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
@@ -69,7 +68,6 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
         $this->application->add(new InvoiceCreateCommand(
             $container->get(ServiceInvoice::class),
-            $container->get(TimesheetRepository::class),
             $container->get(CustomerRepository::class),
             $container->get(ProjectRepository::class),
             $container->get(InvoiceTemplateRepository::class),
@@ -182,10 +180,12 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--set-exported' => null, '--customer' => 1, '--template' => 'Invoice', '--start' => '2020-01-01', '--end' => '2020-03-01']);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('+----+----------+-------+------------- Created 1 invoice(s) --------------------------------------+', $output);
-        $this->assertStringContainsString('| ID | Customer | Total | Filename                                                                |', $output);
-        $this->assertStringContainsString('+----+----------+-------+-------------------------------------------------------------------------+', $output);
-        $this->assertStringContainsString('| Test     | 0 EUR | /', $output);
+        $this->assertStringContainsString('Created 1 invoice(s)', $output);
+        $this->assertStringContainsString('| ID', $output);
+        $this->assertStringContainsString('| Customer', $output);
+        $this->assertStringContainsString('| Total', $output);
+        $this->assertStringContainsString('| Filename', $output);
+        $this->assertStringContainsString('0 EUR', $output);
         $this->assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.html |', $output);
     }
 
