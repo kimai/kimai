@@ -1181,6 +1181,18 @@
         <source>label.remove_default</source>
         <target>Sık kullanılan aramayı sil</target>
       </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Son kayıt</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>O zamandan beri rezervasyon yok</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Bir kaydı silmek istiyorsanız, onu düğmeye sürüklemelisiniz.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
