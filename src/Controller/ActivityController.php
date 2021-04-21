@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Activity\ActivityService;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
@@ -57,12 +58,17 @@ final class ActivityController extends AbstractController
      * @var EventDispatcherInterface
      */
     private $dispatcher;
+    /**
+     * @var ActivityService
+     */
+    private $activityService;
 
-    public function __construct(ActivityRepository $repository, SystemConfiguration $configuration, EventDispatcherInterface $dispatcher)
+    public function __construct(ActivityRepository $repository, SystemConfiguration $configuration, EventDispatcherInterface $dispatcher, ActivityService $activityService)
     {
         $this->repository = $repository;
         $this->configuration = $configuration;
         $this->dispatcher = $dispatcher;
+        $this->activityService = $activityService;
     }
 
     /**
@@ -183,10 +189,7 @@ final class ActivityController extends AbstractController
      */
     public function createAction(Request $request, ?Project $project = null)
     {
-        $activity = new Activity();
-        if (null !== $project) {
-            $activity->setProject($project);
-        }
+        $activity = $this->activityService->createNewActivity($project);
 
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
@@ -196,7 +199,7 @@ final class ActivityController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->saveActivity($activity);
+                $this->activityService->saveNewActivity($activity);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_activity');
@@ -226,7 +229,7 @@ final class ActivityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->repository->saveActivity($activity);
+                $this->activityService->updateActivity($activity);
                 $this->flashSuccess('action.update.success');
 
                 if ($this->isGranted('view', $activity)) {
@@ -286,7 +289,7 @@ final class ActivityController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->saveActivity($activity);
+                $this->activityService->updateActivity($activity);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);

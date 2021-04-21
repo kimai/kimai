@@ -1,0 +1,34 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Event;
+
+use App\Entity\Activity;
+use Symfony\Contracts\EventDispatcher\Event;
+
+/**
+ * Base event class to used with activity manipulations.
+ */
+abstract class AbstractActivityEvent extends Event
+{
+    /**
+     * @var Activity
+     */
+    private $activity;
+
+    public function __construct(Activity $activity)
+    {
+        $this->activity = $activity;
+    }
+
+    public function getActivity(): Activity
+    {
+        return $this->activity;
+    }
+}
