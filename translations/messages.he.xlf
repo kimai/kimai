@@ -298,7 +298,7 @@
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>אימייל</target>
+        <target>דוא״ל</target>
       </trans-unit>
       <trans-unit id="label.team">
         <source>label.team</source>

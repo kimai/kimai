@@ -1124,6 +1124,22 @@
         <source>upload</source>
         <target>Kargatu</target>
       </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Beherantz</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Goranzko</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Gorde ezarpen lehenetsi gisa</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Bilatu hitza</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

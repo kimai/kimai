@@ -50,6 +50,7 @@ require('moment/locale/eo');
 require('moment/locale/es');
 require('moment/locale/eu');
 require('moment/locale/fi');
+require('moment/locale/fo');
 require('moment/locale/fr');
 require('moment/locale/he');
 require('moment/locale/hu');
