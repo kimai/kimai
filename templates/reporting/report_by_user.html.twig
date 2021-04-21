@@ -39,7 +39,7 @@
                     {% for day in days %}
                     <th class="text-center text-nowrap{% if day.day is weekend %} weekend{% endif %}">
                         {{ day.day|day_name(true) }}<br>
-                        {{ day.day|date_format('d.m') }}
+                        {{ day.day|format_date('short') }}
                     </th>
                     {% endfor %}
                 </tr>
