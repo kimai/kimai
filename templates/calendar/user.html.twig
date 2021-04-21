@@ -453,7 +453,6 @@
 
                                 if (jsEvent.pageX >= offset.left && jsEvent.pageX<= (offset.left + trash.outerWidth(true)) &&
                                     jsEvent.pageY >= offset.top && jsEvent.pageY <= (offset.top + trash.outerHeight(true))) {
-                                    // FIXME confirm delete
                                     API.delete(
                                         '{{ path('delete_timesheet', {'id': '__xxx__'}) }}'.replace('__xxx__', event.id),
                                         function () {
