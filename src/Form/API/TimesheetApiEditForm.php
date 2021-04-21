@@ -28,19 +28,14 @@ class TimesheetApiEditForm extends TimesheetEditForm
         if ($builder->has('user')) {
             $builder->get('user')->setRequired(false);
         }
-    }
 
-    /**
-     * Method added to prevent API BC breaks.
-     *
-     * @param FormBuilderInterface $builder
-     */
-    protected function addTags(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add('tags', TagsInputType::class, [
+        if ($builder->has('tags')) {
+            $builder->remove('tags');
+            // @deprecated for BC reasons here, arrays will be supported in 2.0
+            $builder->add('tags', TagsInputType::class, [
                 'required' => false,
             ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
