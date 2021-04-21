@@ -87,7 +87,6 @@ class LayoutControllerTest extends ControllerBaseTest
         self::assertStringContainsString('data-api="', $content);
         self::assertStringContainsString('data-href="', $content);
         self::assertStringContainsString('data-icon=', $content);
-        self::assertStringContainsString('data-format=', $content);
         self::assertStringContainsString('<ul class="menu">', $content);
         self::assertStringContainsString('<li class="messages-menu-empty" style="">', $content);
     }

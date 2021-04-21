@@ -119,7 +119,7 @@
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ entry.duration|duration }}</td>
                 {% else %}
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'duration') }}">
-                        <i data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}" data-format="{{ get_format_duration() }}">{{ entry|duration }}</i>
+                        <i data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</i>
                     </td>
                 {% endif %}
 
