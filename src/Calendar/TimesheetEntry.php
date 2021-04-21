@@ -32,11 +32,16 @@ final class TimesheetEntry implements DragAndDropEntry
 
     public function getData(): array
     {
+        $tags = null;
+        if (!empty($this->timesheet->getTagsAsArray())) {
+            $tags = implode(',', $this->timesheet->getTagsAsArray());
+        }
+
         return [
             'description' => $this->timesheet->getDescription(),
             'activity' => $this->timesheet->getActivity() !== null ? $this->timesheet->getActivity()->getId() : null,
             'project' => $this->timesheet->getProject() !== null ? $this->timesheet->getProject()->getId() : null,
-            'tags' => implode(',', $this->timesheet->getTagsAsArray()),
+            'tags' => $tags,
         ];
     }
 
