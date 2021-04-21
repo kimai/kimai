@@ -50,8 +50,7 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
 
         for(let record of activeRecords) {
             const since = record.getAttribute('data-since');
-            const format = record.getAttribute('data-format');
-            const duration = this.formatDuration(since, format);
+            const duration = this.formatDuration(since);
             if (record.getAttribute('data-title') !== null && duration !== '?') {
                 durations.push(duration);
             }
@@ -75,22 +74,7 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
         document.title = title;
     }
 
-    formatDuration(since, format) {
-        const duration = moment.duration(moment(new Date()).diff(moment(since)));
-
-        let hours = parseInt(duration.asHours()).toString();
-        let minutes = duration.minutes();
-        let seconds = duration.seconds();
-
-        if (hours < 0 || minutes < 0 || seconds < 0) {
-            return '?';
-        }
-
-        // special case for hours, as they can overflow the 24h barrier - Kimai does not support days as duration unit
-        if (hours.length === 1) {
-            hours = '0' + hours;
-        }
-
-        return format.replace('%h', hours).replace('%m', ('0'+minutes).substr(-2)).replace('%s', ('0'+seconds).substr(-2));
+    formatDuration(since) {
+        return this.getPlugin('date').formatDuration(since);
     }
 }

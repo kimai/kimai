@@ -197,6 +197,7 @@
 
             let kimai = event.detail.kimai;
             let API = kimai.getPlugin('api');
+            let DATES = kimai.getPlugin('date');
             jQuery('{{ calendarSelector }}').fullCalendar({
                 themeSystem: 'bootstrap3',
                 defaultView: '{{ app.user.getPreferenceValue('calendar.initial_view') }}',
@@ -338,15 +339,21 @@
                         {% endfor %}
                     {% endif %}
                 ],
-                eventRender: function(eventObj, $el) {
+                eventRender: function(eventObj, $el, view) {
                     {# don't show popover for google calendar #}
                     if (eventObj.source.ajaxSettings !== undefined) {
                         return;
                     }
+
                     {# or when an event is dragged or resized #}
                     if (!showPopover()) {
                         return;
                     }
+
+                    if (view.name !== 'month' ) {
+                        jQuery(".fc-dailytotal").text(DATES.formatSeconds(0)).data('seconds', 0).data('ids', '');
+                    }
+
                     hidePopover();
                     $el.popover({
                         title: renderEventPopoverTitle(eventObj),
@@ -357,78 +364,117 @@
                         html: true
                     });
                 },
-            {% if not is_punch_mode and is_granted('create_own_timesheet') %}
-                dayClick: function(date, jsEvent, view) {
-                    {#
-                       Day-clicks are always triggered, unless a selection was created.
-                       So clicking in a day (month view) or any slot (week and day view) will trigger a dayClick
-                       BEFORE triggering a select - make sure not two create dialogs are requested
-                    #}
-                    if (view.type !== 'month') {
+                viewRender: function(view, element) {
+                    if (view.name === 'month') {
                         return;
                     }
 
-                    let createUrl = '{{ path('timesheet_create') }}?begin=' + date.format();
-                    kimai.getPlugin('modal').openUrlInModal(createUrl);
+                    {# allowed in agendaWeek and agendaDay #}
+                    jQuery(".fc-day-header").each(function (key, val) {
+                        var $this = jQuery(this);
+                        var dateYMD = $this.attr("data-date");
+                        $this.append('<div class="fc-dailytotal" data-seconds="0" data-ids="" id="dailytotal-' + dateYMD + '">'+DATES.formatSeconds(0)+'</div>');
+                    });
                 },
-                selectable: true,
-                select: function(start, end, jsEvent, view) {
-                    if(view.type === 'month') {
+                eventAfterRender: function(event, element, view) {
+                    {# allowed in agendaWeek and agendaDay #}
+                    if (view.name === 'month') {
+                        return;
+                    }
+
+                    {# TODO calculate duration for running entries #}
+                    if (event.end === null) {
+                        return;
+                    }
+
+                    {# TODO split day entries are calculated only for the begin date #}
+                    var $element = jQuery("#dailytotal-" + moment(event.start).format("YYYY-MM-DD"));
+                    var ids = $element.data('ids');
+                    if (ids === null) {
+                        ids = '';
+                    }
+
+                    if (ids.indexOf(event.id) !== -1) {
+                        return;
+                    }
+
+                    var prev = $element.data('seconds');
+                    var duration = prev + ((event.end - event.start) / 1000);
+                    $element.data('seconds', duration);
+                    $element.data('ids', event.id + ' ' + ids);
+                    $element.text(DATES.formatSeconds(duration));
+                },
+                {% if not is_punch_mode and is_granted('create_own_timesheet') %}
+                    dayClick: function(date, jsEvent, view) {
                         {#
-                           Multi-day clicks are NOT allowed in the month view, as simple day clicks would also trigger
-                           a select - there is no way to distinguish a simple click and a two day selection
+                           Day-clicks are always triggered, unless a selection was created.
+                           So clicking in a day (month view) or any slot (week and day view) will trigger a dayClick
+                           BEFORE triggering a select - make sure not two create dialogs are requested
                         #}
-                        return;
-                    }
-                    let createUrl = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
-                    kimai.getPlugin('modal').openUrlInModal(createUrl);
-                },
-            {% endif %}
-            {% if is_granted('edit_own_timesheet') %}
-                eventClick: function(eventObj, jsEvent, view) {
-                    if (eventObj.source.ajaxSettings !== undefined) {
-                        jsEvent.preventDefault();
-                        return;
-                    }
-                    let editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
-                    kimai.getPlugin('modal').openUrlInModal(editUrl);
-                },
-                {% if not is_punch_mode %}
-                    editable: true,
-                    eventDragStart: function(event, jsEvent, ui, view) {
-                        deactivatePopover();
-                    },
-                    eventDragStop: function(event, jsEvent, ui, view) {
-                        activatePopover();
-                        {% if is_granted('delete_own_timesheet') %}
-                            var trash = jQuery('.fc-deleteButton-button');
-                            var offset = trash.offset();
+                        if (view.type !== 'month') {
+                            return;
+                        }
 
-                            if (jsEvent.pageX >= offset.left && jsEvent.pageX<= (offset.left + trash.outerWidth(true)) &&
-                                jsEvent.pageY >= offset.top && jsEvent.pageY <= (offset.top + trash.outerHeight(true))) {
-                                // FIXME confirm delete
-                                API.delete(
-                                    '{{ path('delete_timesheet', {'id': '__xxx__'}) }}'.replace('__xxx__', event.id),
-                                    function () {
-                                        kimai.getPlugin('alert').success('action.delete.success');
-                                        jQuery('{{ calendarSelector }}').fullCalendar('removeEvents', event._id);
-                                    }, function () {
-                                        kimai.getPlugin('alert').success('action.delete.error');
-                                    }
-                                );
-                            }
-                        {% endif %}
+                        let createUrl = '{{ path('timesheet_create') }}?begin=' + date.format();
+                        kimai.getPlugin('modal').openUrlInModal(createUrl);
                     },
-                    eventDrop: changeHandler,
-                    eventResizeStart: function(event, jsEvent, ui, view) {
-                        deactivatePopover();
+                    selectable: true,
+                    select: function(start, end, jsEvent, view) {
+                        if(view.type === 'month') {
+                            {#
+                               Multi-day clicks are NOT allowed in the month view, as simple day clicks would also trigger
+                               a select - there is no way to distinguish a simple click and a two day selection
+                            #}
+                            return;
+                        }
+                        let createUrl = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
+                        kimai.getPlugin('modal').openUrlInModal(createUrl);
                     },
-                    eventResizeStop: function(event, jsEvent, ui, view) {
-                        activatePopover();
-                    },
-                    eventResize: changeHandler,
                 {% endif %}
-            {% endif %}
+                {% if is_granted('edit_own_timesheet') %}
+                    eventClick: function(eventObj, jsEvent, view) {
+                        if (eventObj.source.ajaxSettings !== undefined) {
+                            jsEvent.preventDefault();
+                            return;
+                        }
+                        let editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
+                        kimai.getPlugin('modal').openUrlInModal(editUrl);
+                    },
+                    {% if not is_punch_mode %}
+                        editable: true,
+                        eventDragStart: function(event, jsEvent, ui, view) {
+                            deactivatePopover();
+                        },
+                        eventDragStop: function(event, jsEvent, ui, view) {
+                            activatePopover();
+                            {% if is_granted('delete_own_timesheet') %}
+                                var trash = jQuery('.fc-deleteButton-button');
+                                var offset = trash.offset();
+
+                                if (jsEvent.pageX >= offset.left && jsEvent.pageX<= (offset.left + trash.outerWidth(true)) &&
+                                    jsEvent.pageY >= offset.top && jsEvent.pageY <= (offset.top + trash.outerHeight(true))) {
+                                    API.delete(
+                                        '{{ path('delete_timesheet', {'id': '__xxx__'}) }}'.replace('__xxx__', event.id),
+                                        function () {
+                                            kimai.getPlugin('alert').success('action.delete.success');
+                                            jQuery('{{ calendarSelector }}').fullCalendar('removeEvents', event._id);
+                                        }, function () {
+                                            kimai.getPlugin('alert').success('action.delete.error');
+                                        }
+                                    );
+                                }
+                            {% endif %}
+                        },
+                        eventDrop: changeHandler,
+                        eventResizeStart: function(event, jsEvent, ui, view) {
+                            deactivatePopover();
+                        },
+                        eventResizeStop: function(event, jsEvent, ui, view) {
+                            activatePopover();
+                        },
+                        eventResize: changeHandler,
+                    {% endif %}
+                {% endif %}
             });
             var trashBtn = jQuery('.fc-deleteButton-button');
             trashBtn.html('<span class="text-danger"><i class="{{ 'trash'|icon }} text-danger"></i> ' + trashBtn.text() + '</span>');
