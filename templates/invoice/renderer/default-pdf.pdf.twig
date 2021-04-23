@@ -110,7 +110,9 @@ mpdf-->
                 {% set rate = entry.hourlyRate %}
             {% endif %}
             <tr{# class="{{ cycle(['odd', 'even'], id) }}"#}>
-                <td nowrap class="first text-nowrap">{{ entry.begin|date_short }}</td>
+                <td nowrap class="first text-nowrap">{{ entry.begin|date_short }}
+                    {{ entry.tags|join(', ') }}
+                </td>
                 <td contenteditable="true">
                     {% if entry.description is not empty %}
                         {{ entry.description|nl2br }}

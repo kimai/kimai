@@ -42,5 +42,6 @@ class InvoiceItemTest extends TestCase
         self::assertEquals(0, $sut->getDuration());
         self::assertNull($sut->getCategory());
         self::assertNull($sut->getType());
+        self::assertEquals([], $sut->getTags());
     }
 }
