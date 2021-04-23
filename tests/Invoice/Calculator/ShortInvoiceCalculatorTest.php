@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
+use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Invoice\Calculator\ShortInvoiceCalculator;
@@ -56,6 +57,8 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
+            ->addTag((new Tag())->setName('foo'))
+            ->addTag((new Tag())->setName('bar'))
         ;
 
         $timesheet2 = new Timesheet();
@@ -68,6 +71,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
+            ->addTag((new Tag())->setName('bar1'))
         ;
 
         $timesheet3 = new Timesheet();
@@ -112,6 +116,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals(472.5, $result->getRate());
         $this->assertEquals(5800, $result->getDuration());
         $this->assertEquals(3, $result->getAmount());
+        $this->assertEquals(['foo', 'bar', 'bar1'], $result->getTags());
     }
 
     public function testWithMultipleEntriesDifferentRates()
