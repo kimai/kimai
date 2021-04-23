@@ -276,6 +276,12 @@ final class InvoiceItem
 
     public function addTag(string $tag): void
     {
+        foreach ($this->tags as $t) {
+            if (strcasecmp($tag, $t) === 0) {
+                return;
+            }
+        }
+
         $this->tags[] = $tag;
     }
 
