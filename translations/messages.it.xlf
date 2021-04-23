@@ -1190,6 +1190,18 @@
         <source>label.remove_default</source>
         <target>Elimina il preferito di ricerca</target>
       </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Ultima voce</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Nessuna prenotazione di tempo da</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Se vuoi eliminare una voce, devi trascinarla sul pulsante.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
