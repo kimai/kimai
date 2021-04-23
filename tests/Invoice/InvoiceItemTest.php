@@ -43,5 +43,8 @@ class InvoiceItemTest extends TestCase
         self::assertNull($sut->getCategory());
         self::assertNull($sut->getType());
         self::assertEquals([], $sut->getTags());
+        $sut->addTag('foo');
+        $sut->addTag('bar');
+        self::assertEquals(['foo', 'bar'], $sut->getTags());
     }
 }
