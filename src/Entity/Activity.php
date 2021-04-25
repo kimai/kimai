@@ -135,11 +135,12 @@ class Activity implements EntityWithMetaFields
      * @ Exporter\Expose(label="label.budget")
      *
      * @ORM\Column(name="budget", type="float", nullable=false)
+     * @Assert\Range(min=0.00, max=900000000000.00)
      * @Assert\NotNull()
      */
     private $budget = 0.00;
     /**
-     * The time budget in seconds, will be be zero if unconfigured.
+     * The time budget in seconds, will be zero if unconfigured.
      *
      * @var int
      *
@@ -149,6 +150,7 @@ class Activity implements EntityWithMetaFields
      * @ Exporter\Expose(label="label.timeBudget", type="duration")
      *
      * @ORM\Column(name="time_budget", type="integer", nullable=false)
+     * @Assert\Range(min=0, max=2145600000)
      * @Assert\NotNull()
      */
     private $timeBudget = 0;
