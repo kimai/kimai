@@ -347,12 +347,13 @@ abstract class AbstractSpreadsheetRenderer
 
             $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use (&$isColumnFormatted, $maxWidth, $wrapText, $sanitizeText) {
                 $cell = $sheet->getCellByColumnAndRow($column, $row);
+                $desc = $entity->getDescription();
 
-                if ($sanitizeText) {
-                    $cell->setValueExplicit(StringHelper::sanitizeDDE($entity->getDescription()), DataType::TYPE_STRING);
-                } else {
-                    $cell->setValueExplicit($entity->getDescription(), DataType::TYPE_STRING);
+                if ($sanitizeText && null !== $desc) {
+                    $desc = StringHelper::sanitizeDDE($desc);
                 }
+
+                $cell->setValueExplicit($desc, DataType::TYPE_STRING);
 
                 // Apply wrap text if configured
                 if ($wrapText) {
@@ -362,8 +363,7 @@ abstract class AbstractSpreadsheetRenderer
                 // Apply max width, only needs to be once per column
                 if (!$isColumnFormatted) {
                     if (null !== $maxWidth) {
-                        $sheet->getColumnDimensionByColumn($column)
-                            ->setWidth($maxWidth);
+                        $sheet->getColumnDimensionByColumn($column)->setWidth($maxWidth);
                     }
                     $isColumnFormatted = true;
                 }

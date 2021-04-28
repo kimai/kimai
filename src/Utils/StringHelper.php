@@ -12,7 +12,7 @@ namespace App\Utils;
 final class StringHelper
 {
     // @see https://github.com/payloadbox/csv-injection-payloads
-    private const DDE_PAYLOADS = ['=', '-', '"', '@', '+', '!', ';', '|', "\t", "\n", "\r", "\r\n"];
+    private const DDE_PAYLOADS = ['=', '-', '@', '+', "\t", "\n", "\r", "\r\n"];
 
     public static function ensureMaxLength(?string $string, int $length): ?string
     {
