@@ -11,7 +11,7 @@ namespace App\Tests\Export\Renderer;
 
 use App\Export\Renderer\HtmlRenderer;
 use App\Export\Renderer\HtmlRendererFactory;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectStatisticService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
@@ -26,7 +26,7 @@ class HtmlRendererFactoryTest extends TestCase
         $sut = new HtmlRendererFactory(
             $this->createMock(Environment::class),
             $this->createMock(EventDispatcherInterface::class),
-            $this->createMock(ProjectRepository::class)
+            $this->createMock(ProjectStatisticService::class)
         );
 
         $renderer = $sut->create('foo', 'bar.html.twig');

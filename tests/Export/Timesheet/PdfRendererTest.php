@@ -10,7 +10,7 @@
 namespace App\Tests\Export\Timesheet;
 
 use App\Export\Timesheet\PDFRenderer;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectStatisticService;
 use App\Utils\HtmlToPdfConverter;
 use App\Utils\MPdfConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +29,7 @@ class PdfRendererTest extends AbstractRendererTest
         $sut = new PDFRenderer(
             $this->createMock(Environment::class),
             $this->createMock(HtmlToPdfConverter::class),
-            $this->createMock(ProjectRepository::class)
+            $this->createMock(ProjectStatisticService::class)
         );
 
         $this->assertEquals('pdf', $sut->getId());
@@ -47,7 +47,7 @@ class PdfRendererTest extends AbstractRendererTest
         $request->setLocale('en');
         $stack->push($request);
 
-        $sut = new PDFRenderer($twig, $converter, $this->createMock(ProjectRepository::class));
+        $sut = new PDFRenderer($twig, $converter, $this->createMock(ProjectStatisticService::class));
 
         $response = $this->render($sut);
 

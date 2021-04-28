@@ -9,7 +9,9 @@
 
 namespace App\Tests\Validator;
 
+use App\Activity\ActivityStatisticService;
 use App\Configuration\SystemConfiguration;
+use App\Customer\CustomerStatisticService;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -18,9 +20,7 @@ use App\Entity\User;
 use App\Model\ActivityStatistic;
 use App\Model\CustomerStatistic;
 use App\Model\ProjectStatistic;
-use App\Repository\ActivityRepository;
-use App\Repository\CustomerRepository;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectStatisticService;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\Rate;
 use App\Timesheet\RateService;
@@ -43,15 +43,15 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $configuration = $this->createMock(SystemConfiguration::class);
         $configuration->method('isTimesheetAllowOverbookingBudget')->willReturn($isAllowed);
 
-        $customerRepository = $this->createMock(CustomerRepository::class);
+        $customerRepository = $this->createMock(CustomerStatisticService::class);
         $customerStatistic = $customerStatistic ?? new CustomerStatistic();
         $customerRepository->method('getCustomerStatistics')->willReturn($customerStatistic);
 
-        $projectRepository = $this->createMock(ProjectRepository::class);
+        $projectRepository = $this->createMock(ProjectStatisticService::class);
         $projectStatistic = $projectStatistic ?? new ProjectStatistic();
         $projectRepository->method('getProjectStatistics')->willReturn($projectStatistic);
 
-        $activityRepository = $this->createMock(ActivityRepository::class);
+        $activityRepository = $this->createMock(ActivityStatisticService::class);
         $activityStatistic = $activityStatistic ?? new ActivityStatistic();
         $activityRepository->method('getActivityStatistics')->willReturn($activityStatistic);
 

@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
+use App\Customer\CustomerStatisticService;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
@@ -268,7 +269,7 @@ final class CustomerController extends AbstractController
      * @Route(path="/{id}/details", name="customer_details", methods={"GET", "POST"})
      * @Security("is_granted('view', customer)")
      */
-    public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository)
+    public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository, CustomerStatisticService $statisticService)
     {
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
@@ -295,7 +296,7 @@ final class CustomerController extends AbstractController
         }
 
         if ($this->isGranted('budget', $customer)) {
-            $stats = $this->repository->getCustomerStatistics($customer);
+            $stats = $statisticService->getCustomerStatistics($customer);
         }
 
         if ($this->isGranted('comments', $customer)) {
@@ -370,9 +371,9 @@ final class CustomerController extends AbstractController
      * @Route(path="/{id}/delete", name="admin_customer_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', customer)")
      */
-    public function deleteAction(Customer $customer, Request $request)
+    public function deleteAction(Customer $customer, Request $request, CustomerStatisticService $statisticService)
     {
-        $stats = $this->repository->getCustomerStatistics($customer);
+        $stats = $statisticService->getCustomerStatistics($customer);
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [

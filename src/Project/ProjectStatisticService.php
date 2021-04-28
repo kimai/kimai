@@ -7,11 +7,13 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Reporting;
+namespace App\Project;
 
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Event\ProjectStatisticEvent;
+use App\Model\ProjectStatistic;
 use App\Reporting\ProjectInactive\ProjectInactiveQuery;
 use App\Reporting\ProjectView\ProjectViewModel;
 use App\Reporting\ProjectView\ProjectViewQuery;
@@ -20,16 +22,31 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-final class ProjectStatisticService
+/**
+ * @final
+ */
+class ProjectStatisticService
 {
     private $repository;
     private $timesheetRepository;
+    private $dispatcher;
 
-    public function __construct(ProjectRepository $projectRepository, TimesheetRepository $timesheetRepository)
+    public function __construct(ProjectRepository $projectRepository, TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher)
     {
         $this->repository = $projectRepository;
         $this->timesheetRepository = $timesheetRepository;
+        $this->dispatcher = $dispatcher;
+    }
+
+    public function getProjectStatistics(Project $project, ?DateTime $end = null): ProjectStatistic
+    {
+        $statistic = $this->repository->getProjectStatistics($project, null, $end);
+        $event = new ProjectStatisticEvent($project, $statistic);
+        $this->dispatcher->dispatch($event);
+
+        return $statistic;
     }
 
     /**
