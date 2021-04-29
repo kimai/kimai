@@ -92,7 +92,7 @@ class ActivityRepository extends EntityRepository
      * @param Activity $activity
      * @return ActivityStatistic
      */
-    public function getActivityStatistics(Activity $activity)
+    public function getActivityStatistics(Activity $activity): ActivityStatistic
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb

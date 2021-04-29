@@ -10,9 +10,9 @@
 namespace App\Controller\Reporting;
 
 use App\Controller\AbstractController;
+use App\Project\ProjectStatisticService;
 use App\Reporting\ProjectInactive\ProjectInactiveForm;
 use App\Reporting\ProjectInactive\ProjectInactiveQuery;
-use App\Reporting\ProjectStatisticService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

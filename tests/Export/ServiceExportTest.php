@@ -12,7 +12,7 @@ namespace App\Tests\Export;
 use App\Export\Renderer\HtmlRenderer;
 use App\Export\ServiceExport;
 use App\Export\Timesheet\HtmlRenderer as HtmlExporter;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectStatisticService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Twig\Environment;
@@ -37,7 +37,7 @@ class ServiceExportTest extends TestCase
     {
         $sut = new ServiceExport();
 
-        $renderer = new HtmlRenderer($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectRepository::class));
+        $renderer = new HtmlRenderer($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectStatisticService::class));
         $sut->addRenderer($renderer);
 
         self::assertEquals(1, \count($sut->getRenderer()));
@@ -48,7 +48,7 @@ class ServiceExportTest extends TestCase
     {
         $sut = new ServiceExport();
 
-        $exporter = new HtmlExporter($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectRepository::class));
+        $exporter = new HtmlExporter($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectStatisticService::class));
         $sut->addTimesheetExporter($exporter);
 
         self::assertEquals(1, \count($sut->getTimesheetExporter()));
