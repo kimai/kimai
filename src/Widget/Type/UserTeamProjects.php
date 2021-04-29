@@ -12,21 +12,18 @@ namespace App\Widget\Type;
 use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectStatisticService;
 
 class UserTeamProjects extends SimpleWidget implements AuthorizedWidget, UserWidget
 {
-    /**
-     * @var ProjectRepository
-     */
-    private $repository;
+    private $statisticService;
 
-    public function __construct(ProjectRepository $repository)
+    public function __construct(ProjectStatisticService $statisticService)
     {
         $this->setId('UserTeamProjects');
         $this->setTitle('label.my_team_projects');
         $this->setOption('id', '');
-        $this->repository = $repository;
+        $this->statisticService = $statisticService;
     }
 
     public function getOptions(array $options = []): array
@@ -65,7 +62,7 @@ class UserTeamProjects extends SimpleWidget implements AuthorizedWidget, UserWid
             if ($project->getBudget() > 0 || $project->getTimeBudget() > 0) {
                 $stats[] = [
                     'project' => $project,
-                    'stats' => $this->repository->getProjectStatistics($project),
+                    'stats' => $this->statisticService->getProjectStatistics($project),
                 ];
             }
         }

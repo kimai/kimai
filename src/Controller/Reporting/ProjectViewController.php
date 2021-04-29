@@ -10,7 +10,7 @@
 namespace App\Controller\Reporting;
 
 use App\Controller\AbstractController;
-use App\Reporting\ProjectStatisticService;
+use App\Project\ProjectStatisticService;
 use App\Reporting\ProjectView\ProjectViewForm;
 use App\Reporting\ProjectView\ProjectViewQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

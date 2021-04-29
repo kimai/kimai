@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Activity\ActivityService;
+use App\Activity\ActivityStatisticService;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
@@ -114,7 +115,7 @@ final class ActivityController extends AbstractController
      * @Route(path="/{id}/details", name="activity_details", methods={"GET", "POST"})
      * @Security("is_granted('view', activity)")
      */
-    public function detailsAction(Activity $activity, TeamRepository $teamRepository, ActivityRateRepository $rateRepository)
+    public function detailsAction(Activity $activity, TeamRepository $teamRepository, ActivityRateRepository $rateRepository, ActivityStatisticService $statisticService)
     {
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
@@ -132,7 +133,7 @@ final class ActivityController extends AbstractController
         }
 
         if ($this->isGranted('budget', $activity)) {
-            $stats = $this->repository->getActivityStatistics($activity);
+            $stats = $statisticService->getActivityStatistics($activity);
         }
 
         if ($this->isGranted('permissions', $activity) || $this->isGranted('details', $activity) || $this->isGranted('view_team')) {
@@ -308,9 +309,9 @@ final class ActivityController extends AbstractController
      * @Route(path="/{id}/delete", name="admin_activity_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', activity)")
      */
-    public function deleteAction(Activity $activity, Request $request)
+    public function deleteAction(Activity $activity, Request $request, ActivityStatisticService $statisticService)
     {
-        $stats = $this->repository->getActivityStatistics($activity);
+        $stats = $statisticService->getActivityStatistics($activity);
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
