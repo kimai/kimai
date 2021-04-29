@@ -71,12 +71,6 @@ require('moment/locale/zh-cn');
 
 require('daterangepicker');
 
-/*
-"sortablejs": "^1.10",
-const Sortable = require('sortablejs/Sortable.min');
-global.Sortable = Sortable;
-*/
-
 // ------ AdminLTE framework ------
 require('./sass/bootstrap.scss');
 require('./sass/fontawesome.scss');
