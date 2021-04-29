@@ -27,8 +27,6 @@ class ConstantsTest extends TestCase
 
         $expectedId = $major * 10000 + $minor * 100 + $patch;
 
-        self::assertEquals('1.14', Constants::VERSION, 'Invalid release number');
-        self::assertTrue(\in_array(Constants::STATUS, ['dev', 'stable']), 'Invalid status');
         self::assertEquals($expectedId, Constants::VERSION_ID, 'Invalid version ID');
     }
 }

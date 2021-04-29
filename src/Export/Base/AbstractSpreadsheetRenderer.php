@@ -20,6 +20,7 @@ use App\Export\ExportItemInterface;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\LocaleFormatExtensions;
+use App\Utils\StringHelper;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
@@ -80,6 +81,7 @@ abstract class AbstractSpreadsheetRenderer
         'description' => [
             'maxWidth' => 50,
             'wrapText' => false,
+            'sanitizeDDE' => true,
         ],
         'exported' => [],
         'billable' => [],
@@ -337,15 +339,21 @@ abstract class AbstractSpreadsheetRenderer
         if (isset($columns['description']) && !isset($columns['description']['render'])) {
             $maxWidth = \array_key_exists('maxWidth', $columns['description']) ? \intval($columns['description']['maxWidth']) : null;
             $wrapText = \array_key_exists('wrapText', $columns['description']) ? (bool) $columns['description']['wrapText'] : false;
+            $sanitizeText = \array_key_exists('sanitizeDDE', $columns['description']) ? (bool) $columns['description']['sanitizeDDE'] : true;
 
             // This column has a column-only formatter to set the maximum width of a column.
             // It needs to be executed once, so we use this as a flag on when to skip it.
             $isColumnFormatted = false;
 
-            $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use (&$isColumnFormatted, $maxWidth, $wrapText) {
+            $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use (&$isColumnFormatted, $maxWidth, $wrapText, $sanitizeText) {
                 $cell = $sheet->getCellByColumnAndRow($column, $row);
+                $desc = $entity->getDescription();
 
-                $cell->setValueExplicit($entity->getDescription(), DataType::TYPE_STRING);
+                if ($sanitizeText && null !== $desc) {
+                    $desc = StringHelper::sanitizeDDE($desc);
+                }
+
+                $cell->setValueExplicit($desc, DataType::TYPE_STRING);
 
                 // Apply wrap text if configured
                 if ($wrapText) {
@@ -355,8 +363,7 @@ abstract class AbstractSpreadsheetRenderer
                 // Apply max width, only needs to be once per column
                 if (!$isColumnFormatted) {
                     if (null !== $maxWidth) {
-                        $sheet->getColumnDimensionByColumn($column)
-                            ->setWidth($maxWidth);
+                        $sheet->getColumnDimensionByColumn($column)->setWidth($maxWidth);
                     }
                     $isColumnFormatted = true;
                 }
