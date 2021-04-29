@@ -28,7 +28,6 @@
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
 {% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.users('index') }}{% endblock %}
-{% block page_icon %}{{ 'user'|icon }}{% endblock %}
 
 {% block main_before %}
     {{ tables.data_table_column_modal(tableName, columns, 'kimai.userUpdate') }}
