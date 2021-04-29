@@ -71,6 +71,21 @@
     {% endif %}
 {%- endblock text_widget %}
 
+{% block yearpicker_widget -%}
+    <div class="btn-group">
+        <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousYear|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_format('Y') }}">
+            <i class="{{ 'left'|icon }}"></i>
+        </a>
+        <a class="btn btn-default" href="#" onclick="return false;">
+            <span id="{{ form.vars.id }}_month_name">{{ year|date_format('Y') }}</span>
+        </a>
+        <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{ nextYear|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_format('Y') }}">
+            <i class="{{ 'right'|icon }}"></i>
+        </a>
+    </div>
+    {{ block('hidden_widget') }}
+{%- endblock yearpicker_widget %}
+
 {% block monthpicker_widget -%}
     <div class="btn-group">
         <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousMonth|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}">
