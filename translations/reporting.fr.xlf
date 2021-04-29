@@ -22,6 +22,14 @@
         <source>reporting.initial_view</source>
         <target>Rapport initial</target>
       </trans-unit>
+      <trans-unit id="report_inactive_project">
+        <source>report_inactive_project</source>
+        <target>Projets inactifs</target>
+      </trans-unit>
+      <trans-unit id="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target>Vue hebdomadaire pour tous les utilisateurs</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
