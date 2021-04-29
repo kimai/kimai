@@ -1106,6 +1106,18 @@
         <source>label.remove_default</source>
         <target>Suchfavorit löschen</target>
       </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Letzter Eintrag</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Keine Zeitbuchung mehr seit</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Wenn Sie einen Eintrag löschen wollen, müssen Sie ihn auf die Schaltfläche ziehen.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

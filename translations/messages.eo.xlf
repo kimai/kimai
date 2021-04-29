@@ -1190,6 +1190,18 @@
         <source>label.remove_default</source>
         <target>Forigi serĉan favoraton</target>
       </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Neniu temporezervo ekde</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Se vi volas forigi elementon, vi devas ŝovi kaj demeti ĝin sur la butonon.</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Lasta elemento</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1187,6 +1187,18 @@
         <source>label.remove_default</source>
         <target>Supprimer le favori de recherche</target>
       </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Dernière entrée</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Aucune réservation de temps depuis</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Si vous voulez supprimer une entrée, vous devez la faire glisser sur le bouton.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
