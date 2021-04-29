@@ -105,7 +105,7 @@ final class InstallCommand extends Command
         }
 
         $io->success(
-            sprintf('Congratulations! Successfully installed %s version %s (%s)', Constants::SOFTWARE, Constants::VERSION, Constants::STATUS)
+            sprintf('Congratulations! Successfully installed %s version %s', Constants::SOFTWARE, Constants::VERSION)
         );
 
         return 0;
