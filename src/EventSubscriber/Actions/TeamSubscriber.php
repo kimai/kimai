@@ -26,10 +26,6 @@ class TeamSubscriber extends AbstractActionsSubscriber
         /** @var Team $team */
         $team = $payload['team'];
 
-        if (!$event->isIndexView() && $this->isGranted('view_tag')) {
-            //$event->addBack($this->path('admin_team'));
-        }
-
         if ($team->getId() === null) {
             return;
         }

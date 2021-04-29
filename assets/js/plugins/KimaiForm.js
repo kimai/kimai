@@ -49,7 +49,9 @@ export default class KimaiForm extends KimaiPlugin {
             // If a multi-select, get all selections
             if (field.type === 'select-multiple') {
                 for (var n = 0; n < field.options.length; n++) {
-                    if (!field.options[n].selected) continue;
+                    if (!field.options[n].selected) {
+                        continue;
+                    }
                     serialized.push({
                         name: field.name,
                         value: field.options[n].value

@@ -111,7 +111,6 @@ export default class KimaiFormSelect extends KimaiPlugin {
         }};
 
         const templateResultFunc = function (state) {
-            console.log(state);
             return jQuery('<span><span style="background-color:'+state.id+'; width: 20px; height: 20px; display: inline-block; margin-right: 10px;">&nbsp;</span>' + state.text + '</span>');
         };
 

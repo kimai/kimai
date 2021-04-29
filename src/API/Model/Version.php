@@ -80,5 +80,5 @@ class Version
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
      */
-    protected $copyright = Constants::SOFTWARE . ' - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.';
+    protected $copyright = Constants::SOFTWARE . ' ' . Constants::VERSION . ' by Kevin Papst and contributors.';
 }

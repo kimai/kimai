@@ -20,10 +20,6 @@ abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
 
         /** @var Timesheet $timesheet */
         $timesheet = $payload['timesheet'];
-        if (!$event->isIndexView()) {
-            $event->addBack($this->path($routeListing));
-        }
-
         if ($timesheet->getId() !== null) {
             if ($this->isGranted('edit', $timesheet)) {
                 $class = $event->isView('edit') ? '' : 'modal-ajax-form';
