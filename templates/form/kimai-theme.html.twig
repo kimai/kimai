@@ -73,19 +73,19 @@
 
 {% block yearpicker_widget -%}
     <div class="btn-group">
-        <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousYear|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_format('Y') }}">
+        <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousYear|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}">
             <i class="{{ 'left'|icon }}"></i>
         </a>
         <a class="btn btn-default" href="#" onclick="return false;">
             <span id="{{ form.vars.id }}_month_name">
                 {% if show_range %}
-                    {{ year|date_short }} &ndash; {{ year.modify('+1 year')|date_short }}
+                    {{ year|date_short }} &ndash; {{ nextYear|date_short }}
                 {% else %}
                     {{ year|date_format('Y') }}
                 {% endif %}
             </span>
         </a>
-        <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{ nextYear|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_format('Y') }}">
+        <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{ nextYear|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_short }}">
             <i class="{{ 'right'|icon }}"></i>
         </a>
     </div>
