@@ -34,9 +34,13 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->assertHasNoEntriesWithFilter($client);
         $this->assertHasProfileBox($client, 'John Doe');
         $this->assertHasAboutMeBox($client, UserFixtures::USERNAME_USER);
+
+        $content = $client->getResponse()->getContent();
+        $year = (new \DateTime())->format('Y');
+        $this->assertStringContainsString('<h3 class="box-title">' . $year . '</h3>', $content);
+        $this->assertStringContainsString('var userProfileChart' . $year . ' = new Chart(', $content);
     }
 
     public function testIndexAction()

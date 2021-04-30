@@ -82,9 +82,7 @@
                     <th class="text-nowrap text-center total">{{ total|duration }}</th>
                     {% for day in days %}
                         <th class="text-nowrap text-center day-total{% if day.day is weekend %} weekend{% endif %}">
-                            {% if day.totalDuration > 0 %}
-                                {{ day.totalDuration|duration }}
-                            {% endif %}
+                            {{ day.totalDuration|duration }}
                         </th>
                     {% endfor %}
                 </tr>

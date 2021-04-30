@@ -74,7 +74,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface, Fi
         $allUser = $this->getAllUsers($manager);
         $activities = $this->getAllActivities($manager);
         $projects = $this->getAllProjects($manager);
-        $tags = $this->getAllTags($manager);
+        $allTags = $this->getAllTags($manager);
 
         $faker = Factory::create();
 
