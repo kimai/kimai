@@ -65,15 +65,16 @@ final class ReportUsersListController extends AbstractController
         $query = new UserQuery();
         $query->setCurrentUser($currentUser);
         $allUsers = $this->userRepository->getUsersForQuery($query);
-        $defaultDate = $dateTimeFactory->getStartOfMonth();
-        $now = $dateTimeFactory->createDateTime();
-        $now->setTime(0, 0, 0);
+        $defaultDate = $dateTimeFactory->createDateTime('01 january this year 00:00:00');
 
-        if (null !== ($financialYear = $systemConfiguration->getFinancialYearStart())) {
+        $financialYear = $systemConfiguration->getFinancialYearStart();
+        if (!empty($financialYear)) {
             try {
                 $financialYear = $this->getDateTimeFactory()->createDateTime($financialYear);
                 $year = clone $financialYear;
                 $year->setDate((int) $defaultDate->format('Y'), (int) $financialYear->format('m'), (int) $financialYear->format('d'));
+                $now = $dateTimeFactory->createDateTime();
+                $now->setTime(0, 0, 0);
                 if ($year >= $now) {
                     $year->modify('-1 year');
                 }
@@ -107,14 +108,7 @@ final class ReportUsersListController extends AbstractController
         $start->setTime(0, 0, 0);
 
         $end = clone $start;
-        $end->modify('+11 months');
-        $end->setTime(23, 59, 59);
-
-        $previous = clone $start;
-        $previous->modify('-1 year');
-
-        $next = clone $start;
-        $next->modify('+1 year');
+        $end->modify('+1 year')->modify('-1 day');
 
         $months = [];
         $totals = [];
@@ -203,9 +197,6 @@ final class ReportUsersListController extends AbstractController
             'rows' => $rows,
             'months' => $months,
             'totals' => $totals,
-            'current' => $start,
-            'next' => $next,
-            'previous' => $previous,
         ]);
     }
 

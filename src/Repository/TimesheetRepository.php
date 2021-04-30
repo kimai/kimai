@@ -377,6 +377,9 @@ class TimesheetRepository extends EntityRepository
 
         $qb = $this->getMonthlyStatsQuery($user, $begin, $end, null);
         foreach ($qb->getQuery()->execute() as $statRow) {
+            if (!isset($years[$statRow['year']])) {
+                continue;
+            }
             $month = $years[$statRow['year']]->getMonth((int) $statRow['month']);
             if (null === $month) {
                 continue;
@@ -387,6 +390,9 @@ class TimesheetRepository extends EntityRepository
 
         $qb = $this->getMonthlyStatsQuery($user, $begin, $end, true);
         foreach ($qb->getQuery()->execute() as $statRow) {
+            if (!isset($years[$statRow['year']])) {
+                continue;
+            }
             $month = $years[$statRow['year']]->getMonth((int) $statRow['month']);
             if (null === $month) {
                 continue;
