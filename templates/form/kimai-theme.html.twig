@@ -77,7 +77,13 @@
             <i class="{{ 'left'|icon }}"></i>
         </a>
         <a class="btn btn-default" href="#" onclick="return false;">
-            <span id="{{ form.vars.id }}_month_name">{{ year|date_format('Y') }}</span>
+            <span id="{{ form.vars.id }}_month_name">
+                {% if show_range %}
+                    {{ year|date_short }} &ndash; {{ year.modify('+1 year')|date_short }}
+                {% else %}
+                    {{ year|date_format('Y') }}
+                {% endif %}
+            </span>
         </a>
         <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{ nextYear|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_format('Y') }}">
             <i class="{{ 'right'|icon }}"></i>

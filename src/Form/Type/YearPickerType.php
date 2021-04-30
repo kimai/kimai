@@ -32,6 +32,7 @@ final class YearPickerType extends AbstractType
             'html5' => false,
             'format' => DateType::HTML5_FORMAT,
             'start_date' => new \DateTime(),
+            'show_range' => false,
         ]);
     }
 
@@ -45,6 +46,7 @@ final class YearPickerType extends AbstractType
         }
 
         $view->vars['year'] = $date;
+        $view->vars['show_range'] = $options['show_range'];
         $view->vars['previousYear'] = (clone $date)->modify('-1 year');
         $view->vars['nextYear'] = (clone $date)->modify('+1 year');
     }
