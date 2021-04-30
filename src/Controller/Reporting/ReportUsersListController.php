@@ -9,6 +9,7 @@
 
 namespace App\Controller\Reporting;
 
+use App\Configuration\SystemConfiguration;
 use App\Controller\AbstractController;
 use App\Model\Statistic\Day;
 use App\Model\Statistic\Year;
@@ -55,7 +56,7 @@ final class ReportUsersListController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function yearlyUsersList(Request $request): Response
+    public function yearlyUsersList(Request $request, SystemConfiguration $systemConfiguration): Response
     {
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory();
@@ -64,11 +65,27 @@ final class ReportUsersListController extends AbstractController
         $query = new UserQuery();
         $query->setCurrentUser($currentUser);
         $allUsers = $this->userRepository->getUsersForQuery($query);
+        $defaultDate = $dateTimeFactory->getStartOfMonth();
+        $now = $dateTimeFactory->createDateTime();
+        $now->setTime(0, 0, 0);
+
+        if (null !== ($financialYear = $systemConfiguration->getFinancialYearStart())) {
+            try {
+                $financialYear = $this->getDateTimeFactory()->createDateTime($financialYear);
+                $year = clone $financialYear;
+                $year->setDate((int) $defaultDate->format('Y'), (int) $financialYear->format('m'), (int) $financialYear->format('d'));
+                if ($year >= $now) {
+                    $year->modify('-1 year');
+                }
+                $defaultDate = clone $year;
+            } catch (Exception $exception) {
+            }
+        }
 
         $rows = [];
 
         $values = new YearlyUserList();
-        $values->setDate($dateTimeFactory->getStartOfMonth());
+        $values->setDate(clone $defaultDate);
 
         $form = $this->createForm(YearlyUserListForm::class, $values, [
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
@@ -79,19 +96,19 @@ final class ReportUsersListController extends AbstractController
         $form->submit($request->query->all(), false);
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $values->setDate($dateTimeFactory->getStartOfMonth());
+            $values->setDate(clone $defaultDate);
         }
 
         if ($values->getDate() === null) {
-            $values->setDate($dateTimeFactory->getStartOfMonth());
+            $values->setDate(clone $defaultDate);
         }
 
         $start = $values->getDate();
-        $start->modify('first day of 00:00:00');
+        $start->setTime(0, 0, 0);
 
         $end = clone $start;
         $end->modify('+11 months');
-        $end->modify('last day of 23:59:59');
+        $end->setTime(23, 59, 59);
 
         $previous = clone $start;
         $previous->modify('-1 year');

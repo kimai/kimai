@@ -337,7 +337,7 @@ class TimesheetRepository extends EntityRepository
         $stats->setDurationTotal($durationTotal);
         $stats->setAmountThisMonth($amountMonth);
         $stats->setDurationThisMonth($durationMonth);
-        $stats->setFirstEntry(new DateTime($firstEntry));
+        $stats->setFirstEntry(new DateTime($firstEntry, new \DateTimeZone($user->getTimezone())));
         $stats->setRecordsTotal($recordsTotal);
 
         return $stats;
@@ -362,8 +362,8 @@ class TimesheetRepository extends EntityRepository
             if (!isset($years[$curYear])) {
                 $year = new Year($curYear);
                 for ($i = 1; $i < 13; $i++) {
-                    $date = new DateTime();
-                    $date->setDate((int) $curYear, $i, 1);
+                    $date = clone $begin;
+                    $date->setDate((int) $curYear, $i, (int) $begin->format('d'));
                     $date->setTime(0, 0, 0);
                     if ($date < $begin || $date > $end) {
                         continue;
@@ -598,7 +598,7 @@ class TimesheetRepository extends EntityRepository
         $results = $this->getDailyData($begin, $end, $user);
 
         foreach ($results as $statRow) {
-            $dateTime = new DateTime();
+            $dateTime = clone $begin;
             $dateTime->setDate($statRow['year'], $statRow['month'], $statRow['day']);
             $dateTime->setTime(0, 0, 0);
             $day = new Day($dateTime, (int) $statRow['duration'], (float) $statRow['rate']);
