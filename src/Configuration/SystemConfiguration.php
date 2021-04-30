@@ -241,6 +241,13 @@ class SystemConfiguration implements SystemBundleConfiguration
         return $this->getIncrement('timesheet.time_increment', $this->getTimesheetDefaultRoundingEnd(), 0);
     }
 
+    // ========== Company configurations ==========
+
+    public function getFinancialYearStart(): ?string
+    {
+        return $this->find('company.financial_year');
+    }
+
     // ========== Theme configurations ==========
 
     public function isThemeColorsLimited(): bool
