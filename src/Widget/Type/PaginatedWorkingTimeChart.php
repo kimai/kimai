@@ -101,6 +101,7 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
         $yearData = $this->repository->getStatistic('duration', $yearBegin, $yearEnd, $user);
 
         $financialYearData = null;
+        $financialYearBegin = null;
 
         if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
             $financialYearBegin = $dateTimeFactory->createStartOfFinancialYear($financialYear);
@@ -120,6 +121,7 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
             'month' => $this->repository->getStatistic('duration', $monthBegin, $monthEnd, $user),
             'year' => $yearData,
             'financial' => $financialYearData,
+            'financialBegin' => $financialYearBegin,
         ];
     }
 }

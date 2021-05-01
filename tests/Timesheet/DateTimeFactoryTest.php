@@ -182,9 +182,31 @@ class DateTimeFactoryTest extends TestCase
     public function testCreateStartOfFinancialYearWithConfig()
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
-        $dateTime = $sut->createStartOfFinancialYear('2020-01-20');
-        $expected = $sut->createDateTime('2020-01-20 00:00:00');
-        self::assertInstanceOf(DateTime::class, $dateTime);
-        // FIXME self::assertEquals($expected, $dateTime);
+
+        $future = $sut->createDateTime('+10 days');
+        $past = $sut->createDateTime('-10 days');
+
+        $financial = $sut->createStartOfFinancialYear($future->format('Y-m-d'));
+
+        $future->modify('-1 year');
+        $future->setTime(0, 0, 0);
+
+        self::assertEquals($future, $financial);
+
+        $financial = $sut->createStartOfFinancialYear($past->format('Y-m-d'));
+
+        $past->setTime(0, 0, 0);
+        self::assertEquals($past, $financial);
+    }
+
+    public function testCreateEndOfFinancialYearWithConfig()
+    {
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+
+        $expected = $sut->createDateTime('2021-07-22 23:59:59 ');
+        $financial = $sut->createStartOfFinancialYear('2020-07-23 15:30:00');
+        $end = $sut->createEndOfFinancialYear($financial);
+
+        self::assertEquals($expected, $end);
     }
 }
