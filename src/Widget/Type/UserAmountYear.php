@@ -17,14 +17,15 @@ final class UserAmountYear extends CounterYear
     public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
     {
         parent::__construct($repository, $systemConfiguration);
+        $this->setId('userAmountYear');
         $this->setOption('dataType', 'money');
         $this->setOption('icon', 'money');
         $this->setOption('color', 'yellow');
+        $this->setTitle('stats.amountYear');
     }
 
     public function getData(array $options = [])
     {
-        $this->setTitle('stats.amountYear');
         $this->titleYear = 'stats.amountFinancialYear';
         $this->setQuery(TimesheetRepository::STATS_QUERY_RATE);
         $this->setQueryWithUser(true);

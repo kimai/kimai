@@ -17,13 +17,14 @@ final class ActiveUsersYear extends CounterYear
     public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
     {
         parent::__construct($repository, $systemConfiguration);
+        $this->setId('activeUsersYear');
         $this->setOption('icon', 'user');
         $this->setOption('color', 'yellow');
+        $this->setTitle('stats.userActiveYear');
     }
 
     public function getData(array $options = [])
     {
-        $this->setTitle('stats.userActiveYear');
         $this->titleYear = 'stats.userActiveFinancialYear';
         $this->setQuery(TimesheetRepository::STATS_QUERY_USER);
         $this->setQueryWithUser(false);

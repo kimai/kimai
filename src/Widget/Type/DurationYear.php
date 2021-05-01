@@ -17,14 +17,15 @@ final class DurationYear extends CounterYear
     public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
     {
         parent::__construct($repository, $systemConfiguration);
+        $this->setId('durationYear');
         $this->setOption('dataType', 'duration');
         $this->setOption('icon', 'duration');
         $this->setOption('color', 'yellow');
+        $this->setTitle('stats.durationYear');
     }
 
     public function getData(array $options = [])
     {
-        $this->setTitle('stats.durationYear');
         $this->titleYear = 'stats.durationFinancialYear';
         $this->setQuery(TimesheetRepository::STATS_QUERY_DURATION);
         $this->setQueryWithUser(false);
