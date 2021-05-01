@@ -245,7 +245,13 @@ class SystemConfiguration implements SystemBundleConfiguration
 
     public function getFinancialYearStart(): ?string
     {
-        return $this->find('company.financial_year');
+        $start = $this->find('company.financial_year');
+
+        if (empty($start)) {
+            return null;
+        }
+
+        return (string) $start;
     }
 
     // ========== Theme configurations ==========

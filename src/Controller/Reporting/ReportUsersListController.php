@@ -67,20 +67,8 @@ final class ReportUsersListController extends AbstractController
         $allUsers = $this->userRepository->getUsersForQuery($query);
         $defaultDate = $dateTimeFactory->createDateTime('01 january this year 00:00:00');
 
-        $financialYear = $systemConfiguration->getFinancialYearStart();
-        if (!empty($financialYear)) {
-            try {
-                $financialYear = $this->getDateTimeFactory()->createDateTime($financialYear);
-                $year = clone $financialYear;
-                $year->setDate((int) $defaultDate->format('Y'), (int) $financialYear->format('m'), (int) $financialYear->format('d'));
-                $now = $dateTimeFactory->createDateTime();
-                $now->setTime(0, 0, 0);
-                if ($year >= $now) {
-                    $year->modify('-1 year');
-                }
-                $defaultDate = clone $year;
-            } catch (Exception $exception) {
-            }
+        if (null !== ($financialYear = $systemConfiguration->getFinancialYearStart())) {
+            $defaultDate = $this->getDateTimeFactory()->createStartOfFinancialYear($financialYear);
         }
 
         $rows = [];
@@ -105,14 +93,10 @@ final class ReportUsersListController extends AbstractController
         }
 
         $start = $values->getDate();
-        $start->setTime(0, 0, 0);
-
-        $end = clone $start;
-        $end->modify('+1 year')->modify('-1 day');
+        $end = $this->getDateTimeFactory()->createEndOfFinancialYear($start);
 
         $months = [];
         $totals = [];
-
         foreach ($allUsers as $user) {
             $rows[] = [
                 'years' => $this->timesheetRepository->getMonthlyStats($start, $end, $user),

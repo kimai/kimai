@@ -124,4 +124,32 @@ class DateTimeFactory
 
         return $date;
     }
+
+    public function createStartOfFinancialYear(?string $financialYear = null): DateTime
+    {
+        $defaultDate = $this->createDateTime('01 january this year 00:00:00');
+
+        if (null === $financialYear) {
+            return $defaultDate;
+        }
+
+        $financialYear = $this->createDateTime($financialYear);
+        $financialYear->setDate((int) $defaultDate->format('Y'), (int) $financialYear->format('m'), (int) $financialYear->format('d'));
+
+        $now = $this->createDateTime('00:00:00');
+
+        if ($financialYear >= $now) {
+            $financialYear->modify('-1 year');
+        }
+
+        return $financialYear;
+    }
+
+    public function createEndOfFinancialYear(DateTime $financialYear): DateTime
+    {
+        $yearEnd = clone $financialYear;
+        $yearEnd->modify('+1 year')->modify('-1 day')->setTime(23, 59, 59);
+
+        return $yearEnd;
+    }
 }
