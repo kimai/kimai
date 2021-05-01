@@ -16,11 +16,11 @@ abstract class AbstractWidgetType implements WidgetInterface
     /**
      * @var string
      */
-    protected $id = '';
+    protected $id;
     /**
      * @var string
      */
-    protected $title = '';
+    protected $title;
     /**
      * @var array
      */
@@ -39,7 +39,11 @@ abstract class AbstractWidgetType implements WidgetInterface
 
     public function getId(): string
     {
-        return $this->id;
+        if (!empty($this->id)) {
+            return $this->id;
+        }
+
+        return (new \ReflectionClass($this))->getShortName();
     }
 
     public function setData($data): self

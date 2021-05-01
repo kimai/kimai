@@ -8,7 +8,16 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
-## [1.14](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
+## [1.15](https://github.com/kevinpapst/kimai2/releases/tag/1.15)
+
+**BC break**:
+- Renamed widgets (relevant if you use your own Dashboard config):
+  - `userAmountYear` to `UserAmountYear`
+  - `durationYear` to `DurationYear`
+  - `activeUsersYear` to `ActiveUsersYear`
+  - `amountYear` to `AmountYear`
+
+## [1.14](https://github.com/kevinpapst/kimai2/releases/tag/1.14)
 
 **CRITICAL BC break**: SQLite support was removed. If you are using SQLite, you have to [read this blog post](https://www.kimai.org/blog/2021/sqlite-and-ftp-support-removed/) and migrate to MySQL/MariaDB first!
 

@@ -204,22 +204,22 @@ kimai:
             title: ~
             order: 20
             permission: view_rate_own_timesheet
-            widgets: [userAmountToday, userAmountWeek, userAmountMonth, userAmountYear]
+            widgets: [userAmountToday, userAmountWeek, userAmountMonth, UserAmountYear]
         duration:
             title: dashboard.all
             order: 30
             permission: ROLE_TEAMLEAD
-            widgets: [durationToday, durationWeek, durationMonth, durationYear]
+            widgets: [durationToday, durationWeek, durationMonth, DurationYear]
         active_users:
             title: ~
             order: 40
             permission: ROLE_TEAMLEAD
-            widgets: [activeUsersToday, activeUsersWeek, activeUsersMonth, activeUsersYear]
+            widgets: [activeUsersToday, activeUsersWeek, activeUsersMonth, ActiveUsersYear]
         rates:
             title: ~
             order: 50
             permission: view_rate_other_timesheet
-            widgets: [amountToday, amountWeek, amountMonth, amountYear]
+            widgets: [amountToday, amountWeek, amountMonth, AmountYear]
 # --------------------------------------------------------------------------------
 
 
