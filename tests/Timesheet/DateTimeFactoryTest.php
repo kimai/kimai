@@ -169,4 +169,22 @@ class DateTimeFactoryTest extends TestCase
         // poor test, but there shouldn't be more than 2 seconds between the creation of two DateTime objects
         $this->assertTrue(2 >= $difference);
     }
+
+    public function testCreateStartOfFinancialYearWithoutConfig()
+    {
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+        $dateTime = $sut->createStartOfFinancialYear();
+        $expected = $sut->createDateTime('01 january this year 00:00:00');
+        self::assertInstanceOf(DateTime::class, $dateTime);
+        self::assertEquals($expected, $dateTime);
+    }
+
+    public function testCreateStartOfFinancialYearWithConfig()
+    {
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+        $dateTime = $sut->createStartOfFinancialYear('2020-01-20');
+        $expected = $sut->createDateTime('2020-01-20 00:00:00');
+        self::assertInstanceOf(DateTime::class, $dateTime);
+        // FIXME self::assertEquals($expected, $dateTime);
+    }
 }
