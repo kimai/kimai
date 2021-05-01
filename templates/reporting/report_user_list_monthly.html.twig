@@ -44,9 +44,7 @@
                             {% endfor %}
                         {% endfor %}
                         <th class="text-nowrap text-center total">
-                            {% if usersTotalDuration > 0 %}
-                                {{ usersTotalDuration|duration }}
-                            {% endif %}
+                            {{ usersTotalDuration|duration }}
                         </th>
                         {% for yid, year in userYear.years %}
                             {% for mid, month in year.months %}
