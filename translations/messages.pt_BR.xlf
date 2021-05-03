@@ -1186,6 +1186,10 @@
         <source>label.searchTerm</source>
         <target>Termo de pesquisa</target>
       </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Deletar Configuração Padrão</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
