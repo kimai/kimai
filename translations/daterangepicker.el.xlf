@@ -4,39 +4,39 @@
     <body>
       <trans-unit id="daterangepicker.today">
         <source>daterangepicker.today</source>
-        <target></target>
+        <target>Σήμερα</target>
       </trans-unit>
       <trans-unit id="daterangepicker.yesterday">
         <source>daterangepicker.yesterday</source>
-        <target></target>
+        <target>Χθες</target>
       </trans-unit>
       <trans-unit id="daterangepicker.lastWeek">
         <source>daterangepicker.lastWeek</source>
-        <target></target>
+        <target>Προηγούμενη εβδομάδα</target>
       </trans-unit>
       <trans-unit id="daterangepicker.thisWeek">
         <source>daterangepicker.thisWeek</source>
-        <target></target>
+        <target>Τρέχων εβδομάδα</target>
       </trans-unit>
       <trans-unit id="daterangepicker.lastMonth">
         <source>daterangepicker.lastMonth</source>
-        <target></target>
+        <target>Προηγούμενος μήνας</target>
       </trans-unit>
       <trans-unit id="daterangepicker.thisMonth">
         <source>daterangepicker.thisMonth</source>
-        <target></target>
+        <target>Τρέχων μήνας</target>
       </trans-unit>
       <trans-unit id="daterangepicker.lastYear">
         <source>daterangepicker.lastYear</source>
-        <target></target>
+        <target>Προηγούμενο έτος</target>
       </trans-unit>
       <trans-unit id="daterangepicker.thisYear">
         <source>daterangepicker.thisYear</source>
-        <target></target>
+        <target>Τρέχων έτος</target>
       </trans-unit>
       <trans-unit id="daterangepicker.customRange">
         <source>daterangepicker.customRange</source>
-        <target></target>
+        <target>Προσαρμοσμένο εύρος</target>
       </trans-unit>
     </body>
   </file>
