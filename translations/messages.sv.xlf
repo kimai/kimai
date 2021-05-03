@@ -961,6 +961,62 @@
         <source>upload</source>
         <target>Ladda upp</target>
       </trans-unit>
+      <trans-unit id="label.my_teams">
+        <source>label.my_teams</source>
+        <target>Mina teams</target>
+      </trans-unit>
+      <trans-unit id="action.reset">
+        <source>action.reset</source>
+        <target>Återställ</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Spara alla</target>
+      </trans-unit>
+      <trans-unit id="label.billable">
+        <source>label.billable</source>
+        <target>Debiterbar</target>
+      </trans-unit>
+      <trans-unit id="placeholder.type_message">
+        <source>placeholder.type_message</source>
+        <target>Skriv ditt meddelande...</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Data i formuläret har ändrats. Tryck på "Spara" för att spara ändringarna eller "Stäng" för att avbryta.</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Fil</target>
+      </trans-unit>
+      <trans-unit id="update_multiple">
+        <source>update_multiple</source>
+        <target>%action% %count% poster?</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Sortera efter</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Minskande</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Ökande</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Ta bort sökfavorit</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Spara inställningarna som sökfavorit</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Sökterm</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
