@@ -192,7 +192,6 @@ final class InvoiceController extends AbstractController
         $query->setBegin($begin);
         $query->setEnd($end);
         $query->setExported(InvoiceQuery::STATE_NOT_EXPORTED);
-        $query->setState(InvoiceQuery::STATE_STOPPED);
         // limit access to data from teams
         $query->setCurrentUser($this->getUser());
 
