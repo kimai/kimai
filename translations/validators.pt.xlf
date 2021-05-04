@@ -34,6 +34,10 @@
         <source>The begin date cannot be in the future.</source>
         <target>A data de início não pode ser no futuro.</target>
       </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>O orçamento está esgotado. Do %budget% disponível, %used% tem sido reservado até agora, %free% ainda pode ser utilizado.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
