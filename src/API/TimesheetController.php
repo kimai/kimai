@@ -138,7 +138,7 @@ class TimesheetController extends BaseApiController
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
-        $query = new TimesheetQuery();
+        $query = new TimesheetQuery(false);
         $query->setUser($this->getUser());
 
         if ($this->isGranted('view_other_timesheet') && null !== ($user = $paramFetcher->get('user'))) {
