@@ -19,7 +19,7 @@
       </trans-unit>
       <trans-unit id="both">
         <source>both</source>
-        <target>και τα δύο</target>
+        <target>Και τα δύο</target>
       </trans-unit>
       <trans-unit id="This is a mandatory field">
         <source>This is a mandatory field</source>
