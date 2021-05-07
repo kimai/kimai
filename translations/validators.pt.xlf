@@ -24,11 +24,11 @@
       </trans-unit>
       <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
         <source>This invoice document cannot be used, please rename the file and upload it again.</source>
-        <target>Este documento de fatura não pode ser usado, por favor renomeie o arquivo e carregue-o novamente.</target>
+        <target>Este documento de fatura não pode ser usado, por favor renomeie o ficheiro e carregue-o novamente.</target>
       </trans-unit>
       <trans-unit id="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
-        <target>Você deve selecionar pelo menos um usuário ou equipe.</target>
+        <target>Deve selecionar pelo menos um utilizador ou equipe.</target>
       </trans-unit>
       <trans-unit id="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
