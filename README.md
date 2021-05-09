@@ -7,6 +7,7 @@
     <a href="https://codecov.io/gh/kevinpapst/kimai2"><img alt="Code Coverage" src="https://codecov.io/gh/kevinpapst/kimai2/branch/master/graph/badge.svg"></a>
     <a href="https://packagist.org/packages/kevinpapst/kimai2"><img alt="Latest stable version" src="https://poser.pugx.org/kevinpapst/kimai2/v/stable"></a>
     <a href="https://packagist.org/packages/kevinpapst/kimai2"><img alt="License" src="https://poser.pugx.org/kevinpapst/kimai2/license"></a>
+    <a href="https://twitter.com/kimai_org"><img alt="Twitter" src="https://img.shields.io/badge/follow-%40kimai__org-00acee"></a>
 </p>
 
 <h1 align="center">Kimai - time-tracker</h1>
