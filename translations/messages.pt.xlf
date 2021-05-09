@@ -335,7 +335,7 @@
       </trans-unit>
       <trans-unit id="modal.columns.description">
         <source>modal.columns.description</source>
-        <target>Ao gravar, as colunas desmarcadas serão ocultadas e essa configuração será armazenada em um cookie do navegador. Se você apagar os seus cookies, as configurações serão invertidas.</target>
+        <target>Ao gravar, as colunas desmarcadas serão ocultadas e essa configuração será armazenada num cookie do navegador. Se apagar os seus cookies, as configurações serão invertidas.</target>
       </trans-unit>
       <trans-unit id="label.fixedRate">
         <source>label.fixedRate</source>
