@@ -1061,6 +1061,10 @@
         <source>sum.total</source>
         <target>סך הכל</target>
       </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>חיפוש מונח</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
