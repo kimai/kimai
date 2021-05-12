@@ -11,11 +11,13 @@ namespace App\Controller;
 
 use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDisplayEvent;
+use App\Form\TimesheetEditForm;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -92,5 +94,15 @@ class TimesheetController extends TimesheetAbstractController
     public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TagRepository $tagRepository): Response
     {
         return $this->create($request, 'timesheet/edit.html.twig', $projectRepository, $activityRepository, $tagRepository);
+    }
+
+    protected function getCreateForm(Timesheet $entry): FormInterface
+    {
+        return $this->generateCreateForm($entry, TimesheetEditForm::class, $this->generateUrl('timesheet_create'));
+    }
+
+    protected function getDuplicateForm(Timesheet $entry): FormInterface
+    {
+        return $this->generateCreateForm($entry, TimesheetEditForm::class, $this->generateUrl('timesheet_duplicate', ['id' => $entry->getId()]));
     }
 }

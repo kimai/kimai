@@ -187,6 +187,16 @@ class TimesheetTeamController extends TimesheetAbstractController
         $query->setCurrentUser($this->getUser());
     }
 
+    protected function getCreateForm(Timesheet $entry): FormInterface
+    {
+        return $this->generateCreateForm($entry, TimesheetAdminEditForm::class, $this->generateUrl('admin_timesheet_create'));
+    }
+
+    protected function getDuplicateForm(Timesheet $entry): FormInterface
+    {
+        return $this->generateCreateForm($entry, TimesheetAdminEditForm::class, $this->generateUrl('admin_timesheet_duplicate', ['id' => $entry->getId()]));
+    }
+
     protected function getPermissionEditExport(): string
     {
         return 'edit_export_other_timesheet';
@@ -195,11 +205,6 @@ class TimesheetTeamController extends TimesheetAbstractController
     protected function getPermissionEditRate(): string
     {
         return 'edit_rate_other_timesheet';
-    }
-
-    protected function getCreateFormClassName(): string
-    {
-        return TimesheetAdminEditForm::class;
     }
 
     protected function getEditFormClassName(): string
@@ -224,11 +229,6 @@ class TimesheetTeamController extends TimesheetAbstractController
     protected function getEditRoute(): string
     {
         return 'admin_timesheet_edit';
-    }
-
-    protected function getCreateRoute(): string
-    {
-        return 'admin_timesheet_create';
     }
 
     protected function getMultiUpdateRoute(): string

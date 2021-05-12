@@ -214,7 +214,7 @@ abstract class TimesheetAbstractController extends AbstractController
     {
         $copyTimesheet = clone $timesheet;
 
-        $form = $this->getCreateForm($copyTimesheet);
+        $form = $this->getDuplicateForm($timesheet);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -453,12 +453,12 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    protected function getCreateForm(Timesheet $entry): FormInterface
+    protected function generateCreateForm(Timesheet $entry, string $formClass, string $action): FormInterface
     {
         $mode = $this->getTrackingMode();
 
-        return $this->createForm($this->getCreateFormClassName(), $entry, [
-            'action' => $this->generateUrl($this->getCreateRoute()),
+        return $this->createForm($formClass, $entry, [
+            'action' => $action,
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
             'include_user' => $this->includeUserInForms('create'),
@@ -523,11 +523,6 @@ abstract class TimesheetAbstractController extends AbstractController
         return 'edit_rate_own_timesheet';
     }
 
-    protected function getCreateFormClassName(): string
-    {
-        return TimesheetEditForm::class;
-    }
-
     protected function getEditFormClassName(): string
     {
         return TimesheetEditForm::class;
@@ -553,11 +548,6 @@ abstract class TimesheetAbstractController extends AbstractController
         return 'timesheet_edit';
     }
 
-    protected function getCreateRoute(): string
-    {
-        return 'timesheet_create';
-    }
-
     protected function getMultiUpdateRoute(): string
     {
         return 'timesheet_multi_update';
@@ -572,4 +562,8 @@ abstract class TimesheetAbstractController extends AbstractController
     {
         return $this->getTrackingMode()->canSeeBeginAndEndTimes();
     }
+
+    abstract protected function getDuplicateForm(Timesheet $entry): FormInterface;
+
+    abstract protected function getCreateForm(Timesheet $entry): FormInterface;
 }
