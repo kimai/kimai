@@ -20,6 +20,6 @@ class TimesheetTeamSubscriber extends AbstractTimesheetSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $this->timesheetActions($event, 'admin_timesheet', 'admin_timesheet_edit');
+        $this->timesheetActions($event, 'admin_timesheet_edit', 'admin_timesheet_duplicate');
     }
 }

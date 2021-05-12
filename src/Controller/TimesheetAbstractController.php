@@ -13,6 +13,8 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
+use App\Event\TimesheetDuplicatePostEvent;
+use App\Event\TimesheetDuplicatePreEvent;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\ServiceExport;
@@ -205,6 +207,32 @@ abstract class TimesheetAbstractController extends AbstractController
         return $this->render($renderTemplate, [
             'timesheet' => $entry,
             'form' => $createForm->createView(),
+        ]);
+    }
+
+    protected function duplicate(Timesheet $timesheet, Request $request, string $renderTemplate): Response
+    {
+        $copyTimesheet = clone $timesheet;
+
+        $form = $this->getCreateForm($copyTimesheet);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->dispatcher->dispatch(new TimesheetDuplicatePreEvent($copyTimesheet, $timesheet));
+                $this->service->saveNewTimesheet($copyTimesheet);
+                $this->dispatcher->dispatch(new TimesheetDuplicatePostEvent($copyTimesheet, $timesheet));
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute($this->getTimesheetRoute());
+            } catch (\Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
+        }
+
+        return $this->render($renderTemplate, [
+            'timesheet' => $copyTimesheet,
+            'form' => $form->createView(),
         ]);
     }
 

@@ -23,7 +23,6 @@ use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,7 +42,7 @@ class TimesheetTeamController extends TimesheetAbstractController
      * @param Request $request
      * @return Response
      */
-    public function indexAction($page, Request $request)
+    public function indexAction(int $page, Request $request): Response
     {
         $query = new TimesheetQuery();
         $query->setPage($page);
@@ -54,12 +53,8 @@ class TimesheetTeamController extends TimesheetAbstractController
 
     /**
      * @Route(path="/export/{exporter}", name="admin_timesheet_export", methods={"GET"})
-     *
-     * @param Request $request
-     * @param string $exporter
-     * @return Response
      */
-    public function exportAction(Request $request, string $exporter)
+    public function exportAction(Request $request, string $exporter): Response
     {
         return $this->export($request, $exporter);
     }
@@ -67,26 +62,26 @@ class TimesheetTeamController extends TimesheetAbstractController
     /**
      * @Route(path="/{id}/edit", name="admin_timesheet_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', entry)")
-     *
-     * @param Timesheet $entry
-     * @param Request $request
-     * @return RedirectResponse|Response
      */
-    public function editAction(Timesheet $entry, Request $request)
+    public function editAction(Timesheet $entry, Request $request): Response
     {
         return $this->edit($entry, $request, 'timesheet-team/edit.html.twig');
     }
 
     /**
+     * @Route(path="/{id}/duplicate", name="admin_timesheet_duplicate", methods={"GET", "POST"})
+     * @Security("is_granted('duplicate', entry)")
+     */
+    public function duplicateAction(Timesheet $entry, Request $request): Response
+    {
+        return $this->duplicate($entry, $request, 'timesheet-team/edit.html.twig');
+    }
+
+    /**
      * @Route(path="/create", name="admin_timesheet_create", methods={"GET", "POST"})
      * @Security("is_granted('create_other_timesheet')")
-     *
-     * @param Request $request
-     * @param ProjectRepository $projectRepository
-     * @param ActivityRepository $activityRepository
-     * @return RedirectResponse|Response
      */
-    public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TagRepository $tagRepository)
+    public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TagRepository $tagRepository): Response
     {
         return $this->create($request, 'timesheet-team/edit.html.twig', $projectRepository, $activityRepository, $tagRepository);
     }
@@ -94,11 +89,8 @@ class TimesheetTeamController extends TimesheetAbstractController
     /**
      * @Route(path="/create_mu", name="admin_timesheet_create_multiuser", methods={"GET", "POST"})
      * @Security("is_granted('create_other_timesheet')")
-     *
-     * @param Request $request
-     * @return RedirectResponse|Response
      */
-    public function createForMultiUserAction(Request $request)
+    public function createForMultiUserAction(Request $request): Response
     {
         $entry = new MultiUserTimesheet();
         $entry->setUser($this->getUser());
@@ -176,7 +168,7 @@ class TimesheetTeamController extends TimesheetAbstractController
      * @Route(path="/multi-update", name="admin_timesheet_multi_update", methods={"POST"})
      * @Security("is_granted('edit_other_timesheet')")
      */
-    public function multiUpdateAction(Request $request)
+    public function multiUpdateAction(Request $request): Response
     {
         return $this->multiUpdate($request, 'timesheet-team/multi-update.html.twig');
     }
@@ -185,7 +177,7 @@ class TimesheetTeamController extends TimesheetAbstractController
      * @Route(path="/multi-delete", name="admin_timesheet_multi_delete", methods={"POST"})
      * @Security("is_granted('delete_other_timesheet')")
      */
-    public function multiDeleteAction(Request $request)
+    public function multiDeleteAction(Request $request): Response
     {
         return $this->multiDelete($request);
     }
