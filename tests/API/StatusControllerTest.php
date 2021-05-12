@@ -27,6 +27,11 @@ class StatusControllerTest extends APIControllerBaseTest
         $this->assertUrlIsSecured('/api/version');
     }
 
+    public function testIsSecurePlugins()
+    {
+        $this->assertUrlIsSecured('/api/plugins');
+    }
+
     public function testPing()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -61,5 +66,14 @@ class StatusControllerTest extends APIControllerBaseTest
             'Kimai ' . Constants::VERSION . ' by Kevin Papst and contributors.',
             $result['copyright']
         );
+    }
+
+    public function testPlugins()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/plugins');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
     }
 }
