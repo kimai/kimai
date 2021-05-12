@@ -434,7 +434,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=timesheet_admin_edit_form]')->form();
-        $client->submit($form);
+        $client->submit($form, $form->getPhpValues());
 
         $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
         $client->followRedirect();

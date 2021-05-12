@@ -663,7 +663,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
-        $client->submit($form);
+        $client->submit($form, $form->getPhpValues());
 
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
         $client->followRedirect();
