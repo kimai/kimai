@@ -14,6 +14,7 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Timesheet\DateTimeFactory;
 use App\Timesheet\Util;
 
 /**
@@ -404,5 +405,52 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             self::assertTrue($timesheet->isExported());
             self::assertEquals(Util::calculateRate(13.78, $timesheet->getDuration()), $timesheet->getRate());
         }
+    }
+
+    public function testDuplicateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $dateTime = new DateTimeFactory(new \DateTimeZone('Europe/London'));
+
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(1);
+        $fixture->setAmountRunning(0);
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
+        $fixture->setStartDate($dateTime->createDateTime());
+        $fixture->setCallback(function (Timesheet $timesheet) {
+            $timesheet->setDescription('Testing is fun!');
+            $end = clone $timesheet->getBegin();
+            $end->modify('+ 16 hours');
+            $timesheet->setEnd($end);
+            $timesheet->setFixedRate(2016);
+            $timesheet->setHourlyRate(127);
+        });
+
+        /** @var Timesheet[] $ids */
+        $ids = $this->importFixture($fixture);
+        $newId = $ids[0]->getId();
+
+        $this->request($client, '/team/timesheet/' . $newId . '/duplicate');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_admin_edit_form]')->form();
+        $client->submit($form);
+
+        $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $em = $this->getEntityManager();
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find($newId++);
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        $this->assertEquals('Europe/London', $timesheet->getBegin()->getTimezone()->getName());
+        $this->assertEquals('Testing is fun!', $timesheet->getDescription());
+        $this->assertEquals(2016, $timesheet->getRate());
+        $this->assertEquals(127, $timesheet->getHourlyRate());
+        $this->assertEquals(2016, $timesheet->getFixedRate());
+        $this->assertTrue($timesheet->getDuration() == 57600 || $timesheet->getDuration() == 57660); // 1 minute rounding might be applied
+        $this->assertEquals(2016, $timesheet->getRate());
     }
 }
