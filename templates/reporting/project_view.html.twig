@@ -75,12 +75,27 @@
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'durationTotal') }}">{{ entry.durationTotal|duration }}</td>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
                                     {% if project.timeBudget > 0 %}
-                                                {{ progress.progressbar(project.timeBudget, entry.billableDuration|default(0), entry.billableDuration|duration ~ ' / ' ~ project.timeBudget|duration, '') }}
+                                        {% set timeBudgetLeft = project.timeBudget - entry.billableDuration %}
+                                        {% set options = {
+                                            'max': project.timeBudget|default(0),
+                                            'current': entry.billableDuration|default(0),
+                                            'open': timeBudgetLeft,
+                                            'format': 'duration'
+                                        } %}
+                                        {{ progress.progressbar_full(options) }}
                                     {% endif %}
                                 </td>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">
                                     {% if project.budget > 0 %}
-                                                {{ progress.progressbar(project.budget, entry.billableRate|default(0), entry.billableRate|money(currency) ~ ' / ' ~ project.budget|money(currency), '') }}
+                                        {% set budgetLeft = project.budget - entry.billableRate %}
+                                        {% set options = {
+                                            'max': project.budget|default(0),
+                                            'current': entry.billableRate|default(0),
+                                            'open': budgetLeft,
+                                            'format': 'money',
+                                            'currency': currency
+                                        } %}
+                                        {{ progress.progressbar_full(options) }}
                                     {% endif %}
                                 </td>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'stateDuration') }}">
