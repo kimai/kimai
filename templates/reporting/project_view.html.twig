@@ -14,6 +14,7 @@
     'budget':           {'class': 'hidden-xs', 'title': 'label.budget'|trans},
     'stateDuration':    {'class': 'hidden-sm hidden-xs text-center hw-min', 'title': 'label.not_exported'|trans},
     'stateMoney':       {'class': 'hidden-sm hidden-xs text-center hw-min', 'title': 'label.not_invoiced'|trans},
+    'projectStart':     {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_start'|trans},
     'projectEnd':       {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_end'|trans},
     'comment':          {'class': 'hidden-md hidden-sm hidden-xs hidden', 'title': 'label.comment'|trans},
     'actions':          {'class': 'actions alwaysVisible'},
@@ -116,6 +117,7 @@
                                         {{ entry.notBilledRate|money(currency) }}
                                     {% endif %}
                                 </td>
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'projectStart') }}">{% if project.start is not null %}{{ project.start|date_short }}{% endif %}</td>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'projectEnd') }}">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ project.comment }}</td>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">

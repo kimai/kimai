@@ -5,7 +5,7 @@
     {% set reverseColors = options['reverseColors'] ?? false %}
     {% set formatter = options['format'] ?? null %}
     {% set currency = options['currency'] ?? null %}
-    {% set percentDecimals = options['decimals'] ?? 0 %}
+    {% set percentDecimals = options['decimals'] ?? 1 %}
     {% if formatter == 'duration' %}
         {% set currentFormatted = current|duration %}
         {% set maxFormatted = max|duration %}
