@@ -11,17 +11,22 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\API\Model\Plugin;
 use App\API\Model\Version;
+use App\Plugin\PluginManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @SWG\Tag(name="Default")
+ *
+ * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class StatusController extends BaseApiController
 {
@@ -73,5 +78,33 @@ class StatusController extends BaseApiController
     public function versionAction(): Response
     {
         return $this->viewHandler->handle(new View(new Version(), 200));
+    }
+
+    /**
+     * Returns information about installed Plugins
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns a list of plugin names and versions",
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref=@Model(type=Plugin::class))
+     *      )
+     * )
+     *
+     * @Rest\Get(path="/plugins")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function pluginAction(PluginManager $pluginManager): Response
+    {
+        $plugins = [];
+        foreach ($pluginManager->getPlugins() as $plugin) {
+            $pluginManager->loadMetadata($plugin);
+            $plugins[] = new Plugin($plugin);
+        }
+
+        return $this->viewHandler->handle(new View($plugins, 200));
     }
 }

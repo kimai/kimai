@@ -210,12 +210,11 @@ class TimesheetVoterTest extends AbstractVoterTest
                     'lockdown_period_start' => $lockdownBegin,
                     'lockdown_period_end' => $lockdownEnd,
                     'lockdown_grace_period' => $lockdownGrace,
-                    'allow_overlapping_records' => true,
                 ],
             ]
         ]);
 
-        $voter = new TimesheetVoter($this->getRolePermissionManager(), new LockdownService($config), $config);
+        $voter = new TimesheetVoter($this->getRolePermissionManager(), new LockdownService($config));
         self::assertInstanceOf(Voter::class, $voter);
 
         return $voter;
