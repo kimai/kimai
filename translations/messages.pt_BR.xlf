@@ -450,7 +450,7 @@
       <trans-unit id="admin_activity.short_stats">
         <source>admin_activity.short_stats</source>
         <target>
-                    Atualmente o %project% para o cliente %customer% tem %activities%
+                    Atualmente o %project% para o cliente %customer% tem %activity%
                     atividades e %records% registros de tempo, que contam até um total de %duration%.
                 </target>
       </trans-unit>
@@ -512,7 +512,7 @@
       <trans-unit id="admin_customer.short_stats">
         <source>admin_customer.short_stats</source>
         <target>
-                   Atualmente o %project% para o cliente %customer% tem %activities%
+                   Atualmente o %project% para o cliente %customer% tem %activity%
                     atividades e %records% registros de tempo, que contam até um total de %duration%.
                 </target>
       </trans-unit>

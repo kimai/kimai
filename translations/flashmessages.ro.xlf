@@ -55,7 +55,7 @@
       </trans-unit>
       <trans-unit id="action.upload.error">
         <source>action.upload.error</source>
-        <target>Acest fișier nu a putut fi încărcat sau salvat</target>
+        <target>Acest fișier nu a putut fi încărcat sau salvat: %reason%</target>
       </trans-unit>
     </body>
   </file>

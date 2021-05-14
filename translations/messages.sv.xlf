@@ -435,7 +435,7 @@
       </trans-unit>
       <trans-unit id="admin_project.short_stats">
         <source>admin_project.short_stats</source>
-        <target state="translated">Projektet %project% för kunden %customer% har för närvarande %activities% 
+        <target state="translated">Projektet %project% för kunden %customer% har för närvarande %activities%
                      aktiviteter och %records% tidrapporter, som summeras till %duration%.
                 </target>
       </trans-unit>
@@ -511,7 +511,7 @@
       <trans-unit id="admin_customer.short_stats">
         <source>admin_customer.short_stats</source>
         <target state="translated">
-                    För närvarande har kunden %customer% %project% projekt med %activities% aktiviteter,
+                    För närvarande har kunden %customer% %project% projekt med %activity% aktiviteter,
                     med %records% tidrapporter som summeras till %duration%.
                 </target>
       </trans-unit>

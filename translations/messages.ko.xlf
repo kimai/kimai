@@ -988,7 +988,7 @@
       </trans-unit>
       <trans-unit id="label.plus_more">
         <source>label.plus_more</source>
-        <target>+%계산% 더</target>
+        <target>+%count% 더</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -1032,7 +1032,7 @@
       </trans-unit>
       <trans-unit id="update_multiple">
         <source>update_multiple</source>
-        <target>%액션% %계산% 항목?</target>
+        <target>%count% %action% 항목?</target>
       </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>

@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target>버튼이 작동하지 않으면, 복사하여 &amp; amp; 다음 URL을 브라우저에 붙여 넣으십시오: % url %</target>
+        <target>버튼이 작동하지 않으면, 복사하여 &amp; amp; 다음 URL을 브라우저에 붙여 넣으십시오: %url%</target>
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>이메일 % email %로 Kimai 시간 트래커에 등록했습니다. 이제 링크가 만료되기 전에 계정을 활성화해야합니다.</target>
+        <target>이메일 %email%로 Kimai 시간 트래커에 등록했습니다. 이제 링크가 만료되기 전에 계정을 활성화해야합니다.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
