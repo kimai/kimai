@@ -450,7 +450,7 @@
       <trans-unit id="admin_activity.short_stats">
         <source>admin_activity.short_stats</source>
         <target>
-                    A %customer% ügyfélhez és %project% projekthez tartozó %activities% tevékenységhez
+                    A %customer% ügyfélhez és %project% projekthez tartozó %activity% tevékenységhez
                     kapcsolódik %records% időbejegyzés, ami összesen %duration%.
                 </target>
       </trans-unit>
@@ -512,7 +512,7 @@
       <trans-unit id="admin_customer.short_stats">
         <source>admin_customer.short_stats</source>
         <target>
-                    A %customer% ügyfélhez kapcsolódik %project% projekt, %activities% tevékenység 
+                    A %customer% ügyfélhez kapcsolódik %project% projekt, %activity% tevékenység
                     és %records% időbejegyzés, ami összesen %duration%.
                 </target>
       </trans-unit>

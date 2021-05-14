@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="sv" datatype="plaintext" original="reporting.en.xlf">
+    <body>
+      <trans-unit id="report_user_week">
+        <source>report_user_week</source>
+        <target>Veckovy för enskild användare</target>
+      </trans-unit>
+      <trans-unit id="report_user_month">
+        <source>report_user_month</source>
+        <target>Månadsvy för enskild användare</target>
+      </trans-unit>
+      <trans-unit id="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target>Veckovy för samtliga användare</target>
+      </trans-unit>
+      <trans-unit id="report_monthly_users">
+        <source>report_monthly_users</source>
+        <target>Månadsvy för samtliga användare</target>
+      </trans-unit>
+      <trans-unit id="report_project_view">
+        <source>report_project_view</source>
+        <target>Projektvy</target>
+      </trans-unit>
+      <trans-unit id="report_inactive_project">
+        <source>report_inactive_project</source>
+        <target>Inaktiverade projekt</target>
+      </trans-unit>
+      <trans-unit id="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>Inledande rapport</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
