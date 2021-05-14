@@ -120,13 +120,13 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         return $client->request($method, $this->createUrl($url), $parameters, [], $server, $content);
     }
 
-    protected function assertEntityNotFound(string $role, string $url, string $method = 'GET')
+    protected function assertEntityNotFound(string $role, string $url, string $method = 'GET', ?string $message = null)
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, $url, $method);
         $this->assertApiException($client->getResponse(), [
             'code' => 404,
-            'message' => 'Not found'
+            'message' => $message ?? 'Not found'
         ]);
     }
 
@@ -138,19 +138,19 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         ]);
     }
 
-    protected function assertEntityNotFoundForDelete(string $role, string $url)
+    protected function assertEntityNotFoundForDelete(string $role, string $url, ?string $message = null)
     {
         $this->assertExceptionForDeleteAction($role, $url, [], [
             'code' => 404,
-            'message' => 'Not found'
+            'message' => $message ?? 'Not found'
         ]);
     }
 
-    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data)
+    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data, ?string $message = null)
     {
         $this->assertExceptionForPatchAction($role, $url, $data, [
             'code' => 404,
-            'message' => 'Not found'
+            'message' => $message ?? 'Not found',
         ]);
     }
 
@@ -158,7 +158,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     {
         $this->assertExceptionForPostAction($role, $url, $data, [
             'code' => 404,
-            'message' => $message ?? 'Not found'
+            'message' => $message ?? 'Not found',
         ]);
     }
 

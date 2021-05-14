@@ -2829,16 +2829,16 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "3.3",
+            "version": "3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "67183f1684c71620cd42901539b7196d97f90e2c"
+                "reference": "3cb97b33b6b7c0c2fff70dd176a64784641431ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/67183f1684c71620cd42901539b7196d97f90e2c",
-                "reference": "67183f1684c71620cd42901539b7196d97f90e2c",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/3cb97b33b6b7c0c2fff70dd176a64784641431ed",
+                "reference": "3cb97b33b6b7c0c2fff70dd176a64784641431ed",
                 "shasum": ""
             },
             "require": {
@@ -2894,7 +2894,7 @@
             "description": "Admin theme bundle for Symfony 4+ based on AdminLTE 2.4 with FOSUserBundle support",
             "support": {
                 "issues": "https://github.com/kevinpapst/AdminLTEBundle/issues",
-                "source": "https://github.com/kevinpapst/AdminLTEBundle/tree/3.3"
+                "source": "https://github.com/kevinpapst/AdminLTEBundle/tree/3.4"
             },
             "funding": [
                 {
@@ -2906,7 +2906,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-02-20T16:05:21+00:00"
+            "time": "2021-05-05T10:59:11+00:00"
         },
         {
             "name": "kimai/user-bundle",

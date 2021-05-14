@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="action.upload.error">
         <source>action.upload.error</source>
-        <target>Ezin izan da fitxategia kargatu edo gorde: % reason%</target>
+        <target>Ezin izan da fitxategia kargatu edo gorde: %reason%</target>
       </trans-unit>
     </body>
   </file>

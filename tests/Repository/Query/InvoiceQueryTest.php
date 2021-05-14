@@ -30,7 +30,11 @@ class InvoiceQueryTest extends TimesheetQueryTest
         $this->assertCustomer($sut);
         $this->assertProject($sut);
         $this->assertActivity($sut);
-        $this->assertState($sut);
+
+        self::assertEquals(InvoiceQuery::STATE_STOPPED, $sut->getState());
+        self::assertFalse($sut->isRunning());
+        self::assertTrue($sut->isStopped());
+
         $this->assertExported($sut);
         $this->assertMarkAsExported($sut);
         $this->assertModifiedAfter($sut);

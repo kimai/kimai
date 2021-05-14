@@ -943,7 +943,7 @@
       </trans-unit>
       <trans-unit id="export.date_copyright">
         <source>export.date_copyright</source>
-        <target>נוצר ב %date%</target>
+        <target>נוצר ב %date% %kimai%</target>
       </trans-unit>
       <trans-unit id="active.entries">
         <source>active.entries</source>
@@ -1060,6 +1060,10 @@
       <trans-unit id="sum.total">
         <source>sum.total</source>
         <target>סך הכל</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>חיפוש מונח</target>
       </trans-unit>
     </body>
   </file>

@@ -363,7 +363,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $timesheets = $this->importFixtureForUser(User::ROLE_ADMIN);
         $this->assertCount(10, $timesheets);
 
-        $this->assertApiAccessDenied($client, '/api/timesheets/' . $timesheets[0]->getId(), 'You are not allowed to view this timesheet');
+        $this->assertApiAccessDenied($client, '/api/timesheets/' . $timesheets[0]->getId(), 'Access denied.');
     }
 
     public function testGetEntityAccessAllowedForAdmin()
@@ -379,7 +379,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetEntityNotFound()
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/' . PHP_INT_MAX);
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testPostAction()
@@ -569,12 +569,12 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
-        $this->assertEquals('You are not allowed to update this timesheet', $json['message']);
+        $this->assertEquals('Access denied.', $json['message']);
     }
 
     public function testPatchActionWithUnknownTimesheet()
     {
-        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/255', []);
+        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/255', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testInvalidPatchAction()
@@ -618,7 +618,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testDeleteActionWithUnknownTimesheet()
     {
-        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/timesheets/255');
+        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/timesheets/255', 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testDeleteActionForDifferentUser()
@@ -644,7 +644,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
-        $this->assertEquals('You are not allowed to delete this timesheet', $json['message']);
+        $this->assertEquals('Access denied.', $json['message']);
     }
 
     public function testDeleteActionForExportedRecordIsNotAllowed()
@@ -661,7 +661,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $em->flush();
 
         $this->request($client, '/api/timesheets/' . $id, 'DELETE');
-        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to delete this timesheet');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
     }
 
     public function testDeleteActionForExportedRecordIsAllowedForAdmin()
@@ -784,7 +784,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testStopThrowsNotFound()
     {
-        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/11/stop', []);
+        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/11/stop', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testStopNotAllowedForUser()
@@ -807,7 +807,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $id = $timesheets[3]->getId();
 
         $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
-        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to stop this timesheet');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
     }
 
     public function testGetCollectionWithTags()
@@ -980,12 +980,12 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $id = $timesheets[0]->getId();
 
         $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
-        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to re-start this timesheet');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
     }
 
     public function testRestartThrowsNotFound()
     {
-        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/42/restart', []);
+        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/42/restart', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testDuplicateAction()
@@ -1024,7 +1024,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testDuplicateThrowsNotFound()
     {
-        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/11/duplicate', []);
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/11/duplicate', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testExportAction()
@@ -1063,19 +1063,17 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $id = $timesheets[0]->getId();
 
         $this->request($client, '/api/timesheets/' . $id . '/export', 'PATCH');
-        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to lock this timesheet');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
     }
 
     public function testExportThrowsNotFound()
     {
-        $id = PHP_INT_MAX;
-        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/' . $id . '/export', []);
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/' . PHP_INT_MAX . '/export', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testMetaActionThrowsNotFound()
     {
-        $id = PHP_INT_MAX;
-        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/' . $id . '/meta', []);
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/' . PHP_INT_MAX . '/meta', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testMetaActionThrowsExceptionOnMissingName()
@@ -1084,7 +1082,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $timesheets = $this->importFixtureForUser(User::ROLE_USER);
         $id = $timesheets[0]->getId();
 
-        return $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['value' => 'X'], [
+        $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['value' => 'X'], [
             'code' => 400,
             'message' => 'Parameter "name" of value "NULL" violated a constraint "This value should not be null."'
         ]);
@@ -1096,7 +1094,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $timesheets = $this->importFixtureForUser(User::ROLE_USER);
         $id = $timesheets[0]->getId();
 
-        return $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X'], [
+        $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X'], [
             'code' => 400,
             'message' => 'Parameter "value" of value "NULL" violated a constraint "This value should not be null."'
         ]);
@@ -1108,7 +1106,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $timesheets = $this->importFixtureForUser(User::ROLE_USER);
         $id = $timesheets[0]->getId();
 
-        return $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X', 'value' => 'Y'], [
+        $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X', 'value' => 'Y'], [
             'code' => 500,
             'message' => 'Unknown meta-field requested'
         ]);

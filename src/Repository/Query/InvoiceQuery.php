@@ -28,7 +28,11 @@ class InvoiceQuery extends TimesheetQuery
     public function __construct()
     {
         parent::__construct();
-        $this->setBillable(true);
+        $this->setDefaults([
+            'state' => self::STATE_STOPPED,
+            'billable' => true,
+            'markAsExported' => false,
+        ]);
     }
 
     public function getTemplate(): ?InvoiceTemplate

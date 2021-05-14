@@ -994,6 +994,54 @@
         <source>label.globalsOnly</source>
         <target>Kun globalt</target>
       </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Total</target>
+      </trans-unit>
+      <trans-unit id="rates.title">
+        <source>rates.title</source>
+        <target>Gebyr</target>
+      </trans-unit>
+      <trans-unit id="rates.empty">
+        <source>rates.empty</source>
+        <target>Der er ikke konfigureret noget gebyr endnu.</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Fik</target>
+      </trans-unit>
+      <trans-unit id="attachments">
+        <source>attachments</source>
+        <target>Filer</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Sorter efter</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Faldende</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Stigende</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Slet søge favorit</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Gem indstillinger som søge favorit</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Søge betingelse</target>
+      </trans-unit>
+      <trans-unit id="upload">
+        <source>upload</source>
+        <target>Upload</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

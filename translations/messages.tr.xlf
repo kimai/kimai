@@ -711,11 +711,11 @@
       </trans-unit>
       <trans-unit id="stats.percentUsed">
         <source>stats.percentUsed</source>
-        <target state="translated">%%percent% kullanıldı</target>
+        <target state="translated">%percent%% kullanıldı</target>
       </trans-unit>
       <trans-unit id="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
-        <target state="translated">%%percent% kullanıldı (%left% hala açık)</target>
+        <target state="translated">%percent%% kullanıldı (%left% hala açık)</target>
       </trans-unit>
       <!--
               Invoice
