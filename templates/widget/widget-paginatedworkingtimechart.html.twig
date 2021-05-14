@@ -56,12 +56,21 @@
                             <span class="description-text">{{ 'stats.workingTimeMonth'|trans({'%month%': data.thisMonth|month_name, '%year%': data.thisMonth|date_format('Y')}) }}</span>
                         </div>
                     </div>
+                    {% if data.financial is not null %}
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="description-block border-right">
+                            <h5 class="description-header">{{ data.financial|duration }}</h5>
+                            <span class="description-text">{{ 'stats.workingTimeFinancialYear'|trans }}</span>
+                        </div>
+                    </div>
+                    {% else %}
                     <div class="col-sm-3 col-xs-6">
                         <div class="description-block border-right">
                             <h5 class="description-header">{{ data.year|duration }}</h5>
                             <span class="description-text">{{ 'stats.workingTimeYear'|trans({'%year%': data.thisMonth|date_format('Y')}) }}</span>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             {% endblock %}
         {% endembed %}

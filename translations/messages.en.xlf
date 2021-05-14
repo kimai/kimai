@@ -820,6 +820,10 @@
                 <source>stats.workingTimeYear</source>
                 <target>Full year %year%</target>
             </trans-unit>
+            <trans-unit id="stats.workingTimeFinancialYear">
+                <source>stats.workingTimeFinancialYear</source>
+                <target>Financial year</target>
+            </trans-unit>
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
                 <target>Working hours today</target>
@@ -835,6 +839,10 @@
             <trans-unit id="stats.durationYear">
                 <source>stats.durationYear</source>
                 <target>Working hours this year</target>
+            </trans-unit>
+            <trans-unit id="stats.durationFinancialYear">
+                <source>stats.durationFinancialYear</source>
+                <target>Working hours this financial year</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
@@ -860,6 +868,10 @@
                 <source>stats.amountYear</source>
                 <target>Revenue this year</target>
             </trans-unit>
+            <trans-unit id="stats.amountFinancialYear">
+                <source>stats.amountFinancialYear</source>
+                <target>Revenue this financial year</target>
+            </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
                 <target>Total revenue</target>
@@ -879,6 +891,10 @@
             <trans-unit id="stats.userActiveYear">
                 <source>stats.userActiveYear</source>
                 <target>Active users this year</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveFinancialYear">
+                <source>stats.userActiveFinancialYear</source>
+                <target>Active users this financial year</target>
             </trans-unit>
             <trans-unit id="stats.userActiveTotal">
                 <source>stats.userActiveTotal</source>

@@ -82,7 +82,7 @@
         }
     </script>
 
-    {% for year,yearStat in years %}
+    {% for year, yearStat in years %}
 
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
             {% block box_title %}{{ year }}{% endblock %}
@@ -100,21 +100,33 @@
                                     backgroundColor: '{{ kimai_context.chart.background_color }}',
                                     borderColor: '{{ kimai_context.chart.border_color }}',
                                     data: [
-                                        {% for month in yearStat.months %}
-                                        {{ (month.totalDuration / 3600)|number_format(2, '.', '') }}
-                                        {% if not loop.last %},{% endif %}
+                                        {% for monthNumber in 1..12 %}
+                                            {% set duration = 0 %}
+                                            {% set month = yearStat.month(monthNumber) %}
+                                            {% if month is not null %}
+                                                {% set duration = month.totalDuration %}
+                                            {% endif %}
+                                            {{ (duration / 3600)|number_format(2, '.', '') }}
+                                            {% if not loop.last %},{% endif %}
                                         {% endfor %}
                                     ],
                                     realData: [
-                                        {% for month in yearStat.months %}
-                                            {% set realDayData = {duration: month.totalDuration|duration, billable: month.billableDuration|duration} %}
+                                        {% for monthNumber in 1..12 %}
+                                            {% set duration = 0 %}
+                                            {% set billable = 0 %}
+                                            {% set month = yearStat.month(monthNumber) %}
+                                            {% if month is not null %}
+                                                {% set duration = month.totalDuration %}
+                                                {% set billable = month.billableDuration %}
+                                            {% endif %}
+                                            {% set realDayData = {'duration': duration|duration, 'billable': billable|duration} %}
                                             {{ realDayData|json_encode|raw }}
                                             {% if not loop.last %},{% endif %}
                                         {% endfor %}
                                     ],
                                     monthData: [
-                                        {% for month in yearStat.months %}
-                                        '{{ yearStat.year }}-{{ month.month|length == 1 ? '0'~ month.month : month.month }}-01'
+                                        {% for monthNumber in 1..12 %}
+                                        '{{ yearStat.year }}-{{ monthNumber < 10 ? '0' ~ monthNumber : monthNumber }}-01'
                                         {% if not loop.last %},{% endif %}
                                         {% endfor %}
                                     ],

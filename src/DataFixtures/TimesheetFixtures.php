@@ -17,6 +17,7 @@ use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Timesheet\Util;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -30,19 +31,20 @@ use Faker\Factory;
  *
  * @codeCoverageIgnore
  */
-class TimesheetFixtures extends Fixture implements DependentFixtureInterface
+class TimesheetFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
     public const MIN_TIMESHEETS_PER_USER = 50;
     public const MAX_TIMESHEETS_PER_USER = 500;
     public const MAX_TIMESHEETS_TOTAL = 5000;
     public const MAX_RUNNING_TIMESHEETS_PER_USER = 1;
-    public const TIMERANGE_DAYS = 1095; // 3 years
+    public const TIMERANGE_BEGIN_DAYS = 1; // yesterday
+    public const TIMERANGE_END_DAYS = 1095; // 3 years
     public const TIMERANGE_RUNNING = 1047; // in minutes = 17:45 hours
     public const MIN_MINUTES_PER_ENTRY = 15;
     public const MAX_MINUTES_PER_ENTRY = 840; // 14h
     public const MAX_DESCRIPTION_LENGTH = 200;
 
-    public const ADD_TAGS_MAX_ENTRIES = 10000;
+    public const ADD_TAGS_MAX_ENTRIES = 1000;
     public const MAX_TAG_PER_ENTRY = 3;
 
     public const BATCH_SIZE = 100;
@@ -57,6 +59,11 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
             CustomerFixtures::class,
             TagFixtures::class,
         ];
+    }
+
+    public static function getGroups(): array
+    {
+        return ['timesheet'];
     }
 
     /**
@@ -103,7 +110,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
                 $manager->persist($entry);
 
-                if ($i % self::BATCH_SIZE === 0) {
+                if ($all % self::BATCH_SIZE === 0) {
                     $manager->flush();
                     $manager->clear(Timesheet::class);
                 }
@@ -129,21 +136,18 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
         }
         $manager->flush();
 
-        // TODO this breaks if too many records need to be loaded: find a better way of adding tags
-        if ($all < self::ADD_TAGS_MAX_ENTRIES) {
-            $entries = $manager->getRepository(Timesheet::class)->findAll();
-            foreach ($entries as $temp) {
-                $tagAmount = rand(0, self::MAX_TAG_PER_ENTRY);
-                for ($iTag = 0; $iTag < $tagAmount; $iTag++) {
-                    $tagId = rand(1, TagFixtures::MAX_TAGS);
-                    if (isset($allTags[$tagId])) {
-                        $temp->addTag($allTags[$tagId]);
-                    }
+        $entries = $manager->getRepository(Timesheet::class)->findBy([], [], min($all, self::ADD_TAGS_MAX_ENTRIES));
+        foreach ($entries as $temp) {
+            $tagAmount = rand(0, self::MAX_TAG_PER_ENTRY);
+            for ($iTag = 0; $iTag < $tagAmount; $iTag++) {
+                $tagId = rand(1, TagFixtures::MAX_TAGS);
+                if (isset($allTags[$tagId])) {
+                    $temp->addTag($allTags[$tagId]);
                 }
             }
         }
-
         $manager->flush();
+
         $manager->clear(Timesheet::class);
         $manager->clear(Tag::class);
     }
@@ -212,10 +216,10 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
         return $all;
     }
 
-    private function createTimesheetEntry(User $user, Activity $activity, Project $project, $description, $setEndDate = true)
+    private function createTimesheetEntry(User $user, Activity $activity, Project $project, ?string $description, bool $setEndDate)
     {
         $start = new \DateTime();
-        $start = $start->modify('- ' . (rand(1, self::TIMERANGE_DAYS)) . ' days');
+        $start = $start->modify('- ' . (rand(self::TIMERANGE_BEGIN_DAYS, self::TIMERANGE_END_DAYS)) . ' days');
         $start = $start->modify('- ' . (rand(1, 86400)) . ' seconds');
         $start->setTimezone(new \DateTimeZone($user->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get())));
 

@@ -169,4 +169,44 @@ class DateTimeFactoryTest extends TestCase
         // poor test, but there shouldn't be more than 2 seconds between the creation of two DateTime objects
         $this->assertTrue(2 >= $difference);
     }
+
+    public function testCreateStartOfFinancialYearWithoutConfig()
+    {
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+        $dateTime = $sut->createStartOfFinancialYear();
+        $expected = $sut->createDateTime('01 january this year 00:00:00');
+        self::assertInstanceOf(DateTime::class, $dateTime);
+        self::assertEquals($expected, $dateTime);
+    }
+
+    public function testCreateStartOfFinancialYearWithConfig()
+    {
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+
+        $future = $sut->createDateTime('+10 days');
+        $past = $sut->createDateTime('-10 days');
+
+        $financial = $sut->createStartOfFinancialYear($future->format('Y-m-d'));
+
+        $future->modify('-1 year');
+        $future->setTime(0, 0, 0);
+
+        self::assertEquals($future, $financial);
+
+        $financial = $sut->createStartOfFinancialYear($past->format('Y-m-d'));
+
+        $past->setTime(0, 0, 0);
+        self::assertEquals($past, $financial);
+    }
+
+    public function testCreateEndOfFinancialYearWithConfig()
+    {
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+
+        $expected = $sut->createDateTime('2021-07-22 23:59:59 ');
+        $financial = $sut->createStartOfFinancialYear('2020-07-23 15:30:00');
+        $end = $sut->createEndOfFinancialYear($financial);
+
+        self::assertEquals($expected, $end);
+    }
 }

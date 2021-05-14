@@ -9,6 +9,7 @@
 
 namespace App\Widget\Type;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
@@ -16,22 +17,15 @@ use DateTime;
 
 final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
 {
-    /**
-     * @var TimesheetRepository
-     */
     private $repository;
+    private $systemConfiguration;
 
-    public function __construct(TimesheetRepository $repository)
+    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
     {
         $this->repository = $repository;
+        $this->systemConfiguration = $systemConfiguration;
         $this->setId('PaginatedWorkingTimeChart');
         $this->setTitle('stats.yourWorkingHours');
-
-        $this->setOptions([
-            'year' => (new DateTime('now'))->format('o'),
-            'week' => (new DateTime('now'))->format('W'),
-            'type' => 'bar',
-        ]);
     }
 
     public function setUser(User $user): void
@@ -48,8 +42,13 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
     {
         $options = parent::getOptions($options);
 
-        if (!\in_array($options['type'], ['bar', 'line'])) {
+        if (!\array_key_exists('type', $options) || !\in_array($options['type'], ['bar', 'line'])) {
             $options['type'] = 'bar';
+        }
+
+        if (!\array_key_exists('year', $options)) {
+            $options['year'] = (new DateTime('now'))->format('o');
+            $options['week'] = (new DateTime('now'))->format('W');
         }
 
         return $options;
@@ -91,6 +90,25 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
             $thisMonth = ($dateTimeFactory->createDateTime())->setISODate($year, $week, 1)->setTime(0, 0, 0);
         }
 
+        $dayBegin = $dateTimeFactory->createDateTime('00:00:00');
+        $dayEnd = $dateTimeFactory->createDateTime('23:59:59');
+
+        $monthBegin = (clone $weekBegin)->setDate((int) $weekBegin->format('Y'), (int) $weekBegin->format('n'), 1)->setTime(0, 0, 0);
+        $monthEnd = (clone $weekBegin)->setDate((int) $weekBegin->format('Y'), (int) $weekBegin->format('n'), (int) $weekBegin->format('t'))->setTime(23, 59, 59);
+
+        $yearBegin = $dateTimeFactory->createDateTime(sprintf('01 january %s 00:00:00', $year));
+        $yearEnd = $dateTimeFactory->createDateTime(sprintf('31 december %s 23:59:59', $year));
+        $yearData = $this->repository->getStatistic('duration', $yearBegin, $yearEnd, $user);
+
+        $financialYearData = null;
+        $financialYearBegin = null;
+
+        if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
+            $financialYearBegin = $dateTimeFactory->createStartOfFinancialYear($financialYear);
+            $financialYearEnd = $dateTimeFactory->createEndOfFinancialYear($financialYearBegin);
+            $financialYearData = $this->repository->getStatistic('duration', $financialYearBegin, $financialYearEnd, $user);
+        }
+
         return [
             'begin' => clone $weekBegin,
             'end' => clone $weekEnd,
@@ -98,30 +116,12 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
             'thisMonth' => $thisMonth,
             'lastWeekInYear' => $lastWeekInYear,
             'lastWeekInLastYear' => $lastWeekInLastYear,
-            'day' => $this->repository->getStatistic(
-                'duration',
-                $dateTimeFactory->createDateTime('00:00:00'),
-                $dateTimeFactory->createDateTime('23:59:59'),
-                $user
-            ),
-            'week' => $this->repository->getStatistic(
-                'duration',
-                $weekBegin,
-                $weekEnd,
-                $user
-            ),
-            'month' => $this->repository->getStatistic(
-                'duration',
-                (clone $weekBegin)->setDate((int) $weekBegin->format('Y'), (int) $weekBegin->format('n'), 1)->setTime(0, 0, 0),
-                (clone $weekBegin)->setDate((int) $weekBegin->format('Y'), (int) $weekBegin->format('n'), (int) $weekBegin->format('t'))->setTime(23, 59, 59),
-                $user
-            ),
-            'year' => $this->repository->getStatistic(
-                'duration',
-                $dateTimeFactory->createDateTime(sprintf('01 january %s 00:00:00', $year)),
-                $dateTimeFactory->createDateTime(sprintf('31 december %s 23:59:59', $year)),
-                $user
-            ),
+            'day' => $this->repository->getStatistic('duration', $dayBegin, $dayEnd, $user),
+            'week' => $this->repository->getStatistic('duration', $weekBegin, $weekEnd, $user),
+            'month' => $this->repository->getStatistic('duration', $monthBegin, $monthEnd, $user),
+            'year' => $yearData,
+            'financial' => $financialYearData,
+            'financialBegin' => $financialYearBegin,
         ];
     }
 }

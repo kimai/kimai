@@ -27,7 +27,7 @@ final class Month
                 sprintf('Invalid month given. Expected 1-12, received "%s".', $monthNumber)
             );
         }
-        $this->month = $month;
+        $this->month = str_pad($month, 2, '0', STR_PAD_LEFT);
     }
 
     public function getMonth(): string
