@@ -1,58 +1,58 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="ko" datatype="plaintext" original="flashmessages.en.xlf">
+  <file source-language="en" target-language="el" datatype="plaintext" original="flashmessages.en.xlf">
     <body>
       <trans-unit id="warning">
         <source>warning</source>
-        <target state="translated">경고 </target>
+        <target>Προειδοποίηση</target>
       </trans-unit>
       <trans-unit id="timesheet.stop.success">
         <source>timesheet.stop.success</source>
-        <target state="translated">시간 기록을 멈춤</target>
+        <target>Η καταγραφή ωραρίου σταμάτησε</target>
       </trans-unit>
       <trans-unit id="timesheet.stop.error">
         <source>timesheet.stop.error</source>
-        <target state="translated">시간 기록을 멈출 수 없음</target>
+        <target>Η καταγραφή ωραρίου δεν μπόρεσε να σταματήσει</target>
       </trans-unit>
       <trans-unit id="timesheet.start.success">
         <source>timesheet.start.success</source>
-        <target state="translated">시간 기록을 시작</target>
+        <target>Η καταγραφή ωραρίου ξεκίνησε</target>
       </trans-unit>
       <trans-unit id="timesheet.start.error">
         <source>timesheet.start.error</source>
-        <target state="translated">시간 기록을 시작할 수 없음</target>
+        <target>Η καταγραφή ωραρίου δεν μπόρεσε να ξεκινήσει</target>
       </trans-unit>
       <trans-unit id="timesheet.start.exceeded_limit">
         <source>timesheet.start.exceeded_limit</source>
-        <target state="translated">활성 시간 기록의 한계에 도달했습니다. 최소 한 개 이상의 활성 중인 시간 기록을 중지하십시오.</target>
+        <target>Έχει συμπληρωθεί το όριο των ενεργών καταγραφών ωραρίου, παρακαλούμε σταματήστε τουλάχιστον μία εκτελούμενη μέτρηση ωραρίου.</target>
       </trans-unit>
       <trans-unit id="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
-        <target state="translated">완료된 기록을 편집하고 있음</target>
+        <target>Η εγγραφή που επεξεργάζεστε έχει ήδη εξαχθεί</target>
       </trans-unit>
       <trans-unit id="action.update.success">
         <source>action.update.success</source>
-        <target state="translated">변경사항 저장하기</target>
+        <target>Αποθηκευμένες αλλαγές</target>
       </trans-unit>
       <trans-unit id="action.update.error">
         <source>action.update.error</source>
-        <target state="translated">변경사항을 저장할 수 없습니다: %reason%</target>
+        <target>Δεν ήταν δυνατή η αποθήκευση των αλλαγών: %reason%</target>
       </trans-unit>
       <trans-unit id="action.delete.success">
         <source>action.delete.success</source>
-        <target state="translated">등록이 지워짐</target>
+        <target>Η καταχώριση διαγράφηκε</target>
       </trans-unit>
       <trans-unit id="action.delete.error">
         <source>action.delete.error</source>
-        <target state="translated">등록을 지울 수 없습니다: %reason%</target>
+        <target>Η καταχώριση δεν ήταν δυνατό να διαγραφεί: %reason%</target>
       </trans-unit>
       <trans-unit id="invoice.first_template">
         <source>invoice.first_template</source>
-        <target state="translated">계속 진행하기 전에 첫 번째 템플릿 인보이스를 만드시오</target>
+        <target>Παρακαλούμε δημιουργήστε πρώτα ένα πρότυπο τιμολογίου</target>
       </trans-unit>
       <trans-unit id="action.upload.error">
         <source>action.upload.error</source>
-        <target>파일을 업로드하거나 저장할 수 없습니다: %reason%</target>
+        <target>Δεν ήταν δυνατή η μεταφόρτωση ή η αποθήκευση του αρχείου: %reason%</target>
       </trans-unit>
     </body>
   </file>

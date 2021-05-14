@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="el" datatype="plaintext" original="system-configuration.en.xlf">
+    <body>
+      <trans-unit id="title">
+        <source>title</source>
+        <target>Ρυθμίσεις</target>
+      </trans-unit>
+      <trans-unit id="subtitle">
+        <source>subtitle</source>
+        <target>Αλλαγή καθολικών ρυθμίσεων των λειτουργιών παρακολούθησης ώρας</target>
+      </trans-unit>
+      <trans-unit id="timesheet">
+        <source>timesheet</source>
+        <target>Δελτίο ωρών απασχόλησης</target>
+      </trans-unit>
+      <trans-unit id="invoice">
+        <source>invoice</source>
+        <target>Τιμολόγια</target>
+      </trans-unit>
+      <trans-unit id="form_customer">
+        <source>form_customer</source>
+        <target>Δημιουργία πελάτη - προεπιλεγμένες τιμές</target>
+      </trans-unit>
+      <trans-unit id="form_user">
+        <source>form_user</source>
+        <target>Χρήστης - προεπιλεγμένες τιμές</target>
+      </trans-unit>
+      <trans-unit id="theme">
+        <source>theme</source>
+        <target>Θέμα</target>
+      </trans-unit>
+      <trans-unit id="calendar">
+        <source>calendar</source>
+        <target>Ημερολόγιο</target>
+      </trans-unit>
+      <trans-unit id="label.theme.markdown_content">
+        <source>label.theme.markdown_content</source>
+        <target>Να επιτρέπονται οι μορφοποιήσεις σε περιγραφές και σχόλια</target>
+      </trans-unit>
+      <trans-unit id="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target>Ετικέτες: χρησιμοποιήστε αυτόματη συμπλήρωση αναζήτησης και επιτρέψτε τη δημιουργία ετικετών</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode">
+        <source>label.timesheet.mode</source>
+        <target>Λειτουργία παρακολούθησης ωρών</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_default">
+        <source>label.timesheet.mode_default</source>
+        <target>[Προεπιλογή] Μπορείτε να επεξεργαστείτε τις ώρες έναρξης και λήξης</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_duration_only">
+        <source>label.timesheet.mode_duration_only</source>
+        <target>[Διάρκεια] Αντικαθιστά την ώρα λήξης με πεδίο εισαγωγής διάρκειας</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+        <source>label.timesheet.mode_duration_fixed_begin</source>
+        <target>[Διάρκεια] Διαμορφώσιμη προεπιλεγμένη ώρα έναρξης, μόνο η διάρκεια μπορεί να αλλάξει</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_punch">
+        <source>label.timesheet.mode_punch</source>
+        <target>[Ρολόι] Ο χρήστης μπορεί να ξεκινήσει και να σταματήσει τις εγγραφές, αλλά δεν μπορεί να επεξεργαστεί τις ώρες ή τη διάρκεια</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_future_times">
+        <source>label.timesheet.rules.allow_future_times</source>
+        <target>Επιτρέψτε τις καταχωρήσεις ωρών σε μελλοντική περίοδο</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>Να επιτρέπεται οι υπερκερασμένες τιμές στους αποθηκευμένους προϋπολογισμούς</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+        <source>label.timesheet.rules.allow_overlapping_records</source>
+        <target>Να επιτρέπεται η επικάλυψη στις καταχωρίσεις ωρών</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target>Κλείδωμα περιόδου έναρξης (σχετική ημερομηνία της PHP έως τώρα)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target>Κλειδωμένη περίοδος λήξης (σχετική ημερομηνία PHP έως τώρα)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target>Κλειδωμένη περίοδος χάριτος λήξης (σχετική ημερομηνία PHP έως λήξη περιόδου κλειδώματος)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.active_entries.hard_limit">
+        <source>label.timesheet.active_entries.hard_limit</source>
+        <target>Επιτρεπόμενος αριθμός ταυτόχρονων ενεργών καταχωρήσεων ωρών</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.active_entries.soft_limit">
+        <source>label.timesheet.active_entries.soft_limit</source>
+        <target>Πλήθος των ενεργών καταχωρήσεων ωρών, όπου ειδοποιήσεις θα εμφανίζονται</target>
+      </trans-unit>
+      <trans-unit id="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target>Ελάχιστος αριθμός γραμμάτων για έναρξη αυτόματης συμπλήρωσης</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.week_numbers">
+        <source>label.calendar.week_numbers</source>
+        <target>Εμφάνιση αρίθμησης εβδομάδας</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.weekends">
+        <source>label.calendar.weekends</source>
+        <target>Εμφάνιση Σαββατοκύριακων</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target>Έναρξη των κανονικών ωρών εργασίας (θα επισημαίνεται)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target>Λήξη κανονικών ωρών εργασίας (θα επισημαίνεται)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target>Έναρξη ορατού ωριαίου εύρους</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target>Λήξη ορατού ωριαίου εύρους</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>Χρονικό περιθώριο για προβολή εβδομάδας και ημέρας (μορφή: ωω: λλ: δδ)</target>
+      </trans-unit>
+      <trans-unit id="branding">
+        <source>branding</source>
+        <target>Επωνυμία</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target>Λογότυπο (URL εικόνας, αντικαθιστά την εταιρεία στην οθόνη σύνδεσης)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.company">
+        <source>label.theme.branding.company</source>
+        <target>Εταιρία</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target>Μίνι λογότυπο (συμπτυγμένη πλευρική μπάρα)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target>Τίτλος προγράμματος περιήγησης</target>
+      </trans-unit>
+      <trans-unit id="rounding">
+        <source>rounding</source>
+        <target>Στρογγυλοποίηση ωρών</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target>Στρογγυλοποίηση του χρόνου έναρξης σε λεπτά (0 = απενεργοποιημένο)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>Στρογγυλοποίηση του χρόνου λήξης σε λεπτά (0 = απενεργοποιημένη)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target>Στρογγυλοποίηση της διάρκειας σε λεπτά (0 = απενεργοποιημένη)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target>Λειτουργία στρογγυλοποίησης</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target>Ημέρες της εβδομάδας κατά τις οποίες θα εφαρμοστεί στρογγυλοποίηση</target>
+      </trans-unit>
+      <trans-unit id="Monday">
+        <source>Monday</source>
+        <target>Δευτέρα</target>
+      </trans-unit>
+      <trans-unit id="Tuesday">
+        <source>Tuesday</source>
+        <target>Τρίτη</target>
+      </trans-unit>
+      <trans-unit id="Wednesday">
+        <source>Wednesday</source>
+        <target>Τετάρτη</target>
+      </trans-unit>
+      <trans-unit id="Thursday">
+        <source>Thursday</source>
+        <target>Πέμπτη</target>
+      </trans-unit>
+      <trans-unit id="Friday">
+        <source>Friday</source>
+        <target>Παρασκευή</target>
+      </trans-unit>
+      <trans-unit id="Saturday">
+        <source>Saturday</source>
+        <target>Σαββάτο</target>
+      </trans-unit>
+      <trans-unit id="Sunday">
+        <source>Sunday</source>
+        <target>Κυριακή</target>
+      </trans-unit>
+      <trans-unit id="Ceil">
+        <source>Ceil</source>
+        <target>Μέγιστο: έναρξη, τέλος και διάρκεια θα στρογγυλοποιηθούν</target>
+      </trans-unit>
+      <trans-unit id="Closest">
+        <source>Closest</source>
+        <target>Κοντινότερο: στρογγυλοποίηση μαθηματικά στην πλησιέστερη τιμή</target>
+      </trans-unit>
+      <trans-unit id="Default">
+        <source>Default</source>
+        <target>Τυπικό: Η αρχή θα στρογγυλοποιηθεί προς τα κάτω, το τέλος και η διάρκεια προς τα πάνω</target>
+      </trans-unit>
+      <trans-unit id="Floor">
+        <source>Floor</source>
+        <target>Ελάχιστο: έναρξη, τέλος και διάρκεια θα στρογγυλοποιηθούν προς τα κάτω</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>Προεπιλεγμένη ώρα έναρξης (δεν χρησιμοποιείται σε όλες τις λειτουργίες καταγραφής ωρών)</target>
+      </trans-unit>
+      <trans-unit id="label.simple_form">
+        <source>label.simple_form</source>
+        <target>Απλή αναζήτηση</target>
+      </trans-unit>
+      <trans-unit id="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target>Μορφή αριθμού τιμολογίου</target>
+      </trans-unit>
+      <trans-unit id="first_weekday">
+        <source>first_weekday</source>
+        <target>Πρώτη μέρα της εβδομάδας</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Επιλογή λεπτών για την Διάρκεια</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Επιλογή λεπτών για από &amp; προς</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Χρήση της ρυθμισμένης τιμής του κανόνα στρογγυλοποίησης</target>
+      </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>Εκτός</target>
+      </trans-unit>
+      <trans-unit id="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>Περιορισμός των επιλογών χρωμάτων</target>
+      </trans-unit>
+      <trans-unit id="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>Επιτρεπόμενα χρώματα</target>
+      </trans-unit>
+      <trans-unit id="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>Λίστα διαχωρισμένων με κόμμα κωδικών χρώματος HTML. Τα ονόματα των χρωμάτων μπορούν να οριστούν προσθέτοντας τον κωδικό χρώματος με ένα όνομα και τον χαρακτήρα οριοθέτησης | , π.χ.: White|#ffffff,Black|#000000.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -534,7 +534,7 @@
       <trans-unit id="admin_activity.short_stats">
         <source>admin_activity.short_stats</source>
         <target>
-                    Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activities% czynności
+                    Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activity% czynności
                     oraz  %records% wpisów czasu, które sumują się do łącznej długości %duration% .		
 		 </target>
       </trans-unit>

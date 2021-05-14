@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="action.update.error">
         <source>action.update.error</source>
-        <target>لا يمكن حفظ التغييرات:٪ السبب٪</target>
+        <target>لا يمكن حفظ التغييرات:%reason%</target>
       </trans-unit>
       <trans-unit id="action.delete.success">
         <source>action.delete.success</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="action.delete.error">
         <source>action.delete.error</source>
-        <target>لا يمكن حذف المشاركة:٪ السبب٪</target>
+        <target>لا يمكن حذف المشاركة:%reason%</target>
       </trans-unit>
       <trans-unit id="invoice.first_template">
         <source>invoice.first_template</source>
