@@ -1,3 +1,56 @@
+{% macro progressbar_full(options) %}
+    {% set max = options['max'] ?? 0 %}
+    {% set current = options['current'] ?? 0 %}
+    {% set open = options['open'] ?? null %}
+    {% set reverseColors = options['reverseColors'] ?? false %}
+    {% set formatter = options['format'] ?? null %}
+    {% set currency = options['currency'] ?? null %}
+    {% set percentDecimals = options['decimals'] ?? 1 %}
+    {% if formatter == 'duration' %}
+        {% set currentFormatted = current|duration %}
+        {% set maxFormatted = max|duration %}
+        {% set openFormatted = open is not null ? open|duration : null %}
+    {% elseif formatter == 'money' and currency is not null %}
+        {% set currentFormatted = current|money(currency) %}
+        {% set maxFormatted = max|money(currency) %}
+        {% set openFormatted = open is not null ? open|money(currency) : null %}
+    {% else %}
+        {% set currentFormatted = current %}
+        {% set maxFormatted = max %}
+        {% set openFormatted = open is not null ? open : null %}
+    {% endif %}
+    {% set percentReached = 0 %}
+    {% if max > 0 %}
+        {% set percentReached = (current / (max / 100)) %}
+    {% endif %}
+    {% set width = percentReached|number_format(1, '.', '') %}
+
+    {% if width > 100 %}
+        {% set width = 100 %}
+    {% endif %}
+
+    <div class="progress-group">
+        <div class="progress-title">
+            <span class="progress-text">
+                {{ currentFormatted }}
+            </span>
+            <span class="progress-number">
+                <strong>
+                    {{ maxFormatted }}
+                </strong>
+            </span>
+        </div>
+        <div class="progress">
+            <div class="progress-bar {{ progressbar_color(percentReached, reverseColors) }}" role="progressbar" aria-valuenow="{{ width }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ width }}%"></div>
+        </div>
+        {% if open is not null and open > 0 %}
+            <small>{{ 'stats.percentUsedLeft'|trans({'%percent%': percentReached|number_format(percentDecimals), '%left%': openFormatted}) }}</small>
+        {% else %}
+            <small>{{ 'stats.percentUsed'|trans({'%percent%': percentReached|number_format(percentDecimals)}) }}</small>
+        {% endif %}
+    </div>
+{% endmacro %}
+
 {% macro progressbar(max, current, title, subTitle, reverseColors) %}
     {% set percentReached = 0 %}
     {% if max > 0 %}
