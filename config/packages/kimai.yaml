@@ -258,7 +258,6 @@ kimai:
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
-            duration: '%%h:%%m h'
         en:
             date_time_type: 'yyyy-MM-dd HH:mm'
             date_type: 'yyyy-MM-dd'
