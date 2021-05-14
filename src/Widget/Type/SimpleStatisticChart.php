@@ -102,14 +102,15 @@ class SimpleStatisticChart extends SimpleWidget implements UserWidget
     {
         $timezone = $this->getTimezone();
 
-        $begin = null;
-        $end = null;
+        $begin = $this->begin;
+        $end = $this->end;
 
-        if (!empty($this->begin) && \is_string($this->begin)) {
-            $begin = new \DateTime($this->begin, $timezone);
+        if (!empty($begin) && \is_string($begin)) {
+            $begin = new \DateTime($begin, $timezone);
         }
-        if (!empty($this->end) && \is_string($this->end)) {
-            $end = new \DateTime($this->end, $timezone);
+
+        if (!empty($end) && \is_string($end)) {
+            $end = new \DateTime($end, $timezone);
         }
 
         try {
