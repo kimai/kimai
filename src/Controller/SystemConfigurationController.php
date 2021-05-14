@@ -15,6 +15,7 @@ use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration as SystemConfigurationModel;
 use App\Form\SystemConfigurationForm;
 use App\Form\Type\ArrayToCommaStringType;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\DateTimeTextType;
 use App\Form\Type\DayTimeType;
 use App\Form\Type\LanguageType;
@@ -507,6 +508,12 @@ final class SystemConfigurationController extends AbstractController
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)
                         ->setType(TextType::class),
+                    (new Configuration())
+                        ->setName('company.financial_year')
+                        ->setTranslationDomain('system-configuration')
+                        ->setRequired(false)
+                        ->setType(DatePickerType::class)
+                    ->setOptions(['input' => 'string']),
                 ]),
         ];
     }

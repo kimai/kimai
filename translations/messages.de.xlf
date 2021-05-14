@@ -806,6 +806,10 @@
         <source>stats.workingTimeYear</source>
         <target>Gesamtes Jahr %year%</target>
       </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Geschäftsjahr</target>
+      </trans-unit>
       <trans-unit id="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Arbeitszeit heute</target>
@@ -821,6 +825,10 @@
       <trans-unit id="stats.durationYear">
         <source>stats.durationYear</source>
         <target>Arbeitszeit dieses Jahr</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Arbeitszeit dieses Geschäftsjahr</target>
       </trans-unit>
       <trans-unit id="stats.durationTotal">
         <source>stats.durationTotal</source>
@@ -846,6 +854,10 @@
         <source>stats.amountYear</source>
         <target>Umsatz dieses Jahr</target>
       </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Umsatz dieses Geschäftsjahr</target>
+      </trans-unit>
       <trans-unit id="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Umsatz total</target>
@@ -865,6 +877,10 @@
       <trans-unit id="stats.userActiveYear">
         <source>stats.userActiveYear</source>
         <target>Aktive Benutzer dieses Jahr</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Aktive Benutzer dieses Geschäftsjahr</target>
       </trans-unit>
       <trans-unit id="stats.userActiveTotal">
         <source>stats.userActiveTotal</source>

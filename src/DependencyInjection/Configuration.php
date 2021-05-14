@@ -61,6 +61,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getLanguagesNode())
                 ->append($this->getCalendarNode())
                 ->append($this->getThemeNode())
+                ->append($this->getCompanyNode())
                 ->append($this->getIndustryNode())
                 ->append($this->getDashboardNode())
                 ->append($this->getWidgetsNode())
@@ -477,6 +478,22 @@ class Configuration implements ConfigurationInterface
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('translation')->defaultNull()->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    protected function getCompanyNode()
+    {
+        $builder = new TreeBuilder('company');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('financial_year')->defaultNull()->end()
             ->end()
         ;
 

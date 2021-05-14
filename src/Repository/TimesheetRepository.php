@@ -239,7 +239,7 @@ class TimesheetRepository extends EntityRepository
                 return \count($this->getActiveEntries($user));
 
             case self::STATS_QUERY_MONTHLY:
-                return $this->getMonthlyStats($user, $begin, $end);
+                return $this->getMonthlyStats($begin, $end, $user);
 
             case 'daily':
                 return $this->getDailyStats($user, $begin, $end);
@@ -337,7 +337,7 @@ class TimesheetRepository extends EntityRepository
         $stats->setDurationTotal($durationTotal);
         $stats->setAmountThisMonth($amountMonth);
         $stats->setDurationThisMonth($durationMonth);
-        $stats->setFirstEntry(new DateTime($firstEntry));
+        $stats->setFirstEntry(new DateTime($firstEntry, new \DateTimeZone($user->getTimezone())));
         $stats->setRecordsTotal($recordsTotal);
 
         return $stats;
@@ -346,50 +346,57 @@ class TimesheetRepository extends EntityRepository
     /**
      * Returns an array of Year statistics.
      *
+     * @param DateTime $begin
+     * @param DateTime $end
      * @param User|null $user
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
      * @return Year[]
      */
-    public function getMonthlyStats(User $user = null, ?DateTime $begin = null, ?DateTime $end = null): array
+    public function getMonthlyStats(DateTime $begin, DateTime $end, ?User $user = null): array
     {
         /** @var Year[] $years */
         $years = [];
 
-        $qb = $this->getMonthlyStatsQuery($user, $begin, $end, null);
-        foreach ($qb->getQuery()->execute() as $statRow) {
-            $curYear = $statRow['year'];
-            $curMonth = (int) $statRow['month'];
-
+        $tmp = clone $begin;
+        while ($tmp < $end) {
+            $curYear = $tmp->format('Y');
             if (!isset($years[$curYear])) {
                 $year = new Year($curYear);
                 for ($i = 1; $i < 13; $i++) {
-                    $month = $i < 10 ? '0' . $i : (string) $i;
-                    $year->setMonth(new Month($month));
+                    $date = clone $begin;
+                    $date->setDate((int) $curYear, $i, (int) $begin->format('d'));
+                    $date->setTime(0, 0, 0);
+                    if ($date < $begin || $date > $end) {
+                        continue;
+                    }
+                    $year->setMonth(new Month((string) $i));
                 }
                 $years[$curYear] = $year;
             }
+            $tmp->modify('+1 month');
+        }
 
-            $month = $years[$curYear]->getMonth($curMonth);
+        $qb = $this->getMonthlyStatsQuery($user, $begin, $end, null);
+        foreach ($qb->getQuery()->execute() as $statRow) {
+            if (!isset($years[$statRow['year']])) {
+                continue;
+            }
+            $month = $years[$statRow['year']]->getMonth((int) $statRow['month']);
+            if (null === $month) {
+                continue;
+            }
             $month->setTotalDuration((int) $statRow['duration']);
             $month->setTotalRate((float) $statRow['rate']);
         }
 
         $qb = $this->getMonthlyStatsQuery($user, $begin, $end, true);
         foreach ($qb->getQuery()->execute() as $statRow) {
-            $curYear = $statRow['year'];
-            $curMonth = (int) $statRow['month'];
-
-            if (!isset($years[$curYear])) {
-                $year = new Year($curYear);
-                for ($i = 1; $i < 13; $i++) {
-                    $month = $i < 10 ? '0' . $i : (string) $i;
-                    $year->setMonth(new Month($month));
-                }
-                $years[$curYear] = $year;
+            if (!isset($years[$statRow['year']])) {
+                continue;
             }
-
-            $month = $years[$curYear]->getMonth($curMonth);
+            $month = $years[$statRow['year']]->getMonth((int) $statRow['month']);
+            if (null === $month) {
+                continue;
+            }
             $month->setBillableDuration((int) $statRow['duration']);
             $month->setBillableRate((float) $statRow['rate']);
         }
@@ -597,7 +604,7 @@ class TimesheetRepository extends EntityRepository
         $results = $this->getDailyData($begin, $end, $user);
 
         foreach ($results as $statRow) {
-            $dateTime = new DateTime();
+            $dateTime = clone $begin;
             $dateTime->setDate($statRow['year'], $statRow['month'], $statRow['day']);
             $dateTime->setTime(0, 0, 0);
             $day = new Day($dateTime, (int) $statRow['duration'], (float) $statRow['rate']);

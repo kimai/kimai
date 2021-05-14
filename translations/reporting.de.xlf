@@ -18,6 +18,10 @@
                 <source>report_monthly_users</source>
                 <target>Monatsansicht für alle Benutzer</target>
             </trans-unit>
+            <trans-unit id="report_yearly_users">
+                <source>report_yearly_users</source>
+                <target>Jahresansicht für alle Benutzer</target>
+            </trans-unit>
             <trans-unit id="report_project_view">
                 <source>report_project_view</source>
                 <target>Projektübersicht</target>

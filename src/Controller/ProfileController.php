@@ -70,7 +70,11 @@ final class ProfileController extends AbstractController
     public function indexAction(User $profile, TimesheetRepository $repository, LocaleSettings $localeSettings)
     {
         $userStats = $repository->getUserStatistics($profile);
-        $monthlyStats = $repository->getMonthlyStats($profile);
+
+        $begin = $userStats->getFirstEntry() ?? $this->getDateTimeFactory()->getStartOfMonth();
+        $end = $this->getDateTimeFactory()->getEndOfMonth();
+        $monthlyStats = $repository->getMonthlyStats($begin, $end, $profile);
+        arsort($monthlyStats);
 
         $viewVars = [
             'tab' => 'charts',
