@@ -1176,7 +1176,7 @@
       </trans-unit>
       <trans-unit id="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Pretersaltis antaŭrigardon de %row% pliaj vicoj…</target>
+        <target>Pretersaltis antaŭrigardon de %rows% pliaj vicoj…</target>
       </trans-unit>
       <trans-unit id="invoice.payment_date">
         <source>invoice.payment_date</source>
