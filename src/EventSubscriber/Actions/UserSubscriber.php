@@ -60,7 +60,8 @@ class UserSubscriber extends AbstractActionsSubscriber
 
         $viewOther = $this->isGranted('view_other_timesheet');
         if ($this->isGranted('view_reporting')) {
-            if ($viewOther || ($event->getUser()->getId() === $user->getId())) {
+            // also found in App\Controller\Reporting\ReportByUserController
+            if (($viewOther && $this->isGranted('view_other_reporting')) || ($event->getUser()->getId() === $user->getId())) {
                 $event->addAction('menu.reporting', ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'icon' => 'reporting']);
             }
         }
