@@ -30,6 +30,10 @@
         <source>report_weekly_users</source>
         <target>Tüm kullanıcılar için haftalık görünüm</target>
       </trans-unit>
+      <trans-unit id="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>Tüm kullanıcılar için yıllık görünüm</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
