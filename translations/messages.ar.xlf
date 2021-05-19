@@ -810,6 +810,14 @@
         <source>admin_entity.delete_confirm</source>
         <target>سيتم حذف هذه البيانات أيضًا! بدلاً من ذلك، يُمكنك تحديد مُدخل لِيتم نقل جميع البيانات إليه:</target>
       </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>إجمالي</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>ملف</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
