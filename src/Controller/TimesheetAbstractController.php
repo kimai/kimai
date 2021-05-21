@@ -183,6 +183,11 @@ abstract class TimesheetAbstractController extends AbstractController
             $entry->setActivity($activity);
         }
 
+        if ($request->query->get('description')) {
+            $description = $activityRepository->find($request->query->get('description'));
+            $entry->setDescription($description);
+        }
+
         if ($request->query->get('tags')) {
             foreach ($this->getTags($tagRepository, $request->query->get('tags')) as $tag) {
                 $entry->addTag($tag);
