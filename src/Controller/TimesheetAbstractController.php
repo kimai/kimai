@@ -184,7 +184,7 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         if ($request->query->get('description')) {
-            $description = $activityRepository->find($request->query->get('description'));
+            $description = $request->query->get('description');
             $entry->setDescription($description);
         }
 
