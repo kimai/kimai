@@ -524,7 +524,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
-        $this->assertEquals("Lorem Ipsum", $timesheet->getDescription());
+        $this->assertEquals('Lorem Ipsum', $timesheet->getDescription());
     }
 
     public function testEditAction()
