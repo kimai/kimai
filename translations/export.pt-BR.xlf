@@ -6,6 +6,10 @@
         <source>default.pdf.twig</source>
         <target>Padrão</target>
       </trans-unit>
+      <trans-unit id="default-budget.pdf.twig">
+        <source>default-budget.pdf.twig</source>
+        <target>Com orçamento restante</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
