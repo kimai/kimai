@@ -4,43 +4,43 @@
     <body>
       <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target></target>
+        <target>Se o botão não funcionar, copie &amp; e cole a seguinte URL no seu navegador: %url%</target>
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target></target>
+        <target>Este é um e-mail gerado automaticamente. Não responda, o endereço não será lido.</target>
       </trans-unit>
       <trans-unit id="registration.subject">
         <source>registration.subject</source>
-        <target></target>
+        <target>Ative a sua conta</target>
       </trans-unit>
       <trans-unit id="registration.title">
         <source>registration.title</source>
-        <target></target>
+        <target>Bem-vindo %username%</target>
       </trans-unit>
       <trans-unit id="registration.button">
         <source>registration.button</source>
-        <target></target>
+        <target>Ative a sua conta</target>
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target></target>
+        <target>Você se inscreveu no rastreador de tempo Kimai com o e-mail %email%. Agora você tem que ativar a sua conta nas próximas horas, antes que o link expire.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
-        <target></target>
+        <target>Redefina a sua senha</target>
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target></target>
+        <target>Isso pode acontecer ...</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
-        <target></target>
+        <target>Redefina a sua senha</target>
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target></target>
+        <target>... Então você esqueceu a sua senha? Não se preocupe: O Kimai vai ajudá-lo a criar uma nova:</target>
       </trans-unit>
     </body>
   </file>
