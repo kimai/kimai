@@ -14,6 +14,26 @@
         <source>report_monthly_users</source>
         <target>תצוגה חודשית לכל המשתמשים</target>
       </trans-unit>
+      <trans-unit id="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>דוח ראשוני</target>
+      </trans-unit>
+      <trans-unit id="report_inactive_project">
+        <source>report_inactive_project</source>
+        <target>מיזמים בלתי פעילים</target>
+      </trans-unit>
+      <trans-unit id="report_project_view">
+        <source>report_project_view</source>
+        <target>סקירת המיזם</target>
+      </trans-unit>
+      <trans-unit id="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>תצוגה שנתית לכל המשתמשים</target>
+      </trans-unit>
+      <trans-unit id="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target>תצוגה שבועית לכל המשתמשים</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
