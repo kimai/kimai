@@ -413,6 +413,10 @@
         <source>You must select at least one user or team.</source>
         <target>עליך לבחור בצוות או משתמש אחד לפחות.</target>
       </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>התקציב נוצל במלואו. מתוך %budget% הזמינים, %used% נוצלו עד כה, עדיין ניתן להשתמש ב־%free%.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
