@@ -30,6 +30,10 @@
         <source>report_weekly_users</source>
         <target>Semajna vido por ĉiuj uzantoj</target>
       </trans-unit>
+      <trans-unit id="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>Jara vido por ĉiuj uzantoj</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
