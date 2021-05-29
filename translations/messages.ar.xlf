@@ -840,7 +840,39 @@
       </trans-unit>
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
-        <target state="needs-translation">عِبارة البحث</target>
+        <target state="translated">مصطلح البحث</target>
+      </trans-unit>
+      <trans-unit id="label.replaceTags">
+        <source>label.replaceTags</source>
+        <target>استبدل العلامات</target>
+      </trans-unit>
+      <trans-unit id="label.color">
+        <source>label.color</source>
+        <target>اللون</target>
+      </trans-unit>
+      <trans-unit id="help.fixedRate">
+        <source>help.fixedRate</source>
+        <target>الحصول على نفس القيمة في كل مرة تسجيل ، بغض النظر عن المدة</target>
+      </trans-unit>
+      <trans-unit id="label.daterange">
+        <source>label.daterange</source>
+        <target>النطاق الزمني</target>
+      </trans-unit>
+      <trans-unit id="label.plus_more">
+        <source>label.plus_more</source>
+        <target>+٪ عدد٪ أكثر</target>
+      </trans-unit>
+      <trans-unit id="label.progress">
+        <source>label.progress</source>
+        <target>تقدّم</target>
+      </trans-unit>
+      <trans-unit id="label.my_team_projects">
+        <source>label.my_team_projects</source>
+        <target>مشاريع الفريق وamp; الميزانيات</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>احفظ الكل</target>
       </trans-unit>
     </body>
   </file>
