@@ -780,7 +780,7 @@
       </trans-unit>
       <trans-unit id="update_multiple">
         <source>update_multiple</source>
-        <target>%action% %count% مُدخل؟</target>
+        <target>%إجراء% %عدد% مدخلات؟</target>
       </trans-unit>
       <trans-unit id="my.profile">
         <source>my.profile</source>
@@ -817,6 +817,30 @@
       <trans-unit id="file">
         <source>file</source>
         <target>ملف</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>لقد تغير الشكل. الرجاء النقر فوق "حفظ" لحفظ التغييرات أو "إغلاق" للإلغاء.</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>ترتيب حسب</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>تنازلي</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>تصاعدي</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>حذف البحث المفضل</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target state="needs-translation">عِبارة البحث</target>
       </trans-unit>
     </body>
   </file>
