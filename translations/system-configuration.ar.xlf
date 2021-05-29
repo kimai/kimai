@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
-        <target state="needs-translation">السماح بتنسيق تخفيض الأسعار في الأوصاف والتعليقات</target>
+        <target state="translated">السماح بتنسيق markdown في الأوصاف والتعليقات</target>
       </trans-unit>
       <trans-unit id="label.theme.tags_create">
         <source>label.theme.tags_create</source>
@@ -64,7 +64,7 @@
       </trans-unit>
       <trans-unit id="label.timesheet.rules.allow_future_times">
         <source>label.timesheet.rules.allow_future_times</source>
-        <target>السماح بإدخال الوقت في المستقبل</target>
+        <target>السماح بإدخال الوقت لاحقاً</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
         <source>label.timesheet.rules.allow_overbooking_budget</source>
@@ -76,15 +76,15 @@
       </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_period_start">
         <source>label.timesheet.rules.lockdown_period_start</source>
-        <target>بدء فترة التأمين (تاريخ نسبي لـ PHP حتى الآن)</target>
+        <target>بدء فترة التأمين ( تاريخ نسبي ل PHP حتى الآن )</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_period_end">
         <source>label.timesheet.rules.lockdown_period_end</source>
-        <target>نهاية فترة التأمين (تاريخ نسبي لـ PHP حتى الآن)</target>
+        <target>نهاية فترة التأمين (تاريخ نسبي ل PHP حتى الآن)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
-        <target>نهاية فترة السماح للإغلاق (التاريخ النسبي لـ PHP حتى نهاية فترة التأمين)</target>
+        <target>نهاية فترة السماح الإغلاق (التاريخ النسبي ل PHP حتى نهاية فترة التأمين)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.active_entries.hard_limit">
         <source>label.timesheet.active_entries.hard_limit</source>
