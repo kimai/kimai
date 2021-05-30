@@ -48,7 +48,7 @@ jobs:
                     MAILER_URL: null://localhost
             -   name: Run migrations on MySQL
                 run: |
-                    bin/console doctrine:database:drop --if-exists -n
+                    bin/console doctrine:database:drop --if-exists --force -n
                     bin/console doctrine:database:create --if-not-exists -n
                     bin/console doctrine:migrations:migrate -n
                     bin/console doctrine:migrations:migrate first -n
