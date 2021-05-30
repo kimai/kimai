@@ -390,7 +390,7 @@
                     {# TODO split day entries are calculated only for the begin date #}
                     var $element = jQuery("#dailytotal-" + moment(event.start).format("YYYY-MM-DD"));
                     var ids = $element.data('ids');
-                    if (ids === null) {
+                    if (ids === null || ids === undefined) {
                         ids = '';
                     }
 

@@ -128,15 +128,15 @@
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>Markendarstellung</target>
+        <target>Mein Unternehmen</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>Logo (Bild URL, ersetzt das Unternehmen im Anmeldebildschirm)</target>
+        <target>Logo URL (ersetzt den Unternehmensnamen im Anmeldebildschirm)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>Unternehmen</target>
+        <target>Unternehmensname</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
@@ -145,6 +145,10 @@
       <trans-unit id="label.theme.branding.title">
         <source>label.theme.branding.title</source>
         <target>Browser Titel</target>
+      </trans-unit>
+      <trans-unit id="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>Geschäftsjahr</target>
       </trans-unit>
       <trans-unit id="rounding">
         <source>rounding</source>

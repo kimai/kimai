@@ -75,6 +75,10 @@ final class InvoiceItem
      * @var string
      */
     private $category;
+    /**
+     * @var string[]
+     */
+    private $tags = [];
 
     public function addAdditionalField(string $name, ?string $value): InvoiceItem
     {
@@ -268,5 +272,24 @@ final class InvoiceItem
         $this->category = $category;
 
         return $this;
+    }
+
+    public function addTag(string $tag): void
+    {
+        foreach ($this->tags as $t) {
+            if (strcasecmp($tag, $t) === 0) {
+                return;
+            }
+        }
+
+        $this->tags[] = $tag;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getTags(): array
+    {
+        return $this->tags;
     }
 }

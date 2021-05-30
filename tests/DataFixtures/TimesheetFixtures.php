@@ -45,9 +45,9 @@ final class TimesheetFixtures implements TestFixture
      */
     private $projects = [];
     /**
-     * @var string
+     * @var \DateTime
      */
-    private $startDate = '2018-04-01';
+    private $startDate;
     /**
      * @var bool
      */
@@ -121,8 +121,8 @@ final class TimesheetFixtures implements TestFixture
      */
     public function setStartDate($date): TimesheetFixtures
     {
-        if ($date instanceof \DateTime) {
-            $date = $date->format('Y-m-d');
+        if (!($date instanceof \DateTime)) {
+            $date = new \DateTime($date);
         }
         $this->startDate = $date;
 
@@ -312,7 +312,11 @@ final class TimesheetFixtures implements TestFixture
 
     private function getDateTime(int $i): \DateTime
     {
-        $start = \DateTime::createFromFormat('Y-m-d', $this->startDate);
+        if ($this->startDate === null) {
+            $this->startDate = new \DateTime('2018-04-01');
+        }
+
+        $start = clone $this->startDate;
         $start->modify("+ $i days");
         $start->modify('+ ' . rand(1, 172800) . ' seconds'); // up to 2 days
 

@@ -22,6 +22,14 @@
         <source>reporting.initial_view</source>
         <target>İlk rapor</target>
       </trans-unit>
+      <trans-unit id="report_inactive_project">
+        <source>report_inactive_project</source>
+        <target>Etkin olmayan projeler</target>
+      </trans-unit>
+      <trans-unit id="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target>Tüm kullanıcılar için haftalık görünüm</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

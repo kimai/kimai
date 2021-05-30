@@ -65,7 +65,7 @@
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
-                    {% if entry.hasBudget() %}
+                    {% if entry.hasTimeBudget() %}
                         {{ entry.timeBudget|duration }}
                     {% else %}
                         &ndash;

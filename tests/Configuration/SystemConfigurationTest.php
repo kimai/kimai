@@ -157,10 +157,12 @@ class SystemConfigurationTest extends TestCase
             (new Configuration())->setName('timesheet.rules.allow_future_times')->setValue(''),
             (new Configuration())->setName('saml.activate')->setValue(true),
             (new Configuration())->setName('theme.color_choices')->setValue(''),
+            (new Configuration())->setName('company.financial_year')->setValue('2020-03-27'),
         ]);
         $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
         $this->assertTrue($sut->isSamlActive());
         $this->assertNull($sut->getThemeColorChoices());
+        $this->assertEquals('2020-03-27', $sut->getFinancialYearStart());
     }
 
     public function testUnknownConfigs()
@@ -209,6 +211,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('blue', $sut->getUserDefaultTheme());
         $this->assertEquals('IT', $sut->getUserDefaultLanguage());
         $this->assertEquals('USD', $sut->getUserDefaultCurrency());
+        $this->assertNull($sut->getFinancialYearStart());
     }
 
     public function testFormDefaultWithLoader()

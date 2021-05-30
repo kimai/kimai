@@ -17,6 +17,7 @@
         {% endblock %}
         {% block box_body_class %}{{ box_id }} table-responsive no-padding{% endblock %}
         {% block box_body %}
+            {% set absoluteTotals = 0 %}
             <table class="table table-bordered table-hover dataTable">
                 <tr>
                     <th>&nbsp;</th>
@@ -37,15 +38,14 @@
                         {% for day in userDay.days %}
                             {% if day.totalDuration > 0 %}
                                 {% set usersTotalDuration = usersTotalDuration + day.totalDuration %}
+                                {% set absoluteTotals = absoluteTotals + day.totalDuration %}
                             {% endif %}
                         {% endfor %}
                         <th class="text-nowrap text-center total">
-                            {% if usersTotalDuration > 0 %}
-                                {{ usersTotalDuration|duration }}
-                            {% endif %}
+                            {{ usersTotalDuration|duration }}
                         </th>
                         {% for day in userDay.days %}
-                            <td class="text-nowrap day-total{% if day.day is weekend %} weekend{% endif %}">
+                            <td class="text-nowrap text-center day-total{% if day.day is weekend %} weekend{% endif %}">
                                 {% if day.totalDuration > 0 %}
                                     {{ day.totalDuration|duration }}
                                 {% endif %}
@@ -53,6 +53,17 @@
                         {% endfor %}
                     </tr>
                 {% endfor %}
+                <tr>
+                    <th>&nbsp;</th>
+                    <th class="text-center text-nowrap">
+                        {{ absoluteTotals|duration }}
+                    </th>
+                    {% for id, duration in totals %}
+                        <th class="text-center text-nowrap">
+                            {{ duration|duration }}
+                        </th>
+                    {% endfor %}
+                </tr>
             </table>
         {% endblock %}
     {% endembed %}

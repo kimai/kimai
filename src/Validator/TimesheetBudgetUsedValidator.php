@@ -9,11 +9,11 @@
 
 namespace App\Validator;
 
+use App\Activity\ActivityStatisticService;
 use App\Configuration\SystemConfiguration;
+use App\Customer\CustomerStatisticService;
 use App\Entity\Timesheet;
-use App\Repository\ActivityRepository;
-use App\Repository\CustomerRepository;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectStatisticService;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\RateServiceInterface;
 use App\Utils\Duration;
@@ -25,19 +25,19 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetBudgetUsedValidator extends ConstraintValidator
 {
-    private $customerRepository;
-    private $projectRepository;
-    private $activityRepository;
+    private $customerStatisticService;
+    private $projectStatisticService;
+    private $activityStatisticService;
     private $timesheetRepository;
     private $rateService;
     private $configuration;
 
-    public function __construct(SystemConfiguration $configuration, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TimesheetRepository $timesheetRepository, RateServiceInterface $rateService)
+    public function __construct(SystemConfiguration $configuration, CustomerStatisticService $customerStatisticService, ProjectStatisticService $projectStatisticService, ActivityStatisticService $activityStatisticService, TimesheetRepository $timesheetRepository, RateServiceInterface $rateService)
     {
         $this->configuration = $configuration;
-        $this->customerRepository = $customerRepository;
-        $this->projectRepository = $projectRepository;
-        $this->activityRepository = $activityRepository;
+        $this->customerStatisticService = $customerStatisticService;
+        $this->projectStatisticService = $projectStatisticService;
+        $this->activityStatisticService = $activityStatisticService;
         $this->timesheetRepository = $timesheetRepository;
         $this->rateService = $rateService;
     }
@@ -135,7 +135,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             return false;
         }
 
-        $stat = $this->activityRepository->getActivityStatistics($activity);
+        $stat = $this->activityStatisticService->getActivityStatistics($activity);
 
         $fullRate = ($stat->getRecordRate() + $rate);
 
@@ -164,7 +164,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             return false;
         }
 
-        $stat = $this->projectRepository->getProjectStatistics($project);
+        $stat = $this->projectStatisticService->getProjectStatistics($project);
 
         $fullRate = ($stat->getRecordRate() + $rate);
 
@@ -193,7 +193,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             return false;
         }
 
-        $stat = $this->customerRepository->getCustomerStatistics($customer);
+        $stat = $this->customerStatisticService->getCustomerStatistics($customer);
 
         $fullRate = ($stat->getRecordRate() + $rate);
 

@@ -428,6 +428,9 @@ class ConfigurationTest extends TestCase
                 'connection' => [
                     'organization' => []
                 ],
+            ],
+            'company' => [
+                'financial_year' => null,
             ]
         ];
 

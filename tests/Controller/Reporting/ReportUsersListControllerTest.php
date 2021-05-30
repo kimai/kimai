@@ -28,6 +28,11 @@ class ReportUsersListControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
     }
 
+    public function testYearlyListIsSecure()
+    {
+        $this->assertUrlIsSecured('/reporting/yearly_users_list');
+    }
+
     public function testWeeklyListIsSecure()
     {
         $this->assertUrlIsSecured('/reporting/weekly_users_list');
@@ -38,6 +43,11 @@ class ReportUsersListControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecured('/reporting/monthly_users_list');
     }
 
+    public function testYearlyUsersListIsSecureForUserRole()
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/reporting/yearly_users_list');
+    }
+
     public function testWeeklyUsersListIsSecureForUserRole()
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/reporting/weekly_users_list');
@@ -46,6 +56,16 @@ class ReportUsersListControllerTest extends ControllerBaseTest
     public function testMonthlyUsersListIsSecureForUserRole()
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/reporting/monthly_users_list');
+    }
+
+    public function testYearlyUsersReport()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->importReportingFixture(User::ROLE_TEAMLEAD);
+        $this->assertAccessIsGranted($client, '/reporting/yearly_users_list');
+        self::assertStringContainsString('<div class="box-body yearly-user-list-reporting-box', $client->getResponse()->getContent());
+        $select = $client->getCrawler()->filterXPath("//select[@id='user']");
+        self::assertEquals(0, $select->count());
     }
 
     public function testWeeklyUsersReport()

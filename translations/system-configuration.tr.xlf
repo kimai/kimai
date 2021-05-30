@@ -246,6 +246,18 @@
         <source>label.timesheet.rules.allow_overbooking_budget</source>
         <target>Depolanan bütçeler için fazla rezervasyona izin ver</target>
       </trans-unit>
+      <trans-unit id="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>HTML renk kodlarının virgülle ayrılmış listesi. Renk adları, renk kodunun önüne bir ad ve | sınırlayıcı koyarak ayarlanabilir, örneğin: Beyaz|#ffffff, Siyah|#000000.</target>
+      </trans-unit>
+      <trans-unit id="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>İzin verilen renkler</target>
+      </trans-unit>
+      <trans-unit id="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>Renk seçeneklerini sınırla</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

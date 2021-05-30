@@ -11,7 +11,6 @@
 
 import jQuery from 'jquery';
 import KimaiPlugin from '../KimaiPlugin';
-import moment from "moment";
 
 export default class KimaiDatePicker extends KimaiPlugin {
 

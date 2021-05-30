@@ -32,6 +32,10 @@ class TeamType extends AbstractType
             'choice_label' => function (Team $team) {
                 return $team->getName();
             },
+            'documentation' => [
+                'type' => 'integer',
+                'description' => 'Team ID',
+            ],
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {

@@ -11,6 +11,9 @@ namespace App\Utils;
 
 final class StringHelper
 {
+    // @see https://github.com/payloadbox/csv-injection-payloads
+    private const DDE_PAYLOADS = ['=', '-', '@', '+', "\t", "\n", "\r", "\r\n"];
+
     public static function ensureMaxLength(?string $string, int $length): ?string
     {
         if (null === $string) {
@@ -22,5 +25,23 @@ final class StringHelper
         }
 
         return $string;
+    }
+
+    public static function sanitizeDDE(string $text): string
+    {
+        $sanitize = false;
+
+        if (\in_array($text[0], self::DDE_PAYLOADS)) {
+            $sanitize = true;
+        } elseif (stripos($text, 'DDE') !== false) {
+            $sanitize = true;
+        }
+
+        if ($sanitize) {
+            // trying to prevent fucking Microsoft "feature" DDE
+            $text = "' " . $text;
+        }
+
+        return $text;
     }
 }

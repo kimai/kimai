@@ -42,7 +42,7 @@ final class ReportByUserController extends AbstractController
     private function canSelectUser(): bool
     {
         // also found in App\EventSubscriber\Actions\UserSubscriber
-        if (!$this->isGranted('view_other_timesheet')) {
+        if (!$this->isGranted('view_other_timesheet') || !$this->isGranted('view_other_reporting')) {
             return false;
         }
 
@@ -184,6 +184,10 @@ final class ReportByUserController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Day[] $data
+     * @return array
+     */
     private function prepareReportData(array $data): array
     {
         $days = [];
@@ -194,7 +198,6 @@ final class ReportByUserController extends AbstractController
 
         $rows = [];
 
-        /** @var Day $day */
         foreach ($data as $day) {
             $dayId = $day->getDay()->format('Ymd');
             foreach ($day->getDetails() as $id => $detail) {

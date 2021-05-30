@@ -288,6 +288,8 @@
                         if (jQuery(field).data('daterangepicker') !== undefined) {
                             jQuery(field).data('daterangepicker').setStartDate(momentObj);
                             jQuery(field).data('daterangepicker').setEndDate(momentObj);
+                            {# make sure that the project list is reloaded and the dates can be compared against the project end date #}
+                            jQuery('#{{ blockPrefix }}_customer').trigger('change');
                         }
                     }
                 </script>
