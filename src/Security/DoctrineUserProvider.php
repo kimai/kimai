@@ -72,6 +72,6 @@ final class DoctrineUserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class === User::class || $class === 'App\Entity\User';
+        return $class === User::class;
     }
 }
