@@ -39,7 +39,7 @@ class ThemeConfigurationTest extends TestCase
                 'background_color' => 'rgba(0,115,183,0.7)',
                 'border_color' => '#3b8bba',
                 'grid_color' => 'rgba(0,0,0,.05)',
-                'height' => '200'
+                'height' => '200',
             ],
             'branding' => [
                 'logo' => null,

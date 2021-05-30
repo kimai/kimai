@@ -49,7 +49,7 @@ class PageSizeType extends AbstractType
                 350 => 350,
                 400 => 400,
                 450 => 450,
-                500 => 500
+                500 => 500,
             ],
             'placeholder' => null,
             'choice_translation_domain' => false,

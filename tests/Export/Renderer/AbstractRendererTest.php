@@ -49,7 +49,7 @@ abstract class AbstractRendererTest extends KernelTestCase
                 'date' => 'Y.m.d',
                 'duration' => '%h:%m h',
                 'time' => 'H:i',
-            ]
+            ],
         ];
 
         $translator = $this->createMock(TranslatorInterface::class);

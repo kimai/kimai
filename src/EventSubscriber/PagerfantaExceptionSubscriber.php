@@ -26,7 +26,7 @@ final class PagerfantaExceptionSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::EXCEPTION => ['onCoreException', 1]
+            KernelEvents::EXCEPTION => ['onCoreException', 1],
         ];
     }
 

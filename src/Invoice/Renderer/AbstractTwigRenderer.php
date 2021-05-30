@@ -37,7 +37,7 @@ abstract class AbstractTwigRenderer implements RendererInterface
         $previousLocale = $this->changeTwigLocale($this->twig, $model->getTemplate()->getLanguage());
 
         $content = $this->twig->render('@invoice/' . basename($document->getFilename()), [
-            'model' => $model
+            'model' => $model,
         ]);
 
         $this->changeTwigLocale($this->twig, $previousLocale);

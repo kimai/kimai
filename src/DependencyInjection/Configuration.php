@@ -164,8 +164,8 @@ class Configuration implements ConfigurationInterface
                             'begin' => 1,
                             'end' => 1,
                             'duration' => 0,
-                            'mode' => 'default'
-                        ]
+                            'mode' => 'default',
+                        ],
                     ])
                 ->end()
                 ->arrayNode('rates')
@@ -259,7 +259,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                     ->defaultValue([
                         'var/invoices/',
-                        InvoiceDocumentRepository::DEFAULT_DIRECTORY
+                        InvoiceDocumentRepository::DEFAULT_DIRECTORY,
                     ])
                 ->end()
                 ->arrayNode('documents')
@@ -292,7 +292,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                     ->defaultValue([
                         'var/export/',
-                        'templates/export/renderer/'
+                        'templates/export/renderer/',
                     ])
                 ->end()
                 ->arrayNode('documents')
@@ -421,7 +421,7 @@ class Configuration implements ConfigurationInterface
                         'Gold|#ffd700', 'Yellow|#ffff00', 'Peach|#ffdab9', 'Khaki|#f0e68c',
                         'Olive|#808000', 'Lime|#00ff00', 'Jelly|#9acd32', 'Green|#008000', 'Teal|#008080',
                         'Aqua|#00ffff', 'LightBlue|#add8e6', 'DeepSky|#00bfff', 'Dodger|#1e90ff', 'Blue|#0000ff', 'Navy|#000080',
-                        'Purple|#800080', 'Fuchsia|#ff00ff', 'Violet|#ee82ee', 'Rose|#ffe4e1', 'Lavender|#E6E6FA'
+                        'Purple|#800080', 'Fuchsia|#ff00ff', 'Violet|#ee82ee', 'Rose|#ffe4e1', 'Lavender|#E6E6FA',
                     ]))
                 ->end()
                 ->arrayNode('chart')

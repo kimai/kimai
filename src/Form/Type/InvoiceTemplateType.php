@@ -31,7 +31,7 @@ class InvoiceTemplateType extends AbstractType
             'choice_label' => 'name',
             'query_builder' => function (InvoiceTemplateRepository $repository) {
                 return $repository->getQueryBuilderForFormType();
-            }
+            },
         ]);
     }
 

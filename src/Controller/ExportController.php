@@ -158,8 +158,8 @@ class ExportController extends AbstractController
             'method' => $method,
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'attr' => [
-                'id' => 'export-form'
-            ]
+                'id' => 'export-form',
+            ],
         ]);
     }
 }

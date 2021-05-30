@@ -21,7 +21,7 @@ class InvoiceArchiveQuery extends BaseQuery
     use DateRangeTrait;
 
     public const INVOICE_ARCHIVE_ORDER_ALLOWED = [
-        'date', 'customer', 'total'
+        'date', 'customer', 'total',
     ];
 
     /**

@@ -176,7 +176,7 @@ class ProjectControllerTest extends ControllerBaseTest
             'project_rate_form' => [
                 'user' => null,
                 'rate' => $rate,
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/' . $projectId . '/details'));
         $client->followRedirect();
@@ -233,7 +233,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'project_comment_form' => [
                 'message' => 'A beautiful and long comment **with some** markdown formatting',
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
@@ -249,7 +249,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'project_comment_form' => [
                 'message' => 'Foo bar blub',
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
@@ -276,7 +276,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'project_comment_form' => [
                 'message' => 'Foo bar blub',
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
@@ -353,7 +353,7 @@ class ProjectControllerTest extends ControllerBaseTest
             'project_edit_form' => [
                 'name' => 'Test 2',
                 'customer' => 1,
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, '/details');
         $client->followRedirect();
@@ -379,7 +379,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
         $this->assertEquals('Test', $form->get('project_edit_form[name]')->getValue());
         $client->submit($form, [
-            'project_edit_form' => ['name' => 'Test 2']
+            'project_edit_form' => ['name' => 'Test 2'],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
@@ -513,8 +513,8 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertStringEndsWith($this->createUrl('/admin/project/1/delete'), $form->getUri());
         $client->submit($form, [
             'form' => [
-                'project' => $id
-            ]
+                'project' => $id,
+            ],
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
@@ -556,12 +556,12 @@ class ProjectControllerTest extends ControllerBaseTest
                     'project_edit_form' => [
                         'name' => '',
                         'customer' => 0,
-                    ]
+                    ],
                 ],
                 [
                     '#project_edit_form_name',
                     '#project_edit_form_customer',
-                ]
+                ],
             ],
         ];
     }

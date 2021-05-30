@@ -22,7 +22,7 @@ final class RolePermissionManager
     public const SUPER_ADMIN_PERMISSIONS = [
         'view_all_data',
         'role_permissions',
-        'view_user'
+        'view_user',
     ];
 
     /**

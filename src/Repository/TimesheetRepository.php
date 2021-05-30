@@ -59,7 +59,7 @@ class TimesheetRepository extends EntityRepository
                 'IDENTITY(p.customer) as customer',
                 'IDENTITY(t.project) as project',
                 'IDENTITY(t.activity) as activity',
-                'IDENTITY(t.user) as user'
+                'IDENTITY(t.user) as user',
             ])
             ->leftJoin(Project::class, 'p', Join::WITH, 'p.id = t.project')
             ->andWhere('t.id = :id')
@@ -523,7 +523,7 @@ class TimesheetRepository extends EntityRepository
                             'month' => $beginTmp->format('n'),
                             'year' => $beginTmp->format('Y'),
                             'day' => $beginTmp->format('j'),
-                            'details' => []
+                            'details' => [],
                         ];
                     }
                     $duration = $newDateBegin->getTimestamp() - $beginTmp->getTimestamp();

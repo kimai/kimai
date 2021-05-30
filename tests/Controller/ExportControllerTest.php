@@ -98,7 +98,7 @@ class ExportControllerTest extends ControllerBaseTest
             'default-budget.pdf.twig' => 'default-budget.pdf.twig',
             'default-internal.pdf.twig' => 'default-internal.pdf.twig',
             'default.pdf.twig' => 'default.pdf.twig',
-            'xlsx' => 'xlsx'
+            'xlsx' => 'xlsx',
         ];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
         $this->assertGreaterThanOrEqual(\count($expected), $node->count());
@@ -157,7 +157,7 @@ class ExportControllerTest extends ControllerBaseTest
             'default-budget.pdf.twig' => 'default-budget.pdf.twig',
             'default-internal.pdf.twig' => 'default-internal.pdf.twig',
             'default.pdf.twig' => 'default.pdf.twig',
-            'xlsx' => 'xlsx'
+            'xlsx' => 'xlsx',
         ];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
         $this->assertGreaterThanOrEqual(\count($expected), $node->count());
@@ -193,7 +193,7 @@ class ExportControllerTest extends ControllerBaseTest
         $node->setAttribute('method', 'POST');
 
         $client->submit($form, [
-            'renderer' => 'default'
+            'renderer' => 'default',
         ]);
 
         $response = $client->getResponse();
@@ -228,7 +228,7 @@ class ExportControllerTest extends ControllerBaseTest
         // don't add daterange to make sure the current month is the default range
         $client->submit($form, [
             'renderer' => 'default.html.twig',
-            'markAsExported' => 1
+            'markAsExported' => 1,
         ]);
 
         $response = $client->getResponse();

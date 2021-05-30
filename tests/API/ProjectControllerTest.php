@@ -307,7 +307,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'customer' => 1
+            'customer' => 1,
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -342,7 +342,7 @@ class ProjectControllerTest extends APIControllerBaseTest
             'name' => 'foo',
             'customer' => 100,
             'xxxxx' => 'whoami',
-            'visible' => true
+            'visible' => true,
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $response = $client->getResponse();
@@ -377,7 +377,7 @@ class ProjectControllerTest extends APIControllerBaseTest
             'name' => 'foo',
             'comment' => '',
             'customer' => 1,
-            'visible' => true
+            'visible' => true,
         ];
         $this->request($client, '/api/projects/1', 'PATCH', [], json_encode($data));
         $response = $client->getResponse();
@@ -398,7 +398,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'customer' => 255,
-            'visible' => true
+            'visible' => true,
         ];
         $this->request($client, '/api/projects/1', 'PATCH', [], json_encode($data));
 
@@ -416,7 +416,7 @@ class ProjectControllerTest extends APIControllerBaseTest
     {
         return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['value' => 'X'], [
             'code' => 400,
-            'message' => 'Parameter "name" of value "NULL" violated a constraint "This value should not be null."'
+            'message' => 'Parameter "name" of value "NULL" violated a constraint "This value should not be null."',
         ]);
     }
 
@@ -424,7 +424,7 @@ class ProjectControllerTest extends APIControllerBaseTest
     {
         return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['name' => 'X'], [
             'code' => 400,
-            'message' => 'Parameter "value" of value "NULL" violated a constraint "This value should not be null."'
+            'message' => 'Parameter "value" of value "NULL" violated a constraint "This value should not be null."',
         ]);
     }
 
@@ -432,7 +432,7 @@ class ProjectControllerTest extends APIControllerBaseTest
     {
         return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['name' => 'X', 'value' => 'Y'], [
             'code' => 500,
-            'message' => 'Unknown meta-field requested'
+            'message' => 'Unknown meta-field requested',
         ]);
     }
 
@@ -443,7 +443,7 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $data = [
             'name' => 'metatestmock',
-            'value' => 'another,testing,bar'
+            'value' => 'another,testing,bar',
         ];
         $this->request($client, '/api/projects/1/meta', 'PATCH', [], json_encode($data));
 

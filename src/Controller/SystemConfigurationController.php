@@ -302,14 +302,14 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 1])
+                            new GreaterThanOrEqual(['value' => 1]),
                         ]),
                     (new Configuration())
                         ->setName('timesheet.active_entries.soft_limit')
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 1])
+                            new GreaterThanOrEqual(['value' => 1]),
                         ]),
                     (new Configuration())
                         ->setName('timesheet.time_increment')
@@ -317,14 +317,14 @@ final class SystemConfigurationController extends AbstractController
                         ->setOptions(['deactivate' => false])
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 1])
+                            new GreaterThanOrEqual(['value' => 1]),
                         ]),
                     (new Configuration())
                         ->setName('timesheet.duration_increment')
                         ->setType(MinuteIncrementType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 0])
+                            new GreaterThanOrEqual(['value' => 0]),
                         ]),
                 ]),
             (new SystemConfigurationModel())
@@ -339,21 +339,21 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 0])
+                            new GreaterThanOrEqual(['value' => 0]),
                         ]),
                     (new Configuration())
                         ->setName('timesheet.rounding.default.end')
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 0])
+                            new GreaterThanOrEqual(['value' => 0]),
                         ]),
                     (new Configuration())
                         ->setName('timesheet.rounding.default.duration')
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 0])
+                            new GreaterThanOrEqual(['value' => 0]),
                         ]),
                     (new Configuration())
                         ->setName('timesheet.rounding.default.days')

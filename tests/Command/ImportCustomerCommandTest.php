@@ -49,7 +49,7 @@ class ImportCustomerCommandTest extends KernelTestCase
         $commandTester->setInputs(['no']);
         $commandTester->execute([
             'command' => $command->getName(),
-            'file' => __DIR__ . '/../Importer/_data/foo_bar.csv1'
+            'file' => __DIR__ . '/../Importer/_data/foo_bar.csv1',
         ]);
 
         $result = $commandTester->getDisplay();
@@ -104,7 +104,7 @@ class ImportCustomerCommandTest extends KernelTestCase
         $commandTester->setInputs(['no']);
         $commandTester->execute([
             'command' => $command->getName(),
-            'file' => __DIR__ . '/../Importer/_data/customers.csv'
+            'file' => __DIR__ . '/../Importer/_data/customers.csv',
         ]);
 
         $result = $commandTester->getDisplay();

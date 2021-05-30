@@ -47,8 +47,8 @@ class TeamSubscriber extends AbstractActionsSubscriber
                     'data-method' => 'DELETE',
                     'data-question' => 'confirm.delete',
                     'data-msg-error' => 'action.delete.error',
-                    'data-msg-success' => 'action.delete.success'
-                ]
+                    'data-msg-success' => 'action.delete.success',
+                ],
             ]);
         }
     }

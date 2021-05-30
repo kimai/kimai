@@ -45,7 +45,7 @@ class TeamProjectForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_team_project',
             'attr' => [
-                'data-form-event' => 'kimai.teamUpdate'
+                'data-form-event' => 'kimai.teamUpdate',
             ],
         ]);
     }

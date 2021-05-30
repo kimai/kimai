@@ -336,7 +336,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'project' => 1,
             'user' => 2,
             'tags' => [
-                0 => 'test'
+                0 => 'test',
             ],
             // make sure the timezone is properly applied in serializer (see #1858)
             // minute and second are different from the above datetime object, because of applied default minute rounding
@@ -393,7 +393,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
-            'hourlyRate' => 127
+            'hourlyRate' => 127,
         ];
         $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -417,7 +417,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
-            'hourlyRate' => 127
+            'hourlyRate' => 127,
         ];
         $this->request($client, '/api/timesheets?full=true', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -447,7 +447,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
-            'hourlyRate' => 127
+            'hourlyRate' => 127,
         ];
         $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -482,7 +482,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => (new \DateTime())->format('Y-m-d H:m:s'),
             'description' => 'foo',
             'fixedRate' => 2016,
-            'hourlyRate' => 127
+            'hourlyRate' => 127,
         ];
         $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
         $this->assertApiCallValidationError($client->getResponse(), ['project']);
@@ -510,7 +510,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => (new \DateTime())->format('Y-m-d H:m'),
             'description' => 'foo',
             'fixedRate' => 2016,
-            'hourlyRate' => 127
+            'hourlyRate' => 127,
         ];
         $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
         $this->assertApiCallValidationError($client->getResponse(), ['activity']);
@@ -863,7 +863,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $data = [
             'description' => 'foo',
-            'tags' => 'another,testing,bar'
+            'tags' => 'another,testing,bar',
         ];
         $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], json_encode($data));
 
@@ -894,7 +894,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $data = [
             'description' => 'foo',
-            'tags' => 'another,testing,bar'
+            'tags' => 'another,testing,bar',
         ];
         $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], json_encode($data));
 
@@ -999,7 +999,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
-            'hourlyRate' => 127
+            'hourlyRate' => 127,
         ];
         $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -1084,7 +1084,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['value' => 'X'], [
             'code' => 400,
-            'message' => 'Parameter "name" of value "NULL" violated a constraint "This value should not be null."'
+            'message' => 'Parameter "name" of value "NULL" violated a constraint "This value should not be null."',
         ]);
     }
 
@@ -1096,7 +1096,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X'], [
             'code' => 400,
-            'message' => 'Parameter "value" of value "NULL" violated a constraint "This value should not be null."'
+            'message' => 'Parameter "value" of value "NULL" violated a constraint "This value should not be null."',
         ]);
     }
 
@@ -1108,7 +1108,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X', 'value' => 'Y'], [
             'code' => 500,
-            'message' => 'Unknown meta-field requested'
+            'message' => 'Unknown meta-field requested',
         ]);
     }
 
@@ -1121,7 +1121,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $data = [
             'name' => 'metatestmock',
-            'value' => 'another,testing,bar'
+            'value' => 'another,testing,bar',
         ];
         $this->request($client, '/api/timesheets/' . $id . '/meta', 'PATCH', [], json_encode($data));
 

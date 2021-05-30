@@ -87,7 +87,7 @@ class RolePermissionManagerTest extends TestCase
         $sut = new RolePermissionManager($repository, [
             'ROLE_SUPER_ADMIN' => ['role_permissions', 'view_user', 'create_user'],
             'TEST_ROLE' => ['foo2', 'foo'],
-            'USER_ROLE' => ['foo', 'bar']
+            'USER_ROLE' => ['foo', 'bar'],
         ]);
 
         $user = new User();

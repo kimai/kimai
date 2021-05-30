@@ -40,7 +40,7 @@ class CustomerCommentForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_customer_comment',
             'attr' => [
-                'data-form-event' => 'kimai.customerComment'
+                'data-form-event' => 'kimai.customerComment',
             ],
         ]);
     }

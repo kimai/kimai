@@ -46,7 +46,7 @@ class CustomerRateForm extends AbstractRateForm
             'expand_users' => true,
             'csrf_token_id' => 'admin_customer_rate_edit',
             'attr' => [
-                'data-form-event' => 'kimai.customerUpdate'
+                'data-form-event' => 'kimai.customerUpdate',
             ],
         ]);
     }

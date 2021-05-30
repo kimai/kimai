@@ -50,7 +50,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             'visibility' => '#',
             'create-ts modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
             'create-ts-mu modal-ajax-form' => $this->createUrl('/team/timesheet/create_mu'),
-            'help' => 'https://www.kimai.org/documentation/timesheet.html'
+            'help' => 'https://www.kimai.org/documentation/timesheet.html',
         ]);
     }
 
@@ -183,7 +183,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
                 'description' => 'Testing is fun!',
                 'project' => 1,
                 'activity' => 1,
-            ]
+            ],
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
@@ -216,7 +216,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
                 'activity' => 1,
                 'teams' => '1',
                 'tags' => 'test,1234,foo-bar',
-            ]
+            ],
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
@@ -249,7 +249,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
                 // make sure the default validation for timesheets is applied as well
                 'begin' => (new \DateTime())->format('Y-m-d H:i'),
                 'end' => (new \DateTime('-1 hour'))->format('Y-m-d H:i'),
-            ]
+            ],
         ];
 
         $this->assertFormHasValidationError(
@@ -291,8 +291,8 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             'timesheet_admin_edit_form' => [
                 'description' => 'foo-bar',
                 'tags' => 'foo,bar, testing, hello world,,',
-                'user' => $teamlead->getId()
-            ]
+                'user' => $teamlead->getId(),
+            ],
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
@@ -336,8 +336,8 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'multi_update_table' => [
                 'action' => $this->createUrl('/team/timesheet/multi-delete'),
-                'entities' => implode(',', $ids)
-            ]
+                'entities' => implode(',', $ids),
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
         $client->followRedirect();
@@ -377,8 +377,8 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'multi_update_table' => [
                 'action' => $this->createUrl('/team/timesheet/multi-update'),
-                'entities' => implode(',', $ids)
-            ]
+                'entities' => implode(',', $ids),
+            ],
         ]);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -391,7 +391,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
                 'replaceTags' => true,
                 'tags' => 'test, foo-bar, tralalala',
                 'hourlyRate' => 13.78,
-            ]
+            ],
         ]);
 
         $em->clear();

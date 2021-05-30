@@ -75,7 +75,7 @@ class CreateUserCommandTest extends KernelTestCase
             'username' => $username,
             'email' => $email,
             'role' => $role,
-            'password' => $password
+            'password' => $password,
         ]);
 
         return $commandTester;

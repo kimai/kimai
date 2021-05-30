@@ -31,7 +31,7 @@ class CsvRendererTest extends AbstractRendererTest
     public function getTestModel()
     {
         return [
-            ['400', '2437.12', ' EUR 1,947.99 ', 7, 5, 1, 2, 2]
+            ['400', '2437.12', ' EUR 1,947.99 ', 7, 5, 1, 2, 2],
         ];
     }
 

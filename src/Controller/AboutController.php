@@ -51,7 +51,7 @@ class AboutController extends AbstractController
         }
 
         return $this->render('about/license.html.twig', [
-            'license' => $license
+            'license' => $license,
         ]);
     }
 }

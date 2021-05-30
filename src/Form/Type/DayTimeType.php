@@ -19,7 +19,7 @@ class DayTimeType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
-            'placeholder' => 'hh:mm'
+            'placeholder' => 'hh:mm',
         ]);
     }
 

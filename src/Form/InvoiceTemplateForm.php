@@ -77,7 +77,7 @@ class InvoiceTemplateForm extends AbstractType
                 'required' => false,
             ])
             ->add('decimalDuration', YesNoType::class, [
-                'label' => 'label.decimalDuration'
+                'label' => 'label.decimalDuration',
             ])
         ;
     }

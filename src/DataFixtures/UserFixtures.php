@@ -241,7 +241,7 @@ class UserFixtures extends Fixture
                 '/build/images/default_avatar.png',
                 true,
                 'Europe/Berlin',
-            ]
+            ],
         ];
     }
 }

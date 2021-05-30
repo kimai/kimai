@@ -156,7 +156,7 @@ class ActivityControllerTest extends ControllerBaseTest
             'activity_rate_form' => [
                 'user' => null,
                 'rate' => 123.45,
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
         $client->followRedirect();
@@ -176,7 +176,7 @@ class ActivityControllerTest extends ControllerBaseTest
             'activity_edit_form' => [
                 'name' => 'An AcTiVitY Name',
                 'project' => '1',
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
         $client->followRedirect();
@@ -213,7 +213,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
         $client->submit($form, [
-            'activity_edit_form' => ['name' => 'Test 2', 'customer' => 1, 'project' => '1']
+            'activity_edit_form' => ['name' => 'Test 2', 'customer' => 1, 'project' => '1'],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
         $client->followRedirect();
@@ -231,7 +231,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
         $client->submit($form, [
-            'activity_edit_form' => ['name' => 'Test 2']
+            'activity_edit_form' => ['name' => 'Test 2'],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
         $client->followRedirect();
@@ -387,8 +387,8 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertStringEndsWith($this->createUrl('/admin/activity/1/delete'), $form->getUri());
         $client->submit($form, [
             'form' => [
-                'activity' => $id
-            ]
+                'activity' => $id,
+            ],
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
@@ -430,12 +430,12 @@ class ActivityControllerTest extends ControllerBaseTest
                     'activity_edit_form' => [
                         'name' => '',
                         'project' => 0,
-                    ]
+                    ],
                 ],
                 [
                     '#activity_edit_form_name',
                     '#activity_edit_form_project',
-                ]
+                ],
             ],
         ];
     }

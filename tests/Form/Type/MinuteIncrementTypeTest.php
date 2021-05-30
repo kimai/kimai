@@ -28,7 +28,7 @@ class MinuteIncrementTypeTest extends TypeTestCase
         $form = $form->getForm();
 
         $expected = new TypeTestModel([
-            'increment' => '3'
+            'increment' => '3',
         ]);
 
         $form->submit($data);
@@ -47,7 +47,7 @@ class MinuteIncrementTypeTest extends TypeTestCase
         $form = $form->getForm();
 
         $expected = new TypeTestModel([
-            'increment' => '4'
+            'increment' => '4',
         ]);
 
         $form->submit($data);

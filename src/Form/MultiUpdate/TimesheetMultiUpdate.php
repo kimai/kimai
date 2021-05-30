@@ -183,7 +183,7 @@ class TimesheetMultiUpdate extends AbstractType
             'choices' => [
                 'label.replaceTags' => true,
                 'label.appendTags' => false,
-            ]
+            ],
         ]);
 
         $builder->add('tags', TagsType::class, [
@@ -202,8 +202,8 @@ class TimesheetMultiUpdate extends AbstractType
                 'required' => false,
                 'choices' => [
                     'entryState.exported' => true,
-                    'entryState.not_exported' => false
-                ]
+                    'entryState.not_exported' => false,
+                ],
             ]);
         }
 

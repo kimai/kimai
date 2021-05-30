@@ -52,7 +52,7 @@ class InvoiceDocumentUploadForm extends AbstractType
                         ],
                         'mimeTypesMessage' => 'This file type is not allowed',
                     ]),
-                    new Callback([$this, 'validateDocument'])
+                    new Callback([$this, 'validateDocument']),
                 ],
             ])
         ;

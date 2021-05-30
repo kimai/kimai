@@ -36,7 +36,7 @@ class UserValidationTest extends KernelTestCase
     public function testInvalidValues($username, $email, $roles = [])
     {
         $defaultFields = [
-            'username', 'email'
+            'username', 'email',
         ];
 
         $user = new User();

@@ -40,7 +40,7 @@ class CalendarConfigurationTest extends TestCase
             'businessHours' => [
                 'days' => [2, 4, 6],
                 'begin' => '07:49',
-                'end' => '19:27'
+                'end' => '19:27',
             ],
             'visibleHours' => [
                 'begin' => '09:00',
@@ -60,7 +60,7 @@ class CalendarConfigurationTest extends TestCase
                         'id' => 'en.german#holiday@group.v.calendar.google.com',
                         'color' => '#fff',
                     ],
-                ]
+                ],
             ],
             'weekends' => true,
         ];

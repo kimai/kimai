@@ -40,7 +40,7 @@ class ServiceInvoiceTest extends TestCase
                 'date' => 'Y.m.d',
                 'duration' => '%h:%m h',
                 'time' => 'H:i',
-            ]
+            ],
         ];
 
         $formattings = new LanguageFormattings($languages);

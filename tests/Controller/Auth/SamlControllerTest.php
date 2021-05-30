@@ -43,7 +43,7 @@ class SamlControllerTest extends TestCase
         return [
             'saml' => [
                 'activate' => $activated,
-            ]
+            ],
         ];
     }
 

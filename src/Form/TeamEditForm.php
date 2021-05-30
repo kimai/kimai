@@ -30,7 +30,7 @@ class TeamEditForm extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'label.name',
                 'attr' => [
-                    'autofocus' => 'autofocus'
+                    'autofocus' => 'autofocus',
                 ],
                 // documentation is for NelmioApiDocBundle
                 'documentation' => [
@@ -59,7 +59,7 @@ class TeamEditForm extends AbstractType
                     'description' => 'Array of team member IDs',
                 ],
                 // make sure that disabled users show up in the result list
-                'include_users' => (null !== $team && $team->getUsers()->count() > 0 ? $team->getUsers()->toArray() : [])
+                'include_users' => (null !== $team && $team->getUsers()->count() > 0 ? $team->getUsers()->toArray() : []),
             ])
         ;
     }
@@ -76,7 +76,7 @@ class TeamEditForm extends AbstractType
             'expand_users' => true,
             'csrf_token_id' => 'admin_team_edit',
             'attr' => [
-                'data-form-event' => 'kimai.teamUpdate'
+                'data-form-event' => 'kimai.teamUpdate',
             ],
         ]);
     }

@@ -65,7 +65,7 @@ class RoundingServiceTest extends TestCase
                 (clone $start)->setTimestamp($start->getTimestamp() + 1837),
                 $start,
                 (clone $start)->setTimestamp($start->getTimestamp() + 1837),
-                1837
+                1837,
             ],
             [
                 [
@@ -81,7 +81,7 @@ class RoundingServiceTest extends TestCase
                 (clone $start)->setTime(13, 32, 52),
                 (clone $start)->setTime(12, 15, 00),
                 (clone $start)->setTime(13, 45, 00),
-                5400
+                5400,
             ],
             [
                 [
@@ -97,7 +97,7 @@ class RoundingServiceTest extends TestCase
                 (clone $start)->setTime(13, 32, 52),
                 (clone $start)->setTime(12, 17, 35),
                 (clone $start)->setTime(13, 32, 52),
-                4517
+                4517,
             ],
             [
                 [
@@ -113,7 +113,7 @@ class RoundingServiceTest extends TestCase
                 (clone $start)->setTime(13, 32, 52),
                 (clone $start)->setTime(12, 17, 00),
                 (clone $start)->setTime(13, 33, 00),
-                4560
+                4560,
             ],
             [
                 [
@@ -129,7 +129,7 @@ class RoundingServiceTest extends TestCase
                 (clone $start)->setTime(14, 40, 52),
                 (clone $start)->setTime(12, 10, 51),
                 (clone $start)->setTime(14, 40, 52),
-                10800
+                10800,
             ],
             [
                 [
@@ -152,7 +152,7 @@ class RoundingServiceTest extends TestCase
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 => 2:30
                 (clone $start)->setTime(12, 15, 00), // 12:15
                 (clone $start)->setTime(14, 33, 00), // 14:33 => 2:18 => 2:30
-                9000
+                9000,
             ],
             [
                 [
@@ -175,7 +175,7 @@ class RoundingServiceTest extends TestCase
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 (second duration will not be rounded)
                 (clone $start)->setTime(12, 15, 00), // 12:15
                 (clone $start)->setTime(14, 33, 00), // 14:33 => 2:18 (second duration will not be rounded)
-                9000
+                9000,
             ],
             [
                 [
@@ -198,7 +198,7 @@ class RoundingServiceTest extends TestCase
                 (clone $start)->setTime(12, 27, 35), // ... that no rounding is applied
                 (clone $start)->setTime(12, 27, 35), // no diff, to test ...
                 (clone $start)->setTime(12, 27, 35), // ... that no rounding is applied
-                0
+                0,
             ],
             [
                 [
@@ -221,7 +221,7 @@ class RoundingServiceTest extends TestCase
                 (clone $start)->setTime(12, 27, 00), // ... that no rounding is applied
                 (clone $start)->setTime(12, 27, 00), // no diff, to test ...
                 (clone $start)->setTime(12, 27, 00), // ... that no rounding is applied
-                0
+                0,
             ],
             [
                 [
@@ -244,7 +244,7 @@ class RoundingServiceTest extends TestCase
                 (clone $start)->setTime(12, 27, 35), // ... that no rounding is applied
                 (clone $start)->setTime(12, 27, 35), // no diff, to test ...
                 (clone $start)->setTime(12, 27, 35), // ... that no rounding is applied
-                0
+                0,
             ],
         ];
     }

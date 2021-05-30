@@ -35,7 +35,7 @@ class SamlFactoryTest extends TestCase
         self::assertEquals([
             'security.authentication.provider.saml.test',
             'kimai.saml_listener.test',
-            'secured_area'
+            'secured_area',
         ], $result);
 
         $definition = $container->getDefinition('security.authentication.provider.saml.test');

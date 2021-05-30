@@ -23,7 +23,7 @@ class RoleServiceTest extends TestCase
         $real = [
             'ROLE_TEAMLEAD' => ['ROLE_USER'],
             'ROLE_ADMIN' => ['ROLE_TEAMLEAD'],
-            'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN']
+            'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN'],
         ];
 
         $sut = (new RoleServiceFactory($this))->create($real);
@@ -39,7 +39,7 @@ class RoleServiceTest extends TestCase
         $real = [
             'ROLE_TEAMLEAD' => [0 => 'ROLE_USER'],
             'ROLE_ADMIN' => [0 => 'ROLE_TEAMLEAD'],
-            'ROLE_SUPER_ADMIN' => [0 => 'ROLE_ADMIN']
+            'ROLE_SUPER_ADMIN' => [0 => 'ROLE_ADMIN'],
         ];
 
         $repository = [

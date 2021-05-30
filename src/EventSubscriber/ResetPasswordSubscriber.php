@@ -23,7 +23,7 @@ class ResetPasswordSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            FOSUserEvents::RESETTING_SEND_EMAIL_INITIALIZE => ['onInitializeResetPassword', 200]
+            FOSUserEvents::RESETTING_SEND_EMAIL_INITIALIZE => ['onInitializeResetPassword', 200],
         ];
     }
 

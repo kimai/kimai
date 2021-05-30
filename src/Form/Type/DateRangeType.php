@@ -93,7 +93,7 @@ class DateRangeType extends AbstractType
                 '٦' => '6',
                 '٧' => '7',
                 '٨' => '8',
-                '٩' => '9'
+                '٩' => '9',
             ]
         );
     }

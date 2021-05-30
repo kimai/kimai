@@ -30,13 +30,13 @@ class RoundingServiceFactory extends AbstractMockFactory
                     'begin' => 0,
                     'end' => 0,
                     'duration' => 0,
-                    'mode' => 'default'
-                ]
+                    'mode' => 'default',
+                ],
             ];
         }
 
         $configuration = new SystemConfiguration($loader, [
-            'timesheet' => ['rounding' => $rules]
+            'timesheet' => ['rounding' => $rules],
         ]);
 
         $modes = [

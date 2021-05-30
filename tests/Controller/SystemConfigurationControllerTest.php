@@ -107,8 +107,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                     ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => null],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 99],
                     ['name' => 'timesheet.active_entries.soft_limit', 'value' => 77],
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
@@ -143,8 +143,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                         ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => '+10 days'],
                         ['name' => 'timesheet.active_entries.hard_limit', 'value' => -1],
                         ['name' => 'timesheet.active_entries.soft_limit', 'value' => -1],
-                    ]
-                ]
+                    ],
+                ],
             ],
             [
                 '#system_configuration_form_timesheet_configuration_0_value', // mode
@@ -172,8 +172,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                     ['name' => 'defaults.customer.timezone', 'value' => 'Atlantic/Canary'],
                     ['name' => 'defaults.customer.country', 'value' => 'BB'],
                     ['name' => 'defaults.customer.currency', 'value' => 'GBP'],
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
@@ -204,8 +204,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                     ['name' => 'defaults.user.timezone', 'value' => 'Pacific/Tahiti'],
                     ['name' => 'defaults.user.language', 'value' => 'ru'],
                     ['name' => 'defaults.user.theme', 'value' => 'purple'],
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
@@ -231,8 +231,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                         ['name' => 'defaults.customer.timezone', 'value' => 'XX'],
                         ['name' => 'defaults.customer.country', 'value' => 1],
                         ['name' => 'defaults.customer.currency', 'value' => 'XXX'],
-                    ]
-                ]
+                    ],
+                ],
             ],
             [
                 '#system_configuration_form_form_customer_configuration_0_value',
@@ -258,8 +258,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 'configuration' => [
                     ['name' => 'theme.autocomplete_chars', 'value' => 5],
                     ['name' => 'timesheet.markdown_content', 'value' => 1],
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
@@ -283,8 +283,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                     'configuration' => [
                         ['name' => 'theme.select_type', 'value' => 'foo'],
                         ['name' => 'timesheet.markdown_content', 'value' => 1],
-                    ]
-                ]
+                    ],
+                ],
             ],
             [
                 '#system_configuration_form_theme_configuration_0_value',
@@ -316,8 +316,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                     ['name' => 'calendar.businessHours.end', 'value' => '16:00'],
                     ['name' => 'calendar.visibleHours.begin', 'value' => '05:17'],
                     ['name' => 'calendar.visibleHours.end', 'value' => '21:43'],
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
@@ -349,8 +349,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                         ['name' => 'calendar.businessHours.end', 'value' => null],
                         ['name' => 'calendar.visibleHours.begin', 'value' => 'aa:bb'],
                         ['name' => 'calendar.visibleHours.end', 'value' => ''],
-                    ]
-                ]
+                    ],
+                ],
             ],
             [
                 '#system_configuration_form_calendar_configuration_2_value',

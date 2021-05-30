@@ -109,7 +109,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
         $this->assertApiException($client->getResponse(), [
             'code' => 403,
-            'message' => 'Access denied.'
+            'message' => 'Access denied.',
         ]);
     }
 
@@ -126,7 +126,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         $this->request($client, $url, $method);
         $this->assertApiException($client->getResponse(), [
             'code' => 404,
-            'message' => $message ?? 'Not found'
+            'message' => $message ?? 'Not found',
         ]);
     }
 
@@ -134,7 +134,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     {
         $this->assertExceptionForMethod($client, $url, 'DELETE', [], [
             'code' => 404,
-            'message' => 'Not found'
+            'message' => 'Not found',
         ]);
     }
 
@@ -142,7 +142,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     {
         $this->assertExceptionForDeleteAction($role, $url, [], [
             'code' => 404,
-            'message' => $message ?? 'Not found'
+            'message' => $message ?? 'Not found',
         ]);
     }
 
@@ -211,7 +211,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     {
         $this->assertApiException($response, [
             'code' => Response::HTTP_FORBIDDEN,
-            'message' => $message
+            'message' => $message,
         ]);
     }
 

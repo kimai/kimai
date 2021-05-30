@@ -229,7 +229,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             ->setParameters([
                 '%used%' => $helper->money($rate, $currency),
                 '%budget%' => $helper->money($budget, $currency),
-                '%free%' => $helper->money($free, $currency)
+                '%free%' => $helper->money($free, $currency),
             ])
             ->addViolation()
         ;
@@ -248,7 +248,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             ->setParameters([
                 '%used%' => $durationFormat->format($duration),
                 '%budget%' => $durationFormat->format($budget),
-                '%free%' => $durationFormat->format($free)
+                '%free%' => $durationFormat->format($free),
             ])
             ->addViolation()
         ;

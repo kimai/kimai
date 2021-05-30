@@ -44,7 +44,7 @@ final class TimesheetVoter extends Voter
         self::VIEW_RATE,
         self::EDIT_RATE,
         self::EDIT_EXPORT,
-        'duplicate'
+        'duplicate',
     ];
 
     private $permissionManager;

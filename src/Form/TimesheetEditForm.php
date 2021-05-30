@@ -189,7 +189,7 @@ class TimesheetEditForm extends AbstractType
         $duration = $options['duration_minutes'];
         if ($duration !== null && (int) $duration > 0) {
             $durationOptions = array_merge($durationOptions, [
-                'preset_minutes' => $duration
+                'preset_minutes' => $duration,
             ]);
         }
 
@@ -262,7 +262,7 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder->add('exported', YesNoType::class, [
-            'label' => 'label.exported'
+            'label' => 'label.exported',
         ]);
     }
 

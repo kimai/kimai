@@ -28,7 +28,7 @@ class TitleExtensionTest extends TestCase
         $translator->method('trans')->willReturn('foo');
 
         $configs = [
-            (new Configuration())->setName('theme.branding.title')->setValue($title)
+            (new Configuration())->setName('theme.branding.title')->setValue($title),
         ];
 
         $loader = new TestConfigLoader($configs);

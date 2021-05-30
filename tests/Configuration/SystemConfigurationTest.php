@@ -68,7 +68,7 @@ class SystemConfigurationTest extends TestCase
                 'businessHours' => [
                     'days' => [2, 4, 6],
                     'begin' => '07:49',
-                    'end' => '19:27'
+                    'end' => '19:27',
                 ],
                 'day_limit' => 20,
                 'slot_duration' => '01:11:00',
@@ -88,17 +88,17 @@ class SystemConfigurationTest extends TestCase
                             'id' => 'en.german#holiday@group.v.calendar.google.com',
                             'color' => '#fff',
                         ],
-                    ]
+                    ],
                 ],
                 'weekends' => true,
             ],
             'saml' => [
                 'activate' => false,
-                'title' => 'Fantastic OAuth login'
+                'title' => 'Fantastic OAuth login',
             ],
             'theme' => [
                 'color_choices' => 'Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000',
-                'colors_limited' => true
+                'colors_limited' => true,
             ],
         ];
     }

@@ -239,7 +239,7 @@ final class InvoiceController extends AbstractController
             if (!$form->isSubmitted() || !$form->isValid()) {
                 return $this->render('invoice/payment_date_edit.html.twig', [
                     'invoice' => $invoice,
-                    'form' => $form->createView()
+                    'form' => $form->createView(),
                 ]);
             }
         }
@@ -393,7 +393,7 @@ final class InvoiceController extends AbstractController
 
         $form = $this->createForm(InvoiceDocumentUploadForm::class, null, [
             'action' => $this->generateUrl('admin_invoice_document_upload', []),
-            'method' => 'POST'
+            'method' => 'POST',
         ]);
 
         if ($canUpload) {
@@ -480,7 +480,7 @@ final class InvoiceController extends AbstractController
 
         return $this->render('invoice/template_edit.html.twig', [
             'template' => $template,
-            'form' => $editForm->createView()
+            'form' => $editForm->createView(),
         ]);
     }
 
@@ -494,7 +494,7 @@ final class InvoiceController extends AbstractController
             'include_user' => $this->isGranted('view_other_timesheet'),
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'attr' => [
-                'id' => 'invoice-print-form'
+                'id' => 'invoice-print-form',
             ],
         ]);
     }
@@ -506,7 +506,7 @@ final class InvoiceController extends AbstractController
             'method' => 'GET',
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'attr' => [
-                'id' => 'invoice-archive-form'
+                'id' => 'invoice-archive-form',
             ],
         ]);
     }
@@ -521,7 +521,7 @@ final class InvoiceController extends AbstractController
 
         return $this->createForm(InvoiceTemplateForm::class, $template, [
             'action' => $url,
-            'method' => 'POST'
+            'method' => 'POST',
         ]);
     }
 

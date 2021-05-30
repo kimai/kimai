@@ -24,7 +24,7 @@ class TagControllerTest extends ControllerBaseTest
     protected function importTags(): array
     {
         $tagList = ['Test', 'Administration', 'Support', '#2018-001', '#2018-002', '#2018-003', 'Development',
-            'Marketing', 'First Level Support', 'Bug Fixing'];
+            'Marketing', 'First Level Support', 'Bug Fixing', ];
 
         $fixture = new TagFixtures();
         $fixture->setTagArray($tagList);
@@ -73,7 +73,7 @@ class TagControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'tag_edit_form' => [
                 'name' => 'A tAG Name!',
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/tags/'));
         $client->followRedirect();
@@ -95,7 +95,7 @@ class TagControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/tags/' . $id . '/edit');
         $form = $client->getCrawler()->filter('form[name=tag_edit_form]')->form();
         $client->submit($form, [
-            'tag_edit_form' => ['name' => 'Test 2 updated']
+            'tag_edit_form' => ['name' => 'Test 2 updated'],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/tags/'));
         $client->followRedirect();
@@ -128,8 +128,8 @@ class TagControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'multi_update_table' => [
                 'action' => $this->createUrl('/admin/tags/multi-delete'),
-                'entities' => implode(',', $ids)
-            ]
+                'entities' => implode(',', $ids),
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/tags/'));
         $client->followRedirect();

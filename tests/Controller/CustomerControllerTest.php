@@ -137,7 +137,7 @@ class CustomerControllerTest extends ControllerBaseTest
             'customer_rate_form' => [
                 'user' => null,
                 'rate' => 123.45,
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
@@ -156,7 +156,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'customer_comment_form' => [
                 'message' => 'A beautiful and short comment **with some** markdown formatting',
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
@@ -172,7 +172,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'customer_comment_form' => [
                 'message' => 'Blah foo bar',
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
@@ -199,7 +199,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'customer_comment_form' => [
                 'message' => 'Blah foo bar',
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
@@ -285,7 +285,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'customer_edit_form' => [
                 'name' => 'Test Customer',
-            ]
+            ],
         ]);
         $this->assertIsRedirect($client, '/details');
         $client->followRedirect();
@@ -312,8 +312,8 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertEquals('Test', $form->get('customer_edit_form[name]')->getValue());
         $client->submit($form, [
             'customer_edit_form' => [
-                'name' => 'Test Customer 2'
-            ]
+                'name' => 'Test Customer 2',
+            ],
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
@@ -448,8 +448,8 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertStringEndsWith($this->createUrl('/admin/customer/1/delete'), $form->getUri());
         $client->submit($form, [
             'form' => [
-                'customer' => $id
-            ]
+                'customer' => $id,
+            ],
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/'));
@@ -492,15 +492,15 @@ class CustomerControllerTest extends ControllerBaseTest
                         'name' => '',
                         'country' => '00',
                         'currency' => '00',
-                        'timezone' => 'XXX'
-                    ]
+                        'timezone' => 'XXX',
+                    ],
                 ],
                 [
                     '#customer_edit_form_name',
                     '#customer_edit_form_country',
                     '#customer_edit_form_currency',
                     '#customer_edit_form_timezone',
-                ]
+                ],
             ],
         ];
     }

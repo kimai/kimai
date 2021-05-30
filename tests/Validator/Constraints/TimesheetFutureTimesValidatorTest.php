@@ -38,10 +38,10 @@ class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
                 ],
                 'rounding' => [
                     'default' => [
-                        'begin' => 1
-                    ]
-                ]
-            ]
+                        'begin' => 1,
+                    ],
+                ],
+            ],
         ]);
 
         return new TimesheetFutureTimesValidator($config);

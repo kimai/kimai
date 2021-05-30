@@ -66,22 +66,22 @@ class CalendarControllerTest extends ControllerBaseTest
         return [
             'defaults' => [
                 'user' => [
-                    'language' => 'en'
+                    'language' => 'en',
                 ],
             ],
             'timesheet' => [
                 'default_begin' => '08:30:00',
-                'mode' => 'default'
+                'mode' => 'default',
             ],
             'calendar' => [
                 'businessHours' => [
                     'days' => [2, 4, 6],
                     'begin' => '07:49',
-                    'end' => '19:27'
+                    'end' => '19:27',
                 ],
                 'visibleHours' => [
                     'begin' => '07:49',
-                    'end' => '19:27'
+                    'end' => '19:27',
                 ],
                 'day_limit' => 20,
                 'week_numbers' => false,
@@ -97,7 +97,7 @@ class CalendarControllerTest extends ControllerBaseTest
                             'id' => 'en.german#holiday@group.v.calendar.google.com',
                             'color' => '#fff',
                         ],
-                    ]
+                    ],
                 ],
                 'weekends' => true,
             ],

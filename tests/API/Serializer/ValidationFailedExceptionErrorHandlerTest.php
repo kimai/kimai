@@ -33,13 +33,13 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
             'type' => FlattenException::class,
             'format' => 'json',
             'method' => 'serializeExceptionToJson',
-            'priority' => -1
+            'priority' => -1,
         ], [
             'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
             'type' => ValidationFailedException::class,
             'format' => 'json',
             'method' => 'serializeValidationExceptionToJson',
-            'priority' => -1
+            'priority' => -1,
         ]], ValidationFailedExceptionErrorHandler::getSubscribingMethods());
     }
 
@@ -56,8 +56,8 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
             'code' => '400',
             'message' => null,
             'errors' => [
-                'children' => []
-            ]
+                'children' => [],
+            ],
         ];
         self::assertEquals($expected, $sut->serializeValidationExceptionToJson(new JsonSerializationVisitor(), $validations, [], new SerializationContext()));
     }
@@ -109,9 +109,9 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
                         'errors' => [
                             0 => 'test %wuuf% 123',
                         ],
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
         self::assertEquals($expected, $sut->serializeExceptionToJson(
             new JsonSerializationVisitor(),

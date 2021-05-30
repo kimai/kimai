@@ -32,11 +32,11 @@ class RoleType extends AbstractType
                 'label' => 'label.name',
                 'help' => 'Allowed character: A-Z and _',
                 'constraints' => [
-                    new Regex(['pattern' => '/^[a-zA-Z_]{5,}$/'])
+                    new Regex(['pattern' => '/^[a-zA-Z_]{5,}$/']),
                 ],
                 'attr' => [
-                    'maxlength' => 50
-                ]
+                    'maxlength' => 50,
+                ],
             ])
         ;
 

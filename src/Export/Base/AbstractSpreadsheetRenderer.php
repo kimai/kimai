@@ -432,7 +432,7 @@ abstract class AbstractSpreadsheetRenderer
                     }
 
                     return \count($timesheetMetaFields);
-                }
+                },
             ];
         }
 
@@ -462,7 +462,7 @@ abstract class AbstractSpreadsheetRenderer
                     }
 
                     return \count($customerMetaFields);
-                }
+                },
             ];
         }
 
@@ -489,7 +489,7 @@ abstract class AbstractSpreadsheetRenderer
                     }
 
                     return \count($projectMetaFields);
-                }
+                },
             ];
         }
 
@@ -516,7 +516,7 @@ abstract class AbstractSpreadsheetRenderer
                     }
 
                     return \count($activityMetaFields);
-                }
+                },
             ];
         }
 
@@ -545,7 +545,7 @@ abstract class AbstractSpreadsheetRenderer
                     }
 
                     return \count($userPreferences);
-                }
+                },
             ];
         }
 

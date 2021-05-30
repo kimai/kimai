@@ -39,7 +39,7 @@ trait RateControllerTestTrait
             'user' => 1,
             'rate' => 12.34,
             'internal_rate' => 6.66,
-            'is_fixed' => false
+            'is_fixed' => false,
         ];
         $this->assertEntityNotFoundForPost(User::ROLE_ADMIN, $this->getRateUrl(99), $data, 'Not found');
     }
@@ -51,7 +51,7 @@ trait RateControllerTestTrait
             'user' => 33,
             'rate' => 12.34,
             'internal_rate' => 6.66,
-            'is_fixed' => false
+            'is_fixed' => false,
         ];
         $this->request($client, $this->getRateUrl(), 'POST', [], json_encode($data));
 
@@ -67,7 +67,7 @@ trait RateControllerTestTrait
             'user' => null,
             'rate' => 12.34,
             'internal_rate' => 6.66,
-            'is_fixed' => false
+            'is_fixed' => false,
         ];
         $this->request($client, $this->getRateUrl(), 'POST', [], json_encode($data));
         $response = $client->getResponse();
@@ -84,7 +84,7 @@ trait RateControllerTestTrait
             'user' => null,
             'rate' => 12.34,
             'internal_rate' => 6.66,
-            'is_fixed' => false
+            'is_fixed' => false,
         ];
         $this->request($client, $this->getRateUrl(), 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -105,7 +105,7 @@ trait RateControllerTestTrait
             'user' => 1,
             'rate' => 12.34,
             'internal_rate' => 6.66,
-            'is_fixed' => true
+            'is_fixed' => true,
         ];
         $this->request($client, $this->getRateUrl(), 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -207,7 +207,7 @@ trait RateControllerTestTrait
     protected function assertRateStructure(array $result, $user = null)
     {
         $expectedKeys = [
-            'id', 'rate', 'internalRate', 'isFixed', 'user'
+            'id', 'rate', 'internalRate', 'isFixed', 'user',
         ];
 
         $actual = array_keys($result);

@@ -57,7 +57,7 @@ class TimesheetMultiUpdateDTOTest extends TestCase
                 '' => '',
                 'action.edit' => 'foo',
                 'action.delete' => 'bar',
-                'test' => 'hello/world'
+                'test' => 'hello/world',
             ],
             $sut->getActions()
         );

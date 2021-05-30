@@ -54,7 +54,7 @@ class ImportProjectCommandTest extends KernelTestCase
         $commandTester->setInputs(['no']);
         $commandTester->execute([
             'command' => $command->getName(),
-            'file' => __DIR__ . '/../Importer/_data/foo_bar.csv1'
+            'file' => __DIR__ . '/../Importer/_data/foo_bar.csv1',
         ]);
 
         $result = $commandTester->getDisplay();

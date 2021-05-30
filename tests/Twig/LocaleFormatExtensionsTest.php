@@ -52,7 +52,7 @@ class LocaleFormatExtensionsTest extends TestCase
     {
         $filters = [
             'month_name', 'day_name', 'date_short', 'date_time', 'date_full', 'date_format', 'time', 'hour24',
-            'duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount'
+            'duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount',
         ];
         $i = 0;
 
