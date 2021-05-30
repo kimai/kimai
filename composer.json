@@ -41,7 +41,7 @@
         "onelogin/php-saml": "^3.4",
         "pagerfanta/pagerfanta": "^2.1",
         "phpoffice/phpspreadsheet": "^1.16",
-        "phpoffice/phpword": "^0.17",
+        "phpoffice/phpword": "^0.18",
         "psr/log": "^1.1",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/amazon-mailer": "^4.4",
