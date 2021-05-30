@@ -11,7 +11,6 @@ doctrine:
         default_connection: default
         connections:
             default:
-                override_url: true
                 # existing migrations will fail if the schema filter is activated
                 #schema_filter: ~^(?!(bundle_migration_|kimai2_sessions))~
                 url: '%env(DATABASE_URL)%'
