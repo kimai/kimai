@@ -32,13 +32,11 @@ abstract class AbstractMigration extends BaseAbstractMigration
     }
 
     /**
-     * FIXME overwritten because of a doctrine bug
      * @see https://github.com/doctrine/migrations/issues/1104
      */
     public function isTransactional(): bool
     {
         return false;
-        // return true;
     }
 
     /**

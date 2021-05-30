@@ -31,7 +31,7 @@
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.2",
         "kevinpapst/adminlte-bundle": "^3.3",
-        "kimai/user-bundle": "dev-php8",
+        "kimai/user-bundle": "^2.0",
         "laravolt/avatar": "^3.0",
         "league/csv": "^9.4",
         "league/html-to-markdown": "^4.9",

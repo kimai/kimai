@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "02256d666500f6fd91f0ce583112fb26",
+    "content-hash": "41dc714d188de41dc957bc83168991c1",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2814,16 +2814,16 @@
         },
         {
             "name": "kimai/user-bundle",
-            "version": "dev-php8",
+            "version": "2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kimai/user-bundle.git",
-                "reference": "afb71e161ab0b01384886b6b12aba1cf0317a901"
+                "reference": "9ef2c93a4ed9d14f0e354d88bd5fc7ab68c86c16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kimai/user-bundle/zipball/afb71e161ab0b01384886b6b12aba1cf0317a901",
-                "reference": "afb71e161ab0b01384886b6b12aba1cf0317a901",
+                "url": "https://api.github.com/repos/kimai/user-bundle/zipball/9ef2c93a4ed9d14f0e354d88bd5fc7ab68c86c16",
+                "reference": "9ef2c93a4ed9d14f0e354d88bd5fc7ab68c86c16",
                 "shasum": ""
             },
             "require": {
@@ -2876,9 +2876,9 @@
             "description": "Kimai UserBundle",
             "homepage": "https://www.kimai.org",
             "support": {
-                "source": "https://github.com/kimai/user-bundle/tree/php8"
+                "source": "https://github.com/kimai/user-bundle/tree/2.0"
             },
-            "time": "2021-05-30T10:11:28+00:00"
+            "time": "2021-05-30T10:30:27+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -14343,9 +14343,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "kimai/user-bundle": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
