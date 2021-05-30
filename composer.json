@@ -43,7 +43,7 @@
         "phpoffice/phpspreadsheet": "^1.16",
         "phpoffice/phpword": "^0.18",
         "psr/log": "^1.1",
-        "sensio/framework-extra-bundle": "^5.2",
+        "sensio/framework-extra-bundle": "^6.0",
         "symfony/amazon-mailer": "^4.4",
         "symfony/asset": "^4.4",
         "symfony/console": "^4.4",
