@@ -153,8 +153,14 @@
     "illuminate/cache": {
         "version": "v6.0.4"
     },
+    "illuminate/collections": {
+        "version": "v8.44.0"
+    },
     "illuminate/contracts": {
         "version": "v6.0.4"
+    },
+    "illuminate/macroable": {
+        "version": "v8.44.0"
     },
     "illuminate/support": {
         "version": "v6.0.4"
