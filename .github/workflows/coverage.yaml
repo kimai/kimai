@@ -21,7 +21,7 @@ jobs:
             matrix:
                 php: ['7.4']
 
-        name: PHP ${{ matrix.php }}
+        name: Coverage (${{ matrix.php }})
         steps:
             -   uses: actions/checkout@v2
             -   uses: shivammathur/setup-php@v2
