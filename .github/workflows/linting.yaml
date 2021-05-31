@@ -20,7 +20,7 @@ jobs:
                     coverage: none
                     extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
                     tools: cs2pr:1.1.0
-            -   run: composer install --no-progress
+            -   uses: ramsey/composer-install@v1
             -   run: composer validate --strict
             -   run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none --format=checkstyle | cs2pr
             -   run: vendor/bin/phpstan analyse src -c phpstan.neon --level=5 --no-progress --error-format=checkstyle | cs2pr
