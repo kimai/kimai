@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.2.9",
+        "php": ">=7.3",
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-json": "*",
@@ -21,29 +21,29 @@
         "beberlei/doctrineextensions": "^1.2",
         "composer/package-versions-deprecated": "^1.8",
         "doctrine/doctrine-bundle": "^2.0",
-        "doctrine/doctrine-migrations-bundle": "^2.1",
-        "doctrine/orm": "^2.7",
+        "doctrine/doctrine-migrations-bundle": "^3.0",
+        "doctrine/orm": "^2.8",
         "erusev/parsedown": "^1.6",
         "friendsofsymfony/rest-bundle": "^3.0",
-        "gedmo/doctrine-extensions": "^2.4",
+        "gedmo/doctrine-extensions": "^3.0",
         "handcraftedinthealps/rest-routing-bundle": "^1.0",
         "hslavich/oneloginsaml-bundle": "^1.4",
         "jms/metadata": "^2.0",
-        "jms/serializer-bundle": "^3.2",
+        "jms/serializer-bundle": "^3.9",
         "kevinpapst/adminlte-bundle": "^3.3",
-        "kimai/user-bundle": "^1.1",
-        "laravolt/avatar": "^3.0",
+        "kimai/user-bundle": "^2.0",
+        "laravolt/avatar": "^4.0",
         "league/csv": "^9.4",
-        "league/html-to-markdown": "^4.9",
+        "league/html-to-markdown": "^5.0",
         "mpdf/mpdf": "^8.0",
         "nelmio/api-doc-bundle": "^3.2",
-        "nelmio/cors-bundle": "^1.5",
+        "nelmio/cors-bundle": "^2.0",
         "onelogin/php-saml": "^3.4",
         "pagerfanta/pagerfanta": "^2.1",
         "phpoffice/phpspreadsheet": "^1.16",
-        "phpoffice/phpword": "^0.17",
+        "phpoffice/phpword": "^0.18",
         "psr/log": "^1.1",
-        "sensio/framework-extra-bundle": "^5.2",
+        "sensio/framework-extra-bundle": "^6.0",
         "symfony/amazon-mailer": "^4.4",
         "symfony/asset": "^4.4",
         "symfony/console": "^4.4",
@@ -79,7 +79,7 @@
     "require-dev": {
         "dama/doctrine-test-bundle": "^6.0",
         "doctrine/doctrine-fixtures-bundle": "^3.2",
-        "friendsofphp/php-cs-fixer": "^2.10",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "fzaninotto/faker": "^1.8",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-doctrine": "^0.12",
@@ -100,10 +100,10 @@
             "type": "artifact",
             "url": "var/packages/"
         }
-    ],    
+    ],
     "config": {
         "platform": {
-            "php": "7.2.9"
+            "php": "7.3"
         },
         "preferred-install": {
             "*": "dist"

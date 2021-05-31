@@ -8,6 +8,18 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [1.15](https://github.com/kevinpapst/kimai2/releases/tag/1.15)
+
+**ATTENTION** 
+- This release bumps the minimum required [PHP version to 7.3](https://www.kimai.org/blog/2021/php8-support-php72-dropped/)
+- All plugins that use own databases need to be updated as well
+
+PHP 8 compatibility forced to upgrade MANY libraries, including but not limited to:
+
+- Doctrine Migrations, whose new major version forces the plugin updates 
+- Gedmo v3 (which include BC breaks in definitions)
+- Doctrine DBAL and others, which required PHP 7.3 as well
+
 ## [1.14](https://github.com/kevinpapst/kimai2/releases/tag/1.14)
 
 **CRITICAL BC break**: SQLite support was removed. If you are using SQLite, you have to [read this blog post](https://www.kimai.org/blog/2021/sqlite-and-ftp-support-removed/) and migrate to MySQL/MariaDB first!

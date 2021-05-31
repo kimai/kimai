@@ -1,4 +1,4 @@
-name: CI
+name: Coverage
 on:
     pull_request: null
     push:
@@ -19,9 +19,9 @@ jobs:
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         strategy:
             matrix:
-                php: ['7.3']
+                php: ['7.4']
 
-        name: Coverage - PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }}
         steps:
             -   uses: actions/checkout@v2
             -   uses: shivammathur/setup-php@v2
