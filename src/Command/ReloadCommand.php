@@ -68,7 +68,7 @@ final class ReloadCommand extends Command
 
         // many users execute the bin/console command from arbitrary locations
         $path = getcwd();
-        \chdir($this->getRootDirectory());
+        chdir($this->getRootDirectory());
 
         try {
             $command = $this->getApplication()->find('lint:yaml');
