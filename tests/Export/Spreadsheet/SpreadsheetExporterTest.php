@@ -55,7 +55,7 @@ class SpreadsheetExporterTest extends TestCase
         ];
 
         $entries = [
-            $project,
+            $project
         ];
 
         $spreadsheet = $sut->export($columns, $entries);

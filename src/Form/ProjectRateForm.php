@@ -46,7 +46,7 @@ class ProjectRateForm extends AbstractRateForm
             'expand_users' => true,
             'csrf_token_id' => 'admin_project_rate_edit',
             'attr' => [
-                'data-form-event' => 'kimai.projectUpdate',
+                'data-form-event' => 'kimai.projectUpdate'
             ],
         ]);
     }

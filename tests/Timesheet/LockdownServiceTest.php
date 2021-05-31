@@ -30,7 +30,7 @@ class LockdownServiceTest extends TestCase
                     'lockdown_period_end' => $end,
                     'lockdown_grace_period' => $grace,
                 ],
-            ],
+            ]
         ]);
 
         return new LockdownService($config);

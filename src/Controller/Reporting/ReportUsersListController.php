@@ -100,7 +100,7 @@ final class ReportUsersListController extends AbstractController
         foreach ($allUsers as $user) {
             $rows[] = [
                 'years' => $this->timesheetRepository->getMonthlyStats($start, $end, $user),
-                'user' => $user,
+                'user' => $user
             ];
         }
 
@@ -237,7 +237,7 @@ final class ReportUsersListController extends AbstractController
         foreach ($allUsers as $user) {
             $rows[] = [
                 'days' => $this->timesheetRepository->getDailyStats($user, $start, $end),
-                'user' => $user,
+                'user' => $user
             ];
         }
 
@@ -323,7 +323,7 @@ final class ReportUsersListController extends AbstractController
         foreach ($allUsers as $user) {
             $rows[] = [
                 'days' => $this->timesheetRepository->getDailyStats($user, $start, $end),
-                'user' => $user,
+                'user' => $user
             ];
         }
 

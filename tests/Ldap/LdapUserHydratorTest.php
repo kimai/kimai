@@ -24,11 +24,11 @@ class LdapUserHydratorTest extends TestCase
     {
         $config = new LdapConfiguration([
             'connection' => [
-                'host' => '1.1.1.1',
+                'host' => '1.1.1.1'
             ],
             'user' => [
                 'usernameAttribute' => 'foo',
-                'attributes' => [],
+                'attributes' => []
             ],
             'role' => [],
         ]);
@@ -44,7 +44,7 @@ class LdapUserHydratorTest extends TestCase
     {
         $config = new LdapConfiguration([
             'connection' => [
-                'host' => '1.1.1.1',
+                'host' => '1.1.1.1'
             ],
             'user' => [
                 'usernameAttribute' => 'foo',
@@ -55,7 +55,7 @@ class LdapUserHydratorTest extends TestCase
                     ['ldap_attr' => 'roles', 'user_method' => 'setRoles'],
                     ['ldap_attr' => 'xxxxxxxx', 'user_method' => 'setAvatar'],
                     ['ldap_attr' => 'blubXX', 'user_method' => 'setAvatar'],
-                ],
+                ]
             ],
             'role' => [],
         ]);
@@ -87,7 +87,7 @@ class LdapUserHydratorTest extends TestCase
     {
         $config = new LdapConfiguration([
             'connection' => [
-                'host' => '1.1.1.1',
+                'host' => '1.1.1.1'
             ],
             'user' => [
                 'usernameAttribute' => 'foo',
@@ -97,7 +97,7 @@ class LdapUserHydratorTest extends TestCase
                     ['ldap_attr' => 'foo', 'user_method' => 'setAlias'],
                     ['ldap_attr' => 'bar', 'user_method' => 'setTitle'],
                     ['ldap_attr' => 'xxxxxxxx', 'user_method' => 'setAvatar'],
-                ],
+                ]
             ],
             'role' => [],
         ]);
@@ -133,7 +133,7 @@ class LdapUserHydratorTest extends TestCase
     {
         $config = new LdapConfiguration([
             'user' => [
-                'attributes' => [],
+                'attributes' => []
             ],
             'role' => [
                 'nameAttribute' => 'cn',
@@ -173,13 +173,13 @@ class LdapUserHydratorTest extends TestCase
                 'cn' => [0 => 'group4'],
                 'member' => [0 => 'uid=user2,ou=users,dc=kimai,dc=org', 1 => 'uid=user3,ou=users,dc=kimai,dc=org'],
             ],
-            'count' => 4,
+            'count' => 4
         ];
 
         $roles = [
             'ROLE_TEAMLEAD' => ['ROLE_USER'],
             'ROLE_ADMIN' => ['ROLE_TEAMLEAD'],
-            'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN'],
+            'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN']
         ];
 
         $sut = new LdapUserHydrator($config, (new RoleServiceFactory($this))->create($roles));

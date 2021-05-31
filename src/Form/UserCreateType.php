@@ -30,7 +30,7 @@ class UserCreateType extends UserEditType
                 'label' => 'label.username',
                 'required' => true,
                 'attr' => [
-                    'autofocus' => 'autofocus',
+                    'autofocus' => 'autofocus'
                 ],
             ])
             ->add('plainPassword', RepeatedType::class, [

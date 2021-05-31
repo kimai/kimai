@@ -41,7 +41,7 @@ class CustomerEditForm extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'label.name',
                 'attr' => [
-                    'autofocus' => 'autofocus',
+                    'autofocus' => 'autofocus'
                 ],
             ])
             ->add('number', TextType::class, [
@@ -115,7 +115,7 @@ class CustomerEditForm extends AbstractType
             'currency' => Customer::DEFAULT_CURRENCY,
             'include_budget' => false,
             'attr' => [
-                'data-form-event' => 'kimai.customerUpdate',
+                'data-form-event' => 'kimai.customerUpdate'
             ],
         ]);
     }

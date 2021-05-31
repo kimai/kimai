@@ -28,7 +28,7 @@ class APIDateTimeTypeTest extends TypeTestCase
         $form = $form->getForm();
 
         $expected = new TypeTestModel([
-            'date' => new \DateTime('2020-09-17T13:24:56'),
+            'date' => new \DateTime('2020-09-17T13:24:56')
         ]);
 
         $form->submit($data);
@@ -50,7 +50,7 @@ class APIDateTimeTypeTest extends TypeTestCase
         $form = $form->getForm();
 
         $expected = new TypeTestModel([
-            'date' => new \DateTime('2020-09-17T13:24:56', new \DateTimeZone('Pacific/Tongatapu')),
+            'date' => new \DateTime('2020-09-17T13:24:56', new \DateTimeZone('Pacific/Tongatapu'))
         ]);
 
         $form->submit($data);

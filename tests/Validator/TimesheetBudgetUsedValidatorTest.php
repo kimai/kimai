@@ -382,7 +382,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
                 ->setParameters([
                     '%used%' => $used,
                     '%budget%' => $budget,
-                    '%free%' => $free,
+                    '%free%' => $free
                 ])
                 ->assertRaised();
         }

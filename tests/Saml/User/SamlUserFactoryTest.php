@@ -31,8 +31,8 @@ class SamlUserFactoryTest extends TestCase
             ],
             'roles' => [
                 'attribute' => '',
-                'mapping' => [],
-            ],
+                'mapping' => []
+            ]
         ];
 
         $attributes = [
@@ -57,8 +57,8 @@ class SamlUserFactoryTest extends TestCase
             ],
             'roles' => [
                 'attribute' => '',
-                'mapping' => [],
-            ],
+                'mapping' => []
+            ]
         ];
 
         $attributes = [
@@ -84,8 +84,8 @@ class SamlUserFactoryTest extends TestCase
             ],
             'roles' => [
                 'attribute' => '',
-                'mapping' => [],
-            ],
+                'mapping' => []
+            ]
         ];
 
         $attributes = [
@@ -115,8 +115,8 @@ class SamlUserFactoryTest extends TestCase
                     ['saml' => 'fooobar', 'kimai' => 'ROLE_ADMIN'],
                     ['saml' => 'ROLE_1', 'kimai' => 'ROLE_TEAMLEAD'],
                     ['saml' => 'ROLE_2', 'kimai' => 'ROLE_2'],
-                ],
-            ],
+                ]
+            ]
         ];
 
         $attributes = [
@@ -156,8 +156,8 @@ class SamlUserFactoryTest extends TestCase
             ],
             'roles' => [
                 'attribute' => null,
-                'mapping' => [],
-            ],
+                'mapping' => []
+            ]
         ];
 
         $attributes = [

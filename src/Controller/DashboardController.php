@@ -147,7 +147,7 @@ class DashboardController extends AbstractController
         );
 
         return $this->render('dashboard/index.html.twig', [
-            'widgets' => $clearedSections,
+            'widgets' => $clearedSections
         ]);
     }
 }

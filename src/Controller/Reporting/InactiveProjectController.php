@@ -30,7 +30,7 @@ final class InactiveProjectController extends AbstractController
 
         $query = new ProjectInactiveQuery($dateFactory->createDateTime('-1 year'), $user);
         $form = $this->createForm(ProjectInactiveForm::class, $query, [
-            'timezone' => $user->getTimezone(),
+            'timezone' => $user->getTimezone()
         ]);
         $form->submit($request->query->all(), false);
 

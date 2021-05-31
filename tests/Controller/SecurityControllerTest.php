@@ -88,7 +88,7 @@ class SecurityControllerTest extends ControllerBaseTest
                     'first' => 'test1234',
                     'second' => 'test1234',
                 ],
-            ],
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/register/confirmed'));
@@ -121,7 +121,7 @@ class SecurityControllerTest extends ControllerBaseTest
                         'username' => '',
                         'plainPassword' => ['first' => 'sdfsdf123'],
                         'email' => '',
-                    ],
+                    ]
                 ],
                 [
                     '#fos_user_registration_form_username',
@@ -129,7 +129,7 @@ class SecurityControllerTest extends ControllerBaseTest
                     '#fos_user_registration_form_plainPassword_first',
                     '#fos_user_registration_form_email',
                     '#fos_user_registration_form_email',
-                ],
+                ]
             ],
             // invalid fields: username, password, email
             [
@@ -138,7 +138,7 @@ class SecurityControllerTest extends ControllerBaseTest
                         'username' => 'x',
                         'plainPassword' => ['first' => 'sdfsdf123', 'second' => 'sdfxxxxxxx'],
                         'email' => 'ydfbvsdfgs',
-                    ],
+                    ]
                 ],
                 [
                     '#fos_user_registration_form_username',
@@ -146,7 +146,7 @@ class SecurityControllerTest extends ControllerBaseTest
                     '#fos_user_registration_form_plainPassword_first',
                     '#fos_user_registration_form_email',
                     '#fos_user_registration_form_email',
-                ],
+                ]
             ],
             // invalid fields: password (too short)
             [
@@ -155,11 +155,11 @@ class SecurityControllerTest extends ControllerBaseTest
                         'username' => 'test123',
                         'plainPassword' => ['first' => 'test123', 'second' => 'test123'],
                         'email' => 'ydfbvsdfgs@example.com',
-                    ],
+                    ]
                 ],
                 [
                     '#fos_user_registration_form_plainPassword_first',
-                ],
+                ]
             ],
         ];
     }

@@ -38,7 +38,7 @@ class SkinType extends AbstractType
                 'purple-light' => 'purple-light',
                 'red-light' => 'red-light',
                 'yellow-light' => 'yellow-light',
-            ],
+            ]
         ]);
     }
 

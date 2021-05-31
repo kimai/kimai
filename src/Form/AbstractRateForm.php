@@ -31,7 +31,7 @@ abstract class AbstractRateForm extends AbstractType
                 ],
                 'label' => 'label.rate',
                 'attr' => [
-                    'autofocus' => 'autofocus',
+                    'autofocus' => 'autofocus'
                 ],
                 'currency' => $currency,
                 'help' => 'help.rate',

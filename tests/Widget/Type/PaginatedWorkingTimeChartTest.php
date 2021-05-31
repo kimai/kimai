@@ -124,14 +124,14 @@ class PaginatedWorkingTimeChartTest extends TestCase
                             'activity' => $activity,
                             'project' => $project,
                             'billable' => 1234,
-                        ],
-                    ],
-                ],
+                        ]
+                    ]
+                ]
             ];
         });
 
         $expectedKeys = [
-            'begin', 'end', 'stats', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin',
+            'begin', 'end', 'stats', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
         ];
 
         $configuration = $this->createMock(SystemConfiguration::class);
@@ -172,14 +172,14 @@ class PaginatedWorkingTimeChartTest extends TestCase
                             'activity' => $activity,
                             'project' => $project,
                             'billable' => 1234,
-                        ],
-                    ],
-                ],
+                        ]
+                    ]
+                ]
             ];
         });
 
         $expectedKeys = [
-            'begin', 'end', 'stats', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin',
+            'begin', 'end', 'stats', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
         ];
 
         $configuration = $this->createMock(SystemConfiguration::class);

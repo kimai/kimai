@@ -132,7 +132,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         }
 
         $data = [
-            'message' => 'Invalid credentials',
+            'message' => 'Invalid credentials'
 
             // security measure: do not leak real reason (unknown user, invalid credentials ...)
             // you can uncomment this for debugging
@@ -150,7 +150,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     public function start(Request $request, AuthenticationException $authException = null)
     {
         $data = [
-            'message' => 'Authentication required, missing headers: ' . self::HEADER_USERNAME . ', ' . self::HEADER_TOKEN,
+            'message' => 'Authentication required, missing headers: ' . self::HEADER_USERNAME . ', ' . self::HEADER_TOKEN
         ];
 
         return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);

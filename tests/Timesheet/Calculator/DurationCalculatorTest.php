@@ -57,7 +57,7 @@ class DurationCalculatorTest extends TestCase
                 null,
                 $start,
                 (clone $start)->setTimestamp($start->getTimestamp() + 1837),
-                1837,
+                1837
             ],
             [
                 [
@@ -71,7 +71,7 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 17, 35),
                 (clone $start)->setTime(13, 32, 52),
-                5400,
+                5400
             ],
             [
                 [
@@ -85,7 +85,7 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 17, 35),
                 (clone $start)->setTime(13, 32, 52),
-                4517,
+                4517
             ],
             [
                 [
@@ -99,7 +99,7 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 17, 35),
                 (clone $start)->setTime(13, 32, 52),
-                4560,
+                4560
             ],
             [
                 [
@@ -113,7 +113,7 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 10, 51),
                 (clone $start)->setTime(14, 40, 52),
-                10800,
+                10800
             ],
             [
                 [
@@ -134,7 +134,7 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 27, 35), // 12:15
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 => 2:30
-                9000,
+                9000
             ],
             [
                 [
@@ -155,7 +155,7 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 27, 35), // 12:15
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 (second duration will not be rounded)
-                8280,
+                8280
             ],
             [
                 [
@@ -176,7 +176,7 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 27, 35), // no diff, to test ...
                 (clone $start)->setTime(12, 27, 35), // ... that no rounding is applied
-                0,
+                0
             ],
             [
                 [
@@ -197,7 +197,7 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 27, 00), // no diff, to test ...
                 (clone $start)->setTime(12, 27, 00), // ... that no rounding is applied
-                0,
+                0
             ],
             [
                 [
@@ -218,7 +218,7 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 27, 35), // no diff, to test ...
                 (clone $start)->setTime(12, 27, 35), // ... that no rounding is applied
-                0,
+                0
             ],
         ];
     }

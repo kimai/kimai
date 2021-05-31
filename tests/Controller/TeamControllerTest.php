@@ -43,7 +43,7 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertPageActions($client, [
             'search' => '#',
             'create' => $this->createUrl('/admin/teams/create'),
-            'help' => 'https://www.kimai.org/documentation/teams.html',
+            'help' => 'https://www.kimai.org/documentation/teams.html'
         ]);
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_admin_teams', 6);
@@ -84,7 +84,7 @@ class TeamControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'team_edit_form' => [
                 'name' => 'Test Team' . uniqid(),
-            ],
+            ]
         ]);
         $this->assertIsRedirect($client, '/edit');
         $client->followRedirect();
@@ -115,8 +115,8 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertNotEmpty($form->get('team_edit_form[name]')->getValue());
         $client->submit($form, [
             'team_edit_form' => [
-                'name' => 'Test Team 2',
-            ],
+                'name' => 'Test Team 2'
+            ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
         $client->followRedirect();
@@ -138,8 +138,8 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertNotEmpty($form->get('team_edit_form[name]')->getValue());
         $client->submit($form, [
             'team_edit_form' => [
-                'name' => 'Test Team 2',
-            ],
+                'name' => 'Test Team 2'
+            ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
         $client->followRedirect();

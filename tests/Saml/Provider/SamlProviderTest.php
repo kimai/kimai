@@ -37,8 +37,8 @@ class SamlProviderTest extends TestCase
                 ],
                 'roles' => [
                     'attribute' => '',
-                    'mapping' => [],
-                ],
+                    'mapping' => []
+                ]
             ];
         }
 

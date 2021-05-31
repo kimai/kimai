@@ -54,7 +54,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
                     'lockdown_period_end' => $end,
                     'lockdown_grace_period' => $grace,
                 ],
-            ],
+            ]
         ]);
 
         return new TimesheetLockdownValidator($auth, new LockdownService($config));

@@ -43,13 +43,13 @@ class ValidationFailedExceptionErrorHandler implements SubscribingHandlerInterfa
             'type' => FlattenException::class,
             'format' => 'json',
             'method' => 'serializeExceptionToJson',
-            'priority' => -1,
+            'priority' => -1
         ], [
             'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
             'type' => ValidationFailedException::class,
             'format' => 'json',
             'method' => 'serializeValidationExceptionToJson',
-            'priority' => -1,
+            'priority' => -1
         ]];
     }
 
@@ -80,7 +80,7 @@ class ValidationFailedExceptionErrorHandler implements SubscribingHandlerInterfa
             'code' => '400',
             'message' => $this->translator->trans($exception->getMessage(), [], 'validators'),
             'errors' => [
-                'children' => $errors,
+                'children' => $errors
             ],
         ];
     }

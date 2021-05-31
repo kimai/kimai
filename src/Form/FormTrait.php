@@ -142,8 +142,8 @@ trait FormTrait
         $builder->add('description', DescriptionType::class, [
             'required' => false,
             'attr' => [
-                'autofocus' => 'autofocus',
-            ],
+                'autofocus' => 'autofocus'
+            ]
         ]);
     }
 

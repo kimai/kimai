@@ -44,7 +44,7 @@ class CustomerTeamPermissionForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_customer_teams_edit',
             'attr' => [
-                'data-form-event' => 'kimai.customerTeamUpdate',
+                'data-form-event' => 'kimai.customerTeamUpdate'
             ],
         ]);
     }

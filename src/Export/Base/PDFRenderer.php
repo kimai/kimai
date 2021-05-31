@@ -106,7 +106,7 @@ class PDFRenderer
             'summaries' => $summary,
             'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
             'decimal' => false,
-            'pdfContext' => $context,
+            'pdfContext' => $context
         ], $this->getOptions($query)));
 
         $pdfOptions = array_merge($context->getOptions(), $this->getPdfOptions());

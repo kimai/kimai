@@ -248,35 +248,35 @@ class RateServiceTest extends TestCase
             [
                 31837,
                 [],
-                663.27,
+                663.27
             ],
             [
                 31837,
                 [
                     'default' => [
                         'days' => [$day],
-                        'factor' => 2.0,
+                        'factor' => 2.0
                     ],
                     'foo' => [
                         'days' => ['bar'],
-                        'factor' => 1.5,
+                        'factor' => 1.5
                     ],
                 ],
-                1326.54,
+                1326.54
             ],
             [
                 31837,
                 [
                     'default' => [
                         'days' => [$day],
-                        'factor' => 2.0,
+                        'factor' => 2.0
                     ],
                     'foo' => [
                         'days' => ['MonDay', 'tUEsdAy', 'WEdnesday', 'THursday', 'friDay', 'SATURday', 'sunDAY'],
-                        'factor' => 1.5,
+                        'factor' => 1.5
                     ],
                 ],
-                2321.45,
+                2321.45
             ],
         ];
     }

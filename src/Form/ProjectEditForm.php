@@ -62,7 +62,7 @@ class ProjectEditForm extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'label.name',
                 'attr' => [
-                    'autofocus' => 'autofocus',
+                    'autofocus' => 'autofocus'
                 ],
             ])
             ->add('comment', TextareaType::class, [
@@ -117,7 +117,7 @@ class ProjectEditForm extends AbstractType
             'timezone' => date_default_timezone_get(),
             'time_increment' => 1,
             'attr' => [
-                'data-form-event' => 'kimai.projectUpdate',
+                'data-form-event' => 'kimai.projectUpdate'
             ],
         ]);
     }

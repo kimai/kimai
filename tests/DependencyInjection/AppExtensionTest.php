@@ -49,18 +49,18 @@ class AppExtensionTest extends TestCase
                 'languages' => [
                     'en' => [
                         'date_type' => 'dd. MM. yyyy',
-                        'date' => 'A-m-d',
+                        'date' => 'A-m-d'
                     ],
                     'tr' => [
-                        'date' => 'X-m-d',
+                        'date' => 'X-m-d'
                     ],
                 ],
                 'data_dir' => '/tmp/',
                 'timesheet' => [],
                 'saml' => [
-                    'connection' => [],
-                ],
-            ],
+                    'connection' => []
+                ]
+            ]
         ];
     }
 
@@ -130,7 +130,7 @@ class AppExtensionTest extends TestCase
                     'api_key' => null,
                     'sources' => [],
                 ],
-                'weekends' => true,
+                'weekends' => true
             ],
             'kimai.dashboard' => [],
             'kimai.widgets' => [],
@@ -149,7 +149,7 @@ class AppExtensionTest extends TestCase
                     'language' => 'en',
                     'theme' => null,
                     'currency' => 'EUR',
-                ],
+                ]
             ],
             'kimai.theme' => [
                 'active_warning' => 3,
@@ -160,7 +160,7 @@ class AppExtensionTest extends TestCase
                     'background_color' => '#3c8dbc',
                     'border_color' => '#3b8bba',
                     'grid_color' => 'rgba(0,0,0,.05)',
-                    'height' => '200',
+                    'height' => '200'
                 ],
                 'branding' => [
                     'logo' => null,
@@ -175,7 +175,7 @@ class AppExtensionTest extends TestCase
                     'background_color' => '#d2d6de',
                 ],
                 'colors_limited' => true,
-                'color_choices' => 'Kimai|#d2d6de,Silver|#c0c0c0,Gray|#808080,Black|#000000,Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,Gold|#ffd700,Yellow|#ffff00,Peach|#ffdab9,Khaki|#f0e68c,Olive|#808000,Lime|#00ff00,Jelly|#9acd32,Green|#008000,Teal|#008080,Aqua|#00ffff,LightBlue|#add8e6,DeepSky|#00bfff,Dodger|#1e90ff,Blue|#0000ff,Navy|#000080,Purple|#800080,Fuchsia|#ff00ff,Violet|#ee82ee,Rose|#ffe4e1,Lavender|#E6E6FA',
+                'color_choices' => 'Kimai|#d2d6de,Silver|#c0c0c0,Gray|#808080,Black|#000000,Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,Gold|#ffd700,Yellow|#ffff00,Peach|#ffdab9,Khaki|#f0e68c,Olive|#808000,Lime|#00ff00,Jelly|#9acd32,Green|#008000,Teal|#008080,Aqua|#00ffff,LightBlue|#add8e6,DeepSky|#00bfff,Dodger|#1e90ff,Blue|#0000ff,Navy|#000080,Purple|#800080,Fuchsia|#ff00ff,Violet|#ee82ee,Rose|#ffe4e1,Lavender|#E6E6FA'
             ],
             'kimai.theme.select_type' => 'selectpicker',
             'kimai.theme.show_about' => true,
@@ -192,8 +192,8 @@ class AppExtensionTest extends TestCase
                         'end' => 1,
                         'duration' => 0,
                         'mode' => 'default',
-                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
-                    ],
+                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
+                    ]
                 ],
                 'rates' => [],
                 'active_entries' => [
@@ -219,8 +219,8 @@ class AppExtensionTest extends TestCase
                         'end' => 1,
                         'duration' => 0,
                         'mode' => 'default',
-                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
-                    ],
+                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
+                    ]
             ],
             'kimai.ldap' => [
                 'user' => [
@@ -253,7 +253,7 @@ class AppExtensionTest extends TestCase
                 'ROLE_ADMIN' => [],
                 'ROLE_SUPER_ADMIN' => [],
             ],
-            'kimai.i18n_domains' => [],
+            'kimai.i18n_domains' => []
         ];
 
         $this->assertTrue($container->hasParameter('kimai.config'));
@@ -350,12 +350,12 @@ class AppExtensionTest extends TestCase
             'connection' => [
                 'host' => '9.9.9.9',
                 'baseDn' => 'lkhiuzhkj',
-                'accountFilterFormat' => '(uid=%s)',
+                'accountFilterFormat' => '(uid=%s)'
             ],
             'user' => [
                 'baseDn' => '123123123',
                 'usernameAttribute' => 'xxx',
-                'filter' => '(..........)',
+                'filter' => '(..........)'
             ],
         ];
 
@@ -435,7 +435,7 @@ class AppExtensionTest extends TestCase
         $minConfig['kimai']['theme'] = [
             'branding' => [
                 'translation' => 'yyyy',
-            ],
+            ]
         ];
 
         $this->extension->load($minConfig, $container = $this->getContainer());

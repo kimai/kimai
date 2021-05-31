@@ -163,7 +163,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'required' => false,
             'placeholder' => null,
             'label' => $label,
-            'search' => false,
+            'search' => false
         ]);
     }
 
@@ -171,7 +171,7 @@ abstract class AbstractToolbarForm extends AbstractType
     {
         $builder->add('pageSize', PageSizeType::class, [
             'required' => false,
-            'search' => false,
+            'search' => false
         ]);
     }
 
@@ -350,7 +350,7 @@ abstract class AbstractToolbarForm extends AbstractType
                 'type' => 'integer',
                 'description' => 'Page number. Default: 1',
             ],
-            'empty_data' => 1,
+            'empty_data' => 1
         ]);
     }
 
@@ -364,8 +364,8 @@ abstract class AbstractToolbarForm extends AbstractType
                 'description' => 'The order for returned items',
             ],
             'constraints' => [
-                new Choice(['choices' => [BaseQuery::ORDER_ASC, BaseQuery::ORDER_DESC]]),
-            ],
+                new Choice(['choices' => [BaseQuery::ORDER_ASC, BaseQuery::ORDER_DESC]])
+            ]
         ]);
     }
 
@@ -378,7 +378,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'label' => 'label.order',
             'choices' => [
                 'label.asc' => BaseQuery::ORDER_ASC,
-                'label.desc' => BaseQuery::ORDER_DESC,
+                'label.desc' => BaseQuery::ORDER_DESC
             ],
             'search' => false,
         ]);
@@ -390,8 +390,8 @@ abstract class AbstractToolbarForm extends AbstractType
 
         $builder->add('orderBy', HiddenType::class, [
             'constraints' => [
-                new Choice(['choices' => $allowedColumns]),
-            ],
+                new Choice(['choices' => $allowedColumns])
+            ]
         ]);
     }
 
@@ -412,7 +412,7 @@ abstract class AbstractToolbarForm extends AbstractType
     protected function addTagInputField(FormBuilderInterface $builder)
     {
         $builder->add('tags', TagsType::class, [
-            'required' => false,
+            'required' => false
         ]);
     }
 
@@ -431,7 +431,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'choices' => [
                 'entryState.all' => TimesheetQuery::STATE_ALL,
                 'entryState.running' => TimesheetQuery::STATE_RUNNING,
-                'entryState.stopped' => TimesheetQuery::STATE_STOPPED,
+                'entryState.stopped' => TimesheetQuery::STATE_STOPPED
             ],
         ]);
     }
@@ -446,7 +446,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'choices' => [
                 'entryState.all' => TimesheetQuery::STATE_ALL,
                 'entryState.exported' => TimesheetQuery::STATE_EXPORTED,
-                'entryState.not_exported' => TimesheetQuery::STATE_NOT_EXPORTED,
+                'entryState.not_exported' => TimesheetQuery::STATE_NOT_EXPORTED
             ],
         ]);
     }

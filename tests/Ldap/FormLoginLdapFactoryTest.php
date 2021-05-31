@@ -35,7 +35,7 @@ class FormLoginLdapFactoryTest extends TestCase
         self::assertEquals([
             'security.authentication.provider.kimai_ldap.test',
             'security.authentication.listener.form.test',
-            'secured_area',
+            'secured_area'
         ], $result);
 
         $definition = $container->getDefinition('security.authentication.provider.kimai_ldap.test');

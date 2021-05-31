@@ -39,7 +39,7 @@ class UserControllerTest extends ControllerBaseTest
             'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/user/export'),
             'create' => $this->createUrl('/admin/user/create'),
-            'help' => 'https://www.kimai.org/documentation/users.html',
+            'help' => 'https://www.kimai.org/documentation/users.html'
         ]);
     }
 
@@ -111,7 +111,7 @@ class UserControllerTest extends ControllerBaseTest
                 'plainPassword' => ['first' => '12345678', 'second' => '12345678'],
                 'email' => 'foobar@example.com',
                 'enabled' => 1,
-            ],
+            ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode($username) . '/edit'));
         $client->followRedirect();
@@ -133,7 +133,7 @@ class UserControllerTest extends ControllerBaseTest
                 'email' => 'foobar@example.com',
                 'enabled' => 1,
                 'create_more' => true,
-            ],
+            ]
         ]);
         $this->assertFalse($client->getResponse()->isRedirect());
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -224,8 +224,8 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertStringEndsWith($this->createUrl('/admin/user/' . $user->getId() . '/delete'), $form->getUri());
         $client->submit($form, [
             'form' => [
-                'user' => $userNew->getId(),
-            ],
+                'user' => $userNew->getId()
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/user/'));
@@ -270,7 +270,7 @@ class UserControllerTest extends ControllerBaseTest
                         'title' => '34rtwrtewrt',
                         'avatar' => 'asdfawer',
                         'email' => '',
-                    ],
+                    ]
                 ],
                 [
                     '#user_create_username',
@@ -278,7 +278,7 @@ class UserControllerTest extends ControllerBaseTest
                     '#user_create_plainPassword_first',
                     '#user_create_email',
                     '#user_create_email',
-                ],
+                ]
             ],
             // invalid fields: username, password, email, enabled
             [
@@ -290,7 +290,7 @@ class UserControllerTest extends ControllerBaseTest
                         'title' => '34rtwrtewrt',
                         'avatar' => 'asdfawer',
                         'email' => 'ydfbvsdfgs',
-                    ],
+                    ]
                 ],
                 [
                     '#user_create_username',
@@ -298,7 +298,7 @@ class UserControllerTest extends ControllerBaseTest
                     '#user_create_plainPassword_first',
                     '#user_create_email',
                     '#user_create_email',
-                ],
+                ]
             ],
             // invalid fields: password (too short)
             [
@@ -310,11 +310,11 @@ class UserControllerTest extends ControllerBaseTest
                         'title' => '34rtwrtewrt',
                         'avatar' => 'asdfawer',
                         'email' => 'ydfbvsdfgs@example.com',
-                    ],
+                    ]
                 ],
                 [
                     '#user_create_plainPassword_first',
-                ],
+                ]
             ],
         ];
     }

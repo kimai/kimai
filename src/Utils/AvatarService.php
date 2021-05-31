@@ -33,7 +33,7 @@ class AvatarService
         'uppercase' => true,
         //'fonts' => ['path/to/OpenSans-Bold.ttf', 'path/to/rockwell.ttf'],
         'foregrounds' => [
-            '#FFFFFF',
+            '#FFFFFF'
         ],
         'backgrounds' => [
             '#f44336',
@@ -54,7 +54,7 @@ class AvatarService
         ],
         'border' => [
             'size' => 1,
-            'color' => 'background',
+            'color' => 'background'
         ],
         'theme' => '*',
         'themes' => [
@@ -100,7 +100,7 @@ class AvatarService
                 ],
                 'foregrounds' => ['#FFFFFF'],
             ],
-        ],
+        ]
     ];
 
     public function __construct(string $projectDirectory)

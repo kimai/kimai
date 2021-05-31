@@ -32,7 +32,7 @@ class DoctorController extends AbstractController
         'pdo',
         'zip',
         'gd',
-        'xml',
+        'xml'
     ];
 
     /**

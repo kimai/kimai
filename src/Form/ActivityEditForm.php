@@ -55,7 +55,7 @@ class ActivityEditForm extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'label.name',
                 'attr' => [
-                    'autofocus' => 'autofocus',
+                    'autofocus' => 'autofocus'
                 ],
             ])
             ->add('comment', TextareaType::class, [
@@ -131,7 +131,7 @@ class ActivityEditForm extends AbstractType
             'currency' => Customer::DEFAULT_CURRENCY,
             'include_budget' => false,
             'attr' => [
-                'data-form-event' => 'kimai.activityUpdate',
+                'data-form-event' => 'kimai.activityUpdate'
             ],
         ]);
     }

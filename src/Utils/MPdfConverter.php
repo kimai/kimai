@@ -33,7 +33,7 @@ class MPdfConverter implements HtmlToPdfConverter
         $fonts = new FontVariables();
         $allowed = [
             'mode', 'format', 'default_font_size', 'default_font', 'margin_left', 'margin_right', 'margin_top',
-            'margin_bottom', 'margin_header', 'margin_footer', 'orientation',
+            'margin_bottom', 'margin_header', 'margin_footer', 'orientation'
         ];
 
         $filtered = array_filter($options, function ($key) use ($allowed, $configs, $fonts) {

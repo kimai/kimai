@@ -153,7 +153,7 @@ final class CustomerController extends AbstractController
 
         return $this->render('customer/permissions.html.twig', [
             'customer' => $customer,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
@@ -354,7 +354,7 @@ final class CustomerController extends AbstractController
 
         return $this->render('customer/rates.html.twig', [
             'customer' => $customer,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
@@ -380,7 +380,7 @@ final class CustomerController extends AbstractController
                     'data-form-event' => 'kimai.customerDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
-                ],
+                ]
             ])
             ->add('customer', CustomerType::class, [
                 'label' => 'label.customer',
@@ -469,7 +469,7 @@ final class CustomerController extends AbstractController
 
         return $this->render('customer/edit.html.twig', [
             'customer' => $customer,
-            'form' => $editForm->createView(),
+            'form' => $editForm->createView()
         ]);
     }
 
@@ -510,7 +510,7 @@ final class CustomerController extends AbstractController
         return $this->createForm(CustomerEditForm::class, $customer, [
             'action' => $url,
             'method' => 'POST',
-            'include_budget' => $this->isGranted('budget', $customer),
+            'include_budget' => $this->isGranted('budget', $customer)
         ]);
     }
 }

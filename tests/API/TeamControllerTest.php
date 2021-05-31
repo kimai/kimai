@@ -146,7 +146,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 2,
-            'users' => [1, 5, 4],
+            'users' => [1, 5, 4]
         ];
         $this->request($client, '/api/teams/' . $result['id'], 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -172,7 +172,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => '1',
             'teamlead' => 9999,
-            'users' => [9999],
+            'users' => [9999]
         ];
         $this->request($client, '/api/teams/' . $result['id'], 'PATCH', [], json_encode($data));
 
@@ -227,7 +227,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 1,
-            'users' => [2],
+            'users' => [2]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -262,7 +262,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 1,
-            'users' => [2, 4, 5],
+            'users' => [2, 4, 5]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -284,7 +284,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 1,
-            'users' => [2, 4, 5],
+            'users' => [2, 4, 5]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -347,7 +347,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 1,
-            'users' => [2],
+            'users' => [2]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -384,7 +384,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 1,
-            'users' => [2, 4, 5],
+            'users' => [2, 4, 5]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -412,7 +412,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 1,
-            'users' => [2, 4, 5],
+            'users' => [2, 4, 5]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -464,7 +464,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 1,
-            'users' => [2],
+            'users' => [2]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -501,7 +501,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 1,
-            'users' => [2, 4, 5],
+            'users' => [2, 4, 5]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -529,7 +529,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 1,
-            'users' => [2, 4, 5],
+            'users' => [2, 4, 5]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -581,7 +581,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 1,
-            'users' => [2],
+            'users' => [2]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -618,7 +618,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 1,
-            'users' => [2, 4, 5],
+            'users' => [2, 4, 5]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -646,7 +646,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'teamlead' => 1,
-            'users' => [2, 4, 5],
+            'users' => [2, 4, 5]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());

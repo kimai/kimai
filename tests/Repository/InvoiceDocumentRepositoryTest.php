@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 class InvoiceDocumentRepositoryTest extends TestCase
 {
     protected static $defaultDirectories = [
-        'templates/invoice/renderer',
+        'templates/invoice/renderer'
     ];
 
     protected static $testDocuments = [

@@ -142,7 +142,7 @@ class ProfileControllerTest extends ControllerBaseTest
                 'title' => 'Code Monkey',
                 'avatar' => '/fake/image.jpg',
                 'email' => 'updated@example.com',
-            ],
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/edit'));
@@ -175,7 +175,7 @@ class ProfileControllerTest extends ControllerBaseTest
                 'avatar' => '/fake/image.jpg',
                 'email' => 'updated@example.com',
                 'enabled' => false,
-            ],
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/edit'));
@@ -217,8 +217,8 @@ class ProfileControllerTest extends ControllerBaseTest
                 'plainPassword' => [
                     'first' => 'test1234',
                     'second' => 'test1234',
-                ],
-            ],
+                ]
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/password'));
@@ -245,8 +245,8 @@ class ProfileControllerTest extends ControllerBaseTest
                     'plainPassword' => [
                         'first' => 'abcdef1',
                         'second' => 'abcdef1',
-                    ],
-                ],
+                    ]
+                ]
             ],
             ['#user_password_plainPassword_first']
         );
@@ -273,8 +273,8 @@ class ProfileControllerTest extends ControllerBaseTest
                 'plainApiToken' => [
                     'first' => 'test1234',
                     'second' => 'test1234',
-                ],
-            ],
+                ]
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/api-token'));
@@ -301,8 +301,8 @@ class ProfileControllerTest extends ControllerBaseTest
                     'plainApiToken' => [
                         'first' => 'abcdef1',
                         'second' => 'abcdef1',
-                    ],
-                ],
+                    ]
+                ]
             ],
             ['#user_api_token_plainApiToken_first']
         );
@@ -331,7 +331,7 @@ class ProfileControllerTest extends ControllerBaseTest
             'user_roles[roles]' => [
                 0 => 'ROLE_TEAMLEAD',
                 2 => 'ROLE_SUPER_ADMIN',
-            ],
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/roles'));
@@ -437,8 +437,8 @@ class ProfileControllerTest extends ControllerBaseTest
                     3 => ['name' => UserPreference::LOCALE, 'value' => 'ar'],
                     4 => ['name' => UserPreference::FIRST_WEEKDAY, 'value' => 'sunday'],
                     5 => ['name' => UserPreference::SKIN, 'value' => 'blue'],
-                ],
-            ],
+                ]
+            ]
         ]);
 
         $targetUrl = '/' . $expectedLocale . '/profile/' . urlencode($username) . '/prefs';

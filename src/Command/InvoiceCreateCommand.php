@@ -455,7 +455,7 @@ class InvoiceCreateCommand extends Command
                 $invoice->getId(),
                 $invoice->getCustomer()->getName(),
                 $invoice->getTotal() . ' ' . $invoice->getCustomer()->getCurrency(),
-                $file->getRealPath(),
+                $file->getRealPath()
             ]);
         }
 

@@ -46,7 +46,7 @@ class BookmarkRepository extends EntityRepository
         return $this->findOneBy([
             'user' => $user->getId(),
             'type' => Bookmark::SEARCH_DEFAULT,
-            'name' => substr($name, 0, 50),
+            'name' => substr($name, 0, 50)
         ]);
     }
 }

@@ -89,7 +89,7 @@ class ParsedownExtension extends \Parsedown
                     'text' => $url,
                     'attributes' => [
                         'href' => $url,
-                        'target' => '_blank',
+                        'target' => '_blank'
                     ],
                 ],
             ];
@@ -107,7 +107,7 @@ class ParsedownExtension extends \Parsedown
 
         // add id-attribute
         $block['element']['attributes'] = [
-            'id' => $id,
+            'id' => $id
         ];
 
         return $block;

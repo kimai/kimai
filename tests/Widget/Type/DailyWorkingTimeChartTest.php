@@ -121,9 +121,9 @@ class DailyWorkingTimeChartTest extends TestCase
                             'activity' => $activity,
                             'project' => $project,
                             'billable' => 1234,
-                        ],
-                    ],
-                ],
+                        ]
+                    ]
+                ]
             ];
         });
 

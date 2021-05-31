@@ -38,7 +38,7 @@ class SamlAuthFactory extends AbstractMockFactory
                         'url' => 'https://127.0.0.1:8010/auth/saml/logout',
                         'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
                     ],
-                    'privateKey' => '',
+                    'privateKey' => ''
                 ],
                 'strict' => true,
                 'debug' => true,
@@ -64,15 +64,15 @@ class SamlAuthFactory extends AbstractMockFactory
                     'support' => [
                         'givenName' => 'Kimai Support',
                         'emailAddress' => 'kimai-support@example.com',
-                    ],
+                    ]
                 ],
                 'organization' => [
                     'en' => [
                         'name' => 'Kimai',
                         'displayname' => 'Kimai',
                         'url' => 'https://www.kimai.org',
-                    ],
-                ],
+                    ]
+                ]
             ];
         }
 

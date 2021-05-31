@@ -27,7 +27,7 @@ class TagEditForm extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'label.name',
                 'attr' => [
-                    'autofocus' => 'autofocus',
+                    'autofocus' => 'autofocus'
                 ],
                 'documentation' => [
                     'type' => 'string',
@@ -48,7 +48,7 @@ class TagEditForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'tags_edit',
             'attr' => [
-                'data-form-event' => 'kimai.tagUpdate',
+                'data-form-event' => 'kimai.tagUpdate'
             ],
         ]);
     }

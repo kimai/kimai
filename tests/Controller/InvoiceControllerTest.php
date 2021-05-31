@@ -106,7 +106,7 @@ class InvoiceControllerTest extends ControllerBaseTest
                 'company' => 'Company name',
                 'renderer' => 'default',
                 'calculator' => 'default',
-            ],
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/invoice/template'));
@@ -328,8 +328,8 @@ class InvoiceControllerTest extends ControllerBaseTest
             'form[name=invoice_payment_date_form]',
             [
                 'invoice_payment_date_form' => [
-                    'paymentDate' => 'invalid',
-                ],
+                    'paymentDate' => 'invalid'
+                ]
             ],
             ['#invoice_payment_date_form_paymentDate']
         );
@@ -339,8 +339,8 @@ class InvoiceControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=invoice_payment_date_form]')->form();
         $client->submit($form, [
             'invoice_payment_date_form' => [
-                'paymentDate' => (new \DateTime())->format('Y-m-d'),
-            ],
+                'paymentDate' => (new \DateTime())->format('Y-m-d')
+            ]
         ]);
 
         $this->assertIsRedirect($client, '/invoice/show');
@@ -375,7 +375,7 @@ class InvoiceControllerTest extends ControllerBaseTest
                 'company' => 'Company name',
                 'renderer' => 'default',
                 'calculator' => 'default',
-            ],
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/invoice/template'));

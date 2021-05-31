@@ -25,7 +25,7 @@ class MailType extends AbstractType
             'label' => 'label.email',
             'icon' => 'mail',
             'constraints' => [
-                new Email(['mode' => 'loose']),
+                new Email(['mode' => 'loose'])
             ],
         ]);
     }

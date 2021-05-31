@@ -142,7 +142,7 @@ class UserControllerTest extends APIControllerBaseTest
             'timezone' => 'Europe/Paris',
             'roles' => [
                 'ROLE_TEAMLEAD',
-                'ROLE_ADMIN',
+                'ROLE_ADMIN'
             ],
         ];
         $this->request($client, '/api/users', 'POST', [], json_encode($data));
@@ -175,7 +175,7 @@ class UserControllerTest extends APIControllerBaseTest
             'timezone' => 'Europe/Paris',
             'roles' => [
                 'ROLE_TEAMLEAD',
-                'ROLE_ADMIN',
+                'ROLE_ADMIN'
             ],
         ];
         $this->request($client, '/api/users', 'POST', [], json_encode($data));
@@ -238,7 +238,7 @@ class UserControllerTest extends APIControllerBaseTest
             'timezone' => 'Europe/Paris',
             'roles' => [
                 'ROLE_TEAMLEAD',
-                'ROLE_ADMIN',
+                'ROLE_ADMIN'
             ],
         ];
         $this->request($client, '/api/users', 'POST', [], json_encode($data));

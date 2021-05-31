@@ -39,7 +39,7 @@ class DurationTypeTest extends TypeTestCase
         $form = $form->getForm();
 
         $expected = new TypeTestModel([
-            'duration' => $expected,
+            'duration' => $expected
         ]);
 
         $form->submit($data);

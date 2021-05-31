@@ -37,7 +37,7 @@ final class UserProfileSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::CONTROLLER => ['prepareUserProfile', 200],
+            KernelEvents::CONTROLLER => ['prepareUserProfile', 200]
         ];
     }
 

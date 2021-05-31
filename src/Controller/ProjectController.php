@@ -146,7 +146,7 @@ final class ProjectController extends AbstractController
 
         return $this->render('project/permissions.html.twig', [
             'project' => $project,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
@@ -175,7 +175,7 @@ final class ProjectController extends AbstractController
 
         return $this->render('project/edit.html.twig', [
             'project' => $project,
-            'form' => $editForm->createView(),
+            'form' => $editForm->createView()
         ]);
     }
 
@@ -370,7 +370,7 @@ final class ProjectController extends AbstractController
 
         return $this->render('project/rates.html.twig', [
             'project' => $project,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
@@ -396,7 +396,7 @@ final class ProjectController extends AbstractController
 
         return $this->render('project/edit.html.twig', [
             'project' => $project,
-            'form' => $editForm->createView(),
+            'form' => $editForm->createView()
         ]);
     }
 
@@ -424,7 +424,7 @@ final class ProjectController extends AbstractController
                     'data-form-event' => 'kimai.projectDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
-                ],
+                ]
             ])
             ->add('project', ProjectType::class, [
                 'label' => 'label.project',

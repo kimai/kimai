@@ -211,7 +211,7 @@ class TimesheetVoterTest extends AbstractVoterTest
                     'lockdown_period_end' => $lockdownEnd,
                     'lockdown_grace_period' => $lockdownGrace,
                 ],
-            ],
+            ]
         ]);
 
         $voter = new TimesheetVoter($this->getRolePermissionManager(), new LockdownService($config));

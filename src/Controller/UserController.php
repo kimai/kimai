@@ -141,7 +141,7 @@ final class UserController extends AbstractController
 
         return $this->render('user/create.html.twig', [
             'user' => $user,
-            'form' => $editForm->createView(),
+            'form' => $editForm->createView()
         ]);
     }
 
@@ -159,7 +159,7 @@ final class UserController extends AbstractController
                     'data-form-event' => 'kimai.userUpdate kimai.userDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
-                ],
+                ]
             ])
             ->add('user', UserType::class, [
                 'query_builder' => function (UserRepository $repo) use ($userToDelete) {

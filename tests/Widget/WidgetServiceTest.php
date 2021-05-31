@@ -32,7 +32,7 @@ class WidgetServiceTest extends TestCase
         self::assertCount(0, $sut->getRenderer());
 
         $sut = new WidgetService($repository, [
-            new SimpleWidgetRenderer(new Environment(new FilesystemLoader())),
+            new SimpleWidgetRenderer(new Environment(new FilesystemLoader()))
         ]);
         self::assertCount(1, $sut->getRenderer());
     }

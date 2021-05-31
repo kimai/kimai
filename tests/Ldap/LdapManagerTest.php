@@ -53,7 +53,7 @@ class LdapManagerTest extends TestCase
         $roles = [
             'ROLE_TEAMLEAD' => ['ROLE_USER'],
             'ROLE_ADMIN' => ['ROLE_TEAMLEAD'],
-            'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN'],
+            'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN']
         ];
 
         $hydrator = new LdapUserHydrator($config, (new RoleServiceFactory($this))->create($roles));
@@ -64,7 +64,7 @@ class LdapManagerTest extends TestCase
     public function testFindUserByUsernameOnZeroResults()
     {
         $expected = [
-            'count' => 0,
+            'count' => 0
         ];
 
         $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
@@ -86,7 +86,7 @@ class LdapManagerTest extends TestCase
         $this->expectExceptionMessage('This search must only return a single user');
 
         $expected = [
-            'count' => 3,
+            'count' => 3
         ];
 
         $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
@@ -124,7 +124,7 @@ class LdapManagerTest extends TestCase
     public function testFindUserByOnZeroResults()
     {
         $expected = [
-            'count' => 0,
+            'count' => 0
         ];
 
         $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
@@ -146,7 +146,7 @@ class LdapManagerTest extends TestCase
         $this->expectExceptionMessage('This search must only return a single user');
 
         $expected = [
-            'count' => 3,
+            'count' => 3
         ];
 
         $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
@@ -348,7 +348,7 @@ class LdapManagerTest extends TestCase
                         ['ldap_value' => 'group4', 'role' => 'ROLE_SUPER_ADMIN'],
                     ],
                 ],
-                '(&(member=blub))',
+                '(&(member=blub))'
             ],
             [
                 [
@@ -376,7 +376,7 @@ class LdapManagerTest extends TestCase
                         ['ldap_value' => 'group4', 'role' => 'ROLE_SUPER_ADMIN'],
                     ],
                 ],
-                '(&(memberuid=foo\28bar\29))',
+                '(&(memberuid=foo\28bar\29))'
             ],
         ];
     }
@@ -417,7 +417,7 @@ class LdapManagerTest extends TestCase
                 'cn' => [0 => 'group4'],
                 'member' => [0 => 'uid=user2,ou=users,dc=kimai,dc=org', 1 => 'uid=user3,ou=users,dc=kimai,dc=org'],
             ],
-            'count' => 4,
+            'count' => 4
         ];
 
         $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();

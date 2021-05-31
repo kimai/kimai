@@ -47,7 +47,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             'toolbar-action exporter-xlsx' => $this->createUrl('/timesheet/export/xlsx'),
             'visibility' => '#',
             'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
-            'help' => 'https://www.kimai.org/documentation/timesheet.html',
+            'help' => 'https://www.kimai.org/documentation/timesheet.html'
         ]);
     }
 
@@ -176,7 +176,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                 'end' => null,
                 'project' => 1,
                 'activity' => 1,
-            ],
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
@@ -213,7 +213,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                 'duration' => $duration,
                 'project' => 1,
                 'activity' => 1,
-            ],
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
@@ -288,7 +288,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                 'hourlyRate' => 100,
                 'project' => 1,
                 'activity' => 1,
-            ],
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
@@ -322,7 +322,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                 'hourlyRate' => 100,
                 'project' => 1,
                 'activity' => 1,
-            ],
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
@@ -353,7 +353,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                 'hourlyRate' => 100,
                 'project' => 1,
                 'activity' => 1,
-            ],
+            ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
         $client->followRedirect();
@@ -380,8 +380,8 @@ class TimesheetControllerTest extends ControllerBaseTest
                     ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => null],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 1],
                     ['name' => 'timesheet.active_entries.soft_limit', 'value' => 1],
-                ],
-            ],
+                ]
+            ]
         ]);
 
         $begin = new \DateTime('2018-08-02T20:00:00');
@@ -406,7 +406,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                     //'hourlyRate' => 100,
                     'project' => 1,
                     'activity' => 1,
-                ],
+                ]
             ],
             ['#timesheet_edit_form_begin']
         );
@@ -459,7 +459,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                     'duration' => '01:10',
                     'project' => 1,
                     'activity' => $activity->getId(),
-                ],
+                ]
             ],
             ['#timesheet_edit_form_activity']
         );
@@ -477,7 +477,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                 'hourlyRate' => 100,
                 'project' => 1,
                 'activity' => 1,
-            ],
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
@@ -528,7 +528,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             'timesheet_edit_form' => [
                 'description' => 'foo-bar',
                 'tags' => 'foo,bar, testing, hello world,,',
-            ],
+            ]
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
@@ -570,8 +570,8 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'multi_update_table' => [
                 'action' => $this->createUrl('/timesheet/multi-delete'),
-                'entities' => implode(',', $ids),
-            ],
+                'entities' => implode(',', $ids)
+            ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
         $client->followRedirect();
@@ -610,8 +610,8 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'multi_update_table' => [
                 'action' => $this->createUrl('/timesheet/multi-update'),
-                'entities' => implode(',', $ids),
-            ],
+                'entities' => implode(',', $ids)
+            ]
         ]);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -621,7 +621,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                 'exported' => true,
                 'tags' => 'test, foo-bar',
                 'fixedRate' => 13,
-            ],
+            ]
         ]);
 
         $em->clear();

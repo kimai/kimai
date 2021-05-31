@@ -71,7 +71,7 @@ class PaginationExtensionTest extends TestCase
         $result = $sut->renderPagerfanta($pagerfanta, 'twitter_bootstrap3_translated', [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
-            'routeParams' => ['id' => 137],
+            'routeParams' => ['id' => 137]
         ]);
         $this->assertPaginationHtml($result);
     }
@@ -88,7 +88,7 @@ class PaginationExtensionTest extends TestCase
         $result = $sut->renderPagerfanta($pagerfanta, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
-            'routeParams' => ['id' => 137],
+            'routeParams' => ['id' => 137]
         ]);
         $this->assertPaginationHtml($result);
     }
@@ -117,7 +117,7 @@ class PaginationExtensionTest extends TestCase
         $result = $sut->renderPagination($pagerfanta, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
-            'routeParams' => ['id' => 137],
+            'routeParams' => ['id' => 137]
         ]);
         $this->assertPaginationHtml($result);
     }
@@ -133,7 +133,7 @@ class PaginationExtensionTest extends TestCase
         $pagerfanta = new Pagerfanta(new ArrayAdapter($values));
         $result = $sut->renderPagination($pagerfanta, [
             'css_container_class' => 'pagination pagination-sm inline',
-            'routeParams' => ['id' => 137],
+            'routeParams' => ['id' => 137]
         ]);
         $this->assertPaginationHtml($result);
     }

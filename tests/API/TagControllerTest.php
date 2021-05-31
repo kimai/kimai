@@ -25,7 +25,7 @@ class TagControllerTest extends APIControllerBaseTest
     protected function importTagFixtures(): array
     {
         $tagList = ['Test', 'Administration', 'Support', '#2018-001', '#2018-002', '#2018-003', 'Development',
-            'Marketing', 'First Level Support', 'Bug Fixing', ];
+            'Marketing', 'First Level Support', 'Bug Fixing'];
 
         $fixture = new TagFixtures();
         $fixture->setTagArray($tagList);
@@ -70,7 +70,7 @@ class TagControllerTest extends APIControllerBaseTest
         $this->importTagFixtures();
         $data = [
             'name' => 'foo',
-            'color' => '#000FFF',
+            'color' => '#000FFF'
         ];
         $this->request($client, '/api/tags', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());

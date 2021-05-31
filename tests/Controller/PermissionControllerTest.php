@@ -39,7 +39,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $this->assertPageActions($client, [
             //'back' => $this->createUrl('/admin/user/'),
             'create modal-ajax-form' => $this->createUrl('/admin/permissions/roles/create'),
-            'help' => 'https://www.kimai.org/documentation/permissions.html',
+            'help' => 'https://www.kimai.org/documentation/permissions.html'
         ]);
 
         $content = $client->getResponse()->getContent();
@@ -68,7 +68,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'role' => [
                 'name' => 'TEST_ROLE',
-            ],
+            ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
         $client->followRedirect();
@@ -100,7 +100,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'role' => [
                 'name' => 'TEST_ROLE',
-            ],
+            ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
         $client->followRedirect();
@@ -124,8 +124,8 @@ class PermissionControllerTest extends ControllerBaseTest
             'user_roles[roles]' => [
                 0 => 'ROLE_TEAMLEAD',
                 2 => 'ROLE_SUPER_ADMIN',
-                3 => 'TEST_ROLE',
-            ],
+                3 => 'TEST_ROLE'
+            ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/roles'));
         $client->followRedirect();
@@ -167,7 +167,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'role' => [
                 'name' => 'TEST_ROLE',
-            ],
+            ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
         $client->followRedirect();

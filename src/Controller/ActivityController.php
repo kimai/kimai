@@ -179,7 +179,7 @@ final class ActivityController extends AbstractController
 
         return $this->render('activity/rates.html.twig', [
             'activity' => $activity,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
@@ -211,7 +211,7 @@ final class ActivityController extends AbstractController
 
         return $this->render('activity/edit.html.twig', [
             'activity' => $activity,
-            'form' => $editForm->createView(),
+            'form' => $editForm->createView()
         ]);
     }
 
@@ -245,7 +245,7 @@ final class ActivityController extends AbstractController
 
         return $this->render('activity/permissions.html.twig', [
             'activity' => $activity,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
@@ -301,7 +301,7 @@ final class ActivityController extends AbstractController
 
         return $this->render('activity/edit.html.twig', [
             'activity' => $activity,
-            'form' => $editForm->createView(),
+            'form' => $editForm->createView()
         ]);
     }
 
@@ -318,7 +318,7 @@ final class ActivityController extends AbstractController
                     'data-form-event' => 'kimai.activityDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
-                ],
+                ]
             ])
             ->add('activity', ActivityType::class, [
                 'label' => 'label.activity',
@@ -421,7 +421,7 @@ final class ActivityController extends AbstractController
             'method' => 'POST',
             'currency' => $currency,
             'customer' => true,
-            'include_budget' => $this->isGranted('budget', $activity),
+            'include_budget' => $this->isGranted('budget', $activity)
         ]);
     }
 }

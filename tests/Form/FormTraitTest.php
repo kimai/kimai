@@ -43,7 +43,7 @@ class FormTraitTest extends TypeTestCase
         self::assertFalse($desc->isRequired());
 
         $expected = new TypeTestModel([
-            'description' => 'foo',
+            'description' => 'foo'
         ]);
 
         $form->submit($data);

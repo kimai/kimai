@@ -282,7 +282,7 @@ final class ProfileController extends AbstractController
 
                 return $this->redirectToRoute('user_profile_preferences', [
                     '_locale' => $locale,
-                    'username' => $profile->getUsername(),
+                    'username' => $profile->getUsername()
                 ]);
             } else {
                 $this->flashError('action.update.error', ['%reason%' => 'Validation failed']);
@@ -309,7 +309,7 @@ final class ProfileController extends AbstractController
             'tab' => 'preferences',
             'user' => $profile,
             'form' => $form->createView(),
-            'sections' => $sections,
+            'sections' => $sections
         ]);
     }
 
@@ -320,7 +320,7 @@ final class ProfileController extends AbstractController
             $user,
             [
                 'action' => $this->generateUrl('user_profile_preferences', ['username' => $user->getUsername()]),
-                'method' => 'POST',
+                'method' => 'POST'
             ]
         );
     }
@@ -370,7 +370,7 @@ final class ProfileController extends AbstractController
             $user,
             [
                 'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUsername()]),
-                'method' => 'POST',
+                'method' => 'POST'
             ]
         );
     }
@@ -382,7 +382,7 @@ final class ProfileController extends AbstractController
             $user,
             [
                 'action' => $this->generateUrl('user_profile_api_token', ['username' => $user->getUsername()]),
-                'method' => 'POST',
+                'method' => 'POST'
             ]
         );
     }
