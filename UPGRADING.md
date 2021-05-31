@@ -10,14 +10,15 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.15](https://github.com/kevinpapst/kimai2/releases/tag/1.15)
 
-**ATTENTION** This release bumps the minimum required PHP version to 7.3.
+**ATTENTION** 
+- This release bumps the minimum required [PHP version to 7.3](https://www.kimai.org/blog/2021/php8-support-php72-dropped/)
+- All plugins that use own databases need to be updated as well
 
-It might still work with `>=7.2.9` when using `composer install --ignore-platform-reqs` but without support!
+PHP 8 compatibility forced to upgrade MANY libraries, including but not limited to:
 
-PHP 8 compatibility forced to upgrade MANY libraries:
-
-- Including but not limited to Gedmo v3 (which include BC breaks in definitions)
-- Including Doctrine DBAL in a newer version, that required PHP 7.3
+- Doctrine Migrations, whose new major version forces the plugin updates 
+- Gedmo v3 (which include BC breaks in definitions)
+- Doctrine DBAL and others, which required PHP 7.3 as well
 
 ## [1.14](https://github.com/kevinpapst/kimai2/releases/tag/1.14)
 
