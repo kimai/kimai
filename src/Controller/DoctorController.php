@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use Composer\InstalledVersions;
 use PackageVersions\Versions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -111,26 +112,37 @@ class DoctorController extends AbstractController
 
     private function getComposerPackages(): array
     {
-        $packages = [];
+        $versions = [];
 
-        if (class_exists('Composer\Versions')) {
-            // TODO composer 2
+        if (class_exists(InstalledVersions::class)) {
+            $rootPackage = InstalledVersions::getRootPackage()['name'];
+            foreach (InstalledVersions::getInstalledPackages() as $package) {
+                $versions[$package] = InstalledVersions::getPrettyVersion($package);
+            }
         } else {
-            $packages = Versions::VERSIONS;
+            // @deprecated since 1.14, will be removed with 2.0
+            $rootPackage = Versions::rootPackageName();
+            foreach (Versions::VERSIONS as $name => $version) {
+                $versions[$name] = explode('@', $version)[0];
+            }
         }
 
         // remove kimai from the package list
-        $packages = array_filter($packages, function ($name) {
-            if ($name === Versions::ROOT_PACKAGE_NAME) {
+        $versions = array_filter($versions, function ($version, $name) use ($rootPackage) {
+            if ($name === $rootPackage) {
+                return false;
+            }
+
+            if ($version === null || $version === '*') {
                 return false;
             }
 
             return true;
-        }, ARRAY_FILTER_USE_KEY);
+        }, ARRAY_FILTER_USE_BOTH);
 
-        ksort($packages);
+        ksort($versions);
 
-        return $packages;
+        return $versions;
     }
 
     private function getLoadedExtensions()

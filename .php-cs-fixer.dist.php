@@ -7,7 +7,8 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 COMMENT;
 
-return PhpCsFixer\Config::create()
+$fixer = new PhpCsFixer\Config();
+$fixer
     ->setRiskyAllowed(true)
     ->setRules([
         'encoding' => true,
@@ -19,7 +20,7 @@ return PhpCsFixer\Config::create()
         'function_declaration' => true,
         'indentation_type' => true,
         'line_ending' => true,
-        'lowercase_constants' => true,
+        'constant_case' => ['case' => 'lower'],
         'lowercase_keywords' => true,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
         'header_comment' => ['header' => $fileHeaderComment, 'separate' => 'both'],
@@ -46,7 +47,7 @@ return PhpCsFixer\Config::create()
             'statements' => ['return'],
         ],
         'cast_spaces' => true,
-        'class_attributes_separation' => ['elements' => ['method']],
+        'class_attributes_separation' => ['elements' => ['method' => 'one']],
         'concat_space' => ['spacing' => 'one'],
         'declare_equal_normalize' => true,
         'function_typehint_space' => true,
@@ -100,7 +101,7 @@ return PhpCsFixer\Config::create()
         ],
         'phpdoc_annotation_without_dot' => true,
         'phpdoc_indent' => true,
-        'phpdoc_inline_tag' => true,
+        'phpdoc_inline_tag_normalizer' => true,
         'phpdoc_no_access' => true,
         'phpdoc_no_alias_tag' => true,
         'phpdoc_no_empty_return' => false,
@@ -130,7 +131,7 @@ return PhpCsFixer\Config::create()
         'standardize_increment' => true,
         'standardize_not_equals' => true,
         'ternary_operator_spaces' => true,
-        'trailing_comma_in_multiline_array' => false,
+        'trailing_comma_in_multiline' => false,
         'trim_array_spaces' => true,
         'unary_operator_spaces' => true,
         'whitespace_after_comma_in_array' => true,
@@ -163,3 +164,5 @@ return PhpCsFixer\Config::create()
     )
     ->setFormat('checkstyle')
 ;
+
+return $fixer;

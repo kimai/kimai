@@ -51,7 +51,7 @@ final class LocaleHelper
             $value = 0;
         }
 
-        return $this->getNumberFormatter()->format($value);
+        return $this->getNumberFormatter()->format((float) $value);
     }
 
     /**
