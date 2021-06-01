@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class LockdownServiceTest extends TestCase
 {
-    protected function createService(?string $start, ?string $end, ?string $grace)
+    protected function createService(?string $start, ?string $end, ?string $grace, ?string $timezone = null)
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = new SystemConfiguration($loader, [
@@ -28,6 +28,7 @@ class LockdownServiceTest extends TestCase
                 'rules' => [
                     'lockdown_period_start' => $start,
                     'lockdown_period_end' => $end,
+                    'lockdown_period_timezone' => $timezone,
                     'lockdown_grace_period' => $grace,
                 ],
             ]
