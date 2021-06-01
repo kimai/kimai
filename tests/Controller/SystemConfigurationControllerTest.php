@@ -72,6 +72,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
     {
         return [
             ['form[name=system_configuration_form_timesheet]', $this->createUrl('/admin/system-config/update/timesheet')],
+            ['form[name=system_configuration_form_lockdown_period]', $this->createUrl('/admin/system-config/update/lockdown_period')],
             ['form[name=system_configuration_form_invoice]', $this->createUrl('/admin/system-config/update/invoice')],
             ['form[name=system_configuration_form_rounding]', $this->createUrl('/admin/system-config/update/rounding')],
             ['form[name=system_configuration_form_form_customer]', $this->createUrl('/admin/system-config/update/form_customer')],
@@ -102,9 +103,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
                     ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
                     ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => false],
-                    ['name' => 'timesheet.rules.lockdown_period_start', 'value' => null],
-                    ['name' => 'timesheet.rules.lockdown_period_end', 'value' => null],
-                    ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => null],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 99],
                     ['name' => 'timesheet.active_entries.soft_limit', 'value' => 77],
                 ]
@@ -124,6 +122,41 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertEquals(77, $configService->find('timesheet.active_entries.soft_limit'));
     }
 
+    public function testUpdateLockdownPeriodConfig()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/system-config/');
+
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $this->assertNull($configService->find('timesheet.rules.lockdown_period_start'));
+        $this->assertNull($configService->find('timesheet.rules.lockdown_period_end'));
+        $this->assertNull($configService->find('timesheet.rules.lockdown_period_timezone'));
+        $this->assertNull($configService->find('timesheet.rules.lockdown_grace_period'));
+
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_lockdown_period]')->form();
+        $client->submit($form, [
+            'system_configuration_form_lockdown_period' => [
+                'configuration' => [
+                    ['name' => 'timesheet.rules.lockdown_period_start', 'value' => 'first day of last month 01:23:45'],
+                    ['name' => 'timesheet.rules.lockdown_period_end', 'value' => 'last day of last month 23:01:45'],
+                    ['name' => 'timesheet.rules.lockdown_period_timezone', 'value' => 'Africa/Bangui'],
+                    ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => '+ 12 hours'],
+                ]
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSaveSuccess($client);
+
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $this->assertEquals('first day of last month 01:23:45', $configService->find('timesheet.rules.lockdown_period_start'));
+        $this->assertEquals('last day of last month 23:01:45', $configService->find('timesheet.rules.lockdown_period_end'));
+        $this->assertEquals('Africa/Bangui', $configService->find('timesheet.rules.lockdown_period_timezone'));
+        $this->assertEquals('+ 12 hours', $configService->find('timesheet.rules.lockdown_grace_period'));
+    }
+
     public function testUpdateTimesheetConfigValidation()
     {
         $this->assertFormHasValidationError(
@@ -138,9 +171,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                         ['name' => 'timesheet.rules.allow_future_times', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => 1],
-                        ['name' => 'timesheet.rules.lockdown_period_start', 'value' => 'first day of last month'],
-                        ['name' => 'timesheet.rules.lockdown_period_end', 'value' => 'first day of last month'],
-                        ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => '+10 days'],
                         ['name' => 'timesheet.active_entries.hard_limit', 'value' => -1],
                         ['name' => 'timesheet.active_entries.soft_limit', 'value' => -1],
                     ]
@@ -148,8 +178,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             ],
             [
                 '#system_configuration_form_timesheet_configuration_0_value', // mode
-                '#system_configuration_form_timesheet_configuration_8_value', // hard_limit
-                '#system_configuration_form_timesheet_configuration_9_value', // soft_limit
+                '#system_configuration_form_timesheet_configuration_5_value', // hard_limit
+                '#system_configuration_form_timesheet_configuration_6_value', // soft_limit
             ],
             true
         );

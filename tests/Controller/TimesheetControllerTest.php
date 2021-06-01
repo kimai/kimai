@@ -375,9 +375,6 @@ class TimesheetControllerTest extends ControllerBaseTest
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => true],
                     ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
                     ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => true],
-                    ['name' => 'timesheet.rules.lockdown_period_start', 'value' => null],
-                    ['name' => 'timesheet.rules.lockdown_period_end', 'value' => null],
-                    ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => null],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 1],
                     ['name' => 'timesheet.active_entries.soft_limit', 'value' => 1],
                 ]
