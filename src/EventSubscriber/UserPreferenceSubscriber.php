@@ -21,12 +21,12 @@ use App\Form\Type\LanguageType;
 use App\Form\Type\ReportType;
 use App\Form\Type\SkinType;
 use App\Form\Type\ThemeLayoutType;
+use App\Form\Type\TimezoneType;
 use App\Reporting\ReportingService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Range;
 

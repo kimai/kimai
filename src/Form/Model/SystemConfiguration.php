@@ -12,6 +12,7 @@ namespace App\Form\Model;
 class SystemConfiguration
 {
     public const SECTION_ROUNDING = 'rounding';
+    public const SECTION_LOCKDOWN = 'lockdown_period';
     public const SECTION_TIMESHEET = 'timesheet';
     public const SECTION_FORM_INVOICE = 'invoice';
     public const SECTION_FORM_CUSTOMER = 'form_customer';

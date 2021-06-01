@@ -208,6 +208,11 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (string) $this->find('timesheet.rules.lockdown_grace_period');
     }
 
+    public function getTimesheetLockdownTimeZone(): ?string
+    {
+        return $this->find('timesheet.rules.lockdown_period_timezone');
+    }
+
     public function isTimesheetLockdownActive(): bool
     {
         return !empty($this->find('timesheet.rules.lockdown_period_start')) && !empty($this->find('timesheet.rules.lockdown_period_end'));
