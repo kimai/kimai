@@ -21,7 +21,7 @@ jobs:
             matrix:
                 php: ['7.4']
 
-        name: PHP ${{ matrix.php }}
+        name: Coverage (${{ matrix.php }})
         steps:
             -   uses: actions/checkout@v2
             -   uses: shivammathur/setup-php@v2
@@ -29,9 +29,8 @@ jobs:
                     php-version: ${{ matrix.php }}
                     coverage: pcov
                     extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
-            -   run: |
-                    composer install --no-progress
-                    composer require laminas/laminas-ldap
+            -   uses: ramsey/composer-install@v1
+            -   run: composer require laminas/laminas-ldap
             -   name: Setup problem matchers for PHPUnit
                 run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
             -   name: Run tests
