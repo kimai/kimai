@@ -9,6 +9,7 @@
 
 namespace App\Ldap;
 
+use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -21,20 +22,10 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  *
  * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
  */
-class LdapUserProvider implements UserProviderInterface
+final class LdapUserProvider implements UserProviderInterface
 {
-    /**
-     * @var bool
-     */
-    protected $activated = false;
-    /**
-     * @var LdapManager
-     */
-    protected $ldapManager;
-    /**
-     * @var LoggerInterface|null
-     */
-    protected $logger;
+    private $ldapManager;
+    private $logger;
 
     public function __construct(LdapManager $ldapManager, LoggerInterface $logger = null)
     {
