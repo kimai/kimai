@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Configuration\LdapConfiguration
+ * @covers \App\Configuration\SystemConfiguration
  */
 class LdapConfigurationTest extends TestCase
 {
