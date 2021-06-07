@@ -14,6 +14,7 @@ use App\Form\Model\SystemConfiguration;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * @covers \App\Form\Model\Configuration
  * @covers \App\Form\Model\SystemConfiguration
  */
 class SystemConfigurationTest extends TestCase
@@ -44,5 +45,15 @@ class SystemConfigurationTest extends TestCase
 
         self::assertInstanceOf(SystemConfiguration::class, $sut->addConfiguration($config));
         self::assertEquals([$config, $config, $config], $sut->getConfiguration());
+
+        $config = new Configuration();
+        $config->setName('foo');
+        $sut->addConfiguration($config);
+
+        $config2 = new Configuration();
+        $config2->setName('bar');
+        $sut->addConfiguration($config);
+
+        self::assertSame($config, $sut->getConfigurationByName('foo'));
     }
 }

@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
+ * @covers \App\Command\AbstractRoleCommand
  * @covers \App\Command\DemoteUserCommand
  * @group integration
  */
