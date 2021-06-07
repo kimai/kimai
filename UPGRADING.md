@@ -19,7 +19,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 **LDAP & SAML**
 - SAML users need to activate it by setting the new `kimai.saml.activate: true` config
 - LDAP and SAML users need to remove the complete `security` section from their `local.yaml`
-- Please verify you config with the [LDAP](https://www.kimai.org/documentation/ldap.html) and [SAML](https://www.kimai.org/documentation/saml.html) documentation
+- Please verify your config with the [LDAP](https://www.kimai.org/documentation/ldap.html) and [SAML](https://www.kimai.org/documentation/saml.html) documentation
 
 **DEVELOPER**
 PHP 8 compatibility forced to upgrade MANY libraries, including but not limited to:
