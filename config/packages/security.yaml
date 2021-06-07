@@ -5,7 +5,7 @@ security:
     providers:
         chain_provider:
             chain:
-                providers: [kimai_internal]
+                providers: [kimai_ldap,kimai_internal]
         kimai_ldap:
             id: App\Ldap\LdapUserProvider
         kimai_internal:
@@ -17,6 +17,8 @@ security:
             security: false
 
         secured_area:
+            kimai_saml: ~
+            kimai_ldap: ~
             pattern: ^/
             user_checker: App\Security\UserChecker
             anonymous: true

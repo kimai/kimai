@@ -110,13 +110,13 @@ class ResetTestCommand extends AbstractResetCommand
             }
             $user->setUsername($userConf[9]);
             if ($userConf[10] !== null) {
-                $user->setUsernameCanonical($userConf[10]);
+                // removed field: UsernameCanonical
             }
             if ($userConf[11] !== null) {
                 $user->setEmail($userConf[11]);
             }
             if ($userConf[12] !== null) {
-                $user->setEmailCanonical($userConf[12]);
+                // removed field: EmailCanonical
             }
             if ($userConf[17] !== null) {
                 $user->setApiToken($userConf[17]);

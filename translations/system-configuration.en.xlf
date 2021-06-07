@@ -270,6 +270,38 @@
                 <source>help.theme.color_choices</source>
                 <target>Comma separated list of HTML color codes. Color names can be set by prefixing the color code with a name and the | delimiter, eg.: White|#ffffff,Black|#000000.</target>
             </trans-unit>
+            <trans-unit id="authentication">
+                <source>authentication</source>
+                <target>Authentication</target>
+            </trans-unit>
+            <trans-unit id="label.user_auth_login">
+                <source>label.user_auth_login</source>
+                <target>Login form</target>
+            </trans-unit>
+            <trans-unit id="label.user_auth_registration">
+                <source>label.user_auth_registration</source>
+                <target>User registration</target>
+            </trans-unit>
+            <trans-unit id="label.user_auth_password_reset">
+                <source>label.user_auth_password_reset</source>
+                <target>Forgot password</target>
+            </trans-unit>
+            <trans-unit id="label.user_auth_password_reset_retry_ttl">
+                <source>label.user_auth_password_reset_retry_ttl</source>
+                <target>Forgotten password - seconds before a user can request the next e-mail</target>
+            </trans-unit>
+            <trans-unit id="label.user_auth_password_reset_token_ttl">
+                <source>label.user_auth_password_reset_token_ttl</source>
+                <target>Forgotten password - seconds before a reset link expires</target>
+            </trans-unit>
+            <trans-unit id="label.ldap_activate">
+                <source>label.ldap_activate</source>
+                <target>LDAP login</target>
+            </trans-unit>
+            <trans-unit id="label.saml_activate">
+                <source>label.saml_activate</source>
+                <target>SAML login</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

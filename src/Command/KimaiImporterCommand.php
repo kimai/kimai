@@ -136,7 +136,8 @@ final class KimaiImporterCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('kimai:import-v1')
+            ->setName('kimai:import:v1')
+            ->setAliases(['kimai:import-v1'])
             ->setDescription('Import data from a Kimai v1 installation')
             ->setHelp('This command allows you to import the most important data from a Kimi v1 installation.')
             ->addArgument(

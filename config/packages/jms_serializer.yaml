@@ -10,16 +10,11 @@ jms_serializer:
         xml_serialization:
             format_output: '%kernel.debug%'
     metadata:
-        directories:
-            FOSUB:
-                namespace_prefix: "FOS\\UserBundle"
-                path: "%kernel.root_dir%/../config/serializer/FOS/UserBundle"
         warmup:
             paths:
                 included:
                     - "%kernel.root_dir%/Entity/"
                     - "%kernel.root_dir%/API/Model/"
-                    - "%kernel.root_dir%/../vendor/kimai/user-bundle/Model"
                 excluded: []
     property_naming:
         id: 'jms_serializer.identical_property_naming_strategy'

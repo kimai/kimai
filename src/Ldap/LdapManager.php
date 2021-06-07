@@ -15,8 +15,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
+ *
+ * @final
  */
-final class LdapManager
+class LdapManager
 {
     private $driver;
     private $hydrator;

@@ -48,8 +48,9 @@ abstract class AbstractResetCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('kimai:reset-' . $this->getEnvName())
-            ->setDescription('Resets the dev environment')
+            ->setName('kimai:reset:' . $this->getEnvName())
+            ->setAliases(['kimai:reset-' . $this->getEnvName()])
+            ->setDescription('Resets the "' . $this->getEnvName() . '" environment')
             ->setHelp(
                 <<<EOT
     This command will drop and re-create the database and its schemas, load data and clear the cache.

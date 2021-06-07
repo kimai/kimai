@@ -25,5 +25,8 @@ services:
     # required for the importer command test
     App\Importer\ImporterService:
         public: true
-        arguments:
-          [ '@App\Customer\CustomerService', '@App\Project\ProjectService' ]
+        arguments: ['@App\Customer\CustomerService', '@App\Project\ProjectService']
+
+    App\User\UserService:
+        public: true
+        arguments: ['@App\Repository\UserRepository', '@event_dispatcher', '@validator', '@App\Configuration\SystemConfiguration', '@security.password_encoder']

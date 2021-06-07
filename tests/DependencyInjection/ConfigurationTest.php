@@ -73,6 +73,7 @@ class ConfigurationTest extends TestCase
 
         $config = $this->getMinConfig();
         $config['ldap'] = [
+            'activate' => true,
             'connection' => [
                 'host' => 'foo'
             ],
@@ -231,6 +232,7 @@ class ConfigurationTest extends TestCase
     {
         $finalizedConfig = $this->getCompiledConfig($this->getMinConfig());
         $expected = [
+            'activate' => false,
             'user' => [
                 'baseDn' => '',
                 'filter' => '',
@@ -292,8 +294,11 @@ class ConfigurationTest extends TestCase
                 'time_increment' => null,
             ],
             'user' => [
-                'registration' => true,
+                'registration' => false,
                 'password_reset' => true,
+                'login' => true,
+                'password_reset_retry_ttl' => 7200,
+                'password_reset_token_ttl' => 86400,
             ],
             'invoice' => [
                 'documents' => [
@@ -395,6 +400,7 @@ class ConfigurationTest extends TestCase
                 ],
             ],
             'ldap' => [
+                'activate' => false,
                 'connection' => [
                     'host' => null,
                     'port' => 389,

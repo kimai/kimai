@@ -262,7 +262,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         if ($query->getRole() !== null) {
             $rolesWhere = 'u.roles LIKE :role';
             $qb->setParameter('role', '%' . $query->getRole() . '%');
-            // a hack as FOSUserBundle does not save the ROLE_USER in the database as it is the default role
+            // a workaround, because ROLE_USER is not saved in the database
             if ($query->getRole() === User::ROLE_USER) {
                 $rolesWhere .= ' OR u.roles LIKE :role1';
                 $qb->setParameter('role1', '%{}');

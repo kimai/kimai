@@ -10,6 +10,7 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\UserFixtures;
+use App\Entity\Configuration;
 use App\Entity\User;
 use App\Repository\ConfigurationRepository;
 use App\Tests\KernelTestTrait;
@@ -31,6 +32,20 @@ abstract class ControllerBaseTest extends WebTestCase
     {
         $this->clearConfigCache();
         parent::tearDown();
+    }
+
+    protected function setSystemConfiguration(string $name, $value): void
+    {
+        $repository = static::$kernel->getContainer()->get(ConfigurationRepository::class);
+
+        $entity = $repository->findOneBy(['name' => $name]);
+        if ($entity === null) {
+            $entity = new Configuration();
+            $entity->setName($name);
+        }
+        $entity->setValue($value);
+        $repository->saveConfiguration($entity);
+        $this->clearConfigCache();
     }
 
     protected function clearConfigCache()

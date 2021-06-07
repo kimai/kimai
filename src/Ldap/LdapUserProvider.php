@@ -20,8 +20,10 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  * Overwritten to be able to deactivate LDAP via config switch.
  *
  * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
+ *
+ * @final
  */
-final class LdapUserProvider implements UserProviderInterface
+class LdapUserProvider implements UserProviderInterface
 {
     private $ldapManager;
     private $logger;

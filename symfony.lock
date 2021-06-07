@@ -147,9 +147,6 @@
     "handcraftedinthealps/rest-routing-bundle": {
         "version": "1.0.0"
     },
-    "hslavich/oneloginsaml-bundle": {
-        "version": "v1.4.1"
-    },
     "illuminate/cache": {
         "version": "v6.0.4"
     },
@@ -185,9 +182,6 @@
     },
     "kevinpapst/adminlte-bundle": {
         "version": "0.3"
-    },
-    "kimai/user-bundle": {
-        "version": "dev-master"
     },
     "laminas/laminas-code": {
         "version": "3.4.1"
@@ -635,6 +629,9 @@
     },
     "symfony/polyfill-php80": {
         "version": "v1.17.1"
+    },
+    "symfony/polyfill-php81": {
+        "version": "v1.23.0"
     },
     "symfony/polyfill-uuid": {
         "version": "v1.22.0"
