@@ -26,7 +26,7 @@ class UserValidator extends ConstraintValidator
     }
 
     /**
-     * @param User $value
+     * @param UserEntity $value
      * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint)
