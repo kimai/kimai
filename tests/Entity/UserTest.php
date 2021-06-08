@@ -100,6 +100,8 @@ class UserTest extends TestCase
     {
         $date = new \DateTime('-60 minutes');
         $sut = new User();
+        self::assertFalse($sut->isPasswordRequestNonExpired(3599));
+
         self::assertNull($sut->getPasswordRequestedAt());
         $sut->setPasswordRequestedAt($date);
         self::assertEquals($date, $sut->getPasswordRequestedAt());
@@ -238,6 +240,9 @@ class UserTest extends TestCase
 
         $sut->setSuperAdmin(true);
         self::assertTrue($sut->isSuperAdmin());
+
+        $sut->setSuperAdmin(false);
+        self::assertFalse($sut->isSuperAdmin());
     }
 
     /**

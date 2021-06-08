@@ -39,12 +39,12 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
 
     public function testConfirmWithDeactivatedFeature()
     {
-        $this->testRegisterActionWithDeactivatedFeature('/confirm/123123');
+        $this->testRegisterActionWithDeactivatedFeature('/register/confirm/123123');
     }
 
     public function testConfirmedWithDeactivatedFeature()
     {
-        $this->testRegisterActionWithDeactivatedFeature('/confirmed');
+        $this->testRegisterActionWithDeactivatedFeature('/register/confirmed');
     }
 
     public function testRegisterAccountPageIsRendered()
@@ -154,6 +154,10 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
 
         $this->request($client, '/register/confirm/' . $token);
         $this->assertIsRedirect($client, $this->createUrl('/register/confirmed'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        $this->assertStringContainsString('Congratulations example, your account is now activated.', $content);
 
         $user = $this->loadUserFromDatabase('example');
         self::assertTrue($user->isEnabled());

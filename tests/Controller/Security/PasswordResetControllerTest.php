@@ -26,21 +26,21 @@ class PasswordResetControllerTest extends ControllerBaseTest
 
     public function testResetRequestWithDeactivatedFeature()
     {
-        $this->testResetActionWithDeactivatedFeature('/auth/resetting/request');
+        $this->testResetActionWithDeactivatedFeature('/resetting/request');
     }
 
     public function testSendEmailRequestWithDeactivatedFeature()
     {
-        $this->testResetActionWithDeactivatedFeature('/auth/resetting/send-email');
+        $this->testResetActionWithDeactivatedFeature('/resetting/send-email');
     }
 
     public function testCheckEmailWithDeactivatedFeature()
     {
-        $this->testResetActionWithDeactivatedFeature('/auth/resetting/check-email');
+        $this->testResetActionWithDeactivatedFeature('/resetting/check-email');
     }
 
     public function testResetWithDeactivatedFeature()
     {
-        $this->testResetActionWithDeactivatedFeature('/auth/resetting/reset/1234567890');
+        $this->testResetActionWithDeactivatedFeature('/resetting/reset/1234567890');
     }
 }
