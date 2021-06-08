@@ -15,6 +15,7 @@ use App\Repository\UserRepository;
 use App\User\UserService;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -126,5 +127,13 @@ class PromoteUserCommandTest extends KernelTestCase
         $this->expectExceptionMessage('You can pass either the role or the --super option (but not both simultaneously).');
 
         $this->callCommand('john_user', 'ROLE_TEAMLEAD', true);
+    }
+
+    public function testWithMissingUsername()
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Not enough arguments (missing: "username").');
+
+        $this->callCommand(null, null, true);
     }
 }

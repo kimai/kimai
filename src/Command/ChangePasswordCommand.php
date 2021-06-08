@@ -16,7 +16,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 
 class ChangePasswordCommand extends Command
 {
@@ -60,7 +59,14 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $username = $input->getArgument('username');
+        if (!$input->getArgument('username')) {
+            throw new \Exception('Username can not be empty');
+        }
+
         $password = $input->getArgument('password');
+        if (!$input->getArgument('password')) {
+            throw new \Exception('Username can not be empty');
+        }
 
         $user = $this->userService->findUserByUsernameOrThrowException($username);
 
@@ -77,43 +83,5 @@ EOT
         }
 
         return 0;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function interact(InputInterface $input, OutputInterface $output)
-    {
-        $questions = [];
-
-        if (!$input->getArgument('username')) {
-            $question = new Question('Please give the username:');
-            $question->setValidator(function ($username) {
-                if (empty($username)) {
-                    throw new \Exception('Username can not be empty');
-                }
-
-                return $username;
-            });
-            $questions['username'] = $question;
-        }
-
-        if (!$input->getArgument('password')) {
-            $question = new Question('Please enter the new password:');
-            $question->setValidator(function ($password) {
-                if (empty($password)) {
-                    throw new \Exception('Password can not be empty');
-                }
-
-                return $password;
-            });
-            $question->setHidden(true);
-            $questions['password'] = $question;
-        }
-
-        foreach ($questions as $name => $question) {
-            $answer = $this->getHelper('question')->ask($input, $output, $question);
-            $input->setArgument($name, $answer);
-        }
     }
 }
