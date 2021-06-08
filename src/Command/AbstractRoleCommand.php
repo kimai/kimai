@@ -16,7 +16,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 abstract class AbstractRoleCommand extends Command
@@ -48,6 +47,10 @@ abstract class AbstractRoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $username = $input->getArgument('username');
+        if (!$input->getArgument('username')) {
+            throw new \Exception('Username can not be empty');
+        }
+
         $role = $input->getArgument('role');
         $super = (true === $input->getOption('super'));
 
@@ -56,7 +59,7 @@ abstract class AbstractRoleCommand extends Command
         }
 
         if (null === $role && !$super) {
-            throw new \RuntimeException('Not enough arguments.');
+            throw new \RuntimeException('Not enough arguments, pass a role or use --super.');
         }
 
         $user = $this->userService->findUserByUsernameOrThrowException($username);
@@ -67,41 +70,4 @@ abstract class AbstractRoleCommand extends Command
     }
 
     abstract protected function executeRoleCommand(UserService $manipulator, SymfonyStyle $output, User $user, bool $super, $role);
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function interact(InputInterface $input, OutputInterface $output)
-    {
-        $questions = [];
-
-        if (!$input->getArgument('username')) {
-            $question = new Question('Please choose a username:');
-            $question->setValidator(function ($username) {
-                if (empty($username)) {
-                    throw new \Exception('Username can not be empty');
-                }
-
-                return $username;
-            });
-            $questions['username'] = $question;
-        }
-
-        if ((true !== $input->getOption('super')) && !$input->getArgument('role')) {
-            $question = new Question('Please choose a role:');
-            $question->setValidator(function ($role) {
-                if (empty($role)) {
-                    throw new \Exception('Role can not be empty');
-                }
-
-                return $role;
-            });
-            $questions['role'] = $question;
-        }
-
-        foreach ($questions as $name => $question) {
-            $answer = $this->getHelper('question')->ask($input, $output, $question);
-            $input->setArgument($name, $answer);
-        }
-    }
 }

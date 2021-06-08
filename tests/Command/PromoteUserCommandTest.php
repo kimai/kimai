@@ -10,9 +10,12 @@
 namespace App\Tests\Command;
 
 use App\Command\PromoteUserCommand;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use App\User\UserService;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @covers \App\Command\AbstractRoleCommand
@@ -21,11 +24,25 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class PromoteUserCommandTest extends KernelTestCase
 {
-    public function testCommandName()
+    /**
+     * @var Application
+     */
+    private $application;
+
+    protected function setUp(): void
     {
         $kernel = self::bootKernel();
-        $application = new Application($kernel);
-        $application->add(new PromoteUserCommand($this->createMock(UserService::class)));
+        $this->application = new Application($kernel);
+        $container = self::$kernel->getContainer();
+
+        $userService = $container->get(UserService::class);
+
+        $this->application->add(new PromoteUserCommand($userService));
+    }
+
+    public function testCommandName()
+    {
+        $application = $this->application;
 
         $command = $application->find('kimai:user:promote');
         self::assertInstanceOf(PromoteUserCommand::class, $command);
@@ -33,5 +50,81 @@ class PromoteUserCommandTest extends KernelTestCase
         // test alias
         $command = $application->find('fos:user:promote');
         self::assertInstanceOf(PromoteUserCommand::class, $command);
+    }
+
+    protected function callCommand(string $username, ?string $role, bool $super = false)
+    {
+        $command = $this->application->find('kimai:user:promote');
+        $input = [
+            'command' => $command->getName(),
+            'role' => $role,
+        ];
+
+        if ($username !== null) {
+            $input['username'] = $username;
+        }
+
+        if ($super) {
+            $input['--super'] = true;
+        }
+
+        $commandTester = new CommandTester($command);
+        $commandTester->execute($input);
+
+        return $commandTester;
+    }
+
+    public function testPromoteRole()
+    {
+        $commandTester = $this->callCommand('john_user', 'ROLE_TEAMLEAD');
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('[OK] Role "ROLE_TEAMLEAD" has been added to user "john_user".', $output);
+
+        $container = self::$kernel->getContainer();
+        /** @var UserRepository $userRepository */
+        $userRepository = $container->get('doctrine')->getRepository(User::class);
+        $user = $userRepository->loadUserByUsername('john_user');
+        self::assertInstanceOf(User::class, $user);
+        self::assertTrue($user->isTeamlead());
+    }
+
+    public function testPromoteSuper()
+    {
+        $commandTester = $this->callCommand('john_user', null, true);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('[OK] User "john_user" has been promoted as a super administrator.', $output);
+
+        $container = self::$kernel->getContainer();
+        /** @var UserRepository $userRepository */
+        $userRepository = $container->get('doctrine')->getRepository(User::class);
+        $user = $userRepository->loadUserByUsername('john_user');
+        self::assertInstanceOf(User::class, $user);
+        self::assertTrue($user->isSuperAdmin());
+    }
+
+    public function testPromoteSuperFailsOnSuperAdmin()
+    {
+        $commandTester = $this->callCommand('susan_super', null, true);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('[WARNING] User "susan_super" does already have the super administrator role.', $output);
+    }
+
+    public function testPromoteTeamleadFailsOnTeamlead()
+    {
+        $commandTester = $this->callCommand('tony_teamlead', 'ROLE_TEAMLEAD', false);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('[WARNING] User "tony_teamlead" did already have "ROLE_TEAMLEAD" role.', $output);
+    }
+
+    public function testPromoteRoleAndSuperFails()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('You can pass either the role or the --super option (but not both simultaneously).');
+
+        $this->callCommand('john_user', 'ROLE_TEAMLEAD', true);
     }
 }

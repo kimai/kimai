@@ -26,15 +26,13 @@ class CreateUserCommandTest extends KernelTestCase
     /**
      * @var Application
      */
-    protected $application;
+    private $application;
 
     protected function setUp(): void
     {
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
         $container = self::$kernel->getContainer();
-
-        $passwordEncoder = $container->get('security.password_encoder');
 
         $this->application->add(new CreateUserCommand(
             $container->get(UserService::class),
@@ -67,7 +65,7 @@ class CreateUserCommandTest extends KernelTestCase
 
     protected function createUser($username, $email, $role, $password)
     {
-        $command = $this->application->find('kimai:create-user');
+        $command = $this->application->find('kimai:user:create');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
