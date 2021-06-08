@@ -47,10 +47,6 @@ abstract class AbstractRoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $username = $input->getArgument('username');
-        if (!$input->getArgument('username')) {
-            throw new \Exception('Username can not be empty');
-        }
-
         $role = $input->getArgument('role');
         $super = (true === $input->getOption('super'));
 

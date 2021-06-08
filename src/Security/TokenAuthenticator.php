@@ -27,14 +27,8 @@ class TokenAuthenticator extends AbstractGuardAuthenticator implements PasswordA
     public const HEADER_TOKEN = 'X-AUTH-TOKEN';
     public const HEADER_JAVASCRIPT = 'X-AUTH-SESSION';
 
-    /**
-     * @var EncoderFactoryInterface
-     */
-    protected $encoderFactory;
+    private $encoderFactory;
 
-    /**
-     * @param EncoderFactoryInterface $encoderFactory
-     */
     public function __construct(EncoderFactoryInterface $encoderFactory)
     {
         $this->encoderFactory = $encoderFactory;
@@ -167,7 +161,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator implements PasswordA
 
     public function getPassword($credentials): ?string
     {
-        if (!\array_key_exists('token', $credentials) || empty($credentials['token'])) {
+        if (!\is_array($credentials) || !\array_key_exists('token', $credentials) || empty($credentials['token'])) {
             return null;
         }
 

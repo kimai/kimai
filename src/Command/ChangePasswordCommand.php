@@ -59,14 +59,7 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $username = $input->getArgument('username');
-        if (!$input->getArgument('username')) {
-            throw new \Exception('Username can not be empty');
-        }
-
         $password = $input->getArgument('password');
-        if (!$input->getArgument('password')) {
-            throw new \Exception('Username can not be empty');
-        }
 
         $user = $this->userService->findUserByUsernameOrThrowException($username);
 

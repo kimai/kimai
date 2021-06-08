@@ -31,6 +31,7 @@ class EmailPasswordResetEventTest extends TestCase
 
         $sut = new EmailPasswordResetEvent($user, $email);
 
-        $this->assertEquals($email, $sut->getEmail());
+        self::assertSame($email, $sut->getEmail());
+        self::assertSame($user, $sut->getUser());
     }
 }

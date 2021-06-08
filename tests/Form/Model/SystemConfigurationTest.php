@@ -52,8 +52,9 @@ class SystemConfigurationTest extends TestCase
 
         $config2 = new Configuration();
         $config2->setName('bar');
-        $sut->addConfiguration($config);
+        $sut->addConfiguration($config2);
 
         self::assertSame($config, $sut->getConfigurationByName('foo'));
+        self::assertNull($sut->getConfigurationByName('bar2'));
     }
 }

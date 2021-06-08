@@ -18,6 +18,7 @@ use OneLogin\Saml2\Error;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
  * @covers \App\Saml\Logout\SamlLogoutHandler
@@ -36,6 +37,23 @@ class SamlLogoutHandlerTest extends TestCase
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
         $factory->expects($this->once())->method('create')->willReturn($auth);
+
+        $sut = new SamlLogoutHandler($factory);
+        $sut->logout($request, $response, $token);
+    }
+
+    public function testLogoutWithWrongTokenWillNotCallMethods()
+    {
+        $auth = $this->getMockBuilder(Auth::class)->disableOriginalConstructor()->getMock();
+        $auth->expects($this->never())->method('processSLO');
+        $auth->expects($this->never())->method('getSLOurl');
+
+        $request = new Request();
+        $response = new Response();
+        $token = new UsernamePasswordToken(new User(), [], 'test');
+
+        $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
+        $factory->expects($this->never())->method('create');
 
         $sut = new SamlLogoutHandler($factory);
         $sut->logout($request, $response, $token);

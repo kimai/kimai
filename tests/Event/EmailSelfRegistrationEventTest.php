@@ -31,6 +31,7 @@ class EmailSelfRegistrationEventTest extends TestCase
 
         $sut = new EmailSelfRegistrationEvent($user, $email);
 
-        $this->assertEquals($email, $sut->getEmail());
+        self::assertSame($email, $sut->getEmail());
+        self::assertSame($user, $sut->getUser());
     }
 }
