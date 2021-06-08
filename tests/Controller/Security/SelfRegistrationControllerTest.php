@@ -10,7 +10,6 @@
 namespace App\Tests\Controller\Security;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
 use App\Tests\Controller\ControllerBaseTest;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
@@ -97,17 +96,6 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         return $this->loadUserFromDatabase($username);
-    }
-
-    private function loadUserFromDatabase(string $username)
-    {
-        $container = self::$kernel->getContainer();
-        /** @var UserRepository $userRepository */
-        $userRepository = $container->get('doctrine')->getRepository(User::class);
-        $user = $userRepository->loadUserByUsername($username);
-        self::assertInstanceOf(User::class, $user);
-
-        return $user;
     }
 
     public function testCheckEmailWithoutEmail()

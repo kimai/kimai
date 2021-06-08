@@ -70,5 +70,11 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/resetting/check-email?username=john_user'));
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $user = $this->loadUserFromDatabase('john_user');
+        $token = $user->getConfirmationToken();
+
+        $this->request($client, '/resetting/reset/' . $token);
+        $this->assertTrue($client->getResponse()->isSuccessful());
     }
 }
