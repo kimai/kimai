@@ -53,13 +53,16 @@ class PromoteUserCommandTest extends KernelTestCase
         self::assertInstanceOf(PromoteUserCommand::class, $command);
     }
 
-    protected function callCommand(string $username, ?string $role, bool $super = false)
+    protected function callCommand(?string $username, ?string $role, bool $super = false)
     {
         $command = $this->application->find('kimai:user:promote');
         $input = [
             'command' => $command->getName(),
-            'role' => $role,
         ];
+
+        if ($role !== null) {
+            $input['role'] = $role;
+        }
 
         if ($username !== null) {
             $input['username'] = $username;
