@@ -34,6 +34,18 @@ abstract class ControllerBaseTest extends WebTestCase
         parent::tearDown();
     }
 
+    /**
+     * Using a special container, to access private services as well.
+     *
+     * @param string $service
+     * @return object|null
+     * @see https://symfony.com/blog/new-in-symfony-4-1-simpler-service-testing
+     */
+    protected function getPrivateService(string $service)
+    {
+        return self::$container->get($service);
+    }
+
     protected function setSystemConfiguration(string $name, $value): void
     {
         $repository = static::$kernel->getContainer()->get(ConfigurationRepository::class);

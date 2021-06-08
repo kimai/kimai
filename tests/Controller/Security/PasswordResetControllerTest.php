@@ -16,11 +16,11 @@ use App\Tests\Controller\ControllerBaseTest;
  */
 class PasswordResetControllerTest extends ControllerBaseTest
 {
-    private function testResetActionWithDeactivatedFeature(string $route)
+    private function testResetActionWithDeactivatedFeature(string $route, string $method = 'GET')
     {
         $client = self::createClient();
         $this->setSystemConfiguration('user.password_reset', false);
-        $this->request($client, $route);
+        $this->request($client, $route, $method);
         $this->assertRouteNotFound($client);
     }
 
@@ -31,7 +31,7 @@ class PasswordResetControllerTest extends ControllerBaseTest
 
     public function testSendEmailRequestWithDeactivatedFeature()
     {
-        $this->testResetActionWithDeactivatedFeature('/resetting/send-email');
+        $this->testResetActionWithDeactivatedFeature('/resetting/send-email', 'POST');
     }
 
     public function testCheckEmailWithDeactivatedFeature()
@@ -42,5 +42,33 @@ class PasswordResetControllerTest extends ControllerBaseTest
     public function testResetWithDeactivatedFeature()
     {
         $this->testResetActionWithDeactivatedFeature('/resetting/reset/1234567890');
+    }
+
+    public function testResetRequestPageIsRendered()
+    {
+        $client = self::createClient();
+
+        $this->setSystemConfiguration('user.password_reset', true);
+        $this->request($client, '/resetting/request');
+
+        $response = $client->getResponse();
+        $this->assertTrue($response->isSuccessful());
+
+        $content = $response->getContent();
+        $this->assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
+        $this->assertStringContainsString('Reset your password', $content);
+        $this->assertStringContainsString('<form action="/en/resetting/send-email" method="POST" class="fos_user_resetting_request">', $content);
+        $this->assertStringContainsString('<input type="text"', $content);
+        $this->assertStringContainsString('id="username" name="username" required="required"', $content);
+        $this->assertStringContainsString('>Reset your password</button>', $content);
+
+        $form = $client->getCrawler()->filter('form.fos_user_resetting_request')->form();
+        $client->submit($form, [
+            'username' => 'john_user',
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/resetting/check-email?username=john_user'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
     }
 }
