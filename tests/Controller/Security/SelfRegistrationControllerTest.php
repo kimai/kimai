@@ -9,13 +9,44 @@
 
 namespace App\Tests\Controller\Security;
 
+use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Tests\Controller\ControllerBaseTest;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 /**
  * @group integration
  */
 class SelfRegistrationControllerTest extends ControllerBaseTest
 {
+    private function testRegisterActionWithDeactivatedFeature(string $route)
+    {
+        $client = self::createClient();
+        $this->setSystemConfiguration('user.registration', false);
+        $this->request($client, $route);
+        $this->assertRouteNotFound($client);
+    }
+
+    public function testRegisterWithDeactivatedFeature()
+    {
+        $this->testRegisterActionWithDeactivatedFeature('/register/');
+    }
+
+    public function testCheckEmailWithDeactivatedFeature()
+    {
+        $this->testRegisterActionWithDeactivatedFeature('/register/check-email');
+    }
+
+    public function testConfirmWithDeactivatedFeature()
+    {
+        $this->testRegisterActionWithDeactivatedFeature('/confirm/123123');
+    }
+
+    public function testConfirmedWithDeactivatedFeature()
+    {
+        $this->testRegisterActionWithDeactivatedFeature('/confirmed');
+    }
+
     public function testRegisterAccountPageIsRendered()
     {
         $client = self::createClient();
@@ -41,9 +72,8 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->assertStringContainsString('>Register</button>', $content);
     }
 
-    public function testRegisterAccount()
+    private function createUser(KernelBrowser $client, string $username, string $email, string $password): User
     {
-        $client = self::createClient();
         $this->setSystemConfiguration('user.registration', true);
         $this->request($client, '/register/');
 
@@ -53,11 +83,11 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=fos_user_registration_form]')->form();
         $client->submit($form, [
             'fos_user_registration_form' => [
-                'email' => 'register@example.com',
-                'username' => 'example',
+                'email' => $email,
+                'username' => $username,
                 'plainPassword' => [
-                    'first' => 'test1234',
-                    'second' => 'test1234',
+                    'first' => $password,
+                    'second' => $password,
                 ],
             ]
         ]);
@@ -66,10 +96,79 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
+        return $this->loadUserFromDatabase($username);
+    }
+
+    private function loadUserFromDatabase(string $username)
+    {
+        $container = self::$kernel->getContainer();
+        /** @var UserRepository $userRepository */
+        $userRepository = $container->get('doctrine')->getRepository(User::class);
+        $user = $userRepository->loadUserByUsername($username);
+        self::assertInstanceOf(User::class, $user);
+
+        return $user;
+    }
+
+    public function testCheckEmailWithoutEmail()
+    {
+        $client = self::createClient();
+        $this->setSystemConfiguration('user.registration', true);
+        $this->request($client, '/register/check-email');
+
+        $this->assertIsRedirect($client, $this->createUrl('/register/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function testRegisterAccount()
+    {
+        $client = self::createClient();
+        $this->createUser($client, 'example', 'register@example.com', 'test1234');
+
         $content = $client->getResponse()->getContent();
         $this->assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
         $this->assertStringContainsString('An email has been sent to register@example.com. It contains an activation link you must click to activate your account.', $content);
         $this->assertStringContainsString('<a href="/en/login">', $content);
+    }
+
+    public function testConfirmWithInvalidToken()
+    {
+        $client = self::createClient();
+        $this->setSystemConfiguration('user.registration', true);
+        $this->request($client, '/register/confirm/1234567890');
+
+        $this->assertIsRedirect($client, $this->createUrl('/login'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function testConfirmAccount()
+    {
+        $client = self::createClient();
+        $user = $this->createUser($client, 'example', 'register@example.com', 'test1234');
+
+        $token = $user->getConfirmationToken();
+        self::assertNotEmpty($token);
+        self::assertFalse($user->isEnabled());
+
+        $this->request($client, '/register/confirm/' . $token);
+        $this->assertIsRedirect($client, $this->createUrl('/register/confirmed'));
+
+        $user = $this->loadUserFromDatabase('example');
+        self::assertTrue($user->isEnabled());
+    }
+
+    public function testConfirmedAnonymousRedirectsToLogin()
+    {
+        $client = self::createClient();
+        $this->setSystemConfiguration('user.registration', true);
+        $this->request($client, '/register/confirmed');
+
+        // AccessDeniedException redirects to login
+        $this->assertIsRedirect($client, $this->createUrl('/login'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
     /**
