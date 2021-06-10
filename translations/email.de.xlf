@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>Sie haben sich für die Kimai-Zeiterfassung mit der E-Mail-Adresse %email% registriert. Jetzt müssen Sie den Link in den nächsten Stunden anklicken, bevor der Link keine Gültigkeit mehr hat.</target>
+        <target>Sie haben sich für die Kimai-Zeiterfassung mit der E-Mail-Adresse %email% registriert. Bitte klicken Sie den Link in den nächsten Stunden an, bevor er keine Gültigkeit mehr hat.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>

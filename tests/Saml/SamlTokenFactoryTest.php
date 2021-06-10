@@ -11,7 +11,7 @@ namespace App\Tests\Saml;
 
 use App\Entity\User;
 use App\Saml\SamlTokenFactory;
-use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlToken;
+use App\Saml\Token\SamlToken;
 use PHPUnit\Framework\TestCase;
 
 /**

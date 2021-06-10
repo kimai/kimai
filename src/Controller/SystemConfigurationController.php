@@ -265,7 +265,60 @@ final class SystemConfigurationController extends AbstractController
             }
         }
 
-        return [
+        $authentication = (new SystemConfigurationModel())
+            ->setSection(SystemConfigurationModel::SECTION_AUTHENTICATION)
+            ->setConfiguration([
+                (new Configuration())
+                    ->setName('user.login')
+                    ->setLabel('user_auth_login')
+                    ->setTranslationDomain('system-configuration')
+                    ->setType(YesNoType::class),
+                (new Configuration())
+                    ->setName('user.registration')
+                    ->setLabel('user_auth_registration')
+                    ->setTranslationDomain('system-configuration')
+                    ->setType(YesNoType::class),
+                (new Configuration())
+                    ->setName('user.password_reset')
+                    ->setTranslationDomain('system-configuration')
+                    ->setLabel('user_auth_password_reset')
+                    ->setType(YesNoType::class),
+                (new Configuration())
+                    ->setName('user.password_reset_retry_ttl')
+                    ->setTranslationDomain('system-configuration')
+                    ->setLabel('user_auth_password_reset_retry_ttl')
+                    ->setConstraints([new NotNull(), new GreaterThanOrEqual(['value' => 60])])
+                    ->setType(IntegerType::class),
+                (new Configuration())
+                    ->setName('user.password_reset_token_ttl')
+                    ->setTranslationDomain('system-configuration')
+                    ->setLabel('user_auth_password_reset_token_ttl')
+                    ->setConstraints([new NotNull(), new GreaterThanOrEqual(['value' => 60])])
+                    ->setType(IntegerType::class),
+                /*
+                (new Configuration())
+                    ->setName('ldap.activate')
+                    ->setLabel('ldap_activate')
+                    ->setTranslationDomain('system-configuration')
+                    ->setType(YesNoType::class),
+                (new Configuration())
+                    ->setName('saml.activate')
+                    ->setLabel('saml_activate')
+                    ->setTranslationDomain('system-configuration')
+                    ->setType(YesNoType::class),
+                */
+            ]);
+
+        if (!$this->configurations->isSamlActive()) {
+            $authentication->getConfigurationByName('user.login')->setEnabled(false);
+        }
+
+        if (!$this->configurations->isPasswordResetActive()) {
+            $authentication->getConfigurationByName('user.password_reset_retry_ttl')->setEnabled(false);
+            $authentication->getConfigurationByName('user.password_reset_token_ttl')->setEnabled(false);
+        }
+
+        $configurationModels = [
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_TIMESHEET)
                 ->setConfiguration([
@@ -399,6 +452,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                 ]),
+            $authentication,
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_FORM_CUSTOMER)
                 ->setConfiguration([
@@ -539,5 +593,7 @@ final class SystemConfigurationController extends AbstractController
                     ->setOptions(['input' => 'string']),
                 ]),
         ];
+
+        return $configurationModels;
     }
 }

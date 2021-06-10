@@ -12,10 +12,19 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 **ATTENTION** 
 - This release bumps the minimum required [PHP version to 7.3](https://www.kimai.org/blog/2021/php8-support-php72-dropped/)
+- Self-registration is disabled by default
+- Self-registration now always requires email confirmation
 - All plugins that use own databases need to be updated as well
 
+**LDAP & SAML**
+- SAML users need to activate it by setting the new `kimai.saml.activate: true` config
+- LDAP and SAML users need to remove the complete `security` section from their `local.yaml`
+- Please verify your config with the [LDAP](https://www.kimai.org/documentation/ldap.html) and [SAML](https://www.kimai.org/documentation/saml.html) documentation
+
+**DEVELOPER**
 PHP 8 compatibility forced to upgrade MANY libraries, including but not limited to:
 
+- Removed FOSUserBundle and hslavich/oneloginsaml
 - Doctrine Migrations, whose new major version forces the plugin updates 
 - Gedmo v3 (which include BC breaks in definitions)
 - Doctrine DBAL and others, which required PHP 7.3 as well

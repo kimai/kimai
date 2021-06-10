@@ -18,6 +18,7 @@ class SystemConfiguration
     public const SECTION_FORM_CUSTOMER = 'form_customer';
     public const SECTION_FORM_USER = 'form_user';
     public const SECTION_THEME = 'theme';
+    public const SECTION_AUTHENTICATION = 'authentication';
     public const SECTION_CALENDAR = 'calendar';
     public const SECTION_BRANDING = 'branding';
 
@@ -48,6 +49,17 @@ class SystemConfiguration
     public function getConfiguration(): array
     {
         return $this->configuration;
+    }
+
+    public function getConfigurationByName(string $name): ?Configuration
+    {
+        foreach ($this->configuration as $configuration) {
+            if ($configuration->getName() === $name) {
+                return $configuration;
+            }
+        }
+
+        return null;
     }
 
     /**

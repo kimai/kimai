@@ -9,13 +9,16 @@
 
 namespace App\Tests\Saml\Provider;
 
+use App\Configuration\SamlConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Saml\Provider\SamlProvider;
 use App\Saml\SamlTokenFactory;
+use App\Saml\Token\SamlToken;
 use App\Saml\User\SamlUserFactory;
 use App\Security\DoctrineUserProvider;
-use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlToken;
+use App\Tests\Configuration\TestConfigLoader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -27,7 +30,7 @@ use Symfony\Component\Security\Core\User\ChainUserProvider;
  */
 class SamlProviderTest extends TestCase
 {
-    protected function getSamlProvider($mapping = null, $loadUser = false, ?SamlUserFactory $userFactory = null): SamlProvider
+    protected function getSamlProvider(array $mapping = null, ?User $user = null, ?SamlUserFactory $userFactory = null): SamlProvider
     {
         if (null === $mapping) {
             $mapping = [
@@ -43,15 +46,21 @@ class SamlProviderTest extends TestCase
         }
 
         if (null === $userFactory) {
-            $userFactory = new SamlUserFactory($mapping);
+            $configuration = new SystemConfiguration(new TestConfigLoader([]), [
+                'saml' => $mapping
+            ]);
+
+            $userFactory = new SamlUserFactory(new SamlConfiguration($configuration));
         }
 
+        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['saml' => ['activate' => true]]);
+
         $repository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
-        if ($loadUser !== false) {
-            $repository->expects($this->once())->method('loadUserByUsername')->willReturn($loadUser);
+        if ($user !== null) {
+            $repository->expects($this->once())->method('loadUserByUsername')->willReturn($user);
         }
         $userProvider = new ChainUserProvider([new DoctrineUserProvider($repository)]);
-        $provider = new SamlProvider($repository, $userProvider, new SamlTokenFactory(), $userFactory);
+        $provider = new SamlProvider($repository, $userProvider, new SamlTokenFactory(), $userFactory, $systemConfig);
 
         return $provider;
     }

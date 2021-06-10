@@ -70,14 +70,24 @@ class AppExtension extends Extension
 
         $this->createPermissionParameter($config['permissions'], $container);
         $this->createThemeParameter($config['theme'], $container);
-        $this->createUserParameter($config['user'], $container);
-        $container->setParameter('kimai.saml', $config['saml']);
-        $container->setParameter('kimai.saml.connection', $config['saml']['connection']);
         $container->setParameter('kimai.timesheet', $config['timesheet']); // @deprecated since 1.13
         $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
         $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
 
-        $this->setLdapParameter($config['ldap'], $container);
+        if (!isset($config['ldap']['connection']['baseDn'])) {
+            $config['ldap']['connection']['baseDn'] = $config['ldap']['user']['baseDn'];
+        }
+
+        if (empty($config['ldap']['connection']['accountFilterFormat']) && $config['ldap']['connection']['bindRequiresDn']) {
+            $filter = '';
+            if (!empty($config['ldap']['user']['filter'])) {
+                $filter = $config['ldap']['user']['filter'];
+            }
+            $config['ldap']['connection']['accountFilterFormat'] = '(&' . $filter . '(' . $config['ldap']['user']['usernameAttribute'] . '=%s))';
+        }
+
+        // @deprecated since 1.15
+        $container->setParameter('kimai.ldap', $config['ldap']);
 
         // translation files, which can overwrite the default kimai translations
         $localTranslations = [];
@@ -127,23 +137,6 @@ class AppExtension extends Extension
         }
 
         $container->setParameter('kimai.languages', $config);
-    }
-
-    protected function setLdapParameter(array $config, ContainerBuilder $container)
-    {
-        if (!isset($config['connection']['baseDn'])) {
-            $config['connection']['baseDn'] = $config['user']['baseDn'];
-        }
-
-        if (empty($config['connection']['accountFilterFormat']) && $config['connection']['bindRequiresDn']) {
-            $filter = '';
-            if (!empty($config['user']['filter'])) {
-                $filter = $config['user']['filter'];
-            }
-            $config['connection']['accountFilterFormat'] = '(&' . $filter . '(' . $config['user']['usernameAttribute'] . '=%s))';
-        }
-
-        $container->setParameter('kimai.ldap', $config);
     }
 
     /**
@@ -227,27 +220,6 @@ class AppExtension extends Extension
         $container->setParameter('kimai.theme', $config);
         $container->setParameter('kimai.theme.select_type', $config['select_type']);
         $container->setParameter('kimai.theme.show_about', $config['show_about']);
-    }
-
-    /**
-     * @param array $config
-     * @param ContainerBuilder $container
-     */
-    protected function createUserParameter(array $config, ContainerBuilder $container)
-    {
-        if (!$config['registration']) {
-            $routes = $container->getParameter('admin_lte_theme.routes');
-            $routes['adminlte_registration'] = null;
-            $container->setParameter('admin_lte_theme.routes', $routes);
-        }
-
-        if (!$config['password_reset']) {
-            $routes = $container->getParameter('admin_lte_theme.routes');
-            $routes['adminlte_password_reset'] = null;
-            $container->setParameter('admin_lte_theme.routes', $routes);
-        }
-
-        $container->setParameter('kimai.fosuser', $config);
     }
 
     /**

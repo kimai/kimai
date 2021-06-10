@@ -147,7 +147,19 @@
                 <source>login_required</source>
                 <target>Missing permission. Redirect to login?</target>
             </trans-unit>
+            <trans-unit id="registration.check_email">
+                <source>registration.check_email</source>
+                <target>An email has been sent to %email%. It contains an activation link you must click to activate your account.</target>
+            </trans-unit>
+            <trans-unit id="resetting.check_email">
+                <source>resetting.check_email</source>
+                <target>
+                    An email has been sent. It contains a link you must click to reset your password.
+                    Note: You can only request a new password once within %tokenLifetime% hours.
 
+                    If you don't get an email check your spam folder or try again.
+                </target>
+            </trans-unit>
             <!--
               Menu / Navbar items
             -->

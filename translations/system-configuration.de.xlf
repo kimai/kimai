@@ -270,6 +270,38 @@
         <source>help.theme.color_choices</source>
         <target>Kommagetrennte Liste von HTML Farbcodes. Farbnamen können festgelegt werden, indem dem Farbcode ein Name und das Trennzeichen | vorangestellt wird, z. B.: White|#ffffff,Black|#000000.</target>
       </trans-unit>
+      <trans-unit id="authentication">
+        <source>authentication</source>
+        <target>Authentifizierung</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target>Login Formular</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target>Benutzer Registrierung</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target>Passwort vergessen</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target>Passwort vergessen - Sekunden, bevor ein Benutzer die nächste E-Mail anfordern kann</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target>Passwort vergessen - Sekunden, bevor ein Zurücksetzen-Link abläuft</target>
+      </trans-unit>
+      <trans-unit id="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target>LDAP Anmeldung</target>
+      </trans-unit>
+      <trans-unit id="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target>SAML Anmeldung</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

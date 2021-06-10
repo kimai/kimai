@@ -12,7 +12,6 @@ namespace App\Tests\Security;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Security\DoctrineUserProvider;
-use Hslavich\OneloginSamlBundle\Security\User\SamlUserInterface;
 use KevinPapst\AdminLTEBundle\Model\UserInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -59,8 +58,6 @@ class DoctrineUserProviderTest extends TestCase
         self::assertTrue($sut->supportsClass(User::class));
         self::assertTrue($sut->supportsClass('App\Entity\User'));
         self::assertFalse($sut->supportsClass(UserInterface::class));
-        self::assertFalse($sut->supportsClass(SamlUserInterface::class));
-        self::assertFalse($sut->supportsClass(\FOS\UserBundle\Model\User::class));
         self::assertFalse($sut->supportsClass(TestUserEntity::class));
     }
 
@@ -70,7 +67,6 @@ class DoctrineUserProviderTest extends TestCase
         $this->expectExceptionMessage('Expected an instance of App\Entity\User, but got "App\Tests\Security\TestUserEntity".');
 
         $user = new TestUserEntity();
-        $user->setUsername('foobar');
 
         $repository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
 
