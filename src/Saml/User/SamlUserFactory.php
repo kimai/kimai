@@ -9,38 +9,22 @@
 
 namespace App\Saml\User;
 
+use App\Configuration\SamlConfiguration;
 use App\Entity\User;
-use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlTokenInterface;
-use Hslavich\OneloginSamlBundle\Security\User\SamlUserFactoryInterface;
+use App\Saml\Token\SamlTokenInterface;
 
-final class SamlUserFactory implements SamlUserFactoryInterface
+final class SamlUserFactory
 {
-    /**
-     * @var array
-     */
-    private $mapping;
-    /**
-     * @var string
-     */
-    private $groupAttribute;
-    /**
-     * @var array
-     */
-    private $groupMapping;
+    private $configuration;
 
-    public function __construct(array $attributes)
+    public function __construct(SamlConfiguration $configuration)
     {
-        $this->mapping = $attributes['mapping'];
-        $this->groupAttribute = $attributes['roles']['attribute'];
-        $this->groupMapping = $attributes['roles']['mapping'];
+        $this->configuration = $configuration;
     }
 
-    /**
-     * @param SamlTokenInterface $token
-     * @return User
-     */
-    public function createUser(SamlTokenInterface $token)
+    public function createUser(SamlTokenInterface $token): User
     {
+        // Not using UserService: user settings should be set via SAML attributes
         $user = new User();
         $user->setEnabled(true);
         $user->setUsername($token->getUsername());
@@ -52,17 +36,20 @@ final class SamlUserFactory implements SamlUserFactoryInterface
 
     public function hydrateUser(User $user, SamlTokenInterface $token): void
     {
+        $groupAttribute = $this->configuration->getRolesAttribute();
+        $groupMapping = $this->configuration->getRolesMapping();
+
         // extract user roles from a special saml attribute
-        if (!empty($this->groupAttribute) && $token->hasAttribute($this->groupAttribute)) {
+        if (!empty($groupAttribute) && $token->hasAttribute($groupAttribute)) {
             $groupMap = [];
-            foreach ($this->groupMapping as $mapping) {
+            foreach ($groupMapping as $mapping) {
                 $field = $mapping['kimai'];
                 $attribute = $mapping['saml'];
                 $groupMap[$attribute] = $field;
             }
 
             $roles = [];
-            $samlGroups = $token->getAttribute($this->groupAttribute);
+            $samlGroups = $token->getAttribute($groupAttribute);
             foreach ($samlGroups as $groupName) {
                 if (\array_key_exists($groupName, $groupMap)) {
                     $roles[] = $groupMap[$groupName];
@@ -71,7 +58,9 @@ final class SamlUserFactory implements SamlUserFactoryInterface
             $user->setRoles($roles);
         }
 
-        foreach ($this->mapping as $mapping) {
+        $mappingConfig = $this->configuration->getAttributeMapping();
+
+        foreach ($mappingConfig as $mapping) {
             $field = $mapping['kimai'];
             $attribute = $mapping['saml'];
             $value = $this->getPropertyValue($token, $attribute);

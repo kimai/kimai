@@ -2,6 +2,18 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="en" datatype="plaintext" original="validators.en.xlf">
         <body>
+            <trans-unit id="The entered passwords don't match.">
+                <source>The entered passwords don't match.</source>
+                <target>The entered passwords don't match.</target>
+            </trans-unit>
+            <trans-unit id="The email is already used.">
+                <source>The email is already used.</source>
+                <target>The email is already used.</target>
+            </trans-unit>
+            <trans-unit id="The username is already used.">
+                <source>The username is already used.</source>
+                <target>The username is already used.</target>
+            </trans-unit>
             <trans-unit id="This value is not a valid role.">
                 <source>This value is not a valid role.</source>
                 <target>This value is not a valid role.</target>

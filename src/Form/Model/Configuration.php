@@ -50,7 +50,7 @@ final class Configuration
      */
     private $constraints = [];
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

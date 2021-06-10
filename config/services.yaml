@@ -32,6 +32,9 @@ services:
     # APPLICATION CORE
     # ================================================================================
 
+    security.user.provider.chain:
+        class: App\Security\KimaiUserProvider
+
     App\EventSubscriber\RedirectToLocaleSubscriber:
         arguments: ['@router', '%app_locales%', '%locale%']
 
@@ -56,9 +59,6 @@ services:
     App\Configuration\ThemeConfiguration:
         arguments:
             $settings: '%kimai.theme%'
-
-    App\Configuration\LdapConfiguration:
-        arguments: ['%kimai.ldap%']
 
     App\Utils\MPdfConverter:
         arguments: ['%kernel.cache_dir%']

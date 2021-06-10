@@ -512,11 +512,20 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
-                ->booleanNode('registration')
+                ->booleanNode('login')
                     ->defaultTrue()
+                ->end()
+                ->booleanNode('registration')
+                    ->defaultFalse()
                 ->end()
                 ->booleanNode('password_reset')
                     ->defaultTrue()
+                ->end()
+                ->integerNode('password_reset_retry_ttl')
+                    ->defaultValue(7200)
+                ->end()
+                ->integerNode('password_reset_token_ttl')
+                    ->defaultValue(86400)
                 ->end()
             ->end()
         ;
@@ -670,6 +679,9 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
+                ->booleanNode('activate')
+                    ->defaultFalse()
+                ->end()
                 ->arrayNode('connection')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -767,13 +779,13 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->validate()
                 ->ifTrue(static function ($v) {
-                    return null !== $v['connection']['host'] && !\extension_loaded('ldap');
+                    return $v['activate'] && !\extension_loaded('ldap');
                 })
                 ->thenInvalid('LDAP is activated, but the LDAP PHP extension is not loaded.')
             ->end()
             ->validate()
                 ->ifTrue(static function ($v) {
-                    return null !== $v['connection']['host'] && empty($v['user']['baseDn']);
+                    return $v['activate'] && empty($v['user']['baseDn']);
                 })
                 ->thenInvalid('The "ldap.user.baseDn" config must be set if LDAP is activated.')
             ->end()

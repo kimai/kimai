@@ -10,11 +10,13 @@
 namespace App\Tests\Ldap;
 
 use App\Configuration\LdapConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Ldap\LdapDriver;
 use App\Ldap\LdapDriverException;
 use App\Ldap\LdapManager;
 use App\Ldap\LdapUserHydrator;
+use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Security\RoleServiceFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -39,7 +41,7 @@ class LdapManagerTest extends TestCase
             ];
         }
 
-        $config = new LdapConfiguration([
+        $conf = [
             'user' => [
                 'attributes' => [],
                 'filter' => '(&(objectClass=inetOrgPerson))',
@@ -48,7 +50,9 @@ class LdapManagerTest extends TestCase
                 'baseDn' => 'ou=users, dc=kimai, dc=org',
             ],
             'role' => $roleConfig,
-        ]);
+        ];
+        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $conf]);
+        $config = new LdapConfiguration($systemConfig);
 
         $roles = [
             'ROLE_TEAMLEAD' => ['ROLE_USER'],

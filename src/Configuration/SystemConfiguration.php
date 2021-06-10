@@ -23,11 +23,94 @@ class SystemConfiguration implements SystemBundleConfiguration
         return $repository->getConfiguration();
     }
 
+    // ========== Login form ==========
+
+    public function isLoginFormActive(): bool
+    {
+        if ($this->isLdapActive()) {
+            return true;
+        }
+
+        // if SAML is active, the login form can be deactivated
+        if (!$this->isSamlActive()) {
+            return true;
+        }
+
+        return (bool) $this->find('user.login');
+    }
+
+    public function isSelfRegistrationActive(): bool
+    {
+        return (bool) $this->find('user.registration');
+    }
+
+    public function getPasswordResetTokenLifetime(): int
+    {
+        return (int) $this->find('user.password_reset_token_ttl');
+    }
+
+    public function getPasswordResetRetryLifetime(): int
+    {
+        return (int) $this->find('user.password_reset_retry_ttl');
+    }
+
+    public function isPasswordResetActive(): bool
+    {
+        return (bool) $this->find('user.password_reset');
+    }
+
     // ========== SAML configurations ==========
 
     public function isSamlActive(): bool
     {
         return (bool) $this->find('saml.activate');
+    }
+
+    public function getSamlTitle(): string
+    {
+        return (string) $this->find('saml.title');
+    }
+
+    public function getSamlAttributeMapping(): array
+    {
+        return (array) $this->find('saml.mapping');
+    }
+
+    public function getSamlRolesAttribute(): ?string
+    {
+        return (string) $this->find('saml.roles.attribute');
+    }
+
+    public function getSamlRolesMapping(): array
+    {
+        return (array) $this->find('saml.roles.mapping');
+    }
+
+    public function getSamlConnection(): array
+    {
+        return (array) $this->find('saml.connection');
+    }
+
+    // ========== LDAP configurations ==========
+
+    public function isLdapActive(): bool
+    {
+        return (bool) $this->find('ldap.activate');
+    }
+
+    public function getLdapRoleParameters(): array
+    {
+        return (array) $this->find('ldap.role');
+    }
+
+    public function getLdapUserParameters(): array
+    {
+        return (array) $this->find('ldap.user');
+    }
+
+    public function getLdapConnectionParameters(): array
+    {
+        return (array) $this->find('ldap.connection');
     }
 
     // ========== Calendar configurations ==========
@@ -121,6 +204,7 @@ class SystemConfiguration implements SystemBundleConfiguration
         return $this->find('defaults.user.language');
     }
 
+    // TODO this is only used to display the hourly rate in the user profile
     public function getUserDefaultCurrency(): string
     {
         return $this->find('defaults.user.currency');
