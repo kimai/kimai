@@ -74,10 +74,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Разрешенное количество одновременно запущенных таймеров</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Количество запущенных таймеров, после которого отображается предупреждение</target>
-      </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target>Минимальное количество букв для старта автозавершения</target>

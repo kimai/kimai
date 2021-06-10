@@ -54,10 +54,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Nombre autorisé de relevés d'activité simultanées</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Nombre de relevés de temps d'activité à partir duquel un message d'avertissement est affiché</target>
-      </trans-unit>
       <trans-unit id="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target>Afficher les numéros de semaine</target>

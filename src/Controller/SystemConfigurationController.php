@@ -351,13 +351,6 @@ final class SystemConfigurationController extends AbstractController
                             new GreaterThanOrEqual(['value' => 1])
                         ]),
                     (new Configuration())
-                        ->setName('timesheet.active_entries.soft_limit')
-                        ->setType(IntegerType::class)
-                        ->setTranslationDomain('system-configuration')
-                        ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 1])
-                        ]),
-                    (new Configuration())
                         ->setName('timesheet.time_increment')
                         ->setType(MinuteIncrementType::class)
                         ->setOptions(['deactivate' => false])

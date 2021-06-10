@@ -47,7 +47,6 @@ class TimesheetConfigurationTest extends TestCase
             'markdown_content' => false,
             'active_entries' => [
                 'hard_limit' => 99,
-                'soft_limit' => 15,
             ],
             'default_begin' => 'now',
         ];
@@ -64,7 +63,6 @@ class TimesheetConfigurationTest extends TestCase
             (new Configuration())->setName('timesheet.markdown_content')->setValue('1'),
             (new Configuration())->setName('timesheet.default_begin')->setValue('07:00'),
             (new Configuration())->setName('timesheet.active_entries.hard_limit')->setValue('7'),
-            (new Configuration())->setName('timesheet.active_entries.soft_limit')->setValue('3'),
         ];
     }
 
@@ -79,7 +77,7 @@ class TimesheetConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), []);
 
         $this->assertEquals(99, $sut->getActiveEntriesHardLimit());
-        $this->assertEquals(15, $sut->getActiveEntriesSoftLimit());
+        $this->assertEquals(99, $sut->getActiveEntriesSoftLimit());
         $this->assertFalse($sut->isAllowFutureTimes());
         $this->assertFalse($sut->isMarkdownEnabled());
         $this->assertEquals('duration_only', $sut->getTrackingMode());
@@ -100,7 +98,7 @@ class TimesheetConfigurationTest extends TestCase
     {
         $sut = $this->getSut($this->getDefaultSettings(), $this->getDefaultLoaderSettings());
         $this->assertEquals(7, $sut->getActiveEntriesHardLimit());
-        $this->assertEquals(3, $sut->getActiveEntriesSoftLimit());
+        $this->assertEquals(7, $sut->getActiveEntriesSoftLimit());
         $this->assertTrue($sut->isAllowFutureTimes());
         $this->assertTrue($sut->isMarkdownEnabled());
         $this->assertEquals('default', $sut->getTrackingMode());

@@ -199,6 +199,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->integerNode('soft_limit')
                             ->defaultValue(1)
+                            ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "kimai.timesheet.active_entries.hard_limit" instead.')
                             ->validate()
                                 ->ifTrue(function ($value) {
                                     return $value <= 0;

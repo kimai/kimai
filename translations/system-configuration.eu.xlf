@@ -62,10 +62,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Gehinezko sarrera kopurua aldi berean</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Aldibereko gehinezko sarrera kopurua oharra bota aurretik</target>
-      </trans-unit>
       <trans-unit id="label.theme.select_type">
         <source>label.theme.select_type</source>
         <target>Formulariotako aukeraketa kutxa mota</target>
