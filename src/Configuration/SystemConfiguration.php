@@ -211,6 +211,16 @@ class SystemConfiguration implements SystemBundleConfiguration
     }
 
     // ========== Timesheet configurations ==========
+/*
+    public function getTimesheetBreakWarningDuration(): int
+    {
+        return (int) $this->find('timesheet.rules.break_warning_duration');
+    }
+*/
+    public function getTimesheetLongRunningDuration(): int
+    {
+        return (int) $this->find('timesheet.rules.long_running_duration');
+    }
 
     public function getTimesheetDefaultBeginTime(): string
     {
@@ -350,6 +360,11 @@ class SystemConfiguration implements SystemBundleConfiguration
     public function isThemeColorsLimited(): bool
     {
         return (bool) $this->find('theme.colors_limited');
+    }
+
+    public function getThemeAutocompleteCharacters(): int
+    {
+        return (int) $this->find('theme.autocomplete_chars');
     }
 
     public function getThemeColorChoices(): ?array

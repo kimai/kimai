@@ -298,6 +298,14 @@
         <source>label.saml_activate</source>
         <target>SAML Anmeldung</target>
       </trans-unit>
+      <trans-unit id="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target>Dauer eines Zeiteintrags in Minuten, bevor eine Pausen-Warnung angezeigt wird (0 = deaktiviert)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target>Dauer eines Zeiteintrags in Minuten, bevor das Speichern abgelehnt wird (0 = deaktiviert)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
