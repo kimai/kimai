@@ -249,7 +249,9 @@ class SystemConfiguration implements SystemBundleConfiguration
 
     public function getTimesheetActiveEntriesSoftLimit(): int
     {
-        return (int) $this->find('timesheet.active_entries.soft_limit');
+        @trigger_error('The configuration timesheet.active_entries.soft_limit is deprecated since 1.15', E_USER_DEPRECATED);
+
+        return $this->getTimesheetActiveEntriesHardLimit();
     }
 
     public function getTimesheetDefaultRoundingDays(): string

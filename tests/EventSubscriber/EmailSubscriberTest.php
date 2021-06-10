@@ -9,6 +9,7 @@
 
 namespace App\Tests\EventSubscriber;
 
+use App\Configuration\MailConfiguration;
 use App\Entity\User;
 use App\Event\DashboardEvent;
 use App\Event\EmailEvent;
@@ -20,6 +21,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -38,8 +40,13 @@ class EmailSubscriberTest extends TestCase
 
     public function testSendIsTriggered()
     {
-        $mailer = $this->createMock(KimaiMailer::class);
+        $mailer = $this->createMock(MailerInterface::class);
         $mailer->expects($this->once())->method('send');
+
+        $mailer = new KimaiMailer(
+            new MailConfiguration('test@example.com'),
+            $mailer
+        );
 
         $sut = new EmailSubscriber($mailer);
 

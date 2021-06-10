@@ -62,10 +62,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target state="translated">İzin verilen eşzamanlı zaman kaydı sayısı</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target state="translated">Bir uyarı görüntülenmeden önce çalışan zaman çizelgesi kayıtlarının sayısı</target>
-      </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target state="translated">Otomatik tamamlama için gerekli en az harf adedi</target>

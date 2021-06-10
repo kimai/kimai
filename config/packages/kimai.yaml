@@ -69,13 +69,11 @@ kimai:
         #        factor: 1.5
 
         # If you want to limit the max. active entries per user, you can do it here.
-        # The soft_limit is used as theme setting and displays a warning color if the user has reached X active recordings
         # The hard_limit is used to detect how many active records are allowed per user:
         # - by default a user can only have one active time-record: it is automatically stopped when a new one is started
         # - when hard_limit is > 1 and the user is trying to start a new entry after reaching the limit, a warning is shown
         #   and the user has to stop an active entry first
         # active_entries:
-        #    soft_limit: 1
         #    hard_limit: 3
 
         # Rules that define timesheet validation and behaviour

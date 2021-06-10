@@ -376,7 +376,6 @@ class TimesheetControllerTest extends ControllerBaseTest
                     ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
                     ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => true],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 1],
-                    ['name' => 'timesheet.active_entries.soft_limit', 'value' => 1],
                 ]
             ]
         ]);
