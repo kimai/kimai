@@ -289,6 +289,8 @@ class ConfigurationTest extends TestCase
                     'lockdown_grace_period' => null,
                     'allow_overbooking_budget' => true,
                     'lockdown_period_timezone' => null,
+                    'break_warning_duration' => 360,
+                    'long_running_duration' => 720,
                 ],
                 'duration_increment' => null,
                 'time_increment' => null,

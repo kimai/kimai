@@ -211,12 +211,12 @@ class SystemConfiguration implements SystemBundleConfiguration
     }
 
     // ========== Timesheet configurations ==========
-/*
-    public function getTimesheetBreakWarningDuration(): int
-    {
-        return (int) $this->find('timesheet.rules.break_warning_duration');
-    }
-*/
+    /*
+        public function getTimesheetBreakWarningDuration(): int
+        {
+            return (int) $this->find('timesheet.rules.break_warning_duration');
+        }
+    */
     public function getTimesheetLongRunningDuration(): int
     {
         return (int) $this->find('timesheet.rules.long_running_duration');
