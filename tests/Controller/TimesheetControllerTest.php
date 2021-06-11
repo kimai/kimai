@@ -502,9 +502,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser();
 
         $fixture = new TimesheetFixtures();
-        $fixture->setAmount(10);
+        $fixture->setAmount(1);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
-        $fixture->setStartDate(new \DateTime('-2 hours'));
+        $fixture->setFixedStartDate(new \DateTime('-2 hours'));
         $timesheets = $this->importFixture($fixture);
         $id = $timesheets[0]->getId();
 
@@ -526,6 +526,10 @@ class TimesheetControllerTest extends ControllerBaseTest
                 'tags' => 'foo,bar, testing, hello world,,',
             ]
         ]);
+
+        if (!$client->getResponse()->isRedirect()) {
+            dd($response->getStatusCode(), $response->getContent());
+        }
 
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
         $client->followRedirect();
