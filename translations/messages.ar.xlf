@@ -778,10 +778,6 @@
         <source>attachments</source>
         <target>ملفات</target>
       </trans-unit>
-      <trans-unit id="update_multiple">
-        <source>update_multiple</source>
-        <target>%إجراء% %عدد% مدخلات؟</target>
-      </trans-unit>
       <trans-unit id="my.profile">
         <source>my.profile</source>
         <target>ملف التعريف الخاص بي</target>
@@ -857,10 +853,6 @@
       <trans-unit id="label.daterange">
         <source>label.daterange</source>
         <target>النطاق الزمني</target>
-      </trans-unit>
-      <trans-unit id="label.plus_more">
-        <source>label.plus_more</source>
-        <target>+٪ عدد٪ أكثر</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>

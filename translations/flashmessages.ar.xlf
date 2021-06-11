@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="action.upload.error">
         <source>action.upload.error</source>
-        <target>تعذر تحميل الملف أو حفظه:٪ reason٪</target>
+        <target>تعذر تحميل الملف أو حفظه:%reason%</target>
       </trans-unit>
       <trans-unit id="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
