@@ -217,7 +217,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
     /**
      * @param Response $response
-     * @param string[] $failedFields
+     * @param array<int, string>|array<string, mixed> $failedFields
      * @param bool $extraFields test for the error "This form should not contain extra fields"
      */
     protected function assertApiCallValidationError(Response $response, array $failedFields, bool $extraFields = false)
@@ -235,9 +235,21 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         self::assertArrayHasKey('children', $result['errors']);
         $data = $result['errors']['children'];
 
-        foreach ($failedFields as $fieldName) {
-            self::assertArrayHasKey($fieldName, $data, sprintf('Could not find validation error for field: %s', $fieldName));
+        foreach ($failedFields as $key => $value) {
+            $messages = [];
+            $fieldName = $value;
+            if (\is_string($key)) {
+                $fieldName = $key;
+                $messages = $value;
+                if (!\is_array($messages)) {
+                    $messages = [$value];
+                }
+            }
+            self::assertArrayHasKey($fieldName, $data, sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
             self::assertArrayHasKey('errors', $data[$fieldName], sprintf('Field %s has no validation problem', $fieldName));
+            foreach ($messages as $i => $message) {
+                self::assertEquals($message, $data[$fieldName]['errors'][$i]);
+            }
         }
 
         $foundErrors = [];

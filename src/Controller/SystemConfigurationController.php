@@ -365,6 +365,22 @@ final class SystemConfigurationController extends AbstractController
                         ->setConstraints([
                             new GreaterThanOrEqual(['value' => 0])
                         ]),
+                    /*
+                    (new Configuration())
+                        ->setName('timesheet.rules.break_warning_duration')
+                        ->setType(IntegerType::class)
+                        ->setTranslationDomain('system-configuration')
+                        ->setConstraints([
+                            new GreaterThanOrEqual(['value' => 0])
+                        ]),
+                    */
+                    (new Configuration())
+                        ->setName('timesheet.rules.long_running_duration')
+                        ->setType(IntegerType::class)
+                        ->setTranslationDomain('system-configuration')
+                        ->setConstraints([
+                            new GreaterThanOrEqual(['value' => 0])
+                        ]),
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_LOCKDOWN)

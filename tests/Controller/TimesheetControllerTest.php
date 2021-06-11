@@ -304,10 +304,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(50, $timesheet->getRate());
 
         $expected = new \DateTime('2018-08-02T20:00:00');
-        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getBegin()->format(\DateTime::ATOM));
+        $this->assertEquals($expected->format(\DateTimeInterface::ATOM), $timesheet->getBegin()->format(\DateTimeInterface::ATOM));
 
         $expected = new \DateTime('2018-08-02T20:30:00');
-        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
+        $this->assertEquals($expected->format(\DateTimeInterface::ATOM), $timesheet->getEnd()->format(\DateTimeInterface::ATOM));
     }
 
     public function testCreateActionWithFromAndToValuesTwice()
@@ -338,10 +338,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(50, $timesheet->getRate());
 
         $expected = new \DateTime('2018-08-02T20:00:00');
-        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getBegin()->format(\DateTime::ATOM));
+        $this->assertEquals($expected->format(\DateTimeInterface::ATOM), $timesheet->getBegin()->format(\DateTimeInterface::ATOM));
 
         $expected = new \DateTime('2018-08-02T20:30:00');
-        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
+        $this->assertEquals($expected->format(\DateTimeInterface::ATOM), $timesheet->getEnd()->format(\DateTimeInterface::ATOM));
 
         // create a second entry that is overlapping
         $this->request($client, '/timesheet/create?from=2018-08-02T20%3A02%3A00&to=2018-08-02T20%3A20%3A00');
@@ -489,10 +489,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(800, $timesheet->getRate());
 
         $expected = new \DateTime('2018-08-02T10:00:00');
-        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getBegin()->format(\DateTime::ATOM));
+        $this->assertEquals($expected->format(\DateTimeInterface::ATOM), $timesheet->getBegin()->format(\DateTimeInterface::ATOM));
 
         $expected = new \DateTime('2018-08-02T18:00:00');
-        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
+        $this->assertEquals($expected->format(\DateTimeInterface::ATOM), $timesheet->getEnd()->format(\DateTimeInterface::ATOM));
 
         $this->assertEquals(['one', 'two', 'three'], $timesheet->getTagsAsArray());
     }
@@ -502,9 +502,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser();
 
         $fixture = new TimesheetFixtures();
-        $fixture->setAmount(10);
+        $fixture->setAmount(1);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
-        $fixture->setStartDate('2017-05-01');
+        $fixture->setFixedStartDate(new \DateTime('-2 hours'));
         $timesheets = $this->importFixture($fixture);
         $id = $timesheets[0]->getId();
 
@@ -526,6 +526,10 @@ class TimesheetControllerTest extends ControllerBaseTest
                 'tags' => 'foo,bar, testing, hello world,,',
             ]
         ]);
+
+        if (!$client->getResponse()->isRedirect()) {
+            dd($response->getStatusCode(), $response->getContent());
+        }
 
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
         $client->followRedirect();
@@ -645,7 +649,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $fixture->setCallback(function (Timesheet $timesheet) {
             $timesheet->setDescription('Testing is fun!');
             $end = clone $timesheet->getBegin();
-            $end->modify('+ 16 hours');
+            $end->modify('+ 8 hours');
             $timesheet->setEnd($end);
             $timesheet->setFixedRate(2016);
             $timesheet->setHourlyRate(127);
@@ -675,7 +679,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(2016, $timesheet->getRate());
         $this->assertEquals(127, $timesheet->getHourlyRate());
         $this->assertEquals(2016, $timesheet->getFixedRate());
-        $this->assertTrue($timesheet->getDuration() == 57600 || $timesheet->getDuration() == 57660); // 1 minute rounding might be applied
+        $this->assertTrue($timesheet->getDuration() == 28800 || $timesheet->getDuration() == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $timesheet->getRate());
     }
 }

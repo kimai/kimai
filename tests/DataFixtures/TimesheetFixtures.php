@@ -49,6 +49,10 @@ final class TimesheetFixtures implements TestFixture
      */
     private $startDate;
     /**
+     * @var \DateTime
+     */
+    private $fixedStartDate;
+    /**
      * @var bool
      */
     private $fixedRate = false;
@@ -125,6 +129,13 @@ final class TimesheetFixtures implements TestFixture
             $date = new \DateTime($date);
         }
         $this->startDate = $date;
+
+        return $this;
+    }
+
+    public function setFixedStartDate(\DateTime $date): TimesheetFixtures
+    {
+        $this->fixedStartDate = $date;
 
         return $this;
     }
@@ -312,6 +323,10 @@ final class TimesheetFixtures implements TestFixture
 
     private function getDateTime(int $i): \DateTime
     {
+        if ($this->fixedStartDate !== null) {
+            return $this->fixedStartDate;
+        }
+
         if ($this->startDate === null) {
             $this->startDate = new \DateTime('2018-04-01');
         }

@@ -178,6 +178,10 @@
         {% endblock %}
         {% block box_body %}
             <p>
+                <strong>{{ 'label.username'|trans }}</strong><br>
+                {{ user.username }}
+            </p>
+            <p>
                 <strong>{{ 'profile.first_entry'|trans }}</strong><br>
                 {# FIXME use a configuration for it #}
                 {{ stats.firstEntry|date_short }}
