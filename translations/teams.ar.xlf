@@ -6,6 +6,34 @@
         <source>teams.title</source>
         <target>الفريق</target>
       </trans-unit>
+      <trans-unit id="team.activity_visibility_inherited">
+        <source>team.activity_visibility_inherited</source>
+        <target>النشاط له وصول محدود ، لأنه تم تعيين أذونات الفريق للمشروع / أو العميل.</target>
+      </trans-unit>
+      <trans-unit id="team.create_default">
+        <source>team.create_default</source>
+        <target>إنشاء فريق جديد للحد من الوصول</target>
+      </trans-unit>
+      <trans-unit id="team.project_visibility_inherited">
+        <source>team.project_visibility_inherited</source>
+        <target>المشروع له وصول محدود ، لأنه تم تعيين أذونات الفريق للعميل.</target>
+      </trans-unit>
+      <trans-unit id="team.visibility_restricted">
+        <source>team.visibility_restricted</source>
+        <target>مرئي فقط للفرق التالية وجميع المسؤولين.</target>
+      </trans-unit>
+      <trans-unit id="team.visibility_global">
+        <source>team.visibility_global</source>
+        <target>مرئي للجميع ، حيث أنه لم يتم تعيين أي فريق بعد.</target>
+      </trans-unit>
+      <trans-unit id="teams.customer_access">
+        <source>teams.customer_access</source>
+        <target>منح حق الوصول للعملاء</target>
+      </trans-unit>
+      <trans-unit id="teams.project_access">
+        <source>teams.project_access</source>
+        <target>منح الوصول إلى المشاريع</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

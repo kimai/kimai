@@ -1199,6 +1199,22 @@
         <source>calendar.drag_and_drop.delete</source>
         <target>Si vous voulez supprimer une entrée, vous devez la faire glisser sur le bouton.</target>
       </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Utilisateurs actifs cette année fiscale</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Revenus pour cette année fiscale</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Heures de travail pour cette année fiscale</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Année fiscale</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

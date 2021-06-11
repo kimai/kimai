@@ -552,11 +552,11 @@
       </trans-unit>
       <trans-unit id="label.vat">
         <source>label.vat</source>
-        <target>מע''מ</target>
+        <target>מס</target>
       </trans-unit>
       <trans-unit id="label.vat_id">
         <source>label.vat_id</source>
-        <target>מזהה מע''מ</target>
+        <target>מזהה מע״מ</target>
       </trans-unit>
       <trans-unit id="label.contact">
         <source>label.contact</source>
@@ -1043,7 +1043,7 @@
       </trans-unit>
       <trans-unit id="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
-        <target>שדות שיש לעדכן צריכים קודם להיות פעילים על ידי סימון התיבה המשויכת</target>
+        <target>יש להפעיל שדות לעדכון על ידי לחיצה על תיבות הסימון המתאימות תחילה.</target>
       </trans-unit>
       <trans-unit id="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
@@ -1064,6 +1064,66 @@
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
         <target>חיפוש מונח</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>הצגת רשומות ללא תקציב</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>תאריך תשלום</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>משתמשים פעילים בשנה הפיננסית הזאת</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>הכנסות בשנה הפיננסית הזאת</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>שעות עבודה בשנה הפיננסית הזאת</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>שנה פיננסית</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>גובה המס</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>למחיקת רשומה עליך לגרור אותה לתחתית.</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>לשמור הכול</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>קובץ</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>מיון לפי</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>יורד</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>עולה</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>מחיקת חיפוש מועדף</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>לשמור הגדרה כחיפוש מועדף</target>
       </trans-unit>
     </body>
   </file>

@@ -1,105 +1,102 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="he" datatype="plaintext" original="actions.en.xlf">
-    <header>
-      <tool tool-id="symfony" tool-name="Symfony"/>
-    </header>
+  <file source-language="en" target-language="ar" datatype="plaintext" original="actions.en.xlf">
     <body>
       <trans-unit id="stop">
         <source>stop</source>
-        <target>עצור</target>
+        <target>إيقاف</target>
       </trans-unit>
       <trans-unit id="back">
         <source>back</source>
-        <target>חזור</target>
+        <target>عودة</target>
       </trans-unit>
       <trans-unit id="edit">
         <source>edit</source>
-        <target>ערוך</target>
+        <target>تحرير</target>
       </trans-unit>
       <trans-unit id="trash">
         <source>trash</source>
-        <target>מחק</target>
+        <target>حذف</target>
       </trans-unit>
       <trans-unit id="report">
         <source>report</source>
-        <target>דו''ח</target>
+        <target>تقرير</target>
       </trans-unit>
       <trans-unit id="repeat">
         <source>repeat</source>
-        <target>התחל שוב</target>
+        <target>إبدا من جديد</target>
       </trans-unit>
       <trans-unit id="profile-stats">
         <source>profile-stats</source>
-        <target>פרופיל</target>
+        <target>الملف الشخصي</target>
       </trans-unit>
       <trans-unit id="settings">
         <source>settings</source>
-        <target>העדפות</target>
+        <target>تفضيلات</target>
       </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
-        <target>גיליון שעות</target>
+        <target>الجداول الزمنية</target>
       </trans-unit>
       <trans-unit id="customer">
         <source>customer</source>
-        <target>סנן לקוחות</target>
+        <target>فلتر العملاء</target>
       </trans-unit>
       <trans-unit id="project">
         <source>project</source>
-        <target>סנן פרויקטים</target>
+        <target>فلتر المشاريع</target>
       </trans-unit>
       <trans-unit id="activity">
         <source>activity</source>
-        <target>סנן פעילויות</target>
+        <target>فلتر الأنشطة</target>
       </trans-unit>
       <trans-unit id="copy">
         <source>copy</source>
-        <target>צור עותק</target>
+        <target>إنشاء نسخة</target>
       </trans-unit>
       <trans-unit id="home">
         <source>home</source>
-        <target>דף הבית</target>
+        <target>الصفحة الرئيسية</target>
       </trans-unit>
       <trans-unit id="create-project">
         <source>create-project</source>
-        <target>צור פרוייקט</target>
+        <target>أنشئ مشروعًا</target>
       </trans-unit>
       <trans-unit id="create-activity">
         <source>create-activity</source>
-        <target>צור פעילות</target>
+        <target>قم بإنشاء نشاط</target>
       </trans-unit>
       <trans-unit id="create-timesheet">
         <source>create-timesheet</source>
-        <target>צור גיליון שעות</target>
-      </trans-unit>
-      <trans-unit id="permissions">
-        <source>permissions</source>
-        <target>הרשאות צוות</target>
-      </trans-unit>
-      <trans-unit id="details">
-        <source>details</source>
-        <target>פרטים</target>
-      </trans-unit>
-      <trans-unit id="download">
-        <source>download</source>
-        <target>הורד</target>
-      </trans-unit>
-      <trans-unit id="invoice.pending">
-        <source>invoice.pending</source>
-        <target>ממתין לתשלום</target>
-      </trans-unit>
-      <trans-unit id="invoice.paid">
-        <source>invoice.paid</source>
-        <target>חשבונית שולמה</target>
+        <target>إنشاء الجدول الزمني</target>
       </trans-unit>
       <trans-unit id="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>
-        <target>למגוון משתמשים</target>
+        <target>لِعدَّة مستخدمين</target>
+      </trans-unit>
+      <trans-unit id="permissions">
+        <source>permissions</source>
+        <target>أذونات الفريق</target>
+      </trans-unit>
+      <trans-unit id="details">
+        <source>details</source>
+        <target>إظهار</target>
+      </trans-unit>
+      <trans-unit id="download">
+        <source>download</source>
+        <target>تحميل</target>
+      </trans-unit>
+      <trans-unit id="invoice.pending">
+        <source>invoice.pending</source>
+        <target>في انتظار الدفع</target>
+      </trans-unit>
+      <trans-unit id="invoice.paid">
+        <source>invoice.paid</source>
+        <target>فاتورة مدفوعة</target>
       </trans-unit>
       <trans-unit id="filter">
         <source>filter</source>
-        <target>סינון נתונים</target>
+        <target>فلتر البيانات</target>
       </trans-unit>
     </body>
   </file>

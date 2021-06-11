@@ -1202,6 +1202,22 @@
         <source>label.last_record</source>
         <target>Lasta elemento</target>
       </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Aktivaj uzantoj ĉi-financjare</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Laborhoroj ĉi-financjare</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Enspezoj ĉi-financjare</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Financjaro</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
