@@ -995,7 +995,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('- 8 hours'))->format('Y-m-d H:m:0'),
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
@@ -1008,7 +1008,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
-        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
 
         $this->request($client, '/api/timesheets/' . $result['id'] . '/duplicate', 'PATCH');
@@ -1018,7 +1018,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
-        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
     }
 
