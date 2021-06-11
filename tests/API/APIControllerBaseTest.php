@@ -236,7 +236,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         $data = $result['errors']['children'];
 
         foreach ($failedFields as $fieldName) {
-            self::assertArrayHasKey($fieldName, $data, sprintf('Could not find validation error for field: %s', $fieldName));
+            self::assertArrayHasKey($fieldName, $data, sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
             self::assertArrayHasKey('errors', $data[$fieldName], sprintf('Field %s has no validation problem', $fieldName));
         }
 

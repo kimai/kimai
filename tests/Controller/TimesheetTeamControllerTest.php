@@ -270,7 +270,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
-        $fixture->setStartDate(new \DateTime('-2 hours'));
+        $fixture->setFixedStartDate(new \DateTime('-2 hours'));
         $timesheets = $this->importFixture($fixture);
         $id = $timesheets[0]->getId();
 
