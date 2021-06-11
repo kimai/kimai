@@ -89,6 +89,22 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
+    public function testLongRunningNotTriggersIfDurationIsLowerThan()
+    {
+        $this->validator = $this->createMyValidator(121);
+        $this->validator->initialize($this->context);
+
+        $begin = new \DateTime();
+        $end = new \DateTime('+2 hour');
+        $timesheet = new Timesheet();
+        $timesheet->setBegin($begin);
+        $timesheet->setEnd($end);
+
+        $this->validator->validate($timesheet, new TimesheetLongRunning());
+
+        $this->assertNoViolation();
+    }
+
     public function testNotTriggersOnRunningRecord()
     {
         $begin = new \DateTime('-10 hour');
