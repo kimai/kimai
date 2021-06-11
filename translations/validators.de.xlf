@@ -50,6 +50,10 @@
                 <source>The budget is completely used.</source>
                 <target>Das Budget ist aufgebraucht. Von den vorhandenen %budget% wurden bisher %used% gebucht, noch nutzbar sind %free%.</target>
             </trans-unit>
+            <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+                <source>Maximum duration of {{ value }} hours exceeded.</source>
+                <target>Erlaubt sind max. {{ value }} Stunden.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

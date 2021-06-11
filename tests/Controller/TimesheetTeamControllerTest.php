@@ -265,13 +265,12 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
         $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
-        $fixture->setStartDate('2017-05-01');
+        $fixture->setFixedStartDate(new \DateTime('-2 hours'));
         $timesheets = $this->importFixture($fixture);
         $id = $timesheets[0]->getId();
 
@@ -420,7 +419,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture->setCallback(function (Timesheet $timesheet) {
             $timesheet->setDescription('Testing is fun!');
             $end = clone $timesheet->getBegin();
-            $end->modify('+ 16 hours');
+            $end->modify('+ 8 hours');
             $timesheet->setEnd($end);
             $timesheet->setFixedRate(2016);
             $timesheet->setHourlyRate(127);
@@ -450,7 +449,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals(2016, $timesheet->getRate());
         $this->assertEquals(127, $timesheet->getHourlyRate());
         $this->assertEquals(2016, $timesheet->getFixedRate());
-        $this->assertTrue($timesheet->getDuration() == 57600 || $timesheet->getDuration() == 57660); // 1 minute rounding might be applied
+        $this->assertTrue($timesheet->getDuration() == 28800 || $timesheet->getDuration() == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $timesheet->getRate());
     }
 }

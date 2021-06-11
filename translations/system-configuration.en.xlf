@@ -298,6 +298,14 @@
                 <source>label.saml_activate</source>
                 <target>SAML login</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.rules.break_warning_duration">
+                <source>label.timesheet.rules.break_warning_duration</source>
+                <target>Maximum duration of a timesheet record in minutes before a "break warning" will be displayed (0 = deactivated)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.long_running_duration">
+                <source>label.timesheet.rules.long_running_duration</source>
+                <target>Maximum duration of a timesheet record in minutes before saving is rejected (0 = deactivated)</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
