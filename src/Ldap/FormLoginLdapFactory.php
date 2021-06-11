@@ -20,12 +20,12 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class FormLoginLdapFactory implements SecurityFactoryInterface
 {
-    public function create(ContainerBuilder $container, $id, $config, $userProviderId, $defaultEntryPoint)
+    public function create(ContainerBuilder $container, $id, $config, $userProviderId, $defaultEntryPointId)
     {
         $authProviderId = $this->createAuthProvider($container, $id, $userProviderId);
         $listenerId = $this->createListener($container, $id, $config);
 
-        return [$authProviderId, $listenerId, $defaultEntryPoint];
+        return [$authProviderId, $listenerId, $defaultEntryPointId];
     }
 
     public function getPosition()
@@ -38,7 +38,7 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
         return 'kimai_ldap';
     }
 
-    public function addConfiguration(NodeDefinition $node)
+    public function addConfiguration(NodeDefinition $builder)
     {
     }
 

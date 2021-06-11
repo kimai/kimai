@@ -10,39 +10,24 @@
 namespace App\Command;
 
 use App\Entity\User;
-use Doctrine\Persistence\ManagerRegistry;
+use App\User\UserService;
+use App\Utils\CommandStyle;
+use App\Validator\ValidationFailedException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class CreateUserCommand extends Command
 {
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $encoder;
-    /**
-     * @var ManagerRegistry
-     */
-    private $doctrine;
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
+    private $userService;
 
-    public function __construct(UserPasswordEncoderInterface $encoder, ManagerRegistry $registry, ValidatorInterface $validator)
+    public function __construct(UserService $userService)
     {
-        $this->encoder = $encoder;
-        $this->doctrine = $registry;
-        $this->validator = $validator;
-
         parent::__construct();
+        $this->userService = $userService;
     }
 
     /**
@@ -53,7 +38,8 @@ final class CreateUserCommand extends Command
         $roles = implode(',', [User::DEFAULT_ROLE, User::ROLE_ADMIN]);
 
         $this
-            ->setName('kimai:create-user')
+            ->setName('kimai:user:create')
+            ->setAliases(['kimai:create-user'])
             ->setDescription('Create a new user')
             ->setHelp('This command allows you to create a new user.')
             ->addArgument('username', InputArgument::REQUIRED, 'A name for the new user (must be unique)')
@@ -73,7 +59,7 @@ final class CreateUserCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new SymfonyStyle($input, $output);
+        $io = new CommandStyle($input, $output);
 
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
@@ -87,41 +73,18 @@ final class CreateUserCommand extends Command
 
         $role = $role ?: User::DEFAULT_ROLE;
 
-        $user = new User();
-        $user->setUsername($username)
-            ->setPlainPassword($password)
-            ->setEmail($email)
-            ->setEnabled(true)
-            ->setRoles(explode(',', $role))
-        ;
-
-        $errors = $this->validator->validate($user, null, ['Registration']);
-        if ($errors->count() > 0) {
-            /** @var \Symfony\Component\Validator\ConstraintViolation $error */
-            foreach ($errors as $error) {
-                $value = $error->getInvalidValue();
-                $io->error(
-                    $error->getPropertyPath()
-                    . ' (' . (\is_array($value) ? implode(',', $value) : $value) . ')'
-                    . "\n    "
-                    . $error->getMessage()
-                );
-            }
-
-            return 1;
-        }
+        $user = $this->userService->createNewUser();
+        $user->setUsername($username);
+        $user->setPlainPassword($password);
+        $user->setEmail($email);
+        $user->setEnabled(true);
+        $user->setRoles(explode(',', $role));
 
         try {
-            $pwd = $this->encoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($pwd);
-
-            $entityManager = $this->doctrine->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-            $io->success('Success! Created user: ' . $user->getUsername());
-        } catch (\Exception $ex) {
-            $io->error('Failed to create user: ' . $user->getUsername());
-            $io->error('Reason: ' . $ex->getMessage());
+            $this->userService->saveNewUser($user);
+            $io->success(sprintf('Success! Created user: %s', $username));
+        } catch (ValidationFailedException $ex) {
+            $io->validationError($ex);
 
             return 2;
         }

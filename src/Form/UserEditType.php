@@ -12,11 +12,11 @@ namespace App\Form;
 use App\Entity\User;
 use App\Form\Type\AvatarType;
 use App\Form\Type\LanguageType;
+use App\Form\Type\TimezoneType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

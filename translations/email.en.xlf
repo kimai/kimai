@@ -24,7 +24,7 @@
             </trans-unit>
             <trans-unit id="registration.intro">
                 <source>registration.intro</source>
-                <target>You signed up at the Kimai time-tracker with the email %email%. Now you have to activate your account in the next few hours, before the link expires.</target>
+                <target>You signed up at the Kimai time-tracker with the email %email%. Please activate your account in the next few hours, before the link expires.</target>
             </trans-unit>
             <trans-unit id="reset.subject">
                 <source>reset.subject</source>

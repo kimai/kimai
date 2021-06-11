@@ -147,6 +147,19 @@
         <source>login_required</source>
         <target>Fehlende Berechtigung. Zur Anmeldung wechseln?</target>
       </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Eine E-Mail wurde an %email% gesendet. Sie enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>
+          Eine E-Mail wurde verschickt. Sie beinhaltet einen Link zum Zurücksetzen des Passwortes.
+          Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden.
+
+          Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.
+        </target>
+      </trans-unit>
       <!--
               Menu / Navbar items
             -->

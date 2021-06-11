@@ -205,9 +205,6 @@ class Kernel extends BaseKernel
     {
         $confDir = $this->getProjectDir() . '/config';
 
-        // some routes are based on app configs and will be imported manually
-        $this->configureFosUserRoutes($routes);
-
         // load bundle specific route files
         if (is_dir($confDir . '/routes/')) {
             $routes->import($confDir . '/routes/*' . self::CONFIG_EXTS, '/', 'glob');
@@ -225,27 +222,6 @@ class Kernel extends BaseKernel
             if (strpos(\get_class($bundle), 'KimaiPlugin\\') !== false) {
                 $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
             }
-        }
-    }
-
-    protected function configureFosUserRoutes(RouteCollectionBuilder $routes)
-    {
-        $features = $this->getContainer()->getParameter('kimai.fosuser');
-
-        // Expose the user registration feature
-        if ($features['registration']) {
-            $routes->import(
-                '@FOSUserBundle/Resources/config/routing/registration.xml',
-                '/{_locale}/register'
-            );
-        }
-
-        // Expose the users password-reset feature
-        if ($features['password_reset']) {
-            $routes->import(
-                '@FOSUserBundle/Resources/config/routing/resetting.xml',
-                '/{_locale}/resetting'
-            );
         }
     }
 }

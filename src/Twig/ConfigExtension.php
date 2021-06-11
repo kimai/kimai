@@ -41,6 +41,8 @@ final class ConfigExtension extends AbstractExtension
      */
     public function getThemeConfig(string $name)
     {
+        @trigger_error('The twig function "theme_config" was deprecated with 1.15, replace it with the global "kimai_config" variable.', E_USER_DEPRECATED);
+
         switch ($name) {
             case 'auto_reload_datatable':
                 @trigger_error('The configuration auto_reload_datatable is deprecated and was removed with 1.4', E_USER_DEPRECATED);
@@ -48,7 +50,7 @@ final class ConfigExtension extends AbstractExtension
                 return false;
 
             case 'soft_limit':
-                return $this->configuration->getTimesheetActiveEntriesSoftLimit();
+                return $this->configuration->getTimesheetActiveEntriesHardLimit();
 
             default:
                 $name = 'theme.' . $name;
