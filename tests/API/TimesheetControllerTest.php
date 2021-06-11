@@ -775,6 +775,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public function testStopActionTriggersValidationOnLongRunning()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->setSystemConfiguration('timesheet.rules.long_running_duration', 750);
         $this->importFixtureForUser(User::ROLE_USER);
 
         $start = new \DateTime('-13 hours');
@@ -792,7 +793,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $id = $timesheets[0]->getId();
 
         $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
-        $this->assertApiCallValidationError($client->getResponse(), ['duration']);
+        $this->assertApiCallValidationError($client->getResponse(), ['duration' => 'Maximum 12:30 hours allowed.']);
     }
 
     public function testStopActionFailsOnStoppedEntry()
