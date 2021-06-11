@@ -217,7 +217,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
     /**
      * @param Response $response
-     * @param string[] $failedFields
+     * @param array<int, string>|array<string, mixed> $failedFields
      * @param bool $extraFields test for the error "This form should not contain extra fields"
      */
     protected function assertApiCallValidationError(Response $response, array $failedFields, bool $extraFields = false)
