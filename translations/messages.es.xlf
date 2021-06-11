@@ -1140,6 +1140,78 @@
         <source>file</source>
         <target>Archivo</target>
       </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Sin registro desde</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Sin facturar</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Sin exportar</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Último registro</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Se omitió la previsualización de %rows% filas más…</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Fecha de pago</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Usuarios activos este año fiscal</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Ingresos este año fiscal</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Horas laborables este año fiscal</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Año fiscal</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Si quiere eliminar una entrada, debe arrastrarla sobre el botón.</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Guardar todo</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Ordenar por</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Descendente</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Ascendente</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Eliminar favorito de búsqueda</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Guardar configuración como favorito de búsqueda</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Término de búsqueda</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -43,10 +43,7 @@
       </trans-unit>
       <trans-unit id="http_error_403.suggestion">
         <source>http_error_403.suggestion</source>
-        <target state="translated">
-                    Özür dileriz, bu sayfayı görmeye izniniz yok.
-                    Hata olduğunu düşünüyorsanız yöneticiyle iletişime geçiniz.
-                </target>
+        <target state="translated">Üzgünüz, ancak bu sayfayı görmek için yeterli izniniz yok. Bunun bir hata olduğunu düşünüyorsanız lütfen yöneticinizle görüşün.</target>
       </trans-unit>
     </body>
   </file>

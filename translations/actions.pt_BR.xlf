@@ -94,6 +94,10 @@
         <source>invoice.paid</source>
         <target>Fatura paga</target>
       </trans-unit>
+      <trans-unit id="filter">
+        <source>filter</source>
+        <target>Filtre por data</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

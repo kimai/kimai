@@ -580,7 +580,7 @@
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
-        <target state="translated">Aktif</target>
+        <target state="translated">Etkin</target>
       </trans-unit>
       <trans-unit id="label.roles">
         <source>label.roles</source>
@@ -631,15 +631,15 @@
       </trans-unit>
       <trans-unit id="stats.durationWeek">
         <source>stats.durationWeek</source>
-        <target state="translated">Haftanın çalışma saatleri</target>
+        <target state="translated">Bu haftanın çalışma saatleri</target>
       </trans-unit>
       <trans-unit id="stats.durationMonth">
         <source>stats.durationMonth</source>
-        <target state="translated">Ayın çalışma saatleri</target>
+        <target state="translated">Bu ayın çalışma saatleri</target>
       </trans-unit>
       <trans-unit id="stats.durationYear">
         <source>stats.durationYear</source>
-        <target state="translated">Yılın çalışma saatleri</target>
+        <target state="translated">Bu yılın çalışma saatleri</target>
       </trans-unit>
       <trans-unit id="stats.durationTotal">
         <source>stats.durationTotal</source>
@@ -655,15 +655,15 @@
       </trans-unit>
       <trans-unit id="stats.amountWeek">
         <source>stats.amountWeek</source>
-        <target state="translated">Haftanın geliri</target>
+        <target state="translated">Bu haftanın geliri</target>
       </trans-unit>
       <trans-unit id="stats.amountMonth">
         <source>stats.amountMonth</source>
-        <target state="translated">Ayın geliri</target>
+        <target state="translated">Bu ayın geliri</target>
       </trans-unit>
       <trans-unit id="stats.amountYear">
         <source>stats.amountYear</source>
-        <target state="translated">Yılın geliri</target>
+        <target state="translated">Bu yılın geliri</target>
       </trans-unit>
       <trans-unit id="stats.amountTotal">
         <source>stats.amountTotal</source>
@@ -671,27 +671,27 @@
       </trans-unit>
       <trans-unit id="stats.userActiveToday">
         <source>stats.userActiveToday</source>
-        <target state="translated">Bugünkü aktif kullanıcılar</target>
+        <target state="translated">Bugünün etkin kullanıcıları</target>
       </trans-unit>
       <trans-unit id="stats.userActiveWeek">
         <source>stats.userActiveWeek</source>
-        <target state="translated">Haftanın aktif kullanıcıları</target>
+        <target state="translated">Bu haftanın etkin kullanıcıları</target>
       </trans-unit>
       <trans-unit id="stats.userActiveMonth">
         <source>stats.userActiveMonth</source>
-        <target state="translated">Ayın aktif kullanıcıları</target>
+        <target state="translated">Bu ayın etkin kullanıcıları</target>
       </trans-unit>
       <trans-unit id="stats.userActiveYear">
         <source>stats.userActiveYear</source>
-        <target state="translated">Yılın aktif kullanıcıları</target>
+        <target state="translated">Bu yılın etkin kullanıcıları</target>
       </trans-unit>
       <trans-unit id="stats.userActiveTotal">
         <source>stats.userActiveTotal</source>
-        <target state="translated">Tüm aktif kullanıcılar</target>
+        <target state="translated">Şimdiye kadarki etkin kullanıcılar</target>
       </trans-unit>
       <trans-unit id="stats.activeRecordings">
         <source>stats.activeRecordings</source>
-        <target state="translated">Aktif kayıtlar</target>
+        <target state="translated">Etkin kayıtlar</target>
       </trans-unit>
       <trans-unit id="stats.userTotal">
         <source>stats.userTotal</source>
@@ -888,7 +888,7 @@
             -->
       <trans-unit id="active.entries">
         <source>active.entries</source>
-        <target state="translated">Aktif zaman ölçümleriniz</target>
+        <target state="translated">Etkin zaman ölçümleriniz</target>
       </trans-unit>
       <trans-unit id="timesheet.all">
         <source>timesheet.all</source>
@@ -935,7 +935,7 @@
       </trans-unit>
       <trans-unit id="entryState.running">
         <source>entryState.running</source>
-        <target state="translated">Aktif</target>
+        <target state="translated">Etkin</target>
       </trans-unit>
       <trans-unit id="entryState.stopped">
         <source>entryState.stopped</source>
@@ -1192,6 +1192,22 @@
       <trans-unit id="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
         <target>Bir kaydı silmek istiyorsanız, onu düğmeye sürüklemelisiniz.</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Bu mali yılın etkin kullanıcıları</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Bu mali yılın geliri</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Bu mali yılın çalışma saatleri</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Mali yıl</target>
       </trans-unit>
     </body>
   </file>

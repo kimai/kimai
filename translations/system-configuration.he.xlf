@@ -107,19 +107,19 @@
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>מיתוג</target>
+        <target>החברה שלי</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>לוגו (לינק לתמונה, מחליף את שם החברה בדף הכניסה)</target>
+        <target>כתובת לוגו (מחליף את שם החברה בדף הכניסה)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>חברה</target>
+        <target>שם החברה</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
-        <target>מיני לוגו (תפריט צידי ממוזער)</target>
+        <target>לוגו מוקטן (תפריט צידי ממוזער)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.title">
         <source>label.theme.branding.title</source>
@@ -224,6 +224,38 @@
       <trans-unit id="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>לאפשר רשומות בזמנים חופפים</target>
+      </trans-unit>
+      <trans-unit id="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>צבעים מותרים</target>
+      </trans-unit>
+      <trans-unit id="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>הגבלת בחירות צבע</target>
+      </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>כבוי</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>להשתמש בערכים המוגדרים של כלל העיגול</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>בחירת דקות מזמן עד זמן</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>בחירת שניות למשך זמן</target>
+      </trans-unit>
+      <trans-unit id="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>שנה פיננסית</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>לאפשר הזמנה מעבר לתקציב המאוחסן</target>
       </trans-unit>
     </body>
   </file>
