@@ -258,6 +258,26 @@
         <source>label.company.financial_year</source>
         <target>Financjaro</target>
       </trans-unit>
+      <trans-unit id="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target>Forgesis pasvorton</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target>Registrado de uzanto</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target>Ensaluta formularo</target>
+      </trans-unit>
+      <trans-unit id="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target>Ensaluto per SAML</target>
+      </trans-unit>
+      <trans-unit id="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target>Ensaluto per LDAP</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
