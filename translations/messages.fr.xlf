@@ -1215,6 +1215,14 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Année fiscale</target>
       </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Un courriel a été envoyé. Il contient un lien sur lequel vous devez cliquer pour réinitialiser votre mot de passe. Remarque : vous ne pouvez demander un nouveau mot de passe qu'une seule fois toutes les %tokenLifetime% heures. Si vous ne recevez pas de courriel, vérifiez votre dossier d'indésirables ou réessayez.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Un courriel a été envoyé à %email%. Il contient un lien d'activation sur lequel vous devez cliquer pour activer votre compte.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
