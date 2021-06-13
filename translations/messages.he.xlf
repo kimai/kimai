@@ -1153,6 +1153,10 @@
         <source>registration.check_email</source>
         <target>נשלחה הודעה בדוא״ל אל %email%. היא מכילה קישור אימות עליו יש ללחוץ כדי להפעיל את החשבון שלך.</target>
       </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>אין הזמנת שעה מאז</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
