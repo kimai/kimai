@@ -286,6 +286,18 @@
         <source>label.timesheet.rules.lockdown_period_timezone</source>
         <target>Horzono (se malplena, horzono de la respondanta uzanto estas uzota)</target>
       </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target>Forgesita pasvorto — validecodaŭro de pasvorto-restariga ligilo</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target>Forgesita pasvorto — nombro de sekundoj antaŭ ol uzanto povas peti novan retpoŝtan mesaĝon</target>
+      </trans-unit>
+      <trans-unit id="lockdown_period">
+        <source>lockdown_period</source>
+        <target>Forŝlosa periodo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
