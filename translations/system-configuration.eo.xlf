@@ -278,6 +278,14 @@
         <source>label.ldap_activate</source>
         <target>Ensaluto per LDAP</target>
       </trans-unit>
+      <trans-unit id="authentication">
+        <source>authentication</source>
+        <target>Aŭtentikigo</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target>Horzono (se malplena, horzono de la respondanta uzanto estas uzota)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
