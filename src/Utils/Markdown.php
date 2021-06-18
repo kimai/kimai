@@ -23,7 +23,6 @@ final class Markdown
     {
         $this->parser = new ParsedownExtension();
         $this->parser->setUrlsLinked(true);
-        $this->parser->setBreaksEnabled(true);
     }
 
     /**
@@ -34,7 +33,21 @@ final class Markdown
     public function toHtml(string $text, bool $safe = true): string
     {
         $this->parser->setSafeMode($safe);
+        $this->parser->setBreaksEnabled(true);
 
         return $this->parser->text($text);
+    }
+
+    /**
+     * @param string $text
+     * @param bool $safe
+     * @return string
+     */
+    public function inline(string $text, bool $safe = true): string
+    {
+        $this->parser->setSafeMode($safe);
+        $this->parser->setBreaksEnabled(false);
+
+        return $this->parser->line($text);
     }
 }

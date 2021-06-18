@@ -51,7 +51,7 @@ foo bar
 asdfasdfa
 
     ssdfsdf
-    
+
 http://example.com/foo-bar.html
 file:///home/kimai/images/beautiful-flower.png
 
@@ -63,6 +63,28 @@ aasdfasdf
 222
 EOT;
         $this->assertEquals($html, $sut->toHtml($markdown));
+    }
+
+    public function testMarkdownInline()
+    {
+        $sut = new Markdown();
+        $html = <<<'EOT'
+<em>foo</em> <a href="http://example.com" target="_blank">http://example.com</a>
+
+- foo bar
+- bar foo
+
+bar
+EOT;
+        $markdown = <<<'EOT'
+*foo* http://example.com
+
+- foo bar
+- bar foo
+
+bar
+EOT;
+        $this->assertEquals($html, $sut->inline($markdown));
     }
 
     public function testDuplicateIds()

@@ -89,6 +89,10 @@ final class MarkdownExtension implements RuntimeExtensionInterface
             $addHellip = true;
         }
 
+        if ($this->isMarkdownEnabled()) {
+            $content = $this->markdown->inline($content, false);
+        }
+
         $content = explode(PHP_EOL, $content);
         $result = $content[0];
 
