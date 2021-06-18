@@ -6,7 +6,7 @@
 {% set editRoute = 'admin_timesheet_edit' %}
 {% set canSeeRate = is_granted('view_rate_other_timesheet') %}
 {% set canSeeUsername = true %}
-{% set allowMarkdown = false %}
+{% set allowMarkdown = true %}
 
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.timesheets_team('index') }}{% endblock %}
