@@ -54,10 +54,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Nombre autorisé de relevés d'activité simultanées</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Nombre de relevés de temps d'activité à partir duquel un message d'avertissement est affiché</target>
-      </trans-unit>
       <trans-unit id="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target>Afficher les numéros de semaine</target>
@@ -176,15 +172,15 @@
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>Société</target>
+        <target>Nom de l'entreprise</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>Logo (URL de l'image, remplace le nom de la société sur l'écran de connexion)</target>
+        <target>URL du logo (remplace le nom de la société dans l'écran de connexion)</target>
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>Identité</target>
+        <target>Mon entreprise</target>
       </trans-unit>
       <trans-unit id="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>
@@ -257,6 +253,10 @@
       <trans-unit id="label.theme.colors_limited">
         <source>label.theme.colors_limited</source>
         <target>Limiter les choix de couleurs</target>
+      </trans-unit>
+      <trans-unit id="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>Année fiscale</target>
       </trans-unit>
     </body>
   </file>

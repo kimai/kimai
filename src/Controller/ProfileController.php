@@ -18,15 +18,15 @@ use App\Form\UserPasswordType;
 use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
-use App\Repository\TeamRepository;
 use App\Repository\TimesheetRepository;
+use App\User\UserService;
 use App\Utils\LocaleSettings;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * User profile controller
@@ -37,28 +37,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 final class ProfileController extends AbstractController
 {
     /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $encoder;
-    /**
-     * @var TeamRepository
-     */
-    private $teams;
-
-    public function __construct(UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher)
-    {
-        $this->encoder = $encoder;
-        $this->dispatcher = $dispatcher;
-    }
-
-    /**
      * @Route(path="/", name="my_profile", methods={"GET"})
      */
-    public function profileAction()
+    public function profileAction(): Response
     {
         return $this->redirectToRoute('user_profile', ['username' => $this->getUser()->getUsername()]);
     }
@@ -67,7 +48,7 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}", name="user_profile", methods={"GET"})
      * @Security("is_granted('view', profile)")
      */
-    public function indexAction(User $profile, TimesheetRepository $repository, LocaleSettings $localeSettings)
+    public function indexAction(User $profile, TimesheetRepository $repository, LocaleSettings $localeSettings): Response
     {
         $userStats = $repository->getUserStatistics($profile);
 
@@ -91,7 +72,7 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}/edit", name="user_profile_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', profile)")
      */
-    public function editAction(User $profile, Request $request)
+    public function editAction(User $profile, Request $request): Response
     {
         $form = $this->createEditForm($profile);
         $form->handleRequest($request);
@@ -117,18 +98,13 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}/password", name="user_profile_password", methods={"GET", "POST"})
      * @Security("is_granted('password', profile)")
      */
-    public function passwordAction(User $profile, Request $request)
+    public function passwordAction(User $profile, Request $request, UserService $userService): Response
     {
         $form = $this->createPasswordForm($profile);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $this->encoder->encodePassword($profile, $profile->getPlainPassword());
-            $profile->setPassword($password);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($profile);
-            $entityManager->flush();
+            $userService->updateUser($profile);
 
             $this->flashSuccess('action.update.success');
 
@@ -146,18 +122,13 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}/api-token", name="user_profile_api_token", methods={"GET", "POST"})
      * @Security("is_granted('api-token', profile)")
      */
-    public function apiTokenAction(User $profile, Request $request)
+    public function apiTokenAction(User $profile, Request $request, UserService $userService): Response
     {
         $form = $this->createApiTokenForm($profile);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $this->encoder->encodePassword($profile, $profile->getPlainApiToken());
-            $profile->setApiToken($password);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($profile);
-            $entityManager->flush();
+            $userService->updateUser($profile);
 
             $this->flashSuccess('action.update.success');
 
@@ -175,7 +146,7 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}/roles", name="user_profile_roles", methods={"GET", "POST"})
      * @Security("is_granted('roles', profile)")
      */
-    public function rolesAction(User $profile, Request $request)
+    public function rolesAction(User $profile, Request $request): Response
     {
         $isSuperAdmin = $profile->isSuperAdmin();
 
@@ -209,7 +180,7 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}/teams", name="user_profile_teams", methods={"GET", "POST"})
      * @Security("is_granted('teams', profile)")
      */
-    public function teamsAction(User $profile, Request $request)
+    public function teamsAction(User $profile, Request $request): Response
     {
         $form = $this->createTeamsForm($profile);
         $form->handleRequest($request);
@@ -235,11 +206,11 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}/prefs", name="user_profile_preferences", methods={"GET", "POST"})
      * @Security("is_granted('preferences', profile)")
      */
-    public function preferencesAction(User $profile, Request $request)
+    public function preferencesAction(User $profile, Request $request, EventDispatcherInterface $dispatcher): Response
     {
         // we need to prepare the user preferences, which is done via an EventSubscriber
         $event = new PrepareUserEvent($profile);
-        $this->dispatcher->dispatch($event);
+        $dispatcher->dispatch($event);
 
         $original = [];
         foreach ($profile->getPreferences() as $preference) {

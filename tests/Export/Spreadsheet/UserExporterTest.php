@@ -46,15 +46,15 @@ class UserExporterTest extends TestCase
         $spreadsheet = $sut->export([$user], new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT));
         $worksheet = $spreadsheet->getActiveSheet();
 
-        self::assertNull($worksheet->getCellByColumnAndRow(1, 2, false)->getValue());
-        self::assertEquals('test user', $worksheet->getCellByColumnAndRow(2, 2, false)->getValue());
-        self::assertEquals('Another name', $worksheet->getCellByColumnAndRow(3, 2, false)->getValue());
-        self::assertEquals('Mr. Title', $worksheet->getCellByColumnAndRow(4, 2, false)->getValue());
-        self::assertEquals('test@example.com', $worksheet->getCellByColumnAndRow(5, 2, false)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(6, 2, false)->getValue());
-        self::assertEquals('de', $worksheet->getCellByColumnAndRow(7, 2, false)->getValue());
-        self::assertEquals('Europe/Berlin', $worksheet->getCellByColumnAndRow(8, 2, false)->getValue());
-        self::assertFalse($worksheet->getCellByColumnAndRow(9, 2, false)->getValue());
-        self::assertEquals('ROLE_TEAMLEAD;ROLE_USER', $worksheet->getCellByColumnAndRow(11, 2, false)->getValue());
+        self::assertNull($worksheet->getCellByColumnAndRow(1, 2)->getValue());
+        self::assertEquals('test user', $worksheet->getCellByColumnAndRow(2, 2)->getValue());
+        self::assertEquals('Another name', $worksheet->getCellByColumnAndRow(3, 2)->getValue());
+        self::assertEquals('Mr. Title', $worksheet->getCellByColumnAndRow(4, 2)->getValue());
+        self::assertEquals('test@example.com', $worksheet->getCellByColumnAndRow(5, 2)->getValue());
+        self::assertEquals('', $worksheet->getCellByColumnAndRow(6, 2)->getValue());
+        self::assertEquals('de', $worksheet->getCellByColumnAndRow(7, 2)->getValue());
+        self::assertEquals('Europe/Berlin', $worksheet->getCellByColumnAndRow(8, 2)->getValue());
+        self::assertFalse($worksheet->getCellByColumnAndRow(9, 2)->getValue());
+        self::assertEquals('ROLE_TEAMLEAD;ROLE_USER', $worksheet->getCellByColumnAndRow(11, 2)->getValue());
     }
 }

@@ -9,15 +9,11 @@
 
 namespace App\Saml;
 
-use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlToken;
-use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlTokenFactoryInterface;
+use App\Saml\Token\SamlToken;
 
-final class SamlTokenFactory implements SamlTokenFactoryInterface
+final class SamlTokenFactory
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function createToken($user, array $attributes, array $roles)
+    public function createToken($user, array $attributes, array $roles): SamlToken
     {
         $token = new SamlToken($roles);
         $token->setUser($user);

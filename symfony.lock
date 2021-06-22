@@ -99,9 +99,6 @@
     "doctrine/persistence": {
         "version": "v1.0.0"
     },
-    "doctrine/reflection": {
-        "version": "v1.0.0"
-    },
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
@@ -150,14 +147,17 @@
     "handcraftedinthealps/rest-routing-bundle": {
         "version": "1.0.0"
     },
-    "hslavich/oneloginsaml-bundle": {
-        "version": "v1.4.1"
-    },
     "illuminate/cache": {
         "version": "v6.0.4"
     },
+    "illuminate/collections": {
+        "version": "v8.44.0"
+    },
     "illuminate/contracts": {
         "version": "v6.0.4"
+    },
+    "illuminate/macroable": {
+        "version": "v8.44.0"
     },
     "illuminate/support": {
         "version": "v6.0.4"
@@ -183,11 +183,11 @@
     "kevinpapst/adminlte-bundle": {
         "version": "0.3"
     },
-    "kimai/user-bundle": {
-        "version": "dev-master"
-    },
     "laminas/laminas-code": {
         "version": "3.4.1"
+    },
+    "laminas/laminas-escaper": {
+        "version": "2.7.0"
     },
     "laminas/laminas-eventmanager": {
         "version": "3.2.1"
@@ -267,9 +267,6 @@
     "paragonie/random_compat": {
         "version": "v2.0.17"
     },
-    "pclzip/pclzip": {
-        "version": "2.8.2"
-    },
     "phar-io/manifest": {
         "version": "1.0.1"
     },
@@ -290,9 +287,6 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
-    },
-    "phpoffice/common": {
-        "version": "0.2.9"
     },
     "phpoffice/phpspreadsheet": {
         "version": "1.4.0"
@@ -636,6 +630,9 @@
     "symfony/polyfill-php80": {
         "version": "v1.17.1"
     },
+    "symfony/polyfill-php81": {
+        "version": "v1.23.0"
+    },
     "symfony/polyfill-uuid": {
         "version": "v1.22.0"
     },
@@ -815,9 +812,6 @@
     },
     "zendframework/zend-code": {
         "version": "3.3.0"
-    },
-    "zendframework/zend-escaper": {
-        "version": "2.6.0"
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.0"

@@ -22,6 +22,7 @@ use App\Form\Type\LanguageType;
 use App\Form\Type\MinuteIncrementType;
 use App\Form\Type\RoundingModeType;
 use App\Form\Type\SkinType;
+use App\Form\Type\TimezoneType;
 use App\Form\Type\TrackingModeType;
 use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
@@ -37,7 +38,6 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -232,18 +232,32 @@ final class SystemConfigurationController extends AbstractController
         $dateFormat = 'D, d M Y H:i:s';
 
         if ($this->configurations->isTimesheetLockdownActive()) {
+            $userTimezone = $this->getDateTimeFactory()->getTimezone();
+            $timezone = $this->configurations->getTimesheetLockdownTimeZone();
+
+            if ($timezone !== null) {
+                $timezone = new \DateTimeZone($timezone);
+            }
+
+            if ($timezone === null) {
+                $timezone = $userTimezone;
+            }
+
             try {
                 if (!empty($this->configurations->getTimesheetLockdownPeriodStart())) {
-                    $lockdownStartHelp = $this->getDateTimeFactory()->createDateTime($this->configurations->getTimesheetLockdownPeriodStart());
+                    $lockdownStartHelp = new \DateTime($this->configurations->getTimesheetLockdownPeriodStart(), $timezone);
+                    $lockdownStartHelp->setTimezone($userTimezone);
                     $lockdownStartHelp = $lockdownStartHelp->format($dateFormat);
                 }
                 if (!empty($this->configurations->getTimesheetLockdownPeriodEnd())) {
-                    $lockdownEndHelp = $this->getDateTimeFactory()->createDateTime($this->configurations->getTimesheetLockdownPeriodEnd());
+                    $lockdownEndHelp = new \DateTime($this->configurations->getTimesheetLockdownPeriodEnd(), $timezone);
                     if (!empty($this->configurations->getTimesheetLockdownGracePeriod())) {
                         $lockdownGraceHelp = clone $lockdownEndHelp;
                         $lockdownGraceHelp->modify($this->configurations->getTimesheetLockdownGracePeriod());
+                        $lockdownGraceHelp->setTimezone($userTimezone);
                         $lockdownGraceHelp = $lockdownGraceHelp->format($dateFormat);
                     }
+                    $lockdownEndHelp->setTimezone($userTimezone);
                     $lockdownEndHelp = $lockdownEndHelp->format($dateFormat);
                 }
             } catch (\Exception $ex) {
@@ -251,7 +265,60 @@ final class SystemConfigurationController extends AbstractController
             }
         }
 
-        return [
+        $authentication = (new SystemConfigurationModel())
+            ->setSection(SystemConfigurationModel::SECTION_AUTHENTICATION)
+            ->setConfiguration([
+                (new Configuration())
+                    ->setName('user.login')
+                    ->setLabel('user_auth_login')
+                    ->setTranslationDomain('system-configuration')
+                    ->setType(YesNoType::class),
+                (new Configuration())
+                    ->setName('user.registration')
+                    ->setLabel('user_auth_registration')
+                    ->setTranslationDomain('system-configuration')
+                    ->setType(YesNoType::class),
+                (new Configuration())
+                    ->setName('user.password_reset')
+                    ->setTranslationDomain('system-configuration')
+                    ->setLabel('user_auth_password_reset')
+                    ->setType(YesNoType::class),
+                (new Configuration())
+                    ->setName('user.password_reset_retry_ttl')
+                    ->setTranslationDomain('system-configuration')
+                    ->setLabel('user_auth_password_reset_retry_ttl')
+                    ->setConstraints([new NotNull(), new GreaterThanOrEqual(['value' => 60])])
+                    ->setType(IntegerType::class),
+                (new Configuration())
+                    ->setName('user.password_reset_token_ttl')
+                    ->setTranslationDomain('system-configuration')
+                    ->setLabel('user_auth_password_reset_token_ttl')
+                    ->setConstraints([new NotNull(), new GreaterThanOrEqual(['value' => 60])])
+                    ->setType(IntegerType::class),
+                /*
+                (new Configuration())
+                    ->setName('ldap.activate')
+                    ->setLabel('ldap_activate')
+                    ->setTranslationDomain('system-configuration')
+                    ->setType(YesNoType::class),
+                (new Configuration())
+                    ->setName('saml.activate')
+                    ->setLabel('saml_activate')
+                    ->setTranslationDomain('system-configuration')
+                    ->setType(YesNoType::class),
+                */
+            ]);
+
+        if (!$this->configurations->isSamlActive()) {
+            $authentication->getConfigurationByName('user.login')->setEnabled(false);
+        }
+
+        if (!$this->configurations->isPasswordResetActive()) {
+            $authentication->getConfigurationByName('user.password_reset_retry_ttl')->setEnabled(false);
+            $authentication->getConfigurationByName('user.password_reset_token_ttl')->setEnabled(false);
+        }
+
+        $configurationModels = [
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_TIMESHEET)
                 ->setConfiguration([
@@ -277,35 +344,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
-                        ->setName('timesheet.rules.lockdown_period_start')
-                        ->setOptions(['help' => $lockdownStartHelp])
-                        ->setType(TextType::class)
-                        ->setRequired(false)
-                        ->setConstraints([new DateTimeFormat()])
-                        ->setTranslationDomain('system-configuration'),
-                    (new Configuration())
-                        ->setName('timesheet.rules.lockdown_period_end')
-                        ->setOptions(['help' => $lockdownEndHelp])
-                        ->setType(TextType::class)
-                        ->setRequired(false)
-                        ->setConstraints([new DateTimeFormat()])
-                        ->setTranslationDomain('system-configuration'),
-                    (new Configuration())
-                        ->setName('timesheet.rules.lockdown_grace_period')
-                        ->setOptions(['help' => $lockdownGraceHelp])
-                        ->setType(TextType::class)
-                        ->setRequired(false)
-                        ->setConstraints([new DateTimeFormat()])
-                        ->setTranslationDomain('system-configuration'),
-                    (new Configuration())
                         ->setName('timesheet.active_entries.hard_limit')
-                        ->setType(IntegerType::class)
-                        ->setTranslationDomain('system-configuration')
-                        ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 1])
-                        ]),
-                    (new Configuration())
-                        ->setName('timesheet.active_entries.soft_limit')
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
@@ -326,6 +365,52 @@ final class SystemConfigurationController extends AbstractController
                         ->setConstraints([
                             new GreaterThanOrEqual(['value' => 0])
                         ]),
+                    /*
+                    (new Configuration())
+                        ->setName('timesheet.rules.break_warning_duration')
+                        ->setType(IntegerType::class)
+                        ->setTranslationDomain('system-configuration')
+                        ->setConstraints([
+                            new GreaterThanOrEqual(['value' => 0])
+                        ]),
+                    */
+                    (new Configuration())
+                        ->setName('timesheet.rules.long_running_duration')
+                        ->setType(IntegerType::class)
+                        ->setTranslationDomain('system-configuration')
+                        ->setConstraints([
+                            new GreaterThanOrEqual(['value' => 0])
+                        ]),
+                ]),
+            (new SystemConfigurationModel())
+                ->setSection(SystemConfigurationModel::SECTION_LOCKDOWN)
+                ->setConfiguration([
+                    (new Configuration())
+                        ->setName('timesheet.rules.lockdown_period_start')
+                        ->setOptions(['help' => $lockdownStartHelp])
+                        ->setType(TextType::class)
+                        ->setRequired(false)
+                        ->setConstraints([new DateTimeFormat()])
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('timesheet.rules.lockdown_period_end')
+                        ->setOptions(['help' => $lockdownEndHelp])
+                        ->setType(TextType::class)
+                        ->setRequired(false)
+                        ->setConstraints([new DateTimeFormat()])
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('timesheet.rules.lockdown_period_timezone')
+                        ->setType(TimezoneType::class)
+                        ->setRequired(false)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('timesheet.rules.lockdown_grace_period')
+                        ->setOptions(['help' => $lockdownGraceHelp])
+                        ->setType(TextType::class)
+                        ->setRequired(false)
+                        ->setConstraints([new DateTimeFormat()])
+                        ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_ROUNDING)
@@ -376,6 +461,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                 ]),
+            $authentication,
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_FORM_CUSTOMER)
                 ->setConfiguration([
@@ -516,5 +602,7 @@ final class SystemConfigurationController extends AbstractController
                     ->setOptions(['input' => 'string']),
                 ]),
         ];
+
+        return $configurationModels;
     }
 }

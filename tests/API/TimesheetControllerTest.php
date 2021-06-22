@@ -389,7 +389,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:m:0'),
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
@@ -402,7 +402,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
-        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
     }
 
@@ -413,7 +413,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:m:0'),
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
@@ -426,7 +426,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntityFull', $result);
         $this->assertNotEmpty($result['id']);
-        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
     }
 
@@ -443,7 +443,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'activity' => 1,
             'project' => 1,
             'user' => $user->getId(),
-            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('- 8 hours'))->format('Y-m-d H:m:0'),
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
@@ -744,7 +744,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $start = new \DateTime('-10 days');
+        $start = new \DateTime('-8 hours');
 
         $fixture = new TimesheetFixtures();
         $fixture
@@ -752,7 +752,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setHourlyRate(true)
             ->setAmount(0)
             ->setUser($this->getUserByRole(User::ROLE_USER))
-            ->setStartDate($start)
+            ->setFixedStartDate($start)
             ->setAmountRunning(1)
         ;
         $timesheets = $this->importFixture($fixture);
@@ -770,6 +770,30 @@ class TimesheetControllerTest extends APIControllerBaseTest
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->find($id);
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
+    }
+
+    public function testStopActionTriggersValidationOnLongRunning()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->setSystemConfiguration('timesheet.rules.long_running_duration', 750);
+        $this->importFixtureForUser(User::ROLE_USER);
+
+        $start = new \DateTime('-13 hours');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(0)
+            ->setUser($this->getUserByRole(User::ROLE_USER))
+            ->setFixedStartDate($start)
+            ->setAmountRunning(1)
+        ;
+        $timesheets = $this->importFixture($fixture);
+        $id = $timesheets[0]->getId();
+
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
+        $this->assertApiCallValidationError($client->getResponse(), ['duration' => 'Maximum 12:30 hours allowed.']);
     }
 
     public function testStopActionFailsOnStoppedEntry()
@@ -995,7 +1019,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('- 8 hours'))->format('Y-m-d H:m:0'),
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
@@ -1008,7 +1032,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
-        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
 
         $this->request($client, '/api/timesheets/' . $result['id'] . '/duplicate', 'PATCH');
@@ -1018,7 +1042,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
-        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
     }
 

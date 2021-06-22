@@ -45,6 +45,13 @@ export default class KimaiDatePicker extends KimaiPlugin {
                 }
             });
 
+            jQuery(this).on('show.daterangepicker', function (ev, picker) {
+                if (picker.element.offset().top - jQuery(window).scrollTop() + picker.container.outerHeight() + 30 > jQuery(window).height()) {
+                    picker.drops = 'up';
+                    picker.move();
+                }
+            });
+
             jQuery(this).on('apply.daterangepicker', function(ev, picker) {
                 jQuery(this).val(picker.startDate.format(localeFormat));
                 jQuery(this).trigger("change");

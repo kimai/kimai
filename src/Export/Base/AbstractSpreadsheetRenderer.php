@@ -200,12 +200,17 @@ abstract class AbstractSpreadsheetRenderer
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s)', $startCoordinate, $endCoordinate));
     }
 
-    protected function setRate(Worksheet $sheet, $column, $row, $rate, $currency)
+    protected function setRateStyle(Worksheet $sheet, $column, $row, $rate, $currency)
     {
-        $sheet->setCellValueByColumnAndRow($column, $row, $rate);
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(
             sprintf(self::RATE_FORMAT_LEFT, $currency)
         );
+    }
+
+    protected function setRate(Worksheet $sheet, $column, $row, $rate, $currency)
+    {
+        $sheet->setCellValueByColumnAndRow($column, $row, $rate);
+        $this->setRateStyle($sheet, $column, $row, $rate, $currency);
     }
 
     /**

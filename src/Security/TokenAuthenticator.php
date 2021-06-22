@@ -19,21 +19,16 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 
-class TokenAuthenticator extends AbstractGuardAuthenticator
+class TokenAuthenticator extends AbstractGuardAuthenticator implements PasswordAuthenticatedInterface
 {
     public const HEADER_USERNAME = 'X-AUTH-USER';
     public const HEADER_TOKEN = 'X-AUTH-TOKEN';
     public const HEADER_JAVASCRIPT = 'X-AUTH-SESSION';
 
-    /**
-     * @var EncoderFactoryInterface
-     */
-    protected $encoderFactory;
+    private $encoderFactory;
 
-    /**
-     * @param EncoderFactoryInterface $encoderFactory
-     */
     public function __construct(EncoderFactoryInterface $encoderFactory)
     {
         $this->encoderFactory = $encoderFactory;
@@ -162,5 +157,14 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     public function supportsRememberMe()
     {
         return false;
+    }
+
+    public function getPassword($credentials): ?string
+    {
+        if (!\is_array($credentials) || !\array_key_exists('token', $credentials) || empty($credentials['token'])) {
+            return null;
+        }
+
+        return $credentials['token'];
     }
 }

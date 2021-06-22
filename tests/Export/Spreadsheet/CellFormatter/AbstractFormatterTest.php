@@ -40,7 +40,7 @@ abstract class AbstractFormatterTest extends TestCase
         $worksheet = $spreadsheet->getActiveSheet();
 
         $sut->setFormattedValue($worksheet, 1, 1, $this->getActualValue());
-        $cell = $worksheet->getCellByColumnAndRow(1, 1, false);
+        $cell = $worksheet->getCellByColumnAndRow(1, 1);
         $this->assertCellValue($cell);
         $this->assertCellStyle($worksheet->getStyleByColumnAndRow(1, 1));
     }
@@ -53,7 +53,7 @@ abstract class AbstractFormatterTest extends TestCase
         $worksheet = $spreadsheet->getActiveSheet();
 
         $sut->setFormattedValue($worksheet, 1, 1, null);
-        $cell = $worksheet->getCellByColumnAndRow(1, 1, false);
+        $cell = $worksheet->getCellByColumnAndRow(1, 1);
         $this->assertNullValue($cell);
     }
 

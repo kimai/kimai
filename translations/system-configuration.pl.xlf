@@ -62,10 +62,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Dozwolona maksymalna ilość jednoczesnych czynności (pomiarów)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Ilość jednoczesnych czynności (pomiarów) po której zostanie wyświetlone ostrzeżenie</target>
-      </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target>Minimalna ilość liter do auto-uzupełniania</target>

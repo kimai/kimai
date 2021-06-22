@@ -199,6 +199,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->integerNode('soft_limit')
                             ->defaultValue(1)
+                            ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "kimai.timesheet.active_entries.hard_limit" instead.')
                             ->validate()
                                 ->ifTrue(function ($value) {
                                     return $value <= 0;
@@ -235,8 +236,20 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('lockdown_period_end')
                             ->defaultNull()
                         ->end()
+                        ->scalarNode('lockdown_period_timezone')
+                            ->defaultNull()
+                        ->end()
                         ->scalarNode('lockdown_grace_period')
                             ->defaultNull()
+                        ->end()
+                        ->scalarNode('lockdown_grace_period')
+                            ->defaultNull()
+                        ->end()
+                        ->integerNode('break_warning_duration')
+                            ->defaultValue(0)
+                        ->end()
+                        ->integerNode('long_running_duration')
+                            ->defaultValue(0)
                         ->end()
                     ->end()
                 ->end()
@@ -509,11 +522,20 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
-                ->booleanNode('registration')
+                ->booleanNode('login')
                     ->defaultTrue()
+                ->end()
+                ->booleanNode('registration')
+                    ->defaultFalse()
                 ->end()
                 ->booleanNode('password_reset')
                     ->defaultTrue()
+                ->end()
+                ->integerNode('password_reset_retry_ttl')
+                    ->defaultValue(7200)
+                ->end()
+                ->integerNode('password_reset_token_ttl')
+                    ->defaultValue(86400)
                 ->end()
             ->end()
         ;
@@ -667,6 +689,9 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
+                ->booleanNode('activate')
+                    ->defaultFalse()
+                ->end()
                 ->arrayNode('connection')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -764,13 +789,13 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->validate()
                 ->ifTrue(static function ($v) {
-                    return null !== $v['connection']['host'] && !\extension_loaded('ldap');
+                    return $v['activate'] && !\extension_loaded('ldap');
                 })
                 ->thenInvalid('LDAP is activated, but the LDAP PHP extension is not loaded.')
             ->end()
             ->validate()
                 ->ifTrue(static function ($v) {
-                    return null !== $v['connection']['host'] && empty($v['user']['baseDn']);
+                    return $v['activate'] && empty($v['user']['baseDn']);
                 })
                 ->thenInvalid('The "ldap.user.baseDn" config must be set if LDAP is activated.')
             ->end()

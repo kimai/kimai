@@ -10,8 +10,10 @@
 namespace App\Tests\Ldap;
 
 use App\Configuration\LdapConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Ldap\LdapUserHydrator;
+use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Security\RoleServiceFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -22,7 +24,8 @@ class LdapUserHydratorTest extends TestCase
 {
     public function testEmptyHydrate()
     {
-        $config = new LdapConfiguration([
+        $ldapConfig = [
+            'activate' => true,
             'connection' => [
                 'host' => '1.1.1.1'
             ],
@@ -31,7 +34,10 @@ class LdapUserHydratorTest extends TestCase
                 'attributes' => []
             ],
             'role' => [],
-        ]);
+        ];
+        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+
+        $config = new LdapConfiguration($systemConfig);
 
         $sut = new LdapUserHydrator($config, (new RoleServiceFactory($this))->create([]));
         $user = $sut->hydrate(['dn' => 'blub']);
@@ -42,7 +48,7 @@ class LdapUserHydratorTest extends TestCase
 
     public function testHydrate()
     {
-        $config = new LdapConfiguration([
+        $ldapConfig = [
             'connection' => [
                 'host' => '1.1.1.1'
             ],
@@ -58,7 +64,9 @@ class LdapUserHydratorTest extends TestCase
                 ]
             ],
             'role' => [],
-        ]);
+        ];
+        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $config = new LdapConfiguration($systemConfig);
 
         $ldapEntry = [
             'uid' => ['Karl-Heinz'],
@@ -85,7 +93,7 @@ class LdapUserHydratorTest extends TestCase
 
     public function testHydrateUser()
     {
-        $config = new LdapConfiguration([
+        $ldapConfig = [
             'connection' => [
                 'host' => '1.1.1.1'
             ],
@@ -100,7 +108,9 @@ class LdapUserHydratorTest extends TestCase
                 ]
             ],
             'role' => [],
-        ]);
+        ];
+        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $config = new LdapConfiguration($systemConfig);
 
         $ldapEntry = [
             'uid' => ['Karl-Heinz'],
@@ -131,7 +141,7 @@ class LdapUserHydratorTest extends TestCase
 
     public function testHydrateRoles()
     {
-        $config = new LdapConfiguration([
+        $ldapConfig = [
             'user' => [
                 'attributes' => []
             ],
@@ -145,7 +155,9 @@ class LdapUserHydratorTest extends TestCase
                     ['ldap_value' => 'group4', 'role' => 'ROLE_SUPER_ADMIN'],
                 ],
             ],
-        ]);
+        ];
+        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $config = new LdapConfiguration($systemConfig);
 
         $ldapGroups = [
             // ROLE_TEAMLEAD

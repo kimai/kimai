@@ -86,10 +86,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Toegestane aantal gelijktijdige tijdregistratie opnames</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Aantal gelijktijdige tijdregistratie opnames wanneer een waarschuwing wordt weergegeven</target>
-      </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target>Minimum aantal letters om de auto-completion te starten</target>

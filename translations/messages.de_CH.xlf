@@ -1118,6 +1118,22 @@
         <source>calendar.drag_and_drop.delete</source>
         <target>Wenn Sie einen Eintrag löschen wollen, müssen Sie ihn auf die Schaltfläche ziehen.</target>
       </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Aktive Benutzer dieses Geschäftsjahr</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Umsatz dieses Geschäftsjahr</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Arbeitszeit dieses Geschäftsjahr</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Geschäftsjahr</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
