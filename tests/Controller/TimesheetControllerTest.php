@@ -500,6 +500,7 @@ class TimesheetControllerTest extends ControllerBaseTest
     public function testCreateActionWithDescription()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
         $this->request($client, '/timesheet/create?description=Lorem%20Ipsum');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -521,6 +522,33 @@ class TimesheetControllerTest extends ControllerBaseTest
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
         $this->assertEquals('Lorem Ipsum', $timesheet->getDescription());
+    }
+
+    public function testCreateActionWithDescriptionHtmlInjection()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $this->request($client, '/timesheet/create?description=Some text"><bold>HelloWorld<%2Fbold>');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'hourlyRate' => 100,
+                'project' => 1,
+                'activity' => 1,
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $em = $this->getEntityManager();
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
+        $this->assertEquals('Some text"><bold>HelloWorld</bold>', $timesheet->getDescription());
     }
 
     public function testEditAction()
