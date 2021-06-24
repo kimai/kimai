@@ -367,25 +367,15 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (int) $this->find('theme.autocomplete_chars');
     }
 
-    public function getThemeColorChoices(): ?array
+    public function getThemeColorChoices(): ?string
     {
         $config = $this->find('theme.color_choices');
-        if (empty($config)) {
-            return null;
+        if (!empty($config)) {
+            return $config;
         }
-        $config = explode(',', $config);
 
-        $colors = [];
-        foreach ($config as $item) {
-            if (empty($item)) {
-                continue;
-            }
-            $item = explode('|', $item);
-            $key = $item[0];
-            $value = $key;
-            if (\count($item) > 1) {
-                $value = $item[1];
-            }
+        return $this->default('theme.color_choices');
+    }
 
             if (empty($key)) {
                 $key = $value;

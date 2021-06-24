@@ -18,6 +18,10 @@ trait StringAccessibleConfigTrait
      */
     protected $settings;
     /**
+     * @var array
+     */
+    protected $original;
+    /**
      * @var ConfigLoaderInterface
      */
     protected $repository;
@@ -29,7 +33,7 @@ trait StringAccessibleConfigTrait
     public function __construct(ConfigLoaderInterface $repository, array $settings)
     {
         $this->repository = $repository;
-        $this->settings = $settings;
+        $this->original = $this->settings = $settings;
     }
 
     /**
@@ -84,6 +88,17 @@ trait StringAccessibleConfigTrait
      * @param string $key
      * @return mixed
      */
+    public function default(string $key)
+    {
+        $key = $this->prepareSearchKey($key);
+
+        return $this->get($key, $this->original);
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
     public function find(string $key)
     {
         $this->prepare();
@@ -94,6 +109,7 @@ trait StringAccessibleConfigTrait
 
     private function prepareSearchKey(string $key): string
     {
+        dump($key);
         $prefix = $this->getPrefix() . '.';
         $length = \strlen($prefix);
 
