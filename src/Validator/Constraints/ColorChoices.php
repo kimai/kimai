@@ -22,5 +22,6 @@ class ColorChoices extends Constraint
     ];
 
     public $message = 'The given value {{ value }} is not a valid hexadecimal color.';
-    public $invalidNameMessage = 'The given value {{ name }} is not a valid color name for {{ color }}. Allowed are {{ max }} characters, given {{ count }}.';
+    public $invalidNameMessage = 'The given value {{ name }} is not a valid color name for {{ color }}. Allowed are {{ max }} alpha-numerical characters, including minus and space.';
+    public $maxLength = 20;
 }
