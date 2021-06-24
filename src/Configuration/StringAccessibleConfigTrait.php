@@ -109,7 +109,6 @@ trait StringAccessibleConfigTrait
 
     private function prepareSearchKey(string $key): string
     {
-        dump($key);
         $prefix = $this->getPrefix() . '.';
         $length = \strlen($prefix);
 

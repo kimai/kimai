@@ -376,13 +376,4 @@ class SystemConfiguration implements SystemBundleConfiguration
 
         return $this->default('theme.color_choices');
     }
-
-            if (empty($key)) {
-                $key = $value;
-            }
-            $colors[$key] = $value;
-        }
-
-        return array_unique($colors);
-    }
 }
