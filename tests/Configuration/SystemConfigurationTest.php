@@ -148,6 +148,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(7, $sut->find('timesheet.active_entries.hard_limit'));
         $this->assertFalse($sut->isSamlActive());
         $this->assertFalse($sut->find('theme.colors_limited'));
+        $this->assertEquals('Europe/London', $sut->default('defaults.customer.timezone'));
     }
 
     public function testDefaultWithMixedConfigs()
