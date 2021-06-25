@@ -34,7 +34,7 @@ final class ThemeConfiguration implements \ArrayAccess
      */
     public function offsetGet($offset)
     {
-        return $this->find($offset);
+        return $this->systemConfiguration->find('theme.' . $offset);
     }
 
     /**
@@ -56,17 +56,12 @@ final class ThemeConfiguration implements \ArrayAccess
         throw new \BadMethodCallException('ThemeConfiguration does not support offsetUnset()');
     }
 
-    public function find(string $key)
-    {
-        return $this->systemConfiguration->find('theme.' . $key);
-    }
-
     /**
      * @deprecated since 1.15
      */
     public function isAllowTagCreation(): bool
     {
-        return (bool) $this->find('tags_create');
+        return (bool) $this->offsetGet('tags_create');
     }
 
     /**
@@ -74,7 +69,7 @@ final class ThemeConfiguration implements \ArrayAccess
      */
     public function getTitle(): ?string
     {
-        $title = $this->find('branding.title');
+        $title = $this->offsetGet('branding.title');
         if (null === $title) {
             return null;
         }
