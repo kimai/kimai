@@ -233,7 +233,7 @@ final class InvoiceController extends AbstractController
     public function changeStatusAction(Invoice $invoice, string $status, Request $request): Response
     {
         if ($status === Invoice::STATUS_PAID) {
-            $form = $this->createPaymentDateForm($invoice, $request);
+            $form = $this->createPaymentDateForm($invoice, $status);
             $form->handleRequest($request);
 
             if (!$form->isSubmitted() || !$form->isValid()) {
@@ -525,14 +525,16 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    private function createPaymentDateForm(Invoice $invoice, Request $request): FormInterface
+    private function createPaymentDateForm(Invoice $invoice, string $status): FormInterface
     {
         if (null === $invoice->getPaymentDate()) {
             $invoice->setPaymentDate($this->getDateTimeFactory()->createDateTime());
         }
 
+        $url = $this->generateUrl('admin_invoice_status', ['id' => $invoice->getId(), 'status' => $status]);
+
         return $this->createForm(InvoicePaymentDateForm::class, $invoice, [
-            'action' => $request->getUri(),
+            'action' => $url,
             'method' => 'POST',
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
         ]);
