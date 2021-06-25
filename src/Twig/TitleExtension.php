@@ -40,7 +40,7 @@ class TitleExtension extends AbstractExtension
     {
         $title = $this->configuration->getBrandingTitle();
         if (null === $title || \strlen($title) === 0) {
-            return Constants::SOFTWARE;
+            $title = Constants::SOFTWARE;
         }
 
         return ($prefix ?? '') . $title . $delimiter . $this->translator->trans('time_tracking', [], 'messages');
