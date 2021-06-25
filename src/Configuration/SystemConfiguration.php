@@ -379,14 +379,9 @@ class SystemConfiguration implements SystemBundleConfiguration
 
     // ========== Branding configurations ==========
 
-    public function getBrandingTitle(): string
+    public function getBrandingTitle(): ?string
     {
-        $title = $this->find('theme.branding.title');
-        if (null === $title || \strlen($title) === 0) {
-            return Constants::SOFTWARE;
-        }
-
-        return (string) $title;
+        return $this->find('theme.branding.title');
     }
 
     public function getBrandingCompany(): ?string
