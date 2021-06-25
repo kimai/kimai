@@ -429,7 +429,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('color_choices')
                     ->defaultValue(implode(',', [
-                        Constants::SOFTWARE . '|' . Constants::DEFAULT_COLOR, 'Silver|#c0c0c0', 'Gray|#808080', 'Black|#000000',
+                        'Silver|#c0c0c0', 'Gray|#808080', 'Black|#000000',
                         'Maroon|#800000', 'Brown|#a52a2a', 'Red|#ff0000', 'Orange|#ffa500',
                         'Gold|#ffd700', 'Yellow|#ffff00', 'Peach|#ffdab9', 'Khaki|#f0e68c',
                         'Olive|#808000', 'Lime|#00ff00', 'Jelly|#9acd32', 'Green|#008000', 'Teal|#008080',

@@ -136,7 +136,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(99, $sut->find('timesheet.active_entries.hard_limit'));
         $this->assertTrue($sut->find('theme.colors_limited'));
         $this->assertTrue($sut->isThemeColorsLimited());
-        $this->assertEquals(['Maroon' => '#800000', 'Brown' => '#a52a2a', 'Red' => '#ff0000', 'Orange' => '#ffa500', '#ffffff' => '#ffffff', '#000000' => '#000000'], $sut->getThemeColorChoices());
+        $this->assertEquals('Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000', $sut->getThemeColorChoices());
     }
 
     public function testDefaultWithLoader()
@@ -148,6 +148,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(7, $sut->find('timesheet.active_entries.hard_limit'));
         $this->assertFalse($sut->isSamlActive());
         $this->assertFalse($sut->find('theme.colors_limited'));
+        $this->assertEquals('Europe/London', $sut->default('defaults.customer.timezone'));
     }
 
     public function testDefaultWithMixedConfigs()
@@ -160,7 +161,7 @@ class SystemConfigurationTest extends TestCase
         ]);
         $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
         $this->assertTrue($sut->isSamlActive());
-        $this->assertNull($sut->getThemeColorChoices());
+        $this->assertEquals('Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000', $sut->getThemeColorChoices());
         $this->assertEquals('2020-03-27', $sut->getFinancialYearStart());
     }
 
