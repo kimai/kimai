@@ -66,15 +66,49 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
 
         if ($this->isLimitedColors()) {
             $choices = [];
-            foreach ($this->systemConfiguration->getThemeColorChoices() as $name => $color) {
+            $colors = $this->convertStringToColorArray($this->systemConfiguration->getThemeColorChoices());
+
+            foreach ($colors as $name => $color) {
                 $choices[$name] = $color;
             }
+
             $options['choices'] = $choices;
             $options['search'] = false;
             $options['attr']['data-renderer'] = 'color';
         }
 
         $resolver->setDefaults($options);
+    }
+
+    private function convertStringToColorArray(string $config): array
+    {
+        $config = explode(',', $config);
+
+        $colors = [];
+        foreach ($config as $item) {
+            if (empty($item)) {
+                continue;
+            }
+            $item = explode('|', $item);
+            $key = $item[0];
+            $value = $key;
+
+            if (\count($item) > 1) {
+                $value = $item[1];
+            }
+
+            if (empty($key)) {
+                $key = $value;
+            }
+
+            if ($value === Constants::DEFAULT_COLOR) {
+                continue;
+            }
+
+            $colors[$key] = $value;
+        }
+
+        return array_unique($colors);
     }
 
     /**

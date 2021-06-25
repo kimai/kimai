@@ -57,12 +57,15 @@ class ColorChoicesValidator extends ConstraintValidator
                 return;
             }
 
-            if (!\is_string($name) || 1 !== preg_match('/^[0-9a-zA-Z]{1,10}$/i', $name)) {
+            $name = str_replace(['-', ' '], '', $name);
+            $length = mb_strlen($name);
+
+            if (!\is_string($name) || $length > $constraint->maxLength || !ctype_alnum($name)) {
                 $this->context->buildViolation($constraint->invalidNameMessage)
                     ->setParameter('{{ name }}', $this->formatValue($name))
                     ->setParameter('{{ color }}', $this->formatValue($code))
-                    ->setParameter('{{ max }}', $this->formatValue(10))
-                    ->setParameter('{{ count }}', $this->formatValue(\strlen($name)))
+                    ->setParameter('{{ max }}', $this->formatValue($constraint->maxLength))
+                    ->setParameter('{{ count }}', $this->formatValue($length))
                     ->setCode(ColorChoices::COLOR_CHOICES_NAME_ERROR)
                     ->addViolation();
             }

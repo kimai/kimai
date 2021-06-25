@@ -32,6 +32,8 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
         yield ['#000aaa'];
         yield ['#fffaaa'];
         yield ['Foo|#fffaaa,|#fffaaa,#fffaaa,Bar|#fffaaa,'];
+        yield ['Fo o - sdsd|#fffaaa'];
+        yield ['abcdefghijklmnopqrst|#fffaaa'];
         yield [''];
         yield [null];
     }
@@ -56,9 +58,9 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
 
     public function getInvalidColors()
     {
-        yield ['sdf sdf|#000000', null, 'sdf sdf', '#000000'];
+        yield ['sdf_sdf|#000000', null, 'sdf_sdf', '#000000'];
         yield ['sdfghjklöß.|#aaabbb', null, 'sdfghjklöß.', '#aaabbb'];
-        yield ['abcdefghijklmn|#aaabbb', null, 'abcdefghijklmn', '#aaabbb'];
+        yield ['abcdefghijklmnopqrstu|#aaabbb', null, 'abcdefghijklmnopqrstu', '#aaabbb'];
         yield ['string', 'string', null];
         yield ['000', '000', null];
         yield ['aaa', 'aaa', null];
@@ -94,10 +96,10 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
         }
 
         if (null !== $invalidName) {
-            $this->buildViolation('The given value {{ name }} is not a valid color name for {{ color }}. Allowed are {{ max }} characters, given {{ count }}.')
+            $this->buildViolation('The given value {{ name }} is not a valid color name for {{ color }}. Allowed are {{ max }} alpha-numerical characters, including minus and space.')
                 ->setParameter('{{ color }}', '"' . ($invalidNameCode ?? $color) . '"')
-                ->setParameter('{{ max }}', '10')
-                ->setParameter('{{ count }}', (string) \strlen($invalidName))
+                ->setParameter('{{ max }}', (string) $constraint->maxLength)
+                ->setParameter('{{ count }}', (string) mb_strlen($invalidName))
                 ->setParameter('{{ name }}', '"' . $invalidName . '"')
                 ->setCode(ColorChoices::COLOR_CHOICES_NAME_ERROR)
                 ->assertRaised();
