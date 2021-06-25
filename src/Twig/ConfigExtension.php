@@ -59,9 +59,4 @@ final class ConfigExtension extends AbstractExtension
 
         return $this->configuration->find($name);
     }
-
-    public function __get($name)
-    {
-        return $this->configuration->find('theme.' . $name);
-    }
 }

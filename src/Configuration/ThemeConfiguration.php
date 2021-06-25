@@ -44,7 +44,7 @@ final class ThemeConfiguration implements \ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetSet()');
+        throw new \BadMethodCallException('ThemeConfiguration does not support offsetSet()');
     }
 
     /**
@@ -53,7 +53,7 @@ final class ThemeConfiguration implements \ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetUnset()');
+        throw new \BadMethodCallException('ThemeConfiguration does not support offsetUnset()');
     }
 
     public function find(string $key)
