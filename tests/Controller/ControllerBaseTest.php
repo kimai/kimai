@@ -18,6 +18,7 @@ use App\Tests\KernelTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Test\Constraint as ResponseConstraint;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
@@ -159,6 +160,12 @@ abstract class ControllerBaseTest extends WebTestCase
             $response->getTargetUrl(),
             sprintf('The secure URL %s does not redirect to the login form.', $url)
         );
+    }
+
+    protected function assertSuccessResponse(HttpKernelBrowser $client, string $message = '')
+    {
+        $response = $client->getResponse();
+        self::assertThat($response, new ResponseConstraint\ResponseIsSuccessful(), 'Response is not successful, got code: ' . $response->getStatusCode());
     }
 
     /**
@@ -381,26 +388,26 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param HttpKernelBrowser $client
      * @param string $url
      */
-    protected function assertIsRedirect(HttpKernelBrowser $client, $url = null, $endsWith = true)
+    protected function assertIsRedirect(HttpKernelBrowser $client, $url = null)
     {
-        self::assertTrue($client->getResponse()->isRedirect(), 'Response is not a redirect');
+        self::assertResponseRedirects();
+
         if (null === $url) {
             return;
         }
 
+        $this->assertRedirectUrl($client, $url);
+    }
+
+    protected function assertRedirectUrl(HttpKernelBrowser $client, $url = null, $endsWith = true)
+    {
         self::assertTrue($client->getResponse()->headers->has('Location'), 'Could not find "Location" header');
+        $location = $client->getResponse()->headers->get('Location');
+
         if ($endsWith) {
-            self::assertStringEndsWith(
-                $url,
-                $client->getResponse()->headers->get('Location'),
-                'Redirect URL does not match'
-            );
+            self::assertStringEndsWith($url, $location, 'Redirect URL does not match');
         } else {
-            self::assertStringContainsString(
-                $url,
-                $client->getResponse()->headers->get('Location'),
-                'Redirect URL does not match'
-            );
+            self::assertStringContainsString($url, $location, 'Redirect URL does not match');
         }
     }
 

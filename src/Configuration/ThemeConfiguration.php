@@ -10,40 +10,68 @@
 namespace App\Configuration;
 
 /**
- * @internal will be deprecated soon, use SystemConfiguration instead
+ * @internal might be deprecated in the future, use SystemConfiguration instead
  */
-class ThemeConfiguration implements SystemBundleConfiguration, \ArrayAccess
+final class ThemeConfiguration implements \ArrayAccess
 {
-    use StringAccessibleConfigTrait;
+    private $systemConfiguration;
 
-    public function getPrefix(): string
+    public function __construct(SystemConfiguration $systemConfiguration)
     {
-        return 'theme';
+        $this->systemConfiguration = $systemConfiguration;
     }
 
-    public function isAutoReloadDatatable(): bool
+    /**
+     * @return bool
+     */
+    public function offsetExists($offset)
     {
-        @trigger_error('The configuration auto_reload_datatable is deprecated and was removed with 1.4', E_USER_DEPRECATED);
-
-        return false;
+        return $this->systemConfiguration->has('theme.' . $offset);
     }
 
+    /**
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        return $this->find($offset);
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @throws \BadMethodCallException
+     */
+    public function offsetSet($offset, $value)
+    {
+        throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetSet()');
+    }
+
+    /**
+     * @param mixed $offset
+     * @throws \BadMethodCallException
+     */
+    public function offsetUnset($offset)
+    {
+        throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetUnset()');
+    }
+
+    public function find(string $key)
+    {
+        return $this->systemConfiguration->find('theme.' . $key);
+    }
+
+    /**
+     * @deprecated since 1.15
+     */
     public function isAllowTagCreation(): bool
     {
         return (bool) $this->find('tags_create');
     }
 
     /**
-     * Currently unused, as JS selects are always activated.
-     * @deprecated since 1.7 will be removed with 2.0
+     * @deprecated since 1.15
      */
-    public function getSelectPicker(): string
-    {
-        @trigger_error('getSelectPicker() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        return (string) $this->find('select_type');
-    }
-
     public function getTitle(): ?string
     {
         $title = $this->find('branding.title');

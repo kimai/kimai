@@ -9,7 +9,7 @@
 
 namespace App\Tests\Twig;
 
-use App\Configuration\ThemeConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\Configuration;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Twig\TitleExtension;
@@ -33,7 +33,7 @@ class TitleExtensionTest extends TestCase
 
         $loader = new TestConfigLoader($configs);
 
-        $configuration = new ThemeConfiguration($loader, ['branding' => ['title' => null]]);
+        $configuration = new SystemConfiguration($loader, ['theme' => ['branding' => ['title' => null]]]);
 
         return new TitleExtension($translator, $configuration);
     }

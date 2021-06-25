@@ -9,6 +9,8 @@
 
 namespace App\Configuration;
 
+use App\Constants;
+
 class SystemConfiguration implements SystemBundleConfiguration
 {
     use StringAccessibleConfigTrait;
@@ -375,5 +377,32 @@ class SystemConfiguration implements SystemBundleConfiguration
         }
 
         return $this->default('theme.color_choices');
+    }
+
+    // ========== Branding configurations ==========
+
+    public function getBrandingTitle(): string
+    {
+        $title = $this->find('theme.branding.title');
+        if (null === $title || \strlen($title) === 0) {
+            return Constants::SOFTWARE;
+        }
+
+        return (string) $title;
+    }
+
+    public function getBrandingCompany(): string
+    {
+        $title = $this->find('theme.branding.title');
+        if (null === $title || \strlen($title) === 0) {
+            return Constants::SOFTWARE;
+        }
+
+        return (string) $title;
+    }
+
+    public function isAllowTagCreation(): bool
+    {
+        return (bool) $this->find('theme.tags_create');
     }
 }

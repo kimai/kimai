@@ -69,7 +69,7 @@ class AppExtension extends Extension
         $container->setParameter('kimai.defaults', $config['defaults']); // @deprecated since 1.13
 
         $this->createPermissionParameter($config['permissions'], $container);
-        $this->createThemeParameter($config['theme'], $container);
+        $container->setParameter('kimai.theme', $config['theme']); // @deprecated since 1.15
         $container->setParameter('kimai.timesheet', $config['timesheet']); // @deprecated since 1.13
         $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
         $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
@@ -209,17 +209,6 @@ class AppExtension extends Extension
         }
 
         return $result;
-    }
-
-    /**
-     * @param array $config
-     * @param ContainerBuilder $container
-     */
-    protected function createThemeParameter(array $config, ContainerBuilder $container)
-    {
-        $container->setParameter('kimai.theme', $config);
-        $container->setParameter('kimai.theme.select_type', $config['select_type']);
-        $container->setParameter('kimai.theme.show_about', $config['show_about']);
     }
 
     /**

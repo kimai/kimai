@@ -192,7 +192,8 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $action = '/invoice/save-invoice/1/' . $template->getId() . '?' . http_build_query($urlParams);
         $this->request($client, $action);
-        $this->assertIsRedirect($client, '/invoice/show?id=', false);
+        $this->assertIsRedirect($client);
+        $this->assertRedirectUrl($client, '/invoice/show?id=', false);
         $client->followRedirect();
         $this->assertDataTableRowCount($client, 'datatable_invoices', 1);
 

@@ -11,6 +11,9 @@ namespace App\Configuration;
 
 use App\Entity\Configuration;
 
+/**
+ * @internal do NOT use this trait, but access your configs via SystemConfiguration
+ */
 trait StringAccessibleConfigTrait
 {
     /**

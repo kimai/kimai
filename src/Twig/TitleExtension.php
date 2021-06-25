@@ -9,23 +9,17 @@
 
 namespace App\Twig;
 
-use App\Configuration\ThemeConfiguration;
+use App\Configuration\SystemConfiguration;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class TitleExtension extends AbstractExtension
 {
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-    /**
-     * @var ThemeConfiguration
-     */
-    protected $configuration;
+    private $translator;
+    private $configuration;
 
-    public function __construct(TranslatorInterface $translator, ThemeConfiguration $configuration)
+    public function __construct(TranslatorInterface $translator, SystemConfiguration $configuration)
     {
         $this->translator = $translator;
         $this->configuration = $configuration;
@@ -43,8 +37,6 @@ class TitleExtension extends AbstractExtension
 
     public function generateTitle(?string $prefix = null, string $delimiter = ' – '): string
     {
-        $title = $this->configuration->getTitle() ?? 'Kimai';
-
-        return ($prefix ?? '') . ($title) . $delimiter . $this->translator->trans('time_tracking', [], 'messages');
+        return ($prefix ?? '') . $this->configuration->getBrandingTitle() . $delimiter . $this->translator->trans('time_tracking', [], 'messages');
     }
 }
