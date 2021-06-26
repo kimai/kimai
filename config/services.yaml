@@ -56,10 +56,6 @@ services:
         arguments:
             $settings: '%kimai.config%'
 
-    App\Configuration\ThemeConfiguration:
-        arguments:
-            $settings: '%kimai.theme%'
-
     App\Utils\MPdfConverter:
         arguments: ['%kernel.cache_dir%']
 

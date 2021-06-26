@@ -48,7 +48,7 @@ class CalendarControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser();
         static::$kernel->getContainer()->set(SystemConfiguration::class, $config);
         $this->request($client, '/calendar/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertSuccessResponse($client);
 
         $crawler = $client->getCrawler();
         $calendar = $crawler->filter('div#timesheet_calendar');
@@ -61,9 +61,35 @@ class CalendarControllerTest extends ControllerBaseTest
         $this->assertStringContainsString("name: 'holidays_en'", $content);
     }
 
-    protected function getDefaultSettings()
+    protected function getDefaultSettings(): array
     {
         return [
+            'theme' => [
+                'active_warning' => 3,
+                'box_color' => 'blue',
+                'select_type' => 'selectpicker',
+                'show_about' => true,
+                'chart' => [
+                    'background_color' => '#3c8dbc',
+                    'border_color' => '#3b8bba',
+                    'grid_color' => 'rgba(0,0,0,.05)',
+                    'height' => '200',
+                ],
+                'branding' => [
+                    'logo' => null,
+                    'mini' => null,
+                    'company' => null,
+                    'title' => null,
+                    'translation' => null,
+                ],
+                'autocomplete_chars' => 3,
+                'tags_create' => true,
+                'calendar' => [
+                    'background_color' => '#d2d6de'
+                ],
+                'colors_limited' => true,
+                'color_choices' => 'Silver|#c0c0c0,Gray|#808080,Black|#000000,Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,Gold|#ffd700,Yellow|#ffff00,Peach|#ffdab9,Khaki|#f0e68c,Olive|#808000,Lime|#00ff00,Jelly|#9acd32,Green|#008000,Teal|#008080,Aqua|#00ffff,LightBlue|#add8e6,DeepSky|#00bfff,Dodger|#1e90ff,Blue|#0000ff,Navy|#000080,Purple|#800080,Fuchsia|#ff00ff,Violet|#ee82ee,Rose|#ffe4e1,Lavender|#E6E6FA'
+            ],
             'defaults' => [
                 'user' => [
                     'language' => 'en'

@@ -376,4 +376,21 @@ class SystemConfiguration implements SystemBundleConfiguration
 
         return $this->default('theme.color_choices');
     }
+
+    // ========== Branding configurations ==========
+
+    public function getBrandingTitle(): ?string
+    {
+        return $this->find('theme.branding.title');
+    }
+
+    public function getBrandingCompany(): ?string
+    {
+        return $this->find('theme.branding.company');
+    }
+
+    public function isAllowTagCreation(): bool
+    {
+        return (bool) $this->find('theme.tags_create');
+    }
 }

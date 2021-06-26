@@ -9,15 +9,18 @@
 
 namespace App\Tests\Twig\Runtime;
 
+use App\Configuration\SystemConfiguration;
+use App\Entity\Configuration;
 use App\Entity\User;
 use App\Event\ThemeEvent;
-use App\Tests\Mocks\Security\CurrentUserFactory;
+use App\Tests\Configuration\TestConfigLoader;
 use App\Twig\Runtime\ThemeExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -26,15 +29,46 @@ use Twig\Loader\FilesystemLoader;
  */
 class ThemeEventExtensionTest extends TestCase
 {
-    protected function getSut(bool $hasListener = true): ThemeExtension
+    private function getDefaultSettings(): array
+    {
+        return [
+            'theme' => [
+                'active_warning' => 3,
+                'box_color' => 'green',
+                'select_type' => null,
+                'show_about' => true,
+                'chart' => [
+                    'background_color' => 'rgba(0,115,183,0.7)',
+                    'border_color' => '#3b8bba',
+                    'grid_color' => 'rgba(0,0,0,.05)',
+                    'height' => '200'
+                ],
+                'branding' => [
+                    'logo' => null,
+                    'mini' => null,
+                    'company' => null,
+                    'title' => null,
+                ],
+            ],
+        ];
+    }
+
+    protected function getSut(bool $hasListener = true, string $title = null): ThemeExtension
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->method('hasListeners')->willReturn($hasListener);
         $dispatcher->expects($hasListener ? $this->once() : $this->never())->method('dispatch');
 
-        $user = (new CurrentUserFactory($this))->create(new User());
+        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $translator->method('trans')->willReturn('foo');
 
-        return new ThemeExtension($dispatcher);
+        $configs = [
+            (new Configuration())->setName('theme.branding.title')->setValue($title)
+        ];
+        $loader = new TestConfigLoader($configs);
+        $configuration = new SystemConfiguration($loader, $this->getDefaultSettings());
+
+        return new ThemeExtension($dispatcher, $translator, $configuration);
     }
 
     protected function getEnvironment(): Environment
@@ -118,5 +152,34 @@ class ThemeEventExtensionTest extends TestCase
     {
         $sut = $this->getSut(false);
         self::assertEquals($expected, $sut->getProgressbarClass($percent, $reverseColors));
+    }
+
+    public function testGetTitle()
+    {
+        $sut = $this->getSut(false);
+        $this->assertEquals('Kimai – foo', $sut->generateTitle());
+        $this->assertEquals('sdfsdf | Kimai – foo', $sut->generateTitle('sdfsdf | '));
+        $this->assertEquals('<b>Kimai</b> ... foo', $sut->generateTitle('<b>', '</b> ... '));
+        $this->assertEquals('Kimai | foo', $sut->generateTitle(null, ' | '));
+    }
+
+    public function testGetBrandedTitle()
+    {
+        $sut = $this->getSut(false, 'MyCompany');
+        $this->assertEquals('MyCompany – foo', $sut->generateTitle());
+        $this->assertEquals('sdfsdf | MyCompany – foo', $sut->generateTitle('sdfsdf | '));
+        $this->assertEquals('<b>MyCompany</b> ... foo', $sut->generateTitle('<b>', '</b> ... '));
+        $this->assertEquals('MyCompany | foo', $sut->generateTitle(null, ' | '));
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testThemeConfig()
+    {
+        $sut = $this->getSut(false);
+        self::assertEquals(3, $sut->getThemeConfig('active_warning'));
+        self::assertEquals('green', $sut->getThemeConfig('box_color'));
+        self::assertFalse($sut->getThemeConfig('auto_reload_datatable'));
     }
 }
