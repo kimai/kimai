@@ -24,8 +24,7 @@ class KimaiMailerTest extends TestCase
 {
     public function getSut(): KimaiMailer
     {
-        $config = $this->createMock(MailConfiguration::class);
-        $config->expects($this->any())->method('getFromAddress')->willReturn('zippel@example.com');
+        $config = new MailConfiguration('zippel@example.com');
 
         $mailer = $this->createMock(MailerInterface::class);
 
