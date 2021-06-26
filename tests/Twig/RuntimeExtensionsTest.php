@@ -40,8 +40,10 @@ class RuntimeExtensionsTest extends TestCase
         $expected = [
             'trigger',
             'actions',
+            'get_title',
             'progressbar_color',
             'javascript_translations',
+            'theme_config',
             'active_timesheets',
             'encore_entry_css_source',
             'render_widget',

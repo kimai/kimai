@@ -9,25 +9,29 @@
 
 namespace App\Twig\Runtime;
 
+use App\Configuration\SystemConfiguration;
+use App\Constants;
 use App\Entity\User;
 use App\Event\PageActionsEvent;
 use App\Event\ThemeEvent;
 use App\Event\ThemeJavascriptTranslationsEvent;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Extension\RuntimeExtensionInterface;
 
 final class ThemeExtension implements RuntimeExtensionInterface
 {
-    /**
-     * @var EventDispatcherInterface
-     */
     private $eventDispatcher;
+    private $translator;
+    private $configuration;
 
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct(EventDispatcherInterface $dispatcher, TranslatorInterface $translator, SystemConfiguration $configuration)
     {
         $this->eventDispatcher = $dispatcher;
+        $this->translator = $translator;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -94,5 +98,41 @@ final class ThemeExtension implements RuntimeExtensionInterface
         }
 
         return $class;
+    }
+
+    public function generateTitle(?string $prefix = null, string $delimiter = ' – '): string
+    {
+        $title = $this->configuration->getBrandingTitle();
+        if (null === $title || \strlen($title) === 0) {
+            $title = Constants::SOFTWARE;
+        }
+
+        return ($prefix ?? '') . $title . $delimiter . $this->translator->trans('time_tracking', [], 'messages');
+    }
+
+    /**
+     * @param string $name
+     * @return mixed
+     * @deprecated since 1.15
+     */
+    public function getThemeConfig(string $name)
+    {
+        @trigger_error('The twig function "theme_config" was deprecated with 1.15, replace it with the global "kimai_config" variable.', E_USER_DEPRECATED);
+
+        switch ($name) {
+            case 'auto_reload_datatable':
+                @trigger_error('The configuration auto_reload_datatable is deprecated and was removed with 1.4', E_USER_DEPRECATED);
+
+                return false;
+
+            case 'soft_limit':
+                return $this->configuration->getTimesheetActiveEntriesHardLimit();
+
+            default:
+                $name = 'theme.' . $name;
+                break;
+        }
+
+        return $this->configuration->find($name);
     }
 }

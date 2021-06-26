@@ -98,7 +98,15 @@ class SystemConfigurationTest extends TestCase
             ],
             'theme' => [
                 'color_choices' => 'Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000',
-                'colors_limited' => true
+                'colors_limited' => true,
+                'tags_create' => true,
+                'branding' => [
+                    'logo' => null,
+                    'mini' => null,
+                    'company' => 'Acme Corp.',
+                    'title' => 'Fantastic Time-Tracking',
+                    'translation' => null,
+                ],
             ],
         ];
     }
@@ -137,6 +145,9 @@ class SystemConfigurationTest extends TestCase
         $this->assertTrue($sut->find('theme.colors_limited'));
         $this->assertTrue($sut->isThemeColorsLimited());
         $this->assertEquals('Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000', $sut->getThemeColorChoices());
+        $this->assertEquals('Acme Corp.', $sut->getBrandingCompany());
+        $this->assertEquals('Fantastic Time-Tracking', $sut->getBrandingTitle());
+        $this->assertTrue($sut->isAllowTagCreation());
     }
 
     public function testDefaultWithLoader()

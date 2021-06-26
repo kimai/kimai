@@ -386,7 +386,7 @@ class SystemConfiguration implements SystemBundleConfiguration
 
     public function getBrandingCompany(): ?string
     {
-        return $this->find('theme.branding.title');
+        return $this->find('theme.branding.company');
     }
 
     public function isAllowTagCreation(): bool
