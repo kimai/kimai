@@ -1113,6 +1113,102 @@
         <source>sum.total</source>
         <target>Всего</target>
       </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Последняя запись</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Нет времени на бронирование с</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Не оплачено</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Не экспортировано</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Показать записи без бюджета</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Показать записи без бронирований</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Пропущен предварительный просмотр %rows% строк ...</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Дата платежа</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Активных пользователей в этом финансовом году</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Выручка в этом финансовом году</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Часы работы в этом финансовом году</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Финансовый год</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Сохранить все</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Письмо отправлено на %email%. Чтобы активировать аккаунт, нажмите на ссылку в тексте письма.</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Письмо со ссылкой для сброса пароля отправлено. Примечание: Вы можете запросить сброс пароля не чаще, чем раз в %tokenLifetime% часов. Если Вы не получили письмо - проверьте СПАМ или попробуйте позже.</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Обновить заголовок браузера</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Для удаления записи, перетащите её на кнопку.</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Ставка налога</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Поисковый запрос</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Удалить избранный поиск</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Файл</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Упорядочить по</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>По убыванию</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>По возрастанию</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
