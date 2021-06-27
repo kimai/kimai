@@ -408,7 +408,7 @@
       </trans-unit>
       <trans-unit id="label.timezone">
         <source>label.timezone</source>
-        <target>Временная зона</target>
+        <target>Часовой пояс</target>
       </trans-unit>
       <trans-unit id="label.currency">
         <source>label.currency</source>
