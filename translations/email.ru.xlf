@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>Вы зарегистрировались в Kimai time-tracker с электронным адресом %email%. Вам необходимо активировать свою учетную запись в течение нескольких часов, пока ссылка не истекла.</target>
+        <target>Вы зарегистрировались в Kimai time-tracker с электронным адресом %email%. Пожалуйста, активируйте свою учетную запись в течение нескольких часов, пока ссылка не истекла.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
