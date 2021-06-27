@@ -1095,15 +1095,15 @@
       </trans-unit>
       <trans-unit id="menu.reporting">
         <source>menu.reporting</source>
-        <target>отчет</target>
+        <target>Отчет</target>
       </trans-unit>
       <trans-unit id="rates.title">
         <source>rates.title</source>
-        <target>сборы</target>
+        <target>Сборы</target>
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>сборы не были настроены.</target>
+        <target>Сборы не были настроены.</target>
       </trans-unit>
       <trans-unit id="modal.dirty">
         <source>modal.dirty</source>
