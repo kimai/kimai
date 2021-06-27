@@ -56,10 +56,6 @@ services:
         arguments:
             $settings: '%kimai.config%'
 
-    App\Configuration\ThemeConfiguration:
-        arguments:
-            $settings: '%kimai.theme%'
-
     App\Utils\MPdfConverter:
         arguments: ['%kernel.cache_dir%']
 
@@ -242,6 +238,6 @@ services:
         arguments: ['App\Entity\Invoice']
 
     App\Repository\BookmarkRepository:
-        class:     \Repository\BookmarkRepository
+        class:     App\Repository\BookmarkRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Bookmark']

@@ -367,32 +367,30 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (int) $this->find('theme.autocomplete_chars');
     }
 
-    public function getThemeColorChoices(): ?array
+    public function getThemeColorChoices(): ?string
     {
         $config = $this->find('theme.color_choices');
-        if (empty($config)) {
-            return null;
-        }
-        $config = explode(',', $config);
-
-        $colors = [];
-        foreach ($config as $item) {
-            if (empty($item)) {
-                continue;
-            }
-            $item = explode('|', $item);
-            $key = $item[0];
-            $value = $key;
-            if (\count($item) > 1) {
-                $value = $item[1];
-            }
-
-            if (empty($key)) {
-                $key = $value;
-            }
-            $colors[$key] = $value;
+        if (!empty($config)) {
+            return $config;
         }
 
-        return array_unique($colors);
+        return $this->default('theme.color_choices');
+    }
+
+    // ========== Branding configurations ==========
+
+    public function getBrandingTitle(): ?string
+    {
+        return $this->find('theme.branding.title');
+    }
+
+    public function getBrandingCompany(): ?string
+    {
+        return $this->find('theme.branding.company');
+    }
+
+    public function isAllowTagCreation(): bool
+    {
+        return (bool) $this->find('theme.tags_create');
     }
 }
