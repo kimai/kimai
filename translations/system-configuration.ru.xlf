@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
-        <target>Расписание</target>
+        <target>Учет времени</target>
       </trans-unit>
       <trans-unit id="invoice">
         <source>invoice</source>
@@ -232,11 +232,11 @@
       </trans-unit>
       <trans-unit id="label.timesheet.rules.long_running_duration">
         <source>label.timesheet.rules.long_running_duration</source>
-        <target>Максимальная длительность записи в расписании в минутах, при превышении которого сохранение будет отклонено (0 = выключено)</target>
+        <target>Максимальная длительность записи учета отработанного времени, при превышении которого система отклонит попытку её сохранения (0 = выключено), минут</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.break_warning_duration">
         <source>label.timesheet.rules.break_warning_duration</source>
-        <target>Максимальная длительность записи в расписании в минутах до показа уведомления о перерыве (0 = отключено)</target>
+        <target>Максимальная длительность записи учета отработанного времени до показа уведомления о перерыве (0 = отключено), минут</target>
       </trans-unit>
       <trans-unit id="label.saml_activate">
         <source>label.saml_activate</source>
