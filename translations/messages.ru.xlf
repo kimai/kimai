@@ -230,7 +230,7 @@
       </trans-unit>
       <trans-unit id="action.close">
         <source>action.close</source>
-        <target>Закрыто</target>
+        <target>Закрыть</target>
       </trans-unit>
       <!--
               Dashboard
@@ -384,7 +384,7 @@
       </trans-unit>
       <trans-unit id="label.address">
         <source>label.address</source>
-        <target>Адресса</target>
+        <target>Адрес</target>
       </trans-unit>
       <trans-unit id="label.country">
         <source>label.country</source>
@@ -561,11 +561,11 @@
             -->
       <trans-unit id="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
-        <target>Образцы счетов</target>
+        <target>Шаблоны счетов</target>
       </trans-unit>
       <trans-unit id="invoice.title">
         <source>invoice.title</source>
-        <target>Бланки счета</target>
+        <target>Счета</target>
       </trans-unit>
       <trans-unit id="button.print">
         <source>button.print</source>
@@ -581,19 +581,19 @@
       </trans-unit>
       <trans-unit id="label.due_days">
         <source>label.due_days</source>
-        <target>Дата оплаты - дни</target>
+        <target>Оплатить в течение, дней</target>
       </trans-unit>
       <trans-unit id="invoice.due_days">
         <source>invoice.due_days</source>
-        <target>Дата оплаты</target>
+        <target>Оплатить до</target>
       </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>
-        <target>С</target>
+        <target>Исполнитель</target>
       </trans-unit>
       <trans-unit id="invoice.to">
         <source>invoice.to</source>
-        <target>До</target>
+        <target>Заказчик</target>
       </trans-unit>
       <trans-unit id="invoice.number">
         <source>invoice.number</source>
@@ -601,7 +601,7 @@
       </trans-unit>
       <trans-unit id="invoice.subtotal">
         <source>invoice.subtotal</source>
-        <target>Сумма счета оплаты (нетто)</target>
+        <target>Всего, без учета НДС</target>
       </trans-unit>
       <trans-unit id="invoice.tax">
         <source>invoice.tax</source>
@@ -609,7 +609,7 @@
       </trans-unit>
       <trans-unit id="invoice.total">
         <source>invoice.total</source>
-        <target>Конечная сумма расчета</target>
+        <target>Итого</target>
       </trans-unit>
       <trans-unit id="invoice.service_date">
         <source>invoice.service_date</source>
@@ -621,11 +621,11 @@
       </trans-unit>
       <trans-unit id="label.total_rate">
         <source>label.total_rate</source>
-        <target>Общая стоимость</target>
+        <target>Сумма</target>
       </trans-unit>
       <trans-unit id="label.payment_terms">
         <source>label.payment_terms</source>
-        <target>Информация о выплате</target>
+        <target>Условия оплаты</target>
       </trans-unit>
       <trans-unit id="invoice.signature_user">
         <source>invoice.signature_user</source>
@@ -947,7 +947,7 @@
       </trans-unit>
       <trans-unit id="label.globalsOnly">
         <source>label.globalsOnly</source>
-        <target>только глобальные</target>
+        <target>Только глобальные</target>
       </trans-unit>
       <trans-unit id="export.mark_all">
         <source>export.mark_all</source>
@@ -963,7 +963,7 @@
       </trans-unit>
       <trans-unit id="entryState.exported">
         <source>entryState.exported</source>
-        <target>Очищенно</target>
+        <target>Очищено</target>
       </trans-unit>
       <trans-unit id="label.exported">
         <source>label.exported</source>
@@ -995,7 +995,7 @@
       </trans-unit>
       <trans-unit id="label.decimalDuration">
         <source>label.decimalDuration</source>
-        <target>Длительность отображения в виде десятичного числа</target>
+        <target>Показывать длительность в виде десятичного числа</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
@@ -1003,11 +1003,11 @@
       </trans-unit>
       <trans-unit id="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
-        <target>VAT номер.:</target>
+        <target>ИНН:</target>
       </trans-unit>
       <trans-unit id="label.unit_price">
         <source>label.unit_price</source>
-        <target>Удельная цена</target>
+        <target>Цена</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
