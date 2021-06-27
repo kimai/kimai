@@ -434,7 +434,7 @@
       </trans-unit>
       <trans-unit id="label.title">
         <source>label.title</source>
-        <target>Должность</target>
+        <target>Заголовок</target>
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
@@ -1019,7 +1019,7 @@
       </trans-unit>
       <trans-unit id="label.vat_id">
         <source>label.vat_id</source>
-        <target>НДС-идентификационный номер</target>
+        <target>ИНН</target>
       </trans-unit>
       <trans-unit id="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
