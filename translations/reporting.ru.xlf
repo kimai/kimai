@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="report_project_view">
         <source>report_project_view</source>
-        <target>Обзор проекта</target>
+        <target>Обзор проектов</target>
       </trans-unit>
       <trans-unit id="report_yearly_users">
         <source>report_yearly_users</source>
