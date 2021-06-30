@@ -9,11 +9,17 @@
 
 namespace App\Project;
 
+use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\ProjectStatisticEvent;
+use App\Model\ActivityStatistic;
 use App\Model\ProjectStatistic;
+use App\Model\Statistic\Month;
+use App\Model\Statistic\Year;
+use App\Reporting\ProjectDetails\ProjectDetailsModel;
+use App\Reporting\ProjectDetails\ProjectDetailsQuery;
 use App\Reporting\ProjectInactive\ProjectInactiveQuery;
 use App\Reporting\ProjectView\ProjectViewModel;
 use App\Reporting\ProjectView\ProjectViewQuery;
@@ -22,6 +28,7 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -87,6 +94,99 @@ class ProjectStatisticService
         $this->repository->addPermissionCriteria($qb, $user);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param ProjectDetailsQuery $query
+     * @return ProjectDetailsModel
+     */
+    public function getProjectsDetails(ProjectDetailsQuery $query): ProjectDetailsModel
+    {
+        $model = new ProjectDetailsModel($query->getProject());
+
+        $years = [];
+        $qb = $this->timesheetRepository->createQueryBuilder('t');
+        $qb
+            ->select('SUM(t.duration) as duration')
+            ->addSelect('SUM(t.rate) as rate')
+            ->addSelect('SUM(t.internalRate) as internalRate')
+            ->andWhere('t.project = :project')
+            ->setParameter('project', $query->getProject())
+        ;
+
+        // fetch grouped by activity for all time
+        $qb1 = clone $qb;
+        $qb1
+            ->leftJoin(Activity::class, 'a', Join::WITH, 'a.id = t.activity')
+            ->addSelect('a.id as id')
+            ->addSelect('a.name as name')
+            ->addSelect('a.color as color')
+            ->addSelect('COUNT(t.id) as count')
+            ->addGroupBy('id')
+            ->addGroupBy('name')
+            ->addGroupBy('color')
+        ;
+        foreach ($qb1->getQuery()->getResult() as $tmp) {
+            $activity = new ActivityStatistic();
+            $activity->setId($tmp['id']);
+            $activity->setName($tmp['name']);
+            $activity->setColor($tmp['color'] ?? 'random');
+            $activity->setRecordRate($tmp['rate']);
+            $activity->setRecordDuration($tmp['duration']);
+            $activity->setRecordInternalRate($tmp['internalRate']);
+            $activity->setRecordAmount($tmp['count']);
+            $model->addActivity($activity);
+        }
+
+        $qb1 = clone $qb;
+        $qb1
+            ->addSelect('YEAR(t.begin) as year')
+            ->addGroupBy('year')
+        ;
+        foreach ($qb1->getQuery()->getResult() as $year) {
+            $tmp = new Year($year['year']);
+            $tmp->setTotalRate($year['rate']);
+            $tmp->setTotalInternalRate($year['internalRate']);
+            $tmp->setTotalDuration($year['duration']);
+            $years[$year['year']] = $tmp;
+
+            // fetch grouped by activity and year
+            $qb2 = clone $qb;
+            $qb2
+                ->leftJoin(Activity::class, 'a', Join::WITH, 'a.id = t.activity')
+                ->addSelect('a.name as name')
+                ->addSelect('a.color as color')
+                ->addSelect('YEAR(t.begin) as year')
+                ->andWhere('YEAR(t.begin) = :year')
+                ->setParameter('year', $year['year'])
+                ->addGroupBy('year')
+                ->addGroupBy('name')
+                ->addGroupBy('color')
+            ;
+            foreach ($qb2->getQuery()->getResult() as $tmp) {
+                $tmp['color'] = $tmp['color'] ?? 'random';
+                $model->addYearActivity($tmp['year'], $tmp);
+            }
+        }
+        $model->setYears($years);
+
+        // fetch MONTH for YEAR
+        $qb1 = clone $qb;
+        $qb1
+            ->addSelect('YEAR(t.begin) as year')
+            ->addSelect('MONTH(t.begin) as month')
+            ->addGroupBy('year')
+            ->addGroupBy('month')
+        ;
+        foreach ($qb1->getQuery()->getResult() as $month) {
+            $tmp = new Month($month['month']);
+            $tmp->setTotalRate($month['rate']);
+            $tmp->setTotalInternalRate($month['internalRate']);
+            $tmp->setTotalDuration($month['duration']);
+            $model->getYear($month['year'])->setMonth($tmp);
+        }
+
+        return $model;
     }
 
     /**

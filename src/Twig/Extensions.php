@@ -43,6 +43,7 @@ class Extensions extends AbstractExtension
         return [
             new TwigFunction('class_name', [$this, 'getClassName']),
             new TwigFunction('iso_day_by_name', [$this, 'getIsoDayByName']),
+            new TwigFunction('random_color', [$this, 'randomColor']),
         ];
     }
 
@@ -69,6 +70,11 @@ class Extensions extends AbstractExtension
     public function color(EntityWithMetaFields $entity, bool $defaultColor = false): ?string
     {
         return (new Color())->getColor($entity, $defaultColor);
+    }
+
+    public function randomColor(?string $input = null): string
+    {
+        return (new Color())->getRandom($input);
     }
 
     public function calculateFontContrastColor(string $color): string

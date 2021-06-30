@@ -40,7 +40,8 @@ class ProfileControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
         $year = (new \DateTime())->format('Y');
         $this->assertStringContainsString('<h3 class="box-title">' . $year . '</h3>', $content);
-        $this->assertStringContainsString('var userProfileChart' . $year . ' = new Chart(', $content);
+        $this->assertStringContainsString('new Chart(', $content);
+        $this->assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
     }
 
     public function testIndexAction()
@@ -69,7 +70,7 @@ class ProfileControllerTest extends ControllerBaseTest
         foreach ($dates as $start) {
             $year = $start->format('Y');
             $this->assertStringContainsString('<h3 class="box-title">' . $year . '</h3>', $content);
-            $this->assertStringContainsString('var userProfileChart' . $year . ' = new Chart(', $content);
+            $this->assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
         }
 
         $this->assertHasProfileBox($client, 'John Doe');

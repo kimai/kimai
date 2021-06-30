@@ -52,7 +52,7 @@ document.addEventListener('kimai.initialized', function() {
                         lineTension     : 0.3,
                         data            : [
                             {% for month in year.months %}
-                            {{ (month.totalDuration / 3600)|number_format(2, '.', '') }}
+                            {{ month.totalDuration|duration_chart }}
                             {% if not loop.last %},{% endif %}
                             {% endfor %}
                         ],

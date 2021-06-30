@@ -76,6 +76,27 @@ final class Color
         return $defaultColor ? Constants::DEFAULT_COLOR : null;
     }
 
+    public function getRandom(?string $input = null): string
+    {
+        if ($input === null) {
+            return sprintf('#%06x', rand(0, 16777215));
+        }
+
+        $id = 0;
+        for ($pos = 0; $pos < \strlen($input); $pos++) {
+            $id = mb_ord($input[$pos], 'UTF-8') + (($id << 5) - $id);
+        }
+
+        $id = $id % 16777215;
+
+        $colorCode = abs($id) % 0x1000000;
+        $red = $colorCode >> 16;
+        $green = ($colorCode >> 8) & 0xff;
+        $blue = $colorCode & 0xff;
+
+        return '#' . dechex($red) . dechex($green) . dechex($blue);
+    }
+
     public function getFontContrastColor(string $color): string
     {
         if (empty($color) || $color[0] !== '#') {

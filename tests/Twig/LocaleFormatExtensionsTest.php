@@ -52,7 +52,7 @@ class LocaleFormatExtensionsTest extends TestCase
     {
         $filters = [
             'month_name', 'day_name', 'date_short', 'date_time', 'date_full', 'date_format', 'time', 'hour24',
-            'duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount'
+            'duration', 'duration_chart', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount'
         ];
         $i = 0;
 
@@ -456,6 +456,15 @@ class LocaleFormatExtensionsTest extends TestCase
 
         $this->assertEquals('00:00 h', $sut->duration(null));
         $this->assertEquals('0', $sut->duration(null, true));
+    }
+
+    public function testDurationChart()
+    {
+        $sut = $this->getSut('en', $this->localeEn);
+        self::assertEquals(0.34, $sut->durationChart(1234));
+        self::assertEquals(3.43, $sut->durationChart(12345));
+        self::assertEquals(34.29, $sut->durationChart(123456));
+        self::assertEquals(342.94, $sut->durationChart(1234567));
     }
 
     public function testDurationDecimal()

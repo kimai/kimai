@@ -49,7 +49,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['class_name', 'iso_day_by_name'];
+        $functions = ['class_name', 'iso_day_by_name', 'random_color'];
         $sut = $this->getSut();
         $twigFunctions = $sut->getFunctions();
         $this->assertCount(\count($functions), $twigFunctions);
@@ -188,5 +188,22 @@ sdfsdf' . PHP_EOL . "\n" .
         $sut = $this->getSut();
 
         self::assertEquals($expected, $sut->replaceNewline($input, $replacer));
+    }
+
+    public function testGetRandomColor()
+    {
+        $sut = $this->getSut();
+
+        $this->assertIsValidColor($sut->randomColor());
+
+        $fooColor = $sut->randomColor('foo-bar');
+        self::assertIsValidColor($fooColor);
+        self::assertEquals($fooColor, $sut->randomColor('foo-bar'));
+    }
+
+    private static function assertIsValidColor(string $color)
+    {
+        self::assertStringStartsWith('#', $color);
+        self::assertEquals(7, \strlen($color));
     }
 }

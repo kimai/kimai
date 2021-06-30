@@ -50,6 +50,11 @@ class TimesheetCountedStatistic
         return $this->recordDuration;
     }
 
+    public function getDuration(): int
+    {
+        return $this->recordDuration;
+    }
+
     /**
      * @param int $recordDuration
      * @return $this
@@ -67,6 +72,11 @@ class TimesheetCountedStatistic
      * @return float
      */
     public function getRecordRate()
+    {
+        return $this->recordRate;
+    }
+
+    public function getRate(): float
     {
         return $this->recordRate;
     }

@@ -16,6 +16,7 @@ final class Month
     private $month;
     private $totalDuration = 0;
     private $totalRate = 0.00;
+    private $totalInternalRate = 0.00;
     private $billableDuration = 0;
     private $billableRate = 0.00;
 
@@ -62,6 +63,16 @@ final class Month
         $this->totalRate = $totalRate;
 
         return $this;
+    }
+
+    public function getTotalInternalRate(): float
+    {
+        return $this->totalInternalRate;
+    }
+
+    public function setTotalInternalRate(float $totalInternalRate): void
+    {
+        $this->totalInternalRate = $totalInternalRate;
     }
 
     public function getBillableDuration(): int
