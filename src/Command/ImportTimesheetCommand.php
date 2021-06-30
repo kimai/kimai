@@ -560,41 +560,41 @@ class ImportTimesheetCommand extends Command
             }
         }
 
-        if (null === $this->customerFallback) {
-            $tmpFallback = null;
+        //if (null === $this->customerFallback) {
+        $tmpFallback = null;
 
-            if (!empty($fallback)) {
-                if (\is_int($customer)) {
-                    $tmpFallback = $this->customers->find($fallback);
-                } else {
-                    /** @var Customer|null $tmpFallback */
-                    $tmpFallback = $this->customers->findOneBy(['name' => $fallback]);
-                }
+        if (!empty($fallback)) {
+            if (\is_int($customer)) {
+                $tmpFallback = $this->customers->find($fallback);
+            } else {
+                /** @var Customer|null $tmpFallback */
+                $tmpFallback = $this->customers->findOneBy(['name' => $fallback]);
             }
-
-            if (null === $tmpFallback) {
-                $newName = $customer;
-                if (empty($customer)) {
-                    $newName = self::DEFAULT_CUSTOMER;
-                    if (!empty($fallback) && \is_string($fallback)) {
-                        $newName = $fallback;
-                    }
-                }
-                $tmpFallback = new Customer();
-                $tmpFallback->setName(sprintf($newName, $this->dateTime));
-                $tmpFallback->setComment($this->comment);
-                $tmpFallback->setCountry($this->configuration->getCustomerDefaultCountry());
-                $timezone = date_default_timezone_get();
-                if (null !== $this->configuration->getCustomerDefaultTimezone()) {
-                    $timezone = $this->configuration->getCustomerDefaultTimezone();
-                }
-                $tmpFallback->setTimezone($timezone);
-                $this->customers->saveCustomer($tmpFallback);
-                $this->createdCustomers++;
-            }
-
-            $this->customerFallback = $tmpFallback;
         }
+
+        if (null === $tmpFallback) {
+            $newName = $customer;
+            if (empty($customer)) {
+                $newName = self::DEFAULT_CUSTOMER;
+                if (!empty($fallback) && \is_string($fallback)) {
+                    $newName = $fallback;
+                }
+            }
+            $tmpFallback = new Customer();
+            $tmpFallback->setName(sprintf($newName, $this->dateTime));
+            $tmpFallback->setComment($this->comment);
+            $tmpFallback->setCountry($this->configuration->getCustomerDefaultCountry());
+            $timezone = date_default_timezone_get();
+            if (null !== $this->configuration->getCustomerDefaultTimezone()) {
+                $timezone = $this->configuration->getCustomerDefaultTimezone();
+            }
+            $tmpFallback->setTimezone($timezone);
+            $this->customers->saveCustomer($tmpFallback);
+            $this->createdCustomers++;
+        }
+
+        $this->customerFallback = $tmpFallback;
+        //}
 
         return $this->customerFallback;
     }
