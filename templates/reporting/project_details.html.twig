@@ -238,16 +238,25 @@
         {% endfor %}
     {% endif -%}
 
+    {%- set labels = [] %}
+    {% set rates = [] %}
+    {% set durations = [] %}
+    {% for year in years %}
+        {% set labels = labels|merge([year.year]) %}
+        {% set rates = rates|merge([{'tooltip': year.rate|money(currency), 'value': year.rate}]) %}
+        {% set durations = durations|merge([{'tooltip': year.duration|duration, 'value': year.duration|duration_chart}]) %}
+    {% endfor -%}
+
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs pull-right">
 
             <li><a data-chart="{{ chartPrefix }}User" href="#user-chart" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
             <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
             <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+            <li><a data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
             <li class="active"><a href="#details-chart" data-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
             <li class="pull-left header">
                 {{ widgets.label_project(project) }}
-                <small>{{ widgets.label_customer(entry.project.customer) }}</small>
             </li>
         </ul>
         <div class="tab-content no-padding">
@@ -256,6 +265,14 @@
                     <div class="col-xs-12">
 
                         <table class="table table-hover dataTable">
+                            <tr>
+                                <th class="w-min">
+                                    {{ 'label.customer'|trans }}
+                                </th>
+                                <td>
+                                    {{ widgets.label_customer(entry.project.customer) }}
+                                </td>
+                            </tr>
                             <tr>
                                 <th class="w-min">
                                     {{ 'label.last_record'|trans }}
@@ -383,13 +400,10 @@
                 </div>
             </div>
             <div class="chart tab-pane" id="revenue-chart">
-                {% set labels = [] %}
-                {% set rates = [] %}
-                {% for year in years %}
-                    {% set labels = labels|merge([year.year]) %}
-                    {% set rates = rates|merge([{'tooltip': year.rate|money(currency), 'value': year.rate}]) %}
-                {% endfor %}
                 {{ charts.bar_chart(chartPrefix ~ 'Rate', labels, [rates], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Rate'}) }}
+            </div>
+            <div class="chart tab-pane" id="time-chart">
+                {{ charts.bar_chart(chartPrefix ~ 'Duration', labels, [durations], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Duration'}) }}
             </div>
             <div class="chart tab-pane" id="activity-chart">
                 {{ _self.activity_tab(activities, entry.durationTotal, project.customer.currency, chartPrefix) }}
@@ -406,7 +420,7 @@
                                 {% set color = kimai_config.themeRandomColors ? random_color(user.displayName) : kimai_context.chart.background_color %}
                                 {% set rateTotal = rateTotal + userStat.rate %}
                                 {% set totalDuration = totalDuration + userStat.duration %}
-                                {% set datasets = datasets|merge([{'name': user.displayName, 'duration': userStat.duration, color: color, rate: userStat.rate}]) %}
+                                {% set datasets = datasets|merge([{'name': user.displayName, 'duration': userStat.duration, 'color': color, 'rate': userStat.rate}]) %}
                                 {% set percentage = (100 / (entry.durationTotal / userStat.duration)) %}
                                 <tr>
                                     <th class="text-nowrap">
