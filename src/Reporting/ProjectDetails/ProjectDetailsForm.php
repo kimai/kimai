@@ -35,6 +35,7 @@ class ProjectDetailsForm extends AbstractType
             'required' => true,
             'label' => false,
             'width' => false,
+            'join_customer' => true,
         ]);
     }
 

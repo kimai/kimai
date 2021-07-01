@@ -18,6 +18,7 @@ use App\Model\ActivityStatistic;
 use App\Model\ProjectStatistic;
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
+use App\Model\UserStatistic;
 use App\Reporting\ProjectDetails\ProjectDetailsModel;
 use App\Reporting\ProjectDetails\ProjectDetailsQuery;
 use App\Reporting\ProjectInactive\ProjectInactiveQuery;
@@ -25,6 +26,7 @@ use App\Reporting\ProjectView\ProjectViewModel;
 use App\Reporting\ProjectView\ProjectViewQuery;
 use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
+use App\Repository\UserRepository;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
@@ -39,12 +41,14 @@ class ProjectStatisticService
     private $repository;
     private $timesheetRepository;
     private $dispatcher;
+    private $userRepository;
 
-    public function __construct(ProjectRepository $projectRepository, TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher)
+    public function __construct(ProjectRepository $projectRepository, TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher, UserRepository $userRepository)
     {
         $this->repository = $projectRepository;
         $this->timesheetRepository = $timesheetRepository;
         $this->dispatcher = $dispatcher;
+        $this->userRepository = $userRepository;
     }
 
     public function getProjectStatistics(Project $project, ?DateTime $end = null): ProjectStatistic
@@ -110,34 +114,67 @@ class ProjectStatisticService
             ->select('SUM(t.duration) as duration')
             ->addSelect('SUM(t.rate) as rate')
             ->addSelect('SUM(t.internalRate) as internalRate')
+            ->addSelect('COUNT(t.id) as count')
             ->andWhere('t.project = :project')
             ->setParameter('project', $query->getProject())
         ;
 
-        // fetch grouped by activity for all time
+        // fetch stats grouped by ACTIVITY for all time
         $qb1 = clone $qb;
         $qb1
             ->leftJoin(Activity::class, 'a', Join::WITH, 'a.id = t.activity')
-            ->addSelect('a.id as id')
-            ->addSelect('a.name as name')
-            ->addSelect('a.color as color')
-            ->addSelect('COUNT(t.id) as count')
-            ->addGroupBy('id')
-            ->addGroupBy('name')
-            ->addGroupBy('color')
+            ->addSelect('a as activity')
+            ->addGroupBy('a')
         ;
         foreach ($qb1->getQuery()->getResult() as $tmp) {
             $activity = new ActivityStatistic();
-            $activity->setId($tmp['id']);
-            $activity->setName($tmp['name']);
-            $activity->setColor($tmp['color'] ?? 'random');
+            $activity->setActivity($tmp['activity']);
             $activity->setRecordRate($tmp['rate']);
             $activity->setRecordDuration($tmp['duration']);
             $activity->setRecordInternalRate($tmp['internalRate']);
             $activity->setRecordAmount($tmp['count']);
             $model->addActivity($activity);
         }
+        // ---------------------------------------------------
 
+        // fetch stats grouped by YEAR, MONTH and USER
+        $qb1 = clone $qb;
+        $qb1
+            ->addSelect('YEAR(t.begin) as year')
+            ->addSelect('MONTH(t.begin) as month')
+            ->addSelect('IDENTITY(t.user) as user')
+            ->addGroupBy('year')
+            ->addGroupBy('month')
+            ->addGroupBy('user')
+        ;
+
+        $userMonths = $qb1->getQuery()->getResult();
+        $userIds = array_unique(array_column($userMonths, 'user'));
+
+        $qb2 = $this->userRepository->createQueryBuilder('u');
+        $qb2->select('u')->where($qb2->expr()->in('u.id', $userIds));
+        $users = [];
+        foreach ($qb2->getQuery()->getResult() as $user) {
+            $users[$user->getId()] = new UserStatistic($user);
+        }
+
+        foreach ($userMonths as $tmp) {
+            $user = $users[$tmp['user']]->getUser();
+            $year = $model->getUserYear($tmp['year'], $user);
+            if ($year === null) {
+                $year = new Year($tmp['year']);
+                $model->setUserYear($year, $user);
+            }
+            $month = new Month($tmp['month']);
+            $month->setTotalRate($tmp['rate']);
+            $month->setTotalDuration($tmp['duration']);
+            $month->setTotalInternalRate($tmp['internalRate']);
+            $year->setMonth($month);
+            $users[$tmp['user']]->addValuesFromMonth($month);
+        }
+        // ---------------------------------------------------
+
+        // fetch stats grouped by YEARS
         $qb1 = clone $qb;
         $qb1
             ->addSelect('YEAR(t.begin) as year')
@@ -150,27 +187,31 @@ class ProjectStatisticService
             $tmp->setTotalDuration($year['duration']);
             $years[$year['year']] = $tmp;
 
-            // fetch grouped by activity and year
+            // fetch yearly stats grouped by ACTIVITY and YEAR
             $qb2 = clone $qb;
             $qb2
                 ->leftJoin(Activity::class, 'a', Join::WITH, 'a.id = t.activity')
-                ->addSelect('a.name as name')
-                ->addSelect('a.color as color')
+                ->addSelect('a as activity')
                 ->addSelect('YEAR(t.begin) as year')
                 ->andWhere('YEAR(t.begin) = :year')
                 ->setParameter('year', $year['year'])
                 ->addGroupBy('year')
-                ->addGroupBy('name')
-                ->addGroupBy('color')
+                ->addGroupBy('a')
             ;
             foreach ($qb2->getQuery()->getResult() as $tmp) {
-                $tmp['color'] = $tmp['color'] ?? 'random';
-                $model->addYearActivity($tmp['year'], $tmp);
+                $activity = new ActivityStatistic();
+                $activity->setActivity($tmp['activity']);
+                $activity->setRecordRate($tmp['rate']);
+                $activity->setRecordDuration($tmp['duration']);
+                $activity->setRecordInternalRate($tmp['internalRate']);
+                $activity->setRecordAmount($tmp['count']);
+                $model->addYearActivity($tmp['year'], $activity);
             }
         }
-        $model->setYears($years);
+        $model->setYears(array_values($years));
+        // ---------------------------------------------------
 
-        // fetch MONTH for YEAR
+        // fetch stats grouped by MONTH and YEAR
         $qb1 = clone $qb;
         $qb1
             ->addSelect('YEAR(t.begin) as year')
@@ -185,6 +226,7 @@ class ProjectStatisticService
             $tmp->setTotalDuration($month['duration']);
             $model->getYear($month['year'])->setMonth($tmp);
         }
+        // ---------------------------------------------------
 
         return $model;
     }

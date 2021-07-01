@@ -180,7 +180,7 @@
 
 {#
     id          = 'name'
-    data        = [{name: '', color: 'random', duration: 0, rate: 0}]
+    data        = [{name: '', color: '', duration: 0, rate: 0}]
     options     = {'height: '100px', 'currency': 'EUR', 'renderEvent': 'kimai.initialized'}
 #}
 {% macro doughnut_chart(id, data, options) %}
@@ -204,11 +204,7 @@
                             {
                                 backgroundColor: [
                                     {% for entry in data %}
-                                    {%- set color = entry.color|default(kimai_context.chart.background_color) %}
-                                    {% if color == 'random' %}
-                                    {% set color = random_color(entry.name) %}
-                                    {% endif -%}
-                                    '{{ color }}',
+                                    '{{ entry.color|default(kimai_context.chart.background_color) }}',
                                     {% endfor %}
                                 ],
                                 data: [
@@ -281,7 +277,7 @@
 
 {#
     labels      = ['Foo', 'Bar']
-    datasets    = [{'value': 1234, 'tooltip': '1234€', 'color': 'random'}]
+    datasets    = [{'value': 1234, 'tooltip': '1234€', 'color': ''}]
     options     = {'height: '100px', 'renderEvent': 'kimai.initialized'}
 #}
 {% macro bar_chart(id, labels, datasets, options) %}
@@ -305,11 +301,7 @@
                             {
                                 backgroundColor: [
                                     {% for entry in dataset %}
-                                    {%- set color = entry.color|default(kimai_context.chart.background_color) %}
-                                    {% if color == 'random' %}
-                                    {% set color = random_color(labels[loop.index0]) %}
-                                    {% endif -%}
-                                    '{{ color }}',
+                                    '{{ entry.color|default(kimai_context.chart.background_color) }}',
                                     {% endfor %}
                                 ],
                                 data: [

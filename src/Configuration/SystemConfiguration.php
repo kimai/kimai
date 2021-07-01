@@ -362,6 +362,11 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (bool) $this->find('theme.colors_limited');
     }
 
+    public function isThemeRandomColors(): bool
+    {
+        return (bool) $this->find('theme.random_colors');
+    }
+
     public function getThemeAutocompleteCharacters(): int
     {
         return (int) $this->find('theme.autocomplete_chars');

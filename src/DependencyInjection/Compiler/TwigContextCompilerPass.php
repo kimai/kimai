@@ -27,6 +27,7 @@ class TwigContextCompilerPass implements CompilerPassInterface
     {
         $twig = $container->getDefinition('twig');
 
+        // @deprecated since 1.15
         $theme = $container->getDefinition(ThemeConfiguration::class);
         $twig->addMethodCall('addGlobal', ['kimai_context', $theme]);
 

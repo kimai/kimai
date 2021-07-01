@@ -9,24 +9,41 @@
 
 namespace App\Model;
 
+use App\Entity\Activity;
+
 class ActivityStatistic extends TimesheetCountedStatistic
 {
     /**
-     * @var string|null
+     * @var Activity
+     */
+    private $activity;
+    /**
+     * @var string
      */
     private $color;
-    /**
-     * @var string|null
-     */
-    private $name;
-    /**
-     * @var string|null
-     */
-    private $id;
 
+    public function getActivity(): ?Activity
+    {
+        return $this->activity;
+    }
+
+    public function setActivity(Activity $activity): void
+    {
+        $this->activity = $activity;
+    }
+
+    /**
+     * Added for simpler re-use in frontend (charts).
+     *
+     * @return string|null
+     */
     public function getColor(): ?string
     {
-        return $this->color;
+        if ($this->activity === null) {
+            return $this->color;
+        }
+
+        return $this->activity->getColor() ?? $this->color;
     }
 
     public function setColor(?string $color): void
@@ -34,23 +51,17 @@ class ActivityStatistic extends TimesheetCountedStatistic
         $this->color = $color;
     }
 
+    /**
+     * Added for simpler re-use in frontend (charts).
+     *
+     * @return string|null
+     */
     public function getName(): ?string
     {
-        return $this->name;
-    }
+        if ($this->activity === null) {
+            return null;
+        }
 
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function getId(): ?string
-    {
-        return $this->id;
-    }
-
-    public function setId(?string $id): void
-    {
-        $this->id = $id;
+        return $this->activity->getName();
     }
 }

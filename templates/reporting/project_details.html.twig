@@ -1,5 +1,6 @@
 {% extends 'reporting/layout.html.twig' %}
 {% import "macros/charts.html.twig" as charts %}
+{% import "macros/widgets.html.twig" as widgets %}
 
 {% block report_title %}{{ 'report_project_details'|trans({}, 'reporting') }}{% endblock %}
 
@@ -40,10 +41,10 @@
     {% endembed %}
 
     {% if hasData %}
-        {{ _self.project_details(project_view, project_details.activities) }}
+        {{ _self.project_details(project_view, project_details) }}
         {% set currency = project_view.project.customer.currency %}
 
-        {% for yearStat in project_details.years|reverse %}
+        {%- for yearStat in project_details.years|reverse %}
             {% set year = yearStat.year %}
             {% set labels = [] %}
             {% set rates = [] %}
@@ -60,23 +61,35 @@
                 {% set labels = labels|merge([create_date(year~'-'~monthNumber~'-01 00:00:00')|month_name]) %}
                 {% set durations = durations|merge([{'tooltip': duration|duration, 'value': duration|duration_chart}]) %}
                 {% set rates = rates|merge([{'tooltip': rate|money(currency), 'value': rate}]) %}
-            {% endfor %}
-            <div class="nav-tabs-custom" style="cursor: move;">
+            {% endfor -%}
+
+            {%- set activities = project_details.getYearActivities(year) -%}
+
+            {%- if kimai_config.themeRandomColors %}
+                {% for stat in activities %}
+                    {% if stat.color is null %}
+                        {% do stat.setColor(random_color(stat.name)) %}
+                    {% endif %}
+                {% endfor %}
+            {% endif -%}
+
+            <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
+                    <li><a data-chart="{{ chartPrefix }}User" href="#user-chart-{{ year}}" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
                     <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ year}}" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
-                    <li><a data-chart="{{ chartPrefix }}Rate" href="#month-revenue-chart-{{ year }}" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
-                    <li class="active"><a data-chart="{{ chartPrefix }}Duration" href="#month-time-chart-{{ year }}" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
-                    <li class="pull-left header">{{ year }}</li>
+                    <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ year }}" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+                    <li class="active"><a data-chart="{{ chartPrefix }}Duration" href="#time-chart-{{ year }}" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
+                    <li class="pull-left header">{{ year }} <small>&ndash; {{ yearStat.duration|duration }}, {{ yearStat.rate|money(currency) }}</small></li>
                 </ul>
                 <div class="tab-content no-padding">
-                    <div class="chart tab-pane active" id="month-time-chart-{{ year }}">
+                    <div class="chart tab-pane active" id="time-chart-{{ year }}">
                         <div class="row">
                             <div class="col-xs-12">
                                 {{ charts.bar_chart(chartPrefix ~ 'Duration', labels, [durations], {'height': '300px'}) }}
                             </div>
                         </div>
                     </div>
-                    <div class="chart tab-pane" id="month-revenue-chart-{{ year }}">
+                    <div class="chart tab-pane" id="revenue-chart-{{ year }}">
                         <div class="row">
                             <div class="col-xs-12">
                                 {{ charts.bar_chart(chartPrefix ~ 'Rate', labels, [rates], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Rate'}) }}
@@ -84,11 +97,10 @@
                         </div>
                     </div>
                     <div class="chart tab-pane" id="activity-chart-{{ year}}">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                {{ charts.doughnut_chart(chartPrefix ~ 'Activity', project_details.getYearActivities(year), {'height': '300px', 'legend': {'position': 'right'}, 'currency': currency, 'renderEvent': 'render.' ~ chartPrefix ~ 'Activity'}) }}
-                            </div>
-                        </div>
+                        {{ _self.activity_tab(activities, yearStat.duration, currency, chartPrefix) }}
+                    </div>
+                    <div class="chart tab-pane" id="user-chart-{{ year}}">
+                        {{ _self.user_tab(year, project_details.userYears(year)) }}
                     </div>
                 </div>
             </div>
@@ -96,6 +108,84 @@
     {% endif %}
 
 {% endblock %}
+
+{% macro user_tab(year, userYearStats) %}
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-hover dataTable">
+                <tr>
+                    <th>{{ 'label.username'|trans }}</th>
+                    <th></th>
+                    {% for monthNumber in 1..12 %}
+                        <th>{{ create_date(year~'-'~monthNumber~'-01 00:00:00')|month_name }}</th>
+                    {% endfor %}
+                </tr>
+                {% set yearTotal = 0 %}
+                {% for userYearStat in userYearStats %}
+                    {% set user = userYearStat.user %}
+                    {% set userYear = userYearStat.year %}
+                    {% set userTotal = userYearStat.duration %}
+                    {% set yearTotal = yearTotal + userTotal %}
+                    <tr>
+                        <td class="text-nowrap">
+                            <strong>{{ widgets.username(user) }}</strong>
+                        </td>
+                        <th class="text-nowrap text-center total">
+                            {{ userTotal|duration }}
+                        </th>
+                        {% for monthNumber in 1..12 %}
+                            {% set month = userYear.getMonth(monthNumber) %}
+                            <td class="text-nowrap text-center">
+                                {% if month is not null %}
+                                    {{ month.totalDuration|duration }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <th></th>
+                    <th class="text-nowrap text-center total">
+                        {{ yearTotal|duration }}
+                    </th>
+                    {% for monthNumber in 1..12 %}
+                        {% set total = 0 %}
+                        {% for userYearStat in userYearStats %}
+                            {% set month = userYearStat.year.getMonth(monthNumber) %}
+                            {% if month is not null %}
+                                {% set total = total + month.duration %}
+                            {% endif %}
+                        {% endfor %}
+                        <th class="text-nowrap text-center total">
+                        {{ total|duration }}
+                        </th>
+                    {% endfor %}
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro activity_tab(activities, totalDuration, currency, chartPrefix) %}
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-8 col-lg-6">
+            <table class="table table-hover dataTable">
+                {% for stat in activities %}
+                    {% set percentage = (100 / (totalDuration / stat.duration)) %}
+                    <tr>
+                        <td>{{ widgets.label_color_dot('activity', stat.activity.visible, stat.name, null, stat.color) }}</td>
+                        <td class="text-nowrap text-right">{{ stat.duration|duration }}</td>
+                        <td class="text-nowrap text-right">{{ stat.rate|money(currency) }}</td>
+                        <td class="text-nowrap text-right">{{ percentage|number_format(1) }} %</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-4 col-lg-6">
+            {{ charts.doughnut_chart(chartPrefix ~ 'Activity', activities, {'height': (activities|length > 12 ? '600px' : '300px'), 'legend': {'position': (activities|length > 12 ? 'top' : 'right')}, 'currency': currency, 'renderEvent': 'render.' ~ chartPrefix ~ 'Activity'}) }}
+        </div>
+    </div>
+{% endmacro %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -130,7 +220,9 @@
     </script>
 {% endblock %}
 
-{% macro project_details(entry, activities) %}
+{% macro project_details(entry, project_details) %}
+    {% set activities = project_details.activities %}
+    {% set years = project_details.years %}
     {% import "macros/progressbar.html.twig" as progress %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% import "macros/charts.html.twig" as charts %}
@@ -138,9 +230,20 @@
     {% set currency = project.customer.currency %}
     {% set chartPrefix = 'project' ~ project.id %}
 
-    <div class="nav-tabs-custom" style="cursor: move;">
+    {%- if kimai_config.themeRandomColors %}
+        {% for stat in activities %}
+            {% if stat.color is null %}
+                {% do stat.setColor(random_color(stat.name)) %}
+            {% endif %}
+        {% endfor %}
+    {% endif -%}
+
+    <div class="nav-tabs-custom">
         <ul class="nav nav-tabs pull-right">
+
+            <li><a data-chart="{{ chartPrefix }}User" href="#user-chart" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
             <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
+            <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
             <li class="active"><a href="#details-chart" data-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
             <li class="pull-left header">
                 {{ widgets.label_project(project) }}
@@ -279,9 +382,59 @@
                     </div>
                 </div>
             </div>
+            <div class="chart tab-pane" id="revenue-chart">
+                {% set labels = [] %}
+                {% set rates = [] %}
+                {% for year in years %}
+                    {% set labels = labels|merge([year.year]) %}
+                    {% set rates = rates|merge([{'tooltip': year.rate|money(currency), 'value': year.rate}]) %}
+                {% endfor %}
+                {{ charts.bar_chart(chartPrefix ~ 'Rate', labels, [rates], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Rate'}) }}
+            </div>
             <div class="chart tab-pane" id="activity-chart">
-                {% set chartId = chartPrefix ~ 'Activity' %}
-                {{ charts.doughnut_chart(chartId, activities, {'height': '300px', 'legend': {'position': 'right'}, 'currency': project.customer.currency, 'renderEvent': 'render.' ~ chartId}) }}
+                {{ _self.activity_tab(activities, entry.durationTotal, project.customer.currency, chartPrefix) }}
+            </div>
+            <div class="chart tab-pane" id="user-chart">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-9 col-md-8 col-lg-6">
+                        <table class="table table-hover dataTable">
+                            {% set rateTotal = 0 %}
+                            {% set totalDuration = 0 %}
+                            {% set datasets = [] %}
+                            {% for userStat in project_details.userStats %}
+                                {% set user = userStat.user %}
+                                {% set color = kimai_config.themeRandomColors ? random_color(user.displayName) : kimai_context.chart.background_color %}
+                                {% set rateTotal = rateTotal + userStat.rate %}
+                                {% set totalDuration = totalDuration + userStat.duration %}
+                                {% set datasets = datasets|merge([{'name': user.displayName, 'duration': userStat.duration, color: color, rate: userStat.rate}]) %}
+                                {% set percentage = (100 / (entry.durationTotal / userStat.duration)) %}
+                                <tr>
+                                    <th class="text-nowrap">
+                                        <strong>{{ widgets.username(user) }}</strong>
+                                    </th>
+                                    <td class="text-nowrap text-right">
+                                        {{ userStat.duration|duration }}
+                                    </td>
+                                    <td class="text-nowrap text-right">
+                                        {{ userStat.rate|money(currency) }}
+                                    </td>
+                                    <td class="text-nowrap text-right">
+                                        {{ percentage|number_format(1) }} %
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                                <tr>
+                                    <td></td>
+                                    <th class="text-nowrap text-right total">{{ totalDuration|duration }}</th>
+                                    <th class="text-nowrap text-right total">{{ rateTotal|money(currency) }}</th>
+                                    <td></td>
+                                </tr>
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-4 col-lg-6">
+                        {{ charts.doughnut_chart(chartPrefix ~ 'User', datasets, {'height': (datasets|length > 12 ? '600px' : '300px'), 'legend': {'position': (datasets|length > 12 ? 'top' : 'right')}, 'currency': currency, 'renderEvent': 'render.' ~ chartPrefix ~ 'User'}) }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

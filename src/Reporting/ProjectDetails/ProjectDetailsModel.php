@@ -10,8 +10,11 @@
 namespace App\Reporting\ProjectDetails;
 
 use App\Entity\Project;
+use App\Entity\User;
 use App\Model\ActivityStatistic;
+use App\Model\Statistic\UserYear;
 use App\Model\Statistic\Year;
+use App\Model\UserStatistic;
 
 final class ProjectDetailsModel
 {
@@ -22,11 +25,15 @@ final class ProjectDetailsModel
     /**
      * @var Year[]
      */
-    private $years;
+    private $years = [];
     /**
-     * @var array
+     * @var array<string, array<ActivityStatistic>>
      */
     private $yearlyActivities = [];
+    /**
+     * @var array<string, array<int, UserYear>>
+     */
+    private $usersMonthly = [];
     /**
      * @var ActivityStatistic[]
      */
@@ -42,14 +49,9 @@ final class ProjectDetailsModel
         return $this->project;
     }
 
-    public function addYearActivity(string $year, array $activityStatistic): void
-    {
-        $this->yearlyActivities[$year][] = $activityStatistic;
-    }
-
     public function addActivity(ActivityStatistic $activityStatistic): void
     {
-        $this->activities[] = $activityStatistic;
+        $this->activities[$activityStatistic->getActivity()->getId()] = $activityStatistic;
     }
 
     /**
@@ -57,9 +59,18 @@ final class ProjectDetailsModel
      */
     public function getActivities(): array
     {
-        return $this->activities;
+        return array_values($this->activities);
     }
 
+    public function addYearActivity(string $year, ActivityStatistic $activityStatistic): void
+    {
+        $this->yearlyActivities[$year][] = $activityStatistic;
+    }
+
+    /**
+     * @param string $year
+     * @return ActivityStatistic[]|null
+     */
     public function getYearActivities(string $year): ?array
     {
         if (!isset($this->yearlyActivities[$year])) {
@@ -67,6 +78,55 @@ final class ProjectDetailsModel
         }
 
         return $this->yearlyActivities[$year];
+    }
+
+    /**
+     * @return UserStatistic[]
+     */
+    public function getUserStats(): array
+    {
+        $users = [];
+        foreach ($this->usersMonthly as $year) {
+            foreach ($year as $id => $userYear) {
+                if (\array_key_exists($id, $users)) {
+                    $userStat = $users[$id];
+                } else {
+                    $userStat = new UserStatistic($userYear->getUser());
+                    $users[$id] = $userStat;
+                }
+                $userStat->setRecordDuration($userStat->getRecordDuration() + $userYear->getDuration());
+                $userStat->setRecordRate($userStat->getRecordRate() + $userYear->getRate());
+            }
+        }
+
+        return $users;
+    }
+
+    public function setUserYear(Year $year, User $user): void
+    {
+        $this->usersMonthly[$year->getYear()][$user->getId()] = new UserYear($user, $year);
+    }
+
+    public function getUserYear(string $year, User $user): ?Year
+    {
+        if (!\array_key_exists($year, $this->usersMonthly) || !\array_key_exists($user->getId(), $this->usersMonthly[$year])) {
+            return null;
+        }
+
+        return $this->usersMonthly[$year][$user->getId()]->getYear();
+    }
+
+    /**
+     * @param string $year
+     * @return UserYear[]
+     */
+    public function getUserYears(string $year): array
+    {
+        if (!\array_key_exists($year, $this->usersMonthly)) {
+            return [];
+        }
+
+        return $this->usersMonthly[$year];
     }
 
     /**
