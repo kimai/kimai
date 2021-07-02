@@ -72,6 +72,8 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{ccy}', '2', $invoiceDate],
             ['{ccm}', '2', $invoiceDate],
             ['{ccd}', '2', $invoiceDate],
+            ['{cname}', 'Acme company', $invoiceDate],
+            ['{cnumber}', '0815', $invoiceDate],
             // number formatting (not testing the lower case versions, as the tests might break depending on the date)
             ['{date,10}', '0000' . $invoiceDate->format('ymd'), $invoiceDate],
             ['{Y,6}', '00' . $invoiceDate->format('Y'), $invoiceDate],
@@ -131,10 +133,14 @@ class ConfigurableNumberGeneratorTest extends TestCase
      */
     public function testGetInvoiceNumber(string $format, string $expectedInvoiceNumber, \DateTime $invoiceDate, int $counter = 1)
     {
+        $customer = new Customer();
+        $customer->setName('Acme company');
+        $customer->setNumber('0815');
+
         $sut = $this->getSut($format, $counter);
         $model = new InvoiceModel(new DebugFormatter());
         $model->setInvoiceDate($invoiceDate);
-        $model->setCustomer(new Customer());
+        $model->setCustomer($customer);
         $sut->setModel($model);
 
         $this->assertEquals($expectedInvoiceNumber, $sut->getInvoiceNumber());

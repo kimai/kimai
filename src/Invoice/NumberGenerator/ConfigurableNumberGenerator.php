@@ -183,6 +183,14 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 $partialResult = $this->repository->getCounterForDay($invoiceDate) + $increaseBy;
                 break;
 
+            case 'cname':
+                $partialResult = $this->model->getCustomer()->getName();
+                break;
+
+            case 'cnumber':
+                $partialResult = $this->model->getCustomer()->getNumber();
+                break;
+
             default:
                 $partialResult = $originalFormat;
         }
