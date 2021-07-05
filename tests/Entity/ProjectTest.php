@@ -85,11 +85,11 @@ class ProjectTest extends TestCase
         self::assertEquals('a comment', $sut->getComment());
 
         self::assertFalse($sut->hasColor());
-        self::assertInstanceOf(Project::class, $sut->setColor('#fffccc'));
+        $sut->setColor('#fffccc');
         self::assertEquals('#fffccc', $sut->getColor());
         self::assertTrue($sut->hasColor());
 
-        self::assertInstanceOf(Project::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        $sut->setColor(Constants::DEFAULT_COLOR);
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 

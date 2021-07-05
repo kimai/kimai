@@ -59,7 +59,7 @@ final class LocaleFormatExtensions extends AbstractExtension
             new TwigFilter('time', [$this, 'time']),
             new TwigFilter('hour24', [$this, 'hour24']),
             new TwigFilter('duration', [$this, 'duration']),
-            new TwigFilter('duration_chart', [$this, 'durationChart']),
+            new TwigFilter('chart_duration', [$this, 'durationChart']),
             new TwigFilter('duration_decimal', [$this, 'durationDecimal']),
             new TwigFilter('money', [$this, 'money']),
             new TwigFilter('currency', [$this, 'currency']),
@@ -92,6 +92,7 @@ final class LocaleFormatExtensions extends AbstractExtension
             new TwigFunction('get_format_duration', [$this, 'getDurationFormat']),
             new TwigFunction('create_date', [$this, 'createDate']),
             new TwigFunction('locales', [$this, 'getLocales']),
+            new TwigFunction('month_names', [$this, 'getMonthNames']),
         ];
     }
 
@@ -186,6 +187,25 @@ final class LocaleFormatExtensions extends AbstractExtension
     public function time($date)
     {
         return $this->getFormatter()->time($date);
+    }
+
+    /**
+     * @param string|null $year
+     * @return string[]
+     */
+    public function getMonthNames(?string $year = null): array
+    {
+        $withYear = true;
+        if ($year === null) {
+            $year = date('Y');
+            $withYear = false;
+        }
+        $months = [];
+        for ($i = 1; $i < 13; $i++) {
+            $months[] = $this->getFormatter()->monthName(new DateTime(sprintf('%s-%s-10', $year, ($i < 10 ? '0' . $i : (string) $i))), $withYear);
+        }
+
+        return $months;
     }
 
     public function monthName(\DateTime $dateTime, bool $withYear = false): string

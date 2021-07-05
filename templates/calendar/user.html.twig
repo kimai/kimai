@@ -323,7 +323,7 @@
                                 callback(apiEvents);
                             });
                         },
-                        color: '{{ kimai_context.calendar.background_color }}',
+                        color: '{{ config('theme.calendar.background_color') }}',
                         name: 'kimaiUserTimeSource'
                     }
                     {% if google is not null %}

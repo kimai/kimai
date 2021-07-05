@@ -141,29 +141,8 @@
     "gedmo/doctrine-extensions": {
         "version": "v2.4.36"
     },
-    "guzzlehttp/psr7": {
-        "version": "1.6.1"
-    },
     "handcraftedinthealps/rest-routing-bundle": {
         "version": "1.0.0"
-    },
-    "illuminate/cache": {
-        "version": "v6.0.4"
-    },
-    "illuminate/collections": {
-        "version": "v8.44.0"
-    },
-    "illuminate/contracts": {
-        "version": "v6.0.4"
-    },
-    "illuminate/macroable": {
-        "version": "v8.44.0"
-    },
-    "illuminate/support": {
-        "version": "v6.0.4"
-    },
-    "intervention/image": {
-        "version": "2.5.0"
     },
     "jms/metadata": {
         "version": "1.6.0"
@@ -194,9 +173,6 @@
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.1"
-    },
-    "laravolt/avatar": {
-        "version": "3.0.0"
     },
     "league/csv": {
         "version": "9.4.1"
@@ -245,9 +221,6 @@
             "version": "1.5",
             "ref": "f0436fc35fca88eada758311f8de43bfb61f1980"
         }
-    },
-    "nesbot/carbon": {
-        "version": "2.24.0"
     },
     "nikic/php-parser": {
         "version": "v4.0.2"
@@ -356,9 +329,6 @@
     },
     "psr/simple-cache": {
         "version": "1.0.0"
-    },
-    "ralouphie/getallheaders": {
-        "version": "3.0.3"
     },
     "robrichards/xmlseclibs": {
         "version": "3.0.4"
@@ -797,9 +767,6 @@
     },
     "twig/twig": {
         "version": "v2.4.4"
-    },
-    "voku/portable-ascii": {
-        "version": "1.4.9"
     },
     "webmozart/assert": {
         "version": "1.2.0"

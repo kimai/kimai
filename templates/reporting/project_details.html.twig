@@ -6,6 +6,8 @@
 
 {% set tableName = tableName|default('project_details_reporting') %}
 {% set tableId = 'project-details-form' %}
+{% set view_revenue_tab = project_details is not null and is_granted('budget', project_details.project) %}
+{% set view_revenue_user = project_details is not null and is_granted('view_rate_other_timesheet') %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -17,13 +19,47 @@
     {{ encore_entry_script_tags('chart') }}
 {% endblock %}
 
-{% block report %}
+{% block javascripts %}
+    {{ parent() }}
+    {% set options = {'label': 'duration', 'title': 'name'} %}
+    {% if view_revenue_user and view_revenue_tab %}
+        {% set options = options|merge({'footer': 'rate'}) %}
+    {% endif %}
+    {{ charts.doughnut_javascript(options) }}
+    {{ charts.bar_javascript() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            jQuery('#{{ tableId }}').on('change', function(ev) {
+                jQuery(this).submit();
+            });
+        });
 
+        jQuery('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            renderChart(e.target.dataset.chart);
+        });
+
+        function renderChart(chartName)
+        {
+            var found = false;
+
+            Chart.helpers.each(Chart.instances, function(instance){
+                if (instance.chart.canvas.id === chartName) {
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                document.dispatchEvent(new Event('render.' + chartName))
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block report %}
     {% set hasData = project_view is not null %}
 
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_body_class %}{{ tableName }}-box {% if hasData %}no-padding{% endif %}{% endblock %}
         {% block box_before %}
             {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': tableId}}) }}
         {% endblock %}
@@ -33,81 +69,77 @@
         {% block box_title %}
             {{ form_widget(form) }}
         {% endblock %}
-        {% block box_body %}
-            {% if not hasData %}
-                {{ widgets.nothing_found() }}
-            {% endif %}
-        {% endblock %}
+        {% block box_body %}{% endblock %}
+        {% block box_body_class %}hidden{% endblock %}
     {% endembed %}
 
+    {% if not hasData %}
+        {{ widgets.nothing_found() }}
+    {% endif %}
+
     {% if hasData %}
-        {{ _self.project_details(project_view, project_details) }}
+        {{ _self.project_details(project_view, project_details, view_revenue_tab, view_revenue_user) }}
         {% set currency = project_view.project.customer.currency %}
 
         {%- for yearStat in project_details.years|reverse %}
             {% set year = yearStat.year %}
-            {% set labels = [] %}
-            {% set rates = [] %}
-            {% set durations = [] %}
-            {% set chartPrefix = 'chart' ~ yearStat.year %}
-            {% for monthNumber in 1..12 %}
-                {% set rate = 0 %}
-                {% set duration = 0 %}
-                {% set month = yearStat.month(monthNumber) %}
-                {% if month is not null %}
-                    {% set rate = month.totalRate %}
-                    {% set duration = month.totalDuration %}
-                {% endif %}
-                {% set labels = labels|merge([create_date(year~'-'~monthNumber~'-01 00:00:00')|month_name]) %}
-                {% set durations = durations|merge([{'tooltip': duration|duration, 'value': duration|duration_chart}]) %}
-                {% set rates = rates|merge([{'tooltip': rate|money(currency), 'value': rate}]) %}
-            {% endfor -%}
+            {{ _self.duration_stat(year, year, year, month_names(), yearStat, project_details.getYearActivities(year), project_details.userYears(year), currency, view_revenue_tab) }}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
 
-            {%- set activities = project_details.getYearActivities(year) -%}
+{% macro duration_stat(id, title, year, labels, yearStat, activities, users, currency, view_revenue_tab) %}
+    {% set rates = [] %}
+    {% set durations = [] %}
+    {% set chartPrefix = 'chart' ~ id %}
+    {% for monthNumber in 1..12 %}
+        {% set rate = 0 %}
+        {% set duration = 0 %}
+        {% set month = yearStat.month(monthNumber) %}
+        {% if month is not null %}
+            {% set rate = month.totalRate %}
+            {% set duration = month.totalDuration %}
+        {% endif %}
+        {% set durations = durations|merge([{'label': duration|duration, 'value': duration|chart_duration}]) %}
+        {% set rates = rates|merge([{'label': rate|money(currency), 'value': rate}]) %}
+    {% endfor -%}
 
-            {%- if kimai_config.themeRandomColors %}
-                {% for stat in activities %}
-                    {% if stat.color is null %}
-                        {% do stat.setColor(random_color(stat.name)) %}
-                    {% endif %}
-                {% endfor %}
-            {% endif -%}
-
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs pull-right">
-                    <li><a data-chart="{{ chartPrefix }}User" href="#user-chart-{{ year}}" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
-                    <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ year}}" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
-                    <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ year }}" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
-                    <li class="active"><a data-chart="{{ chartPrefix }}Duration" href="#time-chart-{{ year }}" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
-                    <li class="pull-left header">{{ year }} <small>&ndash; {{ yearStat.duration|duration }}, {{ yearStat.rate|money(currency) }}</small></li>
-                </ul>
-                <div class="tab-content no-padding">
-                    <div class="chart tab-pane active" id="time-chart-{{ year }}">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                {{ charts.bar_chart(chartPrefix ~ 'Duration', labels, [durations], {'height': '300px'}) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chart tab-pane" id="revenue-chart-{{ year }}">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                {{ charts.bar_chart(chartPrefix ~ 'Rate', labels, [rates], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Rate'}) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chart tab-pane" id="activity-chart-{{ year}}">
-                        {{ _self.activity_tab(activities, yearStat.duration, currency, chartPrefix) }}
-                    </div>
-                    <div class="chart tab-pane" id="user-chart-{{ year}}">
-                        {{ _self.user_tab(year, project_details.userYears(year)) }}
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs pull-right">
+            <li><a data-chart="{{ chartPrefix }}User" href="#user-chart-{{ id}}" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
+            <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ id}}" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
+            {% if view_revenue_tab %}
+                <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ id }}" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+            {% endif %}
+            <li class="active"><a data-chart="{{ chartPrefix }}Duration" href="#time-chart-{{ id }}" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
+            <li class="pull-left header">{{ title }} {{ widgets.label(yearStat.duration|duration, 'gray') }} {{ widgets.label(yearStat.rate|money(currency), 'gray') }}</small></li>
+        </ul>
+        <div class="tab-content no-padding">
+            <div class="chart tab-pane active" id="time-chart-{{ id }}">
+                <div class="row">
+                    <div class="col-xs-12">
+                        {{ charts.bar_chart(chartPrefix ~ 'Duration', labels, [durations], {'height': '300px'}) }}
                     </div>
                 </div>
             </div>
-        {% endfor %}
-    {% endif %}
-
-{% endblock %}
+            {% if view_revenue_tab %}
+                <div class="chart tab-pane" id="revenue-chart-{{ id }}">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            {{ charts.bar_chart(chartPrefix ~ 'Rate', labels, [rates], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Rate'}) }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="chart tab-pane" id="activity-chart-{{ id }}">
+                {{ _self.activity_tab(activities, yearStat.duration, currency, chartPrefix, view_revenue_tab) }}
+            </div>
+            <div class="chart tab-pane" id="user-chart-{{ id }}">
+                {{ _self.user_tab(year, users) }}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
 
 {% macro user_tab(year, userYearStats) %}
     <div class="row">
@@ -116,8 +148,8 @@
                 <tr>
                     <th>{{ 'label.username'|trans }}</th>
                     <th></th>
-                    {% for monthNumber in 1..12 %}
-                        <th>{{ create_date(year~'-'~monthNumber~'-01 00:00:00')|month_name }}</th>
+                    {% for monthName in month_names() %}
+                        <th class="text-center">{{ monthName }}</th>
                     {% endfor %}
                 </tr>
                 {% set yearTotal = 0 %}
@@ -128,7 +160,7 @@
                     {% set yearTotal = yearTotal + userTotal %}
                     <tr>
                         <td class="text-nowrap">
-                            <strong>{{ widgets.username(user) }}</strong>
+                            {{ widgets.label_user_dot(user, {'random': true}) }}
                         </td>
                         <th class="text-nowrap text-center total">
                             {{ userTotal|duration }}
@@ -166,61 +198,49 @@
     </div>
 {% endmacro %}
 
-{% macro activity_tab(activities, totalDuration, currency, chartPrefix) %}
+{#
+    activities       = array<ActivityStatistic>
+    totalDuration    = int
+    currency         = string
+    chartPrefix      = string
+    view_revenue_tab = boolean
+#}
+{% macro activity_tab(activities, totalDuration, currency, chartPrefix, view_revenue_tab) %}
+    {% set dataset = [] %}
+    {% set labels = [] %}
     <div class="row">
         <div class="col-xs-12 col-sm-9 col-md-8 col-lg-6">
             <table class="table table-hover dataTable">
                 {% for stat in activities %}
-                    {% set percentage = (100 / (totalDuration / stat.duration)) %}
+                    {% set dataset = dataset|merge([{'value': stat.duration, 'name': stat.name, 'color': stat.activity.color|colorize(stat.activity.name), 'duration': stat.duration|duration, 'rate': stat.rate|money(currency)}]) %}
+                    {% set labels = labels|merge([stat.name]) %}
+                    {% set percentage = 0 %}
+                    {% if totalDuration > 0 and stat.duration > 0 %}
+                        {% set percentage = (100 / (totalDuration / stat.duration)) %}
+                    {% endif %}
                     <tr>
-                        <td>{{ widgets.label_color_dot('activity', stat.activity.visible, stat.name, null, stat.color) }}</td>
+                        <td>{{ widgets.label_activity(stat.activity, {'inherit': false, 'random': true}) }}</td>
                         <td class="text-nowrap text-right">{{ stat.duration|duration }}</td>
+                        {% if view_revenue_tab %}
                         <td class="text-nowrap text-right">{{ stat.rate|money(currency) }}</td>
+                        {% endif %}
                         <td class="text-nowrap text-right">{{ percentage|number_format(1) }} %</td>
                     </tr>
                 {% endfor %}
             </table>
         </div>
         <div class="col-xs-12 col-sm-3 col-md-4 col-lg-6">
-            {{ charts.doughnut_chart(chartPrefix ~ 'Activity', activities, {'height': (activities|length > 12 ? '600px' : '300px'), 'legend': {'position': (activities|length > 12 ? 'top' : 'right')}, 'currency': currency, 'renderEvent': 'render.' ~ chartPrefix ~ 'Activity'}) }}
+            {% set chartOptions = {'height': (dataset|length > 12 ? '600px' : '300px'), 'legend': {'position': (dataset|length > 12 ? 'top' : 'right')}, 'renderEvent': 'render.' ~ chartPrefix ~ 'Activity'} %}
+            {{ charts.doughnut_chart(chartPrefix ~ 'Activity', labels, dataset, chartOptions) }}
         </div>
     </div>
 {% endmacro %}
 
-{% block javascripts %}
-    {{ parent() }}
-    {{ charts.yearly_javascript() }}
-    {{ charts.doughnut_javascript() }}
-    {{ charts.bar_javascript() }}
-    <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            jQuery('#{{ tableId }}').on('change', function(ev) {
-                jQuery(this).submit();
-            });
-        });
-
-        jQuery('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            renderChart(e.target.dataset.chart);
-        });
-
-        function renderChart(chartName)
-        {
-            var found = false;
-
-            Chart.helpers.each(Chart.instances, function(instance){
-                if (instance.chart.canvas.id === chartName) {
-                    found = true;
-                }
-            });
-
-            if (!found) {
-                document.dispatchEvent(new Event('render.' + chartName))
-            }
-        }
-    </script>
-{% endblock %}
-
-{% macro project_details(entry, project_details) %}
+{#
+    entry           = ProjectViewModel
+    project_details = ProjectDetailsModel
+#}
+{% macro project_details(entry, project_details, view_revenue_tab, view_revenue_user) %}
     {% set activities = project_details.activities %}
     {% set years = project_details.years %}
     {% import "macros/progressbar.html.twig" as progress %}
@@ -230,21 +250,13 @@
     {% set currency = project.customer.currency %}
     {% set chartPrefix = 'project' ~ project.id %}
 
-    {%- if kimai_config.themeRandomColors %}
-        {% for stat in activities %}
-            {% if stat.color is null %}
-                {% do stat.setColor(random_color(stat.name)) %}
-            {% endif %}
-        {% endfor %}
-    {% endif -%}
-
     {%- set labels = [] %}
     {% set rates = [] %}
     {% set durations = [] %}
     {% for year in years %}
         {% set labels = labels|merge([year.year]) %}
-        {% set rates = rates|merge([{'tooltip': year.rate|money(currency), 'value': year.rate}]) %}
-        {% set durations = durations|merge([{'tooltip': year.duration|duration, 'value': year.duration|duration_chart}]) %}
+        {% set rates = rates|merge([{'label': year.rate|money(currency), 'value': year.rate}]) %}
+        {% set durations = durations|merge([{'label': year.duration|duration, 'value': year.duration|chart_duration}]) %}
     {% endfor -%}
 
     <div class="nav-tabs-custom">
@@ -252,37 +264,26 @@
 
             <li><a data-chart="{{ chartPrefix }}User" href="#user-chart" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
             <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
+            {% if view_revenue_tab %}
             <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+            {% endif %}
             <li><a data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
             <li class="active"><a href="#details-chart" data-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
             <li class="pull-left header">
-                {{ widgets.label_project(project) }}
+                {{ widgets.label_project(project, {'inherit': false}) }}
             </li>
         </ul>
         <div class="tab-content no-padding">
-            <div class="chart tab-pane active" id="details-chart" style="position: relative; min-height: 300px;">
+            <div class="chart tab-pane active" id="details-chart">
                 <div class="row">
-                    <div class="col-xs-12">
-
+                    <div class="col-xs-6">
                         <table class="table table-hover dataTable">
-                            <tr>
+                            <tr {{ widgets.customer_row_attr(entry.project.customer) }}>
                                 <th class="w-min">
                                     {{ 'label.customer'|trans }}
                                 </th>
                                 <td>
                                     {{ widgets.label_customer(entry.project.customer) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="w-min">
-                                    {{ 'label.last_record'|trans }}
-                                </th>
-                                <td>
-                                    {% if entry.lastRecord is not null %}
-                                        {{ entry.lastRecord|date_short }}
-                                    {% else %}
-                                        &ndash;
-                                    {% endif %}
                                 </td>
                             </tr>
                             <tr>
@@ -309,43 +310,22 @@
                                 </th>
                                 <td>{{ entry.durationTotal|duration }}</td>
                             </tr>
-                            {% if is_granted('budget', project) %}
-                                {% if project.timeBudget > 0 %}
-                                    <tr>
-                                        <th class="w-min">
-                                            {{ 'label.timeBudget'|trans }}
-                                        </th>
-                                        <td>
-                                            {% set timeBudgetLeft = project.timeBudget - entry.billableDuration %}
-                                            {% set options = {
-                                                'max': project.timeBudget|default(0),
-                                                'current': entry.billableDuration|default(0),
-                                                'open': timeBudgetLeft,
-                                                'format': 'duration'
-                                            } %}
-                                            {{ progress.progressbar_full(options) }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% if project.budget > 0 %}
-                                    <tr>
-                                        <th class="w-min">
-                                            {{ 'label.budget'|trans }}
-                                        </th>
-                                        <td>
-                                            {% set budgetLeft = project.budget - entry.billableRate %}
-                                            {% set options = {
-                                                'max': project.budget|default(0),
-                                                'current': entry.billableRate|default(0),
-                                                'open': budgetLeft,
-                                                'format': 'money',
-                                                'currency': currency
-                                            } %}
-                                            {{ progress.progressbar_full(options) }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                            {% endif %}
+                        </table>
+                    </div>
+                    <div class="col-xs-6">
+                        <table class="table table-hover dataTable">
+                            <tr>
+                                <th class="w-min">
+                                    {{ 'label.last_record'|trans }}
+                                </th>
+                                <td>
+                                    {% if entry.lastRecord is not null %}
+                                        {{ entry.lastRecord|date_short }}
+                                    {% else %}
+                                        &ndash;
+                                    {% endif %}
+                                </td>
+                            </tr>
                             <tr>
                                 <th class="w-min">
                                     {{ 'label.not_exported'|trans }}
@@ -395,18 +375,63 @@
                                 </tr>
                             {% endif %}
                         </table>
-
                     </div>
                 </div>
+                {% if is_granted('budget', project) and (project.timeBudget > 0 or project.budget > 0) %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <table class="table table-hover dataTable">
+                            {% if project.timeBudget > 0 %}
+                                <tr>
+                                    <th class="w-min">
+                                        {{ 'label.timeBudget'|trans }}
+                                    </th>
+                                    <td>
+                                        {% set timeBudgetLeft = project.timeBudget - entry.billableDuration %}
+                                        {% set options = {
+                                            'max': project.timeBudget|default(0),
+                                            'current': entry.billableDuration|default(0),
+                                            'open': timeBudgetLeft,
+                                            'format': 'duration'
+                                        } %}
+                                        {{ progress.progressbar_full(options) }}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% if project.budget > 0 %}
+                                <tr>
+                                    <th class="w-min">
+                                        {{ 'label.budget'|trans }}
+                                    </th>
+                                    <td>
+                                        {% set budgetLeft = project.budget - entry.billableRate %}
+                                        {% set options = {
+                                            'max': project.budget|default(0),
+                                            'current': entry.billableRate|default(0),
+                                            'open': budgetLeft,
+                                            'format': 'money',
+                                            'currency': currency
+                                        } %}
+                                        {{ progress.progressbar_full(options) }}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
             </div>
+            {% if view_revenue_tab %}
             <div class="chart tab-pane" id="revenue-chart">
                 {{ charts.bar_chart(chartPrefix ~ 'Rate', labels, [rates], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Rate'}) }}
             </div>
+            {% endif %}
             <div class="chart tab-pane" id="time-chart">
                 {{ charts.bar_chart(chartPrefix ~ 'Duration', labels, [durations], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Duration'}) }}
             </div>
             <div class="chart tab-pane" id="activity-chart">
-                {{ _self.activity_tab(activities, entry.durationTotal, project.customer.currency, chartPrefix) }}
+                {{ _self.activity_tab(activities, entry.durationTotal, project.customer.currency, chartPrefix, view_revenue_tab) }}
             </div>
             <div class="chart tab-pane" id="user-chart">
                 <div class="row">
@@ -415,23 +440,30 @@
                             {% set rateTotal = 0 %}
                             {% set totalDuration = 0 %}
                             {% set datasets = [] %}
+                            {% set labels = [] %}
                             {% for userStat in project_details.userStats %}
                                 {% set user = userStat.user %}
-                                {% set color = kimai_config.themeRandomColors ? random_color(user.displayName) : kimai_context.chart.background_color %}
+                                {% set color = user.color|colorize(user.displayName) %}
                                 {% set rateTotal = rateTotal + userStat.rate %}
                                 {% set totalDuration = totalDuration + userStat.duration %}
-                                {% set datasets = datasets|merge([{'name': user.displayName, 'duration': userStat.duration, 'color': color, 'rate': userStat.rate}]) %}
-                                {% set percentage = (100 / (entry.durationTotal / userStat.duration)) %}
+                                {% set labels = labels|merge([user.displayName]) %}
+                                {% set datasets = datasets|merge([{'name': user.displayName, 'duration': userStat.duration|duration, 'value': userStat.duration, 'color': color, 'rate': userStat.rate|money(currency)}]) %}
+                                {% set percentage = 0 %}
+                                {% if entry.durationTotal > 0 and userStat.duration > 0 %}
+                                    {% set percentage = (100 / (entry.durationTotal / userStat.duration)) %}
+                                {% endif %}
                                 <tr>
-                                    <th class="text-nowrap">
-                                        <strong>{{ widgets.username(user) }}</strong>
+                                    <td>
+                                        {{ widgets.label_user_dot(user, {'random': true}) }}
                                     </th>
                                     <td class="text-nowrap text-right">
                                         {{ userStat.duration|duration }}
                                     </td>
+                                    {% if view_revenue_user %}
                                     <td class="text-nowrap text-right">
                                         {{ userStat.rate|money(currency) }}
                                     </td>
+                                    {% endif %}
                                     <td class="text-nowrap text-right">
                                         {{ percentage|number_format(1) }} %
                                     </td>
@@ -440,13 +472,16 @@
                                 <tr>
                                     <td></td>
                                     <th class="text-nowrap text-right total">{{ totalDuration|duration }}</th>
+                                    {% if view_revenue_user %}
                                     <th class="text-nowrap text-right total">{{ rateTotal|money(currency) }}</th>
+                                    {% endif %}
                                     <td></td>
                                 </tr>
                         </table>
                     </div>
                     <div class="col-xs-12 col-sm-3 col-md-4 col-lg-6">
-                        {{ charts.doughnut_chart(chartPrefix ~ 'User', datasets, {'height': (datasets|length > 12 ? '600px' : '300px'), 'legend': {'position': (datasets|length > 12 ? 'top' : 'right')}, 'currency': currency, 'renderEvent': 'render.' ~ chartPrefix ~ 'User'}) }}
+                        {% set chartOptions = {'height': (datasets|length > 12 ? '600px' : '300px'), 'legend': {'position': (datasets|length > 12 ? 'top' : 'right')}, 'renderEvent': 'render.' ~ chartPrefix ~ 'User'} %}
+                        {{ charts.doughnut_chart(chartPrefix ~ 'User', labels, datasets, chartOptions) }}
                     </div>
                 </div>
             </div>

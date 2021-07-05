@@ -7,6 +7,14 @@
         {% block box_title %}{{ ('profile.' ~ tab)|trans }}{% endblock %}
         {% block box_body %}
             {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-10">
+                    {{ form_row(form.alias) }}
+                </div>
+                <div class="col-md-2">
+                    {{ form_row(form.color) }}
+                </div>
+            </div>
             {{ form_widget(form) }}
             <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
             {{ form_end(form) }}

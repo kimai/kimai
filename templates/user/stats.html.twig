@@ -31,14 +31,19 @@
         {% set monthRoute = path('report_user_month', {'user': user.id, 'date': '__MONTH__'}) %}
     {% endif %}
 
-    {{ charts.yearly_javascript(true, monthRoute, stat_date_format) }}
+    {{ charts.bar_javascript({'footer': 'footer', 'label': 'tooltip', 'onclick': {'url': monthRoute, 'replacer': {'__MONTH__': 'month'}}}) }}
 
     {% for yearStat in years %}
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
             {% import "macros/charts.html.twig" as charts %}
             {% block box_title %}{{ yearStat.year }}{% endblock %}
             {% block box_body %}
-                {{ charts.yearly_chart(yearStat.year, yearStat) }}
+                {% set dataset = [] %}
+                {% for month in yearStat.months %}
+                    {% set monthDate = create_date(yearStat.year ~ '-' ~ month.month ~ '-01') %}
+                    {% set dataset = dataset|merge([{'value': month.duration|chart_duration, 'tooltip': month.duration|duration, 'footer': ('label.billable'|trans ~ ': ' ~ month.billableDuration|duration), 'month': monthDate|date_short}]) %}
+                {% endfor %}
+                {{ charts.bar_chart('userProfileChart'~yearStat.year, month_names(), [dataset], {}) }}
             {% endblock %}
         {% endembed %}
     {% endfor %}
@@ -139,7 +144,7 @@
     {% import "@AdminLTE/Macros/default.html.twig" as macro %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    {% set color = kimai_context.chart.background_color %}
+    {% set color = config('theme.chart.background_color') %}
     {% set event = trigger('user.profile_background', {'color': color, 'font': color|font_contrast, 'user': user, 'image': null}) %}
     {% set config = event.payload %}
 

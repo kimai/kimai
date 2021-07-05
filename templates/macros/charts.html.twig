@@ -1,145 +1,12 @@
-{#
-    --------------------------------- MONTHLY WORKING TIME CHART by YEAR as BAR-CHART ---------------------------------
-    @see https://www.chartjs.org/docs/2.9.4/charts/bar.html
-#}
+
+{# ------------------------------------------------------------------------------ #}
+{# DOUNGHNUT CHART - @see https://www.chartjs.org/docs/2.9.4/charts/doughnut.html #}
+{# ------------------------------------------------------------------------------ #}
 
 {#
-    with_billable   = false
-    monthRoute      = '/show/by_month/__MONTH__'
-    date_format     = '' (only used if monthRoute is not null)
-#}
-{% macro yearly_javascript(with_billable, monthRoute, date_format) %}
-    {% set with_billable = with_billable|default(false) %}
-    <script type="text/javascript">
-        function yearlyChartOptions() {
-            return {
-                maintainAspectRatio: true,
-                responsive: true,
-                legend: false,
-                barPercentage: 0.5,
-                categoryPercentage: 0.9,
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display: false
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        },
-                        gridLines: {
-                            display: true,
-                            color: '{{ kimai_context.chart.grid_color }}',
-                            lineWidth: 1
-                        }
-                    }]
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                            return ' ' + tooltipData['duration'];
-                        },
-                        afterTitle: function(tooltipItems, data) {
-                            return ' ';
-                        },
-                        {% if with_billable %}
-                        beforeFooter: function(tooltipItems, data) {
-                            return ' ';
-                        },
-                        footer: function(tooltipItems, data) {
-                            var tooltipItem = tooltipItems[0];
-                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                            return '{{ 'label.billable'|trans }}: ' + tooltipData['billable'];
-                        },
-                        {% endif %}
-                    }
-                }
-                {%- if monthRoute is not null -%}
-                ,
-                onClick: function(event, elements) {
-                    var element = elements[0];
-                    var month = this.data.datasets[0].monthData[element._index];
-                    var formattedMonth = moment(month).format('{{ date_format }}');
-                    document.location = '{{ monthRoute|raw }}'.replace('__MONTH__', formattedMonth);
-                }
-                {% endif %}
-            };
-        }
-    </script>
-{% endmacro %}
-
-{#
-    yearStat    = \App\Model\Statistic\Year
-    options     = {'height: '100px', 'renderEvent': 'kimai.initialized'}
-#}
-{% macro yearly_chart(id, yearStat, options) %}
-    <div class="chart">
-        <canvas id="userProfileChart{{ id }}" style="height: {{ options.height|default(kimai_context.chart.height ~ 'px') }};"></canvas>
-    </div>
-    <script type="text/javascript">
-        document.addEventListener('{{ options.renderEvent|default('kimai.initialized') }}', function() {
-            new Chart(
-                document.getElementById('userProfileChart{{ id }}').getContext("2d"), {
-                    type: 'bar',
-                    data: {
-                        labels: moment.months(),
-                        datasets: [
-                            {
-                                backgroundColor: '{{ kimai_context.chart.background_color }}',
-                                borderColor: '{{ kimai_context.chart.border_color }}',
-                                data: [
-                                    {% for monthNumber in 1..12 %}
-                                    {% set duration = 0 %}
-                                    {% set month = yearStat.month(monthNumber) %}
-                                    {% if month is not null %}
-                                    {% set duration = month.totalDuration %}
-                                    {% endif %}
-                                    {{ duration|duration_chart }}
-                                    {% if not loop.last %},{% endif %}
-                                    {% endfor %}
-                                ],
-                                realData: [
-                                    {% for monthNumber in 1..12 %}
-                                    {% set duration = 0 %}
-                                    {% set billable = 0 %}
-                                    {% set month = yearStat.month(monthNumber) %}
-                                    {% if month is not null %}
-                                    {% set duration = month.totalDuration %}
-                                    {% set billable = month.billableDuration %}
-                                    {% endif %}
-                                    {% set realDayData = {'duration': duration|duration, 'billable': billable|duration} %}
-                                    {{ realDayData|json_encode|raw }}
-                                    {% if not loop.last %},{% endif %}
-                                    {% endfor %}
-                                ],
-                                monthData: [
-                                    {% for monthNumber in 1..12 %}
-                                    '{{ yearStat.year }}-{{ monthNumber < 10 ? '0' ~ monthNumber : monthNumber }}-01'
-                                    {% if not loop.last %},{% endif %}
-                                    {% endfor %}
-                                ],
-                            }
-                        ]
-                    },
-                    options: Object.assign(yearlyChartOptions(),{{ options|json_encode|raw }})
-                }
-            );
-        });
-    </script>
-{% endmacro %}
-
-{#
-    ------------------------------------------------- DOUNGHNUT CHART -------------------------------------------------
-    @see https://www.chartjs.org/docs/2.9.4/charts/doughnut.html
-#}
-
-{#
-    options = {}
+    options = {'label': 'label', 'title': string|null, 'footer': string|null}
 #}
 {% macro doughnut_javascript(options) %}
-    {% set with_billable = with_billable|default(false) %}
     <script type="text/javascript">
         function doughnutChartOptions() {
             return {
@@ -153,24 +20,28 @@
                     callbacks: {
                         label: function(tooltipItem, data) {
                             var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                            return ' ' + tooltipData['duration'];
+                            return ' ' + tooltipData['{{ options.label|default('label') }}'];
                         },
                         afterTitle: function(tooltipItems, data) {
                             return ' ';
                         },
-                        beforeFooter: function(tooltipItems, data) {
-                            return ' ';
-                        },
+                        {% if options.title is defined and options.title is not empty %}
                         title: function(tooltipItems, data) {
                             var tooltipItem = tooltipItems[0];
                             var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                            return ' ' + tooltipData['name'];
+                            return ' ' + tooltipData['{{ options.title }}'];
+                        },
+                        {% endif %}
+                        {% if options.footer is defined and options.footer is not empty %}
+                        beforeFooter: function(tooltipItems, data) {
+                            return ' ';
                         },
                         footer: function(tooltipItems, data) {
                             var tooltipItem = tooltipItems[0];
                             var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                            return tooltipData['rate'];
+                            return tooltipData['{{ options.footer }}'];
                         },
+                        {% endif %}
                     }
                 }
             };
@@ -180,13 +51,14 @@
 
 {#
     id          = 'name'
-    data        = [{name: '', color: '', duration: 0, rate: 0}]
-    options     = {'height: '100px', 'currency': 'EUR', 'renderEvent': 'kimai.initialized'}
+    dataset     = [{name: '', color: '', duration: 0, rate: 0}]
+    options     = {'height: '100px', 'renderEvent': 'kimai.initialized'}
 #}
-{% macro doughnut_chart(id, data, options) %}
-    {% set height = options.height|default(kimai_context.chart.height ~ 'px') %}
-    <div class="chart" style="position: relative; height: {{ height }};">
-        <canvas id="{{ id }}" height="{{ height }}" style="height: {{ height }};"></canvas>
+{% macro doughnut_chart(id, labels, dataset, options) %}
+    {% set height = options.height|default(config('theme.chart.height') ~ 'px') %}
+    {% set bgColor = config('theme.chart.background_color') %}
+    <div class="chart" style="position: relative;">
+        <canvas id="{{ id }}" style="height: {{ height }};"></canvas>
     </div>
     <script type="text/javascript">
         document.addEventListener('{{ options.renderEvent|default('kimai.initialized') }}', function() {
@@ -194,31 +66,21 @@
                 $("#{{ id }}").get(0).getContext("2d"), {
                     type: 'doughnut',
                     data: {
-                        labels: [
-                            {% for entry in data %}
-                            '{{ entry.name }}'
-                            {% if not loop.last %},{% endif %}
-                            {% endfor %}
-                        ],
+                        labels: {{ labels|json_encode|raw }},
                         datasets: [
                             {
                                 backgroundColor: [
-                                    {% for entry in data %}
-                                    '{{ entry.color|default(kimai_context.chart.background_color) }}',
+                                    {% for entry in dataset %}
+                                    '{{ entry.color|default(bgColor) }}',
                                     {% endfor %}
                                 ],
                                 data: [
-                                    {% for entry in data %}
-                                    {{ entry.duration }}
+                                    {% for entry in dataset %}
+                                    {{ entry.value }}
                                     {% if not loop.last %},{% endif %}
                                     {% endfor %}
                                 ],
-                                realData: [
-                                    {% for entry in data %}
-                                    {{ {'name': entry.name, 'color': entry.color, 'rate': entry.rate|money(options.currency|default(null)), 'duration': entry.duration|duration}|json_encode|raw }}
-                                    {% if not loop.last %},{% endif %}
-                                    {% endfor %}
-                                ],
+                                realData: {{ dataset|json_encode|raw }},
                             }
                         ]
                     },
@@ -229,12 +91,14 @@
     </script>
 {% endmacro %}
 
-{#
-    --------------------------------- BAR-CHART ---------------------------------
-    @see https://www.chartjs.org/docs/2.9.4/charts/bar.html
-#}
+{# ------------------------------------------------------------------- #}
+{# BAR CHART - @see https://www.chartjs.org/docs/2.9.4/charts/bar.html #}
+{# ------------------------------------------------------------------- #}
 
-{% macro bar_javascript() %}
+{#
+    options = {'label': 'label', 'title': string|null, 'footer': string|null, 'onclick': {'url': string, 'replacer': {'name': 'value'}}}
+#}
+{% macro bar_javascript(options) %}
     <script type="text/javascript">
         function barChartOptions() {
             return {
@@ -255,7 +119,7 @@
                         },
                         gridLines: {
                             display: true,
-                            color: '{{ kimai_context.chart.grid_color }}',
+                            color: '{{ config('theme.chart.grid_color') }}',
                             lineWidth: 1
                         }
                     }]
@@ -263,13 +127,47 @@
                 tooltips: {
                     callbacks: {
                         label: function(tooltipItem, data) {
-                            return ' ' + data.datasets[tooltipItem.datasetIndex].tooltipData[tooltipItem.index];
+                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                            return ' ' + tooltipData['{{ options.label|default('label') }}'];
                         },
                         afterTitle: function(tooltipItems, data) {
                             return ' ';
                         },
+                        {% if options.title is defined and options.title is not empty %}
+                        title: function(tooltipItems, data) {
+                            var tooltipItem = tooltipItems[0];
+                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                            return ' ' + tooltipData['{{ options.title }}'];
+                        },
+                        {% endif %}
+                        {% if options.footer is defined and options.footer is not empty %}
+                        beforeFooter: function(tooltipItems, data) {
+                            return ' ';
+                        },
+                        footer: function(tooltipItems, data) {
+                            var tooltipItem = tooltipItems[0];
+                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                            return tooltipData['{{ options.footer }}'];
+                        },
+                        {% endif %}
                     }
-                }
+                },
+                {% if options.onclick is defined and options.onclick.url is defined %}
+                onClick: function(event, elements) {
+                    if (elements.length !== 1) {
+                        return;
+                    }
+                    var element = elements[0];
+                    var data = this.data.datasets[element._datasetIndex].realData[element._index];
+                    var url = '{{ options.onclick.url|raw }}';
+                    {% if options.onclick.replacer is defined %}
+                        {% for replacer, field in options.onclick.replacer %}
+                        url = url.replace(/{{ replacer }}/, data['{{ field }}']);
+                        {% endfor %}
+                        document.location = url;
+                    {% endif %}
+                },
+                {% endif %}
             };
         }
     </script>
@@ -277,13 +175,14 @@
 
 {#
     labels      = ['Foo', 'Bar']
-    datasets    = [{'value': 1234, 'tooltip': '1234€', 'color': ''}]
+    datasets    = [[{'value': 1234, 'tooltip': '1234€', 'color': ''}]]
     options     = {'height: '100px', 'renderEvent': 'kimai.initialized'}
 #}
 {% macro bar_chart(id, labels, datasets, options) %}
-    {% set height = options.height|default(kimai_context.chart.height ~ 'px') %}
-    <div class="chart" style="position: relative; height: {{ height }};">
-        <canvas id="{{ id }}" height="{{ height }}" style="height: {{ height }};"></canvas>
+    {% set height = options.height|default(config('theme.chart.height') ~ 'px') %}
+    {% set bgColor = config('theme.chart.background_color') %}
+    <div class="chart" style="position: relative;">
+        <canvas id="{{ id }}" style="height: {{ height }};"></canvas>
     </div>
     <script type="text/javascript">
         document.addEventListener('{{ options.renderEvent|default('kimai.initialized') }}', function() {
@@ -291,17 +190,13 @@
                 document.getElementById('{{ id }}').getContext("2d"), {
                     type: '{{ options.type|default('bar') }}',
                     data: {
-                        labels: [
-                            {% for label in labels %}
-                            '{{ label }}',
-                            {% endfor %}
-                        ],
+                        labels: {{ labels|json_encode|raw }},
                         datasets: [
                             {% for dataset in datasets %}
                             {
                                 backgroundColor: [
                                     {% for entry in dataset %}
-                                    '{{ entry.color|default(kimai_context.chart.background_color) }}',
+                                    '{{ entry.color|default(bgColor) }}',
                                     {% endfor %}
                                 ],
                                 data: [
@@ -309,11 +204,7 @@
                                     {{ entry.value }},
                                     {% endfor %}
                                 ],
-                                tooltipData: [
-                                    {% for entry in dataset %}
-                                    '{{ entry.tooltip }}',
-                                    {% endfor %}
-                                ],
+                                realData: {{ dataset|json_encode|raw }},
                             },
                             {% endfor %}
                         ]

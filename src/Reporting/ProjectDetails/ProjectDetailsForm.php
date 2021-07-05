@@ -32,7 +32,7 @@ class ProjectDetailsForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('project', ProjectType::class, [
-            'required' => true,
+            'required' => false,
             'label' => false,
             'width' => false,
             'join_customer' => true,

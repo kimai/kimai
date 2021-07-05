@@ -36,23 +36,6 @@ td {
     margin-right: 15px;
 }
 
-/* Profile */
-.avatar-xs {
-    width: 20px;
-    height: 20px;
-}
-.avatar-sm {
-    width: 25px;
-    height: 25px;
-}
-.avatar-md {
-    width: 30px;
-    height: 30px;
-}
-.avatar-lg {
-    width: 40px;
-    height: 40px;
-}
 .box-profile {
     img.img-circle {
         width: 100px;
@@ -64,6 +47,7 @@ td {
 
 .label-gray {
     background-color: $gray-lte;
+    color: #666;
 }
 
 /* Delete link in action dropdowns */

@@ -11,7 +11,7 @@ namespace App\Model;
 
 use App\Entity\Activity;
 
-class ActivityStatistic extends TimesheetCountedStatistic
+class ActivityStatistic extends TimesheetCountedStatistic implements \JsonSerializable
 {
     /**
      * @var Activity
@@ -46,11 +46,6 @@ class ActivityStatistic extends TimesheetCountedStatistic
         return $this->activity->getColor() ?? $this->color;
     }
 
-    public function setColor(?string $color): void
-    {
-        $this->color = $color;
-    }
-
     /**
      * Added for simpler re-use in frontend (charts).
      *
@@ -63,5 +58,13 @@ class ActivityStatistic extends TimesheetCountedStatistic
         }
 
         return $this->activity->getName();
+    }
+
+    public function jsonSerialize()
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'name' => $this->getName(),
+            'color' => $this->getColor(),
+        ]);
     }
 }

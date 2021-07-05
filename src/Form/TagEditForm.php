@@ -10,7 +10,6 @@
 namespace App\Form;
 
 use App\Entity\Tag;
-use App\Form\Type\ColorPickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,6 +17,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TagEditForm extends AbstractType
 {
+    use EntityFormTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -34,7 +35,8 @@ class TagEditForm extends AbstractType
                     'description' => 'The tag name (forbidden character: comma)',
                 ],
             ])
-            ->add('color', ColorPickerType::class);
+        ;
+        $this->addColor($builder);
     }
 
     /**

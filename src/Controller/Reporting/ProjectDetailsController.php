@@ -37,7 +37,7 @@ final class ProjectDetailsController extends AbstractController
         $projectView = null;
         $projectDetails = null;
 
-        if ($query->getProject() !== null) {
+        if ($query->getProject() !== null && $this->isGranted('details', $query->getProject())) {
             $projectViews = $service->getProjectView($user, [$query->getProject()], $query->getToday());
             $projectView = $projectViews[0];
             $projectDetails = $service->getProjectsDetails($query);

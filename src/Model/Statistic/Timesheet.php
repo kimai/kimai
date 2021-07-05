@@ -20,6 +20,16 @@ class Timesheet
      *
      * @return int
      */
+    public function getValue(): int
+    {
+        return $this->totalDuration;
+    }
+
+    /**
+     * For unified access, used in frontend.
+     *
+     * @return int
+     */
     public function getDuration(): int
     {
         return $this->totalDuration;

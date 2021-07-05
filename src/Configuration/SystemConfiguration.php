@@ -367,6 +367,11 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (bool) $this->find('theme.random_colors');
     }
 
+    public function isThemeAllowAvatarUrls(): bool
+    {
+        return (bool) $this->find('theme.avatar_url');
+    }
+
     public function getThemeAutocompleteCharacters(): int
     {
         return (int) $this->find('theme.autocomplete_chars');
@@ -387,11 +392,6 @@ class SystemConfiguration implements SystemBundleConfiguration
     public function getBrandingTitle(): ?string
     {
         return $this->find('theme.branding.title');
-    }
-
-    public function getBrandingCompany(): ?string
-    {
-        return $this->find('theme.branding.company');
     }
 
     public function isAllowTagCreation(): bool

@@ -52,7 +52,7 @@ class LocaleFormatExtensionsTest extends TestCase
     {
         $filters = [
             'month_name', 'day_name', 'date_short', 'date_time', 'date_full', 'date_format', 'time', 'hour24',
-            'duration', 'duration_chart', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount'
+            'duration', 'chart_duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount'
         ];
         $i = 0;
 
@@ -68,7 +68,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['get_format_duration', 'create_date', 'locales'];
+        $functions = ['get_format_duration', 'create_date', 'locales', 'month_names'];
         $i = 0;
 
         $sut = $this->getSut('de', []);

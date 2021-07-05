@@ -1,12 +1,12 @@
 {% set type = options.type|default('bar') %}
 {% set chart_id = options.id %}
-{% set backgroundColor = kimai_context.chart.background_color %}
-{% set gridColor = kimai_context.chart.grid_color %}
+{% set backgroundColor = config('theme.chart.background_color') %}
+{% set gridColor = config('theme.chart.grid_color') %}
 {% set activities = data.activities %}
 {% set data = data.data %}
 
 <div class="chart">
-    <canvas id="{{ chart_id }}" style="height: {{ kimai_context.chart.height }}px;"></canvas>
+    <canvas id="{{ chart_id }}" style="height: {{ config('theme.chart.height') }}px;"></canvas>
 </div>
 
 <script type="text/javascript">
@@ -38,7 +38,7 @@
                                     {%- for entry in day.details -%}
                                         {% set loopId = (entry.project.id ~ '_' ~ entry.activity.id) %}
                                         {%- if loopId == activityId -%}
-                                            {% set realDayData = entry.duration|duration_chart %}
+                                            {% set realDayData = entry.duration|chart_duration %}
                                         {%- endif -%}
                                     {%- endfor -%}
                                     {%- if realDayData is not null -%}

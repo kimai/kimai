@@ -81,9 +81,9 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $profileBox = $client->getCrawler()->filter('div.box-user-profile');
         $this->assertEquals(1, $profileBox->count());
-        $profileAvatar = $profileBox->filter('img.img-circle');
+        $profileAvatar = $profileBox->filter('span.avatar');
         $this->assertEquals(1, $profileAvatar->count());
-        $alt = $profileAvatar->attr('alt');
+        $alt = $profileAvatar->attr('title');
 
         $this->assertEquals($username, $alt);
     }
@@ -132,7 +132,6 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
         $this->assertEquals('John Doe', $user->getAlias());
         $this->assertEquals('Developer', $user->getTitle());
-        $this->assertEquals(UserFixtures::DEFAULT_AVATAR, $user->getAvatar());
         $this->assertEquals('john_user@example.com', $user->getEmail());
         $this->assertTrue($user->isEnabled());
 
@@ -141,7 +140,6 @@ class ProfileControllerTest extends ControllerBaseTest
             'user_edit' => [
                 'alias' => 'Johnny',
                 'title' => 'Code Monkey',
-                'avatar' => '/fake/image.jpg',
                 'email' => 'updated@example.com',
             ]
         ]);
@@ -158,7 +156,6 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
         $this->assertEquals('Johnny', $user->getAlias());
         $this->assertEquals('Code Monkey', $user->getTitle());
-        $this->assertEquals('/fake/image.jpg', $user->getAvatar());
         $this->assertEquals('updated@example.com', $user->getEmail());
         $this->assertTrue($user->isEnabled());
     }
@@ -173,7 +170,6 @@ class ProfileControllerTest extends ControllerBaseTest
             'user_edit' => [
                 'alias' => 'Johnny',
                 'title' => 'Code Monkey',
-                'avatar' => '/fake/image.jpg',
                 'email' => 'updated@example.com',
                 'enabled' => false,
             ]
@@ -191,7 +187,6 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
         $this->assertEquals('Johnny', $user->getAlias());
         $this->assertEquals('Code Monkey', $user->getTitle());
-        $this->assertEquals('/fake/image.jpg', $user->getAvatar());
         $this->assertEquals('updated@example.com', $user->getEmail());
         $this->assertFalse($user->isEnabled());
     }

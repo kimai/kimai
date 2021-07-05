@@ -478,6 +478,9 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('random_colors')
                     ->defaultTrue()
                 ->end()
+                ->booleanNode('avatar_url')
+                    ->defaultFalse()
+                ->end()
             ->end()
         ;
 
