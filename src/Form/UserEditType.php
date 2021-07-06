@@ -26,7 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserEditType extends AbstractType
 {
-    use EntityFormTrait;
+    use ColorTrait;
 
     private $configuration;
 
