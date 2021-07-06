@@ -266,19 +266,3 @@ div.dataTables_scrollHead table.table-bordered {
 .table-striped.dataTable tbody tr.active:nth-child(odd) th {
     background-color: #017ebc;
 }
-
-/* custom extension to make the column wide enough to show the sortable icons */
-table.dataTable th.sortable {
-    padding-left: 22px;
-}
-
-table.dataTable.table > tbody > tr > td {
-    vertical-align: middle;
-    .img-circle {
-        max-width: 30px;
-        margin-right: 0;
-        &.teamlead {
-            box-shadow: 0 0 5px 3px $gray-lte;
-        }
-    }
-}

@@ -30,7 +30,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['docu_link', 'multiline_indent', 'color', 'font_contrast', 'nl2str'];
+        $filters = ['docu_link', 'multiline_indent', 'color', 'font_contrast', 'default_color', 'nl2str'];
         $sut = $this->getSut();
         $twigFilters = $sut->getFilters();
         $this->assertCount(\count($filters), $twigFilters);
@@ -42,9 +42,9 @@ class ExtensionsTest extends TestCase
         }
 
         // make sure that the nl2str filters does proper escaping
-        self::assertEquals('nl2str', $twigFilters[4]->getName());
-        self::assertEquals('html', $twigFilters[4]->getPreEscape());
-        self::assertEquals(['html'], $twigFilters[4]->getSafe(new Node()));
+        self::assertEquals('nl2str', $twigFilters[5]->getName());
+        self::assertEquals('html', $twigFilters[5]->getPreEscape());
+        self::assertEquals(['html'], $twigFilters[5]->getSafe(new Node()));
     }
 
     public function testGetFunctions()
@@ -199,6 +199,16 @@ sdfsdf' . PHP_EOL . "\n" .
         $fooColor = $sut->randomColor('foo-bar');
         self::assertIsValidColor($fooColor);
         self::assertEquals($fooColor, $sut->randomColor('foo-bar'));
+    }
+
+    public function testGetDefaultColor()
+    {
+        $sut = $this->getSut();
+
+        self::assertEquals('#123456', $sut->defaultColor('#123456'));
+        self::assertEquals(Constants::DEFAULT_COLOR, $sut->defaultColor(null));
+        self::assertEquals(Constants::DEFAULT_COLOR, $sut->defaultColor());
+        self::assertEquals('', $sut->defaultColor(''));
     }
 
     private static function assertIsValidColor(string $color)

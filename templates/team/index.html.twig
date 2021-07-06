@@ -26,8 +26,12 @@
         {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.teamUpdate'}) }}
         {% for team in teams %}
             <tr{% if is_granted('edit', team) %} class="open-edit alternative-link" data-href="{{ path('admin_team_edit', {'id': team.id}) }}"{% endif %}>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ team.name }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'teamlead') }}">{{ widgets.label_user(team.teamlead) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
+                    {{ widgets.label_name(team.name, team.color) }}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'teamlead') }}">
+                    {{ widgets.label_user(team.teamlead) }}
+                </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">
                     {% for user in team.users %}
                         {{ widgets.label_user(user) }}&nbsp;

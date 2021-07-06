@@ -31,6 +31,7 @@ class Extensions extends AbstractExtension
             new TwigFilter('multiline_indent', [$this, 'multilineIndent']),
             new TwigFilter('color', [$this, 'color']),
             new TwigFilter('font_contrast', [$this, 'calculateFontContrastColor']),
+            new TwigFilter('default_color', [$this, 'defaultColor']),
             new TwigFilter('nl2str', [$this, 'replaceNewline'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
         ];
     }
@@ -80,6 +81,11 @@ class Extensions extends AbstractExtension
     public function calculateFontContrastColor(string $color): string
     {
         return (new Color())->getFontContrastColor($color);
+    }
+
+    public function defaultColor(?string $color = null): string
+    {
+        return $color ?? Constants::DEFAULT_COLOR;
     }
 
     /**

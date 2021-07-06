@@ -34,7 +34,7 @@
                     {% set usersTotalDuration = 0 %}
                     <tr class="user">
                         <td class="text-nowrap">
-                            <strong>{{ widgets.username(userYear.user) }}</strong>
+                            {{ widgets.label_dot(userYear.user.displayName, userYear.user.color) }}
                         </td>
                         {% for yid, year in userYear.years %}
                             {% for mid, month in year.months %}

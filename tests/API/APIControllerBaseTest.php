@@ -317,6 +317,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 return [
                     'id' => 'int',
                     'name' => 'string',
+                    'color' => '@string',
                 ];
 
             // explicitly requested team
@@ -324,6 +325,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 return [
                     'id' => 'int',
                     'name' => 'string',
+                    'color' => '@string',
                     'teamlead' => ['result' => 'object', 'type' => 'User'],
                     'users' => ['result' => 'array', 'type' => 'User'],
                     'customers' => ['result' => 'array', 'type' => '@Customer'],

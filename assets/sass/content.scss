@@ -69,3 +69,13 @@ table.dataTable thead > tr > th.hw-min {
     width: 1%;
     white-space: normal;
 }
+
+.badge {
+    font-weight: normal;
+    color: #000;
+    background-color: $kimai-default;
+}
+
+.label {
+    font-weight: normal;
+}

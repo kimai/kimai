@@ -63,23 +63,11 @@
 {% endmacro %}
 
 {% macro label_user(user) %}
-    {{ _self.label(user.displayName, 'primary') }}
+    {{ _self.label_color(user.displayName, user.color|colorize(user.displayName)) }}
 {% endmacro %}
 
-{#
-    options = {'random': false}
-#}
-{% macro label_user_dot(user, options) %}
-    {% set random = options.random ?? false %}
-    {% set color = user.color %}
-    {% if color is empty and random %}
-        {% set color = color|colorize(user.displayName) %}
-    {% endif %}
-    {{ _self.label_color_dot('user', user.enabled, user.displayName, null, color) }}
-{% endmacro %}
-
-{% macro label_team(team, class) %}
-    {{ _self.label(team.name, class|default('primary')) }}
+{% macro label_team(team) %}
+    {{ _self.label_color(team.name, team.color|colorize(team.name)) }}
 {% endmacro %}
 
 {% macro user_avatar(user, tooltip, class) %}
@@ -154,6 +142,17 @@
     {{ _self.label_color_dot('customer', customer.visible, customer.name, null, color) }}
 {% endmacro %}
 
+{# Use for list views and the main column (if the entity has something like a name) #}
+{% macro label_name(label, color, isVisible) %}
+    {{ _self.label_color_dot('color', isVisible, label, null, color) }}
+{% endmacro %}
+
+{# Use in datatables to show linked entity names #}
+{% macro label_dot(label, color, isVisible) %}
+    {{ _self.label_color_dot('color', isVisible, label, null, color|colorize(label)) }}
+{% endmacro %}
+
+{# for @internal use only #}
 {% macro label_color_dot(type, isVisible, name, url, color) %}
     <span class="label-{{ type }}{{ isVisible ? '' : ' label-invisible' }}">
         <span class="name">
@@ -190,12 +189,15 @@
 {% endmacro %}
 
 {% macro label(title, type, tooltip) %}
-    {# success, warning, danger, primary, gray #}
     <span {% if tooltip %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="label label-{{ type|default('success') }}">{{ title }}</span>
 {% endmacro %}
 
+{% macro label_color(title, color) %}
+    <span class="label" style="background-color: {{ color|default_color }};color: {{ color|default_color|font_contrast }}">{{ title }}</span>
+{% endmacro %}
+
 {% macro badge(title, color) %}
-    <span class="badge" style="background-color:{{ color }}; color:{{ color|font_contrast }}">{{ title }}</span>
+    <span class="badge"{% if color is not null %} style="background-color:{{ color }}; color:{{ color|font_contrast }}"{% endif %}>{{ title }}</span>
 {% endmacro %}
 
 {% macro alert(type, description, title, icon) %}
@@ -441,25 +443,23 @@
 
 {% macro button_action(icon, url) %}
     <a href="{{ url }}" class="btn btn-default btn-{{ icon }}">
-        {{ macro.icon(icon) }}
+        {{ _self.icon(icon) }}
     </a>
 {% endmacro %}
 
 {% macro tag_list(taglist) %}
-    {% import _self as macro %}
     {% for tag in taglist %}
-        {{ macro.badge(tag.name, tag.color|default('#00a65a')) }}
+        {{ _self.badge(tag.name, tag.color|colorize(tag.name)) }}
     {% endfor %}
 {% endmacro %}
 
 {% macro form_type_value(type, value, entity) %}
-    {% import _self as widgets %}
     {% if '\\ColorPickerType' in type %}
-        {{ widgets.color_dot(value, value) }}
+        {{ _self.color_dot(value, value) }}
     {% elseif '\\DurationType' in type %}
         {{ value|duration }}
     {% elseif '\\YesNoType' in type or '\\CheckBoxType' in type %}
-        {{ widgets.label_boolean(value) }}
+        {{ _self.label_boolean(value) }}
     {% elseif '\\DatePickerType' in type %}
         {{ value|date_short }}
     {% elseif '\\DateTimePickerType' in type %}
@@ -496,11 +496,10 @@
 {% endmacro %}
 
 {% macro team_list(teams, showTitle, collapseAt) %}
-    {% set collapseAt = collapseAt ?? 5 %}
+    {% set collapseAt = collapseAt ?? 12 %}
     {% if showTitle is null %}
         {% set showTitle = true %}
     {% endif %}
-    {% import _self as macro %}
     <table class="table table-hover dataTable" role="grid">
         {% if showTitle %}
         <thead>
@@ -519,15 +518,15 @@
                     {{ team.name }}
                 </td>
                 <td class="avatars">
-                    {{ macro.user_avatar(team.teamlead, ('label.teamlead'|trans ~ ': ' ~ team.teamlead.displayName), 'teamlead') }}
+                    {{ _self.user_avatar(team.teamlead, ('label.teamlead'|trans ~ ': ' ~ team.teamlead.displayName), 'teamlead') }}
                     {% set teamHiddenId = 'team_' ~ team.id ~ '_hiddenUser' ~ random() %}
                     {% set counter = 0  %}
                     {% for user in users %}
                         {% if user != team.teamlead %}
-                            {{ macro.user_avatar(user) }}
+                            {{ _self.user_avatar(user) }}
                             {% set counter = counter + 1 %}
                         {% endif %}
-                        {% if userTeamCount > collapseAt and counter == (collapseAt - 1) and loop.index != userTeamCount %}
+                        {% if userTeamCount > (collapseAt + 1) and counter == (collapseAt - 1) and loop.index != userTeamCount %}
                             <a href="#" onclick="$('#{{ teamHiddenId }}').toggleClass('hidden');$(this).hide();return false;" class="badge">{{ 'label.plus_more'|trans({'%count%': (userTeamCount - collapseAt)}) }}</a>
                             <span class="hidden" id="{{ teamHiddenId }}">
                             {% set counter = counter + 1 %}
