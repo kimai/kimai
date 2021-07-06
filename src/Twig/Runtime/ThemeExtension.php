@@ -15,6 +15,7 @@ use App\Entity\User;
 use App\Event\PageActionsEvent;
 use App\Event\ThemeEvent;
 use App\Event\ThemeJavascriptTranslationsEvent;
+use App\Utils\Color;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -26,6 +27,10 @@ final class ThemeExtension implements RuntimeExtensionInterface
     private $eventDispatcher;
     private $translator;
     private $configuration;
+    /**
+     * @var bool
+     */
+    private $randomColors;
 
     public function __construct(EventDispatcherInterface $dispatcher, TranslatorInterface $translator, SystemConfiguration $configuration)
     {
@@ -134,5 +139,26 @@ final class ThemeExtension implements RuntimeExtensionInterface
         }
 
         return $this->configuration->find($name);
+    }
+
+    public function colorize(?string $color, ?string $identifier = null, ?string $fallback = null): string
+    {
+        if ($color !== null) {
+            return $color;
+        }
+
+        if ($this->randomColors === null) {
+            $this->randomColors = $this->configuration->isThemeRandomColors();
+        }
+
+        if ($this->randomColors) {
+            return (new Color())->getRandom($identifier);
+        }
+
+        if ($fallback !== null) {
+            return $fallback;
+        }
+
+        return Constants::DEFAULT_COLOR;
     }
 }

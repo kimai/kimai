@@ -71,5 +71,9 @@ class ProjectSubscriber extends AbstractActionsSubscriber
         if (($event->isIndexView() || $event->isView('customer_details')) && $this->isGranted('delete', $project)) {
             $event->addDelete($this->path('admin_project_delete', ['id' => $project->getId()]));
         }
+
+        if ($this->isGranted('view_reporting') && $this->isGranted('details_project')) {
+            $event->addAction('report_project_details', ['url' => $this->path('report_project_details', ['project' => $project->getId()]), 'icon' => 'reporting', 'translation_domain' => 'reporting']);
+        }
     }
 }

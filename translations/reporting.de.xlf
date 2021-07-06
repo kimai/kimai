@@ -26,6 +26,10 @@
                 <source>report_project_view</source>
                 <target>Projektübersicht</target>
             </trans-unit>
+            <trans-unit id="report_project_details">
+                <source>report_project_details</source>
+                <target>Projektdetails</target>
+            </trans-unit>
             <trans-unit id="report_inactive_project">
                 <source>report_inactive_project</source>
                 <target>Inaktive Projekte</target>

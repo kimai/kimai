@@ -9,18 +9,17 @@
 
 namespace App\Form;
 
-use App\Form\Type\ColorChoiceType;
 use App\Form\Type\DurationType;
 use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 
 trait EntityFormTrait
 {
+    use ColorTrait;
+
     public function addCommonFields(FormBuilderInterface $builder, array $options): void
     {
         $this->addColor($builder);
@@ -50,39 +49,10 @@ trait EntityFormTrait
             ]);
     }
 
-    public function addColor(FormBuilderInterface $builder): void
-    {
-        $builder
-            ->add('color', ColorChoiceType::class, [
-                'required' => false,
-            ])
-        ;
-
-        // this code exists only for backward compatibility
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($builder) {
-                if (!$builder->get('color')->hasOption('choices')) {
-                    return;
-                }
-
-                $data = $event->getData();
-                $choices = $builder->get('color')->getOption('choices');
-                if (\is_object($data) && method_exists($data, 'getColor')) {
-                    $color = $data->getColor();
-                    if (!empty($color) && array_search($color, $choices) === false) {
-                        $choices[$color] = $color;
-                    }
-                }
-
-                $event->getForm()->add('color', ColorChoiceType::class, [
-                    'required' => false,
-                    'choices' => $choices,
-                ]);
-            }
-        );
-    }
-
+    /**
+     * @deprecated since 1.15
+     * @param FormBuilderInterface $builder
+     */
     public function addCreateMore(FormBuilderInterface $builder): void
     {
         $builder->add('create_more', CheckboxType::class, [

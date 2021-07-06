@@ -269,7 +269,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 return [
                     'id' => 'int',
                     'name' => 'string',
-                    'color' => 'string',
+                    'color' => '@string',
                 ];
 
             // embedded meta data
@@ -290,6 +290,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'id' => 'int',
                     'username' => 'string',
                     'enabled' => 'bool',
+                    'color' => '@string',
                     'alias' => '@string',
                 ];
 
@@ -302,6 +303,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'alias' => '@string',
                     'title' => '@string',
                     'avatar' => '@string',
+                    'color' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'roles' => ['result' => 'array', 'type' => 'string'],
                     'language' => 'string',
@@ -315,6 +317,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 return [
                     'id' => 'int',
                     'name' => 'string',
+                    'color' => '@string',
                 ];
 
             // explicitly requested team
@@ -322,6 +325,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 return [
                     'id' => 'int',
                     'name' => 'string',
+                    'color' => '@string',
                     'teamlead' => ['result' => 'object', 'type' => 'User'],
                     'users' => ['result' => 'array', 'type' => 'User'],
                     'customers' => ['result' => 'array', 'type' => '@Customer'],

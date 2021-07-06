@@ -527,10 +527,6 @@ class TimesheetControllerTest extends ControllerBaseTest
             ]
         ]);
 
-        if (!$client->getResponse()->isRedirect()) {
-            dd($response->getStatusCode(), $response->getContent());
-        }
-
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());

@@ -1,0 +1,78 @@
+
+$avatar-base-size: 30;
+
+.avatar {
+    text-align: center;
+    background-color: #d2d6de;
+    border-radius: 50%;
+    display: inline-block;
+    height: ($avatar-base-size)+px;
+    width: ($avatar-base-size)+px;
+    vertical-align: middle;
+}
+
+.initials {
+    line-height: 1;
+    position: relative;
+    font-weight: bold;
+    font-size: ($avatar-base-size / 2 - 2)+px;
+    top: ($avatar-base-size / 4 - 1)+px;
+}
+
+.avatar-xs {
+    width: ($avatar-base-size * 0.75)+px;
+    height: ($avatar-base-size * 0.75)+px;
+    .initials {
+        font-size: ($avatar-base-size * .75 / 2 - 2)+px;
+        top: ($avatar-base-size * .75 / 4 - 1)+px;
+    }
+}
+
+.avatar-sm {
+    width: ($avatar-base-size * 1.25)+px;
+    height: ($avatar-base-size * 1.25)+px;
+    .initials {
+        font-size: ($avatar-base-size * 1.25 / 2 - 2)+px;
+        top: ($avatar-base-size * 1.25 / 4 - 1)+px;
+    }
+}
+
+.avatar-md {
+    width: ($avatar-base-size * 1.5)+px;
+    height: ($avatar-base-size * 1.5)+px;
+    .initials {
+        font-size: ($avatar-base-size * 1.5 / 2 - 2)+px;
+        top: ($avatar-base-size * 1.5 / 4 - 1)+px;
+    }
+}
+
+.avatar-lg {
+    width: ($avatar-base-size * 2)+px;
+    height: ($avatar-base-size * 2)+px;
+    .initials {
+        font-size: ($avatar-base-size * 2 / 2 - 2)+px;
+        top: ($avatar-base-size * 2 / 4 - 1)+px;
+    }
+}
+
+.widget-user-image {
+    border-radius: 50%;
+    border: 3px solid #fff;
+    .avatar {
+        width: ($avatar-base-size * 2.75)+px;
+        height: ($avatar-base-size * 2.75)+px;
+        .initials {
+            font-size: ($avatar-base-size * 2.75 / 2 - 2)+px;
+            top: ($avatar-base-size * 2.75 / 4 - 1)+px;
+        }
+    }
+}
+
+/* Detail tables like my teams (Dashboard) or */
+table.dataTable.table > tbody > tr > td {
+    &.avatars {
+        .avatar {
+            margin: 1px;
+        }
+    }
+}

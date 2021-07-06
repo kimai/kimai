@@ -28,7 +28,7 @@
         <env name="MAILER_FROM" value="kimai@example.com"/>
 
         <!--
-            REINSTALL THE TEST DATABASE, AFTER CHANGING STRUCTURE?
+            REINSTALL THE TEST DATABASE, eg. AFTER CHANGING STRUCTURE!
 
             Simple:
             - change to "true"

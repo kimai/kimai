@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Constants;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -58,6 +59,21 @@ class UserTest extends TestCase
 
         $user->setTitle('Mr. Code Blaster');
         self::assertEquals('Mr. Code Blaster', $user->getTitle());
+    }
+
+    public function testColor()
+    {
+        $sut = new User();
+        self::assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
+
+        $sut->setColor(Constants::DEFAULT_COLOR);
+        self::assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
+
+        $sut->setColor('#000000');
+        self::assertEquals('#000000', $sut->getColor());
+        self::assertTrue($sut->hasColor());
     }
 
     public function testAuth()
@@ -317,6 +333,7 @@ class UserTest extends TestCase
             ['label.active', 'boolean'],
             ['profile.registration_date', 'datetime'],
             ['label.roles', 'array'],
+            ['label.color', 'string'],
         ];
 
         self::assertCount(\count($expected), $columns);

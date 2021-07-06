@@ -823,6 +823,14 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Financial year</target>
       </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Working time</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Revenues</target>
+      </trans-unit>
       <trans-unit id="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Working hours today</target>

@@ -70,7 +70,7 @@ class TagControllerTest extends APIControllerBaseTest
         $this->importTagFixtures();
         $data = [
             'name' => 'foo',
-            'color' => '#000FFF'
+            'color' => '#00ff00'
         ];
         $this->request($client, '/api/tags', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -79,7 +79,7 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TagEntity', $result);
         $this->assertNotEmpty($result['id']);
-        self::assertEquals('#000FFF', $result['color']);
+        self::assertEquals('#00ff00', $result['color']);
     }
 
     public function testPostActionWithValidationErrors()

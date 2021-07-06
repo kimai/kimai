@@ -62,7 +62,6 @@ final class ProfileController extends AbstractController
             'user' => $profile,
             'stats' => $userStats,
             'years' => $monthlyStats,
-            'stat_date_format' => $localeSettings->getDatePickerFormat(),
         ];
 
         return $this->render('user/stats.html.twig', $viewVars);
@@ -111,7 +110,7 @@ final class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile_password', ['username' => $profile->getUsername()]);
         }
 
-        return $this->render('user/profile.html.twig', [
+        return $this->render('user/form.html.twig', [
             'tab' => 'password',
             'user' => $profile,
             'form' => $form->createView(),
@@ -169,7 +168,7 @@ final class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile_roles', ['username' => $profile->getUsername()]);
         }
 
-        return $this->render('user/profile.html.twig', [
+        return $this->render('user/form.html.twig', [
             'tab' => 'roles',
             'user' => $profile,
             'form' => $form->createView(),
@@ -195,7 +194,7 @@ final class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile_teams', ['username' => $profile->getUsername()]);
         }
 
-        return $this->render('user/profile.html.twig', [
+        return $this->render('user/form.html.twig', [
             'tab' => 'teams',
             'user' => $profile,
             'form' => $form->createView(),
@@ -276,7 +275,7 @@ final class ProfileController extends AbstractController
             }
         }
 
-        return $this->render('user/form.html.twig', [
+        return $this->render('user/preferences.html.twig', [
             'tab' => 'preferences',
             'user' => $profile,
             'form' => $form->createView(),

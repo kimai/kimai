@@ -11,11 +11,9 @@ namespace App\Model\Statistic;
 
 use InvalidArgumentException;
 
-final class Month
+final class Month extends Timesheet
 {
     private $month;
-    private $totalDuration = 0;
-    private $totalRate = 0.00;
     private $billableDuration = 0;
     private $billableRate = 0.00;
 
@@ -38,30 +36,6 @@ final class Month
     public function getMonthNumber(): int
     {
         return (int) $this->month;
-    }
-
-    public function getTotalDuration(): int
-    {
-        return $this->totalDuration;
-    }
-
-    public function setTotalDuration(int $seconds): Month
-    {
-        $this->totalDuration = $seconds;
-
-        return $this;
-    }
-
-    public function getTotalRate(): float
-    {
-        return $this->totalRate;
-    }
-
-    public function setTotalRate(float $totalRate): Month
-    {
-        $this->totalRate = $totalRate;
-
-        return $this;
     }
 
     public function getBillableDuration(): int

@@ -67,16 +67,18 @@
 {% block page_subtitle %}{% endblock %}
 
 {% block logo_mini %}
-    {% if not kimai_context.branding.mini is empty %}
-        {{ kimai_context.branding.mini|raw }}
+    {% set mini = config('theme.branding.mini') %}
+    {% if mini is not empty %}
+        {{ mini|raw }}
     {% else %}
         <b>K</b>TT
     {% endif %}
 {% endblock %}
 
 {% block logo_large %}
-    {% if not kimai_context.branding.company is empty %}
-        {{ kimai_context.branding.company|raw }}
+    {% set company = config('theme.branding.company') %}
+    {% if company is not empty %}
+        {{ company|raw }}
     {% else %}
         <b>Kimai</b> - Time Tracking
     {% endif %}
@@ -230,7 +232,7 @@
                     </a>
                 </li>
             {% endif %}
-            {% if kimai_context.show_about %}
+            {% if config('theme.show_about') %}
             <li class="divider"></li>
             <li>
                 <a href="{{ path('about') }}">
