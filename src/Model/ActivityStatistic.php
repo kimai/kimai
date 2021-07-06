@@ -17,10 +17,6 @@ class ActivityStatistic extends TimesheetCountedStatistic implements \JsonSerial
      * @var Activity
      */
     private $activity;
-    /**
-     * @var string
-     */
-    private $color;
 
     public function getActivity(): ?Activity
     {
@@ -40,10 +36,10 @@ class ActivityStatistic extends TimesheetCountedStatistic implements \JsonSerial
     public function getColor(): ?string
     {
         if ($this->activity === null) {
-            return $this->color;
+            return null;
         }
 
-        return $this->activity->getColor() ?? $this->color;
+        return $this->activity->getColor();
     }
 
     /**

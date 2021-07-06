@@ -104,24 +104,7 @@ final class Color
             return $this->getRandomColor();
         }
 
-        return $this->getRandomFromPalette($input, 'all');
-    }
-
-    public function getRandomByString(string $input): string
-    {
-        $id = 0;
-        for ($pos = 0; $pos < \strlen($input); $pos++) {
-            $id = mb_ord($input[$pos], 'UTF-8') + (($id << 5) - $id);
-        }
-
-        $id = $id % 16777215;
-
-        $colorCode = abs($id) % 0x1000000;
-        $red = $colorCode >> 16;
-        $green = ($colorCode >> 8) & 0xff;
-        $blue = $colorCode & 0xff;
-
-        return '#' . dechex($red) . dechex($green) . dechex($blue);
+        return $this->getRandomFromPalette($input);
     }
 
     public function getRandomColor(): string
@@ -129,14 +112,14 @@ final class Color
         return sprintf('#%06x', rand(0, 16777215));
     }
 
-    public function getRandomFromPalette(string $input, string $palette): string
+    public function getRandomFromPalette(string $input): string
     {
         $id = 0;
         for ($pos = 0; $pos < \strlen($input); $pos++) {
             $id += mb_ord($input[$pos], 'UTF-8');
         }
 
-        $colors = $this->mapPaletteToColors($palette);
+        $colors = self::PALETTE_3;
         $key = $id % \count($colors);
 
         return $colors[$key];
