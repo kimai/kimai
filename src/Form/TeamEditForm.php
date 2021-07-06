@@ -18,6 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TeamEditForm extends AbstractType
 {
+    use ColorTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -37,7 +39,9 @@ class TeamEditForm extends AbstractType
                     'type' => 'string',
                     'description' => 'Name of the team',
                 ],
-            ])
+        ]);
+        $this->addColor($builder);
+        $builder
             ->add('teamlead', UserType::class, [
                 'label' => 'label.teamlead',
                 'multiple' => false,

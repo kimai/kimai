@@ -145,7 +145,6 @@ class SystemConfigurationTest extends TestCase
         $this->assertTrue($sut->find('theme.colors_limited'));
         $this->assertTrue($sut->isThemeColorsLimited());
         $this->assertEquals('Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000', $sut->getThemeColorChoices());
-        $this->assertEquals('Acme Corp.', $sut->getBrandingCompany());
         $this->assertEquals('Fantastic Time-Tracking', $sut->getBrandingTitle());
         $this->assertTrue($sut->isAllowTagCreation());
     }

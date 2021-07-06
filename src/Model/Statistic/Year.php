@@ -9,19 +9,13 @@
 
 namespace App\Model\Statistic;
 
-/**
- * Yearly statistics
- */
-class Year
+final class Year extends Timesheet
 {
-    /**
-     * @var string
-     */
-    protected $year;
+    private $year;
     /**
      * @var Month[]
      */
-    protected $months = [];
+    private $months = [];
 
     public function __construct(string $year)
     {

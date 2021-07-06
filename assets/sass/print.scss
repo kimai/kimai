@@ -6,6 +6,21 @@
  */
 
 @media print{
-    .sf-toolbar, .control-sidebar {display: none !important;}
-    .col-print-12{width:100%;}
+    .sf-toolbar, .control-sidebar {
+        display: none !important;
+    }
+    .col-print-12{
+        width:100%;
+    }
+    .sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .right-side {
+        margin: 0!important;
+    }
+    section.content {
+        margin: 0;
+        padding: 0;
+    }
+    span i.dot {
+        display: none;
+        margin-right: 0!important;
+    }
 }

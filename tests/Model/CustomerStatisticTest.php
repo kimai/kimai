@@ -10,33 +10,37 @@
 namespace App\Tests\Model;
 
 use App\Model\CustomerStatistic;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Model\CustomerStatistic
  */
-class CustomerStatisticTest extends TestCase
+class CustomerStatisticTest extends AbstractTimesheetCountedStatisticTest
 {
     public function testDefaultValues()
     {
-        $sut = new CustomerStatistic();
-        $this->assertEquals(0, $sut->getActivityAmount());
-        $this->assertEquals(0, $sut->getProjectAmount());
-        $this->assertEquals(0, $sut->getRecordAmount());
-        $this->assertEquals(0, $sut->getRecordDuration());
+        $this->assertDefaultValues(new CustomerStatistic());
     }
 
     public function testSetter()
     {
-        $sut = new CustomerStatistic();
-        $sut->setRecordAmount(7654);
-        $sut->setRecordDuration(826);
-        $sut->setActivityAmount(13);
-        $sut->setProjectAmount(2);
+        $this->assertSetter(new CustomerStatistic());
+    }
 
-        $this->assertEquals(13, $sut->getActivityAmount());
-        $this->assertEquals(2, $sut->getProjectAmount());
-        $this->assertEquals(7654, $sut->getRecordAmount());
-        $this->assertEquals(826, $sut->getRecordDuration());
+    public function testJsonSerialize()
+    {
+        $this->assertJsonSerialize(new CustomerStatistic());
+    }
+
+    public function testAdditionalSetter()
+    {
+        $sut = new CustomerStatistic();
+
+        self::assertEquals(0, $sut->getActivityAmount());
+        $sut->setActivityAmount(13);
+        self::assertEquals(13, $sut->getActivityAmount());
+
+        self::assertEquals(0, $sut->getProjectAmount());
+        $sut->setProjectAmount(2);
+        self::assertEquals(2, $sut->getProjectAmount());
     }
 }

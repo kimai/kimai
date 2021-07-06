@@ -9,7 +9,7 @@
 
 namespace App\Model;
 
-class TimesheetCountedStatistic
+class TimesheetCountedStatistic implements \JsonSerializable
 {
     private $recordAmount = 0;
     private $recordDuration = 0;
@@ -41,6 +41,26 @@ class TimesheetCountedStatistic
     }
 
     /**
+     * For unified access, used in frontend.
+     *
+     * @return int
+     */
+    public function getValue(): int
+    {
+        return $this->recordDuration;
+    }
+
+    /**
+     * For unified access, used in frontend.
+     *
+     * @return int
+     */
+    public function getDuration(): int
+    {
+        return $this->recordDuration;
+    }
+
+    /**
      * Returns the total duration of all included timesheet records.
      *
      * @return int
@@ -59,6 +79,16 @@ class TimesheetCountedStatistic
         $this->recordDuration = (int) $recordDuration;
 
         return $this;
+    }
+
+    /**
+     * For unified access, used in frontend.
+     *
+     * @return float
+     */
+    public function getRate(): float
+    {
+        return $this->recordRate;
     }
 
     /**
@@ -131,5 +161,18 @@ class TimesheetCountedStatistic
     public function setRateBillable(float $recordRate): void
     {
         $this->recordRateBillable = $recordRate;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'duration' => $this->recordDuration,
+            'duration_billable' => $this->recordDurationBillable,
+            'rate' => $this->recordRate,
+            'rate_billable' => $this->recordRateBillable,
+            'rate_internal' => $this->recordInternalRate,
+            'amount' => $this->recordAmount,
+            'amount_billable' => $this->recordAmountBillable,
+        ];
     }
 }

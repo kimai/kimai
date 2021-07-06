@@ -51,12 +51,9 @@ trait ColorTrait
 
     /**
      * @param string $color
-     * @return self
      */
-    public function setColor(?string $color = null)
+    public function setColor(?string $color = null): void
     {
         $this->color = $color;
-
-        return $this;
     }
 }

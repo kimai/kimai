@@ -45,7 +45,7 @@
                     </td>
                 {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                    {{ widgets.label_color_dot('tag', true, tag.name, null, tag.color|default('#00a65a')) }}
+                    {{ widgets.label_name(tag.name, tag.color) }}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }}">{{ widgets.label(tag.amount, type) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">

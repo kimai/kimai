@@ -22,7 +22,7 @@ class RuntimeExtensionsTest extends TestCase
 {
     public function testGetFilters()
     {
-        $expected = ['md2html', 'desc2html', 'comment2html', 'comment1line'];
+        $expected = ['md2html', 'desc2html', 'comment2html', 'comment1line', 'colorize'];
         $i = 0;
 
         $sut = new RuntimeExtensions();

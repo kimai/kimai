@@ -33,7 +33,7 @@
                     {% set usersTotalDuration = 0 %}
                     <tr class="user">
                         <td class="text-nowrap">
-                            <strong>{{ widgets.username(userDay.user) }}</strong>
+                            {{ widgets.label_dot(userDay.user.displayName, userDay.user.color) }}
                         </td>
                         {% for day in userDay.days %}
                             {% if day.totalDuration > 0 %}

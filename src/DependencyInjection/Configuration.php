@@ -475,6 +475,12 @@ class Configuration implements ConfigurationInterface
                 ->integerNode('autocomplete_chars')
                     ->defaultValue(3)
                 ->end()
+                ->booleanNode('random_colors')
+                    ->defaultTrue()
+                ->end()
+                ->booleanNode('avatar_url')
+                    ->defaultFalse()
+                ->end()
             ->end()
         ;
 
