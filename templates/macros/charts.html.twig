@@ -4,12 +4,13 @@
 {# ------------------------------------------------------------------------------ #}
 
 {#
-    options = {'label': 'label', 'title': string|null, 'footer': string|null}
+    options = {'label': 'label', 'title': string|null, 'footer': string|null, 'legend': false}
 #}
 {% macro doughnut_javascript(options) %}
     <script type="text/javascript">
         function doughnutChartOptions() {
             return {
+                legend: {% if options.legend is defined %}{{ options.legend }}{% else %}false{% endif %},
                 maintainAspectRatio: true,
                 responsive: true,
                 cutoutPercentage: 40,
@@ -51,6 +52,7 @@
 
 {#
     id          = 'name'
+    labels      = ['Foo', 'Bar']
     dataset     = [{name: '', color: '', duration: 0, rate: 0}]
     options     = {'height: '100px', 'renderEvent': 'kimai.initialized'}
 #}
@@ -66,7 +68,9 @@
                 $("#{{ id }}").get(0).getContext("2d"), {
                     type: 'doughnut',
                     data: {
+                        {% if labels is not empty %}
                         labels: {{ labels|json_encode|raw }},
+                        {% endif %}
                         datasets: [
                             {
                                 backgroundColor: [
@@ -96,13 +100,13 @@
 {# ------------------------------------------------------------------- #}
 
 {#
-    options = {'label': 'label', 'title': string|null, 'footer': string|null, 'onclick': {'url': string, 'replacer': {'name': 'value'}}}
+    options = {'label': 'label', 'title': string|null, 'footer': string|null, 'legend': false, 'onclick': {'url': string, 'replacer': {'name': 'value'}}}
 #}
 {% macro bar_javascript(options) %}
     <script type="text/javascript">
         function barChartOptions() {
             return {
-                legend: false,
+                legend: {% if options.legend is defined %}{{ options.legend }}{% else %}false{% endif %},
                 maintainAspectRatio: true,
                 responsive: true,
                 barPercentage: 0.5,
@@ -174,6 +178,7 @@
 {% endmacro %}
 
 {#
+    id          = 'name'
     labels      = ['Foo', 'Bar']
     datasets    = [[{'value': 1234, 'tooltip': '1234€', 'color': ''}]]
     options     = {'height: '100px', 'renderEvent': 'kimai.initialized'}
@@ -190,7 +195,9 @@
                 document.getElementById('{{ id }}').getContext("2d"), {
                     type: '{{ options.type|default('bar') }}',
                     data: {
+                        {% if labels is not empty %}
                         labels: {{ labels|json_encode|raw }},
+                        {% endif %}
                         datasets: [
                             {% for dataset in datasets %}
                             {
