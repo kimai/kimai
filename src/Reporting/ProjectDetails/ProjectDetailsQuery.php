@@ -24,7 +24,7 @@ final class ProjectDetailsQuery
      */
     private $today;
     /**
-     * @var User|null
+     * @var User
      */
     private $user;
 
@@ -34,7 +34,12 @@ final class ProjectDetailsQuery
         $this->user = $user;
     }
 
-    public function getUser(): ?User
+    public function getToday(): DateTime
+    {
+        return $this->today;
+    }
+
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -47,10 +52,5 @@ final class ProjectDetailsQuery
     public function setProject(?Project $project): void
     {
         $this->project = $project;
-    }
-
-    public function getToday(): DateTime
-    {
-        return $this->today;
     }
 }

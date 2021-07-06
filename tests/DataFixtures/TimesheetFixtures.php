@@ -282,6 +282,7 @@ final class TimesheetFixtures implements TestFixture
         for ($i = 0; $i < $this->running; $i++) {
             $activity = $activities[array_rand($activities)];
             $project = $activity->getProject();
+            $user = $users[array_rand($users)];
 
             if (null === $project) {
                 $project = $projects[array_rand($projects)];
@@ -382,7 +383,7 @@ final class TimesheetFixtures implements TestFixture
     private function getAllUsers(ObjectManager $manager): array
     {
         $all = [];
-        /** @var Project[] $entries */
+        /** @var User[] $entries */
         $entries = $manager->getRepository(User::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
