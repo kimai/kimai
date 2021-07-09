@@ -25,7 +25,7 @@ It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Do
 
 ### Requirements
 
-- PHP 7.2.9 or higher ([PHP 8 not yet](https://github.com/kevinpapst/kimai2/pull/2158))
+- PHP 7.2.9 or higher ([PHP 8 support in master](https://github.com/kevinpapst/kimai2/pull/2158))
 - MariaDB or MySQL
 - Webserver (nginx, Apache)
 - Some PHP extensions, see [composer.json](composer.json) or [here](https://www.kimai.org/download/)
@@ -38,6 +38,9 @@ with many advanced features, including but not limited to:
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
 authentication via SAML/LDAP/Database, customizable role and team permissions, responsive and ready for your mobile device, 
 user specific rates, advanced search & filtering, money and time budgets, multiple reports, support for plugins and many more.
+
+Kimai 2 is based on modern frameworks like [Symfony](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
+[AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json).
 
 ## Installation
 
@@ -65,14 +68,22 @@ It is open for changes and input from the community, your [ideas and questions](
 > You can upgrade Kimai at any time, you don't need to wait for the next official release.
 > The master branch is always deployable, release tags are only snapshots of the current development version.
 
-Release versions will be created on a regular base (approx. one release every 4-8 weeks).
+Release versions will be created on a regular base (approx. one release every 2 months).
 Every code change, whether it's a new feature or a bugfix, will be done on the master branch. 
 Kimai is actively developed in my spare time, I put my effort into the software instead of backporting changes.
 
-## Credits
+## Contributing
 
-Kimai 2 is developed with modern frameworks like 
-[Symfony v4](https://github.com/symfony/symfony), 
-[Doctrine](https://github.com/doctrine/),
-[AdminLTEBundle](https://github.com/kevinpapst/AdminLTEBundle/) (based on [AdminLTE theme](https://github.com/almasaeed2010/AdminLTE)) and 
-[many](composer.json) [more](package.json).
+You want to contribute to this repository? This is so great!
+The best way to start is to [open a new issue](https://github.com/kevinpapst/kimai2/issues) for bugs or feature requests or a [discussion](https://github.com/kevinpapst/kimai2/discussions) for questions, support and such.
+
+In case you want to contribute, but you wouldn't know how, here are some suggestions:
+
+- Spread the word: More user means more people testing and contributing to Kimai - which in turn means better stability and more and better features. Please vote for Kimai on platforms lie Slant, Product Hunt, Softpedia or AlternativeTo, you can tweet about it, share it on LinkedIn, reddit or any of your favorite social media platforms. Every little bit helps!
+- Answer questions: You know the answer to another user's problem? Share your knowledge!
+- Make a feature request: Something can be done better? Something essential missing? Let us know!
+- Report bugs
+- Contribute: You don't have to be programmer to help. The documentation and translation could use some love as well.
+- Sponsor the project
+
+There is one simple rule in our "Code of conduct": Don't be an ass! 
