@@ -18,7 +18,7 @@
             {% endif %}
         {% endblock %}
         {% block box_title %}
-            {{ widgets.label_project(project) }}
+            {{ widgets.label_name(project.name, project.color) }}
         {% endblock %}
         {% block box_body_class %}no-padding{% endblock %}
         {% block box_body %}
