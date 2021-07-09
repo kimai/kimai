@@ -984,7 +984,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Es wurden noch keine Gebühren hinterlegt.</target>
+        <target>Es wurden noch keine Stundensätze hinterlegt.</target>
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>

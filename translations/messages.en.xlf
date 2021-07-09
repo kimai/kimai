@@ -102,7 +102,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>No fees have been configured yet.</target>
+        <target>No hourly rates have yet been configured.</target>
       </trans-unit>
       <trans-unit id="rates.title">
         <source>rates.title</source>
