@@ -189,9 +189,6 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/activity/' . $id . '/edit');
         $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('An AcTiVitY Name', $editForm->get('activity_edit_form[name]')->getValue());
-        // make sure customer and project are pre-selected for none global activities
-        $this->assertEquals('1', $editForm->get('activity_edit_form[project]')->getValue());
-        $this->assertEquals('1', $editForm->get('activity_edit_form[customer]')->getValue());
     }
 
     public function testCreateActionShowsMetaFields()
@@ -213,15 +210,13 @@ class ActivityControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
         $client->submit($form, [
-            'activity_edit_form' => ['name' => 'Test 2', 'customer' => 1, 'project' => '1']
+            'activity_edit_form' => ['name' => 'Test 2']
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
         $client->followRedirect();
         $this->request($client, '/admin/activity/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
-        $this->assertEquals('1', $editForm->get('activity_edit_form[customer]')->getValue());
-        $this->assertEquals('1', $editForm->get('activity_edit_form[project]')->getValue());
     }
 
     public function testEditActionForGlobalActivity()
