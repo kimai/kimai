@@ -260,7 +260,6 @@
 
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs pull-right">
-
             <li><a data-chart="{{ chartPrefix }}User" href="#user-chart" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
             <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
             {% if view_revenue_tab %}
@@ -268,14 +267,14 @@
             {% endif %}
             <li><a data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
             <li class="active"><a href="#details-chart" data-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
-            <li class="pull-left header">
+            <li class="pull-left header hidden-xs">
                 {{ widgets.label_project(project, {'inherit': false}) }}
             </li>
         </ul>
         <div class="tab-content no-padding">
             <div class="chart tab-pane active" id="details-chart">
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-12 col-md-6">
                         <table class="table table-hover dataTable">
                             <tr {{ widgets.customer_row_attr(entry.project.customer) }}>
                                 <th class="w-min">
@@ -287,31 +286,19 @@
                             </tr>
                             <tr>
                                 <th class="w-min">
-                                    {{ 'stats.durationToday'|trans }}
-                                </th>
-                                <td>{{ entry.durationDay|duration }}</td>
-                            </tr>
-                            <tr>
-                                <th class="w-min">
-                                    {{ 'stats.durationWeek'|trans }}
-                                </th>
-                                <td>{{ entry.durationWeek|duration }}</td>
-                            </tr>
-                            <tr>
-                                <th class="w-min">
-                                    {{ 'stats.durationMonth'|trans }}
-                                </th>
-                                <td>{{ entry.durationMonth|duration }}</td>
-                            </tr>
-                            <tr>
-                                <th class="w-min">
                                     {{ 'stats.durationTotal'|trans }}
                                 </th>
                                 <td>{{ entry.durationTotal|duration }}</td>
                             </tr>
+                            <tr>
+                                <th class="w-min">
+                                    {{ 'stats.amountTotal'|trans }}
+                                </th>
+                                <td>{{ entry.rateTotal|money(currency) }}</td>
+                            </tr>
                         </table>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-12 col-md-6">
                         <table class="table table-hover dataTable">
                             <tr>
                                 <th class="w-min">
@@ -353,26 +340,6 @@
                                     {% endif %}
                                 </td>
                             </tr>
-                            {% if project.start is not null %}
-                                <tr>
-                                    <th class="w-min">
-                                        {{ 'label.project_start'|trans }}
-                                    </th>
-                                    <td>
-                                        {{ project.start|date_short }}
-                                    </td>
-                                </tr>
-                            {% endif %}
-                            {% if project.end is not null %}
-                                <tr>
-                                    <th class="w-min">
-                                        {{ 'label.project_end'|trans }}
-                                    </th>
-                                    <td>
-                                        {{ project.end|date_short }}
-                                    </td>
-                                </tr>
-                            {% endif %}
                         </table>
                     </div>
                 </div>

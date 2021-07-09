@@ -2,7 +2,7 @@
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_attributes %}id="{{ id }}"{% endblock %}
     {% block box_title %}
-        {{ 'rates.title'|trans }}
+        {{ 'label.hourlyRate'|trans }}
     {% endblock %}
     {% block box_tools %}
         <a class="modal-ajax-form open-edit btn btn-default btn-sm" data-href="{{ create_url }}" data-toggle="tooltip" data-placement="top" title="{{ 'create'|trans }}"><i class="{{ 'create'|icon }}"></i></a>

@@ -291,7 +291,6 @@ class ActivityControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'comment' => '',
-            'project' => 1,
             'visible' => true,
             'budget' => '999',
             'timeBudget' => '7200',
@@ -332,15 +331,14 @@ class ActivityControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
-            'name' => 'foo',
-            'project' => 255,
-            'visible' => true
+            'name' => 'foofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoo',
+            'visible' => false
         ];
         $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
 
         $response = $client->getResponse();
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertApiCallValidationError($response, ['project']);
+        $this->assertApiCallValidationError($response, ['name']);
     }
 
     public function testMetaActionThrowsNotFound()
