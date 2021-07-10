@@ -100,7 +100,7 @@
             }
             return {
                 id: apiItem.id,
-                title: apiItem.activity.name,
+                title: apiItem.project.name + '\n' + apiItem.activity.name,
                 description: apiItem.description,
                 start: apiItem.begin,
                 end: apiItem.end,
@@ -238,7 +238,7 @@
                     end: '{{ config.businessTimeEnd }}'
                 },
                 slotDuration: '{{ config.slotDuration }}',
-                slotLabelInterval: '{{ config.slotDuration }}',
+                slotLabelInterval: '00:60:00',
                 minTime: '{{ config.timeframeBegin }}',
                 maxTime: '{{ config.timeframeEnd }}',
                 defaultTimedEventDuration: '{{ config.slotDuration }}',  {# how long should entries look like when they don't have an end #}

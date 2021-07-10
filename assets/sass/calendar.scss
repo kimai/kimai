@@ -18,6 +18,15 @@
     }
 
     .title {
+        padding: 0px 0 5px 10px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 0.7em;
+    }
+
+    .projecttitle {
         padding: 5px 0 5px 10px;
         display: block;
         overflow: hidden;
@@ -30,20 +39,29 @@
         white-space: nowrap;
         padding: 5px 7px;
         border-left: 1px solid;
+        line-height: 36px;
     }
 }
 
 
 .fc-bootstrap3 {
-    .table-bordered > tbody > tr > td,
-    .table-bordered > thead > tr > td,
-    .table-bordered > thead > tr > th {
-        border: 1px solid #ddd;
-    }
     .fc-head {
         background-color: #fafafa;
     }
     td.fc-today {
         background-color: #fcf8e3!important;
+    }
+}
+
+.table-bordered{
+    border: 1px solid #ddd;
+
+    tbody>tr>td,
+    tbody>tr>th,
+    tfoot>tr>td,
+    tfoot>tr>th,
+    thead>tr>td,
+    thead>tr>th {
+        border: 1px solid #ddd;
     }
 }

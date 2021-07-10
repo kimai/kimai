@@ -9,5 +9,6 @@
     {% if activity is not null %}
         <span class="pull-right info-icon" data-toggle="tooltip" data-placement="top" title="{{ activity }}">{{ widgets.icon('activity') }}</span>
     {% endif %}
+    <span class="projecttitle">{{ project }}</span>
     <span class="title">{{ title }}</span>
 {% endmacro %}

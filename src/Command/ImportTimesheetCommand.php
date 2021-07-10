@@ -560,7 +560,6 @@ class ImportTimesheetCommand extends Command
             }
         }
 
-        //if (null === $this->customerFallback) {
         $tmpFallback = null;
 
         if (!empty($fallback)) {
@@ -594,7 +593,6 @@ class ImportTimesheetCommand extends Command
         }
 
         $this->customerFallback = $tmpFallback;
-        //}
 
         return $this->customerFallback;
     }
