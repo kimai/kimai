@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Form\Type\AvatarType;
 use App\Form\Type\LanguageType;
@@ -25,6 +26,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserEditType extends AbstractType
 {
+    use ColorTrait;
+
+    private $configuration;
+
+    public function __construct(SystemConfiguration $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -39,9 +49,17 @@ class UserEditType extends AbstractType
                 'label' => 'label.title',
                 'required' => false,
             ])
-            ->add('avatar', AvatarType::class, [
+        ;
+
+        if ($this->configuration->isThemeAllowAvatarUrls()) {
+            $builder->add('avatar', AvatarType::class, [
                 'required' => false,
-            ])
+            ]);
+        }
+
+        $this->addColor($builder);
+
+        $builder
             ->add('email', EmailType::class, [
                 'label' => 'label.email',
             ])

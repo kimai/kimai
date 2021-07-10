@@ -9,28 +9,51 @@
 
 namespace App\Tests\Model;
 
+use App\Entity\Activity;
 use App\Model\ActivityStatistic;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Model\ActivityStatistic
  */
-class ActivityStatisticTest extends TestCase
+class ActivityStatisticTest extends AbstractTimesheetCountedStatisticTest
 {
     public function testDefaultValues()
     {
-        $sut = new ActivityStatistic();
-        $this->assertEquals(0, $sut->getRecordAmount());
-        $this->assertEquals(0, $sut->getRecordDuration());
+        $this->assertDefaultValues(new ActivityStatistic());
     }
 
     public function testSetter()
     {
-        $sut = new ActivityStatistic();
-        $sut->setRecordAmount(7654);
-        $sut->setRecordDuration(826);
+        $this->assertSetter(new ActivityStatistic());
+    }
 
-        $this->assertEquals(7654, $sut->getRecordAmount());
-        $this->assertEquals(826, $sut->getRecordDuration());
+    public function testJsonSerialize()
+    {
+        $this->assertJsonSerialize(new ActivityStatistic());
+    }
+
+    public function testAdditionalSetter()
+    {
+        $sut = new ActivityStatistic();
+        self::assertNull($sut->getActivity());
+        self::assertNull($sut->getColor());
+        self::assertNull($sut->getName());
+
+        $activity = new Activity();
+        $sut->setActivity($activity);
+        $this->assertEquals($activity, $sut->getActivity());
+
+        self::assertNull($sut->getColor());
+        self::assertNull($sut->getName());
+
+        $activity->setName('FOO');
+        self::assertEquals('FOO', $sut->getName());
+
+        $activity->setColor('#000000');
+        self::assertEquals('#000000', $sut->getColor());
+
+        $json = $sut->jsonSerialize();
+        self::assertEquals('FOO', $json['name']);
+        self::assertEquals('#000000', $json['color']);
     }
 }

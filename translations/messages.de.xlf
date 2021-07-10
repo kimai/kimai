@@ -102,7 +102,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Es wurden noch keine Gebühren hinterlegt.</target>
+        <target>Es wurden noch keine Stundensätze hinterlegt.</target>
       </trans-unit>
       <trans-unit id="rates.title">
         <source>rates.title</source>
@@ -822,6 +822,14 @@
       <trans-unit id="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
         <target>Geschäftsjahr</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Arbeitszeit</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Einnahmen</target>
       </trans-unit>
       <trans-unit id="stats.durationToday">
         <source>stats.durationToday</source>

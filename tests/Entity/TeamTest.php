@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Constants;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -36,6 +37,21 @@ class TeamTest extends TestCase
         self::assertEquals(0, $sut->getProjects()->count());
         self::assertInstanceOf(Collection::class, $sut->getActivities());
         self::assertEquals(0, $sut->getActivities()->count());
+    }
+
+    public function testColor()
+    {
+        $sut = new Team();
+        self::assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
+
+        $sut->setColor(Constants::DEFAULT_COLOR);
+        self::assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
+
+        $sut->setColor('#000000');
+        self::assertEquals('#000000', $sut->getColor());
+        self::assertTrue($sut->hasColor());
     }
 
     public function testSetterAndGetter()

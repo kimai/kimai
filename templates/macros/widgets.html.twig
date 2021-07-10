@@ -63,27 +63,43 @@
 {% endmacro %}
 
 {% macro label_user(user) %}
-    {{ _self.label(user.displayName, 'primary') }}
+    {{ _self.label_color(user.displayName, user.color|colorize(user.displayName)) }}
 {% endmacro %}
 
-{% macro label_team(team, class) %}
-    {{ _self.label(team.name, class|default('primary')) }}
+{% macro label_team(team) %}
+    {{ _self.label_color(team.name, team.color|colorize(team.name)) }}
 {% endmacro %}
 
 {% macro user_avatar(user, tooltip, class) %}
-    {% set avatar = avatar(user, admin_lte_context.default_avatar) %}
-    {% if tooltip is same as (false) %}
-    <img src="{{ avatar }}" class="img-circle{% if class is not empty %} {{ class }}{% endif %}" alt="{{ user.displayName }}" />
+    {% if user.avatar is not empty and kimai_config.themeAllowAvatarUrls %}
+        {% set avatar = asset(user.avatar, 'avatars') %}
+        {% if tooltip is same as (false) %}
+        <img src="{{ avatar }}" class="img-circle{% if class is not empty %} {{ class }}{% endif %}" alt="{{ user.displayName }}" />
+        {% else %}
+        <img src="{{ avatar }}" class="img-circle{% if class is not empty %} {{ class }}{% endif %}" data-toggle="tooltip" data-placement="top" alt="{{ user.displayName }}" title="{{ tooltip|default(user.displayName) }}" />
+        {% endif %}
     {% else %}
-    <img src="{{ avatar }}" class="img-circle{% if class is not empty %} {{ class }}{% endif %}" data-toggle="tooltip" data-placement="top" alt="{{ user.displayName }}" title="{{ tooltip|default(user.displayName) }}" />
+        {% set color = user.color|colorize(user.displayName) %}
+        <span class="avatar {{ class }}" style="background-color: {{ color }}; color: {{ color|font_contrast }}"
+        {%- if tooltip is not same as (false) %} data-toggle="tooltip" data-placement="top" title="{{ tooltip|default(user.displayName) }}"{% endif -%}>
+            <span class="initials">{{ user.initials }}</span>
+        </span>
     {% endif %}
 {% endmacro %}
 
-{% macro label_activity(activity, url) %}
+{#
+    options = {'inherit': true, 'random': false}
+#}
+{% macro label_activity(activity, options) %}
+    {% set inherit = options.inherit ?? true %}
+    {% set random = options.random ?? false %}
     {% set isVisible = activity.visible %}
     {% set color = activity.color %}
-    {% if color is empty and activity.project is not null %}
+    {% if color is empty and inherit and activity.project is not null %}
         {% set color = activity.project.color ?? activity.project.customer.color %}
+    {% endif %}
+    {% if color is empty and random %}
+        {% set color = color|colorize(activity.name) %}
     {% endif %}
     {% if isVisible and not activity.project is null %}
         {% set isVisible = activity.project.visible %}
@@ -91,21 +107,52 @@
             {% set isVisible = activity.project.customer.visible %}
         {% endif %}
     {% endif %}
-    {{ _self.label_color_dot('activity', isVisible, activity.name, url, color) }}
+    {{ _self.label_color_dot('activity', isVisible, activity.name, null, color) }}
 {% endmacro %}
 
-{% macro label_project(project, url) %}
+{#
+    options = {'inherit': true, 'random': false}
+#}
+{% macro label_project(project, options) %}
+    {% set inherit = options.inherit ?? true %}
+    {% set random = options.random ?? false %}
     {% set isVisible = false %}
     {% if project.visible and project.customer.visible %}
         {% set isVisible = true %}
     {% endif %}
-    {{ _self.label_color_dot('project', isVisible, project.name, url, (project.color ?? project.customer.color)) }}
+    {% set color = project.color %}
+    {% if color is empty and inherit %}
+        {% set color = project.customer.color %}
+    {% endif %}
+    {% if color is empty and random %}
+        {% set color = color|colorize(project.name) %}
+    {% endif %}
+    {{ _self.label_color_dot('project', isVisible, project.name, null, color) }}
 {% endmacro %}
 
-{% macro label_customer(customer, url) %}
-    {{ _self.label_color_dot('customer', customer.visible, customer.name, url, customer.color) }}
+{#
+    options = {'random': false}
+#}
+{% macro label_customer(customer, options) %}
+    {% set random = options.random ?? false %}
+    {% set color = customer.color %}
+    {% if color is empty and random %}
+        {% set color = color|colorize(customer.name) %}
+    {% endif %}
+    {{ _self.label_color_dot('customer', customer.visible, customer.name, null, color) }}
 {% endmacro %}
 
+{# Use for list views and the main column (if the entity has something like a name) #}
+{% macro label_name(label, color, isVisible) %}
+    {{ _self.label_color_dot('color', isVisible, label, null, color) }}
+{% endmacro %}
+
+{# Use in datatables to show linked entity names #}
+{% macro label_dot(label, color, isVisible) %}
+    {{ _self.label_color_dot('color', isVisible, label, null, color|colorize(label)) }}
+{% endmacro %}
+
+{# for @internal use only #}
 {% macro label_color_dot(type, isVisible, name, url, color) %}
     <span class="label-{{ type }}{{ isVisible ? '' : ' label-invisible' }}">
         <span class="name">
@@ -142,12 +189,15 @@
 {% endmacro %}
 
 {% macro label(title, type, tooltip) %}
-    {# success, warning, danger, primary #}
     <span {% if tooltip %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="label label-{{ type|default('success') }}">{{ title }}</span>
 {% endmacro %}
 
+{% macro label_color(title, color) %}
+    <span class="label" style="background-color: {{ color|default_color }};color: {{ color|default_color|font_contrast }}">{{ title }}</span>
+{% endmacro %}
+
 {% macro badge(title, color) %}
-    <span class="badge" style="background-color:{{ color }}; color:{{ color|font_contrast }}">{{ title }}</span>
+    <span class="badge"{% if color is not null %} style="background-color:{{ color }}; color:{{ color|font_contrast }}"{% endif %}>{{ title }}</span>
 {% endmacro %}
 
 {% macro alert(type, description, title, icon) %}
@@ -393,25 +443,23 @@
 
 {% macro button_action(icon, url) %}
     <a href="{{ url }}" class="btn btn-default btn-{{ icon }}">
-        {{ macro.icon(icon) }}
+        {{ _self.icon(icon) }}
     </a>
 {% endmacro %}
 
 {% macro tag_list(taglist) %}
-    {% import _self as macro %}
     {% for tag in taglist %}
-        {{ macro.badge(tag.name, tag.color|default('#00a65a')) }}
+        {{ _self.badge(tag.name, tag.color|colorize(tag.name)) }}
     {% endfor %}
 {% endmacro %}
 
 {% macro form_type_value(type, value, entity) %}
-    {% import _self as widgets %}
     {% if '\\ColorPickerType' in type %}
-        {{ widgets.color_dot(value, value) }}
+        {{ _self.color_dot(value, value) }}
     {% elseif '\\DurationType' in type %}
         {{ value|duration }}
     {% elseif '\\YesNoType' in type or '\\CheckBoxType' in type %}
-        {{ widgets.label_boolean(value) }}
+        {{ _self.label_boolean(value) }}
     {% elseif '\\DatePickerType' in type %}
         {{ value|date_short }}
     {% elseif '\\DateTimePickerType' in type %}
@@ -448,11 +496,10 @@
 {% endmacro %}
 
 {% macro team_list(teams, showTitle, collapseAt) %}
-    {% set collapseAt = collapseAt ?? 5 %}
+    {% set collapseAt = collapseAt ?? 12 %}
     {% if showTitle is null %}
         {% set showTitle = true %}
     {% endif %}
-    {% import _self as macro %}
     <table class="table table-hover dataTable" role="grid">
         {% if showTitle %}
         <thead>
@@ -471,15 +518,15 @@
                     {{ team.name }}
                 </td>
                 <td class="avatars">
-                    {{ macro.user_avatar(team.teamlead, ('label.teamlead'|trans ~ ': ' ~ team.teamlead.displayName), 'teamlead') }}
+                    {{ _self.user_avatar(team.teamlead, ('label.teamlead'|trans ~ ': ' ~ team.teamlead.displayName), 'teamlead') }}
                     {% set teamHiddenId = 'team_' ~ team.id ~ '_hiddenUser' ~ random() %}
                     {% set counter = 0  %}
                     {% for user in users %}
                         {% if user != team.teamlead %}
-                            {{ macro.user_avatar(user) }}
+                            {{ _self.user_avatar(user) }}
                             {% set counter = counter + 1 %}
                         {% endif %}
-                        {% if userTeamCount > collapseAt and counter == (collapseAt - 1) and loop.index != userTeamCount %}
+                        {% if userTeamCount > (collapseAt + 1) and counter == (collapseAt - 1) and loop.index != userTeamCount %}
                             <a href="#" onclick="$('#{{ teamHiddenId }}').toggleClass('hidden');$(this).hide();return false;" class="badge">{{ 'label.plus_more'|trans({'%count%': (userTeamCount - collapseAt)}) }}</a>
                             <span class="hidden" id="{{ teamHiddenId }}">
                             {% set counter = counter + 1 %}

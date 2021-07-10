@@ -74,11 +74,11 @@ class CustomerTest extends TestCase
         self::assertEquals('hello world', $sut->getComment());
 
         self::assertFalse($sut->hasColor());
-        self::assertInstanceOf(Customer::class, $sut->setColor('#fffccc'));
+        $sut->setColor('#fffccc');
         self::assertEquals('#fffccc', $sut->getColor());
         self::assertTrue($sut->hasColor());
 
-        self::assertInstanceOf(Customer::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        $sut->setColor(Constants::DEFAULT_COLOR);
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 

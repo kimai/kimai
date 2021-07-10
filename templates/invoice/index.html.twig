@@ -138,7 +138,8 @@
                     {% import "macros/datatables.html.twig" as tables %}
                     {% block box_title %}
                         <span id="invoice_preview_details_{{ customer.id }}">{{ widgets.label_customer(customer) }}</span>
-                        <small>{{ 'label.duration'|trans }}: {{ model.calculator.timeWorked|duration() }}, {{ 'label.total_rate'|trans }}: {{ model.calculator.total|money(currency) }}</small>
+                        {{ widgets.label(model.calculator.timeWorked|duration, 'gray') }}
+                        {{ widgets.label(model.calculator.total|money(currency), 'gray') }}
                     {% endblock %}
                     {% block box_body_class %}invoice-preview-box no-padding{% endblock %}
                     {% block box_body %}

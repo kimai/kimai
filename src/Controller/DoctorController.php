@@ -43,7 +43,6 @@ class DoctorController extends AbstractController
         'var/data/',
         'var/log/',
         'var/sessions/',
-        'public/avatars/',
     ];
 
     /**

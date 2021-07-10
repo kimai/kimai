@@ -233,7 +233,11 @@ final class TimesheetFixtures implements TestFixture
         }
 
         $faker = Factory::create();
-        $user = $this->user;
+
+        $users = [$this->user];
+        if ($this->user === null) {
+            $users = $this->getAllUsers($manager);
+        }
 
         $tags = $this->getTagObjectList();
         foreach ($tags as $tag) {
@@ -251,6 +255,7 @@ final class TimesheetFixtures implements TestFixture
                 }
             }
 
+            $user = $users[array_rand($users)];
             $activity = $activities[array_rand($activities)];
             $project = $activity->getProject();
 
@@ -277,6 +282,7 @@ final class TimesheetFixtures implements TestFixture
         for ($i = 0; $i < $this->running; $i++) {
             $activity = $activities[array_rand($activities)];
             $project = $activity->getProject();
+            $user = $users[array_rand($users)];
 
             if (null === $project) {
                 $project = $projects[array_rand($projects)];
@@ -363,6 +369,22 @@ final class TimesheetFixtures implements TestFixture
         $all = [];
         /** @var Project[] $entries */
         $entries = $manager->getRepository(Project::class)->findAll();
+        foreach ($entries as $temp) {
+            $all[$temp->getId()] = $temp;
+        }
+
+        return $all;
+    }
+
+    /**
+     * @param ObjectManager $manager
+     * @return array<int|string, User>
+     */
+    private function getAllUsers(ObjectManager $manager): array
+    {
+        $all = [];
+        /** @var User[] $entries */
+        $entries = $manager->getRepository(User::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }
