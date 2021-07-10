@@ -22,7 +22,6 @@ use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -78,14 +77,10 @@ final class UserController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_user');
         }
 
-        /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->getPagerfantaForQuery($query);
 
         $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::USERS);
@@ -144,13 +139,10 @@ final class UserController extends AbstractController
             $editForm->get('create_more')->setData(true);
         }
 
-        return $this->render(
-            'user/edit.html.twig',
-            [
-                'user' => $user,
-                'form' => $editForm->createView()
-            ]
-        );
+        return $this->render('user/create.html.twig', [
+            'user' => $user,
+            'form' => $editForm->createView()
+        ]);
     }
 
     /**

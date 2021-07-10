@@ -207,11 +207,12 @@ class Project implements EntityWithMetaFields
      * @ Exporter\Expose(label="label.budget")
      *
      * @ORM\Column(name="budget", type="float", nullable=false)
+     * @Assert\Range(min=0.00, max=900000000000.00)
      * @Assert\NotNull()
      */
     private $budget = 0.00;
     /**
-     * The time budget in seconds, will be be zero if not configured.
+     * The time budget in seconds, will be zero if not configured.
      *
      * @var int
      *
@@ -221,6 +222,7 @@ class Project implements EntityWithMetaFields
      * @ Exporter\Expose(label="label.timeBudget", type="duration")
      *
      * @ORM\Column(name="time_budget", type="integer", nullable=false)
+     * @Assert\Range(min=0, max=2145600000)
      * @Assert\NotNull()
      */
     private $timeBudget = 0;
@@ -432,6 +434,11 @@ class Project implements EntityWithMetaFields
         return $this->budget;
     }
 
+    public function hasBudget(): bool
+    {
+        return $this->budget > 0.00;
+    }
+
     public function setTimeBudget(int $seconds): Project
     {
         $this->timeBudget = $seconds;
@@ -442,6 +449,11 @@ class Project implements EntityWithMetaFields
     public function getTimeBudget(): int
     {
         return $this->timeBudget;
+    }
+
+    public function hasTimeBudget(): bool
+    {
+        return $this->timeBudget > 0;
     }
 
     /**
@@ -519,6 +531,21 @@ class Project implements EntityWithMetaFields
         return $this->teams;
     }
 
+    public function isVisibleAtDate(\DateTime $dateTime): bool
+    {
+        if (!$this->isVisible()) {
+            return false;
+        }
+        if ($this->getCustomer() !== null && !$this->getCustomer()->isVisible()) {
+            return false;
+        }
+        if ($this->getEnd() !== null && $dateTime > $this->getEnd()) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * @return string
      */
@@ -531,8 +558,22 @@ class Project implements EntityWithMetaFields
     {
         if ($this->id) {
             $this->id = null;
-            $this->teams = new ArrayCollection();
-            $this->meta = new ArrayCollection();
+        }
+
+        $currentTeams = $this->teams;
+        $this->teams = new ArrayCollection();
+        /** @var Team $team */
+        foreach ($currentTeams as $team) {
+            $this->addTeam($team);
+        }
+
+        $currentMeta = $this->meta;
+        $this->meta = new ArrayCollection();
+        /** @var ProjectMeta $meta */
+        foreach ($currentMeta as $meta) {
+            $newMeta = clone $meta;
+            $newMeta->setEntity($this);
+            $this->setMetaField($newMeta);
         }
     }
 }

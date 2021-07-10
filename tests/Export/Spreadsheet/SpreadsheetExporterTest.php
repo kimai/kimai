@@ -62,8 +62,8 @@ class SpreadsheetExporterTest extends TestCase
 
         $worksheet = $spreadsheet->getActiveSheet();
 
-        self::assertEquals('##test project##', $worksheet->getCellByColumnAndRow(1, 2, false)->getValue());
-        self::assertEquals('~test project~', $worksheet->getCellByColumnAndRow(2, 2, false)->getValue());
-        self::assertFalse($worksheet->getCellByColumnAndRow(3, 2, false)->getValue());
+        self::assertEquals('##test project##', $worksheet->getCellByColumnAndRow(1, 2)->getValue());
+        self::assertEquals('~test project~', $worksheet->getCellByColumnAndRow(2, 2)->getValue());
+        self::assertFalse($worksheet->getCellByColumnAndRow(3, 2)->getValue());
     }
 }

@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: ar|cs|de|de_CH|da|en|eo|es|eu|fi|fr|he|hu|it|ja|ko|nl|pl|pt_BR|ro|ru|sk|sv|tr|vi|zh_CN
+    app_locales: ar|cs|da|de|de_AT|de_CH|el|en|eo|es|eu|fi|fo|fr|he|hu|it|ja|ko|nl|pl|pt|pt_BR|ro|ru|sk|sv|tr|vi|zh_CN
 
 services:
     # default configuration for services in *this* file
@@ -20,7 +20,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Event,Migrations,Tests,Kernel.php,Constants.php}'
+        exclude: '../src/{DependencyInjection,Entity,Event,Migrations,Model,Tests,Kernel.php,Constants.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -31,6 +31,9 @@ services:
     # ================================================================================
     # APPLICATION CORE
     # ================================================================================
+
+    security.user.provider.chain:
+        class: App\Security\KimaiUserProvider
 
     App\EventSubscriber\RedirectToLocaleSubscriber:
         arguments: ['@router', '%app_locales%', '%locale%']
@@ -52,13 +55,6 @@ services:
     App\Configuration\SystemConfiguration:
         arguments:
             $settings: '%kimai.config%'
-
-    App\Configuration\ThemeConfiguration:
-        arguments:
-            $settings: '%kimai.theme%'
-
-    App\Configuration\LdapConfiguration:
-        arguments: ['%kimai.ldap%']
 
     App\Utils\MPdfConverter:
         arguments: ['%kernel.cache_dir%']
@@ -104,12 +100,6 @@ services:
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
 
-    # make sure, that sqlite supports foreign keys and cascade deletes
-    App\Doctrine\SqliteSessionInitSubscriber:
-        class: App\Doctrine\SqliteSessionInitSubscriber
-        tags:
-            - { name: doctrine.event_listener, event: postConnect }
-
     # store and retrieve sessions in and from database
     App\Security\SessionHandler:
         arguments:
@@ -138,7 +128,7 @@ services:
             $roundingModes: !tagged timesheet.rounding_mode
             $rules: '%kimai.timesheet.rounding%'
 
-    App\Timesheet\Calculator\RateCalculator:
+    App\Timesheet\RateService:
         arguments: ['%kimai.timesheet.rates%']
 
     App\Timesheet\TrackingModeService:
@@ -169,57 +159,57 @@ services:
     # ================================================================================
 
     App\Repository\TimesheetRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\TimesheetRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Timesheet']
 
     App\Repository\UserRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\UserRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\User']
 
     App\Repository\TeamRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\TeamRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Team']
 
     App\Repository\ActivityRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\ActivityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Activity']
 
     App\Repository\ProjectRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\ProjectRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Project']
 
     App\Repository\TagRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\TagRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Tag']
 
     App\Repository\CustomerRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\CustomerRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Customer']
 
     App\Repository\InvoiceTemplateRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\InvoiceTemplateRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\InvoiceTemplate']
 
     App\Repository\ConfigurationRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\ConfigurationRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Configuration']
 
     App\Repository\RoleRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\RoleRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Role']
 
     App\Repository\RolePermissionRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\RolePermissionRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\RolePermission']
     
@@ -228,21 +218,26 @@ services:
         arguments: ['%kimai.invoice.documents%']
 
     App\Repository\CustomerRateRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\CustomerRateRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\CustomerRate']
 
     App\Repository\ActivityRateRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\ActivityRateRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\ActivityRate']
 
     App\Repository\ProjectRateRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\ProjectRateRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\ProjectRate']
 
     App\Repository\InvoiceRepository:
-        class:     Doctrine\ORM\EntityRepository
+        class:     App\Repository\InvoiceRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Invoice']
+
+    App\Repository\BookmarkRepository:
+        class:     App\Repository\BookmarkRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Bookmark']

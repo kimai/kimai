@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 /**
  * A voter to check permissions on user profiles.
  */
-class UserVoter extends Voter
+final class UserVoter extends Voter
 {
     private const ALLOWED_ATTRIBUTES = [
         'view',

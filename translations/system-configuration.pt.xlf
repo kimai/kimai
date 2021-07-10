@@ -62,10 +62,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Quantidade permitida de entradas de tempo de execução simultâneas</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Quantidade de entradas de tempo de execução a partir das quais um aviso é exibido</target>
-      </trans-unit>
       <trans-unit id="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target>Mostrar números de semanas</target>
@@ -89,6 +85,142 @@
       <trans-unit id="label.calendar.visibleHours.end">
         <source>label.calendar.visibleHours.end</source>
         <target>Fim do intervalo de tempo visível</target>
+      </trans-unit>
+      <trans-unit id="first_weekday">
+        <source>first_weekday</source>
+        <target>Primeiro dia da semana</target>
+      </trans-unit>
+      <trans-unit id="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target>Formato de número de fatura</target>
+      </trans-unit>
+      <trans-unit id="label.simple_form">
+        <source>label.simple_form</source>
+        <target>Pesquisa simples</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>Tempo de partida padrão (não usado em todos os modos de rastreamento de tempo)</target>
+      </trans-unit>
+      <trans-unit id="Floor">
+        <source>Floor</source>
+        <target>Piso: início, fim e duração serão arredondados para baixo</target>
+      </trans-unit>
+      <trans-unit id="Default">
+        <source>Default</source>
+        <target>Padrão: o início será arredondado para baixo, fim e duração para cima</target>
+      </trans-unit>
+      <trans-unit id="Closest">
+        <source>Closest</source>
+        <target>Mais próximo: arredondamento matemático ao valor mais próximo</target>
+      </trans-unit>
+      <trans-unit id="Ceil">
+        <source>Ceil</source>
+        <target>Ceil: início, fim e duração serão arredondados</target>
+      </trans-unit>
+      <trans-unit id="Sunday">
+        <source>Sunday</source>
+        <target>Domingo</target>
+      </trans-unit>
+      <trans-unit id="Saturday">
+        <source>Saturday</source>
+        <target>Sábado</target>
+      </trans-unit>
+      <trans-unit id="Friday">
+        <source>Friday</source>
+        <target>Sexta</target>
+      </trans-unit>
+      <trans-unit id="Thursday">
+        <source>Thursday</source>
+        <target>Quinta</target>
+      </trans-unit>
+      <trans-unit id="Wednesday">
+        <source>Wednesday</source>
+        <target>Quarta</target>
+      </trans-unit>
+      <trans-unit id="Tuesday">
+        <source>Tuesday</source>
+        <target>Terça</target>
+      </trans-unit>
+      <trans-unit id="Monday">
+        <source>Monday</source>
+        <target>Segunda</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target>Dias da semana em que o arredondamento será aplicado</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target>Modo de arredondamento</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target>Arredondamento da duração em minutos (0 = desativado)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>Arredondamento do tempo final em minutos (0 = desativado)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target>Arredondamento do tempo de início em minutos (0 = desativado)</target>
+      </trans-unit>
+      <trans-unit id="rounding">
+        <source>rounding</source>
+        <target>Arredondamento do tempo</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target>Título do navegador</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target>Mini Logotipo (barra lateral colapsada)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.company">
+        <source>label.theme.branding.company</source>
+        <target>Empresa</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target>Logotipo (URL de imagem, substitui a empresa no ecrã de login)</target>
+      </trans-unit>
+      <trans-unit id="branding">
+        <source>branding</source>
+        <target>Marca</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>Duração do slot para a exibição da semana e do dia (formato: hh:mm:ss)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target>Quantidade mínima de letras para iniciar a conclusão automática</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target>Fim do período de carência de bloqueio (data relativa PHP ao fim do período de bloqueio)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target>Fim do período de bloqueio (data relativa PHP até agora)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target>Início do período de bloqueio (data relativa PHP até agora)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+        <source>label.timesheet.rules.allow_overlapping_records</source>
+        <target>Permitir entradas de tempo sobrepostas</target>
+      </trans-unit>
+      <trans-unit id="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target>Tags: use pesquisa completa automática e permita a criação de tags</target>
+      </trans-unit>
+      <trans-unit id="invoice">
+        <source>invoice</source>
+        <target>Faturas</target>
       </trans-unit>
     </body>
   </file>

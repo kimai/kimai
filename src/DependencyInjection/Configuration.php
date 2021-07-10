@@ -61,6 +61,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getLanguagesNode())
                 ->append($this->getCalendarNode())
                 ->append($this->getThemeNode())
+                ->append($this->getCompanyNode())
                 ->append($this->getIndustryNode())
                 ->append($this->getDashboardNode())
                 ->append($this->getWidgetsNode())
@@ -198,6 +199,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->integerNode('soft_limit')
                             ->defaultValue(1)
+                            ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "kimai.timesheet.active_entries.hard_limit" instead.')
                             ->validate()
                                 ->ifTrue(function ($value) {
                                     return $value <= 0;
@@ -222,6 +224,9 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('allow_future_times')
                             ->defaultTrue()
                         ->end()
+                        ->booleanNode('allow_overbooking_budget')
+                            ->defaultTrue()
+                        ->end()
                         ->booleanNode('allow_overlapping_records')
                             ->defaultTrue()
                         ->end()
@@ -231,8 +236,20 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('lockdown_period_end')
                             ->defaultNull()
                         ->end()
+                        ->scalarNode('lockdown_period_timezone')
+                            ->defaultNull()
+                        ->end()
                         ->scalarNode('lockdown_grace_period')
                             ->defaultNull()
+                        ->end()
+                        ->scalarNode('lockdown_grace_period')
+                            ->defaultNull()
+                        ->end()
+                        ->integerNode('break_warning_duration')
+                            ->defaultValue(0)
+                        ->end()
+                        ->integerNode('long_running_duration')
+                            ->defaultValue(0)
                         ->end()
                     ->end()
                 ->end()
@@ -407,21 +424,31 @@ class Configuration implements ConfigurationInterface
                     ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "kimai.timesheet.active_entries.soft_limit" instead.')
                 ->end()
                 ->scalarNode('box_color')
-                    ->defaultValue('green')
+                    ->defaultValue('blue')
                     ->setDeprecated('The node "%node%" at path "%path%" was removed, please delete it from your config.')
                 ->end()
                 ->scalarNode('select_type')
                     ->defaultValue('selectpicker')
                     ->setDeprecated()
                 ->end()
-                ->booleanNode('auto_reload_datatable')
-                    ->defaultFalse()
-                ->end()
                 ->booleanNode('tags_create')
                     ->defaultTrue()
                 ->end()
                 ->booleanNode('show_about')
                     ->defaultTrue()
+                ->end()
+                ->booleanNode('colors_limited')
+                    ->defaultTrue()
+                ->end()
+                ->scalarNode('color_choices')
+                    ->defaultValue(implode(',', [
+                        'Silver|#c0c0c0', 'Gray|#808080', 'Black|#000000',
+                        'Maroon|#800000', 'Brown|#a52a2a', 'Red|#ff0000', 'Orange|#ffa500',
+                        'Gold|#ffd700', 'Yellow|#ffff00', 'Peach|#ffdab9', 'Khaki|#f0e68c',
+                        'Olive|#808000', 'Lime|#00ff00', 'Jelly|#9acd32', 'Green|#008000', 'Teal|#008080',
+                        'Aqua|#00ffff', 'LightBlue|#add8e6', 'DeepSky|#00bfff', 'Dodger|#1e90ff', 'Blue|#0000ff', 'Navy|#000080',
+                        'Purple|#800080', 'Fuchsia|#ff00ff', 'Violet|#ee82ee', 'Rose|#ffe4e1', 'Lavender|#E6E6FA'
+                    ]))
                 ->end()
                 ->arrayNode('chart')
                     ->addDefaultsIfNotSet()
@@ -461,6 +488,12 @@ class Configuration implements ConfigurationInterface
                 ->integerNode('autocomplete_chars')
                     ->defaultValue(3)
                 ->end()
+                ->booleanNode('random_colors')
+                    ->defaultTrue()
+                ->end()
+                ->booleanNode('avatar_url')
+                    ->defaultFalse()
+                ->end()
             ->end()
         ;
 
@@ -483,6 +516,22 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
+    protected function getCompanyNode()
+    {
+        $builder = new TreeBuilder('company');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('financial_year')->defaultNull()->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
     protected function getUserNode()
     {
         $builder = new TreeBuilder('user');
@@ -492,11 +541,20 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
-                ->booleanNode('registration')
+                ->booleanNode('login')
                     ->defaultTrue()
+                ->end()
+                ->booleanNode('registration')
+                    ->defaultFalse()
                 ->end()
                 ->booleanNode('password_reset')
                     ->defaultTrue()
+                ->end()
+                ->integerNode('password_reset_retry_ttl')
+                    ->defaultValue(7200)
+                ->end()
+                ->integerNode('password_reset_token_ttl')
+                    ->defaultValue(86400)
                 ->end()
             ->end()
         ;
@@ -650,6 +708,9 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
+                ->booleanNode('activate')
+                    ->defaultFalse()
+                ->end()
                 ->arrayNode('connection')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -747,13 +808,13 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->validate()
                 ->ifTrue(static function ($v) {
-                    return null !== $v['connection']['host'] && !\extension_loaded('ldap');
+                    return $v['activate'] && !\extension_loaded('ldap');
                 })
                 ->thenInvalid('LDAP is activated, but the LDAP PHP extension is not loaded.')
             ->end()
             ->validate()
                 ->ifTrue(static function ($v) {
-                    return null !== $v['connection']['host'] && empty($v['user']['baseDn']);
+                    return $v['activate'] && empty($v['user']['baseDn']);
                 })
                 ->thenInvalid('The "ldap.user.baseDn" config must be set if LDAP is activated.')
             ->end()

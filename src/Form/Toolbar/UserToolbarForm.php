@@ -28,8 +28,8 @@ class UserToolbarForm extends AbstractToolbarForm
         $this->addVisibilityChoice($builder, 'label.active');
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
-        $this->addHiddenOrder($builder);
-        $this->addHiddenOrderBy($builder, UserQuery::USER_ORDER_ALLOWED);
+        $this->addOrder($builder);
+        $this->addOrderBy($builder, UserQuery::USER_ORDER_ALLOWED);
     }
 
     /**

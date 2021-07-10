@@ -6,8 +6,8 @@
 
 {% block main %}
     {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
-        'title': customer.name,
+        'title': ('permissions'|trans({}, 'actions')) ~ ': ' ~ customer.name,
         'form': form,
-        'back': path('admin_customer')
+        'back': path('customer_details', {'id': customer.id})
     }) }}
 {% endblock %}

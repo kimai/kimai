@@ -86,10 +86,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Toegestane aantal gelijktijdige tijdregistratie opnames</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Aantal gelijktijdige tijdregistratie opnames wanneer een waarschuwing wordt weergegeven</target>
-      </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target>Minimum aantal letters om de auto-completion te starten</target>
@@ -225,6 +221,22 @@
       <trans-unit id="first_weekday">
         <source>first_weekday</source>
         <target>Eerste dag van de week</target>
+      </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>Uit</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Gebruik de geconfigureerde waarde van de afrondingsregel</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Minuut selectie voor From &amp; To</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Minuut selectie voor looptijd</target>
       </trans-unit>
     </body>
   </file>

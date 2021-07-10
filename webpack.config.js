@@ -17,14 +17,40 @@ Encore
     .copyFiles({ from: './assets/images', to: 'images/[path][name].[ext]' })
 
     .splitEntryChunks()
-    .enableSingleRuntimeChunk()
-    .enableIntegrityHashes()
-    .enableVersioning(Encore.isProduction())
+    .configureSplitChunks(function(splitChunks) {
+        splitChunks.chunks = 'async';
+    })
 
+    // bug: empty hashes in entrypoints.json
+    //.enableIntegrityHashes(Encore.isProduction())
+
+    .enableSingleRuntimeChunk()
+    .enableVersioning(Encore.isProduction())
     .enableSourceMaps(!Encore.isProduction())
     .enableBuildNotifications()
 
-    .enableSassLoader()
+    .enableSassLoader(function(sassOptions) {}, {
+        resolveUrlLoader: false
+    })
+
+    // to rewrite the font url() in CSS to be relative.
+    // https://github.com/symfony/webpack-encore/issues/915#issuecomment-827556896
+    .configureFontRule(
+        { type: 'javascript/auto' },
+        (rule) => {
+            rule.loader = 'file-loader';
+            rule.options = { outputPath: 'fonts', name: '[name].[hash:8].[ext]', publicPath: './fonts/' };
+        }
+    )
+
+    .configureImageRule(
+        { type: 'javascript/auto' },
+        (rule) => {
+            rule.loader = 'file-loader';
+            rule.options = { outputPath: 'images', name: '[name].[hash:8].[ext]', publicPath: './images/' };
+        }
+    )
+
     .autoProvidejQuery()
 
     // prevent that unused moment locales will be included
@@ -35,27 +61,11 @@ Encore
         corejs: 3,
     })
 
-    .configureOptimizeCssPlugin((options) => {
-        options.cssProcessorPluginOptions = {
+    .configureCssMinimizerPlugin((options) => {
+        options.minimizerOptions = {
             preset: ['default', { discardComments: { removeAll: true } }],
-        }
-    })
-
-    .configureTerserPlugin((options) => {
-        options.cache = true;
-        options.terserOptions = {
-            output: {
-                comments: false
-            }
         }
     })
 ;
 
-var config = Encore.getWebpackConfig();
-
-// this is a hack based on https://github.com/symfony/webpack-encore/issues/88
-// to rewrite the font url() in CSS to be relative.
-// if you encounter any problems ... please let me know!
-config.module.rules[3].options.publicPath = './';
-
-module.exports = config;
+module.exports = Encore.getWebpackConfig();

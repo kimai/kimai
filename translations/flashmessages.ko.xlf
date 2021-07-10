@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="action.upload.error">
         <source>action.upload.error</source>
-        <target>파일을 업로드하거나 저장할 수 없습니다: % reason %</target>
+        <target>파일을 업로드하거나 저장할 수 없습니다: %reason%</target>
       </trans-unit>
     </body>
   </file>

@@ -11,27 +11,12 @@ namespace App\Model\Statistic;
 
 use InvalidArgumentException;
 
-/**
- * Monthly statistics
- */
-class Month
+final class Month extends Timesheet
 {
-    /**
-     * @var string
-     */
-    protected $month;
-    /**
-     * @var int
-     */
-    protected $totalDuration = 0;
-    /**
-     * @var float
-     */
-    protected $totalRate = 0.00;
+    private $month;
+    private $billableDuration = 0;
+    private $billableRate = 0.00;
 
-    /**
-     * @param string $month
-     */
     public function __construct(string $month)
     {
         $monthNumber = (int) $month;
@@ -40,38 +25,36 @@ class Month
                 sprintf('Invalid month given. Expected 1-12, received "%s".', $monthNumber)
             );
         }
-        $this->month = $month;
+        $this->month = str_pad($month, 2, '0', STR_PAD_LEFT);
     }
 
-    /**
-     * @return string
-     */
-    public function getMonth()
+    public function getMonth(): string
     {
         return $this->month;
     }
 
-    public function getTotalDuration(): int
+    public function getMonthNumber(): int
     {
-        return $this->totalDuration;
+        return (int) $this->month;
     }
 
-    public function setTotalDuration(int $seconds): Month
+    public function getBillableDuration(): int
     {
-        $this->totalDuration = $seconds;
-
-        return $this;
+        return $this->billableDuration;
     }
 
-    public function getTotalRate(): float
+    public function setBillableDuration(int $billableDuration): void
     {
-        return $this->totalRate;
+        $this->billableDuration = $billableDuration;
     }
 
-    public function setTotalRate(float $totalRate): Month
+    public function getBillableRate(): float
     {
-        $this->totalRate = $totalRate;
+        return $this->billableRate;
+    }
 
-        return $this;
+    public function setBillableRate(float $billableRate): void
+    {
+        $this->billableRate = $billableRate;
     }
 }

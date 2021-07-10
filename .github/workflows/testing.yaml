@@ -1,11 +1,11 @@
-name: CI
+name: Tests
 on:
     pull_request: null
     push:
         branches:
             - master
 jobs:
-    tests:
+    integration:
         runs-on: ubuntu-latest
         services:
             mysql:
@@ -19,40 +19,67 @@ jobs:
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         strategy:
             matrix:
-                php: ['7.2', '7.3', '7.4']
+                php: ['7.3', '7.4', '8.0']
 
-        name: Tests - PHP ${{ matrix.php }}
+        name: Integration (${{ matrix.php }})
         steps:
-            -   uses: actions/checkout@v2
-            -   uses: shivammathur/setup-php@v2
+
+            -   name: Clone Kimai
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: none
-                    extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql, zip, gd, ldap
-            -   run: |
-                    composer install --no-progress
-                    composer require laminas/laminas-ldap
+                    extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
+                    tools: cs2pr:1.1.0
+
+            -   name: Install dependencies
+                uses: ramsey/composer-install@v1
+
+            -   name: Validate Composer
+                run: composer validate --strict
+
+            -   name: Check codestyles
+                run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none --format=checkstyle | cs2pr
+
+            -   name: Run PHPStan on Codebase
+                run: vendor/bin/phpstan analyse src -c phpstan.neon --level=5 --no-progress --error-format=checkstyle | cs2pr
+
+            -   name: Run PHPStan on Tests
+                run: vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=5 --no-progress --error-format=checkstyle | cs2pr
+
+            -   name: Lint codebase
+                run: composer kimai:code-lint
+
+            -   name: Install LDAP package
+                run: composer require laminas/laminas-ldap
+
             -   name: Setup problem matchers for PHPUnit
                 run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
             -   name: Run unit tests
                 run: composer kimai:tests-unit
+                env:
+                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
+                    APP_ENV: dev
+                    MAILER_URL: null://localhost
+
+            -   name: Run integration tests
+                run: composer kimai:tests-integration
+                env:
+                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
+                    APP_ENV: dev
+                    MAILER_URL: null://localhost
+
             -   name: Run migrations on MySQL
                 run: |
+                    bin/console doctrine:database:drop --if-exists --force -n
                     bin/console doctrine:database:create --if-not-exists -n
                     bin/console doctrine:migrations:migrate -n
                     bin/console doctrine:migrations:migrate first -n
                 env:
-                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai
+                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
                     APP_ENV: dev
                     MAILER_URL: null://localhost
-            -   name: Run migrations on SQLite
-                run: |
-                    bin/console doctrine:database:create -n
-                    bin/console doctrine:migrations:migrate -n
-                    bin/console doctrine:migrations:migrate first -n
-                env:
-                    DATABASE_URL: sqlite:///%kernel.project_dir%/var/data/kimai_migrations.sqlite
-                    APP_ENV: dev
-                    MAILER_URL: null://localhost
-            -   name: Run integration tests
-                run: composer kimai:tests-integration

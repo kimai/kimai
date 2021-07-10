@@ -10,12 +10,15 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\UserFixtures;
+use App\Entity\Configuration;
 use App\Entity\User;
 use App\Repository\ConfigurationRepository;
+use App\Repository\UserRepository;
 use App\Tests\KernelTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Test\Constraint as ResponseConstraint;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
@@ -31,6 +34,43 @@ abstract class ControllerBaseTest extends WebTestCase
     {
         $this->clearConfigCache();
         parent::tearDown();
+    }
+
+    /**
+     * Using a special container, to access private services as well.
+     *
+     * @param string $service
+     * @return object|null
+     * @see https://symfony.com/blog/new-in-symfony-4-1-simpler-service-testing
+     */
+    protected function getPrivateService(string $service)
+    {
+        return self::$container->get($service);
+    }
+
+    protected function loadUserFromDatabase(string $username)
+    {
+        $container = self::$kernel->getContainer();
+        /** @var UserRepository $userRepository */
+        $userRepository = $container->get('doctrine')->getRepository(User::class);
+        $user = $userRepository->loadUserByUsername($username);
+        self::assertInstanceOf(User::class, $user);
+
+        return $user;
+    }
+
+    protected function setSystemConfiguration(string $name, $value): void
+    {
+        $repository = static::$kernel->getContainer()->get(ConfigurationRepository::class);
+
+        $entity = $repository->findOneBy(['name' => $name]);
+        if ($entity === null) {
+            $entity = new Configuration();
+            $entity->setName($name);
+        }
+        $entity->setValue($value);
+        $repository->saveConfiguration($entity);
+        $this->clearConfigCache();
     }
 
     protected function clearConfigCache()
@@ -79,11 +119,7 @@ abstract class ControllerBaseTest extends WebTestCase
         return $client;
     }
 
-    /**
-     * @param string $url
-     * @return string
-     */
-    protected function createUrl($url)
+    protected function createUrl(string $url): string
     {
         return '/' . self::DEFAULT_LANGUAGE . '/' . ltrim($url, '/');
     }
@@ -124,6 +160,12 @@ abstract class ControllerBaseTest extends WebTestCase
             $response->getTargetUrl(),
             sprintf('The secure URL %s does not redirect to the login form.', $url)
         );
+    }
+
+    protected function assertSuccessResponse(HttpKernelBrowser $client, string $message = '')
+    {
+        $response = $client->getResponse();
+        self::assertThat($response, new ResponseConstraint\ResponseIsSuccessful(), 'Response is not successful, got code: ' . $response->getStatusCode());
     }
 
     /**
@@ -187,7 +229,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasDataTable(HttpKernelBrowser $client)
     {
-        self::assertStringContainsString('<table class="table table-striped table-hover dataTable" role="grid" data-reload-event="', $client->getResponse()->getContent());
+        self::assertStringContainsString('<table class="table table-hover dataTable" role="grid" data-reload-event="', $client->getResponse()->getContent());
     }
 
     /**
@@ -203,12 +245,12 @@ abstract class ControllerBaseTest extends WebTestCase
 
     /**
      * @param HttpKernelBrowser $client
-     * @param string $id
+     * @param string $class
      * @param int $count
      */
-    protected function assertDataTableRowCount(HttpKernelBrowser $client, string $id, int $count)
+    protected function assertDataTableRowCount(HttpKernelBrowser $client, string $class, int $count)
     {
-        $node = $client->getCrawler()->filter('section.content div#' . $id . ' table.table-striped tbody tr:not(.summary)');
+        $node = $client->getCrawler()->filter('section.content div.' . $class . ' table.dataTable tbody tr:not(.summary)');
         self::assertEquals($count, $node->count());
     }
 
@@ -348,13 +390,25 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertIsRedirect(HttpKernelBrowser $client, $url = null)
     {
-        self::assertTrue($client->getResponse()->isRedirect(), 'Response is not a redirect');
+        self::assertResponseRedirects();
+
         if (null === $url) {
             return;
         }
 
+        $this->assertRedirectUrl($client, $url);
+    }
+
+    protected function assertRedirectUrl(HttpKernelBrowser $client, $url = null, $endsWith = true)
+    {
         self::assertTrue($client->getResponse()->headers->has('Location'), 'Could not find "Location" header');
-        self::assertStringEndsWith($url, $client->getResponse()->headers->get('Location'), 'Redirect URL does not match');
+        $location = $client->getResponse()->headers->get('Location');
+
+        if ($endsWith) {
+            self::assertStringEndsWith($url, $location, 'Redirect URL does not match');
+        } else {
+            self::assertStringContainsString($url, $location, 'Redirect URL does not match');
+        }
     }
 
     protected function assertExcelExportResponse(HttpKernelBrowser $client, string $prefix)

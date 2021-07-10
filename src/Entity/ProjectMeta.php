@@ -49,6 +49,9 @@ class ProjectMeta implements MetaTableTypeInterface
         return $this;
     }
 
+    /**
+     * @return Project|null
+     */
     public function getEntity(): ?EntityWithMetaFields
     {
         return $this->project;

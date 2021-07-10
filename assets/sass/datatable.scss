@@ -158,6 +158,7 @@ table.dataTable thead .sorting_desc_disabled:before {
 }
 
 table.dataTable thead > tr > th {
+    vertical-align: top;
     white-space: nowrap;
 }
 
@@ -264,23 +265,4 @@ div.dataTables_scrollHead table.table-bordered {
 .table-striped.dataTable tbody tr.active:nth-child(odd) td,
 .table-striped.dataTable tbody tr.active:nth-child(odd) th {
     background-color: #017ebc;
-}
-
-/* custom extension to make the column wide enough to show the sortable icons */
-table.dataTable th.sortable {
-    padding-left: 22px;
-}
-
-table.dataTable.table > tbody > tr > td {
-    &.avatars {
-        line-height: 40px;
-    }    
-    vertical-align: middle;
-    .img-circle {
-        max-width: 35px;
-        margin-right: 10px;
-        &.teamlead {
-            box-shadow: 0 0 5px 3px $gray-lte;
-        }
-    }
 }

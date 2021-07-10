@@ -21,9 +21,6 @@ class TagArrayToStringTransformer implements DataTransformerInterface
      */
     private $tagRepository;
 
-    /**
-     * @param TagRepository $tagRepository
-     */
     public function __construct(TagRepository $tagRepository)
     {
         $this->tagRepository = $tagRepository;
@@ -33,7 +30,6 @@ class TagArrayToStringTransformer implements DataTransformerInterface
      * Transforms an array of tags to a string.
      *
      * @param Tag[]|null $tags
-     *
      * @return string
      */
     public function transform($tags)
@@ -48,35 +44,34 @@ class TagArrayToStringTransformer implements DataTransformerInterface
     /**
      * Transforms a string to an array of tags.
      *
-     * @param string|null $stringOfTags
+     * @see \Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer::reverseTransform()
      *
+     * @param string|null $stringOfTags
      * @return Tag[]
-     * @throws TransformationFailedException if object (issue) is not found
+     * @throws TransformationFailedException
      */
     public function reverseTransform($stringOfTags)
     {
         // check for empty tag list
-        if (empty($stringOfTags)) {
+        if ('' === $stringOfTags || null === $stringOfTags) {
             return [];
         }
 
         $names = array_filter(array_unique(array_map('trim', explode(',', $stringOfTags))));
 
-        // Get the current tags and find the new ones that should be created
+        // get the current tags and find the new ones that should be created
         $tags = $this->tagRepository->findBy(['name' => $names]);
-
+        // works, because of the implicit case: (string) $tag
         $newNames = array_diff($names, $tags);
+
         foreach ($newNames as $name) {
             $tag = new Tag();
             $tag->setName($name);
             $tags[] = $tag;
 
-            // There's no need to persist these new tags because Doctrine does that automatically
-            // thanks to the cascade={"persist"} option in the App\Entity\Timesheet::$tags property.
+            // new tags persist automatically thanks to the cascade={"persist"}
         }
 
-        // Return an array of tags to transform them back into a Doctrine Collection.
-        // See Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer::reverseTransform()
         return $tags;
     }
 }

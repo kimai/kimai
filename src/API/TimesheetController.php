@@ -11,8 +11,11 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\RecentActivityEvent;
+use App\Event\TimesheetDuplicatePostEvent;
+use App\Event\TimesheetDuplicatePreEvent;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Form\API\TimesheetApiEditForm;
 use App\Repository\Query\TimesheetQuery;
@@ -34,7 +37,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -118,7 +120,7 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="activities", requirements="[\d|,]+", strict=true, nullable=true, description="Comma separated list of activity IDs to filter timesheets")
      * @Rest\QueryParam(name="page", requirements="\d+", strict=true, nullable=true, description="The page to display, renders a 404 if not found (default: 1)")
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page (default: 50)")
-     * @Rest\QueryParam(name="tags", strict=true, nullable=true, description="The name of tags which are in the datasets")
+     * @Rest\QueryParam(name="tags", strict=true, nullable=true, description="Comma separated list of tag names")
      * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, begin, end, rate (default: begin)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: DESC)")
      * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only records after this date will be included (format: HTML5)")
@@ -136,7 +138,7 @@ class TimesheetController extends BaseApiController
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
-        $query = new TimesheetQuery();
+        $query = new TimesheetQuery(false);
         $query->setUser($this->getUser());
 
         if ($this->isGranted('view_other_timesheet') && null !== ($user = $paramFetcher->get('user'))) {
@@ -278,20 +280,13 @@ class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
+     *
+     * @Security("is_granted('view', id)")
      */
-    public function getAction(int $id): Response
+    public function getAction(Timesheet $id): Response
     {
-        $data = $this->repository->find($id);
-
-        if (null === $data) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('view', $data)) {
-            throw new AccessDeniedHttpException('You are not allowed to view this timesheet');
-        }
-
-        $view = new View($data, 200);
+        $timesheet = $id; // cannot be changed due to BC reasons, routes use 'id'
+        $view = new View($timesheet, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -382,34 +377,27 @@ class TimesheetController extends BaseApiController
      *      )
      * )
      * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
-     *      required=true,
-     *      @SWG\Schema(ref="#/definitions/TimesheetEditForm")
-     * )
-     * @SWG\Parameter(
      *      name="id",
      *      in="path",
      *      type="integer",
      *      description="Timesheet record ID to update",
      *      required=true,
      * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/TimesheetEditForm")
+     * )
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
+     *
+     * @Security("is_granted('edit', id)")
      */
-    public function patchAction(Request $request, int $id): Response
+    public function patchAction(Request $request, Timesheet $id): Response
     {
-        $timesheet = $this->repository->find($id);
-
-        if (null === $timesheet) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $timesheet)) {
-            throw new AccessDeniedHttpException('You are not allowed to update this timesheet');
-        }
-
+        $timesheet = $id;
         $event = new TimesheetMetaDefinitionEvent($timesheet);
         $this->dispatcher->dispatch($event);
 
@@ -461,20 +449,12 @@ class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
+     *
+     * @Security("is_granted('delete', id)")
      */
-    public function deleteAction(int $id): Response
+    public function deleteAction(Timesheet $id): Response
     {
-        $timesheet = $this->repository->find($id);
-
-        if (null === $timesheet) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('delete', $timesheet)) {
-            throw $this->createAccessDeniedException('You are not allowed to delete this timesheet');
-        }
-
-        $this->service->deleteTimesheet($timesheet);
+        $this->service->deleteTimesheet($id);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);
 
@@ -583,22 +563,14 @@ class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
+     *
+     * @Security("is_granted('stop', id)")
      */
-    public function stopAction(int $id): Response
+    public function stopAction(Timesheet $id): Response
     {
-        $timesheet = $this->repository->find($id);
+        $this->service->stopTimesheet($id);
 
-        if (null === $timesheet) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('stop', $timesheet)) {
-            throw new AccessDeniedHttpException('You are not allowed to stop this timesheet');
-        }
-
-        $this->service->stopTimesheet($timesheet);
-
-        $view = new View($timesheet, 200);
+        $view = new View($id, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -625,19 +597,12 @@ class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
+     *
+     * @Security("is_granted('start', id)")
      */
-    public function restartAction(int $id, ParamFetcherInterface $paramFetcher): Response
+    public function restartAction(Timesheet $id, ParamFetcherInterface $paramFetcher): Response
     {
-        $timesheet = $this->repository->find($id);
-
-        if (null === $timesheet) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('start', $timesheet)) {
-            throw new AccessDeniedHttpException('You are not allowed to re-start this timesheet');
-        }
-
+        $timesheet = $id;
         /** @var User $user */
         $user = $this->getUser();
 
@@ -712,22 +677,17 @@ class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
+     *
+     * @Security("is_granted('duplicate', id)")
      */
-    public function duplicateAction(int $id): Response
+    public function duplicateAction(Timesheet $id): Response
     {
-        $timesheet = $this->repository->find($id);
-
-        if (null === $timesheet) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('duplicate', $timesheet)) {
-            throw new AccessDeniedHttpException('You are not allowed to duplicate this timesheet');
-        }
-
+        $timesheet = $id;
         $copyTimesheet = clone $timesheet;
 
+        $this->dispatcher->dispatch(new TimesheetDuplicatePreEvent($copyTimesheet, $timesheet));
         $this->service->saveNewTimesheet($copyTimesheet);
+        $this->dispatcher->dispatch(new TimesheetDuplicatePostEvent($copyTimesheet, $timesheet));
 
         $view = new View($copyTimesheet, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -753,21 +713,12 @@ class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
+     *
+     * @Security("is_granted('edit_export', id)")
      */
-    public function exportAction(int $id): Response
+    public function exportAction(Timesheet $id): Response
     {
-        $timesheet = $this->repository->find($id);
-
-        if (null === $timesheet) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit_export', $timesheet)) {
-            throw new AccessDeniedHttpException(
-                sprintf('You are not allowed to %s this timesheet', ($timesheet->isExported() ? 'unlock' : 'lock'))
-            );
-        }
-
+        $timesheet = $id;
         $timesheet->setExported(!$timesheet->isExported());
 
         $this->service->updateTimesheet($timesheet);
@@ -798,19 +749,12 @@ class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
+     *
+     * @Security("is_granted('edit', id)")
      */
-    public function metaAction(int $id, ParamFetcherInterface $paramFetcher): Response
+    public function metaAction(Timesheet $id, ParamFetcherInterface $paramFetcher): Response
     {
-        $timesheet = $this->repository->find($id);
-
-        if (null === $timesheet) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $timesheet)) {
-            throw new AccessDeniedHttpException('You are not allowed to update this timesheet');
-        }
-
+        $timesheet = $id;
         $event = new TimesheetMetaDefinitionEvent($timesheet);
         $this->dispatcher->dispatch($event);
 

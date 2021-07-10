@@ -10,11 +10,8 @@
 namespace App\Tests\Command;
 
 use App\Command\InstallCommand;
-use App\Constants;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @covers \App\Command\InstallCommand
@@ -27,7 +24,7 @@ class InstallCommandTest extends KernelTestCase
      */
     protected $application;
 
-    protected function getCommand(): Command
+    protected function setUp(): void
     {
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
@@ -37,33 +34,11 @@ class InstallCommandTest extends KernelTestCase
             $container->getParameter('kernel.project_dir'),
             $container->get('doctrine')->getConnection()
         ));
-
-        return $this->application->find('kimai:install');
     }
 
-    public function testFullRunWithEverythingPreInstalled()
+    public function testCommandName()
     {
-        $command = $this->getCommand();
-        $commandTester = new CommandTester($command);
-        $commandTester->setInputs(['no']);
-        $commandTester->execute([
-            'command' => $command->getName(),
-        ]);
-
-        $result = $commandTester->getDisplay();
-
-        self::assertStringContainsString('Kimai installation running', $result);
-        // create database is skipped
-        self::assertStringContainsString('[NOTE] Database is existing and connection could be established', $result);
-        // make sure migrations run always
-        self::assertStringContainsString('Application Migrations', $result);
-        self::assertStringContainsString('No migrations to execute.', $result);
-
-        self::assertStringContainsString(
-            sprintf('[OK] Congratulations! Successfully installed Kimai 2 version %s (%s)', Constants::VERSION, Constants::STATUS),
-            $result
-        );
-
-        self::assertEquals(0, $commandTester->getStatusCode());
+        $command = $this->application->find('kimai:install');
+        self::assertInstanceOf(InstallCommand::class, $command);
     }
 }

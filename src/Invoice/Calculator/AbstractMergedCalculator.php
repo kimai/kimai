@@ -114,5 +114,11 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
         if (empty($invoiceItem->getDescription()) && null !== $entry->getActivity()) {
             $invoiceItem->setDescription($entry->getActivity()->getName());
         }
+
+        if ($entry instanceof Timesheet) {
+            foreach ($entry->getTagsAsArray() as $tag) {
+                $invoiceItem->addTag($tag);
+            }
+        }
     }
 }

@@ -10,7 +10,6 @@
 namespace App;
 
 use App\DependencyInjection\AppExtension;
-use App\DependencyInjection\Compiler\DoctrineCompilerPass;
 use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
@@ -116,15 +115,13 @@ class Kernel extends BaseKernel
                     yield new $class();
                 }
             }
-
-            return;
-        }
-
-        // ... or we load them dynamically from the plugins directory
-        foreach ($this->getBundleDirectories() as $bundleDir) {
-            $bundleName = $bundleDir->getRelativePathname();
-            $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
-            yield new $pluginClass();
+        } else {
+            // ... or we load them dynamically from the plugins directory
+            foreach ($this->getBundleDirectories() as $bundleDir) {
+                $bundleName = $bundleDir->getRelativePathname();
+                $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
+                yield new $pluginClass();
+            }
         }
     }
 
@@ -198,7 +195,6 @@ class Kernel extends BaseKernel
         $loader->load($confDir . '/services-*' . self::CONFIG_EXTS, 'glob');
         $loader->load($confDir . '/services_' . $this->environment . self::CONFIG_EXTS, 'glob');
 
-        $container->addCompilerPass(new DoctrineCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new TwigContextCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new InvoiceServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new ExportServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
@@ -208,10 +204,6 @@ class Kernel extends BaseKernel
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
         $confDir = $this->getProjectDir() . '/config';
-
-        // some routes are based on app configs and will be imported manually
-        $this->configureFosUserRoutes($routes);
-        $this->configureSamlRoutes($routes);
 
         // load bundle specific route files
         if (is_dir($confDir . '/routes/')) {
@@ -231,37 +223,5 @@ class Kernel extends BaseKernel
                 $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
             }
         }
-    }
-
-    protected function configureFosUserRoutes(RouteCollectionBuilder $routes)
-    {
-        $features = $this->getContainer()->getParameter('kimai.fosuser');
-
-        // Expose the user registration feature
-        if ($features['registration']) {
-            $routes->import(
-                '@FOSUserBundle/Resources/config/routing/registration.xml',
-                '/{_locale}/register'
-            );
-        }
-
-        // Expose the users password-reset feature
-        if ($features['password_reset']) {
-            $routes->import(
-                '@FOSUserBundle/Resources/config/routing/resetting.xml',
-                '/{_locale}/resetting'
-            );
-        }
-    }
-
-    protected function configureSamlRoutes(RouteCollectionBuilder $routes)
-    {
-        $saml = $this->getContainer()->getParameter('kimai.saml');
-
-        if (!$saml['activate']) {
-            return;
-        }
-
-        $routes->import('../src/Saml/Controller/SamlController.php', '/auth', 'annotation');
     }
 }

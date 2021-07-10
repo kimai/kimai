@@ -55,11 +55,8 @@ final class TeamController extends AbstractController
         $query->setCurrentUser($this->getUser());
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_team');
         }
 
         $teams = $repository->getPagerfantaForQuery($query);

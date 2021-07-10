@@ -79,6 +79,7 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             'entry.customer.meta.foo-customer',
             'entry.category',
             'entry.type',
+            'entry.tags',
         ];
 
         $keys = array_merge($keys, $metaFields);

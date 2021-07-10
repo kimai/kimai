@@ -9,17 +9,14 @@
 
 namespace App\Form\Type;
 
-use App\Configuration\ThemeConfiguration;
+use App\Configuration\SystemConfiguration;
 use Symfony\Component\Form\AbstractType;
 
-class TagsType extends AbstractType
+final class TagsType extends AbstractType
 {
-    /**
-     * @var ThemeConfiguration
-     */
     private $configuration;
 
-    public function __construct(ThemeConfiguration $configuration)
+    public function __construct(SystemConfiguration $configuration)
     {
         $this->configuration = $configuration;
     }

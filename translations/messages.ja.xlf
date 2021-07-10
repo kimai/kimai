@@ -250,7 +250,7 @@
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>Email</target>
+        <target>電子メール</target>
       </trans-unit>
       <trans-unit id="label.create_more">
         <source>label.create_more</source>

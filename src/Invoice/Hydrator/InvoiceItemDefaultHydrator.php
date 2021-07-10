@@ -62,6 +62,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.description' => $description,
             'entry.amount' => $amount,
             'entry.type' => $item->getType(),
+            'entry.tags' => implode(', ', $item->getTags()),
             'entry.category' => $item->getCategory(),
             'entry.rate' => $formatter->getFormattedMoney($appliedRate, $currency),
             'entry.rate_nc' => $formatter->getFormattedMoney($appliedRate, $currency, false),

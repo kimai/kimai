@@ -35,7 +35,7 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
             if (self.isDirty) {
                 if (jQuery('#remote_form_modal .modal-body .remote_modal_is_dirty_warning').length === 0) {
                     const msg = self.getContainer().getTranslation().get('modal.dirty');
-                    jQuery('#remote_form_modal .modal-body').prepend('<p class="text-danger small remote_modal_is_dirty_warning">' + msg + '</p>');
+                    jQuery('#remote_form_modal .modal-body').prepend('<p class="'+(self.modal.hasClass('modal-danger') ? 'well well-sm ' : '') + 'text-danger small remote_modal_is_dirty_warning">' + msg + '</p>');
                 }
                 e.preventDefault();
                 return;
@@ -152,7 +152,6 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         });
         // -----------------------------------------------------------------------
 
-        this.getContainer().getPlugin('toolbar').hide();
         remoteModal.modal('show');
 
         // the new form that was loaded via ajax

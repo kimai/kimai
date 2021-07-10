@@ -8,6 +8,36 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [1.15](https://github.com/kevinpapst/kimai2/releases/tag/1.15)
+
+**ATTENTION** 
+- This release bumps the minimum required [PHP version to 7.3](https://www.kimai.org/blog/2021/php8-support-php72-dropped/)
+- Self-registration is disabled by default
+- Self-registration now always requires email confirmation
+- All plugins that use own databases need to be updated as well
+
+**LDAP & SAML**
+- SAML users need to activate it by setting the new `kimai.saml.activate: true` config
+- LDAP and SAML users need to remove the complete `security` section from their `local.yaml`
+- Please verify your config with the [LDAP](https://www.kimai.org/documentation/ldap.html) and [SAML](https://www.kimai.org/documentation/saml.html) documentation
+
+**DEVELOPER**
+PHP 8 compatibility forced to upgrade MANY libraries, including but not limited to:
+
+- Removed FOSUserBundle and hslavich/oneloginsaml
+- Doctrine Migrations, whose new major version forces the plugin updates 
+- Gedmo v3 (which include BC breaks in definitions)
+- Doctrine DBAL and others, which required PHP 7.3 as well
+
+## [1.14](https://github.com/kevinpapst/kimai2/releases/tag/1.14)
+
+**CRITICAL BC break**: SQLite support was removed. If you are using SQLite, you have to [read this blog post](https://www.kimai.org/blog/2021/sqlite-and-ftp-support-removed/) and migrate to MySQL/MariaDB first!
+
+**New database tables and fields: don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+Permission changes:
+- `history_invoice` - removed permission entirely
+
 ## [1.13](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
 
 - Deprecated `now` variable in export templates: create it yourself with `{% set now = create_date('now', app.user) %}`

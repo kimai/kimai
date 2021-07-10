@@ -15,12 +15,12 @@ use App\Entity\ActivityMeta;
 use App\Entity\ActivityRate;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\RateInterface;
 use App\Entity\User;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
@@ -28,6 +28,20 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 class ActivityControllerTest extends APIControllerBaseTest
 {
     use RateControllerTestTrait;
+
+    /**
+     * @param ActivityRate $rate
+     * @param bool $isCollection
+     * @return string
+     */
+    protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
+    {
+        if ($isCollection) {
+            return $this->getRateUrl($rate->getActivity()->getId());
+        }
+
+        return $this->getRateUrl($rate->getActivity()->getId(), $rate->getId());
+    }
 
     protected function getRateUrl($id = '1', $rateId = null): string
     {
@@ -77,7 +91,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertUrlIsSecured('/api/activities');
     }
 
-    protected function loadActivityTestData(HttpKernelBrowser $client)
+    protected function loadActivityTestData(): array
     {
         $em = $this->getEntityManager();
 
@@ -116,15 +130,33 @@ class ActivityControllerTest extends APIControllerBaseTest
         $em->persist($activity);
 
         $em->flush();
+
+        return [$project, $project2];
     }
 
     /**
      * @dataProvider getCollectionTestData
      */
-    public function testGetCollection($url, $parameters, $expected)
+    public function testGetCollection($url, $project, $parameters, $expected)
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->loadActivityTestData($client);
+        $imports = $this->loadActivityTestData();
+
+        $projectId = $project !== null ? $imports[$project]->getId() : null;
+        if ($projectId !== null) {
+            if (\array_key_exists('project', $parameters)) {
+                $parameters['project'] = $projectId;
+            }
+
+            if (\array_key_exists('projects', $parameters)) {
+                if (stripos($parameters['projects'], ',') !== false) {
+                    $parameters['projects'] = $projectId . ',' . $projectId;
+                } else {
+                    $parameters['projects'] = (string) $projectId;
+                }
+            }
+        }
+
         $this->assertAccessIsGranted($client, $url, 'GET', $parameters);
         $result = json_decode($client->getResponse()->getContent(), true);
 
@@ -135,31 +167,31 @@ class ActivityControllerTest extends APIControllerBaseTest
             $activity = $result[$i];
             $hasProject = $expected[$i][0];
             self::assertApiResponseTypeStructure('ActivityCollection', $activity);
-            if ($hasProject) {
-                $this->assertEquals($expected[$i][1], $activity['project']);
+            if ($hasProject && $projectId !== null) {
+                $this->assertEquals($projectId, $activity['project']);
             }
         }
     }
 
     public function getCollectionTestData()
     {
-        yield ['/api/activities', [], [[false], [true, 2], [true, 2], [null], [true, 1]]];
+        yield ['/api/activities', null, [], [[false], [true, 2], [true, 2], [null], [true, 1]]];
         //yield ['/api/activities', [], [[false], [false], [true, 2], [true, 1], [true, 2]]];
-        yield ['/api/activities', ['globals' => 'true'], [[false], [false]]];
-        yield ['/api/activities', ['globals' => 'true', 'visible' => 3], [[false], [false], [false]]];
-        yield ['/api/activities', ['globals' => 'true', 'visible' => '2'], [[false]]];
-        yield ['/api/activities', ['globals' => 'true', 'visible' => 1], [[false], [false]]];
-        yield ['/api/activities', ['project' => '1'], [[false], [false], [true, 1]]];
-        yield ['/api/activities', ['project' => '2', 'projects' => '2', 'visible' => 1], [[false], [true, 2], [true, 2], [false]]];
-        yield ['/api/activities', ['project' => '2', 'projects' => '2,2', 'visible' => '3'], [[false], [true, 2], [true, 2], [true, 2], [false], [false]]];
-        yield ['/api/activities', ['projects' => '2,2', 'visible' => 2], [[true, 2], [false]]];
-        yield ['/api/activities', ['projects' => '2', 'visible' => 2], [[true, 2], [false]]];
+        yield ['/api/activities', null, ['globals' => 'true'], [[false], [false]]];
+        yield ['/api/activities', null, ['globals' => 'true', 'visible' => 3], [[false], [false], [false]]];
+        yield ['/api/activities', null, ['globals' => 'true', 'visible' => '2'], [[false]]];
+        yield ['/api/activities', null, ['globals' => 'true', 'visible' => 1], [[false], [false]]];
+        yield ['/api/activities', 0, ['project' => '1'], [[false], [false], [true, 1]]];
+        yield ['/api/activities', 1, ['project' => '2', 'projects' => '2', 'visible' => 1], [[true, 2], [true, 2], [false], [false]]];
+        yield ['/api/activities', 1, ['project' => '2', 'projects' => '2,2', 'visible' => '3'], [[true, 2], [true, 2], [true, 2], [false], [false], [false]]];
+        yield ['/api/activities', 1, ['projects' => '2,2', 'visible' => 2], [[true, 2], [false]]];
+        yield ['/api/activities', 1, ['projects' => '2', 'visible' => 2], [[true, 2], [false]]];
     }
 
     public function testGetCollectionWithQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->loadActivityTestData($client);
+        $imports = $this->loadActivityTestData();
 
         $query = ['order' => 'ASC', 'orderBy' => 'project'];
         $this->assertAccessIsGranted($client, '/api/activities', 'GET', $query);
@@ -169,9 +201,9 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(5, \count($result));
         self::assertApiResponseTypeStructure('ActivityCollection', $result[0]);
-        $this->assertEquals(1, $result[4]['project']);
-        $this->assertEquals(2, $result[3]['project']);
-        $this->assertEquals(2, $result[2]['project']);
+        $this->assertEquals($imports[0]->getId(), $result[4]['project']);
+        $this->assertEquals($imports[1]->getId(), $result[3]['project']);
+        $this->assertEquals($imports[1]->getId(), $result[2]['project']);
     }
 
     public function testGetEntity()
@@ -259,7 +291,6 @@ class ActivityControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'comment' => '',
-            'project' => 1,
             'visible' => true,
             'budget' => '999',
             'timeBudget' => '7200',
@@ -300,15 +331,14 @@ class ActivityControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
-            'name' => 'foo',
-            'project' => 255,
-            'visible' => true
+            'name' => 'foofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoo',
+            'visible' => false
         ];
         $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
 
         $response = $client->getResponse();
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertApiCallValidationError($response, ['project']);
+        $this->assertApiCallValidationError($response, ['name']);
     }
 
     public function testMetaActionThrowsNotFound()

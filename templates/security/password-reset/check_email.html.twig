@@ -1,0 +1,11 @@
+{% extends 'security/password-reset/layout.html.twig' %}
+
+{% block login_form %}
+
+    <p>
+        {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+    </p>
+
+{% endblock %}
+
+

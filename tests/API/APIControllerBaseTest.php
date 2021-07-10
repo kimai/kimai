@@ -60,21 +60,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         return $client;
     }
 
-    /**
-     * @param string $url
-     * @param bool $json
-     * @return string
-     */
-    protected function createUrl($url, $json = true)
+    protected function createUrl(string $url): string
     {
-        if ($json) {
-            if (stripos($url, '?') !== false) {
-                $url = str_replace('?', '.json?', $url);
-            } else {
-                $url .= '.json';
-            }
-        }
-
         return '/' . ltrim($url, '/');
     }
 
@@ -120,17 +107,10 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             sprintf('The secure URL %s is not protected for role %s', $url, $role)
         );
 
-        $expected = [
+        $this->assertApiException($client->getResponse(), [
             'code' => 403,
             'message' => 'Access denied.'
-        ];
-
-        self::assertEquals(403, $client->getResponse()->getStatusCode());
-
-        self::assertEquals(
-            $expected,
-            json_decode($client->getResponse()->getContent(), true)
-        );
+        ]);
     }
 
     protected function request(HttpKernelBrowser $client, string $url, $method = 'GET', array $parameters = [], string $content = null): Crawler
@@ -140,53 +120,45 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         return $client->request($method, $this->createUrl($url), $parameters, [], $server, $content);
     }
 
-    protected function assertEntityNotFound(string $role, string $url, string $method = 'GET')
+    protected function assertEntityNotFound(string $role, string $url, string $method = 'GET', ?string $message = null)
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, $url, $method);
-
-        $expected = [
+        $this->assertApiException($client->getResponse(), [
             'code' => 404,
-            'message' => 'Not found'
-        ];
-
-        self::assertEquals(404, $client->getResponse()->getStatusCode());
-
-        self::assertEquals(
-            $expected,
-            json_decode($client->getResponse()->getContent(), true)
-        );
+            'message' => $message ?? 'Not found'
+        ]);
     }
 
     protected function assertNotFoundForDelete(HttpKernelBrowser $client, string $url)
     {
-        return $this->assertExceptionForMethod($client, $url, 'DELETE', [], [
+        $this->assertExceptionForMethod($client, $url, 'DELETE', [], [
             'code' => 404,
             'message' => 'Not found'
         ]);
     }
 
-    protected function assertEntityNotFoundForDelete(string $role, string $url)
+    protected function assertEntityNotFoundForDelete(string $role, string $url, ?string $message = null)
     {
-        return $this->assertExceptionForDeleteAction($role, $url, [], [
+        $this->assertExceptionForDeleteAction($role, $url, [], [
             'code' => 404,
-            'message' => 'Not found'
+            'message' => $message ?? 'Not found'
         ]);
     }
 
-    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data)
+    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data, ?string $message = null)
     {
-        return $this->assertExceptionForPatchAction($role, $url, $data, [
+        $this->assertExceptionForPatchAction($role, $url, $data, [
             'code' => 404,
-            'message' => 'Not found'
+            'message' => $message ?? 'Not found',
         ]);
     }
 
     protected function assertEntityNotFoundForPost(string $role, string $url, array $data, ?string $message = null)
     {
-        return $this->assertExceptionForPostAction($role, $url, $data, [
+        $this->assertExceptionForPostAction($role, $url, $data, [
             'code' => 404,
-            'message' => $message ?? 'Not found'
+            'message' => $message ?? 'Not found',
         ]);
     }
 
@@ -208,15 +180,14 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     protected function assertExceptionForMethod(HttpKernelBrowser $client, string $url, string $method, array $data, array $expectedErrors)
     {
         $this->request($client, $url, $method, [], json_encode($data));
-        $response = $client->getResponse();
+        $this->assertApiException($client->getResponse(), $expectedErrors);
+    }
+
+    protected function assertApiException(Response $response, array $expectedErrors)
+    {
         self::assertFalse($response->isSuccessful());
-
-        self::assertEquals($expectedErrors['code'], $client->getResponse()->getStatusCode());
-
-        self::assertEquals(
-            $expectedErrors,
-            json_decode($client->getResponse()->getContent(), true)
-        );
+        self::assertEquals($expectedErrors['code'], $response->getStatusCode());
+        self::assertEquals($expectedErrors, json_decode($response->getContent(), true));
     }
 
     protected function assertExceptionForRole(string $role, string $url, string $method, array $data, array $expectedErrors)
@@ -225,11 +196,9 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         $this->assertExceptionForMethod($client, $url, $method, $data, $expectedErrors);
     }
 
-    protected function assertApiException(Response $response, string $message)
+    protected function assertApi500Exception(Response $response, string $message)
     {
-        self::assertFalse($response->isSuccessful());
-        self::assertEquals(500, $response->getStatusCode());
-        self::assertEquals(['code' => 500, 'message' => $message], json_decode($response->getContent(), true));
+        $this->assertApiException($response, ['code' => 500, 'message' => $message]);
     }
 
     protected function assertApiAccessDenied(HttpKernelBrowser $client, string $url, string $message)
@@ -240,15 +209,15 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
     protected function assertApiResponseAccessDenied(Response $response, string $message)
     {
-        self::assertFalse($response->isSuccessful());
-        self::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $expected = ['code' => Response::HTTP_FORBIDDEN, 'message' => $message];
-        self::assertEquals($expected, json_decode($response->getContent(), true));
+        $this->assertApiException($response, [
+            'code' => Response::HTTP_FORBIDDEN,
+            'message' => $message
+        ]);
     }
 
     /**
      * @param Response $response
-     * @param string[] $failedFields
+     * @param array<int, string>|array<string, mixed> $failedFields
      * @param bool $extraFields test for the error "This form should not contain extra fields"
      */
     protected function assertApiCallValidationError(Response $response, array $failedFields, bool $extraFields = false)
@@ -266,9 +235,21 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         self::assertArrayHasKey('children', $result['errors']);
         $data = $result['errors']['children'];
 
-        foreach ($failedFields as $fieldName) {
-            self::assertArrayHasKey($fieldName, $data, sprintf('Could not find validation error for field: %s', $fieldName));
+        foreach ($failedFields as $key => $value) {
+            $messages = [];
+            $fieldName = $value;
+            if (\is_string($key)) {
+                $fieldName = $key;
+                $messages = $value;
+                if (!\is_array($messages)) {
+                    $messages = [$value];
+                }
+            }
+            self::assertArrayHasKey($fieldName, $data, sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
             self::assertArrayHasKey('errors', $data[$fieldName], sprintf('Field %s has no validation problem', $fieldName));
+            foreach ($messages as $i => $message) {
+                self::assertEquals($message, $data[$fieldName]['errors'][$i]);
+            }
         }
 
         $foundErrors = [];
@@ -288,7 +269,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 return [
                     'id' => 'int',
                     'name' => 'string',
-                    'color' => 'string',
+                    'color' => '@string',
                 ];
 
             // embedded meta data
@@ -309,6 +290,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'id' => 'int',
                     'username' => 'string',
                     'enabled' => 'bool',
+                    'color' => '@string',
                     'alias' => '@string',
                 ];
 
@@ -321,6 +303,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'alias' => '@string',
                     'title' => '@string',
                     'avatar' => '@string',
+                    'color' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'roles' => ['result' => 'array', 'type' => 'string'],
                     'language' => 'string',
@@ -334,6 +317,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 return [
                     'id' => 'int',
                     'name' => 'string',
+                    'color' => '@string',
                 ];
 
             // explicitly requested team
@@ -341,6 +325,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 return [
                     'id' => 'int',
                     'name' => 'string',
+                    'color' => '@string',
                     'teamlead' => ['result' => 'object', 'type' => 'User'],
                     'users' => ['result' => 'array', 'type' => 'User'],
                     'customers' => ['result' => 'array', 'type' => '@Customer'],
@@ -514,6 +499,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
                     'exported' => 'bool',
+                    'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
                     // TODO new fields: billable, category
@@ -534,6 +520,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
                     'exported' => 'bool',
+                    'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
                     // TODO new fields: billable, category
@@ -553,6 +540,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'user' => 'int',
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
+                    'exported' => 'bool',
+                    'billable' => 'bool',
                 ];
 
             case 'TimesheetCollectionFull':
@@ -569,6 +558,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'user' => 'int',
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
+                    'exported' => 'bool',
+                    'billable' => 'bool',
                 ];
 
             default:

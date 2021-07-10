@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\ActivityRate;
 use App\Entity\Project;
+use App\Entity\ProjectComment;
 use App\Entity\ProjectMeta;
 use App\Entity\ProjectRate;
 use App\Entity\Team;
@@ -65,7 +66,7 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/project/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
@@ -107,7 +108,7 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/project/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/project/export'));
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
@@ -146,6 +147,8 @@ class ProjectControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#project_details_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#activity_list_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#time_budget_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#budget_box');
         self::assertEquals(1, $node->count());
@@ -213,7 +216,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $em->persist($rate);
 
         $this->request($client, '/admin/project/1/duplicate');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/2/details'));
+        $this->assertIsRedirect($client, '/details');
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#project_rates_box');
         self::assertEquals(1, $node->count());
@@ -234,7 +237,7 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and long comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }
 
@@ -250,15 +253,18 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
         self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.confirmation-link');
-        self::assertEquals($this->createUrl('/admin/project/1/comment_delete'), $node->attr('href'));
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.confirmation-link');
 
-        $this->request($client, '/admin/project/1/comment_delete');
+        $comments = $this->getEntityManager()->getRepository(ProjectComment::class)->findAll();
+        $id = $comments[0]->getId();
+
+        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_delete'), $node->attr('href'));
+        $this->request($client, '/admin/project/' . $id . '/comment_delete');
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-body');
         self::assertStringContainsString('There were no comments posted yet', $node->html());
     }
 
@@ -274,17 +280,20 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box div.box-comments');
+        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
         self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.btn.active');
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
         self::assertEquals(0, $node->count());
 
-        $this->request($client, '/admin/project/1/comment_pin');
+        $comments = $this->getEntityManager()->getRepository(ProjectComment::class)->findAll();
+        $id = $comments[0]->getId();
+
+        $this->request($client, '/admin/project/' . $id . '/comment_pin');
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-comment a.btn.active');
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
         self::assertEquals(1, $node->count());
-        self::assertEquals($this->createUrl('/admin/project/1/comment_pin'), $node->attr('href'));
+        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_pin'), $node->attr('href'));
     }
 
     public function testCreateDefaultTeamAction()
@@ -346,7 +355,7 @@ class ProjectControllerTest extends ControllerBaseTest
                 'customer' => 1,
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/2/details'));
+        $this->assertIsRedirect($client, '/details');
         $client->followRedirect();
         $this->assertHasFlashSuccess($client);
     }
@@ -403,9 +412,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $team2->tick();
 
         $client->submit($form);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
-        $client->followRedirect();
-        $this->assertHasDataTable($client);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
 
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
@@ -418,22 +425,24 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $fixture = new ProjectFixtures();
         $fixture->setAmount(1);
-        $this->importFixture($fixture);
+        /** @var Project[] $projects */
+        $projects = $this->importFixture($fixture);
+        $id = $projects[0]->getId();
 
-        $this->request($client, '/admin/project/2/edit');
+        $this->request($client, '/admin/project/' . $id . '/edit');
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->request($client, '/admin/project/2/delete');
+        $this->request($client, '/admin/project/' . $id . '/delete');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/project/2/delete'), $form->getUri());
+        $this->assertStringEndsWith($this->createUrl('/admin/project/' . $id . '/delete'), $form->getUri());
         $client->submit($form);
 
         $client->followRedirect();
         $this->assertHasDataTable($client);
         $this->assertHasFlashSuccess($client);
 
-        $this->request($client, '/admin/project/2/edit');
+        $this->request($client, '/admin/project/' . $id . '/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());
     }
 
@@ -467,10 +476,9 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertHasFlashDeleteSuccess($client);
         $this->assertHasNoEntriesWithFilter($client);
 
-        // SQLIte does not necessarly support onCascade delete, so these timesheet will stay after deletion
-        // $em->clear();
-        // $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        // $this->assertEquals(0, count($timesheets));
+        $em->clear();
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(0, \count($timesheets));
 
         $this->request($client, '/admin/project/1/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());
@@ -487,7 +495,8 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
         $fixture = new ProjectFixtures();
         $fixture->setAmount(1)->setIsVisible(true);
-        $this->importFixture($fixture);
+        $projects = $this->importFixture($fixture);
+        $id = $projects[0]->getId();
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         $this->assertEquals(10, \count($timesheets));
@@ -504,7 +513,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertStringEndsWith($this->createUrl('/admin/project/1/delete'), $form->getUri());
         $client->submit($form, [
             'form' => [
-                'project' => 2
+                'project' => $id
             ]
         ]);
 
@@ -518,7 +527,7 @@ class ProjectControllerTest extends ControllerBaseTest
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
-            $this->assertEquals(2, $entry->getProject()->getId());
+            $this->assertEquals($id, $entry->getProject()->getId());
         }
 
         $this->request($client, '/admin/project/1/edit');

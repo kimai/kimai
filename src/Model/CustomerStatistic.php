@@ -14,46 +14,32 @@ class CustomerStatistic extends TimesheetCountedStatistic
     /**
      * @var int
      */
-    protected $activityAmount = 0;
+    private $activityAmount = 0;
     /**
      * @var int
      */
-    protected $projectAmount = 0;
+    private $projectAmount = 0;
 
-    /**
-     * @return int
-     */
-    public function getActivityAmount()
+    public function getActivityAmount(): int
     {
         return $this->activityAmount;
     }
 
-    /**
-     * @param int $activityAmount
-     * @return $this
-     */
-    public function setActivityAmount($activityAmount)
+    public function setActivityAmount(int $activityAmount): CustomerStatistic
     {
-        $this->activityAmount = (int) $activityAmount;
+        $this->activityAmount = $activityAmount;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getProjectAmount()
+    public function getProjectAmount(): int
     {
         return $this->projectAmount;
     }
 
-    /**
-     * @param int $projectAmount
-     * @return $this
-     */
-    public function setProjectAmount($projectAmount)
+    public function setProjectAmount(int $projectAmount): CustomerStatistic
     {
-        $this->projectAmount = (int) $projectAmount;
+        $this->projectAmount = $projectAmount;
 
         return $this;
     }

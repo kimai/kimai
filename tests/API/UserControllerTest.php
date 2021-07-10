@@ -134,7 +134,6 @@ class UserControllerTest extends APIControllerBaseTest
         $data = [
             'username' => 'foo',
             'email' => 'foo@example.com',
-            'avatar' => 'test123',
             'title' => 'asdfghjkl',
             'plainPassword' => 'foo@example.com',
             'enabled' => true,
@@ -153,7 +152,6 @@ class UserControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('UserEntity', $result);
         $this->assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['username']);
-        self::assertEquals('test123', $result['avatar']);
         self::assertEquals('asdfghjkl', $result['title']);
         self::assertTrue($result['enabled']);
         self::assertEquals('ru', $result['language']);
@@ -167,7 +165,6 @@ class UserControllerTest extends APIControllerBaseTest
         $data = [
             'username' => 'foo',
             'email' => 'foo@example.com',
-            'avatar' => 'test123',
             'title' => 'asdfghjkl',
             'plainPassword' => '1234567',
             'enabled' => true,
@@ -230,7 +227,6 @@ class UserControllerTest extends APIControllerBaseTest
         $data = [
             'username' => 'foo',
             'email' => 'foo@example.com',
-            'avatar' => 'test123',
             'title' => 'asdfghjkl',
             'plainPassword' => 'foo@example.com',
             'enabled' => true,
@@ -246,7 +242,6 @@ class UserControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $data = [
-            'avatar' => 'test321',
             'title' => 'qwertzui',
             'enabled' => false,
             'language' => 'it',
@@ -263,7 +258,6 @@ class UserControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('UserEntity', $result);
         $this->assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['username']);
-        self::assertEquals('test321', $result['avatar']);
         self::assertEquals('qwertzui', $result['title']);
         self::assertFalse($result['enabled']);
         self::assertEquals('it', $result['language']);
@@ -279,7 +273,7 @@ class UserControllerTest extends APIControllerBaseTest
     public function testPatchActionWithInvalidUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->request($client, '/api/users/1', 'PATCH', [], json_encode(['avatar' => 'asdasd']));
+        $this->request($client, '/api/users/1', 'PATCH', [], json_encode(['language' => 'hu']));
         $this->assertApiResponseAccessDenied($client->getResponse(), 'Not allowed to edit user');
     }
 

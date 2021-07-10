@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="zh-CN" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="button_copy_url_to_browser">
+        <source>button_copy_url_to_browser</source>
+        <target>如果该按钮无效，请复制 &amp; 以下URL并粘贴到浏览器中: %url%</target>
+      </trans-unit>
+      <trans-unit id="registration.subject">
+        <source>registration.subject</source>
+        <target>激活您的账户</target>
+      </trans-unit>
+      <trans-unit id="registration.title">
+        <source>registration.title</source>
+        <target>欢迎 %username%</target>
+      </trans-unit>
+      <trans-unit id="reset.subject">
+        <source>reset.subject</source>
+        <target>重置您的密码</target>
+      </trans-unit>
+      <trans-unit id="reset.intro">
+        <source>reset.intro</source>
+        <target>...您忘记了密码吗？别担心：Kimai将帮助您创建一个新的：</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

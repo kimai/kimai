@@ -31,17 +31,30 @@ class WidgetRepository
     /**
      * @var array
      */
-    private $definitions = [];
+    private $definitions;
+    /**
+     * @var array
+     */
+    private $customDefinition;
 
     public function __construct(TimesheetRepository $repository, array $widgets)
     {
         $this->repository = $repository;
-        $this->definitions = array_merge($this->getDefaultWidgets(), $widgets);
+        $this->customDefinition = $widgets;
+    }
+
+    private function getDefinedWidgets(): array
+    {
+        if (null === $this->definitions) {
+            $this->definitions = array_merge($this->getDefaultWidgets(), $this->customDefinition);
+        }
+
+        return $this->definitions;
     }
 
     public function has(string $id): bool
     {
-        return isset($this->definitions[$id]) || isset($this->widgets[$id]);
+        return isset($this->getDefinedWidgets()[$id]) || isset($this->widgets[$id]);
     }
 
     public function registerWidget(WidgetInterface $widget): WidgetRepository
@@ -64,7 +77,7 @@ class WidgetRepository
         }
 
         // this code should ONLY be reached for internal (pre-registered) widgets
-        $this->registerWidget($this->create($id, $this->definitions[$id]));
+        $this->registerWidget($this->create($id, $this->getDefinedWidgets()[$id]));
 
         return $this->widgets[$id];
     }
@@ -161,16 +174,6 @@ class WidgetRepository
                 'color' => 'purple',
                 'type' => Counter::class,
             ],
-            'userDurationYear' => [
-                'title' => 'stats.durationYear',
-                'query' => TimesheetRepository::STATS_QUERY_DURATION,
-                'user' => true,
-                'begin' => '01 january this year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'icon' => 'duration',
-                'color' => 'yellow',
-                'type' => Counter::class,
-            ],
             'userDurationTotal' => [
                 'title' => 'stats.durationTotal',
                 'query' => TimesheetRepository::STATS_QUERY_DURATION,
@@ -209,16 +212,6 @@ class WidgetRepository
                 'color' => 'purple',
                 'type' => Counter::class,
             ],
-            'userAmountYear' => [
-                'title' => 'stats.amountYear',
-                'query' => TimesheetRepository::STATS_QUERY_RATE,
-                'user' => true,
-                'begin' => '01 january this year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'icon' => 'money',
-                'color' => 'yellow',
-                'type' => Counter::class,
-            ],
             'userAmountTotal' => [
                 'title' => 'stats.amountTotal',
                 'query' => TimesheetRepository::STATS_QUERY_RATE,
@@ -254,16 +247,6 @@ class WidgetRepository
                 'end' => 'last day of this month 23:59:59',
                 'icon' => 'duration',
                 'color' => 'purple',
-                'user' => false,
-                'type' => Counter::class,
-            ],
-            'durationYear' => [
-                'title' => 'stats.durationYear',
-                'query' => TimesheetRepository::STATS_QUERY_DURATION,
-                'begin' => '01 january this year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'icon' => 'duration',
-                'color' => 'yellow',
                 'user' => false,
                 'type' => Counter::class,
             ],
@@ -305,16 +288,6 @@ class WidgetRepository
                 'user' => false,
                 'type' => Counter::class,
             ],
-            'amountYear' => [
-                'title' => 'stats.amountYear',
-                'query' => TimesheetRepository::STATS_QUERY_RATE,
-                'begin' => '01 january this year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'icon' => 'money',
-                'color' => 'yellow',
-                'user' => false,
-                'type' => Counter::class,
-            ],
             'amountTotal' => [
                 'title' => 'stats.amountTotal',
                 'query' => TimesheetRepository::STATS_QUERY_RATE,
@@ -350,16 +323,6 @@ class WidgetRepository
                 'end' => 'last day of this month 23:59:59',
                 'icon' => 'user',
                 'color' => 'purple',
-                'user' => false,
-                'type' => Counter::class,
-            ],
-            'activeUsersYear' => [
-                'title' => 'stats.userActiveYear',
-                'query' => TimesheetRepository::STATS_QUERY_USER,
-                'begin' => '01 january this year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'icon' => 'user',
-                'color' => 'yellow',
                 'user' => false,
                 'type' => Counter::class,
             ],

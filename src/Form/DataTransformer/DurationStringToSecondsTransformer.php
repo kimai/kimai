@@ -40,7 +40,7 @@ class DurationStringToSecondsTransformer implements DataTransformerInterface
     {
         try {
             return $this->formatter->format($intToFormat);
-        } catch (\Exception $e) {
+        } catch (\Exception | \TypeError $e) {
             throw new TransformationFailedException($e->getMessage());
         }
     }

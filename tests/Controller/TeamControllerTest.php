@@ -41,7 +41,7 @@ class TeamControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/teams/');
         $this->assertPageActions($client, [
-            'search search-toggle visible-xs-inline' => '#',
+            'search' => '#',
             'create' => $this->createUrl('/admin/teams/create'),
             'help' => 'https://www.kimai.org/documentation/teams.html'
         ]);
@@ -62,7 +62,7 @@ class TeamControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/teams/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'foo',
         ]);
@@ -78,16 +78,15 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/teams/create');
         $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
 
-        $editForm = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
-        $this->assertEquals('', $editForm->get('team_edit_form[name]')->getValue());
-        $this->assertEquals('5', $editForm->get('team_edit_form[teamlead]')->getValue());
+        $this->assertEquals('', $form->get('team_edit_form[name]')->getValue());
+        $this->assertEquals('5', $form->get('team_edit_form[teamlead]')->getValue());
 
         $client->submit($form, [
             'team_edit_form' => [
-                'name' => 'Test Team',
+                'name' => 'Test Team' . uniqid(),
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/teams/2/edit'));
+        $this->assertIsRedirect($client, '/edit');
         $client->followRedirect();
         $this->assertHasFlashSuccess($client);
         $this->assertHasCustomerAndProjectPermissionBoxes($client);
@@ -210,7 +209,7 @@ class TeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/admin/teams/1/duplicate');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/teams/2/edit'));
+        $this->assertIsRedirect($client, '/edit');
         $client->followRedirect();
         $node = $client->getCrawler()->filter('#team_edit_form_name');
         self::assertEquals(1, $node->count());

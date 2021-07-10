@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="daterangepicker.thisMonth">
         <source>daterangepicker.thisMonth</source>
-        <target>Ce mois</target>
+        <target>Ce mois-ci</target>
       </trans-unit>
       <trans-unit id="daterangepicker.lastYear">
         <source>daterangepicker.lastYear</source>

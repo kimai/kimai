@@ -5,9 +5,27 @@
  * file that was distributed with this source code.
  */
 
+
+/* custom extension to make the column wide enough to show the sortable icons */
+table.dataTable th.sortable {
+    padding-left: 22px;
+}
+
+table.dataTable.table > tbody > tr > td {
+    vertical-align: middle;
+    .img-circle {
+        max-width: 30px;
+        margin-right: 0;
+        &.teamlead {
+            box-shadow: 0 0 5px 3px $gray-lte;
+        }
+    }
+}
+
 span.label-color,
 span.label-meta,
 span.label-tag,
+span.label-user,
 span.label-activity,
 span.label-project,
 span.label-customer {
@@ -37,6 +55,9 @@ table.dataTable {
         &.overlapping {
             border-top: 2px dotted red;
         }
+        &.exported {
+            opacity: 0.7;
+        }
     }
     td {
         /*
@@ -48,7 +69,6 @@ table.dataTable {
         }
         .label {
             font-size: 85%;
-            font-weight: 500;
             padding: .3em .6em .3em;
             line-height: 24px;
         }
@@ -66,6 +86,16 @@ table.dataTable {
         }
         span.label-invisible {
             opacity: 0.8;
+        }
+    }
+}
+
+table.table-hover {
+    tr {
+        &.exported {
+            &:hover {
+                opacity: 1.0;
+            }
         }
     }
 }

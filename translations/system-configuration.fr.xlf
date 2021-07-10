@@ -54,10 +54,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Nombre autorisé de relevés d'activité simultanées</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Nombre de relevés de temps d'activité à partir duquel un message d'avertissement est affiché</target>
-      </trans-unit>
       <trans-unit id="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target>Afficher les numéros de semaine</target>
@@ -176,15 +172,15 @@
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>Société</target>
+        <target>Nom de l'entreprise</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>Logo (URL de l'image, remplace le nom de la société sur l'écran de connexion)</target>
+        <target>URL du logo (remplace le nom de la société dans l'écran de connexion)</target>
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>Identité</target>
+        <target>Mon entreprise</target>
       </trans-unit>
       <trans-unit id="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>
@@ -225,6 +221,42 @@
       <trans-unit id="invoice">
         <source>invoice</source>
         <target>Factures</target>
+      </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>Désactivé</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Utiliser la valeur configurée de la règle d'arrondi</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Sélection des minutes pour Du et Au</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Sélection des minutes pour la durée</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>Autoriser la surréservation des budgets stockés</target>
+      </trans-unit>
+      <trans-unit id="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>Liste de codes de couleur HTML séparés par des virgules. Les noms des couleurs peuvent être définis en faisant précéder le code de couleur d'un nom et du délimiteur |, par ex : Blanc|#ffffff,Noir|#000000.</target>
+      </trans-unit>
+      <trans-unit id="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>Couleurs autorisées</target>
+      </trans-unit>
+      <trans-unit id="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>Limiter les choix de couleurs</target>
+      </trans-unit>
+      <trans-unit id="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>Année fiscale</target>
       </trans-unit>
     </body>
   </file>

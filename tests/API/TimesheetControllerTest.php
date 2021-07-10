@@ -31,7 +31,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public const DATE_FORMAT_HTML5 = 'Y-m-d\TH:i:s';
     public const TEST_TIMEZONE = 'Europe/London';
 
-    protected function importFixtureForUser(string $role)
+    /**
+     * @param string $role
+     * @return Timesheet[]
+     */
+    protected function importFixtureForUser(string $role): array
     {
         $fixture = new TimesheetFixtures();
         $fixture
@@ -43,7 +47,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1))
         ;
 
-        $this->importFixture($fixture);
+        return $this->importFixture($fixture);
     }
 
     public function testIsSecure()
@@ -173,6 +177,25 @@ class TimesheetControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
+    public function testGetCollectionWithQueryFailsWith404OnOutOfRangedPage()
+    {
+        $modifiedAfter = new \DateTime('-1 hour');
+        $begin = new \DateTime('first day of this month');
+        $begin->setTime(0, 0, 0);
+        $end = new \DateTime('last day of this month');
+        $end->setTime(23, 59, 59);
+
+        $query = [
+            'page' => 19,
+            'size' => 50,
+        ];
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importFixtureForUser(User::ROLE_USER);
+        $this->request($client, '/api/timesheets', 'GET', $query);
+        $this->assertApiException($client->getResponse(), ['code' => 404, 'message' => 'Page "19" does not exist. The currentPage must be inferior to "1"']);
+    }
+
     public function testGetCollectionWithSingleParamsQuery()
     {
         $begin = new \DateTime('first day of this month');
@@ -300,8 +323,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->addTag($tag)
         ;
         $em->persist($timesheet);
+        $em->flush();
 
-        $this->assertAccessIsGranted($client, '/api/timesheets/1');
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $timesheet->getId());
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
@@ -314,7 +338,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'tags' => [
                 0 => 'test'
             ],
-            'id' => 1,
             // make sure the timezone is properly applied in serializer (see #1858)
             // minute and second are different from the above datetime object, because of applied default minute rounding
             'begin' => '2020-03-27T14:35:00+1300',
@@ -337,16 +360,17 @@ class TimesheetControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_ADMIN);
+        $timesheets = $this->importFixtureForUser(User::ROLE_ADMIN);
+        $this->assertCount(10, $timesheets);
 
-        $this->assertApiAccessDenied($client, '/api/timesheets/15', 'You are not allowed to view this timesheet');
+        $this->assertApiAccessDenied($client, '/api/timesheets/' . $timesheets[0]->getId(), 'Access denied.');
     }
 
     public function testGetEntityAccessAllowedForAdmin()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->importFixtureForUser(User::ROLE_USER);
-        $this->assertAccessIsGranted($client, '/api/timesheets/1');
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $timesheets[0]->getId());
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
@@ -355,7 +379,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetEntityNotFound()
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/20');
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testPostAction()
@@ -365,7 +389,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:m:0'),
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
@@ -378,7 +402,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
-        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
     }
 
@@ -389,7 +413,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:m:0'),
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
@@ -402,7 +426,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntityFull', $result);
         $this->assertNotEmpty($result['id']);
-        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
     }
 
@@ -419,7 +443,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'activity' => 1,
             'project' => 1,
             'user' => $user->getId(),
-            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('- 8 hours'))->format('Y-m-d H:m:0'),
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
@@ -496,7 +520,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
     {
         $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
         $data = [
             'activity' => 1,
             'project' => 1,
@@ -505,7 +529,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'description' => 'foo',
             'exported' => true,
         ];
-        $this->request($client, '/api/timesheets/1', 'PATCH', [], json_encode($data));
+        $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -530,7 +554,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setStartDate(new \DateTime('-10 days'))
             ->setAllowEmptyDescriptions(false)
         ;
-        $this->importFixture($fixture);
+        $timesheets = $this->importFixture($fixture);
 
         $data = [
             'activity' => 1,
@@ -540,23 +564,23 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'description' => 'foo',
             'exported' => true,
         ];
-        $this->request($client, '/api/timesheets/15', 'PATCH', [], json_encode($data));
+        $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'PATCH', [], json_encode($data));
         $response = $client->getResponse();
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
-        $this->assertEquals('You are not allowed to update this timesheet', $json['message']);
+        $this->assertEquals('Access denied.', $json['message']);
     }
 
     public function testPatchActionWithUnknownTimesheet()
     {
-        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/255', []);
+        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/255', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testInvalidPatchAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
 
         $data = [
             'activity' => 10,
@@ -565,7 +589,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
             'description' => 'foo',
         ];
-        $this->request($client, '/api/timesheets/1', 'PATCH', [], json_encode($data));
+        $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'PATCH', [], json_encode($data));
 
         $response = $client->getResponse();
         $this->assertEquals(400, $response->getStatusCode());
@@ -577,8 +601,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public function testDeleteAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
-        $this->assertAccessIsGranted($client, '/api/timesheets/1');
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $timesheets[0]->getId());
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
@@ -594,17 +618,15 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testDeleteActionWithUnknownTimesheet()
     {
-        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/timesheets/255');
+        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/timesheets/255', 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testDeleteActionForDifferentUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
 
-        $id = 1;
-
-        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'DELETE');
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
         $this->assertEmpty($client->getResponse()->getContent());
@@ -614,15 +636,15 @@ class TimesheetControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_ADMIN);
+        $timesheets = $this->importFixtureForUser(User::ROLE_ADMIN);
 
-        $this->request($client, '/api/timesheets/15', 'DELETE');
+        $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'DELETE');
 
         $response = $client->getResponse();
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
-        $this->assertEquals('You are not allowed to delete this timesheet', $json['message']);
+        $this->assertEquals('Access denied.', $json['message']);
     }
 
     public function testDeleteActionForExportedRecordIsNotAllowed()
@@ -632,13 +654,14 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
+        $id = $timesheet->getId();
         $timesheet->setExported(true);
         $em->persist($timesheet);
         $em->flush();
 
-        $this->request($client, '/api/timesheets/1', 'DELETE');
-        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to delete this timesheet');
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
     }
 
     public function testDeleteActionForExportedRecordIsAllowedForAdmin()
@@ -648,12 +671,13 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
+        $id = $timesheet->getId();
         $timesheet->setExported(true);
         $em->persist($timesheet);
         $em->flush();
 
-        $this->request($client, '/api/timesheets/1', 'DELETE');
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
@@ -720,7 +744,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $start = new \DateTime('-10 days');
+        $start = new \DateTime('-8 hours');
 
         $fixture = new TimesheetFixtures();
         $fixture
@@ -728,12 +752,13 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setHourlyRate(true)
             ->setAmount(0)
             ->setUser($this->getUserByRole(User::ROLE_USER))
-            ->setStartDate($start)
+            ->setFixedStartDate($start)
             ->setAmountRunning(1)
         ;
-        $this->importFixture($fixture);
+        $timesheets = $this->importFixture($fixture);
+        $id = $timesheets[0]->getId();
 
-        $this->request($client, '/api/timesheets/11/stop', 'PATCH');
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -743,22 +768,47 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->find($id);
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
+    }
+
+    public function testStopActionTriggersValidationOnLongRunning()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->setSystemConfiguration('timesheet.rules.long_running_duration', 750);
+        $this->importFixtureForUser(User::ROLE_USER);
+
+        $start = new \DateTime('-13 hours');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(0)
+            ->setUser($this->getUserByRole(User::ROLE_USER))
+            ->setFixedStartDate($start)
+            ->setAmountRunning(1)
+        ;
+        $timesheets = $this->importFixture($fixture);
+        $id = $timesheets[0]->getId();
+
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
+        $this->assertApiCallValidationError($client->getResponse(), ['duration' => 'Maximum 12:30 hours allowed.']);
     }
 
     public function testStopActionFailsOnStoppedEntry()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
-        $this->request($client, '/api/timesheets/1/stop', 'PATCH');
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
 
-        $this->assertApiException($client->getResponse(), 'Timesheet entry already stopped');
+        $this->assertApi500Exception($client->getResponse(), 'Timesheet entry already stopped');
     }
 
     public function testStopThrowsNotFound()
     {
-        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/11/stop', []);
+        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/11/stop', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testStopNotAllowedForUser()
@@ -777,10 +827,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setStartDate($start)
             ->setAmountRunning(3)
         ;
-        $this->importFixture($fixture);
+        $timesheets = $this->importFixture($fixture);
+        $id = $timesheets[3]->getId();
 
-        $this->request($client, '/api/timesheets/12/stop', 'PATCH');
-        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to stop this timesheet');
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
     }
 
     public function testGetCollectionWithTags()
@@ -806,7 +857,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(5, \count($result));
+        $this->assertEquals(10, \count($result));
         self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
 
         $query = ['tags' => 'Test,Admin'];
@@ -831,15 +882,16 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public function testRestartAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
 
         $data = [
             'description' => 'foo',
             'tags' => 'another,testing,bar'
         ];
-        $this->request($client, '/api/timesheets/1', 'PATCH', [], json_encode($data));
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], json_encode($data));
 
-        $this->request($client, '/api/timesheets/1/restart', 'PATCH');
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -861,16 +913,17 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public function testRestartActionWithBegin()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
 
         $data = [
             'description' => 'foo',
             'tags' => 'another,testing,bar'
         ];
-        $this->request($client, '/api/timesheets/1', 'PATCH', [], json_encode($data));
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], json_encode($data));
 
         $begin = new \DateTime('2019-11-27 13:55:00');
-        $this->request($client, '/api/timesheets/1/restart', 'PATCH', ['begin' => $begin->format(BaseApiController::DATE_FORMAT_PHP)]);
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH', ['begin' => $begin->format(BaseApiController::DATE_FORMAT_PHP)]);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -893,11 +946,12 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public function testRestartActionWithCopyData()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->find($id);
         $timesheet->setDescription('foo');
         $timesheet->addTag((new Tag())->setName('another'));
         $timesheet->addTag((new Tag())->setName('testing'));
@@ -908,10 +962,10 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $em->persist($timesheet);
         $em->flush();
 
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->find($id);
         $this->assertEquals('foo', $timesheet->getDescription());
 
-        $this->request($client, '/api/timesheets/1/restart', 'PATCH', ['copy' => 'all']);
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH', ['copy' => 'all']);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -946,15 +1000,16 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setStartDate($start)
             ->setAmountRunning(3)
         ;
-        $this->importFixture($fixture);
+        $timesheets = $this->importFixture($fixture);
+        $id = $timesheets[0]->getId();
 
-        $this->request($client, '/api/timesheets/2/restart', 'PATCH');
-        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to re-start this timesheet');
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
     }
 
     public function testRestartThrowsNotFound()
     {
-        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/42/restart', []);
+        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/42/restart', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testDuplicateAction()
@@ -964,7 +1019,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => ($dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('- 8 hours'))->format('Y-m-d H:m:0'),
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
@@ -977,7 +1032,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
-        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
 
         $this->request($client, '/api/timesheets/' . $result['id'] . '/duplicate', 'PATCH');
@@ -987,68 +1042,71 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
-        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
+        $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
     }
 
     public function testDuplicateThrowsNotFound()
     {
-        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/11/duplicate', []);
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/11/duplicate', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testExportAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->find($id);
         $this->assertFalse($timesheet->isExported());
 
-        $this->request($client, '/api/timesheets/1/export', 'PATCH');
+        $this->request($client, '/api/timesheets/' . $id . '/export', 'PATCH');
         $this->assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
 
         $em->clear();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->find($id);
         $this->assertTrue($timesheet->isExported());
 
-        $this->request($client, '/api/timesheets/1/export', 'PATCH');
+        $this->request($client, '/api/timesheets/' . $id . '/export', 'PATCH');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $em->clear();
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->find($id);
         $this->assertFalse($timesheet->isExported());
     }
 
     public function testExportNotAllowedForUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
 
-        $this->request($client, '/api/timesheets/1/export', 'PATCH');
-        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to lock this timesheet');
+        $this->request($client, '/api/timesheets/' . $id . '/export', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
     }
 
     public function testExportThrowsNotFound()
     {
-        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/42/export', []);
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/' . PHP_INT_MAX . '/export', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testMetaActionThrowsNotFound()
     {
-        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/42/meta', []);
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/' . PHP_INT_MAX . '/meta', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
     }
 
     public function testMetaActionThrowsExceptionOnMissingName()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
 
-        return $this->assertExceptionForMethod($client, '/api/timesheets/1/meta', 'PATCH', ['value' => 'X'], [
+        $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['value' => 'X'], [
             'code' => 400,
             'message' => 'Parameter "name" of value "NULL" violated a constraint "This value should not be null."'
         ]);
@@ -1057,9 +1115,10 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public function testMetaActionThrowsExceptionOnMissingValue()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
 
-        return $this->assertExceptionForMethod($client, '/api/timesheets/1/meta', 'PATCH', ['name' => 'X'], [
+        $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X'], [
             'code' => 400,
             'message' => 'Parameter "value" of value "NULL" violated a constraint "This value should not be null."'
         ]);
@@ -1068,9 +1127,10 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public function testMetaActionThrowsExceptionOnMissingMetafield()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
 
-        return $this->assertExceptionForMethod($client, '/api/timesheets/1/meta', 'PATCH', ['name' => 'X', 'value' => 'Y'], [
+        $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X', 'value' => 'Y'], [
             'code' => 500,
             'message' => 'Unknown meta-field requested'
         ]);
@@ -1079,14 +1139,15 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public function testMetaAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
         static::$container->get('event_dispatcher')->addSubscriber(new TimesheetTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',
             'value' => 'another,testing,bar'
         ];
-        $this->request($client, '/api/timesheets/1/meta', 'PATCH', [], json_encode($data));
+        $this->request($client, '/api/timesheets/' . $id . '/meta', 'PATCH', [], json_encode($data));
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -1096,7 +1157,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->find($id);
         $this->assertEquals('another,testing,bar', $timesheet->getMetaField('metatestmock')->getValue());
     }
 }

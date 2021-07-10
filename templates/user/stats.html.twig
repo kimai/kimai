@@ -1,5 +1,6 @@
 {% extends 'user/layout.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/charts.html.twig" as charts %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -11,109 +12,187 @@
     {{ encore_entry_script_tags('chart') }}
 {% endblock %}
 
+{% block profile_navbar %}
+    {{ _self.about_me(user, stats) }}
+{% endblock %}
+
+{% block profile_intro %}{% endblock %}
+
 {% block profile_content %}
+
+    {{ _self.profile_box_horizontal(user, stats) }}
 
     {% if years is empty %}
         {{ widgets.nothing_found() }}
     {% endif %}
 
-    <script type="text/javascript">
-        function userProfileChartOptions() {
-            return {
-                maintainAspectRatio: true,
-                responsive: true,
-                legend: false,
-                barPercentage: 0.5,
-                categoryPercentage: 0.9,
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display: false
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        },
-                        gridLines: {
-                            display: true,
-                            color: '{{ kimai_context.chart.grid_color }}',
-                            lineWidth: 1
-                        }
-                    }]
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            return data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                        }
-                    }
-                }
-                {%- if is_granted('view_reporting') and (app.user.id == user.id or is_granted('view_other_timesheet')) -%}
-                ,
-                onClick: function(event, elements) {
-                    var element = elements[0];
-                    var month = this.data.datasets[0].monthData[element._index];
-                    var formattedMonth = moment(month).format('{{ stat_date_format }}');
-                    var reportUrl = '{{ path('report_user_month', {'user': user.id, 'date': 'XXXXX'})|raw }}'.replace('XXXXX', formattedMonth);
-                    document.location = reportUrl;
-                }
-            {% endif %}
-            };
-        }
-    </script>
+    {% set monthRoute = null %}
+    {%- if user.enabled and is_granted('view_reporting') and (app.user.id == user.id or is_granted('view_other_timesheet')) -%}
+        {% set monthRoute = path('report_user_month', {'user': user.id, 'date': '__MONTH__'}) %}
+    {% endif %}
 
-    {% for year,yearStat in years %}
+    {{ charts.bar_javascript({'footer': 'footer', 'label': 'tooltip', 'onclick': {'url': monthRoute, 'replacer': {'__MONTH__': 'month'}}}) }}
 
+    {% for yearStat in years %}
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-            {% block box_title %}{{ year }}{% endblock %}
+            {% import "macros/charts.html.twig" as charts %}
+            {% block box_title %}{{ yearStat.year }}{% endblock %}
             {% block box_body %}
-                <div class="chart">
-                    <canvas id="userProfileChart{{ year }}" style="height: {{ kimai_context.chart.height }}px;"></canvas>
-                </div>
-                <script type="text/javascript">
-                    document.addEventListener('kimai.initialized', function() {
-                        var userProfileChartData{{ year }} = {
-                            labels: moment.months(),
-                            datasets: [
-                                {
-                                    label: '{{ year }}',
-                                    backgroundColor: '{{ kimai_context.chart.background_color }}',
-                                    borderColor: '{{ kimai_context.chart.border_color }}',
-                                    data: [
-                                        {% for month in yearStat.months %}
-                                        {{ (month.totalDuration / 3600)|number_format(2, '.', '') }}
-                                        {% if not loop.last %},{% endif %}
-                                        {% endfor %}
-                                    ],
-                                    realData: [
-                                        {% for month in yearStat.months %}
-                                        '{{ month.totalDuration|duration }}'
-                                        {% if not loop.last %},{% endif %}
-                                        {% endfor %}
-                                    ],
-                                    monthData: [
-                                        {% for month in yearStat.months %}
-                                        '{{ yearStat.year }}-{{ month.month|length == 1 ? '0'~ month.month : month.month }}-01'
-                                        {% if not loop.last %},{% endif %}
-                                        {% endfor %}
-                                    ],
-                                }
-                            ]
-                        };
-
-                        var userProfileChart{{ year }} = new Chart(
-                            $("#userProfileChart{{ year }}").get(0).getContext("2d"), {
-                                type: 'bar',
-                                data: userProfileChartData{{ year }},
-                                options: userProfileChartOptions()
-                            }
-                        );
-                    });
-                </script>
+                {% set dataset = [] %}
+                {% for month in yearStat.months %}
+                    {% set monthDate = create_date(yearStat.year ~ '-' ~ month.month ~ '-01') %}
+                    {% set dataset = dataset|merge([{'value': month.duration|chart_duration, 'tooltip': month.duration|duration, 'footer': ('label.billable'|trans ~ ': ' ~ month.billableDuration|duration), 'month': monthDate|date_short}]) %}
+                {% endfor %}
+                {{ charts.bar_chart('userProfileChart'~yearStat.year, month_names(), [dataset], {}) }}
             {% endblock %}
         {% endembed %}
-
     {% endfor %}
 
+    {% if user.teams is not empty and (is_granted('teams', user) or (app.user == user and is_granted('view_team_member'))) %}
+        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+            {% import "macros/widgets.html.twig" as widgets %}
+            {% block box_title %}{{ 'label.my_teams'|trans }}{% endblock %}
+            {% block box_body %}
+                {{ widgets.team_list(user.teams) }}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('kimai.teamUpdate', true);
+        });
+    </script>
+{% endblock %}
+
+{% macro about_me(user, stats) %}
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% block box_title %}
+            <a href="mailto:{{ user.email }}" title="{{ 'label.email'|trans }}">{{ widgets.icon('mail') }}</a>
+            <span data-toggle="tooltip" title="{{ 'label.id'|trans }}: {{ user.id }}">{{ 'profile.about_me'|trans }}</span>
+        {% endblock %}
+        {% block box_body %}
+            <p>
+                <strong>{{ 'label.username'|trans }}</strong><br>
+                {{ user.username }}
+            </p>
+            <p>
+                <strong>{{ 'profile.first_entry'|trans }}</strong><br>
+                {# FIXME use a configuration for it #}
+                {{ stats.firstEntry|date_short }}
+            </p>
+            <p>
+                <strong>{{ 'profile.registration_date'|trans }}</strong><br>
+                {{ user.registeredAt|date_short }}
+            </p>
+            {% if is_granted('hourly-rate', user) and user.preferenceValue('hourly_rate') is not null %}
+                <p>
+                    <strong>{{ 'label.hourlyRate'|trans }}</strong><br>
+                    {{ user.preferenceValue('hourly_rate') }}
+                </p>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endmacro %}
+
+{% macro profile_box_vertical(user, stats) %}
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% block box_body_class %}box-profile box-user-profile{% endblock %}
+        {% block box_body %}
+            <div class="text-center">
+                {{ widgets.user_avatar(user) }}
+                <h3 class="profile-username">{{ widgets.username(user) }}</h3>
+                <p class="text-muted">{{ user.title }}</p>
+            </div>
+            {% set seeOwnRate = is_granted('view_rate_own_timesheet') %}
+
+            <table class="table">
+                <tr>
+                    <th>{{ 'stats.durationMonth'|trans }}</th>
+                    <td class="text-nowrap pull-right">{{ stats.durationThisMonth|duration }}</td>
+                </tr>
+                {% if seeOwnRate %}
+                    <tr>
+                        <th>{{ 'stats.amountMonth'|trans }}</th>
+                        {# TODO which currency shall we use here? #}
+                        <td class="text-nowrap pull-right">{{ stats.amountThisMonth|money }}</td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <th>{{ 'stats.durationTotal'|trans }}</th>
+                    <td class="text-nowrap pull-right">{{ stats.durationTotal|duration }}</td>
+                </tr>
+                {% if seeOwnRate %}
+                    <tr>
+                        <th>{{ 'stats.amountTotal'|trans }}</th>
+                        {# TODO which currency shall we use here? #}
+                        <td class="text-nowrap pull-right">{{ stats.amountTotal|money }}</td>
+                    </tr>
+                {% endif %}
+            </table>
+        {% endblock %}
+    {% endembed %}
+{% endmacro %}
+
+{% macro profile_box_horizontal(user, stats) %}
+    {% import "@AdminLTE/Macros/default.html.twig" as macro %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set color = config('theme.chart.background_color') %}
+    {% set event = trigger('user.profile_background', {'color': color, 'font': color|font_contrast, 'user': user, 'image': null}) %}
+    {% set config = event.payload %}
+
+    <div class="box box-widget widget-user box-user-profile">
+        <div class="widget-user-header" style="{% if config.image is not null %}background: url('{{ config.image }}') center center;{% else %}background-color: {{ config.color }}{% endif %}">
+            <h3 class="widget-user-username" style="color: {{ config.font }}">
+                {{ widgets.username(user) }}
+            </h3>
+            <h5 class="widget-user-desc" style="color: {{ config.font }}">{{ user.title }}</h5>
+        </div>
+        <div class="widget-user-image">
+            {{ widgets.user_avatar(user) }}
+        </div>
+        <div class="box-footer">
+            {% if stats is not null %}
+                {% set seeOwnRate = is_granted('view_rate_own_timesheet') %}
+                {% set columnLength = seeOwnRate ? 3 : 6 %}
+                <div class="row">
+                    <div class="col-sm-{{ columnLength }} border-right">
+                        <div class="description-block">
+                            <h5 class="description-header">{{ stats.durationThisMonth|duration }}</h5>
+                            <span class="description-text">{{ 'stats.durationMonth'|trans }}</span>
+                        </div>
+                    </div>
+                    {% if seeOwnRate %}
+                        <div class="col-sm-{{ columnLength }} border-right">
+                            <div class="description-block">
+                                <h5 class="description-header">{{ stats.amountThisMonth|money }}</h5>
+                                <span class="description-text">{{ 'stats.amountMonth'|trans }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="col-sm-{{ columnLength }} border-right">
+                        <div class="description-block">
+                            <h5 class="description-header">{{ stats.durationTotal|duration }}</h5>
+                            <span class="description-text">{{ 'stats.durationTotal'|trans }}</span>
+                        </div>
+                    </div>
+                    {% if seeOwnRate %}
+                        <div class="col-sm-{{ columnLength }} border-right">
+                            <div class="description-block">
+                                <h5 class="description-header">{{ stats.amountTotal|money }}</h5>
+                                <span class="description-text">{{ 'stats.amountTotal'|trans }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}

@@ -23,10 +23,11 @@ class DayTest extends TestCase
         $date = new DateTime('-8 hours');
         $sut = new Day($date, 12340, 197.25956);
 
-        $this->assertSame($date, $sut->getDay());
-        $this->assertEquals([], $sut->getDetails());
-        $this->assertEquals(12340, $sut->getTotalDuration());
-        $this->assertEquals(197.25956, $sut->getTotalRate());
+        self::assertSame($date, $sut->getDay());
+        self::assertEquals([], $sut->getDetails());
+        self::assertSame(12340, $sut->getTotalDuration());
+        self::assertSame(197.25956, $sut->getTotalRate());
+        self::assertSame(0, $sut->getTotalDurationBillable());
     }
 
     public function testAllowedMonths()
@@ -36,9 +37,11 @@ class DayTest extends TestCase
 
         $sut->setTotalDuration(999);
         $sut->setTotalRate(0.123456789);
+        $sut->setTotalDurationBillable(12345);
 
-        $this->assertEquals(999, $sut->getTotalDuration());
-        $this->assertEquals(0.123456789, $sut->getTotalRate());
+        self::assertSame(999, $sut->getTotalDuration());
+        self::assertSame(0.123456789, $sut->getTotalRate());
+        self::assertSame(12345, $sut->getTotalDurationBillable());
     }
 
     public function testSetDetails()
@@ -47,6 +50,6 @@ class DayTest extends TestCase
 
         $sut->setDetails(['foo' => ['bar' => '1212e'], 'hello' => 'world']);
 
-        $this->assertEquals(['foo' => ['bar' => '1212e'], 'hello' => 'world'], $sut->getDetails());
+        self::assertEquals(['foo' => ['bar' => '1212e'], 'hello' => 'world'], $sut->getDetails());
     }
 }

@@ -34,9 +34,14 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->assertHasNoEntriesWithFilter($client);
         $this->assertHasProfileBox($client, 'John Doe');
         $this->assertHasAboutMeBox($client, UserFixtures::USERNAME_USER);
+
+        $content = $client->getResponse()->getContent();
+        $year = (new \DateTime())->format('Y');
+        $this->assertStringContainsString('<h3 class="box-title">' . $year . '</h3>', $content);
+        $this->assertStringContainsString('new Chart(', $content);
+        $this->assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
     }
 
     public function testIndexAction()
@@ -65,7 +70,7 @@ class ProfileControllerTest extends ControllerBaseTest
         foreach ($dates as $start) {
             $year = $start->format('Y');
             $this->assertStringContainsString('<h3 class="box-title">' . $year . '</h3>', $content);
-            $this->assertStringContainsString('var userProfileChart' . $year . ' = new Chart(', $content);
+            $this->assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
         }
 
         $this->assertHasProfileBox($client, 'John Doe');
@@ -74,11 +79,11 @@ class ProfileControllerTest extends ControllerBaseTest
 
     protected function assertHasProfileBox(HttpKernelBrowser $client, string $username)
     {
-        $profileBox = $client->getCrawler()->filter('div.box-body.box-profile');
+        $profileBox = $client->getCrawler()->filter('div.box-user-profile');
         $this->assertEquals(1, $profileBox->count());
-        $profileAvatar = $profileBox->filter('img.img-circle');
+        $profileAvatar = $profileBox->filter('span.avatar');
         $this->assertEquals(1, $profileAvatar->count());
-        $alt = $profileAvatar->attr('alt');
+        $alt = $profileAvatar->attr('title');
 
         $this->assertEquals($username, $alt);
     }
@@ -87,38 +92,25 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringContainsString('<h3 class="box-title">About me</h3>', $content);
-        $this->assertStringContainsString('<td class="text-nowrap pull-right">' . $username . '</td>', $content);
+        $this->assertStringContainsString('About me', $content);
     }
 
     public function getTabTestData()
     {
-        $userTabs = ['#settings', '#password', '#api-token'];
-
         return [
-            [User::ROLE_USER, UserFixtures::USERNAME_USER, ['#settings', '#password', '#api-token']],
-            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_SUPER_ADMIN, array_merge($userTabs, ['#teams', '#roles'])],
+            [User::ROLE_USER, UserFixtures::USERNAME_USER],
+            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_SUPER_ADMIN],
         ];
     }
 
     /**
      * @dataProvider getTabTestData
      */
-    public function testEditActionTabs($role, $username, $expectedTabs)
+    public function testEditActionTabs($role, $username)
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, '/profile/' . $username . '/edit');
         $this->assertTrue($client->getResponse()->isSuccessful());
-
-        $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
-        $this->assertEquals(\count($expectedTabs), $tabs->count());
-        $foundTabs = [];
-
-        /** @var \DOMElement $tab */
-        foreach ($tabs->filter('a') as $tab) {
-            $foundTabs[] = $tab->getAttribute('href');
-        }
-        $this->assertEmpty(array_diff($expectedTabs, $foundTabs));
     }
 
     public function testIndexActionWithDifferentUsername()
@@ -140,7 +132,6 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
         $this->assertEquals('John Doe', $user->getAlias());
         $this->assertEquals('Developer', $user->getTitle());
-        $this->assertEquals(UserFixtures::DEFAULT_AVATAR, $user->getAvatar());
         $this->assertEquals('john_user@example.com', $user->getEmail());
         $this->assertTrue($user->isEnabled());
 
@@ -149,7 +140,6 @@ class ProfileControllerTest extends ControllerBaseTest
             'user_edit' => [
                 'alias' => 'Johnny',
                 'title' => 'Code Monkey',
-                'avatar' => '/fake/image.jpg',
                 'email' => 'updated@example.com',
             ]
         ]);
@@ -166,7 +156,6 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
         $this->assertEquals('Johnny', $user->getAlias());
         $this->assertEquals('Code Monkey', $user->getTitle());
-        $this->assertEquals('/fake/image.jpg', $user->getAvatar());
         $this->assertEquals('updated@example.com', $user->getEmail());
         $this->assertTrue($user->isEnabled());
     }
@@ -181,7 +170,6 @@ class ProfileControllerTest extends ControllerBaseTest
             'user_edit' => [
                 'alias' => 'Johnny',
                 'title' => 'Code Monkey',
-                'avatar' => '/fake/image.jpg',
                 'email' => 'updated@example.com',
                 'enabled' => false,
             ]
@@ -199,7 +187,6 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
         $this->assertEquals('Johnny', $user->getAlias());
         $this->assertEquals('Code Monkey', $user->getTitle());
-        $this->assertEquals('/fake/image.jpg', $user->getAvatar());
         $this->assertEquals('updated@example.com', $user->getEmail());
         $this->assertFalse($user->isEnabled());
     }

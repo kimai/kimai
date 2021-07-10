@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="reporting.en.xlf">
     <body>
-      <trans-unit id="reporting.title">
-        <source>reporting.title</source>
-        <target>דיווח</target>
-      </trans-unit>
       <trans-unit id="report_user_week">
         <source>report_user_week</source>
         <target>תצוגה שבועית למשתמש אחד</target>
@@ -17,6 +13,26 @@
       <trans-unit id="report_monthly_users">
         <source>report_monthly_users</source>
         <target>תצוגה חודשית לכל המשתמשים</target>
+      </trans-unit>
+      <trans-unit id="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>דוח ראשוני</target>
+      </trans-unit>
+      <trans-unit id="report_inactive_project">
+        <source>report_inactive_project</source>
+        <target>מיזמים בלתי פעילים</target>
+      </trans-unit>
+      <trans-unit id="report_project_view">
+        <source>report_project_view</source>
+        <target>סקירת המיזם</target>
+      </trans-unit>
+      <trans-unit id="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>תצוגה שנתית לכל המשתמשים</target>
+      </trans-unit>
+      <trans-unit id="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target>תצוגה שבועית לכל המשתמשים</target>
       </trans-unit>
     </body>
   </file>
