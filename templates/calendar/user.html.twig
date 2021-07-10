@@ -375,6 +375,7 @@
                         var dateYMD = $this.attr("data-date");
                         $this.append('<div class="fc-dailytotal" data-seconds="0" data-ids="" id="dailytotal-' + dateYMD + '">'+DATES.formatSeconds(0)+'</div>');
                     });
+                    jQuery(".fc-week-number").append('<div class="fc-weeklytotal" data-seconds="0"></div>');
                 },
                 eventAfterRender: function(event, element, view) {
                     {# allowed in agendaWeek and agendaDay #}
@@ -403,6 +404,14 @@
                     $element.data('seconds', duration);
                     $element.data('ids', event.id + ' ' + ids);
                     $element.text(DATES.formatSeconds(duration));
+                },
+                eventAfterAllRender: function(view) {
+                    var events = view.calendar.clientEvents();
+                    var sum = 0;
+                    for(var i = 0;i<events.length;i++){
+                        sum += ((events[i].end - events[i].start) / 1000);
+                    }
+                    jQuery('.fc-weeklytotal').text(DATES.formatSeconds(sum));
                 },
                 {% if not is_punch_mode and is_granted('create_own_timesheet') %}
                     dayClick: function(date, jsEvent, view) {
