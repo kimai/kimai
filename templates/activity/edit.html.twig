@@ -22,8 +22,12 @@
                 </div>
             </div>
             {{ form_row(form.comment) }}
-            {{ form_row(form.customer) }}
-            {{ form_row(form.project) }}
+            {% if form.customer is defined %}
+                {{ form_row(form.customer) }}
+            {% endif %}
+            {% if form.project is defined %}
+                {{ form_row(form.project) }}
+            {% endif %}
             {% if form.budget is defined %}
             <div class="row">
                 <div class="col-md-6">

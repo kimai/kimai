@@ -88,8 +88,9 @@
     {% endif %}
     </td>
     <td align="right">
-    {% if kimai_context.branding.company is not empty %}
-        {{ kimai_context.branding.company|raw }} &ndash; {{ now|date_full }}
+    {% set company = config('theme.branding.company') %}
+    {% if company is not empty %}
+        {{ company|raw }} &ndash; {{ now|date_full }}
     {% else %}
         {{ 'export.date_copyright'|trans({'%date%': now|date_full, '%kimai%': '<a href="' ~ constant('App\\Constants::HOMEPAGE') ~ '">' ~ constant('App\\Constants::SOFTWARE') ~ '</a>'})|raw }}
     {% endif %}

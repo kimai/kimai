@@ -10,6 +10,14 @@
         max-height: 26px;
         margin-top: -2px;
     }
+    .avatar {
+        max-height: 26px;
+        max-width: 26px;
+        margin-top: -2px;
+        .initials {
+            top: 4px;
+        }
+    }
     li>a.ddt-large {
         padding: 15px 12px 11px 10px;
         font-size: 10px;

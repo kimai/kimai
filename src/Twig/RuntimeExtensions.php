@@ -48,6 +48,7 @@ class RuntimeExtensions extends AbstractExtension
             new TwigFilter('desc2html', [MarkdownExtension::class, 'timesheetContent'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
             new TwigFilter('comment2html', [MarkdownExtension::class, 'commentContent'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
             new TwigFilter('comment1line', [MarkdownExtension::class, 'commentOneLiner'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
+            new TwigFilter('colorize', [ThemeExtension::class, 'colorize']),
         ];
     }
 }

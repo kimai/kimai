@@ -224,6 +224,10 @@ class ProjectRepository extends EntityRepository
             ->addOrderBy('p.name', 'ASC')
         ;
 
+        if ($query->withCustomer()) {
+            $qb->addSelect('c');
+        }
+
         $qb->andWhere($qb->expr()->eq('p.visible', ':visible'));
         $qb->andWhere($qb->expr()->eq('c.visible', ':customer_visible'));
 

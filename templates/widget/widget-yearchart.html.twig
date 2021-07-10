@@ -1,6 +1,6 @@
-{% set backgroundColor = kimai_context.chart.background_color %}
-{% set borderColor = kimai_context.chart.border_color %}
-{% set gridColor = kimai_context.chart.grid_color %}
+{% set backgroundColor = config('theme.chart.background_color') %}
+{% set borderColor = config('theme.chart.border_color') %}
+{% set gridColor = config('theme.chart.grid_color') %}
 {% set colors = options.color|default('')|split(';') %}
 {% set type = options.type|default('line') %}
 {% if type not in ['line', 'bar'] %}
@@ -16,7 +16,7 @@
 {% endif %}
 
 <div class="chart">
-    <canvas id="timeChart" style="height: {{ kimai_context.chart.height }}px;"></canvas>
+    <canvas id="timeChart" style="height: {{ config('theme.chart.height') }}px;"></canvas>
 </div>
 
 <script type="text/javascript">
@@ -52,7 +52,7 @@ document.addEventListener('kimai.initialized', function() {
                         lineTension     : 0.3,
                         data            : [
                             {% for month in year.months %}
-                            {{ (month.totalDuration / 3600)|number_format(2, '.', '') }}
+                            {{ month.totalDuration|chart_duration }}
                             {% if not loop.last %},{% endif %}
                             {% endfor %}
                         ],

@@ -280,6 +280,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     private $roles = [];
 
+    use ColorTrait;
+
     public function __construct()
     {
         $this->registeredAt = new DateTime();
@@ -895,5 +897,41 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function __toString()
     {
         return $this->getDisplayName();
+    }
+
+    public function getInitials(): string
+    {
+        $length = 2;
+
+        $name = $this->getDisplayName();
+        $initial = '';
+
+        if (filter_var($name, FILTER_VALIDATE_EMAIL)) {
+            // turn my.email@gmail.com into "My Email"
+            $result = mb_strstr($name, '@', true);
+            $name = $result === false ? $name : $result;
+            $name = str_replace('.', ' ', $name);
+        }
+
+        $words = explode(' ', $name);
+
+        // if name contains single word, use first N character
+        if (\count($words) === 1) {
+            $initial = $words[0];
+
+            if (mb_strlen($name) >= $length) {
+                $initial = mb_substr($name, 0, $length, 'UTF-8');
+            }
+        } else {
+            // otherwise, use initial char from each word
+            foreach ($words as $word) {
+                $initial .= mb_substr($word, 0, 1, 'UTF-8');
+            }
+            $initial = mb_substr($initial, 0, $length, 'UTF-8');
+        }
+
+        $initial = mb_strtoupper($initial);
+
+        return $initial;
     }
 }

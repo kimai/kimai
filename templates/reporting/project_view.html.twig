@@ -61,7 +61,7 @@
                         {% set project = entry.project %}
                         {% set currency = project.customer.currency %}
                         {% if is_granted('budget', project) %}
-                            <tr {{ widgets.project_row_attr(project, now) }}>
+                            <tr{% if is_granted('details', project) %} class="alternative-link open-edit" data-href="{{ path('report_project_details', {'project': project.id}) }}"{% endif %}>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_project(project) }}</td>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'lastRecord') }}">
                                     {% if entry.lastRecord is not null %}

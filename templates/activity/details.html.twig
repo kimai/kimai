@@ -18,7 +18,7 @@
         {% import "project/actions.html.twig" as projectActions %}
         {% block box_attributes %}id="activity_details_box"{% endblock %}
         {% block box_title %}
-            {{ widgets.label_activity(activity) }}
+            {{ widgets.label_name(activity.name, activity.color) }}
         {% endblock %}
         {% block box_tools %}
             {% if can_edit %}
