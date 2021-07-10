@@ -44,6 +44,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
 
 /**
@@ -582,6 +583,11 @@ final class SystemConfigurationController extends AbstractController
                         ->setTranslationDomain('system-configuration')
                         ->setType(TextType::class)
                         ->setConstraints([new Regex(['pattern' => '/[0-2]{1}[0-9]{1}:[0-9]{2}:[0-9]{2}/']), new NotNull()]),
+                    (new Configuration())
+                        ->setName('calendar.dragdrop_amount')
+                        ->setTranslationDomain('system-configuration')
+                        ->setType(IntegerType::class)
+                        ->setConstraints([new Range(['min' => 0, 'max' => 20]), new NotNull()]),
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_BRANDING)
