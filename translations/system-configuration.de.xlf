@@ -138,6 +138,10 @@
         <source>label.calendar.slot_duration</source>
         <target>Slotdauer für Wochen- und Tagesansicht (Format: hh:mm:ss)</target>
       </trans-unit>
+      <trans-unit id="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>Anzahl an letzten Tätigkeiten neben der Kalenderansicht (0 um den Bereich auszublenden)</target>
+      </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
         <target>Mein Unternehmen</target>

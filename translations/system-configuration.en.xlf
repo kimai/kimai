@@ -138,6 +138,10 @@
                 <source>label.calendar.slot_duration</source>
                 <target>Slot duration for week- and day view (format: hh:mm:ss)</target>
             </trans-unit>
+            <trans-unit id="label.calendar.dragdrop_amount">
+                <source>label.calendar.dragdrop_amount</source>
+                <target>Amount of last activities next to the calendar (0 to hide panel)</target>
+            </trans-unit>
             <trans-unit id="branding">
                 <source>branding</source>
                 <target>My company</target>
