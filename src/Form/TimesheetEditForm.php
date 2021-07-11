@@ -11,7 +11,7 @@ namespace App\Form;
 
 use App\Entity\Timesheet;
 use App\Form\Type\BillableType;
-use App\Form\Type\DateTimePickerType;
+use App\Form\Type\DateTimeChoicePickerType;
 use App\Form\Type\DescriptionType;
 use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
@@ -155,7 +155,7 @@ class TimesheetEditForm extends AbstractType
             $dateTimeOptions['time_increment'] = $options['begin_minutes'];
         }
 
-        $builder->add('begin', DateTimePickerType::class, array_merge($dateTimeOptions, [
+        $builder->add('begin', DateTimeChoicePickerType::class, array_merge($dateTimeOptions, [
             'label' => 'label.begin',
         ]));
     }
@@ -166,7 +166,7 @@ class TimesheetEditForm extends AbstractType
             $dateTimeOptions['time_increment'] = (int) $options['end_minutes'];
         }
 
-        $builder->add('end', DateTimePickerType::class, array_merge($dateTimeOptions, [
+        $builder->add('end', DateTimeChoicePickerType::class, array_merge($dateTimeOptions, [
             'label' => 'label.end',
             'required' => false,
         ]));

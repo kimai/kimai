@@ -464,6 +464,8 @@
         {{ value|date_short }}
     {% elseif '\\DateTimePickerType' in type %}
         {{ value|date_full }}
+    {% elseif '\\DateTimeChoicePickerType' in type %}
+        {{ value|date_full }}
     {% elseif '\\CountryType' in type %}
         {{ value|country }}
     {% elseif '\\CurrencyType' in type %}
