@@ -10,7 +10,7 @@
 
 {% block main %}
     <div class="row">
-        {% set hasDragAndDrop = (dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) %}
+        {% set hasDragAndDrop = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) %}
         {% if hasDragAndDrop %}
         <div class="hidden-xs col-sm-5 col-md-4 col-lg-3 no-print">
             {% for source in dragAndDrop|filter(s => s.entries|length > 0) %}
@@ -19,7 +19,7 @@
                     {% block box_body_class %}drag-and-drop-source{% endblock %}
                     {% block box_body %}
                         <div class="external-events" data-method="{{ source.method }}" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
-                            {% for entry in source.entries %}
+                            {% for entry in source.entries|slice(0, config.dragDropAmount) %}
                                 <div draggable="true" style="background-color: {{ entry.color }}; color: {{ entry.color|font_contrast }}" class="external-event ui-draggable ui-draggable-handle" data-entry="{{ entry.data|json_encode|e('html_attr') }}">
                                     {% if source.blockInclude is not null and entry.blockName is not null and block(entry.blockName, source.blockInclude) is defined %}
                                         {{ block(entry.blockName, source.blockInclude) }}

@@ -62,6 +62,7 @@ class CalendarController extends AbstractController
             'slotDuration' => $configuration->getCalendarSlotDuration(),
             'timeframeBegin' => $configuration->getCalendarTimeframeBegin(),
             'timeframeEnd' => $configuration->getCalendarTimeframeEnd(),
+            'dragDropAmount' => $configuration->getCalendarDragAndDropMaxEntries(),
         ];
 
         $isPunchMode = !$mode->canEditDuration() && !$mode->canEditBegin() && !$mode->canEditEnd();
