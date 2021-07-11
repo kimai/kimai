@@ -23,15 +23,25 @@ final class CalendarDragAndDropSourceEvent extends Event
      * @var DragAndDropSource[]
      */
     private $sources = [];
+    /**
+     * @var int
+     */
+    private $maxEntries = 0;
 
-    public function __construct(User $user)
+    public function __construct(User $user, int $maxEntries)
     {
         $this->user = $user;
+        $this->maxEntries = $maxEntries;
     }
 
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    public function getMaxEntries(): int
+    {
+        return $this->maxEntries;
     }
 
     public function addSource(DragAndDropSource $source): CalendarDragAndDropSourceEvent

@@ -170,6 +170,11 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (string) $this->find('calendar.slot_duration');
     }
 
+    public function getCalendarDragAndDropMaxEntries(): int
+    {
+        return (int) $this->find('calendar.dragdrop_amount');
+    }
+
     // ========== Customer configurations ==========
 
     public function getCustomerDefaultTimezone(): ?string

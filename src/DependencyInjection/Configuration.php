@@ -391,6 +391,19 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->booleanNode('weekends')->defaultTrue()->end()
+                ->integerNode('dragdrop_amount')
+                    ->defaultValue(10)
+                    ->validate()
+                        ->ifTrue(static function ($v) {
+                            if ($v === null || $v < 0 || $v > 20) {
+                                return true;
+                            }
+
+                            return false;
+                        })
+                        ->thenInvalid('The dragdrop_amount must be between 0 and 20')
+                    ->end()
+                ->end()
             ->end()
         ;
 
