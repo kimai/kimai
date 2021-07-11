@@ -314,6 +314,10 @@
                 <source>label.timesheet.rules.long_running_duration</source>
                 <target>Maximum duration of a timesheet record in minutes before saving is rejected (0 = deactivated)</target>
             </trans-unit>
+            <trans-unit id="label.calendar.dragdrop_amount">
+                <source>label.calendar.dragdrop_amount</source>
+                <target>Amount of entries for drag&amp;drop (0 = deactivated)</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

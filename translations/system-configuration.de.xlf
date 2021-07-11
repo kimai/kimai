@@ -314,6 +314,10 @@
         <source>label.timesheet.rules.long_running_duration</source>
         <target>Maximale Dauer eines Zeiteintrags in Minuten, bevor das Speichern abgelehnt wird (0 = deaktiviert)</target>
       </trans-unit>
+      <trans-unit id="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>Anzahl an Einträgen für Drag&amp;Drop (0 = deaktiviert)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
