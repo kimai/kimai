@@ -19,6 +19,8 @@
 {% set columnTitles = {} %}
 {% set columns = {
     'date': true,
+    'begin': false,
+    'end': false,
     'username': false,
     'customer': true,
     'project': true,
@@ -62,9 +64,29 @@
         let initialized = false;
 
         window.addEventListener('load', function() {
+            var loader = new KimaiWebLoader({
+                formatDuration: '{{ get_format_duration() }}',
+                locale: '{{ app.request.locale }}',
+            }, {});
+            var DATES = loader.getKimai().getPlugin('date');
+
+            document.getElementById('duration-decimal').addEventListener('click', function(event) {
+                var spans = document.getElementsByClassName('duration-format');
+                for (var span of spans) {
+                    var duration = span.dataset['duration'];
+                    if (duration === undefined) {
+                        continue;
+                    }
+                    if (!event.target.checked) {
+                        span.innerHTML = DATES.formatSeconds(duration);
+                    } else {
+                        span.innerHTML = (new Intl.NumberFormat('{{ app.request.locale }}', {maximumFractionDigits: 2}).format(duration / 3600));
+                    }
+                }
+            });
+
             let config = KimaiCookies.get('kimai_html_export');
             if (config !== undefined && config !== null) {
-                console.log(config);
                 for (const key in config) {
                     let elName = key;
                     let checked = config[key];
@@ -80,7 +102,88 @@
                     }
                 }
             }
+
             initialized = true;
+
+            document.getElementById('summary-by-activities').addEventListener('click', function(event) {
+                document.getElementById('summary-project').style.display = event.target.checked ? 'none' : 'table';
+                document.getElementById('summary-activity').style.display = event.target.checked ? 'table' : 'none';
+                saveVisibility();
+            });
+            document.getElementById('date-format').addEventListener('change', function(event) {
+                var elements = document.getElementsByClassName('dateformat');
+                var dateType = event.target.value;
+                for (var elem of elements) {
+                    var formattedDate = elem.dataset[dateType];
+                    if (formattedDate === undefined) {
+                        continue;
+                    }
+                    elem.innerHTML = formattedDate;
+                }
+            });
+            document.getElementById('summary-show').addEventListener('click', function(event) {
+                document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
+                saveVisibility();
+            });
+            {% if showTimeBudget %}
+            document.getElementById('summary-timeBudget').addEventListener('click', function(event) {
+                var cells = document.getElementsByClassName('export-timeBudget');
+                for (var columnCell of cells) {
+                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+                }
+                saveVisibility();
+            });
+            {% endif %}
+            {% if showRateBudget %}
+            document.getElementById('summary-budget').addEventListener('click', function(event) {
+                var cells = document.getElementsByClassName('export-budget');
+                for (var columnCell of cells) {
+                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+                }
+                saveVisibility();
+            });
+            {% endif %}
+            document.getElementById('summary-duration').addEventListener('click', function(event) {
+                var cells = document.getElementsByClassName('summary-duration');
+                for (var columnCell of cells) {
+                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+                }
+                saveVisibility();
+            });
+            document.getElementById('summary-rate').addEventListener('click', function(event) {
+                var cells = document.getElementsByClassName('summary-rate');
+                for (var columnCell of cells) {
+                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+                }
+                saveVisibility();
+            });
+            document.getElementById('summary-rate-internal').addEventListener('click', function(event) {
+                var cells = document.getElementsByClassName('summary-rate-internal');
+                for (var columnCell of cells) {
+                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+                }
+                saveVisibility();
+            });
+            document.getElementById('summary-show').addEventListener('click', function(event) {
+                document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
+                saveVisibility();
+            });
+            document.getElementById('records-show').addEventListener('click', function(event) {
+                document.getElementById('export-records').style.display = event.target.checked ? 'block' : 'none';
+                saveVisibility();
+            });
+
+            var columnCheckboxes = document.getElementsByClassName('column-visibility-changer');
+
+            for (var checkbox of columnCheckboxes) {
+                checkbox.addEventListener('click', function(event) {
+                    var cells = document.getElementsByClassName('column-'+event.target.name);
+                    for (var columnCell of cells) {
+                        columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+                    }
+                    saveVisibility();
+                });
+            }
         });
 
         function saveVisibility()
@@ -96,72 +199,7 @@
             }
             KimaiCookies.set('kimai_html_export', settings, {expires: 365, SameSite: 'Strict'});
         }
-        document.getElementById('summary-by-activities').addEventListener('click', function(event) {
-            document.getElementById('summary-project').style.display = event.target.checked ? 'none' : 'table';
-            document.getElementById('summary-activity').style.display = event.target.checked ? 'table' : 'none';
-            saveVisibility();
-        });
-        document.getElementById('summary-show').addEventListener('click', function(event) {
-            document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
-            saveVisibility();
-        });
-        {% if showTimeBudget %}
-        document.getElementById('summary-timeBudget').addEventListener('click', function(event) {
-            var cells = document.getElementsByClassName('export-timeBudget');
-            for (var columnCell of cells) {
-                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-            }
-            saveVisibility();
-        });
-        {% endif %}
-        {% if showRateBudget %}
-        document.getElementById('summary-budget').addEventListener('click', function(event) {
-            var cells = document.getElementsByClassName('export-budget');
-            for (var columnCell of cells) {
-                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-            }
-            saveVisibility();
-        });
-        {% endif %}
-        document.getElementById('summary-duration').addEventListener('click', function(event) {
-            var cells = document.getElementsByClassName('summary-duration');
-            for (var columnCell of cells) {
-                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-            }
-            saveVisibility();
-        });
-        document.getElementById('summary-rate').addEventListener('click', function(event) {
-            var cells = document.getElementsByClassName('summary-rate');
-            for (var columnCell of cells) {
-                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-            }
-            saveVisibility();
-        });
-        document.getElementById('summary-rate-internal').addEventListener('click', function(event) {
-            var cells = document.getElementsByClassName('summary-rate-internal');
-            for (var columnCell of cells) {
-                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-            }
-            saveVisibility();
-        });
-        document.getElementById('summary-show').addEventListener('click', function(event) {
-            document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
-            saveVisibility();
-        });
-        document.getElementById('records-show').addEventListener('click', function(event) {
-            document.getElementById('export-records').style.display = event.target.checked ? 'block' : 'none';
-            saveVisibility();
-        });
-        var columnCheckboxes = document.getElementsByClassName('column-visibility-changer');
-        for (var checkbox of columnCheckboxes) {
-            checkbox.addEventListener('click', function(event) {
-                var cells = document.getElementsByClassName('column-'+event.target.name);
-                for (var columnCell of cells) {
-                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-                }
-                saveVisibility();
-            });
-        }
+
     </script>
 {% endblock %}
 
@@ -177,99 +215,111 @@
         .items td.cost {
             text-align: center;
         }
-        .toolbar {
-            border-bottom: 1px solid #ccc;
-            background-color: #eee;
-            padding: 5px 0 0 5px;
-        }
     </style>
 {% endblock %}
 
 {% block export %}
-    <div class="row no-print toolbar">
-        <div class="col-xs-12">
-            <form class="form-inline">
-                <div class="row">
-                    <div class="col-xs-1">
-                        <div class="form-group">
-                            <label class="control-label" for="summary-show">
-                                <input type="checkbox" id="summary-show" name="summary-show" checked="checked">
-                                {{ 'export.summary'|trans }}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-xs-11">
-                        <div class="form-group">
-                            <label class="control-label" for="summary-by-activities">
-                                <input type="checkbox" id="summary-by-activities" name="summary-by-activities">
-                                {{ 'label.activity'|trans }}
-                            </label>
-                        </div>
-                        {% if showTimeBudget %}
-                        <div class="form-group">
-                            <label class="control-label" for="summary-timeBudget">
-                                <input type="checkbox" id="summary-timeBudget" name="summary-timeBudget" checked>
-                                {{ 'label.timeBudget'|trans }}
-                            </label>
-                        </div>
-                        {% endif %}
-                        {% if showRateBudget %}
-                        <div class="form-group">
-                            <label class="control-label" for="summary-budget">
-                                <input type="checkbox" id="summary-budget" name="summary-budget" checked>
-                                {{ 'label.budget'|trans }}
-                            </label>
-                        </div>
-                        {% endif %}
-
-                        <div class="form-group">
-                            <label class="control-label" for="summary-duration">
-                                <input type="checkbox" id="summary-duration" name="summary-duration" checked>
-                                {{ 'label.duration'|trans }}
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="summary-rate-internal">
-                                <input type="checkbox" id="summary-rate-internal" name="summary-rate-internal" checked>
-                                {{ 'label.rate_internal'|trans }}
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="summary-rate">
-                                <input type="checkbox" id="summary-rate" name="summary-rate" checked>
-                                {{ 'label.rate'|trans }}
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-1">
-                        <div class="form-group">
-                            <label class="control-label" for="records-show">
-                                <input type="checkbox" id="records-show" name="records-show" checked="checked">
-                                {{ 'export.full_list'|trans }}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-xs-11">
-                        {% for columnId, visibility in columns %}
-                            <div class="form-group">
-                                <label class="control-label" for="records-column-{{ columnId }}">
-                                    <input type="checkbox" class="column-visibility-changer" id="records-column-{{ columnId }}" name="{{ columnId }}" {% if visibility %}checked="checked"{% endif %}>
-                                    {{ columnTitles[columnId]|default('label.'~columnId)|trans }}
-                                </label>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </form>
+    <form class="form-inline no-print">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ 'settings'|trans({}, 'actions') }}
+            </div>
+            <div class="panel-body">
+                <label class="control-label" for="duration-decimal">
+                    <input type="checkbox" id="duration-decimal" name="duration-decimal"{% if decimal%} checked="checked"{% endif %}>
+                    {{ 'label.timesheet.export_decimal'|trans }}
+                </label>
+                |
+                <label class="control-label" for="date-format">
+                    {{ 'label.date'|trans }}:
+                    {% set demo_date = create_date('2020-01-01 20:00:00') %}
+                    <select id="date-format" name="date-format">
+                        <option value="time">{{ demo_date|date_time }}</option>
+                        <option value="short">{{ demo_date|date_short }}</option>
+                        <option value="full">{{ demo_date|date_full }}</option>
+                        <option value="date">{{ demo_date|date }}</option>
+                    </select>
+                </label>
+            </div>
         </div>
-    </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label class="control-label" for="summary-show">
+                    <input type="checkbox" id="summary-show" name="summary-show" checked="checked">
+                    {{ 'export.summary'|trans }}
+                </label>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label" for="summary-by-activities">
+                        <input type="checkbox" id="summary-by-activities" name="summary-by-activities">
+                        {{ 'label.activity'|trans }}
+                    </label>
+                </div>
+                {% if showTimeBudget %}
+                <div class="form-group">
+                    <label class="control-label" for="summary-timeBudget">
+                        <input type="checkbox" id="summary-timeBudget" name="summary-timeBudget" checked>
+                        {{ 'label.timeBudget'|trans }}
+                    </label>
+                </div>
+                {% endif %}
+                {% if showRateBudget %}
+                <div class="form-group">
+                    <label class="control-label" for="summary-budget">
+                        <input type="checkbox" id="summary-budget" name="summary-budget" checked>
+                        {{ 'label.budget'|trans }}
+                    </label>
+                </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label class="control-label" for="summary-duration">
+                        <input type="checkbox" id="summary-duration" name="summary-duration" checked>
+                        {{ 'label.duration'|trans }}
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="summary-rate-internal">
+                        <input type="checkbox" id="summary-rate-internal" name="summary-rate-internal" checked>
+                        {{ 'label.rate_internal'|trans }}
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="summary-rate">
+                        <input type="checkbox" id="summary-rate" name="summary-rate" checked>
+                        {{ 'label.rate'|trans }}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="form-group">
+                    <label class="control-label" for="records-show">
+                        <input type="checkbox" id="records-show" name="records-show" checked="checked">
+                        {{ 'export.full_list'|trans }}
+                    </label>
+                </div>
+            </div>
+            <div class="panel-body">
+                {% for columnId, visibility in columns %}
+                    <div class="form-group">
+                        <label class="control-label" for="records-column-{{ columnId }}">
+                            <input type="checkbox" class="column-visibility-changer" id="records-column-{{ columnId }}" name="{{ columnId }}" {% if visibility %}checked="checked"{% endif %}>
+                            {{ columnTitles[columnId]|default('label.'~columnId)|trans }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </form>
 
     <div class="row">
         <div class="col-xs-12">
-            <h2>{{ 'export.document_title'|trans }}</h2>
+            <h2 contenteditable="true">{{ 'export.document_title'|trans }}</h2>
             <p>
                 {{ 'export.period'|trans }}:
                 {{ query.begin|date_short }} - {{ query.end|date_short }}
@@ -279,7 +329,7 @@
 
     <div class="row" id="export-summary">
         <div class="col-xs-12">
-            <h3>{{ 'export.summary'|trans }}</h3>
+            <h3 contenteditable="true">{{ 'export.summary'|trans }}</h3>
             <table class="items table table-condensed table-bordered dataTable" id="summary-project">
                 <thead>
                 <tr>
@@ -316,7 +366,9 @@
                             {% if showRateBudget %}
                                 <td class="export-budget"></td>
                             {% endif %}
-                            <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
+                            <td class="totals duration summary-duration">
+                                <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
+                            </td>
                             <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
                             <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                         </tr>
@@ -332,7 +384,7 @@
                         {% if showTimeBudget %}
                             <td class="center export-timeBudget">
                                 {% if budgets[id] is defined and budgets[id].time_left > 0 %}
-                                    {{ budgets[id].time_left|duration(decimal) }}
+                                    <span class="duration-format" data-duration="{{ budgets[id].time_left }}">{{ budgets[id].time_left|duration(decimal) }}</span>
                                 {% endif %}
                             </td>
                         {% endif %}
@@ -343,7 +395,9 @@
                                 {% endif %}
                             </td>
                         {% endif %}
-                        <td class="duration summary-duration">{{ summary.duration|duration(decimal) }}</td>
+                        <td class="duration summary-duration">
+                            <span class="duration-format" data-duration="{{ summary.duration }}">{{ summary.duration|duration(decimal) }}</span>
+                        </td>
                         <td class="cost summary-rate-internal">{{ summary.rate_internal|money(summary.currency) }}</td>
                         <td class="cost summary-rate">{{ summary.rate|money(summary.currency) }}</td>
                     </tr>
@@ -360,7 +414,9 @@
                         {% if showRateBudget %}
                             <td class="export-budget"></td>
                         {% endif %}
-                        <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
+                        <td class="totals duration summary-duration">
+                            <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
+                        </td>
                         <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
@@ -399,7 +455,9 @@
                     {% if customer is not same as(summary.customer) %}
                         <tr class="summary">
                             <td colspan="3"></td>
-                            <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
+                            <td class="totals duration summary-duration">
+                                <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
+                            </td>
                             <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
                             <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                         </tr>
@@ -414,7 +472,9 @@
                             <td>{{ summary.customer }}</td>
                             <td>{{ summary.project }}</td>
                             <td>{{ activitySummary.activity }}</td>
-                            <td class="duration summary-duration">{{ activitySummary.duration|duration(decimal) }}</td>
+                            <td class="duration summary-duration">
+                                <span class="duration-format" data-duration="{{ activitySummary.duration }}">{{ activitySummary.duration|duration(decimal) }}</span>
+                            </td>
                             <td class="cost summary-rate-internal">{{ activitySummary.rate_internal|money(activitySummary.currency) }}</td>
                             <td class="cost summary-rate">{{ activitySummary.rate|money(activitySummary.currency) }}</td>
                         </tr>
@@ -426,7 +486,9 @@
                 {% if customer is not same as(null) %}
                     <tr class="summary">
                         <td colspan="3"></td>
-                        <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
+                        <td class="totals duration summary-duration">
+                            <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
+                        </td>
                         <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
@@ -438,7 +500,7 @@
 
     <div class="row" id="export-records">
         <div class="col-xs-12">
-            <h3>{{ 'export.full_list'|trans }}</h3>
+            <h3 contenteditable="true">{{ 'export.full_list'|trans }}</h3>
             <table class="table table-condensed table-bordered dataTable">
                 <thead>
                 <tr>
@@ -470,11 +532,25 @@
                     {% endif %}
                     <tr>
                         <td class="column-date text-nowrap" {% if not columns.date %}style="display: none"{% endif %}>
+                            <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}" data-date="{{ entry.begin|date }}">
                             {{ entry.begin|date_time }}
+                            </span>
                             {% if entry.end %}
                                 <br>
+                                <span class="dateformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_full }}" data-time="{{ entry.end|date_time }}" data-date="{{ entry.end|date }}">
                                 {{ entry.end|date_time }}
+                                </span>
                             {% endif %}
+                        </td>
+                        <td class="column-begin text-nowrap" {% if not columns.begin %}style="display: none"{% endif %}>
+                            <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}" data-date="{{ entry.begin|date }}">
+                            {{ entry.begin|date_time }}
+                            </span>
+                        </td>
+                        <td class="column-end text-nowrap" {% if not columns.end %}style="display: none"{% endif %}>
+                            <span class="dateformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_full }}" data-time="{{ entry.end|date_time }}" data-date="{{ entry.end|date }}">
+                            {{ entry.end|date_time }}
+                            </span>
                         </td>
                         <td class="column-username" {% if not columns.username %}style="display: none"{% endif %}>
                             {{ widgets.username(entry.user) }}
@@ -543,7 +619,7 @@
                             {{ entry.fixedRate|money(entry.project.customer.currency) }}
                         </td>
                         <td class="column-duration text-nowrap" {% if not columns.duration %}style="display: none"{% endif %}>
-                            {{ entry.duration|duration(decimal) }}
+                            <span class="duration-format" data-duration="{{ entry.duration }}">{{ entry.duration|duration(decimal) }}</span>
                         </td>
                         <td class="column-rate_internal text-nowrap" {% if not columns.rate_internal %}style="display: none"{% endif %}>
                             {% if entry.internalRate is defined %}
@@ -565,7 +641,7 @@
                         {% endif %}
                     {% endfor %}
                     <th class="text-nowrap column-duration">
-                        {{- timeWorked|duration(decimal) -}}
+                        <span class="duration-format" data-duration="{{ timeWorked }}">{{- timeWorked|duration(decimal) -}}</span>
                     </th>
                     <th class="text-nowrap column-rate_internal">
                         {%- if currency is not null and currency is not same as(false) %}
