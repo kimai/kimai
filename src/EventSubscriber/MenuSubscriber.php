@@ -95,7 +95,7 @@ final class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('view_reporting')) {
             $reporting = new MenuItemModel('reporting', 'menu.reporting', 'reporting', [], $this->getIcon('reporting'));
-            $reporting->setChildRoutes(['report_user_week', 'report_user_month', 'report_monthly_users']);
+            $reporting->setChildRoutes(['report_user_week', 'report_user_month', 'report_weekly_users', 'report_monthly_users', 'report_project_view']);
             $menu->addChild($reporting);
         }
 
@@ -129,8 +129,13 @@ final class MenuSubscriber implements EventSubscriberInterface
         $auth = $this->security;
 
         if ($auth->isGranted('view_user')) {
-            $users = new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], $this->getIcon('user'));
-            $users->setChildRoutes(['admin_user_create', 'admin_user_delete',  'admin_user_permissions', 'user_profile', 'user_profile_edit', 'user_profile_password', 'user_profile_api_token', 'user_profile_roles', 'user_profile_teams', 'user_profile_preferences']);
+            $users = new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], $this->getIcon('users'));
+            $users->setChildRoutes(['admin_user_create', 'admin_user_delete',  'user_profile', 'user_profile_edit', 'user_profile_password', 'user_profile_api_token', 'user_profile_roles', 'user_profile_teams', 'user_profile_preferences']);
+            $menu->addChild($users);
+        }
+
+        if ($auth->isGranted('role_permissions')) {
+            $users = new MenuItemModel('admin_user_permissions', 'profile.roles', 'admin_user_permissions', [], $this->getIcon('permissions'));
             $menu->addChild($users);
         }
 

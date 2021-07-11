@@ -2,6 +2,18 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="en" datatype="plaintext" original="validators.en.xlf">
         <body>
+            <trans-unit id="The entered passwords don't match.">
+                <source>The entered passwords don't match.</source>
+                <target>The entered passwords don't match.</target>
+            </trans-unit>
+            <trans-unit id="The email is already used.">
+                <source>The email is already used.</source>
+                <target>The email is already used.</target>
+            </trans-unit>
+            <trans-unit id="The username is already used.">
+                <source>The username is already used.</source>
+                <target>The username is already used.</target>
+            </trans-unit>
             <trans-unit id="This value is not a valid role.">
                 <source>This value is not a valid role.</source>
                 <target>This value is not a valid role.</target>
@@ -33,6 +45,14 @@
             <trans-unit id="The given value is not a valid time.">
                 <source>The given value is not a valid time.</source>
                 <target>The given value is not a valid time.</target>
+            </trans-unit>
+            <trans-unit id="The budget is completely used.">
+                <source>The budget is completely used.</source>
+                <target>The budget is used up. Of the available %budget%, %used% has been booked so far, %free% can still be used.</target>
+            </trans-unit>
+            <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+                <source>Maximum duration of {{ value }} hours exceeded.</source>
+                <target>Maximum {{ value }} hours allowed.</target>
             </trans-unit>
         </body>
     </file>

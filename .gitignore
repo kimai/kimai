@@ -19,10 +19,10 @@ php.ini
 public/avatars/*.png
 
 templates/invoice/renderer/.~lock*
+translations/branding.en.xlf
 
 /var/data/*
 !/var/data/.gitkeep
-!/var/data/kimai_test.sqlite
 /var/coverage/
 /var/cache/*
 !var/cache/.gitkeep
@@ -56,6 +56,7 @@ templates/invoice/renderer/.~lock*
 ###> friendsofphp/php-cs-fixer ###
 .php_cs
 .php_cs.cache
+.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
 ###> symfony/phpunit-bridge ###

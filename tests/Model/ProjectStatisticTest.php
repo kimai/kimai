@@ -9,34 +9,35 @@
 
 namespace App\Tests\Model;
 
-use App\Entity\Project;
+use App\Model\CustomerStatistic;
 use App\Model\ProjectStatistic;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Model\ProjectStatistic
  */
-class ProjectStatisticTest extends TestCase
+class ProjectStatisticTest extends AbstractTimesheetCountedStatisticTest
 {
     public function testDefaultValues()
     {
-        $sut = new ProjectStatistic(new Project());
-        self::assertEquals(0, $sut->getActivityAmount());
-        self::assertEquals(0, $sut->getRecordAmount());
-        self::assertEquals(0, $sut->getRecordDuration());
+        $this->assertDefaultValues(new CustomerStatistic());
     }
 
     public function testSetter()
     {
-        $project = new Project();
-        $sut = new ProjectStatistic($project);
-        $sut->setRecordAmount(7654);
-        $sut->setRecordDuration(826);
-        $sut->setActivityAmount(13);
+        $this->assertSetter(new CustomerStatistic());
+    }
 
+    public function testJsonSerialize()
+    {
+        $this->assertJsonSerialize(new CustomerStatistic());
+    }
+
+    public function testAdditionalSetter()
+    {
+        $sut = new ProjectStatistic();
+
+        self::assertEquals(0, $sut->getActivityAmount());
+        $sut->setActivityAmount(13);
         self::assertEquals(13, $sut->getActivityAmount());
-        self::assertEquals(7654, $sut->getRecordAmount());
-        self::assertEquals(826, $sut->getRecordDuration());
-        self::assertSame($project, $sut->getProject());
     }
 }

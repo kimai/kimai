@@ -9,10 +9,14 @@
 
 namespace App\Form\Type;
 
+use App\Entity\User;
+use App\Reporting\ReportingService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Custom form field type to select the initial view, where the user should be redirected to after login.
@@ -21,7 +25,7 @@ class InitialViewType extends AbstractType
 {
     public const DEFAULT_VIEW = 'timesheet';
 
-    public const ALLOWED_VIEWS = [
+    private const ALLOWED_VIEWS = [
         'dashboard' => 'menu.homepage',
         'timesheet' => 'menu.timesheet',
         'calendar' => 'calendar.title',
@@ -34,7 +38,7 @@ class InitialViewType extends AbstractType
         'admin_activity' => 'menu.admin_activity',
     ];
 
-    protected const ROUTE_PERMISSION = [
+    private const ROUTE_PERMISSION = [
         'dashboard' => '',
         'timesheet' => 'view_own_timesheet',
         'calendar' => 'view_own_timesheet',
@@ -47,17 +51,15 @@ class InitialViewType extends AbstractType
         'admin_activity' => 'view_activity',
     ];
 
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    protected $voter;
+    private $voter;
+    private $reportingService;
+    private $translator;
 
-    /**
-     * @param AuthorizationCheckerInterface $voter
-     */
-    public function __construct(AuthorizationCheckerInterface $voter)
+    public function __construct(AuthorizationCheckerInterface $voter, ReportingService $reportingService, TranslatorInterface $translator)
     {
         $this->voter = $voter;
+        $this->reportingService = $reportingService;
+        $this->translator = $translator;
     }
 
     /**
@@ -65,18 +67,26 @@ class InitialViewType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $choices = [];
-        foreach (self::ROUTE_PERMISSION as $route => $permission) {
-            if (empty($permission) || $this->voter->isGranted($permission)) {
-                $name = self::ALLOWED_VIEWS[$route];
-                $choices[$name] = $route;
+        $resolver->setDefault('required', true);
+        $resolver->setDefault('choices', function (Options $options) {
+            $choices = [];
+            foreach (self::ROUTE_PERMISSION as $route => $permission) {
+                if (empty($permission) || $this->voter->isGranted($permission)) {
+                    $name = self::ALLOWED_VIEWS[$route];
+                    $choices[$name] = $route;
+                }
             }
-        }
 
-        $resolver->setDefaults([
-            'required' => true,
-            'choices' => $choices,
-        ]);
+            /** @var User $user */
+            $user = $options['user'];
+
+            foreach ($this->reportingService->getAvailableReports($user) as $report) {
+                $label = $this->translator->trans('menu.reporting') . ': ' . $this->translator->trans($report->getLabel(), [], 'reporting');
+                $choices[$label] = $report->getRoute();
+            }
+
+            return $choices;
+        });
     }
 
     /**

@@ -22,6 +22,7 @@ use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
@@ -78,58 +79,79 @@ class CustomerRepository extends EntityRepository
         return $this->count([]);
     }
 
-    /**
-     * Retrieves statistics for one customer.
-     *
-     * @param Customer $customer
-     * @return CustomerStatistic
-     */
-    public function getCustomerStatistics(Customer $customer)
+    public function getCustomerStatistics(Customer $customer): CustomerStatistic
     {
-        $stats = new CustomerStatistic();
-
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
-            ->addSelect('COUNT(t.id) as recordAmount')
-            ->addSelect('SUM(t.duration) as recordDuration')
-            ->addSelect('SUM(t.rate) as recordRate')
-            ->addSelect('SUM(t.internalRate) as recordInternalRate')
             ->from(Timesheet::class, 't')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
+            ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
             ->andWhere('p.customer = :customer')
+            ->setParameter('customer', $customer)
         ;
-        $timesheetResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
 
-        if (isset($timesheetResult[0])) {
-            $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
-            $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
-            $stats->setRecordRate($timesheetResult[0]['recordRate']);
-            $stats->setRecordInternalRate($timesheetResult[0]['recordInternalRate']);
+        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
+
+        $stats = new CustomerStatistic();
+
+        if (null !== $timesheetResult) {
+            $stats->setRecordAmount($timesheetResult['amount']);
+            $stats->setRecordDuration($timesheetResult['duration']);
+            $stats->setRecordRate($timesheetResult['rate']);
+            $stats->setRecordInternalRate($timesheetResult['internal_rate']);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
-            ->select('COUNT(a.id) as activityAmount')
+            ->from(Timesheet::class, 't')
+            ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
+            ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->andWhere('p.customer = :customer')
+            ->andWhere('t.billable = :billable')
+            ->setParameter('customer', $customer)
+            ->setParameter('billable', true, Types::BOOLEAN)
+        ;
+
+        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $timesheetResult) {
+            $stats->setDurationBillable($timesheetResult['duration']);
+            $stats->setRateBillable($timesheetResult['rate']);
+            $stats->setRecordAmountBillable($timesheetResult['amount']);
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->select('COUNT(a.id) as amount')
             ->from(Activity::class, 'a')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 'a.project = p.id')
             ->andWhere('a.project = p.id')
             ->andWhere('p.customer = :customer')
+            ->setParameter('customer', $customer)
         ;
-        $activityResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
 
-        if (isset($activityResult[0])) {
-            $stats->setActivityAmount($activityResult[0]['activityAmount']);
+        $activityResult = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $activityResult) {
+            $stats->setActivityAmount($activityResult['amount']);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('COUNT(p.id) as projectAmount')
+        $qb->select('COUNT(p.id) as amount')
             ->from(Project::class, 'p')
             ->andWhere('p.customer = :customer')
+            ->setParameter('customer', $customer)
         ;
-        $projectResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
 
-        if (isset($projectResult[0])) {
-            $stats->setProjectAmount($projectResult[0]['projectAmount']);
+        $projectResult = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $projectResult) {
+            $stats->setProjectAmount($projectResult['amount']);
         }
 
         return $stats;
@@ -223,7 +245,17 @@ class CustomerRepository extends EntityRepository
             ->from(Customer::class, 'c')
         ;
 
-        $qb->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
+        foreach ($query->getOrderGroups() as $orderBy => $order) {
+            switch ($orderBy) {
+                case 'vat_id':
+                    $orderBy = 'c.vatId';
+                    break;
+                default:
+                    $orderBy = 'c.' . $orderBy;
+                    break;
+            }
+            $qb->addOrderBy($orderBy, $order);
+        }
 
         if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));

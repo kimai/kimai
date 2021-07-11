@@ -59,7 +59,7 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/activity/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
@@ -102,7 +102,7 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/activity/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/activity/export'));
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
@@ -138,6 +138,8 @@ class ActivityControllerTest extends ControllerBaseTest
         self::assertHasProgressbar($client);
 
         $node = $client->getCrawler()->filter('div.box#activity_details_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#time_budget_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#budget_box');
         self::assertEquals(1, $node->count());
@@ -180,12 +182,13 @@ class ActivityControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertHasDataTable($client);
 
-        $this->request($client, '/admin/activity/2/edit');
+        $activities = $this->getEntityManager()->getRepository(Activity::class)->findAll();
+        $activity = array_pop($activities);
+        $id = $activity->getId();
+
+        $this->request($client, '/admin/activity/' . $id . '/edit');
         $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('An AcTiVitY Name', $editForm->get('activity_edit_form[name]')->getValue());
-        // make sure customer and project are pre-selected for none global activities
-        $this->assertEquals('1', $editForm->get('activity_edit_form[project]')->getValue());
-        $this->assertEquals('1', $editForm->get('activity_edit_form[customer]')->getValue());
     }
 
     public function testCreateActionShowsMetaFields()
@@ -207,15 +210,13 @@ class ActivityControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
         $client->submit($form, [
-            'activity_edit_form' => ['name' => 'Test 2', 'customer' => 1, 'project' => '1']
+            'activity_edit_form' => ['name' => 'Test 2']
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
         $client->followRedirect();
         $this->request($client, '/admin/activity/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
-        $this->assertEquals('1', $editForm->get('activity_edit_form[customer]')->getValue());
-        $this->assertEquals('1', $editForm->get('activity_edit_form[project]')->getValue());
     }
 
     public function testEditActionForGlobalActivity()
@@ -240,15 +241,16 @@ class ActivityControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
 
         /** @var Activity $activity */
-        $activity = $em->getRepository(Activity::class)->find(1);
+        $activity = $em->getRepository(Activity::class)->findAll()[0];
         self::assertEquals(0, $activity->getTeams()->count());
+        $id = $activity->getId();
 
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $fixture->setAddCustomer(false);
         $this->importFixture($fixture);
 
-        $this->assertAccessIsGranted($client, '/admin/activity/1/permissions');
+        $this->assertAccessIsGranted($client, '/admin/activity/' . $id . '/permissions');
         $form = $client->getCrawler()->filter('form[name=activity_team_permission_form]')->form();
         /** @var ChoiceFormField $team1 */
         $team1 = $form->get('activity_team_permission_form[teams][0]');
@@ -258,12 +260,10 @@ class ActivityControllerTest extends ControllerBaseTest
         $team2->tick();
 
         $client->submit($form);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
-        $client->followRedirect();
-        $this->assertHasDataTable($client);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/' . $id . '/details'));
 
         /** @var Activity $activity */
-        $activity = $em->getRepository(Activity::class)->find(1);
+        $activity = $em->getRepository(Activity::class)->find($id);
         self::assertEquals(2, $activity->getTeams()->count());
     }
 
@@ -342,10 +342,9 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertHasFlashDeleteSuccess($client);
         $this->assertHasNoEntriesWithFilter($client);
 
-        // SQLIte does not necessarly support onCascade delete, so these timesheet will stay after deletion
-        // $em->clear();
-        // $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        // $this->assertEquals(0, count($timesheets));
+        $em->clear();
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(0, \count($timesheets));
 
         $this->request($client, '/admin/activity/1/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());
@@ -364,7 +363,9 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
         $fixture = new ActivityFixtures();
         $fixture->setAmount(1)->setIsGlobal(true)->setIsVisible(true);
-        $this->importFixture($fixture);
+        $activities = $this->importFixture($fixture);
+        $activity = $activities[0];
+        $id = $activity->getId();
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         $this->assertEquals(10, \count($timesheets));
@@ -381,7 +382,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertStringEndsWith($this->createUrl('/admin/activity/1/delete'), $form->getUri());
         $client->submit($form, [
             'form' => [
-                'activity' => 2
+                'activity' => $id
             ]
         ]);
 
@@ -395,7 +396,7 @@ class ActivityControllerTest extends ControllerBaseTest
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
-            $this->assertEquals(2, $entry->getActivity()->getId());
+            $this->assertEquals($id, $entry->getActivity()->getId());
         }
 
         $this->request($client, '/admin/activity/1/edit');

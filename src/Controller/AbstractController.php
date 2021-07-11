@@ -10,12 +10,16 @@
 namespace App\Controller;
 
 use App\Configuration\LanguageFormattings;
+use App\Entity\Bookmark;
 use App\Entity\User;
+use App\Repository\BookmarkRepository;
+use App\Repository\Query\BaseQuery;
 use App\Timesheet\DateTimeFactory;
 use App\Utils\LocaleFormats;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
-use Symfony\Component\Translation\DataCollectorTranslator;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -30,18 +34,12 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      */
     public const ROLE_ADMIN = User::ROLE_ADMIN;
 
-    /**
-     * @return DataCollectorTranslator
-     */
-    private function getTranslator()
+    protected function getTranslator(): TranslatorInterface
     {
         return $this->container->get('translator');
     }
 
-    /**
-     * @return LoggerInterface $logger
-     */
-    private function getLogger()
+    private function getLogger(): LoggerInterface
     {
         return $this->container->get('logger');
     }
@@ -52,7 +50,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      * @param string $translationKey
      * @param array $parameter
      */
-    protected function flashSuccess($translationKey, $parameter = [])
+    protected function flashSuccess(string $translationKey, array $parameter = []): void
     {
         $this->addFlashTranslated('success', $translationKey, $parameter);
     }
@@ -63,7 +61,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      * @param string $translationKey
      * @param array $parameter
      */
-    protected function flashWarning($translationKey, $parameter = [])
+    protected function flashWarning(string $translationKey, array $parameter = []): void
     {
         $this->addFlashTranslated('warning', $translationKey, $parameter);
     }
@@ -74,7 +72,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      * @param string $translationKey
      * @param array $parameter
      */
-    protected function flashError($translationKey, $parameter = [])
+    protected function flashError(string $translationKey, array $parameter = []): void
     {
         $this->addFlashTranslated('error', $translationKey, $parameter);
     }
@@ -84,7 +82,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      *
      * @param \Exception $exception
      */
-    protected function flashUpdateException(\Exception $exception)
+    protected function flashUpdateException(\Exception $exception): void
     {
         $this->flashException($exception, 'action.update.error');
     }
@@ -94,7 +92,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      *
      * @param \Exception $exception
      */
-    protected function flashDeleteException(\Exception $exception)
+    protected function flashDeleteException(\Exception $exception): void
     {
         $this->flashException($exception, 'action.delete.error');
     }
@@ -106,7 +104,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      * @param string $translationKey
      * @param array $parameter
      */
-    protected function flashException(\Exception $exception, string $translationKey, array $parameter = [])
+    protected function flashException(\Exception $exception, string $translationKey, array $parameter = []): void
     {
         $this->logException($exception);
 
@@ -124,7 +122,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      * @param string $message
      * @param array $parameter
      */
-    protected function addFlashTranslated(string $type, string $message, array $parameter = [])
+    protected function addFlashTranslated(string $type, string $message, array $parameter = []): void
     {
         if (!empty($parameter)) {
             foreach ($parameter as $key => $value) {
@@ -140,7 +138,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         $this->addFlash($type, $message);
     }
 
-    protected function logException(\Exception $ex)
+    protected function logException(\Exception $ex): void
     {
         $this->getLogger()->critical($ex->getMessage());
     }
@@ -160,11 +158,79 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             $user = $this->getUser();
         }
 
-        return new DateTimeFactory(new \DateTimeZone($user->getTimezone()));
+        return DateTimeFactory::createByUser($user);
     }
 
     protected function getLocaleFormats(string $locale): LocaleFormats
     {
         return new LocaleFormats($this->container->get(LanguageFormattings::class), $locale);
+    }
+
+    protected function handleSearch(FormInterface $form, Request $request): bool
+    {
+        $data = $form->getData();
+        if (!($data instanceof BaseQuery)) {
+            throw new \InvalidArgumentException('handleSearchForm() requires an instanceof BaseQuery as form data');
+        }
+
+        /** @var BookmarkRepository $bookmarkRepo */
+        $bookmarkRepo = $this->getDoctrine()->getRepository(Bookmark::class);
+        $bookmark = $bookmarkRepo->getSearchDefaultOptions($this->getUser(), $data->getName());
+
+        $submitData = $request->query->all();
+
+        // remove bookmark
+        if ($bookmark !== null && $request->query->has('removeDefaultQuery')) {
+            $bookmarkRepo->deleteBookmark($bookmark);
+
+            return true;
+        }
+
+        // apply bookmark ONLY if search form was not submitted manually
+        if ($bookmark !== null && !$request->query->has('performSearch')) {
+            $data->setBookmark($bookmark);
+            if (!$request->query->has('setDefaultQuery')) {
+                $submitData = array_merge($bookmark->getContent(), $submitData);
+            }
+        }
+
+        // clean up parameters from unknown search values
+        foreach ($submitData as $name => $values) {
+            if (!$form->has($name)) {
+                unset($submitData[$name]);
+            }
+        }
+
+        $form->submit($submitData, false);
+
+        if (!$form->isValid()) {
+            $data->resetByFormError($form->getErrors(true));
+        } elseif ($request->query->has('setDefaultQuery')) {
+            $params = [];
+            foreach ($form->all() as $name => $child) {
+                $params[$name] = $child->getViewData();
+            }
+
+            $filter = ['page', 'setDefaultQuery', 'removeDefaultQuery', 'performSearch'];
+            foreach ($filter as $name) {
+                if (isset($params[$name])) {
+                    unset($params[$name]);
+                }
+            }
+
+            if ($bookmark === null) {
+                $bookmark = new Bookmark();
+                $bookmark->setType(Bookmark::SEARCH_DEFAULT);
+                $bookmark->setUser($this->getUser());
+                $bookmark->setName(substr($data->getName(), 0, 50));
+            }
+
+            $bookmark->setContent($params);
+            $bookmarkRepo->saveBookmark($bookmark);
+
+            return true;
+        }
+
+        return false;
     }
 }

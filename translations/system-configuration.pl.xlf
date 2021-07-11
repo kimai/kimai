@@ -62,10 +62,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Dozwolona maksymalna ilość jednoczesnych czynności (pomiarów)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Ilość jednoczesnych czynności (pomiarów) po której zostanie wyświetlone ostrzeżenie</target>
-      </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target>Minimalna ilość liter do auto-uzupełniania</target>
@@ -225,6 +221,18 @@
       <trans-unit id="label.theme.tags_create">
         <source>label.theme.tags_create</source>
         <target>Tagi: użyj automatycznego wyszukiwania i zezwól na tworzenie tagów</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Użyj ustawionej wartości reguły zaokrąglania</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Wybór minut dla Od &amp; Do</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Wybór minut dla czasu trwania</target>
       </trans-unit>
     </body>
   </file>

@@ -778,10 +778,6 @@
         <source>attachments</source>
         <target>ملفات</target>
       </trans-unit>
-      <trans-unit id="update_multiple">
-        <source>update_multiple</source>
-        <target>%action% %count% مُدخل؟</target>
-      </trans-unit>
       <trans-unit id="my.profile">
         <source>my.profile</source>
         <target>ملف التعريف الخاص بي</target>
@@ -809,6 +805,66 @@
       <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
         <target>سيتم حذف هذه البيانات أيضًا! بدلاً من ذلك، يُمكنك تحديد مُدخل لِيتم نقل جميع البيانات إليه:</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>إجمالي</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>ملف</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>لقد تغير الشكل. الرجاء النقر فوق "حفظ" لحفظ التغييرات أو "إغلاق" للإلغاء.</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>ترتيب حسب</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>تنازلي</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>تصاعدي</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>حذف البحث المفضل</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target state="translated">مصطلح البحث</target>
+      </trans-unit>
+      <trans-unit id="label.replaceTags">
+        <source>label.replaceTags</source>
+        <target>استبدل العلامات</target>
+      </trans-unit>
+      <trans-unit id="label.color">
+        <source>label.color</source>
+        <target>اللون</target>
+      </trans-unit>
+      <trans-unit id="help.fixedRate">
+        <source>help.fixedRate</source>
+        <target>الحصول على نفس القيمة في كل مرة تسجيل ، بغض النظر عن المدة</target>
+      </trans-unit>
+      <trans-unit id="label.daterange">
+        <source>label.daterange</source>
+        <target>النطاق الزمني</target>
+      </trans-unit>
+      <trans-unit id="label.progress">
+        <source>label.progress</source>
+        <target>تقدّم</target>
+      </trans-unit>
+      <trans-unit id="label.my_team_projects">
+        <source>label.my_team_projects</source>
+        <target>مشاريع الفريق وamp; الميزانيات</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>احفظ الكل</target>
       </trans-unit>
     </body>
   </file>

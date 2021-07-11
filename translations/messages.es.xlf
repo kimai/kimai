@@ -86,7 +86,7 @@
       </trans-unit>
       <trans-unit id="login_required">
         <source>login_required</source>
-        <target>Falta de permisos. ¿Redirigir para iniciar sesión?</target>
+        <target>Sin permisos. ¿Volver al inicio de sesión?</target>
       </trans-unit>
       <!--
               Menu / Navbar items
@@ -1014,7 +1014,7 @@
       </trans-unit>
       <trans-unit id="menu.reporting">
         <source>menu.reporting</source>
-        <target>Reportando</target>
+        <target>Informes</target>
       </trans-unit>
       <trans-unit id="label.vat_id">
         <source>label.vat_id</source>
@@ -1111,6 +1111,106 @@
       <trans-unit id="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
         <target>Campos adicionales</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Total</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>El formulario ha cambiado. Por favor pulsa "Guardar" para guardar los cambios o "Cerrar" para cancelar.</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Mostrar entrada sin presupuesto</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Mostrar entradas sin reservar</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Tipo impositivo</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Actualizar el título del navegador</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Archivo</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Sin registro desde</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Sin facturar</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Sin exportar</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Último registro</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Se omitió la previsualización de %rows% filas más…</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Fecha de pago</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Usuarios activos este año fiscal</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Ingresos este año fiscal</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Horas laborables este año fiscal</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Año fiscal</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Si quiere eliminar una entrada, debe arrastrarla sobre el botón.</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Guardar todo</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Ordenar por</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Descendente</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Ascendente</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Eliminar favorito de búsqueda</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Guardar configuración como favorito de búsqueda</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Término de búsqueda</target>
       </trans-unit>
     </body>
   </file>

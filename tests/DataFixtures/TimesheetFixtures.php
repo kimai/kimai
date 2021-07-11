@@ -16,14 +16,13 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Timesheet\Util;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
  * Defines the sample data to load in during controller tests.
  */
-final class TimesheetFixtures extends Fixture
+final class TimesheetFixtures implements TestFixture
 {
     /**
      * @var User
@@ -46,9 +45,13 @@ final class TimesheetFixtures extends Fixture
      */
     private $projects = [];
     /**
-     * @var string
+     * @var \DateTime
      */
-    private $startDate = '2018-04-01';
+    private $startDate;
+    /**
+     * @var \DateTime
+     */
+    private $fixedStartDate;
     /**
      * @var bool
      */
@@ -122,10 +125,17 @@ final class TimesheetFixtures extends Fixture
      */
     public function setStartDate($date): TimesheetFixtures
     {
-        if ($date instanceof \DateTime) {
-            $date = $date->format('Y-m-d');
+        if (!($date instanceof \DateTime)) {
+            $date = new \DateTime($date);
         }
         $this->startDate = $date;
+
+        return $this;
+    }
+
+    public function setFixedStartDate(\DateTime $date): TimesheetFixtures
+    {
+        $this->fixedStartDate = $date;
 
         return $this;
     }
@@ -205,10 +215,13 @@ final class TimesheetFixtures extends Fixture
     }
 
     /**
-     * {@inheritdoc}
+     * @param ObjectManager $manager
+     * @return Timesheet[]
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): array
     {
+        $created = [];
+
         $activities = $this->activities;
         if (empty($activities)) {
             $activities = $this->getAllActivities($manager);
@@ -220,7 +233,17 @@ final class TimesheetFixtures extends Fixture
         }
 
         $faker = Factory::create();
-        $user = $this->user;
+
+        $users = [$this->user];
+        if ($this->user === null) {
+            $users = $this->getAllUsers($manager);
+        }
+
+        $tags = $this->getTagObjectList();
+        foreach ($tags as $tag) {
+            $manager->persist($tag);
+        }
+        $manager->flush();
 
         for ($i = 0; $i < $this->amount; $i++) {
             $description = $faker->text;
@@ -232,14 +255,13 @@ final class TimesheetFixtures extends Fixture
                 }
             }
 
+            $user = $users[array_rand($users)];
             $activity = $activities[array_rand($activities)];
             $project = $activity->getProject();
 
             if (null === $project) {
                 $project = $projects[array_rand($projects)];
             }
-
-            $tags = $this->getTagObjectList($i);
 
             $timesheet = $this->createTimesheetEntry(
                 $user,
@@ -254,17 +276,17 @@ final class TimesheetFixtures extends Fixture
                 \call_user_func($this->callback, $timesheet);
             }
             $manager->persist($timesheet);
+            $created[] = $timesheet;
         }
 
         for ($i = 0; $i < $this->running; $i++) {
             $activity = $activities[array_rand($activities)];
             $project = $activity->getProject();
+            $user = $users[array_rand($users)];
 
             if (null === $project) {
                 $project = $projects[array_rand($projects)];
             }
-
-            $tags = $this->getTagObjectList($i);
 
             $timesheet = $this->createTimesheetEntry(
                 $user,
@@ -280,26 +302,42 @@ final class TimesheetFixtures extends Fixture
                 \call_user_func($this->callback, $timesheet);
             }
             $manager->persist($timesheet);
+            $created[] = $timesheet;
         }
 
         $manager->flush();
+
+        return $created;
     }
 
-    protected function getTagObjectList(int $cnt): array
+    private function getTagObjectList(): array
     {
         if (true === $this->useTags) {
-            $tagObject = new Tag();
-            $tagObject->setName($this->tags[($cnt % \count($this->tags))]);
+            $all = [];
+            foreach ($this->tags as $tagName) {
+                $tagObject = new Tag();
+                $tagObject->setName($tagName);
 
-            return [$tagObject];
+                $all[] = $tagObject;
+            }
+
+            return $all;
         }
 
         return [];
     }
 
-    protected function getDateTime(int $i): \DateTime
+    private function getDateTime(int $i): \DateTime
     {
-        $start = \DateTime::createFromFormat('Y-m-d', $this->startDate);
+        if ($this->fixedStartDate !== null) {
+            return $this->fixedStartDate;
+        }
+
+        if ($this->startDate === null) {
+            $this->startDate = new \DateTime('2018-04-01');
+        }
+
+        $start = clone $this->startDate;
         $start->modify("+ $i days");
         $start->modify('+ ' . rand(1, 172800) . ' seconds'); // up to 2 days
 
@@ -310,7 +348,7 @@ final class TimesheetFixtures extends Fixture
      * @param ObjectManager $manager
      * @return array<int|string, Activity>
      */
-    protected function getAllActivities(ObjectManager $manager): array
+    private function getAllActivities(ObjectManager $manager): array
     {
         $all = [];
         /** @var Activity[] $entries */
@@ -326,11 +364,27 @@ final class TimesheetFixtures extends Fixture
      * @param ObjectManager $manager
      * @return array<int|string, Project>
      */
-    protected function getAllProjects(ObjectManager $manager): array
+    private function getAllProjects(ObjectManager $manager): array
     {
         $all = [];
         /** @var Project[] $entries */
         $entries = $manager->getRepository(Project::class)->findAll();
+        foreach ($entries as $temp) {
+            $all[$temp->getId()] = $temp;
+        }
+
+        return $all;
+    }
+
+    /**
+     * @param ObjectManager $manager
+     * @return array<int|string, User>
+     */
+    private function getAllUsers(ObjectManager $manager): array
+    {
+        $all = [];
+        /** @var User[] $entries */
+        $entries = $manager->getRepository(User::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }

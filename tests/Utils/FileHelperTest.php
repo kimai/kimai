@@ -39,4 +39,19 @@ class FileHelperTest extends TestCase
     {
         self::assertEquals($expected, FileHelper::convertToAsciiFilename($original));
     }
+
+    public function testDataDirectory()
+    {
+        $data = realpath(__DIR__ . '/../_data/');
+        $sut = new FileHelper($data);
+        self::assertEquals($data . '/', $sut->getDataDirectory());
+        self::assertEquals($data . '/foo/', $sut->getDataDirectory('/foo/'));
+        self::assertEquals($data . '/foo/', $sut->getDataDirectory('foo'));
+
+        $data = realpath(__DIR__ . '/../../var/data/');
+        $sut->setDataDirectory($data);
+        self::assertEquals($data . '/', $sut->getDataDirectory());
+        self::assertEquals($data . '/foo/', $sut->getDataDirectory('/foo/'));
+        self::assertEquals($data . '/foo/', $sut->getDataDirectory('foo'));
+    }
 }

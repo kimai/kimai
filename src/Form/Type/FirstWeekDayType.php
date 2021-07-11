@@ -32,7 +32,8 @@ class FirstWeekDayType extends AbstractType
             'multiple' => false,
             'choices' => $choices,
             'label' => 'first_weekday',
-            'translation_domain' => 'system-configuration'
+            'translation_domain' => 'system-configuration',
+            'search' => false,
         ]);
     }
 

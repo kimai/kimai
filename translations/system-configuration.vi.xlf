@@ -70,10 +70,6 @@
                 <source>label.timesheet.active_entries.hard_limit</source>
                 <target>Số lượng cho phép của các mục thời gian chạy đồng thời</target>
             </trans-unit>
-            <trans-unit id="label.timesheet.active_entries.soft_limit">
-                <source>label.timesheet.active_entries.soft_limit</source>
-                <target>Số mục thời gian chạy mà cảnh báo được hiển thị</target>
-            </trans-unit>
             <trans-unit id="label.theme.autocomplete_chars">
                 <source>label.theme.autocomplete_chars</source>
                 <target>Số lượng chữ cái tối thiểu để bắt đầu tự động hoàn thành</target>

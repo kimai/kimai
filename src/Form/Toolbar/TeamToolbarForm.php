@@ -24,8 +24,8 @@ class TeamToolbarForm extends AbstractToolbarForm
         $this->addSearchTermInputField($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
-        $this->addHiddenOrder($builder);
-        $this->addHiddenOrderBy($builder, TeamQuery::TEAM_ORDER_ALLOWED);
+        $this->addOrder($builder);
+        $this->addOrderBy($builder, TeamQuery::TEAM_ORDER_ALLOWED);
     }
 
     /**

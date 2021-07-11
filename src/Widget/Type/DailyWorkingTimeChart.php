@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\DateTimeFactory;
 use DateTime;
 
 class DailyWorkingTimeChart extends SimpleWidget implements UserWidget
@@ -30,8 +31,8 @@ class DailyWorkingTimeChart extends SimpleWidget implements UserWidget
         $this->setId('DailyWorkingTimeChart');
         $this->setTitle('stats.yourWorkingHours');
         $this->setOptions([
-            'begin' => 'monday this week 00:00:00',
-            'end' => 'sunday this week 23:59:59',
+            'begin' => null,
+            'end' => null,
             'color' => '',
             'type' => self::DEFAULT_CHART,
             'id' => '',
@@ -67,10 +68,20 @@ class DailyWorkingTimeChart extends SimpleWidget implements UserWidget
             throw new \InvalidArgumentException('Widget option "user" must be an instance of ' . User::class);
         }
 
+        $dateTimeFactory = DateTimeFactory::createByUser($user);
+
+        if ($options['begin'] === null) {
+            $options['begin'] = $dateTimeFactory->getStartOfWeek();
+        }
+
         if ($options['begin'] instanceof DateTime) {
             $begin = $options['begin'];
         } else {
             $begin = new DateTime($options['begin'], new \DateTimeZone($user->getTimezone()));
+        }
+
+        if ($options['end'] === null) {
+            $options['end'] = $dateTimeFactory->getEndOfWeek($begin);
         }
 
         if ($options['end'] instanceof DateTime) {

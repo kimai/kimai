@@ -286,11 +286,11 @@
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>Email</target>
+        <target>E-mail</target>
       </trans-unit>
       <trans-unit id="label.team">
         <source>label.team</source>
-        <target>Zaspół</target>
+        <target state="translated">Zespół</target>
       </trans-unit>
       <trans-unit id="label.teamlead">
         <source>label.teamlead</source>
@@ -534,7 +534,7 @@
       <trans-unit id="admin_activity.short_stats">
         <source>admin_activity.short_stats</source>
         <target>
-                    Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activities% czynności
+                    Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activity% czynności
                     oraz  %records% wpisów czasu, które sumują się do łącznej długości %duration% .		
 		 </target>
       </trans-unit>
@@ -684,7 +684,7 @@
             -->
       <trans-unit id="stats.durationToday">
         <source>stats.durationToday</source>
-        <target>Pprzepracowane godziny dzisiaj</target>
+        <target state="translated">Przepracowane godziny dzisiaj</target>
       </trans-unit>
       <trans-unit id="stats.durationWeek">
         <source>stats.durationWeek</source>
@@ -1129,6 +1129,10 @@
       <trans-unit id="sum.total">
         <source>sum.total</source>
         <target>Razem</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Formularz uległ zmianie. Prosimy, kliknij "Zapisz", by zapisać zmiany, lub "Zamknij", by je anulować.</target>
       </trans-unit>
     </body>
   </file>

@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 /**
  * A voter to check authorization on Customers.
  */
-class CustomerVoter extends Voter
+final class CustomerVoter extends Voter
 {
     /**
      * supported attributes/rules based on the given customer

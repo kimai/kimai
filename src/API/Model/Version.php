@@ -20,7 +20,7 @@ use JMS\Serializer\Annotation as Serializer;
 class Version
 {
     /**
-     * Kimai Version, eg. "1.9"
+     * Kimai Version, eg. "1.14"
      *
      * @var string
      *
@@ -29,6 +29,18 @@ class Version
      * @Serializer\Type(name="string")
      */
     protected $version = Constants::VERSION;
+    /**
+     * Kimai Version as integer, eg. 11400
+     *
+     * Follows the same logic as PHP_VERSION_ID, see https://www.php.net/manual/de/function.phpversion.php
+     *
+     * @var int
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     * @Serializer\Type(name="integer")
+     */
+    protected $versionId = Constants::VERSION_ID;
     /**
      * Candidate: either "prod" or "dev"
      *
@@ -68,5 +80,5 @@ class Version
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
      */
-    protected $copyright = Constants::SOFTWARE . ' - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.';
+    protected $copyright = Constants::SOFTWARE . ' ' . Constants::VERSION . ' by Kevin Papst and contributors.';
 }

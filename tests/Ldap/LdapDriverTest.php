@@ -11,7 +11,6 @@ namespace App\Tests\Ldap;
 
 use App\Entity\User;
 use App\Ldap\LdapDriver;
-use App\Ldap\LdapDriverException;
 use Laminas\Ldap\Exception\LdapException;
 use Laminas\Ldap\Ldap;
 use PHPUnit\Framework\TestCase;
@@ -60,21 +59,6 @@ class LdapDriverTest extends TestCase
         $sut = new TestLdapDriver($zendLdap);
         $result = $sut->search('', '', []);
         self::assertEquals(['count' => 3, 1, 2, 3], $result);
-    }
-
-    public function testSearchException()
-    {
-        $this->expectException(LdapDriverException::class);
-        $this->expectExceptionMessage('An error occurred with the search operation.');
-
-        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->onlyMethods(['bind', 'searchEntries'])->getMock();
-        $zendLdap->expects($this->once())->method('bind');
-        $zendLdap->expects($this->once())->method('searchEntries')->willThrowException(
-            new LdapException($zendLdap, '', LdapException::LDAP_SERVER_DOWN)
-        );
-
-        $sut = new TestLdapDriver($zendLdap);
-        $sut->search('', '', []);
     }
 }
 

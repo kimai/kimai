@@ -62,10 +62,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target state="translated">İzin verilen eşzamanlı zaman kaydı sayısı</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target state="translated">Bir uyarı görüntülenmeden önce çalışan zaman çizelgesi kayıtlarının sayısı</target>
-      </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target state="translated">Otomatik tamamlama için gerekli en az harf adedi</target>
@@ -188,15 +184,15 @@
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>Şirket</target>
+        <target>Şirket adı</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>Logo (Resim URL'si, giriş ekranındaki şirketin yerini alır)</target>
+        <target>Logo URL'si (giriş ekranındaki şirket adının yerini alır)</target>
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>Marka</target>
+        <target>Şirketim</target>
       </trans-unit>
       <trans-unit id="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>
@@ -225,6 +221,42 @@
       <trans-unit id="invoice">
         <source>invoice</source>
         <target>Faturalar</target>
+      </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>Kapalı</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Yuvarlama kuralının yapılandırılan değerini kullan</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Başlangıç &amp; Bitiş için dakika seçimi</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Süre için dakika seçimi</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>Depolanan bütçeler için fazla rezervasyona izin ver</target>
+      </trans-unit>
+      <trans-unit id="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>HTML renk kodlarının virgülle ayrılmış listesi. Renk adları, renk kodunun önüne bir ad ve | sınırlayıcı koyarak ayarlanabilir, örneğin: Beyaz|#ffffff, Siyah|#000000.</target>
+      </trans-unit>
+      <trans-unit id="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>İzin verilen renkler</target>
+      </trans-unit>
+      <trans-unit id="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>Renk seçeneklerini sınırla</target>
+      </trans-unit>
+      <trans-unit id="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>Mali yıl</target>
       </trans-unit>
     </body>
   </file>

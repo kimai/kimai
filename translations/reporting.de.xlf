@@ -2,10 +2,6 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="de" datatype="plaintext" original="reporting.en.xlf">
         <body>
-            <trans-unit id="reporting.title">
-                <source>reporting.title</source>
-                <target>Reporting</target>
-            </trans-unit>
             <trans-unit id="report_user_week">
                 <source>report_user_week</source>
                 <target>Wochenansicht für einen Benutzer</target>
@@ -14,9 +10,33 @@
                 <source>report_user_month</source>
                 <target>Monatsansicht für einen Benutzer</target>
             </trans-unit>
+            <trans-unit id="report_weekly_users">
+                <source>report_weekly_users</source>
+                <target>Wochenansicht für alle Benutzer</target>
+            </trans-unit>
             <trans-unit id="report_monthly_users">
                 <source>report_monthly_users</source>
                 <target>Monatsansicht für alle Benutzer</target>
+            </trans-unit>
+            <trans-unit id="report_yearly_users">
+                <source>report_yearly_users</source>
+                <target>Jahresansicht für alle Benutzer</target>
+            </trans-unit>
+            <trans-unit id="report_project_view">
+                <source>report_project_view</source>
+                <target>Projektübersicht</target>
+            </trans-unit>
+            <trans-unit id="report_project_details">
+                <source>report_project_details</source>
+                <target>Projektdetails</target>
+            </trans-unit>
+            <trans-unit id="report_inactive_project">
+                <source>report_inactive_project</source>
+                <target>Inaktive Projekte</target>
+            </trans-unit>
+            <trans-unit id="reporting.initial_view">
+                <source>reporting.initial_view</source>
+                <target>Initialer Bericht</target>
             </trans-unit>
         </body>
     </file>

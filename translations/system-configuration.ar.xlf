@@ -1,0 +1,267 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ar" datatype="plaintext" original="system-configuration.en.xlf">
+    <body>
+      <trans-unit id="title">
+        <source>title</source>
+        <target>إعدادات</target>
+      </trans-unit>
+      <trans-unit id="subtitle">
+        <source>subtitle</source>
+        <target>قم بتغيير التكوينات العالمية لمتتبع الوقت الخاص بك</target>
+      </trans-unit>
+      <trans-unit id="timesheet">
+        <source>timesheet</source>
+        <target>الجداول الزمنية</target>
+      </trans-unit>
+      <trans-unit id="invoice">
+        <source>invoice</source>
+        <target>الفواتير</target>
+      </trans-unit>
+      <trans-unit id="form_customer">
+        <source>form_customer</source>
+        <target>إنشاء العميل — القيم الافتراضية</target>
+      </trans-unit>
+      <trans-unit id="form_user">
+        <source>form_user</source>
+        <target>المستخدم — القيم الافتراضية</target>
+      </trans-unit>
+      <trans-unit id="theme">
+        <source>theme</source>
+        <target>موضوع</target>
+      </trans-unit>
+      <trans-unit id="calendar">
+        <source>calendar</source>
+        <target>تقويم</target>
+      </trans-unit>
+      <trans-unit id="label.theme.markdown_content">
+        <source>label.theme.markdown_content</source>
+        <target state="translated">السماح بتنسيق markdown في الأوصاف والتعليقات</target>
+      </trans-unit>
+      <trans-unit id="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target>العلامات: استخدم بحث الإكمال التلقائي واسمح بإنشاء العلامات</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode">
+        <source>label.timesheet.mode</source>
+        <target>وضع تتبع الوقت</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_default">
+        <source>label.timesheet.mode_default</source>
+        <target>[افتراضي] يمكن تعديل أوقات البدء والانتهاء</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_duration_only">
+        <source>label.timesheet.mode_duration_only</source>
+        <target>[مدة] يستبدل وقت الانتهاء بحقل إدخال مدة</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+        <source>label.timesheet.mode_duration_fixed_begin</source>
+        <target>[مدة] وقت البدء الثابت القابل للتكوين ، يمكن تغيير المدة فقط</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_punch">
+        <source>label.timesheet.mode_punch</source>
+        <target>[الوقت على مدار الساعة] يمكن للمستخدم بدء التسجيل وإيقافه ، ولكن لا يمكنه تعديل الأوقات أو المدة</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_future_times">
+        <source>label.timesheet.rules.allow_future_times</source>
+        <target>السماح بإدخال الوقت لاحقاً</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>السماح بالحجز الزائد للميزانيات المخزنة</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+        <source>label.timesheet.rules.allow_overlapping_records</source>
+        <target>السماح بإدخال وقت إضافي للخانات</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target>بدء فترة التأمين ( تاريخ نسبي ل PHP حتى الآن )</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target>نهاية فترة التأمين (تاريخ نسبي ل PHP حتى الآن)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target>نهاية فترة السماح الإغلاق (التاريخ النسبي ل PHP حتى نهاية فترة التأمين)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.active_entries.hard_limit">
+        <source>label.timesheet.active_entries.hard_limit</source>
+        <target>العدد المسموح به من إدخال وقت التشغيل في وقت واحد</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.active_entries.soft_limit">
+        <source>label.timesheet.active_entries.soft_limit</source>
+        <target>عدد إدخال وقت التشغيل التي يتم من خلالها عرض تحذير</target>
+      </trans-unit>
+      <trans-unit id="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target>الحد الأدنى لعدد الأحرف لبدء الإكمال التلقائي</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.week_numbers">
+        <source>label.calendar.week_numbers</source>
+        <target>عرض أرقام الأسبوع</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.weekends">
+        <source>label.calendar.weekends</source>
+        <target>عرض عطلات نهاية الأسبوع</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target>بداية ساعات العمل العادية (سيتم تمييزها)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target>نهاية ساعات العمل العادية (سيتم تمييزها)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target>بداية النطاق الزمني المرئي</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target>نهاية النطاق الزمني المرئي</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>مدة الفتحة لعرض الأسبوع واليوم (التنسيق: ساعة: دقيقة: ثانية)</target>
+      </trans-unit>
+      <trans-unit id="branding">
+        <source>branding</source>
+        <target>شركتي</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target>عنوان URL للشعار (يحل محل اسم الشركة في شاشة تسجيل الدخول)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.company">
+        <source>label.theme.branding.company</source>
+        <target>اسم الشركة</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target>شعار صغير (شريط جانبي مطوي)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target>عنوان المتصفح</target>
+      </trans-unit>
+      <trans-unit id="rounding">
+        <source>rounding</source>
+        <target>تقريب الوقت</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target>تقريب وقت البدء بالدقائق (0 = غير مفعّل)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>تقريب وقت الانتهاء بالدقائق (0 = غير مفعّل)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target>تقريب المدة بالدقائق (0 = غير مفعّل)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target>وضع التقريب</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target>أيام الأسبوع التي سيتم فيها التقريب</target>
+      </trans-unit>
+      <trans-unit id="Monday">
+        <source>Monday</source>
+        <target>الاثنين</target>
+      </trans-unit>
+      <trans-unit id="Tuesday">
+        <source>Tuesday</source>
+        <target>الثلاثاء</target>
+      </trans-unit>
+      <trans-unit id="Wednesday">
+        <source>Wednesday</source>
+        <target>الأربعاء</target>
+      </trans-unit>
+      <trans-unit id="Thursday">
+        <source>Thursday</source>
+        <target>الخميس</target>
+      </trans-unit>
+      <trans-unit id="Friday">
+        <source>Friday</source>
+        <target>الجمعة</target>
+      </trans-unit>
+      <trans-unit id="Saturday">
+        <source>Saturday</source>
+        <target>السبت</target>
+      </trans-unit>
+      <trans-unit id="Sunday">
+        <source>Sunday</source>
+        <target>الأحد</target>
+      </trans-unit>
+      <trans-unit id="Ceil">
+        <source>Ceil</source>
+        <target>السقف: سيتم تقريب البداية والنهاية والمدة</target>
+      </trans-unit>
+      <trans-unit id="Closest">
+        <source>Closest</source>
+        <target>الأقرب: التقريب الحسابي لأقرب قيمة</target>
+      </trans-unit>
+      <trans-unit id="Default">
+        <source>Default</source>
+        <target>قياسي: سيتم تقريب البداية إلى الأدنى ، والنهاية والمدة لأعلى</target>
+      </trans-unit>
+      <trans-unit id="Floor">
+        <source>Floor</source>
+        <target>الطابق: سيتم تقريب البداية والنهاية والمدة</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>وقت البدء الافتراضي (غير مستخدم في جميع أوضاع تعقب الوقت)</target>
+      </trans-unit>
+      <trans-unit id="label.simple_form">
+        <source>label.simple_form</source>
+        <target>بحث بسيط</target>
+      </trans-unit>
+      <trans-unit id="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target>تنسيق رقم الفاتورة</target>
+      </trans-unit>
+      <trans-unit id="first_weekday">
+        <source>first_weekday</source>
+        <target>اول يوم من الأسبوع</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>اختيار الدقيقة للمدة</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>اختيار الدقيقة لـ amp من و إلى</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>استخدم القيمة المكونة لقاعدة التقريب</target>
+      </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>إيقاف</target>
+      </trans-unit>
+      <trans-unit id="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>الحد من خيارات الألوان</target>
+      </trans-unit>
+      <trans-unit id="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>الألوان المسموح بها</target>
+      </trans-unit>
+      <trans-unit id="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>قائمة رموز ألوان HTML مفصولة بفواصل. يمكن تعيين أسماء الألوان عن طريق إضافة اسم و | المحدد ، على سبيل المثال: أبيض | # ffffff ، أسود | # 000000.</target>
+      </trans-unit>
+      <trans-unit id="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>السنة المالية</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

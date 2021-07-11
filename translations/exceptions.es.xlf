@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="http_error_403.description">
         <source>http_error_403.description</source>
-        <target>Acceso restringido.</target>
+        <target>La página está restringida</target>
       </trans-unit>
       <trans-unit id="http_error_403.suggestion">
         <source>http_error_403.suggestion</source>

@@ -12,8 +12,7 @@ namespace App\Invoice\Renderer;
 use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceModel;
 use App\Invoice\RendererInterface;
-use App\Twig\DateExtensions;
-use App\Twig\LocaleExtensions;
+use App\Twig\LocaleFormatExtensions;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Twig\Environment;
@@ -61,12 +60,8 @@ abstract class AbstractTwigRenderer implements RendererInterface
 
         $translator->setLocale($locale);
 
-        /** @var LocaleExtensions $extension */
-        $extension = $twig->getExtension(LocaleExtensions::class);
-        $extension->setLocale($locale);
-
-        /** @var DateExtensions $extension */
-        $extension = $twig->getExtension(DateExtensions::class);
+        /** @var LocaleFormatExtensions $extension */
+        $extension = $twig->getExtension(LocaleFormatExtensions::class);
         $extension->setLocale($locale);
 
         return $previousLocale;

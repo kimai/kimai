@@ -73,6 +73,7 @@ class ConfigurationTest extends TestCase
 
         $config = $this->getMinConfig();
         $config['ldap'] = [
+            'activate' => true,
             'connection' => [
                 'host' => 'foo'
             ],
@@ -231,6 +232,7 @@ class ConfigurationTest extends TestCase
     {
         $finalizedConfig = $this->getCompiledConfig($this->getMinConfig());
         $expected = [
+            'activate' => false,
             'user' => [
                 'baseDn' => '',
                 'filter' => '',
@@ -285,13 +287,20 @@ class ConfigurationTest extends TestCase
                     'lockdown_period_start' => null,
                     'lockdown_period_end' => null,
                     'lockdown_grace_period' => null,
+                    'allow_overbooking_budget' => true,
+                    'lockdown_period_timezone' => null,
+                    'break_warning_duration' => 0,
+                    'long_running_duration' => 0,
                 ],
                 'duration_increment' => null,
                 'time_increment' => null,
             ],
             'user' => [
-                'registration' => true,
+                'registration' => false,
                 'password_reset' => true,
+                'login' => true,
+                'password_reset_retry_ttl' => 7200,
+                'password_reset_token_ttl' => 86400,
             ],
             'invoice' => [
                 'documents' => [
@@ -341,9 +350,8 @@ class ConfigurationTest extends TestCase
             ],
             'theme' => [
                 'active_warning' => 3,
-                'box_color' => 'green',
+                'box_color' => 'blue',
                 'select_type' => 'selectpicker',
-                'auto_reload_datatable' => false,
                 'show_about' => true,
                 'chart' => [
                     'background_color' => '#3c8dbc',
@@ -362,7 +370,11 @@ class ConfigurationTest extends TestCase
                 'tags_create' => true,
                 'calendar' => [
                     'background_color' => '#d2d6de'
-                ]
+                ],
+                'colors_limited' => true,
+                'color_choices' => 'Silver|#c0c0c0,Gray|#808080,Black|#000000,Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,Gold|#ffd700,Yellow|#ffff00,Peach|#ffdab9,Khaki|#f0e68c,Olive|#808000,Lime|#00ff00,Jelly|#9acd32,Green|#008000,Teal|#008080,Aqua|#00ffff,LightBlue|#add8e6,DeepSky|#00bfff,Dodger|#1e90ff,Blue|#0000ff,Navy|#000080,Purple|#800080,Fuchsia|#ff00ff,Violet|#ee82ee,Rose|#ffe4e1,Lavender|#E6E6FA',
+                'random_colors' => true,
+                'avatar_url' => false,
             ],
             'industry' => [
                 'translation' => null,
@@ -393,6 +405,7 @@ class ConfigurationTest extends TestCase
                 ],
             ],
             'ldap' => [
+                'activate' => false,
                 'connection' => [
                     'host' => null,
                     'port' => 389,
@@ -427,6 +440,9 @@ class ConfigurationTest extends TestCase
                 'connection' => [
                     'organization' => []
                 ],
+            ],
+            'company' => [
+                'financial_year' => null,
             ]
         ];
 

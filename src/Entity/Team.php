@@ -129,6 +129,8 @@ class Team
      */
     private $activities;
 
+    use ColorTrait;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();

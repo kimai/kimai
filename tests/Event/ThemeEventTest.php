@@ -18,6 +18,14 @@ use PHPUnit\Framework\TestCase;
  */
 class ThemeEventTest extends TestCase
 {
+    public function testEmpty()
+    {
+        $sut = new ThemeEvent();
+        $this->assertNull($sut->getUser());
+        $this->assertNull($sut->getPayload());
+        $this->assertEquals('', $sut->getContent());
+    }
+
     public function testDefaultValues()
     {
         $user = new User();
@@ -25,21 +33,7 @@ class ThemeEventTest extends TestCase
 
         $sut = new ThemeEvent($user);
 
-        $this->assertNull($sut->getPayload());
-        $this->assertEquals('', $sut->getContent());
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testDeprecation()
-    {
-        $user = new User();
-        $user->setAlias('foo');
-
-        $sut = new ThemeEvent($user);
-
-        $this->assertEquals($user, $sut->getUser());
+        $this->assertSame($user, $sut->getUser());
     }
 
     public function testGetterAndSetter()

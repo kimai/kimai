@@ -10,7 +10,7 @@
 namespace App\Tests\Export\Renderer;
 
 use App\Export\Renderer\HtmlRenderer;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectStatisticService;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
@@ -28,7 +28,7 @@ class HtmlRendererTest extends AbstractRendererTest
         $sut = new HtmlRenderer(
             $this->createMock(Environment::class),
             new EventDispatcher(),
-            $this->createMock(ProjectRepository::class)
+            $this->createMock(ProjectStatisticService::class)
         );
 
         $this->assertEquals('html', $sut->getId());
@@ -46,7 +46,7 @@ class HtmlRendererTest extends AbstractRendererTest
         $request->setLocale('en');
         $stack->push($request);
 
-        $sut = new HtmlRenderer($twig, new EventDispatcher(), $this->createMock(ProjectRepository::class));
+        $sut = new HtmlRenderer($twig, new EventDispatcher(), $this->createMock(ProjectStatisticService::class));
 
         $response = $this->render($sut);
 

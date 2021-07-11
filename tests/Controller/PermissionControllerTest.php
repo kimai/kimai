@@ -10,6 +10,7 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\UserFixtures;
+use App\Entity\Role;
 use App\Entity\RolePermission;
 use App\Entity\User;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -36,8 +37,8 @@ class PermissionControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 119);
         $this->assertPageActions($client, [
-            'back' => $this->createUrl('/admin/user/'),
-            'roles modal-ajax-form' => $this->createUrl('/admin/permissions/roles/create'),
+            //'back' => $this->createUrl('/admin/user/'),
+            'create modal-ajax-form' => $this->createUrl('/admin/permissions/roles/create'),
             'help' => 'https://www.kimai.org/documentation/permissions.html'
         ]);
 
@@ -104,6 +105,15 @@ class PermissionControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
         $client->followRedirect();
 
+        $roles = $this->getEntityManager()->getRepository(Role::class)->findAll();
+        $id = null;
+        foreach ($roles as $role) {
+            if ($role->getName() === 'TEST_ROLE') {
+                $id = $role->getId();
+                break;
+            }
+        }
+
         $content = $client->getResponse()->getContent();
         self::assertStringContainsString('<th data-field="TEST_ROLE" class="alwaysVisible text-center">', $content);
 
@@ -126,7 +136,7 @@ class PermissionControllerTest extends ControllerBaseTest
 
         /** @var CsrfToken $token */
         $token = static::$kernel->getContainer()->get('security.csrf.token_manager')->getToken('user_role_permissions');
-        $this->request($client, '/admin/permissions/roles/1/delete/' . $token->getValue());
+        $this->request($client, '/admin/permissions/roles/' . $id . '/delete/' . $token->getValue());
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
         $client->followRedirect();
 
@@ -166,9 +176,18 @@ class PermissionControllerTest extends ControllerBaseTest
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
         $this->assertEquals(0, \count($rolePermissions));
 
+        $roles = $em->getRepository(Role::class)->findAll();
+        $id = null;
+        foreach ($roles as $role) {
+            if ($role->getName() === 'TEST_ROLE') {
+                $id = $role->getId();
+                break;
+            }
+        }
+
         // create the permission
         $token = static::$kernel->getContainer()->get('security.csrf.token_manager')->getToken('user_role_permissions');
-        $this->request($client, '/admin/permissions/roles/1/view_user/1/' . $token->getValue(), 'POST');
+        $this->request($client, '/admin/permissions/roles/' . $id . '/view_user/1/' . $token->getValue(), 'POST');
 
         self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -182,14 +201,14 @@ class PermissionControllerTest extends ControllerBaseTest
         self::assertEquals('view_user', $permission->getPermission());
         self::assertTrue($permission->isAllowed());
         self::assertEquals('TEST_ROLE', $permission->getRole()->getName());
-        self::assertEquals(1, $permission->getRole()->getId());
+        self::assertEquals($id, $permission->getRole()->getId());
 
         // flush the cache to prevent wrong results
         $em->clear();
 
         // update the permission
         $token = static::$kernel->getContainer()->get('security.csrf.token_manager')->getToken('user_role_permissions');
-        $this->request($client, '/admin/permissions/roles/1/view_user/0/' . $token->getValue(), 'POST');
+        $this->request($client, '/admin/permissions/roles/' . $id . '/view_user/0/' . $token->getValue(), 'POST');
 
         self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);

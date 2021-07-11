@@ -12,12 +12,15 @@ namespace App\Entity;
 use App\Constants;
 use App\Export\Annotation as Exporter;
 use App\Utils\StringHelper;
+use App\Validator\Constraints as Constraints;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
+use Exception;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -31,6 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @UniqueEntity("username")
  * @UniqueEntity("email")
+ * @Constraints\User(groups={"UserCreate", "Registration", "Default"})
  *
  * @Serializer\ExclusionPolicy("all")
  * @Serializer\VirtualProperty(
@@ -62,7 +66,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
  * @Exporter\Expose("active", label="label.active", exp="object.isEnabled()", type="boolean")
  */
-class User extends BaseUser implements UserInterface
+class User implements UserInterface, EquatableInterface, \Serializable
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
@@ -110,7 +114,7 @@ class User extends BaseUser implements UserInterface
     /**
      * Registration date for the user
      *
-     * @var \DateTime
+     * @var DateTime
      *
      * @Exporter\Expose(label="profile.registration_date", type="datetime")
      *
@@ -154,6 +158,8 @@ class User extends BaseUser implements UserInterface
     /**
      * @var string
      * @internal to be set via form, must not be persisted
+     * @Assert\NotBlank(groups={"ApiTokenUpdate"})
+     * @Assert\Length(min="8", max="60", groups={"ApiTokenUpdate"})
      */
     private $plainApiToken;
     /**
@@ -203,11 +209,82 @@ class User extends BaseUser implements UserInterface
      * @internal has no database mapping as the value is calculated from a permission
      */
     private $isAllowedToSeeAllData = null;
+    /**
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
+     * @var string
+     * @ORM\Column(name="username", type="string", length=180)
+     * @Assert\NotBlank(groups={"Registration", "UserCreate", "Profile"})
+     * @Assert\Length(min="2", max="60", groups={"Registration", "UserCreate", "Profile"})
+     */
+    private $username;
+    /**
+     * @var string
+     * @ORM\Column(name="email", type="string", length=180)
+     * @Assert\NotBlank(groups={"Registration", "UserCreate", "Profile"})
+     * @Assert\Length(min="2", max="180")
+     * @Assert\Email(groups={"Registration", "UserCreate", "Profile"})
+     */
+    private $email;
+    /**
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
+     * @var bool
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled = false;
+    /**
+     * Encrypted password. Must be persisted.
+     *
+     * @var string
+     * @ORM\Column(name="password", type="string")
+     */
+    private $password;
+    /**
+     * Plain password. Used for model validation, not persisted.
+     *
+     * TODO make the password rules configurable
+     *
+     * @var string|null
+     * @Assert\NotBlank(groups={"Registration", "PasswordUpdate", "UserCreate"})
+     * @Assert\Length(min="8", max="60", groups={"Registration", "PasswordUpdate", "UserCreate", "ResetPassword", "ChangePassword"})
+     */
+    private $plainPassword;
+    /**
+     * @var \DateTime|null
+     * @ORM\Column(name="last_login", type="datetime", nullable=true)
+     */
+    private $lastLogin;
+    /**
+     * Random string sent to the user email address in order to verify it.
+     *
+     * @var string|null
+     * @ORM\Column(name="confirmation_token", type="string", length=180, unique=true, nullable=true)
+     */
+    private $confirmationToken;
+    /**
+     * @var \DateTime|null
+     * @ORM\Column(name="password_requested_at", type="datetime", nullable=true)
+     */
+    private $passwordRequestedAt;
+    /**
+     * @Serializer\Expose()
+     * @Serializer\Groups({"User_Entity"})
+     * @Serializer\Type("array<string>")
+     *
+     * @var array
+     * @ORM\Column(name="roles", type="array")
+     * @Constraints\Role(groups={"RolesUpdate"})
+     */
+    private $roles = [];
+
+    use ColorTrait;
 
     public function __construct()
     {
-        parent::__construct();
-        $this->registeredAt = new \DateTime();
+        $this->registeredAt = new DateTime();
         $this->preferences = new ArrayCollection();
         $this->teams = new ArrayCollection();
     }
@@ -217,12 +294,12 @@ class User extends BaseUser implements UserInterface
         return $this->id;
     }
 
-    public function getRegisteredAt(): ?\DateTime
+    public function getRegisteredAt(): ?DateTime
     {
         return $this->registeredAt;
     }
 
-    public function setRegisteredAt(\DateTime $registeredAt): User
+    public function setRegisteredAt(DateTime $registeredAt): User
     {
         $this->registeredAt = $registeredAt;
 
@@ -369,9 +446,24 @@ class User extends BaseUser implements UserInterface
         $this->setPreferenceValue(UserPreference::LOCALE, $language);
     }
 
+    public function isFirstDayOfWeekSunday(): bool
+    {
+        return $this->getFirstDayOfWeek() === 'sunday';
+    }
+
     public function getFirstDayOfWeek(): string
     {
         return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY);
+    }
+
+    public function isSmallLayout(): bool
+    {
+        return $this->getPreferenceValue('theme.layout', 'fixed') === 'boxed';
+    }
+
+    public function isExportDecimal(): bool
+    {
+        return (bool) $this->getPreferenceValue('timesheet.export_decimal', false);
     }
 
     public function setTimezone(?string $timezone)
@@ -387,7 +479,7 @@ class User extends BaseUser implements UserInterface
      * @param mixed $default
      * @return bool|int|null|string
      */
-    public function getPreferenceValue($name, $default = null)
+    public function getPreferenceValue(string $name, $default = null)
     {
         $preference = $this->getPreference($name);
         if (null === $preference) {
@@ -439,6 +531,18 @@ class User extends BaseUser implements UserInterface
         return !$this->getTeams()->isEmpty();
     }
 
+    public function hasTeamMember(User $user): bool
+    {
+        /** @var Team $team */
+        foreach ($this->getTeams() as $team) {
+            if ($team->hasUser($user)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * @return Collection<Team>
      */
@@ -468,7 +572,7 @@ class User extends BaseUser implements UserInterface
      * @internal immutable property that cannot be set by plugins
      * @param bool $canSeeAllData
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function initCanSeeAllData(bool $canSeeAllData): bool
     {
@@ -529,10 +633,305 @@ class User extends BaseUser implements UserInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function addRole($role)
+    {
+        $role = strtoupper($role);
+        if ($role === static::DEFAULT_ROLE) {
+            return $this;
+        }
+
+        if (!\in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function getLastLogin(): ?DateTime
+    {
+        return $this->lastLogin;
+    }
+
+    public function getConfirmationToken(): ?string
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRoles()
+    {
+        $roles = $this->roles;
+
+        // we need to make sure to have at least one role
+        $roles[] = static::DEFAULT_ROLE;
+
+        return array_values(array_unique($roles));
+    }
+
+    public function hasRole($role): bool
+    {
+        return \in_array(strtoupper($role), $this->getRoles(), true);
+    }
+
+    public function setSuperAdmin(bool $isSuper): void
+    {
+        if (true === $isSuper) {
+            $this->addRole(static::ROLE_SUPER_ADMIN);
+        } else {
+            $this->removeRole(static::ROLE_SUPER_ADMIN);
+        }
+    }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->hasRole(static::ROLE_SUPER_ADMIN);
+    }
+
+    public function removeRole($role): User
+    {
+        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
+        }
+
+        return $this;
+    }
+
+    public function setUsername($username): User
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function setEmail($email): User
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): User
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function setPassword($password): User
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function setPlainPassword($password): User
+    {
+        $this->plainPassword = $password;
+
+        return $this;
+    }
+
+    public function setLastLogin(\DateTime $time = null): User
+    {
+        $this->lastLogin = $time;
+
+        return $this;
+    }
+
+    public function setConfirmationToken($confirmationToken): User
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    public function setPasswordRequestedAt(\DateTime $date = null): User
+    {
+        $this->passwordRequestedAt = $date;
+
+        return $this;
+    }
+
+    /**
+     * Gets the timestamp that the user requested a password reset.
+     *
+     * @return DateTime|null
+     */
+    public function getPasswordRequestedAt(): ?DateTime
+    {
+        return $this->passwordRequestedAt;
+    }
+
+    public function isPasswordRequestNonExpired(int $seconds): bool
+    {
+        $date = $this->getPasswordRequestedAt();
+
+        if ($date === null || !($date instanceof DateTime)) {
+            return false;
+        }
+
+        return $date->getTimestamp() + $seconds > time();
+    }
+
+    public function setRoles(array $roles): User
+    {
+        $this->roles = [];
+
+        foreach ($roles as $role) {
+            $this->addRole($role);
+        }
+
+        return $this;
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+        if (!$user instanceof self) {
+            return false;
+        }
+
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+        return serialize([
+            $this->password,
+            $this->username,
+            $this->enabled,
+            $this->id,
+            $this->email,
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+
+        // unserialize a user object from <= 1.14
+        if (8 === \count($data)) {
+            unset($data[1], $data[2], $data[7]);
+            $data = array_values($data);
+        }
+
+        list(
+            $this->password,
+            $this->username,
+            $this->enabled,
+            $this->id,
+            $this->email) = $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
     {
         return $this->getDisplayName();
+    }
+
+    public function getInitials(): string
+    {
+        $length = 2;
+
+        $name = $this->getDisplayName();
+        $initial = '';
+
+        if (filter_var($name, FILTER_VALIDATE_EMAIL)) {
+            // turn my.email@gmail.com into "My Email"
+            $result = mb_strstr($name, '@', true);
+            $name = $result === false ? $name : $result;
+            $name = str_replace('.', ' ', $name);
+        }
+
+        $words = explode(' ', $name);
+
+        // if name contains single word, use first N character
+        if (\count($words) === 1) {
+            $initial = $words[0];
+
+            if (mb_strlen($name) >= $length) {
+                $initial = mb_substr($name, 0, $length, 'UTF-8');
+            }
+        } else {
+            // otherwise, use initial char from each word
+            foreach ($words as $word) {
+                $initial .= mb_substr($word, 0, 1, 'UTF-8');
+            }
+            $initial = mb_substr($initial, 0, $length, 'UTF-8');
+        }
+
+        $initial = mb_strtoupper($initial);
+
+        return $initial;
     }
 }

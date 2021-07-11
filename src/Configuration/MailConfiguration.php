@@ -9,7 +9,7 @@
 
 namespace App\Configuration;
 
-class MailConfiguration
+final class MailConfiguration
 {
     /**
      * @var string

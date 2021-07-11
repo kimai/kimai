@@ -10,21 +10,26 @@
 namespace App\Tests\Configuration;
 
 use App\Configuration\LdapConfiguration;
+use App\Configuration\SystemConfiguration;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Configuration\LdapConfiguration
+ * @covers \App\Configuration\SystemConfiguration
  */
 class LdapConfigurationTest extends TestCase
 {
     protected function getSut(array $settings)
     {
-        return new LdapConfiguration($settings);
+        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $settings]);
+
+        return new LdapConfiguration($systemConfig);
     }
 
     protected function getDefaultSettings()
     {
         return [
+            'activate' => true,
             'connection' => [
                 'host' => '1.2.3.4',
             ],
@@ -37,9 +42,19 @@ class LdapConfigurationTest extends TestCase
         ];
     }
 
+    public function testDefault()
+    {
+        $sut = $this->getSut([]);
+        $this->assertFalse($sut->isActivated());
+        $this->assertEquals([], $sut->getUserParameters());
+        $this->assertEquals([], $sut->getRoleParameters());
+        $this->assertEquals([], $sut->getConnectionParameters());
+    }
+
     public function testMapping()
     {
         $sut = $this->getSut($this->getDefaultSettings());
+        $this->assertTrue($sut->isActivated());
         $this->assertEquals(['foo' => 'bar'], $sut->getUserParameters());
         $this->assertEquals(['bar' => 'foo'], $sut->getRoleParameters());
         $this->assertEquals(['host' => '1.2.3.4'], $sut->getConnectionParameters());

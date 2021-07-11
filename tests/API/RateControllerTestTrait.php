@@ -9,6 +9,7 @@
 
 namespace App\Tests\API;
 
+use App\Entity\RateInterface;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,9 +25,11 @@ trait RateControllerTestTrait
      */
     abstract protected function getRateUrl($id = '1', $rateId = null): string;
 
+    abstract protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string;
+
     /**
      * @param string|int $id
-     * @return array
+     * @return RateInterface[]
      */
     abstract protected function importTestRates($id): array;
 
@@ -160,12 +163,12 @@ trait RateControllerTestTrait
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $expectedRates = $this->importTestRates(1);
 
-        $this->request($client, $this->getRateUrl(1, 1), 'DELETE');
+        $this->request($client, $this->getRateUrlByRate($expectedRates[0], false), 'DELETE');
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEmpty($client->getResponse()->getContent());
 
         // fetch rates to validate that one was removed
-        $this->request($client, $this->getRateUrl(1));
+        $this->request($client, $this->getRateUrlByRate($expectedRates[0], true));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);

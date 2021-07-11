@@ -50,6 +50,10 @@
         <source>invoice.first_template</source>
         <target>Crea un modello di fatturazione per continuare</target>
       </trans-unit>
+      <trans-unit id="action.upload.error">
+        <source>action.upload.error</source>
+        <target>Il file non ha potuto essere caricato o salvato: %reason%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -26,11 +26,7 @@ final class Version20190201150324 extends AbstractMigration
     {
         $timezone = date_default_timezone_get();
 
-        if ($this->isPlatformSqlite()) {
-            $this->addSql('ALTER TABLE kimai2_timesheet ADD COLUMN timezone VARCHAR(64) DEFAULT NULL');
-        } else {
-            $this->addSql('ALTER TABLE kimai2_timesheet ADD timezone VARCHAR(64) NOT NULL');
-        }
+        $this->addSql('ALTER TABLE kimai2_timesheet ADD timezone VARCHAR(64) NOT NULL');
 
         $this->addSql('UPDATE kimai2_timesheet SET timezone = "' . $timezone . '"');
     }

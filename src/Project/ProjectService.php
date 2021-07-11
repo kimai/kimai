@@ -23,6 +23,9 @@ use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+/**
+ * @final
+ */
 class ProjectService
 {
     /**

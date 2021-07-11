@@ -35,10 +35,9 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_user_admin', 7);
         $this->assertPageActions($client, [
-            'search search-toggle visible-xs-inline' => '#',
+            'search' => '#',
             'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/user/export'),
-            'permissions' => $this->createUrl('/admin/permissions'),
             'create' => $this->createUrl('/admin/user/create'),
             'help' => 'https://www.kimai.org/documentation/users.html'
         ]);
@@ -51,7 +50,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/user/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'hourly_rate:35 tony',
             'role' => 'ROLE_TEAMLEAD',
@@ -84,7 +83,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/user/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/user/export'));
         $client->submit($form, [
             'searchTerm' => 'hourly_rate:35 tony',
@@ -99,7 +98,7 @@ class UserControllerTest extends ControllerBaseTest
 
     public function testCreateAction()
     {
-        $username = '亚历山德拉';
+        $username = '亚历山德拉' . uniqid();
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/create');
         $form = $client->getCrawler()->filter('form[name=user_create]')->form();
@@ -116,17 +115,6 @@ class UserControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode($username) . '/edit'));
         $client->followRedirect();
-
-        $expectedTabs = ['#settings', '#password', '#api-token', '#teams', '#roles'];
-
-        $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
-        $this->assertEquals(\count($expectedTabs), $tabs->count());
-        $foundTabs = [];
-        /** @var \DOMElement $tab */
-        foreach ($tabs->filter('a') as $tab) {
-            $foundTabs[] = $tab->getAttribute('href');
-        }
-        $this->assertEmpty(array_diff($expectedTabs, $foundTabs));
 
         $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
         $this->assertEquals($username, $form->get('user_edit[alias]')->getValue());
@@ -200,10 +188,9 @@ class UserControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertHasFlashDeleteSuccess($client);
 
-        // SQLIte does not necessarly support onCascade delete, so these timesheet will stay after deletion
-        // $em->clear();
-        // $timesheets = $em->getRepository(Timesheet::class)->count([]);
-        // $this->assertEquals(0, $timesheets);
+        $em->clear();
+        $timesheets = $em->getRepository(Timesheet::class)->count([]);
+        $this->assertEquals(0, $timesheets);
 
         $this->request($client, '/admin/user/' . $user->getId() . '/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());
@@ -281,15 +268,12 @@ class UserControllerTest extends ControllerBaseTest
                         'plainPassword' => ['first' => 'sdfsdf123'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
-                        'avatar' => 'asdfawer',
                         'email' => '',
                     ]
                 ],
                 [
                     '#user_create_username',
-                    '#user_create_username',
                     '#user_create_plainPassword_first',
-                    '#user_create_email',
                     '#user_create_email',
                 ]
             ],
@@ -301,15 +285,12 @@ class UserControllerTest extends ControllerBaseTest
                         'plainPassword' => ['first' => 'sdfsdf123', 'second' => 'sdfxxxxxxx'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
-                        'avatar' => 'asdfawer',
                         'email' => 'ydfbvsdfgs',
                     ]
                 ],
                 [
                     '#user_create_username',
-                    '#user_create_username',
                     '#user_create_plainPassword_first',
-                    '#user_create_email',
                     '#user_create_email',
                 ]
             ],
@@ -321,7 +302,6 @@ class UserControllerTest extends ControllerBaseTest
                         'plainPassword' => ['first' => 'test123', 'second' => 'test123'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
-                        'avatar' => 'asdfawer',
                         'email' => 'ydfbvsdfgs@example.com',
                     ]
                 ],

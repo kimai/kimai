@@ -11,7 +11,6 @@ namespace App\Repository;
 
 use App\Entity\Role;
 use App\Entity\RolePermission;
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -38,6 +37,6 @@ class RolePermissionRepository extends EntityRepository
         $qb->select('r.name as role,rp.permission,rp.allowed')
             ->leftJoin('rp.role', 'r');
 
-        return $qb->getQuery()->execute([], AbstractQuery::HYDRATE_ARRAY);
+        return $qb->getQuery()->getArrayResult();
     }
 }

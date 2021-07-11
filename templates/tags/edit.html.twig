@@ -6,9 +6,22 @@
 {% block page_actions %}{{ actions.tag(tag, 'edit') }}{% endblock %}
 
 {% block main %}
-    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
+    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formOptions = {
         'title': tag.name|default('create'|trans),
         'form': form,
         'back': path('tags')
-    }) }}
+    } %}
+    {% embed formEditTemplate with formOptions %}
+        {% block form_body %}
+            <div class="row">
+                <div class="col-md-10">
+                    {{ form_row(form.name) }}
+                </div>
+                <div class="col-md-2">
+                    {{ form_row(form.color) }}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

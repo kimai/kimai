@@ -19,6 +19,9 @@ class TestConfigLoader implements ConfigLoaderInterface
 {
     private $configs = [];
 
+    /**
+     * @param Configuration[] $configs
+     */
     public function __construct(array $configs)
     {
         $this->configs = $configs;

@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 /**
  * A voter to check permissions on Timesheets.
  */
-class TimesheetVoter extends Voter
+final class TimesheetVoter extends Voter
 {
     public const VIEW = 'view';
     public const START = 'start';

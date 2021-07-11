@@ -199,7 +199,7 @@
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>Email</target>
+        <target>Эл. почта</target>
       </trans-unit>
       <trans-unit id="label.create_more">
         <source>label.create_more</source>
@@ -1104,6 +1104,14 @@
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
         <target>сборы не были настроены.</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Форма изменилась. Пожалуйста, нажмите на кнопку «Сохранить», чтобы сохранить изменения или «Закрыть» для отмены.</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Всего</target>
       </trans-unit>
     </body>
   </file>

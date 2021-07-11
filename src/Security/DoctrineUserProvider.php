@@ -11,12 +11,14 @@ namespace App\Security;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Exception;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-final class DoctrineUserProvider implements UserProviderInterface
+final class DoctrineUserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
     /**
      * @var UserRepository
@@ -51,7 +53,7 @@ final class DoctrineUserProvider implements UserProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function refreshUser(SecurityUserInterface $user)
+    public function refreshUser(UserInterface $user)
     {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', User::class, \get_class($user)));
@@ -72,6 +74,17 @@ final class DoctrineUserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class === User::class || $class === 'App\Entity\User';
+        return $class === User::class;
+    }
+
+    public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
+    {
+        if ($user instanceof User) {
+            try {
+                $user->setPassword($newEncodedPassword);
+                $this->repository->saveUser($user);
+            } catch (Exception $e) {
+            }
+        }
     }
 }

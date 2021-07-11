@@ -12,21 +12,24 @@ namespace App\Tests\Controller;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
-use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
  */
 class TagControllerTest extends ControllerBaseTest
 {
-    protected function importTags(HttpKernelBrowser $client): void
+    /**
+     * @return Tag[]
+     */
+    protected function importTags(): array
     {
         $tagList = ['Test', 'Administration', 'Support', '#2018-001', '#2018-002', '#2018-003', 'Development',
             'Marketing', 'First Level Support', 'Bug Fixing'];
 
         $fixture = new TagFixtures();
         $fixture->setTagArray($tagList);
-        $this->importFixture($fixture);
+
+        return $this->importFixture($fixture);
     }
 
     public function testIsSecure()
@@ -37,7 +40,7 @@ class TagControllerTest extends ControllerBaseTest
     public function testIndexAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $this->importTags($client);
+        $this->importTags();
         $this->assertAccessIsGranted($client, '/admin/tags/');
 
         $this->assertHasDataTable($client);
@@ -47,12 +50,12 @@ class TagControllerTest extends ControllerBaseTest
     public function testIndexActionWithSearchTermQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $this->importTags($client);
+        $this->importTags();
 
         $this->request($client, '/admin/tags/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'Support',
         ]);
@@ -76,7 +79,9 @@ class TagControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertHasDataTable($client);
 
-        $this->request($client, '/admin/tags/1/edit');
+        $id = $this->getEntityManager()->getRepository(Tag::class)->findAll()[0]->getId();
+
+        $this->request($client, '/admin/tags/' . $id . '/edit');
         $editForm = $client->getCrawler()->filter('form[name=tag_edit_form]')->form();
         $this->assertEquals('A tAG Name!', $editForm->get('tag_edit_form[name]')->getValue());
     }
@@ -84,9 +89,10 @@ class TagControllerTest extends ControllerBaseTest
     public function testEditAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->importTags($client);
+        $tags = $this->importTags();
+        $id = $tags[0]->getId();
 
-        $this->assertAccessIsGranted($client, '/admin/tags/1/edit');
+        $this->assertAccessIsGranted($client, '/admin/tags/' . $id . '/edit');
         $form = $client->getCrawler()->filter('form[name=tag_edit_form]')->form();
         $client->submit($form, [
             'tag_edit_form' => ['name' => 'Test 2 updated']
@@ -94,7 +100,7 @@ class TagControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/admin/tags/'));
         $client->followRedirect();
         $this->assertHasDataTable($client);
-        $this->request($client, '/admin/tags/1/edit');
+        $this->request($client, '/admin/tags/' . $id . '/edit');
         $editForm = $client->getCrawler()->filter('form[name=tag_edit_form]')->form();
         $this->assertEquals('Test 2 updated', $editForm->get('tag_edit_form[name]')->getValue());
     }
@@ -102,7 +108,7 @@ class TagControllerTest extends ControllerBaseTest
     public function testMultiDeleteAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $this->importTags($client);
+        $this->importTags();
 
         $this->assertAccessIsGranted($client, '/admin/tags/');
 

@@ -136,7 +136,8 @@ final class KimaiImporterCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('kimai:import-v1')
+            ->setName('kimai:import:v1')
+            ->setAliases(['kimai:import-v1'])
             ->setDescription('Import data from a Kimai v1 installation')
             ->setHelp('This command allows you to import the most important data from a Kimi v1 installation.')
             ->addArgument(
@@ -304,7 +305,9 @@ final class KimaiImporterCommand extends Command
         $validationMessages = [];
         try {
             $usedEmails = [];
+            $userIds = [];
             foreach ($users as $oldUser) {
+                $userIds[] = $oldUser['userID'];
                 if (empty($oldUser['mail'])) {
                     $validationMessages[] = sprintf('User "%s" with ID %s has no email', $oldUser['name'], $oldUser['userID']);
                     continue;
@@ -323,6 +326,15 @@ final class KimaiImporterCommand extends Command
             foreach ($projects as $oldProject) {
                 if (!\in_array($oldProject['customerID'], $customerIds)) {
                     $validationMessages[] = sprintf('Project "%s" with ID %s has unknown customer with ID %s', $oldProject['name'], $oldProject['projectID'], $oldProject['customerID']);
+                }
+            }
+
+            foreach ($rates as $oldRate) {
+                if ($oldRate['userID'] === null) {
+                    continue;
+                }
+                if (!\in_array($oldRate['userID'], $userIds)) {
+                    $validationMessages[] = sprintf('Unknown user with ID "%s" found for rate with project "%s" and activity "%s"', $oldRate['userID'], $oldRate['projectID'], $oldRate['activityID']);
                 }
             }
         } catch (Exception $ex) {

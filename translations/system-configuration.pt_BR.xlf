@@ -62,10 +62,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Número permitido de entradas de tempo de execução simultâneas</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Número de entradas de tempo de execução a partir das quais um aviso é exibido</target>
-      </trans-unit>
       <trans-unit id="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target>Mostrar números de semanas</target>
@@ -184,15 +180,15 @@
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>Empresa</target>
+        <target>O nome da empresa</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>Logotipo (URL de imagem, substitui a empresa na tela de login)</target>
+        <target>A URL do logotipo (substitui o nome da empresa na tela de login)</target>
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>Marca</target>
+        <target>A minha empresa</target>
       </trans-unit>
       <trans-unit id="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>
@@ -225,6 +221,42 @@
       <trans-unit id="invoice">
         <source>invoice</source>
         <target>Faturas</target>
+      </trans-unit>
+      <trans-unit id="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>Lista separada por vírgulas com os códigos das cores HTML. Os nomes das cores podem ser definidos através do prefixo do código da cor com um nome e o | delimitador, por exemplo: Branco|#ffffffff,Preto|#000000.</target>
+      </trans-unit>
+      <trans-unit id="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>Cores permitidas</target>
+      </trans-unit>
+      <trans-unit id="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>Limite as escolhas de cor</target>
+      </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>Feriado</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Use o valor configurado da regra de arredondamento</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Seleção de minutos para De &amp; Para</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Seleção de minutos para a duração</target>
+      </trans-unit>
+      <trans-unit id="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>Ano fiscal</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>Permitir o overbooking (a reserva em excesso) dos orçamentos acumulados</target>
       </trans-unit>
     </body>
   </file>

@@ -44,7 +44,7 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         });
         for (let checkbox of this.modal.querySelectorAll('form input[type=checkbox]')) {
             checkbox.addEventListener('click', function () {
-                self.changeVisibility(checkbox.getAttribute('name'));
+                self.changeVisibility(checkbox.getAttribute('name'), checkbox.checked);
             });
         }
     }
@@ -55,7 +55,7 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         for (let checkbox of form.querySelectorAll('input[type=checkbox]')) {
             settings[checkbox.getAttribute('name')] = checkbox.checked;
         }
-        Cookies.set(form.getAttribute('name'), JSON.stringify(settings), {expires: 365});
+        Cookies.set(form.getAttribute('name'), JSON.stringify(settings), {expires: 365, SameSite: 'Strict'});
         jQuery(this.modal).modal('toggle');
     }
 
@@ -70,24 +70,40 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         jQuery(this.modal).modal('toggle');
     }
 
-    changeVisibility(columnName) {
-        const table = document.getElementById('datatable_' + this.id).getElementsByClassName('dataTable')[0];
-        let column = 0;
-        let foundColumn = false;
-        for (let columnElement of table.getElementsByTagName('th')) {
-            if (columnElement.getAttribute('data-field') === columnName) {
-                foundColumn = true;
-                break;
+    changeVisibility(columnName, checked) {
+        const tables = document.getElementsByClassName('datatable_' + this.id);
+        for (let tableBox of tables) {
+            let column = 0;
+            let foundColumn = false;
+            let table = tableBox.getElementsByClassName('dataTable')[0];
+            for (let columnElement of table.getElementsByTagName('th')) {
+                if (columnElement.getAttribute('data-field') === columnName) {
+                    foundColumn = true;
+                    break;
+                }
+
+                if (columnElement.getAttribute('colspan') !== null) {
+                    console.log('Tables with colspans are not supported!');
+                }
+
+                column++;
             }
-            column++;
-        }
 
-        if (!foundColumn) {
-            return;
-        }
+            if (!foundColumn) {
+                return;
+            }
 
-        for (let rowElement of table.getElementsByTagName('tr')) {
-            rowElement.children[column].classList.toggle('hidden');
+            for (let rowElement of table.getElementsByTagName('tr')) {
+                if (rowElement.children[column] === undefined) {
+                    continue;
+                }
+
+                if (checked) {
+                    rowElement.children[column].classList.remove('hidden');
+                } else {
+                    rowElement.children[column].classList.add('hidden');
+                }
+            }
         }
     }
 

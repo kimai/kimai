@@ -19,7 +19,8 @@ use App\Event\UserPreferenceDisplayEvent;
 use App\Export\ExportItemInterface;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
-use App\Twig\DateExtensions;
+use App\Twig\LocaleFormatExtensions;
+use App\Utils\StringHelper;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
@@ -47,7 +48,7 @@ abstract class AbstractSpreadsheetRenderer
     public const RATE_FORMAT = self::RATE_FORMAT_LEFT;
 
     /**
-     * @var DateExtensions
+     * @var LocaleFormatExtensions
      */
     protected $dateExtension;
     /**
@@ -80,8 +81,10 @@ abstract class AbstractSpreadsheetRenderer
         'description' => [
             'maxWidth' => 50,
             'wrapText' => false,
+            'sanitizeDDE' => true,
         ],
         'exported' => [],
+        'billable' => [],
         'tags' => [],
         'hourlyRate' => [],
         'fixedRate' => [],
@@ -90,9 +93,14 @@ abstract class AbstractSpreadsheetRenderer
         'project-meta' => [],
         'activity-meta' => [],
         'user-meta' => [],
+        'type' => [],
+        'category' => [],
+        'customer_number' => [],
+        'customer_vat' => [],
+        'order_number' => [],
     ];
 
-    public function __construct(TranslatorInterface $translator, DateExtensions $dateExtension, EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter)
+    public function __construct(TranslatorInterface $translator, LocaleFormatExtensions $dateExtension, EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter)
     {
         $this->translator = $translator;
         $this->dateExtension = $dateExtension;
@@ -117,7 +125,16 @@ abstract class AbstractSpreadsheetRenderer
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $excelDate = Date::PHPToExcel($date);
+
+        if ($excelDate === false) {
+            $sheet->setCellValueByColumnAndRow($column, $row, $date);
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $excelDate);
+        // TODO why is that format hardcoded and does not depend on the users locale?
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::DATETIME_FORMAT);
     }
 
@@ -129,7 +146,15 @@ abstract class AbstractSpreadsheetRenderer
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $excelDate = Date::PHPToExcel($date);
+
+        if ($excelDate === false) {
+            $sheet->setCellValueByColumnAndRow($column, $row, $date);
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $excelDate);
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::TIME_FORMAT);
     }
 
@@ -141,7 +166,16 @@ abstract class AbstractSpreadsheetRenderer
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $excelDate = Date::PHPToExcel($date);
+
+        if ($excelDate === false) {
+            $sheet->setCellValueByColumnAndRow($column, $row, $date);
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $excelDate);
+        // TODO why is that format hardcoded and does not depend on the users locale?
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_YYYYMMDD2);
     }
 
@@ -166,12 +200,17 @@ abstract class AbstractSpreadsheetRenderer
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s)', $startCoordinate, $endCoordinate));
     }
 
-    protected function setRate(Worksheet $sheet, $column, $row, $rate, $currency)
+    protected function setRateStyle(Worksheet $sheet, $column, $row, $rate, $currency)
     {
-        $sheet->setCellValueByColumnAndRow($column, $row, $rate);
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(
             sprintf(self::RATE_FORMAT_LEFT, $currency)
         );
+    }
+
+    protected function setRate(Worksheet $sheet, $column, $row, $rate, $currency)
+    {
+        $sheet->setCellValueByColumnAndRow($column, $row, $rate);
+        $this->setRateStyle($sheet, $column, $row, $rate, $currency);
     }
 
     /**
@@ -305,15 +344,21 @@ abstract class AbstractSpreadsheetRenderer
         if (isset($columns['description']) && !isset($columns['description']['render'])) {
             $maxWidth = \array_key_exists('maxWidth', $columns['description']) ? \intval($columns['description']['maxWidth']) : null;
             $wrapText = \array_key_exists('wrapText', $columns['description']) ? (bool) $columns['description']['wrapText'] : false;
+            $sanitizeText = \array_key_exists('sanitizeDDE', $columns['description']) ? (bool) $columns['description']['sanitizeDDE'] : true;
 
             // This column has a column-only formatter to set the maximum width of a column.
             // It needs to be executed once, so we use this as a flag on when to skip it.
             $isColumnFormatted = false;
 
-            $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use (&$isColumnFormatted, $maxWidth, $wrapText) {
+            $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use (&$isColumnFormatted, $maxWidth, $wrapText, $sanitizeText) {
                 $cell = $sheet->getCellByColumnAndRow($column, $row);
+                $desc = $entity->getDescription();
 
-                $cell->setValueExplicit($entity->getDescription(), DataType::TYPE_STRING);
+                if ($sanitizeText && null !== $desc) {
+                    $desc = StringHelper::sanitizeDDE($desc);
+                }
+
+                $cell->setValueExplicit($desc, DataType::TYPE_STRING);
 
                 // Apply wrap text if configured
                 if ($wrapText) {
@@ -323,8 +368,7 @@ abstract class AbstractSpreadsheetRenderer
                 // Apply max width, only needs to be once per column
                 if (!$isColumnFormatted) {
                     if (null !== $maxWidth) {
-                        $sheet->getColumnDimensionByColumn($column)
-                            ->setWidth($maxWidth);
+                        $sheet->getColumnDimensionByColumn($column)->setWidth($maxWidth);
                     }
                     $isColumnFormatted = true;
                 }
@@ -333,7 +377,14 @@ abstract class AbstractSpreadsheetRenderer
 
         if (isset($columns['exported']) && !isset($columns['exported']['render'])) {
             $columns['exported']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
-                $exported = $entity->isExported() ? 'entryState.exported' : 'entryState.not_exported';
+                $exported = $entity->isExported() ? 'yes' : 'no';
+                $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans($exported));
+            };
+        }
+
+        if (isset($columns['billable']) && !isset($columns['billable']['render'])) {
+            $columns['billable']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $exported = (method_exists($entity, 'isBillable') && !$entity->isBillable()) ? 'no' : 'yes';
                 $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans($exported));
             };
         }
@@ -501,6 +552,78 @@ abstract class AbstractSpreadsheetRenderer
                     return \count($userPreferences);
                 }
             ];
+        }
+
+        if (isset($columns['type']) && !isset($columns['type']['render'])) {
+            $columns['type']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $sheet->setCellValueByColumnAndRow($column, $row, $entity->getType());
+            };
+        }
+
+        if (isset($columns['category']) && !isset($columns['category']['render'])) {
+            $columns['category']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $sheet->setCellValueByColumnAndRow($column, $row, $entity->getCategory());
+            };
+        }
+
+        if (isset($columns['customer_number'])) {
+            if (!isset($columns['customer_number']['header'])) {
+                $columns['customer_number']['header'] = function (Worksheet $sheet, $row, $column) {
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.number'));
+
+                    return 1;
+                };
+            }
+
+            if (!isset($columns['customer_number']['render'])) {
+                $columns['customer_number']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                    $customerId = '';
+                    if (null !== $entity->getProject()) {
+                        $customerId = $entity->getProject()->getCustomer()->getNumber();
+                    }
+                    $sheet->setCellValueByColumnAndRow($column, $row, $customerId);
+                };
+            }
+        }
+
+        if (isset($columns['customer_vat']) && !isset($columns['customer_vat']['render'])) {
+            if (!isset($columns['customer_vat']['header'])) {
+                $columns['customer_vat']['header'] = function (Worksheet $sheet, $row, $column) {
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.vat_id'));
+
+                    return 1;
+                };
+            }
+
+            if (!isset($columns['customer_vat']['render'])) {
+                $columns['customer_vat']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                    $customerVat = '';
+                    if (null !== $entity->getProject()) {
+                        $customerVat = $entity->getProject()->getCustomer()->getVatId();
+                    }
+                    $sheet->setCellValueByColumnAndRow($column, $row, $customerVat);
+                };
+            }
+        }
+
+        if (isset($columns['order_number']) && !isset($columns['order_number']['render'])) {
+            if (!isset($columns['order_number']['header'])) {
+                $columns['order_number']['header'] = function (Worksheet $sheet, $row, $column) {
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.orderNumber'));
+
+                    return 1;
+                };
+            }
+
+            if (!isset($columns['order_number']['render'])) {
+                $columns['order_number']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                    $orderNumber = '';
+                    if (null !== $entity->getProject()) {
+                        $orderNumber = $entity->getProject()->getOrderNumber();
+                    }
+                    $sheet->setCellValueByColumnAndRow($column, $row, $orderNumber);
+                };
+            }
         }
 
         if (!$showRates) {
