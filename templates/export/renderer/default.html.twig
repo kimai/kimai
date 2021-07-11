@@ -85,24 +85,6 @@
                 }
             });
 
-            let config = KimaiCookies.get('kimai_html_export');
-            if (config !== undefined && config !== null) {
-                for (const key in config) {
-                    let elName = key;
-                    let checked = config[key];
-                    let el = document.getElementById(elName);
-                    if (el === undefined || el === null) {
-                        el = document.getElementById('records-column-' + elName);
-                        if (el === undefined || el === null) {
-                            continue;
-                        }
-                    }
-                    if (checked !== el.checked) {
-                        el.click();
-                    }
-                }
-            }
-
             initialized = true;
 
             document.getElementById('summary-by-activities').addEventListener('click', function(event) {
@@ -111,15 +93,13 @@
                 saveVisibility();
             });
             document.getElementById('date-format').addEventListener('change', function(event) {
-                var elements = document.getElementsByClassName('dateformat');
-                var dateType = event.target.value;
-                for (var elem of elements) {
-                    var formattedDate = elem.dataset[dateType];
-                    if (formattedDate === undefined) {
-                        continue;
-                    }
-                    elem.innerHTML = formattedDate;
-                }
+                changedDateFormat(event.target.value, 'dateformat');
+            });
+            document.getElementById('begin-format').addEventListener('change', function(event) {
+                changedDateFormat(event.target.value, 'beginformat');
+            });
+            document.getElementById('end-format').addEventListener('change', function(event) {
+                changedDateFormat(event.target.value, 'endformat');
             });
             document.getElementById('summary-show').addEventListener('click', function(event) {
                 document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
@@ -177,14 +157,51 @@
 
             for (var checkbox of columnCheckboxes) {
                 checkbox.addEventListener('click', function(event) {
-                    var cells = document.getElementsByClassName('column-'+event.target.name);
-                    for (var columnCell of cells) {
-                        columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-                    }
-                    saveVisibility();
+                    changeVisibility(event.target.name, event.target.checked);
                 });
             }
+
+            // needs to be executed as last action in the flow, after the listener were registered
+            let config = KimaiCookies.get('kimai_html_export');
+            if (config !== undefined && config !== null) {
+                for (const key in config) {
+                    let elName = key;
+                    let checked = config[key];
+                    console.log(elName, checked);
+                    let el = document.getElementById(elName);
+                    if (el === undefined || el === null) {
+                        el = document.getElementById('records-column-' + elName);
+                        if (el === undefined || el === null) {
+                            continue;
+                        }
+                    }
+                    if (checked !== el.checked) {
+                        el.click();
+                    }
+                }
+            }
         });
+
+        function changeVisibility(column, visible)
+        {
+            var cells = document.getElementsByClassName('column-' + column);
+            for (var columnCell of cells) {
+                columnCell.style.display = visible ? 'table-cell' : 'none';
+            }
+            saveVisibility();
+        }
+
+        function changedDateFormat(formatType, className)
+        {
+            var elements = document.getElementsByClassName(className);
+            for (var elem of elements) {
+                var formattedDate = elem.dataset[formatType];
+                if (formattedDate === undefined) {
+                    continue;
+                }
+                elem.innerHTML = formattedDate;
+            }
+        }
 
         function saveVisibility()
         {
@@ -234,6 +251,28 @@
                     {{ 'label.date'|trans }}:
                     {% set demo_date = create_date('2020-01-01 20:00:00') %}
                     <select id="date-format" name="date-format">
+                        <option value="time">{{ demo_date|date_time }}</option>
+                        <option value="short">{{ demo_date|date_short }}</option>
+                        <option value="full">{{ demo_date|date_full }}</option>
+                    </select>
+                </label>
+                |
+                <label class="control-label" for="begin-format">
+                    {{ 'label.begin'|trans }}:
+                    {% set demo_date = create_date('2020-01-01 13:00:00') %}
+                    <select id="begin-format" name="begin-format">
+                        <option value="plain">{{ demo_date|date_format('H:i') }}</option>
+                        <option value="time">{{ demo_date|date_time }}</option>
+                        <option value="short">{{ demo_date|date_short }}</option>
+                        <option value="full">{{ demo_date|date_full }}</option>
+                    </select>
+                </label>
+                |
+                <label class="control-label" for="end-format">
+                    {{ 'label.end'|trans }}:
+                    {% set demo_date = create_date('2020-01-01 18:00:00') %}
+                    <select id="end-format" name="end-format">
+                        <option value="plain">{{ demo_date|date_format('H:i') }}</option>
                         <option value="time">{{ demo_date|date_time }}</option>
                         <option value="short">{{ demo_date|date_short }}</option>
                         <option value="full">{{ demo_date|date_full }}</option>
@@ -542,13 +581,13 @@
                             {% endif %}
                         </td>
                         <td class="column-begin text-nowrap" {% if not columns.begin %}style="display: none"{% endif %}>
-                            <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}">
-                            {{ entry.begin|date_time }}
+                            <span class="beginformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}" data-plain="{{ entry.begin|date_format('H:i') }}">
+                            {{ entry.begin|date_format('H:i') }}
                             </span>
                         </td>
                         <td class="column-end text-nowrap" {% if not columns.end %}style="display: none"{% endif %}>
-                            <span class="dateformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_full }}" data-time="{{ entry.end|date_time }}">
-                            {{ entry.end|date_time }}
+                            <span class="endformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_full }}" data-time="{{ entry.end|date_time }}" data-plain="{{ entry.end|date_format('H:i') }}">
+                            {{ entry.end|date_format('H:i') }}
                             </span>
                         </td>
                         <td class="column-username" {% if not columns.username %}style="display: none"{% endif %}>
