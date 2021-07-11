@@ -237,7 +237,6 @@
                         <option value="time">{{ demo_date|date_time }}</option>
                         <option value="short">{{ demo_date|date_short }}</option>
                         <option value="full">{{ demo_date|date_full }}</option>
-                        <option value="date">{{ demo_date|date }}</option>
                     </select>
                 </label>
             </div>
@@ -532,23 +531,23 @@
                     {% endif %}
                     <tr>
                         <td class="column-date text-nowrap" {% if not columns.date %}style="display: none"{% endif %}>
-                            <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}" data-date="{{ entry.begin|date }}">
+                            <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}">
                             {{ entry.begin|date_time }}
                             </span>
                             {% if entry.end %}
                                 <br>
-                                <span class="dateformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_full }}" data-time="{{ entry.end|date_time }}" data-date="{{ entry.end|date }}">
+                                <span class="dateformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_full }}" data-time="{{ entry.end|date_time }}">
                                 {{ entry.end|date_time }}
                                 </span>
                             {% endif %}
                         </td>
                         <td class="column-begin text-nowrap" {% if not columns.begin %}style="display: none"{% endif %}>
-                            <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}" data-date="{{ entry.begin|date }}">
+                            <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}">
                             {{ entry.begin|date_time }}
                             </span>
                         </td>
                         <td class="column-end text-nowrap" {% if not columns.end %}style="display: none"{% endif %}>
-                            <span class="dateformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_full }}" data-time="{{ entry.end|date_time }}" data-date="{{ entry.end|date }}">
+                            <span class="dateformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_full }}" data-time="{{ entry.end|date_time }}">
                             {{ entry.end|date_time }}
                             </span>
                         </td>
