@@ -259,6 +259,13 @@
 
 {% block styles %}
     <style>
+        @media print{
+            h2 { font-size: 22px; }
+            h3 { font-size: 18px; }
+            p, td { font-size: 11px; }
+            th, td.totals { font-size: 12px; }
+            table.table-bordered.dataTable { border-collapse: collapse!important; }
+        }
         .items td.totals {
             font-weight: bold;
             text-align: right;
@@ -266,8 +273,15 @@
         .items td.duration,
         .items th.duration,
         .items th.cost,
-        .items td.cost {
-            text-align: center;
+        .items td.cost,
+        .items th.column-rate,
+        .items th.column-rate_internal,
+        .items th.column-duration
+        {
+            text-align: right;
+        }
+        .table>thead:first-child>tr:first-child>th {
+            padding-right: 5px;
         }
     </style>
 {% endblock %}
@@ -576,7 +590,7 @@
     <div class="row" id="export-records">
         <div class="col-xs-12">
             <h3 id="doc-records" contenteditable="true">{{ 'export.full_list'|trans }}</h3>
-            <table class="table table-condensed table-bordered dataTable">
+            <table class="items table table-condensed table-bordered dataTable">
                 <thead>
                 <tr>
                     {% for columnId, visibility in columns %}
@@ -610,12 +624,6 @@
                             <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}">
                             {{ entry.begin|date_time }}
                             </span>
-                            {% if entry.end %}
-                                <br>
-                                <span class="dateformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_full }}" data-time="{{ entry.end|date_time }}">
-                                {{ entry.end|date_time }}
-                                </span>
-                            {% endif %}
                         </td>
                         <td class="column-begin text-nowrap" {% if not columns.begin %}style="display: none"{% endif %}>
                             <span class="beginformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}" data-plain="{{ entry.begin|date_format('H:i') }}">
@@ -693,17 +701,17 @@
                         <td class="column-fixedRate text-nowrap" {% if not columns.fixedRate %}style="display: none"{% endif %}>
                             {{ entry.fixedRate|money(entry.project.customer.currency) }}
                         </td>
-                        <td class="column-duration text-nowrap" {% if not columns.duration %}style="display: none"{% endif %}>
+                        <td class="duration column-duration text-nowrap" {% if not columns.duration %}style="display: none"{% endif %}>
                             <span class="duration-format" data-duration="{{ entry.duration }}">{{ entry.duration|duration(decimal) }}</span>
                         </td>
-                        <td class="column-rate_internal text-nowrap" {% if not columns.rate_internal %}style="display: none"{% endif %}>
+                        <td class="cost column-rate_internal text-nowrap" {% if not columns.rate_internal %}style="display: none"{% endif %}>
                             {% if entry.internalRate is defined %}
                                 {{ entry.internalRate|money(entry.project.customer.currency) }}
                             {% else %}
                                 {{ entry.rate|money(entry.project.customer.currency) }}
                             {% endif %}
                         </td>
-                        <td class="column-rate text-nowrap" {% if not columns.rate %}style="display: none"{% endif %}>
+                        <td class="cost column-rate text-nowrap" {% if not columns.rate %}style="display: none"{% endif %}>
                             {{ entry.rate|money(entry.project.customer.currency) }}
                         </td>
                     </tr>
