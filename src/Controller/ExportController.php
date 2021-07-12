@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Timesheet;
 use App\Export\ServiceExport;
+use App\Export\TooManyItemsExportException;
 use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\Query\ExportQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -45,6 +46,7 @@ class ExportController extends AbstractController
         $query = $this->getDefaultQuery();
 
         $showPreview = false;
+        $tooManyResults = false;
         $maxItemsPreview = 500;
         $entries = [];
 
@@ -56,25 +58,33 @@ class ExportController extends AbstractController
         $byCustomer = [];
 
         if ($form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
-            $showPreview = true;
-            $entries = $this->getEntries($query);
-            foreach ($entries as $entry) {
-                $cid = $entry->getProject()->getCustomer()->getId();
-                if (!isset($byCustomer[$cid])) {
-                    $byCustomer[$cid] = [
-                        'customer' => $entry->getProject()->getCustomer(),
-                        'rate' => 0,
-                        'internalRate' => 0,
-                        'duration' => 0,
-                    ];
+            try {
+                $showPreview = true;
+                $entries = $this->getEntries($query);
+                foreach ($entries as $entry) {
+                    $cid = $entry->getProject()->getCustomer()->getId();
+                    if (!isset($byCustomer[$cid])) {
+                        $byCustomer[$cid] = [
+                            'customer' => $entry->getProject()->getCustomer(),
+                            'rate' => 0,
+                            'internalRate' => 0,
+                            'duration' => 0,
+                        ];
+                    }
+                    $byCustomer[$cid]['rate'] += $entry->getRate();
+                    $byCustomer[$cid]['internalRate'] += $entry->getInternalRate();
+                    $byCustomer[$cid]['duration'] += $entry->getDuration();
                 }
-                $byCustomer[$cid]['rate'] += $entry->getRate();
-                $byCustomer[$cid]['internalRate'] += $entry->getInternalRate();
-                $byCustomer[$cid]['duration'] += $entry->getDuration();
+            } catch (TooManyItemsExportException $ex) {
+                $tooManyResults = true;
+                $showPreview = false;
+                $entries = [];
+                $this->logException($ex);
             }
         }
 
         return $this->render('export/index.html.twig', [
+            'too_many' => $tooManyResults,
             'by_customer' => $byCustomer,
             'query' => $query,
             'entries' => $entries,

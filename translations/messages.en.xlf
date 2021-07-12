@@ -246,6 +246,10 @@
         <source>error.no_comments_found</source>
         <target>There were no comments posted yet.</target>
       </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>Request could not be processed, too many results were found.</target>
+      </trans-unit>
       <!--
               General labels
             -->

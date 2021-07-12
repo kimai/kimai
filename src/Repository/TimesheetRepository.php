@@ -962,6 +962,10 @@ class TimesheetRepository extends EntityRepository
             $qb->leftJoin('t.activity', 'a');
         }
 
+        if ($query->getMaxResults() !== null) {
+            $qb->setMaxResults($query->getMaxResults());
+        }
+
         return $qb;
     }
 
