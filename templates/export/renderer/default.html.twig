@@ -4,6 +4,7 @@
 
 {% block document_title %}{{ 'export.title'|trans }}{% endblock %}
 
+{% set storageItemName = 'kimai_html_export' %}
 {% set showRateBudget = false %}
 {% set showTimeBudget = false %}
 {% for budget in budgets %}
@@ -83,9 +84,8 @@
                         span.innerHTML = (new Intl.NumberFormat('{{ app.request.locale }}', {maximumFractionDigits: 2}).format(duration / 3600));
                     }
                 }
+                saveVisibility();
             });
-
-            initialized = true;
 
             document.getElementById('summary-by-activities').addEventListener('click', function(event) {
                 document.getElementById('summary-project').style.display = event.target.checked ? 'none' : 'table';
@@ -161,25 +161,54 @@
                 });
             }
 
-            // needs to be executed as last action in the flow, after the listener were registered
-            let config = KimaiCookies.get('kimai_html_export');
-            if (config !== undefined && config !== null) {
-                for (const key in config) {
-                    let elName = key;
-                    let checked = config[key];
-                    console.log(elName, checked);
-                    let el = document.getElementById(elName);
-                    if (el === undefined || el === null) {
-                        el = document.getElementById('records-column-' + elName);
-                        if (el === undefined || el === null) {
+            var editableTitles = document.querySelectorAll('[contenteditable=true]');
+
+            for (var editable of editableTitles) {
+                editable.addEventListener('input', function(event) {
+                    if (event.target.innerText === '') {
+                        return;
+                    }
+                    saveVisibility();
+                });
+            }
+
+            try {
+                // needs to be executed as last action in the flow, after the listener were registered
+                let config = KimaiStorage.get('{{ storageItemName }}');
+                if (config !== null) {
+                    for (const elName in config){
+                        if (!config.hasOwnProperty(elName)) {
                             continue;
                         }
-                    }
-                    if (checked !== el.checked) {
-                        el.click();
+                        let elValue = config[elName];
+                        let el = document.getElementById(elName);
+                        if (el === undefined || el === null) {
+                            el = document.getElementById('records-column-' + elName);
+                            if (el === undefined || el === null) {
+                                continue;
+                            }
+                        }
+                        if (el.type === 'checkbox') {
+                            if (elValue !== el.checked) {
+                                el.click();
+                            }
+                        } else if (el.type === 'select-one') {
+                            if (el.value !== elValue) {
+                                el.value = elValue;
+                                el.dispatchEvent(new Event('change'));
+                            }
+                        } else if (el.isContentEditable) {
+                            el.innerText = elValue;
+                        }
                     }
                 }
+            } catch (e) {
+                // ignore error in restoring
+                console.log('Failed to restore settings, clearing all up: ', e);
+                KimaiStorage.remove('{{ storageItemName }}');
             }
+
+            initialized = true;
         });
 
         function changeVisibility(column, visible)
@@ -201,6 +230,7 @@
                 }
                 elem.innerHTML = formattedDate;
             }
+            saveVisibility();
         }
 
         function saveVisibility()
@@ -212,9 +242,15 @@
             const form = document.getElementsByTagName('form')[0];
             let settings = {};
             for (let checkbox of form.querySelectorAll('input[type=checkbox]')) {
-                settings[checkbox.getAttribute('name')] = checkbox.checked;
+                settings[checkbox.getAttribute('id')] = checkbox.checked;
             }
-            KimaiCookies.set('kimai_html_export', settings, {expires: 365, SameSite: 'Strict'});
+            for (let selectbox of form.querySelectorAll('select')) {
+                settings[selectbox.getAttribute('id')] = selectbox.value;
+            }
+            for (let editable of document.querySelectorAll('[contenteditable=true]')) {
+                settings[editable.getAttribute('id')] = editable.innerText;
+            }
+            KimaiStorage.set('{{ storageItemName }}', settings);
         }
 
     </script>
@@ -357,7 +393,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <h2 contenteditable="true">{{ 'export.document_title'|trans }}</h2>
+            <h2 id="doc-title" contenteditable="true">{{ 'export.document_title'|trans }}</h2>
             <p>
                 {{ 'export.period'|trans }}:
                 {{ query.begin|date_short }} - {{ query.end|date_short }}
@@ -367,7 +403,7 @@
 
     <div class="row" id="export-summary">
         <div class="col-xs-12">
-            <h3 contenteditable="true">{{ 'export.summary'|trans }}</h3>
+            <h3 id="doc-summary" contenteditable="true">{{ 'export.summary'|trans }}</h3>
             <table class="items table table-condensed table-bordered dataTable" id="summary-project">
                 <thead>
                 <tr>
@@ -538,7 +574,7 @@
 
     <div class="row" id="export-records">
         <div class="col-xs-12">
-            <h3 contenteditable="true">{{ 'export.full_list'|trans }}</h3>
+            <h3 id="doc-records" contenteditable="true">{{ 'export.full_list'|trans }}</h3>
             <table class="table table-condensed table-bordered dataTable">
                 <thead>
                 <tr>
