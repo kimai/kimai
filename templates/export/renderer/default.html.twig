@@ -172,11 +172,12 @@
                 });
             }
 
-            try {
-                // needs to be executed as last action in the flow, after the listener were registered
-                let config = KimaiStorage.get('{{ storageItemName }}');
-                if (config !== null) {
-                    for (const elName in config){
+            // needs to be executed as last action in the flow, after the listener were registered
+            let config = localStorage.getItem('{{ storageItemName }}');
+            if (config !== null) {
+                try {
+                    config = JSON.parse(config);
+                    for (const elName in config) {
                         if (!config.hasOwnProperty(elName)) {
                             continue;
                         }
@@ -201,11 +202,11 @@
                             el.innerText = elValue;
                         }
                     }
+                } catch (e) {
+                    // ignore error in restoring
+                    console.log('Failed to restore settings, clearing all up: ', e);
+                    localStorage.removeItem('{{ storageItemName }}');
                 }
-            } catch (e) {
-                // ignore error in restoring
-                console.log('Failed to restore settings, clearing all up: ', e);
-                KimaiStorage.remove('{{ storageItemName }}');
             }
 
             initialized = true;
@@ -250,7 +251,7 @@
             for (let editable of document.querySelectorAll('[contenteditable=true]')) {
                 settings[editable.getAttribute('id')] = editable.innerText;
             }
-            KimaiStorage.set('{{ storageItemName }}', settings);
+            localStorage.setItem('{{ storageItemName }}', JSON.stringify(settings));
         }
 
     </script>
