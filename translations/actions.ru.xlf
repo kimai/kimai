@@ -94,6 +94,10 @@
         <source>report</source>
         <target>Сообщить</target>
       </trans-unit>
+      <trans-unit id="filter">
+        <source>filter</source>
+        <target>Фильтрация данных</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

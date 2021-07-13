@@ -38,6 +38,22 @@
         <source>The budget is completely used.</source>
         <target>Bütçe tükendi. Toplam kullanılabilir %budget% bütçeden, %used% şimdiye kadar rezerve edildi, %free% hala kullanılabilir.</target>
       </trans-unit>
+      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>En fazla {{ value }} saate izin veriliyor.</target>
+      </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>Kullanıcı adı zaten kullanılıyor.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>E-posta adresi zaten kullanılıyor.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>Girilen parolalar eşleşmiyor.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

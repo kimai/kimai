@@ -1125,6 +1125,38 @@
         <source>label.set_as_default</source>
         <target>לשמור הגדרה כחיפוש מועדף</target>
       </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>דילגנו על תצוגה מקדימה של %rows% שורות נוספות…</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>רשומה אחרונה</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>לא חויבו</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>לא ייוצאו</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>הצגת רשומות בלי הזמנות</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>נשלחה הודעה בדוא״ל. היא מכילה קישור שיש ללחוץ עליו כדי לאפס את הסיסמה שלך. לתשומת לבך: ניתן לבקש סיסמה חדשה אחת לכל %tokenLifetime% שעות. אם לא קיבלת הודעה בדוא״ל מוטב לבדוק בתיקיית הספאם שלך או לנסות שוב.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>נשלחה הודעה בדוא״ל אל %email%. היא מכילה קישור אימות עליו יש ללחוץ כדי להפעיל את החשבון שלך.</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>אין הזמנת שעה מאז</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

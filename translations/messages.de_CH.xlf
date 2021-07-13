@@ -2,6 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="de" target-language="de-CH" datatype="plaintext" original="messages.en.xlf">
     <body>
+      <!--
+              Global template keys
+            -->
       <trans-unit id="action.close">
         <source>action.close</source>
         <target>Schliessen</target>
@@ -1133,6 +1136,31 @@
       <trans-unit id="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
         <target>Geschäftsjahr</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Eine E-Mail wurde an %email% gesendet. Sie enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>
+          Eine E-Mail wurde verschickt. Sie beinhaltet einen Link zum Zurücksetzen des Passwortes.
+          Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden.
+
+          Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.
+        </target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>Anfrage konnte nicht verarbeitet werden, es wurden zu viele Ergebnisse gefunden.</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Arbeitszeit</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Einnahmen</target>
       </trans-unit>
     </body>
   </file>
