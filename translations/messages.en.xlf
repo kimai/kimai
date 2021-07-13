@@ -154,11 +154,11 @@
       <trans-unit id="resetting.check_email">
         <source>resetting.check_email</source>
         <target>
-          An email has been sent. It contains a link you must click to reset your password.
-          Note: You can only request a new password once within %tokenLifetime% hours.
+                    An email has been sent. It contains a link you must click to reset your password.
+                    Note: You can only request a new password once within %tokenLifetime% hours.
 
-          If you don't get an email check your spam folder or try again.
-        </target>
+                    If you don't get an email check your spam folder or try again.
+                </target>
       </trans-unit>
       <!--
               Menu / Navbar items
