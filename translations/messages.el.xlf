@@ -367,7 +367,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Πληκτρολογήσετε το μήνυμα σας...</target>
+        <target>Πληκτρολογήσετε το μήνυμα σας…</target>
       </trans-unit>
       <trans-unit id="label.billable">
         <source>label.billable</source>
@@ -1045,7 +1045,7 @@
       </trans-unit>
       <trans-unit id="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Παράλειψη προ-επισκόπησης %rows% και περισσότερων γραμμών ...</target>
+        <target>Παράλειψη προ-επισκόπησης %rows% και περισσότερων γραμμών …</target>
       </trans-unit>
       <!--
               Export

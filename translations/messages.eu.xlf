@@ -1078,7 +1078,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Idatzi zure mezua...</target>
+        <target>Idatzi zure mezua…</target>
       </trans-unit>
       <trans-unit id="label.recalculate_rates">
         <source>label.recalculate_rates</source>

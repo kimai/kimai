@@ -1096,7 +1096,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Digite sua mensagem...</target>
+        <target>Digite sua mensagem…</target>
       </trans-unit>
       <trans-unit id="label.team">
         <source>label.team</source>

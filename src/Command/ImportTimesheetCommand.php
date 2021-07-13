@@ -91,6 +91,10 @@ class ImportTimesheetCommand extends Command
      */
     private $userCache = [];
     /**
+     * @var Tag[]
+     */
+    private $tagCache = [];
+    /**
      * Comment that will be added to new customers, projects and activities.
      *
      * @var string
@@ -371,9 +375,7 @@ class ImportTimesheetCommand extends Command
                             continue;
                         }
 
-                        if (null === ($tag = $this->tagRepository->findTagByName($tagName))) {
-                            $tag = (new Tag())->setName($tagName);
-                        }
+                        $tag = $this->getTag($tagName);
 
                         $timesheet->addTag($tag);
                     }
@@ -469,6 +471,23 @@ class ImportTimesheetCommand extends Command
         return $this->userCache[$user];
     }
 
+    private function getTag(string $tagName): Tag
+    {
+        if (\array_key_exists($tagName, $this->tagCache)) {
+            return $this->tagCache[$tagName];
+        }
+
+        $tag = $this->tagRepository->findTagByName($tagName);
+
+        if ($tag === null) {
+            $tag = (new Tag())->setName($tagName);
+        }
+
+        $this->tagCache[$tagName] = $tag;
+
+        return $this->tagCache[$tagName];
+    }
+
     private function getActivity($activity, Project $project, $activityType): Activity
     {
         $tmpActivity = null;
@@ -497,8 +516,9 @@ class ImportTimesheetCommand extends Command
 
     private function getProject($project, $customer, $fallbackCustomer): Project
     {
-        if (!\array_key_exists($project, $this->projectCache)) {
-            /** @var Customer $tmpCustomer */
+        $cacheKey = $project . '_____' . $customer;
+
+        if (!\array_key_exists($cacheKey, $this->projectCache)) {
             $tmpCustomer = $this->getCustomer($customer, $fallbackCustomer);
             /** @var Project $tmpProject */
             $tmpProject = null;
@@ -533,10 +553,10 @@ class ImportTimesheetCommand extends Command
                 $this->createdProjects++;
             }
 
-            $this->projectCache[$project] = $tmpProject;
+            $this->projectCache[$cacheKey] = $tmpProject;
         }
 
-        return $this->projectCache[$project];
+        return $this->projectCache[$cacheKey];
     }
 
     private function getCustomer($customer, $fallback): Customer
@@ -560,41 +580,43 @@ class ImportTimesheetCommand extends Command
             }
         }
 
-        if (null === $this->customerFallback) {
-            $tmpFallback = null;
-
-            if (!empty($fallback)) {
-                if (\is_int($customer)) {
-                    $tmpFallback = $this->customers->find($fallback);
-                } else {
-                    /** @var Customer|null $tmpFallback */
-                    $tmpFallback = $this->customers->findOneBy(['name' => $fallback]);
-                }
-            }
-
-            if (null === $tmpFallback) {
-                $newName = $customer;
-                if (empty($customer)) {
-                    $newName = self::DEFAULT_CUSTOMER;
-                    if (!empty($fallback) && \is_string($fallback)) {
-                        $newName = $fallback;
-                    }
-                }
-                $tmpFallback = new Customer();
-                $tmpFallback->setName(sprintf($newName, $this->dateTime));
-                $tmpFallback->setComment($this->comment);
-                $tmpFallback->setCountry($this->configuration->getCustomerDefaultCountry());
-                $timezone = date_default_timezone_get();
-                if (null !== $this->configuration->getCustomerDefaultTimezone()) {
-                    $timezone = $this->configuration->getCustomerDefaultTimezone();
-                }
-                $tmpFallback->setTimezone($timezone);
-                $this->customers->saveCustomer($tmpFallback);
-                $this->createdCustomers++;
-            }
-
-            $this->customerFallback = $tmpFallback;
+        if (null !== $this->customerFallback && !empty($fallback)) {
+            return $this->customerFallback;
         }
+
+        $tmpFallback = null;
+
+        if (!empty($fallback)) {
+            if (is_numeric($fallback)) {
+                $tmpFallback = $this->customers->find((int) $fallback);
+            } else {
+                /** @var Customer|null $tmpFallback */
+                $tmpFallback = $this->customers->findOneBy(['name' => $fallback]);
+            }
+        }
+
+        if (null === $tmpFallback) {
+            $newName = $customer;
+            if (empty($customer)) {
+                $newName = self::DEFAULT_CUSTOMER;
+                if (!empty($fallback) && \is_string($fallback)) {
+                    $newName = $fallback;
+                }
+            }
+            $tmpFallback = new Customer();
+            $tmpFallback->setName(sprintf($newName, $this->dateTime));
+            $tmpFallback->setComment($this->comment);
+            $tmpFallback->setCountry($this->configuration->getCustomerDefaultCountry());
+            $timezone = date_default_timezone_get();
+            if (null !== $this->configuration->getCustomerDefaultTimezone()) {
+                $timezone = $this->configuration->getCustomerDefaultTimezone();
+            }
+            $tmpFallback->setTimezone($timezone);
+            $this->customers->saveCustomer($tmpFallback);
+            $this->createdCustomers++;
+        }
+
+        $this->customerFallback = $tmpFallback;
 
         return $this->customerFallback;
     }

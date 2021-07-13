@@ -50,6 +50,7 @@ final class ProjectViewController extends AbstractController
             'title' => 'report_project_view',
             'tableName' => 'project_view_reporting',
             'now' => $this->getDateTimeFactory()->createDateTime(),
+            'showDurations' => true,
         ]);
     }
 }

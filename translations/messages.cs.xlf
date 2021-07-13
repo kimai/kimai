@@ -1088,7 +1088,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Napište vaši zprávu...</target>
+        <target>Napište vaši zprávu…</target>
       </trans-unit>
       <trans-unit id="label.recalculate_rates">
         <source>label.recalculate_rates</source>

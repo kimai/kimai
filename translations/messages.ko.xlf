@@ -1004,7 +1004,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>메시지 입력...</target>
+        <target>메시지 입력…</target>
       </trans-unit>
       <trans-unit id="label.teamlead">
         <source>label.teamlead</source>
@@ -1152,7 +1152,7 @@
       </trans-unit>
       <trans-unit id="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>%rows% 더 많은 행의 미리 보기를 건너뛰었습니다...</target>
+        <target>%rows% 더 많은 행의 미리 보기를 건너뛰었습니다…</target>
       </trans-unit>
       <trans-unit id="invoice.payment_date">
         <source>invoice.payment_date</source>

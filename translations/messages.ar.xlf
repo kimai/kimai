@@ -684,7 +684,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>اكتب رسالتك...</target>
+        <target>اكتب رسالتك…</target>
       </trans-unit>
       <trans-unit id="label.teamlead">
         <source>label.teamlead</source>

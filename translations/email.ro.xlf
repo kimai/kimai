@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target>Asta se poate întâmpla ...</target>
+        <target>Asta se poate întâmpla …</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
@@ -43,7 +43,7 @@
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target>... ți-ai uitat parola? Nu te îngrijora. Kimai te va ajuta să îți creezi o parolă nouă:</target>
+        <target>… ți-ai uitat parola? Nu te îngrijora. Kimai te va ajuta să îți creezi o parolă nouă:</target>
       </trans-unit>
     </body>
   </file>

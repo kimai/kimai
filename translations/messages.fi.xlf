@@ -334,7 +334,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target state="translated">Kirjoita viesti...</target>
+        <target state="translated">Kirjoita viesti…</target>
       </trans-unit>
       <trans-unit id="label.billable">
         <source>label.billable</source>

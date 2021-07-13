@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target>آن می تواند اتفاق بیفتد ...</target>
+        <target>آن می تواند اتفاق بیفتد …</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target>... خب شما پسورد خود را فراموش کرده اید؟ نگران نباشید : kimai به شما کمک خواهد کرد تا یکی جدید بسازید:</target>
+        <target>… خب شما پسورد خود را فراموش کرده اید؟ نگران نباشید : kimai به شما کمک خواهد کرد تا یکی جدید بسازید:</target>
       </trans-unit>
     </body>
   </file>
