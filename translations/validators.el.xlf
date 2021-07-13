@@ -38,6 +38,22 @@
         <source>This value is not a valid role.</source>
         <target>Αυτή η τιμή δεν αποτελεί έγκυρο ρόλο.</target>
       </trans-unit>
+      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>{{ value }} ώρες το μέγιστο επιτρέπονται.</target>
+      </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>Αυτό το όνομα χρήστη έχει χρησιμοποιηθεί.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>Αυτό το email έχει χρησιμοποιηθεί.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>Τα διαπιστευτήρια που εισάγατε δεν ταυτίζονται.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

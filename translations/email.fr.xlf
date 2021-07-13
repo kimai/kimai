@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>Vous vous êtes inscrit·e sur Kimai avec le courriel %email%. Vous devez maintenant activer votre compte dans les prochaines heures, avant que le lien expire.</target>
+        <target>Vous vous êtes inscrit·e sur Kimai avec le courriel %email%. Veuillez activer votre compte dans les prochaines heures, avant que le lien expire.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>

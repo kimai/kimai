@@ -1202,6 +1202,26 @@
         <source>calendar.drag_and_drop.delete</source>
         <target>Se vuoi eliminare una voce, devi trascinarla sul pulsante.</target>
       </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Utenti attivi in questo anno finanziario</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Ore di lavoro in questo anno finanziario</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Anno finanziario</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>È stata inviata un'e-mail. Contiene un collegamento che devi cliccare per reimpostare la tua password. Nota: puoi richiedere una nuova password solo una volta entro %tokenLifetime% ore. Se non ricevi un'e-mail, controlla la tua cartella spam o prova di nuovo.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Un'e-mail è stata inviata a %email%. Contiene un collegamento di attivazione che devi cliccare per attivare il tuo account.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

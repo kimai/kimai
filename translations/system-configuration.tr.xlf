@@ -258,6 +258,54 @@
         <source>label.company.financial_year</source>
         <target>Mali yıl</target>
       </trans-unit>
+      <trans-unit id="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target>Kaydetme reddedilmeden önce bir zaman çizelgesi kaydının dakika cinsinden azami süresi (0 = devre dışı)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target>Bir "ara verme uyarısı" görüntülenmeden önce bir zaman çizelgesi kaydının dakika cinsinden azami süresi (0 = devre dışı)</target>
+      </trans-unit>
+      <trans-unit id="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target>SAML ile oturum açma</target>
+      </trans-unit>
+      <trans-unit id="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target>LDAP ile oturum açma</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target>Unutulan parola - sıfırlama bağlantısının süresinin dolması için gereken saniye cinsinden süre</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target>Unutulan parola - kullanıcının bir sonraki e-postayı isteyebilmesi için gereken saniye cinsinden süre</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target>Parolayı unuttum</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target>Kullanıcı kaydı</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target>Oturum açma formu</target>
+      </trans-unit>
+      <trans-unit id="authentication">
+        <source>authentication</source>
+        <target>Kimlik doğrulama</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target>Saat dilimi (boşsa ilgili kullanıcının saat dilimi kullanılır)</target>
+      </trans-unit>
+      <trans-unit id="lockdown_period">
+        <source>lockdown_period</source>
+        <target>Kilitleme dönemi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
