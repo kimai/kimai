@@ -979,7 +979,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Skriv ditt meddelande...</target>
+        <target>Skriv ditt meddelande…</target>
       </trans-unit>
       <trans-unit id="modal.dirty">
         <source>modal.dirty</source>

@@ -996,7 +996,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Typ uw bericht...</target>
+        <target>Typ uw bericht…</target>
       </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
@@ -1128,7 +1128,7 @@
       </trans-unit>
       <trans-unit id="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Voorbeeld van nog %rows% rijen overgeslagen ...</target>
+        <target>Voorbeeld van nog %rows% rijen overgeslagen …</target>
       </trans-unit>
       <trans-unit id="label.not_invoiced">
         <source>label.not_invoiced</source>

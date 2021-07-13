@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target>Ez megtörténhet...</target>
+        <target>Ez megtörténhet…</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>

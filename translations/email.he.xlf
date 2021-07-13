@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target>זה עלול לקרות ...</target>
+        <target>זה עלול לקרות …</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>

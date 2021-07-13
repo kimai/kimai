@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target>그럴 수 있습니다...</target>
+        <target>그럴 수 있습니다…</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target>... 암호를 잊어 버렸습니까? 걱정하지 마세요: Kimai가 새 계정을 만드는 데 도움을 줄 것입니다:</target>
+        <target>… 암호를 잊어 버렸습니까? 걱정하지 마세요: Kimai가 새 계정을 만드는 데 도움을 줄 것입니다:</target>
       </trans-unit>
     </body>
   </file>
