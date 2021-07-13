@@ -136,6 +136,10 @@
  */
 
 /*!
+ * [KIMAI] KimaiStorage: simple wrapper to handle localStorage access
+ */
+
+/*!
  * [KIMAI] KimaiThemeInitializer: initialize theme functionality
  */
 
