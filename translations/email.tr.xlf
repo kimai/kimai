@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>Kimai zaman izleyicisine %email% e-posta adresiyle kaydoldunuz. Şimdi, bağlantının süresi dolmadan birkaç saat içinde hesabınızı etkinleştirmeniz gerekiyor.</target>
+        <target>Kimai zaman izleyicisine %email% e-posta adresiyle kaydoldunuz. Lütfen bağlantının süresi dolmadan birkaç saat içinde hesabınızı etkinleştirin.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
