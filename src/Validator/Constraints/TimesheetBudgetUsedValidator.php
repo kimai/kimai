@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Validator;
+namespace App\Validator\Constraints;
 
 use App\Activity\ActivityStatisticService;
 use App\Configuration\SystemConfiguration;
@@ -18,7 +18,6 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\RateServiceInterface;
 use App\Utils\Duration;
 use App\Utils\LocaleHelper;
-use App\Validator\Constraints\TimesheetBudgetUsedConstraint;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -48,8 +47,8 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
      */
     public function validate($timesheet, Constraint $constraint)
     {
-        if (!($constraint instanceof TimesheetBudgetUsedConstraint)) {
-            throw new UnexpectedTypeException($constraint, TimesheetBudgetUsedConstraint::class);
+        if (!($constraint instanceof TimesheetBudgetUsed)) {
+            throw new UnexpectedTypeException($constraint, TimesheetBudgetUsed::class);
         }
 
         if (!\is_object($timesheet) || !($timesheet instanceof Timesheet)) {
@@ -127,7 +126,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         }
     }
 
-    private function checkActivity(TimesheetBudgetUsedConstraint $constraint, Timesheet $timesheet, int $duration, float $rate): bool
+    private function checkActivity(TimesheetBudgetUsed $constraint, Timesheet $timesheet, int $duration, float $rate): bool
     {
         $activity = $timesheet->getActivity();
 
@@ -156,7 +155,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         return false;
     }
 
-    private function checkProject(TimesheetBudgetUsedConstraint $constraint, Timesheet $timesheet, int $duration, float $rate): bool
+    private function checkProject(TimesheetBudgetUsed $constraint, Timesheet $timesheet, int $duration, float $rate): bool
     {
         $project = $timesheet->getProject();
 
@@ -185,7 +184,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         return false;
     }
 
-    private function checkCustomer(TimesheetBudgetUsedConstraint $constraint, Timesheet $timesheet, int $duration, float $rate): bool
+    private function checkCustomer(TimesheetBudgetUsed $constraint, Timesheet $timesheet, int $duration, float $rate): bool
     {
         $customer = $timesheet->getProject()->getCustomer();
 
@@ -214,7 +213,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         return false;
     }
 
-    private function addBudgetViolation(TimesheetBudgetUsedConstraint $constraint, Timesheet $timesheet, string $field, float $budget, float $rate)
+    private function addBudgetViolation(TimesheetBudgetUsed $constraint, Timesheet $timesheet, string $field, float $budget, float $rate)
     {
         // using the locale of the assigned user is not the best solution, but allows to be independent from the request stack
         $helper = new LocaleHelper($timesheet->getUser()->getLanguage());
@@ -235,7 +234,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         ;
     }
 
-    private function addTimeBudgetViolation(TimesheetBudgetUsedConstraint $constraint, string $field, int $budget, int $duration)
+    private function addTimeBudgetViolation(TimesheetBudgetUsed $constraint, string $field, int $budget, int $duration)
     {
         $durationFormat = new Duration();
 

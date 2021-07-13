@@ -206,6 +206,9 @@ class ImportTimesheetCommand extends Command
 
             default:
                 try {
+                    if (!\in_array($timezone, \DateTimeZone::listIdentifiers())) {
+                        throw new \InvalidArgumentException('Not a known PHP timezone');
+                    }
                     $timezone = new \DateTimeZone($timezone);
                 } catch (\Exception $ex) {
                     $io->error('Invalid timezone given, import canceled.');
@@ -245,7 +248,7 @@ class ImportTimesheetCommand extends Command
         $all = $csv->getRecords();
         $total = iterator_count($all);
 
-        $io->text(sprintf('Found %s timesheets to import, validating now', $total));
+        $io->text(sprintf('Found %s timesheets to import, pre-validating now', $total));
 
         $records = [];
         $doImport = true;
@@ -288,6 +291,7 @@ class ImportTimesheetCommand extends Command
             $progressBar->advance();
         }
         $progressBar->finish();
+        $io->writeln('');
 
         if (!$ignoreErrors && !$doImport) {
             $io->caution(sprintf('Not importing, previous %s errors need to be fixed first.', $errors));
@@ -295,8 +299,8 @@ class ImportTimesheetCommand extends Command
             return 5;
         }
 
-        $io->text(sprintf('Validated %s rows.', $countAll));
-        $io->text(sprintf('Importing %s of %s rows, skipping %s with validation errors.', \count($records), iterator_count($all), $errors));
+        $io->writeln('');
+        $io->text(sprintf('Processing %s of %s rows, skipping %s with pre-validation errors.', \count($records), iterator_count($all), $errors));
 
         // values for new users
         $password = $input->getOption('password');
@@ -306,6 +310,8 @@ class ImportTimesheetCommand extends Command
 
         $durationParser = new Duration();
         $row = 0;
+        $imported = 0;
+        $failed = 0;
 
         $isBatchUpdate = $input->getOption('batch');
         $batches = [];
@@ -401,10 +407,11 @@ class ImportTimesheetCommand extends Command
                 } else {
                     $this->timesheets->save($timesheet);
                 }
+
+                $imported++;
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed importing timesheet row %s with: %s', $row, $ex->getMessage()));
-
-                return 6;
+                $failed++;
             }
 
             $progressBar->advance();
@@ -415,6 +422,9 @@ class ImportTimesheetCommand extends Command
         }
 
         $progressBar->finish();
+
+        $io->writeln('');
+        $io->writeln('');
 
         if ($this->createdUsers > 0) {
             $io->success(sprintf('Created %s users', $this->createdUsers));
@@ -429,7 +439,13 @@ class ImportTimesheetCommand extends Command
             $io->success(sprintf('Created %s activities', $this->createdActivities));
         }
 
-        $io->success(sprintf('Imported %s rows', $row));
+        if ($failed > 0) {
+            $io->warning(sprintf('Failed validating %s rows', $failed));
+        }
+
+        if ($imported > 0) {
+            $io->success(sprintf('Imported %s rows', $imported));
+        }
 
         return 0;
     }
