@@ -309,6 +309,18 @@
         <source>lockdown_period</source>
         <target>משך נעילה</target>
       </trans-unit>
+      <trans-unit id="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>כמות הרשומות לגרירה והשלכה (0 = מושבת)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>להשתמש בצבעים אקראיים לפריטים שלא הוקצה להם צבע</target>
+      </trans-unit>
+      <trans-unit id="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>לאפשר להשתמש בכתובות לתמונות יצוגיות</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
