@@ -477,11 +477,7 @@ class ImportTimesheetCommand extends Command
             return $this->tagCache[$tagName];
         }
 
-        $tag = null;
-
-        if ($tag === null) {
-            $tag = $this->tagRepository->findTagByName($tagName);
-        }
+        $tag = $this->tagRepository->findTagByName($tagName);
 
         if ($tag === null) {
             $tag = (new Tag())->setName($tagName);
