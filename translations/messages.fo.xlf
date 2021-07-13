@@ -745,7 +745,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Skriva tíni boð...</target>
+        <target>Skriva tíni boð…</target>
       </trans-unit>
       <trans-unit id="label.billable">
         <source>label.billable</source>
@@ -917,7 +917,7 @@
       </trans-unit>
       <trans-unit id="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Leyp undansýning av %rows% fleiri rekkjum um ...</target>
+        <target>Leyp undansýning av %rows% fleiri rekkjum um …</target>
       </trans-unit>
       <trans-unit id="recent.activities.format">
         <source>recent.activities.format</source>

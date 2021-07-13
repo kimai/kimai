@@ -64,6 +64,10 @@
         <source>label.searchTerm</source>
         <target>Search term</target>
       </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Save setting as search favourite</target>
+      </trans-unit>
       <trans-unit id="label.remove_default">
         <source>label.remove_default</source>
         <target>Delete search favourite</target>
@@ -383,7 +387,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Type your message...</target>
+        <target>Type your message…</target>
       </trans-unit>
       <trans-unit id="label.billable">
         <source>label.billable</source>
@@ -1096,7 +1100,7 @@
       </trans-unit>
       <trans-unit id="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Skipped preview of %rows% more rows ...</target>
+        <target>Skipped preview of %rows% more rows …</target>
       </trans-unit>
       <!--
               Export

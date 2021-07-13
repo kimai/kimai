@@ -21,7 +21,7 @@ final class Version20210605154245 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Cleans up User table';
+        return 'Cleans up the user table';
     }
 
     public function up(Schema $schema): void

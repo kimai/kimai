@@ -936,7 +936,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Üzenet írása...</target>
+        <target>Üzenet írása…</target>
       </trans-unit>
       <trans-unit id="label.teamlead">
         <source>label.teamlead</source>

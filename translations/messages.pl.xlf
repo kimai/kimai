@@ -1108,7 +1108,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Wpisz swoją wiadomość...</target>
+        <target>Wpisz swoją wiadomość…</target>
       </trans-unit>
       <trans-unit id="label.recalculate_rates">
         <source>label.recalculate_rates</source>
