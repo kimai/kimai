@@ -58,6 +58,10 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
      * @var User[]
      */
     private $users = [];
+    /**
+     * @var int|null
+     */
+    private $maxResults;
 
     public function __construct(bool $resetTimes = true)
     {
@@ -67,6 +71,16 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
             'orderBy' => 'begin',
             'dateRange' => new DateRange($resetTimes)
         ]);
+    }
+
+    public function getMaxResults(): ?int
+    {
+        return $this->maxResults;
+    }
+
+    public function setMaxResults(?int $maxResults): void
+    {
+        $this->maxResults = $maxResults;
     }
 
     public function addUser(User $user): self
