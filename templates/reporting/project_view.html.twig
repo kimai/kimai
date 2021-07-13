@@ -3,12 +3,19 @@
 
 {% block report_title %}{{ (title|default('report_project_view'))|trans({}, 'reporting') }}{% endblock %}
 
+{% set showDurations = showDurations is defined and showDurations is same as (true) %}
 {% set columns = {
     'name':             {'class': 'alwaysVisible'},
     'lastRecord':       {'class': 'hidden text-center hw-min', 'title': 'label.last_record'|trans},
-    'today':            {'class': 'hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationToday'|trans},
-    'week':             {'class': 'hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationWeek'|trans},
-    'month':            {'class': 'hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationMonth'|trans},
+} %}
+{% if showDurations %}
+    {% set columns = columns|merge({
+        'today':            {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationToday'|trans},
+        'week':             {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationWeek'|trans},
+        'month':            {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationMonth'|trans},
+    }) %}
+{% endif %}
+{% set columns = columns|merge({
     'durationTotal':    {'class': 'text-center hw-min', 'title': 'stats.durationTotal'|trans},
     'timeBudget':       {'class': 'hidden-xs', 'title': 'label.timeBudget'|trans},
     'budget':           {'class': 'hidden-xs', 'title': 'label.budget'|trans},
@@ -18,7 +25,7 @@
     'projectEnd':       {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_end'|trans},
     'comment':          {'class': 'hidden-md hidden-sm hidden-xs hidden', 'title': 'label.comment'|trans},
     'actions':          {'class': 'actions alwaysVisible'},
-} %}
+}) %}
 {% set tableName = tableName|default('project_view_reporting') %}
 
 {% block main_before %}
@@ -70,9 +77,11 @@
                                         &ndash;
                                     {% endif %}
                                 </td>
+                                {% if showDurations %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'today') }}">{{ entry.durationDay|duration }}</td>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'week') }}">{{ entry.durationWeek|duration }}</td>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'month') }}">{{ entry.durationMonth|duration }}</td>
+                                {% endif %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'durationTotal') }}">{{ entry.durationTotal|duration }}</td>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
                                     {% if project.timeBudget > 0 %}
