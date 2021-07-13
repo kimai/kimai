@@ -11,19 +11,19 @@ namespace App\Validator\Constraints;
 
 use App\Entity\Timesheet as TimesheetEntity;
 use App\Timesheet\LockdownService;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetLockdownValidator extends ConstraintValidator
 {
-    private $auth;
     private $lockdownService;
+    private $security;
 
-    public function __construct(AuthorizationCheckerInterface $auth, LockdownService $lockdownService)
+    public function __construct(Security $security, LockdownService $lockdownService)
     {
-        $this->auth = $auth;
+        $this->security = $security;
         $this->lockdownService = $lockdownService;
     }
 
@@ -50,7 +50,7 @@ final class TimesheetLockdownValidator extends ConstraintValidator
         }
 
         // lockdown never takes effect for users with special permission
-        if ($this->auth->isGranted('lockdown_override_timesheet')) {
+        if (null !== $this->security->getUser() && $this->security->isGranted('lockdown_override_timesheet')) {
             return;
         }
 
@@ -67,7 +67,10 @@ final class TimesheetLockdownValidator extends ConstraintValidator
             }
         }
 
-        $allowEditInGracePeriod = $this->auth->isGranted('lockdown_grace_timesheet');
+        $allowEditInGracePeriod = false;
+        if (null !== $this->security->getUser() && $this->security->isGranted('lockdown_grace_timesheet')) {
+            $allowEditInGracePeriod = true;
+        }
 
         if ($this->lockdownService->isEditable($timesheet, $now, $allowEditInGracePeriod)) {
             return;

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Validator;
+namespace App\Tests\Validator\Constraints;
 
 use App\Activity\ActivityStatisticService;
 use App\Configuration\SystemConfiguration;
@@ -25,16 +25,16 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\Rate;
 use App\Timesheet\RateService;
 use App\Timesheet\RateServiceInterface;
-use App\Validator\Constraints\TimesheetBudgetUsedConstraint;
-use App\Validator\TimesheetBudgetUsedValidator;
+use App\Validator\Constraints\TimesheetBudgetUsed;
+use App\Validator\Constraints\TimesheetBudgetUsedValidator;
 use DateTime;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetBudgetUsedConstraint
- * @covers \App\Validator\TimesheetBudgetUsedValidator
+ * @covers \App\Validator\Constraints\TimesheetBudgetUsed
+ * @covers \App\Validator\Constraints\TimesheetBudgetUsedValidator
  */
 class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
 {
@@ -83,7 +83,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $this->validator->initialize($this->context);
         $this->context->addViolation('FOOOOOOOOO');
 
-        $this->validator->validate(new Timesheet(), new TimesheetBudgetUsedConstraint());
+        $this->validator->validate(new Timesheet(), new TimesheetBudgetUsed());
         $this->buildViolation('FOOOOOOOOO')->assertRaised();
     }
 
@@ -91,7 +91,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate('foo', new TimesheetBudgetUsedConstraint());
+        $this->validator->validate('foo', new TimesheetBudgetUsed());
     }
 
     public function testWithMissingEnd()
@@ -99,7 +99,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin(new DateTime());
 
-        $this->validator->validate($timesheet, new TimesheetBudgetUsedConstraint());
+        $this->validator->validate($timesheet, new TimesheetBudgetUsed());
         $this->assertNoViolation();
     }
 
@@ -109,7 +109,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setBegin(new DateTime());
         $timesheet->setEnd(new DateTime());
 
-        $this->validator->validate($timesheet, new TimesheetBudgetUsedConstraint());
+        $this->validator->validate($timesheet, new TimesheetBudgetUsed());
         $this->assertNoViolation();
     }
 
@@ -120,7 +120,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setEnd(new DateTime());
         $timesheet->setUser(new User());
 
-        $this->validator->validate($timesheet, new TimesheetBudgetUsedConstraint());
+        $this->validator->validate($timesheet, new TimesheetBudgetUsed());
         $this->assertNoViolation();
     }
 
@@ -135,7 +135,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setUser(new User());
         $timesheet->setProject($project);
 
-        $this->validator->validate($timesheet, new TimesheetBudgetUsedConstraint());
+        $this->validator->validate($timesheet, new TimesheetBudgetUsed());
         $this->assertNoViolation();
     }
 
@@ -161,7 +161,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setProject($project);
         $timesheet->setActivity($activity);
 
-        $this->validator->validate($timesheet, new TimesheetBudgetUsedConstraint());
+        $this->validator->validate($timesheet, new TimesheetBudgetUsed());
         $this->assertNoViolation();
     }
 
@@ -372,7 +372,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $this->validator = $this->createValidator(false, $activityStatistic, $projectStatistic, $customerStatistic, $rawData, $rate);
         $this->validator->initialize($this->context);
 
-        $this->validator->validate($timesheet, new TimesheetBudgetUsedConstraint());
+        $this->validator->validate($timesheet, new TimesheetBudgetUsed());
 
         if (null === $used && null === $budget && null === $free && $path === null) {
             $this->assertNoViolation();

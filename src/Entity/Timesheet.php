@@ -140,6 +140,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @internal for storing the timezone of "begin" and "end" date
      *
      * @ORM\Column(name="timezone", type="string", length=64, nullable=false)
+     * @Assert\Timezone
      */
     private $timezone;
     /**
