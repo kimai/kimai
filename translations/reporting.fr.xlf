@@ -34,6 +34,10 @@
         <source>report_yearly_users</source>
         <target>Vue annuelle pour tous les utilisateurs</target>
       </trans-unit>
+      <trans-unit id="report_project_details">
+        <source>report_project_details</source>
+        <target>Détails du projet</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
