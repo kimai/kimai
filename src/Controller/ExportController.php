@@ -9,7 +9,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Timesheet;
+use App\Export\ExportItemInterface;
 use App\Export\ServiceExport;
 use App\Export\TooManyItemsExportException;
 use App\Form\Toolbar\ExportToolbarForm;
@@ -146,7 +146,7 @@ class ExportController extends AbstractController
 
     /**
      * @param ExportQuery $query
-     * @return Timesheet[]
+     * @return ExportItemInterface[]
      */
     protected function getEntries(ExportQuery $query): array
     {
