@@ -276,8 +276,6 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      *
@@ -499,7 +497,7 @@ class TimesheetController extends BaseApiController
         }
 
         if (null !== ($reqLimit = $paramFetcher->get('size'))) {
-            $limit = $reqLimit;
+            $limit = (int) $reqLimit;
         }
 
         if (null !== ($reqBegin = $paramFetcher->get('begin'))) {
