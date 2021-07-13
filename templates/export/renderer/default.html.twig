@@ -254,6 +254,19 @@
             localStorage.setItem('{{ storageItemName }}', JSON.stringify(settings));
         }
 
+        function resetExport()
+        {
+            var editableTitles = document.querySelectorAll('[contenteditable=true]');
+
+            for (var editable of editableTitles) {
+                editable.innerText = editable.dataset['original'];
+            }
+
+            localStorage.removeItem('{{ storageItemName }}');
+            const form = document.getElementsByTagName('form')[0];
+            form.reset();
+        }
+
     </script>
 {% endblock %}
 
@@ -329,6 +342,7 @@
                         <option value="full">{{ demo_date|date_full }}</option>
                     </select>
                 </label>
+                <button type="reset" class="btn btn-primary pull-right" onclick="resetExport()">{{ 'action.reset'|trans }}</button>
             </div>
         </div>
 
@@ -408,7 +422,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <h2 id="doc-title" contenteditable="true">{{ 'export.document_title'|trans }}</h2>
+            <h2 id="doc-title" contenteditable="true" data-original="{{ 'export.document_title'|trans }}">{{ 'export.document_title'|trans }}</h2>
             <p>
                 {{ 'export.period'|trans }}:
                 {{ query.begin|date_short }} - {{ query.end|date_short }}
@@ -418,7 +432,7 @@
 
     <div class="row" id="export-summary">
         <div class="col-xs-12">
-            <h3 id="doc-summary" contenteditable="true">{{ 'export.summary'|trans }}</h3>
+            <h3 id="doc-summary" contenteditable="true" data-original="{{ 'export.summary'|trans }}">{{ 'export.summary'|trans }}</h3>
             <table class="items table table-condensed table-bordered dataTable" id="summary-project">
                 <thead>
                 <tr>
@@ -589,7 +603,7 @@
 
     <div class="row" id="export-records">
         <div class="col-xs-12">
-            <h3 id="doc-records" contenteditable="true">{{ 'export.full_list'|trans }}</h3>
+            <h3 id="doc-records" contenteditable="true" data-original="{{ 'export.full_list'|trans }}">{{ 'export.full_list'|trans }}</h3>
             <table class="items table table-condensed table-bordered dataTable">
                 <thead>
                 <tr>
