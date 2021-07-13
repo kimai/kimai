@@ -44,9 +44,9 @@ class TimesheetApiEditForm extends TimesheetEditForm
 
         $resolver->setDefaults([
             'csrf_protection' => false,
-            'allow_duration' => false,
             // overwritten and changed to default "true",
             // because the docs are cached without these fields otherwise
+            'allow_duration' => true,
             'include_user' => true,
             'include_exported' => true,
             'include_rate' => true,

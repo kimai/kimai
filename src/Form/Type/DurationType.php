@@ -33,6 +33,10 @@ class DurationType extends AbstractType
             'constraints' => [new DurationConstraint()],
             'preset_hours' => null,
             'preset_minutes' => null,
+            'documentation' => [
+                'type' => 'string',
+                'description' => 'This field might not be available, depending on the used time-tracking mode. If you submit end and duration, duration will be ignored.',
+            ],
         ]);
     }
 
