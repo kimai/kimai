@@ -331,6 +331,7 @@ class TimesheetController extends BaseApiController
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
             'date_format' => self::DATE_FORMAT,
+            'allow_duration' => $mode->canUpdateTimesWithAPI(),
         ]);
 
         $form->submit($request->request->all(), false);
@@ -408,6 +409,7 @@ class TimesheetController extends BaseApiController
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
             'date_format' => self::DATE_FORMAT,
+            'allow_duration' => $mode->canUpdateTimesWithAPI(),
         ]);
 
         $form->setData($timesheet);
