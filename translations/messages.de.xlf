@@ -246,6 +246,10 @@
         <source>error.no_comments_found</source>
         <target>Es wurden noch keine Kommentare abgegeben.</target>
       </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>Anfrage konnte nicht verarbeitet werden, es wurden zu viele Ergebnisse gefunden.</target>
+      </trans-unit>
       <!--
               General labels
             -->
