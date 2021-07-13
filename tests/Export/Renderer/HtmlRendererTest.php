@@ -52,8 +52,8 @@ class HtmlRendererTest extends AbstractRendererTest
 
         $content = $response->getContent();
 
-        $this->assertStringContainsString('<h2>', $content);
-        $this->assertStringContainsString('<h3>Summary</h3>', $content);
+        $this->assertStringContainsString('<h2 id="doc-title" contenteditable="true"', $content);
+        $this->assertStringContainsString('<h3 id="doc-summary" contenteditable="true" data-original="Summary">Summary</h3>', $content);
         $this->assertEquals(1, substr_count($content, 'id="export-summary"'));
         $this->assertEquals(1, substr_count($content, 'id="export-records"'));
         $this->assertEquals(1, substr_count($content, 'id="summary-project"'));
@@ -61,7 +61,7 @@ class HtmlRendererTest extends AbstractRendererTest
 
         $this->assertStringContainsString('<td>Customer Name</td>', $content);
         $this->assertStringContainsString('<td>project name</td>', $content);
-        $this->assertStringContainsString('<td class="duration summary-duration">01:50 h</td>', $content);
+        $this->assertStringContainsString('<span class="duration-format" data-duration="6600">01:50 h</span>', $content);
         $this->assertStringContainsString('<td class="cost summary-rate">€2,437.12</td>', $content);
 
         // 5 times in the "full list" and once in the "summary with activities"
