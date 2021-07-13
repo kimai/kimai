@@ -91,6 +91,10 @@ class ImportTimesheetCommand extends Command
      */
     private $userCache = [];
     /**
+     * @var Tag[]
+     */
+    private $tagCache = [];
+    /**
      * Comment that will be added to new customers, projects and activities.
      *
      * @var string
@@ -371,9 +375,7 @@ class ImportTimesheetCommand extends Command
                             continue;
                         }
 
-                        if (null === ($tag = $this->tagRepository->findTagByName($tagName))) {
-                            $tag = (new Tag())->setName($tagName);
-                        }
+                        $tag = $this->getTag($tagName);
 
                         $timesheet->addTag($tag);
                     }
@@ -467,6 +469,27 @@ class ImportTimesheetCommand extends Command
         }
 
         return $this->userCache[$user];
+    }
+
+    private function getTag(string $tagName): Tag
+    {
+        if (\array_key_exists($tagName, $this->tagCache)) {
+            return $this->tagCache[$tagName];
+        }
+
+        $tag = null;
+
+        if ($tag === null) {
+            $tag = $this->tagRepository->findTagByName($tagName);
+        }
+
+        if ($tag === null) {
+            $tag = (new Tag())->setName($tagName);
+        }
+
+        $this->tagCache[$tagName] = $tag;
+
+        return $this->tagCache[$tagName];
     }
 
     private function getActivity($activity, Project $project, $activityType): Activity
