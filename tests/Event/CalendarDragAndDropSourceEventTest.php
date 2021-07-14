@@ -24,7 +24,7 @@ class CalendarDragAndDropSourceEventTest extends TestCase
         $user = new User();
         $user->setAlias('foo');
 
-        $sut = new CalendarDragAndDropSourceEvent($user);
+        $sut = new CalendarDragAndDropSourceEvent($user, 10);
 
         $hello = new TestDragAndDropSource('hello');
         $tmp1 = new TestDragAndDropSource('foo');
@@ -40,6 +40,7 @@ class CalendarDragAndDropSourceEventTest extends TestCase
         self::assertInstanceOf(CalendarDragAndDropSourceEvent::class, $sut->addSource($tmp3));
         self::assertCount(4, $sut->getSources());
         self::assertEquals([$tmp1, $tmp2, $hello, $tmp3], $sut->getSources());
+        self::assertEquals(10, $sut->getMaxEntries());
 
         self::assertFalse($sut->removeSource(new TestDragAndDropSource('foo')));
         self::assertTrue($sut->removeSource($hello));

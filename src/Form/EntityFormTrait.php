@@ -9,7 +9,6 @@
 
 namespace App\Form;
 
-use App\Form\Type\ColorPickerType;
 use App\Form\Type\DurationType;
 use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\YesNoType;
@@ -19,13 +18,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 trait EntityFormTrait
 {
+    use ColorTrait;
+
     public function addCommonFields(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('color', ColorPickerType::class, [
-                'required' => false,
-            ])
-        ;
+        $this->addColor($builder);
 
         if ($options['include_budget']) {
             $builder
@@ -52,6 +49,10 @@ trait EntityFormTrait
             ]);
     }
 
+    /**
+     * @deprecated since 1.15
+     * @param FormBuilderInterface $builder
+     */
     public function addCreateMore(FormBuilderInterface $builder): void
     {
         $builder->add('create_more', CheckboxType::class, [

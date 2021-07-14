@@ -20,6 +20,7 @@ use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
@@ -91,15 +92,15 @@ class ActivityRepository extends EntityRepository
      * @param Activity $activity
      * @return ActivityStatistic
      */
-    public function getActivityStatistics(Activity $activity)
+    public function getActivityStatistics(Activity $activity): ActivityStatistic
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
             ->from(Timesheet::class, 't')
             ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('SUM(t.duration) as duration')
-            ->addSelect('SUM(t.rate) as rate')
-            ->addSelect('SUM(t.internalRate) as internal_rate')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
             ->where('t.activity = :activity')
             ->setParameter('activity', $activity)
         ;
@@ -113,6 +114,26 @@ class ActivityRepository extends EntityRepository
             $stats->setRecordDuration($timesheetResult['duration']);
             $stats->setRecordRate($timesheetResult['rate']);
             $stats->setRecordInternalRate($timesheetResult['internal_rate']);
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->from(Timesheet::class, 't')
+            ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->where('t.activity = :activity')
+            ->andWhere('t.billable = :billable')
+            ->setParameter('activity', $activity)
+            ->setParameter('billable', true, Types::BOOLEAN)
+        ;
+
+        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $timesheetResult) {
+            $stats->setDurationBillable($timesheetResult['duration']);
+            $stats->setRateBillable($timesheetResult['rate']);
+            $stats->setRecordAmountBillable($timesheetResult['amount']);
         }
 
         return $stats;
@@ -272,20 +293,20 @@ class ActivityRepository extends EntityRepository
             ->leftJoin('p.customer', 'c')
         ;
 
-        $orderBy = $query->getOrderBy();
-        switch ($orderBy) {
-            case 'project':
-                $orderBy = 'p.name';
-                break;
-            case 'customer':
-                $orderBy = 'c.name';
-                break;
-            default:
-                $orderBy = 'a.' . $orderBy;
-                break;
+        foreach ($query->getOrderGroups() as $orderBy => $order) {
+            switch ($orderBy) {
+                case 'project':
+                    $orderBy = 'p.name';
+                    break;
+                case 'customer':
+                    $orderBy = 'c.name';
+                    break;
+                default:
+                    $orderBy = 'a.' . $orderBy;
+                    break;
+            }
+            $qb->addOrderBy($orderBy, $order);
         }
-
-        $qb->addOrderBy($orderBy, $query->getOrder());
 
         $where = $qb->expr()->andX();
 

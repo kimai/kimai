@@ -268,15 +268,12 @@ class UserControllerTest extends ControllerBaseTest
                         'plainPassword' => ['first' => 'sdfsdf123'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
-                        'avatar' => 'asdfawer',
                         'email' => '',
                     ]
                 ],
                 [
                     '#user_create_username',
-                    '#user_create_username',
                     '#user_create_plainPassword_first',
-                    '#user_create_email',
                     '#user_create_email',
                 ]
             ],
@@ -288,15 +285,12 @@ class UserControllerTest extends ControllerBaseTest
                         'plainPassword' => ['first' => 'sdfsdf123', 'second' => 'sdfxxxxxxx'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
-                        'avatar' => 'asdfawer',
                         'email' => 'ydfbvsdfgs',
                     ]
                 ],
                 [
                     '#user_create_username',
-                    '#user_create_username',
                     '#user_create_plainPassword_first',
-                    '#user_create_email',
                     '#user_create_email',
                 ]
             ],
@@ -308,7 +302,6 @@ class UserControllerTest extends ControllerBaseTest
                         'plainPassword' => ['first' => 'test123', 'second' => 'test123'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
-                        'avatar' => 'asdfawer',
                         'email' => 'ydfbvsdfgs@example.com',
                     ]
                 ],

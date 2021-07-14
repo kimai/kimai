@@ -32,4 +32,49 @@ export default class KimaiForm extends KimaiPlugin {
         this.getContainer().getPlugin('date-time-picker').destroyDateTimePicker(formSelector);
         this.getContainer().getPlugin('date-range-picker').destroyDateRangePicker(formSelector);
     }
+
+    getFormData(form) {
+        let serialized = [];
+
+        // Loop through each field in the form
+        for (let i = 0; i < form.elements.length; i++) {
+
+            let field = form.elements[i];
+
+            // Don't serialize a couple of field types (button and submit are important to exclude, eg. invoice preview would fail otherwise)
+            if (!field.name || field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') {
+                continue;
+            }
+
+            // If a multi-select, get all selections
+            if (field.type === 'select-multiple') {
+                for (var n = 0; n < field.options.length; n++) {
+                    if (!field.options[n].selected) {
+                        continue;
+                    }
+                    serialized.push({
+                        name: field.name,
+                        value: field.options[n].value
+                    });
+                }
+            } else if ((field.type !== 'checkbox' && field.type !== 'radio') || field.checked) {
+                serialized.push({
+                    name: field.name,
+                    value: field.value
+                });
+            }
+        }
+
+        return serialized;
+    }
+
+    convertFormDataToQueryString(formData) {
+        let serialized = [];
+
+        for (let row of formData) {
+            serialized.push(encodeURIComponent(row.name) + "=" + encodeURIComponent(row.value));
+        }
+
+        return serialized.join('&');
+    }
 }

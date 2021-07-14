@@ -58,15 +58,29 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
      * @var User[]
      */
     private $users = [];
+    /**
+     * @var int|null
+     */
+    private $maxResults;
 
-    public function __construct()
+    public function __construct(bool $resetTimes = true)
     {
         parent::__construct();
         $this->setDefaults([
             'order' => self::ORDER_DESC,
             'orderBy' => 'begin',
-            'dateRange' => new DateRange()
+            'dateRange' => new DateRange($resetTimes)
         ]);
+    }
+
+    public function getMaxResults(): ?int
+    {
+        return $this->maxResults;
+    }
+
+    public function setMaxResults(?int $maxResults): void
+    {
+        $this->maxResults = $maxResults;
     }
 
     public function addUser(User $user): self

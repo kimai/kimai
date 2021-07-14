@@ -1,5 +1,3 @@
-<h1 align="center">Kimai 2 - online time-tracker</h1>
-
 <p align="center">
     <img src="https://raw.githubusercontent.com/kimai/images/master/repository-header.png" alt="Kimai logo">
 </p>
@@ -9,37 +7,40 @@
     <a href="https://codecov.io/gh/kevinpapst/kimai2"><img alt="Code Coverage" src="https://codecov.io/gh/kevinpapst/kimai2/branch/master/graph/badge.svg"></a>
     <a href="https://packagist.org/packages/kevinpapst/kimai2"><img alt="Latest stable version" src="https://poser.pugx.org/kevinpapst/kimai2/v/stable"></a>
     <a href="https://packagist.org/packages/kevinpapst/kimai2"><img alt="License" src="https://poser.pugx.org/kevinpapst/kimai2/license"></a>
-    <a href="https://gitter.im/kimai2/support"><img alt="Gitter" src="https://badges.gitter.im/kimai2/support.svg"></a>
-    <a href="https://www.bountysource.com/teams/kimai2"><img alt="Bountysource" src="https://img.shields.io/bountysource/team/kimai2/activity"></a>
+    <a href="https://twitter.com/kimai_org"><img alt="Twitter" src="https://img.shields.io/badge/follow-%40kimai__org-00acee"></a>
 </p>
+
+<h1 align="center">Kimai - time-tracker</h1>
 
 Kimai is a free, open source and online time-tracking software designed for small businesses and freelancers. 
 It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Doctrine, AdminLTE, Webpack, ES6 etc.
 
 ## Introduction
 
-- [Home](https://www.kimai.org) - The house of Kimai
-- [Blog](https://www.kimai.org/blog/) - Get the latest news
-- [Documentation](https://www.kimai.org/documentation/) - Learn how to use
-- [Translations](https://www.kimai.org/documentation/translations.html) - Kimai in your language
-- [Migration](https://www.kimai.org/documentation/migration-v1.html) - Import data from v1 
+- [Home](https://www.kimai.org) - Kimai project homepage
+- [Blog](https://www.kimai.org/blog/) - Read the latest news
+- [Documentation](https://www.kimai.org/documentation/) - Learn how to use Kimai
+- [Translations](https://hosted.weblate.org/projects/kimai/#languages) - Kimai in your language
+- [Migration](https://www.kimai.org/documentation/migration-v1.html) - Import data from Kimai 1 
 
 ### Requirements
 
-- PHP 7.2.9 or higher
+- PHP 7.2.9 or higher ([PHP 8 support in master](https://github.com/kevinpapst/kimai2/pull/2158))
 - MariaDB or MySQL
 - Webserver (nginx, Apache)
-- A modern browser
 - Some PHP extensions, see [composer.json](composer.json) or [here](https://www.kimai.org/download/)
 
 ### About
 
-This is the new version of the open source timetracker Kimai. It is stable and production ready, ships
-with most advanced features from Kimai 1 and many new ones, including but not limited to: 
+This is the new version of the open source time tracker Kimai. It is stable and production ready, ships
+with many advanced features, including but not limited to: 
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
-authentication via SAML/LDAP/Database, customizable role permissions, responsive and ready for your mobile device, 
-user specific rates, advanced search & filtering, money and time budgets with report, support for plugins and many more.
+authentication via SAML/LDAP/Database, customizable role and team permissions, responsive and ready for your mobile device, 
+user specific rates, advanced search & filtering, money and time budgets, multiple reports, support for plugins and many more.
+
+Kimai 2 is based on modern frameworks like [Symfony](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
+[AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json).
 
 ## Installation
 
@@ -50,7 +51,7 @@ user specific rates, advanced search & filtering, money and time budgets with re
 
 ### Updating Kimai
 
-- [Update Kimai](https://www.kimai.org/documentation/updates.html) - the documentation
+- [Update Kimai](https://www.kimai.org/documentation/updates.html) - get the latest version
 - [UPGRADING guide](UPGRADING.md) - version specific steps
 
 ### Plugins
@@ -67,15 +68,22 @@ It is open for changes and input from the community, your [ideas and questions](
 > You can upgrade Kimai at any time, you don't need to wait for the next official release.
 > The master branch is always deployable, release tags are only snapshots of the current development version.
 
-Release versions will be created on a regular base (approx. one release every 4-8 weeks).
-Every code change, whether it's a new feature or a bug fix, will be done on the master branch. 
-Kimai is actively developed in my spare time and I put my effort into the software instead of backporting changes for old versions.
-The only exception is a critical security issue, which I would fix in the latest stable version as well. 
+Release versions will be created on a regular base (approx. one release every 2 months).
+Every code change, whether it's a new feature or a bugfix, will be done on the master branch. 
+Kimai is actively developed in my spare time, I put my effort into the software instead of backporting changes.
 
-## Credits
+## Contributing
 
-Kimai 2 is developed with modern frameworks like 
-[Symfony v4](https://github.com/symfony/symfony), 
-[Doctrine](https://github.com/doctrine/),
-[AdminLTEBundle](https://github.com/kevinpapst/AdminLTEBundle/) (based on [AdminLTE theme](https://github.com/almasaeed2010/AdminLTE)) and 
-[many](composer.json) [more](package.json).
+You want to contribute to this repository? This is so great!
+The best way to start is to [open a new issue](https://github.com/kevinpapst/kimai2/issues) for bugs or feature requests or a [discussion](https://github.com/kevinpapst/kimai2/discussions) for questions, support and such.
+
+In case you want to contribute, but you wouldn't know how, here are some suggestions:
+
+- Spread the word: More user means more people testing and contributing to Kimai - which in turn means better stability and more and better features. Please vote for Kimai on platforms lie Slant, Product Hunt, Softpedia or AlternativeTo, you can tweet about it, share it on LinkedIn, reddit or any of your favorite social media platforms. Every little bit helps!
+- Answer questions: You know the answer to another user's problem? Share your knowledge!
+- Make a feature request: Something can be done better? Something essential missing? Let us know!
+- Report bugs
+- Contribute: You don't have to be programmer to help. The documentation and translation could use some love as well.
+- Sponsor the project
+
+There is one simple rule in our "Code of conduct": Don't be an ass! 

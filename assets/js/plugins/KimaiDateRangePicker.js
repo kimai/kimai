@@ -36,8 +36,12 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
 
             rangesList[TRANSLATE.get('today')] = [moment(), moment()];
             rangesList[TRANSLATE.get('yesterday')] = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];
-            rangesList[TRANSLATE.get('thisWeek')] = [moment().startOf('week'), moment().endOf('week')];
-            rangesList[TRANSLATE.get('lastWeek')] = [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')];
+            rangesList[TRANSLATE.get('thisWeek')] = [moment().startOf('isoWeek'), moment().endOf('isoWeek')];
+            rangesList[TRANSLATE.get('lastWeek')] = [moment().subtract(1, 'week').startOf('isoWeek'), moment().subtract(1, 'week').endOf('isoWeek')];
+            if (firstDow === 0) { // sunday = 0
+                rangesList[TRANSLATE.get('thisWeek')] = [moment().startOf('isoWeek').subtract(1, 'day'), moment().endOf('isoWeek').subtract(1, 'day')];
+                rangesList[TRANSLATE.get('lastWeek')] = [moment().subtract(1, 'week').startOf('isoWeek').subtract(1, 'day'), moment().subtract(1, 'week').endOf('isoWeek').subtract(1, 'day')];
+            }
             rangesList[TRANSLATE.get('thisMonth')] = [moment().startOf('month'), moment().endOf('month')];
             rangesList[TRANSLATE.get('lastMonth')] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
             rangesList[TRANSLATE.get('thisYear')] = [moment().startOf('year'), moment().endOf('year')];
@@ -60,6 +64,13 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
                 },
                 ranges: rangesList,
                 alwaysShowCalendars: true
+            });
+
+            jQuery(this).on('show.daterangepicker', function (ev, picker) {
+                if (picker.element.offset().top - jQuery(window).scrollTop() + picker.container.outerHeight() + 30 > jQuery(window).height()) {
+                    picker.drops = 'up';
+                    picker.move();
+                }
             });
 
             jQuery(this).on('apply.daterangepicker', function(ev, picker) {

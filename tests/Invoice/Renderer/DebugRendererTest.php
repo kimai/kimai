@@ -143,7 +143,7 @@ class DebugRendererTest extends TestCase
             'user.title',
             'user.meta.hello',
             'user.meta.kitty',
-            'testFromModelHydrator'
+            'testFromModelHydrator',
         ];
 
         if ($activityCounter > 1) {
@@ -242,7 +242,8 @@ class DebugRendererTest extends TestCase
             'entry.customer.meta.foo-customer',
             'entry.category',
             'entry.type',
-            'testFromItemHydrator'
+            'testFromItemHydrator',
+            'entry.tags',
         ];
 
         $keys = array_merge($keys, $metaFields);

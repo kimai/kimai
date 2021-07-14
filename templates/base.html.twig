@@ -16,17 +16,12 @@
 
 {% block page_content_start %}
     {% if app.session and app.session.started and app.session.flashbag.peekAll|length > 0 %}
-        {% set close = adminlte_close_alert|default(true) %}
         {% set domain = 'flashmessages' %}
         <script type="text/javascript">
             document.addEventListener('kimai.initialized', function(options) {
                 var ALERT = options.detail.kimai.getPlugin('alert');
                 {% for type, messages in app.session.flashbag.all %}
                     {% for message in messages %}
-                        {% if type == 'fos_user_success' %}
-                            {% set type = 'success' %}
-                            {% set domain = 'FOSUserBundle' %}
-                        {% endif %}
                         {% if type == 'error' %}
                             ALERT.error('{{ message|trans({}, domain) }}');
                         {% elseif type == 'warning' %}
@@ -72,16 +67,18 @@
 {% block page_subtitle %}{% endblock %}
 
 {% block logo_mini %}
-    {% if not kimai_context.branding.mini is empty %}
-        {{ kimai_context.branding.mini|raw }}
+    {% set mini = config('theme.branding.mini') %}
+    {% if mini is not empty %}
+        {{ mini|raw }}
     {% else %}
         <b>K</b>TT
     {% endif %}
 {% endblock %}
 
 {% block logo_large %}
-    {% if not kimai_context.branding.company is empty %}
-        {{ kimai_context.branding.company|raw }}
+    {% set company = config('theme.branding.company') %}
+    {% if company is not empty %}
+        {{ company|raw }}
     {% else %}
         <b>Kimai</b> - Time Tracking
     {% endif %}
@@ -124,17 +121,16 @@
         {% endif %}
         {% block navbar_extensions %}{% endblock %}
         {% set active_timesheets = active_timesheets(app.user) %}
-        {% set soft_limit = theme_config('soft_limit') %}
+        {% set active_limit = kimai_config.timesheetActiveEntriesHardLimit %}
         <li class="dropdown messages-menu" style="{% if active_timesheets is empty %}display:none{% endif %}">
             <a href="#" class="dropdown-toggle ddt-large ticktac" data-toggle="dropdown">
                 <i class="{{ 'start'|icon }} fa-2x"></i>
-                <span data-warning="{{ soft_limit }}" class="label label-{% if active_timesheets|length > soft_limit %}danger{% else %}warning{% endif %}">{% if active_timesheets|length > 0 %}{{ active_timesheets|length }}{% endif %}</span>
+                <span data-warning="{{ active_limit }}" class="label label-{% if active_timesheets|length > active_limit %}danger{% else %}warning{% endif %}">{% if active_timesheets|length > 0 %}{{ active_timesheets|length }}{% endif %}</span>
             </a>
             <ul class="dropdown-menu"
                 data-api="{{ path('active_timesheet') }}"
                 data-href="{{ path('stop_timesheet', {'id' : '000'}) }}"
-                data-icon="{{ 'stop-small'|icon }}"
-                data-format="{{ get_format_duration() }}">
+                data-icon="{{ 'stop-small'|icon }}">
                 <li class="header">
                     {{ 'active.entries'|trans }}
                 </li>
@@ -149,7 +145,7 @@
                                     <h4>
                                         <span>{{ entry.activity.name }}</span>
                                         <small>
-                                            <span data-title="true" data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}" data-format="{{ get_format_duration() }}">{{ entry|duration }}</span>
+                                            <span data-title="true" data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</span>
                                         </small>
                                     </h4>
                                     <p>{{ entry.project.name }} ({{ entry.project.customer.name }})</p>
@@ -201,7 +197,7 @@
                 <li>
                     <a href="{{ path('user_profile', {'username' : app.user.username}) }}">
                         <h4 class="control-sidebar-subheading">
-                            <i class="{{ 'avatar'|icon }}"></i>
+                            <i class="{{ 'user'|icon }}"></i>
                             {{ 'my.profile'|trans }}
                         </h4>
                     </a>
@@ -236,7 +232,7 @@
                     </a>
                 </li>
             {% endif %}
-            {% if kimai_context.show_about %}
+            {% if config('theme.show_about') %}
             <li class="divider"></li>
             <li>
                 <a href="{{ path('about') }}">
@@ -276,11 +272,12 @@
         window.addEventListener('load', function() {
             var loader = new KimaiWebLoader(
                 {
+                    formatDuration: '{{ get_format_duration() }}',
                     login: '{{ path('fos_user_security_login') }}',
                     locale: '{{ app.request.locale }}',
                     first_dow_iso: {{ iso_day_by_name(app.user.firstDayOfWeek) }},
                     twentyFourHours: {{ 'true'|hour24('false') }},
-                    autoComplete: {{ theme_config('autocomplete_chars') }},
+                    autoComplete: {{ kimai_config.themeAutocompleteCharacters }},
                     defaultColor: '{{ constant('App\\Constants::DEFAULT_COLOR') }}',
                     updateBrowserTitle: {% if app.user.preferenceValue('theme.update_browser_title') %}true{% else %}false{% endif %}
                 },

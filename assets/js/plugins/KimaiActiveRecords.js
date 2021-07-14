@@ -41,9 +41,13 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         const handle = function() { self.reloadActiveRecords(); };
 
         document.addEventListener('kimai.timesheetUpdate', handle);
+        document.addEventListener('kimai.timesheetDelete', handle);
         document.addEventListener('kimai.activityUpdate', handle);
+        document.addEventListener('kimai.activityDelete', handle);
         document.addEventListener('kimai.projectUpdate', handle);
+        document.addEventListener('kimai.projectDelete', handle);
         document.addEventListener('kimai.customerUpdate', handle);
+        document.addEventListener('kimai.customerDelete', handle);
     }
 
     emptyList() {
@@ -82,7 +86,7 @@ export default class KimaiActiveRecords extends KimaiPlugin {
                             `<h4>` +
                                 `<span>${ timesheet.activity.name }</span>` +
                                 `<small>` +
-                                    `<span data-title="true" data-since="${ timesheet.begin }" data-format="${ this.attributes['format'] }">${ durations.formatDuration(timesheet.duration, this.attributes['format']) }</span>` +
+                                    `<span data-title="true" data-since="${ timesheet.begin }">${ durations.formatDuration(timesheet.duration) }</span>` +
                                 `</small>` +
                             `</h4>` +
                             `<p>${ timesheet.project.name } (${ timesheet.project.customer.name })</p>` +

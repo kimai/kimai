@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>Ti sei registrato/a con l'indirizzo %email%. Ora bisogna provvedere ad attivare l'account prima che il collegamento scada.</target>
+        <target>Ti sei registrato/a con l'indirizzo %email%. Si prega di provvedere ad attivare l'account prima che il collegamento scada.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>

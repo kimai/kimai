@@ -24,7 +24,7 @@
             </trans-unit>
             <trans-unit id="registration.intro">
                 <source>registration.intro</source>
-                <target>Bạn đã đăng ký theo dõi thời gian Kimai với email% email%. Bây giờ bạn phải kích hoạt tài khoản của mình trong vài giờ tới, trước khi liên kết hết hạn.</target>
+                <target>Bạn đã đăng ký theo dõi thời gian Kimai với email %email%. Bây giờ bạn phải kích hoạt tài khoản của mình trong vài giờ tới, trước khi liên kết hết hạn.</target>
             </trans-unit>
             <trans-unit id="reset.subject">
                 <source>reset.subject</source>
@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="reset.title">
                 <source>reset.title</source>
-                <target>Điều đó có thể xảy ra...</target>
+                <target>Điều đó có thể xảy ra…</target>
             </trans-unit>
             <trans-unit id="reset.button">
                 <source>reset.button</source>
@@ -40,7 +40,7 @@
             </trans-unit>
             <trans-unit id="reset.intro">
                 <source>reset.intro</source>
-                <target>... bạn quên mật khẩu? Đừng lo lắng: Kimai sẽ giúp bạn tạo một cái mới:</target>
+                <target>… bạn quên mật khẩu? Đừng lo lắng: Kimai sẽ giúp bạn tạo một cái mới:</target>
             </trans-unit>
         </body>
     </file>

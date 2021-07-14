@@ -30,6 +30,6 @@ abstract class BaseApiController extends AbstractController
             $user = $this->getUser();
         }
 
-        return new DateTimeFactory(new \DateTimeZone($user->getTimezone()));
+        return DateTimeFactory::createByUser($user);
     }
 }

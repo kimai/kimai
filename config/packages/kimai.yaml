@@ -69,13 +69,11 @@ kimai:
         #        factor: 1.5
 
         # If you want to limit the max. active entries per user, you can do it here.
-        # The soft_limit is used as theme setting and displays a warning color if the user has reached X active recordings
         # The hard_limit is used to detect how many active records are allowed per user:
         # - by default a user can only have one active time-record: it is automatically stopped when a new one is started
         # - when hard_limit is > 1 and the user is trying to start a new entry after reaching the limit, a warning is shown
         #   and the user has to stop an active entry first
         # active_entries:
-        #    soft_limit: 1
         #    hard_limit: 3
 
         # Rules that define timesheet validation and behaviour
@@ -106,7 +104,7 @@ kimai:
             CUSTOMERS_ALL_TEAM: ['view_team_customer','edit_team_customer','budget_team_customer','comments_team_customer','comments_create_team_customer','details_team_customer']
             CUSTOMERS_TEAMLEAD: ['view_teamlead_customer','budget_teamlead_customer','comments_teamlead_customer','comments_create_teamlead_customer','details_teamlead_customer']
             INVOICE: ['view_invoice','create_invoice']
-            INVOICE_ADMIN: ['manage_invoice_template','history_invoice']
+            INVOICE_ADMIN: ['manage_invoice_template']
             TIMESHEET: ['view_own_timesheet','start_own_timesheet','stop_own_timesheet','create_own_timesheet','edit_own_timesheet','export_own_timesheet','delete_own_timesheet']
             TIMESHEET_OTHER: ['view_other_timesheet','start_other_timesheet','stop_other_timesheet','create_other_timesheet','edit_other_timesheet','export_other_timesheet','delete_other_timesheet']
             PROFILE: ['view_own_profile','edit_own_profile','password_own_profile','preferences_own_profile','api-token_own_profile']
@@ -118,7 +116,7 @@ kimai:
             EXPORT: ['create_export','edit_export_own_timesheet','edit_export_other_timesheet']
             TEAMS: ['view_team','create_team','edit_team','delete_team']
             LOCKDOWN: ['lockdown_grace_timesheet','lockdown_override_timesheet']
-            REPORTING: ['view_reporting']
+            REPORTING: ['view_reporting','view_other_reporting']
             # some single default definitions for roles
             SINGLE_USER: ['view_team_member','budget_team_project']
             SINGLE_TEAMLEAD: ['view_rate_own_timesheet','view_rate_other_timesheet','hourly-rate_own_profile','view_team_member']
@@ -218,7 +216,7 @@ kimai:
         rates:
             title: ~
             order: 50
-            permission: view_rate_other_timesheet
+            permission: view_all_data
             widgets: [amountToday, amountWeek, amountMonth, amountYear]
 # --------------------------------------------------------------------------------
 
@@ -249,6 +247,11 @@ kimai:
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         de_CH:
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date: 'd.m.Y'
+            date_time: 'd.m. H:i'
+        el:  
             date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'

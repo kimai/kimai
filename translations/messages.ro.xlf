@@ -50,7 +50,7 @@
       </trans-unit>
       <trans-unit id="confirm">
         <source>confirm</source>
-        <target>Confirm</target>
+        <target>Confirmați</target>
       </trans-unit>
       <trans-unit id="upload">
         <source>upload</source>
@@ -286,7 +286,7 @@
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>Email</target>
+        <target>E-mail</target>
       </trans-unit>
       <trans-unit id="label.team">
         <source>label.team</source>
@@ -478,7 +478,7 @@
       </trans-unit>
       <trans-unit id="calendar.title">
         <source>calendar.title</source>
-        <target>Calendar</target>
+        <target>Calendarul</target>
       </trans-unit>
       <trans-unit id="admin_timesheet.title">
         <source>admin_timesheet.title</source>
@@ -809,7 +809,7 @@
       </trans-unit>
       <trans-unit id="invoice.subtotal">
         <source>invoice.subtotal</source>
-        <target>Subtotal</target>
+        <target>Subtotalul</target>
       </trans-unit>
       <trans-unit id="invoice.tax">
         <source>invoice.tax</source>
@@ -1001,11 +1001,11 @@
       </trans-unit>
       <trans-unit id="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
-        <target>An întreg</target>
+        <target>An întreg %year%</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
-        <target>%lună% %an%</target>
+        <target>%month% %year%</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
@@ -1033,7 +1033,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Scrie mesajul tău...</target>
+        <target>Scrie mesajul tău…</target>
       </trans-unit>
       <trans-unit id="label.recalculate_rates">
         <source>label.recalculate_rates</source>
@@ -1054,6 +1054,74 @@
       <trans-unit id="menu.reporting">
         <source>menu.reporting</source>
         <target>Raportare</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Nefacturat</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Neexportate</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Afișați intrările fără buget</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Afișați intrările fără rezervări</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>A sărit previzualizarea peste %rows% rânduri …</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Data plății</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Rata de impozitare</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Actualizarea titlului browserului</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Salvează tot</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Formularul s-a modificat. Faceți clic pe „Salvați” pentru a salva modificările sau pe „Închidere” pentru a anula.</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Total</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Fișier</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Ordonează după</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Descrescător</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Crescător</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Salvați ca setare implicită</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Termen de căutare</target>
       </trans-unit>
     </body>
   </file>

@@ -39,6 +39,7 @@ class CalendarViewType extends AbstractType
         $resolver->setDefaults([
             'required' => true,
             'choices' => $choices,
+            'search' => false,
         ]);
     }
 

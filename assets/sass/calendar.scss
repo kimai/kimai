@@ -17,18 +17,35 @@
         width: 100%;
     }
 
+    .subtitle {
+        padding: 0 7px 4px 7px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 0.7em;
+    }
+
     .title {
-        padding: 5px 0 5px 10px;
+        padding: 3px 7px 0;
         display: block;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+}
 
-    .info-icon {
-        width: 30px;
-        white-space: nowrap;
-        padding: 5px 7px;
-        border-left: 1px solid;
+
+.fc-bootstrap3 {
+    .table-bordered > tbody > tr > td,
+    .table-bordered > thead > tr > td,
+    .table-bordered > thead > tr > th {
+        border: 1px solid #ddd;
+    }
+    .fc-head {
+        background-color: #fafafa;
+    }
+    td.fc-today {
+        background-color: #fcf8e3!important;
     }
 }

@@ -10,12 +10,14 @@
 namespace App\Form;
 
 use App\Entity\Timesheet;
+use App\Form\Type\BillableType;
 use App\Form\Type\DateTimePickerType;
 use App\Form\Type\DescriptionType;
 use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
 use App\Form\Type\MetaFieldsCollectionType;
+use App\Form\Type\TagsType;
 use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
@@ -121,13 +123,13 @@ class TimesheetEditForm extends AbstractType
             $descriptionOptions['attr'] = ['autofocus' => 'autofocus'];
         }
         $builder->add('description', DescriptionType::class, $descriptionOptions);
-
-        $this->addTags($builder);
+        $builder->add('tags', TagsType::class, ['required' => false]);
         $this->addRates($builder, $currency, $options);
         $this->addUser($builder, $options);
         $builder->add('metaFields', MetaFieldsCollectionType::class);
 
         $this->addExported($builder, $options);
+        $this->addBillable($builder, $options);
     }
 
     protected function showCustomer(array $options, bool $isNew, int $customerCount): bool
@@ -264,6 +266,15 @@ class TimesheetEditForm extends AbstractType
         ]);
     }
 
+    protected function addBillable(FormBuilderInterface $builder, array $options)
+    {
+        if (!$options['include_billable']) {
+            return;
+        }
+
+        $builder->add('billable', BillableType::class, []);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -276,6 +287,7 @@ class TimesheetEditForm extends AbstractType
             'csrf_token_id' => 'timesheet_edit',
             'include_user' => false,
             'include_exported' => false,
+            'include_billable' => true,
             'include_rate' => true,
             'docu_chapter' => 'timesheet.html',
             'method' => 'POST',

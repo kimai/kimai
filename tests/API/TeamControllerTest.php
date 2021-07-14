@@ -653,13 +653,13 @@ class TeamControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         //  team not found
-        $this->request($client, '/api/teams/999/activities/999', 'DELETE');
+        $this->request($client, '/api/teams/999/activities/9999', 'DELETE');
         self::assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
         $json = json_decode($client->getResponse()->getContent(), true);
         self::assertEquals('Team not found', $json['message']);
 
         //  activity not found
-        $this->request($client, '/api/teams/' . $result['id'] . '/activities/999', 'DELETE');
+        $this->request($client, '/api/teams/' . $result['id'] . '/activities/9999', 'DELETE');
         self::assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
         $json = json_decode($client->getResponse()->getContent(), true);
         self::assertEquals('Activity not found', $json['message']);

@@ -13,11 +13,12 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Tests\Mocks\TrackingModeServiceFactory;
 use App\Validator\Constraints\TimesheetOverlapping;
 use App\Validator\Constraints\TimesheetRestart;
 use App\Validator\Constraints\TimesheetRestartValidator;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
@@ -34,12 +35,13 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
 
     protected function createMyValidator(bool $allowed, string $trackingMode)
     {
-        $auth = $this->createMock(AuthorizationCheckerInterface::class);
+        $auth = $this->createMock(Security::class);
+        $auth->method('getUser')->willReturn(new User());
         $auth->method('isGranted')->willReturn($allowed);
 
         $service = (new TrackingModeServiceFactory($this))->create($trackingMode);
 
-        return new TimesheetRestartValidator($service, $auth);
+        return new TimesheetRestartValidator($auth, $service);
     }
 
     public function testConstraintIsInvalid()

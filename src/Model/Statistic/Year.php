@@ -9,39 +9,27 @@
 
 namespace App\Model\Statistic;
 
-/**
- * Yearly statistics
- */
-class Year
+final class Year extends Timesheet
 {
-    /**
-     * @var string
-     */
-    protected $year;
+    private $year;
     /**
      * @var Month[]
      */
-    protected $months = [];
+    private $months = [];
 
-    /**
-     * @param string $year
-     */
-    public function __construct($year)
+    public function __construct(string $year)
     {
         $this->year = $year;
     }
 
-    /**
-     * @return string
-     */
-    public function getYear()
+    public function getYear(): string
     {
         return $this->year;
     }
 
     public function setMonth(Month $month): Year
     {
-        $this->months[(int) $month->getMonth()] = $month;
+        $this->months[$month->getMonthNumber()] = $month;
 
         return $this;
     }

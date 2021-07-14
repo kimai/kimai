@@ -12,18 +12,17 @@ namespace App\EventSubscriber\Actions;
 use App\Entity\Timesheet;
 use App\Event\PageActionsEvent;
 
+/**
+ * @internal
+ */
 abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
 {
-    protected function timesheetActions(PageActionsEvent $event, string $routeListing, string $routeEdit): void
+    protected function timesheetActions(PageActionsEvent $event, string $routeEdit, string $routeDuplicate): void
     {
         $payload = $event->getPayload();
 
         /** @var Timesheet $timesheet */
         $timesheet = $payload['timesheet'];
-        if (!$event->isIndexView()) {
-            $event->addBack($this->path($routeListing));
-        }
-
         if ($timesheet->getId() !== null) {
             if ($this->isGranted('edit', $timesheet)) {
                 $class = $event->isView('edit') ? '' : 'modal-ajax-form';
@@ -39,7 +38,8 @@ abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
             }
 
             if ($this->isGranted('duplicate', $timesheet)) {
-                $event->addAction('copy', ['url' => $this->path('duplicate_timesheet', ['id' => $timesheet->getId()]), 'class' => 'api-link', 'attr' => ['data-payload' => '{"copy": "all"}', 'data-event' => 'kimai.timesheetStart kimai.timesheetUpdate', 'data-method' => 'PATCH', 'data-msg-error' => 'action.update.error', 'data-msg-success' => 'action.update.success']]);
+                $class = $event->isView('edit') ? '' : 'modal-ajax-form';
+                $event->addAction('copy', ['url' => $this->path($routeDuplicate, ['id' => $timesheet->getId()]), 'class' => $class]);
             }
 
             if ($event->countActions() > 0) {
@@ -47,7 +47,17 @@ abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
             }
 
             if ($event->isIndexView() && $this->isGranted('delete', $timesheet)) {
-                $event->addAction('trash', ['url' => $this->path('delete_timesheet', ['id' => $timesheet->getId()]), 'class' => 'api-link', 'attr' => ['data-event' => 'kimai.timesheetDelete kimai.timesheetUpdate', 'data-method' => 'DELETE', 'data-question' => 'confirm.delete', 'data-msg-error' => 'action.delete.error', 'data-msg-success' => 'action.delete.success']]);
+                $event->addAction('trash', [
+                    'url' => $this->path('delete_timesheet', ['id' => $timesheet->getId()]),
+                    'class' => 'api-link',
+                    'attr' => [
+                        'data-event' => 'kimai.timesheetDelete',
+                        'data-method' => 'DELETE',
+                        'data-question' => 'confirm.delete',
+                        'data-msg-error' => 'action.delete.error',
+                        'data-msg-success' => 'action.delete.success'
+                    ]
+                ]);
             }
         }
 

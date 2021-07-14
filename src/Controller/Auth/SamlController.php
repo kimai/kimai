@@ -10,7 +10,7 @@
 namespace App\Controller\Auth;
 
 use App\Configuration\SystemConfiguration;
-use App\Saml\SamlAuth;
+use App\Saml\SamlAuthFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,12 +22,12 @@ use Symfony\Component\Security\Core\Security;
  */
 final class SamlController extends AbstractController
 {
-    private $oneLoginAuth;
+    private $authFactory;
     private $systemConfiguration;
 
-    public function __construct(SamlAuth $oneLoginAuth, SystemConfiguration $systemConfiguration)
+    public function __construct(SamlAuthFactory $authFactory, SystemConfiguration $systemConfiguration)
     {
-        $this->oneLoginAuth = $oneLoginAuth;
+        $this->authFactory = $authFactory;
         $this->systemConfiguration = $systemConfiguration;
     }
 
@@ -43,20 +43,23 @@ final class SamlController extends AbstractController
         $session = $request->getSession();
         $authErrorKey = Security::AUTHENTICATION_ERROR;
 
+        $error = null;
+
         if ($request->attributes->has($authErrorKey)) {
             $error = $request->attributes->get($authErrorKey);
         } elseif (null !== $session && $session->has($authErrorKey)) {
             $error = $session->get($authErrorKey);
             $session->remove($authErrorKey);
-        } else {
-            $error = null;
         }
 
         if ($error) {
-            throw new \RuntimeException($error->getMessage());
+            if (\is_object($error) && method_exists($error, 'getMessage')) {
+                $error = $error->getMessage();
+            }
+            throw new \RuntimeException($error);
         }
 
-        $this->oneLoginAuth->login($session->get('_security.main.target_path'));
+        $this->authFactory->create()->login($session->get('_security.main.target_path'));
     }
 
     /**
@@ -68,7 +71,7 @@ final class SamlController extends AbstractController
             throw $this->createNotFoundException('SAML deactivated');
         }
 
-        $metadata = $this->oneLoginAuth->getSettings()->getSPMetadata();
+        $metadata = $this->authFactory->create()->getSettings()->getSPMetadata();
 
         $response = new Response($metadata);
         $response->headers->set('Content-Type', 'xml');

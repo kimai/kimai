@@ -28,7 +28,8 @@ class ThemeLayoutType extends AbstractType
             'choices' => [
                 'fixed' => 'fixed',
                 'boxed' => 'boxed',
-            ]
+            ],
+            'search' => false,
         ]);
     }
 

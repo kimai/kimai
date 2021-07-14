@@ -433,8 +433,8 @@
       <trans-unit id="admin_project.short_stats">
         <source>admin_project.short_stats</source>
         <target>
-                    Actuellement, le projet %project% pour le client %customer% comprend %activités% 
-                    et %enregistrements% de durées, pour un total de %duration%. 
+                    Actuellement, le projet %project% pour le client %customer% comprend %activities%
+                    et %records% de durées, pour un total de %duration%.
                 </target>
       </trans-unit>
       <!--
@@ -826,7 +826,7 @@
       </trans-unit>
       <trans-unit id="recent.activities">
         <source>recent.activities</source>
-        <target>Reprendre une de vos récentes activités</target>
+        <target>Reprendre une de vos activités récentes</target>
       </trans-unit>
       <trans-unit id="recent.activities.format">
         <source>recent.activities.format</source>
@@ -977,7 +977,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Aucune taxe n'a été configuré pour le moment.</target>
+        <target>Aucun taux horaire n'a encore été configuré.</target>
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>
@@ -1126,6 +1126,114 @@
       <trans-unit id="theme.update_browser_title">
         <source>theme.update_browser_title</source>
         <target>Mettre à jour le titre du navigateur</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Afficher les entrées sans budget</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Afficher les entrées sans réservation</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Taux d’imposition</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Fichier</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Non facturé</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Non exporté</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Trier par</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Descendant</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Ascendant</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Enregistrer le paramètre comme favori de la recherche</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Terme de recherche</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Aperçu de %rows% lignes supplémentaires ignoré…</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Date de paiement</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Tout enregistrer</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Supprimer le favori de recherche</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Dernière entrée</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Aucune réservation de temps depuis</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Si vous voulez supprimer une entrée, vous devez la faire glisser sur le bouton.</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Utilisateurs actifs cette année fiscale</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Revenus pour cette année fiscale</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Heures de travail pour cette année fiscale</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Année fiscale</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Un courriel a été envoyé. Il contient un lien sur lequel vous devez cliquer pour réinitialiser votre mot de passe. Remarque : vous ne pouvez demander un nouveau mot de passe qu'une seule fois toutes les %tokenLifetime% heures. Si vous ne recevez pas de courriel, vérifiez votre dossier d'indésirables ou réessayez.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Un courriel a été envoyé à %email%. Il contient un lien d'activation sur lequel vous devez cliquer pour activer votre compte.</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Revenus</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Temps de travail</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>La demande n'a pas pu être traitée, trop de résultats ont été trouvés.</target>
       </trans-unit>
     </body>
   </file>

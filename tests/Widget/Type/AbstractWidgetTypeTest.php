@@ -25,8 +25,6 @@ abstract class AbstractWidgetTypeTest extends TestCase
     {
         $sut = $this->createSut();
         self::assertInstanceOf(AbstractWidgetType::class, $sut);
-        self::assertEquals('', $sut->getId());
-        self::assertEquals('', $sut->getTitle());
         self::assertEquals($this->getDefaultOptions(), $sut->getOptions());
         self::assertNull($sut->getData());
         self::assertEquals('bar', $sut->getOption('foo', 'bar'));
@@ -51,7 +49,10 @@ abstract class AbstractWidgetTypeTest extends TestCase
         self::assertEquals(array_merge($this->getDefaultOptions(), ['föööö' => 'trääääää']), $sut->getOptions());
 
         $sut->setOptions(['blub' => 'blab', 'dataType' => 'money']);
-        self::assertEquals(['blub' => 'blab', 'dataType' => 'money', 'föööö' => 'trääääää'], $sut->getOptions());
+        $options = $sut->getOptions();
+        self::assertEquals('blab', $options['blub']);
+        self::assertEquals('money', $options['dataType']);
+        self::assertEquals('trääääää', $options['föööö']);
 
         // id
         $sut->setId('cvbnmyx');

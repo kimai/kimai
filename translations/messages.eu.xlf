@@ -497,9 +497,9 @@
       <trans-unit id="admin_project.short_stats">
         <source>admin_project.short_stats</source>
         <target>
-                    %customer% bezeroarentzako %project% proiektuak, %activities% jarduera eta
-                   %records% sarrera ditu, guztizko %duration% iraupenarekin.
-                </target>
+           %customer% bezeroarentzako %project% proiektuak, %activities% jarduera eta
+           %records% sarrera ditu, guztizko %duration% iraupenarekin.
+        </target>
       </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
@@ -519,9 +519,9 @@
       <trans-unit id="admin_activity.short_stats">
         <source>admin_activity.short_stats</source>
         <target>
-                  %customer% bezeroarentzako %project% proiektuak
-                 %records% sarrera ditu, guztizko %duration% iraupenarekin.
-               </target>
+          %customer% bezeroarentzako %project% proiektuak, %activity% jarduera eta
+          %records% sarrera ditu, guztizko %duration% iraupenarekin.
+        </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -750,11 +750,11 @@
       </trans-unit>
       <trans-unit id="stats.percentUsed">
         <source>stats.percentUsed</source>
-        <target>%%percent% erabilia</target>
+        <target>%percent%% erabilia</target>
       </trans-unit>
       <trans-unit id="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
-        <target>%%percent% erabilia (%%left% faltan)</target>
+        <target>%percent%% erabilia (%%left% faltan)</target>
       </trans-unit>
       <!--
               Invoice
@@ -1078,7 +1078,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Idatzi zure mezua...</target>
+        <target>Idatzi zure mezua…</target>
       </trans-unit>
       <trans-unit id="label.recalculate_rates">
         <source>label.recalculate_rates</source>
@@ -1123,6 +1123,22 @@
       <trans-unit id="upload">
         <source>upload</source>
         <target>Kargatu</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Beherantz</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Goranzko</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Gorde ezarpen lehenetsi gisa</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Bilatu hitza</target>
       </trans-unit>
     </body>
   </file>

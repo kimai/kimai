@@ -62,10 +62,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Numero di attività simultanee permesse</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Numero di attività in corso per cui visualizzare un avvertimento</target>
-      </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target>Numero minimo di caratteri per iniziare l'autocompletamento</target>
@@ -100,15 +96,15 @@
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>Branding</target>
+        <target>La mia azienda</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>Logo (URL immagine, login screen)</target>
+        <target>Logo URL (sostituisce il nome dell'azienda nella schermata di accesso)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>Azienda</target>
+        <target>Nome dell'azienda</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>

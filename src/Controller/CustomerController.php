@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
+use App\Customer\CustomerStatisticService;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
@@ -87,6 +88,7 @@ final class CustomerController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'metaColumns' => $this->findMetaColumns($query),
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -248,6 +250,9 @@ final class CustomerController extends AbstractController
         $query->setPage($page);
         $query->setPageSize(5);
         $query->addCustomer($customer);
+        $query->setShowBoth();
+        $query->addOrderGroup('visible', ProjectQuery::ORDER_DESC);
+        $query->addOrderGroup('name', ProjectQuery::ORDER_ASC);
 
         /* @var $entries Pagerfanta */
         $entries = $projectRepository->getPagerfantaForQuery($query);
@@ -256,6 +261,7 @@ final class CustomerController extends AbstractController
             'customer' => $customer,
             'projects' => $entries,
             'page' => $page,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -263,7 +269,7 @@ final class CustomerController extends AbstractController
      * @Route(path="/{id}/details", name="customer_details", methods={"GET", "POST"})
      * @Security("is_granted('view', customer)")
      */
-    public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository)
+    public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository, CustomerStatisticService $statisticService)
     {
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
@@ -290,7 +296,7 @@ final class CustomerController extends AbstractController
         }
 
         if ($this->isGranted('budget', $customer)) {
-            $stats = $this->repository->getCustomerStatistics($customer);
+            $stats = $statisticService->getCustomerStatistics($customer);
         }
 
         if ($this->isGranted('comments', $customer)) {
@@ -313,8 +319,9 @@ final class CustomerController extends AbstractController
             'stats' => $stats,
             'team' => $defaultTeam,
             'teams' => $teams,
-            'now' => new \DateTime('now', $timezone),
-            'rates' => $rates
+            'customer_now' => new \DateTime('now', $timezone),
+            'rates' => $rates,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -364,13 +371,13 @@ final class CustomerController extends AbstractController
      * @Route(path="/{id}/delete", name="admin_customer_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', customer)")
      */
-    public function deleteAction(Customer $customer, Request $request)
+    public function deleteAction(Customer $customer, Request $request, CustomerStatisticService $statisticService)
     {
-        $stats = $this->repository->getCustomerStatistics($customer);
+        $stats = $statisticService->getCustomerStatistics($customer);
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.customerUpdate kimai.customerDelete',
+                    'data-form-event' => 'kimai.customerDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
                 ]

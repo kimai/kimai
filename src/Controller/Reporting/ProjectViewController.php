@@ -10,9 +10,9 @@
 namespace App\Controller\Reporting;
 
 use App\Controller\AbstractController;
+use App\Project\ProjectStatisticService;
 use App\Reporting\ProjectView\ProjectViewForm;
 use App\Reporting\ProjectView\ProjectViewQuery;
-use App\Reporting\ProjectView\ProjectViewService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,17 +23,17 @@ final class ProjectViewController extends AbstractController
      * @Route(path="/reporting/project_view", name="report_project_view", methods={"GET","POST"})
      * @Security("is_granted('view_reporting') and is_granted('budget_project')")
      */
-    public function __invoke(Request $request, ProjectViewService $service)
+    public function __invoke(Request $request, ProjectStatisticService $service)
     {
-        $query = new ProjectViewQuery($this->getDateTimeFactory()->createDateTime(), $this->getUser());
+        $dateFactory = $this->getDateTimeFactory();
+        $user = $this->getUser();
 
-        $form = $this->createForm(ProjectViewForm::class, $query, [
-            'action' => $this->generateUrl('report_project_view')
-        ]);
-
+        $query = new ProjectViewQuery($dateFactory->createDateTime(), $user);
+        $form = $this->createForm(ProjectViewForm::class, $query);
         $form->submit($request->query->all(), false);
 
-        $entries = $service->getProjectView($query);
+        $projects = $service->findProjectsForView($query);
+        $entries = $service->getProjectView($user, $projects, $query->getToday());
 
         $byCustomer = [];
         foreach ($entries as $entry) {
@@ -47,6 +47,10 @@ final class ProjectViewController extends AbstractController
         return $this->render('reporting/project_view.html.twig', [
             'entries' => $byCustomer,
             'form' => $form->createView(),
+            'title' => 'report_project_view',
+            'tableName' => 'project_view_reporting',
+            'now' => $this->getDateTimeFactory()->createDateTime(),
+            'showDurations' => true,
         ]);
     }
 }

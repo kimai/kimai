@@ -20,7 +20,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Translation\DataCollectorTranslator;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -35,18 +34,12 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      */
     public const ROLE_ADMIN = User::ROLE_ADMIN;
 
-    /**
-     * @return DataCollectorTranslator
-     */
-    private function getTranslator()
+    protected function getTranslator(): TranslatorInterface
     {
         return $this->container->get('translator');
     }
 
-    /**
-     * @return LoggerInterface $logger
-     */
-    private function getLogger()
+    private function getLogger(): LoggerInterface
     {
         return $this->container->get('logger');
     }
@@ -57,7 +50,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      * @param string $translationKey
      * @param array $parameter
      */
-    protected function flashSuccess($translationKey, $parameter = [])
+    protected function flashSuccess(string $translationKey, array $parameter = []): void
     {
         $this->addFlashTranslated('success', $translationKey, $parameter);
     }
@@ -68,7 +61,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      * @param string $translationKey
      * @param array $parameter
      */
-    protected function flashWarning($translationKey, $parameter = [])
+    protected function flashWarning(string $translationKey, array $parameter = []): void
     {
         $this->addFlashTranslated('warning', $translationKey, $parameter);
     }
@@ -79,7 +72,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      * @param string $translationKey
      * @param array $parameter
      */
-    protected function flashError($translationKey, $parameter = [])
+    protected function flashError(string $translationKey, array $parameter = []): void
     {
         $this->addFlashTranslated('error', $translationKey, $parameter);
     }
@@ -89,7 +82,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      *
      * @param \Exception $exception
      */
-    protected function flashUpdateException(\Exception $exception)
+    protected function flashUpdateException(\Exception $exception): void
     {
         $this->flashException($exception, 'action.update.error');
     }
@@ -99,7 +92,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      *
      * @param \Exception $exception
      */
-    protected function flashDeleteException(\Exception $exception)
+    protected function flashDeleteException(\Exception $exception): void
     {
         $this->flashException($exception, 'action.delete.error');
     }
@@ -111,7 +104,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      * @param string $translationKey
      * @param array $parameter
      */
-    protected function flashException(\Exception $exception, string $translationKey, array $parameter = [])
+    protected function flashException(\Exception $exception, string $translationKey, array $parameter = []): void
     {
         $this->logException($exception);
 
@@ -129,7 +122,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      * @param string $message
      * @param array $parameter
      */
-    protected function addFlashTranslated(string $type, string $message, array $parameter = [])
+    protected function addFlashTranslated(string $type, string $message, array $parameter = []): void
     {
         if (!empty($parameter)) {
             foreach ($parameter as $key => $value) {
@@ -145,7 +138,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         $this->addFlash($type, $message);
     }
 
-    protected function logException(\Exception $ex)
+    protected function logException(\Exception $ex): void
     {
         $this->getLogger()->critical($ex->getMessage());
     }
@@ -165,7 +158,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             $user = $this->getUser();
         }
 
-        return new DateTimeFactory(new \DateTimeZone($user->getTimezone()));
+        return DateTimeFactory::createByUser($user);
     }
 
     protected function getLocaleFormats(string $locale): LocaleFormats
@@ -196,7 +189,9 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         // apply bookmark ONLY if search form was not submitted manually
         if ($bookmark !== null && !$request->query->has('performSearch')) {
             $data->setBookmark($bookmark);
-            $submitData = array_merge($bookmark->getContent(), $submitData);
+            if (!$request->query->has('setDefaultQuery')) {
+                $submitData = array_merge($bookmark->getContent(), $submitData);
+            }
         }
 
         // clean up parameters from unknown search values
@@ -209,10 +204,8 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         $form->submit($submitData, false);
 
         if (!$form->isValid()) {
-            $data->resetByFormError($form->getErrors());
-        }
-
-        if ($request->query->has('setDefaultQuery')) {
+            $data->resetByFormError($form->getErrors(true));
+        } elseif ($request->query->has('setDefaultQuery')) {
             $params = [];
             foreach ($form->all() as $name => $child) {
                 $params[$name] = $child->getViewData();

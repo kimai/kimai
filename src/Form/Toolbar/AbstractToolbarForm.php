@@ -17,6 +17,7 @@ use App\Form\Type\PageSizeType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\SearchTermType;
 use App\Form\Type\TagsType;
+use App\Form\Type\TeamType;
 use App\Form\Type\UserRoleType;
 use App\Form\Type\UserType;
 use App\Form\Type\VisibilityType;
@@ -65,7 +66,34 @@ abstract class AbstractToolbarForm extends AbstractType
     protected function addUsersChoice(FormBuilderInterface $builder)
     {
         $builder->add('users', UserType::class, [
+            'documentation' => [
+                'type' => 'array',
+                'items' => ['type' => 'integer', 'description' => 'User ID'],
+                'description' => 'Array of user IDs',
+            ],
             'label' => 'label.user',
+            'multiple' => true,
+            'required' => false,
+        ]);
+    }
+
+    protected function addTeamChoice(FormBuilderInterface $builder)
+    {
+        $builder->add('team', TeamType::class, [
+            'label' => 'label.team',
+            'required' => false,
+        ]);
+    }
+
+    protected function addTeamsChoice(FormBuilderInterface $builder)
+    {
+        $builder->add('teams', TeamType::class, [
+            'documentation' => [
+                'type' => 'array',
+                'items' => ['type' => 'integer', 'description' => 'Team ID'],
+                'description' => 'Array of team IDs',
+            ],
+            'label' => 'label.team',
             'multiple' => true,
             'required' => false,
         ]);
@@ -89,7 +117,15 @@ abstract class AbstractToolbarForm extends AbstractType
         }
 
         // just a fake field for having this field at the right position in the frontend
-        $builder->add($name, HiddenType::class);
+        $builder->add($name, CustomerType::class, [
+            'documentation' => [
+                'type' => 'array',
+                'items' => ['type' => 'integer', 'description' => 'Customer ID'],
+                'description' => 'Array of customer IDs',
+            ],
+            'choices' => [],
+            'multiple' => $multiCustomer,
+        ]);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
@@ -182,7 +218,15 @@ abstract class AbstractToolbarForm extends AbstractType
             $name = 'projects';
         }
         // just a fake field for having this field at the right position in the frontend
-        $builder->add($name, HiddenType::class);
+        $builder->add($name, ProjectType::class, [
+            'documentation' => [
+                'type' => 'array',
+                'items' => ['type' => 'integer', 'description' => 'Project ID'],
+                'description' => 'Array of project IDs',
+            ],
+            'choices' => [],
+            'multiple' => $multiProject,
+        ]);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
@@ -244,7 +288,15 @@ abstract class AbstractToolbarForm extends AbstractType
         }
 
         // just a fake field for having this field at the right position in the frontend
-        $builder->add($name, HiddenType::class);
+        $builder->add($name, ActivityType::class, [
+            'documentation' => [
+                'type' => 'array',
+                'items' => ['type' => 'integer', 'description' => 'Activity ID'],
+                'description' => 'Array of activity IDs',
+            ],
+            'choices' => [],
+            'multiple' => $multiActivity,
+        ]);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
@@ -294,6 +346,10 @@ abstract class AbstractToolbarForm extends AbstractType
     protected function addHiddenPagination(FormBuilderInterface $builder)
     {
         $builder->add('page', HiddenType::class, [
+            'documentation' => [
+                'type' => 'integer',
+                'description' => 'Page number. Default: 1',
+            ],
             'empty_data' => 1
         ]);
     }
@@ -303,6 +359,10 @@ abstract class AbstractToolbarForm extends AbstractType
         @trigger_error('addHiddenOrder() is deprecated and will be removed with 2.0, use the new search modal instead', E_USER_DEPRECATED);
 
         $builder->add('order', HiddenType::class, [
+            'documentation' => [
+                'type' => 'string',
+                'description' => 'The order for returned items',
+            ],
             'constraints' => [
                 new Choice(['choices' => [BaseQuery::ORDER_ASC, BaseQuery::ORDER_DESC]])
             ]
@@ -312,11 +372,15 @@ abstract class AbstractToolbarForm extends AbstractType
     protected function addOrder(FormBuilderInterface $builder)
     {
         $builder->add('order', ChoiceType::class, [
+            'documentation' => [
+                'description' => 'The order for returned items',
+            ],
             'label' => 'label.order',
             'choices' => [
                 'label.asc' => BaseQuery::ORDER_ASC,
                 'label.desc' => BaseQuery::ORDER_DESC
-            ]
+            ],
+            'search' => false,
         ]);
     }
 
@@ -340,7 +404,8 @@ abstract class AbstractToolbarForm extends AbstractType
         }
         $builder->add('orderBy', ChoiceType::class, [
             'label' => 'label.orderBy',
-            'choices' => $all
+            'choices' => $all,
+            'search' => false,
         ]);
     }
 

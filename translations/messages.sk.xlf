@@ -287,7 +287,7 @@
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>Email</target>
+        <target>E-mail</target>
       </trans-unit>
       <trans-unit id="label.team">
         <source>label.team</source>
@@ -964,7 +964,7 @@
       </trans-unit>
       <trans-unit id="export.date_copyright">
         <source>export.date_copyright</source>
-        <target>Vytvorené %date%</target>
+        <target>Vytvorené %date% - %kimai%</target>
       </trans-unit>
       <!--
              Navbar - recent entries and activities
@@ -1092,7 +1092,7 @@
       </trans-unit>
       <trans-unit id="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
-        <target>Dnes, %deň%</target>
+        <target>Dnes, %day%</target>
       </trans-unit>
       <trans-unit id="label.lastLogin">
         <source>label.lastLogin</source>
@@ -1112,7 +1112,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Napíšte vašu správu...</target>
+        <target>Napíšte vašu správu…</target>
       </trans-unit>
       <trans-unit id="label.recalculate_rates">
         <source>label.recalculate_rates</source>

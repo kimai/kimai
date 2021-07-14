@@ -130,7 +130,8 @@ class AppExtensionTest extends TestCase
                     'api_key' => null,
                     'sources' => [],
                 ],
-                'weekends' => true
+                'weekends' => true,
+                'dragdrop_amount' => 10,
             ],
             'kimai.dashboard' => [],
             'kimai.widgets' => [],
@@ -174,12 +175,10 @@ class AppExtensionTest extends TestCase
                 'calendar' => [
                     'background_color' => '#d2d6de',
                 ],
-            ],
-            'kimai.theme.select_type' => 'selectpicker',
-            'kimai.theme.show_about' => true,
-            'kimai.fosuser' => [
-                'registration' => true,
-                'password_reset' => true,
+                'colors_limited' => true,
+                'color_choices' => 'Silver|#c0c0c0,Gray|#808080,Black|#000000,Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,Gold|#ffd700,Yellow|#ffff00,Peach|#ffdab9,Khaki|#f0e68c,Olive|#808000,Lime|#00ff00,Jelly|#9acd32,Green|#008000,Teal|#008080,Aqua|#00ffff,LightBlue|#add8e6,DeepSky|#00bfff,Dodger|#1e90ff,Blue|#0000ff,Navy|#000080,Purple|#800080,Fuchsia|#ff00ff,Violet|#ee82ee,Rose|#ffe4e1,Lavender|#E6E6FA',
+                'random_colors' => true,
+                'avatar_url' => false,
             ],
             'kimai.timesheet' => [
                 'mode' => 'default',
@@ -205,6 +204,9 @@ class AppExtensionTest extends TestCase
                     'lockdown_period_end' => null,
                     'lockdown_grace_period' => null,
                     'allow_overbooking_budget' => true,
+                    'lockdown_period_timezone' => null,
+                    'break_warning_duration' => 0,
+                    'long_running_duration' => 0,
                 ],
                 'default_begin' => 'now',
                 'duration_increment' => null,
@@ -220,31 +222,6 @@ class AppExtensionTest extends TestCase
                         'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
                     ]
             ],
-            'kimai.ldap' => [
-                'user' => [
-                    'baseDn' => null,
-                    'filter' => '',
-                    'usernameAttribute' => 'uid',
-                    'attributesFilter' => '(objectClass=*)',
-                    'attributes' => [],
-                ],
-                'role' => [
-                    'baseDn' => null,
-                    'nameAttribute' => 'cn',
-                    'userDnAttribute' => 'member',
-                    'groups' => [],
-                    'usernameAttribute' => 'dn',
-                ],
-                'connection' => [
-                    'baseDn' => null,
-                    'host' => null,
-                    'port' => 389,
-                    'useStartTls' => false,
-                    'useSsl' => false,
-                    'bindRequiresDn' => true,
-                    'accountFilterFormat' => '(&(uid=%s))',
-                ],
-            ],
             'kimai.permissions' => [
                 'ROLE_USER' => [],
                 'ROLE_TEAMLEAD' => [],
@@ -254,7 +231,38 @@ class AppExtensionTest extends TestCase
             'kimai.i18n_domains' => []
         ];
 
+        $kimaiLdap = [
+            'activate' => false,
+            'user' => [
+                'baseDn' => null,
+                'filter' => '',
+                'usernameAttribute' => 'uid',
+                'attributesFilter' => '(objectClass=*)',
+                'attributes' => [],
+            ],
+            'role' => [
+                'baseDn' => null,
+                'nameAttribute' => 'cn',
+                'userDnAttribute' => 'member',
+                'groups' => [],
+                'usernameAttribute' => 'dn',
+            ],
+            'connection' => [
+                'baseDn' => null,
+                'host' => null,
+                'port' => 389,
+                'useStartTls' => false,
+                'useSsl' => false,
+                'bindRequiresDn' => true,
+                'accountFilterFormat' => '(&(uid=%s))',
+            ],
+        ];
+
         $this->assertTrue($container->hasParameter('kimai.config'));
+
+        $config = $container->getParameter('kimai.config');
+        $this->assertArrayHasKey('ldap', $config);
+        $this->assertEquals($kimaiLdap, $config['ldap']);
 
         foreach ($expected as $key => $value) {
             $this->assertTrue($container->hasParameter($key), 'Could not find config: ' . $key);
@@ -279,32 +287,6 @@ class AppExtensionTest extends TestCase
             [
                 'adminlte_registration' => 'foo',
                 'adminlte_password_reset' => 'bar',
-            ],
-            $container->getParameter('admin_lte_theme.routes')
-        );
-    }
-
-    public function testDeactivateAdditionalAuthenticationRoutes()
-    {
-        $minConfig = $this->getMinConfig();
-        $minConfig['kimai']['user'] = [
-            'registration' => false,
-            'password_reset' => false,
-        ];
-        $adminLte = [
-            'adminlte_registration' => 'foo',
-            'adminlte_password_reset' => 'bar',
-        ];
-
-        $container = $this->getContainer();
-        $container->setParameter('admin_lte_theme.routes', $adminLte);
-
-        $this->extension->load($minConfig, $container);
-
-        $this->assertEquals(
-            [
-                'adminlte_registration' => null,
-                'adminlte_password_reset' => null,
             ],
             $container->getParameter('admin_lte_theme.routes')
         );
@@ -359,7 +341,9 @@ class AppExtensionTest extends TestCase
 
         $this->extension->load($minConfig, $container = $this->getContainer());
 
-        $ldapConfig = $container->getParameter('kimai.ldap');
+        $config = $container->getParameter('kimai.config');
+        $ldapConfig = $config['ldap'];
+
         $this->assertEquals('123123123', $ldapConfig['user']['baseDn']);
         $this->assertEquals('(..........)', $ldapConfig['user']['filter']);
         $this->assertEquals('xxx', $ldapConfig['user']['usernameAttribute']);
@@ -382,7 +366,9 @@ class AppExtensionTest extends TestCase
 
         $this->extension->load($minConfig, $container = $this->getContainer());
 
-        $ldapConfig = $container->getParameter('kimai.ldap');
+        $config = $container->getParameter('kimai.config');
+        $ldapConfig = $config['ldap'];
+
         $this->assertEquals('123123123', $ldapConfig['user']['baseDn']);
         $this->assertEquals('xxx', $ldapConfig['user']['usernameAttribute']);
         $this->assertEquals('123123123', $ldapConfig['connection']['baseDn']);
@@ -407,7 +393,9 @@ class AppExtensionTest extends TestCase
 
         $this->extension->load($minConfig, $container = $this->getContainer());
 
-        $ldapConfig = $container->getParameter('kimai.ldap');
+        $config = $container->getParameter('kimai.config');
+        $ldapConfig = $config['ldap'];
+
         $this->assertEquals('123123123', $ldapConfig['user']['baseDn']);
         $this->assertEquals('zzzz', $ldapConfig['user']['usernameAttribute']);
         $this->assertEquals('7658765', $ldapConfig['connection']['baseDn']);

@@ -113,4 +113,22 @@ class ColorTest extends TestCase
         $this->assertEquals('#000000', $sut->getFontContrastColor('#ccccc'));
         $this->assertEquals('#000000', $sut->getFontContrastColor('#ccccccc'));
     }
+
+    public function testGetRandomColor()
+    {
+        $sut = new Color();
+
+        self::assertIsValidColor($sut->getRandomFromPalette('1234'));
+
+        self::assertIsValidColor($sut->getRandom());
+        self::assertIsValidColor($sut->getRandomColor());
+        self::assertIsValidColor($sut->getRandom('1234'));
+        self::assertEquals($sut->getRandom('1234'), $sut->getRandomFromPalette('1234'));
+    }
+
+    private static function assertIsValidColor(string $color)
+    {
+        self::assertStringStartsWith('#', $color);
+        self::assertEquals(7, \strlen($color));
+    }
 }

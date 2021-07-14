@@ -11,8 +11,10 @@ namespace App\Tests\Controller\Auth;
 
 use App\Configuration\SystemConfiguration;
 use App\Controller\Auth\SamlController;
+use App\Saml\SamlAuthFactory;
 use App\Tests\Configuration\TestConfigLoader;
-use App\Tests\Mocks\Saml\SamlAuthFactory;
+use App\Tests\Mocks\Saml\SamlAuthFactoryFactory;
+use OneLogin\Saml2\Auth;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Util\Xml;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,9 +49,9 @@ class SamlControllerTest extends TestCase
         ];
     }
 
-    protected function getAuth()
+    protected function getAuth(): Auth
     {
-        return (new SamlAuthFactory($this))->create();
+        return (new SamlAuthFactoryFactory($this))->create()->create();
     }
 
     protected function getSystemConfiguration(bool $activated = true)
@@ -62,8 +64,9 @@ class SamlControllerTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You must configure the check path in your firewall.');
 
-        $oauth = $this->getAuth();
-        $sut = new SamlController($oauth, $this->getSystemConfiguration());
+        $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
+
+        $sut = new SamlController($factory, $this->getSystemConfiguration());
         $sut->assertionConsumerServiceAction();
     }
 
@@ -72,8 +75,9 @@ class SamlControllerTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You must configure the logout path in your firewall.');
 
-        $oauth = $this->getAuth();
-        $sut = new SamlController($oauth, $this->getSystemConfiguration());
+        $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
+
+        $sut = new SamlController($factory, $this->getSystemConfiguration());
         $sut->logoutAction();
     }
 
@@ -104,7 +108,11 @@ class SamlControllerTest extends TestCase
 EOD;
 
         $oauth = $this->getAuth();
-        $sut = new SamlController($oauth, $this->getSystemConfiguration());
+
+        $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
+        $factory->expects($this->once())->method('create')->willReturn($oauth);
+
+        $sut = new SamlController($factory, $this->getSystemConfiguration());
         $result = $sut->metadataAction();
 
         self::assertInstanceOf(Response::class, $result);
@@ -126,8 +134,9 @@ EOD;
         $request->setSession($this->createMock(SessionInterface::class));
         $request->attributes->set(Security::AUTHENTICATION_ERROR, new \Exception('My test error'));
 
-        $oauth = $this->getAuth();
-        $sut = new SamlController($oauth, $this->getSystemConfiguration());
+        $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
+
+        $sut = new SamlController($factory, $this->getSystemConfiguration());
         $sut->loginAction($request);
     }
 
@@ -136,7 +145,9 @@ EOD;
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('SAML deactivated');
 
-        $sut = new SamlController($this->getAuth(), $this->getSystemConfiguration(false));
+        $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
+
+        $sut = new SamlController($factory, $this->getSystemConfiguration(false));
         $sut->loginAction(new Request());
     }
 
@@ -145,7 +156,9 @@ EOD;
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('SAML deactivated');
 
-        $sut = new SamlController($this->getAuth(), $this->getSystemConfiguration(false));
+        $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
+
+        $sut = new SamlController($factory, $this->getSystemConfiguration(false));
         $sut->metadataAction();
     }
 
@@ -154,7 +167,9 @@ EOD;
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('SAML deactivated');
 
-        $sut = new SamlController($this->getAuth(), $this->getSystemConfiguration(false));
+        $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
+
+        $sut = new SamlController($factory, $this->getSystemConfiguration(false));
         $sut->logoutAction();
     }
 
@@ -163,7 +178,9 @@ EOD;
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('SAML deactivated');
 
-        $sut = new SamlController($this->getAuth(), $this->getSystemConfiguration(false));
+        $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
+
+        $sut = new SamlController($factory, $this->getSystemConfiguration(false));
         $sut->assertionConsumerServiceAction();
     }
 }

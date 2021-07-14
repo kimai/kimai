@@ -62,10 +62,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Número máximo de registros activos simultáneos permitidos</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>Número de registros activos simultáneos para que se muestre una advertencia</target>
-      </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target>Número mínimo de letras para iniciar la compleción automática</target>
@@ -233,6 +229,10 @@
       <trans-unit id="label.timesheet.rounding.default.end">
         <source>label.timesheet.rounding.default.end</source>
         <target>Redondeo de la hora de finalización en minutos (0 = desactivado)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>Unidad mínima de tiempo para las vistas semanal y diaria (formato: hh:mm:ss)</target>
       </trans-unit>
     </body>
   </file>

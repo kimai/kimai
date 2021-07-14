@@ -28,27 +28,25 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 /**
- * Defines the form used to manipulate Timesheet entries.
- * @internal
+ * Helper functions to manage dependent customer-project-activity fields.
  */
 trait FormTrait
 {
     protected function addCustomer(FormBuilderInterface $builder, ?Customer $customer = null)
     {
-        $builder
-            ->add('customer', CustomerType::class, [
-                'query_builder' => function (CustomerRepository $repo) use ($builder, $customer) {
-                    $query = new CustomerFormTypeQuery($customer);
-                    $query->setUser($builder->getOption('user'));
+        $builder->add('customer', CustomerType::class, [
+            'query_builder' => function (CustomerRepository $repo) use ($builder, $customer) {
+                $query = new CustomerFormTypeQuery($customer);
+                $query->setUser($builder->getOption('user'));
 
-                    return $repo->getQueryBuilderForFormType($query);
-                },
-                'data' => $customer ? $customer : '',
-                'required' => false,
-                'placeholder' => '',
-                'mapped' => false,
-                'project_enabled' => true,
-            ]);
+                return $repo->getQueryBuilderForFormType($query);
+            },
+            'data' => $customer ? $customer : '',
+            'required' => false,
+            'placeholder' => '',
+            'mapped' => false,
+            'project_enabled' => true,
+        ]);
     }
 
     protected function addProject(FormBuilderInterface $builder, bool $isNew, ?Project $project = null, ?Customer $customer = null)
@@ -102,17 +100,15 @@ trait FormTrait
 
     protected function addActivity(FormBuilderInterface $builder, ?Activity $activity = null, ?Project $project = null)
     {
-        $builder
-            ->add('activity', ActivityType::class, [
-                'placeholder' => '',
-                'query_builder' => function (ActivityRepository $repo) use ($builder, $activity, $project) {
-                    $query = new ActivityFormTypeQuery($activity, $project);
-                    $query->setUser($builder->getOption('user'));
+        $builder->add('activity', ActivityType::class, [
+            'placeholder' => '',
+            'query_builder' => function (ActivityRepository $repo) use ($builder, $activity, $project) {
+                $query = new ActivityFormTypeQuery($activity, $project);
+                $query->setUser($builder->getOption('user'));
 
-                    return $repo->getQueryBuilderForFormType($query);
-                },
-            ])
-        ;
+                return $repo->getQueryBuilderForFormType($query);
+            },
+        ]);
 
         // replaces the activity select after submission, to make sure only activities for the selected project are displayed
         $builder->addEventListener(
@@ -143,20 +139,23 @@ trait FormTrait
     {
         @trigger_error('FormTrait::addDescription() is deprecated and will be removed with 2.0, use DescriptionType instead', E_USER_DEPRECATED);
 
-        $builder
-            ->add('description', DescriptionType::class, [
-                'required' => false,
-                'attr' => [
-                    'autofocus' => 'autofocus'
-                ]
-            ]);
+        $builder->add('description', DescriptionType::class, [
+            'required' => false,
+            'attr' => [
+                'autofocus' => 'autofocus'
+            ]
+        ]);
     }
 
+    /**
+     * @deprecated since 1.14
+     */
     protected function addTags(FormBuilderInterface $builder)
     {
-        $builder
-            ->add('tags', TagsType::class, [
-                'required' => false,
-            ]);
+        @trigger_error('FormTrait::addTags() is deprecated and will be removed with 2.0, use TagsType instead', E_USER_DEPRECATED);
+
+        $builder->add('tags', TagsType::class, [
+            'required' => false,
+        ]);
     }
 }

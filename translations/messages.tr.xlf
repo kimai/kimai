@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="confirm.delete">
         <source>confirm.delete</source>
-        <target state="translated">Silmek istiyor musunuz?</target>
+        <target state="translated">Gerçekten silmek istiyor musunuz?</target>
       </trans-unit>
       <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
@@ -42,7 +42,7 @@
       </trans-unit>
       <trans-unit id="delete.not_in_use">
         <source>delete.not_in_use</source>
-        <target state="translated">Bu öğe güvenle silinebilir.</target>
+        <target state="translated">Bu öge güvenle silinebilir.</target>
       </trans-unit>
       <trans-unit id="cancel">
         <source>cancel</source>
@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="dashboard.subtitle">
         <source>dashboard.subtitle</source>
-        <target state="translated">Hoşgeldiniz!</target>
+        <target state="translated">Hoş geldiniz!</target>
       </trans-unit>
       <trans-unit id="dashboard.all">
         <source>dashboard.all</source>
@@ -580,7 +580,7 @@
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
-        <target state="translated">Aktif</target>
+        <target state="translated">Etkin</target>
       </trans-unit>
       <trans-unit id="label.roles">
         <source>label.roles</source>
@@ -631,15 +631,15 @@
       </trans-unit>
       <trans-unit id="stats.durationWeek">
         <source>stats.durationWeek</source>
-        <target state="translated">Haftanın çalışma saatleri</target>
+        <target state="translated">Bu haftanın çalışma saatleri</target>
       </trans-unit>
       <trans-unit id="stats.durationMonth">
         <source>stats.durationMonth</source>
-        <target state="translated">Ayın çalışma saatleri</target>
+        <target state="translated">Bu ayın çalışma saatleri</target>
       </trans-unit>
       <trans-unit id="stats.durationYear">
         <source>stats.durationYear</source>
-        <target state="translated">Yılın çalışma saatleri</target>
+        <target state="translated">Bu yılın çalışma saatleri</target>
       </trans-unit>
       <trans-unit id="stats.durationTotal">
         <source>stats.durationTotal</source>
@@ -655,15 +655,15 @@
       </trans-unit>
       <trans-unit id="stats.amountWeek">
         <source>stats.amountWeek</source>
-        <target state="translated">Haftanın geliri</target>
+        <target state="translated">Bu haftanın geliri</target>
       </trans-unit>
       <trans-unit id="stats.amountMonth">
         <source>stats.amountMonth</source>
-        <target state="translated">Ayın geliri</target>
+        <target state="translated">Bu ayın geliri</target>
       </trans-unit>
       <trans-unit id="stats.amountYear">
         <source>stats.amountYear</source>
-        <target state="translated">Yılın geliri</target>
+        <target state="translated">Bu yılın geliri</target>
       </trans-unit>
       <trans-unit id="stats.amountTotal">
         <source>stats.amountTotal</source>
@@ -671,27 +671,27 @@
       </trans-unit>
       <trans-unit id="stats.userActiveToday">
         <source>stats.userActiveToday</source>
-        <target state="translated">Bugünkü aktif kullanıcılar</target>
+        <target state="translated">Bugünün etkin kullanıcıları</target>
       </trans-unit>
       <trans-unit id="stats.userActiveWeek">
         <source>stats.userActiveWeek</source>
-        <target state="translated">Haftanın aktif kullanıcıları</target>
+        <target state="translated">Bu haftanın etkin kullanıcıları</target>
       </trans-unit>
       <trans-unit id="stats.userActiveMonth">
         <source>stats.userActiveMonth</source>
-        <target state="translated">Ayın aktif kullanıcıları</target>
+        <target state="translated">Bu ayın etkin kullanıcıları</target>
       </trans-unit>
       <trans-unit id="stats.userActiveYear">
         <source>stats.userActiveYear</source>
-        <target state="translated">Yılın aktif kullanıcıları</target>
+        <target state="translated">Bu yılın etkin kullanıcıları</target>
       </trans-unit>
       <trans-unit id="stats.userActiveTotal">
         <source>stats.userActiveTotal</source>
-        <target state="translated">Tüm aktif kullanıcılar</target>
+        <target state="translated">Şimdiye kadarki etkin kullanıcılar</target>
       </trans-unit>
       <trans-unit id="stats.activeRecordings">
         <source>stats.activeRecordings</source>
-        <target state="translated">Aktif kayıtlar</target>
+        <target state="translated">Etkin kayıtlar</target>
       </trans-unit>
       <trans-unit id="stats.userTotal">
         <source>stats.userTotal</source>
@@ -711,11 +711,11 @@
       </trans-unit>
       <trans-unit id="stats.percentUsed">
         <source>stats.percentUsed</source>
-        <target state="translated">%%percent% kullanıldı</target>
+        <target state="translated">%percent%% kullanıldı</target>
       </trans-unit>
       <trans-unit id="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
-        <target state="translated">%%percent% kullanıldı (%left% hala açık)</target>
+        <target state="translated">%percent%% kullanıldı (%left% hala açık)</target>
       </trans-unit>
       <!--
               Invoice
@@ -888,7 +888,7 @@
             -->
       <trans-unit id="active.entries">
         <source>active.entries</source>
-        <target state="translated">Aktif zaman ölçümleriniz</target>
+        <target state="translated">Etkin zaman ölçümleriniz</target>
       </trans-unit>
       <trans-unit id="timesheet.all">
         <source>timesheet.all</source>
@@ -935,7 +935,7 @@
       </trans-unit>
       <trans-unit id="entryState.running">
         <source>entryState.running</source>
-        <target state="translated">Aktif</target>
+        <target state="translated">Etkin</target>
       </trans-unit>
       <trans-unit id="entryState.stopped">
         <source>entryState.stopped</source>
@@ -1051,7 +1051,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Mesajınızı yazın...</target>
+        <target>Mesajınızı yazın…</target>
       </trans-unit>
       <trans-unit id="label.recalculate_rates">
         <source>label.recalculate_rates</source>
@@ -1120,6 +1120,102 @@
       <trans-unit id="theme.update_browser_title">
         <source>theme.update_browser_title</source>
         <target>Tarayıcı başlığını güncelle</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Bütçesiz kayıtları göster</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Rezervasyonsuz kayıtları göster</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Vergi oranı</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Dosya</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Faturalandırılmadı</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Dışa aktarılmadı</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Sıralama ölçütü</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Azalan</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Artan</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Ayarı sık kullanılan arama olarak kaydet</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Arama terimi</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>%rows% satırın ön izlemesi atlandı …</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Ödeme tarihi</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Tümünü kaydet</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Sık kullanılan aramayı sil</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Son kayıt</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>O zamandan beri rezervasyon yok</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Bir kaydı silmek istiyorsanız, onu düğmeye sürüklemelisiniz.</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Bu mali yılın etkin kullanıcıları</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Bu mali yılın geliri</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Bu mali yılın çalışma saatleri</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Mali yıl</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Parolanızı sıfırlamak için tıklamanız gereken bağlantı içeren bir e-posta gönderildi. Not: %tokenLifetime% saat içinde yalnızca bir kez yeni bir parola talep edebilirsiniz. E-posta almazsanız, spam klasörünüze bakın veya tekrar deneyin.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>%email% adresine, hesabınızı etkinleştirmek için tıklamanız gereken etkinleştirme bağlantısı içeren bir e-posta gönderildi.</target>
       </trans-unit>
     </body>
   </file>

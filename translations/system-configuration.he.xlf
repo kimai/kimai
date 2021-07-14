@@ -73,10 +73,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>כמות מותרת לרשומות זמן פעילות במקביל</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>מספר רשומות זמן פעילות במקביל להצגת אזהרה</target>
-      </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target>מספר תווים מינימלי כדי להתחיל השלמה אוטומטית</target>
@@ -111,19 +107,19 @@
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>מיתוג</target>
+        <target>החברה שלי</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>לוגו (לינק לתמונה, מחליף את שם החברה בדף הכניסה)</target>
+        <target>כתובת לוגו (מחליף את שם החברה בדף הכניסה)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>חברה</target>
+        <target>שם החברה</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
-        <target>מיני לוגו (תפריט צידי ממוזער)</target>
+        <target>לוגו מוקטן (תפריט צידי ממוזער)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.title">
         <source>label.theme.branding.title</source>
@@ -228,6 +224,90 @@
       <trans-unit id="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>לאפשר רשומות בזמנים חופפים</target>
+      </trans-unit>
+      <trans-unit id="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>צבעים מותרים</target>
+      </trans-unit>
+      <trans-unit id="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>הגבלת בחירות צבע</target>
+      </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>כבוי</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>להשתמש בערכים המוגדרים של כלל העיגול</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>בחירת דקות מזמן עד זמן</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>בחירת שניות למשך זמן</target>
+      </trans-unit>
+      <trans-unit id="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>שנה פיננסית</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>לאפשר הזמנה מעבר לתקציב המאוחסן</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target>משך הזמן המרבי לרשומה בגיליון השעות בטרם דחיית השמירה (0 = השבתה)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target>משך הזמן המרבי לרשומת גיליון שעות בדקות לפני שתופיע „אזהרת הפסקה” (0 = השבתה)</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target>סיסמה שנשכחה - שניות לפני תפוגת תוקף קישור האיפוס</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target>סיסמה שנשכחה - שניות לפני שמשתמש יכול לבקש את ההודעה הבאה בדוא״ל</target>
+      </trans-unit>
+      <trans-unit id="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>רשימה מופרדת בפסיקים של קודים של צבעים ב־HTML. את שמות הצבעים ניתן להגדיר בשם לפני קוד הצבע עם המפריד |, למשל: לבן|‎#ffffff,שחור|#00000.</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target>אזור זמן (אם לא צוין, יוגדר אזור הזמן של כל משתמש באופן פרטני עבורו)</target>
+      </trans-unit>
+      <trans-unit id="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target>כניסה עם SAML</target>
+      </trans-unit>
+      <trans-unit id="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target>כניסה דרך LDAP</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target>שכחתי סיסמה</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target>רישום משתמשים</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target>טופס כניסה</target>
+      </trans-unit>
+      <trans-unit id="authentication">
+        <source>authentication</source>
+        <target>אימות</target>
+      </trans-unit>
+      <trans-unit id="lockdown_period">
+        <source>lockdown_period</source>
+        <target>משך נעילה</target>
       </trans-unit>
     </body>
   </file>

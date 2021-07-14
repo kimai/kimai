@@ -9,8 +9,31 @@
 
 namespace App\Tests\Security;
 
-use FOS\UserBundle\Model\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class TestUserEntity extends User
+class TestUserEntity implements UserInterface
 {
+    public function getRoles()
+    {
+        return [];
+    }
+
+    public function getPassword()
+    {
+        return null;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return 'foo';
+    }
+
+    public function eraseCredentials()
+    {
+    }
 }

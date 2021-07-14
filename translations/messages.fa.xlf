@@ -1,0 +1,436 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fa" datatype="plaintext" original="messages.en.xlf">
+    <body>
+      <!--
+              Global template keys
+            -->
+      <trans-unit id="time_tracking">
+        <source>time_tracking</source>
+        <target>رهگیری زمان</target>
+      </trans-unit>
+      <trans-unit id="yes">
+        <source>yes</source>
+        <target>بله</target>
+      </trans-unit>
+      <trans-unit id="no">
+        <source>no</source>
+        <target>خیر</target>
+      </trans-unit>
+      <trans-unit id="both">
+        <source>both</source>
+        <target>هر دو</target>
+      </trans-unit>
+      <trans-unit id="This is a mandatory field">
+        <source>This is a mandatory field</source>
+        <target>اجباری</target>
+      </trans-unit>
+      <trans-unit id="create">
+        <source>create</source>
+        <target>ساختن</target>
+      </trans-unit>
+      <trans-unit id="confirm.delete">
+        <source>confirm.delete</source>
+        <target>شما قطعا قصد دارید این را حذف کنید؟</target>
+      </trans-unit>
+      <trans-unit id="admin_entity.delete_confirm">
+        <source>admin_entity.delete_confirm</source>
+        <target>این داده به خوبی پاک خواهد شد! متناوبا، از سوی دیگر شما میتوانید یک ورودی را انتخاب نمایید که تمام داده ها به آن ترجمه شوند:</target>
+      </trans-unit>
+      <trans-unit id="delete.not_in_use">
+        <source>delete.not_in_use</source>
+        <target>این آیتم به صورت امن می تواند حذف شود.</target>
+      </trans-unit>
+      <trans-unit id="cancel">
+        <source>cancel</source>
+        <target>لغو</target>
+      </trans-unit>
+      <trans-unit id="confirm">
+        <source>confirm</source>
+        <target>تایید</target>
+      </trans-unit>
+      <trans-unit id="upload">
+        <source>upload</source>
+        <target>بارگزاری</target>
+      </trans-unit>
+      <trans-unit id="search">
+        <source>search</source>
+        <target>جستجو</target>
+      </trans-unit>
+      <trans-unit id="my.profile">
+        <source>my.profile</source>
+        <target>پروفایل من</target>
+      </trans-unit>
+      <trans-unit id="update_multiple">
+        <source>update_multiple</source>
+        <target state="translated">%action% %count% ورودی ها؟</target>
+      </trans-unit>
+      <trans-unit id="attachments">
+        <source>attachments</source>
+        <target>فایل ها</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>فایل</target>
+      </trans-unit>
+      <trans-unit id="rates.empty">
+        <source>rates.empty</source>
+        <target>فایلی هنوز تنظیم نشده است.</target>
+      </trans-unit>
+      <trans-unit id="rates.title">
+        <source>rates.title</source>
+        <target>هزینه ها</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>جمع</target>
+      </trans-unit>
+      <!--
+              Login / Security
+            -->
+      <trans-unit id="label.password">
+        <source>label.password</source>
+        <target>رمز عبور</target>
+      </trans-unit>
+      <trans-unit id="label.password_repeat">
+        <source>label.password_repeat</source>
+        <target>تکرار رمز عبور</target>
+      </trans-unit>
+      <trans-unit id="label.logout">
+        <source>label.logout</source>
+        <target>خروج</target>
+      </trans-unit>
+      <trans-unit id="label.user_profile">
+        <source>label.user_profile</source>
+        <target>پروفایل من</target>
+      </trans-unit>
+      <trans-unit id="label.api_token">
+        <source>label.api_token</source>
+        <target>پسورد API</target>
+      </trans-unit>
+      <trans-unit id="label.api_token_repeat">
+        <source>label.api_token_repeat</source>
+        <target>ریست پسورد API</target>
+      </trans-unit>
+      <trans-unit id="login_required">
+        <source>login_required</source>
+        <target>مجوز را گم کرده. به صفحه ورود انتقال دهد؟</target>
+      </trans-unit>
+      <!--
+              Menu / Navbar items
+            -->
+      <trans-unit id="menu.homepage">
+        <source>menu.homepage</source>
+        <target>داشبرد</target>
+      </trans-unit>
+      <trans-unit id="menu.admin">
+        <source>menu.admin</source>
+        <target>مدیریت</target>
+      </trans-unit>
+      <trans-unit id="menu.system">
+        <source>menu.system</source>
+        <target>سیستم</target>
+      </trans-unit>
+      <trans-unit id="menu.logout">
+        <source>menu.logout</source>
+        <target>خروج</target>
+      </trans-unit>
+      <trans-unit id="timesheet.title">
+        <source>timesheet.title</source>
+        <target>زمان های من</target>
+      </trans-unit>
+      <trans-unit id="label.plus_more">
+        <source>label.plus_more</source>
+        <target>+%count% بیشتر</target>
+      </trans-unit>
+      <trans-unit id="label.progress">
+        <source>label.progress</source>
+        <target>پیشرفت</target>
+      </trans-unit>
+      <trans-unit id="label.my_team_projects">
+        <source>label.my_team_projects</source>
+        <target>پروژه های تیمی &amp; بودجه</target>
+      </trans-unit>
+      <trans-unit id="label.my_teams">
+        <source>label.my_teams</source>
+        <target>تیم های من</target>
+      </trans-unit>
+      <trans-unit id="label.toggle_dropdown">
+        <source>label.toggle_dropdown</source>
+        <target>نمایش منو</target>
+      </trans-unit>
+      <trans-unit id="more.info.link">
+        <source>more.info.link</source>
+        <target>اطلاعات بیشتر</target>
+      </trans-unit>
+      <trans-unit id="dashboard.all">
+        <source>dashboard.all</source>
+        <target>تمام کاربران</target>
+      </trans-unit>
+      <trans-unit id="dashboard.subtitle">
+        <source>dashboard.subtitle</source>
+        <target>خوش آمدی!</target>
+      </trans-unit>
+      <trans-unit id="dashboard.title">
+        <source>dashboard.title</source>
+        <target>داشبورد</target>
+      </trans-unit>
+      <trans-unit id="action.close">
+        <source>action.close</source>
+        <target>بستن</target>
+      </trans-unit>
+      <trans-unit id="action.back">
+        <source>action.back</source>
+        <target>بازگشت</target>
+      </trans-unit>
+      <trans-unit id="action.reset">
+        <source>action.reset</source>
+        <target>تنظیم مجدد</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>ذخیره همه</target>
+      </trans-unit>
+      <trans-unit id="action.save">
+        <source>action.save</source>
+        <target>ذخیره</target>
+      </trans-unit>
+      <trans-unit id="action.delete">
+        <source>action.delete</source>
+        <target>حذف</target>
+      </trans-unit>
+      <trans-unit id="action.edit">
+        <source>action.edit</source>
+        <target>ویرایش</target>
+      </trans-unit>
+      <trans-unit id="label.actions">
+        <source>label.actions</source>
+        <target>فعالیت</target>
+      </trans-unit>
+      <trans-unit id="label.billable">
+        <source>label.billable</source>
+        <target>قابل پرداخت</target>
+      </trans-unit>
+      <trans-unit id="placeholder.type_message">
+        <source>placeholder.type_message</source>
+        <target>پیام خود را تایپ کنید …</target>
+      </trans-unit>
+      <trans-unit id="label.create_more">
+        <source>label.create_more</source>
+        <target>ورودی های بیشتری ایجاد کنید</target>
+      </trans-unit>
+      <trans-unit id="label.team">
+        <source>label.team</source>
+        <target>تیم</target>
+      </trans-unit>
+      <trans-unit id="label.email">
+        <source>label.email</source>
+        <target>ایمیل</target>
+      </trans-unit>
+      <trans-unit id="label.customer">
+        <source>label.customer</source>
+        <target>مشتری</target>
+      </trans-unit>
+      <trans-unit id="label.language">
+        <source>label.language</source>
+        <target>زبان</target>
+      </trans-unit>
+      <trans-unit id="label.recalculate_rates">
+        <source>label.recalculate_rates</source>
+        <target>محاسبه مجدد نرخ ها</target>
+      </trans-unit>
+      <trans-unit id="help.rate_internal">
+        <source>help.rate_internal</source>
+        <target>هزینه های داخلی (اگر این مشخص نشده باشد ، از نرخ طبیعی استفاده می شود)</target>
+      </trans-unit>
+      <trans-unit id="label.rate_internal">
+        <source>label.rate_internal</source>
+        <target>نرخ داخلی</target>
+      </trans-unit>
+      <trans-unit id="help.rate">
+        <source>help.rate</source>
+        <target>نرخ ساعتی شارژ می شود</target>
+      </trans-unit>
+      <trans-unit id="label.rate">
+        <source>label.rate</source>
+        <target>نرخ</target>
+      </trans-unit>
+      <trans-unit id="label.hours">
+        <source>label.hours</source>
+        <target>ساعت ها</target>
+      </trans-unit>
+      <trans-unit id="label.theme.layout">
+        <source>label.theme.layout</source>
+        <target>نمایش: طرح بندی</target>
+      </trans-unit>
+      <trans-unit id="label.skin">
+        <source>label.skin</source>
+        <target>نمایش: رنگها</target>
+      </trans-unit>
+      <trans-unit id="label.hourly_rate">
+        <source>label.hourly_rate</source>
+        <target>نرخ ساعتی</target>
+      </trans-unit>
+      <trans-unit id="label.hourlyRate">
+        <source>label.hourlyRate</source>
+        <target>نرخ ساعتی</target>
+      </trans-unit>
+      <trans-unit id="label.tags">
+        <source>label.tags</source>
+        <target>برچسب ها</target>
+      </trans-unit>
+      <trans-unit id="label.tag">
+        <source>label.tag</source>
+        <target>برچسب ها</target>
+      </trans-unit>
+      <trans-unit id="label.project">
+        <source>label.project</source>
+        <target>پروژه</target>
+      </trans-unit>
+      <trans-unit id="label.activity">
+        <source>label.activity</source>
+        <target>فعالیت</target>
+      </trans-unit>
+      <trans-unit id="label.timeBudget">
+        <source>label.timeBudget</source>
+        <target>بودجه زمان</target>
+      </trans-unit>
+      <trans-unit id="label.budget">
+        <source>label.budget</source>
+        <target>بودجه</target>
+      </trans-unit>
+      <trans-unit id="label.visible">
+        <source>label.visible</source>
+        <target>قابل مشاهده</target>
+      </trans-unit>
+      <trans-unit id="label.id">
+        <source>label.id</source>
+        <target>شناسه</target>
+      </trans-unit>
+      <trans-unit id="label.comment">
+        <source>label.comment</source>
+        <target>دیدگاه</target>
+      </trans-unit>
+      <trans-unit id="label.name">
+        <source>label.name</source>
+        <target>نام</target>
+      </trans-unit>
+      <trans-unit id="label.description">
+        <source>label.description</source>
+        <target>توضیحات</target>
+      </trans-unit>
+      <trans-unit id="label.username">
+        <source>label.username</source>
+        <target>کاربر</target>
+      </trans-unit>
+      <trans-unit id="label.user">
+        <source>label.user</source>
+        <target>کاربر</target>
+      </trans-unit>
+      <trans-unit id="label.duration">
+        <source>label.duration</source>
+        <target>مدت زمان</target>
+      </trans-unit>
+      <trans-unit id="label.endtime">
+        <source>label.endtime</source>
+        <target>پایان</target>
+      </trans-unit>
+      <trans-unit id="label.starttime">
+        <source>label.starttime</source>
+        <target>شروع</target>
+      </trans-unit>
+      <trans-unit id="label.date">
+        <source>label.date</source>
+        <target>روز</target>
+      </trans-unit>
+      <trans-unit id="error.no_comments_found">
+        <source>error.no_comments_found</source>
+        <target>هنوز نظری ارسال نشده است.</target>
+      </trans-unit>
+      <trans-unit id="error.no_entries_found">
+        <source>error.no_entries_found</source>
+        <target>هیچ ورودی بر اساس فیلترهای انتخابی شما پیدا نشد.</target>
+      </trans-unit>
+      <trans-unit id="menu.doctor">
+        <source>menu.doctor</source>
+        <target>دکتر</target>
+      </trans-unit>
+      <trans-unit id="menu.tags">
+        <source>menu.tags</source>
+        <target>برچسب ها</target>
+      </trans-unit>
+      <trans-unit id="menu.system_configuration">
+        <source>menu.system_configuration</source>
+        <target>تنظیمات</target>
+      </trans-unit>
+      <trans-unit id="menu.plugin">
+        <source>menu.plugin</source>
+        <target>پلاگین ها</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_team">
+        <source>menu.admin_team</source>
+        <target>تیم ها</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_user">
+        <source>menu.admin_user</source>
+        <target>کاربران</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_activity">
+        <source>menu.admin_activity</source>
+        <target>فعالیت ها</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_project">
+        <source>menu.admin_project</source>
+        <target>پروژه ها</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_customer">
+        <source>menu.admin_customer</source>
+        <target>مشتریان</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_timesheet">
+        <source>menu.admin_timesheet</source>
+        <target>برنامه های زمانی</target>
+      </trans-unit>
+      <trans-unit id="menu.reporting">
+        <source>menu.reporting</source>
+        <target>گزارش نویسی</target>
+      </trans-unit>
+      <trans-unit id="menu.export">
+        <source>menu.export</source>
+        <target>خروجی گرفتن</target>
+      </trans-unit>
+      <trans-unit id="menu.invoice">
+        <source>menu.invoice</source>
+        <target>فاکتورها</target>
+      </trans-unit>
+      <trans-unit id="menu.timesheet">
+        <source>menu.timesheet</source>
+        <target>زمان من</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>فرم تغییر کرده است. برای ذخیره تغییرات ، لطفاً روی "ذخیره" یا برای لغو روی "بستن" کلیک کنید.</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>سفارش توسط</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>نزولی</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>صعودی</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>ذخیره به عنوان تنظیمات پیش فرض</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>عبارت جستجو</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -9,12 +9,15 @@
 
 namespace App\Tests\Export;
 
+use App\Export\ExportRepositoryInterface;
 use App\Export\Renderer\HtmlRenderer;
 use App\Export\ServiceExport;
 use App\Export\Timesheet\HtmlRenderer as HtmlExporter;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectStatisticService;
+use App\Repository\Query\ExportQuery;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
 
 /**
@@ -22,9 +25,16 @@ use Twig\Environment;
  */
 class ServiceExportTest extends TestCase
 {
+    private function createSut(): ServiceExport
+    {
+        $sut = new ServiceExport($this->createMock(EventDispatcherInterface::class));
+
+        return $sut;
+    }
+
     public function testEmptyObject()
     {
-        $sut = new ServiceExport();
+        $sut = $this->createSut();
 
         self::assertEmpty($sut->getRenderer());
         self::assertNull($sut->getRendererById('default'));
@@ -35,9 +45,9 @@ class ServiceExportTest extends TestCase
 
     public function testAddRenderer()
     {
-        $sut = new ServiceExport();
+        $sut = $this->createSut();
 
-        $renderer = new HtmlRenderer($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectRepository::class));
+        $renderer = new HtmlRenderer($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectStatisticService::class));
         $sut->addRenderer($renderer);
 
         self::assertEquals(1, \count($sut->getRenderer()));
@@ -46,12 +56,26 @@ class ServiceExportTest extends TestCase
 
     public function testAddTimesheetExporter()
     {
-        $sut = new ServiceExport();
+        $sut = $this->createSut();
 
-        $exporter = new HtmlExporter($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectRepository::class));
+        $exporter = new HtmlExporter($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectStatisticService::class));
         $sut->addTimesheetExporter($exporter);
 
         self::assertEquals(1, \count($sut->getTimesheetExporter()));
         self::assertSame($exporter, $sut->getTimesheetExporterById('print'));
+    }
+
+    public function testAddExportRepository()
+    {
+        $sut = $this->createSut();
+
+        $repository = $this->createMock(ExportRepositoryInterface::class);
+        $repository->expects($this->once())->method('getExportItemsForQuery')->willReturn([]);
+        $sut->addExportRepository($repository);
+
+        $query = new ExportQuery();
+        $items = $sut->getExportItems($query);
+
+        self::assertEquals([], $items);
     }
 }

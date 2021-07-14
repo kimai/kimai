@@ -67,6 +67,7 @@ class ProjectType extends AbstractType
             'activity_select' => 'activity',
             'activity_visibility' => ActivityQuery::SHOW_VISIBLE,
             'ignore_date' => false,
+            'join_customer' => false,
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {
@@ -77,6 +78,9 @@ class ProjectType extends AbstractType
                 }
                 if (true === $options['ignore_date']) {
                     $query->setIgnoreDate(true);
+                }
+                if (true === $options['join_customer']) {
+                    $query->setWithCustomer(true);
                 }
 
                 return $repo->getQueryBuilderForFormType($query);

@@ -14,6 +14,26 @@
         <source>report_monthly_users</source>
         <target>Tüm kullanıcılar için aylık görünüm</target>
       </trans-unit>
+      <trans-unit id="report_project_view">
+        <source>report_project_view</source>
+        <target>Projeye genel bakış</target>
+      </trans-unit>
+      <trans-unit id="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>İlk rapor</target>
+      </trans-unit>
+      <trans-unit id="report_inactive_project">
+        <source>report_inactive_project</source>
+        <target>Etkin olmayan projeler</target>
+      </trans-unit>
+      <trans-unit id="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target>Tüm kullanıcılar için haftalık görünüm</target>
+      </trans-unit>
+      <trans-unit id="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>Tüm kullanıcılar için yıllık görünüm</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

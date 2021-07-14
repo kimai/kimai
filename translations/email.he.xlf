@@ -27,7 +27,7 @@
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>נרשמת למערכת דיווח השעות עם כתובת הדוא״ל: %email%. עליך להפעיל את החשבון בשעות הקרובות לפני שיפוג תוקף הקישור.</target>
+        <target>נרשמת למערכת דיווח השעות עם כתובת הדוא״ל %email%. נא להפעיל את החשבון בשעות הקרובות לפני שיפוג תוקף הקישור.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target>זה עלול לקרות ...</target>
+        <target>זה עלול לקרות …</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>

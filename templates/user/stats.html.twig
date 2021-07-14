@@ -1,5 +1,6 @@
 {% extends 'user/layout.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/charts.html.twig" as charts %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -25,102 +26,26 @@
         {{ widgets.nothing_found() }}
     {% endif %}
 
-    <script type="text/javascript">
-        function userProfileChartOptions() {
-            return {
-                maintainAspectRatio: true,
-                responsive: true,
-                legend: false,
-                barPercentage: 0.5,
-                categoryPercentage: 0.9,
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display: false
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        },
-                        gridLines: {
-                            display: true,
-                            color: '{{ kimai_context.chart.grid_color }}',
-                            lineWidth: 1
-                        }
-                    }]
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            return data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                        }
-                    }
-                }
-                {%- if user.enabled and is_granted('view_reporting') and (app.user.id == user.id or is_granted('view_other_timesheet')) -%}
-                ,
-                onClick: function(event, elements) {
-                    var element = elements[0];
-                    var month = this.data.datasets[0].monthData[element._index];
-                    var formattedMonth = moment(month).format('{{ stat_date_format }}');
-                    document.location = '{{ path('report_user_month', {'user': user.id, 'date': 'XXXXX'})|raw }}'.replace('XXXXX', formattedMonth);
-                }
-            {% endif %}
-            };
-        }
-    </script>
+    {% set monthRoute = null %}
+    {%- if user.enabled and is_granted('view_reporting') and (app.user.id == user.id or is_granted('view_other_timesheet')) -%}
+        {% set monthRoute = path('report_user_month', {'user': user.id, 'date': '__MONTH__'}) %}
+    {% endif %}
 
-    {% for year,yearStat in years %}
+    {{ charts.bar_javascript({'footer': 'footer', 'label': 'tooltip', 'onclick': {'url': monthRoute, 'replacer': {'__MONTH__': 'month'}}}) }}
 
+    {% for yearStat in years %}
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-            {% block box_title %}{{ year }}{% endblock %}
+            {% import "macros/charts.html.twig" as charts %}
+            {% block box_title %}{{ yearStat.year }}{% endblock %}
             {% block box_body %}
-                <div class="chart">
-                    <canvas id="userProfileChart{{ year }}" style="height: {{ kimai_context.chart.height }}px;"></canvas>
-                </div>
-                <script type="text/javascript">
-                    document.addEventListener('kimai.initialized', function() {
-                        var userProfileChartData{{ year }} = {
-                            labels: moment.months(),
-                            datasets: [
-                                {
-                                    label: '{{ year }}',
-                                    backgroundColor: '{{ kimai_context.chart.background_color }}',
-                                    borderColor: '{{ kimai_context.chart.border_color }}',
-                                    data: [
-                                        {% for month in yearStat.months %}
-                                        {{ (month.totalDuration / 3600)|number_format(2, '.', '') }}
-                                        {% if not loop.last %},{% endif %}
-                                        {% endfor %}
-                                    ],
-                                    realData: [
-                                        {% for month in yearStat.months %}
-                                        '{{ month.totalDuration|duration }}'
-                                        {% if not loop.last %},{% endif %}
-                                        {% endfor %}
-                                    ],
-                                    monthData: [
-                                        {% for month in yearStat.months %}
-                                        '{{ yearStat.year }}-{{ month.month|length == 1 ? '0'~ month.month : month.month }}-01'
-                                        {% if not loop.last %},{% endif %}
-                                        {% endfor %}
-                                    ],
-                                }
-                            ]
-                        };
-
-                        var userProfileChart{{ year }} = new Chart(
-                            $("#userProfileChart{{ year }}").get(0).getContext("2d"), {
-                                type: 'bar',
-                                data: userProfileChartData{{ year }},
-                                options: userProfileChartOptions()
-                            }
-                        );
-                    });
-                </script>
+                {% set dataset = [] %}
+                {% for month in yearStat.months %}
+                    {% set monthDate = create_date(yearStat.year ~ '-' ~ month.month ~ '-01') %}
+                    {% set dataset = dataset|merge([{'value': month.duration|chart_duration, 'tooltip': month.duration|duration, 'footer': ('label.billable'|trans ~ ': ' ~ month.billableDuration|duration), 'month': monthDate|date_short}]) %}
+                {% endfor %}
+                {{ charts.bar_chart('userProfileChart'~yearStat.year, month_names(), [dataset], {}) }}
             {% endblock %}
         {% endembed %}
-
     {% endfor %}
 
     {% if user.teams is not empty and (is_granted('teams', user) or (app.user == user and is_granted('view_team_member'))) %}
@@ -152,6 +77,10 @@
             <span data-toggle="tooltip" title="{{ 'label.id'|trans }}: {{ user.id }}">{{ 'profile.about_me'|trans }}</span>
         {% endblock %}
         {% block box_body %}
+            <p>
+                <strong>{{ 'label.username'|trans }}</strong><br>
+                {{ user.username }}
+            </p>
             <p>
                 <strong>{{ 'profile.first_entry'|trans }}</strong><br>
                 {# FIXME use a configuration for it #}
@@ -215,7 +144,7 @@
     {% import "@AdminLTE/Macros/default.html.twig" as macro %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    {% set color = kimai_context.chart.background_color %}
+    {% set color = config('theme.chart.background_color') %}
     {% set event = trigger('user.profile_background', {'color': color, 'font': color|font_contrast, 'user': user, 'image': null}) %}
     {% set config = event.payload %}
 

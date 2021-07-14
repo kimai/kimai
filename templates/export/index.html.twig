@@ -11,7 +11,7 @@
     'description': {'class': 'hidden-xs hidden-sm hidden-md timesheet-description', 'orderBy': false},
     'unit_price': {'class': 'hidden hidden-xs text-nowrap', 'orderBy': false},
     'duration': {'class': 'text-nowrap', 'orderBy': false},
-    'rate_internal': {'class': 'hidden-xs text-nowrap', 'orderBy': false},
+    'rate_internal': {'class': 'hidden text-nowrap', 'orderBy': false},
     'total_rate': {'class': 'text-nowrap', 'orderBy': false},
     'exported': {'class': 'alwaysVisible', 'orderBy': false},
 } %}
@@ -32,6 +32,7 @@
 {% block main %}
 
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/search.html.twig" as search %}
         {% form_theme form '@AdminLTE/layout/form-theme-horizontal.html.twig' %}
         {% block box_title %}{{ 'export.filter'|trans }}{% endblock %}
         {% block box_before %}{{ form_start(form) }}{% endblock %}
@@ -46,73 +47,117 @@
             {% if form.users is defined %}
                 {{ form_row(form.users) }}
             {% endif %}
+            {{ form_row(form.billable) }}
             {{ form_row(form.exported) }}
             {{ form_row(form.state) }}
             {{ form_row(form.markAsExported) }}
         {% endblock %}
         {% block box_footer%}
-            {% set buttons = {} %}
-            {% for button in renderer %}
-                {% set title = button.title %}
-                {% set group = [] %}
-                {% if buttons[(title)] is defined %}
-                    {% set group = buttons[(title)] %}
-                {% endif %}
-                {% set group = group|merge([button]) %}
-                {% set buttons = buttons|merge({(title): group}) %}
-            {% endfor %}
-            <div class="btn-group" id="export-buttons" role="group">
-                {% for group in buttons %}
-                    {% set button = group.0 %}
-                    {% if group|length == 1 %}
-                        <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
-                            {{ ('button.' ~ button.title)|trans }}
-                        </button>
-                    {% elseif group|length > 1 %}
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ ('button.' ~ button.title)|trans }} <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                            {% for button in group %}
-                                <li><a href="#" class="startExportBtn" data-type="{{ button.id }}">{{ (button.id)|trans({}, 'export') }}</a></li>
-                            {% endfor %}
-                            </ul>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            {{ form_widget(form.preview) }}
+            {{ search.searchButton(form) }}
         {% endblock %}
         {% block box_after %}{{ form_end(form) }}{% endblock %}
     {% endembed %}
 
-    {% if preview_show %}
+    {% if too_many is same as (true) %}
+        {{ widgets.callout('danger', 'error.too_many_entries') }}
+    {% elseif preview_show %}
         {% if entries is empty %}
             {{ widgets.nothing_found() }}
         {% else %}
+            {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+                {% import "macros/widgets.html.twig" as widgets %}
+                {% block box_title %}
+                    {{ 'button.preview'|trans }}: {{ 'export.title'|trans }}
+                {% endblock %}
+                {% block box_body_class %}no-padding{% endblock %}
+                {% block box_footer %}
+                    {% set buttons = {} %}
+                    {% for button in renderer %}
+                        {% set title = button.title %}
+                        {% set group = [] %}
+                        {% if buttons[(title)] is defined %}
+                            {% set group = buttons[(title)] %}
+                        {% endif %}
+                        {% set group = group|merge([button]) %}
+                        {% set buttons = buttons|merge({(title): group}) %}
+                    {% endfor %}
+                    <div class="btn-group" id="export-buttons" role="group">
+                        {% for group in buttons %}
+                            {% set button = group.0 %}
+                            {% if group|length == 1 %}
+                                <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
+                                    {{ ('button.' ~ button.title)|trans }}
+                                </button>
+                            {% elseif group|length > 1 %}
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{ ('button.' ~ button.title)|trans }} <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        {% for button in group %}
+                                            <li><a href="#" class="startExportBtn" data-type="{{ button.id }}">{{ (button.id)|trans({}, 'export') }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endblock %}
+                {% block box_body %}
+                    <table class="table table-hover dataTable">
+                        <thead>
+                        <tr>
+                            <th>{{ 'label.customer'|trans }}</th>
+                            <th class="w-min text-center hidden-xs">{{ 'label.duration'|trans }}</th>
+                            {# <th class="w-min text-right hidden-xs">{{ 'label.internalRate'|trans }}</th> #}
+                            <th class="w-min text-right">{{ 'label.total_rate'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for row in by_customer %}
+                            {% set currency = row.customer.currency %}
+                            <tr>
+                                <td>
+                                    {{ widgets.label_customer(row.customer) }}
+                                </td>
+                                <td class="w-min text-center hidden-xs">
+                                    {{ row.duration|duration(decimal) }}
+                                </td>
+                                {#
+                                <td class="w-min text-right hidden-xs">
+                                    {{ row.internalRate|money(currency) }}
+                                </td>
+                                #}
+                                <td class="w-min text-right">
+                                    {{ row.rate|money(currency) }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endblock %}
+            {% endembed %}
+
+            {% set itemsAmount = entries|length %}
+            {% if preview_limit %}
+                {% set entries = entries|slice(0, preview_limit) %}
+            {% endif %}
+
             {{ tables.datatable_header(tableName, columns, query, {}) }}
-            {% set totalAmount = {} %}
-            {% set totalInternalAmount = {} %}
-            {% set totalDuration = 0 %}
             {% for entry in entries %}
                 {% set currency = entry.project.customer.currency %}
-                {% set duration = entry.duration|duration %}
-                {% if totalAmount[currency] is not defined %}
-                    {% set totalAmount = totalAmount|merge({(currency): 0}) %}
-                    {% set totalInternalAmount = totalInternalAmount|merge({(currency): 0}) %}
-                {% endif %}
                 {% if entry.fixedRate is not null %}
                     {% set rate = entry.fixedRate %}
                 {% else %}
                     {% set rate = entry.hourlyRate %}
                 {% endif %}
-                {% set totalDuration = totalDuration + entry.duration %}
-                {% set totalAmount = totalAmount|merge({(currency): totalAmount[currency] + entry.rate}) %}
-                {% set totalInternalAmount = totalInternalAmount|merge({(currency): totalInternalAmount[currency] + entry.internalRate}) %}
                 <tr>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.label_user(entry.user) }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">
+                        {{ entry.begin|date_short }}
+                    </td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">
+                        {{ widgets.label_user(entry.user) }}
+                    </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                         {{ widgets.label_project(entry.project) }}
                         <br>
@@ -130,7 +175,7 @@
                         {{ rate|money(currency) }}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}" data-duration="{{ entry.duration }}">
-                        {{ duration }}
+                        {{ entry.duration|duration(decimal) }}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'rate_internal') }}">
                         {{ entry.internalRate|money(currency) }}
@@ -161,30 +206,11 @@
                     </td>
                 </tr>
             {% endfor %}
-            <tr>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'date') }}"></th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'user') }}"></th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'project') }}"></th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}"></th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'description') }}"></th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}"></th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}">
-                    {{ totalDuration|duration }}
-                </th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'rate_internal') }}">
-                    {% for currency, amount in totalInternalAmount %}
-                        {{ amount|money(currency) }}
-                        {% if not loop.last %}<br>{% endif %}
-                    {% endfor %}
-                </th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">
-                    {% for currency, amount in totalAmount %}
-                        {{ amount|money(currency) }}
-                        {% if not loop.last %}<br>{% endif %}
-                    {% endfor %}
-                </th>
-                <th class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}"></th>
-            </tr>
+            {% if preview_limit and itemsAmount > preview_limit %}
+                <tr class="warning">
+                    <td colspan="10">&raquo; {{ 'preview.skipped_rows'|trans({'%rows%': (itemsAmount - preview_limit)}) }}</td>
+                </tr>
+            {% endif %}
             {{ tables.data_table_footer(entries) }}
         {% endif %}
     {% endif %}
@@ -201,7 +227,7 @@
             var message = '{{ 'export.clear_all'|trans }}';
             var hasActive = true;
 
-            if (!$('#export-toggle-button').hasClass('export-off')) {
+            if (!jQuery('#export-toggle-button').hasClass('export-off')) {
                 message = '{{ 'export.mark_all'|trans }}';
                 hasActive = false;
             }
@@ -210,8 +236,8 @@
                 if (!value) {
                     return;
                 }
-                var btn = $(button);
-                var exportButtons = $('.exportBtn');
+                var btn = jQuery(button);
+                var exportButtons = jQuery('.exportBtn');
                 // disabling does not yet work...
                 if (exportButtons.length > 0) {
                     btn.addClass('disabled');
@@ -219,8 +245,8 @@
 
                 // ... as the clicks are asynchronous and the each comes back too early ...
                 exportButtons.each(function () {
-                    if (hasActive === $(this).hasClass('active')) {
-                        $(this).click();
+                    if (hasActive === jQuery(this).hasClass('active')) {
+                        jQuery(this).click();
                     }
                 });
 
@@ -254,11 +280,11 @@
                     } else {
                         button.button('clean');
                     }
-                    if ($('select#exported').val() !== '{{ constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') }}') {
+                    if (jQuery('select#exported').val() !== '{{ constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') }}') {
                         button.closest('tr').hide('ease', function() {
-                            $(this).remove();
-                            if($(this).closest('table').find('tbody tr:visible').length === 0) {
-                                $('#export-buttons button').prop('disabled', true);
+                            jQuery(this).remove();
+                            if(jQuery(this).closest('table').find('tbody tr:visible').length === 0) {
+                                jQuery('#export-buttons button').prop('disabled', true);
                             }
                         });
                     }
@@ -286,24 +312,24 @@
         }
 
         document.addEventListener('kimai.initialized', function() {
-            $('body').on('click', '.exportBtn', function() {
-                var button = $(this);
+            jQuery('body').on('click', '.exportBtn', function() {
+                var button = jQuery(this);
                 var id = button.attr('data-timesheet');
                 updateTimesheetExportState(button, id, !button.hasClass('active'));
             });
 
-            $('#export-toggle-button').on('click', function () {
+            jQuery('#export-toggle-button').on('click', function () {
                 confirmToggleState(this);
             });
 
-            $('body').on('click', '#export-buttons .startExportBtn', function() {
-                $('#renderer').val($(this).attr('data-type'));
-                var $form = $("#export-form");
+            jQuery('body').on('click', '#export-buttons .startExportBtn', function() {
+                jQuery('#renderer').val(jQuery(this).attr('data-type'));
+                var $form = jQuery("#export-form");
                 var prevAction = $form.attr('action');
                 var prevMethod = $form.attr('method');
                 $form.attr('target', '_blank').attr('method', 'POST').attr('action', '{{ path('export_data') }}');
                 $form.submit();
-                $('#renderer').val('');
+                jQuery('#renderer').val('');
                 $form.removeAttr('target').attr('action', prevAction).attr('method', prevMethod);
             });
         });

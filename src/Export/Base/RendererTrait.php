@@ -10,7 +10,7 @@
 namespace App\Export\Base;
 
 use App\Export\ExportItemInterface;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
 
 trait RendererTrait
@@ -124,10 +124,10 @@ trait RendererTrait
     /**
      * @param ExportItemInterface[] $exportItems
      * @param TimesheetQuery $query
-     * @param ProjectRepository $projectRepository
+     * @param ProjectStatisticService $projectStatisticService
      * @return array
      */
-    protected function calculateProjectBudget(array $exportItems, TimesheetQuery $query, ProjectRepository $projectRepository)
+    protected function calculateProjectBudget(array $exportItems, TimesheetQuery $query, ProjectStatisticService $projectStatisticService)
     {
         $summary = [];
 
@@ -154,7 +154,7 @@ trait RendererTrait
                 ];
 
                 if (null !== $project && ($project->getTimeBudget() > 0 || $project->getBudget() > 0)) {
-                    $projectStats = $projectRepository->getProjectStatistics($project, null, $query->getEnd());
+                    $projectStats = $projectStatisticService->getProjectStatistics($project, $query->getEnd());
 
                     if ($project->getTimeBudget() > 0) {
                         $summary[$id]['time_left'] = $project->getTimeBudget() - $projectStats->getRecordDuration();

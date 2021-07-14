@@ -34,6 +34,26 @@
         <source>The begin date cannot be in the future.</source>
         <target>A data de início não pode ser no futuro.</target>
       </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>O orçamento foi esgotado. Do %budget% disponível, do que foi %used% tem sido reservado até o momento, há %free% que ainda pode ser utilizado.</target>
+      </trans-unit>
+      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>O máximo de {{ value }} hora(s) permitida(s).</target>
+      </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>O nome de usuário já está em uso.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>O e-mail já está em uso.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>As senhas digitidas não batem.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

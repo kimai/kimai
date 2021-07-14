@@ -17,7 +17,7 @@ use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\ExportItemInterface;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectStatisticService;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -37,9 +37,9 @@ class HtmlRenderer
      */
     protected $dispatcher;
     /**
-     * @var ProjectRepository
+     * @var ProjectStatisticService
      */
-    private $projectRepository;
+    private $projectStatisticService;
     /**
      * @var string
      */
@@ -49,11 +49,11 @@ class HtmlRenderer
      */
     private $template = 'default.html.twig';
 
-    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectRepository $projectRepository)
+    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectStatisticService $projectStatisticService)
     {
         $this->twig = $twig;
         $this->dispatcher = $dispatcher;
-        $this->projectRepository = $projectRepository;
+        $this->projectStatisticService = $projectStatisticService;
     }
 
     /**
@@ -71,9 +71,9 @@ class HtmlRenderer
     {
         $decimal = false;
         if (null !== $query->getCurrentUser()) {
-            $decimal = (bool) $query->getCurrentUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+            $decimal = $query->getCurrentUser()->isExportDecimal();
         } elseif (null !== $query->getUser()) {
-            $decimal = (bool) $query->getUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+            $decimal = $query->getUser()->isExportDecimal();
         }
 
         return ['decimal' => $decimal];
@@ -107,7 +107,7 @@ class HtmlRenderer
             'entries' => $timesheets,
             'query' => $query,
             'summaries' => $summary,
-            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectRepository),
+            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
             // @deprecated since 1.3, will be removed with 2.0
             'metaColumns' => $timesheetMetaFields,
             'timesheetMetaFields' => $timesheetMetaFields,

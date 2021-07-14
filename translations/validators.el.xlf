@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="el" datatype="plaintext" original="validators.en.xlf">
+    <body>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>Ο προϋπολογισμός έχει εξαντληθεί. Από το διαθέσιμο %budget%, έχει χρησιμοποιηθεί το %used% μέχρι στιγμής, το υπολειπόμενο %free% μπορεί να χρησιμοποιηθεί.</target>
+      </trans-unit>
+      <trans-unit id="The given value is not a valid time.">
+        <source>The given value is not a valid time.</source>
+        <target>Η παρεχόμενη τιμή δεν αποτελεί έγκυρη ώρα.</target>
+      </trans-unit>
+      <trans-unit id="You already have an entry for this time.">
+        <source>You already have an entry for this time.</source>
+        <target>Έχετε ήδη μια καταχώριση για αυτήν την ώρα.</target>
+      </trans-unit>
+      <trans-unit id="This period is locked, please choose a later date.">
+        <source>This period is locked, please choose a later date.</source>
+        <target>Αυτή η περίοδος είναι δεσμευμένη, παρακαλούμε επιλέξτε μια μεταγενέστερη ημερομηνία.</target>
+      </trans-unit>
+      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
+        <target>Αυτό το έγγραφο τιμολογίου δεν μπορεί να χρησιμοποιηθεί, παρακαλούμε μετονομάστε το αρχείο και μεταφορτώστε το ξανά.</target>
+      </trans-unit>
+      <trans-unit id="You must select at least one user or team.">
+        <source>You must select at least one user or team.</source>
+        <target>Πρέπει να επιλέξετε τουλάχιστον έναν χρήστη ή ομάδα.</target>
+      </trans-unit>
+      <trans-unit id="The begin date cannot be in the future.">
+        <source>The begin date cannot be in the future.</source>
+        <target>Η ημερομηνία έναρξης δεν γίνεται να είναι σε μέλλοντα χρόνο.</target>
+      </trans-unit>
+      <trans-unit id="End date must not be earlier then start date.">
+        <source>End date must not be earlier then start date.</source>
+        <target>Η ημερομηνία λήξης δεν γίνεται να είναι προγενέστερη από την ημερομηνία έναρξης.</target>
+      </trans-unit>
+      <trans-unit id="This value is not a valid role.">
+        <source>This value is not a valid role.</source>
+        <target>Αυτή η τιμή δεν αποτελεί έγκυρο ρόλο.</target>
+      </trans-unit>
+      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>{{ value }} ώρες το μέγιστο επιτρέπονται.</target>
+      </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>Αυτό το όνομα χρήστη έχει χρησιμοποιηθεί.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>Αυτό το email έχει χρησιμοποιηθεί.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>Τα διαπιστευτήρια που εισάγατε δεν ταυτίζονται.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

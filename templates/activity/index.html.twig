@@ -37,11 +37,13 @@
     {% if entries.count == 0 %}
         {{ widgets.nothing_found('kimai.activityUpdate') }}
     {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.activityUpdate kimai.activityTeamUpdate'}) }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.activityUpdate kimai.activityDelete kimai.activityTeamUpdate'}) }}
 
         {% for entry in entries %}
-            <tr{% if is_granted('view', entry) %} class="alternative-link open-edit" data-href="{{ path('activity_details', {'id': entry.id}) }}"{% endif %}>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_color_dot('activity', true, entry.name, null, entry.color) }}</td>
+            <tr {{ widgets.activity_row_attr(entry, now) }}>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
+                    {{ widgets.label_name(entry.name, entry.color) }}
+                </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                     {# only none-global activities have a project and customer assigned #}
                     {% if entry.project %}
@@ -54,7 +56,7 @@
                         {% endif %}
                     {% endif %}
                 </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment1line }}</td>
                 {% for field in metaColumns %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
                         {{ tables.datatable_meta_column(entry, field) }}

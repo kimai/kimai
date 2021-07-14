@@ -42,15 +42,15 @@ class AnnotatedObjectExporterTest extends TestCase
         $spreadsheet = $sut->export(Project::class, [$project]);
         $worksheet = $spreadsheet->getActiveSheet();
 
-        self::assertNull($worksheet->getCellByColumnAndRow(1, 2, false)->getValue());
-        self::assertEquals('test project', $worksheet->getCellByColumnAndRow(2, 2, false)->getValue());
-        self::assertEquals('A customer', $worksheet->getCellByColumnAndRow(3, 2, false)->getValue());
-        self::assertEquals(1234567890, $worksheet->getCellByColumnAndRow(4, 2, false)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(5, 2, false)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(6, 2, false)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(7, 2, false)->getValue());
-        self::assertEquals('#ababab', $worksheet->getCellByColumnAndRow(8, 2, false)->getValue());
-        self::assertFalse($worksheet->getCellByColumnAndRow(9, 2, false)->getValue());
-        self::assertEquals('Lorem Ipsum', $worksheet->getCellByColumnAndRow(10, 2, false)->getValue());
+        self::assertNull($worksheet->getCellByColumnAndRow(1, 2)->getValue());
+        self::assertEquals('test project', $worksheet->getCellByColumnAndRow(2, 2)->getValue());
+        self::assertEquals('A customer', $worksheet->getCellByColumnAndRow(3, 2)->getValue());
+        self::assertEquals(1234567890, $worksheet->getCellByColumnAndRow(4, 2)->getValue());
+        self::assertEquals('', $worksheet->getCellByColumnAndRow(5, 2)->getValue());
+        self::assertEquals('', $worksheet->getCellByColumnAndRow(6, 2)->getValue());
+        self::assertEquals('', $worksheet->getCellByColumnAndRow(7, 2)->getValue());
+        self::assertEquals('#ababab', $worksheet->getCellByColumnAndRow(8, 2)->getValue());
+        self::assertFalse($worksheet->getCellByColumnAndRow(9, 2)->getValue());
+        self::assertEquals('Lorem Ipsum', $worksheet->getCellByColumnAndRow(10, 2)->getValue());
     }
 }

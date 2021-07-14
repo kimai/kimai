@@ -413,6 +413,26 @@
         <source>You must select at least one user or team.</source>
         <target>עליך לבחור בצוות או משתמש אחד לפחות.</target>
       </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>התקציב נוצל במלואו. מתוך %budget% הזמינים, %used% נוצלו עד כה, עדיין ניתן להשתמש ב־%free%.</target>
+      </trans-unit>
+      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>מותר {{ value }} שעות לכל היותר.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>כתובת הדוא״ל כבר תפוסה.</target>
+      </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>שם המשתמש כבר תפוס.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>הסיסמאות שהוקלדו אינן תואמות.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -62,10 +62,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target state="translated">İzin verilen eşzamanlı zaman kaydı sayısı</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target state="translated">Bir uyarı görüntülenmeden önce çalışan zaman çizelgesi kayıtlarının sayısı</target>
-      </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target state="translated">Otomatik tamamlama için gerekli en az harf adedi</target>
@@ -188,15 +184,15 @@
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>Şirket</target>
+        <target>Şirket adı</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>Logo (Resim URL'si, giriş ekranındaki şirketin yerini alır)</target>
+        <target>Logo URL'si (giriş ekranındaki şirket adının yerini alır)</target>
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>Marka</target>
+        <target>Şirketim</target>
       </trans-unit>
       <trans-unit id="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>
@@ -241,6 +237,74 @@
       <trans-unit id="label.timesheet.duration_increment">
         <source>label.timesheet.duration_increment</source>
         <target>Süre için dakika seçimi</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>Depolanan bütçeler için fazla rezervasyona izin ver</target>
+      </trans-unit>
+      <trans-unit id="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>HTML renk kodlarının virgülle ayrılmış listesi. Renk adları, renk kodunun önüne bir ad ve | sınırlayıcı koyarak ayarlanabilir, örneğin: Beyaz|#ffffff, Siyah|#000000.</target>
+      </trans-unit>
+      <trans-unit id="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>İzin verilen renkler</target>
+      </trans-unit>
+      <trans-unit id="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>Renk seçeneklerini sınırla</target>
+      </trans-unit>
+      <trans-unit id="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>Mali yıl</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target>Kaydetme reddedilmeden önce bir zaman çizelgesi kaydının dakika cinsinden azami süresi (0 = devre dışı)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target>Bir "ara verme uyarısı" görüntülenmeden önce bir zaman çizelgesi kaydının dakika cinsinden azami süresi (0 = devre dışı)</target>
+      </trans-unit>
+      <trans-unit id="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target>SAML ile oturum açma</target>
+      </trans-unit>
+      <trans-unit id="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target>LDAP ile oturum açma</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target>Unutulan parola - sıfırlama bağlantısının süresinin dolması için gereken saniye cinsinden süre</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target>Unutulan parola - kullanıcının bir sonraki e-postayı isteyebilmesi için gereken saniye cinsinden süre</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target>Parolayı unuttum</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target>Kullanıcı kaydı</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target>Oturum açma formu</target>
+      </trans-unit>
+      <trans-unit id="authentication">
+        <source>authentication</source>
+        <target>Kimlik doğrulama</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target>Saat dilimi (boşsa ilgili kullanıcının saat dilimi kullanılır)</target>
+      </trans-unit>
+      <trans-unit id="lockdown_period">
+        <source>lockdown_period</source>
+        <target>Kilitleme dönemi</target>
       </trans-unit>
     </body>
   </file>

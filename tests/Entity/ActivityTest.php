@@ -60,11 +60,11 @@ class ActivityTest extends TestCase
         $this->assertEquals('hello world', $sut->getComment());
 
         self::assertFalse($sut->hasColor());
-        $this->assertInstanceOf(Activity::class, $sut->setColor('#fffccc'));
+        $sut->setColor('#fffccc');
         $this->assertEquals('#fffccc', $sut->getColor());
         self::assertTrue($sut->hasColor());
 
-        $this->assertInstanceOf(Activity::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        $sut->setColor(Constants::DEFAULT_COLOR);
         $this->assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 

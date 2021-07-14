@@ -42,6 +42,14 @@
                 <source>label.theme.tags_create</source>
                 <target>Tags: use auto-complete search and allow tag creation</target>
             </trans-unit>
+            <trans-unit id="label.theme.avatar_url">
+                <source>label.theme.avatar_url</source>
+                <target>Allow the use of URLs for avatar images</target>
+            </trans-unit>
+            <trans-unit id="label.theme.random_colors">
+                <source>label.theme.random_colors</source>
+                <target>Use random colors for objects without assigned color</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.mode">
                 <source>label.timesheet.mode</source>
                 <target>Timetracking mode</target>
@@ -74,6 +82,14 @@
                 <source>label.timesheet.rules.allow_overlapping_records</source>
                 <target>Allow overlapping time entries</target>
             </trans-unit>
+            <trans-unit id="lockdown_period">
+                <source>lockdown_period</source>
+                <target>Lockdown period</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.lockdown_period_timezone">
+                <source>label.timesheet.rules.lockdown_period_timezone</source>
+                <target>Time zone (if empty, time zone of the respective user is used)</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.rules.lockdown_period_start">
                 <source>label.timesheet.rules.lockdown_period_start</source>
                 <target>Lockdown period start (PHP relative date to now)</target>
@@ -89,10 +105,6 @@
             <trans-unit id="label.timesheet.active_entries.hard_limit">
                 <source>label.timesheet.active_entries.hard_limit</source>
                 <target>Permitted number of simultaneously running time entries</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.active_entries.soft_limit">
-                <source>label.timesheet.active_entries.soft_limit</source>
-                <target>Number of running time entries from which a warning is displayed</target>
             </trans-unit>
             <trans-unit id="label.theme.autocomplete_chars">
                 <source>label.theme.autocomplete_chars</source>
@@ -128,15 +140,15 @@
             </trans-unit>
             <trans-unit id="branding">
                 <source>branding</source>
-                <target>Branding</target>
+                <target>My company</target>
             </trans-unit>
             <trans-unit id="label.theme.branding.logo">
                 <source>label.theme.branding.logo</source>
-                <target>Logo (Image URL, replaces the company in login screen)</target>
+                <target>Logo URL (replaces the company name in login screen)</target>
             </trans-unit>
             <trans-unit id="label.theme.branding.company">
                 <source>label.theme.branding.company</source>
-                <target>Company</target>
+                <target>Company name</target>
             </trans-unit>
             <trans-unit id="label.theme.branding.mini">
                 <source>label.theme.branding.mini</source>
@@ -145,6 +157,10 @@
             <trans-unit id="label.theme.branding.title">
                 <source>label.theme.branding.title</source>
                 <target>Browser Title</target>
+            </trans-unit>
+            <trans-unit id="label.company.financial_year">
+                <source>label.company.financial_year</source>
+                <target>Financial year</target>
             </trans-unit>
             <trans-unit id="rounding">
                 <source>rounding</source>
@@ -245,6 +261,62 @@
             <trans-unit id="off">
                 <source>off</source>
                 <target>Off</target>
+            </trans-unit>
+            <trans-unit id="label.theme.colors_limited">
+                <source>label.theme.colors_limited</source>
+                <target>Limit color choices</target>
+            </trans-unit>
+            <trans-unit id="label.theme.color_choices">
+                <source>label.theme.color_choices</source>
+                <target>Allowed colors</target>
+            </trans-unit>
+            <trans-unit id="help.theme.color_choices">
+                <source>help.theme.color_choices</source>
+                <target>Comma separated list of HTML color codes. Color names can be set by prefixing the color code with a name and the | delimiter, eg.: White|#ffffff,Black|#000000.</target>
+            </trans-unit>
+            <trans-unit id="authentication">
+                <source>authentication</source>
+                <target>Authentication</target>
+            </trans-unit>
+            <trans-unit id="label.user_auth_login">
+                <source>label.user_auth_login</source>
+                <target>Login form</target>
+            </trans-unit>
+            <trans-unit id="label.user_auth_registration">
+                <source>label.user_auth_registration</source>
+                <target>User registration</target>
+            </trans-unit>
+            <trans-unit id="label.user_auth_password_reset">
+                <source>label.user_auth_password_reset</source>
+                <target>Forgot password</target>
+            </trans-unit>
+            <trans-unit id="label.user_auth_password_reset_retry_ttl">
+                <source>label.user_auth_password_reset_retry_ttl</source>
+                <target>Forgotten password - seconds before a user can request the next e-mail</target>
+            </trans-unit>
+            <trans-unit id="label.user_auth_password_reset_token_ttl">
+                <source>label.user_auth_password_reset_token_ttl</source>
+                <target>Forgotten password - seconds before a reset link expires</target>
+            </trans-unit>
+            <trans-unit id="label.ldap_activate">
+                <source>label.ldap_activate</source>
+                <target>LDAP login</target>
+            </trans-unit>
+            <trans-unit id="label.saml_activate">
+                <source>label.saml_activate</source>
+                <target>SAML login</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.break_warning_duration">
+                <source>label.timesheet.rules.break_warning_duration</source>
+                <target>Maximum duration of a timesheet record in minutes before a "break warning" will be displayed (0 = deactivated)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.long_running_duration">
+                <source>label.timesheet.rules.long_running_duration</source>
+                <target>Maximum duration of a timesheet record in minutes before saving is rejected (0 = deactivated)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.dragdrop_amount">
+                <source>label.calendar.dragdrop_amount</source>
+                <target>Amount of entries for drag&amp;drop (0 = deactivated)</target>
             </trans-unit>
         </body>
     </file>

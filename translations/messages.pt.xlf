@@ -335,7 +335,7 @@
       </trans-unit>
       <trans-unit id="modal.columns.description">
         <source>modal.columns.description</source>
-        <target>Ao gravar, as colunas desmarcadas serão ocultadas e essa configuração será armazenada em um cookie do navegador. Se você apagar os seus cookies, as configurações serão invertidas.</target>
+        <target>Ao gravar, as colunas desmarcadas serão ocultadas e essa configuração será armazenada num cookie do navegador. Se apagar os seus cookies, as configurações serão invertidas.</target>
       </trans-unit>
       <trans-unit id="label.fixedRate">
         <source>label.fixedRate</source>
@@ -443,7 +443,7 @@
       </trans-unit>
       <trans-unit id="admin_activity.short_stats">
         <source>admin_activity.short_stats</source>
-        <target>Atualmente o %project% para o cliente %customer% tem %activities% atividades e %records% registos de tempo, que contam até um total de %duration%.</target>
+        <target>Atualmente o %project% para o cliente %customer% tem %activity% atividades e %records% registos de tempo, que contam até um total de %duration%.</target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -502,7 +502,7 @@
       </trans-unit>
       <trans-unit id="admin_customer.short_stats">
         <source>admin_customer.short_stats</source>
-        <target>Atualmente o %project% para o cliente %customer% tem %activities% atividades e %records% registos de tempo, que contam até um total de %duration%.</target>
+        <target>Atualmente o %project% para o cliente %customer% tem %activity% atividades e %records% registos de tempo, que contam até um total de %duration%.</target>
       </trans-unit>
       <!--
               Admin: Users
@@ -994,7 +994,7 @@
       </trans-unit>
       <trans-unit id="label.plus_more">
         <source>label.plus_more</source>
-        <target>+%contar%mais</target>
+        <target>+%count%mais</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -1018,7 +1018,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Escreva a sua mensagem...</target>
+        <target>Escreva a sua mensagem…</target>
       </trans-unit>
       <trans-unit id="label.teamlead">
         <source>label.teamlead</source>
@@ -1082,7 +1082,7 @@
       </trans-unit>
       <trans-unit id="update_multiple">
         <source>update_multiple</source>
-        <target>%ação%%contar%entradas?</target>
+        <target>%action%%count%entradas?</target>
       </trans-unit>
       <trans-unit id="my.profile">
         <source>my.profile</source>
@@ -1103,6 +1103,90 @@
       <trans-unit id="profile.registration_date">
         <source>profile.registration_date</source>
         <target>Registrado em</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Última entrada</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Sem reserva de tempo desde</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Se quiser apagar uma entrada, deve arrastá-la para o botão.</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Gravar configuração como favorito de pesquisa</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Não cobrado</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Não exportado</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Mostrar entradas sem orçamento</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Mostrar entradas sem reservas</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Pular a pré-visualização das %rows% mais filas …</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Data de pagamento</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Taxa de imposto</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Atualizar título do navegador</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Salvar tudo</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>O formulário foi alterado. Por favor clique em "Salvar" para armazenar as alterações ou "Fechar" para cancelar.</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Total</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Ficheiro</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Ordenar por</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Descendente</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Ascendente</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Deletar Configuração Padrão</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Termo de pesquisa</target>
       </trans-unit>
     </body>
   </file>

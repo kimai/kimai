@@ -10,12 +10,14 @@
 namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
+use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
 use App\Export\Spreadsheet\AnnotatedObjectExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\InvoiceDocumentUploadForm;
+use App\Form\InvoicePaymentDateForm;
 use App\Form\InvoiceTemplateForm;
 use App\Form\Toolbar\InvoiceArchiveForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
@@ -30,7 +32,6 @@ use App\Repository\Query\InvoiceQuery;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,45 +84,30 @@ final class InvoiceController extends AbstractController
             $this->flashWarning('invoice.first_template');
         }
 
-        $model = null;
-
         $query = $this->getDefaultQuery();
         $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('invoice');
+        }
 
-        if ($this->isGranted('create_invoice') && $form->isValid()) {
-            // use the current request locale as fallback, if no translation was configured
-            if (null !== $query->getTemplate() && null === $query->getTemplate()->getLanguage()) {
-                $query->getTemplate()->setLanguage($request->getLocale());
-            }
+        $models = [];
+        $total = 0;
+        $searched = false;
 
-            try {
-                /** @var SubmitButton $createButton */
-                $createButton = $form->get('create');
-                if ($createButton->isClicked()) {
-                    return $this->renderInvoice($query);
-                }
-
-                /** @var SubmitButton $printButton */
-                $printButton = $form->get('print');
-                if ($printButton->isClicked()) {
-                    return $this->service->renderInvoice($query, $this->dispatcher);
-                }
-            } catch (Exception $ex) {
-                $this->logException($ex);
-                $this->flashError('action.update.error', ['%reason%' => 'check doctor/logs']);
-            }
-
-            /** @var SubmitButton $previewButton */
-            $previewButton = $form->get('preview');
-            if ($previewButton->isClicked()) {
+        if ($form->isValid() && $this->isGranted('create_invoice')) {
+            if ($request->query->has('createInvoice')) {
                 try {
-                    $model = $this->service->createModel($query);
-                    $entries = $this->service->findInvoiceItems($query);
-                    if (!empty($entries)) {
-                        $model->addEntries($entries);
-                    }
+                    return $this->renderInvoice($query, $request);
+                } catch (Exception $ex) {
+                    $this->logException($ex);
+                    $this->flashError('action.update.error', ['%reason%' => 'check doctor/logs']);
+                }
+            }
+
+            if ($form->get('template')->getData() !== null) {
+                try {
+                    $models = $this->service->createModels($query);
+                    $searched = true;
                 } catch (Exception $ex) {
                     $this->logException($ex);
                     $this->flashError($ex->getMessage());
@@ -129,14 +115,73 @@ final class InvoiceController extends AbstractController
             }
         }
 
+        foreach ($models as $model) {
+            $total += \count($model->getCalculator()->getEntries());
+        }
+
         return $this->render('invoice/index.html.twig', [
-            'query' => $query,
-            'model' => $model,
+            'models' => $models,
             'form' => $form->createView(),
+            'limit_preview' => ($total > 500),
+            'searched' => $searched,
         ]);
     }
 
-    protected function getDefaultQuery(): InvoiceQuery
+    /**
+     * @Route(path="/preview/{customer}/{template}", name="invoice_preview", methods={"GET"})
+     * @Security("is_granted('view_invoice')")
+     */
+    public function previewAction(Customer $customer, InvoiceTemplate $template, Request $request, SystemConfiguration $configuration): Response
+    {
+        if (!$this->templateRepository->hasTemplate()) {
+            return $this->redirectToRoute('invoice');
+        }
+
+        $query = $this->getDefaultQuery();
+        $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
+        $form->submit($request->query->all(), false);
+
+        if ($form->isValid() && $this->isGranted('create_invoice')) {
+            try {
+                $query->setTemplate($template);
+                $query->setCustomers([$customer]);
+                $model = $this->service->createModel($query);
+
+                return $this->service->renderInvoiceWithModel($model, $this->dispatcher);
+            } catch (Exception $ex) {
+                $this->logException($ex);
+                $this->flashError('action.update.error', ['%reason%' => 'Failed generating invoice preview: ' . $ex->getMessage()]);
+            }
+        }
+
+        return $this->redirectToRoute('invoice');
+    }
+
+    /**
+     * @Route(path="/save-invoice/{customer}/{template}", name="invoice_create", methods={"GET"})
+     * @Security("is_granted('view_invoice')")
+     */
+    public function createInvoiceAction(Customer $customer, InvoiceTemplate $template, Request $request, SystemConfiguration $configuration): Response
+    {
+        if (!$this->templateRepository->hasTemplate()) {
+            return $this->redirectToRoute('invoice');
+        }
+
+        $query = $this->getDefaultQuery();
+        $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
+        $form->submit($request->query->all(), false);
+
+        if ($form->isValid() && $this->isGranted('create_invoice')) {
+            $query->setTemplate($template);
+            $query->setCustomers([$customer]);
+
+            return $this->renderInvoice($query, $request);
+        }
+
+        return $this->redirectToRoute('invoice');
+    }
+
+    private function getDefaultQuery(): InvoiceQuery
     {
         $factory = $this->getDateTimeFactory();
         $begin = $factory->getStartOfMonth();
@@ -147,7 +192,6 @@ final class InvoiceController extends AbstractController
         $query->setBegin($begin);
         $query->setEnd($end);
         $query->setExported(InvoiceQuery::STATE_NOT_EXPORTED);
-        $query->setState(InvoiceQuery::STATE_STOPPED);
         // limit access to data from teams
         $query->setCurrentUser($this->getUser());
 
@@ -159,20 +203,23 @@ final class InvoiceController extends AbstractController
         return $query;
     }
 
-    protected function renderInvoice(InvoiceQuery $query)
+    private function renderInvoice(InvoiceQuery $query, Request $request)
     {
+        // use the current request locale as fallback, if no translation was configured
+        if (null !== $query->getTemplate() && null === $query->getTemplate()->getLanguage()) {
+            $query->getTemplate()->setLanguage($request->getLocale());
+        }
+
         try {
-            $invoice = $this->service->createInvoice($query, $this->dispatcher);
+            $invoices = $this->service->createInvoices($query, $this->dispatcher);
 
             $this->flashSuccess('action.update.success');
 
-            if ($this->isGranted('history_invoice')) {
-                return $this->redirectToRoute('admin_invoice_list', ['id' => $invoice->getId()]);
+            if (\count($invoices) === 1) {
+                return $this->redirectToRoute('admin_invoice_list', ['id' => $invoices[0]->getId()]);
             }
 
-            $file = $this->service->getInvoiceFile($invoice);
-
-            return $this->file($file->getRealPath(), $file->getBasename());
+            return $this->redirectToRoute('admin_invoice_list');
         } catch (Exception $ex) {
             $this->flashUpdateException($ex);
         }
@@ -181,11 +228,22 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/change-status/{id}/{status}", name="admin_invoice_status", methods={"GET"})
-     * @Security("is_granted('history_invoice')")
+     * @Route(path="/change-status/{id}/{status}", name="admin_invoice_status", methods={"GET", "POST"})
      */
-    public function changeStatusAction(Invoice $invoice, string $status): Response
+    public function changeStatusAction(Invoice $invoice, string $status, Request $request): Response
     {
+        if ($status === Invoice::STATUS_PAID) {
+            $form = $this->createPaymentDateForm($invoice, $status);
+            $form->handleRequest($request);
+
+            if (!$form->isSubmitted() || !$form->isValid()) {
+                return $this->render('invoice/payment_date_edit.html.twig', [
+                    'invoice' => $invoice,
+                    'form' => $form->createView()
+                ]);
+            }
+        }
+
         try {
             $this->service->changeInvoiceStatus($invoice, $status);
             $this->flashSuccess('action.update.success');
@@ -198,7 +256,6 @@ final class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/delete/{id}", name="admin_invoice_delete", methods={"GET"})
-     * @Security("is_granted('history_invoice')")
      */
     public function deleteInvoiceAction(Invoice $invoice): Response
     {
@@ -214,7 +271,6 @@ final class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/download/{id}", name="admin_invoice_download", methods={"GET"})
-     * @Security("is_granted('history_invoice')")
      */
     public function downloadAction(Invoice $invoice): Response
     {
@@ -231,7 +287,6 @@ final class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/show/{page}", defaults={"page": 1}, requirements={"page": "[1-9]\d*"}, name="admin_invoice_list", methods={"GET"})
-     * @Security("is_granted('history_invoice')")
      */
     public function showInvoicesAction(Request $request, int $page): Response
     {
@@ -380,10 +435,6 @@ final class InvoiceController extends AbstractController
      */
     public function createTemplateAction(Request $request, ?InvoiceTemplate $copyFrom): Response
     {
-        if (!$this->templateRepository->hasTemplate()) {
-            $this->flashWarning('invoice.first_template');
-        }
-
         $template = new InvoiceTemplate();
 
         if (null !== $copyFrom) {
@@ -410,7 +461,7 @@ final class InvoiceController extends AbstractController
         return $this->redirectToRoute('admin_invoice_template');
     }
 
-    protected function renderTemplateForm(InvoiceTemplate $template, Request $request): Response
+    private function renderTemplateForm(InvoiceTemplate $template, Request $request): Response
     {
         $editForm = $this->createEditForm($template);
 
@@ -433,7 +484,7 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    protected function getToolbarForm(InvoiceQuery $query, bool $simple): FormInterface
+    private function getToolbarForm(InvoiceQuery $query, bool $simple): FormInterface
     {
         $form = $simple ? InvoiceToolbarSimpleForm::class : InvoiceToolbarForm::class;
 
@@ -471,6 +522,21 @@ final class InvoiceController extends AbstractController
         return $this->createForm(InvoiceTemplateForm::class, $template, [
             'action' => $url,
             'method' => 'POST'
+        ]);
+    }
+
+    private function createPaymentDateForm(Invoice $invoice, string $status): FormInterface
+    {
+        if (null === $invoice->getPaymentDate()) {
+            $invoice->setPaymentDate($this->getDateTimeFactory()->createDateTime());
+        }
+
+        $url = $this->generateUrl('admin_invoice_status', ['id' => $invoice->getId(), 'status' => $status]);
+
+        return $this->createForm(InvoicePaymentDateForm::class, $invoice, [
+            'action' => $url,
+            'method' => 'POST',
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
         ]);
     }
 }

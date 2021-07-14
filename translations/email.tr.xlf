@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>Kimai zaman izleyicisine %email% e-posta adresiyle kaydoldunuz. Şimdi, bağlantının süresi dolmadan birkaç saat içinde hesabınızı etkinleştirmeniz gerekiyor.</target>
+        <target>Kimai zaman izleyicisine %email% e-posta adresiyle kaydoldunuz. Lütfen bağlantının süresi dolmadan birkaç saat içinde hesabınızı etkinleştirin.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target>Bu olabilir ...</target>
+        <target>Bu olabilir …</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target>... parolanızı mı unuttunuz? Endişelenmeyin: Kimai, yeni bir tane oluşturmanıza yardımcı olacaktır:</target>
+        <target>… parolanızı mı unuttunuz? Endişelenmeyin: Kimai, yeni bir tane oluşturmanıza yardımcı olacaktır:</target>
       </trans-unit>
     </body>
   </file>

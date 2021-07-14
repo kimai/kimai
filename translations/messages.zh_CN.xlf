@@ -1015,7 +1015,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>输入您的消息...</target>
+        <target>输入您的消息…</target>
       </trans-unit>
       <trans-unit id="label.theme.layout">
         <source>label.theme.layout</source>

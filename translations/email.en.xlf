@@ -24,7 +24,7 @@
             </trans-unit>
             <trans-unit id="registration.intro">
                 <source>registration.intro</source>
-                <target>You signed up at the Kimai time-tracker with the email %email%. Now you have to activate your account in the next few hours, before the link expires.</target>
+                <target>You signed up at the Kimai time-tracker with the email %email%. Please activate your account in the next few hours, before the link expires.</target>
             </trans-unit>
             <trans-unit id="reset.subject">
                 <source>reset.subject</source>
@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="reset.title">
                 <source>reset.title</source>
-                <target>That can happen ...</target>
+                <target>That can happen …</target>
             </trans-unit>
             <trans-unit id="reset.button">
                 <source>reset.button</source>
@@ -40,7 +40,7 @@
             </trans-unit>
             <trans-unit id="reset.intro">
                 <source>reset.intro</source>
-                <target>... so you forgot your password? Don't worry: Kimai will help you to create a new one:</target>
+                <target>… so you forgot your password? Don't worry: Kimai will help you to create a new one:</target>
             </trans-unit>
         </body>
     </file>

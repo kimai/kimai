@@ -26,6 +26,14 @@
         <source>about.title</source>
         <target>حول Kimai</target>
       </trans-unit>
+      <trans-unit id="published_under">
+        <source>published_under</source>
+        <target>تم نشره حسب %kimai%</target>
+      </trans-unit>
+      <trans-unit id="library_authors">
+        <source>library_authors</source>
+        <target>… مؤلفو مكتبات البرامج الحالية ،، لم يكون kimai قادراً على إكمالها بدونك 👍</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

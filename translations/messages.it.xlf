@@ -70,7 +70,7 @@
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>
-        <target>Files</target>
+        <target>File</target>
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
@@ -318,7 +318,7 @@
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>Email</target>
+        <target>E-mail</target>
       </trans-unit>
       <trans-unit id="label.team">
         <source>label.team</source>
@@ -334,7 +334,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Scrivi quì il tuo messaggio...</target>
+        <target>Scrivi il tuo messaggio…</target>
       </trans-unit>
       <trans-unit id="label.billable">
         <source>label.billable</source>
@@ -643,7 +643,7 @@
       </trans-unit>
       <trans-unit id="label.homepage">
         <source>label.homepage</source>
-        <target>Homepage</target>
+        <target>Pagina principale</target>
       </trans-unit>
       <trans-unit id="label.timezone">
         <source>label.timezone</source>
@@ -907,7 +907,7 @@
       </trans-unit>
       <trans-unit id="invoice.due_days">
         <source>invoice.due_days</source>
-        <target>Tipo di pagamento</target>
+        <target>Scadenza pagamento</target>
       </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>
@@ -1129,6 +1129,98 @@
       <trans-unit id="sum.total">
         <source>sum.total</source>
         <target>Totale</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Mostra le voci senza budget</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Mostra le voci senza prenotazioni</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Aliquota fiscale</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>File</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Non fatturato</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Non esportato</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Ordina per</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Decrescente</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Ascendente</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Salva l'impostazione come preferita per la ricerca</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Termine di ricerca</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Anteprima ignorata di %rows% più righe…</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Data di pagamento</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Salva tutto</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Elimina il preferito di ricerca</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Ultima voce</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Nessuna prenotazione di tempo da</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Se vuoi eliminare una voce, devi trascinarla sul pulsante.</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Utenti attivi in questo anno finanziario</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Ore di lavoro in questo anno finanziario</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Anno finanziario</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>È stata inviata un'e-mail. Contiene un collegamento che devi cliccare per reimpostare la tua password. Nota: puoi richiedere una nuova password solo una volta entro %tokenLifetime% ore. Se non ricevi un'e-mail, controlla la tua cartella spam o prova di nuovo.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Un'e-mail è stata inviata a %email%. Contiene un collegamento di attivazione che devi cliccare per attivare il tuo account.</target>
       </trans-unit>
     </body>
   </file>

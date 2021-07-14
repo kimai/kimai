@@ -140,6 +140,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @internal for storing the timezone of "begin" and "end" date
      *
      * @ORM\Column(name="timezone", type="string", length=64, nullable=false)
+     * @Assert\Timezone
      */
     private $timezone;
     /**
@@ -241,7 +242,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @var bool
      *
      * @Serializer\Expose()
-     * @Serializer\Groups({"Entity"})
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="exported", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -249,6 +250,9 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     private $exported = false;
     /**
      * @var bool
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
@@ -408,6 +412,11 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     public function getDuration(): ?int
     {
+        // only auto calculate if manually set duration is null - the result is important for eg. validations
+        if ($this->duration === null && $this->begin !== null && $this->end !== null) {
+            return $this->end->getTimestamp() - $this->begin->getTimestamp();
+        }
+
         return $this->duration;
     }
 

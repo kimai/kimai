@@ -55,10 +55,17 @@ final class LockdownService
         $lockedStart = $this->configuration->getTimesheetLockdownPeriodStart();
         $lockedEnd = $this->configuration->getTimesheetLockdownPeriodEnd();
         $gracePeriod = $this->configuration->getTimesheetLockdownGracePeriod();
+        $timezone = $this->configuration->getTimesheetLockdownTimeZone();
+
+        if ($timezone === null) {
+            $timezone = $timesheetStart->getTimezone();
+        } else {
+            $timezone = new \DateTimeZone($timezone);
+        }
 
         try {
-            $lockdownStart = new \DateTime($lockedStart, $timesheetStart->getTimezone());
-            $lockdownEnd = new \DateTime($lockedEnd, $timesheetStart->getTimezone());
+            $lockdownStart = new \DateTime($lockedStart, $timezone);
+            $lockdownEnd = new \DateTime($lockedEnd, $timezone);
             $lockdownGrace = clone $lockdownEnd;
             if (!empty($gracePeriod)) {
                 $lockdownGrace->modify($gracePeriod);

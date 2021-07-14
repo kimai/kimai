@@ -10,6 +10,7 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
+use App\Reporting\Report;
 use App\Reporting\ReportingService;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -34,7 +35,11 @@ class ReportingSubscriber extends AbstractActionsSubscriber
         $reports = $this->reportingService->getAvailableReports($event->getUser());
 
         foreach ($reports as $report) {
-            $event->addActionToSubmenu('reporting', $report->getId(), ['title' => $report->getLabel(), 'translation_domain' => 'reporting', 'url' => $this->path($report->getRoute()), 'class' => 'toolbar-action report-' . $report->getId()]);
+            $subMenu = 'reporting';
+            if ($report instanceof Report) {
+                $subMenu = $report->getReportIcon();
+            }
+            $event->addActionToSubmenu($subMenu, $report->getId(), ['title' => $report->getLabel(), 'translation_domain' => 'reporting', 'url' => $this->path($report->getRoute()), 'class' => 'toolbar-action report-' . $report->getId()]);
         }
 
         $event->addHelp($this->documentationLink('reporting.html'));

@@ -9,30 +9,32 @@
 
 namespace App\Configuration;
 
-class LdapConfiguration
+final class LdapConfiguration
 {
-    /**
-     * @var array
-     */
-    protected $settings = [];
+    private $configuration;
 
-    public function __construct(array $settings)
+    public function __construct(SystemConfiguration $configuration)
     {
-        $this->settings = $settings;
+        $this->configuration = $configuration;
+    }
+
+    public function isActivated(): bool
+    {
+        return $this->configuration->isLdapActive();
     }
 
     public function getRoleParameters(): array
     {
-        return (array) $this->settings['role'];
+        return $this->configuration->getLdapRoleParameters();
     }
 
     public function getUserParameters(): array
     {
-        return (array) $this->settings['user'];
+        return $this->configuration->getLdapUserParameters();
     }
 
     public function getConnectionParameters(): array
     {
-        return (array) $this->settings['connection'];
+        return $this->configuration->getLdapConnectionParameters();
     }
 }

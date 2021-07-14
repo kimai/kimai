@@ -73,7 +73,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $templates = $this->importFixture($fixture);
         $id = $templates[0]->getId();
 
-        $this->request($client, '/invoice/?customer=1&template=' . $id . '&preview=');
+        $this->request($client, '/invoice/?customers[]=1&template=' . $id);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);
@@ -168,12 +168,12 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?preview='));
+        $node->setAttribute('action', $this->createUrl('/invoice/'));
         $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => $template->getId(),
             'daterange' => $dateRange,
-            'customer' => 1,
+            'customers' => [1],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -181,25 +181,21 @@ class InvoiceControllerTest extends ControllerBaseTest
         // no warning should be displayed
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
-        // but the datatable with all timesheets + 1 row for the total
-        $this->assertDataTableRowCount($client, 'datatable_invoice', 21);
+        // but the datatable with all timesheets
+        $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
 
-        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
-        $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?create='));
-        $node->setAttribute('method', 'GET');
-        $client->submit($form, [
-            'template' => $template->getId(),
+        $urlParams = [
             'daterange' => $dateRange,
-            'customer' => 1,
-            'projects' => [1],
+            'projects[]' => 1,
             'markAsExported' => 1,
-        ]);
+        ];
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $node = $client->getCrawler()->filter('body');
-        $this->assertEquals(1, $node->count());
-        $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
+        $action = '/invoice/save-invoice/1/' . $template->getId() . '?' . http_build_query($urlParams);
+        $this->request($client, $action);
+        $this->assertIsRedirect($client);
+        $this->assertRedirectUrl($client, '/invoice/show?id=', false);
+        $client->followRedirect();
+        $this->assertDataTableRowCount($client, 'datatable_invoices', 1);
 
         $em = $this->getEntityManager();
         $em->clear();
@@ -234,35 +230,13 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
-        $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?preview='));
-        $node->setAttribute('method', 'GET');
-        $client->submit($form, [
-            'template' => $id,
+        $params = [
             'daterange' => $dateRange,
-            'customer' => 1,
-        ]);
-
-        $this->assertTrue($client->getResponse()->isSuccessful());
-
-        // no warning should be displayed
-        $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
-        $this->assertEquals(0, $node->count());
-        // but the datatable with all timesheets + 1 row for the total
-        $this->assertDataTableRowCount($client, 'datatable_invoice', 21);
-
-        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
-        $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?print='));
-        $node->setAttribute('method', 'GET');
-        $client->submit($form, [
-            'template' => $id,
-            'daterange' => $dateRange,
-            'customer' => 1,
             'projects' => [1],
-        ]);
+        ];
 
+        $action = '/invoice/preview/1/' . $id . '?' . http_build_query($params);
+        $this->request($client, $action);
         $this->assertTrue($client->getResponse()->isSuccessful());
         $node = $client->getCrawler()->filter('body');
         $this->assertEquals(1, $node->count());
@@ -299,7 +273,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'template' => $template->getId(),
             'daterange' => $dateRange,
-            'customer' => 1,
+            'customers' => [1],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -307,17 +281,17 @@ class InvoiceControllerTest extends ControllerBaseTest
         // no warning should be displayed
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
-        // but the datatable with all timesheets + 1 row for the total
-        $this->assertDataTableRowCount($client, 'datatable_invoice', 21);
+        // but the datatable with all timesheets
+        $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?create='));
+        $node->setAttribute('action', $this->createUrl('/invoice/?createInvoice=true'));
         $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => $template->getId(),
             'daterange' => $dateRange,
-            'customer' => 1,
+            'customers' => [1],
             'projects' => [1],
             'markAsExported' => 1,
         ]);
@@ -347,6 +321,29 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->request($client, '/invoice/change-status/' . $id . '/paid');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertHasValidationError(
+            $client,
+            '/invoice/change-status/' . $id . '/paid',
+            'form[name=invoice_payment_date_form]',
+            [
+                'invoice_payment_date_form' => [
+                    'paymentDate' => 'invalid'
+                ]
+            ],
+            ['#invoice_payment_date_form_paymentDate']
+        );
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=invoice_payment_date_form]')->form();
+        $client->submit($form, [
+            'invoice_payment_date_form' => [
+                'paymentDate' => (new \DateTime())->format('Y-m-d')
+            ]
+        ]);
+
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());

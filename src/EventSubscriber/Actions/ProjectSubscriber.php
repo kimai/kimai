@@ -30,7 +30,7 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             return;
         }
 
-        if ($this->isGranted('view', $project)) {
+        if (!$event->isView('project_details') && $this->isGranted('view', $project)) {
             $event->addAction('details', ['url' => $this->path('project_details', ['id' => $project->getId()])]);
         }
 
@@ -68,8 +68,12 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             $event->addAction('copy', ['url' => $this->path('admin_project_duplicate', ['id' => $project->getId()])]);
         }
 
-        if ($event->isIndexView() && $this->isGranted('delete', $project)) {
-            $event->addAction('trash', ['url' => $this->path('admin_project_delete', ['id' => $project->getId()]), 'class' => 'modal-ajax-form text-red']);
+        if (($event->isIndexView() || $event->isView('customer_details')) && $this->isGranted('delete', $project)) {
+            $event->addDelete($this->path('admin_project_delete', ['id' => $project->getId()]));
+        }
+
+        if ($project->isVisible() && $this->isGranted('view_reporting') && $this->isGranted('details', $project)) {
+            $event->addAction('report_project_details', ['url' => $this->path('report_project_details', ['project' => $project->getId()]), 'icon' => 'reporting', 'translation_domain' => 'reporting']);
         }
     }
 }

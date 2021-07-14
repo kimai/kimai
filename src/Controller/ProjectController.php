@@ -30,6 +30,7 @@ use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
 use App\Project\ProjectDuplicationService;
 use App\Project\ProjectService;
+use App\Project\ProjectStatisticService;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
@@ -99,6 +100,7 @@ final class ProjectController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'metaColumns' => $this->findMetaColumns($query),
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -271,6 +273,9 @@ final class ProjectController extends AbstractController
         $query->setPageSize(5);
         $query->addProject($project);
         $query->setExcludeGlobals(true);
+        $query->setShowBoth();
+        $query->addOrderGroup('visible', ActivityQuery::ORDER_DESC);
+        $query->addOrderGroup('name', ActivityQuery::ORDER_ASC);
 
         /* @var $entries Pagerfanta */
         $entries = $activityRepository->getPagerfantaForQuery($query);
@@ -279,6 +284,7 @@ final class ProjectController extends AbstractController
             'project' => $project,
             'activities' => $entries,
             'page' => $page,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -286,7 +292,7 @@ final class ProjectController extends AbstractController
      * @Route(path="/{id}/details", name="project_details", methods={"GET", "POST"})
      * @Security("is_granted('view', project)")
      */
-    public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository)
+    public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository, ProjectStatisticService $statisticService)
     {
         $event = new ProjectMetaDefinitionEvent($project);
         $this->dispatcher->dispatch($event);
@@ -307,7 +313,7 @@ final class ProjectController extends AbstractController
         }
 
         if ($this->isGranted('budget', $project)) {
-            $stats = $this->repository->getProjectStatistics($project);
+            $stats = $statisticService->getProjectStatistics($project);
         }
 
         if ($this->isGranted('comments', $project)) {
@@ -330,7 +336,8 @@ final class ProjectController extends AbstractController
             'stats' => $stats,
             'team' => $defaultTeam,
             'teams' => $teams,
-            'rates' => $rates
+            'rates' => $rates,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -408,13 +415,13 @@ final class ProjectController extends AbstractController
      * @Route(path="/{id}/delete", name="admin_project_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', project)")
      */
-    public function deleteAction(Project $project, Request $request)
+    public function deleteAction(Project $project, Request $request, ProjectStatisticService $statisticService)
     {
-        $stats = $this->repository->getProjectStatistics($project);
+        $stats = $statisticService->getProjectStatistics($project);
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.projectUpdate kimai.projectDelete',
+                    'data-form-event' => 'kimai.projectDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
                 ]

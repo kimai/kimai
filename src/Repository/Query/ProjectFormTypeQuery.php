@@ -18,10 +18,8 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
      * @var Project|null
      */
     private $projectToIgnore;
-    /**
-     * @var bool
-     */
     private $ignoreDate = false;
+    private $withCustomer = false;
 
     /**
      * @param Project|int|null $project
@@ -42,6 +40,16 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
             }
             $this->setCustomers($customer);
         }
+    }
+
+    public function withCustomer(): bool
+    {
+        return $this->withCustomer;
+    }
+
+    public function setWithCustomer(bool $withCustomer): void
+    {
+        $this->withCustomer = $withCustomer;
     }
 
     /**
