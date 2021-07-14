@@ -34,6 +34,26 @@
         <source>This period is locked, please choose a later date.</source>
         <target>Ten okres jest zablokowany, wybierz późniejszą datę.</target>
       </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>Budżet się wyczerpał. Z dostępnych %budget%, %used% zostało zarezerwowane do tej pory, %free% może być nadal używany.</target>
+      </trans-unit>
+      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>Maksymalna ilość godzin dozwolona.</target>
+      </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>Nazwa użytkownika jest już zajęta.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>Adres E-mail jest już używany.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>wprowadzone hasła nie pasują.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
