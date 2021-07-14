@@ -96,15 +96,15 @@
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>Branding</target>
+        <target>Moja firma</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>Logo (URL grafiki, zamienia logo na stronie logowania)</target>
+        <target>Logo URL (zastępuje nazwę firmy na ekranie logowania)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>Firma</target>
+        <target>Nazwa Firmy</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
@@ -233,6 +233,90 @@
       <trans-unit id="label.timesheet.duration_increment">
         <source>label.timesheet.duration_increment</source>
         <target>Wybór minut dla czasu trwania</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>Liczba wpisów do przeciągania &amp; i upuszczania (0 = deactivated)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target>Maksymalny czas trwania rekordu grafiku w minutach przed odrzuceniem zapisu (0 = deactivated)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target>Maksymalny czas trwania rekordu grafiku w minutach przed wyświetleniem „ostrzeżenia o przerwie” zostanie wyświetlone (0 = deactivated)</target>
+      </trans-unit>
+      <trans-unit id="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target>Logowanie SAML</target>
+      </trans-unit>
+      <trans-unit id="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target>logowanie LDAP</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target>Zapomniane hasło - sekundy przed wygaśnięciem linku resetującego</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target>Zapomniałeś hasło - zachwile możesz poprosić na następne w E-mailu</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target>Zapomniałeś hasła</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target>Rejestracja użytkownika</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target>Forma logowania</target>
+      </trans-unit>
+      <trans-unit id="authentication">
+        <source>authentication</source>
+        <target>Poświadczenie</target>
+      </trans-unit>
+      <trans-unit id="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>Lista oddzielonych przecinkami kodów kolorów HTML. Nazwy kolorów można ustawić, poprzedzając kod koloru nazwą | delimiter, eg.: White|#ffffff,Black|#000000.</target>
+      </trans-unit>
+      <trans-unit id="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>Zezwól na kolory</target>
+      </trans-unit>
+      <trans-unit id="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>Limit wybranych kolorów</target>
+      </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>Wyłącz</target>
+      </trans-unit>
+      <trans-unit id="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>Budżet roczny</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target>Strefa czasowa (Jeśli jest pusta, używana jest strefa czasowa odpowiedniego użytkownika</target>
+      </trans-unit>
+      <trans-unit id="lockdown_period">
+        <source>lockdown_period</source>
+        <target>Okres blokady</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>Zezwalaj na rezerwację zapisanych budżetów</target>
+      </trans-unit>
+      <trans-unit id="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>Użyj losowy kolor dla przedmiotu bez przypisanego koloru</target>
+      </trans-unit>
+      <trans-unit id="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>Zezwalaj na używanie adresów URL dla obrazów awatarów</target>
       </trans-unit>
     </body>
   </file>
