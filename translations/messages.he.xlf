@@ -1157,6 +1157,18 @@
         <source>label.last_record_before</source>
         <target>אין הזמנת שעה מאז</target>
       </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>רווחים</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>זמן עבודה</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>לא ניתן לעבד את הבקשה, נמצאו יותר מדי תוצאות.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
