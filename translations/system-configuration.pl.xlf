@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>Moja firma</target>
+        <target>Marka</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
