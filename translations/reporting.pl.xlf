@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="report_weekly_users">
         <source>report_weekly_users</source>
-        <target>tygodniowy widok dla wszystkich użytkowników</target>
+        <target>Tygodniowy widok dla wszystkich użytkowników</target>
       </trans-unit>
     </body>
   </file>
