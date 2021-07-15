@@ -56,7 +56,7 @@ class DurationType extends AbstractType
             $h = (int) ($minutes / 60);
             $m = $minutes % 60;
             $interval = new \DateInterval('PT' . $h . 'H' . $m . 'M');
-            $presets[] = $interval->format('%h:%I');
+            $presets[] = $interval->format('%H:%I');
         }
 
         $view->vars['duration_presets'] = $presets;

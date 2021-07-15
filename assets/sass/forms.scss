@@ -13,3 +13,11 @@ form.form-narrow {
         margin: 0 0 5px 0;
     }
 }
+
+.datetime-group {
+    white-space: nowrap;
+    .form-control {
+        width: auto;
+        display: inline;
+    }
+}
