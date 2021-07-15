@@ -1032,7 +1032,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target state="needs-translation">Nie skonfigurowano jeszcze stawek godzinowych.</target>
+        <target state="translated">Nie skonfigurowano jeszcze stawek godzinowych.</target>
       </trans-unit>
       <trans-unit id="upload">
         <source>upload</source>
@@ -1208,39 +1208,43 @@
       </trans-unit>
       <trans-unit id="resetting.check_email">
         <source>resetting.check_email</source>
-        <target state="needs-translation">E-mail został wysłany. Zawiera link który musisz kliknąć aby zresetować twoje hasło. Uwaga Możesz jedynie poprosić o nowe hasło w ciągu godziny. jeśli nie dostałeś e-maila zobacz swój folder ze spamem lub spróbuj ponownie.</target>
+        <target state="translated">E-mail został wysłany. Zawiera link który musisz kliknąć aby zresetować twoje hasło. Uwaga Możesz jedynie poprosić o nowe hasło w ciągu godziny. jeśli nie dostałeś e-maila zobacz swój folder ze spamem lub spróbuj ponownie.</target>
       </trans-unit>
       <trans-unit id="registration.check_email">
         <source>registration.check_email</source>
-        <target state="needs-translation">Email został wysłany do %email%. Zawiera link aktywacyjny który musisz kliknąć, aby aktywować swoje konto.</target>
+        <target state="translated">Email został wysłany do %email%. Zawiera link aktywacyjny który musisz kliknąć, aby aktywować swoje konto.</target>
       </trans-unit>
       <trans-unit id="file">
         <source>file</source>
-        <target state="needs-translation">pliki</target>
+        <target state="translated">pliki</target>
       </trans-unit>
       <trans-unit id="label.orderBy">
         <source>label.orderBy</source>
-        <target state="needs-translation">Zamówione przez</target>
+        <target state="translated">Zamówione przez</target>
       </trans-unit>
       <trans-unit id="label.desc">
         <source>label.desc</source>
-        <target state="needs-translation">Malejąco</target>
+        <target state="translated">Malejąco</target>
       </trans-unit>
       <trans-unit id="label.asc">
         <source>label.asc</source>
-        <target state="needs-translation">rosnąco</target>
+        <target state="translated">rosnąco</target>
       </trans-unit>
       <trans-unit id="label.remove_default">
         <source>label.remove_default</source>
-        <target state="needs-translation">usuń ulubione wyszukiwanie</target>
+        <target state="translated">usuń ulubione wyszukiwanie</target>
       </trans-unit>
       <trans-unit id="label.set_as_default">
         <source>label.set_as_default</source>
-        <target state="needs-translation">Zapisz ustawienie jako ulubione wyszukiwania</target>
+        <target state="translated">Zapisz ustawienie jako ulubione wyszukiwania</target>
       </trans-unit>
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
-        <target state="needs-translation">wyszukaj termin</target>
+        <target state="translated">wyszukaj termin</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>pokaż wpisy bez rezerwacji</target>
       </trans-unit>
     </body>
   </file>
