@@ -49,15 +49,6 @@
     </div>
 {%- endblock datetime_widget %}
 
-{% block datetimechoice_widget -%}
-    <div class="input-group">
-        <div class="input-group-addon">
-            <a href="#" onclick="if (!$('#{{ id }}').is(':disabled')) { $('#{{ id }}').val(moment().format('{{ attr['data-format'] }}')).change(); }return false;"><i class="{{ 'calendar'|icon }}"></i></a>
-        </div>
-        {{ block('form_widget_simple') }}
-    </div>
-{%- endblock datetimechoice_widget %}
-
 {% block date_widget -%}
     <div class="input-group">
         <div class="input-group-addon">
