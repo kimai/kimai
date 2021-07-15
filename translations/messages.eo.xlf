@@ -1218,6 +1218,20 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Financjaro</target>
       </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>
+          Retpoŝta mesaĝo estis sendita al email.
+          Ĝi enhavas aktivigan ligon, kiun vi devas alklaki por restarigi vian pasvorton.
+          Noto: Vi povas peti novan pasvorton nur unufoje en %tokenLifetime% horoj.
+
+          Se vi ne ricevas retpoŝtan mesaĝon, kontrolu vian trudmesaĝujon aŭ reprovu.
+        </target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Retpoŝta mesaĝo estis sendita al %email%. Ĝi enhavas aktivigan ligon, kiun vi devas alklaki por aktivigi vian konton.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -128,6 +128,19 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
+    public function testValidateCalendarDragDropMaxEntries()
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.calendar.dragdrop_amount": The dragdrop_amount must be between 0 and 20');
+
+        $config = $this->getMinConfig();
+        $config['calendar'] = [
+            'dragdrop_amount' => 50,
+        ];
+
+        $this->assertConfig($config, []);
+    }
+
     public function testValidateLdapFilterInvalidParenthesisCounter()
     {
         $this->expectException(InvalidConfigurationException::class);

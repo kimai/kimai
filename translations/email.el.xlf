@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target>Αυτό μπορεί να συμβεί ...</target>
+        <target>Αυτό μπορεί να συμβεί …</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target>... επομένως ξεχάσατε τον δικό σας κωδικό πρόσβασης; Μην ανησυχείτε: Το λογισμικό Kimai θα σας βοηθήσει να δημιουργήσετε ένα νέο:</target>
+        <target>… επομένως ξεχάσατε τον δικό σας κωδικό πρόσβασης; Μην ανησυχείτε: Το λογισμικό Kimai θα σας βοηθήσει να δημιουργήσετε ένα νέο:</target>
       </trans-unit>
     </body>
   </file>

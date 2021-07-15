@@ -37,6 +37,7 @@ class TimesheetQueryTest extends BaseQueryTest
         $this->assertExported($sut);
         $this->assertSearchTerm($sut);
         $this->assertModifiedAfter($sut);
+        $this->assertMaxResults($sut);
 
         self::assertNull($sut->getBillable());
         self::assertFalse($sut->isBillable());
@@ -48,6 +49,13 @@ class TimesheetQueryTest extends BaseQueryTest
         $this->assertBillable($sut);
 
         $this->assertResetByFormError(new TimesheetQuery(), 'begin', 'DESC');
+    }
+
+    protected function assertMaxResults(TimesheetQuery $sut)
+    {
+        self::assertNull($sut->getMaxResults());
+        $sut->setMaxResults(999);
+        self::assertEquals(999, $sut->getMaxResults());
     }
 
     protected function assertUser(TimesheetQuery $sut)

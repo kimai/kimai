@@ -8,6 +8,7 @@
 {% set tableId = 'project-details-form' %}
 {% set view_revenue_tab = project_details is not null and is_granted('budget', project_details.project) %}
 {% set view_revenue_user = project_details is not null and is_granted('view_rate_other_timesheet') %}
+{% set see_users = is_granted('view_other_timesheet') or is_granted('view_other_reporting') %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -78,17 +79,17 @@
     {% endif %}
 
     {% if hasData %}
-        {{ _self.project_details(project_view, project_details, view_revenue_tab, view_revenue_user) }}
+        {{ _self.project_details(project_view, project_details, view_revenue_tab, view_revenue_user, see_users) }}
         {% set currency = project_view.project.customer.currency %}
 
         {%- for yearStat in project_details.years|reverse %}
             {% set year = yearStat.year %}
-            {{ _self.duration_stat(year, year, year, month_names(), yearStat, project_details.getYearActivities(year), project_details.userYears(year), currency, view_revenue_tab) }}
+            {{ _self.duration_stat(year, year, year, month_names(), yearStat, project_details.getYearActivities(year), project_details.userYears(year), currency, view_revenue_tab, see_users) }}
         {% endfor %}
     {% endif %}
 {% endblock %}
 
-{% macro duration_stat(id, title, year, labels, yearStat, activities, users, currency, view_revenue_tab) %}
+{% macro duration_stat(id, title, year, labels, yearStat, activities, users, currency, view_revenue_tab, see_users) %}
     {% set rates = [] %}
     {% set durations = [] %}
     {% set chartPrefix = 'chart' ~ id %}
@@ -106,7 +107,9 @@
 
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs pull-right">
+            {% if see_users %}
             <li><a data-chart="{{ chartPrefix }}User" href="#user-chart-{{ id}}" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
+            {% endif %}
             <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ id}}" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
             {% if view_revenue_tab %}
                 <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ id }}" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
@@ -134,9 +137,11 @@
             <div class="chart tab-pane" id="activity-chart-{{ id }}">
                 {{ _self.activity_tab(activities, yearStat.duration, currency, chartPrefix, view_revenue_tab) }}
             </div>
+            {% if see_users %}
             <div class="chart tab-pane" id="user-chart-{{ id }}">
                 {{ _self.user_tab(year, users) }}
             </div>
+            {% endif %}
         </div>
     </div>
 {% endmacro %}
@@ -239,7 +244,7 @@
     entry           = ProjectViewModel
     project_details = ProjectDetailsModel
 #}
-{% macro project_details(entry, project_details, view_revenue_tab, view_revenue_user) %}
+{% macro project_details(entry, project_details, view_revenue_tab, view_revenue_user, see_users) %}
     {% set activities = project_details.activities %}
     {% set years = project_details.years %}
     {% import "macros/progressbar.html.twig" as progress %}
@@ -260,7 +265,9 @@
 
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs pull-right">
+            {% if see_users %}
             <li><a data-chart="{{ chartPrefix }}User" href="#user-chart" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
+            {% endif %}
             <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
             {% if view_revenue_tab %}
             <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
@@ -290,12 +297,14 @@
                                 </th>
                                 <td>{{ entry.durationTotal|duration }}</td>
                             </tr>
+                            {% if view_revenue_tab %}
                             <tr>
                                 <th class="w-min">
                                     {{ 'stats.amountTotal'|trans }}
                                 </th>
                                 <td>{{ entry.rateTotal|money(currency) }}</td>
                             </tr>
+                            {% endif %}
                         </table>
                     </div>
                     <div class="col-xs-12 col-md-6">
@@ -312,38 +321,34 @@
                                     {% endif %}
                                 </td>
                             </tr>
+                            {% if is_granted('create_export') %}
                             <tr>
                                 <th class="w-min">
                                     {{ 'label.not_exported'|trans }}
                                 </th>
                                 <td>
-                                    {% if is_granted('create_export') %}
-                                        <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
-                                            {{ entry.notExportedDuration|duration }}
-                                        </a>
-                                    {% else %}
+                                    <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
                                         {{ entry.notExportedDuration|duration }}
-                                    {% endif %}
+                                    </a>
                                 </td>
                             </tr>
+                            {% endif %}
+                            {% if is_granted('view_invoice') %}
                             <tr>
                                 <th class="w-min">
                                     {{ 'label.not_invoiced'|trans }}
                                 </th>
                                 <td>
-                                    {% if is_granted('view_invoice') %}
-                                        <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
-                                            {{ entry.notBilledRate|money(currency) }}
-                                        </a>
-                                    {% else %}
+                                    <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
                                         {{ entry.notBilledRate|money(currency) }}
-                                    {% endif %}
+                                    </a>
                                 </td>
                             </tr>
+                            {% endif %}
                         </table>
                     </div>
                 </div>
-                {% if is_granted('budget', project) and (project.timeBudget > 0 or project.budget > 0) %}
+                {% if view_revenue_tab and (project.timeBudget > 0 or project.budget > 0) %}
                 <div class="row">
                     <div class="col-xs-12">
                         <table class="table table-hover dataTable">
@@ -399,6 +404,7 @@
             <div class="chart tab-pane" id="activity-chart">
                 {{ _self.activity_tab(activities, entry.durationTotal, project.customer.currency, chartPrefix, view_revenue_tab) }}
             </div>
+            {% if see_users %}
             <div class="chart tab-pane" id="user-chart">
                 <div class="row">
                     <div class="col-xs-12 col-sm-9 col-md-8 col-lg-6">
@@ -450,6 +456,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 {% endmacro %}

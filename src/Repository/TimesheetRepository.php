@@ -962,6 +962,10 @@ class TimesheetRepository extends EntityRepository
             $qb->leftJoin('t.activity', 'a');
         }
 
+        if ($query->getMaxResults() !== null) {
+            $qb->setMaxResults($query->getMaxResults());
+        }
+
         return $qb;
     }
 
@@ -972,7 +976,7 @@ class TimesheetRepository extends EntityRepository
      * @return array|mixed
      * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function getRecentActivities(User $user = null, DateTime $startFrom = null, $limit = 10)
+    public function getRecentActivities(User $user = null, DateTime $startFrom = null, int $limit = 10)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 

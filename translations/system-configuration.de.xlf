@@ -138,10 +138,6 @@
         <source>label.calendar.slot_duration</source>
         <target>Slotdauer für Wochen- und Tagesansicht (Format: hh:mm:ss)</target>
       </trans-unit>
-      <trans-unit id="label.calendar.dragdrop_amount">
-        <source>label.calendar.dragdrop_amount</source>
-        <target>Anzahl an letzten Tätigkeiten neben der Kalenderansicht (0 um den Bereich auszublenden)</target>
-      </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
         <target>Mein Unternehmen</target>
@@ -284,11 +280,11 @@
       </trans-unit>
       <trans-unit id="label.user_auth_login">
         <source>label.user_auth_login</source>
-        <target>Login Formular</target>
+        <target>Anmeldeformular</target>
       </trans-unit>
       <trans-unit id="label.user_auth_registration">
         <source>label.user_auth_registration</source>
-        <target>Benutzer Registrierung</target>
+        <target>Benutzerregistrierung</target>
       </trans-unit>
       <trans-unit id="label.user_auth_password_reset">
         <source>label.user_auth_password_reset</source>
@@ -296,19 +292,19 @@
       </trans-unit>
       <trans-unit id="label.user_auth_password_reset_retry_ttl">
         <source>label.user_auth_password_reset_retry_ttl</source>
-        <target>Passwort vergessen - Sekunden, bevor ein Benutzer die nächste E-Mail anfordern kann</target>
+        <target>Passwort vergessen – Sekunden, bevor ein Benutzer die nächste E-Mail anfordern kann</target>
       </trans-unit>
       <trans-unit id="label.user_auth_password_reset_token_ttl">
         <source>label.user_auth_password_reset_token_ttl</source>
-        <target>Passwort vergessen - Sekunden, bevor ein Zurücksetzen-Link abläuft</target>
+        <target>Passwort vergessen – Sekunden, bevor ein Zurücksetzen-Link abläuft</target>
       </trans-unit>
       <trans-unit id="label.ldap_activate">
         <source>label.ldap_activate</source>
-        <target>LDAP Anmeldung</target>
+        <target>LDAP-Anmeldung</target>
       </trans-unit>
       <trans-unit id="label.saml_activate">
         <source>label.saml_activate</source>
-        <target>SAML Anmeldung</target>
+        <target>SAML-Anmeldung</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.break_warning_duration">
         <source>label.timesheet.rules.break_warning_duration</source>
@@ -317,6 +313,10 @@
       <trans-unit id="label.timesheet.rules.long_running_duration">
         <source>label.timesheet.rules.long_running_duration</source>
         <target>Maximale Dauer eines Zeiteintrags in Minuten, bevor das Speichern abgelehnt wird (0 = deaktiviert)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>Anzahl an Einträgen für Drag&amp;Drop (0 = deaktiviert)</target>
       </trans-unit>
     </body>
   </file>

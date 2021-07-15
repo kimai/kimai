@@ -826,7 +826,7 @@
       </trans-unit>
       <trans-unit id="recent.activities">
         <source>recent.activities</source>
-        <target>Reprendre une de vos récentes activités</target>
+        <target>Reprendre une de vos activités récentes</target>
       </trans-unit>
       <trans-unit id="recent.activities.format">
         <source>recent.activities.format</source>
@@ -977,7 +977,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Aucune taxe n'a été configuré pour le moment.</target>
+        <target>Aucun taux horaire n'a encore été configuré.</target>
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>
@@ -1214,6 +1214,26 @@
       <trans-unit id="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
         <target>Année fiscale</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Un courriel a été envoyé. Il contient un lien sur lequel vous devez cliquer pour réinitialiser votre mot de passe. Remarque : vous ne pouvez demander un nouveau mot de passe qu'une seule fois toutes les %tokenLifetime% heures. Si vous ne recevez pas de courriel, vérifiez votre dossier d'indésirables ou réessayez.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Un courriel a été envoyé à %email%. Il contient un lien d'activation sur lequel vous devez cliquer pour activer votre compte.</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Revenus</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Temps de travail</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>La demande n'a pas pu être traitée, trop de résultats ont été trouvés.</target>
       </trans-unit>
     </body>
   </file>

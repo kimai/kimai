@@ -65,8 +65,8 @@
         <target>Search term</target>
       </trans-unit>
       <trans-unit id="label.set_as_default">
-        <source>Save setting as search favourite</source>
-        <target state="needs-translation">Save setting as search favourite</target>
+        <source>label.set_as_default</source>
+        <target>Save setting as search favourite</target>
       </trans-unit>
       <trans-unit id="label.remove_default">
         <source>label.remove_default</source>
@@ -147,19 +147,19 @@
         <source>login_required</source>
         <target>Missing permission. Redirect to login?</target>
       </trans-unit>
-            <trans-unit id="registration.check_email">
-                <source>registration.check_email</source>
-                <target>An email has been sent to %email%. It contains an activation link you must click to activate your account.</target>
-            </trans-unit>
-            <trans-unit id="resetting.check_email">
-                <source>resetting.check_email</source>
-                <target>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>An email has been sent to %email%. It contains an activation link you must click to activate your account.</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>
                     An email has been sent. It contains a link you must click to reset your password.
                     Note: You can only request a new password once within %tokenLifetime% hours.
 
                     If you don't get an email check your spam folder or try again.
                 </target>
-            </trans-unit>
+      </trans-unit>
       <!--
               Menu / Navbar items
             -->
@@ -245,6 +245,10 @@
       <trans-unit id="error.no_comments_found">
         <source>error.no_comments_found</source>
         <target>There were no comments posted yet.</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>Request could not be processed, too many results were found.</target>
       </trans-unit>
       <!--
               General labels
@@ -383,7 +387,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Type your message...</target>
+        <target>Type your message…</target>
       </trans-unit>
       <trans-unit id="label.billable">
         <source>label.billable</source>
@@ -1096,7 +1100,7 @@
       </trans-unit>
       <trans-unit id="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Skipped preview of %rows% more rows ...</target>
+        <target>Skipped preview of %rows% more rows …</target>
       </trans-unit>
       <!--
               Export

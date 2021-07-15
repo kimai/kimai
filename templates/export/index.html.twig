@@ -58,7 +58,9 @@
         {% block box_after %}{{ form_end(form) }}{% endblock %}
     {% endembed %}
 
-    {% if preview_show %}
+    {% if too_many is same as (true) %}
+        {{ widgets.callout('danger', 'error.too_many_entries') }}
+    {% elseif preview_show %}
         {% if entries is empty %}
             {{ widgets.nothing_found() }}
         {% else %}

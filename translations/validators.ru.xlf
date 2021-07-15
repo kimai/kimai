@@ -34,6 +34,26 @@
         <source>The begin date cannot be in the future.</source>
         <target>Дата начала не может быть в будущем.</target>
       </trans-unit>
+      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>Максимум {{ value }} часов доступно.</target>
+      </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>Бюджет исчерпан. Из доступного %budget% зарезервировано %used%, %free% может быть использовано.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>Введенные пароли не совпадают.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>Указанный email уже используется.</target>
+      </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>Указанное имя пользователя уже используется.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

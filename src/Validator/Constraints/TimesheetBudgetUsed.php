@@ -9,18 +9,9 @@
 
 namespace App\Validator\Constraints;
 
-use App\Validator\TimesheetBudgetUsedValidator;
-
-final class TimesheetBudgetUsedConstraint extends TimesheetConstraint
+final class TimesheetBudgetUsed extends TimesheetConstraint
 {
-    public const BUDGET_SPENT = 'kimai-timesheet-budget-used-01';
-
     // same messages, so we can re-use the validation translation!
     public $messageRate = 'The budget is completely used.';
     public $messageTime = 'The budget is completely used.';
-
-    public function validatedBy()
-    {
-        return TimesheetBudgetUsedValidator::class;
-    }
 }

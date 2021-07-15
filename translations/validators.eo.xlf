@@ -38,6 +38,22 @@
         <source>The budget is completely used.</source>
         <target>La buĝeto estas elĉerpita. El la disponebla %budget%, %used% estis uzita ĝis nun, kaj %free% ankoraŭ restas uzebla.</target>
       </trans-unit>
+      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>Maksumuma nombro de horoj estas {{ value }}.</target>
+      </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>La salutnomo estas jam uzata.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>La retpoŝta adreso estas jam uzata.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>La tajpitaj pasvortoj ne kongruas.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

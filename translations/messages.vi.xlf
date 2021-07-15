@@ -943,7 +943,7 @@
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
-        <target>Ngày đặt hàng...</target>
+        <target>Ngày đặt hàng…</target>
       </trans-unit>
       <trans-unit id="label.decimalDuration">
         <source>label.decimalDuration</source>

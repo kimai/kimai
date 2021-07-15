@@ -230,7 +230,7 @@
       </trans-unit>
       <trans-unit id="action.close">
         <source>action.close</source>
-        <target>Закрыто</target>
+        <target>Закрыть</target>
       </trans-unit>
       <!--
               Dashboard
@@ -384,7 +384,7 @@
       </trans-unit>
       <trans-unit id="label.address">
         <source>label.address</source>
-        <target>Адресса</target>
+        <target>Адрес</target>
       </trans-unit>
       <trans-unit id="label.country">
         <source>label.country</source>
@@ -408,7 +408,7 @@
       </trans-unit>
       <trans-unit id="label.timezone">
         <source>label.timezone</source>
-        <target>Временная зона</target>
+        <target>Часовой пояс</target>
       </trans-unit>
       <trans-unit id="label.currency">
         <source>label.currency</source>
@@ -434,7 +434,7 @@
       </trans-unit>
       <trans-unit id="label.title">
         <source>label.title</source>
-        <target>Должность</target>
+        <target>Заголовок</target>
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
@@ -561,11 +561,11 @@
             -->
       <trans-unit id="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
-        <target>Образцы счетов</target>
+        <target>Шаблоны счетов</target>
       </trans-unit>
       <trans-unit id="invoice.title">
         <source>invoice.title</source>
-        <target>Бланки счета</target>
+        <target>Счета</target>
       </trans-unit>
       <trans-unit id="button.print">
         <source>button.print</source>
@@ -581,19 +581,19 @@
       </trans-unit>
       <trans-unit id="label.due_days">
         <source>label.due_days</source>
-        <target>Дата оплаты - дни</target>
+        <target>Оплатить в течение, дней</target>
       </trans-unit>
       <trans-unit id="invoice.due_days">
         <source>invoice.due_days</source>
-        <target>Дата оплаты</target>
+        <target>Оплатить до</target>
       </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>
-        <target>С</target>
+        <target>Исполнитель</target>
       </trans-unit>
       <trans-unit id="invoice.to">
         <source>invoice.to</source>
-        <target>До</target>
+        <target>Заказчик</target>
       </trans-unit>
       <trans-unit id="invoice.number">
         <source>invoice.number</source>
@@ -601,7 +601,7 @@
       </trans-unit>
       <trans-unit id="invoice.subtotal">
         <source>invoice.subtotal</source>
-        <target>Сумма счета оплаты (нетто)</target>
+        <target>Всего, без учета НДС</target>
       </trans-unit>
       <trans-unit id="invoice.tax">
         <source>invoice.tax</source>
@@ -609,7 +609,7 @@
       </trans-unit>
       <trans-unit id="invoice.total">
         <source>invoice.total</source>
-        <target>Конечная сумма расчета</target>
+        <target>Итого</target>
       </trans-unit>
       <trans-unit id="invoice.service_date">
         <source>invoice.service_date</source>
@@ -621,11 +621,11 @@
       </trans-unit>
       <trans-unit id="label.total_rate">
         <source>label.total_rate</source>
-        <target>Общая стоимость</target>
+        <target>Сумма</target>
       </trans-unit>
       <trans-unit id="label.payment_terms">
         <source>label.payment_terms</source>
-        <target>Информация о выплате</target>
+        <target>Условия оплаты</target>
       </trans-unit>
       <trans-unit id="invoice.signature_user">
         <source>invoice.signature_user</source>
@@ -947,7 +947,7 @@
       </trans-unit>
       <trans-unit id="label.globalsOnly">
         <source>label.globalsOnly</source>
-        <target>только глобальные</target>
+        <target>Только глобальные</target>
       </trans-unit>
       <trans-unit id="export.mark_all">
         <source>export.mark_all</source>
@@ -963,7 +963,7 @@
       </trans-unit>
       <trans-unit id="entryState.exported">
         <source>entryState.exported</source>
-        <target>Очищенно</target>
+        <target>Очищено</target>
       </trans-unit>
       <trans-unit id="label.exported">
         <source>label.exported</source>
@@ -995,7 +995,7 @@
       </trans-unit>
       <trans-unit id="label.decimalDuration">
         <source>label.decimalDuration</source>
-        <target>Длительность отображения в виде десятичного числа</target>
+        <target>Показывать длительность в виде десятичного числа</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
@@ -1003,11 +1003,11 @@
       </trans-unit>
       <trans-unit id="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
-        <target>VAT номер.:</target>
+        <target>ИНН:</target>
       </trans-unit>
       <trans-unit id="label.unit_price">
         <source>label.unit_price</source>
-        <target>Удельная цена</target>
+        <target>Цена</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
@@ -1019,7 +1019,7 @@
       </trans-unit>
       <trans-unit id="label.vat_id">
         <source>label.vat_id</source>
-        <target>НДС-идентификационный номер</target>
+        <target>ИНН</target>
       </trans-unit>
       <trans-unit id="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
@@ -1063,7 +1063,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Ввести сообщение...</target>
+        <target>Ввести сообщение…</target>
       </trans-unit>
       <trans-unit id="label.teamlead">
         <source>label.teamlead</source>
@@ -1095,15 +1095,15 @@
       </trans-unit>
       <trans-unit id="menu.reporting">
         <source>menu.reporting</source>
-        <target>отчет</target>
+        <target>Отчет</target>
       </trans-unit>
       <trans-unit id="rates.title">
         <source>rates.title</source>
-        <target>сборы</target>
+        <target>Сборы</target>
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>сборы не были настроены.</target>
+        <target>Сборы не были настроены.</target>
       </trans-unit>
       <trans-unit id="modal.dirty">
         <source>modal.dirty</source>
@@ -1112,6 +1112,102 @@
       <trans-unit id="sum.total">
         <source>sum.total</source>
         <target>Всего</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Последняя запись</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Нет времени на бронирование с</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Не оплачено</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Не экспортировано</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Показать записи без бюджета</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Показать записи без бронирований</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Пропущен предварительный просмотр %rows% строк ...</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Дата платежа</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Активных пользователей в этом финансовом году</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Выручка в этом финансовом году</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Часы работы в этом финансовом году</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Финансовый год</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Сохранить все</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Письмо отправлено на %email%. Чтобы активировать аккаунт, нажмите на ссылку в тексте письма.</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Письмо со ссылкой для сброса пароля отправлено. Примечание: Вы можете запросить сброс пароля не чаще, чем раз в %tokenLifetime% часов. Если Вы не получили письмо - проверьте СПАМ или попробуйте позже.</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Обновить заголовок браузера</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Для удаления записи, перетащите её на кнопку.</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Ставка налога</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Поисковый запрос</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Удалить избранный поиск</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Файл</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Упорядочить по</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>По убыванию</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>По возрастанию</target>
       </trans-unit>
     </body>
   </file>

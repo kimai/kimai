@@ -43,10 +43,13 @@ abstract class AbstractSpreadsheetRenderer
     public const DATETIME_FORMAT = 'yyyy-mm-dd hh:mm';
     public const TIME_FORMAT = 'hh:mm';
     public const DURATION_FORMAT = '[hh]:mm';
+    public const DURATION_DECIMAL = '#0.00';
     public const RATE_FORMAT_DEFAULT = '#.##0,00 [$%1$s];-#.##0,00 [$%1$s]';
     public const RATE_FORMAT_LEFT = '_("%1$s"* #,##0.00_);_("%1$s"* \(#,##0.00\);_("%1$s"* "-"??_);_(@_)';
     public const RATE_FORMAT = self::RATE_FORMAT_LEFT;
 
+    protected $durationFormat = self::DURATION_FORMAT;
+    protected $durationBase = 86400;
     /**
      * @var LocaleFormatExtensions
      */
@@ -183,7 +186,7 @@ abstract class AbstractSpreadsheetRenderer
     {
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s)', $startCoordinate, $endCoordinate));
         $style = $sheet->getStyleByColumnAndRow($column, $row);
-        $style->getNumberFormat()->setFormatCode(self::DURATION_FORMAT);
+        $style->getNumberFormat()->setFormatCode($this->durationFormat);
     }
 
     protected function setDuration(Worksheet $sheet, $column, $row, $duration)
@@ -191,8 +194,8 @@ abstract class AbstractSpreadsheetRenderer
         if (null === $duration) {
             $duration = 0;
         }
-        $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=%s/86400', $duration));
-        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::DURATION_FORMAT);
+        $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=%s/%s', $duration, $this->durationBase));
+        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode($this->durationFormat);
     }
 
     protected function setRateTotal(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate)
@@ -232,6 +235,11 @@ abstract class AbstractSpreadsheetRenderer
      */
     protected function getColumns(array $exportItems, TimesheetQuery $query, array $columns): array
     {
+        if (null !== $query->getCurrentUser() && $query->getCurrentUser()->isExportDecimal()) {
+            $this->durationFormat = self::DURATION_DECIMAL;
+            $this->durationBase = 3600;
+        }
+
         $showRates = $this->isRenderRate($query);
 
         if (isset($columns['date']) && !isset($columns['date']['render'])) {

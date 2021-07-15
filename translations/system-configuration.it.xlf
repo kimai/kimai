@@ -96,15 +96,15 @@
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>Branding</target>
+        <target>La mia azienda</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>Logo (URL immagine, login screen)</target>
+        <target>Logo URL (sostituisce il nome dell'azienda nella schermata di accesso)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>Azienda</target>
+        <target>Nome dell'azienda</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>

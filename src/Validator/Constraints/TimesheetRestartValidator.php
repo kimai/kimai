@@ -11,26 +11,20 @@ namespace App\Validator\Constraints;
 
 use App\Entity\Timesheet as TimesheetEntity;
 use App\Timesheet\TrackingModeService;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetRestartValidator extends ConstraintValidator
 {
-    /**
-     * @var TrackingModeService
-     */
     private $trackingModeService;
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $auth;
+    private $security;
 
-    public function __construct(TrackingModeService $service, AuthorizationCheckerInterface $auth)
+    public function __construct(Security $security, TrackingModeService $service)
     {
+        $this->security = $security;
         $this->trackingModeService = $service;
-        $this->auth = $auth;
     }
 
     /**
@@ -58,7 +52,7 @@ final class TimesheetRestartValidator extends ConstraintValidator
             return;
         }
 
-        if ($this->auth->isGranted('start', $timesheet)) {
+        if (null !== $this->security->getUser() && $this->security->isGranted('start', $timesheet)) {
             return;
         }
 
@@ -76,7 +70,5 @@ final class TimesheetRestartValidator extends ConstraintValidator
             ->setTranslationDomain('validators')
             ->setCode(TimesheetRestart::START_DISALLOWED)
             ->addViolation();
-
-        return;
     }
 }

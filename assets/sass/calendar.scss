@@ -32,10 +32,14 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        font-size: 0.7em;
     }
 
-    .info-icon {
-        width: 30px;
+    .title {
+        padding: 3px 7px 0;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
         white-space: nowrap;
         padding: 5px 7px;
         border-left: 1px solid;
