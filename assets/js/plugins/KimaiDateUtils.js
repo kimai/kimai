@@ -38,6 +38,11 @@ export default class KimaiDateUtils extends KimaiPlugin {
         return this.formatMomentDuration(duration);
     }
 
+    formatSecondsToDec(seconds) {
+        const duration = moment.duration('PT' + seconds + 'S');
+        return duration.asHours() + ' h';
+    }
+
     formatMomentDuration(duration) {
         const hours = parseInt(duration.asHours()).toString();
         const minutes = duration.minutes();

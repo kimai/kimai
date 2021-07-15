@@ -353,6 +353,7 @@
                     if (view.name !== 'month' ) {
                         jQuery(".fc-dailytotal").text(DATES.formatSeconds(0)).data('seconds', 0).data('ids', '');
                     }
+                    $el.find('.fc-time').append('<span> (' + DATES.formatSecondsToDec((eventObj.end - eventObj.start) / 1000) + ')</span>');
 
                     hidePopover();
                     $el.popover({
