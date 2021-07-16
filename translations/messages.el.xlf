@@ -1188,6 +1188,30 @@
         <source>label.last_record</source>
         <target>Τελευταία καταχώρηση</target>
       </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Ενεργοί χρήστες κατά το τρέχον οικονομικό έτος</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Έσοδα τρέχοντος οικονομικού έτους</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Ωράριο εργασίας κατά το τρέχον οικονομικό έτος</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Εισπράξεις</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Χρόνος εργασίας</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Οικονομικό έτος</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
