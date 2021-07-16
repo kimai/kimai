@@ -131,15 +131,15 @@
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.begin">
         <source>label.timesheet.rounding.default.begin</source>
-        <target>עיגול זמן ההתחלה בדקות (0 = לא מופעל)</target>
+        <target>עיגול זמן ההתחלה בדקות (0 = מושבת)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.end">
         <source>label.timesheet.rounding.default.end</source>
-        <target>עיגול זמן הסיום בדקות (0 = לא מופעל)</target>
+        <target>עיגול זמן הסיום בדקות (0 = מושבת)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.duration">
         <source>label.timesheet.rounding.default.duration</source>
-        <target>עיגול משך זמן העבודה בדקות (0 = לא מופעל)</target>
+        <target>עיגול משך זמן העבודה בדקות (0 = מושבת)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.mode">
         <source>label.timesheet.rounding.default.mode</source>
