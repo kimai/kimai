@@ -34,15 +34,14 @@ class DateTimePickerType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $dateTimePicker = $this->localeSettings->getDateTimePickerFormat();
-        $dateTimeFormat = $this->localeSettings->getDateTimeTypeFormat();
+        //$dateTimePicker = $this->localeSettings->getDateTimePickerFormat();
+        //$dateTimeFormat = $this->localeSettings->getDateTimeTypeFormat();
 
         $resolver->setDefaults([
             'label' => 'label.begin',
             'date_widget' => 'single_text',
             'time_widget' => 'single_text',
             'html5' => true,
-            'format' => $dateTimeFormat,
             'with_seconds' => false,
             'time_increment' => 1,
         ]);
