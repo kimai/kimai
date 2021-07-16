@@ -1,11 +1,7 @@
 {% macro dd_event(title, customer, project, deprecated) %}
     {% import "macros/widgets.html.twig" as widgets %}
+    <span class="title">{{ title }}</span>
     {% if project is not null %}
         <span class="subtitle">{{ project }}{% if customer is not null %}, {{ customer }}{% endif %}</span>
     {% endif %}
-    {% if deprecated is not null %}
-        <span class="pull-right info-icon" data-toggle="tooltip" data-placement="top" title="{{ deprecated }}">{{ widgets.icon('activity') }}</span>
-    {% endif %}
-    <span class="projecttitle">{{ project }}</span>
-    <span class="title">{{ title }}</span>
 {% endmacro %}

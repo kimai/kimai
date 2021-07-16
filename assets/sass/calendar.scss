@@ -17,17 +17,8 @@
         width: 100%;
     }
 
-    .title {
-        padding: 0px 0 5px 10px;
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        font-size: 0.7em;
-    }
-
-    .projecttitle {
-        padding: 5px 0 5px 10px;
+    .subtitle {
+        padding: 0 7px 4px 7px;
         display: block;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -41,9 +32,6 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        padding: 5px 7px;
-        border-left: 1px solid;
-        line-height: 36px;
     }
 }
 
