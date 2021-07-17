@@ -111,9 +111,9 @@ class ProjectStatisticService
         $years = [];
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
-            ->select('SUM(t.duration) as duration')
-            ->addSelect('SUM(t.rate) as rate')
-            ->addSelect('SUM(t.internalRate) as internalRate')
+            ->select('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')
             ->addSelect('COUNT(t.id) as count')
             ->andWhere('t.project = :project')
             ->setParameter('project', $query->getProject())
