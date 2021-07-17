@@ -13,7 +13,9 @@
 <h1 align="center">Kimai - time-tracker</h1>
 
 Kimai is a free, open source and online time-tracking software designed for small businesses and freelancers. 
-It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Doctrine, AdminLTE, Webpack, ES6 etc.
+It is built with modern technologies such as [Symfony](https://github.com/symfony/symfony), [Bootstrap](https://github.com/twbs/bootstrap), 
+[RESTful API](https://github.com/FriendsOfSymfony/FOSRestBundle), [Doctrine](https://github.com/doctrine/),
+[AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/), [Webpack](https://github.com/webpack/webpack), ES6 and [many](composer.json) [more](package.json).
 
 ## Introduction
 
@@ -25,10 +27,10 @@ It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Do
 
 ### Requirements
 
-- PHP 7.2.9 or higher ([PHP 8 support in master](https://github.com/kevinpapst/kimai2/pull/2158))
+- PHP 7.3 or higher (PHP 8 supported)
 - MariaDB or MySQL
-- Webserver (nginx, Apache)
-- Some PHP extensions, see [composer.json](composer.json) or [here](https://www.kimai.org/download/)
+- A webserver and subdomain
+- PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `xsl`, `zip`
 
 ### About
 
@@ -37,10 +39,7 @@ with many advanced features, including but not limited to:
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
 authentication via SAML/LDAP/Database, customizable role and team permissions, responsive and ready for your mobile device, 
-user specific rates, advanced search & filtering, money and time budgets, multiple reports, support for plugins and many more.
-
-Kimai 2 is based on modern frameworks like [Symfony](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
-[AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json).
+user specific rates, advanced search & filtering, money and time budgets, reporting, support for plugins and many more.
 
 ## Installation
 
