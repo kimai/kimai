@@ -714,8 +714,8 @@
         <target>Alvo de pagamento</target>
       </trans-unit>
       <trans-unit id="invoice.from">
-        <source>invoice.from</source>
-        <target>De</target>
+        <source>Exhibitor</source>
+        <target>Expositor</target>
       </trans-unit>
       <trans-unit id="invoice.to">
         <source>invoice.to</source>
@@ -774,8 +774,8 @@
         <target>Número do pedido</target>
       </trans-unit>
       <trans-unit id="label.invoice_tax_number">
-        <source>label.invoice_tax_number</source>
-        <target>VAT no. (Imposto Britânico):</target>
+        <source>Number nip:</source>
+        <target>Número nip:</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
