@@ -82,8 +82,11 @@
                 {{ user.username }}
             </p>
             <p>
+                <strong>{{ 'label.account_number'|trans }}</strong><br>
+                {{ user.accountNumber }}
+            </p>
+            <p>
                 <strong>{{ 'profile.first_entry'|trans }}</strong><br>
-                {# FIXME use a configuration for it #}
                 {{ stats.firstEntry|date_short }}
             </p>
             <p>
@@ -152,6 +155,9 @@
         <div class="widget-user-header" style="{% if config.image is not null %}background: url('{{ config.image }}') center center;{% else %}background-color: {{ config.color }}{% endif %}">
             <h3 class="widget-user-username" style="color: {{ config.font }}">
                 {{ widgets.username(user) }}
+                {% if user.displayName != user.username %}
+                    ({{ user.username }})
+                {% endif %}
             </h3>
             <h5 class="widget-user-desc" style="color: {{ config.font }}">{{ user.title }}</h5>
         </div>

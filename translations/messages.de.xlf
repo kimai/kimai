@@ -1243,6 +1243,10 @@
         <source>label.last_record</source>
         <target>Letzter Eintrag</target>
       </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Personalnummer</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -291,6 +291,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                     $qb->expr()->orX(
                         $qb->expr()->like('u.alias', ':searchTerm'),
                         $qb->expr()->like('u.title', ':searchTerm'),
+                        $qb->expr()->like('u.accountNumber', ':searchTerm'),
                         $qb->expr()->like('u.email', ':searchTerm'),
                         $qb->expr()->like('u.username', ':searchTerm')
                     )
