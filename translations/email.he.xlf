@@ -43,7 +43,7 @@
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target>שכחת את הסיסמה שלך? אל דאגה, נעזור לך ליצור סיסמה חדשה:</target>
+        <target>… אז שכחת את הסיסמה שלך? אל דאגה, נעזור לך ליצור סיסמה חדשה:</target>
       </trans-unit>
     </body>
   </file>

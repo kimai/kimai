@@ -34,6 +34,10 @@
         <source>report_weekly_users</source>
         <target>תצוגה שבועית לכל המשתמשים</target>
       </trans-unit>
+      <trans-unit id="report_project_details">
+        <source>report_project_details</source>
+        <target>פרטי המיזם</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

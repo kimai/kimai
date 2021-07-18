@@ -34,6 +34,10 @@
         <source>reporting.initial_view</source>
         <target>Relatório inicial</target>
       </trans-unit>
+      <trans-unit id="report_project_details">
+        <source>report_project_details</source>
+        <target>Detalhes do projeto</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

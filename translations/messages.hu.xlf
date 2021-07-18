@@ -715,11 +715,11 @@
       </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>
-        <target>Feladó:</target>
+        <target>Feladó</target>
       </trans-unit>
       <trans-unit id="invoice.to">
         <source>invoice.to</source>
-        <target>Címzett:</target>
+        <target>Címzett</target>
       </trans-unit>
       <trans-unit id="invoice.number">
         <source>invoice.number</source>

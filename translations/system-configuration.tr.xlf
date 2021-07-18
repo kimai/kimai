@@ -306,6 +306,18 @@
         <source>lockdown_period</source>
         <target>Kilitleme dönemi</target>
       </trans-unit>
+      <trans-unit id="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>Sürükle-bırak için girdi sayısı (0 = devre dışı)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>Renk atanmamış nesneler için rastgele renkler kullan</target>
+      </trans-unit>
+      <trans-unit id="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>Avatarlar için URL kullanımına izin ver</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

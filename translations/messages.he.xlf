@@ -19,7 +19,7 @@
       </trans-unit>
       <trans-unit id="both">
         <source>both</source>
-        <target>הכל</target>
+        <target>הכול</target>
       </trans-unit>
       <trans-unit id="This is a mandatory field">
         <source>This is a mandatory field</source>
@@ -27,11 +27,11 @@
       </trans-unit>
       <trans-unit id="create">
         <source>create</source>
-        <target>צור</target>
+        <target>יצירה</target>
       </trans-unit>
       <trans-unit id="confirm.delete">
         <source>confirm.delete</source>
-        <target>אתה באמת מעוניין למחוק?</target>
+        <target>למחוק את זה?</target>
       </trans-unit>
       <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
@@ -42,23 +42,23 @@
       </trans-unit>
       <trans-unit id="delete.not_in_use">
         <source>delete.not_in_use</source>
-        <target>האובייקט הזה יכול להימחק בביטחה.</target>
+        <target>אפשר למחוק את הפריט הזה ללא חשש.</target>
       </trans-unit>
       <trans-unit id="cancel">
         <source>cancel</source>
-        <target>בטל</target>
+        <target>ביטול</target>
       </trans-unit>
       <trans-unit id="confirm">
         <source>confirm</source>
-        <target>אשר</target>
+        <target>אישור</target>
       </trans-unit>
       <trans-unit id="upload">
         <source>upload</source>
-        <target>העלה</target>
+        <target>העלאה</target>
       </trans-unit>
       <trans-unit id="search">
         <source>search</source>
-        <target>חפש</target>
+        <target>חיפוש</target>
       </trans-unit>
       <trans-unit id="my.profile">
         <source>my.profile</source>
@@ -70,11 +70,11 @@
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>
-        <target>Files</target>
+        <target>קבצים</target>
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>לא הוגדרו עדיין עמלות.</target>
+        <target>לא הוגדרו עדיין עמלות שעתיות.</target>
       </trans-unit>
       <trans-unit id="rates.title">
         <source>rates.title</source>
@@ -90,7 +90,7 @@
       </trans-unit>
       <trans-unit id="label.logout">
         <source>label.logout</source>
-        <target>התנתקות</target>
+        <target>יציאה</target>
       </trans-unit>
       <trans-unit id="label.user_profile">
         <source>label.user_profile</source>
@@ -106,11 +106,11 @@
       </trans-unit>
       <trans-unit id="login_required">
         <source>login_required</source>
-        <target>חסרה הרשאה. התחבר מחדש?</target>
+        <target>חסרה הרשאה. להפנות לכניסה למערכת?</target>
       </trans-unit>
       <trans-unit id="menu.homepage">
         <source>menu.homepage</source>
-        <target>דשבורד</target>
+        <target>לוח בקרה</target>
       </trans-unit>
       <trans-unit id="menu.admin">
         <source>menu.admin</source>
@@ -122,7 +122,7 @@
       </trans-unit>
       <trans-unit id="menu.logout">
         <source>menu.logout</source>
-        <target>התנתקות</target>
+        <target>יציאה</target>
       </trans-unit>
       <trans-unit id="menu.timesheet">
         <source>menu.timesheet</source>
@@ -146,7 +146,7 @@
       </trans-unit>
       <trans-unit id="menu.admin_project">
         <source>menu.admin_project</source>
-        <target>פרויקטים</target>
+        <target>מיזמים</target>
       </trans-unit>
       <trans-unit id="menu.admin_activity">
         <source>menu.admin_activity</source>
@@ -178,7 +178,7 @@
       </trans-unit>
       <trans-unit id="error.no_entries_found">
         <source>error.no_entries_found</source>
-        <target>לא נמצאו רשומות על בסיס הסינונים שבחרת.</target>
+        <target>לא נמצאו רשומות שתואמות לסינונים שבחרת.</target>
       </trans-unit>
       <trans-unit id="error.no_comments_found">
         <source>error.no_comments_found</source>
@@ -242,7 +242,7 @@
       </trans-unit>
       <trans-unit id="label.project">
         <source>label.project</source>
-        <target>פרויקט</target>
+        <target>מיזם</target>
       </trans-unit>
       <trans-unit id="label.tag">
         <source>label.tag</source>
@@ -266,7 +266,7 @@
       </trans-unit>
       <trans-unit id="label.theme.layout">
         <source>label.theme.layout</source>
-        <target>הצג: פריסה</target>
+        <target>תצוגה: פריסה</target>
       </trans-unit>
       <trans-unit id="label.hours">
         <source>label.hours</source>
@@ -286,7 +286,7 @@
       </trans-unit>
       <trans-unit id="help.rate_internal">
         <source>help.rate_internal</source>
-        <target>עלות פנימית. אם לא מצוין ערך, ילקח התעריף הרגיל</target>
+        <target>עלויות פנימיות (אם לא מוגדר, זה התעריף הרגיל)</target>
       </trans-unit>
       <trans-unit id="label.language">
         <source>label.language</source>
@@ -310,7 +310,7 @@
       </trans-unit>
       <trans-unit id="label.create_more">
         <source>label.create_more</source>
-        <target>צור רשומות נוספות</target>
+        <target>יצירת רשומות נוספות</target>
       </trans-unit>
       <trans-unit id="label.billable">
         <source>label.billable</source>
@@ -322,35 +322,35 @@
       </trans-unit>
       <trans-unit id="action.edit">
         <source>action.edit</source>
-        <target>ערוך</target>
+        <target>עריכה</target>
       </trans-unit>
       <trans-unit id="action.delete">
         <source>action.delete</source>
-        <target>מחק</target>
+        <target>מחיקה</target>
       </trans-unit>
       <trans-unit id="action.save">
         <source>action.save</source>
-        <target>שמור</target>
+        <target>שמירה</target>
       </trans-unit>
       <trans-unit id="action.reset">
         <source>action.reset</source>
-        <target>אפס</target>
+        <target>איפוס</target>
       </trans-unit>
       <trans-unit id="action.back">
         <source>action.back</source>
-        <target>חזור</target>
+        <target>חזרה</target>
       </trans-unit>
       <trans-unit id="action.close">
         <source>action.close</source>
-        <target>סגור</target>
+        <target>סגירה</target>
       </trans-unit>
       <trans-unit id="dashboard.title">
         <source>dashboard.title</source>
-        <target>דשבורד</target>
+        <target>לוח בקרה</target>
       </trans-unit>
       <trans-unit id="dashboard.subtitle">
         <source>dashboard.subtitle</source>
-        <target>ברוך הבא!</target>
+        <target>ברוך בואך!</target>
       </trans-unit>
       <trans-unit id="dashboard.all">
         <source>dashboard.all</source>
@@ -362,7 +362,7 @@
       </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
-        <target>הראה תפריט</target>
+        <target>הצגת תפריט</target>
       </trans-unit>
       <trans-unit id="label.my_teams">
         <source>label.my_teams</source>
@@ -370,7 +370,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>פרויקטים ותקציבים לצוות</target>
+        <target>מיזמים ותקציבים לצוות</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -386,7 +386,7 @@
       </trans-unit>
       <trans-unit id="timesheet.edit">
         <source>timesheet.edit</source>
-        <target>ערוך רשומה</target>
+        <target>עריכת רשומה</target>
       </trans-unit>
       <trans-unit id="label.begin">
         <source>label.begin</source>
@@ -402,11 +402,11 @@
       </trans-unit>
       <trans-unit id="modal.columns.title">
         <source>modal.columns.title</source>
-        <target>שנה הצגת עמודות</target>
+        <target>שינוי עמודות מוצגות</target>
       </trans-unit>
       <trans-unit id="modal.columns.description">
         <source>modal.columns.description</source>
-        <target>לאחר השמירה, כל העמודות הלא מסומנות יהיו מוסתרות. הגדרה זו תישמר בעוגיה בדפדפן. אם תמחק עוגיות מהדפדפן שלך, הגדרה זו תתבטל.</target>
+        <target>לאחר השמירה, כל העמודות הלא מסומנות תוסתרנה. הגדרה זו תישמר בעוגיה בדפדפן. מחיקת עוגיות מהדפדפן שלך תבטל את ההגדרה הזו.</target>
       </trans-unit>
       <trans-unit id="label.fixedRate">
         <source>label.fixedRate</source>
@@ -422,11 +422,11 @@
       </trans-unit>
       <trans-unit id="label.replaceTags">
         <source>label.replaceTags</source>
-        <target>החלף תגיות</target>
+        <target>החלפת תגיות</target>
       </trans-unit>
       <trans-unit id="label.appendTags">
         <source>label.appendTags</source>
-        <target>הוסף תגיות</target>
+        <target>הוספת תגיות</target>
       </trans-unit>
       <trans-unit id="profile.title">
         <source>profile.title</source>
@@ -466,15 +466,15 @@
       </trans-unit>
       <trans-unit id="label.theme.collapsed_sidebar">
         <source>label.theme.collapsed_sidebar</source>
-        <target>מזער את התפריט השמאלי</target>
+        <target>צמצום התפריט הימני</target>
       </trans-unit>
       <trans-unit id="label.calendar.initial_view">
         <source>label.calendar.initial_view</source>
-        <target>החל תצוגת לוח שנה</target>
+        <target>תצוגת לוח שנה התחלתית</target>
       </trans-unit>
       <trans-unit id="label.login.initial_view">
         <source>label.login.initial_view</source>
-        <target>החל תצוגה לאחר התחברות</target>
+        <target>תצוגה התחלתית לאחר הכניסה</target>
       </trans-unit>
       <trans-unit id="label.lastLogin">
         <source>label.lastLogin</source>
@@ -494,11 +494,11 @@
       </trans-unit>
       <trans-unit id="label.timesheet.daily_stats">
         <source>label.timesheet.daily_stats</source>
-        <target>הראה סטטיסטיקות יומיות בגיליון השעות</target>
+        <target>הצגת סטטיסטיקות יומיות בגיליון השעות</target>
       </trans-unit>
       <trans-unit id="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
-        <target>ייצא משך זמן עם נקודה עשרונית</target>
+        <target>ייצוא משך זמן עם נקודה עשרונית</target>
       </trans-unit>
       <trans-unit id="calendar.title">
         <source>calendar.title</source>
@@ -510,22 +510,19 @@
       </trans-unit>
       <trans-unit id="admin_project.title">
         <source>admin_project.title</source>
-        <target>פרויקטים</target>
+        <target>מיזמים</target>
       </trans-unit>
       <trans-unit id="admin_project.short_stats">
         <source>admin_project.short_stats</source>
-        <target>
-                    כרגע, הפרויקט %project% ללקוח %customer% יש %activities%
-                    פעילויות ו %records% רשומות זמן, שמסתכמות לסך הכל %duration%.
-                </target>
+        <target>כרגע, למיזם %project% ללקוח %customer% יש %activities% פעילויות ו־%records% רשומות זמן, שמסתכמות לסך של %duration%.</target>
       </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
-        <target>תחילת פרויקט</target>
+        <target>תחילת מיזם</target>
       </trans-unit>
       <trans-unit id="label.project_end">
         <source>label.project_end</source>
-        <target>סיום פרויקט</target>
+        <target>סוף מיזם</target>
       </trans-unit>
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
@@ -533,10 +530,7 @@
       </trans-unit>
       <trans-unit id="admin_activity.short_stats">
         <source>admin_activity.short_stats</source>
-        <target>
-                    כרגע, הפעילות %activity% בפרויקט %project% ללקוח %customer%
-                    יש %records% רשומות זמן, שמסתכמות לסך הכל %duration%.
-                </target>
+        <target>כרגע, לפעילות %activity% במיזם %project% ללקוח %customer% יש %records% רשומות זמן, שמסתכמות לסך של %duration%.</target>
       </trans-unit>
       <trans-unit id="admin_customer.title">
         <source>admin_customer.title</source>
@@ -596,10 +590,7 @@
       </trans-unit>
       <trans-unit id="admin_customer.short_stats">
         <source>admin_customer.short_stats</source>
-        <target>
-                    כרגע, ללקוח %customer% יש %project% פרויקטים עם %activity% פעילויות, שמסתכמות
-                    ב %records% רשומות זמן לסך הכל %duration%.
-                </target>
+        <target>כרגע, ללקוח %customer% יש %project% מיזמים עם %activity% פעילויות, שמסתכמות ב־%records% רשומות זמן לסך של %duration%.</target>
       </trans-unit>
       <trans-unit id="admin_user.title">
         <source>admin_user.title</source>
@@ -683,7 +674,7 @@
       </trans-unit>
       <trans-unit id="stats.durationTotal">
         <source>stats.durationTotal</source>
-        <target>סך הכל שעות עבודה</target>
+        <target>סך שעות העבודה</target>
       </trans-unit>
       <trans-unit id="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -707,7 +698,7 @@
       </trans-unit>
       <trans-unit id="stats.amountTotal">
         <source>stats.amountTotal</source>
-        <target>סך הכל הכנסות</target>
+        <target>סך ההכנסות</target>
       </trans-unit>
       <trans-unit id="stats.userActiveToday">
         <source>stats.userActiveToday</source>
@@ -727,7 +718,7 @@
       </trans-unit>
       <trans-unit id="stats.userActiveTotal">
         <source>stats.userActiveTotal</source>
-        <target>משתמשים פעילים</target>
+        <target>משתמשים פעילים אי פעם</target>
       </trans-unit>
       <trans-unit id="stats.activeRecordings">
         <source>stats.activeRecordings</source>
@@ -743,7 +734,7 @@
       </trans-unit>
       <trans-unit id="stats.projectTotal">
         <source>stats.projectTotal</source>
-        <target>פרויקטים</target>
+        <target>מיזמים</target>
       </trans-unit>
       <trans-unit id="stats.customerTotal">
         <source>stats.customerTotal</source>
@@ -755,7 +746,7 @@
       </trans-unit>
       <trans-unit id="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
-        <target>%percent%% בשימוש (%left% עדין פתוחות)</target>
+        <target>%percent%% בשימוש (%left% עדיין פתוחות)</target>
       </trans-unit>
       <trans-unit id="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
@@ -767,7 +758,7 @@
       </trans-unit>
       <trans-unit id="invoice.filter">
         <source>invoice.filter</source>
-        <target>סנן נתוני חשבונית</target>
+        <target>סינון נתוני חשבונית</target>
       </trans-unit>
       <trans-unit id="button.preview">
         <source>button.preview</source>
@@ -779,7 +770,7 @@
       </trans-unit>
       <trans-unit id="button.print">
         <source>button.print</source>
-        <target>הדפס</target>
+        <target>הדפסה</target>
       </trans-unit>
       <trans-unit id="button.csv">
         <source>button.csv</source>
@@ -803,7 +794,7 @@
       </trans-unit>
       <trans-unit id="label.mark_as_exported">
         <source>label.mark_as_exported</source>
-        <target>סמן לייצוא</target>
+        <target>סימון שעבר ייצוא</target>
       </trans-unit>
       <trans-unit id="label.template">
         <source>label.template</source>
@@ -819,11 +810,11 @@
       </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>
-        <target>התחלה</target>
+        <target>מציג</target>
       </trans-unit>
       <trans-unit id="invoice.to">
         <source>invoice.to</source>
-        <target>סיום</target>
+        <target>לטובת</target>
       </trans-unit>
       <trans-unit id="invoice.number">
         <source>invoice.number</source>
@@ -839,7 +830,7 @@
       </trans-unit>
       <trans-unit id="invoice.total">
         <source>invoice.total</source>
-        <target>סך הכל</target>
+        <target>סך הכול</target>
       </trans-unit>
       <trans-unit id="invoice.service_date">
         <source>invoice.service_date</source>
@@ -867,7 +858,7 @@
       </trans-unit>
       <trans-unit id="invoice.signature_customer">
         <source>invoice.signature_customer</source>
-        <target>אישור: Date / שם הלקוח / חתימה</target>
+        <target>אישור: תאריך / שם הלקוח / חתימה</target>
       </trans-unit>
       <trans-unit id="invoice.total_working_time">
         <source>invoice.total_working_time</source>
@@ -881,21 +872,17 @@
         <source>label.orderDate</source>
         <target>תאריך הזמנה</target>
       </trans-unit>
-      <trans-unit id="label.invoice_tax_number">
-        <source>label.invoice_tax_number</source>
-        <target>מספר מע''מ:</target>
-      </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
         <target>חשבון בנק</target>
       </trans-unit>
       <trans-unit id="label.decimalDuration">
         <source>label.decimalDuration</source>
-        <target>הצג משך זמן עם נקודה עשרונית</target>
+        <target>הצגת משך זמן עם נקודה עשרונית</target>
       </trans-unit>
       <trans-unit id="label.status">
         <source>label.status</source>
-        <target>סטטוס</target>
+        <target>מצב</target>
       </trans-unit>
       <trans-unit id="status.new">
         <source>status.new</source>
@@ -911,15 +898,15 @@
       </trans-unit>
       <trans-unit id="export.title">
         <source>export.title</source>
-        <target>ייצא</target>
+        <target>ייצוא</target>
       </trans-unit>
       <trans-unit id="export.subtitle">
         <source>export.subtitle</source>
-        <target>ייצא גיליון שעות עבודה במספר פורמטים</target>
+        <target>ייצוא גיליון שעות עבודה במספר תצורות</target>
       </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
-        <target>סנן נתונים לייצוא</target>
+        <target>סינון נתונים לייצוא</target>
       </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
@@ -927,7 +914,7 @@
       </trans-unit>
       <trans-unit id="export.document_title">
         <source>export.document_title</source>
-        <target>ייצא גיליון שעות</target>
+        <target>ייצוא גיליון שעות</target>
       </trans-unit>
       <trans-unit id="export.full_list">
         <source>export.full_list</source>
@@ -943,7 +930,7 @@
       </trans-unit>
       <trans-unit id="export.date_copyright">
         <source>export.date_copyright</source>
-        <target>נוצר ב %date% %kimai%</target>
+        <target>נוצר ב־%date% עם %kimai%</target>
       </trans-unit>
       <trans-unit id="active.entries">
         <source>active.entries</source>
@@ -951,19 +938,19 @@
       </trans-unit>
       <trans-unit id="timesheet.all">
         <source>timesheet.all</source>
-        <target>הצג את כל הרשומות</target>
+        <target>הצגת כל הרשומות</target>
       </trans-unit>
       <trans-unit id="recent.activities">
         <source>recent.activities</source>
-        <target>אתחל את אחת הפעילויות האחרונות שלך</target>
+        <target>הפעלה של אחת הפעילויות האחרונות שלך מחדש</target>
       </trans-unit>
       <trans-unit id="recent.activities.format">
         <source>recent.activities.format</source>
-        <target>%activity% ב %project% עבור %customer%</target>
+        <target>%activity% ב%project% עבור %customer%</target>
       </trans-unit>
       <trans-unit id="timesheet.start">
         <source>timesheet.start</source>
-        <target>צור רשומת זמן חדשה</target>
+        <target>יצירת רשומת זמן חדשה</target>
       </trans-unit>
       <trans-unit id="label.pageSize">
         <source>label.pageSize</source>
@@ -971,11 +958,11 @@
       </trans-unit>
       <trans-unit id="label.entryState">
         <source>label.entryState</source>
-        <target>מצב רשומה</target>
+        <target>רשומות</target>
       </trans-unit>
       <trans-unit id="label.exported">
         <source>label.exported</source>
-        <target>ייצוא</target>
+        <target>עבר ייצוא</target>
       </trans-unit>
       <trans-unit id="entryState.exported">
         <source>entryState.exported</source>
@@ -987,7 +974,7 @@
       </trans-unit>
       <trans-unit id="entryState.all">
         <source>entryState.all</source>
-        <target>הכל</target>
+        <target>הכול</target>
       </trans-unit>
       <trans-unit id="entryState.running">
         <source>entryState.running</source>
@@ -999,15 +986,15 @@
       </trans-unit>
       <trans-unit id="export.clear_all">
         <source>export.clear_all</source>
-        <target>סמן את כל הרשומות כפתוחות?</target>
+        <target>לסמן את כל הרשומות כפתוחות?</target>
       </trans-unit>
       <trans-unit id="export.mark_all">
         <source>export.mark_all</source>
-        <target>נקה את כל הרשומות המסומנות?</target>
+        <target>לנקות את כל הרשומות המסומנות?</target>
       </trans-unit>
       <trans-unit id="label.globalsOnly">
         <source>label.globalsOnly</source>
-        <target>רק גלובלי</target>
+        <target>גלובלי בלבד</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
@@ -1051,19 +1038,19 @@
       </trans-unit>
       <trans-unit id="theme.update_browser_title">
         <source>theme.update_browser_title</source>
-        <target>עדכן כותרת דפדפן</target>
+        <target>עדכון כותרת דפדפן</target>
       </trans-unit>
       <trans-unit id="modal.dirty">
         <source>modal.dirty</source>
-        <target>הטופס השתנה. נא ללחץ על "שמירה" כדי לשמור את השינויים או על "סגירה" כדי לבטל.</target>
+        <target>הטופס השתנה. נא ללחוץ על „שמירה” כדי לשמור את השינויים או על „סגירה” כדי לבטל.</target>
       </trans-unit>
       <trans-unit id="sum.total">
         <source>sum.total</source>
-        <target>סך הכל</target>
+        <target>סך הכול</target>
       </trans-unit>
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
-        <target>חיפוש מונח</target>
+        <target>מונח לחיפוש</target>
       </trans-unit>
       <trans-unit id="label.includeNoBudget">
         <source>label.includeNoBudget</source>
@@ -1095,11 +1082,11 @@
       </trans-unit>
       <trans-unit id="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
-        <target>למחיקת רשומה עליך לגרור אותה לתחתית.</target>
+        <target>למחיקת רשומה יש לגרור אותה לתחתית.</target>
       </trans-unit>
       <trans-unit id="action.save_all">
         <source>action.save_all</source>
-        <target>לשמור הכול</target>
+        <target>שמירה של הכול</target>
       </trans-unit>
       <trans-unit id="file">
         <source>file</source>
@@ -1156,6 +1143,18 @@
       <trans-unit id="label.last_record_before">
         <source>label.last_record_before</source>
         <target>אין הזמנת שעה מאז</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>רווחים</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>זמן עבודה</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>לא ניתן לעבד את הבקשה, נמצאו יותר מדי תוצאות.</target>
       </trans-unit>
     </body>
   </file>

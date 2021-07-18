@@ -1087,7 +1087,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Henüz hiçbir ücret yapılandırılmadı.</target>
+        <target>Henüz hiçbir saatlik ücret yapılandırılmadı.</target>
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>
@@ -1216,6 +1216,18 @@
       <trans-unit id="registration.check_email">
         <source>registration.check_email</source>
         <target>%email% adresine, hesabınızı etkinleştirmek için tıklamanız gereken etkinleştirme bağlantısı içeren bir e-posta gönderildi.</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Kazançlar</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Açık kalma süresi</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>Çok fazla sonuç bulunduğundan dolayı istek işlenemedi.</target>
       </trans-unit>
     </body>
   </file>

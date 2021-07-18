@@ -1072,7 +1072,7 @@
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Tajpi vian mesaĝon…</target>
+        <target>Tajpu vian mesaĝon…</target>
       </trans-unit>
       <trans-unit id="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
@@ -1231,6 +1231,14 @@
       <trans-unit id="registration.check_email">
         <source>registration.check_email</source>
         <target>Retpoŝta mesaĝo estis sendita al %email%. Ĝi enhavas aktivigan ligon, kiun vi devas alklaki por aktivigi vian konton.</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Enspezoj</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Laborhoroj</target>
       </trans-unit>
     </body>
   </file>

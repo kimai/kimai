@@ -713,14 +713,6 @@
         <source>invoice.due_days</source>
         <target>支払期日</target>
       </trans-unit>
-      <trans-unit id="invoice.from">
-        <source>invoice.from</source>
-        <target>From</target>
-      </trans-unit>
-      <trans-unit id="invoice.to">
-        <source>invoice.to</source>
-        <target>To</target>
-      </trans-unit>
       <trans-unit id="invoice.number">
         <source>invoice.number</source>
         <target>請求書番号</target>

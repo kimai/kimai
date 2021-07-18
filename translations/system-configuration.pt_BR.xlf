@@ -306,6 +306,18 @@
         <source>lockdown_period</source>
         <target>Período de bloqueio</target>
       </trans-unit>
+      <trans-unit id="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>Quantidade das entradas para arrastar&amp;largar (0 = desativado)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>Use cores aleatórias para os objetos sem atribuição de cor</target>
+      </trans-unit>
+      <trans-unit id="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>Permitir o uso de URLs para as imagens do avatar</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
