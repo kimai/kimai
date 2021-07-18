@@ -56,7 +56,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  *
- * @Exporter\Order({"id", "username", "alias", "title", "email", "accountNumber", "last_login", "language", "timezone", "active", "registeredAt", "roles", "teams"})
+ * @Exporter\Order({"id", "username", "alias", "title", "email", "last_login", "language", "timezone", "active", "registeredAt", "roles", "teams", "color", "accountNumber"})
  * @Exporter\Expose("email", label="label.email", exp="object.getEmail()")
  * @Exporter\Expose("username", label="label.username", exp="object.getUsername()")
  * @Exporter\Expose("timezone", label="label.timezone", exp="object.getTimezone()")

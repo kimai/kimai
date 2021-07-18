@@ -338,6 +338,7 @@ class UserTest extends TestCase
             ['profile.registration_date', 'datetime'],
             ['label.roles', 'array'],
             ['label.color', 'string'],
+            ['label.account_number', 'string'],
         ];
 
         self::assertCount(\count($expected), $columns);
