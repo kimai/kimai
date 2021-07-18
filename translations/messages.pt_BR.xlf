@@ -713,10 +713,6 @@
         <source>invoice.due_days</source>
         <target>Alvo de pagamento</target>
       </trans-unit>
-      <trans-unit id="invoice.from">
-        <source>invoice.from</source>
-        <target>Expositor</target>
-      </trans-unit>
       <trans-unit id="invoice.to">
         <source>invoice.to</source>
         <target>Para</target>
