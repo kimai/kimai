@@ -8,11 +8,19 @@
         {% block box_body %}
             {{ form_start(form) }}
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-9">
                     {{ form_row(form.alias) }}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     {{ form_row(form.color) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    {{ form_row(form.title) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.accountNumber) }}
                 </div>
             </div>
             {{ form_widget(form) }}

@@ -234,7 +234,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      *
      * @var string|null
      * @ORM\Column(name="account", type="string", length=30, nullable=true)
-     * @Assert\Length(allowEmptyString=true, max="30")
+     * @Assert\Length(allowEmptyString=true, max="30", groups={"Registration", "UserCreate", "Profile"})
      */
     private $accountNumber;
     /**
