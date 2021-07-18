@@ -309,7 +309,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'roles' => ['result' => 'array', 'type' => 'string'],
                     'language' => 'string',
                     'timezone' => 'string',
-                    'accountNumber' => 'string',
+                    'accountNumber' => '@string',
                 ];
 
             // if a team is embedded
