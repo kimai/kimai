@@ -1148,7 +1148,7 @@
       </trans-unit>
       <trans-unit id="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Pominięto podgląd więcej wierszy…</target>
+        <target>Pominięto podgląd %rows% więcej wierszy…</target>
       </trans-unit>
       <trans-unit id="invoice.payment_date">
         <source>invoice.payment_date</source>
