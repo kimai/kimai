@@ -1007,8 +1007,8 @@
         <target>Payment date</target>
       </trans-unit>
       <trans-unit id="invoice.from">
-        <source>Exhibitor</source>
-        <target>Exhibitor</target>
+        <source>From</source>
+        <target>From</target>
       </trans-unit>
       <trans-unit id="invoice.to">
         <source>invoice.to</source>
@@ -1071,8 +1071,8 @@
         <target>Order date</target>
       </trans-unit>
       <trans-unit id="label.invoice_tax_number">
-        <source>Number nip:</source>
-        <target>Number nip:</target>
+        <source>VAT no.:</source>
+        <target>VAT no.:</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
