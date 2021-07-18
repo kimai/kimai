@@ -56,7 +56,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  *
- * @Exporter\Order({"id", "username", "alias", "title", "email", "last_login", "language", "timezone", "active", "registeredAt", "roles", "teams"})
+ * @Exporter\Order({"id", "username", "alias", "title", "email", "last_login", "language", "timezone", "active", "registeredAt", "roles", "teams", "color", "accountNumber"})
  * @Exporter\Expose("email", label="label.email", exp="object.getEmail()")
  * @Exporter\Expose("username", label="label.username", exp="object.getUsername()")
  * @Exporter\Expose("timezone", label="label.timezone", exp="object.getTimezone()")
@@ -85,7 +85,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
      * Internal ID
      *
      * @var int
-     * @internal must be protected because of parent class
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
@@ -96,7 +95,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer")
      */
-    protected $id;
+    private $id;
     /**
      * The user alias will be displayed in the frontend instead of the username
      *
@@ -227,6 +226,17 @@ class User implements UserInterface, EquatableInterface, \Serializable
      * @Assert\Email(groups={"Registration", "UserCreate", "Profile"})
      */
     private $email;
+    /**
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
+     * @Exporter\Expose(label="label.account_number")
+     *
+     * @var string|null
+     * @ORM\Column(name="account", type="string", length=30, nullable=true)
+     * @Assert\Length(allowEmptyString=true, max="30", groups={"Registration", "UserCreate", "Profile"})
+     */
+    private $accountNumber;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
@@ -933,5 +943,15 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $initial = mb_strtoupper($initial);
 
         return $initial;
+    }
+
+    public function getAccountNumber(): ?string
+    {
+        return $this->accountNumber;
+    }
+
+    public function setAccountNumber(?string $accountNumber): void
+    {
+        $this->accountNumber = $accountNumber;
     }
 }

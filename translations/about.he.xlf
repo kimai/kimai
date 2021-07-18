@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="about.title">
         <source>about.title</source>
-        <target>על אודות Kimai</target>
+        <target>על אודות קימאי</target>
       </trans-unit>
       <trans-unit id="support">
         <source>support</source>
@@ -23,19 +23,19 @@
       </trans-unit>
       <trans-unit id="donate">
         <source>donate</source>
-        <target>תרומה לעתיד של Kimai</target>
+        <target>תרומה לעתיד של קימאי</target>
       </trans-unit>
       <trans-unit id="published_under">
         <source>published_under</source>
-        <target>%kimai% מופץ תחת</target>
+        <target>%kimai% מופץ בכפוף</target>
       </trans-unit>
       <trans-unit id="special_thanks">
         <source>special_thanks</source>
-        <target>תודה מיוחדת הולכת אל …</target>
+        <target>תודה מיוחדת מגיעה ל…</target>
       </trans-unit>
       <trans-unit id="library_authors">
         <source>library_authors</source>
-        <target>… המפתחים של רכיבי התכנה האלה, Kimai לא הייתה אפשרית בלעדיכם 👍</target>
+        <target>… המפתחים של רכיבי התכנה האלה, קימאי לא הייתה קיימת בלעדיכם 👍</target>
       </trans-unit>
     </body>
   </file>

@@ -131,15 +131,15 @@
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.begin">
         <source>label.timesheet.rounding.default.begin</source>
-        <target>עיגול זמן ההתחלה בדקות (0 = לא מופעל)</target>
+        <target>עיגול זמן ההתחלה בדקות (0 = מושבת)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.end">
         <source>label.timesheet.rounding.default.end</source>
-        <target>עיגול זמן הסיום בדקות (0 = לא מופעל)</target>
+        <target>עיגול זמן הסיום בדקות (0 = מושבת)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.duration">
         <source>label.timesheet.rounding.default.duration</source>
-        <target>עיגול משך זמן העבודה בדקות (0 = לא מופעל)</target>
+        <target>עיגול משך זמן העבודה בדקות (0 = מושבת)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.mode">
         <source>label.timesheet.rounding.default.mode</source>
@@ -308,6 +308,18 @@
       <trans-unit id="lockdown_period">
         <source>lockdown_period</source>
         <target>משך נעילה</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>כמות הרשומות לגרירה והשלכה (0 = מושבת)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>להשתמש בצבעים אקראיים לפריטים שלא הוקצה להם צבע</target>
+      </trans-unit>
+      <trans-unit id="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>לאפשר להשתמש בכתובות לתמונות יצוגיות</target>
       </trans-unit>
     </body>
   </file>

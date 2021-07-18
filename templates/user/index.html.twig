@@ -7,6 +7,7 @@
 {% set columns = {
     'avatar': {'class': 'alwaysVisible w-min', 'title': null, 'orderBy': false},
     'alias': {'class': 'alwaysVisible'},
+    'account_number': {'class': 'hidden-xs hidden-sm hidden'},
     'title': {'class': 'hidden-xs hidden-sm hidden'},
     'email': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
     'lastLogin': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
@@ -44,6 +45,7 @@
             <tr {{ widgets.user_row_attr(entry) }}>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'avatar') }}">{{ widgets.user_avatar(entry) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'alias') }}">{{ widgets.username(entry) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'account_number') }}">{{ entry.accountNumber }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">{{ entry.email }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'lastLogin') }}">{% if entry.lastLogin is not null %}{{ entry.lastLogin|date_full }}{% endif %}</td>

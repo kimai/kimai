@@ -713,10 +713,6 @@
         <source>invoice.due_days</source>
         <target>Alvo de pagamento</target>
       </trans-unit>
-      <trans-unit id="invoice.from">
-        <source>invoice.from</source>
-        <target>De</target>
-      </trans-unit>
       <trans-unit id="invoice.to">
         <source>invoice.to</source>
         <target>Para</target>
@@ -772,10 +768,6 @@
       <trans-unit id="label.orderNumber">
         <source>label.orderNumber</source>
         <target>Número do pedido</target>
-      </trans-unit>
-      <trans-unit id="label.invoice_tax_number">
-        <source>label.invoice_tax_number</source>
-        <target>VAT no. (Imposto Britânico):</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
@@ -888,7 +880,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Nenhuma taxa foi configurada ainda.</target>
+        <target>Nenhuma taxa horária foi configurada.</target>
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>
@@ -1225,6 +1217,18 @@
       <trans-unit id="registration.check_email">
         <source>registration.check_email</source>
         <target>Um e-mail foi enviado para %email%. Ele contém um link de ativação que você deve clicar para ativar a sua conta.</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Receitas</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Tempo de trabalho</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>A solicitação não pôde ser processada, muitos resultados foram encontrados.</target>
       </trans-unit>
     </body>
   </file>

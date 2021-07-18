@@ -49,6 +49,10 @@ class UserEditType extends AbstractType
                 'label' => 'label.title',
                 'required' => false,
             ])
+            ->add('accountNumber', TextType::class, [
+                'label' => 'label.account_number',
+                'required' => false,
+            ])
         ;
 
         if ($this->configuration->isThemeAllowAvatarUrls()) {

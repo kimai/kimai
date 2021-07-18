@@ -298,6 +298,14 @@
         <source>lockdown_period</source>
         <target>Forŝlosa periodo</target>
       </trans-unit>
+      <trans-unit id="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>Permesi URL-ojn por profilbildoj</target>
+      </trans-unit>
+      <trans-unit id="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>Uzi hazardajn kolorojn por objektoj sen asignita koloro</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

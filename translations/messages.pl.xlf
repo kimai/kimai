@@ -557,10 +557,6 @@
         <source>label.vat</source>
         <target>Vat</target>
       </trans-unit>
-      <trans-unit id="label.vat_id">
-        <source>label.vat_id</source>
-        <target>NIP</target>
-      </trans-unit>
       <trans-unit id="label.contact">
         <source>label.contact</source>
         <target>Kontakt</target>
@@ -897,10 +893,6 @@
         <source>label.orderDate</source>
         <target>Data zamówienia</target>
       </trans-unit>
-      <trans-unit id="label.invoice_tax_number">
-        <source>label.invoice_tax_number</source>
-        <target>NR NIP:</target>
-      </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
         <target>Konto bankowe</target>
@@ -1032,7 +1024,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Opłaty nie zostały jeszcze ustalone.</target>
+        <target state="translated">Nie skonfigurowano jeszcze stawek godzinowych.</target>
       </trans-unit>
       <trans-unit id="upload">
         <source>upload</source>
@@ -1133,6 +1125,118 @@
       <trans-unit id="modal.dirty">
         <source>modal.dirty</source>
         <target>Formularz uległ zmianie. Prosimy, kliknij "Zapisz", by zapisać zmiany, lub "Zamknij", by je anulować.</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>ostatni wpis</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>brak rezerwacji od czasu</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>nierozliczone</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>nie eksportowane</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>pokaż wpisy bez budżetu</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Pominięto podgląd %rows% więcej wierszy…</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>termin zapłaty</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Aktywni użytkownicy w budżetowym roku</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Dochód w tym budżetowym roku</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Godziny pracy w roku budżetowym</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Przychody</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>czas pracy</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>rok budżetowy</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>wysokość podatku</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>jeśli chcesz usunąć wpis, musisz przeciągnąć go na przycisk.</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>zaktualizuj tytuł przeglądarki</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>zapisz wszystko</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>Nie można przetworzyć żądania, znaleziono zbyt wiele wyników.</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target state="translated">E-mail został wysłany. Zawiera link który musisz kliknąć aby zresetować twoje hasło. Uwaga Możesz jedynie poprosić o nowe hasło w %tokenLifetime% godziny. jeśli nie dostałeś e-maila zobacz swój folder ze spamem lub spróbuj ponownie.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target state="translated">Email został wysłany do %email%. Zawiera link aktywacyjny który musisz kliknąć, aby aktywować swoje konto.</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target state="translated">pliki</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target state="translated">Zamówione przez</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target state="translated">Malejąco</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target state="translated">rosnąco</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target state="translated">usuń ulubione wyszukiwanie</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target state="translated">Zapisz ustawienie jako ulubione wyszukiwania</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target state="translated">wyszukaj termin</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>pokaż wpisy bez rezerwacji</target>
       </trans-unit>
     </body>
   </file>

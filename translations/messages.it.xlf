@@ -74,7 +74,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Voce tasse, non configurata.</target>
+        <target>Nessuna tariffa oraria è stata ancora configurata.</target>
       </trans-unit>
       <trans-unit id="rates.title">
         <source>rates.title</source>
@@ -1221,6 +1221,22 @@
       <trans-unit id="registration.check_email">
         <source>registration.check_email</source>
         <target>Un'e-mail è stata inviata a %email%. Contiene un collegamento di attivazione che devi cliccare per attivare il tuo account.</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Entrate di questo anno finanziario</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Entrate</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Tempo di lavoro</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>La richiesta non può essere elaborata, sono stati trovati troppi risultati.</target>
       </trans-unit>
     </body>
   </file>

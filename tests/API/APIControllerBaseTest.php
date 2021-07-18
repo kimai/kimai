@@ -292,6 +292,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'enabled' => 'bool',
                     'color' => '@string',
                     'alias' => '@string',
+                    'accountNumber' => '@string',
                 ];
 
             // if a user is loaded explicitly
@@ -308,6 +309,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'roles' => ['result' => 'array', 'type' => 'string'],
                     'language' => 'string',
                     'timezone' => 'string',
+                    'accountNumber' => '@string',
                 ];
 
             // if a team is embedded

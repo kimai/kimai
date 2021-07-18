@@ -34,6 +34,10 @@
         <source>report_yearly_users</source>
         <target>Tüm kullanıcılar için yıllık görünüm</target>
       </trans-unit>
+      <trans-unit id="report_project_details">
+        <source>report_project_details</source>
+        <target>Proje detayları</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
