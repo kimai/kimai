@@ -39,6 +39,7 @@ class UserTest extends TestCase
         self::assertNull($user->getAvatar());
         self::assertNull($user->getAlias());
         self::assertNull($user->getId());
+        self::assertNull($user->getAccountNumber());
         self::assertNull($user->getApiToken());
         self::assertNull($user->getPlainApiToken());
         self::assertNull($user->getPasswordRequestedAt());
@@ -59,6 +60,9 @@ class UserTest extends TestCase
 
         $user->setTitle('Mr. Code Blaster');
         self::assertEquals('Mr. Code Blaster', $user->getTitle());
+
+        $user->setAccountNumber('A-058375');
+        self::assertEquals('A-058375', $user->getAccountNumber());
     }
 
     public function testColor()
@@ -334,6 +338,7 @@ class UserTest extends TestCase
             ['profile.registration_date', 'datetime'],
             ['label.roles', 'array'],
             ['label.color', 'string'],
+            ['label.account_number', 'string'],
         ];
 
         self::assertCount(\count($expected), $columns);
