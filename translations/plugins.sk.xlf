@@ -6,18 +6,6 @@
                 <source>plugins.title</source>
                 <target>Rozšírenia</target>
             </trans-unit>
-            <trans-unit id="plugins.subtitle">
-                <source>plugins.subtitle</source>
-                <target>Funkciu Kimai môžete vylepšiť pomocou zásuvných modulov</target>
-            </trans-unit>
-            <trans-unit id="label.version">
-                <source>label.version</source>
-                <target>Verzia</target>
-            </trans-unit>
-            <trans-unit id="label.required_version">
-                <source>label.required_version</source>
-                <target>Kompatibilné s</target>
-            </trans-unit>
             <trans-unit id="plugin.none_installed">
                 <source>plugin.none_installed</source>
                 <target>Ešte nemáte nainštalovaný plugin.</target>
