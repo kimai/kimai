@@ -1200,7 +1200,7 @@
       </trans-unit>
       <trans-unit id="resetting.check_email">
         <source>resetting.check_email</source>
-        <target state="translated">E-mail został wysłany. Zawiera link który musisz kliknąć aby zresetować twoje hasło. Uwaga Możesz jedynie poprosić o nowe hasło w ciągu godziny. jeśli nie dostałeś e-maila zobacz swój folder ze spamem lub spróbuj ponownie.</target>
+        <target state="translated">E-mail został wysłany. Zawiera link który musisz kliknąć aby zresetować twoje hasło. Uwaga Możesz jedynie poprosić o nowe hasło w %tokenLifetime% godziny. jeśli nie dostałeś e-maila zobacz swój folder ze spamem lub spróbuj ponownie.</target>
       </trans-unit>
       <trans-unit id="registration.check_email">
         <source>registration.check_email</source>
