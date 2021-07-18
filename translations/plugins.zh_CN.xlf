@@ -2,10 +2,6 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="zh-CN" datatype="plaintext" original="plugins.en.xlf">
         <body>
-            <trans-unit id="plugins.title">
-                <source>plugins.title</source>
-                <target>插件</target>
-            </trans-unit>
             <trans-unit id="plugin.none_installed">
                 <source>plugin.none_installed</source>
                 <target>您尚未安装插件。</target>
