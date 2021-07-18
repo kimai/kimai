@@ -809,7 +809,7 @@
         <target>יעד לתשלום</target>
       </trans-unit>
       <trans-unit id="invoice.from">
-        <source>Exhibitor</source>
+        <source>invoice.from</source>
         <target>מציג</target>
       </trans-unit>
       <trans-unit id="invoice.to">
@@ -871,10 +871,6 @@
       <trans-unit id="label.orderDate">
         <source>label.orderDate</source>
         <target>תאריך הזמנה</target>
-      </trans-unit>
-      <trans-unit id="label.invoice_tax_number">
-        <source>Number nip:</source>
-        <target>מספר nip:</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>

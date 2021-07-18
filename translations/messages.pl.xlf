@@ -557,10 +557,6 @@
         <source>label.vat</source>
         <target>Vat</target>
       </trans-unit>
-      <trans-unit id="label.vat_id">
-        <source>label.vat_id</source>
-        <target>NIP</target>
-      </trans-unit>
       <trans-unit id="label.contact">
         <source>label.contact</source>
         <target>Kontakt</target>
@@ -896,10 +892,6 @@
       <trans-unit id="label.orderDate">
         <source>label.orderDate</source>
         <target>Data zamówienia</target>
-      </trans-unit>
-      <trans-unit id="label.invoice_tax_number">
-        <source>label.invoice_tax_number</source>
-        <target>NR NIP:</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>

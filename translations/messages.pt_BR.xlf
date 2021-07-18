@@ -714,7 +714,7 @@
         <target>Alvo de pagamento</target>
       </trans-unit>
       <trans-unit id="invoice.from">
-        <source>Exhibitor</source>
+        <source>invoice.from</source>
         <target>Expositor</target>
       </trans-unit>
       <trans-unit id="invoice.to">
@@ -772,10 +772,6 @@
       <trans-unit id="label.orderNumber">
         <source>label.orderNumber</source>
         <target>Número do pedido</target>
-      </trans-unit>
-      <trans-unit id="label.invoice_tax_number">
-        <source>Number nip:</source>
-        <target>Número nip:</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>

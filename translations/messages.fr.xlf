@@ -712,7 +712,7 @@
       </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>
-        <target>Exploitant</target>
+        <target>De</target>
       </trans-unit>
       <trans-unit id="invoice.to">
         <source>invoice.to</source>
