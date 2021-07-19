@@ -794,7 +794,7 @@
       </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>
-        <target>מציג</target>
+        <target>מאת</target>
       </trans-unit>
       <trans-unit id="invoice.to">
         <source>invoice.to</source>
@@ -1139,6 +1139,14 @@
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
         <target>לא ניתן לעבד את הבקשה, נמצאו יותר מדי תוצאות.</target>
+      </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>מספר סגל</target>
+      </trans-unit>
+      <trans-unit id="label.invoice_tax_number">
+        <source>label.invoice_tax_number</source>
+        <target>מס׳ במע״מ:</target>
       </trans-unit>
     </body>
   </file>
