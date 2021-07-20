@@ -1203,6 +1203,18 @@
         <source>error.too_many_entries</source>
         <target>A solicitação não pôde ser processada, muitos resultados foram encontrados.</target>
       </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Número da equipe</target>
+      </trans-unit>
+      <trans-unit id="label.invoice_tax_number">
+        <source>label.invoice_tax_number</source>
+        <target>No. do VAT:</target>
+      </trans-unit>
+      <trans-unit id="invoice.from">
+        <source>invoice.from</source>
+        <target>De</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
