@@ -18,7 +18,10 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-final class DoctrineUserProvider implements UserProviderInterface, PasswordUpgraderInterface
+/**
+ * @final
+ */
+class DoctrineUserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
     /**
      * @var UserRepository
