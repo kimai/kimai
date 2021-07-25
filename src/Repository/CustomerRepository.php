@@ -22,7 +22,6 @@ use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
@@ -83,48 +82,44 @@ class CustomerRepository extends EntityRepository
      */
     public function getCustomerStatistics(Customer $customer): CustomerStatistic
     {
+        $stats = new CustomerStatistic();
+
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
             ->from(Timesheet::class, 't')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
             ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('t.billable as billable')
             ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
             ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
             ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
             ->andWhere('p.customer = :customer')
             ->setParameter('customer', $customer)
+            ->groupBy('billable')
         ;
 
-        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
-
-        $stats = new CustomerStatistic();
+        $timesheetResult = $qb->getQuery()->getResult();
 
         if (null !== $timesheetResult) {
-            $stats->setRecordAmount($timesheetResult['amount']);
-            $stats->setRecordDuration($timesheetResult['duration']);
-            $stats->setRecordRate($timesheetResult['rate']);
-            $stats->setRecordInternalRate($timesheetResult['internal_rate']);
-        }
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Timesheet::class, 't')
-            ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
-            ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
-            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
-            ->andWhere('p.customer = :customer')
-            ->andWhere('t.billable = :billable')
-            ->setParameter('customer', $customer)
-            ->setParameter('billable', true, Types::BOOLEAN)
-        ;
-
-        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
-
-        if (null !== $timesheetResult) {
-            $stats->setDurationBillable($timesheetResult['duration']);
-            $stats->setRateBillable($timesheetResult['rate']);
-            $stats->setRecordAmountBillable($timesheetResult['amount']);
+            $amount = 0;
+            $duration = 0;
+            $rate = 0.00;
+            $rateInternal = 0.00;
+            foreach ($timesheetResult as $resultRow) {
+                $amount += $resultRow['amount'];
+                $duration += $resultRow['duration'];
+                $rate += $resultRow['rate'];
+                $rateInternal += $resultRow['internal_rate'];
+                if ($resultRow['billable']) {
+                    $stats->setDurationBillable($resultRow['duration']);
+                    $stats->setRateBillable($resultRow['rate']);
+                    $stats->setRecordAmountBillable($resultRow['amount']);
+                }
+            }
+            $stats->setRecordAmount($amount);
+            $stats->setRecordDuration($duration);
+            $stats->setRecordRate($rate);
+            $stats->setRecordInternalRate($rateInternal);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();

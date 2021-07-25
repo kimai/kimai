@@ -11,6 +11,7 @@ namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
+use App\Security\DoctrineUserProvider;
 use Symfony\Component\Security\Core\Authentication\Provider\UserAuthenticationProvider;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -19,28 +20,17 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
  */
 class LdapAuthenticationProvider extends UserAuthenticationProvider
 {
-    /**
-     * @var UserProviderInterface
-     */
     private $userProvider;
-
-    /**
-     * @var LdapManager
-     */
     private $ldapManager;
-    /**
-     * @var LdapConfiguration
-     */
     private $config;
 
-    public function __construct(UserCheckerInterface $userChecker, $providerKey, UserProviderInterface $userProvider, LdapManager $ldapManager, LdapConfiguration $config, $hideUserNotFoundExceptions = true)
+    public function __construct(UserCheckerInterface $userChecker, $providerKey, DoctrineUserProvider $userProvider, LdapManager $ldapManager, LdapConfiguration $config, $hideUserNotFoundExceptions = true)
     {
         parent::__construct($userChecker, $providerKey, $hideUserNotFoundExceptions);
 
