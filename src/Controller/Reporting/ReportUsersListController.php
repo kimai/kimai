@@ -35,13 +35,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class ReportUsersListController extends AbstractController
 {
-    /**
-     * @var TimesheetRepository
-     */
     private $timesheetRepository;
-    /**
-     * @var UserRepository
-     */
     private $userRepository;
 
     public function __construct(TimesheetRepository $timesheetRepository, UserRepository $userRepository)
@@ -90,16 +84,20 @@ final class ReportUsersListController extends AbstractController
         }
 
         $start = $values->getDate();
-        $end = $this->getDateTimeFactory()->createEndOfFinancialYear($start);
+        // there is a potential edge case bug for financial years:
+        // the last month will be skipped, if the financial year started on a different day than the first
+        $end = $dateTimeFactory->createEndOfFinancialYear($start);
 
         $monthStats = [];
+        $hasData = true;
 
         if (!empty($allUsers)) {
             $monthStats = $statisticService->getMonthlyStats($start, $end, $allUsers);
         }
 
         if (empty($monthStats)) {
-            $monthStats = [new MonthlyStatistic($start, $end)];
+            $monthStats = [new MonthlyStatistic($start, $end, $currentUser)];
+            $hasData = false;
         }
 
         return $this->render('reporting/report_user_list_monthly.html.twig', [
@@ -107,6 +105,7 @@ final class ReportUsersListController extends AbstractController
             'box_id' => 'yearly-user-list-reporting-box',
             'form' => $form->createView(),
             'stats' => $monthStats,
+            'hasData' => $hasData,
         ]);
     }
 

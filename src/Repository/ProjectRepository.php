@@ -55,6 +55,26 @@ class ProjectRepository extends EntityRepository
     }
 
     /**
+     * @param int[] $projectIds
+     * @return Project[]
+     */
+    public function findByIds(array $projectIds)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->where($qb->expr()->in('p.id', ':id'))
+            ->setParameter('id', $projectIds)
+        ;
+
+        $projects = $qb->getQuery()->getResult();
+
+        $loader = new ProjectLoader($qb->getEntityManager());
+        $loader->loadResults($projects);
+
+        return $projects;
+    }
+
+    /**
      * @param Project $project
      * @throws ORMException
      * @throws \Doctrine\ORM\OptimisticLockException

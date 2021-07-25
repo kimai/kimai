@@ -59,25 +59,35 @@ final class DailyStatistic
         return array_values($this->days);
     }
 
-    public function getDay(string $year, string $month, string $day): ?StatisticDate
+    public function getDayByDateTime(DateTime $date): ?StatisticDate
+    {
+        return $this->getDay($date->format('Y'), $date->format('m'), $date->format('d'));
+    }
+
+    public function getDayByReportDate(string $date): ?StatisticDate
     {
         $this->setupDays();
 
-        if ((int) $month < 10) {
-            $month = '0' . $month;
-        }
-
-        if ((int) $day < 10) {
-            $day = '0' . $day;
-        }
-
-        $id = $year . '-' . $month . '-' . $day;
-
-        if (!isset($this->days[$id])) {
+        if (!isset($this->days[$date])) {
             return null;
         }
 
-        return $this->days[$id];
+        return $this->days[$date];
+    }
+
+    public function getDay(string $year, string $month, string $day): ?StatisticDate
+    {
+        if ((int) $month < 10) {
+            $month = '0' . (int) $month;
+        }
+
+        if ((int) $day < 10) {
+            $day = '0' . (int) $day;
+        }
+
+        $date = $year . '-' . $month . '-' . $day;
+
+        return $this->getDayByReportDate($date);
     }
 
     /**

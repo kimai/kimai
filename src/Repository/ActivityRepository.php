@@ -62,6 +62,26 @@ class ActivityRepository extends EntityRepository
     }
 
     /**
+     * @param int[] $activityIds
+     * @return Activity[]
+     */
+    public function findByIds(array $activityIds)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb
+            ->where($qb->expr()->in('a.id', ':id'))
+            ->setParameter('id', $activityIds)
+        ;
+
+        $activities = $qb->getQuery()->getResult();
+
+        $loader = new ActivityLoader($qb->getEntityManager());
+        $loader->loadResults($activities);
+
+        return $activities;
+    }
+
+    /**
      * @param Activity $activity
      * @throws ORMException
      * @throws \Doctrine\ORM\OptimisticLockException

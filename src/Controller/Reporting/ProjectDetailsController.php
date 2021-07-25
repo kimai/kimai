@@ -37,7 +37,6 @@ final class ProjectDetailsController extends AbstractController
         $projectDetails = null;
 
         if ($query->getProject() !== null && $this->isGranted('details', $query->getProject())) {
-            // FIXME remove me
             $projectViews = $service->getProjectView($user, [$query->getProject()], $query->getToday());
             $projectView = $projectViews[0];
             $projectDetails = $service->getProjectsDetails($query);

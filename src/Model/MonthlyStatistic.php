@@ -23,14 +23,14 @@ final class MonthlyStatistic
     private $end;
     private $user;
 
-    public function __construct(DateTime $begin, DateTime $end, ?User $user = null)
+    public function __construct(DateTime $begin, DateTime $end, User $user)
     {
         $this->begin = $begin;
         $this->end = $end;
         $this->user = $user;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -49,6 +49,7 @@ final class MonthlyStatistic
                 $year = [];
                 for ($i = 1; $i < 13; $i++) {
                     $date = clone $this->begin;
+                    // financial years do NOT start at the first of the month, do not reset day to 1
                     $date->setDate((int) $curYear, $i, (int) $this->begin->format('d'));
                     $date->setTime(0, 0, 0);
                     if ($date < $this->begin || $date > $this->end) {

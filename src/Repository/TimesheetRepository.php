@@ -626,6 +626,7 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * @deprecated since 1.15 - use TimesheetStatisticService::getDailyStatistics() instead
      * @param User|null $user
      * @param DateTime $begin
      * @param DateTime $end

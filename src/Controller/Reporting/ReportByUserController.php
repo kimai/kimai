@@ -10,12 +10,18 @@
 namespace App\Controller\Reporting;
 
 use App\Controller\AbstractController;
-use App\Model\Statistic\Day;
+use App\Entity\User;
+use App\Model\DailyStatistic;
+use App\Model\Statistic\StatisticDate;
 use App\Reporting\MonthByUser;
 use App\Reporting\MonthByUserForm;
 use App\Reporting\WeekByUser;
 use App\Reporting\WeekByUserForm;
+use App\Repository\ActivityRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\TimesheetStatisticService;
+use DateTime;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,14 +35,17 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 final class ReportByUserController extends AbstractController
 {
-    /**
-     * @var TimesheetRepository
-     */
     private $timesheetRepository;
+    private $statisticService;
+    private $projectRepository;
+    private $activityRepository;
 
-    public function __construct(TimesheetRepository $timesheetRepository)
+    public function __construct(TimesheetRepository $timesheetRepository, TimesheetStatisticService $statisticService, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
     {
         $this->timesheetRepository = $timesheetRepository;
+        $this->statisticService = $statisticService;
+        $this->projectRepository = $projectRepository;
+        $this->activityRepository = $activityRepository;
     }
 
     private function canSelectUser(): bool
@@ -100,15 +109,14 @@ final class ReportByUserController extends AbstractController
         $nextMonth = clone $start;
         $nextMonth->modify('+1 month');
 
-        $data = $this->timesheetRepository->getDailyStats($selectedUser, $start, $end);
-        $rows = $this->prepareReportData($data);
+        $data = $this->prepareReport($start, $end, $selectedUser);
 
         return $this->render('reporting/report_by_user.html.twig', [
             'report_title' => 'report_user_month',
             'box_id' => 'user-month-reporting-box',
             'form' => $form->createView(),
-            'days' => $data,
-            'rows' => $rows,
+            'rows' => $data,
+            'days' => new DailyStatistic($start, $end, $selectedUser),
             'user' => $selectedUser,
             'current' => $start,
             'next' => $nextMonth,
@@ -155,7 +163,6 @@ final class ReportByUserController extends AbstractController
 
         $start = $dateTimeFactory->getStartOfWeek($values->getDate());
         $end = $dateTimeFactory->getEndOfWeek($values->getDate());
-
         $selectedUser = $values->getUser();
 
         $previous = clone $start;
@@ -164,15 +171,14 @@ final class ReportByUserController extends AbstractController
         $next = clone $start;
         $next->modify('+1 week');
 
-        $data = $this->timesheetRepository->getDailyStats($selectedUser, $start, $end);
-        $rows = $this->prepareReportData($data);
+        $data = $this->prepareReport($start, $end, $selectedUser);
 
         return $this->render('reporting/report_by_user.html.twig', [
             'report_title' => 'report_user_week',
             'box_id' => 'user-week-reporting-box',
             'form' => $form->createView(),
-            'days' => $data,
-            'rows' => $rows,
+            'days' => new DailyStatistic($start, $end, $selectedUser),
+            'rows' => $data,
             'user' => $selectedUser,
             'current' => $start,
             'next' => $next,
@@ -180,50 +186,52 @@ final class ReportByUserController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Day[] $data
-     * @return array
-     */
-    private function prepareReportData(array $data): array
+    private function prepareReport(DateTime $begin, DateTime $end, User $user): array
     {
-        $days = [];
+        $data = $this->statisticService->getDailyStatisticsGrouped($begin, $end, [$user]);
 
-        foreach ($data as $day) {
-            $days[$day->getDay()->format('Ymd')] = ['date' => $day->getDay(), 'duration' => 0];
+        $data = array_pop($data);
+        $projectIds = [];
+        $activityIds = [];
+
+        foreach ($data as $projectId => $projectValues) {
+            $projectIds[$projectId] = $projectId;
+            $dailyProjectStatistic = new DailyStatistic($begin, $end, $user);
+            foreach ($projectValues['activities'] as $activityId => $activityValues) {
+                $activityIds[$activityId] = $activityId;
+                if (!isset($data[$projectId]['duration'])) {
+                    $data[$projectId]['duration'] = 0;
+                }
+                if (!isset($data[$projectId]['activities'][$activityId]['duration'])) {
+                    $data[$projectId]['activities'][$activityId]['duration'] = 0;
+                }
+                /** @var StatisticDate $day */
+                foreach ($activityValues['days']->getDays() as $day) {
+                    $statDay = $dailyProjectStatistic->getDayByDateTime($day->getDate());
+                    $statDay->setTotalDuration($statDay->getTotalDuration() + $day->getDuration());
+                    $data[$projectId]['duration'] = $data[$projectId]['duration'] + $day->getDuration();
+                    $data[$projectId]['activities'][$activityId]['duration'] = $data[$projectId]['activities'][$activityId]['duration'] + $day->getDuration();
+                }
+            }
+            $data[$projectId]['days'] = $dailyProjectStatistic;
         }
 
-        $rows = [];
+        $activities = $this->activityRepository->findByIds($activityIds);
+        foreach ($activities as $activity) {
+            $activityIds[$activity->getId()] = $activity;
+        }
 
-        foreach ($data as $day) {
-            $dayId = $day->getDay()->format('Ymd');
-            foreach ($day->getDetails() as $id => $detail) {
-                $projectId = $detail['project']->getId();
-                if (!\array_key_exists($projectId, $rows)) {
-                    $rows[$projectId] = [
-                        'project' => $detail['project'],
-                        'duration' => 0,
-                        'days' => $days,
-                        'activities' => [],
-                    ];
-                }
-
-                $rows[$projectId]['duration'] += $detail['duration'];
-                $rows[$projectId]['days'][$dayId]['duration'] += $detail['duration'];
-
-                $activityId = $detail['activity']->getId();
-                if (!\array_key_exists($activityId, $rows[$projectId]['activities'])) {
-                    $rows[$projectId]['activities'][$activityId] = [
-                        'activity' => $detail['activity'],
-                        'duration' => 0,
-                        'days' => $days,
-                    ];
-                }
-
-                $rows[$projectId]['activities'][$activityId]['duration'] += $detail['duration'];
-                $rows[$projectId]['activities'][$activityId]['days'][$dayId]['duration'] += $detail['duration'];
+        foreach ($data as $projectId => $projectValues) {
+            foreach ($projectValues['activities'] as $activityId => $activityValues) {
+                $data[$projectId]['activities'][$activityId]['activity'] = $activityIds[$activityId];
             }
         }
 
-        return $rows;
+        $projects = $this->projectRepository->findByIds($projectIds);
+        foreach ($projects as $project) {
+            $data[$project->getId()]['project'] = $project;
+        }
+
+        return $data;
     }
 }

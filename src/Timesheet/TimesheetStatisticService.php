@@ -64,28 +64,108 @@ final class TimesheetStatisticService
             ->groupBy('year')
             ->addGroupBy('month')
             ->addGroupBy('day')
-            ->addGroupBy('billable')
             ->addGroupBy('user')
+            ->addGroupBy('billable')
         ;
 
         $results = $qb->getQuery()->getResult();
 
         foreach ($results as $row) {
             $day = $stats[$row['user']]->getDay($row['year'], $row['month'], $row['day']);
+
             if ($day === null) {
-                // might happen for the last day, which is accidentally queried due to timezone differences
+                // timezone differences
                 continue;
             }
+
             $day->setTotalDuration($day->getTotalDuration() + (int) $row['duration']);
-            $day->setTotalRate($day->getTotalRate() + (float) $row['duration']);
-            $day->setTotalInternalRate($day->getTotalInternalRate() + (float) $row['duration']);
+            $day->setTotalRate($day->getTotalRate() + (float) $row['rate']);
+            $day->setTotalInternalRate($day->getTotalInternalRate() + (float) $row['internalRate']);
             if ($row['billable']) {
-                $day->setBillableRate((float) $row['duration']);
+                $day->setBillableRate((float) $row['rate']);
                 $day->setBillableDuration((int) $row['duration']);
             }
         }
 
         return array_values($stats);
+    }
+
+    /**
+     * @internal only for core development
+     * @param DateTime $begin
+     * @param DateTime $end
+     * @param User[] $users
+     * @return array<int, DailyStatistic[]>
+     */
+    public function getDailyStatisticsGrouped(DateTime $begin, DateTime $end, array $users): array
+    {
+        /** @var DailyStatistic[] $stats */
+        $stats = [];
+        $usersById = [];
+
+        foreach ($users as $user) {
+            $usersById[$user->getId()] = $user;
+            if (!isset($stats[$user->getId()])) {
+                $stats[$user->getId()] = [];
+            }
+        }
+
+        $qb = $this->repository->createQueryBuilder('t');
+
+        $qb
+            ->select('COALESCE(SUM(t.rate), 0.0) as rate')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')
+            ->addSelect('t.billable as billable')
+            ->addSelect('IDENTITY(t.user) as user')
+            ->addSelect('IDENTITY(t.project) as project')
+            ->addSelect('IDENTITY(t.activity) as activity')
+            ->addSelect('DATE(t.begin) as date')
+            ->where($qb->expr()->isNotNull('t.end'))
+            ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))
+            ->andWhere($qb->expr()->in('t.user', ':user'))
+            ->setParameter('begin', $begin)
+            ->setParameter('end', $end)
+            ->setParameter('user', $users)
+            ->groupBy('date')
+            ->addGroupBy('project')
+            ->addGroupBy('activity')
+            ->addGroupBy('user')
+            ->addGroupBy('billable')
+        ;
+
+        $results = $qb->getQuery()->getResult();
+
+        foreach ($results as $row) {
+            $uid = $row['user'];
+            $pid = $row['project'];
+            $aid = $row['activity'];
+            if (!isset($stats[$uid][$pid])) {
+                $stats[$uid][$pid] = ['project' => $pid, 'activities' => []];
+            }
+            if (!isset($stats[$uid][$pid]['activities'][$aid])) {
+                $stats[$uid][$pid]['activities'][$aid] = ['activity' => $aid, 'days' => new DailyStatistic($begin, $end, $usersById[$uid])];
+            }
+
+            /** @var DailyStatistic $days */
+            $days = $stats[$uid][$pid]['activities'][$aid]['days'];
+            $day = $days->getDayByReportDate($row['date']);
+
+            if ($day === null) {
+                // timezone differences
+                continue;
+            }
+
+            $day->setTotalDuration($day->getTotalDuration() + (int) $row['duration']);
+            $day->setTotalRate($day->getTotalRate() + (float) $row['rate']);
+            $day->setTotalInternalRate($day->getTotalInternalRate() + (float) $row['internalRate']);
+            if ($row['billable']) {
+                $day->setBillableRate((float) $row['rate']);
+                $day->setBillableDuration((int) $row['duration']);
+            }
+        }
+
+        return $stats;
     }
 
     public function findFirstRecordDate(User $user): ?DateTime
@@ -140,23 +220,25 @@ final class TimesheetStatisticService
             ->setParameter('user', $users)
             ->groupBy('year')
             ->addGroupBy('month')
-            ->addGroupBy('billable')
             ->addGroupBy('user')
+            ->addGroupBy('billable')
         ;
 
         $results = $qb->getQuery()->getResult();
 
         foreach ($results as $row) {
             $month = $stats[$row['user']]->getMonth($row['year'], $row['month']);
+
             if ($month === null) {
                 // might happen for the last month, which is accidentally queried due to timezone differences
                 continue;
             }
+
             $month->setTotalDuration($month->getTotalDuration() + (int) $row['duration']);
-            $month->setTotalRate($month->getTotalRate() + (float) $row['duration']);
-            $month->setTotalInternalRate($month->getTotalInternalRate() + (float) $row['duration']);
+            $month->setTotalRate($month->getTotalRate() + (float) $row['rate']);
+            $month->setTotalInternalRate($month->getTotalInternalRate() + (float) $row['internalRate']);
             if ($row['billable']) {
-                $month->setBillableRate((float) $row['duration']);
+                $month->setBillableRate((float) $row['rate']);
                 $month->setBillableDuration((int) $row['duration']);
             }
         }
