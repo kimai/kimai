@@ -96,11 +96,11 @@ class ProjectTest extends TestCase
         self::assertInstanceOf(Project::class, $sut->setVisible(false));
         self::assertFalse($sut->isVisible());
 
-        self::assertInstanceOf(Project::class, $sut->setBudget(12345.67));
+        $sut->setBudget(12345.67);
         self::assertEquals(12345.67, $sut->getBudget());
         self::assertTrue($sut->hasBudget());
 
-        self::assertInstanceOf(Project::class, $sut->setTimeBudget(937321));
+        $sut->setTimeBudget(937321);
         self::assertEquals(937321, $sut->getTimeBudget());
         self::assertTrue($sut->hasTimeBudget());
     }

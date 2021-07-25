@@ -79,6 +79,15 @@ class ProjectRepository extends EntityRepository
         return $this->count([]);
     }
 
+    /**
+     * @deprecated since 1.15 use ProjectStatisticService::getProjectStatistics() instead - will be removed with 2.0
+     *
+     * @param Project $project
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
+     * @return ProjectStatistic
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function getProjectStatistics(Project $project, ?DateTime $begin = null, ?DateTime $end = null): ProjectStatistic
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

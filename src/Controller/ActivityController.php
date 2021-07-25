@@ -124,6 +124,7 @@ final class ActivityController extends AbstractController
         $rates = [];
         $teams = null;
         $defaultTeam = null;
+        $now = $this->getDateTimeFactory()->createDateTime();
 
         if ($this->isGranted('edit', $activity)) {
             if ($this->isGranted('create_team')) {
@@ -133,7 +134,7 @@ final class ActivityController extends AbstractController
         }
 
         if ($this->isGranted('budget', $activity)) {
-            $stats = $statisticService->getActivityStatistics($activity);
+            $stats = $statisticService->getBudgetStatisticModel($activity, $now);
         }
 
         if ($this->isGranted('permissions', $activity) || $this->isGranted('details', $activity) || $this->isGranted('view_team')) {
@@ -146,7 +147,7 @@ final class ActivityController extends AbstractController
             'rates' => $rates,
             'team' => $defaultTeam,
             'teams' => $teams,
-            'now' => $this->getDateTimeFactory()->createDateTime(),
+            'now' => $now,
         ]);
     }
 

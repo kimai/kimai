@@ -107,6 +107,9 @@ class TimesheetStatistic
         $this->amountThisMonth = (float) $amountThisMonth;
     }
 
+    /**
+     * @deprecated since 1.15 use TimesheetStatisticService::findFirstRecordDate() instead, will be removed with 2.0
+     */
     public function getFirstEntry(): ?\DateTime
     {
         return $this->firstEntry;

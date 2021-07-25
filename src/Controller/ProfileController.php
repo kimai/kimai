@@ -19,8 +19,8 @@ use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\TimesheetStatisticService;
 use App\User\UserService;
-use App\Utils\LocaleSettings;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -48,20 +48,20 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}", name="user_profile", methods={"GET"})
      * @Security("is_granted('view', profile)")
      */
-    public function indexAction(User $profile, TimesheetRepository $repository, LocaleSettings $localeSettings): Response
+    public function indexAction(User $profile, TimesheetRepository $repository, TimesheetStatisticService $statisticService): Response
     {
-        $userStats = $repository->getUserStatistics($profile);
+        $userStats = $repository->getUserStatistics($profile, false);
+        $firstEntry = $statisticService->findFirstRecordDate($profile);
 
-        $begin = $userStats->getFirstEntry() ?? $this->getDateTimeFactory()->getStartOfMonth();
+        $begin = $firstEntry ?? $this->getDateTimeFactory()->getStartOfMonth();
         $end = $this->getDateTimeFactory()->getEndOfMonth();
-        $monthlyStats = $repository->getMonthlyStats($begin, $end, $profile);
-        arsort($monthlyStats);
 
         $viewVars = [
             'tab' => 'charts',
             'user' => $profile,
             'stats' => $userStats,
-            'years' => $monthlyStats,
+            'firstTimesheet' => $firstEntry,
+            'workMonths' => $statisticService->getMonthlyStats($begin, $end, [$profile])[0]
         ];
 
         return $this->render('user/stats.html.twig', $viewVars);

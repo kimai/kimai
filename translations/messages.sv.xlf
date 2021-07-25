@@ -433,25 +433,12 @@
         <source>admin_project.title</source>
         <target state="translated">Projekt</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target state="translated">Projektet %project% för kunden %customer% har för närvarande %activities%
-                     aktiviteter och %records% tidrapporter, som summeras till %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Activity
             -->
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target state="translated">Aktiviteter</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target state="translated">
-                     För närvarande har aktiviteten %activity% i projektet %project% för kunden %customer%
-                     har %records% tidrapporter, vilket summeras till %duration%.
-                     </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -508,13 +495,6 @@
         <source>label.currency</source>
         <target state="translated">Valuta</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target state="translated">
-                    För närvarande har kunden %customer% %project% projekt med %activity% aktiviteter,
-                    med %records% tidrapporter som summeras till %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: User
             -->
@@ -541,12 +521,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target state="translated">Roll</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target state="translated">
-                    För närvarande har användaren %user% %records% tidrapporter som summeras till %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Plugins

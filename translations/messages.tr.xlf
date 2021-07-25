@@ -485,20 +485,12 @@
         <source>admin_project.title</source>
         <target state="translated">Projeler</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target state="translated">Şu anda %project% projesi %customer% müşterisi için %activities% etkinliğe ve %records% kayda sahip, toplamı %duration%.</target>
-      </trans-unit>
       <!--
               Admin: Activity
             -->
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target state="translated">Etkinlikler</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target state="translated">Şu anda %project% projesindeki %activity% etkinliği %customer% müşterisi için %records% kayda sahip, toplamı %duration%.</target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -555,10 +547,6 @@
         <source>label.currency</source>
         <target state="translated">Para birimi</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target state="translated">Şu anda %customer% müşterisi %project% projeye ve %activity% etkinliğe sahip, %records% adet kayıt ve toplam %duration%.</target>
-      </trans-unit>
       <!--
               Admin: Users
             -->
@@ -585,12 +573,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target state="translated">Rol</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target state="translated">
-                    Şu anda %user% kullanıcısı %records% adet kayda sahip, toplamı %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Plugins

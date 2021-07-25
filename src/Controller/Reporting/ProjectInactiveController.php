@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class InactiveProjectController extends AbstractController
+final class ProjectInactiveController extends AbstractController
 {
     /**
      * @Route(path="/reporting/project_inactive", name="report_project_inactive", methods={"GET","POST"})
@@ -35,7 +35,7 @@ final class InactiveProjectController extends AbstractController
         $form->submit($request->query->all(), false);
 
         $projects = $service->findInactiveProjects($query);
-        $entries = $service->getProjectView($user, $projects, $query->getLastChange());
+        $entries = $service->getProjectView($user, $projects);
 
         $byCustomer = [];
         foreach ($entries as $entry) {
@@ -51,7 +51,8 @@ final class InactiveProjectController extends AbstractController
             'form' => $form->createView(),
             'title' => 'report_inactive_project',
             'tableName' => 'inactive_project_reporting',
-            'now' => $this->getDateTimeFactory()->createDateTime(),
+            'now' => $dateFactory->createDateTime(),
+            'skipColumns' => ['today', 'week', 'month', 'projectStart', 'projectEnd', 'comment'],
         ]);
     }
 }

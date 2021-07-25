@@ -64,8 +64,14 @@ class CustomerSubscriber extends AbstractActionsSubscriber
             $event->addDivider();
         }
 
-        if ($customer->isVisible() && $this->isGranted('create_project')) {
-            $event->addAction('create-project', ['icon' => 'create', 'url' => $this->path('admin_project_create_with_customer', ['customer' => $customer->getId()]), 'class' => 'modal-ajax-form']);
+        if (!$event->isView('customer_details')) {
+            if ($customer->isVisible() && $this->isGranted('create_project')) {
+                $event->addAction('create-project', [
+                    'icon' => 'create',
+                    'url' => $this->path('admin_project_create_with_customer', ['customer' => $customer->getId()]),
+                    'class' => 'modal-ajax-form'
+                ]);
+            }
         }
 
         if ($event->isIndexView() && $this->isGranted('delete', $customer)) {

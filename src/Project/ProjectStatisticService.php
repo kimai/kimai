@@ -14,16 +14,20 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\ProjectStatisticEvent;
+use App\Form\Model\DateRange;
 use App\Model\ActivityStatistic;
+use App\Model\ProjectBudgetStatisticModel;
 use App\Model\ProjectStatistic;
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
 use App\Model\UserStatistic;
+use App\Reporting\ProjectDateRange\ProjectDateRangeQuery;
 use App\Reporting\ProjectDetails\ProjectDetailsModel;
 use App\Reporting\ProjectDetails\ProjectDetailsQuery;
 use App\Reporting\ProjectInactive\ProjectInactiveQuery;
 use App\Reporting\ProjectView\ProjectViewModel;
 use App\Reporting\ProjectView\ProjectViewQuery;
+use App\Repository\Loader\ProjectLoader;
 use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
@@ -51,13 +55,13 @@ class ProjectStatisticService
         $this->userRepository = $userRepository;
     }
 
-    public function getProjectStatistics(Project $project, ?DateTime $end = null): ProjectStatistic
+    public function getProjectStatistics(Project $project, ?DateTime $begin = null, ?DateTime $end = null): ProjectStatistic
     {
-        $statistic = $this->repository->getProjectStatistics($project, null, $end);
-        $event = new ProjectStatisticEvent($project, $statistic);
+        $statistics = $this->getBudgetStatistic([$project], $begin, $end);
+        $event = new ProjectStatisticEvent($project, array_pop($statistics), $begin, $end);
         $this->dispatcher->dispatch($event);
 
-        return $statistic;
+        return $event->getStatistic();
     }
 
     /**
@@ -97,7 +101,187 @@ class ProjectStatisticService
 
         $this->repository->addPermissionCriteria($qb, $user);
 
-        return $qb->getQuery()->getResult();
+        /** @var Project[] $projects */
+        $projects = $qb->getQuery()->getResult();
+
+        // pre-cache customer objects instead of joining them
+        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager());
+        $loader->loadResults($projects);
+
+        return $projects;
+    }
+
+    /**
+     * @param ProjectDateRangeQuery $query
+     * @return Project[]
+     */
+    public function findProjectsWorkedInDateRange(ProjectDateRangeQuery $query, DateRange $dateRange): array
+    {
+        $user = $query->getUser();
+        $begin = $dateRange->getBegin();
+        $end = $dateRange->getEnd();
+
+        $qb2 = $this->repository->createQueryBuilder('t1');
+        $qb2
+            ->select('1')
+            ->from(Timesheet::class, 't')
+            ->andWhere('p = t.project')
+            ->andWhere($qb2->expr()->between('t.begin', ':begin', ':end'))
+        ;
+
+        $qb = $this->repository->createQueryBuilder('p');
+        $qb
+            ->select('p')
+            ->andWhere($qb->expr()->exists($qb2))
+            ->setParameter('begin', $begin, Types::DATETIME_MUTABLE)
+            ->setParameter('end', $end, Types::DATETIME_MUTABLE)
+        ;
+
+        if ($query->getCustomer() !== null) {
+            $qb->andWhere($qb->expr()->eq('p.customer', ':customer'))
+                ->setParameter('customer', $query->getCustomer());
+        }
+
+        $this->repository->addPermissionCriteria($qb, $user);
+
+        /** @var Project[] $projects */
+        $projects = $qb->getQuery()->getResult();
+
+        // pre-cache customer objects instead of joining them
+        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager());
+        $loader->loadResults($projects);
+
+        return $projects;
+    }
+
+    public function getBudgetStatisticModel(Project $project, DateTime $today): ProjectBudgetStatisticModel
+    {
+        $stats = new ProjectBudgetStatisticModel($project);
+
+        $stats->setStatisticTotal($this->getProjectStatistics($project));
+
+        $begin = null;
+        $end = $today;
+
+        if ($project->isMonthlyBudget()) {
+            $dateFactory = new DateTimeFactory($today->getTimezone());
+            $begin = $dateFactory->getStartOfMonth($today);
+            $end = $dateFactory->getEndOfMonth($today);
+        }
+
+        $stats->setStatistic($this->getProjectStatistics($project, $begin, $end));
+
+        return $stats;
+    }
+
+    /**
+     * @param Project[] $projects
+     * @param DateTime $today
+     * @return ProjectBudgetStatisticModel[]
+     */
+    public function getBudgetStatisticModelForProjects(array $projects, DateTime $today): array
+    {
+        $models = [];
+        $monthly = [];
+        $allTime = [];
+
+        foreach ($projects as $project) {
+            $models[$project->getId()] = new ProjectBudgetStatisticModel($project);
+            if ($project->isMonthlyBudget()) {
+                $monthly[] = $project;
+            } else {
+                $allTime[] = $project;
+            }
+        }
+
+        // display the budget at the end of the selected period and not the total sum of all times (do not include times in the future)
+        $statisticsTotal = $this->getBudgetStatistic($projects);
+        foreach ($statisticsTotal as $projectId => $statistic) {
+            $models[$projectId]->setStatisticTotal($statistic);
+        }
+
+        $dateFactory = new DateTimeFactory($today->getTimezone());
+
+        if (\count($monthly) > 0) {
+            $begin = $dateFactory->getStartOfMonth($today);
+            $end = $dateFactory->getEndOfMonth($today);
+            $statistics = $this->getBudgetStatistic($monthly, $begin, $end);
+            foreach ($statistics as $projectId => $statistic) {
+                $models[$projectId]->setStatistic($statistic);
+            }
+        }
+
+        if (\count($allTime) > 0) {
+            $statistics = $this->getBudgetStatistic($allTime, null, $today);
+            foreach ($statistics as $projectId => $statistic) {
+                $models[$projectId]->setStatistic($statistic);
+            }
+        }
+
+        return $models;
+    }
+
+    /**
+     * @param Project[] $projects
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
+     * @return array<int, ProjectStatistic>
+     */
+    private function getBudgetStatistic(array $projects, ?DateTime $begin = null, ?DateTime $end = null): array
+    {
+        $statistics = [];
+        foreach ($projects as $project) {
+            $statistics[$project->getId()] = new ProjectStatistic();
+        }
+
+        $qb = $this->timesheetRepository->createQueryBuilder('t');
+        $qb
+            ->select('IDENTITY(t.project) AS id')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')
+            ->addSelect('COUNT(t.id) as counter')
+            ->addSelect('t.billable as billable')
+            ->andWhere($qb->expr()->in('t.project', ':project'))
+            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->groupBy('id')
+            ->addGroupBy('billable')
+            ->setParameter('project', array_keys($statistics))
+        ;
+
+        if ($begin !== null) {
+            $qb
+                ->andWhere($qb->expr()->gte('t.begin', ':begin'))
+                ->setParameter('begin', $begin, Types::DATETIME_MUTABLE)
+            ;
+        }
+
+        if ($end !== null) {
+            $qb
+                ->andWhere($qb->expr()->lte('t.begin', ':end'))
+                ->setParameter('end', $end, Types::DATETIME_MUTABLE)
+            ;
+        }
+
+        $result = $qb->getQuery()->getResult();
+
+        if (null !== $result) {
+            foreach ($result as $resultRow) {
+                $statistic = $statistics[$resultRow['id']];
+                $statistic->setDuration($statistic->getDuration() + $resultRow['duration']);
+                $statistic->setRate($statistic->getRate() + $resultRow['rate']);
+                $statistic->setInternalRate($statistic->getInternalRate() + $resultRow['internalRate']);
+                $statistic->setCounter($statistic->getCounter() + $resultRow['counter']);
+                if ($resultRow['billable']) {
+                    $statistic->setDurationBillable($resultRow['duration']);
+                    $statistic->setRateBillable($resultRow['rate']);
+                    $statistic->setInternalRateBillable($resultRow['internalRate']);
+                    $statistic->setCounterBillable($resultRow['counter']);
+                }
+            }
+        }
+
+        return $statistics;
     }
 
     /**
@@ -106,14 +290,16 @@ class ProjectStatisticService
      */
     public function getProjectsDetails(ProjectDetailsQuery $query): ProjectDetailsModel
     {
-        $model = new ProjectDetailsModel($query->getProject());
+        $project = $query->getProject();
+        $model = new ProjectDetailsModel($project);
+        $model->setBudgetStatisticModel($this->getBudgetStatisticModel($project, $query->getToday()));
 
         $years = [];
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
-            ->select('SUM(t.duration) as duration')
-            ->addSelect('SUM(t.rate) as rate')
-            ->addSelect('SUM(t.internalRate) as internalRate')
+            ->select('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')
             ->addSelect('COUNT(t.id) as count')
             ->andWhere('t.project = :project')
             ->setParameter('project', $query->getProject())
@@ -151,26 +337,28 @@ class ProjectStatisticService
         $userMonths = $qb1->getQuery()->getResult();
         $userIds = array_unique(array_column($userMonths, 'user'));
 
-        $qb2 = $this->userRepository->createQueryBuilder('u');
-        $qb2->select('u')->where($qb2->expr()->in('u.id', $userIds));
-        $users = [];
-        foreach ($qb2->getQuery()->getResult() as $user) {
-            $users[$user->getId()] = new UserStatistic($user);
-        }
-
-        foreach ($userMonths as $tmp) {
-            $user = $users[$tmp['user']]->getUser();
-            $year = $model->getUserYear($tmp['year'], $user);
-            if ($year === null) {
-                $year = new Year($tmp['year']);
-                $model->setUserYear($year, $user);
+        if (!empty($userIds)) {
+            $qb2 = $this->userRepository->createQueryBuilder('u');
+            $qb2->select('u')->where($qb2->expr()->in('u.id', $userIds));
+            $users = [];
+            foreach ($qb2->getQuery()->getResult() as $user) {
+                $users[$user->getId()] = new UserStatistic($user);
             }
-            $month = new Month($tmp['month']);
-            $month->setTotalRate($tmp['rate']);
-            $month->setTotalDuration($tmp['duration']);
-            $month->setTotalInternalRate($tmp['internalRate']);
-            $year->setMonth($month);
-            $users[$tmp['user']]->addValuesFromMonth($month);
+
+            foreach ($userMonths as $tmp) {
+                $user = $users[$tmp['user']]->getUser();
+                $year = $model->getUserYear($tmp['year'], $user);
+                if ($year === null) {
+                    $year = new Year($tmp['year']);
+                    $model->setUserYear($year, $user);
+                }
+                $month = new Month($tmp['month']);
+                $month->setTotalRate($tmp['rate']);
+                $month->setTotalDuration($tmp['duration']);
+                $month->setTotalInternalRate($tmp['internalRate']);
+                $year->setMonth($month);
+                $users[$tmp['user']]->addValuesFromMonth($month);
+            }
         }
         // ---------------------------------------------------
 
@@ -279,7 +467,14 @@ class ProjectStatisticService
 
         $this->repository->addPermissionCriteria($qb, $user);
 
-        return $qb->getQuery()->getResult();
+        /** @var Project[] $projects */
+        $projects = $qb->getQuery()->getResult();
+
+        // pre-cache customer objects instead of joining them
+        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager());
+        $loader->loadResults($projects);
+
+        return $projects;
     }
 
     /**
@@ -297,25 +492,36 @@ class ProjectStatisticService
 
         $today = clone $today;
 
-        $begin = $factory->getStartOfWeek($today);
-        $end = $factory->getEndOfWeek($today);
-        $startMonth = (clone $begin)->modify('first day of this month');
-        $endMonth = (clone $begin)->modify('last day of this month');
+        $startOfWeek = $factory->getStartOfWeek($today);
+        $endOfWeek = $factory->getEndOfWeek($today);
+        $startMonth = (clone $startOfWeek)->modify('first day of this month');
+        $endMonth = (clone $startOfWeek)->modify('last day of this month');
 
         $projectViews = [];
         foreach ($projects as $project) {
             $projectViews[$project->getId()] = new ProjectViewModel($project);
         }
 
+        $budgetStats = $this->getBudgetStatisticModelForProjects($projects, $today);
+        foreach ($budgetStats as $model) {
+            $projectViews[$model->getProject()->getId()]->setBudgetStatisticModel($model);
+        }
+
         $projectIds = array_keys($projectViews);
 
-        $qb = $this->timesheetRepository->createQueryBuilder('t');
-        $qb
-            ->select('IDENTITY(t.project) AS id, COUNT(t.id) as amount, COALESCE(SUM(t.duration), 0) AS duration, COALESCE(SUM(t.rate), 0) AS rate, MAX(t.begin) as lastRecord')
-            ->andWhere($qb->expr()->in('t.project', ':project'))
+        $tplQb = $this->timesheetRepository->createQueryBuilder('t');
+        $tplQb
+            ->select('IDENTITY(t.project) AS id')
+            ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('COALESCE(SUM(t.duration), 0) AS duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) AS rate')
+            ->andWhere($tplQb->expr()->in('t.project', ':project'))
             ->groupBy('t.project')
             ->setParameter('project', array_values($projectIds))
         ;
+
+        $qb = clone $tplQb;
+        $qb->addSelect('MAX(t.begin) as lastRecord');
 
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
@@ -329,14 +535,10 @@ class ProjectStatisticService
         }
 
         // values for today
-        $qb = $this->timesheetRepository->createQueryBuilder('t');
+        $qb = clone $tplQb;
         $qb
-            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration')
-            ->andWhere($qb->expr()->in('t.project', ':project'))
-            ->andWhere('DATE(t.begin) = :starting_date')
-            ->groupBy('t.project')
-            ->setParameter('starting_date', $today->format('Y-m-d'))
-            ->setParameter('project', array_values($projectIds))
+            ->andWhere('DATE(t.begin) = :start_date')
+            ->setParameter('start_date', $today, Types::DATETIME_MUTABLE)
         ;
 
         $result = $qb->getQuery()->getScalarResult();
@@ -345,15 +547,11 @@ class ProjectStatisticService
         }
 
         // values for the current week
-        $qb = $this->timesheetRepository->createQueryBuilder('t');
+        $qb = clone $tplQb;
         $qb
-            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration')
-            ->andWhere($qb->expr()->in('t.project', ':project'))
             ->andWhere('DATE(t.begin) BETWEEN :start_date AND :end_date')
-            ->groupBy('t.project')
-            ->setParameter('start_date', $begin->format('Y-m-d'))
-            ->setParameter('end_date', $end->format('Y-m-d'))
-            ->setParameter('project', array_values($projectIds))
+            ->setParameter('start_date', $startOfWeek, Types::DATETIME_MUTABLE)
+            ->setParameter('end_date', $endOfWeek, Types::DATETIME_MUTABLE)
         ;
 
         $result = $qb->getQuery()->getScalarResult();
@@ -362,15 +560,11 @@ class ProjectStatisticService
         }
 
         // values for the current month
-        $qb = $this->timesheetRepository->createQueryBuilder('t');
+        $qb = clone $tplQb;
         $qb
-            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration')
-            ->andWhere($qb->expr()->in('t.project', ':project'))
-            ->andWhere('DATE(t.begin) BETWEEN :start_month AND :end_month')
-            ->groupBy('t.project')
-            ->setParameter('start_month', $startMonth)
-            ->setParameter('end_month', $endMonth)
-            ->setParameter('project', array_values($projectIds))
+            ->andWhere('DATE(t.begin) BETWEEN :start_date AND :end_date')
+            ->setParameter('start_date', $startMonth, Types::DATETIME_MUTABLE)
+            ->setParameter('end_date', $endMonth, Types::DATETIME_MUTABLE)
         ;
 
         $result = $qb->getQuery()->getScalarResult();
@@ -379,14 +573,10 @@ class ProjectStatisticService
         }
 
         // values for all time (not exported)
-        $qb = $this->timesheetRepository->createQueryBuilder('t');
+        $qb = clone $tplQb;
         $qb
-            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration, COALESCE(SUM(t.rate), 0) AS rate')
-            ->andWhere($qb->expr()->in('t.project', ':project'))
             ->andWhere('t.exported = :exported')
-            ->groupBy('t.project')
             ->setParameter('exported', false, Types::BOOLEAN)
-            ->setParameter('project', array_values($projectIds))
         ;
 
         $result = $qb->getQuery()->getScalarResult();
@@ -396,16 +586,12 @@ class ProjectStatisticService
         }
 
         // values for all time (not exported and billable)
-        $qb = $this->timesheetRepository->createQueryBuilder('t');
+        $qb = clone $tplQb;
         $qb
-            ->select('IDENTITY(t.project) AS id, COALESCE(SUM(t.duration), 0) AS duration, COALESCE(SUM(t.rate), 0) AS rate')
-            ->andWhere($qb->expr()->in('t.project', ':project'))
             ->andWhere('t.exported = :exported')
             ->andWhere('t.billable = :billable')
-            ->groupBy('t.project')
             ->setParameter('exported', false, Types::BOOLEAN)
             ->setParameter('billable', true, Types::BOOLEAN)
-            ->setParameter('project', array_values($projectIds))
         ;
 
         $result = $qb->getQuery()->getScalarResult();
@@ -415,14 +601,11 @@ class ProjectStatisticService
         }
 
         // values for all time (none billable)
-        $qb = $this->timesheetRepository->createQueryBuilder('t');
+        $qb = clone $tplQb;
         $qb
-            ->select('IDENTITY(t.project) AS id, SUM(t.duration) AS duration, SUM(t.rate) AS rate')
-            ->andWhere($qb->expr()->in('t.project', ':project'))
             ->andWhere('t.billable = :billable')
             ->groupBy('t.project')
             ->setParameter('billable', true, Types::BOOLEAN)
-            ->setParameter('project', array_values($projectIds))
         ;
 
         $result = $qb->getQuery()->getScalarResult();

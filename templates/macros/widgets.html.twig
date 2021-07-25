@@ -504,7 +504,7 @@
         {% if showTitle %}
         <thead>
             <tr>
-                <th>{{ 'label.team'|trans }}</th>
+                <th class="hw-min">{{ 'label.team'|trans }}</th>
                 <th>{{ 'label.user'|trans }}</th>
             </tr>
         </thead>
@@ -515,7 +515,7 @@
             {% set userTeamCount = users|length %}
             <tr{% if is_granted('edit', team) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_team_member', {'id': team.id}) }}"{% endif %}>
                 <td>
-                    {{ team.name }}
+                    {{ _self.label_team(team) }}
                 </td>
                 <td class="avatars">
                     {{ _self.user_avatar(team.teamlead, ('label.teamlead'|trans ~ ': ' ~ team.teamlead.displayName), 'teamlead') }}
@@ -654,4 +654,12 @@
         </div>
         {% endfor %}
     </div>
+{% endmacro %}
+
+{% macro percent(maximum, current) %}
+    {% if maximum > 0 %}
+        {{ (current / (maximum / 100))|number_format(2) }} %
+    {% else %}
+        {{ 0|number_format(2) }} %
+    {% endif %}
 {% endmacro %}

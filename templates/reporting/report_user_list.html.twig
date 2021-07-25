@@ -18,18 +18,20 @@
         {% block box_body_class %}{{ box_id }} table-responsive no-padding{% endblock %}
         {% block box_body %}
             {% set absoluteTotals = 0 %}
+            {% set totals = {} %}
             <table class="table table-bordered table-hover dataTable">
                 <tr>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
-                    {% for day in days %}
-                    <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}">
-                        {{ day|day_name(true) }}<br>
-                        {{ day|format_date('short') }}
-                    </th>
+                    {% for day in stats.0.getDateTimes() %}
+                        <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}">
+                            {{ day|day_name(true) }}<br>
+                            {{ day|format_date('short') }}
+                        </th>
+                        {% set totals = totals|merge({(day|report_date): 0}) %}
                     {% endfor %}
                 </tr>
-                {% for userDay in rows %}
+                {% for userDay in stats %}
                     {% set usersTotalDuration = 0 %}
                     <tr class="user">
                         <td class="text-nowrap">
@@ -40,12 +42,13 @@
                                 {% set usersTotalDuration = usersTotalDuration + day.totalDuration %}
                                 {% set absoluteTotals = absoluteTotals + day.totalDuration %}
                             {% endif %}
+                            {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + day.totalDuration)}) %}
                         {% endfor %}
                         <th class="text-nowrap text-center total">
-                            {{ usersTotalDuration|duration }}
+                            <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userDay.user.id}) }}">{{ usersTotalDuration|duration }}</a>
                         </th>
                         {% for day in userDay.days %}
-                            <td class="text-nowrap text-center day-total{% if day.day is weekend %} weekend{% endif %}">
+                            <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}">
                                 {% if day.totalDuration > 0 %}
                                     {{ day.totalDuration|duration }}
                                 {% endif %}
@@ -74,8 +77,8 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            $('#{{ form.date.vars.id }}').on('change', function(ev) {
-                $(this).closest('form').submit();
+            jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
+                jQuery(this).closest('form').submit();
             });
         });
     </script>

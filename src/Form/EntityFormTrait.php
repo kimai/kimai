@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use App\Form\Type\BudgetType;
 use App\Form\Type\DurationType;
 use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\YesNoType;
@@ -38,6 +39,7 @@ trait EntityFormTrait
                     'icon' => 'clock',
                     'required' => false,
                 ])
+                ->add('budgetType', BudgetType::class)
             ;
         }
 

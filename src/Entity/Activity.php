@@ -50,8 +50,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "color", "visible", "comment"})
  * @Exporter\Expose("project", label="label.project", exp="object.getProject() === null ? null : object.getProject().getName()")
  */
-class Activity implements EntityWithMetaFields
+class Activity implements EntityWithMetaFields, EntityWithBudget
 {
+    use BudgetTrait;
+    use ColorTrait;
+
     /**
      * Internal ID
      *
@@ -120,40 +123,6 @@ class Activity implements EntityWithMetaFields
      * @Assert\NotNull()
      */
     private $visible = true;
-
-    // keep the traits here, for placing the column at the "correct" position
-    use ColorTrait;
-
-    /**
-     * The total monetary budget, will be zero if unconfigured.
-     *
-     * @var float
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Activity_Entity"})
-     *
-     * @ Exporter\Expose(label="label.budget")
-     *
-     * @ORM\Column(name="budget", type="float", nullable=false)
-     * @Assert\Range(min=0.00, max=900000000000.00)
-     * @Assert\NotNull()
-     */
-    private $budget = 0.00;
-    /**
-     * The time budget in seconds, will be zero if unconfigured.
-     *
-     * @var int
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Activity_Entity"})
-     *
-     * @ Exporter\Expose(label="label.timeBudget", type="duration")
-     *
-     * @ORM\Column(name="time_budget", type="integer", nullable=false)
-     * @Assert\Range(min=0, max=2145600000)
-     * @Assert\NotNull()
-     */
-    private $timeBudget = 0;
     /**
      * Meta fields
      *
@@ -256,40 +225,6 @@ class Activity implements EntityWithMetaFields
     public function isVisible(): bool
     {
         return $this->visible;
-    }
-
-    public function setBudget(float $budget): Activity
-    {
-        $this->budget = $budget;
-
-        return $this;
-    }
-
-    public function getBudget(): float
-    {
-        return $this->budget;
-    }
-
-    public function hasBudget(): bool
-    {
-        return $this->budget > 0.00;
-    }
-
-    public function setTimeBudget(int $seconds): Activity
-    {
-        $this->timeBudget = $seconds;
-
-        return $this;
-    }
-
-    public function getTimeBudget(): int
-    {
-        return $this->timeBudget;
-    }
-
-    public function hasTimeBudget(): bool
-    {
-        return $this->timeBudget > 0;
     }
 
     /**

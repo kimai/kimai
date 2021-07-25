@@ -433,26 +433,12 @@
         <source>admin_project.title</source>
         <target>Projetos</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-                    Atualmente o %project% para o cliente %customer% tem %activities%
-                    atividades e %records% registros de tempo, que contam até um total de %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Activity
             -->
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Atividades</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-                    Atualmente o %project% para o cliente %customer% tem %activity%
-                    atividades e %records% registros de tempo, que contam até um total de %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -509,13 +495,6 @@
         <source>label.currency</source>
         <target>Moeda</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>
-                   Atualmente o %project% para o cliente %customer% tem %activity%
-                    atividades e %records% registros de tempo, que contam até um total de %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: User
             -->
@@ -542,12 +521,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Função</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                    Atualmente o usuário %user% possuí %records% registros de tempo, que contam até um total de %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Plugins

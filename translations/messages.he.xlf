@@ -512,10 +512,6 @@
         <source>admin_project.title</source>
         <target>מיזמים</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>כרגע, למיזם %project% ללקוח %customer% יש %activities% פעילויות ו־%records% רשומות זמן, שמסתכמות לסך של %duration%.</target>
-      </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
         <target>תחילת מיזם</target>
@@ -527,10 +523,6 @@
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>פעילויות</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>כרגע, לפעילות %activity% במיזם %project% ללקוח %customer% יש %records% רשומות זמן, שמסתכמות לסך של %duration%.</target>
       </trans-unit>
       <trans-unit id="admin_customer.title">
         <source>admin_customer.title</source>
@@ -588,10 +580,6 @@
         <source>label.currency</source>
         <target>מטבע</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>כרגע, ללקוח %customer% יש %project% מיזמים עם %activity% פעילויות, שמסתכמות ב־%records% רשומות זמן לסך של %duration%.</target>
-      </trans-unit>
       <trans-unit id="admin_user.title">
         <source>admin_user.title</source>
         <target>משתמש</target>
@@ -615,10 +603,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>תפקיד</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>כרגע למשתמש %user% יש %records% רשומות זמן שמסתכמות לכדי %duration% סך הכול.</target>
       </trans-unit>
       <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>

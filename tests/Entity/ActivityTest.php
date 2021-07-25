@@ -68,11 +68,11 @@ class ActivityTest extends TestCase
         $this->assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 
-        $this->assertInstanceOf(Activity::class, $sut->setBudget(12345.67));
+        $sut->setBudget(12345.67);
         $this->assertEquals(12345.67, $sut->getBudget());
         self::assertTrue($sut->hasBudget());
 
-        $this->assertInstanceOf(Activity::class, $sut->setTimeBudget(937321));
+        $sut->setTimeBudget(937321);
         $this->assertEquals(937321, $sut->getTimeBudget());
         self::assertTrue($sut->hasTimeBudget());
 

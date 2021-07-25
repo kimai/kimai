@@ -45,5 +45,13 @@ final class TeamIdLoader implements LoaderInterface
             ->andWhere($qb->expr()->in('t.id', $ids))
             ->getQuery()
             ->execute();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL t.{id}', 'projects')
+            ->from(Team::class, 't')
+            ->leftJoin('t.projects', 'projects')
+            ->andWhere($qb->expr()->in('t.id', $ids))
+            ->getQuery()
+            ->execute();
     }
 }

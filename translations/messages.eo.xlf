@@ -529,13 +529,6 @@
         <source>admin_project.title</source>
         <target>Projektoj</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-                    Nun la projekto %project% por la kliento %customer% havas %activities%
-                    aktivaĵojn kaj %records% temporegistraĵojn, kiuj sumiĝas al tuto de %duration%.
-                </target>
-      </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
         <target>Komenco de projekto</target>
@@ -550,13 +543,6 @@
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Aktivaĵoj</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-                    Nun la aktivaĵo %activity% en la projekto %project% por la kliento %customer%
-                    havas %records% temporegistraĵojn, kiuj sumiĝas al tuto de %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -617,13 +603,6 @@
         <source>label.currency</source>
         <target>Valuto</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>
-                    Nun la kliento %customer% havas %project% projektojn kun %activity% aktivaĵojn, kiuj sumiĝas en
-                    %records% temporegistraĵoj al tuto de %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Users
             -->
@@ -650,12 +629,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Rolo</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                    Nun la uzanto %user% havas %records% temporegistraĵojn kiuj sumiĝas al tuto de %duration%.
-                </target>
       </trans-unit>
       <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>

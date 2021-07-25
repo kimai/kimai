@@ -73,7 +73,7 @@
 
 {% block yearpicker_widget -%}
     <div class="btn-group">
-        <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousYear|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}">
+        <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousYear|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}">
             <i class="{{ 'left'|icon }}"></i>
         </a>
         <a class="btn btn-default" href="#" onclick="return false;">
@@ -85,7 +85,7 @@
                 {% endif %}
             </span>
         </a>
-        <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{ nextYear|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_short }}">
+        <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{ nextYear|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_short }}">
             <i class="{{ 'right'|icon }}"></i>
         </a>
     </div>
@@ -94,13 +94,13 @@
 
 {% block monthpicker_widget -%}
     <div class="btn-group">
-        <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousMonth|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}">
+        <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousMonth|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}">
             <i class="{{ 'left'|icon }}"></i>
         </a>
         <a class="btn btn-default" href="#" onclick="return false;">
             <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
         </a>
-        <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{ nextMonth|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}">
+        <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{ nextMonth|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}">
             <i class="{{ 'right'|icon }}"></i>
         </a>
     </div>
@@ -109,13 +109,13 @@
 
 {% block weekpicker_widget -%}
     <div class="btn-group">
-        <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousWeek|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}">
+        <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousWeek|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}">
             <i class="{{ 'left'|icon }}"></i>
         </a>
         <a class="btn btn-default" href="#" onclick="return false;">
             <span id="{{ form.vars.id }}_week_number">{{ 'stats.workingTimeWeek'|trans({'%week%': week|date_format('W')}) }}</span>
         </a>
-        <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{ nextWeek|date_short }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}">
+        <a class="btn btn-default btn-right" href="#" onclick="$('#{{ form.vars.id }}').val('{{ nextWeek|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}">
             <i class="{{ 'right'|icon }}"></i>
         </a>
     </div>

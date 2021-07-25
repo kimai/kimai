@@ -610,10 +610,6 @@
         <source>admin_project.title</source>
         <target>Εργασίες</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>Επί του παρόντος, το έργο %project% για τον πελάτη %customer% έχει %activities% δραστηριότητες και %records% εγγραφές-ωρών, που συνολικά ανέρχονται σε %duration%.</target>
-      </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
         <target>Εκκίνηση έργου</target>
@@ -628,10 +624,6 @@
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Δραστηριότητες</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>Επί του παρόντος η δραστηριότητα %activity% στο έργο %project% για τον πελάτη %customer% έχει %records% καταχωρήσεις-ωρών, που συνολικά ανέρχονται σε %duration%.</target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -696,10 +688,6 @@
         <source>label.currency</source>
         <target>Νόμισμα</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>Επί του παρόντος, ο πελάτης %customer% έχει %project% έργα με %activity% δραστηριότητες, οι οποίες συνοψίζονται σε %records% εγγραφές-ωρών με άθροισμα %duration%.</target>
-      </trans-unit>
       <!--
               Admin: Users
             -->
@@ -726,10 +714,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Ρόλος</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>Επί του παρόντος, ο χρήστης %user% έχει %records% εγγραφές-ωρών με άθροισμα %duration%.</target>
       </trans-unit>
       <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>

@@ -40,7 +40,7 @@ class CustomerRepository extends EntityRepository
      * @param null $lockVersion
      * @return Customer|null
      */
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null): ?Customer
     {
         /** @var Customer|null $customer */
         $customer = parent::find($id, $lockMode, $lockVersion);
@@ -57,28 +57,30 @@ class CustomerRepository extends EntityRepository
     /**
      * @param Customer $customer
      * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveCustomer(Customer $customer)
+    public function saveCustomer(Customer $customer): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($customer);
         $entityManager->flush();
     }
 
-    /**
-     * @param null|bool $visible
-     * @return int
-     */
-    public function countCustomer($visible = null)
+    public function countCustomer(bool $visible = false): int
     {
-        if (null !== $visible) {
+        if ($visible) {
             return $this->count(['visible' => (bool) $visible]);
         }
 
         return $this->count([]);
     }
 
+    /**
+     * @deprecated since 1.15 use CustomerStatisticService::getCustomerStatistics() instead - will be removed with 2.0
+     *
+     * @param Customer $customer
+     * @return CustomerStatistic
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function getCustomerStatistics(Customer $customer): CustomerStatistic
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

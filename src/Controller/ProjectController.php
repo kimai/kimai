@@ -304,6 +304,7 @@ final class ProjectController extends AbstractController
         $comments = null;
         $teams = null;
         $rates = [];
+        $now = $this->getDateTimeFactory()->createDateTime();
 
         if ($this->isGranted('edit', $project)) {
             if ($this->isGranted('create_team')) {
@@ -313,7 +314,7 @@ final class ProjectController extends AbstractController
         }
 
         if ($this->isGranted('budget', $project)) {
-            $stats = $statisticService->getProjectStatistics($project);
+            $stats = $statisticService->getBudgetStatisticModel($project, $now);
         }
 
         if ($this->isGranted('comments', $project)) {
@@ -337,7 +338,7 @@ final class ProjectController extends AbstractController
             'team' => $defaultTeam,
             'teams' => $teams,
             'rates' => $rates,
-            'now' => $this->getDateTimeFactory()->createDateTime(),
+            'now' => $now,
         ]);
     }
 

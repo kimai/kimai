@@ -154,7 +154,7 @@ trait RendererTrait
                 ];
 
                 if (null !== $project && ($project->getTimeBudget() > 0 || $project->getBudget() > 0)) {
-                    $projectStats = $projectStatisticService->getProjectStatistics($project, $query->getEnd());
+                    $projectStats = $projectStatisticService->getProjectStatistics($project, null, $query->getEnd());
 
                     if ($project->getTimeBudget() > 0) {
                         $summary[$id]['time_left'] = $project->getTimeBudget() - $projectStats->getRecordDuration();

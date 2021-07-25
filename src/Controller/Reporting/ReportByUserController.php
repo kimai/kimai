@@ -60,7 +60,6 @@ final class ReportByUserController extends AbstractController
     {
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory($currentUser);
-        $localeFormats = $this->getLocaleFormats($request->getLocale());
         $canChangeUser = $this->canSelectUser();
 
         $values = new MonthByUser();
@@ -71,7 +70,6 @@ final class ReportByUserController extends AbstractController
             'include_user' => $canChangeUser,
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
-            'format' => $localeFormats->getDateTypeFormat(),
         ]);
 
         $form->submit($request->query->all(), false);
@@ -129,7 +127,6 @@ final class ReportByUserController extends AbstractController
     {
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory($currentUser);
-        $localeFormats = $this->getLocaleFormats($request->getLocale());
         $canChangeUser = $this->canSelectUser();
 
         $values = new WeekByUser();
@@ -140,7 +137,6 @@ final class ReportByUserController extends AbstractController
             'include_user' => $canChangeUser,
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
-            'format' => $localeFormats->getDateTypeFormat(),
         ]);
 
         $form->submit($request->query->all(), false);

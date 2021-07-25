@@ -89,6 +89,7 @@ class ActivityRepository extends EntityRepository
     /**
      * Retrieves statistics for one activity.
      *
+     * @deprecated since 1.15 use ActivityStatisticService::getActivityStatistics() instead - will be removed with 2.0
      * @param Activity $activity
      * @return ActivityStatistic
      */

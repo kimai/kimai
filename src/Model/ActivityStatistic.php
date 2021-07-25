@@ -10,8 +10,9 @@
 namespace App\Model;
 
 use App\Entity\Activity;
+use App\Model\Statistic\BudgetStatistic;
 
-class ActivityStatistic extends TimesheetCountedStatistic implements \JsonSerializable
+class ActivityStatistic extends BudgetStatistic implements \JsonSerializable
 {
     /**
      * @var Activity

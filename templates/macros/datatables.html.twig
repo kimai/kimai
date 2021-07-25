@@ -109,6 +109,9 @@
         {# change the next if, once data_table_header_options() will be deleted #}
         {% if classes is iterable %}
             {% set classes = classes.class %}
+            {% if columns[column].columnClass is defined %}
+                {% set classes = classes ~ ' ' ~ columns[column].columnClass %}
+            {% endif %}
         {% endif %}
         {% if 'alwaysVisible' in classes %}
             {# as this column should always be visible, we remove every class that includes hidden #}

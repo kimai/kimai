@@ -12,7 +12,6 @@ namespace App\Reporting;
 use App\Form\Type\MonthPickerType;
 use App\Form\Type\UserType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -37,7 +36,6 @@ class MonthByUserForm extends AbstractType
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
-            'format' => $options['format'],
         ]);
 
         if ($options['include_user']) {
@@ -54,7 +52,6 @@ class MonthByUserForm extends AbstractType
             'data_class' => MonthByUser::class,
             'timezone' => date_default_timezone_get(),
             'start_date' => new \DateTime(),
-            'format' => DateType::HTML5_FORMAT,
             'include_user' => false,
             'csrf_protection' => false,
             'method' => 'GET',

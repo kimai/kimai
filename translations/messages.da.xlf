@@ -497,26 +497,12 @@
         <source>admin_project.title</source>
         <target>Projekter</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-                    På nuværende tidspunkt har projektet %project% for kunden %customer% %activities%
-                    aktiviteter og %records% tidsregistreringer, i alt %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Activity
             -->
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Aktiviteter</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-                    På nuværende tidspunkt har aktiviteten %activity% i projektet %project% for kunden %customer%
-                    %records% tidsregistreringer, i alt %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -577,13 +563,6 @@
         <source>label.currency</source>
         <target>Valuta</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>
-                    På nuværende tidspunkt har kunden %customer% %project% projekter med %activity% aktiviteter, med i alt
-                     %records% tidsregistreringer på i alt %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Users
             -->
@@ -610,12 +589,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Rolle</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                    På nuværende tidspunkt har bruger %user% %records% tidsregistreringer på i alt %duration%.
-                </target>
       </trans-unit>
       <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>

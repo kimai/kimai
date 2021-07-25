@@ -1,6 +1,7 @@
 .box {
     /* used on detail pages for: customer, project and activity */
-    .box-body.no-padding div.comment {
+    .box-body.no-padding div.comment,
+    .box-body.no-padding .box-padding {
         padding: 10px;
     }
 

@@ -9,7 +9,6 @@
 
 namespace App\Form\Type;
 
-use App\Utils\MomentFormatConverter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormInterface;
@@ -48,7 +47,6 @@ final class WeekPickerType extends AbstractType
         $view->vars['week'] = $date;
         $view->vars['previousWeek'] = (clone $date)->modify('-1 week');
         $view->vars['nextWeek'] = (clone $date)->modify('+1 week');
-        $view->vars['momentFormat'] = (new MomentFormatConverter())->convert($options['format']);
     }
 
     /**

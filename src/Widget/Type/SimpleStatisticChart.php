@@ -114,11 +114,12 @@ class SimpleStatisticChart extends SimpleWidget implements UserWidget
         }
 
         try {
+            $user = null;
             if (true === $this->queryWithUser) {
-                return $this->repository->getStatistic($this->query, $begin, $end, $this->user);
-            } else {
-                return $this->repository->getStatistic($this->query, $begin, $end, null);
+                $user = $this->user;
             }
+
+            return $this->repository->getStatistic($this->query, $begin, $end, $user);
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()

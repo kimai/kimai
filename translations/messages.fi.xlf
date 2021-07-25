@@ -565,13 +565,6 @@
         <source>admin_project.title</source>
         <target state="translated">Projektit</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target state="translated">
-                    Tällä hetkellä projektilla %project% asiakkaalle %customer% on %activities%
-                    työtehtävää ja %records% aikamerkintää, joiden kesto on yhteensä %duration%.
-                </target>
-      </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
         <target state="translated">Projektin aloitus</target>
@@ -586,13 +579,6 @@
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target state="translated">Työtehtävät</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target state="translated">
-                    Tällä hetkellä työtehtävällä %activity% projektissa %project% asiakkaalle %customer%
-                    on %records% aikamerkintää, joiden kesto on yhteensä %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -653,13 +639,6 @@
         <source>label.currency</source>
         <target state="translated">Valuutta</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target state="translated">
-                    Tällä hetkellä asiakkaalla %customer% on %project% projektia joissa %activity% työtehtävää, joissa on yhteensä
-                    %records% aikamerkintää eli kesto yhteensä %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Users
             -->
@@ -686,12 +665,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target state="translated">Rooli</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target state="translated">
-                    Tällä hetkellä käyttäjällä %user% on %records% aikamerkintää mikä on yhteensä %duration%.
-                </target>
       </trans-unit>
       <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>

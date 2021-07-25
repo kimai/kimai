@@ -3,30 +3,30 @@
 
 {% block report_title %}{{ (title|default('report_project_view'))|trans({}, 'reporting') }}{% endblock %}
 
-{% set showDurations = showDurations is defined and showDurations is same as (true) %}
-{% set columns = {
+{% set availableColumns = {
     'name':             {'class': 'alwaysVisible'},
-    'lastRecord':       {'class': 'hidden text-center hw-min', 'title': 'label.last_record'|trans},
-} %}
-{% if showDurations %}
-    {% set columns = columns|merge({
-        'today':            {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationToday'|trans},
-        'week':             {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationWeek'|trans},
-        'month':            {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationMonth'|trans},
-    }) %}
-{% endif %}
-{% set columns = columns|merge({
-    'durationTotal':    {'class': 'text-center hw-min', 'title': 'stats.durationTotal'|trans},
     'timeBudget':       {'class': 'hidden-xs', 'title': 'label.timeBudget'|trans},
     'budget':           {'class': 'hidden-xs', 'title': 'label.budget'|trans},
-    'stateDuration':    {'class': 'hidden-sm hidden-xs text-center hw-min', 'title': 'label.not_exported'|trans},
-    'stateMoney':       {'class': 'hidden-sm hidden-xs text-center hw-min', 'title': 'label.not_invoiced'|trans},
+    'lastRecord':       {'class': 'text-center hw-min', 'title': 'label.last_record'|trans, 'columnClass': 'w-min'},
+    'today':            {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationToday'|trans},
+    'week':             {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationWeek'|trans},
+    'month':            {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationMonth'|trans},
+    'durationTotal':    {'class': 'text-center hw-min', 'title': 'stats.durationTotal'|trans, 'columnClass': 'w-min'},
+    'exported':         {'class': 'hidden-sm hidden-xs hidden text-center hw-min', 'title': 'label.not_exported'|trans, 'columnClass': 'w-min'},
+    'invoiced':         {'class': 'hidden-sm hidden-xs hidden text-center hw-min', 'title': 'label.not_invoiced'|trans, 'columnClass': 'w-min'},
     'projectStart':     {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_start'|trans},
     'projectEnd':       {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_end'|trans},
     'comment':          {'class': 'hidden-md hidden-sm hidden-xs hidden', 'title': 'label.comment'|trans},
     'actions':          {'class': 'actions alwaysVisible'},
-}) %}
+} %}
 {% set tableName = tableName|default('project_view_reporting') %}
+{% set skipColumns = skipColumns is defined ? skipColumns : {} %}
+{% set columns = {} %}
+{% for name, config in availableColumns %}
+    {% if name not in skipColumns %}
+        {% set columns = columns|merge({(name): config}) %}
+    {% endif %}
+{% endfor %}
 
 {% block main_before %}
     {{ tables.data_table_column_modal(tableName, columns) }}
@@ -66,10 +66,14 @@
                     </tr>
                     {% for entry in mapping.projects|sort((a, b) => a.project.name <=> b.project.name) %}
                         {% set project = entry.project %}
+                        {% set budgetStats = entry.getBudgetStatisticModel() %}
                         {% set currency = project.customer.currency %}
                         {% if is_granted('budget', project) %}
-                            <tr{% if is_granted('details', project) %} class="alternative-link open-edit" data-href="{{ path('report_project_details', {'project': project.id}) }}"{% endif %}>
+                            <tr {{ widgets.project_row_attr(project, now) }}>
+                            {% for name, column_config in columns %}
+                                {% if name == 'name' %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_project(project) }}</td>
+                                {% elseif name == 'lastRecord' %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'lastRecord') }}">
                                     {% if entry.lastRecord is not null %}
                                         {{ entry.lastRecord|date_short }}
@@ -77,38 +81,28 @@
                                         &ndash;
                                     {% endif %}
                                 </td>
-                                {% if showDurations %}
+                                {% elseif name == 'today' %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'today') }}">{{ entry.durationDay|duration }}</td>
+                                {% elseif name == 'week' %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'week') }}">{{ entry.durationWeek|duration }}</td>
+                                {% elseif name == 'month' %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'month') }}">{{ entry.durationMonth|duration }}</td>
-                                {% endif %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'durationTotal') }}">{{ entry.durationTotal|duration }}</td>
+                                {% elseif name == 'durationTotal' %}
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'durationTotal') }} w-min">{{ entry.durationTotal|duration }}</td>
+                                {% elseif name == 'timeBudget' %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
-                                    {% if project.timeBudget > 0 %}
-                                        {% set timeBudgetLeft = project.timeBudget - entry.billableDuration %}
-                                        {% set options = {
-                                            'max': project.timeBudget|default(0),
-                                            'current': entry.billableDuration|default(0),
-                                            'open': timeBudgetLeft,
-                                            'format': 'duration'
-                                        } %}
-                                        {{ progress.progressbar_full(options) }}
+                                    {% if budgetStats.hasTimeBudget() %}
+                                        {{ progress.progressbar_timebudget(budgetStats) }}
                                     {% endif %}
                                 </td>
+                                {% elseif name == 'budget' %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">
-                                    {% if project.budget > 0 %}
-                                        {% set budgetLeft = project.budget - entry.billableRate %}
-                                        {% set options = {
-                                            'max': project.budget|default(0),
-                                            'current': entry.billableRate|default(0),
-                                            'open': budgetLeft,
-                                            'format': 'money',
-                                            'currency': currency
-                                        } %}
-                                        {{ progress.progressbar_full(options) }}
+                                    {% if project.hasBudget() %}
+                                        {{ progress.progressbar_budget(budgetStats, project.customer.currency) }}
                                     {% endif %}
                                 </td>
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'stateDuration') }}">
+                                {% elseif name == 'exported' %}
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}">
                                     {% if is_granted('create_export') %}
                                         <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
                                             {{ entry.notExportedDuration|duration }}
@@ -117,7 +111,8 @@
                                         {{ entry.notExportedDuration|duration }}
                                     {% endif %}
                                 </td>
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'stateMoney') }}">
+                                {% elseif name == 'invoiced' %}
+                                <td class="{{ tables.data_table_column_class(tableName, columns, 'invoiced') }}">
                                     {% if is_granted('view_invoice') %}
                                         <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
                                             {{ entry.notBilledRate|money(currency) }}
@@ -126,12 +121,18 @@
                                         {{ entry.notBilledRate|money(currency) }}
                                     {% endif %}
                                 </td>
+                                {% elseif name == 'projectStart' %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'projectStart') }}">{% if project.start is not null %}{{ project.start|date_short }}{% endif %}</td>
+                                {% elseif name == 'projectEnd' %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'projectEnd') }}">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
+                                {% elseif name == 'comment' %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ project.comment }}</td>
+                                {% elseif name == 'actions' %}
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                                     {{ projectActions.project(project, 'custom') }}
                                 </td>
+                                {% endif %}
+                            {% endfor %}
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -147,8 +148,8 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            $('#project-view-form').on('change', function(ev) {
-                $(this).submit();
+            jQuery('#project-view-form').on('change', function(ev) {
+                jQuery(this).submit();
             });
         });
     </script>

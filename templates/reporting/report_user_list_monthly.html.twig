@@ -17,54 +17,53 @@
         {% endblock %}
         {% block box_body_class %}{{ box_id }} table-responsive no-padding{% endblock %}
         {% block box_body %}
+            {% set totals = {} %}
             <table class="table table-bordered table-hover dataTable">
                 <tr>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
-                    {% for id, month in months %}
-                    <th class="text-center text-nowrap">
-                        <a href="{{ path('report_monthly_users', {'date': month|date_short}) }}">
-                            {{ month|month_name }}<br>
-                            {{ month|date_format('Y') }}
-                        </a>
-                    </th>
+                    {% for month in stats.0.getDateTimes() %}
+                        <th class="text-center text-nowrap">
+                            <a href="{{ path('report_monthly_users', {'date': month|report_date}) }}">
+                                {{ month|month_name }}<br>
+                                {{ month|date_format('Y') }}
+                            </a>
+                        </th>
+                        {% set totals = totals|merge({(month|report_date): 0}) %}
                     {% endfor %}
                 </tr>
-                {% for userYear in rows %}
+                {% for userYear in stats|filter(row => row.user is not null) %}
                     {% set usersTotalDuration = 0 %}
                     <tr class="user">
                         <td class="text-nowrap">
                             {{ widgets.label_dot(userYear.user.displayName, userYear.user.color) }}
                         </td>
-                        {% for yid, year in userYear.years %}
-                            {% for mid, month in year.months %}
+                            {% for mid, month in userYear.months %}
                                 {% if month.totalDuration > 0 %}
                                     {% set usersTotalDuration = usersTotalDuration + month.totalDuration %}
                                 {% endif %}
                             {% endfor %}
-                        {% endfor %}
                         <th class="text-nowrap text-center total">
                             {{ usersTotalDuration|duration }}
                         </th>
-                        {% for yid, year in userYear.years %}
-                            {% for mid, month in year.months %}
-                                <td class="text-nowrap text-center day-total">
-                                    {% if month.totalDuration > 0 %}
-                                        <a href="{{ path('report_user_month', {'date': (year.year ~'-'~month.month~'-01')|date_short, 'user': userYear.user.id}) }}" data-toggle="tooltip" title="{{ 'label.billable'|trans }}: {{ month.billableDuration|duration }}">
-                                            {{ month.totalDuration|duration }}
-                                        </a>
-                                    {% endif %}
-                                </td>
-                            {% endfor %}
+                        {% for mid, month in userYear.getMonths() %}
+                            <td class="text-nowrap text-center day-total">
+                                {% if month.totalDuration > 0 %}
+                                    <a href="{{ path('report_user_month', {'date': create_date(month.date.format('Y') ~'-'~month.date.format('m')~'-01')|report_date, 'user': userYear.user.id}) }}" data-toggle="tooltip" title="{{ 'label.billable'|trans }}: {{ month.billableDuration|duration }}">
+                                        {{ month.totalDuration|duration }}
+                                    </a>
+                                    {% set totals = totals|merge({(month.date|report_date): (totals[month.date|report_date] + month.totalDuration)}) %}
+                                {% endif %}
+                            </td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
                 <tr>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
-                    {% for id, duration in totals %}
+                    {% for id, total in totals %}
                         <th class="text-center text-nowrap">
-                            {{ duration|duration }}
+                            {{ total|duration }}
                         </th>
                     {% endfor %}
                 </tr>
@@ -78,8 +77,8 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            $('#{{ form.date.vars.id }}').on('change', function(ev) {
-                $(this).closest('form').submit();
+            jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
+                jQuery(this).closest('form').submit();
             });
         });
     </script>

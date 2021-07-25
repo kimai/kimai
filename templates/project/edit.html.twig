@@ -41,11 +41,14 @@
             </div>
             {% if form.budget is defined %}
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     {{ form_row(form.budget) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     {{ form_row(form.timeBudget) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.budgetType) }}
                 </div>
             </div>
             {% endif %}

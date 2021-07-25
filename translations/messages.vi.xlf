@@ -545,13 +545,6 @@
         <source>admin_project.title</source>
         <target>Dự án</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-                    Hiện tại dự án  %project% cho khách hàng %customer% với %activities%
-                    hành động và %records% thời gian lưu, tổng cộng lên đến tổng số %duration%.
-                </target>
-      </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
         <target>Dự án bắt đầu</target>
@@ -566,13 +559,6 @@
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Hoạt động</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-                    Hiện đang hoạt động %activity% trong dự án %project% với khách hàng %customer%
-                    có %records% thời gian lưu, tổng cộng lên đến tổng số %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -633,13 +619,6 @@
         <source>label.currency</source>
         <target>Tiền tệ</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>
-                    Currently the customer %customer% has %project% projects with %activity% activities, which sum up
-                    in %records% time-records to a total of %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Users
             -->
@@ -666,12 +645,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Vai trò</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                    Currently the user %user% has %records% time-records which sum up to a total of %duration%.
-                </target>
       </trans-unit>
       <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>

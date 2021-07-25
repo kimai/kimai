@@ -381,6 +381,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'budget' => 'float',
                     'timeBudget' => 'int',
                     'vatId' => '@string', // since 1.10
+                    'budgetType' => '@string', // since 1.15
                 ];
 
             // if a project is embedded
@@ -436,6 +437,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'timeBudget' => 'int',
                     'orderNumber' => '@string',
                     'orderDate' => '@datetime',
+                    'budgetType' => '@string', // since 1.15
                 ];
 
             // embedded activities
@@ -484,6 +486,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'budget' => 'float',
                     'timeBudget' => 'int',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
+                    'budgetType' => '@string', // since 1.15
                 ];
 
             case 'TimesheetEntity':

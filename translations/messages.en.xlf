@@ -630,13 +630,6 @@
         <source>admin_project.title</source>
         <target>Projects</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-                    Currently the project %project% for the customer %customer% has %activities%
-                    activities and %records% time-records, which sum up to a total of %duration%.
-                </target>
-      </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
         <target>Project start</target>
@@ -651,13 +644,6 @@
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Activities</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-                    Currently the activity %activity% in the project %project% for the customer %customer%
-                    has %records% time-records, which sum up to a total of %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -722,13 +708,6 @@
         <source>label.currency</source>
         <target>Currency</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>
-                    Currently the customer %customer% has %project% projects with %activity% activities, which sum up
-                    in %records% time-records to a total of %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Users
             -->
@@ -755,12 +734,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Role</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                    Currently the user %user% has %records% time-records which sum up to a total of %duration%.
-                </target>
       </trans-unit>
       <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>
@@ -938,6 +911,14 @@
       <trans-unit id="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
         <target>%percent%% used (%left% are still open)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% used this month</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% used (%left% are still open this month)</target>
       </trans-unit>
       <!--
               Invoice
@@ -1246,6 +1227,18 @@
       <trans-unit id="label.account_number">
         <source>label.account_number</source>
         <target>Staff number</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Budget-Type</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Monthly</target>
+      </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
       </trans-unit>
     </body>
   </file>

@@ -482,24 +482,12 @@
         <source>admin_project.title</source>
         <target>Projecten</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-                    Het project %project% voor klant %customer% telt %activities% activiteiten en %records% geregistreerde tijden met een totale duur van %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Activity
             -->
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Activiteiten</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-                    De activiteit %activity% in het project %project% voor de klant %customer% telt %records% geregistreerde tijden met een totale duur van %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -556,12 +544,6 @@
         <source>label.currency</source>
         <target>Valuta</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>
-                    Momenteel heeft %customer% %project% projecten met %activity% activiteiten, wat opgeteld %records% geregistreerde tijden met een totale duur van %duration% opleverd.
-                </target>
-      </trans-unit>
       <!--
               Admin: User
             -->
@@ -588,12 +570,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Rechten</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                     %user% heeft %records% geregistreerde tijden met een totale duur van %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Plugins

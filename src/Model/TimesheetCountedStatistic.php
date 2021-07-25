@@ -11,13 +11,40 @@ namespace App\Model;
 
 class TimesheetCountedStatistic implements \JsonSerializable
 {
-    private $recordAmount = 0;
+    private $counter = 0;
     private $recordDuration = 0;
     private $recordRate = 0.0;
     private $recordInternalRate = 0.0;
-    private $recordAmountBillable = 0;
+
+    private $counterBillable = 0;
     private $recordDurationBillable = 0;
     private $recordRateBillable = 0.0;
+    private $internalRateBillable = 0.0;
+
+    /**
+     * For unified access, used in frontend.
+     *
+     * @return int
+     */
+    public function getCounter(): int
+    {
+        return $this->counter;
+    }
+
+    public function setCounter(int $counter): void
+    {
+        $this->counter = $counter;
+    }
+
+    public function getCounterBillable(): int
+    {
+        return $this->counterBillable;
+    }
+
+    public function setCounterBillable(int $counter): void
+    {
+        $this->counterBillable = $counter;
+    }
 
     /**
      * Returns the total amount of included timesheet records.
@@ -26,7 +53,7 @@ class TimesheetCountedStatistic implements \JsonSerializable
      */
     public function getRecordAmount()
     {
-        return $this->recordAmount;
+        return $this->counter;
     }
 
     /**
@@ -35,7 +62,7 @@ class TimesheetCountedStatistic implements \JsonSerializable
      */
     public function setRecordAmount($recordAmount)
     {
-        $this->recordAmount = (int) $recordAmount;
+        $this->counter = (int) $recordAmount;
 
         return $this;
     }
@@ -48,6 +75,11 @@ class TimesheetCountedStatistic implements \JsonSerializable
     public function getValue(): int
     {
         return $this->recordDuration;
+    }
+
+    public function setDuration(int $duration): void
+    {
+        $this->recordDuration = $duration;
     }
 
     /**
@@ -101,6 +133,11 @@ class TimesheetCountedStatistic implements \JsonSerializable
         return $this->recordRate;
     }
 
+    public function setRate(float $rate): void
+    {
+        $this->recordRate = $rate;
+    }
+
     /**
      * @param float $recordRate
      * @return $this
@@ -122,6 +159,21 @@ class TimesheetCountedStatistic implements \JsonSerializable
         return $this->recordInternalRate;
     }
 
+    public function getInternalRate(): float
+    {
+        return $this->recordInternalRate;
+    }
+
+    public function getInternalRateBillable(): float
+    {
+        return $this->internalRateBillable;
+    }
+
+    public function setInternalRateBillable(float $internalRateBillable): void
+    {
+        $this->internalRateBillable = $internalRateBillable;
+    }
+
     /**
      * @param float $recordInternalRate
      * @return $this
@@ -133,14 +185,19 @@ class TimesheetCountedStatistic implements \JsonSerializable
         return $this;
     }
 
+    public function setInternalRate(float $internalRate): void
+    {
+        $this->recordInternalRate = $internalRate;
+    }
+
     public function getRecordAmountBillable(): int
     {
-        return $this->recordAmountBillable;
+        return $this->counterBillable;
     }
 
     public function setRecordAmountBillable(int $recordAmount): void
     {
-        $this->recordAmountBillable = $recordAmount;
+        $this->counterBillable = $recordAmount;
     }
 
     public function getDurationBillable(): int
@@ -171,8 +228,8 @@ class TimesheetCountedStatistic implements \JsonSerializable
             'rate' => $this->recordRate,
             'rate_billable' => $this->recordRateBillable,
             'rate_internal' => $this->recordInternalRate,
-            'amount' => $this->recordAmount,
-            'amount_billable' => $this->recordAmountBillable,
+            'amount' => $this->counter,
+            'amount_billable' => $this->counterBillable,
         ];
     }
 }

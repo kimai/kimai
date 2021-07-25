@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block profile_navbar %}
-    {{ _self.about_me(user, stats) }}
+    {{ _self.about_me(user, stats, firstTimesheet) }}
 {% endblock %}
 
 {% block profile_intro %}{% endblock %}
@@ -22,7 +22,7 @@
 
     {{ _self.profile_box_horizontal(user, stats) }}
 
-    {% if years is empty %}
+    {% if workMonths is empty %}
         {{ widgets.nothing_found() }}
     {% endif %}
 
@@ -33,17 +33,17 @@
 
     {{ charts.bar_javascript({'footer': 'footer', 'label': 'tooltip', 'onclick': {'url': monthRoute, 'replacer': {'__MONTH__': 'month'}}}) }}
 
-    {% for yearStat in years %}
+    {% for year in workMonths.years|reverse %}
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
             {% import "macros/charts.html.twig" as charts %}
-            {% block box_title %}{{ yearStat.year }}{% endblock %}
+            {% block box_title %}{{ year }}{% endblock %}
             {% block box_body %}
                 {% set dataset = [] %}
-                {% for month in yearStat.months %}
-                    {% set monthDate = create_date(yearStat.year ~ '-' ~ month.month ~ '-01') %}
-                    {% set dataset = dataset|merge([{'value': month.duration|chart_duration, 'tooltip': month.duration|duration, 'footer': ('label.billable'|trans ~ ': ' ~ month.billableDuration|duration), 'month': monthDate|date_short}]) %}
+                {% for month in workMonths.year(year) %}
+                    {% set monthDate = create_date(year ~ '-' ~ month.date.format('m') ~ '-01') %}
+                    {% set dataset = dataset|merge([{'value': month.duration|chart_duration, 'tooltip': month.duration|duration, 'footer': ('label.billable'|trans ~ ': ' ~ month.billableDuration|duration), 'month': monthDate|report_date}]) %}
                 {% endfor %}
-                {{ charts.bar_chart('userProfileChart'~yearStat.year, month_names(), [dataset], {}) }}
+                {{ charts.bar_chart('userProfileChart'~year, month_names(), [dataset], {}) }}
             {% endblock %}
         {% endembed %}
     {% endfor %}
@@ -69,7 +69,7 @@
     </script>
 {% endblock %}
 
-{% macro about_me(user, stats) %}
+{% macro about_me(user, stats, firstTimesheet) %}
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}
@@ -81,13 +81,20 @@
                 <strong>{{ 'label.username'|trans }}</strong><br>
                 {{ user.username }}
             </p>
+            {% if user.accountNumber is not empty %}
             <p>
                 <strong>{{ 'label.account_number'|trans }}</strong><br>
                 {{ user.accountNumber }}
             </p>
+            {% endif %}
+
             <p>
                 <strong>{{ 'profile.first_entry'|trans }}</strong><br>
-                {{ stats.firstEntry|date_short }}
+                {% if firstTimesheet is not null %}
+                    {{ firstTimesheet|date_short }}
+                {% else %}
+                    &ndash;
+                {% endif %}
             </p>
             <p>
                 <strong>{{ 'profile.registration_date'|trans }}</strong><br>

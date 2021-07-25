@@ -57,7 +57,7 @@
 {% endblock %}
 
 {% block report %}
-    {% set hasData = project_view is not null %}
+    {% set hasData = project is not null and project_view is not null %}
 
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
@@ -79,8 +79,8 @@
     {% endif %}
 
     {% if hasData %}
-        {{ _self.project_details(project_view, project_details, view_revenue_tab, view_revenue_user, see_users) }}
-        {% set currency = project_view.project.customer.currency %}
+        {{ _self.project_details(project, project_view, project_details, view_revenue_tab, view_revenue_user, see_users) }}
+        {% set currency = project.customer.currency %}
 
         {%- for yearStat in project_details.years|reverse %}
             {% set year = yearStat.year %}
@@ -241,16 +241,16 @@
 {% endmacro %}
 
 {#
-    entry           = ProjectViewModel
+    project         = Project
+    project_view    = ProjectViewModel
     project_details = ProjectDetailsModel
 #}
-{% macro project_details(entry, project_details, view_revenue_tab, view_revenue_user, see_users) %}
+{% macro project_details(project, project_view, project_details, view_revenue_tab, view_revenue_user, see_users) %}
     {% set activities = project_details.activities %}
     {% set years = project_details.years %}
     {% import "macros/progressbar.html.twig" as progress %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% import "macros/charts.html.twig" as charts %}
-    {% set project = entry.project %}
     {% set currency = project.customer.currency %}
     {% set chartPrefix = 'project' ~ project.id %}
 
@@ -265,14 +265,18 @@
 
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs pull-right">
-            {% if see_users %}
+            {% if see_users and project_details.userStats|length > 0 %}
             <li><a data-chart="{{ chartPrefix }}User" href="#user-chart" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
             {% endif %}
+            {% if activities is not empty %}
             <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
-            {% if view_revenue_tab %}
+            {% endif %}
+            {% if view_revenue_tab and project_view.rateTotal > 0 %}
             <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
             {% endif %}
+            {% if project_view.durationTotal > 0 %}
             <li><a data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
+            {% endif %}
             <li class="active"><a href="#details-chart" data-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
             <li class="pull-left header hidden-xs">
                 {{ widgets.label_project(project, {'inherit': false}) }}
@@ -283,26 +287,26 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
                         <table class="table table-hover dataTable">
-                            <tr {{ widgets.customer_row_attr(entry.project.customer) }}>
+                            <tr {{ widgets.customer_row_attr(project.customer) }}>
                                 <th class="w-min">
                                     {{ 'label.customer'|trans }}
                                 </th>
                                 <td>
-                                    {{ widgets.label_customer(entry.project.customer) }}
+                                    {{ widgets.label_customer(project.customer) }}
                                 </td>
                             </tr>
                             <tr>
                                 <th class="w-min">
                                     {{ 'stats.durationTotal'|trans }}
                                 </th>
-                                <td>{{ entry.durationTotal|duration }}</td>
+                                <td>{{ project_view.durationTotal|duration }}</td>
                             </tr>
                             {% if view_revenue_tab %}
                             <tr>
                                 <th class="w-min">
                                     {{ 'stats.amountTotal'|trans }}
                                 </th>
-                                <td>{{ entry.rateTotal|money(currency) }}</td>
+                                <td>{{ project_view.rateTotal|money(currency) }}</td>
                             </tr>
                             {% endif %}
                         </table>
@@ -314,8 +318,8 @@
                                     {{ 'label.last_record'|trans }}
                                 </th>
                                 <td>
-                                    {% if entry.lastRecord is not null %}
-                                        {{ entry.lastRecord|date_short }}
+                                    {% if project_view.lastRecord is not null %}
+                                        {{ project_view.lastRecord|date_short }}
                                     {% else %}
                                         &ndash;
                                     {% endif %}
@@ -328,7 +332,7 @@
                                 </th>
                                 <td>
                                     <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
-                                        {{ entry.notExportedDuration|duration }}
+                                        {{ project_view.notExportedDuration|duration }}
                                     </a>
                                 </td>
                             </tr>
@@ -340,7 +344,7 @@
                                 </th>
                                 <td>
                                     <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
-                                        {{ entry.notBilledRate|money(currency) }}
+                                        {{ project_view.notBilledRate|money(currency) }}
                                     </a>
                                 </td>
                             </tr>
@@ -349,62 +353,58 @@
                     </div>
                 </div>
                 {% if view_revenue_tab and (project.timeBudget > 0 or project.budget > 0) %}
-                <div class="row">
-                    <div class="col-xs-12">
-                        <table class="table table-hover dataTable">
-                            {% if project.timeBudget > 0 %}
-                                <tr>
-                                    <th class="w-min">
-                                        {{ 'label.timeBudget'|trans }}
-                                    </th>
-                                    <td>
-                                        {% set timeBudgetLeft = project.timeBudget - entry.billableDuration %}
-                                        {% set options = {
-                                            'max': project.timeBudget|default(0),
-                                            'current': entry.billableDuration|default(0),
-                                            'open': timeBudgetLeft,
-                                            'format': 'duration'
-                                        } %}
-                                        {{ progress.progressbar_full(options) }}
-                                    </td>
-                                </tr>
-                            {% endif %}
-                            {% if project.budget > 0 %}
-                                <tr>
-                                    <th class="w-min">
-                                        {{ 'label.budget'|trans }}
-                                    </th>
-                                    <td>
-                                        {% set budgetLeft = project.budget - entry.billableRate %}
-                                        {% set options = {
-                                            'max': project.budget|default(0),
-                                            'current': entry.billableRate|default(0),
-                                            'open': budgetLeft,
-                                            'format': 'money',
-                                            'currency': currency
-                                        } %}
-                                        {{ progress.progressbar_full(options) }}
-                                    </td>
-                                </tr>
-                            {% endif %}
-                        </table>
+                    {% set budgetStats = project_details.budgetStatisticModel %}
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table class="table table-hover dataTable">
+                                {% if project.timeBudget > 0 %}
+                                    <tr>
+                                        <th class="w-min">
+                                            {{ 'label.timeBudget'|trans }}
+                                            {% if budgetStats.isMonthlyBudget() %}
+                                                ({{ 'label.budgetType_month'|trans }})
+                                            {% endif %}
+                                        </th>
+                                        <td>
+                                            {{ progress.progressbar_timebudget(budgetStats) }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if project.budget > 0 %}
+                                    <tr>
+                                        <th class="w-min">
+                                            {{ 'label.budget'|trans }}
+                                            {% if budgetStats.isMonthlyBudget() %}
+                                                ({{ 'label.budgetType_month'|trans }})
+                                            {% endif %}
+                                        </th>
+                                        <td>
+                                            {{ progress.progressbar_budget(budgetStats, project.customer.currency) }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </table>
+                        </div>
                     </div>
-                </div>
                 {% endif %}
 
             </div>
-            {% if view_revenue_tab %}
+            {% if view_revenue_tab and project_view.rateTotal > 0 %}
             <div class="chart tab-pane" id="revenue-chart">
                 {{ charts.bar_chart(chartPrefix ~ 'Rate', labels, [rates], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Rate'}) }}
             </div>
             {% endif %}
+            {% if project_view.durationTotal > 0 %}
             <div class="chart tab-pane" id="time-chart">
                 {{ charts.bar_chart(chartPrefix ~ 'Duration', labels, [durations], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Duration'}) }}
             </div>
+            {% endif %}
+            {% if activities is not empty %}
             <div class="chart tab-pane" id="activity-chart">
-                {{ _self.activity_tab(activities, entry.durationTotal, project.customer.currency, chartPrefix, view_revenue_tab) }}
+                {{ _self.activity_tab(activities, project_view.durationTotal, project.customer.currency, chartPrefix, view_revenue_tab) }}
             </div>
-            {% if see_users %}
+            {% endif %}
+            {% if see_users and project_details.userStats|length > 0 %}
             <div class="chart tab-pane" id="user-chart">
                 <div class="row">
                     <div class="col-xs-12 col-sm-9 col-md-8 col-lg-6">
@@ -420,8 +420,8 @@
                                 {% set totalDuration = totalDuration + userStat.duration %}
                                 {% set datasets = datasets|merge([{'name': user.displayName, 'duration': userStat.duration|duration, 'value': userStat.duration, 'color': color, 'rate': userStat.rate|money(currency)}]) %}
                                 {% set percentage = 0 %}
-                                {% if entry.durationTotal > 0 and userStat.duration > 0 %}
-                                    {% set percentage = (100 / (entry.durationTotal / userStat.duration)) %}
+                                {% if project_view.durationTotal > 0 and userStat.duration > 0 %}
+                                    {% set percentage = (100 / (project_view.durationTotal / userStat.duration)) %}
                                 {% endif %}
                                 <tr>
                                     <td>

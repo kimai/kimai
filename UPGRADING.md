@@ -15,9 +15,10 @@ Perform EACH version specific task between your version and the new one, otherwi
 - Self-registration is disabled by default
 - Self-registration now always requires email confirmation
 - All plugins that use own databases need to be updated as well
+- Removed the YearChart widget and the related configs named `userRecapThisYear`, `userRecapLastYear`, `userRecapTwoYears`, `userRecapThreeYears`
 
 **LDAP & SAML**
-- SAML users need to activate it by setting the new `kimai.saml.activate: true` config
+- SAML users need to activate SAML by setting the new `kimai.saml.activate: true` config key
 - LDAP and SAML users need to remove the complete `security` section from their `local.yaml`
 - Please verify your config with the [LDAP](https://www.kimai.org/documentation/ldap.html) and [SAML](https://www.kimai.org/documentation/saml.html) documentation
 
@@ -25,7 +26,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 PHP 8 compatibility forced to upgrade MANY libraries, including but not limited to:
 
 - Removed FOSUserBundle and hslavich/oneloginsaml
-- Doctrine Migrations, whose new major version forces the plugin updates 
+- Doctrine Migrations, whose new major version forces plugin updates 
 - Gedmo v3 (which include BC breaks in definitions)
 - Doctrine DBAL and others, which required PHP 7.3 as well
 
