@@ -15,10 +15,13 @@
         {% block box_title %}
             {{ form_widget(form.date) }}
         {% endblock %}
-        {% block box_body_class %}{{ box_id }} table-responsive no-padding{% endblock %}
+        {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}no-padding{% endif %}{% endblock %}
         {% block box_body %}
             {% set absoluteTotals = 0 %}
             {% set totals = {} %}
+            {% if not hasData %}
+                {{ widgets.nothing_found() }}
+            {% else %}
             <table class="table table-bordered table-hover dataTable">
                 <tr>
                     <th>&nbsp;</th>
@@ -68,6 +71,7 @@
                     {% endfor %}
                 </tr>
             </table>
+            {% endif %}
         {% endblock %}
     {% endembed %}
 

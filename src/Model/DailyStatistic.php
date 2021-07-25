@@ -23,14 +23,14 @@ final class DailyStatistic
     private $end;
     private $user;
 
-    public function __construct(DateTime $begin, DateTime $end, ?User $user = null)
+    public function __construct(DateTime $begin, DateTime $end, User $user)
     {
         $this->begin = $begin;
         $this->end = $end;
         $this->user = $user;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }

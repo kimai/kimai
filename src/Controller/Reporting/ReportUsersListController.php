@@ -153,13 +153,15 @@ final class ReportUsersListController extends AbstractController
         $next->modify('+1 month');
 
         $dayStats = [];
+        $hasData = true;
 
         if (!empty($allUsers)) {
             $dayStats = $statisticService->getDailyStatistics($start, $end, $allUsers);
         }
 
         if (empty($dayStats)) {
-            $dayStats = [new DailyStatistic($start, $end)];
+            $dayStats = [new DailyStatistic($start, $end, $currentUser)];
+            $hasData = false;
         }
 
         return $this->render('reporting/report_user_list.html.twig', [
@@ -171,7 +173,8 @@ final class ReportUsersListController extends AbstractController
             'previous' => $previous,
             'subReportDate' => $values->getDate(),
             'subReportRoute' => 'report_user_month',
-            'stats' => $dayStats
+            'stats' => $dayStats,
+            'hasData' => $hasData,
         ]);
     }
 
@@ -215,13 +218,15 @@ final class ReportUsersListController extends AbstractController
         $next->modify('+1 week');
 
         $dayStats = [];
+        $hasData = true;
 
         if (!empty($allUsers)) {
             $dayStats = $statisticService->getDailyStatistics($start, $end, $allUsers);
         }
 
         if (empty($dayStats)) {
-            $dayStats = [new DailyStatistic($start, $end)];
+            $dayStats = [new DailyStatistic($start, $end, $currentUser)];
+            $hasData = false;
         }
 
         return $this->render('reporting/report_user_list.html.twig', [
@@ -234,6 +239,7 @@ final class ReportUsersListController extends AbstractController
             'subReportDate' => $values->getDate(),
             'subReportRoute' => 'report_user_week',
             'stats' => $dayStats,
+            'hasData' => $hasData,
         ]);
     }
 }
