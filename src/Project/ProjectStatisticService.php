@@ -55,6 +55,14 @@ class ProjectStatisticService
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * WARNING: this method does not respect the budget type. Your results will always be wither the "full lifetime data" or the "selected date-range".
+     *
+     * @param Project $project
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
+     * @return ProjectStatistic
+     */
     public function getProjectStatistics(Project $project, ?DateTime $begin = null, ?DateTime $end = null): ProjectStatistic
     {
         $statistics = $this->getBudgetStatistic([$project], $begin, $end);
@@ -480,16 +488,12 @@ class ProjectStatisticService
     /**
      * @param User $user
      * @param Project[] $projects
-     * @param DateTime|null $today
+     * @param DateTime $today
      * @return ProjectViewModel[]
      */
-    public function getProjectView(User $user, array $projects, ?DateTime $today = null): array
+    public function getProjectView(User $user, array $projects, DateTime $today): array
     {
         $factory = DateTimeFactory::createByUser($user);
-        if (null === $today) {
-            $today = $factory->createDateTime();
-        }
-
         $today = clone $today;
 
         $startOfWeek = $factory->getStartOfWeek($today);

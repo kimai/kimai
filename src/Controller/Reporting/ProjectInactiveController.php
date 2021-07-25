@@ -27,6 +27,7 @@ final class ProjectInactiveController extends AbstractController
     {
         $dateFactory = $this->getDateTimeFactory();
         $user = $this->getUser();
+        $now = $dateFactory->createDateTime();
 
         $query = new ProjectInactiveQuery($dateFactory->createDateTime('-1 year'), $user);
         $form = $this->createForm(ProjectInactiveForm::class, $query, [
@@ -35,7 +36,7 @@ final class ProjectInactiveController extends AbstractController
         $form->submit($request->query->all(), false);
 
         $projects = $service->findInactiveProjects($query);
-        $entries = $service->getProjectView($user, $projects);
+        $entries = $service->getProjectView($user, $projects, $now);
 
         $byCustomer = [];
         foreach ($entries as $entry) {
@@ -51,7 +52,7 @@ final class ProjectInactiveController extends AbstractController
             'form' => $form->createView(),
             'title' => 'report_inactive_project',
             'tableName' => 'inactive_project_reporting',
-            'now' => $dateFactory->createDateTime(),
+            'now' => $now,
             'skipColumns' => ['today', 'week', 'month', 'projectStart', 'projectEnd', 'comment'],
         ]);
     }

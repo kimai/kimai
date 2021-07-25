@@ -37,6 +37,14 @@ class ActivityStatisticService
         $this->dispatcher = $dispatcher;
     }
 
+    /**
+     * WARNING: this method does not respect the budget type. Your results will always be wither the "full lifetime data" or the "selected date-range".
+     *
+     * @param Activity $activity
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
+     * @return ActivityStatistic
+     */
     public function getActivityStatistics(Activity $activity, ?DateTime $begin = null, ?DateTime $end = null): ActivityStatistic
     {
         $statistics = $this->getBudgetStatistic([$activity], $begin, $end);

@@ -39,6 +39,14 @@ class CustomerStatisticService
         $this->dispatcher = $dispatcher;
     }
 
+    /**
+     * WARNING: this method does not respect the budget type. Your results will always be wither the "full lifetime data" or the "selected date-range".
+     *
+     * @param Customer $customer
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
+     * @return CustomerStatistic
+     */
     public function getCustomerStatistics(Customer $customer, ?DateTime $begin = null, ?DateTime $end = null): CustomerStatistic
     {
         $statistics = $this->getBudgetStatistic([$customer], $begin, $end);
