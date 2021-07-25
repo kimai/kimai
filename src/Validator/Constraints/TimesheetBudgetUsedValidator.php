@@ -13,11 +13,13 @@ use App\Activity\ActivityStatisticService;
 use App\Configuration\SystemConfiguration;
 use App\Customer\CustomerStatisticService;
 use App\Entity\Timesheet;
+use App\Model\BudgetStatisticModel;
 use App\Project\ProjectStatisticService;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\RateServiceInterface;
 use App\Utils\Duration;
 use App\Utils\LocaleHelper;
+use DateTime;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -59,12 +61,13 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             return;
         }
 
-        if ($this->context->getViolations()->count() > 0) {
+        // we can only work with stopped entries
+        if (null === $timesheet->getEnd() || null === $timesheet->getUser()) {
             return;
         }
 
-        // we can only work with stopped entries
-        if (null === $timesheet->getEnd() || null === $timesheet->getUser() || null === $timesheet->getProject()) {
+        // budgets need only be calculated for billable records
+        if (!$timesheet->isBillable()) {
             return;
         }
 
@@ -86,9 +89,10 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         if ($timesheet->getId() !== null) {
             $rawData = $this->timesheetRepository->getRawData($timesheet);
 
-            // if an existing entry was updated, but duration and rate were not changed: do not validate
-            // this could for example happen if overbooking config was recently activated
-            if ($duration === $rawData['duration'] && $rate === $rawData['rate']) {
+            // if an existing entry was updated, but "duration", "rate" and "billable" were not changed:
+            // do not validate! this could for example happen when export flag is changed OR if "prevent overbooking"
+            // config was recently activated and this is an old entry
+            if ($duration === $rawData['duration'] && $rate === $rawData['rate'] && $timesheet->isBillable() === $rawData['billable']) {
                 return;
             }
 
@@ -97,115 +101,61 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             $projectId = (int) $rawData['project'];
             $customerId = (int) $rawData['customer'];
 
-            if (null !== $timesheet->getActivity() && $activityId === $timesheet->getActivity()->getId()) {
-                $activityDuration -= $rawData['duration'];
-                $activityRate -= $rawData['rate'];
-            }
+            // only subtract the previously logged data in case the record was billable
+            // if it wasn't billable, then its values are not included in the statistic models used later on
+            if ($rawData['billable']) {
+                if (null !== $timesheet->getActivity() && $activityId === $timesheet->getActivity()->getId()) {
+                    $activityDuration -= $rawData['duration'];
+                    $activityRate -= $rawData['rate'];
+                }
 
-            if ($projectId === $timesheet->getProject()->getId()) {
-                $projectDuration -= $rawData['duration'];
-                $projectRate -= $rawData['rate'];
-            }
+                if (null !== $timesheet->getProject()) {
+                    if ($projectId === $timesheet->getProject()->getId()) {
+                        $projectDuration -= $rawData['duration'];
+                        $projectRate -= $rawData['rate'];
+                    }
 
-            if ($customerId === $timesheet->getProject()->getCustomer()->getId()) {
-                $customerDuration -= $rawData['duration'];
-                $customerRate -= $rawData['rate'];
+                    if ($customerId === $timesheet->getProject()->getCustomer()->getId()) {
+                        $customerDuration -= $rawData['duration'];
+                        $customerRate -= $rawData['rate'];
+                    }
+                }
             }
         }
 
-        if (null !== $timesheet->getActivity() && $this->checkActivity($constraint, $timesheet, $activityDuration, $activityRate)) {
-            return;
+        $now = new DateTime('now', $timesheet->getBegin()->getTimezone());
+
+        if (null !== ($activity = $timesheet->getActivity()) && $activity->hasBudgets()) {
+            $stat = $this->activityStatisticService->getBudgetStatisticModel($activity, $now);
+            $this->checkBudgets($constraint, $stat, $timesheet, $activityDuration, $activityRate, 'activity');
         }
 
-        if ($this->checkProject($constraint, $timesheet, $projectDuration, $projectRate)) {
-            return;
-        }
-
-        if ($this->checkCustomer($constraint, $timesheet, $customerDuration, $customerRate)) {
-            return;
+        if (null !== ($project = $timesheet->getProject())) {
+            if ($project->hasBudgets()) {
+                $stat = $this->projectStatisticService->getBudgetStatisticModel($project, $now);
+                $this->checkBudgets($constraint, $stat, $timesheet, $projectDuration, $projectRate, 'project');
+            }
+            if (null !== ($customer = $project->getCustomer()) && $customer->hasBudgets()) {
+                $stat = $this->customerStatisticService->getBudgetStatisticModel($customer, $now);
+                $this->checkBudgets($constraint, $stat, $timesheet, $customerDuration, $customerRate, 'customer');
+            }
         }
     }
 
-    private function checkActivity(TimesheetBudgetUsed $constraint, Timesheet $timesheet, int $duration, float $rate): bool
+    private function checkBudgets(TimesheetBudgetUsed $constraint, BudgetStatisticModel $stat, Timesheet $timesheet, int $duration, float $rate, string $field): bool
     {
-        $activity = $timesheet->getActivity();
+        $fullRate = ($stat->getBudgetSpent() + $rate);
 
-        if (!$activity->hasBudget() && !$activity->hasTimeBudget()) {
-            return false;
-        }
-
-        $stat = $this->activityStatisticService->getActivityStatistics($activity);
-
-        $fullRate = ($stat->getRecordRate() + $rate);
-
-        if ($activity->hasBudget() && $fullRate > $activity->getBudget()) {
-            $this->addBudgetViolation($constraint, $timesheet, 'activity', $activity->getBudget(), $stat->getRecordRate());
+        if ($stat->hasBudget() && $fullRate > $stat->getBudget()) {
+            $this->addBudgetViolation($constraint, $timesheet, $field, $stat->getBudget(), $stat->getBudgetSpent());
 
             return true;
         }
 
-        $fullDuration = ($stat->getRecordDuration() + $duration);
+        $fullDuration = ($stat->getTimeBudgetSpent() + $duration);
 
-        if ($activity->hasTimeBudget() && $fullDuration > $activity->getTimeBudget()) {
-            $this->addTimeBudgetViolation($constraint, 'activity', $activity->getTimeBudget(), $stat->getRecordDuration());
-
-            return true;
-        }
-
-        return false;
-    }
-
-    private function checkProject(TimesheetBudgetUsed $constraint, Timesheet $timesheet, int $duration, float $rate): bool
-    {
-        $project = $timesheet->getProject();
-
-        if (!$project->hasBudget() && !$project->hasTimeBudget()) {
-            return false;
-        }
-
-        $stat = $this->projectStatisticService->getProjectStatistics($project);
-
-        $fullRate = ($stat->getRecordRate() + $rate);
-
-        if ($project->hasBudget() && $fullRate > $project->getBudget()) {
-            $this->addBudgetViolation($constraint, $timesheet, 'project', $project->getBudget(), $stat->getRecordRate());
-
-            return true;
-        }
-
-        $fullDuration = ($stat->getRecordDuration() + $duration);
-
-        if ($project->hasTimeBudget() && $fullDuration > $project->getTimeBudget()) {
-            $this->addTimeBudgetViolation($constraint, 'project', $project->getTimeBudget(), $stat->getRecordDuration());
-
-            return true;
-        }
-
-        return false;
-    }
-
-    private function checkCustomer(TimesheetBudgetUsed $constraint, Timesheet $timesheet, int $duration, float $rate): bool
-    {
-        $customer = $timesheet->getProject()->getCustomer();
-
-        if (!$customer->hasBudget() && !$customer->hasTimeBudget()) {
-            return false;
-        }
-
-        $stat = $this->customerStatisticService->getCustomerStatistics($customer);
-
-        $fullRate = ($stat->getRecordRate() + $rate);
-
-        if ($customer->hasBudget() && $fullRate > $customer->getBudget()) {
-            $this->addBudgetViolation($constraint, $timesheet, 'customer', $customer->getBudget(), $stat->getRecordRate());
-
-            return true;
-        }
-
-        $fullDuration = ($stat->getRecordDuration() + $duration);
-
-        if ($customer->hasTimeBudget() && $fullDuration > $customer->getTimeBudget()) {
-            $this->addTimeBudgetViolation($constraint, 'customer', $customer->getTimeBudget(), $stat->getRecordDuration());
+        if ($stat->hasTimeBudget() && $fullDuration > $stat->getTimeBudget()) {
+            $this->addTimeBudgetViolation($constraint, $field, $stat->getTimeBudget(), $stat->getTimeBudgetSpent());
 
             return true;
         }

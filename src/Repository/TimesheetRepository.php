@@ -28,7 +28,6 @@ use App\Repository\Query\TimesheetQuery;
 use DateInterval;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -46,8 +45,17 @@ class TimesheetRepository extends EntityRepository
     public const STATS_QUERY_USER = 'users';
     public const STATS_QUERY_AMOUNT = 'amount';
     public const STATS_QUERY_ACTIVE = 'active';
+    /**
+     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
+     */
     public const STATS_QUERY_MONTHLY = 'monthly';
 
+    /**
+     * Fetches the raw data of an timesheet, to allow comparison eg. of submitted and previously stored data.
+     *
+     * @param Timesheet $id
+     * @return array
+     */
     public function getRawData(Timesheet $id): array
     {
         $qb = $this->createQueryBuilder('t');
@@ -56,17 +64,18 @@ class TimesheetRepository extends EntityRepository
                 't.rate',
                 't.duration',
                 't.hourlyRate',
+                't.billable',
                 'IDENTITY(p.customer) as customer',
                 'IDENTITY(t.project) as project',
                 'IDENTITY(t.activity) as activity',
                 'IDENTITY(t.user) as user'
             ])
             ->leftJoin(Project::class, 'p', Join::WITH, 'p.id = t.project')
-            ->andWhere('t.id = :id')
+            ->andWhere($qb->expr()->eq('t.id', ':id'))
             ->setParameter('id', $id)
         ;
 
-        return $qb->getQuery()->getSingleResult(AbstractQuery::HYDRATE_ARRAY);
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
@@ -375,7 +384,7 @@ class TimesheetRepository extends EntityRepository
      * @param DateTime $end
      * @param User|null $user
      * @return Year[]
-     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead. Will be removed with 2.0
+     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
      */
     public function getMonthlyStats(DateTime $begin, DateTime $end, ?User $user = null): array
     {
@@ -438,7 +447,7 @@ class TimesheetRepository extends EntityRepository
      * @param DateTime|null $end
      * @param bool|null $billable
      * @return QueryBuilder
-     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead. Will be removed with 2.0
+     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
      */
     private function getMonthlyStatsQuery(User $user = null, ?DateTime $begin = null, ?DateTime $end = null, ?bool $billable = null): QueryBuilder
     {
