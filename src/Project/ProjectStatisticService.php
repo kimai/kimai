@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Event\ProjectBudgetStatisticEvent;
 use App\Event\ProjectStatisticEvent;
 use App\Form\Model\DateRange;
 use App\Model\ActivityStatistic;
@@ -205,6 +206,9 @@ class ProjectStatisticService
 
         $stats->setStatistic($this->getProjectStatistics($project, $begin, $end));
 
+        $event = new ProjectBudgetStatisticEvent([$stats], $begin, $end);
+        $this->dispatcher->dispatch($event);
+
         return $stats;
     }
 
@@ -229,28 +233,34 @@ class ProjectStatisticService
         }
 
         $statisticsTotal = $this->getBudgetStatistic($projects);
-        foreach ($statisticsTotal as $projectId => $statistic) {
-            $models[$projectId]->setStatisticTotal($statistic);
+        foreach ($statisticsTotal as $id => $statistic) {
+            $models[$id]->setStatisticTotal($statistic);
         }
 
         $dateFactory = new DateTimeFactory($today->getTimezone());
+
+        $begin = null;
+        $end = $today;
 
         if (\count($monthly) > 0) {
             $begin = $dateFactory->getStartOfMonth($today);
             $end = $dateFactory->getEndOfMonth($today);
             $statistics = $this->getBudgetStatistic($monthly, $begin, $end);
-            foreach ($statistics as $projectId => $statistic) {
-                $models[$projectId]->setStatistic($statistic);
+            foreach ($statistics as $id => $statistic) {
+                $models[$id]->setStatistic($statistic);
             }
         }
 
         if (\count($allTime) > 0) {
             // display the budget at the end of the selected period and not the total sum of all times (do not include times in the future)
             $statistics = $this->getBudgetStatistic($allTime, null, $today);
-            foreach ($statistics as $projectId => $statistic) {
-                $models[$projectId]->setStatistic($statistic);
+            foreach ($statistics as $id => $statistic) {
+                $models[$id]->setStatistic($statistic);
             }
         }
+
+        $event = new ProjectBudgetStatisticEvent($models, $begin, $end);
+        $this->dispatcher->dispatch($event);
 
         return $models;
     }
@@ -280,6 +290,9 @@ class ProjectStatisticService
             $models[$projectId]->setStatistic($statistic);
         }
 
+        $event = new ProjectBudgetStatisticEvent($models, $begin, $end);
+        $this->dispatcher->dispatch($event);
+
         return $models;
     }
 
@@ -289,7 +302,7 @@ class ProjectStatisticService
      * @param DateTime|null $end
      * @return array<int, ProjectStatistic>
      */
-    private function getBudgetStatistic(array $projects, ?DateTime $begin = null, ?DateTime $end = null): array
+    public function getBudgetStatistic(array $projects, ?DateTime $begin = null, ?DateTime $end = null): array
     {
         $statistics = [];
         foreach ($projects as $project) {
