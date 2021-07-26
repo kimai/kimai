@@ -39,8 +39,8 @@ final class ProjectDateRangeController extends AbstractController
         $dateRange->setBegin($query->getMonth());
         $dateRange->setEnd($dateFactory->getEndOfMonth($dateRange->getBegin()));
 
-        $projects = $service->findProjectsWorkedInDateRange($query, $dateRange);
-        $entries = $service->getBudgetStatisticModelForProjects($projects, $dateRange->getEnd());
+        $projects = $service->findProjectsForDateRange($query, $dateRange);
+        $entries = $service->getBudgetStatisticModelForProjectsByDateRange($projects, $dateRange->getBegin(), $dateRange->getEnd(), $dateRange->getEnd());
 
         $byCustomer = [];
         foreach ($entries as $entry) {
@@ -54,7 +54,7 @@ final class ProjectDateRangeController extends AbstractController
         return $this->render('reporting/project_daterange.html.twig', [
             'entries' => $byCustomer,
             'form' => $form->createView(),
-            'now' => $dateFactory->createDateTime(),
+            'queryEnd' => $dateRange->getEnd(),
         ]);
     }
 }

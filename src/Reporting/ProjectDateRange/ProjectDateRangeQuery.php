@@ -27,10 +27,33 @@ final class ProjectDateRangeQuery
      */
     private $customer;
 
+    private $includeNoBudget = false;
+    private $onlyWithRecords = false;
+
     public function __construct(\DateTime $month, User $user)
     {
         $this->month = clone $month;
         $this->user = $user;
+    }
+
+    public function isIncludeNoBudget(): bool
+    {
+        return $this->includeNoBudget;
+    }
+
+    public function setIncludeNoBudget(bool $includeNoBudget): void
+    {
+        $this->includeNoBudget = $includeNoBudget;
+    }
+
+    public function isOnlyWithRecords(): bool
+    {
+        return $this->onlyWithRecords;
+    }
+
+    public function setOnlyWithRecords(bool $onlyWithRecords): void
+    {
+        $this->onlyWithRecords = $onlyWithRecords;
     }
 
     public function getUser(): ?User

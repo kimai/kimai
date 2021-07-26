@@ -123,27 +123,53 @@ class ProjectStatisticService
      * @param ProjectDateRangeQuery $query
      * @return Project[]
      */
-    public function findProjectsWorkedInDateRange(ProjectDateRangeQuery $query, DateRange $dateRange): array
+    public function findProjectsForDateRange(ProjectDateRangeQuery $query, DateRange $dateRange): array
     {
         $user = $query->getUser();
         $begin = $dateRange->getBegin();
         $end = $dateRange->getEnd();
 
-        $qb2 = $this->repository->createQueryBuilder('t1');
-        $qb2
-            ->select('1')
-            ->from(Timesheet::class, 't')
-            ->andWhere('p = t.project')
-            ->andWhere($qb2->expr()->between('t.begin', ':begin', ':end'))
-        ;
-
         $qb = $this->repository->createQueryBuilder('p');
         $qb
             ->select('p')
-            ->andWhere($qb->expr()->exists($qb2))
+            ->andWhere($qb->expr()->eq('p.visible', true))
+            ->andWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->orX(
+                        $qb->expr()->lte('p.start', ':end'),
+                        $qb->expr()->isNull('p.start')
+                    ),
+                    $qb->expr()->orX(
+                        $qb->expr()->gte('p.end', ':begin'),
+                        $qb->expr()->isNull('p.end')
+                    )
+                )
+            )
             ->setParameter('begin', $begin, Types::DATETIME_MUTABLE)
             ->setParameter('end', $end, Types::DATETIME_MUTABLE)
         ;
+
+        if ($query->isOnlyWithRecords()) {
+            $qb2 = $this->repository->createQueryBuilder('t1');
+            $qb2
+                ->select('1')
+                ->from(Timesheet::class, 't')
+                ->andWhere('p = t.project')
+                ->andWhere($qb2->expr()->between('t.begin', ':begin', ':end'))
+            ;
+            $qb->andWhere($qb->expr()->exists($qb2));
+        }
+
+        if (!$query->isIncludeNoBudget()) {
+            $qb
+                ->andWhere(
+                    $qb->expr()->orX(
+                        $qb->expr()->gt('p.budget', 0.0),
+                        $qb->expr()->gt('p.timeBudget', 0)
+                    )
+                )
+            ;
+        }
 
         if ($query->getCustomer() !== null) {
             $qb->andWhere($qb->expr()->eq('p.customer', ':customer'))
@@ -202,7 +228,6 @@ class ProjectStatisticService
             }
         }
 
-        // display the budget at the end of the selected period and not the total sum of all times (do not include times in the future)
         $statisticsTotal = $this->getBudgetStatistic($projects);
         foreach ($statisticsTotal as $projectId => $statistic) {
             $models[$projectId]->setStatisticTotal($statistic);
@@ -220,10 +245,39 @@ class ProjectStatisticService
         }
 
         if (\count($allTime) > 0) {
+            // display the budget at the end of the selected period and not the total sum of all times (do not include times in the future)
             $statistics = $this->getBudgetStatistic($allTime, null, $today);
             foreach ($statistics as $projectId => $statistic) {
                 $models[$projectId]->setStatistic($statistic);
             }
+        }
+
+        return $models;
+    }
+
+    /**
+     * @param Project[] $projects
+     * @param DateTime $begin
+     * @param DateTime $end
+     * @param DateTime|null $totalsEnd
+     * @return ProjectBudgetStatisticModel[]
+     */
+    public function getBudgetStatisticModelForProjectsByDateRange(array $projects, DateTime $begin, DateTime $end, ?DateTime $totalsEnd = null): array
+    {
+        $models = [];
+
+        foreach ($projects as $project) {
+            $models[$project->getId()] = new ProjectBudgetStatisticModel($project);
+        }
+
+        $statisticsTotal = $this->getBudgetStatistic($projects, null, $totalsEnd);
+        foreach ($statisticsTotal as $projectId => $statistic) {
+            $models[$projectId]->setStatisticTotal($statistic);
+        }
+
+        $statistics = $this->getBudgetStatistic($projects, $begin, $end);
+        foreach ($statistics as $projectId => $statistic) {
+            $models[$projectId]->setStatistic($statistic);
         }
 
         return $models;

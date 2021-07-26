@@ -12,6 +12,7 @@ namespace App\Reporting\ProjectDateRange;
 use App\Form\Type\CustomerType;
 use App\Form\Type\MonthPickerType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -42,6 +43,11 @@ class ProjectDateRangeForm extends AbstractType
             'label' => false,
             'view_timezone' => $options['timezone'],
             'model_timezone' => $options['timezone'],
+        ]);
+
+        $builder->add('includeNoBudget', CheckboxType::class, [
+            'required' => false,
+            'label' => 'label.includeNoBudget',
         ]);
     }
 
