@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="report_monthly_users">
         <source>report_monthly_users</source>
-        <target>Vista mensile di tutti gli utenti</target>
+        <target>Vista mensile per tutti gli utenti</target>
       </trans-unit>
       <trans-unit id="reporting.initial_view">
         <source>reporting.initial_view</source>
@@ -21,6 +21,22 @@
       <trans-unit id="report_project_view">
         <source>report_project_view</source>
         <target>Panoramica del progetto</target>
+      </trans-unit>
+      <trans-unit id="report_inactive_project">
+        <source>report_inactive_project</source>
+        <target>Progetti inattivi</target>
+      </trans-unit>
+      <trans-unit id="report_project_details">
+        <source>report_project_details</source>
+        <target>Dettagli del progetto</target>
+      </trans-unit>
+      <trans-unit id="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>Vista annuale per tutti gli utenti</target>
+      </trans-unit>
+      <trans-unit id="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target>Vista settimanale per tutti gli utenti</target>
       </trans-unit>
     </body>
   </file>
