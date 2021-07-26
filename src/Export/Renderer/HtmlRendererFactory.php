@@ -9,35 +9,29 @@
 
 namespace App\Export\Renderer;
 
+use App\Activity\ActivityStatisticService;
 use App\Project\ProjectStatisticService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
 
 final class HtmlRendererFactory
 {
-    /**
-     * @var Environment
-     */
     private $twig;
-    /**
-     * @var EventDispatcherInterface
-     */
     private $dispatcher;
-    /**
-     * @var ProjectStatisticService
-     */
     private $projectStatisticService;
+    private $activityStatisticService;
 
-    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectStatisticService $projectStatisticService)
+    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectStatisticService $projectStatisticService, ActivityStatisticService $activityStatisticService)
     {
         $this->twig = $twig;
         $this->dispatcher = $dispatcher;
         $this->projectStatisticService = $projectStatisticService;
+        $this->activityStatisticService = $activityStatisticService;
     }
 
     public function create(string $id, string $template): HtmlRenderer
     {
-        $renderer = new HtmlRenderer($this->twig, $this->dispatcher, $this->projectStatisticService);
+        $renderer = new HtmlRenderer($this->twig, $this->dispatcher, $this->projectStatisticService, $this->activityStatisticService);
         $renderer->setId($id);
         $renderer->setTemplate($template);
 

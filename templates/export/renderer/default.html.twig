@@ -5,16 +5,6 @@
 {% block document_title %}{{ 'export.title'|trans }}{% endblock %}
 
 {% set storageItemName = 'kimai_html_export' %}
-{% set showRateBudget = false %}
-{% set showTimeBudget = false %}
-{% for budget in budgets %}
-    {% if budget.money_left > 0 %}
-        {% set showRateBudget = true %}
-    {% endif %}
-    {% if budget.time_left > 0 %}
-        {% set showTimeBudget = true %}
-    {% endif %}
-{% endfor %}
 
 {% set decimal = decimal|default(false) %}
 {% set columnTitles = {} %}
@@ -105,7 +95,6 @@
                 document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
                 saveVisibility();
             });
-            {% if showTimeBudget %}
             document.getElementById('summary-timeBudget').addEventListener('click', function(event) {
                 var cells = document.getElementsByClassName('export-timeBudget');
                 for (var columnCell of cells) {
@@ -113,8 +102,6 @@
                 }
                 saveVisibility();
             });
-            {% endif %}
-            {% if showRateBudget %}
             document.getElementById('summary-budget').addEventListener('click', function(event) {
                 var cells = document.getElementsByClassName('export-budget');
                 for (var columnCell of cells) {
@@ -122,7 +109,6 @@
                 }
                 saveVisibility();
             });
-            {% endif %}
             document.getElementById('summary-duration').addEventListener('click', function(event) {
                 var cells = document.getElementsByClassName('summary-duration');
                 for (var columnCell of cells) {
@@ -360,22 +346,18 @@
                         {{ 'label.activity'|trans }}
                     </label>
                 </div>
-                {% if showTimeBudget %}
                 <div class="form-group">
                     <label class="control-label" for="summary-timeBudget">
                         <input type="checkbox" id="summary-timeBudget" name="summary-timeBudget" checked>
                         {{ 'label.timeBudget'|trans }}
                     </label>
                 </div>
-                {% endif %}
-                {% if showRateBudget %}
                 <div class="form-group">
                     <label class="control-label" for="summary-budget">
                         <input type="checkbox" id="summary-budget" name="summary-budget" checked>
                         {{ 'label.budget'|trans }}
                     </label>
                 </div>
-                {% endif %}
 
                 <div class="form-group">
                     <label class="control-label" for="summary-duration">
@@ -438,12 +420,8 @@
                 <tr>
                     <th>{{ 'label.customer'|trans }}</th>
                     <th>{{ 'label.project'|trans }}</th>
-                    {% if showTimeBudget %}
-                        <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
-                    {% endif %}
-                    {% if showRateBudget %}
-                        <th class="center export-budget">{{ 'label.budget'|trans }}</th>
-                    {% endif %}
+                    <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
+                    <th class="center export-budget">{{ 'label.budget'|trans }}</th>
                     <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
                     <th class="cost summary-rate-internal">{{ 'label.rate_internal'|trans }}</th>
                     <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
@@ -463,12 +441,8 @@
                     {% if customer is not same as(summary.customer) %}
                         <tr class="summary">
                             <td colspan="2">&nbsp;</td>
-                            {% if showTimeBudget %}
-                                <td class="export-timeBudget"></td>
-                            {% endif %}
-                            {% if showRateBudget %}
-                                <td class="export-budget"></td>
-                            {% endif %}
+                            <td class="export-timeBudget"></td>
+                            <td class="export-budget"></td>
                             <td class="totals duration summary-duration">
                                 <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
                             </td>
@@ -484,20 +458,16 @@
                     <tr>
                         <td>{{ summary.customer }}</td>
                         <td>{{ summary.project }}</td>
-                        {% if showTimeBudget %}
-                            <td class="center export-timeBudget">
-                                {% if budgets[id] is defined and budgets[id].time_left > 0 %}
-                                    <span class="duration-format" data-duration="{{ budgets[id].time_left }}">{{ budgets[id].time_left|duration(decimal) }}</span>
-                                {% endif %}
-                            </td>
-                        {% endif %}
-                        {% if showRateBudget %}
-                            <td class="center export-budget">
-                                {% if budgets[id] is defined and budgets[id].money_left > 0 %}
-                                    {{ budgets[id].money_left|money(summary.currency) }}
-                                {% endif %}
-                            </td>
-                        {% endif %}
+                        <td class="center export-timeBudget">
+                            {% if budgets[id] is defined and budgets[id].time_left > 0 %}
+                                <span class="duration-format" data-duration="{{ budgets[id].time_left }}">{{ budgets[id].time_left|duration(decimal) }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="center export-budget">
+                            {% if budgets[id] is defined and budgets[id].money_left > 0 %}
+                                {{ budgets[id].money_left|money(summary.currency) }}
+                            {% endif %}
+                        </td>
                         <td class="duration summary-duration">
                             <span class="duration-format" data-duration="{{ summary.duration }}">{{ summary.duration|duration(decimal) }}</span>
                         </td>
@@ -511,12 +481,8 @@
                 {% if customer is not same as(null) %}
                     <tr class="summary">
                         <td colspan="2">&nbsp;</td>
-                        {% if showTimeBudget %}
-                            <td class="export-timeBudget"></td>
-                        {% endif %}
-                        {% if showRateBudget %}
-                            <td class="export-budget"></td>
-                        {% endif %}
+                        <td class="export-timeBudget"></td>
+                        <td class="export-budget"></td>
                         <td class="totals duration summary-duration">
                             <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
                         </td>
@@ -539,6 +505,8 @@
                     <th>{{ 'label.customer'|trans }}</th>
                     <th>{{ 'label.project'|trans }}</th>
                     <th>{{ 'label.activity'|trans }}</th>
+                    <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
+                    <th class="center export-budget">{{ 'label.budget'|trans }}</th>
                     <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
                     <th class="cost summary-rate-internal">{{ 'label.rate_internal'|trans }}</th>
                     <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
@@ -550,7 +518,7 @@
                 {% set customerRate = 0 %}
                 {% set customerInternalRate = 0 %}
                 {% set customerCurrency = null %}
-                {% for summary in summaries %}
+                {% for id, summary in summaries %}
                     {% if customer is same as(null) %}
                         {% set customer = summary.customer %}
                         {% set customerCurrency = summary.currency %}
@@ -558,6 +526,8 @@
                     {% if customer is not same as(summary.customer) %}
                         <tr class="summary">
                             <td colspan="3"></td>
+                            <td class="export-timeBudget"></td>
+                            <td class="export-budget"></td>
                             <td class="totals duration summary-duration">
                                 <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
                             </td>
@@ -570,11 +540,26 @@
                         {% set customerRate = 0 %}
                         {% set customerInternalRate = 0 %}
                     {% endif %}
-                    {% for activitySummary in summary.activities %}
+                    {% for activityId, activitySummary in summary.activities %}
                         <tr>
                             <td>{{ summary.customer }}</td>
                             <td>{{ summary.project }}</td>
                             <td>{{ activitySummary.activity }}</td>
+                            {% if activity_budgets[id] is defined and activity_budgets[id][activityId] is defined %}
+                                <td class="center export-timeBudget">
+                                    {% if activity_budgets[id][activityId].time_left > 0 %}
+                                        <span class="duration-format" data-duration="{{ activity_budgets[id][activityId].time_left }}">{{ activity_budgets[id][activityId].time_left|duration(decimal) }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="center export-budget">
+                                    {% if activity_budgets[id][activityId].money_left > 0 %}
+                                        {{ activity_budgets[id][activityId].money_left|money(summary.currency) }}
+                                    {% endif %}
+                                </td>
+                            {% else %}
+                                <td class="center export-timeBudget"></td>
+                                <td class="center export-budget"></td>
+                            {% endif %}
                             <td class="duration summary-duration">
                                 <span class="duration-format" data-duration="{{ activitySummary.duration }}">{{ activitySummary.duration|duration(decimal) }}</span>
                             </td>
@@ -589,6 +574,8 @@
                 {% if customer is not same as(null) %}
                     <tr class="summary">
                         <td colspan="3"></td>
+                        <td class="export-timeBudget"></td>
+                        <td class="export-budget"></td>
                         <td class="totals duration summary-duration">
                             <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
                         </td>

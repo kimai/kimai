@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export;
 
+use App\Activity\ActivityStatisticService;
 use App\Export\ExportRepositoryInterface;
 use App\Export\Renderer\HtmlRenderer;
 use App\Export\ServiceExport;
@@ -47,7 +48,12 @@ class ServiceExportTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $renderer = new HtmlRenderer($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectStatisticService::class));
+        $renderer = new HtmlRenderer(
+            $this->createMock(Environment::class),
+            new EventDispatcher(),
+            $this->createMock(ProjectStatisticService::class),
+            $this->createMock(ActivityStatisticService::class)
+        );
         $sut->addRenderer($renderer);
 
         self::assertEquals(1, \count($sut->getRenderer()));
@@ -58,7 +64,7 @@ class ServiceExportTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $exporter = new HtmlExporter($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectStatisticService::class));
+        $exporter = new HtmlExporter($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectStatisticService::class), $this->createMock(ActivityStatisticService::class));
         $sut->addTimesheetExporter($exporter);
 
         self::assertEquals(1, \count($sut->getTimesheetExporter()));
