@@ -86,6 +86,13 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
         return $this->statisticTotal->getDurationBillable();
     }
 
+    public function getTimeBudgetOpen(): int
+    {
+        $value = $this->getTimeBudget() - $this->getTimeBudgetSpent();
+
+        return $value > 0 ? $value : 0;
+    }
+
     public function getTimeBudgetSpent(): int
     {
         return $this->getDurationBillable();
@@ -99,6 +106,13 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
     public function getBudget(): float
     {
         return $this->entity->getBudget();
+    }
+
+    public function getBudgetOpen(): float
+    {
+        $value = $this->getBudget() - $this->getBudgetSpent();
+
+        return $value > 0 ? $value : 0;
     }
 
     public function getBudgetSpent(): float

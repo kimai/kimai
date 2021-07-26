@@ -116,7 +116,7 @@
         {% set options = {
             'max': budgetStatisticModel.getBudget(),
             'current': budgetStatisticModel.getBudgetSpent(),
-            'open': (budgetStatisticModel.getBudget() - budgetStatisticModel.getBudgetSpent()),
+            'open': (budgetStatisticModel.getBudgetOpen()),
             'format': 'money',
             'currency': currency,
         } %}
@@ -138,7 +138,7 @@
         {% set options = {
             'max': budgetStatisticModel.getTimeBudget(),
             'current': budgetStatisticModel.getTimeBudgetSpent(),
-            'open': (budgetStatisticModel.getTimeBudget() - budgetStatisticModel.getTimeBudgetSpent()),
+            'open': (budgetStatisticModel.getTimeBudgetOpen()),
             'format': 'duration',
         } %}
         {% if budgetStatisticModel.isMonthlyBudget() %}
