@@ -10,6 +10,7 @@
 namespace App\Activity;
 
 use App\Entity\Activity;
+use App\Event\ActivityBudgetStatisticEvent;
 use App\Event\ActivityStatisticEvent;
 use App\Model\ActivityBudgetStatisticModel;
 use App\Model\ActivityStatistic;
@@ -70,7 +71,63 @@ class ActivityStatisticService
 
         $stats->setStatistic($this->getActivityStatistics($activity, $begin, $end));
 
+        $event = new ActivityBudgetStatisticEvent([$stats], $begin, $end);
+        $this->dispatcher->dispatch($event);
+
         return $stats;
+    }
+
+    /**
+     * @param Activity[] $activities
+     * @param DateTime $today
+     * @return ActivityBudgetStatisticModel[]
+     */
+    public function getBudgetStatisticModelForActivities(array $activities, DateTime $today): array
+    {
+        $models = [];
+        $monthly = [];
+        $allTime = [];
+
+        foreach ($activities as $activity) {
+            $models[$activity->getId()] = new ActivityBudgetStatisticModel($activity);
+            if ($activity->isMonthlyBudget()) {
+                $monthly[] = $activity;
+            } else {
+                $allTime[] = $activity;
+            }
+        }
+
+        $statisticsTotal = $this->getBudgetStatistic($activities);
+        foreach ($statisticsTotal as $id => $statistic) {
+            $models[$id]->setStatisticTotal($statistic);
+        }
+
+        $dateFactory = new DateTimeFactory($today->getTimezone());
+
+        $begin = null;
+        $end = $today;
+
+        if (\count($monthly) > 0) {
+            $begin = $dateFactory->getStartOfMonth($today);
+            $end = $dateFactory->getEndOfMonth($today);
+            $statistics = $this->getBudgetStatistic($monthly, $begin, $end);
+            foreach ($statistics as $id => $statistic) {
+                $models[$id]->setStatistic($statistic);
+            }
+        }
+
+        if (\count($allTime) > 0) {
+            // display the budget at the end of the selected period and not the total sum of all times (do not include times in the future)
+            $statistics = $this->getBudgetStatistic($allTime, null, $today);
+            foreach ($statistics as $id => $statistic) {
+                $models[$id]->setStatistic($statistic);
+            }
+        }
+
+        $event = new ActivityBudgetStatisticEvent($models, $begin, $end);
+        $this->dispatcher->dispatch($event);
+
+        return $models;
     }
 
     /**
