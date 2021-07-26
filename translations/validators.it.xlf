@@ -38,6 +38,22 @@
         <source>This invoice document cannot be used, please rename the file and upload it again.</source>
         <target>Questo documento di fattura non può essere utilizzato, rinomina il file e caricalo di nuovo.</target>
       </trans-unit>
+      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>Massimo {{ value }} ore permesse.</target>
+      </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>L'username è già in uso.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>L'email è già in uso.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>Le password inserite non corrispondono.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
