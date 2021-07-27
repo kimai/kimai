@@ -203,8 +203,16 @@ class DateTimeFactoryTest extends TestCase
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
 
-        $expected = $sut->createDateTime('2021-07-22 23:59:59 ');
-        $financial = $sut->createStartOfFinancialYear('2020-07-23 15:30:00');
+        $now = $sut->createDateTime();
+        $expected = $sut->createDateTime();
+        $expected->setDate($expected->format('Y'), 7, 22);
+        $expected->setTime(23, 59, 59);
+
+        if ($now > $expected) {
+            $expected->modify('+1 year');
+        }
+
+        $financial = $sut->createStartOfFinancialYear('2018-07-23 15:30:00');
         $end = $sut->createEndOfFinancialYear($financial);
 
         self::assertEquals($expected, $end);
