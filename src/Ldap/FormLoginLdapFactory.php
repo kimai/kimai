@@ -13,6 +13,7 @@ use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityF
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
@@ -48,6 +49,7 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
         $container
             ->setDefinition($providerId, new ChildDefinition(LdapAuthenticationProvider::class))
             ->replaceArgument(1, $id)
+            ->replaceArgument(2, new Reference($userProviderId))
         ;
 
         return $providerId;

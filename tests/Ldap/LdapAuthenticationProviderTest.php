@@ -14,8 +14,7 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Ldap\LdapAuthenticationProvider;
 use App\Ldap\LdapManager;
-use App\Repository\UserRepository;
-use App\Security\DoctrineUserProvider;
+use App\Ldap\LdapUserProvider;
 use App\Tests\Configuration\TestConfigLoader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -23,15 +22,25 @@ use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserChecker;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @covers \App\Ldap\LdapAuthenticationProvider
  */
 class LdapAuthenticationProviderTest extends TestCase
 {
-    private function getUserProvider(): DoctrineUserProvider
+    public const USER_PROVIDER_CLASS = LdapUserProvider::class;
+
+    private function getUserProvider(?User $user = null): UserProviderInterface
     {
-        return new DoctrineUserProvider($this->createMock(UserRepository::class));
+        if ($user === null) {
+            return new LdapUserProvider($this->createMock(LdapManager::class));
+        }
+
+        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
+        $userProvider->expects($this->once())->method('loadUserByUsername')->willReturn($user);
+
+        return $userProvider;
     }
 
     private function getConfiguration(bool $active = true): LdapConfiguration
@@ -98,8 +107,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $user = (new User())->setUsername('foo')->setEnabled(true);
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = $this->getConfiguration(true);
-        $userProvider = $this->getMockBuilder(DoctrineUserProvider::class)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
-        $userProvider->expects($this->once())->method('loadUserByUsername')->willReturn($user);
+        $userProvider = $this->getUserProvider($user);
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
@@ -118,8 +126,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['bind'])->getMock();
         $manager->expects($this->once())->method('bind')->willReturn(false);
         $config = $this->getConfiguration(true);
-        $userProvider = $this->getMockBuilder(DoctrineUserProvider::class)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
-        $userProvider->expects($this->once())->method('loadUserByUsername')->willReturn($user);
+        $userProvider = $this->getUserProvider($user);
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
@@ -138,7 +145,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['bind'])->getMock();
         $manager->expects($this->once())->method('bind')->willReturn(false);
         $config = $this->getConfiguration(true);
-        $userProvider = $this->getMockBuilder(DoctrineUserProvider::class)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
+        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
         $userProvider->expects($this->never())->method('loadUserByUsername');
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
@@ -159,8 +166,7 @@ class LdapAuthenticationProviderTest extends TestCase
             self::assertSame($updateUser, $user);
         });
         $config = $this->getConfiguration(true);
-        $userProvider = $this->getMockBuilder(DoctrineUserProvider::class)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
-        $userProvider->expects($this->once())->method('loadUserByUsername')->willReturn($user);
+        $userProvider = $this->getUserProvider($user);
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
@@ -181,7 +187,7 @@ class LdapAuthenticationProviderTest extends TestCase
             self::assertSame($updateUser, $user);
         });
         $config = $this->getConfiguration(true);
-        $userProvider = $this->getMockBuilder(DoctrineUserProvider::class)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
+        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
         $userProvider->expects($this->never())->method('loadUserByUsername');
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
@@ -200,7 +206,7 @@ class LdapAuthenticationProviderTest extends TestCase
 
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = $this->getConfiguration(true);
-        $userProvider = $this->getMockBuilder(DoctrineUserProvider::class)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
+        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
         $userProvider->expects($this->once())->method('loadUserByUsername')->willThrowException(new UsernameNotFoundException('blub foo bar'));
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
@@ -219,7 +225,7 @@ class LdapAuthenticationProviderTest extends TestCase
 
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = $this->getConfiguration(true);
-        $userProvider = $this->getMockBuilder(DoctrineUserProvider::class)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
+        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
         $userProvider->expects($this->once())->method('loadUserByUsername')->willThrowException(new \Exception('server away', 1234));
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
