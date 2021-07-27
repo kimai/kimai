@@ -799,8 +799,7 @@ class TimesheetRepository extends EntityRepository
         $qb
             ->resetDQLPart('select')
             ->resetDQLPart('orderBy')
-            // faster then using "distinct id", as the user field is a separate (and smaller) index
-            ->select($qb->expr()->count('t.user'))
+            ->select($qb->expr()->count('t.id'))
         ;
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
