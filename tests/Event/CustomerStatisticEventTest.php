@@ -32,5 +32,14 @@ class CustomerStatisticEventTest extends AbstractCustomerEventTest
         $sut = new CustomerStatisticEvent($customer, $statistic);
 
         self::assertSame($statistic, $sut->getStatistic());
+        self::assertSame($customer, $sut->getCustomer());
+        self::assertNull($sut->getBegin());
+        self::assertNull($sut->getEnd());
+
+        $begin = new \DateTime('2020-08-08 12:34:56');
+        $end = new \DateTime('2020-09-08 12:34:56');
+        $sut = new CustomerStatisticEvent($customer, $statistic, $begin, $end);
+        self::assertSame($begin, $sut->getBegin());
+        self::assertSame($end, $sut->getEnd());
     }
 }

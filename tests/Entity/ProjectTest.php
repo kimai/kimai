@@ -18,12 +18,11 @@ use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\Project
  */
-class ProjectTest extends TestCase
+class ProjectTest extends AbstractEntityTest
 {
     public function testDefaultValues()
     {
@@ -39,16 +38,17 @@ class ProjectTest extends TestCase
         self::assertTrue($sut->isVisible());
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
-        self::assertEquals(0.0, $sut->getBudget());
-        self::assertEquals(0, $sut->getTimeBudget());
-        self::assertFalse($sut->hasBudget());
-        self::assertFalse($sut->hasTimeBudget());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());
         self::assertNull($sut->getMetaField('foo'));
         self::assertInstanceOf(Collection::class, $sut->getTeams());
         self::assertEquals(0, $sut->getTeams()->count());
         self::assertTrue($sut->isVisibleAtDate(new \DateTime()));
+    }
+
+    public function testBudgets()
+    {
+        $this->assertBudget(new Project());
     }
 
     public function testSetterAndGetter()
@@ -95,14 +95,6 @@ class ProjectTest extends TestCase
 
         self::assertInstanceOf(Project::class, $sut->setVisible(false));
         self::assertFalse($sut->isVisible());
-
-        $sut->setBudget(12345.67);
-        self::assertEquals(12345.67, $sut->getBudget());
-        self::assertTrue($sut->hasBudget());
-
-        $sut->setTimeBudget(937321);
-        self::assertEquals(937321, $sut->getTimeBudget());
-        self::assertTrue($sut->hasTimeBudget());
     }
 
     public function testMetaFields()
