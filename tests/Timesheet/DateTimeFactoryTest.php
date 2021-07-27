@@ -205,7 +205,7 @@ class DateTimeFactoryTest extends TestCase
 
         $now = $sut->createDateTime();
         $expected = $sut->createDateTime();
-        $expected->setDate($expected->format('Y'), 7, 22);
+        $expected->setDate((int) $expected->format('Y'), 7, 22);
         $expected->setTime(23, 59, 59);
 
         if ($now > $expected) {
