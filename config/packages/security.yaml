@@ -5,7 +5,7 @@ security:
     providers:
         chain_provider:
             chain:
-                providers: [kimai_ldap,kimai_internal]
+                providers: [kimai_internal,kimai_ldap]
         kimai_ldap:
             id: App\Ldap\LdapUserProvider
         kimai_internal:
