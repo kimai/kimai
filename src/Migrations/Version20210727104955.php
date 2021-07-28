@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
+use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\Migrations\AbstractMigration;
 
 /**
  * @version 1.15
