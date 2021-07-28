@@ -35,5 +35,14 @@ abstract class AbstractEntityTest extends TestCase
 
         $entityWithBudget->setBudgetType('month');
         $this->assertTrue($entityWithBudget->isMonthlyBudget());
+        $entityWithBudget->setBudgetType(null);
+        $this->assertFalse($entityWithBudget->isMonthlyBudget());
+
+        try {
+            $entityWithBudget->setBudgetType('foo');
+            $this->fail('Budget type only allows "month"');
+        } catch (\InvalidArgumentException $e) {
+            self::assertEquals('Unknown budget type: foo', $e->getMessage());
+        }
     }
 }
