@@ -5,22 +5,34 @@
  * file that was distributed with this source code.
  */
 
+.navbar-custom-menu {
+    .navbar-nav {
+        li>.ddt-small {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    }
+}
+
 .navbar-nav {
     img.img-circle {
         max-height: 26px;
         margin-top: -2px;
     }
     .avatar {
-        max-height: 26px;
-        max-width: 26px;
-        margin-top: -2px;
+        max-height: 30px;
+        max-width: 30px;
+        height: 30px;
+        width: 30px;
+        margin-top: 0;
         .initials {
-            top: 4px;
+            top: 6px;
+            left: 1px;
         }
     }
-    li>a.ddt-large {
-        padding: 15px 12px 11px 10px;
-        font-size: 10px;
+    li>.ddt-small {
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
     li.messages-menu ul.menu li {
         a:hover .pull-left i {
@@ -43,7 +55,6 @@
         width: unset !important;
     }
     .user-menu {
-        margin-right: 10px;
         ul {
             li {
                 a {
@@ -81,24 +92,39 @@
     }
 }
 
-/*
-.ticktac:hover i.running{
-    color: #4ff131;
+.ticktac-single {
+    display: block;
+    position: relative;
+    padding-left: 10px;
+    padding-right: 5px;
+    i {
+        color: #fff;
+    }
+    span {
+        color: #fff;
+        font-size: 1.8em;
+        line-height: 1em;
+        padding-left: 8px;
+        padding-right: 10px;
+    }
+    &:hover {
+        background: rgba(0,0,0,.3);
+        .ticktac-stop {
+            i {
+                color: #dd4b39;
+            }
+        }
+        .ticktac-start {
+            i {
+                color: $brand-warning;
+            }
+        }
+    }
 }
-
-li.open .ticktac i.running{
-    color: #4ff131;
+body.fixed {
+    .navbar-nav {
+        .user-menu {
+            margin-right: 10px;
+        }
+    }
 }
-
-.ticktac i.stopped{
-    color: #fff;
-}
-
-.ticktac:hover i.stopped{
-    color: #4ff131;
-}
-.user-panel>.info {
-    left: 40px;
-    padding-top: 0px;
-}
-*/
