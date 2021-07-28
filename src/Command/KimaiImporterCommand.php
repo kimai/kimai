@@ -322,42 +322,22 @@ final class KimaiImporterCommand extends Command
 
             if (!$options['merge-customer']) {
                 $this->customers = [];
-                // TODO test me
-                // $this->getDoctrine()->getManager()->clear(CustomerMeta::class);
-                // $this->getDoctrine()->getManager()->clear(CustomerRate::class);
-                // $this->getDoctrine()->getManager()->clear(Customer::class);
             }
 
             if (!$options['merge-project']) {
                 $this->projects = [];
-                // TODO test me
-                // $this->getDoctrine()->getManager()->clear(ProjectMeta::class);
-                // $this->getDoctrine()->getManager()->clear(ProjectRate::class);
-                // $this->getDoctrine()->getManager()->clear(Project::class);
             }
 
             if (!$options['merge-user']) {
                 $this->users = [];
-                // TODO test me
-                // $this->getDoctrine()->getManager()->clear(UserPreference::class);
-                // $this->getDoctrine()->getManager()->clear(User::class);
             }
 
             if (!$options['merge-team']) {
                 $this->teams = [];
-                // TODO test me
-                // $this->getDoctrine()->getManager()->clear(Team::class);
             }
 
             if (!$options['merge-activity']) {
                 $this->activities = [];
-            }
-
-            if (!$options['merge-team'] && !$options['merge-activity']) {
-                // TODO test me
-                // $this->getDoctrine()->getManager()->clear(ActivityMeta::class);
-                // $this->getDoctrine()->getManager()->clear(ActivityRate::class);
-                // $this->getDoctrine()->getManager()->clear(Activity::class);
             }
 
             $io->title(sprintf('Handling data from table prefix: %s', $this->dbPrefix));
