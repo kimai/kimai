@@ -1211,6 +1211,10 @@
         <source>error.too_many_entries</source>
         <target>Çok fazla sonuç bulunduğundan dolayı istek işlenemedi.</target>
       </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Personel numarası</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
