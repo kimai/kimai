@@ -5,22 +5,34 @@
  * file that was distributed with this source code.
  */
 
+.navbar-custom-menu {
+    .navbar-nav {
+        li>.ddt-small {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    }
+}
+
 .navbar-nav {
     img.img-circle {
         max-height: 26px;
         margin-top: -2px;
     }
     .avatar {
-        max-height: 26px;
-        max-width: 26px;
-        margin-top: -2px;
+        max-height: 30px;
+        max-width: 30px;
+        height: 30px;
+        width: 30px;
+        margin-top: 0;
         .initials {
-            top: 4px;
+            top: 5px;
+            left: 0;
         }
     }
-    li>a.ddt-large {
-        padding: 15px 12px 11px 10px;
-        font-size: 10px;
+    li>.ddt-small {
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
     li.messages-menu ul.menu li {
         a:hover .pull-left i {
@@ -43,17 +55,13 @@
         width: unset !important;
     }
     .user-menu {
-        margin-right: 10px;
         ul {
             li {
                 a {
+                    color: #444;
                     &:hover {
                         background-color: #f4f4f4;
-                        i {
-                            color: $blue;
-                        }
                     }
-                    color: #444;
                     i {
                         padding-right: 10px;
                     }
@@ -63,9 +71,6 @@
                 }
             }
         }
-    }
-    .notifications-menu>.dropdown-menu>li .menu>li>a:hover i {
-        color: $green;
     }
 }
 
@@ -80,25 +85,69 @@
         padding: 5px 25px 5px 25px
     }
 }
-
-/*
-.ticktac:hover i.running{
-    color: #4ff131;
+@keyframes ticktac-blink {
+    0% { opacity: 1; }
+    5% { opacity: 0.95; }
+    10% { opacity: 0.9; }
+    15% { opacity: 0.85; }
+    20% { opacity: 0.8; }
+    25% { opacity: 0.75; }
+    30% { opacity: 0.7; }
+    35% { opacity: 0.65; }
+    40% { opacity: 0.6; }
+    45% { opacity: 0.65; }
+    50% { opacity: 0.7; }
+    55% { opacity: 0.75; }
+    60% { opacity: 0.8; }
+    65% { opacity: 0.85; }
+    70% { opacity: 0.9; }
+    75% { opacity: 0.95; }
+    100% { opacity: 1; }
+}
+.ticktac-single {
+    display: block;
+    position: relative;
+    padding-left: 15px;
+    padding-right: 15px;
+    i {
+        animation: ticktac-blink 2s step-end infinite;
+    }
+    span {
+        font-size: 1.8em;
+        line-height: 1em;
+        padding-left: 5px;
+        padding-right: 0;
+    }
+    &:hover {
+        background: rgba(0,0,0,.3);
+    }
+}
+body.fixed {
+    .navbar-nav {
+        .user-menu {
+            margin-right: 10px;
+        }
+    }
 }
 
-li.open .ticktac i.running{
-    color: #4ff131;
+@media (max-width: $screen-sm-min) {
+    .ticktac-single {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .navbar-custom-menu .navbar-nav li>.ddt-small {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 }
 
-.ticktac i.stopped{
-    color: #fff;
+@media (max-width: $screen-md-min) {
+    .ticktac-single {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .navbar-custom-menu .navbar-nav li>.ddt-small {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
-
-.ticktac:hover i.stopped{
-    color: #4ff131;
-}
-.user-panel>.info {
-    left: 40px;
-    padding-top: 0px;
-}
-*/

@@ -15,43 +15,21 @@ $avatar-base-size: 30;
     line-height: 1;
     position: relative;
     font-weight: bold;
-    font-size: ($avatar-base-size / 2 - 2)+px;
-    top: ($avatar-base-size / 4 - 1)+px;
+    font-size: ceil($avatar-base-size / 2 - 2)+px;
+    top: ceil($avatar-base-size / 4 - 1)+px;
 }
 
-.avatar-xs {
-    width: ($avatar-base-size * 0.75)+px;
-    height: ($avatar-base-size * 0.75)+px;
-    .initials {
-        font-size: ($avatar-base-size * .75 / 2 - 2)+px;
-        top: ($avatar-base-size * .75 / 4 - 1)+px;
-    }
-}
+$avatarSizes: "xs" .75, "sm" 1.25, "md" 1.5, "lg" 2;
 
-.avatar-sm {
-    width: ($avatar-base-size * 1.25)+px;
-    height: ($avatar-base-size * 1.25)+px;
-    .initials {
-        font-size: ($avatar-base-size * 1.25 / 2 - 2)+px;
-        top: ($avatar-base-size * 1.25 / 4 - 1)+px;
-    }
-}
+@each $avatarSizeName, $avatarBaseSize in $avatarSizes {
+    .avatar-#{$avatarSizeName} {
+        width: ceil($avatar-base-size * $avatarBaseSize)+px;
+        height: ceil($avatar-base-size * $avatarBaseSize)+px;
 
-.avatar-md {
-    width: ($avatar-base-size * 1.5)+px;
-    height: ($avatar-base-size * 1.5)+px;
-    .initials {
-        font-size: ($avatar-base-size * 1.5 / 2 - 2)+px;
-        top: ($avatar-base-size * 1.5 / 4 - 1)+px;
-    }
-}
-
-.avatar-lg {
-    width: ($avatar-base-size * 2)+px;
-    height: ($avatar-base-size * 2)+px;
-    .initials {
-        font-size: ($avatar-base-size * 2 / 2 - 2)+px;
-        top: ($avatar-base-size * 2 / 4 - 1)+px;
+        .initials {
+            font-size: ceil($avatar-base-size * $avatarBaseSize / 2 - 2)+px;
+            top: ceil($avatar-base-size * $avatarBaseSize / 4 - 1)+px;
+        }
     }
 }
 
@@ -59,11 +37,11 @@ $avatar-base-size: 30;
     border-radius: 50%;
     border: 3px solid #fff;
     .avatar {
-        width: ($avatar-base-size * 2.75)+px;
-        height: ($avatar-base-size * 2.75)+px;
+        width: ceil($avatar-base-size * 2.75)+px;
+        height: ceil($avatar-base-size * 2.75)+px;
         .initials {
-            font-size: ($avatar-base-size * 2.75 / 2 - 2)+px;
-            top: ($avatar-base-size * 2.75 / 4 - 1)+px;
+            font-size: ceil($avatar-base-size * 2.75 / 2 - 2)+px;
+            top: ceil($avatar-base-size * 2.75 / 4 - 1)+px;
         }
     }
 }

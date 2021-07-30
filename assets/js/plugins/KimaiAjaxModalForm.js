@@ -31,36 +31,28 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         this.isDirty = false;
 
         this.modal = jQuery('#remote_form_modal');
-        this.modal.on('hide.bs.modal', function (e) {
-            if (self.isDirty) {
-                if (jQuery('#remote_form_modal .modal-body .remote_modal_is_dirty_warning').length === 0) {
-                    const msg = self.getContainer().getTranslation().get('modal.dirty');
-                    jQuery('#remote_form_modal .modal-body').prepend('<p class="'+(self.modal.hasClass('modal-danger') ? 'well well-sm ' : '') + 'text-danger small remote_modal_is_dirty_warning">' + msg + '</p>');
+        this.modal
+            .on('hide.bs.modal', function (e) {
+                if (self.isDirty) {
+                    if (jQuery('#remote_form_modal .modal-body .remote_modal_is_dirty_warning').length === 0) {
+                        const msg = self.getContainer().getTranslation().get('modal.dirty');
+                        jQuery('#remote_form_modal .modal-body').prepend('<p class="'+(self.modal.hasClass('modal-danger') ? 'well well-sm ' : '') + 'text-danger small remote_modal_is_dirty_warning">' + msg + '</p>');
+                    }
+                    e.preventDefault();
+                    return;
                 }
-                e.preventDefault();
-                return;
-            }
-            jQuery(self._getFormIdentifier()).off('change', self._isDirtyHandler);
-            self.isDirty = false;
-            self.getContainer().getPlugin('event').trigger('modal-hide');
-        });
-        this.modal.on('hidden.bs.modal', function () {
-            // kill all references, so GC can kick in
-            self.getContainer().getPlugin('form').destroyForm(self._getFormIdentifier());
-            jQuery('#remote_form_modal .modal-body').replaceWith('');
-        });
-
-        this.modal.on('show.bs.modal', function () {
-            self.getContainer().getPlugin('event').trigger('modal-show');
-        });
-        this.modal.on('shown.bs.modal', function () {
-            // workaround for autofocus attribute, as the modal "steals" it
-            let formAutofocus = jQuery(self._getFormIdentifier()).find('[autofocus]');
-            if (formAutofocus.length < 1) {
-                formAutofocus = jQuery(self._getFormIdentifier()).find('input[type=text],textarea,select');
-            }
-            formAutofocus.filter(':not("[data-datetimepicker=on]")').filter(':visible:first').focus().delay(1000).focus();
-        });
+                jQuery(self._getFormIdentifier()).off('change', self._isDirtyHandler);
+                self.isDirty = false;
+                self.getContainer().getPlugin('event').trigger('modal-hide');
+            })
+            .on('hidden.bs.modal', function () {
+                // kill all references, so GC can kick in
+                self.getContainer().getPlugin('form').destroyForm(self._getFormIdentifier());
+                jQuery('#remote_form_modal .modal-body').replaceWith('');
+            })
+            .on('show.bs.modal', function () {
+                self.getContainer().getPlugin('event').trigger('modal-show');
+            });
 
         this._addClickHandler(this.selector, function(href) {
             self.openUrlInModal(href);
