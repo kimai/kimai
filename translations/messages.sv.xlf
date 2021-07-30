@@ -573,7 +573,7 @@
       </trans-unit>
       <trans-unit id="stats.durationTotal">
         <source>stats.durationTotal</source>
-        <target state="translated">Arbetstid totalt</target>
+        <target state="translated">Arbetstimmar totalt</target>
       </trans-unit>
       <trans-unit id="stats.amountToday">
         <source>stats.amountToday</source>
@@ -1062,6 +1062,166 @@
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
         <target>Begäran kunde inte behandlas, för många resultat hittades.</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeMonth">
+        <source>stats.workingTimeMonth</source>
+        <target>%month% %year%</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Inga tidsbokningar sedan</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Visa postar utan budget</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Visa poster utan bokningar</target>
+      </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>Fält som ska uppdateras måste först aktiveras genom att klicka i den associerade kryssrutan.</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft">
+        <source>stats.percentUsedLeft</source>
+        <target>%percent%% använt (%left% öppet)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed">
+        <source>stats.percentUsed</source>
+        <target>%percent%% använt</target>
+      </trans-unit>
+      <trans-unit id="stats.yourWorkingHours">
+        <source>stats.yourWorkingHours</source>
+        <target>Mina arbetstimmar</target>
+      </trans-unit>
+      <trans-unit id="label.decimalDuration">
+        <source>label.decimalDuration</source>
+        <target>Visa längden som decimaltal</target>
+      </trans-unit>
+      <trans-unit id="label.orderDate">
+        <source>label.orderDate</source>
+        <target>Orderdatum</target>
+      </trans-unit>
+      <trans-unit id="help.fixedRate">
+        <source>help.fixedRate</source>
+        <target>Varje tidspost får samma värde, oavsett dess längd</target>
+      </trans-unit>
+      <trans-unit id="label.plus_more">
+        <source>label.plus_more</source>
+        <target>+%count% mer</target>
+      </trans-unit>
+      <trans-unit id="label.progress">
+        <source>label.progress</source>
+        <target>Förlopp</target>
+      </trans-unit>
+      <trans-unit id="label.my_team_projects">
+        <source>label.my_team_projects</source>
+        <target>Lagprojekt &amp; budget</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Ett mejl har skickats. Det innehåller en länk som du måste klicka på för att återställa ditt lösenord. Obs: Du kan endast begära ett nytt lösenord en gång inom %tokenLifetime% timmar. Om du inte har fått mejlet kontrollera din spamkorg eller försök igen.</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Om du vill ta bort en post måste du dra den till knappen.</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Sista posten</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Inte fakturerat</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Inte exporterat</target>
+      </trans-unit>
+      <trans-unit id="button.preview_print">
+        <source>button.preview_print</source>
+        <target>Förhandsgranska utskrift</target>
+      </trans-unit>
+      <trans-unit id="button.preview">
+        <source>button.preview</source>
+        <target>Förhandsgranska</target>
+      </trans-unit>
+      <trans-unit id="label.lastLogin">
+        <source>label.lastLogin</source>
+        <target>Senaste inloggning</target>
+      </trans-unit>
+      <trans-unit id="label.status">
+        <source>label.status</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="label.mark_as_exported">
+        <source>label.mark_as_exported</source>
+        <target>Markera som exporterat</target>
+      </trans-unit>
+      <trans-unit id="user_role.title">
+        <source>user_role.title</source>
+        <target>Användarroll</target>
+      </trans-unit>
+      <trans-unit id="user_permissions.title">
+        <source>user_permissions.title</source>
+        <target>Användarrättigheter</target>
+      </trans-unit>
+      <trans-unit id="status.pending">
+        <source>status.pending</source>
+        <target>Väntar på</target>
+      </trans-unit>
+      <trans-unit id="status.paid">
+        <source>status.paid</source>
+        <target>Betald</target>
+      </trans-unit>
+      <trans-unit id="status.new">
+        <source>status.new</source>
+        <target>Ny</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeYear">
+        <source>stats.workingTimeYear</source>
+        <target>Helår %year%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeWeek">
+        <source>stats.workingTimeWeek</source>
+        <target>Vecka %week%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeToday">
+        <source>stats.workingTimeToday</source>
+        <target>Idag, %day%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Arbetstid</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Arbetade timmar detta budgetåret</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Budgetår</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Aktiva användare under budgetåret</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Intäkter</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Intäkter detta räkenskapsåret</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Ett mejl har skickats till %email%. Det innehåller en aktiveringslänk som du måste klicka för att aktivera kontot.</target>
+      </trans-unit>
+      <trans-unit id="profile.registration_date">
+        <source>profile.registration_date</source>
+        <target>Registrerad</target>
       </trans-unit>
     </body>
   </file>
