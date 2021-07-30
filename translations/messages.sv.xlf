@@ -170,7 +170,7 @@
       </trans-unit>
       <trans-unit id="label.username">
         <source>label.username</source>
-        <target>Username</target>
+        <target>Användare</target>
       </trans-unit>
       <trans-unit id="label.description">
         <source>label.description</source>
@@ -917,7 +917,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Inga avgifter har konfigurerats ännu.</target>
+        <target>Inga timpriser har konfigurerats ännu.</target>
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>
@@ -990,6 +990,78 @@
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
         <target>Sökterm</target>
+      </trans-unit>
+      <trans-unit id="Allowed character: A-Z and _">
+        <source>Allowed character: A-Z and _</source>
+        <target>Tillåtna tecken: A-Z och _</target>
+      </trans-unit>
+      <trans-unit id="invoice.filter">
+        <source>invoice.filter</source>
+        <target>Filtrera fakturadata</target>
+      </trans-unit>
+      <trans-unit id="export.filter">
+        <source>export.filter</source>
+        <target>Filtrera data för export</target>
+      </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>Ytterligare fält</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Betalningsdag</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Hoppade över förhandsgranskning av %rows% fler rader…</target>
+      </trans-unit>
+      <trans-unit id="profile.teams">
+        <source>profile.teams</source>
+        <target>Lag</target>
+      </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Anställningsnummer</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Momssats</target>
+      </trans-unit>
+      <trans-unit id="label.vat_id">
+        <source>label.vat_id</source>
+        <target>VAD-ID</target>
+      </trans-unit>
+      <trans-unit id="label.project_end">
+        <source>label.project_end</source>
+        <target>Projektet slutar</target>
+      </trans-unit>
+      <trans-unit id="label.project_start">
+        <source>label.project_start</source>
+        <target>Projektet börjar</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Uppdatera webbläsarens titel</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.export_decimal">
+        <source>label.timesheet.export_decimal</source>
+        <target>Använd decimallängd vid export</target>
+      </trans-unit>
+      <trans-unit id="label.appendTags">
+        <source>label.appendTags</source>
+        <target>Fäst taggar</target>
+      </trans-unit>
+      <trans-unit id="label.replaceTags">
+        <source>label.replaceTags</source>
+        <target>Ersätt taggar</target>
+      </trans-unit>
+      <trans-unit id="label.color">
+        <source>label.color</source>
+        <target>Färg</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>Begäran kunde inte behandlas, för många resultat hittades.</target>
       </trans-unit>
     </body>
   </file>
