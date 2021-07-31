@@ -35,10 +35,6 @@ final class ActivityBudgetStatisticEvent
             return $this->models[$activityId];
         }
 
-        if (\count($this->models) === 1 && $this->models[0]->getActivity()->getId() === $activityId) {
-            return $this->models[0];
-        }
-
         foreach ($this->models as $model) {
             if ($model->getActivity()->getId() === $activityId) {
                 return $model;

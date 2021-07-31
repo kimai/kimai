@@ -35,10 +35,6 @@ final class ProjectBudgetStatisticEvent
             return $this->models[$projectId];
         }
 
-        if (\count($this->models) === 1 && $this->models[0]->getProject()->getId() === $projectId) {
-            return $this->models[0];
-        }
-
         foreach ($this->models as $model) {
             if ($model->getProject()->getId() === $projectId) {
                 return $model;
