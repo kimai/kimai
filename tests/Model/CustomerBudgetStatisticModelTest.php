@@ -21,11 +21,13 @@ use PHPUnit\Framework\TestCase;
 class CustomerBudgetStatisticModelTest extends TestCase
 {
     /**
-     * @param Customer $entity
+     * @param EntityWithBudget $entity
      * @return CustomerBudgetStatisticModel
      */
     protected function getSut(EntityWithBudget $entity): BudgetStatisticModel
     {
+        \assert($entity instanceof Customer);
+
         return new CustomerBudgetStatisticModel($entity);
     }
 

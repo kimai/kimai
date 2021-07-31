@@ -10,29 +10,72 @@
 namespace App\Tests\Model;
 
 use App\Entity\User;
-use App\Model\ActivityStatistic;
+use App\Model\Statistic\Month;
 use App\Model\UserStatistic;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Model\UserStatistic
  */
-class UserStatisticTest extends TestCase
+class UserStatisticTest extends AbstractTimesheetCountedStatisticTest
 {
-    public function testDefaultValues()
+    private function getSut(): UserStatistic
     {
         $user = new User();
-        $sut = new UserStatistic($user);
-        $this->assertEquals(0, $sut->getRecordRate());
+
+        return new UserStatistic($user);
+    }
+
+    public function testDefaultValues()
+    {
+        $this->assertDefaultValues($this->getSut());
     }
 
     public function testSetter()
     {
-        $sut = new ActivityStatistic();
-        $sut->setRecordAmount(7654);
-        $sut->setRecordDuration(826);
+        $this->assertSetter($this->getSut());
+    }
 
-        $this->assertEquals(7654, $sut->getRecordAmount());
-        $this->assertEquals(826, $sut->getRecordDuration());
+    public function testJsonSerialize()
+    {
+        $this->assertJsonSerialize($this->getSut());
+    }
+
+    public function testAdditionalValues()
+    {
+        $user = new User();
+        $sut = new UserStatistic($user);
+
+        $this->assertSetter($sut);
+
+        self::assertSame(22, $sut->getDuration());
+        self::assertSame(1234, $sut->getDurationBillable());
+        self::assertSame(323.97, $sut->getRate());
+        self::assertSame(123.456, $sut->getRateBillable());
+        self::assertSame(567.09, $sut->getInternalRate());
+
+        $month = new Month('10');
+
+        $sut->addValuesFromMonth($month);
+
+        self::assertSame(22, $sut->getDuration());
+        self::assertSame(1234, $sut->getDurationBillable());
+        self::assertSame(323.97, $sut->getRate());
+        self::assertSame(123.456, $sut->getRateBillable());
+        self::assertSame(567.09, $sut->getInternalRate());
+
+        $month = new Month('10');
+        $month->setTotalDuration(123);
+        $month->setBillableDuration(234);
+        $month->setTotalRate(345.67);
+        $month->setBillableRate(456.78);
+        $month->setTotalInternalRate(567.89);
+
+        $sut->addValuesFromMonth($month);
+
+        self::assertSame(145, $sut->getDuration());
+        self::assertSame(1468, $sut->getDurationBillable());
+        self::assertSame(669.64, $sut->getRate());
+        self::assertSame(580.236, $sut->getRateBillable());
+        self::assertSame(1134.98, $sut->getInternalRate());
     }
 }

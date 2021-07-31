@@ -117,7 +117,7 @@ class CustomerRepository extends EntityRepository
                     $stats->setRecordAmountBillable($resultRow['amount']);
                 }
             }
-            $stats->setRecordAmount($amount);
+            $stats->setCounter($amount);
             $stats->setRecordDuration($duration);
             $stats->setRecordRate($rate);
             $stats->setRecordInternalRate($rateInternal);

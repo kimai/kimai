@@ -22,7 +22,7 @@ class Timesheet
      */
     public function getValue(): int
     {
-        return $this->totalDuration;
+        return $this->getDuration();
     }
 
     /**
@@ -37,7 +37,7 @@ class Timesheet
 
     public function getTotalDuration(): int
     {
-        return $this->totalDuration;
+        return $this->getDuration();
     }
 
     public function setTotalDuration(int $totalDuration): void
@@ -57,7 +57,7 @@ class Timesheet
 
     public function getTotalRate(): float
     {
-        return $this->totalRate;
+        return $this->getRate();
     }
 
     public function setTotalRate(float $totalRate): void
@@ -77,7 +77,7 @@ class Timesheet
 
     public function getTotalInternalRate(): float
     {
-        return $this->totalInternalRate;
+        return $this->getInternalRate();
     }
 
     public function setTotalInternalRate(float $totalInternalRate): void

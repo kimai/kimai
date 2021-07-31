@@ -133,7 +133,7 @@ class ProjectRepository extends EntityRepository
         $stats = new ProjectStatistic();
 
         if (null !== $timesheetResult) {
-            $stats->setRecordAmount($timesheetResult['amount']);
+            $stats->setCounter($timesheetResult['amount']);
             $stats->setRecordDuration($timesheetResult['duration']);
             $stats->setRecordRate($timesheetResult['rate']);
             $stats->setRecordInternalRate($timesheetResult['internal_rate']);

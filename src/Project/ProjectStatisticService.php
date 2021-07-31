@@ -393,7 +393,7 @@ class ProjectStatisticService
             $activity->setRecordRate($tmp['rate']);
             $activity->setRecordDuration($tmp['duration']);
             $activity->setRecordInternalRate($tmp['internalRate']);
-            $activity->setRecordAmount($tmp['count']);
+            $activity->setCounter($tmp['count']);
             $model->addActivity($activity);
         }
         // ---------------------------------------------------
@@ -467,7 +467,7 @@ class ProjectStatisticService
                 $activity->setRecordRate($tmp['rate']);
                 $activity->setRecordDuration($tmp['duration']);
                 $activity->setRecordInternalRate($tmp['internalRate']);
-                $activity->setRecordAmount($tmp['count']);
+                $activity->setCounter($tmp['count']);
                 $model->addYearActivity($tmp['year'], $activity);
             }
         }

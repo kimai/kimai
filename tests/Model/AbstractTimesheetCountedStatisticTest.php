@@ -20,12 +20,30 @@ abstract class AbstractTimesheetCountedStatisticTest extends TestCase
         self::assertSame(0.0, $sut->getRate());
         self::assertSame(0, $sut->getRecordDuration());
         self::assertSame(0, $sut->getDuration());
-        self::assertSame(0, $sut->getRecordAmount());
+        self::assertSame(0, $sut->getCounter());
+        self::assertSame(0, $sut->getCounterBillable());
         self::assertSame(0.0, $sut->getRecordInternalRate());
         self::assertSame(0, $sut->getValue());
         self::assertSame(0, $sut->getDurationBillable());
         self::assertSame(0.0, $sut->getRateBillable());
         self::assertSame(0, $sut->getRecordAmountBillable());
+
+        $json = $sut->jsonSerialize();
+
+        $expected = [
+            'duration' => 0,
+            'duration_billable' => 0,
+            'rate' => 0.0,
+            'rate_billable' => 0.0,
+            'rate_internal' => 0.0,
+            'amount' => 0,
+            'amount_billable' => 0,
+        ];
+
+        foreach ($expected as $key => $value) {
+            self::assertArrayHasKey($key, $json);
+            self::assertSame($value, $json[$key]);
+        }
     }
 
     protected function assertSetter(TimesheetCountedStatistic $sut)
@@ -33,23 +51,32 @@ abstract class AbstractTimesheetCountedStatisticTest extends TestCase
         self::assertInstanceOf(TimesheetCountedStatistic::class, $sut->setRecordRate(23.97));
         self::assertInstanceOf(TimesheetCountedStatistic::class, $sut->setRecordDuration(21));
         self::assertInstanceOf(TimesheetCountedStatistic::class, $sut->setRecordAmount(5));
+        $sut->setRecordAmountBillable(15);
         self::assertInstanceOf(TimesheetCountedStatistic::class, $sut->setRecordInternalRate(99.09));
 
         self::assertSame(23.97, $sut->getRecordRate());
-        self::assertSame(23.97, $sut->getRate());
         self::assertSame(21, $sut->getRecordDuration());
-        self::assertSame(21, $sut->getDuration());
-        self::assertSame(21, $sut->getValue());
         self::assertSame(5, $sut->getRecordAmount());
+        self::assertSame(15, $sut->getRecordAmountBillable());
         self::assertSame(99.09, $sut->getRecordInternalRate());
 
+        self::assertSame(21, $sut->getValue());
+
+        $sut->setCounter(524);
+        $sut->setCounterBillable(198);
+        $sut->setInternalRate(567.09);
+        $sut->setRate(323.97);
+        $sut->setDuration(22);
         $sut->setRateBillable(123.456);
         $sut->setDurationBillable(1234);
-        $sut->setRecordAmountBillable(4321);
 
+        self::assertSame(524, $sut->getCounter());
+        self::assertSame(198, $sut->getCounterBillable());
+        self::assertSame(567.09, $sut->getInternalRate());
+        self::assertSame(22, $sut->getDuration());
+        self::assertSame(323.97, $sut->getRate());
         self::assertSame(123.456, $sut->getRateBillable());
         self::assertSame(1234, $sut->getDurationBillable());
-        self::assertSame(4321, $sut->getRecordAmountBillable());
     }
 
     protected function assertJsonSerialize(TimesheetCountedStatistic $sut)
