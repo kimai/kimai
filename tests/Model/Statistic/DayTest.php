@@ -11,13 +11,26 @@ namespace App\Tests\Model\Statistic;
 
 use App\Model\Statistic\Day;
 use DateTime;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Model\Statistic\Day
  */
-class DayTest extends TestCase
+class DayTest extends AbstractTimesheetTest
 {
+    public function testDefaultValues()
+    {
+        $date = new DateTime('-8 hours');
+        $sut = new Day($date, 0, 0.0);
+        $this->assertDefaultValues($sut);
+    }
+
+    public function testSetter()
+    {
+        $date = new DateTime('-8 hours');
+        $sut = new Day($date, 12340, 197.25956);
+        $this->assertSetter($sut);
+    }
+
     public function testConstruct()
     {
         $date = new DateTime('-8 hours');

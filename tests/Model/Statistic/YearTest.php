@@ -11,16 +11,17 @@ namespace App\Tests\Model\Statistic;
 
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Model\Statistic\Year
  */
-class YearTest extends TestCase
+class YearTest extends AbstractTimesheetTest
 {
     public function testDefaultValues()
     {
         $sut = new Year('1999');
+        $this->assertDefaultValues($sut);
+
         self::assertNull($sut->getMonth(1));
         self::assertEmpty($sut->getMonths());
         self::assertIsArray($sut->getMonths());
@@ -30,6 +31,7 @@ class YearTest extends TestCase
     public function testSetter()
     {
         $sut = new Year('1999');
+        $this->assertSetter($sut);
 
         $sut->setMonth(new Month('01'));
         $sut->setMonth(new Month('02'));

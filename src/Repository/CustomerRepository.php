@@ -192,6 +192,7 @@ class CustomerRepository extends EntityRepository
 
     /**
      * @deprecated since 1.1 - use getQueryBuilderForFormType() instead - will be removed with 2.0
+     * @codeCoverageIgnore
      */
     public function builderForEntityType($customer)
     {

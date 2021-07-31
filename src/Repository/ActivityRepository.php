@@ -107,10 +107,9 @@ class ActivityRepository extends EntityRepository
     }
 
     /**
-     * Retrieves statistics for one activity.
+     * @deprecated since 1.15 use ActivityStatisticService::getActivityStatistics() instead - will be removed with 2.0
      * @codeCoverageIgnore
      *
-     * @deprecated since 1.15 use ActivityStatisticService::getActivityStatistics() instead - will be removed with 2.0
      * @param Activity $activity
      * @return ActivityStatistic
      */
@@ -216,6 +215,7 @@ class ActivityRepository extends EntityRepository
 
     /**
      * @deprecated since 1.1 - use getQueryBuilderForFormType() instead - will be removed with 2.0
+     * @codeCoverageIgnore
      */
     public function builderForEntityType($activity, $project)
     {
