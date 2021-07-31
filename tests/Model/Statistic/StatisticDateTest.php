@@ -9,7 +9,6 @@
 
 namespace App\Tests\Model\Statistic;
 
-use App\Model\Statistic\Day;
 use App\Model\Statistic\StatisticDate;
 use DateTime;
 
@@ -23,6 +22,8 @@ class StatisticDateTest extends AbstractTimesheetTest
         $dateTime = new \DateTime('-8 hours');
         $sut = new StatisticDate($dateTime);
         $this->assertDefaultValues($sut);
+        self::assertSame(0.0, $sut->getBillableRate());
+        self::assertSame(0, $sut->getBillableDuration());
         self::assertNotSame($dateTime, $sut->getDate());
         self::assertEquals($dateTime->getTimestamp(), $sut->getDate()->getTimestamp());
     }
@@ -30,42 +31,19 @@ class StatisticDateTest extends AbstractTimesheetTest
     public function testSetter()
     {
         $date = new DateTime('-8 hours');
-        $sut = new Day($date, 12340, 197.25956);
+        $sut = new StatisticDate($date);
         $this->assertSetter($sut);
     }
 
-    public function testConstruct()
+    public function testAdditionalMethods()
     {
         $date = new DateTime('-8 hours');
-        $sut = new Day($date, 12340, 197.25956);
+        $sut = new StatisticDate($date);
 
-        self::assertSame($date, $sut->getDay());
-        self::assertEquals([], $sut->getDetails());
-        self::assertSame(12340, $sut->getTotalDuration());
-        self::assertSame(197.25956, $sut->getTotalRate());
-        self::assertSame(0, $sut->getTotalDurationBillable());
-    }
+        $sut->setBillableRate(4869.38);
+        self::assertSame(4869.38, $sut->getBillableRate());
 
-    public function testAllowedMonths()
-    {
-        $date = new DateTime('-8 hours');
-        $sut = new Day($date, 12340, 197.25956);
-
-        $sut->setTotalDuration(999);
-        $sut->setTotalRate(0.123456789);
-        $sut->setTotalDurationBillable(12345);
-
-        self::assertSame(999, $sut->getTotalDuration());
-        self::assertSame(0.123456789, $sut->getTotalRate());
-        self::assertSame(12345, $sut->getTotalDurationBillable());
-    }
-
-    public function testSetDetails()
-    {
-        $sut = new Day(new DateTime(), 12340, 197.25956);
-
-        $sut->setDetails(['foo' => ['bar' => '1212e'], 'hello' => 'world']);
-
-        self::assertEquals(['foo' => ['bar' => '1212e'], 'hello' => 'world'], $sut->getDetails());
+        $sut->setBillableDuration(512376);
+        self::assertSame(512376, $sut->getBillableDuration());
     }
 }
