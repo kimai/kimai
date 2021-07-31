@@ -99,7 +99,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Οι χρεώσεις δεν έχουν ρυθμιστεί ακόμη.</target>
+        <target>Οι ωριαίες χρεώσεις δεν έχουν ρυθμιστεί ακόμη.</target>
       </trans-unit>
       <trans-unit id="rates.title">
         <source>rates.title</source>
@@ -1195,6 +1195,22 @@
       <trans-unit id="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
         <target>Οικονομικό έτος</target>
+      </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Αριθμός στελεχών</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>Το αίτημα δεν μπορεί να επεξεργαστεί, βρέθηκαν πάρα πολλά αποτελέσματα.</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Ένα ηλεκτρονικό μήνυμα έχει αποσταλεί. Περιέχει το σύνδεσμο που πρέπει να ακολουθήσετε για να επαναφέρετε τον κωδικό σας. Σημείωση: Μπορείτε να ζητήσετε νέο κωδικό μία φορά εντός %tokenLifetime% ωρών. Εάν δεν λάβετε το ηλεκτρονικό μήνυμα ελέγξετε τον φάκελο με τα ανεπιθύμητα μηνύματα η προσπαθήστε ξανά.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Ένα ηλεκτρονικό μήνυμα έχει αποσταλεί στην διεύθυνση %email%. Περιέχει τον σύνδεσμο ενεργοποίησης που πρέπει να ακολουθήσετε για να ενεργοποιήσετε τον λογαριασμό σας.</target>
       </trans-unit>
     </body>
   </file>
