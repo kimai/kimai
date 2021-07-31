@@ -42,7 +42,7 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
         return $this->entity;
     }
 
-    public function getStatistic(): BudgetStatistic
+    public function getStatistic(): ?BudgetStatistic
     {
         return $this->statistic;
     }
@@ -52,7 +52,7 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
         $this->statistic = $statistic;
     }
 
-    public function getStatisticTotal(): BudgetStatistic
+    public function getStatisticTotal(): ?BudgetStatistic
     {
         return $this->statisticTotal;
     }
@@ -80,7 +80,15 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
     public function getDurationBillable(): int
     {
         if ($this->isMonthlyBudget()) {
+            if ($this->statistic === null) {
+                return 0;
+            }
+
             return $this->statistic->getDurationBillable();
+        }
+
+        if ($this->statisticTotal === null) {
+            return 0;
         }
 
         return $this->statisticTotal->getDurationBillable();
@@ -123,7 +131,15 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
     public function getRateBillable(): float
     {
         if ($this->isMonthlyBudget()) {
+            if ($this->statistic === null) {
+                return 0.00;
+            }
+
             return $this->statistic->getRateBillable();
+        }
+
+        if ($this->statisticTotal === null) {
+            return 0.00;
         }
 
         return $this->statisticTotal->getRateBillable();
@@ -132,7 +148,15 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
     public function getRate(): float
     {
         if ($this->isMonthlyBudget()) {
+            if ($this->statistic === null) {
+                return 0.00;
+            }
+
             return $this->statistic->getRate();
+        }
+
+        if ($this->statisticTotal === null) {
+            return 0.00;
         }
 
         return $this->statisticTotal->getRate();
@@ -141,7 +165,15 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
     public function getDuration(): int
     {
         if ($this->isMonthlyBudget()) {
+            if ($this->statistic === null) {
+                return 0;
+            }
+
             return $this->statistic->getDuration();
+        }
+
+        if ($this->statisticTotal === null) {
+            return 0;
         }
 
         return $this->statisticTotal->getDuration();
@@ -150,7 +182,15 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
     public function getInternalRate(): float
     {
         if ($this->isMonthlyBudget()) {
+            if ($this->statistic === null) {
+                return 0.00;
+            }
+
             return $this->statistic->getInternalRate();
+        }
+
+        if ($this->statisticTotal === null) {
+            return 0.00;
         }
 
         return $this->statisticTotal->getInternalRate();
