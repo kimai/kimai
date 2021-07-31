@@ -101,6 +101,7 @@ class ProjectRepository extends EntityRepository
 
     /**
      * @deprecated since 1.15 use ProjectStatisticService::getProjectStatistics() instead - will be removed with 2.0
+     * @codeCoverageIgnore
      *
      * @param Project $project
      * @param DateTime|null $begin

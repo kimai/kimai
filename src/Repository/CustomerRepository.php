@@ -75,6 +75,7 @@ class CustomerRepository extends EntityRepository
 
     /**
      * @deprecated since 1.15 use CustomerStatisticService::getCustomerStatistics() instead - will be removed with 2.0
+     * @codeCoverageIgnore
      *
      * @param Customer $customer
      * @return CustomerStatistic

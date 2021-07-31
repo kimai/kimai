@@ -133,6 +133,7 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
+     * @codeCoverageIgnore
      */
     public function add(Timesheet $timesheet, int $maxRunningEntries)
     {
@@ -203,13 +204,15 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
+     * @codeCoverageIgnore
+     *
      * @param Timesheet $entry
      * @param bool $flush
      * @return bool
      * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
      */
     public function stopRecording(Timesheet $entry, bool $flush = true)
     {
@@ -378,13 +381,13 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * Returns an array of Year statistics.
+     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
+     * @codeCoverageIgnore
      *
      * @param DateTime $begin
      * @param DateTime $end
      * @param User|null $user
      * @return Year[]
-     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
      */
     public function getMonthlyStats(DateTime $begin, DateTime $end, ?User $user = null): array
     {
@@ -442,12 +445,14 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
+     * @codeCoverageIgnore
+     *
      * @param User|null $user
      * @param DateTime|null $begin
      * @param DateTime|null $end
      * @param bool|null $billable
      * @return QueryBuilder
-     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
      */
     private function getMonthlyStatsQuery(User $user = null, ?DateTime $begin = null, ?DateTime $end = null, ?bool $billable = null): QueryBuilder
     {
@@ -627,6 +632,8 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @deprecated since 1.15 - use TimesheetStatisticService::getDailyStatistics() instead
+     * @codeCoverageIgnore
+     *
      * @param User|null $user
      * @param DateTime $begin
      * @param DateTime $end
@@ -692,6 +699,9 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
+     * @codeCoverageIgnore
+     *
      * @param User $user
      * @param int $hardLimit
      * @param bool $flush
@@ -699,7 +709,6 @@ class TimesheetRepository extends EntityRepository
      * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
      */
     public function stopActiveEntries(User $user, int $hardLimit, bool $flush = true)
     {
