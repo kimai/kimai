@@ -27,6 +27,7 @@ abstract class AbstractTimesheetCountedStatisticTest extends TestCase
         self::assertSame(0, $sut->getDurationBillable());
         self::assertSame(0.0, $sut->getRateBillable());
         self::assertSame(0, $sut->getRecordAmountBillable());
+        self::assertSame(0.0, $sut->getInternalRateBillable());
 
         $json = $sut->jsonSerialize();
 
@@ -69,6 +70,7 @@ abstract class AbstractTimesheetCountedStatisticTest extends TestCase
         $sut->setDuration(22);
         $sut->setRateBillable(123.456);
         $sut->setDurationBillable(1234);
+        $sut->setInternalRateBillable(987.12);
 
         self::assertSame(524, $sut->getCounter());
         self::assertSame(198, $sut->getCounterBillable());
@@ -77,6 +79,7 @@ abstract class AbstractTimesheetCountedStatisticTest extends TestCase
         self::assertSame(323.97, $sut->getRate());
         self::assertSame(123.456, $sut->getRateBillable());
         self::assertSame(1234, $sut->getDurationBillable());
+        self::assertSame(987.12, $sut->getInternalRateBillable());
     }
 
     protected function assertJsonSerialize(TimesheetCountedStatistic $sut)
