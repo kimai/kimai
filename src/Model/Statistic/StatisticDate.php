@@ -17,10 +17,10 @@ final class StatisticDate extends Timesheet
 
     public function __construct(\DateTime $date)
     {
-        $this->date = $date;
+        $this->date = \DateTimeImmutable::createFromMutable($date);
     }
 
-    public function getDate(): \DateTime
+    public function getDate(): \DateTimeImmutable
     {
         return $this->date;
     }

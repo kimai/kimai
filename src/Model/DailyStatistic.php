@@ -42,6 +42,7 @@ final class DailyStatistic
         }
 
         $tmp = clone $this->begin;
+        $tmp->setTime(0, 0, 0);
         while ($tmp < $this->end) {
             $id = $tmp->format('Y-m-d');
             $this->days[$id] = new StatisticDate(clone $tmp);
