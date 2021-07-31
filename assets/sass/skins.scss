@@ -10,7 +10,7 @@ $skins:
 
 @each $skinColor, $navHighlight, $tickTacColor, $startButton, $stopButton in $skins {
     @each $prefix in (".skin-#{$skinColor}", ".skin-#{$skinColor}-light") {
-        @media (max-width: $screen-sm-min) {
+        @media (max-width: $screen-sm-max) {
             #{$prefix} {
                 .main-header .navbar .dropdown-menu li.divider {
                     background-color: #ccc;

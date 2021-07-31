@@ -5,10 +5,6 @@
  * file that was distributed with this source code.
  */
 
-.toolbar-pad {
-    padding: 10px;
-}
-
 @media (min-width: $screen-sm-min) {
     .toolbar {
         // @deprecated since 1.2 - using the navbar-form is deprecated and will be removed with 2.0
@@ -26,8 +22,5 @@
                 width: 100%;
             }
         }
-    }
-    .toolbar-pad {
-        padding: 10px 0;
     }
 }
