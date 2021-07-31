@@ -25,7 +25,11 @@ class ActivityBudgetStatisticEventTest extends TestCase
         $activity->expects($this->exactly(2))->method('getId')->willReturn(12);
 
         $model1 = new ActivityBudgetStatisticModel($activity);
-        $models = [$model1];
+        $model2 = new ActivityBudgetStatisticModel(new Activity());
+        $models = [
+            $model1,
+            4 => $model2,
+        ];
         $begin = new \DateTime('-1 years');
         $end = new \DateTime();
 
@@ -34,6 +38,7 @@ class ActivityBudgetStatisticEventTest extends TestCase
         self::assertSame($models, $sut->getModels());
         self::assertNull($sut->getModel(1));
         self::assertSame($model1, $sut->getModel(12));
+        self::assertSame($model2, $sut->getModel(4));
         self::assertSame($begin, $sut->getBegin());
         self::assertSame($end, $sut->getEnd());
     }
