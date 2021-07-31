@@ -12,6 +12,7 @@ namespace App\Model;
 use App\Entity\User;
 use App\Model\Statistic\StatisticDate;
 use DateTime;
+use DateTimeInterface;
 
 final class DailyStatistic
 {
@@ -25,8 +26,8 @@ final class DailyStatistic
 
     public function __construct(DateTime $begin, DateTime $end, User $user)
     {
-        $this->begin = $begin;
-        $this->end = $end;
+        $this->begin = clone $begin;
+        $this->end = clone $end;
         $this->user = $user;
     }
 
@@ -60,7 +61,7 @@ final class DailyStatistic
         return array_values($this->days);
     }
 
-    public function getDayByDateTime(DateTime $date): ?StatisticDate
+    public function getDayByDateTime(\DateTimeInterface $date): ?StatisticDate
     {
         return $this->getDay($date->format('Y'), $date->format('m'), $date->format('d'));
     }
@@ -92,7 +93,7 @@ final class DailyStatistic
     }
 
     /**
-     * @return DateTime[]
+     * @return DateTimeInterface[]
      */
     public function getDateTimes(): array
     {

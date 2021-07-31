@@ -15,12 +15,12 @@ final class StatisticDate extends Timesheet
     private $billableDuration = 0;
     private $billableRate = 0.00;
 
-    public function __construct(\DateTime $date)
+    public function __construct(\DateTimeInterface $date)
     {
-        $this->date = \DateTimeImmutable::createFromMutable($date);
+        $this->date = clone $date;
     }
 
-    public function getDate(): \DateTimeImmutable
+    public function getDate(): \DateTimeInterface
     {
         return $this->date;
     }

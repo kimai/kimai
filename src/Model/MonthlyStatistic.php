@@ -12,6 +12,7 @@ namespace App\Model;
 use App\Entity\User;
 use App\Model\Statistic\StatisticDate;
 use DateTime;
+use DateTimeInterface;
 
 final class MonthlyStatistic
 {
@@ -25,8 +26,8 @@ final class MonthlyStatistic
 
     public function __construct(DateTime $begin, DateTime $end, User $user)
     {
-        $this->begin = $begin;
-        $this->end = $end;
+        $this->begin = clone $begin;
+        $this->end = clone $end;
         $this->user = $user;
     }
 
@@ -42,17 +43,22 @@ final class MonthlyStatistic
         }
 
         $years = [];
-        $tmp = clone $this->begin;
+        $begin = clone $this->begin;
+        $begin->setTime(0, 0, 0);
+
+        $tmp = clone $begin;
+        $day = (int) $begin->format('d');
+
         while ($tmp < $this->end) {
             $curYear = $tmp->format('Y');
             if (!isset($years[$curYear])) {
                 $year = [];
                 for ($i = 1; $i < 13; $i++) {
-                    $date = clone $this->begin;
+                    $date = clone $begin;
                     // financial years do NOT start at the first of the month, do not reset day to 1
-                    $date->setDate((int) $curYear, $i, (int) $this->begin->format('d'));
+                    $date->setDate((int) $curYear, $i, $day);
                     $date->setTime(0, 0, 0);
-                    if ($date < $this->begin || $date > $this->end) {
+                    if ($date < $begin || $date > $this->end) {
                         continue;
                     }
                     $year[$i] = new StatisticDate($date);
@@ -84,6 +90,9 @@ final class MonthlyStatistic
         return $this->years[$year];
     }
 
+    /**
+     * @return StatisticDate[]
+     */
     public function getMonths(): array
     {
         $this->setupYears();
@@ -112,7 +121,7 @@ final class MonthlyStatistic
     }
 
     /**
-     * @return DateTime[]
+     * @return DateTimeInterface[]
      */
     public function getDateTimes(): array
     {
