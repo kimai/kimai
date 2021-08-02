@@ -21,7 +21,7 @@ final class Version20210802160837 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Fills the new date column in the timesheet table';
+        return 'Creates the index on the new timesheet statistic date column';
     }
 
     public function up(Schema $schema): void
