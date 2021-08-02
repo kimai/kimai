@@ -459,7 +459,10 @@ class TimesheetRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->from(Timesheet::class, 't');
-        $qb->select('COALESCE(SUM(t.rate), 0) as rate, COALESCE(SUM(t.duration), 0) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year');
+        $qb->select('COALESCE(SUM(t.rate), 0) as rate');
+        $qb->addSelect('COALESCE(SUM(t.duration), 0) as duration');
+        $qb->addSelect('MONTH(t.date) as month');
+        $qb->addSelect('YEAR(t.date) as year');
 
         if (!empty($begin)) {
             $qb->andWhere($qb->expr()->gte('t.begin', ':from'));

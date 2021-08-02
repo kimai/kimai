@@ -10,6 +10,8 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.15](https://github.com/kevinpapst/kimai2/releases/tag/1.15)
 
+Updating the database might take quite a while, depending on the amount of timesheet entries and speed of your database server (~1 minute per 100k records).
+
 **ATTENTION** 
 - This release bumps the minimum required [PHP version to 7.3](https://www.kimai.org/blog/2021/php8-support-php72-dropped/)
 - Self-registration is disabled by default

@@ -52,9 +52,9 @@ final class TimesheetStatisticService
             ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')
             ->addSelect('t.billable as billable')
             ->addSelect('IDENTITY(t.user) as user')
-            ->addSelect('DAY(t.begin) as day')
-            ->addSelect('MONTH(t.begin) as month')
-            ->addSelect('YEAR(t.begin) as year')
+            ->addSelect('DAY(t.date) as day')
+            ->addSelect('MONTH(t.date) as month')
+            ->addSelect('YEAR(t.date) as year')
             ->where($qb->expr()->isNotNull('t.end'))
             ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))
             ->andWhere($qb->expr()->in('t.user', ':user'))
@@ -111,7 +111,6 @@ final class TimesheetStatisticService
         }
 
         $qb = $this->repository->createQueryBuilder('t');
-
         $qb
             ->select('COALESCE(SUM(t.rate), 0.0) as rate')
             ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
@@ -120,7 +119,7 @@ final class TimesheetStatisticService
             ->addSelect('IDENTITY(t.user) as user')
             ->addSelect('IDENTITY(t.project) as project')
             ->addSelect('IDENTITY(t.activity) as activity')
-            ->addSelect('DATE(t.begin) as date')
+            ->addSelect('DATE(t.date) as date')
             ->where($qb->expr()->isNotNull('t.end'))
             ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))
             ->andWhere($qb->expr()->in('t.user', ':user'))
@@ -209,8 +208,8 @@ final class TimesheetStatisticService
             ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
             ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')
             ->addSelect('t.billable as billable')
-            ->addSelect('MONTH(t.begin) as month')
-            ->addSelect('YEAR(t.begin) as year')
+            ->addSelect('MONTH(t.date) as month')
+            ->addSelect('YEAR(t.date) as year')
             ->addSelect('IDENTITY(t.user) as user')
             ->where($qb->expr()->isNotNull('t.end'))
             ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))

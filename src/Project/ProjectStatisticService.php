@@ -401,8 +401,8 @@ class ProjectStatisticService
         // fetch stats grouped by YEAR, MONTH and USER
         $qb1 = clone $qb;
         $qb1
-            ->addSelect('YEAR(t.begin) as year')
-            ->addSelect('MONTH(t.begin) as month')
+            ->addSelect('YEAR(t.date) as year')
+            ->addSelect('MONTH(t.date) as month')
             ->addSelect('IDENTITY(t.user) as user')
             ->addGroupBy('year')
             ->addGroupBy('month')
@@ -440,7 +440,7 @@ class ProjectStatisticService
         // fetch stats grouped by YEARS
         $qb1 = clone $qb;
         $qb1
-            ->addSelect('YEAR(t.begin) as year')
+            ->addSelect('YEAR(t.date) as year')
             ->addGroupBy('year')
         ;
         foreach ($qb1->getQuery()->getResult() as $year) {
@@ -455,8 +455,8 @@ class ProjectStatisticService
             $qb2
                 ->leftJoin(Activity::class, 'a', Join::WITH, 'a.id = t.activity')
                 ->addSelect('a as activity')
-                ->addSelect('YEAR(t.begin) as year')
-                ->andWhere('YEAR(t.begin) = :year')
+                ->addSelect('YEAR(t.date) as year')
+                ->andWhere('YEAR(t.date) = :year')
                 ->setParameter('year', $year['year'])
                 ->addGroupBy('year')
                 ->addGroupBy('a')
@@ -477,8 +477,8 @@ class ProjectStatisticService
         // fetch stats grouped by MONTH and YEAR
         $qb1 = clone $qb;
         $qb1
-            ->addSelect('YEAR(t.begin) as year')
-            ->addSelect('MONTH(t.begin) as month')
+            ->addSelect('YEAR(t.date) as year')
+            ->addSelect('MONTH(t.date) as month')
             ->addGroupBy('year')
             ->addGroupBy('month')
         ;
@@ -592,7 +592,7 @@ class ProjectStatisticService
         ;
 
         $qb = clone $tplQb;
-        $qb->addSelect('MAX(t.begin) as lastRecord');
+        $qb->addSelect('MAX(t.date) as lastRecord');
 
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
@@ -608,7 +608,7 @@ class ProjectStatisticService
         // values for today
         $qb = clone $tplQb;
         $qb
-            ->andWhere('DATE(t.begin) = :start_date')
+            ->andWhere('DATE(t.date) = :start_date')
             ->setParameter('start_date', $today, Types::DATETIME_MUTABLE)
         ;
 
@@ -620,7 +620,7 @@ class ProjectStatisticService
         // values for the current week
         $qb = clone $tplQb;
         $qb
-            ->andWhere('DATE(t.begin) BETWEEN :start_date AND :end_date')
+            ->andWhere('DATE(t.date) BETWEEN :start_date AND :end_date')
             ->setParameter('start_date', $startOfWeek, Types::DATETIME_MUTABLE)
             ->setParameter('end_date', $endOfWeek, Types::DATETIME_MUTABLE)
         ;
@@ -633,7 +633,7 @@ class ProjectStatisticService
         // values for the current month
         $qb = clone $tplQb;
         $qb
-            ->andWhere('DATE(t.begin) BETWEEN :start_date AND :end_date')
+            ->andWhere('DATE(t.date) BETWEEN :start_date AND :end_date')
             ->setParameter('start_date', $startMonth, Types::DATETIME_MUTABLE)
             ->setParameter('end_date', $endMonth, Types::DATETIME_MUTABLE)
         ;

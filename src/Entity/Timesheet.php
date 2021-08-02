@@ -30,6 +30,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\Index(columns={"start_time"}),
  *          @ORM\Index(columns={"start_time","end_time"}),
  *          @ORM\Index(columns={"start_time","end_time","user"}),
+ *          @ORM\Index(columns={"date_tz","user"}),
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TimesheetRepository")
@@ -108,6 +109,16 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+    /**
+     * Reflects the date in the users timezone (not in UTC).
+     * This value is automatically set through the begin column and ONLY used in statistic queries.
+     *
+     * @var \DateTimeImmutable
+     *
+     * @ORM\Column(name="date_tz", type="date", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $date;
     /**
      * @var DateTime
      *
@@ -360,6 +371,8 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     {
         $this->begin = $begin;
         $this->timezone = $begin->getTimezone()->getName();
+        // make sure that the original date is always
+        $this->date = \DateTime::createFromFormat('Y-m-d H:i:s', $begin->format('Y-m-d 00:00:00'), new DateTimeZone('UTC'));
 
         return $this;
     }
@@ -588,8 +601,8 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     }
 
     /**
-     * BE WARNED: this method should NOT be used.
-     * It was ONLY introduced for the command "kimai:import-v1".
+     * BE WARNED: this method should NOT be used from outside.
+     * It is reserved for some very rare use-cases.
      *
      * @internal
      * @param string $timezone
