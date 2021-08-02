@@ -10,21 +10,21 @@
 namespace App\Form\Extension;
 
 use App\Entity\User;
-use App\Security\CurrentUser;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 
 final class UserExtension extends AbstractTypeExtension
 {
     /**
-     * @var CurrentUser
+     * @var Security
      */
-    private $user;
+    private $security;
 
-    public function __construct(CurrentUser $user)
+    public function __construct(Security $security)
     {
-        $this->user = $user;
+        $this->security = $security;
     }
 
     public static function getExtendedTypes(): iterable
@@ -37,6 +37,6 @@ final class UserExtension extends AbstractTypeExtension
         $resolver->setDefined(['user']);
         // null needs to be allowed, as there is no user for anonymous forms (like "forgot password" and "registration")
         $resolver->setAllowedTypes('user', [User::class, 'null']);
-        $resolver->setDefault('user', $this->user->getUser());
+        $resolver->setDefault('user', $this->security->getUser());
     }
 }
