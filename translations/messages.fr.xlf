@@ -1208,6 +1208,10 @@
         <source>error.too_many_entries</source>
         <target>La demande n'a pas pu être traitée, trop de résultats ont été trouvés.</target>
       </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Numéro d'équipe</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
