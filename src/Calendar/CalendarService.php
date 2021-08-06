@@ -11,6 +11,7 @@ namespace App\Calendar;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
+use App\Event\CalendarConfigurationEvent;
 use App\Event\CalendarDragAndDropSourceEvent;
 use App\Event\CalendarGoogleSourceEvent;
 use App\Event\RecentActivityEvent;
@@ -98,5 +99,25 @@ final class CalendarService
         }
 
         return new Google($apiKey, $sources);
+    }
+
+    public function getConfiguration(): array
+    {
+        $config = [
+            'dayLimit' => $this->configuration->getCalendarDayLimit(),
+            'showWeekNumbers' => $this->configuration->isCalendarShowWeekNumbers(),
+            'showWeekends' => $this->configuration->isCalendarShowWeekends(),
+            'businessDays' => $this->configuration->getCalendarBusinessDays(),
+            'businessTimeBegin' => $this->configuration->getCalendarBusinessTimeBegin(),
+            'businessTimeEnd' => $this->configuration->getCalendarBusinessTimeEnd(),
+            'slotDuration' => $this->configuration->getCalendarSlotDuration(),
+            'timeframeBegin' => $this->configuration->getCalendarTimeframeBegin(),
+            'timeframeEnd' => $this->configuration->getCalendarTimeframeEnd(),
+            'dragDropAmount' => $this->configuration->getCalendarDragAndDropMaxEntries(),
+        ];
+        $event = new CalendarConfigurationEvent($config);
+        $this->dispatcher->dispatch($event);
+
+        return $event->getConfiguration();
     }
 }

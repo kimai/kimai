@@ -39,18 +39,7 @@ class CalendarController extends AbstractController
         $factory = $this->getDateTimeFactory();
         $defaultStart = $factory->createDateTime($configuration->getTimesheetDefaultBeginTime());
 
-        $config = [
-            'dayLimit' => $configuration->getCalendarDayLimit(),
-            'showWeekNumbers' => $configuration->isCalendarShowWeekNumbers(),
-            'showWeekends' => $configuration->isCalendarShowWeekends(),
-            'businessDays' => $configuration->getCalendarBusinessDays(),
-            'businessTimeBegin' => $configuration->getCalendarBusinessTimeBegin(),
-            'businessTimeEnd' => $configuration->getCalendarBusinessTimeEnd(),
-            'slotDuration' => $configuration->getCalendarSlotDuration(),
-            'timeframeBegin' => $configuration->getCalendarTimeframeBegin(),
-            'timeframeEnd' => $configuration->getCalendarTimeframeEnd(),
-            'dragDropAmount' => $configuration->getCalendarDragAndDropMaxEntries(),
-        ];
+        $config = $this->calendarService->getConfiguration();
 
         $isPunchMode = !$mode->canEditDuration() && !$mode->canEditBegin() && !$mode->canEditEnd();
         $dragAndDrop = [];
