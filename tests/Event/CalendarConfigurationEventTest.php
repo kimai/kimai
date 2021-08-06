@@ -29,7 +29,7 @@ class CalendarConfigurationEventTest extends TestCase
         self::assertSame($configuration, $sut->getConfiguration());
 
         $new_configuration = ['a' => 'new_value'] + $configuration + ['e' => 'should_not_be_set'];
-        $sut->setConfiguration($configuration);
+        $sut->setConfiguration($new_configuration);
 
         unset($new_configuration['e']);
         self::assertSame($new_configuration, $sut->getConfiguration());
