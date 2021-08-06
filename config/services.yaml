@@ -35,8 +35,8 @@ services:
     security.user.provider.chain:
         class: App\Security\KimaiUserProvider
 
-    App\EventSubscriber\RedirectToLocaleSubscriber:
-        arguments: ['@router', '%app_locales%', '%locale%']
+    App\Utils\LanguageService:
+        arguments: ['%app_locales%']
 
     App\Repository\WidgetRepository:
         arguments:
@@ -106,13 +106,6 @@ services:
             - !service { class: PDO, factory: ['@database_connection', 'getWrappedConnection'] }
 
     # ================================================================================
-    # FORMS
-    # ================================================================================
-
-    App\Form\Type\LanguageType:
-        arguments: ['%app_locales%']
-
-    # ================================================================================
     # THEME
     # ================================================================================
 
@@ -152,7 +145,7 @@ services:
     # ================================================================================
 
     App\Ldap\LdapAuthenticationProvider:
-        arguments: ['@App\Security\UserChecker', '', '', '', '@App\Configuration\LdapConfiguration', '%security.authentication.hide_user_not_found%']
+        arguments: ['@App\Security\UserChecker', '', '', '', '@App\Configuration\LdapConfiguration']
 
     # ================================================================================
     # REPOSITORIES

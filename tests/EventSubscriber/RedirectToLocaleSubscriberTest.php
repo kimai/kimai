@@ -10,6 +10,7 @@
 namespace App\Tests\EventSubscriber;
 
 use App\EventSubscriber\RedirectToLocaleSubscriber;
+use App\Utils\LanguageService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -24,7 +25,7 @@ class RedirectToLocaleSubscriberTest extends TestCase
     public function testConstruct()
     {
         $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
-        $sut = new RedirectToLocaleSubscriber($urlGenerator, 'de|en', 'en');
+        $sut = new RedirectToLocaleSubscriber($urlGenerator, new LanguageService('de|en'));
 
         self::assertEquals([KernelEvents::REQUEST => ['onKernelRequest']], RedirectToLocaleSubscriber::getSubscribedEvents());
 
@@ -36,14 +37,5 @@ class RedirectToLocaleSubscriberTest extends TestCase
         $event->expects($this->never())->method('setResponse');
 
         $sut->onKernelRequest($event);
-    }
-
-    public function testConstructWithUnknownDefaultLocale()
-    {
-        $this->expectException(\UnexpectedValueException::class);
-        $this->expectExceptionMessage('The default locale ("en") must be one of "de|it".');
-
-        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
-        $sut = new RedirectToLocaleSubscriber($urlGenerator, 'de|it', 'en');
     }
 }
