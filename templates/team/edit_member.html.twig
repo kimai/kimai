@@ -6,9 +6,5 @@
 {% block page_actions %}{{ actions.team(team, 'edit') }}{% endblock %}
 
 {% block main %}
-    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
-        'title': team.name|default('create'|trans),
-        'form': form,
-        'back': path('admin_team')
-    }) }}
+    {% include 'team/member-form.html.twig' %}
 {% endblock %}

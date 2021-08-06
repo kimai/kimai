@@ -16,7 +16,7 @@
 
         {% set columns = {
             'name': {'class': ''},
-            'teamlead': {'class': ''},
+            'teamlead': {'class': '', 'orderBy': false},
             'user': {'class': 'hidden-xs', 'orderBy': false},
             'actions': {'class': 'actions alwaysVisible'},
         } %}
@@ -30,11 +30,17 @@
                     {{ widgets.label_name(team.name, team.color) }}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'teamlead') }}">
-                    {{ widgets.label_user(team.teamlead) }}
+                    {% for member in team.members %}
+                        {% if member.teamlead %}
+                            {{ widgets.label_user(member.user) }}
+                        {% endif %}
+                    {% endfor %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">
-                    {% for user in team.users %}
-                        {{ widgets.label_user(user) }}&nbsp;
+                    {% for member in team.members %}
+                        {% if not member.teamlead %}
+                            {{ widgets.label_user(member.user) }}
+                        {% endif %}
                     {% endfor %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">

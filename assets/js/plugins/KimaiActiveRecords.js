@@ -48,6 +48,13 @@ export default class KimaiActiveRecords extends KimaiPlugin {
 
     _toggleMenu(hasEntries) {
         this.menu.style.display = hasEntries ? 'inline-block' : 'none';
+        if (!hasEntries) {
+            // make sure that template entries in the menu are removed, otherwise they
+            // might still be shown in the browsers title
+            for (let record of this.menu.querySelectorAll('[data-since]')) {
+                record.dataset['since'] = '';
+            }
+        }
 
         const menuEmpty = document.querySelector(this.selectorEmpty);
         if (menuEmpty !== null) {

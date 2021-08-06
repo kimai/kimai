@@ -46,7 +46,7 @@ class ActivityRepository extends EntityRepository
             return null;
         }
 
-        $loader = new ActivityLoader($this->getEntityManager());
+        $loader = new ActivityLoader($this->getEntityManager(), true);
         $loader->loadResults([$activity]);
 
         return $activity;
@@ -75,7 +75,7 @@ class ActivityRepository extends EntityRepository
 
         $activities = $qb->getQuery()->getResult();
 
-        $loader = new ActivityLoader($qb->getEntityManager());
+        $loader = new ActivityLoader($qb->getEntityManager(), true);
         $loader->loadResults($activities);
 
         return $activities;
@@ -173,7 +173,7 @@ class ActivityRepository extends EntityRepository
         }
 
         if (null !== $user) {
-            $teams = array_merge($teams, $user->getTeams()->toArray());
+            $teams = array_merge($teams, $user->getTeams());
         }
 
         if (empty($teams)) {

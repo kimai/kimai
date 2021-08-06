@@ -54,7 +54,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiDateUtils());
         kimai.registerPlugin(new KimaiFormSelect('.selectpicker'));
         kimai.registerPlugin(new KimaiConfirmationLink('confirmation-link'));
-        kimai.registerPlugin(new KimaiActiveRecordsDuration('[data-since]'));
+        kimai.registerPlugin(new KimaiActiveRecordsDuration());
         kimai.registerPlugin(new KimaiDatatableColumnView('data-column-visibility'));
         kimai.registerPlugin(new KimaiDateRangePicker('input[data-daterangepickerenable="on"]'));
         kimai.registerPlugin(new KimaiDateTimePicker('input[data-datetimepicker="on"]'));

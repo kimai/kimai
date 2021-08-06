@@ -11,9 +11,9 @@ namespace App\Repository;
 
 use App\Entity\Invoice;
 use App\Entity\Role;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Repository\Loader\UserIdLoader;
 use App\Repository\Loader\UserLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
@@ -59,11 +59,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     public function getUserById($id): ?User
     {
         /** @var User|null $user */
-        $user = $this->findOneBy(['id' => $id]);
+        $user = $this->find($id);
 
         if ($user !== null) {
-            $loader = new UserIdLoader($this->getEntityManager());
-            $loader->loadResults([$user->getId()]);
+            $loader = new UserLoader($this->getEntityManager(), true);
+            $loader->loadResults([$user]);
         }
 
         return $user;
@@ -82,11 +82,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return parent::findOneBy($criteria, $orderBy);
     }
 
-    /**
-     * @param null|bool $enabled
-     * @return int
-     */
-    public function countUser($enabled = null)
+    public function countUser(?bool $enabled = null): int
     {
         if (null !== $enabled) {
             return $this->count(['enabled' => (bool) $enabled]);
@@ -135,8 +131,8 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->getOneOrNullResult();
 
         if ($user !== null) {
-            $loader = new UserIdLoader($this->getEntityManager());
-            $loader->loadResults([$user->getId()]);
+            $loader = new UserLoader($this->getEntityManager(), true);
+            $loader->loadResults([$user]);
         }
 
         return $user;
@@ -178,6 +174,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return $qb;
     }
 
+    /**
+     * @param QueryBuilder $qb
+     * @param User|null $user
+     * @param Team[] $teams
+     */
     private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
     {
         // make sure that all queries without a user see all user
@@ -193,23 +194,38 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         $or = $qb->expr()->orX();
 
         // if no explicit team was requested and the user is part of some teams
-        // then find all members of teams where he is teamlead
-        if (null !== $user && $user->hasTeamAssignment()) {
-            $qb->leftJoin('u.teams', 't');
-            $or->add($qb->expr()->eq('t.teamlead', ':teamlead'));
-            $qb->setParameter('teamlead', $user);
+        // then find all members of his teams (where he is teamlead)
+        if (null !== $user && $user->isTeamlead()) {
+            $userIds = [];
+            foreach ($user->getTeams() as $team) {
+                if ($team->isTeamlead($user)) {
+                    foreach ($team->getUsers() as $teamMember) {
+                        $userIds[] = $teamMember->getId();
+                    }
+                }
+            }
+            $userIds = array_unique($userIds);
+            $qb->setParameter('teamMember', $userIds);
+            $or->add($qb->expr()->in('u.id', ':teamMember'));
         }
 
         // if teams where requested, then select all team members
         if (\count($teams) > 0) {
-            $or->add($qb->expr()->isMemberOf(':teams', 'u.teams'));
-            $qb->setParameter('teams', $teams);
+            $userIds = [];
+            foreach ($teams as $team) {
+                foreach ($team->getUsers() as $user) {
+                    $userIds[] = $user->getId();
+                }
+            }
+            $userIds = array_unique($userIds);
+            $qb->setParameter('userIds', $userIds);
+            $or->add($qb->expr()->in('u.id', ':userIds'));
         }
 
         // and make sure, that the user himself is always returned
         if (null !== $user) {
-            $or->add($qb->expr()->eq('u.id', ':user'));
-            $qb->setParameter('user', $user);
+            $or->add($qb->expr()->eq('u.id', ':self'));
+            $qb->setParameter('self', $user);
         }
 
         if ($or->count() > 0) {
@@ -250,6 +266,17 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         ;
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
+
+        if (\count($query->getSearchTeams()) > 0) {
+            $userIds = [];
+            foreach ($query->getSearchTeams() as $team) {
+                foreach ($team->getUsers() as $user) {
+                    $userIds[] = $user->getId();
+                }
+            }
+            $qb->andWhere($qb->expr()->in('u.id', ':searchTeams'));
+            $qb->setParameter('searchTeams', array_unique($userIds));
+        }
 
         if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));

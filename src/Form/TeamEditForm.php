@@ -10,8 +10,10 @@
 namespace App\Form;
 
 use App\Entity\Team;
+use App\Form\Type\TeamMemberType;
 use App\Form\Type\UserType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -41,31 +43,28 @@ class TeamEditForm extends AbstractType
                 ],
         ]);
         $this->addColor($builder);
-        $builder
-            ->add('teamlead', UserType::class, [
-                'label' => 'label.teamlead',
-                'multiple' => false,
-                'expanded' => false,
-                // documentation is for NelmioApiDocBundle
-                'documentation' => [
-                    'type' => 'integer',
-                    'description' => 'User ID for the teamlead',
-                ],
-            ])
-            ->add('users', UserType::class, [
-                'multiple' => true,
-                'expanded' => $options['expand_users'],
-                'by_reference' => false,
-                'documentation' => [
-                    'type' => 'array',
-                    'items' => ['type' => 'integer', 'description' => 'User IDs'],
-                    'title' => 'Team member',
-                    'description' => 'Array of team member IDs',
-                ],
-                // make sure that disabled users show up in the result list
-                'include_users' => (null !== $team && $team->getUsers()->count() > 0 ? $team->getUsers()->toArray() : [])
-            ])
-        ;
+
+        $builder->add('members', CollectionType::class, [
+            'entry_type' => TeamMemberType::class,
+            'entry_options' => [
+                'label' => false,
+            ],
+            'allow_add' => true,
+            'by_reference' => false,
+            'allow_delete' => true,
+            'label' => 'label.user',
+            // FIXME documentation
+        ]);
+
+        $builder->add('users', UserType::class, [
+            'label' => 'add_user.label',
+            'help' => 'team.add_user.help',
+            'mapped' => false,
+            'multiple' => false,
+            'expanded' => false,
+            'required' => false,
+            'ignore_users' => $team !== null ? $team->getUsers() : []
+        ]);
     }
 
     /**
@@ -77,7 +76,6 @@ class TeamEditForm extends AbstractType
             'data_class' => Team::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'expand_users' => true,
             'csrf_token_id' => 'admin_team_edit',
             'attr' => [
                 'data-form-event' => 'kimai.teamUpdate'

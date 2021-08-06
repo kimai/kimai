@@ -11,6 +11,7 @@ namespace App\Tests\Entity;
 
 use App\Constants;
 use App\Entity\Team;
+use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Export\Spreadsheet\ColumnDefinition;
@@ -198,7 +199,11 @@ class UserTest extends TestCase
         self::assertEmpty($sut->getTeams());
         self::assertEmpty($team->getUsers());
 
-        $sut->addTeam($team);
+        $member1 = new TeamMember();
+        $member1->setUser($sut);
+        $member1->setTeam($team);
+
+        $sut->addMembership($member1);
         self::assertCount(1, $sut->getTeams());
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getUsers()[0]);
@@ -218,12 +223,13 @@ class UserTest extends TestCase
         self::assertTrue($sut->isTeamleadOf($team2));
         self::assertTrue($sut->isInTeam($team2));
 
-        $sut->removeTeam(new Team());
         self::assertCount(2, $sut->getTeams());
-        $sut->removeTeam($team);
+        $sut->removeMembership(new TeamMember());
+        self::assertCount(2, $sut->getTeams());
+        $sut->removeMembership($member1);
         self::assertCount(1, $sut->getTeams());
         self::assertTrue($sut->hasTeamAssignment());
-        $sut->removeTeam($team2);
+        $team2->removeUser($sut);
         self::assertCount(0, $sut->getTeams());
         self::assertFalse($sut->hasTeamAssignment());
     }
@@ -241,7 +247,7 @@ class UserTest extends TestCase
         self::assertFalse($sut->isTeamlead());
 
         $sut->addRole(User::ROLE_TEAMLEAD);
-        self::assertTrue($sut->isTeamlead());
+        self::assertTrue($sut->hasTeamleadRole());
         self::assertFalse($sut->canSeeAllData());
 
         $sut->removeRole(User::ROLE_ADMIN);
@@ -256,7 +262,7 @@ class UserTest extends TestCase
         $sut->removeRole(User::ROLE_SUPER_ADMIN);
         self::assertFalse($sut->canSeeAllData());
         self::assertFalse($sut->isSuperAdmin());
-        self::assertTrue($sut->isTeamlead());
+        self::assertTrue($sut->hasTeamleadRole());
 
         $sut->setSuperAdmin(true);
         self::assertTrue($sut->isSuperAdmin());

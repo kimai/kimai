@@ -50,7 +50,7 @@ class UserTeamProjects extends SimpleWidget implements AuthorizedWidget, UserWid
         $now = new \DateTime('now', new \DateTimeZone($user->getTimezone()));
 
         $loader = new TeamLoader($this->entityManager);
-        $loader->loadResults($user->getTeams()->toArray());
+        $loader->loadResults($user->getTeams());
 
         $teamProjects = [];
         $projects = [];

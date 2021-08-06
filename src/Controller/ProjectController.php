@@ -249,7 +249,7 @@ final class ProjectController extends AbstractController
 
         $defaultTeam = new Team();
         $defaultTeam->setName($project->getName());
-        $defaultTeam->setTeamLead($this->getUser());
+        $defaultTeam->addTeamLead($this->getUser());
         $defaultTeam->addProject($project);
 
         try {

@@ -355,7 +355,6 @@ class ProfileControllerTest extends ControllerBaseTest
     public function testTeamsAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $em = $this->getEntityManager();
 
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
@@ -371,7 +370,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
-        $this->assertEquals([], $user->getTeams()->toArray());
+        $this->assertEquals([], $user->getTeams());
 
         $form = $client->getCrawler()->filter('form[name=user_teams]')->form();
         /** @var ChoiceFormField $team */
@@ -386,10 +385,9 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertEquals(1, $user->getTeams()->count());
+        $this->assertCount(1, $user->getTeams());
     }
 
     public function getPreferencesTestData()

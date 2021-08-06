@@ -20,19 +20,13 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class TimesheetIdLoader implements LoaderInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
     private $entityManager;
-    /**
-     * @var bool
-     */
-    private $fullyHydrated = false;
+    private $fullyHydrated;
 
-    public function __construct(EntityManagerInterface $entityManager, bool $hydrateFullTree = false)
+    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
     {
         $this->entityManager = $entityManager;
-        $this->fullyHydrated = $hydrateFullTree;
+        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**

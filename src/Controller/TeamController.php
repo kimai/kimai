@@ -86,25 +86,10 @@ final class TeamController extends AbstractController
      */
     public function duplicateTeam(Team $team, Request $request)
     {
-        $newTeam = new Team();
+        $newTeam = clone $team;
         $newTeam->setName($team->getName() . ' [COPY]');
-        $newTeam->setTeamLead($team->getTeamLead());
-
-        foreach ($team->getUsers() as $user) {
-            $newTeam->addUser($user);
-        }
-        foreach ($team->getCustomers() as $customer) {
-            $newTeam->addCustomer($customer);
-        }
-        foreach ($team->getProjects() as $project) {
-            $newTeam->addProject($project);
-        }
 
         try {
-            // make sure that the teamlead is always part of the team, otherwise permission checks
-            // and filtering might not work as expected!
-            $team->addUser($team->getTeamLead());
-
             $this->repository->saveTeam($newTeam);
             $this->flashSuccess('action.update.success');
 
@@ -140,10 +125,6 @@ final class TeamController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                // make sure that the teamlead is always part of the team, otherwise permission checks
-                // and filtering might not work as expected!
-                $team->addUser($team->getTeamLead());
-
                 $this->repository->saveTeam($team);
                 $this->flashSuccess('action.update.success');
 
@@ -175,22 +156,16 @@ final class TeamController extends AbstractController
             'method' => 'POST',
         ]);
 
-        if ($request->isMethod('POST') && (null !== ($editFormValues = $request->get($editForm->getName())))) {
-            $editForm->submit($editFormValues, true);
+        $editForm->handleRequest($request);
 
-            if ($editForm->isValid()) {
-                try {
-                    // make sure that the teamlead is always part of the team, otherwise permission checks
-                    // and filtering might not work as expected!
-                    $team->addUser($team->getTeamLead());
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            try {
+                $this->repository->saveTeam($team);
+                $this->flashSuccess('action.update.success');
 
-                    $this->repository->saveTeam($team);
-                    $this->flashSuccess('action.update.success');
-
-                    return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                } catch (\Exception $ex) {
-                    $this->flashUpdateException($ex);
-                }
+                return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
+            } catch (\Exception $ex) {
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -198,10 +173,9 @@ final class TeamController extends AbstractController
             $customerForm = $this->createForm(TeamCustomerForm::class, $team, [
                 'method' => 'POST',
             ]);
+            $customerForm->handleRequest($request);
 
-            if ($request->isMethod('POST') && (null !== ($customerFormValues = $request->get($customerForm->getName())))) {
-                $customerForm->submit($customerFormValues, true);
-
+            if ($customerForm->isSubmitted() && $customerForm->isValid()) {
                 if ($customerForm->isValid()) {
                     try {
                         $this->repository->saveTeam($team);
@@ -217,10 +191,9 @@ final class TeamController extends AbstractController
             $projectForm = $this->createForm(TeamProjectForm::class, $team, [
                 'method' => 'POST',
             ]);
+            $projectForm->handleRequest($request);
 
-            if ($request->isMethod('POST') && (null !== ($projectFormValues = $request->get($projectForm->getName())))) {
-                $projectForm->submit($projectFormValues, true);
-
+            if ($projectForm->isSubmitted() && $projectForm->isValid()) {
                 if ($projectForm->isValid()) {
                     try {
                         $this->repository->saveTeam($team);

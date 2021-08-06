@@ -15,12 +15,12 @@ use Doctrine\ORM\EntityManagerInterface;
 final class TimesheetLoader implements LoaderInterface
 {
     private $entityManager;
-    private $hydrateFullTree;
+    private $fullyHydrated;
 
-    public function __construct(EntityManagerInterface $entityManager, bool $hydrateFullTree = false)
+    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
     {
         $this->entityManager = $entityManager;
-        $this->hydrateFullTree = $hydrateFullTree;
+        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
@@ -32,7 +32,7 @@ final class TimesheetLoader implements LoaderInterface
             return $timesheet->getId();
         }, $timesheets);
 
-        $loader = new TimesheetIdLoader($this->entityManager, $this->hydrateFullTree);
+        $loader = new TimesheetIdLoader($this->entityManager, $this->fullyHydrated);
         $loader->loadResults($ids);
     }
 }

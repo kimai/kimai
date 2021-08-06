@@ -511,21 +511,23 @@
         {% endif %}
         <tbody>
         {% for team in teams|sort((a, b) => a.name <=> b.name) %}
-            {% set users = team.users|filter(u => u.enabled) %}
-            {% set userTeamCount = users|length %}
+            {% set members = team.members|filter(m => m.user.enabled) %}
+            {% set userTeamCount = members|length %}
             <tr{% if is_granted('edit', team) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_team_member', {'id': team.id}) }}"{% endif %}>
                 <td>
-                    {{ _self.label_team(team) }}
+                    {{ _self.label_color_dot('color', true, team.name, null, team.color|colorize(team.name)) }}
                 </td>
                 <td class="avatars">
-                    {{ _self.user_avatar(team.teamlead, ('label.teamlead'|trans ~ ': ' ~ team.teamlead.displayName), 'teamlead') }}
                     {% set teamHiddenId = 'team_' ~ team.id ~ '_hiddenUser' ~ random() %}
                     {% set counter = 0  %}
-                    {% for user in users %}
-                        {% if user != team.teamlead %}
+                    {% for member in members|sort((a, b) => a.teamlead < b.teamlead) %}
+                        {% set user = member.user %}
+                        {% if member.teamlead %}
+                            {{ _self.user_avatar(user, ('label.teamlead'|trans ~ ': ' ~ user.displayName), 'teamlead') }}
+                        {% else %}
                             {{ _self.user_avatar(user) }}
-                            {% set counter = counter + 1 %}
                         {% endif %}
+                        {% set counter = counter + 1 %}
                         {% if userTeamCount > (collapseAt + 1) and counter == (collapseAt - 1) and loop.index != userTeamCount %}
                             <a href="#" onclick="$('#{{ teamHiddenId }}').toggleClass('hidden');$(this).hide();return false;" class="badge">{{ 'label.plus_more'|trans({'%count%': (userTeamCount - collapseAt)}) }}</a>
                             <span class="hidden" id="{{ teamHiddenId }}">

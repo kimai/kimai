@@ -48,7 +48,7 @@
         {% endembed %}
     {% endfor %}
 
-    {% if user.teams is not empty and (is_granted('teams', user) or (app.user == user and is_granted('view_team_member'))) %}
+    {% if user.teams is not empty and (is_granted('teams', user) or is_granted('view_team_member', user)) %}
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
             {% import "macros/widgets.html.twig" as widgets %}
             {% block box_title %}{{ 'label.my_teams'|trans }}{% endblock %}

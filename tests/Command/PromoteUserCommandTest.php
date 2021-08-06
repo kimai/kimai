@@ -90,7 +90,7 @@ class PromoteUserCommandTest extends KernelTestCase
         $userRepository = $container->get('doctrine')->getRepository(User::class);
         $user = $userRepository->loadUserByUsername('john_user');
         self::assertInstanceOf(User::class, $user);
-        self::assertTrue($user->isTeamlead());
+        self::assertTrue($user->hasTeamleadRole());
     }
 
     public function testPromoteSuper()

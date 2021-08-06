@@ -18,14 +18,13 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class UserIdLoader implements LoaderInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
     private $entityManager;
+    private $fullyHydrated;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
     {
         $this->entityManager = $entityManager;
+        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
@@ -41,44 +40,44 @@ final class UserIdLoader implements LoaderInterface
 
         $qb = $em->createQueryBuilder();
         /** @var User[] $users */
-        $users = $qb->select('PARTIAL u.{id}', 'teams')
-            ->from(User::class, 'u')
-            ->leftJoin('u.teams', 'teams')
-            ->andWhere($qb->expr()->in('u.id', $ids))
+        $users = $qb->select('PARTIAL user.{id}', 'memberships', 'team')
+            ->from(User::class, 'user')
+            ->leftJoin('user.memberships', 'memberships')
+            ->leftJoin('memberships.team', 'team')
+            ->andWhere($qb->expr()->in('user.id', $ids))
             ->getQuery()
             ->execute();
 
         $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL u.{id}', 'preferences')
-            ->from(User::class, 'u')
-            ->leftJoin('u.preferences', 'preferences')
-            ->andWhere($qb->expr()->in('u.id', $ids))
+        $qb->select('PARTIAL user.{id}', 'preferences')
+            ->from(User::class, 'user')
+            ->leftJoin('user.preferences', 'preferences')
+            ->andWhere($qb->expr()->in('user.id', $ids))
             ->getQuery()
             ->execute();
 
-        $teamIds = [];
-        foreach ($users as $user) {
-            foreach ($user->getTeams() as $team) {
-                $teamIds[] = $team->getId();
+        // do not load team members or leads by default, because they will only be used on detail pages
+        // and there is no benefit in adding multiple queries for most requests when they are only needed in one place
+        if ($this->fullyHydrated) {
+            $teamIds = [];
+            foreach ($users as $user) {
+                foreach ($user->getTeams() as $team) {
+                    $teamIds[] = $team->getId();
+                }
             }
-        }
+            $teamIds = array_unique($teamIds);
 
-        if (\count($teamIds) > 0) {
-            $qb = $em->createQueryBuilder();
-            $qb->select('PARTIAL t.{id}', 'teamlead')
-                ->from(Team::class, 't')
-                ->leftJoin('t.teamlead', 'teamlead')
-                ->andWhere($qb->expr()->in('t.id', $teamIds))
-                ->getQuery()
-                ->execute();
-
-            $qb = $em->createQueryBuilder();
-            $qb->select('PARTIAL t.{id}', 'users')
-                ->from(Team::class, 't')
-                ->leftJoin('t.users', 'users')
-                ->andWhere($qb->expr()->in('t.id', $teamIds))
-                ->getQuery()
-                ->execute();
+            if (\count($teamIds) > 0) {
+                $qb = $em->createQueryBuilder();
+                /** @var Team[] $teams */
+                $teams = $qb->select('PARTIAL team.{id}', 'members', 'user')
+                    ->from(Team::class, 'team')
+                    ->leftJoin('team.members', 'members')
+                    ->leftJoin('members.user', 'user')
+                    ->andWhere($qb->expr()->in('team.id', $teamIds))
+                    ->getQuery()
+                    ->execute();
+            }
         }
     }
 }

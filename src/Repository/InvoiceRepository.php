@@ -127,7 +127,7 @@ class InvoiceRepository extends EntityRepository
         }
 
         if (null !== $user) {
-            $teams = array_merge($teams, $user->getTeams()->toArray());
+            $teams = array_merge($teams, $user->getTeams());
         }
 
         $qb->leftJoin('i.customer', 'c');

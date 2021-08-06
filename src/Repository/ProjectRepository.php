@@ -48,7 +48,7 @@ class ProjectRepository extends EntityRepository
             return null;
         }
 
-        $loader = new ProjectLoader($this->getEntityManager());
+        $loader = new ProjectLoader($this->getEntityManager(), true);
         $loader->loadResults([$project]);
 
         return $project;
@@ -68,7 +68,7 @@ class ProjectRepository extends EntityRepository
 
         $projects = $qb->getQuery()->getResult();
 
-        $loader = new ProjectLoader($qb->getEntityManager());
+        $loader = new ProjectLoader($qb->getEntityManager(), true);
         $loader->loadResults($projects);
 
         return $projects;
@@ -195,7 +195,7 @@ class ProjectRepository extends EntityRepository
         }
 
         if (null !== $user) {
-            $teams = array_merge($teams, $user->getTeams()->toArray());
+            $teams = array_merge($teams, $user->getTeams());
         }
 
         if (empty($teams)) {

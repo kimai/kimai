@@ -227,7 +227,7 @@ final class CustomerController extends AbstractController
 
         $defaultTeam = new Team();
         $defaultTeam->setName($customer->getName());
-        $defaultTeam->setTeamLead($this->getUser());
+        $defaultTeam->addTeamLead($this->getUser());
         $defaultTeam->addCustomer($customer);
 
         try {

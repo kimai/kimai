@@ -79,13 +79,13 @@ class TeamControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
 
         $this->assertEquals('', $form->get('team_edit_form[name]')->getValue());
-        $this->assertEquals('5', $form->get('team_edit_form[teamlead]')->getValue());
 
-        $client->submit($form, [
-            'team_edit_form' => [
-                'name' => 'Test Team' . uniqid(),
-            ]
-        ]);
+        $values = $form->getPhpValues();
+        $values['team_edit_form']['name'] = 'Test Team' . uniqid();
+        $values['team_edit_form']['members'][0]['user'] = 5;
+        $values['team_edit_form']['members'][0]['teamlead'] = 1;
+        $client->request($form->getMethod(), $form->getUri(), $values, $form->getPhpFiles());
+
         $this->assertIsRedirect($client, '/edit');
         $client->followRedirect();
         $this->assertHasFlashSuccess($client);
@@ -105,14 +105,13 @@ class TeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(2);
         $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/teams/1/edit');
         $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
-        $this->assertNotEmpty($form->get('team_edit_form[name]')->getValue());
+
         $client->submit($form, [
             'team_edit_form' => [
                 'name' => 'Test Team 2'
@@ -135,7 +134,6 @@ class TeamControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/teams/1/edit_member');
         $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
-        $this->assertNotEmpty($form->get('team_edit_form[name]')->getValue());
         $client->submit($form, [
             'team_edit_form' => [
                 'name' => 'Test Team 2'

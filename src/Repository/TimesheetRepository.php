@@ -765,7 +765,7 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (null !== $user) {
-            $teams = array_merge($teams, $user->getTeams()->toArray());
+            $teams = array_merge($teams, $user->getTeams());
         }
 
         if (empty($teams)) {

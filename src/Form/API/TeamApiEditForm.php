@@ -18,6 +18,7 @@ class TeamApiEditForm extends TeamEditForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
+        $builder->remove('users');
     }
 
     /**
@@ -28,7 +29,6 @@ class TeamApiEditForm extends TeamEditForm
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'expand_users' => false,
             'csrf_protection' => false,
         ]);
     }

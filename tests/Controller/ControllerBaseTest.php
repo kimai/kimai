@@ -364,11 +364,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasFlashSuccess(HttpKernelBrowser $client, string $message = null)
     {
-        $content = $client->getResponse()->getContent();
-        self::assertStringContainsString('ALERT.success(\'', $content, 'Could not find flash success message');
-        if (null !== $message) {
-            self::assertStringContainsString($message, $content);
-        }
+        $this->assertHasFlashMessage($client, 'success', $message);
     }
 
     /**
@@ -377,9 +373,17 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasFlashError(HttpKernelBrowser $client, string $message = null)
     {
+        $this->assertHasFlashMessage($client, 'error', $message);
+    }
+
+    private function assertHasFlashMessage(HttpKernelBrowser $client, string $type, string $message = null)
+    {
         $content = $client->getResponse()->getContent();
-        self::assertStringContainsString('ALERT.error(\'', $content, 'Could not find flash error message');
+        self::assertStringContainsString('ALERT.' . $type . '(\'', $content, 'Could not find flash ' . $type . ' message');
         if (null !== $message) {
+            // this is a lazy workaround, the templates use the javascript escape filter: |e('js')
+            // if you ever want to test more complex strings, this logic has to be enhanced
+            $message = str_replace([' ', ':'], ['\u0020', '\u003A'], $message);
             self::assertStringContainsString($message, $content);
         }
     }

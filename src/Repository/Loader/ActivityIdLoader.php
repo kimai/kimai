@@ -10,7 +10,9 @@
 namespace App\Repository\Loader;
 
 use App\Entity\Activity;
+use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Team;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -18,14 +20,13 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class ActivityIdLoader implements LoaderInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
     private $entityManager;
+    private $fullyHydrated;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
     {
         $this->entityManager = $entityManager;
+        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
@@ -40,6 +41,7 @@ final class ActivityIdLoader implements LoaderInterface
         $em = $this->entityManager;
 
         $qb = $em->createQueryBuilder();
+        /** @var Activity[] $activities */
         $activities = $qb->select('PARTIAL a.{id}', 'project')
             ->from(Activity::class, 'a')
             ->leftJoin('a.project', 'project')
@@ -58,51 +60,76 @@ final class ActivityIdLoader implements LoaderInterface
 
         // global activities don't have projects
         if (!empty($activities)) {
-            $projectIds = array_map(function (Activity $activity) {
+            $projectIds = array_unique(array_map(function (Activity $activity) {
                 if (null === $activity->getProject()) {
                     return null;
                 }
 
                 return $activity->getProject()->getId();
-            }, $activities);
+            }, $activities));
 
             $qb = $em->createQueryBuilder();
-            $qb->select('PARTIAL p.{id}', 'customer')
-                ->from(Project::class, 'p')
-                ->leftJoin('p.customer', 'customer')
-                ->andWhere($qb->expr()->in('p.id', $projectIds))
-                ->getQuery()
-                ->execute();
-
-            $qb = $em->createQueryBuilder();
-            $qb->select('PARTIAL a.{id}', 'PARTIAL project.{id}', 'teams', 'teamlead')
-                ->from(Activity::class, 'a')
-                ->leftJoin('a.project', 'project')
-                ->leftJoin('project.teams', 'teams')
-                ->leftJoin('teams.teamlead', 'teamlead')
-                ->andWhere($qb->expr()->in('a.id', $ids))
-                ->getQuery()
-                ->execute();
-
-            $qb = $em->createQueryBuilder();
-            $qb->select('PARTIAL a.{id}', 'PARTIAL project.{id}', 'PARTIAL customer.{id}', 'teams', 'teamlead')
-                ->from(Activity::class, 'a')
-                ->leftJoin('a.project', 'project')
+            $qb->select('PARTIAL project.{id}', 'customer')
+                ->from(Project::class, 'project')
                 ->leftJoin('project.customer', 'customer')
+                ->andWhere($qb->expr()->in('project.id', $projectIds))
+                ->getQuery()
+                ->execute();
+
+            $customerIds = array_unique(array_map(function (Activity $activity) {
+                if (null === $activity->getProject()) {
+                    return null;
+                }
+
+                return $activity->getProject()->getCustomer()->getId();
+            }, $activities));
+
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL project.{id}', 'teams')
+                ->from(Project::class, 'project')
+                ->leftJoin('project.teams', 'teams')
+                ->andWhere($qb->expr()->in('project.id', $projectIds))
+                ->getQuery()
+                ->execute();
+
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL customer.{id}', 'teams')
+                ->from(Customer::class, 'customer')
                 ->leftJoin('customer.teams', 'teams')
-                ->leftJoin('teams.teamlead', 'teamlead')
-                ->andWhere($qb->expr()->in('a.id', $ids))
+                ->andWhere($qb->expr()->in('customer.id', $customerIds))
                 ->getQuery()
                 ->execute();
         }
 
         $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL a.{id}', 'teams', 'teamlead')
+        $qb->select('PARTIAL a.{id}', 'teams')
             ->from(Activity::class, 'a')
             ->leftJoin('a.teams', 'teams')
-            ->leftJoin('teams.teamlead', 'teamlead')
             ->andWhere($qb->expr()->in('a.id', $ids))
             ->getQuery()
             ->execute();
+
+        // do not load team members or leads by default, because they will only be used on detail pages
+        // and there is no benefit in adding multiple queries for most requests when they are only needed in one place
+        if ($this->fullyHydrated) {
+            $teamIds = [];
+            foreach ($activities as $activity) {
+                foreach ($activity->getTeams() as $team) {
+                    $teamIds[] = $team->getId();
+                }
+            }
+            $teamIds = array_unique($teamIds);
+
+            if (\count($teamIds) > 0) {
+                $qb = $em->createQueryBuilder();
+                $qb->select('PARTIAL team.{id}', 'members', 'user')
+                    ->from(Team::class, 'team')
+                    ->leftJoin('team.members', 'members')
+                    ->leftJoin('members.user', 'user')
+                    ->andWhere($qb->expr()->in('team.id', $teamIds))
+                    ->getQuery()
+                    ->execute();
+            }
+        }
     }
 }

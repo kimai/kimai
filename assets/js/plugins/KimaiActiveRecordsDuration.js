@@ -9,15 +9,9 @@
  * [KIMAI] KimaiActiveRecordsDuration: activate the updates for all active timesheet records on this page
  */
 
-import moment from 'moment';
 import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiActiveRecordsDuration extends KimaiPlugin {
-
-    constructor(selector) {
-        super();
-        this.selector = selector;
-    }
 
     getId() {
         return 'timesheet-duration';
@@ -39,7 +33,7 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
 
     updateRecords() {
         let durations = [];
-        const activeRecords = document.querySelectorAll(this.selector);
+        const activeRecords = document.querySelectorAll('[data-since]:not([data-since=""])');
 
         if (activeRecords.length === 0) {
             if (this.updateBrowserTitle) {
@@ -48,12 +42,16 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
             return;
         }
 
-        for(let record of activeRecords) {
-            const since = record.getAttribute('data-since');
-            const duration = this.formatDuration(since);
-            if (record.getAttribute('data-title') !== null && duration !== '?') {
+        const DATE = this.getPlugin('date');
+
+        for (let record of activeRecords) {
+            const since = record.dataset['since'];
+            const duration = DATE.formatDuration(since);
+            // only use the ones from the menu for the title
+            if (record.dataset['replacer'] !== undefined && record.dataset['title'] !== null && duration !== '?') {
                 durations.push(duration);
             }
+            // but update all on the page (running entries in list pages)
             record.textContent = duration;
         }
 
@@ -72,9 +70,5 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
             title += prefix + duration;
         }
         document.title = title;
-    }
-
-    formatDuration(since) {
-        return this.getPlugin('date').formatDuration(since);
     }
 }

@@ -47,7 +47,7 @@ class CustomerRepository extends EntityRepository
             return null;
         }
 
-        $loader = new CustomerLoader($this->getEntityManager());
+        $loader = new CustomerLoader($this->getEntityManager(), true);
         $loader->loadResults([$customer]);
 
         return $customer;
@@ -168,7 +168,7 @@ class CustomerRepository extends EntityRepository
         }
 
         if (null !== $user) {
-            $teams = array_merge($teams, $user->getTeams()->toArray());
+            $teams = array_merge($teams, $user->getTeams());
         }
 
         if (empty($teams)) {

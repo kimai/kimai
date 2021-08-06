@@ -1873,20 +1873,20 @@ final class KimaiImporterCommand extends Command
             $team->addUser($user);
 
             // first user in the team will become team lead
-            if ($team->getTeamLead() == null) {
-                $team->setTeamLead($user);
+            if (!$team->hasTeamleads()) {
+                $team->addTeamLead($user);
             }
 
             // any other user with admin role in the team will become team lead
             // should be the last added admin of the source group
             if ($row['membershipRoleID'] === 1) {
-                $team->setTeamLead($user);
+                $team->addTeamLead($user);
             }
         }
 
         // if team has no users it will not be persisted
         foreach ($newTeams as $oldId => $team) {
-            if ($team->getTeamLead() === null) {
+            if (!$team->hasUsers()) {
                 $io->warning(sprintf('Didn\'t import team: %s because it has no users.', $team->getName()));
                 ++$skippedEmpty;
                 unset($newTeams[$oldId]);
@@ -1998,7 +1998,7 @@ final class KimaiImporterCommand extends Command
         $team->setName($name);
         $teamlead = $users[array_key_first($users)];
         $teamlead = $this->getCachedUser($teamlead['userID']);
-        $team->setTeamLead($teamlead);
+        $team->addTeamLead($teamlead);
         foreach ($users as $oldUser) {
             $team->addUser($this->getCachedUser($oldUser['userID']));
             foreach ($activities as $oldActivity) {

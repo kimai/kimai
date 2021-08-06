@@ -265,7 +265,7 @@ final class ActivityController extends AbstractController
 
         $defaultTeam = new Team();
         $defaultTeam->setName($activity->getName());
-        $defaultTeam->setTeamLead($this->getUser());
+        $defaultTeam->addTeamLead($this->getUser());
         $defaultTeam->addActivity($activity);
 
         try {

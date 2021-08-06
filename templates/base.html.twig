@@ -23,13 +23,13 @@
                 {% for type, messages in app.session.flashbag.all %}
                     {% for message in messages %}
                         {% if type == 'error' %}
-                            ALERT.error('{{ message|trans({}, domain) }}');
+                            ALERT.error('{{ message|trans({}, domain)|e('js') }}');
                         {% elseif type == 'warning' %}
-                            ALERT.warning('{{ message|trans({}, domain) }}');
+                            ALERT.warning('{{ message|trans({}, domain)|e('js') }}');
                         {% elseif type == 'success' %}
-                            ALERT.success('{{ message|trans({}, domain) }}');
+                            ALERT.success('{{ message|trans({}, domain)|e('js') }}');
                         {% else %}
-                            ALERT.info('{{ message|trans({}, domain) }}');
+                            ALERT.info('{{ message|trans({}, domain)|e('js') }}');
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
@@ -123,7 +123,7 @@
             {% set hasActiveRecords = active_timesheets is not empty %}
             {% if not hasActiveRecords %}
                 {# fake entry, because at least one html template node is needed #}
-                {% set active_timesheets = [{'id': '000', 'begin': create_date('now'), 'activity': {'name': ''}, 'project': {'name': '', 'customer': {'name': ''}}}] %}
+                {% set active_timesheets = [{'id': '000', 'begin': null, 'activity': {'name': ''}, 'project': {'name': '', 'customer': {'name': ''}}}] %}
             {% endif %}
             {% set active_limit = kimai_config.timesheetActiveEntriesHardLimit %}
             <li class="messages-menu {% if active_limit > 1 and hasActiveRecords %}dropdown{% endif %}" data-api="{{ path('active_timesheet') }}" data-href="{{ path('stop_timesheet', {'id' : '000'}) }}" data-icon="{{ 'stop-small'|icon }}" style="{% if not hasActiveRecords %}display:none{% endif %}">
@@ -132,7 +132,7 @@
                     <div class="ddt-small ticktac-single ticktac-running">
                         <div class="ticktac-stop">
                             <a data-replacer="url" class="api-link" href="{{ path('stop_timesheet', {'id' : entry.id}) }}" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
-                                <i class="{{ 'stop-small'|icon }} fa-2x"></i><span data-replacer="duration" data-title="true" data-since="{{ entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</span>
+                                <i class="{{ 'stop-small'|icon }} fa-2x"></i><span data-replacer="duration" data-title="true" data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</span>
                             </a>
                         </div>
                     </div>
@@ -156,7 +156,7 @@
                                             <h4>
                                                 <span data-replacer="activity">{{ entry.activity.name }}</span>
                                                 <small>
-                                                    <span data-replacer="duration" data-title="true" data-since="{{ entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</span>
+                                                    <span data-replacer="duration" data-title="true" data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</span>
                                                 </small>
                                             </h4>
                                             <p><span data-replacer="project">{{ entry.project.name }}</span> (<span data-replacer="customer">{{ entry.project.customer.name }}</span>)</p>
