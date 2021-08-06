@@ -12,7 +12,7 @@ namespace App\Model\Statistic;
 use App\Model\TimesheetCountedStatistic;
 
 /**
- * @final
+ * @internal
  */
 class BudgetStatistic extends TimesheetCountedStatistic
 {
