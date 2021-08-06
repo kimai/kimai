@@ -14,7 +14,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 class CalendarConfigurationEvent extends Event
 {
     /**
-     * @var array
+     * @var array<string, string|int|bool|array>
      */
     private $configuration;
 
@@ -30,6 +30,10 @@ class CalendarConfigurationEvent extends Event
 
     public function setConfiguration(array $configuration)
     {
-        $this->configuration = $configuration;
+        foreach ($configuration as $key => $value) {
+            if (array_key_exists($key, $this->configuration)) {
+                $this->configuration[$key] = $value;
+            }
+        }
     }
 }
