@@ -156,6 +156,9 @@ class ServiceInvoiceTest extends TestCase
         self::assertEquals([], $items);
     }
 
+    /**
+     * @group legacy
+     */
     public function testFindInvoiceItemsWithCustomer()
     {
         $sut = $this->getSut([]);

@@ -240,7 +240,6 @@ class SystemConfigurationTest extends TestCase
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
         $this->assertEquals(99, $sut->getTimesheetActiveEntriesHardLimit());
-        $this->assertEquals(99, $sut->getTimesheetActiveEntriesSoftLimit());
         $this->assertFalse($sut->isTimesheetAllowFutureTimes());
         $this->assertFalse($sut->isTimesheetMarkdownEnabled());
         $this->assertEquals('duration_only', $sut->getTimesheetTrackingMode());
@@ -260,11 +259,19 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(5, $sut->getTimesheetIncrementEnd());
     }
 
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedSettingsWithoutLoader()
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        $this->assertEquals(99, $sut->getTimesheetActiveEntriesSoftLimit());
+    }
+
     public function testTimesheetWithLoader()
     {
         $sut = $this->getSut($this->getDefaultSettings(), $this->getDefaultLoaderSettings());
         $this->assertEquals(7, $sut->getTimesheetActiveEntriesHardLimit());
-        $this->assertEquals(7, $sut->getTimesheetActiveEntriesSoftLimit());
         $this->assertTrue($sut->isTimesheetAllowFutureTimes());
         $this->assertTrue($sut->isTimesheetMarkdownEnabled());
         $this->assertEquals('default', $sut->getTimesheetTrackingMode());
