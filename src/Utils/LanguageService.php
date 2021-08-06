@@ -31,7 +31,7 @@ final class LanguageService
         if (!\is_array($this->locales)) {
             // no further checks, because the list of languages is hard coded and we can be sure that
             // it is well formatted and contains the default langauge english
-            $this->locales = array_unique(explode('|', trim(strtolower($this->locales))));
+            $this->locales = array_unique(explode('|', trim($this->locales)));
         }
 
         return $this->locales;

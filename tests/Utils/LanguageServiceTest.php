@@ -39,12 +39,13 @@ class LanguageServiceTest extends TestCase
 
     public function testMultipleLanguages()
     {
-        $sut = new LanguageService('de|it|fr|ru|hu|en');
+        $sut = new LanguageService('de|it|fr|de_CH|ru|hu|en|zh_CN');
         self::assertTrue($sut->isKnownLanguage('de'));
         self::assertTrue($sut->isKnownLanguage('en'));
         self::assertTrue($sut->isKnownLanguage('en'));
         self::assertFalse($sut->isKnownLanguage('xx'));
         self::assertEquals('en', $sut->getDefaultLanguage());
-        self::assertEquals(['de', 'it', 'fr', 'ru', 'hu', 'en'], $sut->getAllLanguages());
+        // casing is important for locales!
+        self::assertEquals(['de', 'it', 'fr', 'de_CH', 'ru', 'hu', 'en', 'zh_CN'], $sut->getAllLanguages());
     }
 }
