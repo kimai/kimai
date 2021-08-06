@@ -9,6 +9,8 @@
 
 namespace App\Repository\Query;
 
+use App\Entity\Team;
+
 /**
  * Can be used for advanced queries with the: UserRepository
  */
