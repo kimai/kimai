@@ -43,7 +43,6 @@ class ActivityRateForm extends AbstractRateForm
             'data_class' => ActivityRate::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'expand_users' => true,
             'csrf_token_id' => 'admin_customer_rate_edit',
             'attr' => [
                 'data-form-event' => 'kimai.activityUpdate'

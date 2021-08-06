@@ -263,6 +263,7 @@ final class ServiceInvoice
     /**
      * @param InvoiceQuery $query
      * @return InvoiceItemInterface[]
+     * @deprecated since 1.14 and will be removed with 2.0
      */
     public function findInvoiceItems(InvoiceQuery $query): array
     {
