@@ -1076,7 +1076,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Сборы не были настроены.</target>
+        <target>Почасовая оплата пока не настроена.</target>
       </trans-unit>
       <trans-unit id="modal.dirty">
         <source>modal.dirty</source>
@@ -1112,7 +1112,7 @@
       </trans-unit>
       <trans-unit id="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Пропущен предварительный просмотр %rows% строк ...</target>
+        <target>Пропущен предварительный просмотр %rows% строк …</target>
       </trans-unit>
       <trans-unit id="invoice.payment_date">
         <source>invoice.payment_date</source>
@@ -1181,6 +1181,26 @@
       <trans-unit id="label.asc">
         <source>label.asc</source>
         <target>По возрастанию</target>
+      </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Номер сотрудника</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Доходы</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Время работы</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>Запрос не может быть обработан, найдено слишком много результатов.</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Сохранить настройки как избранные при поиске</target>
       </trans-unit>
     </body>
   </file>
