@@ -35,6 +35,11 @@ final class LanguageService
         return $this->locales;
     }
 
+    public function isKnownLanguage(string $language): bool
+    {
+        return \in_array($language, $this->getAllLanguages());
+    }
+
     public function getDefaultLanguage(): string
     {
         return Constants::DEFAULT_LOCALE;
