@@ -255,7 +255,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @ORM\Column(name="exported", type="boolean", nullable=false)
+     * @ORM\Column(name="exported", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
     private $exported = false;
