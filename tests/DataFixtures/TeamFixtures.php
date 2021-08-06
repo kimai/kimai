@@ -11,6 +11,7 @@ namespace App\Tests\DataFixtures;
 
 use App\Entity\Customer;
 use App\Entity\Team;
+use App\Entity\TeamMember;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 
@@ -106,10 +107,14 @@ final class TeamFixtures implements TestFixture
                 }
             }
 
+            $member = new TeamMember();
+            $member->setUser($lead);
+            $member->setTeamlead(true);
+
             $team = new Team();
             $team
                 ->setName('Testing: ' . uniqid())
-                ->addTeamLead($lead)
+                ->addMember($member)
             ;
 
             if ($this->addUser) {
