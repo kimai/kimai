@@ -529,7 +529,7 @@
                         {% endif %}
                         {% set counter = counter + 1 %}
                         {% if userTeamCount > (collapseAt + 1) and counter == (collapseAt - 1) and loop.index != userTeamCount %}
-                            <a href="#" onclick="$('#{{ teamHiddenId }}').toggleClass('hidden');$(this).hide();return false;" class="badge">{{ 'label.plus_more'|trans({'%count%': (userTeamCount - collapseAt)}) }}</a>
+                            <a href="#" onclick="$(this).parent().append($('#{{ teamHiddenId }}').contents());$('#{{ teamHiddenId }}').remove();$(this).remove();return false;" class="badge">{{ 'label.plus_more'|trans({'%count%': (userTeamCount - collapseAt)}) }}</a>
                             <span class="hidden" id="{{ teamHiddenId }}">
                             {% set counter = counter + 1 %}
                         {% endif %}
