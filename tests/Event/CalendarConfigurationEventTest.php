@@ -9,27 +9,29 @@
 
 namespace App\Tests\Event;
 
-use App\Calendar\GoogleSource;
-use App\Entity\User;
-use App\Event\CalendarGoogleSourceEvent;
+use App\Event\CalendarConfigurationEvent;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Event\CalendarGoogleSourceEvent
+ * @covers \App\Event\CalendarConfigurationEvent
  */
-class CalendarGoogleSourceEventTest extends TestCase
+class CalendarConfigurationEventTest extends TestCase
 {
     public function testGetterAndSetter()
     {
-        $user = new User();
-        $user->setAlias('foo');
+        $configuration = [
+          'a' => 'b',
+          'c' => 1,
+          'd' => false,
+        ];
+        $sut = new CalendarConfigurationEvent($configuration);
 
-        $sut = new CalendarGoogleSourceEvent($user);
+        self::assertSame($configuration, $sut->getConfiguration());
 
-        self::assertSame($user, $sut->getUser());
-        self::assertIsArray($sut->getSources());
-        self::assertEmpty($sut->getSources());
-        self::assertInstanceOf(CalendarGoogleSourceEvent::class, $sut->addSource(new GoogleSource('', '')));
-        self::assertCount(1, $sut->getSources());
+        $new_configuration = ['a' => 'new_value'] + $configuration + ['e' => 'should_not_be_set'];
+        $sut->setConfiguration($configuration);
+
+        unset($new_configuration['e']);
+        self::assertSame($new_configuration, $sut->getConfiguration());
     }
 }
