@@ -223,9 +223,10 @@ class Team
      */
     public function getTeamLead(): ?User
     {
-        $leads = $this->getTeamLeads();
-        if (\count($leads) > 0) {
-            return array_shift($leads);
+        foreach ($this->members as $member) {
+            if ($member->isTeamlead()) {
+                return $member->getUser();
+            }
         }
 
         return null;
