@@ -31,7 +31,7 @@ class CalendarConfigurationEvent extends Event
     public function setConfiguration(array $configuration)
     {
         foreach ($configuration as $key => $value) {
-            if (array_key_exists($key, $this->configuration)) {
+            if (\array_key_exists($key, $this->configuration)) {
                 $this->configuration[$key] = $value;
             }
         }
