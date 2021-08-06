@@ -9,6 +9,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Utils\LanguageService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -25,48 +26,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class RedirectToLocaleSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var UrlGeneratorInterface
-     */
     private $urlGenerator;
+    private $languageService;
 
-    /**
-     * List of supported locales.
-     *
-     * @var string[]
-     */
-    private $locales = [];
-
-    /**
-     * @var string
-     */
-    private $defaultLocale = '';
-
-    /**
-     * Constructor.
-     *
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param string $locales Supported locales separated by '|'
-     * @param string|null $defaultLocale
-     */
-    public function __construct(UrlGeneratorInterface $urlGenerator, $locales, $defaultLocale = null)
+    public function __construct(UrlGeneratorInterface $urlGenerator, LanguageService $languageService)
     {
         $this->urlGenerator = $urlGenerator;
-
-        $this->locales = explode('|', trim($locales));
-        $this->defaultLocale = $defaultLocale ?: $this->locales[0];
-
-        if (!\in_array($this->defaultLocale, $this->locales)) {
-            throw new \UnexpectedValueException(
-                sprintf('The default locale ("%s") must be one of "%s".', $this->defaultLocale, $locales)
-            );
-        }
-
-        // Add the default locale at the first position of the array,
-        // because Symfony\HttpFoundation\Request::getPreferredLanguage
-        // returns the first element when no an appropriate language is found
-        array_unshift($this->locales, $this->defaultLocale);
-        $this->locales = array_unique($this->locales);
+        $this->languageService = $languageService;
     }
 
     public static function getSubscribedEvents(): array
@@ -84,13 +50,20 @@ class RedirectToLocaleSubscriber implements EventSubscriberInterface
         if ('/' !== $request->getPathInfo()) {
             return;
         }
+
         // Ignore requests from referrers with the same HTTP host in order to prevent
         // changing language for users who possibly already selected it for this application.
         if (0 === stripos($request->headers->get('referer'), $request->getSchemeAndHttpHost())) {
             return;
         }
 
-        $preferredLanguage = $request->getPreferredLanguage($this->locales);
+        $allLanguages = $this->languageService->getAllLanguages();
+
+        // Add the default locale at the first position of the array, because getPreferredLanguage()
+        // returns the first element when no appropriate language is found
+        array_unshift($allLanguages, $this->languageService->getDefaultLanguage());
+
+        $preferredLanguage = $request->getPreferredLanguage(array_unique($allLanguages));
 
         $response = new RedirectResponse($this->urlGenerator->generate('homepage', ['_locale' => $preferredLanguage]));
         $event->setResponse($response);
