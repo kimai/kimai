@@ -9,7 +9,6 @@
 
 namespace App\Form\Type;
 
-use App\Utils\MomentFormatConverter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormInterface;
@@ -48,7 +47,6 @@ final class MonthPickerType extends AbstractType
         $view->vars['month'] = $date;
         $view->vars['previousMonth'] = (clone $date)->modify('-1 month');
         $view->vars['nextMonth'] = (clone $date)->modify('+1 month');
-        $view->vars['momentFormat'] = (new MomentFormatConverter())->convert($options['format']);
     }
 
     /**

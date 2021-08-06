@@ -10,14 +10,17 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.15](https://github.com/kevinpapst/kimai2/releases/tag/1.15)
 
+Updating the database might take quite a while, depending on the amount of timesheet entries and speed of your database server (~1 minute per 100k records).
+
 **ATTENTION** 
 - This release bumps the minimum required [PHP version to 7.3](https://www.kimai.org/blog/2021/php8-support-php72-dropped/)
 - Self-registration is disabled by default
 - Self-registration now always requires email confirmation
 - All plugins that use own databases need to be updated as well
+- Removed the YearChart widget and the related configs named `userRecapThisYear`, `userRecapLastYear`, `userRecapTwoYears`, `userRecapThreeYears`
 
 **LDAP & SAML**
-- SAML users need to activate it by setting the new `kimai.saml.activate: true` config
+- SAML users need to activate SAML by setting the new `kimai.saml.activate: true` config key
 - LDAP and SAML users need to remove the complete `security` section from their `local.yaml`
 - Please verify your config with the [LDAP](https://www.kimai.org/documentation/ldap.html) and [SAML](https://www.kimai.org/documentation/saml.html) documentation
 
@@ -25,7 +28,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 PHP 8 compatibility forced to upgrade MANY libraries, including but not limited to:
 
 - Removed FOSUserBundle and hslavich/oneloginsaml
-- Doctrine Migrations, whose new major version forces the plugin updates 
+- Doctrine Migrations, whose new major version forces plugin updates 
 - Gedmo v3 (which include BC breaks in definitions)
 - Doctrine DBAL and others, which required PHP 7.3 as well
 

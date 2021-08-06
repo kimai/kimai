@@ -30,6 +30,10 @@
                 <source>report_project_details</source>
                 <target>Projektdetails</target>
             </trans-unit>
+            <trans-unit id="report_project_daterange">
+                <source>report_project_daterange</source>
+                <target>Monatsauswertung</target>
+            </trans-unit>
             <trans-unit id="report_inactive_project">
                 <source>report_inactive_project</source>
                 <target>Inaktive Projekte</target>

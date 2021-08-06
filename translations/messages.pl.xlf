@@ -509,13 +509,6 @@
         <source>admin_project.title</source>
         <target>Projekty</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-                    Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activities% czynności
-                    oraz  %records% wpisów czasu, które sumują się do łącznej długości %duration% .
-                </target>
-      </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
         <target>Start projektu</target>
@@ -530,13 +523,6 @@
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Czynności</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-                    Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activity% czynności
-                    oraz  %records% wpisów czasu, które sumują się do łącznej długości %duration% .		
-		 </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -593,13 +579,6 @@
         <source>label.currency</source>
         <target>Waluta</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>
-                    Obecnie istniejące %project% projekty dla klienta %customer% mających zarejestrowanych %activity% czynności
-                    oraz  %records% wpisów czasu, które sumują się do łącznej długości %duration% .
-                </target>
-      </trans-unit>
       <!--
               Admin: Users
             -->
@@ -626,12 +605,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Rola</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                    Obecnie użytkownik %user% ma  %records% wpisów czasu które sumują się do łacznej długości %duration% .
-                </target>
       </trans-unit>
       <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>

@@ -43,6 +43,7 @@ final class ProjectDetailsController extends AbstractController
         }
 
         return $this->render('reporting/project_details.html.twig', [
+            'project' => $query->getProject(),
             'project_view' => $projectView,
             'project_details' => $projectDetails,
             'form' => $form->createView(),

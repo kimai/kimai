@@ -28,7 +28,6 @@ use App\Repository\Query\TimesheetQuery;
 use DateInterval;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -46,8 +45,17 @@ class TimesheetRepository extends EntityRepository
     public const STATS_QUERY_USER = 'users';
     public const STATS_QUERY_AMOUNT = 'amount';
     public const STATS_QUERY_ACTIVE = 'active';
+    /**
+     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
+     */
     public const STATS_QUERY_MONTHLY = 'monthly';
 
+    /**
+     * Fetches the raw data of an timesheet, to allow comparison eg. of submitted and previously stored data.
+     *
+     * @param Timesheet $id
+     * @return array
+     */
     public function getRawData(Timesheet $id): array
     {
         $qb = $this->createQueryBuilder('t');
@@ -56,17 +64,18 @@ class TimesheetRepository extends EntityRepository
                 't.rate',
                 't.duration',
                 't.hourlyRate',
+                't.billable',
                 'IDENTITY(p.customer) as customer',
                 'IDENTITY(t.project) as project',
                 'IDENTITY(t.activity) as activity',
                 'IDENTITY(t.user) as user'
             ])
             ->leftJoin(Project::class, 'p', Join::WITH, 'p.id = t.project')
-            ->andWhere('t.id = :id')
+            ->andWhere($qb->expr()->eq('t.id', ':id'))
             ->setParameter('id', $id)
         ;
 
-        return $qb->getQuery()->getSingleResult(AbstractQuery::HYDRATE_ARRAY);
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
@@ -124,6 +133,7 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
+     * @codeCoverageIgnore
      */
     public function add(Timesheet $timesheet, int $maxRunningEntries)
     {
@@ -194,13 +204,15 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
+     * @codeCoverageIgnore
+     *
      * @param Timesheet $entry
      * @param bool $flush
      * @return bool
      * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
      */
     public function stopRecording(Timesheet $entry, bool $flush = true)
     {
@@ -264,39 +276,26 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param string $select
-     * @param User $user
-     * @return int
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    protected function queryThisMonth($select, User $user)
-    {
-        try {
-            $timezone = new \DateTimeZone($user->getTimezone());
-            $begin = new DateTime('first day of this month 00:00:00', $timezone);
-            $end = new DateTime('last day of this month 23:59:59', $timezone);
-
-            return $this->queryTimeRange($select, $begin, $end, $user);
-        } catch (\Exception $ex) {
-        }
-
-        return 0;
-    }
-
-    /**
-     * @param string $select
+     * @param string|string[] $select
      * @param DateTime|null $begin
      * @param DateTime|null $end
      * @param User|null $user
      * @return int|mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    protected function queryTimeRange(string $select, ?DateTime $begin, ?DateTime $end, ?User $user)
+    protected function queryTimeRange($select, ?DateTime $begin, ?DateTime $end, ?User $user)
     {
+        $selects = $select;
+        if (!\is_array($select)) {
+            $selects = [$select];
+        }
+
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select($select)
-            ->from(Timesheet::class, 't');
+        $qb->from(Timesheet::class, 't');
+        foreach ($selects as $s) {
+            $qb->addSelect($s);
+        }
 
         if (!empty($begin)) {
             $qb
@@ -315,36 +314,75 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('user', $user);
         }
 
+        if (\is_array($select)) {
+            return $qb->getQuery()->getOneOrNullResult();
+        }
+
         $result = $qb->getQuery()->getSingleScalarResult();
 
         return empty($result) ? 0 : $result;
     }
 
-    public function getUserStatistics(User $user): TimesheetStatistic
+    /**
+     * @param User $user
+     * @param bool $bcSafe will be removed with 2.0
+     * @return TimesheetStatistic
+     */
+    public function getUserStatistics(User $user, bool $bcSafe = true): TimesheetStatistic
     {
-        $durationTotal = $this->getStatistic(self::STATS_QUERY_DURATION, null, null, $user);
-        $recordsTotal = $this->getStatistic(self::STATS_QUERY_AMOUNT, null, null, $user);
-        $rateTotal = $this->getStatistic(self::STATS_QUERY_RATE, null, null, $user);
-        $amountMonth = $this->queryThisMonth('COALESCE(SUM(t.rate), 0)', $user);
-        $durationMonth = $this->queryThisMonth('COALESCE(SUM(t.duration), 0)', $user);
-        $firstEntry = $this->getEntityManager()
-            ->createQuery('SELECT MIN(t.begin) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
-            ->setParameter('user', $user)
-            ->getSingleScalarResult();
+        $allTimeData = $this->queryTimeRange([
+            'COALESCE(SUM(t.duration), 0) as duration',
+            'COALESCE(SUM(t.rate), 0) as rate',
+            'COUNT(t.id) as amount'
+        ], null, null, $user);
+
+        $timezone = new \DateTimeZone($user->getTimezone());
+        $begin = new DateTime('first day of this month 00:00:00', $timezone);
+        $end = new DateTime('last day of this month 23:59:59', $timezone);
+
+        $monthData = $this->queryTimeRange(
+            [
+            'COALESCE(SUM(t.rate), 0) as rate',
+            'COALESCE(SUM(t.duration), 0) as duration'
+            ],
+            $begin,
+            $end,
+            $user
+        );
 
         $stats = new TimesheetStatistic();
-        $stats->setAmountTotal($rateTotal);
-        $stats->setDurationTotal($durationTotal);
-        $stats->setAmountThisMonth($amountMonth);
-        $stats->setDurationThisMonth($durationMonth);
-        $stats->setFirstEntry(new DateTime($firstEntry, new \DateTimeZone($user->getTimezone())));
-        $stats->setRecordsTotal($recordsTotal);
+
+        if ($bcSafe) {
+            $firstEntry = $this->getEntityManager()
+                ->createQuery('SELECT MIN(t.begin) FROM ' . Timesheet::class . ' t WHERE t.user = :user AND 1=12')
+                ->setParameter('user', $user)
+                ->getSingleScalarResult();
+
+            $timezone = new \DateTimeZone($user->getTimezone());
+
+            if ($firstEntry !== null) {
+                $stats->setFirstEntry(new DateTime($firstEntry, $timezone));
+            } else {
+                @trigger_error(
+                    'TimesheetStatistic::getFirstEntry() returns a wrong result for users without record and will be removed with 2.0',
+                    E_USER_DEPRECATED
+                );
+                $stats->setFirstEntry(new DateTime('now', $timezone));
+            }
+        }
+
+        $stats->setAmountTotal($allTimeData['rate']);
+        $stats->setDurationTotal($allTimeData['duration']);
+        $stats->setAmountThisMonth($monthData['rate']);
+        $stats->setDurationThisMonth($monthData['duration']);
+        $stats->setRecordsTotal($allTimeData['amount']);
 
         return $stats;
     }
 
     /**
-     * Returns an array of Year statistics.
+     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
+     * @codeCoverageIgnore
      *
      * @param DateTime $begin
      * @param DateTime $end
@@ -353,6 +391,8 @@ class TimesheetRepository extends EntityRepository
      */
     public function getMonthlyStats(DateTime $begin, DateTime $end, ?User $user = null): array
     {
+        @trigger_error('TimesheetRepository::getMonthlyStats() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+
         /** @var Year[] $years */
         $years = [];
 
@@ -404,12 +444,25 @@ class TimesheetRepository extends EntityRepository
         return $years;
     }
 
+    /**
+     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
+     * @codeCoverageIgnore
+     *
+     * @param User|null $user
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
+     * @param bool|null $billable
+     * @return QueryBuilder
+     */
     private function getMonthlyStatsQuery(User $user = null, ?DateTime $begin = null, ?DateTime $end = null, ?bool $billable = null): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->from(Timesheet::class, 't');
-        $qb->select('COALESCE(SUM(t.rate), 0) as rate, COALESCE(SUM(t.duration), 0) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year');
+        $qb->select('COALESCE(SUM(t.rate), 0) as rate');
+        $qb->addSelect('COALESCE(SUM(t.duration), 0) as duration');
+        $qb->addSelect('MONTH(t.date) as month');
+        $qb->addSelect('YEAR(t.date) as year');
 
         if (!empty($begin)) {
             $qb->andWhere($qb->expr()->gte('t.begin', ':from'));
@@ -465,8 +518,8 @@ class TimesheetRepository extends EntityRepository
         $or->add($qb->expr()->between('t.end', ':begin', ':end'));
 
         $qb->select('t, p, a, c')
-            ->from(Timesheet::class, 't')
-            ->andWhere($qb->expr()->isNotNull('t.end'))
+                ->from(Timesheet::class, 't')
+                ->andWhere($qb->expr()->isNotNull('t.end'))
             ->andWhere($or)
             ->orderBy('t.begin', 'DESC')
             ->setParameter('begin', $begin)
@@ -581,6 +634,9 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * @deprecated since 1.15 - use TimesheetStatisticService::getDailyStatistics() instead
+     * @codeCoverageIgnore
+     *
      * @param User|null $user
      * @param DateTime $begin
      * @param DateTime $end
@@ -646,6 +702,9 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
+     * @codeCoverageIgnore
+     *
      * @param User $user
      * @param int $hardLimit
      * @param bool $flush
@@ -653,7 +712,6 @@ class TimesheetRepository extends EntityRepository
      * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
      */
     public function stopActiveEntries(User $user, int $hardLimit, bool $flush = true)
     {
@@ -753,8 +811,7 @@ class TimesheetRepository extends EntityRepository
         $qb
             ->resetDQLPart('select')
             ->resetDQLPart('orderBy')
-            // faster then using "distinct id", as the user field is a separate (and smaller) index
-            ->select($qb->expr()->count('t.user'))
+            ->select($qb->expr()->count('t.id'))
         ;
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 

@@ -449,26 +449,12 @@
         <source>admin_project.title</source>
         <target state="translated">프로젝트</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target state="translated">
-                    현재의 %project%프로젝트 %customer%고객을 위한 %activities%활동과 
-                    %records% 시간기록에 의해 책정된 총합 %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Activity
             -->
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target state="translated">활동</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target state="translated">
-                    현재의 %activity%활동 %project%프로젝트의 %customer%고객
-                    %records% 시간기록에 의해 책정된 총합%duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -525,13 +511,6 @@
         <source>label.currency</source>
         <target state="translated">통화</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target state="translated">
-                    현재 %customer%고객은 %activity% 업무가 포함된 %project% 프로젝트를 가지고 있으며,
-                    이 프로젝트는 %records%기록에서 총%duration%시간을 계산합니다.
-                </target>
-      </trans-unit>
       <!--
               Admin: User
             -->
@@ -558,12 +537,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target state="translated">역할 </target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target state="translated">
-                    현재 %user%사용자는 %records%시간기록을 계산하여 %duration%의 총합을 가진다.
-                </target>
       </trans-unit>
       <!--
               Admin: Plugins

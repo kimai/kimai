@@ -32,6 +32,9 @@ class ProjectStatisticTest extends AbstractTimesheetCountedStatisticTest
         $this->assertJsonSerialize(new CustomerStatistic());
     }
 
+    /**
+     * @group legacy
+     */
     public function testAdditionalSetter()
     {
         $sut = new ProjectStatistic();

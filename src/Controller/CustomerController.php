@@ -283,6 +283,7 @@ final class CustomerController extends AbstractController
         $teams = null;
         $projects = null;
         $rates = [];
+        $now = $this->getDateTimeFactory()->createDateTime();
 
         if ($this->isGranted('edit', $customer)) {
             if ($this->isGranted('create_team')) {
@@ -296,7 +297,7 @@ final class CustomerController extends AbstractController
         }
 
         if ($this->isGranted('budget', $customer)) {
-            $stats = $statisticService->getCustomerStatistics($customer);
+            $stats = $statisticService->getBudgetStatisticModel($customer, $now);
         }
 
         if ($this->isGranted('comments', $customer)) {
@@ -321,7 +322,7 @@ final class CustomerController extends AbstractController
             'teams' => $teams,
             'customer_now' => new \DateTime('now', $timezone),
             'rates' => $rates,
-            'now' => $this->getDateTimeFactory()->createDateTime(),
+            'now' => $now,
         ]);
     }
 

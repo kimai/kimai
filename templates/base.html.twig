@@ -41,7 +41,7 @@
 {% block page_content_before %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_BEFORE')) %}
     {{ event.content|raw }}
-    <div class="toolbar-pad no-print">
+    <div class="no-print">
         {% block main_before %}{% endblock %}
     </div>
 {% endblock %}

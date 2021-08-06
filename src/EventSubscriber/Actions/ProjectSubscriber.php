@@ -60,12 +60,21 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             $event->addDivider();
         }
 
-        if ($project->isVisible() && $project->getCustomer()->isVisible() && $this->isGranted('create_activity')) {
-            $event->addAction('create-activity', ['icon' => 'create', 'url' => $this->path('admin_activity_create_with_project', ['project' => $project->getId()]), 'class' => 'modal-ajax-form']);
-        }
+        if (!$event->isView('project_details')) {
+            if ($project->isVisible() && $project->getCustomer()->isVisible() && $this->isGranted('create_activity')) {
+                $event->addAction('create-activity', [
+                    'icon' => 'create',
+                    'url' => $this->path('admin_activity_create_with_project', ['project' => $project->getId()]),
+                    'class' => 'modal-ajax-form'
+                ]);
+            }
 
-        if ($this->isGranted('edit', $project)) {
-            $event->addAction('copy', ['url' => $this->path('admin_project_duplicate', ['id' => $project->getId()])]);
+            if ($this->isGranted('edit', $project)) {
+                $event->addAction(
+                    'copy',
+                    ['url' => $this->path('admin_project_duplicate', ['id' => $project->getId()])]
+                );
+            }
         }
 
         if (($event->isIndexView() || $event->isView('customer_details')) && $this->isGranted('delete', $project)) {

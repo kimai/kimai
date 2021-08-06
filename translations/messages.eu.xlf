@@ -494,13 +494,6 @@
         <source>admin_project.title</source>
         <target>Proiektuak</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-           %customer% bezeroarentzako %project% proiektuak, %activities% jarduera eta
-           %records% sarrera ditu, guztizko %duration% iraupenarekin.
-        </target>
-      </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
         <target>Proiektu hasiera</target>
@@ -515,13 +508,6 @@
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Jarduerak</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-          %customer% bezeroarentzako %project% proiektuak, %activity% jarduera eta
-          %records% sarrera ditu, guztizko %duration% iraupenarekin.
-        </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -582,10 +568,6 @@
         <source>label.currency</source>
         <target>Txanpoia</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>%customer% bezeroak %project% proiektu ditu %activity% jardurerarekin, %records% sarrera, %duration%-ko guztizko luzerarekin.</target>
-      </trans-unit>
       <!--
               Admin: User
             -->
@@ -612,12 +594,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Rola</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                     %user%  erabiltzailea %records% sarrera ditu, guztizko %duration% iraupenarekin.
-                </target>
       </trans-unit>
       <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>

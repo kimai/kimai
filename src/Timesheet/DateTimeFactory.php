@@ -48,9 +48,14 @@ class DateTimeFactory
         return $this->timezone;
     }
 
-    public function getStartOfMonth(): DateTime
+    public function getStartOfMonth(?DateTime $date = null): DateTime
     {
-        $date = $this->createDateTime('first day of this month');
+        if (null === $date) {
+            $date = $this->createDateTime();
+        }
+
+        $date = clone $date;
+        $date->modify('first day of this month');
         $date->setTime(0, 0, 0);
 
         return $date;
@@ -81,7 +86,7 @@ class DateTimeFactory
     public function getEndOfWeek(?DateTime $date = null): DateTime
     {
         if (null === $date) {
-            $date = $this->createDateTime('now');
+            $date = $this->createDateTime();
         }
 
         $lastDay = $this->startOnSunday ? 6 : 7;
@@ -89,9 +94,14 @@ class DateTimeFactory
         return $this->createWeekDateTime($date->format('o'), $date->format('W'), $lastDay, 23, 59, 59);
     }
 
-    public function getEndOfMonth(): DateTime
+    public function getEndOfMonth(?DateTime $date = null): DateTime
     {
-        $date = $this->createDateTime('last day of this month');
+        if (null === $date) {
+            $date = $this->createDateTime();
+        }
+
+        $date = clone $date;
+        $date = $date->modify('last day of this month');
         $date->setTime(23, 59, 59);
 
         return $date;

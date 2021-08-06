@@ -37,6 +37,7 @@ class UserDateTimeFactory extends DateTimeFactory
     public function getTimezone(): DateTimeZone
     {
         if ($this->initializedFromUser === false) {
+            @trigger_error('UserDateTimeFactory is deprecated and will be removed with 2.0, use DateTimeFactory instead', E_USER_DEPRECATED);
             $timezone = date_default_timezone_get();
 
             $user = $this->user->getUser();

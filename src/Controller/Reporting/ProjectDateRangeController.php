@@ -10,17 +10,18 @@
 namespace App\Controller\Reporting;
 
 use App\Controller\AbstractController;
+use App\Form\Model\DateRange;
 use App\Project\ProjectStatisticService;
-use App\Reporting\ProjectInactive\ProjectInactiveForm;
-use App\Reporting\ProjectInactive\ProjectInactiveQuery;
+use App\Reporting\ProjectDateRange\ProjectDateRangeForm;
+use App\Reporting\ProjectDateRange\ProjectDateRangeQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class InactiveProjectController extends AbstractController
+final class ProjectDateRangeController extends AbstractController
 {
     /**
-     * @Route(path="/reporting/project_inactive", name="report_project_inactive", methods={"GET","POST"})
+     * @Route(path="/reporting/project_daterange", name="report_project_daterange", methods={"GET","POST"})
      * @Security("is_granted('view_reporting') and is_granted('budget_project')")
      */
     public function __invoke(Request $request, ProjectStatisticService $service)
@@ -28,14 +29,18 @@ final class InactiveProjectController extends AbstractController
         $dateFactory = $this->getDateTimeFactory();
         $user = $this->getUser();
 
-        $query = new ProjectInactiveQuery($dateFactory->createDateTime('-1 year'), $user);
-        $form = $this->createForm(ProjectInactiveForm::class, $query, [
+        $query = new ProjectDaterangeQuery($dateFactory->getStartOfMonth(), $user);
+        $form = $this->createForm(ProjectDateRangeForm::class, $query, [
             'timezone' => $user->getTimezone()
         ]);
         $form->submit($request->query->all(), false);
 
-        $projects = $service->findInactiveProjects($query);
-        $entries = $service->getProjectView($user, $projects, $query->getLastChange());
+        $dateRange = new DateRange(true);
+        $dateRange->setBegin($query->getMonth());
+        $dateRange->setEnd($dateFactory->getEndOfMonth($dateRange->getBegin()));
+
+        $projects = $service->findProjectsForDateRange($query, $dateRange);
+        $entries = $service->getBudgetStatisticModelForProjectsByDateRange($projects, $dateRange->getBegin(), $dateRange->getEnd(), $dateRange->getEnd());
 
         $byCustomer = [];
         foreach ($entries as $entry) {
@@ -46,12 +51,10 @@ final class InactiveProjectController extends AbstractController
             $byCustomer[$customer->getId()]['projects'][] = $entry;
         }
 
-        return $this->render('reporting/project_view.html.twig', [
+        return $this->render('reporting/project_daterange.html.twig', [
             'entries' => $byCustomer,
             'form' => $form->createView(),
-            'title' => 'report_inactive_project',
-            'tableName' => 'inactive_project_reporting',
-            'now' => $this->getDateTimeFactory()->createDateTime(),
+            'queryEnd' => $dateRange->getEnd(),
         ]);
     }
 }

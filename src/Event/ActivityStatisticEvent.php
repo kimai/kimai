@@ -15,15 +15,29 @@ use App\Model\ActivityStatistic;
 final class ActivityStatisticEvent extends AbstractActivityEvent
 {
     private $statistic;
+    private $begin;
+    private $end;
 
-    public function __construct(Activity $activity, ActivityStatistic $statistic)
+    public function __construct(Activity $activity, ActivityStatistic $statistic, \DateTime $begin = null, \DateTime $end = null)
     {
         parent::__construct($activity);
         $this->statistic = $statistic;
+        $this->begin = $begin;
+        $this->end = $end;
     }
 
     public function getStatistic(): ActivityStatistic
     {
         return $this->statistic;
+    }
+
+    public function getBegin(): ?\DateTime
+    {
+        return $this->begin;
+    }
+
+    public function getEnd(): ?\DateTime
+    {
+        return $this->end;
     }
 }

@@ -9,6 +9,7 @@
 
 namespace App\Export\Base;
 
+use App\Activity\ActivityStatisticService;
 use App\Entity\MetaTableTypeInterface;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
@@ -32,14 +33,9 @@ class HtmlRenderer
      * @var Environment
      */
     protected $twig;
-    /**
-     * @var EventDispatcherInterface
-     */
     protected $dispatcher;
-    /**
-     * @var ProjectStatisticService
-     */
     private $projectStatisticService;
+    private $activityStatisticService;
     /**
      * @var string
      */
@@ -49,11 +45,12 @@ class HtmlRenderer
      */
     private $template = 'default.html.twig';
 
-    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectStatisticService $projectStatisticService)
+    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectStatisticService $projectStatisticService, ActivityStatisticService $activityStatisticService)
     {
         $this->twig = $twig;
         $this->dispatcher = $dispatcher;
         $this->projectStatisticService = $projectStatisticService;
+        $this->activityStatisticService = $activityStatisticService;
     }
 
     /**
@@ -108,6 +105,7 @@ class HtmlRenderer
             'query' => $query,
             'summaries' => $summary,
             'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
+            'activity_budgets' => $this->calculateActivityBudget($timesheets, $query, $this->activityStatisticService),
             // @deprecated since 1.3, will be removed with 2.0
             'metaColumns' => $timesheetMetaFields,
             'timesheetMetaFields' => $timesheetMetaFields,

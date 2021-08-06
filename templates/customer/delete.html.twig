@@ -6,18 +6,15 @@
 
 {% block main %}
 
-    {% set inUse = (stats.recordAmount > 0) %}
+    {% set inUse = (stats.counter > 0) %}
 
     {% set params = {
-        '%activity%': stats.activityAmount,
-        '%project%': stats.projectAmount,
-        '%customer%': customer.name,
-        '%records%': stats.recordAmount,
-        '%duration%': stats.recordDuration|duration
+        '%records%': stats.counter,
+        '%duration%': stats.duration|duration
     } %}
 
     {{ include(app.request.xmlHttpRequest ? 'default/_form_delete_modal.html.twig' : 'default/_form_delete.html.twig', {
-        'message': ("admin_customer.short_stats"|trans(params) ~ "admin_entity.delete_confirm"|trans),
+        'message': ("delete_warning.short_stats"|trans(params) ~ "admin_entity.delete_confirm"|trans),
         'form': form,
         'used': inUse,
         'back': path('admin_customer')

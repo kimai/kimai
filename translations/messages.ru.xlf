@@ -338,26 +338,12 @@
         <source>admin_project.title</source>
         <target>Проекты</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-                    На данный момент для проекта %project% клиента %customer% существует всего %activities%
-                    активностей и %records% временных записей, общая продолжительность которых составляет %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Activity
             -->
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Деятельность</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-                    На данный момент для деятельности %activity% в проекте %project% клиента %customer% существует
-                    всего временных записей %records%, общая продолжительность которых составляет %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -414,13 +400,6 @@
         <source>label.currency</source>
         <target>Валюта</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>
-                    На данный момент для деятельности %activity% в проекте %project% клиента %customer% существует
-                    всего временных записей %records%, общая продолжительность которых составляет %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: User
             -->
@@ -447,12 +426,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Позиция</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                    На данный момент для пользователя %user% существует всего временных записей %records%, общая продолжительность которых составляет %duration%.
-                </target>
       </trans-unit>
       <!--
               ROLES

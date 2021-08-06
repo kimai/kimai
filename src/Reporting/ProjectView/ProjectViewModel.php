@@ -10,6 +10,7 @@
 namespace App\Reporting\ProjectView;
 
 use App\Entity\Project;
+use App\Model\BudgetStatisticModelInterface;
 use DateTime;
 
 final class ProjectViewModel
@@ -27,7 +28,14 @@ final class ProjectViewModel
     private $notBilledRate = 0.00;
     private $billableDuration = 0;
     private $billableRate = 0.00;
+    /**
+     * @var \DateTime|null
+     */
     private $lastRecord;
+    /**
+     * @var BudgetStatisticModelInterface
+     */
+    private $budgetStatisticModel;
 
     public function __construct(Project $project)
     {
@@ -167,5 +175,15 @@ final class ProjectViewModel
     public function setLastRecord(DateTime $lastRecord): void
     {
         $this->lastRecord = $lastRecord;
+    }
+
+    public function getBudgetStatisticModel(): BudgetStatisticModelInterface
+    {
+        return $this->budgetStatisticModel;
+    }
+
+    public function setBudgetStatisticModel(BudgetStatisticModelInterface $budgetStatisticModel): void
+    {
+        $this->budgetStatisticModel = $budgetStatisticModel;
     }
 }

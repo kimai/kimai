@@ -30,21 +30,23 @@ class ExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['docu_link', 'multiline_indent', 'color', 'font_contrast', 'default_color', 'nl2str'];
+        $filters = ['report_date', 'docu_link', 'multiline_indent', 'color', 'font_contrast', 'default_color', 'nl2str'];
         $sut = $this->getSut();
         $twigFilters = $sut->getFilters();
         $this->assertCount(\count($filters), $twigFilters);
         $i = 0;
-        /** @var TwigFilter $filter */
+
         foreach ($twigFilters as $filter) {
             $this->assertInstanceOf(TwigFilter::class, $filter);
             $this->assertEquals($filters[$i++], $filter->getName());
         }
 
+        $id = array_search('nl2str', $filters);
+
         // make sure that the nl2str filters does proper escaping
-        self::assertEquals('nl2str', $twigFilters[5]->getName());
-        self::assertEquals('html', $twigFilters[5]->getPreEscape());
-        self::assertEquals(['html'], $twigFilters[5]->getSafe(new Node()));
+        self::assertEquals('nl2str', $twigFilters[$id]->getName());
+        self::assertEquals('html', $twigFilters[$id]->getPreEscape());
+        self::assertEquals(['html'], $twigFilters[$id]->getSafe(new Node()));
     }
 
     public function testGetFunctions()

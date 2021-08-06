@@ -15,56 +15,63 @@
         {% block box_title %}
             {{ form_widget(form.date) }}
         {% endblock %}
-        {% block box_body_class %}{{ box_id }} table-responsive no-padding{% endblock %}
+        {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}no-padding{% endif %}{% endblock %}
         {% block box_body %}
-            {% set absoluteTotals = 0 %}
-            <table class="table table-bordered table-hover dataTable">
-                <tr>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    {% for day in days %}
-                    <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}">
-                        {{ day|day_name(true) }}<br>
-                        {{ day|format_date('short') }}
-                    </th>
-                    {% endfor %}
-                </tr>
-                {% for userDay in rows %}
-                    {% set usersTotalDuration = 0 %}
-                    <tr class="user">
-                        <td class="text-nowrap">
-                            {{ widgets.label_dot(userDay.user.displayName, userDay.user.color) }}
-                        </td>
-                        {% for day in userDay.days %}
-                            {% if day.totalDuration > 0 %}
-                                {% set usersTotalDuration = usersTotalDuration + day.totalDuration %}
-                                {% set absoluteTotals = absoluteTotals + day.totalDuration %}
-                            {% endif %}
-                        {% endfor %}
-                        <th class="text-nowrap text-center total">
-                            {{ usersTotalDuration|duration }}
-                        </th>
-                        {% for day in userDay.days %}
-                            <td class="text-nowrap text-center day-total{% if day.day is weekend %} weekend{% endif %}">
-                                {% if day.totalDuration > 0 %}
-                                    {{ day.totalDuration|duration }}
-                                {% endif %}
-                            </td>
+            {% if not hasData %}
+                {{ widgets.nothing_found() }}
+            {% else %}
+                {% set absoluteTotals = 0 %}
+                {% set totals = {} %}
+                <table class="table table-bordered table-hover dataTable">
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        {% for day in stats.0.getDateTimes() %}
+                            <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}">
+                                {{ day|day_name(true) }}<br>
+                                {{ day|format_date('short') }}
+                            </th>
+                            {% set totals = totals|merge({(day|report_date): 0}) %}
                         {% endfor %}
                     </tr>
-                {% endfor %}
-                <tr>
-                    <th>&nbsp;</th>
-                    <th class="text-center text-nowrap">
-                        {{ absoluteTotals|duration }}
-                    </th>
-                    {% for id, duration in totals %}
-                        <th class="text-center text-nowrap">
-                            {{ duration|duration }}
-                        </th>
+                    {% for userDay in stats %}
+                        {% set usersTotalDuration = 0 %}
+                        <tr class="user">
+                            <td class="text-nowrap">
+                                {{ widgets.label_dot(userDay.user.displayName, userDay.user.color) }}
+                            </td>
+                            {% for day in userDay.days %}
+                                {% if day.totalDuration > 0 %}
+                                    {% set usersTotalDuration = usersTotalDuration + day.totalDuration %}
+                                    {% set absoluteTotals = absoluteTotals + day.totalDuration %}
+                                {% endif %}
+                                {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + day.totalDuration)}) %}
+                            {% endfor %}
+                            <th class="text-nowrap text-center total">
+                                <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userDay.user.id}) }}">{{ usersTotalDuration|duration }}</a>
+                            </th>
+                            {% for day in userDay.days %}
+                                <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}">
+                                    {% if day.totalDuration > 0 %}
+                                        {{ day.totalDuration|duration }}
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
                     {% endfor %}
-                </tr>
-            </table>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th class="text-center text-nowrap">
+                            {{ absoluteTotals|duration }}
+                        </th>
+                        {% for id, duration in totals %}
+                            <th class="text-center text-nowrap">
+                                {{ duration|duration }}
+                            </th>
+                        {% endfor %}
+                    </tr>
+                </table>
+            {% endif %}
         {% endblock %}
     {% endembed %}
 
@@ -74,8 +81,8 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            $('#{{ form.date.vars.id }}').on('change', function(ev) {
-                $(this).closest('form').submit();
+            jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
+                jQuery(this).closest('form').submit();
             });
         });
     </script>

@@ -52,8 +52,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
  */
-class Project implements EntityWithMetaFields
+class Project implements EntityWithMetaFields, EntityWithBudget
 {
+    use BudgetTrait;
+    use ColorTrait;
+
     /**
      * Internal ID
      *
@@ -192,40 +195,6 @@ class Project implements EntityWithMetaFields
      * @Assert\NotNull()
      */
     private $visible = true;
-
-    // keep the trait include exactly here, for placing the column at the correct position
-    use ColorTrait;
-
-    /**
-     * The total monetary budget, will be zero if not configured.
-     *
-     * @var float
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Project_Entity"})
-     *
-     * @ Exporter\Expose(label="label.budget")
-     *
-     * @ORM\Column(name="budget", type="float", nullable=false)
-     * @Assert\Range(min=0.00, max=900000000000.00)
-     * @Assert\NotNull()
-     */
-    private $budget = 0.00;
-    /**
-     * The time budget in seconds, will be zero if not configured.
-     *
-     * @var int
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Project_Entity"})
-     *
-     * @ Exporter\Expose(label="label.timeBudget", type="duration")
-     *
-     * @ORM\Column(name="time_budget", type="integer", nullable=false)
-     * @Assert\Range(min=0, max=2145600000)
-     * @Assert\NotNull()
-     */
-    private $timeBudget = 0;
     /**
      * Meta fields
      *
@@ -420,40 +389,6 @@ class Project implements EntityWithMetaFields
         }
 
         return $this;
-    }
-
-    public function setBudget(float $budget): Project
-    {
-        $this->budget = $budget;
-
-        return $this;
-    }
-
-    public function getBudget(): float
-    {
-        return $this->budget;
-    }
-
-    public function hasBudget(): bool
-    {
-        return $this->budget > 0.00;
-    }
-
-    public function setTimeBudget(int $seconds): Project
-    {
-        $this->timeBudget = $seconds;
-
-        return $this;
-    }
-
-    public function getTimeBudget(): int
-    {
-        return $this->timeBudget;
-    }
-
-    public function hasTimeBudget(): bool
-    {
-        return $this->timeBudget > 0;
     }
 
     /**

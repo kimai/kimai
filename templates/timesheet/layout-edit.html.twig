@@ -276,12 +276,20 @@
                             duration = parseFloat(duration) * 3600;
                             momentDuration = moment.duration('PT' + duration + 'S');
                         } else if (duration.indexOf('H') !== -1 || duration.indexOf('M') !== -1 || duration.indexOf('S') !== -1) {
+                            {# D for days does not work, because 'PT1H' but with days 'P1D' is used #}
                             momentDuration = moment.duration('PT' + duration);
+                        } else {
+                            let c = parseInt(duration);
+                            let d = parseInt(duration).toFixed();
+                            if (!isNaN(c) && duration === d) {
+                                duration = c * 3600;
+                                momentDuration = moment.duration('PT' + duration + 'S');
+                            }
                         }
 
                         return momentDuration;
                     }
-                    
+
                     function applyDateToField(field, momentObj, format)
                     {
                         field.value = momentObj.format(format);

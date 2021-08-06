@@ -15,6 +15,12 @@
     }
 }
 
+@media (min-width: $screen-lg-min) {
+    .content {
+        padding: 20px;
+    }
+}
+
 td {
     &.timesheet-description {
         ul {

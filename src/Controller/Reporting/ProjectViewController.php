@@ -49,8 +49,7 @@ final class ProjectViewController extends AbstractController
             'form' => $form->createView(),
             'title' => 'report_project_view',
             'tableName' => 'project_view_reporting',
-            'now' => $this->getDateTimeFactory()->createDateTime(),
-            'showDurations' => true,
+            'now' => $dateFactory->createDateTime(),
         ]);
     }
 }

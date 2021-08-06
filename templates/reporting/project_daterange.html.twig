@@ -1,0 +1,97 @@
+{% extends 'reporting/layout.html.twig' %}
+{% import "macros/datatables.html.twig" as tables %}
+
+{% block report_title %}{{ 'report_project_daterange'|trans({}, 'reporting') }}{% endblock %}
+
+{% set columns = {
+    'name':          {'class': 'alwaysVisible'},
+    'timeBudget':    {'class': 'hidden-xs', 'title': 'label.timeBudget'|trans},
+    'budget':        {'class': 'hidden-xs', 'title': 'label.budget'|trans},
+    'duration':      {'class': 'text-center hw-min', 'title': 'stats.durationMonth'|trans, 'columnClass': 'w-min'},
+    'rate':          {'class': 'text-center hw-min', 'title': 'stats.amountMonth'|trans, 'columnClass': 'w-min'},
+    'billable':      {'class': 'text-center hw-min', 'columnClass': 'w-min'},
+    'actions':       {'class': 'actions alwaysVisible'},
+} %}
+{% set tableName = 'project_daterange_reporting' %}
+
+{% block main_before %}
+    {{ tables.data_table_column_modal(tableName, columns) }}
+{% endblock %}
+
+{% block report %}
+
+    {% set hasData = entries|length > 0 %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/progressbar.html.twig" as progress %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% import "macros/datatables.html.twig" as tables %}
+        {% import "project/actions.html.twig" as projectActions %}
+        {% block box_body_class %}{{ tableName }}-box {% if hasData %}no-padding{% endif %}{% endblock %}
+        {% block box_before %}
+            {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': 'project-daterange-form'}}) }}
+        {% endblock %}
+        {% block box_after %}
+            {{ form_end(form) }}
+        {% endblock %}
+        {% block box_tools %}
+            {{ widgets.action_button('visibility', {'modal': ('#modal_' ~ tableName), 'class': 'btn-sm'}) }}
+        {% endblock %}
+        {% block box_title %}
+            {{ form_widget(form) }}
+        {% endblock %}
+        {% block box_body %}
+            {% if not hasData %}
+                {{ widgets.nothing_found() }}
+            {% else %}
+                {{ tables.datatable_header(tableName, columns, null, {'bordered': true, 'boxClass': ''}) }}
+
+                {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
+                    <tr class="summary">
+                        <td colspan="{{ columns|length }}">{{ widgets.label_customer(mapping.customer) }}</td>
+                    </tr>
+                    {% for entry in mapping.projects|sort((a, b) => a.entity.name <=> b.entity.name) %}
+                        {% set project = entry.entity %}
+                        {% set currency = project.customer.currency %}
+                        {% if is_granted('budget', project) %}
+                            <tr {{ widgets.project_row_attr(project, queryEnd) }}>
+                            {% for name, column_config in columns %}
+                                <td class="{{ tables.data_table_column_class(tableName, columns, name) }}">
+                                {% if name == 'name' %}
+                                {{ widgets.label_project(project) }}
+                                {% elseif name == 'duration' %}
+                                    {{ entry.statistic.duration|duration }}
+                                {% elseif name == 'rate' %}
+                                    {{ entry.statistic.rate|money(currency) }}
+                                {% elseif name == 'billable' %}
+                                    {{ widgets.percent(entry.statistic.rate, entry.statistic.rateBillable) }}
+                                {% elseif name == 'timeBudget' %}
+                                    {{ progress.progressbar_timebudget(entry) }}
+                                {% elseif name == 'budget' %}
+                                    {{ progress.progressbar_budget(entry, currency) }}
+                                {% elseif name == 'actions' %}
+                                    {{ projectActions.project(project, 'custom') }}
+                                {% endif %}
+                                </td>
+                            {% endfor %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {{ tables.data_table_footer(entries) }}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            jQuery('#project-daterange-form').on('change', function(ev) {
+                jQuery(this).submit();
+            });
+        });
+    </script>
+{% endblock %}

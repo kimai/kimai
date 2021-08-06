@@ -18,12 +18,11 @@ use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\Activity
  */
-class ActivityTest extends TestCase
+class ActivityTest extends AbstractEntityTest
 {
     public function testDefaultValues()
     {
@@ -36,14 +35,15 @@ class ActivityTest extends TestCase
         $this->assertTrue($sut->isGlobal());
         $this->assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
-        $this->assertEquals(0.0, $sut->getBudget());
-        $this->assertEquals(0, $sut->getTimeBudget());
-        self::assertFalse($sut->hasBudget());
-        self::assertFalse($sut->hasTimeBudget());
         $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
         $this->assertEquals(0, $sut->getMetaFields()->count());
         $this->assertNull($sut->getMetaField('foo'));
         $this->assertInstanceOf(Collection::class, $sut->getTeams());
+    }
+
+    public function testBudgets()
+    {
+        $this->assertBudget(new Activity());
     }
 
     public function testSetterAndGetter()
@@ -67,14 +67,6 @@ class ActivityTest extends TestCase
         $sut->setColor(Constants::DEFAULT_COLOR);
         $this->assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
-
-        $this->assertInstanceOf(Activity::class, $sut->setBudget(12345.67));
-        $this->assertEquals(12345.67, $sut->getBudget());
-        self::assertTrue($sut->hasBudget());
-
-        $this->assertInstanceOf(Activity::class, $sut->setTimeBudget(937321));
-        $this->assertEquals(937321, $sut->getTimeBudget());
-        self::assertTrue($sut->hasTimeBudget());
 
         $this->assertTrue($sut->isGlobal());
         $this->assertInstanceOf(Activity::class, $sut->setProject(new Project()));

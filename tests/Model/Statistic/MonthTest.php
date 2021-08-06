@@ -11,16 +11,17 @@ namespace App\Tests\Model\Statistic;
 
 use App\Model\Statistic\Month;
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Model\Statistic\Month
  */
-class MonthTest extends TestCase
+class MonthTest extends AbstractTimesheetTest
 {
     public function testDefaultValues()
     {
         $sut = new Month('01');
+        $this->assertDefaultValues($sut);
+
         self::assertSame('01', $sut->getMonth());
         self::assertSame(0, $sut->getTotalDuration());
         self::assertSame(0.0, $sut->getTotalRate());
@@ -88,6 +89,8 @@ class MonthTest extends TestCase
     public function testSetter()
     {
         $sut = new Month('01');
+        $this->assertSetter($sut);
+
         $sut->setTotalDuration(999);
         $sut->setTotalRate(0.123456789);
         $sut->setBillableDuration(123456);

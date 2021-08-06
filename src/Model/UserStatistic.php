@@ -31,10 +31,10 @@ class UserStatistic extends TimesheetCountedStatistic
 
     public function addValuesFromMonth(Month $month): void
     {
-        $this->setRecordDuration($this->getRecordDuration() + $month->getTotalDuration());
+        $this->setDuration($this->getDuration() + $month->getDuration());
         $this->setDurationBillable($this->getDurationBillable() + $month->getBillableDuration());
-        $this->setRecordRate($this->getRate() + $month->getTotalRate());
+        $this->setRate($this->getRate() + $month->getRate());
         $this->setRateBillable($this->getRateBillable() + $month->getBillableRate());
-        $this->setRecordInternalRate($this->getRecordInternalRate() + $month->getTotalInternalRate());
+        $this->setInternalRate($this->getInternalRate() + $month->getInternalRate());
     }
 }

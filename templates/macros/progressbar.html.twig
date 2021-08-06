@@ -6,6 +6,8 @@
     {% set formatter = options['format'] ?? null %}
     {% set currency = options['currency'] ?? null %}
     {% set percentDecimals = options['decimals'] ?? 1 %}
+    {% set transPercentOpen = options['trans_percent_open'] ?? 'stats.percentUsedLeft' %}
+    {% set transPercentSpent = options['trans_percent_spent'] ?? 'stats.percentUsed' %}
     {% if formatter == 'duration' %}
         {% set currentFormatted = current|duration %}
         {% set maxFormatted = max|duration %}
@@ -44,9 +46,9 @@
             <div class="progress-bar {{ progressbar_color(percentReached, reverseColors) }}" role="progressbar" aria-valuenow="{{ width }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ width }}%"></div>
         </div>
         {% if open is not null and open > 0 %}
-            <small>{{ 'stats.percentUsedLeft'|trans({'%percent%': percentReached|number_format(percentDecimals), '%left%': openFormatted}) }}</small>
+            <small>{{ transPercentOpen|trans({'%percent%': percentReached|number_format(percentDecimals), '%left%': openFormatted}) }}</small>
         {% else %}
-            <small>{{ 'stats.percentUsed'|trans({'%percent%': percentReached|number_format(percentDecimals)}) }}</small>
+            <small>{{ transPercentSpent|trans({'%percent%': percentReached|number_format(percentDecimals)}) }}</small>
         {% endif %}
     </div>
 {% endmacro %}
@@ -103,4 +105,48 @@
             <small>{{ 'stats.percentUsed'|trans({'%percent%': percentReached|number_format(0)}) }}</small>
         {% endif %}
     </div>
+{% endmacro %}
+
+{#
+    @param \App\Model\BudgetStatisticModelInterface budgetStatisticModel
+    @param string currency
+#}
+{% macro progressbar_budget(budgetStatisticModel, currency) %}
+    {% if budgetStatisticModel.hasBudget() %}
+        {% set options = {
+            'max': budgetStatisticModel.getBudget(),
+            'current': budgetStatisticModel.getBudgetSpent(),
+            'open': (budgetStatisticModel.getBudgetOpen()),
+            'format': 'money',
+            'currency': currency,
+        } %}
+        {% if budgetStatisticModel.isMonthlyBudget() %}
+            {% set options = options|merge({
+                'trans_percent_open': 'stats.percentUsedLeft_month',
+                'trans_percent_spent': 'stats.percentUsed_month',
+            }) %}
+        {% endif %}
+        {{ _self.progressbar_full(options) }}
+    {% endif %}
+{% endmacro %}
+
+{#
+    @param \App\Model\BudgetStatisticModelInterface budgetStatisticModel
+#}
+{% macro progressbar_timebudget(budgetStatisticModel) %}
+    {% if budgetStatisticModel.hasTimeBudget() %}
+        {% set options = {
+            'max': budgetStatisticModel.getTimeBudget(),
+            'current': budgetStatisticModel.getTimeBudgetSpent(),
+            'open': (budgetStatisticModel.getTimeBudgetOpen()),
+            'format': 'duration',
+        } %}
+        {% if budgetStatisticModel.isMonthlyBudget() %}
+            {% set options = options|merge({
+                'trans_percent_open': 'stats.percentUsedLeft_month',
+                'trans_percent_spent': 'stats.percentUsed_month',
+            }) %}
+        {% endif %}
+        {{ _self.progressbar_full(options) }}
+    {% endif %}
 {% endmacro %}

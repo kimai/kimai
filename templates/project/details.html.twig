@@ -49,42 +49,66 @@
                     </td>
                 </tr>
                 {% if is_granted('details', project) %}
+                    {% if project.orderNumber is not empty %}
                     <tr>
                         <th>{{ 'label.orderNumber'|trans }}</th>
                         <td colspan="3">
                             {{ project.orderNumber }}
                         </td>
                     </tr>
+                    {% endif %}
+                    {% if project.orderDate is not empty %}
                     <tr>
                         <th>{{ 'label.orderDate'|trans }}</th>
                         <td colspan="3">
-                            {% if project.orderDate is not empty %}
-                                {{ project.orderDate|date_full }}
-                            {% else %}
-                                &ndash;
-                            {% endif %}
+                            {{ project.orderDate|date_full }}
                         </td>
                     </tr>
+                    {% endif %}
+                    {% if project.start is not empty %}
                     <tr>
                         <th>{{ 'label.project_start'|trans }}</th>
                         <td colspan="3">
-                            {% if project.start is not empty %}
-                                {{ project.start|date_full }}
-                            {% else %}
-                                &ndash;
-                            {% endif %}
+                            {{ project.start|date_full }}
                         </td>
                     </tr>
+                    {% endif %}
+                    {% if project.end is not empty %}
                     <tr>
                         <th>{{ 'label.project_end'|trans }}</th>
                         <td colspan="3">
-                            {% if project.end is not empty %}
-                                {{ project.end|date_full }}
-                            {% else %}
-                                &ndash;
-                            {% endif %}
+                            {{ project.end|date_full }}
                         </td>
                     </tr>
+                    {% endif %}
+                {% endif %}
+                {% if is_granted('budget', project) %}
+                    {% if project.hasBudget() %}
+                    <tr>
+                        <th>
+                            {{ 'label.budget'|trans }}
+                            {% if project.isMonthlyBudget() %}
+                                ({{ 'label.budgetType_month'|trans }})
+                            {% endif %}
+                        </th>
+                        <td colspan="3">
+                            {{ project.getBudget()|money(project.customer.currency) }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if project.hasTimeBudget() %}
+                    <tr>
+                        <th>
+                            {{ 'label.timeBudget'|trans }}
+                            {% if project.isMonthlyBudget() %}
+                                ({{ 'label.budgetType_month'|trans }})
+                            {% endif %}
+                        </th>
+                        <td colspan="3">
+                            {{ project.getTimeBudget()|duration }}
+                        </td>
+                    </tr>
+                    {% endif %}
                 {% endif %}
                 {% for metaField in project.visibleMetaFields|sort((a, b) => a.order <=> b.order) %}
                     <tr>

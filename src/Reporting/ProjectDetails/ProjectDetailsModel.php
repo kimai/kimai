@@ -12,6 +12,7 @@ namespace App\Reporting\ProjectDetails;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Model\ActivityStatistic;
+use App\Model\BudgetStatisticModel;
 use App\Model\Statistic\UserYear;
 use App\Model\Statistic\Year;
 use App\Model\UserStatistic;
@@ -38,6 +39,10 @@ final class ProjectDetailsModel
      * @var ActivityStatistic[]
      */
     private $activities = [];
+    /**
+     * @var BudgetStatisticModel
+     */
+    private $budgetStatisticModel;
 
     public function __construct(Project $project)
     {
@@ -154,5 +159,15 @@ final class ProjectDetailsModel
     public function setYears(array $years): void
     {
         $this->years = $years;
+    }
+
+    public function getBudgetStatisticModel(): ?BudgetStatisticModel
+    {
+        return $this->budgetStatisticModel;
+    }
+
+    public function setBudgetStatisticModel(BudgetStatisticModel $budgetStatisticModel): void
+    {
+        $this->budgetStatisticModel = $budgetStatisticModel;
     }
 }

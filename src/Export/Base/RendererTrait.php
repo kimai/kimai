@@ -9,6 +9,7 @@
 
 namespace App\Export\Base;
 
+use App\Activity\ActivityStatisticService;
 use App\Export\ExportItemInterface;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
@@ -25,24 +26,22 @@ trait RendererTrait
 
         foreach ($exportItems as $exportItem) {
             $customerId = 'none';
-            $customerName = '';
-            $currency = null;
             $projectId = 'none';
-            $projectName = '';
             $activityId = 'none';
-            $activityName = '';
+            $customer = null;
+            $project = null;
+            $activity = null;
+            $currency = null;
 
-            if (null !== $exportItem->getProject()) {
-                $customerId = $exportItem->getProject()->getCustomer()->getId();
-                $customerName = $exportItem->getProject()->getCustomer()->getName();
-                $projectId = $exportItem->getProject()->getId();
-                $projectName = $exportItem->getProject()->getName();
-                $currency = $exportItem->getProject()->getCustomer()->getCurrency();
+            if (null !== ($project = $exportItem->getProject())) {
+                $customer = $project->getCustomer();
+                $customerId = $customer->getId();
+                $projectId = $project->getId();
+                $currency = $customer->getCurrency();
             }
 
-            if (null !== $exportItem->getActivity()) {
+            if (null !== ($activity = $exportItem->getActivity())) {
                 $activityId = $exportItem->getActivity()->getId();
-                $activityName = $exportItem->getActivity()->getName();
             }
 
             $id = $customerId . '_' . $projectId;
@@ -51,8 +50,8 @@ trait RendererTrait
 
             if (!isset($summary[$id])) {
                 $summary[$id] = [
-                    'customer' => $customerName,
-                    'project' => $projectName,
+                    'customer' => '',
+                    'project' => '',
                     'activities' => [],
                     'currency' => $currency,
                     'rate' => 0,
@@ -61,6 +60,11 @@ trait RendererTrait
                     'type' => [],
                     'types' => [],
                 ];
+
+                if ($project !== null) {
+                    $summary[$id]['customer'] = $customer->getName();
+                    $summary[$id]['project'] = $project->getName();
+                }
             }
 
             if (!isset($summary[$id]['type'][$type])) {
@@ -81,12 +85,16 @@ trait RendererTrait
 
             if (!isset($summary[$id]['activities'][$activityId])) {
                 $summary[$id]['activities'][$activityId] = [
-                    'activity' => $activityName,
+                    'activity' => '',
                     'currency' => $currency,
                     'rate' => 0,
                     'rate_internal' => 0,
                     'duration' => 0,
                 ];
+
+                if ($activity !== null) {
+                    $summary[$id]['activities'][$activityId]['activity'] = $activity->getName();
+                }
             }
 
             $duration = $exportItem->getDuration();
@@ -130,17 +138,21 @@ trait RendererTrait
     protected function calculateProjectBudget(array $exportItems, TimesheetQuery $query, ProjectStatisticService $projectStatisticService)
     {
         $summary = [];
+        $projects = [];
 
         foreach ($exportItems as $exportItem) {
             $customer = null;
-            $customerId = 'none';
             $project = null;
+            $customerId = 'none';
             $projectId = 'none';
 
             if (null !== ($project = $exportItem->getProject())) {
                 $customer = $project->getCustomer();
                 $customerId = $customer->getId();
                 $projectId = $project->getId();
+                if ($project->hasBudgets()) {
+                    $projects[] = $project;
+                }
             }
 
             $id = $customerId . '_' . $projectId;
@@ -152,17 +164,88 @@ trait RendererTrait
                     'time_left' => null,
                     'money_left' => null,
                 ];
+            }
+        }
 
-                if (null !== $project && ($project->getTimeBudget() > 0 || $project->getBudget() > 0)) {
-                    $projectStats = $projectStatisticService->getProjectStatistics($project, $query->getEnd());
+        $allBudgets = $projectStatisticService->getBudgetStatisticModelForProjects($projects, $query->getEnd());
 
-                    if ($project->getTimeBudget() > 0) {
-                        $summary[$id]['time_left'] = $project->getTimeBudget() - $projectStats->getRecordDuration();
-                    }
-                    if ($project->getBudget() > 0) {
-                        $summary[$id]['money_left'] = $project->getBudget() - $projectStats->getRecordRate();
-                    }
-                }
+        foreach ($allBudgets as $projectId => $statisticModel) {
+            $project = $statisticModel->getProject();
+            $id = $project->getCustomer()->getId() . '_' . $projectId;
+            if ($statisticModel->hasTimeBudget()) {
+                $summary[$id]['time_left'] = $statisticModel->getTimeBudgetOpen();
+            }
+            if ($statisticModel->hasBudget()) {
+                $summary[$id]['money_left'] = $statisticModel->getBudgetOpen();
+            }
+        }
+
+        return $summary;
+    }
+
+    /**
+     * @param ExportItemInterface[] $exportItems
+     * @param TimesheetQuery $query
+     * @param ActivityStatisticService $activityStatisticService
+     * @return array
+     */
+    protected function calculateActivityBudget(array $exportItems, TimesheetQuery $query, ActivityStatisticService $activityStatisticService)
+    {
+        $summary = [];
+        $activities = [];
+
+        foreach ($exportItems as $exportItem) {
+            $customerId = 'none';
+            $projectId = 'none';
+            $customer = null;
+            $project = null;
+            $activity = null;
+
+            if (null === ($activity = $exportItem->getActivity())) {
+                continue;
+            }
+
+            if ($activity->isGlobal()) {
+                continue;
+            }
+
+            if ($activity->hasBudgets()) {
+                $activities[] = $activity;
+            }
+
+            if (null !== ($project = $exportItem->getProject())) {
+                $projectId = $project->getId();
+                $customerId = $project->getCustomer()->getId();
+            }
+
+            $id = $customerId . '_' . $projectId;
+
+            if (!isset($summary[$id])) {
+                $summary[$id] = [];
+            }
+
+            $activityId = $activity->getId();
+
+            if (!isset($summary[$id][$activityId])) {
+                $summary[$id][$activityId] = [
+                    'time' => $activity->getTimeBudget(),
+                    'money' => $activity->getBudget(),
+                    'time_left' => null,
+                    'money_left' => null,
+                ];
+            }
+        }
+
+        $allBudgets = $activityStatisticService->getBudgetStatisticModelForActivities($activities, $query->getEnd());
+
+        foreach ($allBudgets as $activityId => $statisticModel) {
+            $project = $statisticModel->getActivity()->getProject();
+            $id = $project->getCustomer()->getId() . '_' . $project->getId();
+            if ($statisticModel->hasTimeBudget()) {
+                $summary[$id][$activityId]['time_left'] = $statisticModel->getTimeBudgetOpen();
+            }
+            if ($statisticModel->hasBudget()) {
+                $summary[$id][$activityId]['money_left'] = $statisticModel->getBudgetOpen();
             }
         }
 

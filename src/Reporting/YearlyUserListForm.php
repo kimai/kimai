@@ -11,7 +11,6 @@ namespace App\Reporting;
 
 use App\Form\Type\YearPickerType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -36,7 +35,6 @@ class YearlyUserListForm extends AbstractType
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
-            'format' => $options['format'],
             'show_range' => true,
         ]);
     }
@@ -50,7 +48,6 @@ class YearlyUserListForm extends AbstractType
             'data_class' => YearlyUserList::class,
             'timezone' => date_default_timezone_get(),
             'start_date' => new \DateTime(),
-            'format' => DateType::HTML5_FORMAT,
             'csrf_protection' => false,
             'method' => 'GET',
         ]);

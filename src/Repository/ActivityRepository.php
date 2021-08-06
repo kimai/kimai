@@ -62,6 +62,26 @@ class ActivityRepository extends EntityRepository
     }
 
     /**
+     * @param int[] $activityIds
+     * @return Activity[]
+     */
+    public function findByIds(array $activityIds)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb
+            ->where($qb->expr()->in('a.id', ':id'))
+            ->setParameter('id', $activityIds)
+        ;
+
+        $activities = $qb->getQuery()->getResult();
+
+        $loader = new ActivityLoader($qb->getEntityManager());
+        $loader->loadResults($activities);
+
+        return $activities;
+    }
+
+    /**
      * @param Activity $activity
      * @throws ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -87,7 +107,8 @@ class ActivityRepository extends EntityRepository
     }
 
     /**
-     * Retrieves statistics for one activity.
+     * @deprecated since 1.15 use ActivityStatisticService::getActivityStatistics() instead - will be removed with 2.0
+     * @codeCoverageIgnore
      *
      * @param Activity $activity
      * @return ActivityStatistic
@@ -110,7 +131,7 @@ class ActivityRepository extends EntityRepository
         $stats = new ActivityStatistic();
 
         if (null !== $timesheetResult) {
-            $stats->setRecordAmount($timesheetResult['amount']);
+            $stats->setCounter($timesheetResult['amount']);
             $stats->setRecordDuration($timesheetResult['duration']);
             $stats->setRecordRate($timesheetResult['rate']);
             $stats->setRecordInternalRate($timesheetResult['internal_rate']);
@@ -194,6 +215,7 @@ class ActivityRepository extends EntityRepository
 
     /**
      * @deprecated since 1.1 - use getQueryBuilderForFormType() instead - will be removed with 2.0
+     * @codeCoverageIgnore
      */
     public function builderForEntityType($activity, $project)
     {

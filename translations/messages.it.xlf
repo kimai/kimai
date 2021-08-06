@@ -565,13 +565,6 @@
         <source>admin_project.title</source>
         <target>Progetti</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-                    Attualmente il progetto %project% del cliente %customer% conta %activities%
-                    attività e %records% registrazioni, con una durata totale di %duration%.
-                </target>
-      </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
         <target>Inizio progetto</target>
@@ -586,13 +579,6 @@
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Attività</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-                    Attualmente le attività %activity% nel progetto %project% del cliente %customer%
-                    conta %records% registrazioni, con una durata totale di %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -653,13 +639,6 @@
         <source>label.currency</source>
         <target>Valuta</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>
-                    Attualmente il cliente %customer% conta %project% progetti con %activity% activities, e
-                    %records% registrazioni con una durata totale di %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: User
             -->
@@ -686,12 +665,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Permessi</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                    Attualmente l'utente %user% ha %records% registrazioni per una durata totale di %duration%.
-                </target>
       </trans-unit>
       <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>

@@ -482,26 +482,12 @@
         <source>admin_project.title</source>
         <target>Proyectos</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-                    Actualmente el proyecto %project% para el cliente %customer% tiene %activities%
-                    actividades y %records% registros, para un total de %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Activity
             -->
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Actividades</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-                    Actualmente la actividad %activity% en el proyecto %project% para el cliente %customer%
-                    tiene %records% registros, para un total de %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -558,10 +544,6 @@
         <source>label.currency</source>
         <target>Moneda</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>Actualmente el cliente %customer% tiene %project% proyectos con %activity% actividades, para un total de %records% registros que suman %duration%.</target>
-      </trans-unit>
       <!--
               Admin: User
             -->
@@ -588,12 +570,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Rol</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                    Actualmente el usuario %user% tiene %records% registros para un total de %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Plugins

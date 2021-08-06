@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export\Renderer;
 
+use App\Activity\ActivityStatisticService;
 use App\Export\Renderer\HtmlRenderer;
 use App\Export\Renderer\HtmlRendererFactory;
 use App\Project\ProjectStatisticService;
@@ -26,7 +27,8 @@ class HtmlRendererFactoryTest extends TestCase
         $sut = new HtmlRendererFactory(
             $this->createMock(Environment::class),
             $this->createMock(EventDispatcherInterface::class),
-            $this->createMock(ProjectStatisticService::class)
+            $this->createMock(ProjectStatisticService::class),
+            $this->createMock(ActivityStatisticService::class)
         );
 
         $renderer = $sut->create('foo', 'bar.html.twig');

@@ -453,26 +453,12 @@
         <source>admin_project.title</source>
         <target>Projekt</target>
       </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-                    V současné době je projekt %project% pro zákazníka %customer% má %activities%
-                    činnosti a %records% časový záznam, což je celkem %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Activity
             -->
       <trans-unit id="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Aktivity</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-                    Aktuální aktivita %activity% v projektu %project% pro zákazníka %customer%
-                    má %records% časový záznam, který je celkem %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Customer
@@ -529,13 +515,6 @@
         <source>label.currency</source>
         <target>Měna</target>
       </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>
-                    V současné době zákazník %customer% má %project% projekt s %activity% činnosti, které shrnují
-                    v %records% časovém záznamu celkem %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Users
             -->
@@ -562,12 +541,6 @@
       <trans-unit id="label.roles">
         <source>label.roles</source>
         <target>Funkce</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                    V současné době uživatel %user% má %records% časových záznamů, které činí celkem %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Plugins

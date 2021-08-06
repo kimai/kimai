@@ -27,6 +27,7 @@ class Extensions extends AbstractExtension
     public function getFilters()
     {
         return [
+            new TwigFilter('report_date', [$this, 'formatReportDate']),
             new TwigFilter('docu_link', [$this, 'documentationLink']),
             new TwigFilter('multiline_indent', [$this, 'multilineIndent']),
             new TwigFilter('color', [$this, 'color']),
@@ -46,6 +47,11 @@ class Extensions extends AbstractExtension
             new TwigFunction('iso_day_by_name', [$this, 'getIsoDayByName']),
             new TwigFunction('random_color', [$this, 'randomColor']),
         ];
+    }
+
+    public function formatReportDate(\DateTime $dateTime): string
+    {
+        return $dateTime->format('Y-m-d');
     }
 
     public function getIsoDayByName(string $weekDay): int

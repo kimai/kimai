@@ -11,7 +11,6 @@ namespace App\Repository;
 
 use App\Widget\Type\Counter;
 use App\Widget\Type\SimpleStatisticChart;
-use App\Widget\Type\YearChart;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
@@ -341,46 +340,6 @@ class WidgetRepository
                 'color' => 'red',
                 'user' => false,
                 'type' => Counter::class,
-            ],
-            'userRecapThisYear' => [
-                'title' => 'stats.yourWorkingHours',
-                'query' => TimesheetRepository::STATS_QUERY_MONTHLY,
-                'user' => true,
-                'begin' => '01 january this year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'color' => '',
-                'icon' => '',
-                'type' => YearChart::class,
-            ],
-            'userRecapLastYear' => [
-                'title' => 'stats.yourWorkingHours',
-                'query' => TimesheetRepository::STATS_QUERY_MONTHLY,
-                'user' => true,
-                'begin' => '01 january last year 00:00:00',
-                'end' => '31 december last year 23:59:59',
-                'color' => 'rgba(0,115,183,0.7)|#3b8bba',
-                'icon' => '',
-                'type' => YearChart::class,
-            ],
-            'userRecapTwoYears' => [
-                'title' => 'stats.yourWorkingHours',
-                'query' => TimesheetRepository::STATS_QUERY_MONTHLY,
-                'user' => true,
-                'begin' => '01 january last year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'color' => 'rgba(0,115,183,0.6)|#3b8bba;rgba(233,233,233,0.8)|#ccc',
-                'icon' => '',
-                'type' => YearChart::class,
-            ],
-            'userRecapThreeYears' => [
-                'title' => 'stats.yourWorkingHours',
-                'query' => TimesheetRepository::STATS_QUERY_MONTHLY,
-                'user' => true,
-                'begin' => '2 years ago first day of january 00:00:00',
-                'end' => 'this year last day of december 23:59:59',
-                'color' => 'rgba(0,115,183,0.4)|#3b8bba;rgba(233,233,233,0.7)|#ccc;rgba(210,214,222,0.9)|#c1c7d1',
-                'icon' => '',
-                'type' => YearChart::class,
             ],
         ];
     }

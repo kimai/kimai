@@ -55,6 +55,26 @@ class ProjectRepository extends EntityRepository
     }
 
     /**
+     * @param int[] $projectIds
+     * @return Project[]
+     */
+    public function findByIds(array $projectIds)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->where($qb->expr()->in('p.id', ':id'))
+            ->setParameter('id', $projectIds)
+        ;
+
+        $projects = $qb->getQuery()->getResult();
+
+        $loader = new ProjectLoader($qb->getEntityManager());
+        $loader->loadResults($projects);
+
+        return $projects;
+    }
+
+    /**
      * @param Project $project
      * @throws ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -79,6 +99,16 @@ class ProjectRepository extends EntityRepository
         return $this->count([]);
     }
 
+    /**
+     * @deprecated since 1.15 use ProjectStatisticService::getProjectStatistics() instead - will be removed with 2.0
+     * @codeCoverageIgnore
+     *
+     * @param Project $project
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
+     * @return ProjectStatistic
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function getProjectStatistics(Project $project, ?DateTime $begin = null, ?DateTime $end = null): ProjectStatistic
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -103,7 +133,7 @@ class ProjectRepository extends EntityRepository
         $stats = new ProjectStatistic();
 
         if (null !== $timesheetResult) {
-            $stats->setRecordAmount($timesheetResult['amount']);
+            $stats->setCounter($timesheetResult['amount']);
             $stats->setRecordDuration($timesheetResult['duration']);
             $stats->setRecordRate($timesheetResult['rate']);
             $stats->setRecordInternalRate($timesheetResult['internal_rate']);
@@ -196,6 +226,7 @@ class ProjectRepository extends EntityRepository
 
     /**
      * @deprecated since 1.1 - use getQueryBuilderForFormType() istead - will be removed with 2.0
+     * @codeCoverageIgnore
      */
     public function builderForEntityType($project, $customer)
     {
