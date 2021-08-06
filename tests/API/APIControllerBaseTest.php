@@ -339,7 +339,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'id' => 'int',
                     'name' => 'string',
                     'color' => '@string',
-                    'teamlead' => ['result' => 'object', 'type' => 'User'],
+                    'teamlead' => ['result' => 'object', 'type' => '@User'],
                     'members' => ['result' => 'array', 'type' => 'TeamMember'],
                     'users' => ['result' => 'array', 'type' => 'User'],
                     'customers' => ['result' => 'array', 'type' => '@Customer'],
