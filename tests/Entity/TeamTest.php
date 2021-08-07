@@ -98,8 +98,10 @@ class TeamTest extends TestCase
         $member21->setUser($user);
 
         self::assertNull($member21->getTeam());
+        // this will not actually add it
         $sut->addMember($member21);
         self::assertSame($sut, $member21->getTeam());
+        self::assertCount(2, $sut->getMembers());
     }
 
     public function testTeamMembershipsException()

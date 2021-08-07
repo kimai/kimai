@@ -111,4 +111,16 @@ class UserVoterTest extends AbstractVoterTest
           [User::AUTH_SAML, VoterInterface::ACCESS_DENIED],
         ];
     }
+
+    public function testViewTeamMember()
+    {
+        $userMock = $this->createMock(User::class);
+        $userMock->method('getId')->willReturn(1);
+        $user = new User();
+        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $sut = $this->getVoter(UserVoter::class);
+
+        $this->assertEquals(VoterInterface::ACCESS_GRANTED, $sut->vote($token, $user, ['view_team_member']));
+        $this->assertEquals(VoterInterface::ACCESS_DENIED, $sut->vote($token, $userMock, ['view_team_member']));
+    }
 }

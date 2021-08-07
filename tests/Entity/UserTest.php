@@ -423,6 +423,7 @@ class UserTest extends TestCase
     public function testTeamMemberships()
     {
         $team = new Team();
+        $team->setName('Foo');
 
         $member = new TeamMember();
         $member->setTeam($team);
@@ -448,6 +449,7 @@ class UserTest extends TestCase
         self::assertFalse($sut->isTeamleadOf($team));
 
         $sut->addMembership($member);
+        self::assertCount(1, $sut->getMemberships());
         self::assertFalse($sut->isTeamleadOf($team));
 
         $member->setTeamlead(true);
@@ -457,8 +459,18 @@ class UserTest extends TestCase
         $member21->setTeam($team);
 
         self::assertNull($member21->getUser());
+        // this will not be added, because $team is already assigned
         $sut->addMembership($member21);
+
+        self::assertCount(1, $sut->getMemberships());
         self::assertSame($sut, $member21->getUser());
+
+        $sut->addTeam(new Team());
+        self::assertCount(2, $sut->getTeams());
+        self::assertCount(2, $sut->getMemberships());
+
+        $sut->removeTeam($team);
+        self::assertCount(1, $sut->getMemberships());
     }
 
     public function testTeamMembershipsException()

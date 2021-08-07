@@ -522,6 +522,12 @@ class User implements UserInterface, EquatableInterface, \Serializable
             throw new \InvalidArgumentException('Cannot set foreign user membership');
         }
 
+        if (null !== ($existing = $this->findMember($member))) {
+            $existing->setTeamlead($member->isTeamlead());
+
+            return;
+        }
+
         // when using the API an invalid team id does not trigger the validation first, but after calling this method :-(
         if ($member->getTeam() !== null) {
             $this->memberships->add($member);
@@ -635,6 +641,42 @@ class User implements UserInterface, EquatableInterface, \Serializable
         }
 
         return $teams;
+    }
+
+    /**
+     * Required in the User profile screen to edit his teams.
+     *
+     * @param Team $team
+     */
+    public function addTeam(Team $team): void
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->getTeam() === $team) {
+                return;
+            }
+        }
+
+        $membership = new TeamMember();
+        $membership->setUser($this);
+        $membership->setTeam($team);
+
+        $this->addMembership($membership);
+    }
+
+    /**
+     * Required in the User profile screen to edit his teams.
+     *
+     * @param Team $team
+     */
+    public function removeTeam(Team $team): void
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->getTeam() === $team) {
+                $this->removeMembership($membership);
+
+                return;
+            }
+        }
     }
 
     public function isInTeam(Team $team): bool
