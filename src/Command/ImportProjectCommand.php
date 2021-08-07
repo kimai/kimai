@@ -195,7 +195,7 @@ class ImportProjectCommand extends Command
 
                 $team = new Team();
                 $team->setName($project->getName());
-                $team->addTeamLead($teamlead);
+                $team->addTeamlead($teamlead);
 
                 $this->teams->saveTeam($team);
 

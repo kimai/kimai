@@ -212,7 +212,7 @@ class Team
      * @deprecated since 1.15 - will be removed with 2.0
      * @return User|null
      */
-    public function getTeamLead(): ?User
+    public function getTeamlead(): ?User
     {
         foreach ($this->members as $member) {
             if ($member->isTeamlead()) {
@@ -223,15 +223,10 @@ class Team
         return null;
     }
 
-    public function countUser(): int
-    {
-        return $this->members->count();
-    }
-
     /**
      * @return User[]
      */
-    public function getTeamLeads(): array
+    public function getTeamleads(): array
     {
         $leads = [];
         foreach ($this->members as $member) {
@@ -260,7 +255,7 @@ class Team
      */
     public function setTeamlead(User $teamlead): void
     {
-        $this->addTeamLead($teamlead);
+        $this->addTeamlead($teamlead);
     }
 
     public function addTeamlead(User $user): void
@@ -268,6 +263,11 @@ class Team
         $this->addUser($user, true);
     }
 
+    /**
+     * Will only remove the teamlead flag, not the user from the team.
+     *
+     * @param User $user
+     */
     public function removeTeamlead(User $user): void
     {
         foreach ($this->members as $member) {

@@ -128,7 +128,7 @@ class ResetTestCommand extends AbstractResetCommand
 
         $team = new Team();
         $team->setName('Test team');
-        $team->addTeamLead($userEntities[6]);
+        $team->addTeamlead($userEntities[6]);
         $team->addUser($userEntities[7]);
         $this->entityManager->persist($team);
 

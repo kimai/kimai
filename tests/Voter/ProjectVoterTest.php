@@ -52,7 +52,7 @@ class ProjectVoterTest extends AbstractVoterTest
         }
 
         $team = new Team();
-        $team->addTeamLead($userTeamlead);
+        $team->addTeamlead($userTeamlead);
         foreach ([$userTeamlead] as $user) {
             $project = new Project();
             $team->addProject($project);
@@ -95,7 +95,7 @@ class ProjectVoterTest extends AbstractVoterTest
         $team = new Team();
         $user = new User();
         $user->addRole(User::ROLE_TEAMLEAD);
-        $team->addTeamLead($user);
+        $team->addTeamlead($user);
 
         $project = new Project();
         $customer = new Customer();
@@ -117,7 +117,7 @@ class ProjectVoterTest extends AbstractVoterTest
         $team = new Team();
         $user = new User();
         $user->addRole(User::ROLE_USER);
-        $team->addTeamLead($user);
+        $team->addTeamlead($user);
 
         $project = new Project();
         $customer = new Customer();

@@ -144,7 +144,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         // and a team
         $team = new Team();
         $team->setName('Testing project team');
-        $team->addTeamLead($this->getUserByRole(User::ROLE_USER));
+        $team->addTeamlead($this->getUserByRole(User::ROLE_USER));
         $team->addCustomer($customer);
         $team->addProject($project);
         $team->addUser($this->getUserByRole(User::ROLE_TEAMLEAD));

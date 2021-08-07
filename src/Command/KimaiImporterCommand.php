@@ -1874,13 +1874,13 @@ final class KimaiImporterCommand extends Command
 
             // first user in the team will become team lead
             if (!$team->hasTeamleads()) {
-                $team->addTeamLead($user);
+                $team->addTeamlead($user);
             }
 
             // any other user with admin role in the team will become team lead
             // should be the last added admin of the source group
             if ($row['membershipRoleID'] === 1) {
-                $team->addTeamLead($user);
+                $team->addTeamlead($user);
             }
         }
 
@@ -1998,7 +1998,7 @@ final class KimaiImporterCommand extends Command
         $team->setName($name);
         $teamlead = $users[array_key_first($users)];
         $teamlead = $this->getCachedUser($teamlead['userID']);
-        $team->addTeamLead($teamlead);
+        $team->addTeamlead($teamlead);
         foreach ($users as $oldUser) {
             $team->addUser($this->getCachedUser($oldUser['userID']));
             foreach ($activities as $oldActivity) {

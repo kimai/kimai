@@ -14,6 +14,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
+use App\Entity\TeamMember;
 use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
@@ -55,6 +56,57 @@ class TeamTest extends TestCase
         self::assertTrue($sut->hasColor());
     }
 
+    public function testTeamMemberships()
+    {
+        $user = new User();
+        $user2 = new User();
+
+        $member = new TeamMember();
+        $member->setUser($user);
+
+        $member21 = new TeamMember();
+        $member21->setUser($user);
+
+        $member2 = new TeamMember();
+        $member2->setUser($user);
+        $member2->setTeam(new Team());
+
+        $sut = new Team();
+        self::assertFalse($sut->isTeamlead($user));
+        self::assertCount(0, $sut->getTeamleads());
+        self::assertCount(0, $sut->getMembers());
+        self::assertFalse($sut->hasMember($member));
+        $sut->removeMember($member);
+        $sut->removeMember($member2);
+        $sut->addMember($member);
+        self::assertCount(1, $sut->getMembers());
+        $sut->removeMember($member2);
+        self::assertCount(1, $sut->getMembers());
+        $sut->removeMember($member);
+        self::assertCount(0, $sut->getMembers());
+        self::assertFalse($sut->isTeamlead($user));
+
+        $sut->addMember($member);
+        $member->setTeamlead(true);
+        self::assertTrue($sut->isTeamlead($user));
+        self::assertCount(1, $sut->getMembers());
+        $sut->addTeamlead($user2);
+        self::assertCount(2, $sut->getMembers());
+        self::assertTrue($sut->isTeamlead($user2));
+        $sut->removeTeamlead($user2);
+        self::assertCount(2, $sut->getMembers());
+        self::assertFalse($sut->isTeamlead($user2));
+    }
+
+    public function testTeamMembershipsException()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $sut = new Team();
+        $member = new TeamMember();
+        $member->setTeam(new Team());
+        $sut->addMember($member);
+    }
+
     public function testSetterAndGetter()
     {
         $sut = new Team();
@@ -65,8 +117,8 @@ class TeamTest extends TestCase
         $user = $this->createMock(User::class);
         $user->method('getId')->willReturn(99);
         $user->method('getAlias')->willReturn('Foo!');
-        $sut->addTeamLead($user);
-        self::assertSame($user, $sut->getTeamLeads()[0]);
+        $sut->addTeamlead($user);
+        self::assertSame($user, $sut->getTeamleads()[0]);
         self::assertTrue($sut->hasTeamleads());
 
         $user1 = $this->createMock(User::class);
@@ -76,16 +128,16 @@ class TeamTest extends TestCase
 
         self::assertFalse($sut->isTeamlead(new User()));
         self::assertTrue($sut->isTeamlead($user));
-        self::assertCount(1, $sut->getTeamLeads());
-        $sut->addTeamLead($user1);
-        self::assertCount(2, $sut->getTeamLeads());
+        self::assertCount(1, $sut->getTeamleads());
+        $sut->addTeamlead($user1);
+        self::assertCount(2, $sut->getTeamleads());
         self::assertCount(2, $sut->getMembers());
         $sut->addUser($user2);
         self::assertCount(3, $sut->getMembers());
-        self::assertCount(2, $sut->getTeamLeads());
+        self::assertCount(2, $sut->getTeamleads());
         $sut->addUser($user2);
         self::assertCount(3, $sut->getMembers());
-        self::assertCount(2, $sut->getTeamLeads());
+        self::assertCount(2, $sut->getTeamleads());
     }
 
     /**
@@ -95,17 +147,17 @@ class TeamTest extends TestCase
     {
         $sut = new Team();
 
-        self::assertNull($sut->getTeamLead());
+        self::assertNull($sut->getTeamlead());
         self::assertIsArray($sut->getUsers());
         self::assertEmpty($sut->getUsers());
 
         $user = (new User())->setAlias('Foo!');
         self::assertCount(0, $sut->getUsers());
-        $sut->setTeamLead($user);
-        self::assertSame($user, $sut->getTeamLead());
+        $sut->setTeamlead($user);
+        self::assertSame($user, $sut->getTeamlead());
         self::assertTrue($sut->hasTeamleads());
         self::assertCount(1, $sut->getUsers());
-        self::assertCount(1, $sut->getTeamLeads());
+        self::assertCount(1, $sut->getTeamleads());
         self::assertCount(1, $sut->getMembers());
     }
 
@@ -191,7 +243,7 @@ class TeamTest extends TestCase
         self::assertCount(1, $sut->getUsers());
         $sut->removeUser($user);
         self::assertCount(0, $sut->getUsers());
-        $sut->addTeamLead(new User());
+        $sut->addTeamlead(new User());
         self::assertCount(1, $sut->getUsers());
     }
 }
