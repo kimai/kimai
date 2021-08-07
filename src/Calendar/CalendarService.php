@@ -115,6 +115,7 @@ final class CalendarService
             'timeframeEnd' => $this->configuration->getCalendarTimeframeEnd(),
             'dragDropAmount' => $this->configuration->getCalendarDragAndDropMaxEntries(),
         ];
+
         $event = new CalendarConfigurationEvent($config);
         $this->dispatcher->dispatch($event);
 

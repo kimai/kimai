@@ -19,6 +19,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use JMS\Serializer\Annotation as Serializer;
+use Swagger\Annotations as SWG;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -63,7 +64,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Exporter\Expose("language", label="label.language", exp="object.getLanguage()")
  * @Exporter\Expose("last_login", label="label.lastLogin", exp="object.getLastLogin()", type="datetime")
  * @Exporter\Expose("roles", label="label.roles", exp="object.getRoles()", type="array")
- * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
+ * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams()", type="array")
  * @Exporter\Expose("active", label="label.active", exp="object.isEnabled()", type="boolean")
  */
 class User implements UserInterface, EquatableInterface, \Serializable
@@ -172,25 +173,17 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     private $preferences;
     /**
-     * All teams of the user
-     *
-     * @var Team[]|ArrayCollection
+     * @var TeamMember[]|ArrayCollection<TeamMember>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"User_Entity"})
+     * @SWG\Property(ref="#/definitions/TeamMembership")
      *
-     * @ORM\ManyToMany(targetEntity="Team", inversedBy="users", cascade={"persist"})
-     * @ORM\JoinTable(
-     *  name="kimai2_users_teams",
-     *  joinColumns={
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
-     *  },
-     *  inverseJoinColumns={
-     *      @ORM\JoinColumn(name="team_id", referencedColumnName="id", onDelete="CASCADE")
-     *  }
-     * )
+     * @ORM\OneToMany(targetEntity="App\Entity\TeamMember", mappedBy="user", fetch="LAZY", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @Assert\NotNull()
      */
-    private $teams;
+    private $memberships;
     /**
      * The type of authentication used by the user (eg. "kimai", "ldap", "saml")
      *
@@ -296,7 +289,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     {
         $this->registeredAt = new DateTime();
         $this->preferences = new ArrayCollection();
-        $this->teams = new ArrayCollection();
+        $this->memberships = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -515,37 +508,99 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return $this;
     }
 
-    public function addTeam(Team $team): User
+    public function addMembership(TeamMember $member): void
     {
-        if ($this->teams->contains($team)) {
-            return $this;
-        }
-
-        $this->teams->add($team);
-        $team->addUser($this);
-
-        return $this;
-    }
-
-    public function removeTeam(Team $team)
-    {
-        if (!$this->teams->contains($team)) {
+        if ($this->memberships->contains($member)) {
             return;
         }
-        $this->teams->removeElement($team);
-        $team->removeUser($this);
+
+        if ($member->getUser() === null) {
+            $member->setUser($this);
+        }
+
+        if ($member->getUser() !== $this) {
+            throw new \InvalidArgumentException('Cannot set foreign user membership');
+        }
+
+        if (null !== ($existing = $this->findMember($member))) {
+            $existing->setTeamlead($member->isTeamlead());
+
+            return;
+        }
+
+        // when using the API an invalid team id does not trigger the validation first, but after calling this method :-(
+        if ($member->getTeam() !== null) {
+            $this->memberships->add($member);
+            $member->getTeam()->addMember($member);
+        }
     }
 
+    public function removeMembership(TeamMember $member): void
+    {
+        $existingMember = $this->findMember($member);
+        if ($existingMember === null) {
+            return;
+        }
+
+        $this->memberships->removeElement($existingMember);
+        $existingMember->getUser()->removeMembership($existingMember);
+    }
+
+    /**
+     * Indexed by ID to use it within collection type forms.
+     *
+     * @return TeamMember[]
+     */
+    public function getMemberships(): iterable
+    {
+        $all = [];
+        foreach ($this->memberships as $member) {
+            if ($member->getId() === null) {
+                $all[] = $member;
+            } else {
+                $all[$member->getId()] = $member;
+            }
+        }
+
+        return $all;
+    }
+
+    public function hasMembership(TeamMember $member): bool
+    {
+        return $this->memberships->contains($member);
+    }
+
+    private function findMember(TeamMember $member): ?TeamMember
+    {
+        foreach ($this->memberships as $oldMember) {
+            if ($oldMember->getUser() === $member->getUser() && $oldMember->getTeam() === $member->getTeam()) {
+                return $oldMember;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Checks if the user is member of any team.
+     *
+     * @return bool
+     */
     public function hasTeamAssignment(): bool
     {
-        return !$this->getTeams()->isEmpty();
+        return !$this->memberships->isEmpty();
     }
 
-    public function hasTeamMember(User $user): bool
+    /**
+     * Checks is the user is teamlead in any of the assigned teams.
+     *
+     * @see User::hasTeamleadRole()
+     * @return bool
+     */
+    public function isTeamlead(): bool
     {
-        /** @var Team $team */
-        foreach ($this->getTeams() as $team) {
-            if ($team->hasUser($user)) {
+        foreach ($this->memberships as $membership) {
+            if ($membership->isTeamlead()) {
                 return true;
             }
         }
@@ -554,21 +609,96 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @return Collection<Team>
+     * Checks if the given user is a team member.
+     *
+     * @param User $user
+     * @return bool
      */
-    public function getTeams(): Collection
+    public function hasTeamMember(User $user): bool
     {
-        return $this->teams;
+        foreach ($this->memberships as $membership) {
+            if ($membership->getTeam()->hasUser($user)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("teams"),
+     * @Serializer\Groups({"User_Entity"})
+     * @SWG\Property(ref="#/definitions/TeamEntity")
+     *
+     * @return Team[]
+     */
+    public function getTeams(): iterable
+    {
+        $teams = [];
+        foreach ($this->memberships as $membership) {
+            $teams[] = $membership->getTeam();
+        }
+
+        return $teams;
+    }
+
+    /**
+     * Required in the User profile screen to edit his teams.
+     *
+     * @param Team $team
+     */
+    public function addTeam(Team $team): void
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->getTeam() === $team) {
+                return;
+            }
+        }
+
+        $membership = new TeamMember();
+        $membership->setUser($this);
+        $membership->setTeam($team);
+
+        $this->addMembership($membership);
+    }
+
+    /**
+     * Required in the User profile screen to edit his teams.
+     *
+     * @param Team $team
+     */
+    public function removeTeam(Team $team): void
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->getTeam() === $team) {
+                $this->removeMembership($membership);
+
+                return;
+            }
+        }
     }
 
     public function isInTeam(Team $team): bool
     {
-        return $this->teams->contains($team);
+        foreach ($this->memberships as $membership) {
+            if ($membership->getTeam() === $team) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function isTeamleadOf(Team $team): bool
     {
-        return $team->getTeamLead() === $this;
+        foreach ($this->memberships as $membership) {
+            if ($membership->getTeam() === $team) {
+                return $membership->isTeamlead();
+            }
+        }
+
+        return false;
     }
 
     public function canSeeAllData(): bool
@@ -596,7 +726,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return true;
     }
 
-    public function isTeamlead(): bool
+    public function hasTeamleadRole(): bool
     {
         return $this->hasRole(static::ROLE_TEAMLEAD);
     }
@@ -698,6 +828,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     public function getLastLogin(): ?DateTime
     {
+        if ($this->lastLogin !== null) {
+            // make sure to use the users own timezone
+            $this->lastLogin->setTimeZone(new \DateTimeZone($this->getTimezone()));
+        }
+
         return $this->lastLogin;
     }
 

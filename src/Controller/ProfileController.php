@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
@@ -21,6 +22,7 @@ use App\Form\UserTeamsType;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetStatisticService;
 use App\User\UserService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -179,13 +181,27 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}/teams", name="user_profile_teams", methods={"GET", "POST"})
      * @Security("is_granted('teams', profile)")
      */
-    public function teamsAction(User $profile, Request $request): Response
+    public function teamsAction(User $profile, Request $request, UserService $service): Response
     {
+        $originalMembers = new ArrayCollection();
+        foreach ($profile->getMemberships() as $member) {
+            $originalMembers->add($member);
+        }
+
         $form = $this->createTeamsForm($profile);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+
+            /** @var TeamMember $member */
+            foreach ($originalMembers as $member) {
+                if (!$profile->hasMembership($member)) {
+                    $member->getTeam()->removeMember($member);
+                    $entityManager->remove($profile);
+                }
+            }
+
             $entityManager->persist($profile);
             $entityManager->flush();
 

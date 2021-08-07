@@ -85,9 +85,9 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    protected function addTeamsChoice(FormBuilderInterface $builder)
+    protected function addTeamsChoice(FormBuilderInterface $builder, string $field = 'teams')
     {
-        $builder->add('teams', TeamType::class, [
+        $builder->add($field, TeamType::class, [
             'documentation' => [
                 'type' => 'array',
                 'items' => ['type' => 'integer', 'description' => 'Team ID'],

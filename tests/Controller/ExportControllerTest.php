@@ -50,7 +50,7 @@ class ExportControllerTest extends ControllerBaseTest
         /** @var Team $team */
         $team = new Team();
         $team->setName('fooo');
-        $team->setTeamLead($teamlead);
+        $team->addTeamlead($teamlead);
         $team->addUser($user);
         $em->persist($team);
         $em->persist($user);

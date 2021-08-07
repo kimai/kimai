@@ -100,7 +100,7 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
             $team = new Team();
             $team
                 ->setName($faker->company . ' ' . $i)
-                ->setTeamLead($allUsers[array_rand($allUsers)])
+                ->addTeamlead($allUsers[array_rand($allUsers)])
             ;
 
             if ($userCount > 0) {

@@ -197,7 +197,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $project->setEnd(new \DateTime());
         $em->persist($project);
         $team = new Team();
-        $team->setTeamLead($this->getUserByRole(User::ROLE_ADMIN));
+        $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
         $team->addProject($project);
         $team->setName('project 1');
         $em->persist($team);

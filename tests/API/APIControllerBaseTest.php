@@ -235,6 +235,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         self::assertArrayHasKey('children', $result['errors']);
         $data = $result['errors']['children'];
 
+        $foundErrors = [];
+
         foreach ($failedFields as $key => $value) {
             $messages = [];
             $fieldName = $value;
@@ -245,17 +247,25 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     $messages = [$value];
                 }
             }
+
+            while (stripos($fieldName, '.') !== false) {
+                $parts = explode('.', $fieldName);
+                $tmp = array_shift($parts);
+                self::assertArrayHasKey($tmp, $data, sprintf('Could not find field "%s" in result', $tmp));
+                $data = $data[$tmp];
+                if (\count($data) === 1 && \array_key_exists('children', $data)) {
+                    $data = $data['children'];
+                }
+                $fieldName = implode('.', $parts);
+            }
+
             self::assertArrayHasKey($fieldName, $data, sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
             self::assertArrayHasKey('errors', $data[$fieldName], sprintf('Field %s has no validation problem', $fieldName));
             foreach ($messages as $i => $message) {
                 self::assertEquals($message, $data[$fieldName]['errors'][$i]);
             }
-        }
-
-        $foundErrors = [];
-        foreach ($data as $fieldName => $field) {
-            if (\array_key_exists('errors', $field) && \count($field['errors']) > 0) {
-                $foundErrors[$fieldName] = \count($field['errors']);
+            if (\array_key_exists('errors', $data[$fieldName]) && \count($data[$fieldName]['errors']) > 0) {
+                $foundErrors[$fieldName] = \count($data[$fieldName]['errors']);
             }
         }
 
@@ -310,6 +320,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'language' => 'string',
                     'timezone' => 'string',
                     'accountNumber' => '@string',
+                    'memberships' => ['result' => 'array', 'type' => 'TeamMembership'],
                 ];
 
             // if a team is embedded
@@ -328,11 +339,26 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'id' => 'int',
                     'name' => 'string',
                     'color' => '@string',
-                    'teamlead' => ['result' => 'object', 'type' => 'User'],
+                    'teamlead' => ['result' => 'object', 'type' => '@User'],
+                    'members' => ['result' => 'array', 'type' => 'TeamMember'],
                     'users' => ['result' => 'array', 'type' => 'User'],
                     'customers' => ['result' => 'array', 'type' => '@Customer'],
                     'projects' => ['result' => 'array', 'type' => '@Project'],
                     'activities' => ['result' => 'array', 'type' => '@Activity'],
+                ];
+
+            // if the team is used inside the team context
+            case 'TeamMember':
+                return [
+                    'user' => ['result' => 'object', 'type' => 'User'],
+                    'teamlead' => 'bool',
+                ];
+
+            // if the team is used inside the user context
+            case 'TeamMembership':
+                return [
+                    'team' => ['result' => 'object', 'type' => 'Team'],
+                    'teamlead' => 'bool',
                 ];
 
             // if a customer is embedded in other objects

@@ -11,6 +11,7 @@ namespace App\Tests\Entity;
 
 use App\Constants;
 use App\Entity\Team;
+use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Export\Spreadsheet\ColumnDefinition;
@@ -198,7 +199,11 @@ class UserTest extends TestCase
         self::assertEmpty($sut->getTeams());
         self::assertEmpty($team->getUsers());
 
-        $sut->addTeam($team);
+        $member1 = new TeamMember();
+        $member1->setUser($sut);
+        $member1->setTeam($team);
+
+        $sut->addMembership($member1);
         self::assertCount(1, $sut->getTeams());
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getUsers()[0]);
@@ -218,12 +223,13 @@ class UserTest extends TestCase
         self::assertTrue($sut->isTeamleadOf($team2));
         self::assertTrue($sut->isInTeam($team2));
 
-        $sut->removeTeam(new Team());
         self::assertCount(2, $sut->getTeams());
-        $sut->removeTeam($team);
+        $sut->removeMembership(new TeamMember());
+        self::assertCount(2, $sut->getTeams());
+        $sut->removeMembership($member1);
         self::assertCount(1, $sut->getTeams());
         self::assertTrue($sut->hasTeamAssignment());
-        $sut->removeTeam($team2);
+        $team2->removeUser($sut);
         self::assertCount(0, $sut->getTeams());
         self::assertFalse($sut->hasTeamAssignment());
     }
@@ -241,7 +247,7 @@ class UserTest extends TestCase
         self::assertFalse($sut->isTeamlead());
 
         $sut->addRole(User::ROLE_TEAMLEAD);
-        self::assertTrue($sut->isTeamlead());
+        self::assertTrue($sut->hasTeamleadRole());
         self::assertFalse($sut->canSeeAllData());
 
         $sut->removeRole(User::ROLE_ADMIN);
@@ -256,7 +262,7 @@ class UserTest extends TestCase
         $sut->removeRole(User::ROLE_SUPER_ADMIN);
         self::assertFalse($sut->canSeeAllData());
         self::assertFalse($sut->isSuperAdmin());
-        self::assertTrue($sut->isTeamlead());
+        self::assertTrue($sut->hasTeamleadRole());
 
         $sut->setSuperAdmin(true);
         self::assertTrue($sut->isSuperAdmin());
@@ -405,12 +411,74 @@ class UserTest extends TestCase
         $unserialized = unserialize($data);
 
         $actual = [
-            $sut->getUsername(),
-            $sut->isEnabled(),
-            $sut->getId(),
-            $sut->getEmail(),
+            $unserialized->getUsername(),
+            $unserialized->isEnabled(),
+            $unserialized->getId(),
+            $unserialized->getEmail(),
         ];
 
         self::assertEquals($expected, $actual);
+    }
+
+    public function testTeamMemberships()
+    {
+        $team = new Team();
+        $team->setName('Foo');
+
+        $member = new TeamMember();
+        $member->setTeam($team);
+
+        $member2 = new TeamMember();
+        $member2->setUser(new User());
+        $member2->setTeam($team);
+
+        $sut = new User();
+        self::assertFalse($sut->isTeamleadOf($team));
+        self::assertFalse($sut->isTeamlead());
+        self::assertCount(0, $sut->getMemberships());
+        self::assertFalse($sut->hasMembership($member));
+        $sut->removeMembership($member);
+        $sut->removeMembership($member2);
+        $sut->addMembership($member);
+        self::assertCount(1, $sut->getMemberships());
+        $sut->removeMembership($member2);
+        self::assertCount(1, $sut->getMemberships());
+        $sut->removeMembership($member);
+        self::assertCount(0, $sut->getMemberships());
+
+        self::assertFalse($sut->isTeamleadOf($team));
+
+        $sut->addMembership($member);
+        self::assertCount(1, $sut->getMemberships());
+        self::assertFalse($sut->isTeamleadOf($team));
+
+        $member->setTeamlead(true);
+        self::assertTrue($sut->isTeamleadOf($team));
+
+        $member21 = new TeamMember();
+        $member21->setTeam($team);
+
+        self::assertNull($member21->getUser());
+        // this will not be added, because $team is already assigned
+        $sut->addMembership($member21);
+
+        self::assertCount(1, $sut->getMemberships());
+        self::assertSame($sut, $member21->getUser());
+
+        $sut->addTeam(new Team());
+        self::assertCount(2, $sut->getTeams());
+        self::assertCount(2, $sut->getMemberships());
+
+        $sut->removeTeam($team);
+        self::assertCount(1, $sut->getMemberships());
+    }
+
+    public function testTeamMembershipsException()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $sut = new User();
+        $member = new TeamMember();
+        $member->setUser(new User());
+        $sut->addMembership($member);
     }
 }

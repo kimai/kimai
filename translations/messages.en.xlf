@@ -1240,6 +1240,14 @@
         <source>delete_warning.short_stats</source>
         <target>Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
       </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Add user</target>
+      </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\Tag;
 use App\Entity\Team;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Form\Model\MultiUserTimesheet;
 use App\Form\TimesheetAdminEditForm;
@@ -101,14 +102,15 @@ class TimesheetTeamController extends TimesheetAbstractController
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
             try {
-                /** @var ArrayCollection $users */
+                /** @var ArrayCollection<User> $users */
                 $users = $createForm->get('users')->getData();
-                /** @var ArrayCollection $teams */
+                /** @var ArrayCollection<Team> $teams */
                 $teams = $createForm->get('teams')->getData();
 
                 $allUsers = $users->toArray();
+                /** @var Team $team */
                 foreach ($teams as $team) {
-                    $allUsers = array_merge($allUsers, $team->getUsers()->toArray());
+                    $allUsers = array_merge($allUsers, $team->getUsers());
                 }
                 $allUsers = array_unique($allUsers);
 

@@ -9,6 +9,7 @@
 
 namespace App\Tests\Repository\Loader;
 
+use App\Entity\Customer;
 use App\Entity\Project;
 use App\Repository\Loader\ProjectLoader;
 
@@ -20,12 +21,18 @@ class ProjectLoaderTest extends AbstractLoaderTest
 {
     public function testLoadResults()
     {
-        $em = $this->getEntityManagerMock(4);
-
-        $sut = new ProjectLoader($em);
+        $customer = $this->createMock(Customer::class);
+        $customer->expects($this->once())->method('getId')->willReturn(13);
 
         $entity = $this->createMock(Project::class);
         $entity->expects($this->once())->method('getId')->willReturn(1);
+        $entity->expects($this->once())->method('getCustomer')->willReturn($customer);
+
+        $results = [$entity];
+
+        $em = $this->getEntityManagerMock(4, $results);
+
+        $sut = new ProjectLoader($em);
 
         $sut->loadResults([$entity]);
     }

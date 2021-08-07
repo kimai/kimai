@@ -17,12 +17,17 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractLoaderTest extends TestCase
 {
-    protected function getEntityManagerMock(int $createQueryBuilderCount)
+    protected function getEntityManagerMock(int $createQueryBuilderCount, $resultMock = null)
     {
         $em = $this->createMock(EntityManager::class);
         $qb = $this->createMock(QueryBuilder::class);
+
         $query = $this->createMock(AbstractQuery::class);
         $expr = $this->createMock(Expr::class);
+
+        if ($resultMock !== null) {
+            $query->expects($this->any())->method('execute')->willReturn($resultMock);
+        }
 
         $expr->expects($this->any())->method('isNotNull')->willReturn('');
         $expr->expects($this->any())->method('in')->willReturn('');

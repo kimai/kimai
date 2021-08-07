@@ -9,60 +9,38 @@
 
 namespace App\Form\Type;
 
-use App\Entity\User;
-use App\Repository\UserRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\TeamMember;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Select a user that
- */
 class TeamMemberType extends AbstractType
 {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('user', UserType::class, [
+            'selectpicker' => false,
+        ]);
+
+        $builder->add('teamlead', YesNoType::class, [
+            'label' => 'label.teamlead'
+        ]);
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'team_member';
+    }
+
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'class' => User::class,
+            'data_class' => TeamMember::class,
             'label' => 'label.user',
-            'choice_label' => function (User $user) {
-                return $user->getDisplayName();
-            },
+            'compound' => true,
         ]);
-
-        $resolver->setDefault('query_builder', function (Options $options) {
-            return function (UserRepository $repo) use ($options) {
-                $qb = $repo->createQueryBuilder('u');
-                $qb
-                    ->andWhere($qb->expr()->eq('u.enabled', ':enabled'))
-                    ->setParameter('enabled', true, \PDO::PARAM_BOOL)
-                    ->orderBy('u.username', 'ASC');
-
-                /** @var User $user */
-                $user = $options['user'];
-
-                if (null !== $user && $user->hasTeamAssignment() && !$user->canSeeAllData()) {
-                    $qb
-                        ->leftJoin('u.teams', 'teams')
-                        ->leftJoin('teams.users', 'users')
-                        ->andWhere($qb->expr()->isMemberOf(':teams', 'u.teams'))
-                        ->setParameter('teams', $user->getTeams());
-                }
-
-                return $qb;
-            };
-        });
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
-    {
-        return EntityType::class;
     }
 }

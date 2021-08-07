@@ -37,6 +37,8 @@ nelmio_api_doc:
             - { alias: TeamEditForm,                type: App\Form\API\TeamApiEditForm,             groups: [Default, Entity, Team, Team_Entity] }
             - { alias: TeamEntity,                  type: App\Entity\Team,                          groups: [Default, Entity, Team, Team_Entity] }
             - { alias: TeamCollection,              type: App\Entity\Team,                          groups: [Default, Collection, Team] }
+            - { alias: TeamMember,                  type: App\Entity\TeamMember,                    groups: [Team_Entity] }
+            - { alias: TeamMembership,              type: App\Entity\TeamMember,                    groups: [User_Entity] }
     areas:
         path_patterns:
             - ^/api(?!/doc)

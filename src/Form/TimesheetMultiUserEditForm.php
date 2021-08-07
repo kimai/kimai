@@ -9,8 +9,8 @@
 
 namespace App\Form;
 
-use App\Form\Type\TeamMemberType;
 use App\Form\Type\TeamType;
+use App\Form\Type\UserType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,7 +24,7 @@ class TimesheetMultiUserEditForm extends TimesheetAdminEditForm
 
         parent::buildForm($builder, $options);
 
-        $builder->add('users', TeamMemberType::class, [
+        $builder->add('users', UserType::class, [
             'multiple' => true,
             'required' => false,
         ]);

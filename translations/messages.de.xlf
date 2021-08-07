@@ -1240,6 +1240,14 @@
         <source>delete_warning.short_stats</source>
         <target>Momentan existieren insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.</target>
       </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Benutzer hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Durch Auswahl wird dem Team ein neuer Benutzer hinzugefügt. Sie können im Anschluss festlegen, ob der Benutzer ein Teamleiter sein soll.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

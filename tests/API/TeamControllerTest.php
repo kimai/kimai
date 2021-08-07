@@ -92,7 +92,9 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
+            'members' => [
+                ['user' => 1, 'teamlead' => 1]
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -123,39 +125,62 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => '',
-            'teamlead' => 9999,
+            'members' => [
+                ['user' => 9999, 'teamlead' => 1]
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
 
         $response = $client->getResponse();
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertApiCallValidationError($response, ['name', 'teamlead']);
+        $this->assertApiCallValidationError($response, ['name', 'members.0.user']);
     }
 
     public function testPatchAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
+            'members' => [
+                ['user' => 1, 'teamlead' => true],
+                ['user' => 5, 'teamlead' => true],
+            ]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
+        $updateId = $result['id'];
 
         $data = [
             'name' => 'foo',
-            'teamlead' => 2,
-            'users' => [1, 5, 4]
+            'members' => [
+                ['user' => 2, 'teamlead' => true],
+                ['user' => 1, 'teamlead' => false],
+                ['user' => 4, 'teamlead' => true],
+            ]
         ];
-        $this->request($client, '/api/teams/' . $result['id'], 'PATCH', [], json_encode($data));
+
+        $this->request($client, '/api/teams/' . $updateId, 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
         $this->assertNotEmpty($result['id']);
-        self::assertCount(4, $result['users']);
+        self::assertCount(3, $result['users']);
+
+        self::assertFalse($result['members'][1]['teamlead']);
+        self::assertEquals(1, $result['members'][1]['user']['id']);
+        self::assertEquals('clara_customer', $result['members'][1]['user']['username']);
+
+        self::assertTrue($result['members'][2]['teamlead']);
+        self::assertEquals(4, $result['members'][2]['user']['id']);
+        self::assertEquals('tony_teamlead', $result['members'][2]['user']['username']);
+
+        self::assertTrue(true, $result['members'][0]['teamlead']);
+        self::assertEquals(2, $result['members'][0]['user']['id']);
+        self::assertEquals('john_user', $result['members'][0]['user']['username']);
     }
 
     public function testPatchActionWithValidationErrors()
@@ -163,7 +188,9 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -171,14 +198,15 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $data = [
             'name' => '1',
-            'teamlead' => 9999,
-            'users' => [9999]
+            'members' => [
+                ['user' => 9999, 'teamlead' => 1],
+            ],
         ];
         $this->request($client, '/api/teams/' . $result['id'], 'PATCH', [], json_encode($data));
 
         $response = $client->getResponse();
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertApiCallValidationError($response, ['name', 'teamlead', 'users']);
+        $this->assertApiCallValidationError($response, ['name', 'members.0.user']);
     }
 
     public function testDeleteAction()
@@ -205,7 +233,9 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
+            'members' => [
+                ['user' => 1, 'teamlead' => 1]
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -226,8 +256,10 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
-            'users' => [2]
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+                ['user' => 2, 'teamlead' => 0],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -261,8 +293,12 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
-            'users' => [2, 4, 5]
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+                ['user' => 2, 'teamlead' => 0],
+                ['user' => 4, 'teamlead' => 0],
+                ['user' => 5, 'teamlead' => 0],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -283,8 +319,12 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
-            'users' => [2, 4, 5]
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+                ['user' => 2, 'teamlead' => 0],
+                ['user' => 4, 'teamlead' => 0],
+                ['user' => 5, 'teamlead' => 0],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -324,7 +364,9 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -346,8 +388,10 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
-            'users' => [2]
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+                ['user' => 2, 'teamlead' => 0],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -383,8 +427,12 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
-            'users' => [2, 4, 5]
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+                ['user' => 2, 'teamlead' => 0],
+                ['user' => 4, 'teamlead' => 0],
+                ['user' => 5, 'teamlead' => 0],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -411,8 +459,12 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
-            'users' => [2, 4, 5]
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+                ['user' => 2, 'teamlead' => 0],
+                ['user' => 4, 'teamlead' => 0],
+                ['user' => 5, 'teamlead' => 0],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -442,7 +494,9 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -463,8 +517,10 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
-            'users' => [2]
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+                ['user' => 2, 'teamlead' => 0],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -500,8 +556,12 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
-            'users' => [2, 4, 5]
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+                ['user' => 2, 'teamlead' => 0],
+                ['user' => 4, 'teamlead' => 0],
+                ['user' => 5, 'teamlead' => 0],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -528,8 +588,12 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
-            'users' => [2, 4, 5]
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+                ['user' => 2, 'teamlead' => 0],
+                ['user' => 4, 'teamlead' => 0],
+                ['user' => 5, 'teamlead' => 0],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -559,7 +623,9 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -580,8 +646,10 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
-            'users' => [2]
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+                ['user' => 2, 'teamlead' => 0],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -617,8 +685,12 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
-            'users' => [2, 4, 5]
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+                ['user' => 2, 'teamlead' => 0],
+                ['user' => 4, 'teamlead' => 0],
+                ['user' => 5, 'teamlead' => 0],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -645,8 +717,12 @@ class TeamControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'teamlead' => 1,
-            'users' => [2, 4, 5]
+            'members' => [
+                ['user' => 1, 'teamlead' => 1],
+                ['user' => 2, 'teamlead' => 0],
+                ['user' => 4, 'teamlead' => 0],
+                ['user' => 5, 'teamlead' => 0],
+            ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());

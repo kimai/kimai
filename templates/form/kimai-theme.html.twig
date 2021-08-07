@@ -8,6 +8,31 @@
     {{ parent() }}
 {% endblock form_label %}
 
+{% block _team_edit_form_members_entry_user_widget %}
+    {#  this will convert the select box into a hidden field, which are exchangable from an HTML perspective #}
+    {%- set type = 'hidden' -%}
+    {{ block('form_widget_simple') }}
+{% endblock %}
+
+{% block team_member_widget %}
+    <div class="row">
+        <div class="col-xs-7">
+            <div class="checkbox">
+            <button class="btn btn-default btn-xs" onclick="jQuery(this).parent().parent().parent().remove();return false;"><i class="{{ 'trash'|icon }}"></i></button>
+            {% if form.vars.data is not null and form.vars.data.user is not null %}
+                {{ form.vars.data.user.displayName }}
+            {% else %}
+                __USERNAME__
+            {% endif %}
+            </div>
+            {{ form_widget(form.user) }}
+        </div>
+        <div class="col-xs-5">
+            {{ form_widget(form.teamlead) }}
+        </div>
+    </div>
+{% endblock team_member_widget %}
+
 {% block daterange_widget %}
     <div class="input-group">
         <div class="input-group-addon">

@@ -15,6 +15,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
+use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Form\API\TeamApiEditForm;
 use App\Repository\ActivityRepository;
@@ -22,7 +23,6 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
-use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
@@ -77,7 +77,7 @@ final class TeamController extends BaseApiController
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
+    public function cgetAction(): Response
     {
         $data = $this->repository->findAll();
 
@@ -177,16 +177,10 @@ final class TeamController extends BaseApiController
      */
     public function postAction(Request $request): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $team = new Team();
-        $team->setTeamLead($user);
 
         $form = $this->createForm(TeamApiEditForm::class, $team);
-
         $form->submit($request->request->all());
-        $team->addUser($team->getTeamLead());
 
         if ($form->isValid()) {
             $this->repository->saveTeam($team);
@@ -241,17 +235,31 @@ final class TeamController extends BaseApiController
             throw new NotFoundException();
         }
 
+        // cache the current memberlist
+        /** @var TeamMember[] $originalMembers */
+        $originalMembers = [];
+        foreach ($team->getMembers() as $member) {
+            $originalMembers[] = $member;
+        }
+
         $form = $this->createForm(TeamApiEditForm::class, $team);
 
         $form->setData($team);
         $form->submit($request->request->all(), false);
-        $team->addUser($team->getTeamLead());
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
             $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
+        }
+
+        // and now remove the ones, which are not in the list any longer
+        foreach ($originalMembers as $member) {
+            if (!$team->hasMember($member)) {
+                $member->getUser()->removeMembership($member);
+                $this->repository->removeTeamMember($member);
+            }
         }
 
         $this->repository->saveTeam($team);

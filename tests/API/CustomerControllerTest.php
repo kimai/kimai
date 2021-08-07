@@ -160,7 +160,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         // and finally a team
         $team = new Team();
         $team->setName('Testing customer 1 team');
-        $team->setTeamLead($this->getUserByRole(User::ROLE_USER));
+        $team->addTeamlead($this->getUserByRole(User::ROLE_USER));
         $team->addCustomer($customer);
         $team->addProject($project);
         $team->addUser($this->getUserByRole(User::ROLE_TEAMLEAD));

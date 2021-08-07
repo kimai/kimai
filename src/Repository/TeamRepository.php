@@ -10,6 +10,7 @@
 namespace App\Repository;
 
 use App\Entity\Team;
+use App\Entity\TeamMember;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\Loader\TeamLoader;
@@ -26,6 +27,19 @@ use Pagerfanta\Pagerfanta;
  */
 class TeamRepository extends EntityRepository
 {
+    /**
+     * @return Team[]
+     */
+    public function findAll(): array
+    {
+        $result = parent::findAll();
+
+        $loader = new TeamLoader($this->getEntityManager());
+        $loader->loadResults($result);
+
+        return $result;
+    }
+
     public function find($id, $lockMode = null, $lockVersion = null)
     {
         /** @var Team|null $team */
@@ -50,6 +64,16 @@ class TeamRepository extends EntityRepository
         $entityManager = $this->getEntityManager();
         $entityManager->persist($team);
         $entityManager->flush();
+    }
+
+    /**
+     * @param TeamMember $member
+     * @throws ORMException
+     */
+    public function removeTeamMember(TeamMember $member)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($member);
     }
 
     /**
@@ -131,21 +155,17 @@ class TeamRepository extends EntityRepository
 
         $orderBy = $query->getOrderBy();
         switch ($orderBy) {
-            case 'teamlead':
-                $qb->leftJoin('t.teamlead', 'lead');
-                $orderBy = 'lead.username';
-                break;
             default:
                 $orderBy = 't.' . $orderBy;
                 break;
         }
 
         if ($query->hasUsers()) {
+            $qb->leftJoin('t.members', 'qMembers');
             $qb->orWhere(
-                $qb->expr()->in('t.teamlead', ':user'),
-                $qb->expr()->isMemberOf(':user', 't.users')
-            )
-            ->setParameter('user', $query->getUsers());
+                $qb->expr()->in('qMembers.user', ':user')
+            );
+            $qb->setParameter('user', $query->getUsers());
         }
 
         $qb->addOrderBy($orderBy, $query->getOrder());
@@ -181,19 +201,31 @@ class TeamRepository extends EntityRepository
             return;
         }
 
+        // this is an OR on purpose because we either query only for teams where the user is teamlead
+        // OR we query for all teams where the user is a member - in later case $teams is not empty
         $or = $qb->expr()->orX();
 
+        // this query should limit to teams where the user is a teamlead (eg. in dropdowns or listing page)
         if (null !== $user) {
-            $or->add($qb->expr()->eq('t.teamlead', ':id'));
+            $qb->leftJoin('t.members', 'members');
+            $or->add(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('members.user', ':id'),
+                    $qb->expr()->eq('members.teamlead', true),
+                )
+            );
             $qb->setParameter('id', $user);
         }
 
+        // this is primarily used, if we want to query for teams of the current user
+        // and not 'teamlead_only' as used in the teams form type
         if (!empty($teams)) {
             $ids = [];
             foreach ($teams as $team) {
                 $ids[] = $team->getId();
             }
-            $or->add($qb->expr()->in('t.id', $ids));
+            $or->add($qb->expr()->in('t.id', ':teamIds'));
+            $qb->setParameter('teamIds', array_unique($ids));
         }
 
         $qb->andWhere($or);

@@ -46,7 +46,7 @@ class TeamType extends AbstractType
                 $query->setCurrentUser($user);
 
                 if (!$options['teamlead_only']) {
-                    $query->setTeams($user->getTeams()->toArray());
+                    $query->setTeams($user->getTeams());
                 }
 
                 return $repo->getQueryBuilderForFormType($query);

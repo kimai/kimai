@@ -15,10 +15,12 @@ use Doctrine\ORM\EntityManagerInterface;
 final class UserLoader implements LoaderInterface
 {
     private $entityManager;
+    private $fullyHydrated;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
     {
         $this->entityManager = $entityManager;
+        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
@@ -30,7 +32,7 @@ final class UserLoader implements LoaderInterface
             return $user->getId();
         }, $users);
 
-        $loader = new UserIdLoader($this->entityManager);
+        $loader = new UserIdLoader($this->entityManager, $this->fullyHydrated);
         $loader->loadResults($ids);
     }
 }

@@ -90,7 +90,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $userRepository = $container->get('doctrine')->getRepository(User::class);
         $user = $userRepository->loadUserByUsername('tony_teamlead');
         self::assertInstanceOf(User::class, $user);
-        self::assertFalse($user->isTeamlead());
+        self::assertFalse($user->hasTeamleadRole());
     }
 
     public function testDemoteSuper()

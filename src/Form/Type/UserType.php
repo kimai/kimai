@@ -37,6 +37,8 @@ class UserType extends AbstractType
             'choice_translation_domain' => false,
             // whether disabled users should be included in the result list
             'include_disabled' => false,
+            // an array of users that should not be included in the result list
+            'ignore_users' => [],
             // an array of users, which will always be included in the result list
             // why? if the base entity could include disabled users, which should not be hidden in/removed from the list
             // eg. when editing a team that has disabled users, these users would be removed silently
@@ -55,6 +57,10 @@ class UserType extends AbstractType
 
                 if ($options['include_disabled'] === true) {
                     $query->setVisibility(VisibilityInterface::SHOW_BOTH);
+                }
+
+                foreach ($options['ignore_users'] as $userToIgnore) {
+                    $query->addUserToIgnore($userToIgnore);
                 }
 
                 if (!empty($options['include_users'])) {
