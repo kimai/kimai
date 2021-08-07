@@ -1148,6 +1148,26 @@
         <source>label.invoice_tax_number</source>
         <target>מס׳ במע״מ:</target>
       </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>קיימים כרגע %records% רשומות זמן שמסתכמות לסך של %duration%.</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>חודשי</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>סוג תקציב</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% נוצלו (%left% עדיין פתוחים החודש)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% נוצלו החודש</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
