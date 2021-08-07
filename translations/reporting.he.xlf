@@ -38,6 +38,10 @@
         <source>report_project_details</source>
         <target>פרטי המיזם</target>
       </trans-unit>
+      <trans-unit id="report_project_daterange">
+        <source>report_project_daterange</source>
+        <target>דוח חודשי</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
