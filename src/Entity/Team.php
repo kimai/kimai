@@ -57,13 +57,13 @@ class Team
      */
     private $name;
     /**
-     * Team member, including all teamleads
+     * All team member (including team leads)
      *
      * @var TeamMember[]|Collection<TeamMember>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity"})
-     * @SWG\Property(ref="#/definitions/TeamMember")
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/TeamMember"))
      *
      * @ORM\OneToMany(targetEntity="App\Entity\TeamMember", mappedBy="team", fetch="LAZY", cascade={"persist"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
@@ -167,10 +167,9 @@ class Team
             throw new \InvalidArgumentException('Cannot set foreign team membership');
         }
 
-        $this->members->add($member);
-        // when using the API an invalid USER id does not trigger a validation error,
-        // but the object is added first before the validation triggers :-(
+        // when using the API an invalid user id does not trigger the validation first, but after calling this method :-(
         if ($member->getUser() !== null) {
+            $this->members->add($member);
             $member->getUser()->addMembership($member);
         }
     }
@@ -200,14 +199,6 @@ class Team
 
         $this->members->removeElement($existingMember);
         $existingMember->getUser()->removeMembership($existingMember);
-    }
-
-    /**
-     * @param TeamMember[] $members
-     */
-    public function setMembers(array $members): void
-    {
-        $this->members = $members;
     }
 
     /**

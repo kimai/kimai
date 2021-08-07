@@ -36,12 +36,12 @@ class TeamEditForm extends AbstractType
                 'attr' => [
                     'autofocus' => 'autofocus'
                 ],
-                // documentation is for NelmioApiDocBundle
                 'documentation' => [
                     'type' => 'string',
                     'description' => 'Name of the team',
                 ],
         ]);
+
         $this->addColor($builder);
 
         $builder->add('members', CollectionType::class, [
@@ -53,7 +53,23 @@ class TeamEditForm extends AbstractType
             'by_reference' => false,
             'allow_delete' => true,
             'label' => 'label.user',
-            // FIXME documentation
+            'documentation' => [
+                'type' => 'array',
+                'items' => [
+                    'type' => 'object',
+                    'properties' => [
+                        'user' => [
+                            'type' => 'integer',
+                            'description' => 'User ID',
+                        ],
+                        'teamlead' => [
+                            'type' => 'boolean',
+                            'description' => 'Whether the user is a teamlead',
+                        ],
+                    ]
+                ],
+                'description' => 'All team members',
+            ],
         ]);
 
         $builder->add('users', UserType::class, [

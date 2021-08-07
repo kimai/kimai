@@ -41,7 +41,6 @@ class TeamMemberType extends AbstractType
             'data_class' => TeamMember::class,
             'label' => 'label.user',
             'compound' => true,
-            // FIXME test entity type
         ]);
     }
 }
