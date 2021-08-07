@@ -693,11 +693,11 @@
       </trans-unit>
       <trans-unit id="stats.percentUsed">
         <source>stats.percentUsed</source>
-        <target state="translated">%percent%% kullanıldı</target>
+        <target state="translated">%%percent% kullanıldı</target>
       </trans-unit>
       <trans-unit id="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
-        <target state="translated">%percent%% kullanıldı (%left% hala açık)</target>
+        <target state="translated">%%percent% kullanıldı (%left% hala açık)</target>
       </trans-unit>
       <!--
               Invoice
@@ -1214,6 +1214,26 @@
       <trans-unit id="label.account_number">
         <source>label.account_number</source>
         <target>Personel numarası</target>
+      </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>Şu anda toplam %duration% süreye denk gelen %records% zaman kaydı var.</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Aylık</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Bütçe Türü</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%%percent% kullanıldı (bu ay %left% hala açık)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>Bu ay %%percent% kullanıldı</target>
       </trans-unit>
     </body>
   </file>
