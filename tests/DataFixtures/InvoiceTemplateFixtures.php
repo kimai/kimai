@@ -32,7 +32,7 @@ class InvoiceTemplateFixtures implements TestFixture
         $template
             ->setName('Invoice')
             ->setTitle('Your company name')
-            ->setCompany($faker->company)
+            ->setCompany($faker->company())
             ->setVat(19)
             ->setDueDays(14)
             ->setPaymentTerms(
@@ -42,10 +42,10 @@ class InvoiceTemplateFixtures implements TestFixture
                 'as reference.'
             )
             ->setAddress(
-                $faker->streetAddress . PHP_EOL .
-                $faker->city . ', ' . $faker->stateAbbr . ' ' . $faker->postcode . PHP_EOL .
-                'Phone: ' . $faker->phoneNumber . PHP_EOL .
-                'Email: ' . $faker->safeEmail
+                $faker->streetAddress() . PHP_EOL .
+                $faker->city() . ' ' . $faker->postcode() . ', ' . $faker->country() . PHP_EOL .
+                'Phone: ' . $faker->phoneNumber() . PHP_EOL .
+                'Email: ' . $faker->safeEmail()
             )
             ->setLanguage('en')
         ;

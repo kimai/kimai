@@ -246,7 +246,7 @@ final class TimesheetFixtures implements TestFixture
         $manager->flush();
 
         for ($i = 0; $i < $this->amount; $i++) {
-            $description = $faker->text;
+            $description = $faker->text();
             if ($this->allowEmptyDescriptions) {
                 if ($i % 3 == 0) {
                     $description = null;
@@ -292,7 +292,7 @@ final class TimesheetFixtures implements TestFixture
                 $user,
                 $activity,
                 $project,
-                $faker->text,
+                $faker->text(),
                 $this->getDateTime($i),
                 $tags,
                 false

@@ -80,13 +80,14 @@ final class CustomerFixtures implements TestFixture
             }
             $customer = new Customer();
             $customer
-                ->setCurrency($faker->currencyCode)
-                ->setName($faker->company . ($visible ? '' : ' (x)'))
-                ->setAddress($faker->address)
-                ->setComment($faker->text)
-                ->setNumber('C-' . $faker->ean8)
-                ->setCountry($faker->countryCode)
-                ->setTimezone($faker->timezone)
+                ->setCurrency($faker->currencyCode())
+                ->setName($faker->company() . ($visible ? '' : ' (x)'))
+                ->setAddress($faker->address())
+                ->setEmail($faker->safeEmail())
+                ->setComment($faker->text())
+                ->setNumber('C-' . $faker->ean8())
+                ->setCountry($faker->countryCode())
+                ->setTimezone($faker->timezone())
                 ->setVisible($visible)
             ;
 
