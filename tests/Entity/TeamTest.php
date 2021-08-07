@@ -64,9 +64,6 @@ class TeamTest extends TestCase
         $member = new TeamMember();
         $member->setUser($user);
 
-        $member21 = new TeamMember();
-        $member21->setUser($user);
-
         $member2 = new TeamMember();
         $member2->setUser($user);
         $member2->setTeam(new Team());
@@ -96,6 +93,13 @@ class TeamTest extends TestCase
         $sut->removeTeamlead($user2);
         self::assertCount(2, $sut->getMembers());
         self::assertFalse($sut->isTeamlead($user2));
+
+        $member21 = new TeamMember();
+        $member21->setUser($user);
+
+        self::assertNull($member21->getTeam());
+        $sut->addMember($member21);
+        self::assertSame($sut, $member21->getTeam());
     }
 
     public function testTeamMembershipsException()
@@ -245,5 +249,53 @@ class TeamTest extends TestCase
         self::assertCount(0, $sut->getUsers());
         $sut->addTeamlead(new User());
         self::assertCount(1, $sut->getUsers());
+    }
+
+    public function testClone()
+    {
+        $c = new Customer();
+        $c->setName('Foo');
+        $p = new Project();
+        $p->setName('Bar');
+        $a = new Activity();
+        $a->setName('Hello');
+        $u = new User();
+        $u->setAlias('World');
+        $member = new TeamMember();
+        $member->setUser(new User());
+
+        $team = new Team();
+        $team->addCustomer($c);
+        $team->addCustomer(new Customer());
+        $team->addProject($p);
+        $team->addProject(new Project());
+        $team->addActivity($a);
+        $team->addActivity(new Activity());
+
+        $team->addTeamlead($u);
+        $team->addMember($member);
+        $team->addUser(new User());
+
+        $reflection = new \ReflectionClass($team);
+        $property = $reflection->getProperty('id');
+        $property->setAccessible(true);
+        $property->setValue($team, 99);
+        $property->setAccessible(false);
+        self::assertEquals(99, $team->getId());
+
+        $sut = clone $team;
+        self::assertNull($sut->getId());
+        self::assertCount(2, $sut->getCustomers());
+        self::assertCount(2, $sut->getProjects());
+        self::assertCount(2, $sut->getActivities());
+        self::assertCount(1, $sut->getTeamleads());
+        self::assertCount(3, $sut->getMembers());
+        self::assertCount(3, $sut->getUsers());
+        self::assertSame($c, $sut->getCustomers()[0]);
+        self::assertSame($p, $sut->getProjects()[0]);
+        self::assertSame($a, $sut->getActivities()[0]);
+        self::assertSame($u, $sut->getTeamleads()[0]);
+        self::assertSame($u, $sut->getMembers()[0]->getUser());
+        self::assertSame($member->getUser(), $sut->getUsers()[1]);
     }
 }

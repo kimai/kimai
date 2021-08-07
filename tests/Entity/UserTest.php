@@ -411,12 +411,62 @@ class UserTest extends TestCase
         $unserialized = unserialize($data);
 
         $actual = [
-            $sut->getUsername(),
-            $sut->isEnabled(),
-            $sut->getId(),
-            $sut->getEmail(),
+            $unserialized->getUsername(),
+            $unserialized->isEnabled(),
+            $unserialized->getId(),
+            $unserialized->getEmail(),
         ];
 
         self::assertEquals($expected, $actual);
+    }
+
+    public function testTeamMemberships()
+    {
+        $team = new Team();
+
+        $member = new TeamMember();
+        $member->setTeam($team);
+
+        $member2 = new TeamMember();
+        $member2->setUser(new User());
+        $member2->setTeam($team);
+
+        $sut = new User();
+        self::assertFalse($sut->isTeamleadOf($team));
+        self::assertFalse($sut->isTeamlead());
+        self::assertCount(0, $sut->getMemberships());
+        self::assertFalse($sut->hasMembership($member));
+        $sut->removeMembership($member);
+        $sut->removeMembership($member2);
+        $sut->addMembership($member);
+        self::assertCount(1, $sut->getMemberships());
+        $sut->removeMembership($member2);
+        self::assertCount(1, $sut->getMemberships());
+        $sut->removeMembership($member);
+        self::assertCount(0, $sut->getMemberships());
+
+        self::assertFalse($sut->isTeamleadOf($team));
+
+        $sut->addMembership($member);
+        self::assertFalse($sut->isTeamleadOf($team));
+
+        $member->setTeamlead(true);
+        self::assertTrue($sut->isTeamleadOf($team));
+
+        $member21 = new TeamMember();
+        $member21->setTeam($team);
+
+        self::assertNull($member21->getUser());
+        $sut->addMembership($member21);
+        self::assertSame($sut, $member21->getUser());
+    }
+
+    public function testTeamMembershipsException()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $sut = new User();
+        $member = new TeamMember();
+        $member->setUser(new User());
+        $sut->addMembership($member);
     }
 }
