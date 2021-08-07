@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\ProjectValidator
+ * @covers \App\Validator\Constraints\TeamValidator
  */
 class TeamValidatorTest extends ConstraintValidatorTestCase
 {
