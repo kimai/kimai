@@ -1215,6 +1215,26 @@
         <source>invoice.from</source>
         <target>De</target>
       </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>Atualmente existe %records% de registros de tempo, que somam até uma duração total de %duration%.</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Mensal</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Tipo do orçamento</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% utilizado (%left% ainda estão abertos este mês)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% usado este mês</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
