@@ -154,16 +154,20 @@
 
 {# for @internal use only #}
 {% macro label_color_dot(type, isVisible, name, url, color) %}
+    {% apply spaceless %}
     <span class="label-{{ type }}{{ isVisible ? '' : ' label-invisible' }}">
         <span class="name">
             <i class="dot {{ 'dot'|icon }} fa-fw"{% if color is not empty %} style="color:{{ color }}"{% endif %}></i>
+            <span class="name-inner">
             {%- if url is not empty -%}
                 <a href="{{ url }}">{{ name }}</a>
             {%- else -%}
                 {{ name }}
             {%- endif -%}
+            </span>
         </span>
     </span>
+    {% endapply %}
 {% endmacro %}
 
 {% macro color_dot(color, tooltip) %}

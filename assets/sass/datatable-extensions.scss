@@ -30,6 +30,12 @@ span.label-activity,
 span.label-project,
 span.label-customer {
     display: inline-block;
+    .name {
+        white-space: nowrap;
+        .name-inner {
+            white-space: normal;
+        }
+    }
     .dot {
         font-size: 9px;
         margin-right: 3px;
