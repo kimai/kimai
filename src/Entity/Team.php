@@ -355,9 +355,9 @@ class Team
      * @Serializer\Groups({"Team_Entity"})
      * @SWG\Property(ref="#/definitions/User")
      *
-     * @return array<User>
+     * @return User[]
      */
-    public function getUsers(): iterable
+    public function getUsers(): array
     {
         $users = [];
         foreach ($this->members as $member) {
