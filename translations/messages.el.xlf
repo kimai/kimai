@@ -1212,6 +1212,26 @@
         <source>registration.check_email</source>
         <target>Ένα ηλεκτρονικό μήνυμα έχει αποσταλεί στην διεύθυνση %email%. Περιέχει τον σύνδεσμο ενεργοποίησης που πρέπει να ακολουθήσετε για να ενεργοποιήσετε τον λογαριασμό σας.</target>
       </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>Προς το παρόν %records% καταγραφές χρόνου εργασίας υπάρχουν, που συνοψίζονται σε συνολική διάρκεια από %duration%.</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Μηνιαία</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Τύπος-Προϋπολογισμού</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% χρησιμοποιείται (%left% είναι ακόμα ενεργά αυτό τον μήνα)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% χρησιμοποιήθηκε αυτόν το μήνα</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
