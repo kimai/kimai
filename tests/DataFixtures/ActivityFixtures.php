@@ -119,8 +119,8 @@ final class ActivityFixtures implements TestFixture
             $activity = new Activity();
             $activity
                 ->setProject($project)
-                ->setName($faker->bs . ($visible ? '' : ' (x)'))
-                ->setComment($faker->text)
+                ->setName($faker->company() . ($visible ? '' : ' (x)'))
+                ->setComment($faker->text())
                 ->setVisible($visible)
             ;
 

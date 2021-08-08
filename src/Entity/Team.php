@@ -167,17 +167,17 @@ class Team
             throw new \InvalidArgumentException('Cannot set foreign team membership');
         }
 
-        if (null !== ($existing = $this->findMember($member))) {
-            $existing->setTeamlead($member->isTeamlead());
-
+        // when using the API an invalid user id does not trigger the validation first, but after calling this method :-(
+        if ($member->getUser() === null) {
             return;
         }
 
-        // when using the API an invalid user id does not trigger the validation first, but after calling this method :-(
-        if ($member->getUser() !== null) {
-            $this->members->add($member);
-            $member->getUser()->addMembership($member);
+        if (null !== ($existing = $this->findMember($member))) {
+            return;
         }
+
+        $this->members->add($member);
+        $member->getUser()->addMembership($member);
     }
 
     public function hasMember(TeamMember $member): bool
@@ -196,10 +196,20 @@ class Team
         return null;
     }
 
+    private function findMemberByUser(User $user): ?TeamMember
+    {
+        foreach ($this->members as $oldMember) {
+            if ($oldMember->getUser() === $user) {
+                return $oldMember;
+            }
+        }
+
+        return null;
+    }
+
     public function removeMember(TeamMember $member): void
     {
-        $existingMember = $this->findMember($member);
-        if ($existingMember === null) {
+        if (null === ($existingMember = $this->findMember($member))) {
             return;
         }
 
@@ -246,10 +256,8 @@ class Team
 
     public function isTeamlead(User $user): bool
     {
-        foreach ($this->members as $member) {
-            if ($user === $member->getUser()) {
-                return $member->isTeamlead();
-            }
+        if (null !== ($member = $this->findMemberByUser($user))) {
+            return $member->isTeamlead();
         }
 
         return false;
@@ -266,34 +274,37 @@ class Team
 
     public function addTeamlead(User $user): void
     {
-        $this->addUser($user, true);
+        if (null !== ($member = $this->findMemberByUser($user))) {
+            $member->setTeamlead(true);
+
+            return;
+        }
+
+        $member = new TeamMember();
+        $member->setTeam($this);
+        $member->setUser($user);
+        $member->setTeamlead(true);
+
+        $this->addMember($member);
     }
 
     /**
-     * Will only remove the teamlead flag, not the user from the team.
+     * Removes the teamlead flag, but leaves the user within the team.
      *
      * @param User $user
      */
-    public function removeTeamlead(User $user): void
+    public function demoteTeamlead(User $user): void
     {
-        foreach ($this->members as $member) {
-            if ($member->getUser() === $user) {
-                $member->setTeamlead(false);
+        if (null !== ($member = $this->findMemberByUser($user))) {
+            $member->setTeamlead(false);
 
-                return;
-            }
+            return;
         }
     }
 
     public function hasUser(User $user): bool
     {
-        foreach ($this->members as $member) {
-            if ($member->getUser() === $user) {
-                return true;
-            }
-        }
-
-        return false;
+        return (null !== ($member = $this->findMemberByUser($user)));
     }
 
     public function hasUsers(): bool
@@ -312,39 +323,24 @@ class Team
         return false;
     }
 
-    public function addUser(User $user, bool $teamlead = false): void
+    public function addUser(User $user): void
     {
-        foreach ($this->members as $member) {
-            if ($member->getUser() === $user) {
-                $member->setTeamlead($teamlead);
-
-                return;
-            }
+        if (null !== ($member = $this->findMemberByUser($user))) {
+            return;
         }
 
         $member = new TeamMember();
         $member->setTeam($this);
         $member->setUser($user);
-        $member->setTeamlead($teamlead);
 
         $this->addMember($member);
     }
 
     public function removeUser(User $user): void
     {
-        $memberToRemove = null;
-        foreach ($this->members as $member) {
-            if ($member->getUser() === $user) {
-                $memberToRemove = $member;
-                break;
-            }
+        if (null !== ($member = $this->findMemberByUser($user))) {
+            $this->removeMember($member);
         }
-
-        if ($memberToRemove === null) {
-            return;
-        }
-
-        $this->removeMember($memberToRemove);
     }
 
     /**
@@ -355,9 +351,9 @@ class Team
      * @Serializer\Groups({"Team_Entity"})
      * @SWG\Property(ref="#/definitions/User")
      *
-     * @return array<User>
+     * @return User[]
      */
-    public function getUsers(): iterable
+    public function getUsers(): array
     {
         $users = [];
         foreach ($this->members as $member) {

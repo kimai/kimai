@@ -94,16 +94,17 @@ class CustomerFixtures extends Fixture
     {
         $entry = new Customer();
         $entry
-            ->setCurrency($faker->currencyCode)
-            ->setName($faker->company)
-            ->setAddress($faker->address)
-            ->setComment($faker->text)
-            ->setNumber('C-' . $faker->ean8)
-            ->setCountry($faker->countryCode)
-            ->setTimezone($faker->timezone)
+            ->setCurrency($faker->currencyCode())
+            ->setName($faker->company())
+            ->setAddress($faker->address())
+            ->setEmail($faker->safeEmail())
+            ->setComment($faker->text())
+            ->setNumber('C-' . $faker->ean8())
+            ->setCountry($faker->countryCode())
+            ->setTimezone($faker->timezone())
             ->setVisible($visible)
-            ->setVatId($faker->vat)
         ;
+        $entry->setVatId($faker->creditCardNumber());
 
         if (rand(0, 3) % 3) {
             $entry->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET));
@@ -126,11 +127,14 @@ class CustomerFixtures extends Fixture
     {
         $entry = new Project();
 
+        /** @var string $name */
+        $name = $faker->words(2, true);
+
         $entry
-            ->setName($faker->catchPhrase)
-            ->setComment($faker->text)
+            ->setName(ucfirst($name))
+            ->setComment($faker->text())
             ->setCustomer($customer)
-            ->setOrderNumber('P-' . $faker->ean8)
+            ->setOrderNumber('P-' . $faker->ean8())
             ->setVisible($visible)
         ;
 
@@ -153,11 +157,14 @@ class CustomerFixtures extends Fixture
      */
     private function createActivity(Generator $faker, ?Project $project, $visible)
     {
+        /** @var string $name */
+        $name = $faker->words(2, true);
+
         $entry = new Activity();
         $entry
-            ->setName($faker->bs)
+            ->setName(ucfirst($name))
             ->setProject($project)
-            ->setComment($faker->text)
+            ->setComment($faker->text())
             ->setVisible($visible)
         ;
 

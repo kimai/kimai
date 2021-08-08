@@ -98,9 +98,9 @@ final class ProjectFixtures implements TestFixture
                 $visible = $this->isVisible;
             }
             $project = new Project();
-            $project->setName($faker->catchPhrase . ($visible ? '' : ' (x)'));
+            $project->setName($faker->company() . ($visible ? '' : ' (x)'));
             $project->setBudget(rand(0, 10000));
-            $project->setComment($faker->text);
+            $project->setComment($faker->text());
             $project->setCustomer($customers[array_rand($customers)]);
             $project->setVisible($visible);
 

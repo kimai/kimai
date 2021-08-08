@@ -76,8 +76,8 @@
     "require-dev": {
         "dama/doctrine-test-bundle": "^6.0",
         "doctrine/doctrine-fixtures-bundle": "^3.2",
+        "fakerphp/faker": "^1.15",
         "friendsofphp/php-cs-fixer": "^3.0",
-        "fzaninotto/faker": "^1.8",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-doctrine": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",

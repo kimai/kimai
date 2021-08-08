@@ -85,9 +85,9 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    protected function addTeamsChoice(FormBuilderInterface $builder, string $field = 'teams')
+    protected function addTeamsChoice(FormBuilderInterface $builder, string $field = 'teams', array $options = [])
     {
-        $builder->add($field, TeamType::class, [
+        $builder->add($field, TeamType::class, array_merge([
             'documentation' => [
                 'type' => 'array',
                 'items' => ['type' => 'integer', 'description' => 'Team ID'],
@@ -96,7 +96,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'label' => 'label.team',
             'multiple' => true,
             'required' => false,
-        ]);
+        ], $options));
     }
 
     protected function addCustomerChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false)
