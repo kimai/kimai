@@ -289,11 +289,11 @@ class Team
     }
 
     /**
-     * Will only remove the teamlead flag, not the user from the team.
+     * Removes the teamlead flag, but leaves the user within the team.
      *
      * @param User $user
      */
-    public function removeTeamlead(User $user): void
+    public function demoteTeamlead(User $user): void
     {
         if (null !== ($member = $this->findMemberByUser($user))) {
             $member->setTeamlead(false);
