@@ -33,7 +33,7 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
     public const MAX_PROJECTS_PER_TEAM = 5;
 
     /**
-     * @return class-string[]
+     * @return string[]
      */
     public function getDependencies()
     {
@@ -89,7 +89,7 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
             if (self::MAX_USERS_PER_TEAM < $maxUsers) {
                 $maxUsers = self::MAX_USERS_PER_TEAM;
             }
-            $userCount = mt_rand(0, $maxUsers);
+            $userCount = mt_rand(1, $maxUsers);
 
             $maxProjects = \count($allProjects) - 1;
             if (self::MAX_PROJECTS_PER_TEAM < $maxProjects) {
@@ -98,10 +98,8 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
             $projectCount = mt_rand(0, $maxProjects);
 
             $team = new Team();
-            $team
-                ->setName($faker->company . ' ' . $i)
-                ->addTeamlead($allUsers[array_rand($allUsers)])
-            ;
+            $team->setName($faker->company . ' ' . $i);
+            $team->addTeamlead($allUsers[array_rand($allUsers)]);
 
             if ($userCount > 0) {
                 $userKeys = array_rand($allUsers, $userCount);

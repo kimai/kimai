@@ -75,7 +75,16 @@ class TeamTest extends TestCase
         self::assertFalse($sut->hasMember($member));
         $sut->removeMember($member);
         $sut->removeMember($member2);
+        self::assertFalse($sut->hasUser($user));
         $sut->addMember($member);
+
+        self::assertTrue($sut->hasUser($user));
+        self::assertFalse($sut->isTeamlead($user));
+        $sut->addTeamlead($user);
+        self::assertTrue($sut->isTeamlead($user));
+        $sut->addUser($user);
+        self::assertTrue($sut->isTeamlead($user));
+
         self::assertCount(1, $sut->getMembers());
         $sut->removeMember($member2);
         self::assertCount(1, $sut->getMembers());
