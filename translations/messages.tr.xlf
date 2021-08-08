@@ -1235,6 +1235,14 @@
         <source>stats.percentUsed_month</source>
         <target>Bu ay %%percent% kullanıldı</target>
       </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Listeden seçerek takıma yeni bir kullanıcı ekleyin. Daha sonra kullanıcının takım lideri olup olmayacağına karar verebilirsiniz.</target>
+      </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Kullanıcı ekle</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
