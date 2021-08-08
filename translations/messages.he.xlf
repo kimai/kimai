@@ -1168,6 +1168,14 @@
         <source>stats.percentUsed_month</source>
         <target>%percent%% נוצלו החודש</target>
       </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>ניתן להוסיף משתמש חדש לצוות על ידי בחירה בו מהרשימה. לאחר מכן ניתן להחליט אם משתמש זה אמור להיות מוביל הצוות.</target>
+      </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>הוספת משתמש</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
