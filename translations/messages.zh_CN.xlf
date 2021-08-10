@@ -1117,15 +1117,15 @@
       </trans-unit>
       <trans-unit id="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
-        <target>全年%年%</target>
+        <target>全年 %year%</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target>周历 %周%</target>
+        <target>周历 %week%</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
-        <target>今天，%天%</target>
+        <target>今天，%day%</target>
       </trans-unit>
       <trans-unit id="label.tax_rate">
         <source>label.tax_rate</source>
@@ -1185,7 +1185,7 @@
       </trans-unit>
       <trans-unit id="registration.check_email">
         <source>registration.check_email</source>
-        <target>一封电子邮件已发送至 %电子邮件%。它包含一个激活链接，您必须单击该链接才能激活您的帐户。</target>
+        <target>一封电子邮件已发送至 %email%。它包含一个激活链接，您必须单击该链接才能激活您的帐户。</target>
       </trans-unit>
       <trans-unit id="file">
         <source>file</source>
