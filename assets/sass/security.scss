@@ -6,12 +6,24 @@ body.login-page {
         text-align: center;
         padding: 30px 35px;
         box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
+        .btn {
+            padding: 7px;
+            font-size: 115%;
+        }
     }
-    .login-head{
+    .login-head {
         margin-top: 0;
     }
     .login-actions a {
         display: block;
+    }
+    .form-group {
+        input[type=password], input[type=text] {
+            padding: 20px 15px;
+        }
+    }
+    span.glyphicon {
+        display: none;
     }
 }
 @media (max-width: $screen-sm-max) {
