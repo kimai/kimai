@@ -1232,6 +1232,14 @@
         <source>stats.percentUsed_month</source>
         <target>%percent%% χρησιμοποιήθηκε αυτόν το μήνα</target>
       </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Προσθήκη ενός νέου χρήστη στην ομάδα επιλέγοντάς τον από την λίστα. Έπειτα μπορείτε να αποφασίσετε εάν ο χρήστης πρέπει να οριστεί ως αρχηγός ομάδας.</target>
+      </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Προσθήκη χρήστη</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
