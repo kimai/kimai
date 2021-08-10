@@ -52,11 +52,16 @@ final class ProfileController extends AbstractController
      */
     public function indexAction(User $profile, TimesheetRepository $repository, TimesheetStatisticService $statisticService): Response
     {
+        $dateFactory = $this->getDateTimeFactory();
         $userStats = $repository->getUserStatistics($profile, false);
         $firstEntry = $statisticService->findFirstRecordDate($profile);
 
-        $begin = $firstEntry ?? $this->getDateTimeFactory()->getStartOfMonth();
-        $end = $this->getDateTimeFactory()->getEndOfMonth();
+        $begin = $firstEntry ?? $dateFactory->getStartOfMonth();
+        $end = $dateFactory->getEndOfMonth();
+
+        // statistic service does not fill up the complete year by default!
+        // but we need a full year, because the chart needs always 12 month
+        $begin = $dateFactory->createStartOfYear($begin);
 
         $viewVars = [
             'tab' => 'charts',
