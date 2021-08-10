@@ -1,0 +1,23 @@
+body.login-page {
+    .alert {
+        margin-bottom: 0;
+    }
+    .login-box-body {
+        text-align: center;
+        padding: 30px 35px;
+        box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
+    }
+    .login-head{
+        margin-top: 0;
+    }
+    .login-actions a {
+        display: block;
+    }
+}
+@media (max-width: $screen-sm-max) {
+    body.login-page {
+        .login-box-body {
+            padding: 20px 27px;
+        }
+    }
+}
