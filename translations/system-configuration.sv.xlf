@@ -1,116 +1,275 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="sv" datatype="plaintext" original="system-configuration.en.xlf">
-        <body>
-            <trans-unit id="title">
-                <source>title</source>
-                <target state="translated">Inställningar</target>
-            </trans-unit>
-            <trans-unit id="subtitle">
-                <source>subtitle</source>
-                <target state="translated">Ändra globala konfigurationer för din tidsredovisning</target>
-            </trans-unit>
-            <trans-unit id="timesheet">
-                <source>timesheet</source>
-                <target state="translated">Tidrapport</target>
-            </trans-unit>
-            <trans-unit id="form_customer">
-                <source>form_customer</source>
-                <target state="translated">Skapa kund - standardvärden</target>
-            </trans-unit>
-            <trans-unit id="theme">
-                <source>theme</source>
-                <target state="translated">Tema</target>
-            </trans-unit>
-            <trans-unit id="calendar">
-                <source>calendar</source>
-                <target state="translated">Kalender</target>
-            </trans-unit>
-            <trans-unit id="label.theme.markdown_content">
-                <source>label.theme.markdown_content</source>
-                <target state="translated">Tillåt markdown-formatting i beskrivningar och kommentarer</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode">
-                <source>label.timesheet.mode</source>
-                <target state="translated">Tidsredovisningsläge</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_default">
-                <source>label.timesheet.mode_default</source>
-                <target state="translated">Standard: acceptera start- och slutdatum</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_duration_only">
-                <source>label.timesheet.mode_duration_only</source>
-                <target state="translated">Endast varaktighet: ersätter slutdatumsfältet med ett fält för varaktighet</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_duration_fixed_begin">
-                <source>label.timesheet.mode_duration_fixed_begin</source>
-                <target state="translated">[Varaktighet] Konfigurerbar fast starttid, endast varaktighet kan ändras</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_punch">
-                <source>label.timesheet.mode_punch</source>
-                <target state="translated">[Tidsklocka] -användaren kan starta och stoppa tidsinspelningar, men inte redigera tiderna eller varaktigheten</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rules.allow_future_times">
-                <source>label.timesheet.rules.allow_future_times</source>
-                <target state="translated">Tillåt tidsposter i framtiden</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.active_entries.hard_limit">
-                <source>label.timesheet.active_entries.hard_limit</source>
-                <target state="translated">Tillåtet antal aktiva tidsinspelningar</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.week_numbers">
-                <source>label.calendar.week_numbers</source>
-                <target state="translated">Visa veckonummer</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.weekends">
-                <source>label.calendar.weekends</source>
-                <target state="translated">Visa helger</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.businessHours.begin">
-                <source>label.calendar.businessHours.begin</source>
-                <target state="translated">Början av normala öppettider (kommer att markeras)</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.businessHours.end">
-                <source>label.calendar.businessHours.end</source>
-                <target state="translated">Slut på normala öppettider (kommer att markeras)</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.visibleHours.begin">
-                <source>label.calendar.visibleHours.begin</source>
-                <target state="translated">Början av synligt tidsintervall</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.visibleHours.end">
-                <source>label.calendar.visibleHours.end</source>
-                <target state="translated">Slut på synligt tidsintervall</target>
-            </trans-unit>
-            <trans-unit id="Monday">
-                <source>Monday</source>
-                <target state="translated">Måndag</target>
-            </trans-unit>
-            <trans-unit id="Tuesday">
-                <source>Tuesday</source>
-                <target state="translated">Tisdag</target>
-            </trans-unit>
-            <trans-unit id="Wednesday">
-                <source>Wednesday</source>
-                <target state="translated">Onsdag</target>
-            </trans-unit>
-            <trans-unit id="Thursday">
-                <source>Thursday</source>
-                <target state="translated">Torsdag</target>
-            </trans-unit>
-            <trans-unit id="Friday">
-                <source>Friday</source>
-                <target state="translated">Fredag</target>
-            </trans-unit>
-            <trans-unit id="Saturday">
-                <source>Saturday</source>
-                <target state="translated">Lördag</target>
-            </trans-unit>
-            <trans-unit id="Sunday">
-                <source>Sunday</source>
-                <target state="translated">Söndag</target>
-            </trans-unit>
-
-        </body>
-    </file>
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="sv" datatype="plaintext" original="system-configuration.en.xlf">
+    <body>
+      <trans-unit id="title">
+        <source>title</source>
+        <target state="translated">Inställningar</target>
+      </trans-unit>
+      <trans-unit id="subtitle">
+        <source>subtitle</source>
+        <target state="translated">Ändra globala konfigurationer för din tidsredovisning</target>
+      </trans-unit>
+      <trans-unit id="timesheet">
+        <source>timesheet</source>
+        <target state="translated">Tidrapport</target>
+      </trans-unit>
+      <trans-unit id="form_customer">
+        <source>form_customer</source>
+        <target state="translated">Skapa kund - standardvärden</target>
+      </trans-unit>
+      <trans-unit id="theme">
+        <source>theme</source>
+        <target state="translated">Tema</target>
+      </trans-unit>
+      <trans-unit id="calendar">
+        <source>calendar</source>
+        <target state="translated">Kalender</target>
+      </trans-unit>
+      <trans-unit id="label.theme.markdown_content">
+        <source>label.theme.markdown_content</source>
+        <target state="translated">Tillåt markdown-formatting i beskrivningar och kommentarer</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode">
+        <source>label.timesheet.mode</source>
+        <target state="translated">Tidsredovisningsläge</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_default">
+        <source>label.timesheet.mode_default</source>
+        <target state="translated">Standard: acceptera start- och slutdatum</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_duration_only">
+        <source>label.timesheet.mode_duration_only</source>
+        <target state="translated">Endast varaktighet: ersätter slutdatumsfältet med ett fält för varaktighet</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+        <source>label.timesheet.mode_duration_fixed_begin</source>
+        <target state="translated">[Varaktighet] Konfigurerbar fast starttid, endast varaktighet kan ändras</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.mode_punch">
+        <source>label.timesheet.mode_punch</source>
+        <target state="translated">[Tidsklocka] -användaren kan starta och stoppa tidsinspelningar, men inte redigera tiderna eller varaktigheten</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_future_times">
+        <source>label.timesheet.rules.allow_future_times</source>
+        <target state="translated">Tillåt tidsposter i framtiden</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.active_entries.hard_limit">
+        <source>label.timesheet.active_entries.hard_limit</source>
+        <target state="translated">Tillåtet antal aktiva tidsinspelningar</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.week_numbers">
+        <source>label.calendar.week_numbers</source>
+        <target state="translated">Visa veckonummer</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.weekends">
+        <source>label.calendar.weekends</source>
+        <target state="translated">Visa helger</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target state="translated">Början av normala öppettider (kommer att markeras)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target state="translated">Slut på normala öppettider (kommer att markeras)</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target state="translated">Början av synligt tidsintervall</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target state="translated">Slut på synligt tidsintervall</target>
+      </trans-unit>
+      <trans-unit id="Monday">
+        <source>Monday</source>
+        <target state="translated">Måndag</target>
+      </trans-unit>
+      <trans-unit id="Tuesday">
+        <source>Tuesday</source>
+        <target state="translated">Tisdag</target>
+      </trans-unit>
+      <trans-unit id="Wednesday">
+        <source>Wednesday</source>
+        <target state="translated">Onsdag</target>
+      </trans-unit>
+      <trans-unit id="Thursday">
+        <source>Thursday</source>
+        <target state="translated">Torsdag</target>
+      </trans-unit>
+      <trans-unit id="Friday">
+        <source>Friday</source>
+        <target state="translated">Fredag</target>
+      </trans-unit>
+      <trans-unit id="Saturday">
+        <source>Saturday</source>
+        <target state="translated">Lördag</target>
+      </trans-unit>
+      <trans-unit id="Sunday">
+        <source>Sunday</source>
+        <target state="translated">Söndag</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target>Glömt lösenord</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target>Användarregistrering</target>
+      </trans-unit>
+      <trans-unit id="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>Tillåt färger</target>
+      </trans-unit>
+      <trans-unit id="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>Begränsa färgval</target>
+      </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>Av</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Använd den konfigurerade regeln för avrundning</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Minutval för Från &amp; Till</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Minutval för längden</target>
+      </trans-unit>
+      <trans-unit id="first_weekday">
+        <source>first_weekday</source>
+        <target>Veckans första dag</target>
+      </trans-unit>
+      <trans-unit id="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target>Format för fakturanummer</target>
+      </trans-unit>
+      <trans-unit id="label.simple_form">
+        <source>label.simple_form</source>
+        <target>Enkel sökning</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>Standard starttid (används inte i alla tidsrapporteringslägen)</target>
+      </trans-unit>
+      <trans-unit id="Floor">
+        <source>Floor</source>
+        <target>Golv: början, slutet och längden avrundas nedåt</target>
+      </trans-unit>
+      <trans-unit id="Default">
+        <source>Default</source>
+        <target>Standard: början avrundas nedåt, slutet och längden avrundas uppåt</target>
+      </trans-unit>
+      <trans-unit id="Closest">
+        <source>Closest</source>
+        <target>Närmast: matematisk avrundning till närmsta värdet</target>
+      </trans-unit>
+      <trans-unit id="Ceil">
+        <source>Ceil</source>
+        <target>Tak: början, slutet och längden kommer avrundas uppåt</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target>Veckodagar då avrundningen ska gälla</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target>Avrundningsläge</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target>Avrundning av längden i minuter (0 = avaktiverat)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>Avrundning av sluttiden i minuter (0 = avaktiverat)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target>Avrundning av starttiden i minuter (0 = avaktiverat)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target>URL för logga (ersätter företagsnamnet på inloggningsskärmen)</target>
+      </trans-unit>
+      <trans-unit id="rounding">
+        <source>rounding</source>
+        <target>Avrundning av tid</target>
+      </trans-unit>
+      <trans-unit id="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>Budgetår</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target>Webbläsarens titel</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target>Minilogo (infällt sidofält)</target>
+      </trans-unit>
+      <trans-unit id="label.theme.branding.company">
+        <source>label.theme.branding.company</source>
+        <target>Företagsnamn</target>
+      </trans-unit>
+      <trans-unit id="branding">
+        <source>branding</source>
+        <target>Mitt företag</target>
+      </trans-unit>
+      <trans-unit id="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target>Minsta antalet tecken för att påbörja automatisk komplettering</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target>Låst period slutar (PHP relativt datum till nu)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target>Låst period börjar (PHP relativt datum till nu)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target>Tidszon (om tomt så används respektive användares tidszon)</target>
+      </trans-unit>
+      <trans-unit id="lockdown_period">
+        <source>lockdown_period</source>
+        <target>Låst period</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+        <source>label.timesheet.rules.allow_overlapping_records</source>
+        <target>Tillåt överlappande tidsposter</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>Tillåt överbokning av lagrade budgetar</target>
+      </trans-unit>
+      <trans-unit id="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>Använd slumpmässiga färger för objekt som saknar tilldelad färg</target>
+      </trans-unit>
+      <trans-unit id="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>Tillåt URL:er för profilbilder</target>
+      </trans-unit>
+      <trans-unit id="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target>Taggar: använd automatisk komplettering vid sökning och tillåt skapande av taggar</target>
+      </trans-unit>
+      <trans-unit id="form_user">
+        <source>form_user</source>
+        <target>Användare – standardvärden</target>
+      </trans-unit>
+      <trans-unit id="invoice">
+        <source>invoice</source>
+        <target>Fakturor</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

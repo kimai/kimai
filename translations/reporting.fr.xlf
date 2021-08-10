@@ -38,6 +38,10 @@
         <source>report_project_details</source>
         <target>Détails du projet</target>
       </trans-unit>
+      <trans-unit id="report_project_daterange">
+        <source>report_project_daterange</source>
+        <target>Rapport mensuel</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1203,6 +1203,46 @@
         <source>error.too_many_entries</source>
         <target>A solicitação não pôde ser processada, muitos resultados foram encontrados.</target>
       </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Número da equipe</target>
+      </trans-unit>
+      <trans-unit id="label.invoice_tax_number">
+        <source>label.invoice_tax_number</source>
+        <target>No. do VAT:</target>
+      </trans-unit>
+      <trans-unit id="invoice.from">
+        <source>invoice.from</source>
+        <target>De</target>
+      </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>Atualmente existe %records% de registros de tempo, que somam até uma duração total de %duration%.</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Mensal</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Tipo do orçamento</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% utilizado (%left% ainda estão abertos este mês)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% usado este mês</target>
+      </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Adicione um novo usuário à equipe, selecionando-o a partir lista. Em seguida, você pode decidir se o usuário deve se tornar um líder de equipe.</target>
+      </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Adicione um usuário</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

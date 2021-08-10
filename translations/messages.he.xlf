@@ -794,7 +794,7 @@
       </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>
-        <target>מציג</target>
+        <target>מאת</target>
       </trans-unit>
       <trans-unit id="invoice.to">
         <source>invoice.to</source>
@@ -1139,6 +1139,42 @@
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
         <target>לא ניתן לעבד את הבקשה, נמצאו יותר מדי תוצאות.</target>
+      </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>מספר סגל</target>
+      </trans-unit>
+      <trans-unit id="label.invoice_tax_number">
+        <source>label.invoice_tax_number</source>
+        <target>מס׳ במע״מ:</target>
+      </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>קיימים כרגע %records% רשומות זמן שמסתכמות לסך של %duration%.</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>חודשי</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>סוג תקציב</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% נוצלו (%left% עדיין פתוחים החודש)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% נוצלו החודש</target>
+      </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>ניתן להוסיף משתמש חדש לצוות על ידי בחירה בו מהרשימה. לאחר מכן ניתן להחליט אם משתמש זה אמור להיות מוביל הצוות.</target>
+      </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>הוספת משתמש</target>
       </trans-unit>
     </body>
   </file>

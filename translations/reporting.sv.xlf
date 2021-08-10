@@ -30,6 +30,14 @@
         <source>reporting.initial_view</source>
         <target>Inledande rapport</target>
       </trans-unit>
+      <trans-unit id="report_project_details">
+        <source>report_project_details</source>
+        <target>Projektdetaljer</target>
+      </trans-unit>
+      <trans-unit id="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>Årlig vy för alla användare</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

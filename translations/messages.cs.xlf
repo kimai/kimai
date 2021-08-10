@@ -1099,6 +1099,18 @@
         <source>upload</source>
         <target>Nahrát</target>
       </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Sestupně</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Vzestupně</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Hledaný výraz</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

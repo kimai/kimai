@@ -30,6 +30,18 @@
         <source>reporting.initial_view</source>
         <target>Αρχική αναφορά</target>
       </trans-unit>
+      <trans-unit id="report_project_details">
+        <source>report_project_details</source>
+        <target>Λεπτομέρειες Έργου</target>
+      </trans-unit>
+      <trans-unit id="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>Ετήσια προβολή για όλους τους χρήστες</target>
+      </trans-unit>
+      <trans-unit id="report_project_daterange">
+        <source>report_project_daterange</source>
+        <target>Μηνιαία Αναφορά</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
