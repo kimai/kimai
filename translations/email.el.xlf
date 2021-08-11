@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>Εγγραφήκατε στο λογισμικό παρακολούθησης χρόνου Kimai με το e-mail %email%. Τώρα χρειάζεται να ενεργοποιήσετε τον λογαριασμό σας εντός μερικών ωρών, προτού λήξει ο σύνδεσμος.</target>
+        <target>Εγγραφήκατε στο λογισμικό παρακολούθησης χρόνου Kimai με το e-mail %email%. Παρακαλούμε ενεργοποιήσετε τον λογαριασμό σας εντός μερικών ωρών, προτού λήξει ο σύνδεσμος.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>

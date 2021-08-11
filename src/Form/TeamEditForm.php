@@ -27,8 +27,13 @@ class TeamEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $users = [];
+
         /** @var Team|null $team */
         $team = $options['data'] ?? null;
+        if ($team !== null) {
+            $users = $team->getUsers();
+        }
 
         $builder
             ->add('name', TextType::class, [
@@ -48,6 +53,7 @@ class TeamEditForm extends AbstractType
             'entry_type' => TeamMemberType::class,
             'entry_options' => [
                 'label' => false,
+                'include_users' => $users
             ],
             'allow_add' => true,
             'by_reference' => false,

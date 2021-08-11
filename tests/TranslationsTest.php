@@ -86,7 +86,7 @@ class TranslationsTest extends TestCase
                     $key = (string) $transUnit->source;
                     if (isset($transLang[$key])) {
                         // some special cases, which don't work properly - base translation should be changed
-                        if (!\in_array($key, ['stats.percentUsedLeft', 'stats.percentUsedLeft_month'])) {
+                        if (!\in_array($key, ['stats.percentUsed', 'stats.percentUsedLeft', 'stats.percentUsed_month', 'stats.percentUsedLeft_month'])) {
                             preg_match_all('/%.+%/Uu', (string) $transUnit->target, $matches);
                             asort($matches[0]);
                             self::assertEquals($transLang[$key], array_values($matches[0]), sprintf('Invalid replacer "%s" in "%s"', $key, basename($file)));

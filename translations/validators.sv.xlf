@@ -1,23 +1,59 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="sv" datatype="plaintext" original="validators.en.xlf">
-        <body>
-            <trans-unit id="This value is not a valid role.">
-                <source>This value is not a valid role.</source>
-                <target state="translated">Detta värdet är inte en giltig roll.</target>
-            </trans-unit>
-            <trans-unit id="End date must not be earlier then start date.">
-                <source>End date must not be earlier then start date.</source>
-                <target state="translated">Slutdatumet får inte vara tidigare än startdatumet.</target>
-            </trans-unit>
-            <trans-unit id="The begin date cannot be in the future.">
-                <source>The begin date cannot be in the future.</source>
-                <target state="translated">Startdatumet får inte vara i framtiden.</target>
-            </trans-unit>
-            <trans-unit id="You must select at least one user or team.">
-                <source>You must select at least one user or team.</source>
-                <target state="translated">Du måste välja minst en anändare eller arbetslag</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="sv" datatype="plaintext" original="validators.en.xlf">
+    <body>
+      <trans-unit id="This value is not a valid role.">
+        <source>This value is not a valid role.</source>
+        <target state="translated">Detta värdet är inte en giltig roll.</target>
+      </trans-unit>
+      <trans-unit id="End date must not be earlier then start date.">
+        <source>End date must not be earlier then start date.</source>
+        <target state="translated">Slutdatumet får inte vara tidigare än startdatumet.</target>
+      </trans-unit>
+      <trans-unit id="The begin date cannot be in the future.">
+        <source>The begin date cannot be in the future.</source>
+        <target state="translated">Startdatumet får inte vara i framtiden.</target>
+      </trans-unit>
+      <trans-unit id="You must select at least one user or team.">
+        <source>You must select at least one user or team.</source>
+        <target state="translated">Du måste välja minst en användare eller lag.</target>
+      </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>Budgeten är förbrukad. Av den tillgängliga budgeten %budget% har %used% blivit bokad hittills. %free% kan fortfarande användas.</target>
+      </trans-unit>
+      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>Max {{ value }} timmar tillåts.</target>
+      </trans-unit>
+      <trans-unit id="The given value is not a valid time.">
+        <source>The given value is not a valid time.</source>
+        <target>Det angivna värdet är inte en giltig tid.</target>
+      </trans-unit>
+      <trans-unit id="You already have an entry for this time.">
+        <source>You already have an entry for this time.</source>
+        <target>Du har redan en post för den här tiden.</target>
+      </trans-unit>
+      <trans-unit id="This period is locked, please choose a later date.">
+        <source>This period is locked, please choose a later date.</source>
+        <target>Den här perioden är låst, vad god välj ett senare datum.</target>
+      </trans-unit>
+      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
+        <target>Den här fakturadokumentet kan inte användas, var god döp om filen och ladda upp den igen.</target>
+      </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>Användarnamnet används redan.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>E-postadressen används redan.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>Lösenordet matchar inte.</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

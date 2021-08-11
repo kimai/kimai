@@ -20,6 +20,7 @@ class TeamMemberType extends AbstractType
     {
         $builder->add('user', UserType::class, [
             'selectpicker' => false,
+            'include_users' => $options['include_users'],
         ]);
 
         $builder->add('teamlead', YesNoType::class, [
@@ -41,6 +42,7 @@ class TeamMemberType extends AbstractType
             'data_class' => TeamMember::class,
             'label' => 'label.user',
             'compound' => true,
+            'include_users' => [],
         ]);
     }
 }

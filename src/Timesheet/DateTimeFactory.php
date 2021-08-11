@@ -52,9 +52,10 @@ class DateTimeFactory
     {
         if (null === $date) {
             $date = $this->createDateTime();
+        } else {
+            $date = clone $date;
         }
 
-        $date = clone $date;
         $date->modify('first day of this month');
         $date->setTime(0, 0, 0);
 
@@ -64,10 +65,10 @@ class DateTimeFactory
     public function getStartOfWeek(?DateTime $date = null): DateTime
     {
         if (null === $date) {
-            $date = $this->createDateTime('now');
+            $from = $this->createDateTime('now');
+        } else {
+            $from = clone $date;
         }
-
-        $from = clone $date;
 
         $year = $from->format('o');
         $week = $from->format('W');
@@ -118,9 +119,7 @@ class DateTimeFactory
 
     public function createDateTime(string $datetime = 'now'): DateTime
     {
-        $date = new DateTime($datetime, $this->getTimezone());
-
-        return $date;
+        return new DateTime($datetime, $this->getTimezone());
     }
 
     /**
@@ -130,7 +129,18 @@ class DateTimeFactory
      */
     public function createDateTimeFromFormat(string $format, ?string $datetime = 'now')
     {
-        $date = DateTime::createFromFormat($format, $datetime, $this->getTimezone());
+        return DateTime::createFromFormat($format, $datetime, $this->getTimezone());
+    }
+
+    public function createStartOfYear(?DateTime $date = null): DateTime
+    {
+        if (null === $date) {
+            $date = $this->createDateTime();
+        } else {
+            $date = clone $date;
+        }
+
+        $date->modify('first day of january 00:00:00');
 
         return $date;
     }

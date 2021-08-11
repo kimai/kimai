@@ -433,6 +433,10 @@
         <source>The entered passwords don't match.</source>
         <target>הסיסמאות שהוקלדו אינן תואמות.</target>
       </trans-unit>
+      <trans-unit id="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target>יש להקצות לצוות מוביל אחד לפחות.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

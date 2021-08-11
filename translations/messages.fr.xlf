@@ -1208,6 +1208,30 @@
         <source>error.too_many_entries</source>
         <target>La demande n'a pas pu être traitée, trop de résultats ont été trouvés.</target>
       </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Numéro d'équipe</target>
+      </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>Il existe actuellement %records% enregistrements de temps, dont la durée totale est de %duration%.</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Mensuel</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Type de budget</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% utilisés (%left% sont encore ouverts ce mois-ci)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% utilisés ce mois-ci</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
