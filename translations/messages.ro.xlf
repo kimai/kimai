@@ -74,7 +74,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Încă nu au fost configurate tarifele.</target>
+        <target>Nu au fost încă configurate tarife orare.</target>
       </trans-unit>
       <trans-unit id="rates.title">
         <source>rates.title</source>
@@ -1095,6 +1095,90 @@
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
         <target>Termen de căutare</target>
+      </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Adăugați un nou utilizator în echipă, selectându-l din listă. Ulterior, puteți decide dacă utilizatorul trebuie să devină lider de echipă.</target>
+      </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Adăugați un utilizator</target>
+      </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>În prezent, există %recorduri% înregistrări de timp, care însumează o durată totală de %durata%.</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Lunar</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Tip bugetar</target>
+      </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Numărul de personal</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Ultima intrare</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Nici o rezervare de timp, deoarece</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%%% utilizate (%left% sunt încă deschise în această lună)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percentaj%%% folosit în această lună</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Utilizatori activi în acest exercițiu financiar</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Venituri în acest exercițiu financiar</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Ore de lucru în acest exercițiu financiar</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Venituri</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Timp de lucru</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Exercițiul financiar</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Dacă doriți să ștergeți o intrare, trebuie să o trageți pe buton.</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>Cererea nu a putut fi procesată, au fost găsite prea multe rezultate.</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>A fost trimis un e-mail. Acesta conține un link pe care trebuie să faceți clic pentru a vă reseta parola. Notă: Puteți solicita o singură dată o nouă parolă în decurs de %tokenLifetime% ore. Dacă nu primiți un e-mail, verificați dosarul de spam sau încercați din nou.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>A fost trimis un e-mail la %email%. Acesta conține un link de activare pe care trebuie să faceți clic pentru a vă activa contul.</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Ștergeți favoritele de căutare</target>
       </trans-unit>
     </body>
   </file>
