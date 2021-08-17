@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="calendar">
         <source>calendar</source>
-        <target>Calendar</target>
+        <target>Calendarul</target>
       </trans-unit>
       <trans-unit id="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
