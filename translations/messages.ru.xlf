@@ -1202,6 +1202,10 @@
         <source>label.set_as_default</source>
         <target>Сохранить настройки как избранные при поиске</target>
       </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Добавить пользователя</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
