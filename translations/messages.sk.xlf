@@ -1115,6 +1115,42 @@
         <source>upload</source>
         <target>Nahrať</target>
       </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>E -mail bol odoslaný na adresu %email %. Obsahuje aktivačný odkaz, na ktorý musíte kliknúť, aby ste si aktivovali účet.</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Formulár bol zmenený. Prosím kliknite "Uložiť" pre uloženie zmien alebo "Zatvoriť" pre zrušenie.</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Súbor</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Zoradiť podľa</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Zostupne</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Vzostupne</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Odstrániť vyhľadávanie obľúbených</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Uložiť nastavenie ako vyhľadávanie obľúbených</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Hľadaný výraz</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
