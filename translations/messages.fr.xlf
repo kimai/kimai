@@ -1232,6 +1232,14 @@
         <source>stats.percentUsed_month</source>
         <target>%percent%% utilisés ce mois-ci</target>
       </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Ajoutez un nouvel utilisateur à l'équipe en le sélectionnant dans la liste. Ensuite, vous pouvez décider si l'utilisateur doit devenir chef d'équipe.</target>
+      </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Ajouter un utilisateur</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
