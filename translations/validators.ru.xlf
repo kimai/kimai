@@ -54,6 +54,10 @@
         <source>The username is already used.</source>
         <target>Указанное имя пользователя уже используется.</target>
       </trans-unit>
+      <trans-unit id="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target>В команде должен быть назначен хотя бы один руководитель.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
