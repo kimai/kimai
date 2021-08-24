@@ -211,7 +211,7 @@
             <h4><i class="icon {{ icon|icon(icon) }}"></i> {{ title|trans }}</h4>
             {{ description|trans }}
         {% elseif icon %}
-            <h4><i class="icon {{ icon|icon(icon) }}"></i> {{ description|trans }}</h4>
+            <i class="icon {{ icon|icon(icon) }}"></i> {{ description|trans }}
         {% else %}
             {{ description|trans }}
         {% endif %}
