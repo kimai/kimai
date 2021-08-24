@@ -11,7 +11,7 @@ namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
 
-class TimesheetsTeamSubscriber extends AbstractTimesheetsSubscriber
+class TimesheetsTeamSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {
@@ -24,7 +24,7 @@ class TimesheetsTeamSubscriber extends AbstractTimesheetsSubscriber
         $event->addColumnToggle('#modal_timesheet_admin');
 
         if ($this->isGranted('export_other_timesheet')) {
-            $this->addExporter($event, 'admin_timesheet_export');
+            $event->addAction('download', ['url' => $this->path('admin_timesheet_export'), 'class' => 'toolbar-action modal-ajax-form']);
         }
 
         if ($this->isGranted('create_other_timesheet')) {
