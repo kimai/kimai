@@ -31,7 +31,7 @@ class CsvRendererTest extends AbstractRendererTest
     public function getTestModel()
     {
         return [
-            ['400', '2437.12', ' EUR 1,947.99 ', 7, 5, 1, 2, 2]
+            ['400', '2437.12', ' EUR 1,947.99 ', 6, 5, 1, 2, 2]
         ];
     }
 
@@ -52,8 +52,6 @@ class CsvRendererTest extends AbstractRendererTest
         $this->assertTrue(file_exists($file->getRealPath()));
         $content = file_get_contents($file->getRealPath());
 
-        $this->assertStringContainsString('"' . $totalDuration . '"', $content);
-        $this->assertStringContainsString('"' . $totalRate . '"', $content);
         $this->assertStringContainsString('"' . $expectedRate . '"', $content);
         $this->assertEquals($expectedRows, substr_count($content, PHP_EOL));
         $this->assertEquals($expectedDescriptions, substr_count($content, 'activity description'));
@@ -105,7 +103,7 @@ class CsvRendererTest extends AbstractRendererTest
             27 => 'ORDER-123',
         ];
 
-        self::assertEquals(7, \count($all));
+        self::assertEquals(6, \count($all));
         self::assertEquals($expected, $all[5]);
         self::assertEquals(\count($expected), \count($all[0]));
         self::assertEquals('foo', $all[4][14]);

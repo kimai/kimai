@@ -4,6 +4,8 @@
     data-title="{{- get_title()|e('html_attr') -}}"
 {% endblock %}
 
+{% block page_title %}{{- get_title() -}}{% endblock %}
+
 {% block after_body_start %}
     {% embed 'embeds/modal.html.twig' %}
         {% block modal_id %}remote_form_modal{% endblock %}

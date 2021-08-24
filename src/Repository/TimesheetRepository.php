@@ -25,6 +25,7 @@ use App\Repository\Loader\TimesheetLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\Result\TimesheetResult;
 use DateInterval;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
@@ -749,7 +750,7 @@ class TimesheetRepository extends EntityRepository
      * Especially the following question is still un-answered!
      *
      * Should a teamlead:
-     * 1 . see all records of his team-members, even if they recorded times for projects invisible to him
+     * 1. see all records of his team-members, even if they recorded times for projects invisible to him
      * 2. only see records for projects which can be accessed by hom (current situation)
      */
     private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): bool
@@ -833,6 +834,13 @@ class TimesheetRepository extends EntityRepository
         $qb = $this->getQueryBuilderForQuery($query);
 
         return $this->getHydratedResultsByQuery($qb, $fullyHydrated);
+    }
+
+    public function getTimesheetResult(TimesheetQuery $query): TimesheetResult
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+
+        return new TimesheetResult($qb);
     }
 
     /**

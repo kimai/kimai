@@ -105,7 +105,7 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
         // load new form from given content
         if (jQuery(html).find('#form_modal .modal-content').length > 0) {
-            // switch classes, in case the modal type changed
+            // Support changing modal importance/types
             remoteModal.on('hidden.bs.modal', function () {
                 if (remoteModal.hasClass('modal-danger')) {
                     remoteModal.removeClass('modal-danger');
@@ -114,6 +114,16 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
             if (jQuery(html).find('#form_modal').hasClass('modal-danger')) {
                 remoteModal.addClass('modal-danger');
+            }
+
+            // Support changing modal sizes
+            let modalDialog = remoteModal.find('.modal-dialog');
+            let largeModal = jQuery(html).find('.modal-dialog').hasClass('modal-lg');
+            if (largeModal && !modalDialog.hasClass('modal-lg')) {
+                modalDialog.addClass('modal-lg');
+            }
+            if (!largeModal && modalDialog.hasClass('modal-lg')) {
+                modalDialog.removeClass('modal-lg');
             }
 
             jQuery('#remote_form_modal .modal-content').replaceWith(
@@ -155,7 +165,13 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         form.on('change', this._isDirtyHandler);
 
         // click handler for modal save button, to send forms via ajax
-        form.on('submit', function(event){
+        form.on('submit', function(event) {
+            // if the form has a target, we let the normal HTML flow happen
+            if (form.attr('target') !== undefined) {
+                return true;
+            }
+
+            // otherwise we do some AJAX magic to process the form in the background
             const btn = jQuery(formIdentifier + ' button[type=submit]').button('loading');
             const eventName = form.attr('data-form-event');
             const events = self.getContainer().getPlugin('event');

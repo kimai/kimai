@@ -43,11 +43,8 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $this->assertPageActions($client, [
             'search' => '#',
-            'toolbar-action exporter-csv' => $this->createUrl('/team/timesheet/export/csv'),
-            'toolbar-action exporter-print' => $this->createUrl('/team/timesheet/export/print'),
-            'toolbar-action exporter-pdf' => $this->createUrl('/team/timesheet/export/pdf'),
-            'toolbar-action exporter-xlsx' => $this->createUrl('/team/timesheet/export/xlsx'),
             'visibility' => '#',
+            'download toolbar-action modal-ajax-form' => $this->createUrl('/team/timesheet/export/'),
             'create-ts modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
             'create-ts-mu modal-ajax-form' => $this->createUrl('/team/timesheet/create_mu'),
             'help' => 'https://www.kimai.org/documentation/timesheet.html'
@@ -146,18 +143,17 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($fixture);
 
-        $this->request($client, '/team/timesheet/');
+        $this->request($client, '/team/timesheet/export/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.searchform')->form();
-        $form->getFormNode()->setAttribute('action', $this->createUrl('/team/timesheet/export/print'));
-        $client->submit($form, [
-            'state' => 1,
-            'pageSize' => 25,
-            'daterange' => $dateRange,
-            'customers' => [],
+        $client->submitForm('export-btn-print', [
+            'export' => [
+                'state' => 1,
+                'daterange' => $dateRange,
+                'customers' => [],
+            ]
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());

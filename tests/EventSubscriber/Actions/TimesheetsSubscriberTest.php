@@ -13,7 +13,6 @@ use App\EventSubscriber\Actions\TimesheetsSubscriber;
 
 /**
  * @covers \App\EventSubscriber\Actions\AbstractActionsSubscriber
- * @covers \App\EventSubscriber\Actions\AbstractTimesheetsSubscriber
  * @covers \App\EventSubscriber\Actions\TimesheetsSubscriber
  */
 class TimesheetsSubscriberTest extends AbstractActionsSubscriberTest

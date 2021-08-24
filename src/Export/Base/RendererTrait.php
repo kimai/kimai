@@ -167,7 +167,9 @@ trait RendererTrait
             }
         }
 
-        $allBudgets = $projectStatisticService->getBudgetStatisticModelForProjects($projects, $query->getEnd());
+        $today = $this->getToday($query);
+
+        $allBudgets = $projectStatisticService->getBudgetStatisticModelForProjects($projects, $today);
 
         foreach ($allBudgets as $projectId => $statisticModel) {
             $project = $statisticModel->getProject();
@@ -181,6 +183,29 @@ trait RendererTrait
         }
 
         return $summary;
+    }
+
+    private function getToday(TimesheetQuery $query): \DateTime
+    {
+        $end = $query->getEnd();
+
+        if ($end !== null) {
+            return $end;
+        }
+
+        if ($query->getCurrentUser() !== null) {
+            $timezone = $query->getCurrentUser()->getTimezone();
+
+            return new \DateTime('now', new \DateTimeZone($timezone));
+        }
+
+        if ($query->getUser() !== null) {
+            $timezone = $query->getUser()->getTimezone();
+
+            return new \DateTime('now', new \DateTimeZone($timezone));
+        }
+
+        return new \DateTime();
     }
 
     /**
@@ -236,7 +261,9 @@ trait RendererTrait
             }
         }
 
-        $allBudgets = $activityStatisticService->getBudgetStatisticModelForActivities($activities, $query->getEnd());
+        $today = $this->getToday($query);
+
+        $allBudgets = $activityStatisticService->getBudgetStatisticModelForActivities($activities, $today);
 
         foreach ($allBudgets as $activityId => $statisticModel) {
             $project = $statisticModel->getActivity()->getProject();

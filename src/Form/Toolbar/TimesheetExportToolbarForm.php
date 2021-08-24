@@ -1,0 +1,63 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Form\Toolbar;
+
+use App\Repository\Query\TimesheetQuery;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+/**
+ * Defines the form used for filtering the timesheet.
+ */
+class TimesheetExportToolbarForm extends AbstractToolbarForm
+{
+    public function getBlockPrefix()
+    {
+        return 'export';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $newOptions = [];
+        if ($options['ignore_date'] === true) {
+            $newOptions['ignore_date'] = true;
+        }
+
+        $this->addSearchTermInputField($builder);
+        $this->addDateRange($builder, ['timezone' => $options['timezone']]);
+        $this->addCustomerMultiChoice($builder, $newOptions, true);
+        $this->addProjectMultiChoice($builder, $newOptions, true, true);
+        $this->addActivityMultiChoice($builder, [], true);
+        $this->addTagInputField($builder);
+        if ($options['include_user']) {
+            $this->addUsersChoice($builder);
+        }
+        $this->addTimesheetStateChoice($builder);
+        $this->addBillableChoice($builder);
+        $this->addExportStateChoice($builder);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => TimesheetQuery::class,
+            'csrf_protection' => false,
+            'include_user' => false,
+            'ignore_date' => true,
+            'timezone' => date_default_timezone_get(),
+        ]);
+    }
+}
