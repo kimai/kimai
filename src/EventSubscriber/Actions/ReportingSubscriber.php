@@ -39,7 +39,7 @@ class ReportingSubscriber extends AbstractActionsSubscriber
             if ($report instanceof Report) {
                 $subMenu = $report->getReportIcon();
             }
-            $event->addActionToSubmenu($subMenu, $report->getId(), ['title' => $report->getLabel(), 'translation_domain' => 'reporting', 'url' => $this->path($report->getRoute()), 'class' => 'toolbar-action report-' . $report->getId()]);
+            $event->addActionToSubmenu($subMenu, $report->getId(), ['title' => $report->getLabel(), 'translation_domain' => 'reporting', 'url' => $this->path($report->getRoute()), 'class' => 'report-' . $report->getId()]);
         }
 
         $event->addHelp($this->documentationLink('reporting.html'));
