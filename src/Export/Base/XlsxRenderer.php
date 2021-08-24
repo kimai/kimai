@@ -17,7 +17,7 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer
 {
     protected function isTotalRowSupported(): bool
     {
-        return false;
+        return true;
     }
 
     public function getFileExtension(): string
