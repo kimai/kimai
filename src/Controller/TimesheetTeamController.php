@@ -14,6 +14,7 @@ use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\TimesheetMetaDisplayEvent;
+use App\Export\ServiceExport;
 use App\Form\Model\MultiUserTimesheet;
 use App\Form\TimesheetAdminEditForm;
 use App\Form\TimesheetMultiUserEditForm;
@@ -45,19 +46,19 @@ class TimesheetTeamController extends TimesheetAbstractController
      */
     public function indexAction(int $page, Request $request): Response
     {
-        $query = new TimesheetQuery();
+        $query = $this->createDefaultQuery();
         $query->setPage($page);
-        $query->setName('TeamTimesListing');
 
         return $this->index($query, $request, 'admin_timesheet', 'timesheet-team/index.html.twig', TimesheetMetaDisplayEvent::TEAM_TIMESHEET);
     }
 
     /**
-     * @Route(path="/export/{exporter}", name="admin_timesheet_export", methods={"GET"})
+     * @Route(path="/export/", name="admin_timesheet_export", methods={"GET", "POST"})
+     * @Security("is_granted('export_other_timesheet')")
      */
-    public function exportAction(Request $request, string $exporter): Response
+    public function exportAction(Request $request, ServiceExport $serviceExport): Response
     {
-        return $this->export($request, $exporter);
+        return $this->export($request, $serviceExport);
     }
 
     /**
@@ -233,6 +234,11 @@ class TimesheetTeamController extends TimesheetAbstractController
         return 'admin_timesheet_edit';
     }
 
+    protected function getExportRoute(): string
+    {
+        return 'admin_timesheet_export';
+    }
+
     protected function getMultiUpdateRoute(): string
     {
         return 'admin_timesheet_multi_update';
@@ -246,5 +252,10 @@ class TimesheetTeamController extends TimesheetAbstractController
     protected function canSeeStartEndTime(): bool
     {
         return true;
+    }
+
+    protected function getQueryNamePrefix(): string
+    {
+        return 'TeamTimes';
     }
 }

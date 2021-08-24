@@ -23,6 +23,7 @@ use App\Form\MultiUpdate\MultiUpdateTableDTO;
 use App\Form\MultiUpdate\TimesheetMultiUpdate;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use App\Form\TimesheetEditForm;
+use App\Form\Toolbar\TimesheetExportToolbarForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
@@ -33,6 +34,7 @@ use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,10 +50,6 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected $dispatcher;
     /**
-     * @var ServiceExport
-     */
-    protected $exportService;
-    /**
      * @var TimesheetService
      */
     protected $service;
@@ -63,13 +61,11 @@ abstract class TimesheetAbstractController extends AbstractController
     public function __construct(
         TimesheetRepository $repository,
         EventDispatcherInterface $dispatcher,
-        ServiceExport $exportService,
         TimesheetService $timesheetService,
         SystemConfiguration $configuration
     ) {
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
-        $this->exportService = $exportService;
         $this->service = $timesheetService;
         $this->configuration = $configuration;
     }
@@ -241,40 +237,55 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    protected function export(Request $request, string $exporterId): Response
+    protected function export(Request $request, ServiceExport $serviceExport): Response
     {
-        $query = new TimesheetQuery();
+        $query = $this->createDefaultQuery();
 
-        $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
+        $form = $this->getExportForm($query);
 
-        $factory = $this->getDateTimeFactory();
-
-        // by default the current month is exported, but it can be overwritten
-        // this should not be removed, otherwise we would export EVERY available record in the admin section
-        // as the default toolbar query does neither limit the user nor the date-range!
-        if (null === $query->getBegin()) {
-            $query->setBegin($factory->getStartOfMonth());
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $this->ignorePersistedSearch($request);
         }
-        $query->getBegin()->setTime(0, 0, 0);
 
-        if (null === $query->getEnd()) {
-            $query->setEnd($factory->getEndOfMonth());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute($this->getExportRoute());
         }
-        $query->getEnd()->setTime(23, 59, 59);
 
         $this->prepareQuery($query);
 
-        $entries = $this->repository->getTimesheetsForQuery($query);
-
-        $exporter = $this->exportService->getTimesheetExporterById($exporterId);
-
-        if (null === $exporter) {
-            throw $this->createNotFoundException('Invalid timesheet exporter given');
+        // make sure that we use the "expected time range"
+        if (null !== $query->getBegin()) {
+            $query->getBegin()->setTime(0, 0, 0);
+        }
+        if (null !== $query->getEnd()) {
+            $query->getEnd()->setTime(23, 59, 59);
         }
 
-        return $exporter->render($entries, $query);
+        $entries = $this->repository->getTimesheetResult($query);
+        // large exports have a huge boost by that, there were exports dropping from 11k queries to ~ 30
+        $entries->setFullyHydrated(true);
+        $stats = $entries->getStatistic();
+
+        // perform the real export
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $type = $request->request->get('exporter');
+            if (null !== $type) {
+                $exporter = $serviceExport->getTimesheetExporterById($type);
+
+                if (null === $exporter) {
+                    $form->addError(new FormError('Invalid timesheet exporter given'));
+                } else {
+                    return $exporter->render($entries->getResults(), $query);
+                }
+            }
+        }
+
+        return $this->render('timesheet/layout-export.html.twig', [
+            'form' => $form->createView(),
+            'route_back' => $this->getTimesheetRoute(),
+            'exporter' => $serviceExport->getTimesheetExporter(),
+            'stats' => $stats,
+        ]);
     }
 
     protected function multiUpdate(Request $request, string $renderTemplate)
@@ -518,6 +529,16 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
+    protected function getExportForm(TimesheetQuery $query): FormInterface
+    {
+        return $this->createForm(TimesheetExportToolbarForm::class, $query, [
+            'action' => $this->generateUrl($this->getExportRoute()),
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
+            'method' => Request::METHOD_POST,
+            'include_user' => $this->includeUserInForms('toolbar'),
+        ]);
+    }
+
     protected function getPermissionEditExport(): string
     {
         return 'edit_export_own_timesheet';
@@ -563,9 +584,27 @@ abstract class TimesheetAbstractController extends AbstractController
         return 'timesheet_multi_delete';
     }
 
+    protected function getExportRoute(): string
+    {
+        return 'timesheet_export';
+    }
+
     protected function canSeeStartEndTime(): bool
     {
         return $this->getTrackingMode()->canSeeBeginAndEndTimes();
+    }
+
+    protected function getQueryNamePrefix(): string
+    {
+        return 'MyTimes';
+    }
+
+    protected function createDefaultQuery(string $suffix = 'Listing'): TimesheetQuery
+    {
+        $query = new TimesheetQuery();
+        $query->setName($this->getQueryNamePrefix() . $suffix);
+
+        return $query;
     }
 
     abstract protected function getDuplicateForm(Timesheet $entry): FormInterface;

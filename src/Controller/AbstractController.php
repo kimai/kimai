@@ -166,6 +166,31 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return new LocaleFormats($this->container->get(LanguageFormattings::class), $locale);
     }
 
+    private function getLastSearch(BaseQuery $query): ?array
+    {
+        $name = 'search_' . $this->getSearchName($query);
+
+        if (!$this->get('session')->has($name)) {
+            return null;
+        }
+
+        return $this->get('session')->get($name);
+    }
+
+    private function getSearchName(BaseQuery $query): string
+    {
+        return substr($query->getName(), 0, 50);
+    }
+
+    /**
+     * @param Request $request
+     * @internal
+     */
+    protected function ignorePersistedSearch(Request $request): void
+    {
+        $request->query->set('performSearch', true);
+    }
+
     protected function handleSearch(FormInterface $form, Request $request): bool
     {
         $data = $form->getData();
@@ -173,23 +198,35 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             throw new \InvalidArgumentException('handleSearchForm() requires an instanceof BaseQuery as form data');
         }
 
-        /** @var BookmarkRepository $bookmarkRepo */
-        $bookmarkRepo = $this->getDoctrine()->getRepository(Bookmark::class);
-        $bookmark = $bookmarkRepo->getSearchDefaultOptions($this->getUser(), $data->getName());
-
         $submitData = $request->query->all();
-
-        // remove bookmark
-        if ($bookmark !== null && $request->query->has('removeDefaultQuery')) {
-            $bookmarkRepo->deleteBookmark($bookmark);
-
-            return true;
+        // allow to use forms with block-prefix
+        if (!empty($formName = $form->getConfig()->getName()) && $request->request->has($formName)) {
+            $submitData = $request->request->get($formName);
         }
 
-        // apply bookmark ONLY if search form was not submitted manually
-        if ($bookmark !== null && !$request->query->has('performSearch')) {
-            $data->setBookmark($bookmark);
-            if (!$request->query->has('setDefaultQuery')) {
+        $searchName = $this->getSearchName($data);
+
+        /** @var BookmarkRepository $bookmarkRepo */
+        $bookmarkRepo = $this->getDoctrine()->getRepository(Bookmark::class);
+        $bookmark = $bookmarkRepo->getSearchDefaultOptions($this->getUser(), $searchName);
+
+        if ($bookmark !== null) {
+            if ($request->query->has('removeDefaultQuery')) {
+                $bookmarkRepo->deleteBookmark($bookmark);
+                $bookmark = null;
+
+                return true;
+            } else {
+                $data->setBookmark($bookmark);
+            }
+        }
+
+        // apply persisted search data ONLY if search form was not submitted manually
+        if (!$request->query->has('performSearch')) {
+            $sessionSearch = $this->getLastSearch($data);
+            if ($sessionSearch !== null) {
+                $submitData = array_merge($sessionSearch, $submitData);
+            } elseif ($bookmark !== null && !$request->query->has('setDefaultQuery')) {
                 $submitData = array_merge($bookmark->getContent(), $submitData);
             }
         }
@@ -205,24 +242,39 @@ abstract class AbstractController extends BaseAbstractController implements Serv
 
         if (!$form->isValid()) {
             $data->resetByFormError($form->getErrors(true));
-        } elseif ($request->query->has('setDefaultQuery')) {
-            $params = [];
-            foreach ($form->all() as $name => $child) {
-                $params[$name] = $child->getViewData();
-            }
 
-            $filter = ['page', 'setDefaultQuery', 'removeDefaultQuery', 'performSearch'];
-            foreach ($filter as $name) {
-                if (isset($params[$name])) {
-                    unset($params[$name]);
-                }
-            }
+            return false;
+        }
 
+        $params = [];
+        foreach ($form->all() as $name => $child) {
+            $params[$name] = $child->getViewData();
+        }
+
+        // these should NEVER be saved
+        $filter = ['setDefaultQuery', 'removeDefaultQuery', 'performSearch'];
+        foreach ($filter as $name) {
+            if (isset($params[$name])) {
+                unset($params[$name]);
+            }
+        }
+
+        $this->get('session')->set('search_' . $searchName, $params);
+
+        // filter stuff, that does not belong in a bookmark
+        $filter = ['page'];
+        foreach ($filter as $name) {
+            if (isset($params[$name])) {
+                unset($params[$name]);
+            }
+        }
+
+        if ($request->query->has('setDefaultQuery')) {
             if ($bookmark === null) {
                 $bookmark = new Bookmark();
                 $bookmark->setType(Bookmark::SEARCH_DEFAULT);
                 $bookmark->setUser($this->getUser());
-                $bookmark->setName(substr($data->getName(), 0, 50));
+                $bookmark->setName($searchName);
             }
 
             $bookmark->setContent($params);
