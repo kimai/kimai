@@ -262,8 +262,6 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         $entries = $this->repository->getTimesheetResult($query);
-        // large exports have a huge boost by that, there were exports dropping from 11k queries to ~ 30
-        $entries->setFullyHydrated(true);
         $stats = $entries->getStatistic();
 
         // perform the real export
@@ -275,7 +273,7 @@ abstract class TimesheetAbstractController extends AbstractController
                 if (null === $exporter) {
                     $form->addError(new FormError('Invalid timesheet exporter given'));
                 } else {
-                    return $exporter->render($entries->getResults(), $query);
+                    return $exporter->render($entries->getResults(true), $query);
                 }
             }
         }

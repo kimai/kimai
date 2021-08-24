@@ -10,24 +10,15 @@
 namespace App\Repository\Result;
 
 use App\Repository\Loader\TimesheetLoader;
-use App\Repository\Query\TimesheetQuery;
 use Doctrine\ORM\QueryBuilder;
 
 class TimesheetResult
 {
-    private $fullyHydrated = false;
-    private $query;
     private $queryBuilder;
 
-    public function __construct(TimesheetQuery $query, QueryBuilder $queryBuilder)
+    public function __construct(QueryBuilder $queryBuilder)
     {
-        $this->query = $query;
         $this->queryBuilder = $queryBuilder;
-    }
-
-    public function setFullyHydrated(bool $fullyHydrated): void
-    {
-        $this->fullyHydrated = $fullyHydrated;
     }
 
     public function getStatistic(): TimesheetResultStatistic
@@ -52,12 +43,12 @@ class TimesheetResult
         return $query->toIterable();
     }
 
-    public function getResults(): array
+    public function getResults(bool $fullyHydrated = false): array
     {
         $query = $this->queryBuilder->getQuery();
         $results = $query->getResult();
 
-        $loader = new TimesheetLoader($this->queryBuilder->getEntityManager(), $this->fullyHydrated);
+        $loader = new TimesheetLoader($this->queryBuilder->getEntityManager(), $fullyHydrated);
         $loader->loadResults($results);
 
         return $results;
