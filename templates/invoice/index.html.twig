@@ -9,9 +9,9 @@
     'project': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
     'description': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
     'user': {'class': 'hidden-xs hidden-sm w-min', 'orderBy': false},
-    'unit_price': {'class': 'hidden-xs text-center w-min', 'orderBy': false},
-    'amount': {'class': 'text-center w-min', 'orderBy': false},
-    'duration': {'class': 'hidden-xs text-center w-min', 'orderBy': false},
+    'unit_price': {'class': 'hidden-xs text-right w-min', 'orderBy': false},
+    'amount': {'class': 'text-right w-min', 'orderBy': false},
+    'duration': {'class': 'hidden-xs text-right w-min', 'orderBy': false},
     'total_rate': {'class': 'text-right alwaysVisible w-min', 'orderBy': false},
 } %}
 
@@ -95,7 +95,7 @@
                         <tr>
                             <th>{{ 'label.customer'|trans }}</th>
                             <th class="w-min text-center actions"></th>
-                            <th class="w-min text-center hidden-xs">{{ 'label.duration'|trans }}</th>
+                            <th class="w-min text-right hidden-xs">{{ 'label.duration'|trans }}</th>
                             <th class="w-min text-right hidden-xs">{{ 'label.total_rate'|trans }}</th>
                         </tr>
                     </thead>
@@ -112,7 +112,7 @@
                                     {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'class': 'btn btn-sm', 'attr': {'data-href': path('invoice_preview', {'customer': model.customer.id, 'template': model.template.id})}}) }}
                                     {{ widgets.action_button('save', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'class': 'btn btn-sm', 'attr': {'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id})}}, 'success') }}
                                 </td>
-                                <td class="w-min text-center hidden-xs">
+                                <td class="w-min text-right hidden-xs">
                                     {{ model.calculator.timeWorked|duration(isDecimal) }}
                                 </td>
                                 <td class="w-min text-right hidden-xs">

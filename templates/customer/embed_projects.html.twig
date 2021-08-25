@@ -27,7 +27,7 @@
                     <tr>
                         <th>{{ 'label.name'|trans }}</th>
                         <th class="hidden-xs">{{ 'label.comment'|trans }}</th>
-                        <th class="w-min text-center">{{ 'label.project_end'|trans }}</th>
+                        <th class="w-min text-right">{{ 'label.project_end'|trans }}</th>
                         <th class="w-min text-center">{{ 'label.visible'|trans }}</th>
                         <th class="w-min text-center">{{ 'label.team'|trans }}</th>
                         <th class="actions"></th>
@@ -38,7 +38,7 @@
                     <tr {{ widgets.project_row_attr(project, now) }}>
                         <td>{{ widgets.label_project(project) }}</td>
                         <td class="hidden-xs">{{ project.comment|comment1line(not app.user.smallLayout) }}</td>
-                        <td class="w-min text-center">
+                        <td class="w-min text-right">
                             {% if project.end is not null %}
                                 {{ project.end|date_short }}
                             {% else %}
