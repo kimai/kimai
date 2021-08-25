@@ -132,19 +132,19 @@ table.dataTable thead .sorting_desc:before {
     top: 10px;
     left: 5px;
     display: block;
-    font-family: 'Glyphicons Halflings';
+    font-family: 'Font Awesome 5 Free';
     opacity: 0.5;
     font-size: 12px;
 }
 table.dataTable thead .sorting:before {
     opacity: 0.2;
-    content: "\e150"; /* sort */
+    content: "\f0dc"; /* sort */
 }
 table.dataTable thead .sorting_asc:before {
-    content: "\e155"; /* sort-by-attributes */
+    content: "\f0de"; /* sort-by-attributes */
 }
 table.dataTable thead .sorting_desc:before {
-    content: "\e156"; /* sort-by-attributes-alt */
+    content: "\f0dd"; /* sort-by-attributes-alt */
 }
 div.dataTables_scrollBody table.dataTable thead .sorting:before,
 div.dataTables_scrollBody table.dataTable thead .sorting_asc:before,
