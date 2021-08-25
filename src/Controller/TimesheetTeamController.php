@@ -195,9 +195,9 @@ class TimesheetTeamController extends TimesheetAbstractController
         return $this->generateCreateForm($entry, TimesheetAdminEditForm::class, $this->generateUrl('admin_timesheet_create'));
     }
 
-    protected function getDuplicateForm(Timesheet $entry): FormInterface
+    protected function getDuplicateForm(Timesheet $entry, Timesheet $original): FormInterface
     {
-        return $this->generateCreateForm($entry, TimesheetAdminEditForm::class, $this->generateUrl('admin_timesheet_duplicate', ['id' => $entry->getId()]));
+        return $this->generateCreateForm($entry, TimesheetAdminEditForm::class, $this->generateUrl('admin_timesheet_duplicate', ['id' => $original->getId()]));
     }
 
     protected function getPermissionEditExport(): string
