@@ -299,11 +299,8 @@ final class InvoiceController extends AbstractController
         $query->setCurrentUser($this->getUser());
 
         $form = $this->getArchiveToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_invoice_list');
         }
 
         $invoices = $this->invoiceRepository->getPagerfantaForQuery($query);
