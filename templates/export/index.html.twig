@@ -9,10 +9,10 @@
     'project': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
     'activity': {'class': 'hidden-xs hidden-sm hidden-md', 'orderBy': false},
     'description': {'class': 'hidden-xs hidden-sm hidden-md timesheet-description', 'orderBy': false},
-    'unit_price': {'class': 'hidden hidden-xs text-nowrap', 'orderBy': false},
-    'duration': {'class': 'text-nowrap', 'orderBy': false},
-    'rate_internal': {'class': 'hidden text-nowrap', 'orderBy': false},
-    'total_rate': {'class': 'text-nowrap', 'orderBy': false},
+    'unit_price': {'class': 'text-right hidden hidden-xs text-nowrap', 'orderBy': false},
+    'duration': {'class': 'text-right text-nowrap', 'orderBy': false},
+    'rate_internal': {'class': 'text-right hidden text-nowrap', 'orderBy': false},
+    'total_rate': {'class': 'text-right text-nowrap', 'orderBy': false},
     'exported': {'class': 'alwaysVisible', 'orderBy': false},
 } %}
 
@@ -108,7 +108,7 @@
                         <thead>
                         <tr>
                             <th>{{ 'label.customer'|trans }}</th>
-                            <th class="w-min text-center hidden-xs">{{ 'label.duration'|trans }}</th>
+                            <th class="w-min text-right hidden-xs">{{ 'label.duration'|trans }}</th>
                             {# <th class="w-min text-right hidden-xs">{{ 'label.internalRate'|trans }}</th> #}
                             <th class="w-min text-right">{{ 'label.total_rate'|trans }}</th>
                         </tr>
@@ -120,7 +120,7 @@
                                 <td>
                                     {{ widgets.label_customer(row.customer) }}
                                 </td>
-                                <td class="w-min text-center hidden-xs">
+                                <td class="w-min text-right hidden-xs">
                                     {{ row.duration|duration(decimal) }}
                                 </td>
                                 {#

@@ -29,6 +29,16 @@
     top: 0;
     right: 0;
     padding-left: 10px;
+    .btn {
+        span.label {
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            text-align: center;
+            font-size: 9px;
+            padding: 2px 3px;
+        }
+    }
 }
 
 @media (max-width: $screen-md-max) {

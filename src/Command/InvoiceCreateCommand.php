@@ -238,7 +238,6 @@ class InvoiceCreateCommand extends Command
         // =============== VALIDATION END ===============
 
         $defaultQuery = new InvoiceQuery();
-        $defaultQuery->setOrder(InvoiceQuery::ORDER_ASC);
         $defaultQuery->setBegin($start);
         $defaultQuery->setEnd($end);
         $defaultQuery->setCurrentUser($user);

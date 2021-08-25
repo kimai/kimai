@@ -155,6 +155,7 @@ final class TimesheetService
             $this->repository->save($timesheet);
             $this->dispatcher->dispatch(new TimesheetCreatePostEvent($timesheet));
 
+            // TODO really stop always or only if $timesheet->getEnd() === null
             try {
                 $this->stopActiveEntries($timesheet);
             } catch (ValidationFailedException $vex) {

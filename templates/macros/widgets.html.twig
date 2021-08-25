@@ -180,15 +180,15 @@
     {% if teams|length > 0 %}
         {{ _self.badge_counter(teams|length) }}
     {% else %}
-        {{ _self.icon('unlocked') }}
+        {{ _self.badge_counter(0, null, 'bg-gray') }}
     {% endif %}
 {% endmacro %}
 
-{% macro badge_counter(count, url) %}
+{% macro badge_counter(count, url, type) %}
     {% if url %}
-        <a href="{{ url }}"><span class="badge bg-blue">{{ count }}</span></a>
+        <a href="{{ url }}"><span class="badge {{ type|default('bg-blue') }}">{{ count }}</span></a>
     {% else %}
-        <span class="badge bg-blue">{{ count }}</span>
+        <span class="badge {{ type|default('bg-blue') }}">{{ count }}</span>
     {% endif %}
 {% endmacro %}
 
@@ -359,6 +359,7 @@
         {% set title = null %}
         {% set disabled = false %}
         {% set attr = {} %}
+        {% set label = null %}
         {% set translation_domain = 'messages' %}
         {% if type is same as (false) %}
             {% set class = "" %}
@@ -369,6 +370,7 @@
         {% endif %}
 
         {% if values is not iterable %}
+            {% deprecated 'Passing a non iterable action_button is deprecated since 1.15 and will be removed with 2.0' %}
             {% set url = values %}
             {% if 'onclick:' in url %}
                 {% set onclick = url|replace({'onclick:': ''}) %}
@@ -393,6 +395,7 @@
             {% set title = values.title ?? null %}
             {% set class = class ~ ( values.class | default("")) %}
             {% set attr = values.attr ?? {} %}
+            {% set label = values.label ?? null %}
             {% set translation_domain = values.translation_domain ?? translation_domain %}
         {% endif %}
 
@@ -412,7 +415,7 @@
                     {{ ' ' ~ name }}={% if '"' in value %}'{{ value|raw }}'{% else %}"{{ value|raw }}"{% endif %}
                     {% endfor %}
                 {% endif %}
-        >{% if title is not null %}{{ title|trans({}, translation_domain) }}{% else %}{{ _self.icon(icon) }}{% endif %}</a>
+        >{% if title is not null %}{{ title|trans({}, translation_domain) }}{% else %}{{ _self.icon(icon) }}{% endif %}{% if label is not null %}<span class="label bg-yellow">{{ label }}</span>{% endif %}</a>
     {% endapply %}
 {% endmacro %}
 

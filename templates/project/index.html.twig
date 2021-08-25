@@ -19,8 +19,8 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'budget': {'class': 'hidden-xs hidden-sm hidden text-center w-min', 'title': 'label.budget'|trans},
-    'timeBudget': {'class': 'hidden-xs hidden-sm hidden text-center w-min', 'title': 'label.timeBudget'|trans},
+    'budget': {'class': 'hidden-xs hidden-sm hidden text-right w-min', 'title': 'label.budget'|trans},
+    'timeBudget': {'class': 'hidden-xs hidden-sm hidden text-right w-min', 'title': 'label.timeBudget'|trans},
     'team': {'class': 'text-center w-min', 'orderBy': false},
     'visible': {'class': 'text-center hidden w-min'},
     'actions': {'class': 'actions alwaysVisible'},
@@ -30,7 +30,7 @@
 
 {% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
 {% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
-{% block page_actions %}{{ actions.projects('index') }}{% endblock %}
+{% block page_actions %}{{ actions.projects('index', query) }}{% endblock %}
 
 {% block main_before %}
     {{ tables.data_table_column_modal(tableName, columns) }}

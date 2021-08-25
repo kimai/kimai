@@ -20,6 +20,16 @@ class ExportQuery extends TimesheetQuery
      */
     private $markAsExported = false;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setDefaults([
+            'order' => ExportQuery::ORDER_ASC,
+            'state' => ExportQuery::STATE_STOPPED,
+            'exported' => ExportQuery::STATE_NOT_EXPORTED,
+        ]);
+    }
+
     public function getRenderer(): ?string
     {
         return $this->renderer;

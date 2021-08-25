@@ -188,10 +188,8 @@ final class InvoiceController extends AbstractController
         $end = $factory->getEndOfMonth();
 
         $query = new InvoiceQuery();
-        $query->setOrder(InvoiceQuery::ORDER_ASC);
         $query->setBegin($begin);
         $query->setEnd($end);
-        $query->setExported(InvoiceQuery::STATE_NOT_EXPORTED);
         // limit access to data from teams
         $query->setCurrentUser($this->getUser());
 
@@ -301,11 +299,8 @@ final class InvoiceController extends AbstractController
         $query->setCurrentUser($this->getUser());
 
         $form = $this->getArchiveToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_invoice_list');
         }
 
         $invoices = $this->invoiceRepository->getPagerfantaForQuery($query);

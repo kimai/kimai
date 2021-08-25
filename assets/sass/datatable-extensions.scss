@@ -6,11 +6,6 @@
  */
 
 
-/* custom extension to make the column wide enough to show the sortable icons */
-table.dataTable th.sortable {
-    padding-left: 22px;
-}
-
 table.dataTable.table > tbody > tr > td {
     vertical-align: middle;
     .img-circle {

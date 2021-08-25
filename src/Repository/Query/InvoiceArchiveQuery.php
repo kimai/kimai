@@ -21,7 +21,9 @@ class InvoiceArchiveQuery extends BaseQuery
     use DateRangeTrait;
 
     public const INVOICE_ARCHIVE_ORDER_ALLOWED = [
-        'date', 'customer', 'total'
+        'date', 'total_rate',
+        // TODO other fields have a problem with translation
+        // 'number', 'tax', 'payed', 'status'
     ];
 
     /**
@@ -40,6 +42,8 @@ class InvoiceArchiveQuery extends BaseQuery
             'orderBy' => 'date',
             'order' => self::ORDER_DESC,
             'dateRange' => new DateRange(),
+            'customers' => [],
+            'status' => [],
         ]);
     }
 

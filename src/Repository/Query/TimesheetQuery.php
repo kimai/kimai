@@ -69,7 +69,13 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
         $this->setDefaults([
             'order' => self::ORDER_DESC,
             'orderBy' => 'begin',
-            'dateRange' => new DateRange($resetTimes)
+            'dateRange' => new DateRange($resetTimes),
+            'exported' => self::STATE_ALL,
+            'state' => self::STATE_ALL,
+            'billable' => null,
+            'tags' => [],
+            'users' => [],
+            'activities' => [],
         ]);
     }
 

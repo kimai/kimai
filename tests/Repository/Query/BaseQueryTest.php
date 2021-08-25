@@ -36,6 +36,7 @@ class BaseQueryTest extends TestCase
     {
         $this->assertBaseQuery(new BaseQuery());
         $this->assertResetByFormError(new BaseQuery());
+        $this->assertFilter(new BaseQuery());
     }
 
     /**
@@ -121,6 +122,36 @@ class BaseQueryTest extends TestCase
         self::assertSame($team, $sut->getTeams()[0]);
     }
 
+    protected function assertFilter(BaseQuery $sut)
+    {
+        self::assertEquals(0, $sut->countFilter());
+        $sut->setSearchTerm(new SearchTerm('sdfsdf'));
+        self::assertEquals(1, $sut->countFilter());
+        $sut->setPageSize(22);
+        self::assertEquals(2, $sut->countFilter());
+        $sut->setPage(2);
+        self::assertEquals(2, $sut->countFilter());
+        $sut->setOrderBy('foo');
+        self::assertEquals(3, $sut->countFilter());
+        $sut->setOrder(BaseQuery::ORDER_DESC);
+        self::assertEquals(4, $sut->countFilter());
+        $sut->setOrder(BaseQuery::ORDER_ASC);
+        self::assertEquals(3, $sut->countFilter());
+        $sut->setOrder(BaseQuery::ORDER_DESC);
+        self::assertEquals(4, $sut->countFilter());
+
+        self::assertTrue($sut->matchesFilter('page', 2));
+        self::assertFalse($sut->isDefaultFilter('page'));
+
+        $sut->resetFilter();
+        self::assertEquals(0, $sut->countFilter());
+
+        self::assertEquals(1, $sut->getPage());
+        self::assertTrue($sut->matchesFilter('page', 1));
+        self::assertTrue($sut->isDefaultFilter('page'));
+        self::assertFalse($sut->isDefaultFilter('foo'));
+    }
+
     protected function assertBookmark(BaseQuery $sut)
     {
         $bookmark = new Bookmark();
@@ -129,6 +160,9 @@ class BaseQueryTest extends TestCase
         $sut->setBookmark($bookmark);
         self::assertSame($bookmark, $sut->getBookmark());
         self::assertTrue($sut->hasBookmark());
+        self::assertFalse($sut->isBookmarkSearch());
+        $sut->flagAsBookmarkSearch();
+        self::assertTrue($sut->isBookmarkSearch());
     }
 
     protected function assertPage(BaseQuery $sut)

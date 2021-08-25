@@ -10,9 +10,9 @@
     {{ widgets.table_actions(event.actions) }}
 {% endmacro %}
 
-{% macro invoice_listing(view) %}
+{% macro invoice_listing(view, query) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'invoice_details', view) %}
+    {% set event = actions(app.user, 'invoice_details', view, {'query': query}) %}
     {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 

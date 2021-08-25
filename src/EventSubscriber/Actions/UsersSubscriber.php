@@ -10,6 +10,7 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
+use App\Repository\Query\UserQuery;
 
 class UsersSubscriber extends AbstractActionsSubscriber
 {
@@ -20,10 +21,17 @@ class UsersSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $event->addSearchToggle();
+        $payload = $event->getPayload();
+
+        /** @var UserQuery $query */
+        $query = $payload['query'];
+
+        $event->addSearchToggle($query);
+
         if ($event->isIndexView()) {
             $event->addColumnToggle('#modal_user_admin');
         }
+
         $event->addQuickExport($this->path('user_export'));
 
         if ($this->isGranted('create_user')) {
