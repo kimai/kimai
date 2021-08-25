@@ -33,7 +33,7 @@ class MPdfConverter implements HtmlToPdfConverter
         $fonts = new FontVariables();
         $allowed = [
             'mode', 'format', 'default_font_size', 'default_font', 'margin_left', 'margin_right', 'margin_top',
-            'margin_bottom', 'margin_header', 'margin_footer', 'orientation'
+            'margin_bottom', 'margin_header', 'margin_footer', 'orientation', 'simpleTables', 'packTableData'
         ];
 
         $filtered = array_filter($options, function ($key) use ($allowed, $configs, $fonts) {
@@ -63,7 +63,11 @@ class MPdfConverter implements HtmlToPdfConverter
     {
         $options = array_merge(
             $this->sanitizeOptions($options),
-            ['tempDir' => $this->cacheDirectory, 'exposeVersion' => false]
+            [
+                'tempDir' => $this->cacheDirectory, 'exposeVersion' => false,
+                // FIXME make these configurable - eg. one system setting "pdf compatibility mode"
+                //'simpleTables' => true, 'packTableData' => true
+            ]
         );
 
         $mpdf = new Mpdf($options);
@@ -78,7 +82,20 @@ class MPdfConverter implements HtmlToPdfConverter
         // https://mpdf.github.io/troubleshooting/known-issues.html#blank-pages-or-some-sections-missing
         $parts = explode('<pagebreak>', $html);
         for ($i = 0; $i < \count($parts); $i++) {
-            $mpdf->WriteHTML($parts[$i]);
+            // TODO test me : gc_collect_cycles();
+            if (stripos($parts[$i], '<!-- CONTENT_PART -->') !== false) {
+                $subParts = explode('<!-- CONTENT_PART -->', $parts[$i]);
+                $run = 0;
+                foreach ($subParts as $subPart) {
+                    if ($run++ % 1000 === 0) {
+                        gc_collect_cycles();
+                    }
+                    $mpdf->WriteHTML($subPart);
+                }
+            } else {
+                $mpdf->WriteHTML($parts[$i]);
+            }
+
             if ($i < \count($parts) - 1) {
                 $mpdf->WriteHTML('<pagebreak>');
             }
