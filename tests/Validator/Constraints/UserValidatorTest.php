@@ -72,11 +72,11 @@ class UserValidatorTest extends ConstraintValidatorTestCase
     public function testUserIsInvalidWithRepository()
     {
         $existing = $this->createMock(UserEntity::class);
-        $existing->expects($this->exactly(2))->method('getId')->willReturn(123);
+        $existing->expects($this->exactly(4))->method('getId')->willReturn(123);
 
         $userService = $this->createMock(UserService::class);
-        $userService->expects($this->once())->method('findUserByEmail')->willReturn($existing);
-        $userService->expects($this->once())->method('findUserByName')->willReturn($existing);
+        $userService->expects($this->exactly(2))->method('findUserByEmail')->willReturn($existing);
+        $userService->expects($this->exactly(2))->method('findUserByName')->willReturn($existing);
 
         $this->validator = new UserValidator($userService);
         $this->validator->initialize($this->context);
@@ -87,12 +87,19 @@ class UserValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($user, new User());
 
-        $this->buildViolation('The email is already used.')
+        $this
+            ->buildViolation('The email is already used.')
             ->atPath('property.path.email')
             ->setCode(User::USER_EXISTING_EMAIL)
+            ->buildNextViolation('An equal email is already used.')
+            ->atPath('property.path.username')
+            ->setCode(User::USER_EXISTING_NAME_AS_EMAIL)
             ->buildNextViolation('The username is already used.')
             ->atPath('property.path.username')
             ->setCode(User::USER_EXISTING_NAME)
+            ->buildNextViolation('An equal username is already used.')
+            ->atPath('property.path.email')
+            ->setCode(User::USER_EXISTING_EMAIL_AS_NAME)
             ->assertRaised();
     }
 }
