@@ -12,7 +12,7 @@
     {% set options = {'class': 'alwaysVisible text-center'} %}
     {% if canEditPermissions and role.name not in system_roles|keys %}
         {% set widget %}
-        &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id, 'token': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ widgets.icon('trash') }}</a>
+        &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id, 'csrfToken': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ widgets.icon('trash') }}</a>
         {% endset %}
         {% set options = options|merge({'html_after': widget}) %}
     {% endif %}
@@ -47,10 +47,10 @@
                                 {% if value %}
                                     {{ widgets.label('yes'|trans, 'warning') }}
                                 {% else %}
-                                    <a class="togglePerm permOff" href="#" data-href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': '1', 'token': '__TOKEN__'}) }}">{{ widgets.label('no'|trans, 'danger') }}</a>
+                                    <a class="togglePerm permOff" href="#" data-href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': '1', 'csrfToken': '__TOKEN__'}) }}">{{ widgets.label('no'|trans, 'danger') }}</a>
                                 {% endif %}
                             {% else %}
-                                <a class="togglePerm {{ value ? 'permOn' : 'permOff' }}" href="#" data-href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': '__VALUE__', 'token': '__TOKEN__'}) }}">{{ widgets.label_boolean(value) }}</a>
+                                <a class="togglePerm {{ value ? 'permOn' : 'permOff' }}" href="#" data-href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': '__VALUE__', 'csrfToken': '__TOKEN__'}) }}">{{ widgets.label_boolean(value) }}</a>
                             {% endif %}
                         </td>
                     {% endfor %}
