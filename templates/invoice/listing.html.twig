@@ -13,9 +13,9 @@
     'due_date': {'class': 'hidden-xs w-min', 'title': 'invoice.due_days'|trans, 'orderBy': false},
     'payment_date': {'class': 'hidden-xs hidden w-min', 'title': 'invoice.payment_date'|trans, 'orderBy': false},
     'status': {'class': 'alwaysVisible w-min', 'orderBy': false},
-    'subtotal': {'class': 'hidden-xs w-min hidden', 'title': 'invoice.subtotal'|trans, 'orderBy': false},
-    'tax': {'class': 'hidden-xs w-min hidden', 'title': 'invoice.tax'|trans},
-    'total_rate': {'class': 'hidden-xs w-min'},
+    'subtotal': {'class': 'hidden-xs text-right w-min hidden', 'title': 'invoice.subtotal'|trans, 'orderBy': false},
+    'tax': {'class': 'hidden-xs text-right w-min hidden', 'title': 'invoice.tax'|trans},
+    'total_rate': {'class': 'hidden-xs text-right w-min'},
     'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
 } %}
 
@@ -45,8 +45,6 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'payment_date') }}">
                     {% if entry.paymentDate and entry.paid %}
                         {{ widgets.label(entry.paymentDate|date_short, 'primary') }}
-                    {% else %}
-                        &ndash;
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'status') }}">{{ macros.invoice_status(entry) }}</td>

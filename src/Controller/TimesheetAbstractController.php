@@ -215,7 +215,7 @@ abstract class TimesheetAbstractController extends AbstractController
     {
         $copyTimesheet = clone $timesheet;
 
-        $form = $this->getDuplicateForm($timesheet);
+        $form = $this->getDuplicateForm($copyTimesheet, $timesheet);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -605,7 +605,7 @@ abstract class TimesheetAbstractController extends AbstractController
         return $query;
     }
 
-    abstract protected function getDuplicateForm(Timesheet $entry): FormInterface;
+    abstract protected function getDuplicateForm(Timesheet $entry, Timesheet $original): FormInterface;
 
     abstract protected function getCreateForm(Timesheet $entry): FormInterface;
 }

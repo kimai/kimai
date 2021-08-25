@@ -17,13 +17,13 @@
 
 {% if showStartEndTime %}
     {% set columns = columns|merge({
-        'starttime': {'class': 'hidden-xs', 'orderBy': 'begin'},
-        'endtime': {'class': 'hidden-xs', 'orderBy': 'end'}
+        'starttime': {'class': 'hidden-xs text-center', 'orderBy': 'begin'},
+        'endtime': {'class': 'hidden-xs text-center', 'orderBy': 'end'}
     }) %}
 {% endif %}
-{% set columns = columns|merge({'duration': ''}) %}
+{% set columns = columns|merge({'duration': {'class': 'text-right'}}) %}
 {% if canSeeRate %}
-    {% set columns = columns|merge({'rate': ''}) %}
+    {% set columns = columns|merge({'rate': {'class': 'text-right'}}) %}
 {% endif %}
 {% set columns = columns|merge({
     'customer': {'class': 'hidden-xs hidden-sm hidden-md'},

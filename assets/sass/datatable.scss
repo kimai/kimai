@@ -125,26 +125,28 @@ table.dataTable thead .sorting_desc_disabled {
     position: relative;
 }
 
-table.dataTable thead .sorting:before,
-table.dataTable thead .sorting_asc:before,
-table.dataTable thead .sorting_desc:before {
-    position: absolute;
-    top: 10px;
-    left: 5px;
-    display: block;
-    font-family: 'Glyphicons Halflings';
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+    font-weight: bold;
+}
+
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:after {
+    padding-left: 5px;
+    font-family: 'Font Awesome 5 Free';
     opacity: 0.5;
     font-size: 12px;
 }
-table.dataTable thead .sorting:before {
+table.dataTable thead .sorting:after {
     opacity: 0.2;
-    content: "\e150"; /* sort */
+    content: "\f0dc"; /* sort */
 }
-table.dataTable thead .sorting_asc:before {
-    content: "\e155"; /* sort-by-attributes */
+table.dataTable thead .sorting_asc:after {
+    content: "\f062";
 }
-table.dataTable thead .sorting_desc:before {
-    content: "\e156"; /* sort-by-attributes-alt */
+table.dataTable thead .sorting_desc:after {
+    content: "\f063";
 }
 div.dataTables_scrollBody table.dataTable thead .sorting:before,
 div.dataTables_scrollBody table.dataTable thead .sorting_asc:before,
@@ -162,11 +164,6 @@ table.dataTable thead > tr > th {
     white-space: nowrap;
 }
 
-/*
-table.dataTable thead > tr > th {
-    padding-right: 30px;
-}
-*/
 table.dataTable th:active {
     outline: none;
 }

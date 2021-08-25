@@ -127,7 +127,7 @@ class UserService
 
     public function findUserByName(string $name): ?User
     {
-        return $this->repository->findOneBy(['username' => $name]);
+        return $this->repository->findByUsername($name);
     }
 
     public function findUserByConfirmationToken(string $token): ?User
