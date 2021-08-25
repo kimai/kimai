@@ -20,10 +20,14 @@ class User extends Constraint
 {
     public const USER_EXISTING_EMAIL = 'kimai-user-00';
     public const USER_EXISTING_NAME = 'kimai-user-01';
+    public const USER_EXISTING_EMAIL_AS_NAME = 'kimai-user-02';
+    public const USER_EXISTING_NAME_AS_EMAIL = 'kimai-user-03';
 
     protected static $errorNames = [
         self::USER_EXISTING_EMAIL => 'The email is already used.',
         self::USER_EXISTING_NAME => 'The username is already used.',
+        self::USER_EXISTING_EMAIL_AS_NAME => 'An equal username is already used.',
+        self::USER_EXISTING_NAME_AS_EMAIL => 'An equal email is already used.',
     ];
 
     public $message = 'The user has invalid settings.';

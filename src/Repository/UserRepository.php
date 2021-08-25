@@ -82,6 +82,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return parent::findOneBy($criteria, $orderBy);
     }
 
+    public function findByUsername($username): ?User
+    {
+        return parent::findOneBy(['username' => $username]);
+    }
+
     public function countUser(?bool $enabled = null): int
     {
         if (null !== $enabled) {
