@@ -387,7 +387,7 @@
       </trans-unit>
       <trans-unit id="The budget is completely used.">
         <source>The budget is completely used.</source>
-        <target>Bugetul este epuizat. Din %bugetul% disponibil, %utilizat% a fost rezervat până în prezent, %liber% poate fi încă utilizat.</target>
+        <target>Bugetul este epuizat. Din %budget% disponibil, %used% a fost rezervat până în prezent, %free% poate fi încă utilizat.</target>
       </trans-unit>
       <trans-unit id="The username is already used.">
         <source>The username is already used.</source>

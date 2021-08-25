@@ -1117,7 +1117,7 @@
       </trans-unit>
       <trans-unit id="registration.check_email">
         <source>registration.check_email</source>
-        <target>E -mail bol odoslaný na adresu %email %. Obsahuje aktivačný odkaz, na ktorý musíte kliknúť, aby ste si aktivovali účet.</target>
+        <target>E -mail bol odoslaný na adresu %email%. Obsahuje aktivačný odkaz, na ktorý musíte kliknúť, aby ste si aktivovali účet.</target>
       </trans-unit>
       <trans-unit id="modal.dirty">
         <source>modal.dirty</source>
