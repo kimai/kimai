@@ -41,11 +41,8 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
         $this->assertPageActions($client, [
             'search' => '#',
-            'toolbar-action exporter-csv' => $this->createUrl('/timesheet/export/csv'),
-            'toolbar-action exporter-print' => $this->createUrl('/timesheet/export/print'),
-            'toolbar-action exporter-pdf' => $this->createUrl('/timesheet/export/pdf'),
-            'toolbar-action exporter-xlsx' => $this->createUrl('/timesheet/export/xlsx'),
             'visibility' => '#',
+            'download toolbar-action modal-ajax-form' => $this->createUrl('/timesheet/export/'),
             'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
             'help' => 'https://www.kimai.org/documentation/timesheet.html'
         ]);
@@ -134,18 +131,17 @@ class TimesheetControllerTest extends ControllerBaseTest
         $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($fixture);
 
-        $this->request($client, '/timesheet/');
+        $this->request($client, '/timesheet/export/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.searchform')->form();
-        $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/export/print'));
-        $client->submit($form, [
-            'state' => 1,
-            'pageSize' => 25,
-            'daterange' => $dateRange,
-            'customers' => [],
+        $client->submitForm('export-btn-print', [
+            'export' => [
+                'state' => 1,
+                'daterange' => $dateRange,
+                'customers' => [],
+            ]
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());

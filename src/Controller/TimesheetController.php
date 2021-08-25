@@ -11,10 +11,10 @@ namespace App\Controller;
 
 use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDisplayEvent;
+use App\Export\ServiceExport;
 use App\Form\TimesheetEditForm;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
@@ -35,20 +35,19 @@ class TimesheetController extends TimesheetAbstractController
      */
     public function indexAction(int $page, Request $request): Response
     {
-        $query = new TimesheetQuery();
+        $query = $this->createDefaultQuery();
         $query->setPage($page);
-        $query->setName('MyTimesListing');
 
         return $this->index($query, $request, 'timesheet', 'timesheet/index.html.twig', TimesheetMetaDisplayEvent::TIMESHEET);
     }
 
     /**
-     * @Route(path="/export/{exporter}", name="timesheet_export", methods={"GET"})
+     * @Route(path="/export/", name="timesheet_export", methods={"GET", "POST"})
      * @Security("is_granted('export_own_timesheet')")
      */
-    public function exportAction(Request $request, string $exporter): Response
+    public function exportAction(Request $request, ServiceExport $serviceExport): Response
     {
-        return $this->export($request, $exporter);
+        return $this->export($request, $serviceExport);
     }
 
     /**

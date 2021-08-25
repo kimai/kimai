@@ -706,34 +706,41 @@ abstract class AbstractSpreadsheetRenderer
             $entryHeaderRow++;
         }
 
-        if (null !== $durationColumn) {
-            $startCoordinate = $sheet->getCellByColumnAndRow($durationColumn, 2)->getCoordinate();
-            $endCoordinate = $sheet->getCellByColumnAndRow($durationColumn, $entryHeaderRow - 1)->getCoordinate();
-            $this->setDurationTotal($sheet, $durationColumn, $entryHeaderRow, $startCoordinate, $endCoordinate);
-            $style = $sheet->getStyleByColumnAndRow($durationColumn, $entryHeaderRow);
-            $style->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
-            $style->getFont()->setBold(true);
-        }
+        if ($this->isTotalRowSupported()) {
+            if (null !== $durationColumn) {
+                $startCoordinate = $sheet->getCellByColumnAndRow($durationColumn, 2)->getCoordinate();
+                $endCoordinate = $sheet->getCellByColumnAndRow($durationColumn, $entryHeaderRow - 1)->getCoordinate();
+                $this->setDurationTotal($sheet, $durationColumn, $entryHeaderRow, $startCoordinate, $endCoordinate);
+                $style = $sheet->getStyleByColumnAndRow($durationColumn, $entryHeaderRow);
+                $style->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
+                $style->getFont()->setBold(true);
+            }
 
-        if (null !== $rateColumn) {
-            $startCoordinate = $sheet->getCellByColumnAndRow($rateColumn, 2)->getCoordinate();
-            $endCoordinate = $sheet->getCellByColumnAndRow($rateColumn, $entryHeaderRow - 1)->getCoordinate();
-            $this->setRateTotal($sheet, $rateColumn, $entryHeaderRow, $startCoordinate, $endCoordinate);
-            $style = $sheet->getStyleByColumnAndRow($rateColumn, $entryHeaderRow);
-            $style->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
-            $style->getFont()->setBold(true);
-        }
+            if (null !== $rateColumn) {
+                $startCoordinate = $sheet->getCellByColumnAndRow($rateColumn, 2)->getCoordinate();
+                $endCoordinate = $sheet->getCellByColumnAndRow($rateColumn, $entryHeaderRow - 1)->getCoordinate();
+                $this->setRateTotal($sheet, $rateColumn, $entryHeaderRow, $startCoordinate, $endCoordinate);
+                $style = $sheet->getStyleByColumnAndRow($rateColumn, $entryHeaderRow);
+                $style->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
+                $style->getFont()->setBold(true);
+            }
 
-        if (null !== $internalRateColumn) {
-            $startCoordinate = $sheet->getCellByColumnAndRow($internalRateColumn, 2)->getCoordinate();
-            $endCoordinate = $sheet->getCellByColumnAndRow($internalRateColumn, $entryHeaderRow - 1)->getCoordinate();
-            $this->setRateTotal($sheet, $internalRateColumn, $entryHeaderRow, $startCoordinate, $endCoordinate);
-            $style = $sheet->getStyleByColumnAndRow($internalRateColumn, $entryHeaderRow);
-            $style->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
-            $style->getFont()->setBold(true);
+            if (null !== $internalRateColumn) {
+                $startCoordinate = $sheet->getCellByColumnAndRow($internalRateColumn, 2)->getCoordinate();
+                $endCoordinate = $sheet->getCellByColumnAndRow($internalRateColumn, $entryHeaderRow - 1)->getCoordinate();
+                $this->setRateTotal($sheet, $internalRateColumn, $entryHeaderRow, $startCoordinate, $endCoordinate);
+                $style = $sheet->getStyleByColumnAndRow($internalRateColumn, $entryHeaderRow);
+                $style->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
+                $style->getFont()->setBold(true);
+            }
         }
 
         return $spreadsheet;
+    }
+
+    protected function isTotalRowSupported(): bool
+    {
+        return false;
     }
 
     /**

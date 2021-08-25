@@ -5,7 +5,7 @@
 {% set _reset = reset is defined and reset is same as (false) ? false : true %}
 <div class="box box-primary">
     {% block form_before %}{% endblock %}
-    {{ form_start(form) }}
+    {{ form_start(form, formStartOptions|default({})) }}
     <div class="box-header with-border">
         <h3 class="box-title">
             {{ title }}
@@ -20,7 +20,9 @@
         {% endblock %}
     </div>
     <div class="box-footer">
-        <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+        {% block submit_button %}
+            <input type="submit" data-loading-text="{{ (submit_button|default('action.save'))|trans }}…" value="{{ (submit_button|default('action.save'))|trans }}" class="btn btn-primary" />
+        {% endblock %}
         {% if _back is not same as (false) %}
             <a href="{{ _back }}" class="btn btn-link">{{ 'action.back'|trans }}</a>
         {% endif %}

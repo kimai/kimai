@@ -1122,6 +1122,10 @@
         <source>export.date_copyright</source>
         <target>Erstellt %date% mit %kimai%</target>
       </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>Ihre Suche führt zu %count% Ergebnissen. Sollte der Export fehlschlagen, müssen Sie die Suche weiter eingrenzen.</target>
+      </trans-unit>
       <!--
              Navbar - recent entries and activities
             -->
