@@ -1106,7 +1106,7 @@
       </trans-unit>
       <trans-unit id="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
-        <target>În prezent, există %recorduri% înregistrări de timp, care însumează o durată totală de %durata%.</target>
+        <target>În prezent, există %records% înregistrări de timp, care însumează o durată totală de %duration%.</target>
       </trans-unit>
       <trans-unit id="label.budgetType_month">
         <source>label.budgetType_month</source>
