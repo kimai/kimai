@@ -133,7 +133,7 @@ class PageActionsEvent extends ThemeEvent
 
         if ($query !== null) {
             $label = $query->countFilter();
-            if ($label <= 0) {
+            if ($label < 1) {
                 $label = null;
             }
         }
