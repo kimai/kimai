@@ -18,6 +18,14 @@
                 <source>The username is already used.</source>
                 <target>Dieser Benutzername wird bereits verwendet.</target>
             </trans-unit>
+            <trans-unit id="An equal username is already used.">
+                <source>An equal username is already used.</source>
+                <target>Eine gleichlautender Benutzername wird bereits verwendet.</target>
+            </trans-unit>
+            <trans-unit id="An equal email is already used.">
+                <source>An equal email is already used.</source>
+                <target>Eine gleichlautende E-Mail-Adresse wird bereits verwendet.</target>
+            </trans-unit>
             <trans-unit id="This value is not a valid role.">
                 <source>This value is not a valid role.</source>
                 <target>Dieser Wert ist keine gültige Rolle.</target>
