@@ -1240,6 +1240,10 @@
         <source>add_user.label</source>
         <target>Ajouter un utilisateur</target>
       </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>Votre recherche aboutit à %count% de résultats. Si l'exportation échoue, vous devez affiner votre recherche.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
