@@ -10,6 +10,7 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
+use App\Repository\Query\ProjectQuery;
 
 class ProjectsSubscriber extends AbstractActionsSubscriber
 {
@@ -20,7 +21,13 @@ class ProjectsSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $event->addSearchToggle();
+        $payload = $event->getPayload();
+
+        /** @var ProjectQuery $query */
+        $query = $payload['query'];
+
+        $event->addSearchToggle($query);
+
         $event->addColumnToggle('#modal_project_admin');
         $event->addQuickExport($this->path('project_export'));
 

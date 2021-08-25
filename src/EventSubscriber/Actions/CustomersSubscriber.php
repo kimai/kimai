@@ -10,6 +10,7 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
+use App\Repository\Query\CustomerQuery;
 
 class CustomersSubscriber extends AbstractActionsSubscriber
 {
@@ -20,7 +21,12 @@ class CustomersSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $event->addSearchToggle();
+        $payload = $event->getPayload();
+
+        /** @var CustomerQuery $query */
+        $query = $payload['query'];
+
+        $event->addSearchToggle($query);
         $event->addColumnToggle('#modal_customer_admin');
         $event->addQuickExport($this->path('customer_export'));
 

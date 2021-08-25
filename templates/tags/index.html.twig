@@ -6,7 +6,7 @@
 
 {% block page_title %}{{ 'menu.tags'|trans }}{% endblock %}
 {% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
-{% block page_actions %}{{ actions.tags('index') }}{% endblock %}
+{% block page_actions %}{{ actions.tags('index', query) }}{% endblock %}
 
 {% block main %}
 
