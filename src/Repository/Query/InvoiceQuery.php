@@ -29,6 +29,8 @@ class InvoiceQuery extends TimesheetQuery
     {
         parent::__construct();
         $this->setDefaults([
+            'order' => InvoiceQuery::ORDER_ASC,
+            'exported' => InvoiceQuery::STATE_NOT_EXPORTED,
             'state' => self::STATE_STOPPED,
             'billable' => true,
             'markAsExported' => false,

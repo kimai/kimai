@@ -85,13 +85,17 @@ class BaseQuery
      */
     private $searchTerm;
     /**
-     * @var Bookmark
+     * @var Bookmark|null
      */
     private $bookmark;
     /**
      * @var string|null
      */
     private $name;
+    /**
+     * @var bool
+     */
+    private $bookmarkSearch = false;
 
     /**
      * @param Team[] $teams
@@ -258,13 +262,44 @@ class BaseQuery
     {
         $method = 'set' . ucfirst($name);
         if (method_exists($this, $method)) {
-            $this->{$method}($value);
-        } elseif (property_exists($this, $name)) {
-            $this->$name = $value;
+            \call_user_func([$this, $method], $value);
+
+            return;
+        }
+
+        if (substr($name, -1) === 's') {
+            $method = 'add' . ucfirst(substr($name, 0, \strlen($name) - 1));
+            if (method_exists($this, $method) && \is_array($value)) {
+                foreach ($value as $v) {
+                    \call_user_func([$this, $method], $v);
+                }
+
+                return;
+            }
+        }
+
+        if (property_exists($this, $name)) {
+            $this->{$name} = $value;
+        }
+    }
+
+    protected function get($name)
+    {
+        $methods = ['get' . ucfirst($name), 'is' . ucfirst($name), 'has' . ucfirst($name)];
+        foreach ($methods as $method) {
+            if (method_exists($this, $method)) {
+                return \call_user_func([$this, $method]);
+            }
+        }
+
+        if (property_exists($this, $name)) {
+            return $this->{$name};
         }
     }
 
     /**
+     * You have to add ALL user facing form fields as default!
+     *
      * @param array $defaults
      * @return self
      */
@@ -346,5 +381,67 @@ class BaseQuery
         }
 
         return $query;
+    }
+
+    public function isDefaultFilter(string $filter): bool
+    {
+        if (!\array_key_exists($filter, $this->defaults)) {
+            return false;
+        }
+
+        $expectedValue = $this->defaults[$filter];
+
+        return $this->matchesFilter($filter, $expectedValue);
+    }
+
+    public function matchesFilter(string $filter, $expectedValue): bool
+    {
+        $currentValue = $this->get($filter);
+
+        if (\is_object($currentValue)) {
+            if ($currentValue != $expectedValue) {
+                return false;
+            }
+        } else {
+            if ($currentValue !== $expectedValue) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function countFilter(): int
+    {
+        $filter = 0;
+
+        foreach (array_keys($this->defaults) as $key) {
+            if ($key === 'page') {
+                continue;
+            }
+
+            if (!$this->isDefaultFilter($key)) {
+                $filter++;
+            }
+        }
+
+        return $filter;
+    }
+
+    public function resetFilter(): void
+    {
+        foreach ($this->defaults as $key => $value) {
+            $this->set($key, $value);
+        }
+    }
+
+    public function flagAsBookmarkSearch(): void
+    {
+        $this->bookmarkSearch = true;
+    }
+
+    public function isBookmarkSearch(): bool
+    {
+        return $this->bookmarkSearch;
     }
 }

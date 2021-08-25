@@ -40,6 +40,8 @@ class InvoiceArchiveQuery extends BaseQuery
             'orderBy' => 'date',
             'order' => self::ORDER_DESC,
             'dateRange' => new DateRange(),
+            'customers' => [],
+            'status' => [],
         ]);
     }
 
