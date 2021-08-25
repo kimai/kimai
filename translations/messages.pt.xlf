@@ -1058,7 +1058,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Ainda não foram configuradas quaisquer taxas.</target>
+        <target>Nenhuma taxa horária foi configurada ainda.</target>
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>
@@ -1122,7 +1122,7 @@
       </trans-unit>
       <trans-unit id="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Pular a pré-visualização das %rows% mais filas …</target>
+        <target>Pulou pré-visualização das %rows% mais filas …</target>
       </trans-unit>
       <trans-unit id="invoice.payment_date">
         <source>invoice.payment_date</source>
@@ -1171,6 +1171,50 @@
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
         <target>Termo de pesquisa</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>% percent %% usado (% left% ainda está aberto este mês)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>% percent %% usado este mês</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Usuários ativos este ano financeiro</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Receita deste ano financeiro</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Horas de trabalho neste ano fiscal</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Expediente de trabalho</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Ano financeiro</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Receitas</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>O pedido não pôde ser processado, muitos resultados foram encontrados.</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Um e-mail foi enviado. Ele contém um link que você deve clicar para redefinir sua senha. Nota: Você só pode solicitar uma nova senha uma vez dentro de %tokenLifetime% horas. Se você não receber um e-mail, verifique sua pasta de spam ou tente novamente.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Um e-mail foi enviado para %email%. Ele contém um link de ativação que você deve clicar para ativar sua conta.</target>
       </trans-unit>
     </body>
   </file>
