@@ -180,15 +180,15 @@
     {% if teams|length > 0 %}
         {{ _self.badge_counter(teams|length) }}
     {% else %}
-        {{ _self.icon('unlocked') }}
+        {{ _self.badge_counter(0, null, 'bg-gray') }}
     {% endif %}
 {% endmacro %}
 
-{% macro badge_counter(count, url) %}
+{% macro badge_counter(count, url, type) %}
     {% if url %}
-        <a href="{{ url }}"><span class="badge bg-blue">{{ count }}</span></a>
+        <a href="{{ url }}"><span class="badge {{ type|default('bg-blue') }}">{{ count }}</span></a>
     {% else %}
-        <span class="badge bg-blue">{{ count }}</span>
+        <span class="badge {{ type|default('bg-blue') }}">{{ count }}</span>
     {% endif %}
 {% endmacro %}
 
