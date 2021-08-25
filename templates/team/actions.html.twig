@@ -1,6 +1,6 @@
-{% macro teams(view) %}
+{% macro teams(view, query) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'teams', view) %}
+    {% set event = actions(app.user, 'teams', view, {'query': query}) %}
     {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 

@@ -24,12 +24,17 @@ class UserQuery extends BaseQuery implements VisibilityInterface
      * @var string|null
      */
     private $role;
+    /**
+     * @var Team[]
+     */
     private $searchTeams = [];
 
     public function __construct()
     {
         $this->setDefaults([
             'orderBy' => 'username',
+            'searchTeams' => [],
+            'visibility' => VisibilityInterface::SHOW_VISIBLE,
         ]);
     }
 

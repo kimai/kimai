@@ -10,6 +10,7 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
+use App\Repository\Query\TimesheetQuery;
 
 class TimesheetsTeamSubscriber extends AbstractActionsSubscriber
 {
@@ -20,7 +21,12 @@ class TimesheetsTeamSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $event->addSearchToggle();
+        $payload = $event->getPayload();
+
+        /** @var TimesheetQuery $query */
+        $query = $payload['query'];
+
+        $event->addSearchToggle($query);
         $event->addColumnToggle('#modal_timesheet_admin');
 
         if ($this->isGranted('export_other_timesheet')) {

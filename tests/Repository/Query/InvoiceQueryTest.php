@@ -24,7 +24,7 @@ class InvoiceQueryTest extends TimesheetQueryTest
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, 'begin');
-        $this->assertOrder($sut, InvoiceQuery::ORDER_DESC);
+        $this->assertOrder($sut, InvoiceQuery::ORDER_ASC);
 
         $this->assertUser($sut);
         $this->assertCustomer($sut);
@@ -35,7 +35,7 @@ class InvoiceQueryTest extends TimesheetQueryTest
         self::assertFalse($sut->isRunning());
         self::assertTrue($sut->isStopped());
 
-        $this->assertExported($sut);
+        $this->assertExportedWith($sut, InvoiceQuery::STATE_NOT_EXPORTED);
         $this->assertMarkAsExported($sut);
         $this->assertModifiedAfter($sut);
 
