@@ -1,0 +1,298 @@
+/*
+ * Skin: Midnight Dark theme
+ * @see https://github.com/anvyst/adminlte-skin-midnight
+ * converted with http://less2scss.awk5.com/
+ * ------------
+ */
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "variables";
+@import "mixins";
+
+$blue: #075383;
+
+$body-bg: #353c42;
+$navbar-bg: #272c30;
+$sidebar-dark-bg: #272c30;
+$sidebar-light-bg: #272c30;
+$sidebar-light-submenu-color: #fff;
+$white: #fff;
+$text-color: #bec5cb;
+$font-color: $text-color;
+$heading-color: #44DEF1;
+$box-border-color: $black;
+$border-radius: 4px;
+
+.skin-midnight {
+    color: $text-color;
+
+    h4 {
+        color: $heading-color;
+    }
+
+    .content-header {
+        > .breadcrumb
+        > li
+        > a {
+            color: $font-color;
+        }
+    }
+
+    .table {
+        > thead,
+        > tbody,
+        > tfoot {
+            > tr {
+                > th,
+                > td {
+                    color: $font-color;
+                    border-top: 0;
+                }
+
+                &.odd {
+                    background-color: darken(#353c42, 5%);
+                }
+
+                &.odd, &.even {
+                    &:hover {
+                        background-color: darken(#353c42, 10%);
+                    }
+                }
+            }
+        }
+    }
+
+    .table-bordered {
+        > thead,
+        > tbody,
+        > tfoot {
+            > tr {
+                > th,
+                > td {
+                    border: 1px solid $body-bg;
+                }
+            }
+        }
+    }
+
+    .dataTables_wrapper {
+        input[type='search'] {
+            border-radius: $border-radius;
+            background-color: $body-bg;
+            border: 0;
+            color: $font-color;
+        }
+    }
+
+    .dataTables_paginate {
+        .pagination {
+            li > a {
+                background-color: transparent !important;
+                border: 0;
+            }
+        }
+    }
+
+
+    @include skin-dark-sidebar($sidebar-dark-bg);
+
+    .box,
+    .box-footer,
+    .info-box,
+    .box-comment,
+    .comment-text,
+    .comment-text .username {
+        color: $text-color;
+        background-color: $navbar-bg;
+    }
+
+    .box-comments {
+        .box-comment {
+            border-bottom-color: $body-bg;
+        }
+    }
+
+    .box-footer {
+        border-top: 1px solid $body-bg;
+    }
+
+    .box-header{
+        &.with-border {
+            border-bottom: 1px solid $body-bg;
+        }
+    }
+
+    .box-solid, .box {
+        @include box-solid-variant($navbar-bg, $text-color);
+    }
+
+    .box {
+        &.box-info,
+        &.box-primary,
+        &.box-success,
+        &.box-warning,
+        &.box-danger {
+            border-top-width: 3px;
+        }
+
+        &.box-info {
+            border-top-color: $aqua;
+        }
+
+        &.box-primary {
+            border-top-color: $blue;
+        }
+
+        &.box-success {
+            border-top-color: $green;
+        }
+
+        &.box-warning {
+            border-top-color: $orange;
+        }
+
+        &.box-danger {
+            border-top-color: $red;
+        }
+    }
+
+    .main-header {
+        .navbar {
+            @include navbar-variant($navbar-bg, $font-color);
+        }
+    }
+
+    .timeline {
+        li {
+            .timeline-item {
+                color: $font-color;
+                background-color: $navbar-bg;
+                border-color: $body-bg;
+            }
+
+            .timeline-header {
+                border-bottom-color: $body-bg;
+            }
+        }
+    }
+
+    .nav-stacked
+    > li
+    > a {
+        color: $font-color;
+
+        &:hover {
+            color: white;
+            background-color: darken(#353c42, 10%);
+        }
+    }
+
+    .content-wrapper,
+    .right-side{
+        background-color: $body-bg;
+    }
+
+    .main-footer, .nav-tabs-custom {
+        background-color: $navbar-bg;
+        border-top-color: $body-bg;
+        color: $font-color;
+
+        .nav-tabs {
+            border-bottom-color: $body-bg;
+        }
+
+        .tab-content {
+            background-color: $navbar-bg;
+        }
+    }
+
+    .nav-tabs-custom>.nav-tabs>li.active>a {
+        border-left-color: $body-bg;
+        border-right-color: $body-bg;
+    }
+
+    .nav-tabs-custom>.nav-tabs.pull-right>li:first-of-type.active>a {
+        border-left-color: $body-bg;
+    }
+
+    .nav-tabs-custom > .nav-tabs > li {
+        color: $font-color;
+
+        &.active {
+            > a {
+                background-color: $navbar-bg;
+            }
+        }
+
+        > a {
+            color: $font-color;
+        }
+    }
+
+    .form-group,
+    .input-group {
+        .input-group-addon,
+        input,
+        textarea {
+            background-color: $body-bg;
+            color: $font-color;
+            border: 1px solid $body-bg;
+        }
+    }
+
+    .list-group {
+        color: $font-color;
+        background-color: $navbar-bg;
+
+        .list-group-item {
+            border-color: $body-bg;
+            background-color: $navbar-bg;
+        }
+    }
+
+    .input-group {
+        .input-group-addon {
+            border-right: 1px solid $navbar-bg;
+        }
+    }
+
+    .form-control {
+        border-color: $navbar-bg;
+        background-color: $body-bg;
+    }
+
+
+
+    .select2 {
+        .select2-selection {
+            background-color: $body-bg;
+            color: $font-color;
+            border: 1px solid $body-bg;
+
+            .select2-container--default,
+            .select2-selection--single,
+            .select2-selection--multiple,
+            .select2-selection__rendered {
+                color: $font-color;
+            }
+
+        }
+    }
+
+    .select2-dropdown {
+        background-color: $body-bg;
+        color: $font-color;
+        border: 1px solid $body-bg;
+
+        .select2-search__field {
+            background-color: $navbar-bg;
+            color: $font-color;
+            border: 1px solid $body-bg;
+        }
+    }
+
+    .select2-container--default.select2-container--open {
+        background-color: $navbar-bg;
+    }
+}
+

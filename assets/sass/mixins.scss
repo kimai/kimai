@@ -1,0 +1,149 @@
+//AdminLTE mixins
+//===============
+
+@import "variables";
+
+@mixin navbar-variant($color, $font-color: rgba(255, 255, 255, 0.8), $hover-color: #f6f6f6, $hover-bg: rgba(0, 0, 0, 0.1)) {
+    background-color: $color;
+    //Navbar links
+    .nav > li > a {
+        color: $font-color;
+    }
+
+    .nav > li > a:hover,
+    .nav > li > a:active,
+    .nav > li > a:focus,
+    .nav .open > a,
+    .nav .open > a:hover,
+    .nav .open > a:focus,
+    .nav > .active > a {
+        background: $hover-bg;
+        color: $hover-color;
+    }
+
+    //Add color to the sidebar toggle button
+    .sidebar-toggle {
+        color: $font-color;
+
+        &:hover {
+            color: $hover-color;
+            background: $hover-bg;
+        }
+    }
+}
+
+//Box solid color variantion creator
+@mixin box-solid-variant($color, $text-color: #fff) {
+    border: 1px solid $color;
+    > .box-header {
+        color: $text-color;
+        background-color: $color;
+
+        a,
+        .btn {
+            color: $text-color;
+        }
+    }
+}
+
+//Dark Sidebar Mixin
+@mixin skin-dark-sidebar($link-hover-border-color) {
+    // Sidebar background color (Both .wrapper and .left-side are responsible for sidebar bg color)
+    .wrapper,
+    .main-sidebar,
+    .left-side {
+        background-color: $sidebar-dark-bg;
+    }
+    //User Panel (resides in the sidebar)
+    .user-panel {
+        > .info, > .info > a {
+            color: #fff;
+        }
+    }
+    //Sidebar Menu. First level links
+    .sidebar-menu > li {
+        //Section Headning
+        &.header {
+            color: lighten($sidebar-dark-bg, 20%);
+            background: darken($sidebar-dark-bg, 4%);
+        }
+
+        //links
+        > a {
+            border-left: 3px solid transparent;
+        }
+
+        //Hover and active states
+        &:hover > a,
+        &.active > a,
+        &.menu-open > a {
+            color: $sidebar-dark-hover-color;
+            background: $sidebar-dark-hover-bg;
+        }
+
+        &.active > a {
+            border-left-color: $link-hover-border-color;
+        }
+
+        //First Level Submenu
+        > .treeview-menu {
+            margin: 0 1px;
+            background: $sidebar-dark-submenu-bg;
+        }
+    }
+    //All links within the sidebar menu
+    .sidebar a {
+        color: $sidebar-dark-color;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    //All submenus
+    .sidebar-menu .treeview-menu {
+        > li {
+            > a {
+                color: $sidebar-dark-submenu-color;
+            }
+
+            &.active > a, > a:hover {
+                color: $sidebar-dark-submenu-hover-color;
+            }
+        }
+    }
+    //The sidebar search form
+    .sidebar-form {
+        border-radius: 3px;
+        border: 1px solid lighten($sidebar-dark-bg, 10%);
+        margin: 10px 10px;
+
+        input[type="text"], .btn {
+            box-shadow: none;
+            background-color: lighten($sidebar-dark-bg, 10%);
+            border: 1px solid transparent;
+            height: 35px;
+            //@include transition(all $transition-speed $transition-fn);
+        }
+
+        input[type="text"] {
+            color: #666;
+            border-radius: 2px 0 2px 0;
+
+            &:focus,
+            &:focus + .input-group-btn .btn {
+                background-color: #fff;
+                color: #666;
+            }
+
+            &:focus + .input-group-btn .btn {
+                border-left-color: #fff;
+
+            }
+        }
+
+        .btn {
+            color: #999;
+            border-radius: 0 2px 0 2px;
+        }
+    }
+}
