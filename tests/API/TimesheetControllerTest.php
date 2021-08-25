@@ -796,16 +796,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($client->getResponse(), ['duration' => 'Maximum 12:30 hours allowed.']);
     }
 
-    public function testStopActionFailsOnStoppedEntry()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
-        $id = $timesheets[0]->getId();
-        $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
-
-        $this->assertApi500Exception($client->getResponse(), 'Timesheet entry already stopped');
-    }
-
     public function testStopThrowsNotFound()
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/11/stop', [], 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
