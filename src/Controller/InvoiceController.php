@@ -188,10 +188,8 @@ final class InvoiceController extends AbstractController
         $end = $factory->getEndOfMonth();
 
         $query = new InvoiceQuery();
-        $query->setOrder(InvoiceQuery::ORDER_ASC);
         $query->setBegin($begin);
         $query->setEnd($end);
-        $query->setExported(InvoiceQuery::STATE_NOT_EXPORTED);
         // limit access to data from teams
         $query->setCurrentUser($this->getUser());
 
