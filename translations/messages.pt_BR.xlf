@@ -1243,6 +1243,10 @@
         <source>add_user.label</source>
         <target>Adicione um usuário</target>
       </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>Sua pesquisa tem %count% resultados. Caso a exportação falhe, você tem que reduzir ainda mais a sua pesquisa.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
