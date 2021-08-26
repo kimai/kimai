@@ -128,7 +128,7 @@
       </trans-unit>
       <trans-unit id="menu.admin_user">
         <source>menu.admin_user</source>
-        <target>Usuário</target>
+        <target>Usuários</target>
       </trans-unit>
       <trans-unit id="menu.plugin">
         <source>menu.plugin</source>
@@ -292,7 +292,7 @@
       </trans-unit>
       <trans-unit id="dashboard.subtitle">
         <source>dashboard.subtitle</source>
-        <target>Bem vindo!</target>
+        <target>Bem-vindo!</target>
       </trans-unit>
       <trans-unit id="dashboard.all">
         <source>dashboard.all</source>
