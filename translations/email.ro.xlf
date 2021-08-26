@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ro" datatype="plaintext" original="email.en.xlf">
     <header>
@@ -27,7 +27,7 @@
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>Te-ai înregistrat în sistemul de pontaj Kimai cu adresa de mail %email%. Trebuie să îți activezi contul în urmatoarele ore, înainte ca adresa să expire.</target>
+        <target>Te-ai înscris la Kimai time-tracker cu adresa de e-mail %email%. Vă rugăm să vă activați contul în următoarele câteva ore, înainte ca link-ul să expire.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>

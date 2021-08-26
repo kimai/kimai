@@ -58,6 +58,14 @@
         <source>At least one team leader must be assigned to the team.</source>
         <target>Takıma en az bir takım lideri atanmalıdır.</target>
       </trans-unit>
+      <trans-unit id="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target>Eşit bir e-posta adresi zaten kullanılıyor.</target>
+      </trans-unit>
+      <trans-unit id="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target>Eşit bir kullanıcı adı zaten kullanılıyor.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

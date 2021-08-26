@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="calendar">
         <source>calendar</source>
-        <target>Calendar</target>
+        <target>Calendarul</target>
       </trans-unit>
       <trans-unit id="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
@@ -103,19 +103,19 @@
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target>Branding</target>
+        <target>Compania mea</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>Logo (URL-ul imaginii, înlocuiește compania în ecranul de conectare)</target>
+        <target>Logo URL (înlocuiește numele companiei în ecranul de conectare)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>Firma</target>
+        <target>Numele companiei</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
-        <target>Mini Logo (sidebar restrâns)</target>
+        <target>Mini Logo (bara laterală prăbușită)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.title">
         <source>label.theme.branding.title</source>
@@ -224,6 +224,102 @@
       <trans-unit id="invoice">
         <source>invoice</source>
         <target>Facturi</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>Numărul de intrări pentru drag&amp;drop (0 = dezactivat)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target>Durata maximă a unei înregistrări a foii de pontaj, în minute, înainte ca salvarea să fie respinsă (0 = dezactivat)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target>Durata maximă a unei înregistrări din foaia de pontaj, în minute, înainte de a se afișa un "avertisment de pauză" (0 = dezactivat)</target>
+      </trans-unit>
+      <trans-unit id="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target>Autentificare SAML</target>
+      </trans-unit>
+      <trans-unit id="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target>Autentificare LDAP</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target>Parolă uitată - secunde înainte ca un link de resetare să expire</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target>Parola uitată - secunde înainte ca un utilizator să poată solicita următorul e-mail</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target>Parola uitată</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target>Înregistrarea utilizatorului</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target>Formular de autentificare</target>
+      </trans-unit>
+      <trans-unit id="authentication">
+        <source>authentication</source>
+        <target>Autentificare</target>
+      </trans-unit>
+      <trans-unit id="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>Listă de coduri de culori HTML separate prin virgulă. Numele culorilor pot fi setate prin prefixarea codului de culoare cu un nume și cu delimitatorul |, de exemplu..: Alb|#ffffff,Negru|#000000.</target>
+      </trans-unit>
+      <trans-unit id="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>Culori permise</target>
+      </trans-unit>
+      <trans-unit id="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>Limitați alegerile de culoare</target>
+      </trans-unit>
+      <trans-unit id="off">
+        <source>off</source>
+        <target>Oprit</target>
+      </trans-unit>
+      <trans-unit id="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Utilizați valoarea configurată a regulii de rotunjire</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Selecție de minute pentru De la &amp; Până la</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Selecție de minute pentru Durată</target>
+      </trans-unit>
+      <trans-unit id="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>Exercițiul financiar</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target>Fusul orar (dacă este gol, se utilizează fusul orar al utilizatorului respectiv)</target>
+      </trans-unit>
+      <trans-unit id="lockdown_period">
+        <source>lockdown_period</source>
+        <target>Perioada de izolare</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>Permiterea suprarezervării bugetelor stocate</target>
+      </trans-unit>
+      <trans-unit id="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>Utilizați culori aleatorii pentru obiectele fără culoare atribuită</target>
+      </trans-unit>
+      <trans-unit id="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>Permiteți utilizarea de URL-uri pentru imaginile avatarurilor</target>
       </trans-unit>
     </body>
   </file>

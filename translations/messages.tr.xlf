@@ -1243,6 +1243,10 @@
         <source>add_user.label</source>
         <target>Kullanıcı ekle</target>
       </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>Aramanız %count% sonuç veriyor. Dışa aktarma başarısız olursa, aramanızı daha da daraltmanız gerekir.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

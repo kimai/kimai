@@ -437,6 +437,14 @@
         <source>At least one team leader must be assigned to the team.</source>
         <target>יש להקצות לצוות מוביל אחד לפחות.</target>
       </trans-unit>
+      <trans-unit id="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target>כבר קיימת כתובת דוא״ל זהה.</target>
+      </trans-unit>
+      <trans-unit id="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target>כבר קיים שם משתמש זהה.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
