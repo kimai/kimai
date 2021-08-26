@@ -58,6 +58,14 @@
         <source>At least one team leader must be assigned to the team.</source>
         <target>Τουλάχιστο ένας αρχηγός ομάδας πρέπει να ανατεθεί στην ομάδα.</target>
       </trans-unit>
+      <trans-unit id="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target>Ένα συνώνυμο όνομα ηλεκτρονικού ταχυδρομείου χρησιμοποιείται ήδη.</target>
+      </trans-unit>
+      <trans-unit id="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target>Ένα συνώνυμο όνομα χρήστη χρησιμοποιείται ήδη.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
