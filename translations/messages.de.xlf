@@ -460,7 +460,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Team Projekte &amp; Budgets</target>
+        <target>Meine Projekte</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
