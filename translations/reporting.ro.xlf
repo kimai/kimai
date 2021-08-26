@@ -14,6 +14,34 @@
         <source>report_monthly_users</source>
         <target>Vizualizare lunară pentru toți utilizatorii</target>
       </trans-unit>
+      <trans-unit id="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>Raport inițial</target>
+      </trans-unit>
+      <trans-unit id="report_inactive_project">
+        <source>report_inactive_project</source>
+        <target>Proiecte inactive</target>
+      </trans-unit>
+      <trans-unit id="report_project_daterange">
+        <source>report_project_daterange</source>
+        <target>Raport lunar</target>
+      </trans-unit>
+      <trans-unit id="report_project_details">
+        <source>report_project_details</source>
+        <target>Detalii despre proiect</target>
+      </trans-unit>
+      <trans-unit id="report_project_view">
+        <source>report_project_view</source>
+        <target>Prezentare generală a proiectului</target>
+      </trans-unit>
+      <trans-unit id="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>Vizualizare anuală pentru toți utilizatorii</target>
+      </trans-unit>
+      <trans-unit id="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target>Vizualizare săptămânală pentru toți utilizatorii</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

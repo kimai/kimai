@@ -1176,6 +1176,10 @@
         <source>add_user.label</source>
         <target>הוספת משתמש</target>
       </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>החיפוש שלך מניב %count% תוצאות. אם הייצוא נכשל, עליך לצמצם את החיפוש שלך עוד יותר.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

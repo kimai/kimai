@@ -381,6 +381,30 @@
         <source>You must select at least one user or team.</source>
         <target>Trebuie să alegi minim un utilizator sau o echipă.</target>
       </trans-unit>
+      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>Numărul maxim de ore {{ valoare }} permise.</target>
+      </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>Bugetul este epuizat. Din %budget% disponibil, %used% a fost rezervat până în prezent, %free% poate fi încă utilizat.</target>
+      </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>Numele de utilizator este deja utilizat.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>Adresa de e-mail este deja utilizată.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>Parolele introduse nu se potrivesc.</target>
+      </trans-unit>
+      <trans-unit id="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target>Echipei trebuie să i se atribuie cel puțin un lider de echipă.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

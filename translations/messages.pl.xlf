@@ -804,7 +804,7 @@
       </trans-unit>
       <trans-unit id="invoice.from">
         <source>invoice.from</source>
-        <target>Wystawca</target>
+        <target>Od</target>
       </trans-unit>
       <trans-unit id="invoice.to">
         <source>invoice.to</source>
@@ -1210,6 +1210,18 @@
       <trans-unit id="label.includeNoWork">
         <source>label.includeNoWork</source>
         <target>pokaż wpisy bez rezerwacji</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% wykorzystano (%left% wciąż otwarte w tym miesiącu)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% wykorzystano w tym miesiącu</target>
+      </trans-unit>
+      <trans-unit id="label.vat_id">
+        <source>label.vat_id</source>
+        <target>VAT-ID</target>
       </trans-unit>
     </body>
   </file>

@@ -246,7 +246,7 @@
       </trans-unit>
       <trans-unit id="label.budget">
         <source>label.budget</source>
-        <target>Budget</target>
+        <target>Βudget</target>
       </trans-unit>
       <trans-unit id="label.timeBudget">
         <source>label.timeBudget</source>
@@ -1210,6 +1210,38 @@
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
         <target>La richiesta non può essere elaborata, sono stati trovati troppi risultati.</target>
+      </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>Attualmente esistono %records% registrazioni, la cui lunghezza ammonta ad un totale di %duration%.</target>
+      </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Aggiungi un nuovo utente al team selezionandolo dalla lista. Potrai poi devidere se l'utente dovrebbe diventare un leader.</target>
+      </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Aggiungi utente</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Mensilmente</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Tipo di budget</target>
+      </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Numero del personale</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% usato (%left% sono ancora aperti questo mese)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% usato questo mese</target>
       </trans-unit>
     </body>
   </file>
