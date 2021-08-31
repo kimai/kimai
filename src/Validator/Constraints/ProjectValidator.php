@@ -18,7 +18,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ProjectValidator extends ConstraintValidator
 {
-
     /**
      * @var Constraint[]
      */
@@ -27,7 +26,7 @@ class ProjectValidator extends ConstraintValidator
     /**
      * @param Constraint[] $constraints
      */
-    public function __construct(iterable $constraints)
+    public function __construct(iterable $constraints = [])
     {
         $this->constraints = $constraints;
     }
@@ -47,12 +46,12 @@ class ProjectValidator extends ConstraintValidator
         }
 
         $this->validateProject($value, $this->context);
-        
+
         foreach ($this->constraints as $constraint) {
             $this->context
                 ->getValidator()
                 ->inContext($this->context)
-                ->validate($timesheet, $constraint, [Constraint::DEFAULT_GROUP]);
+                ->validate($value, $constraint, [Constraint::DEFAULT_GROUP]);
         }
     }
 
