@@ -28,6 +28,7 @@ use App\Timesheet\CalculatorInterface as TimesheetCalculator;
 use App\Timesheet\Rounding\RoundingInterface;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Validator\Constraints\TimesheetConstraint;
+use App\Validator\Constraints\ProjectConstraint;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetRendererInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -60,6 +61,7 @@ class Kernel extends BaseKernel
     public const TAG_TIMESHEET_EXPORTER = 'timesheet.exporter';
     public const TAG_TIMESHEET_TRACKING_MODE = 'timesheet.tracking_mode';
     public const TAG_TIMESHEET_ROUNDING_MODE = 'timesheet.rounding_mode';
+    public const TAG_PROJECT_VALIDATOR = 'project.validator';
 
     public function getCacheDir()
     {
@@ -87,6 +89,7 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(TrackingModeInterface::class)->addTag(self::TAG_TIMESHEET_TRACKING_MODE);
         $container->registerForAutoconfiguration(RoundingInterface::class)->addTag(self::TAG_TIMESHEET_ROUNDING_MODE);
         $container->registerForAutoconfiguration(TimesheetConstraint::class)->addTag(self::TAG_TIMESHEET_VALIDATOR);
+        $container->registerForAutoconfiguration(ProjectConstraint::class)->addTag(self::TAG_PROJECT_VALIDATOR);
 
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');

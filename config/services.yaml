@@ -65,6 +65,9 @@ services:
     App\Validator\Constraints\TimesheetValidator:
         arguments: [!tagged timesheet.validator]
 
+    App\Validator\Constraints\ProjectValidator:
+        arguments: [!tagged project.validator]
+
     App\Widget\WidgetService:
         arguments:
             $renderer: !tagged widget.renderer
