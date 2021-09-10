@@ -35,7 +35,7 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
 
         foreach ($model->toArray() as $search => $replace) {
             $replace = $xmlEscaper->escape($replace);
-            $replace = str_replace(PHP_EOL, '</w:t><w:br /><w:t xml:space="preserve">', $replace);
+            $replace = preg_replace('/\n|\r\n?/', '</w:t><w:br /><w:t xml:space="preserve">', $replace);
 
             $template->setValue($search, $replace);
         }
@@ -57,7 +57,7 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
             $values = $model->itemToArray($entry);
             foreach ($values as $search => $replace) {
                 $replace = $xmlEscaper->escape($replace);
-                $replace = str_replace(PHP_EOL, '</w:t><w:br /><w:t xml:space="preserve">', $replace);
+                $replace = preg_replace('/\n|\r\n?/', '</w:t><w:br /><w:t xml:space="preserve">', $replace);
 
                 $template->setValue($search . '#' . $i, $replace);
             }
