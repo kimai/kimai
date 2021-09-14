@@ -28,7 +28,7 @@ final class Version20190201150324 extends AbstractMigration
 
         $this->addSql('ALTER TABLE kimai2_timesheet ADD timezone VARCHAR(64) NOT NULL');
 
-        $this->addSql('UPDATE kimai2_timesheet SET timezone = "' . $timezone . '"');
+        $this->addSql("UPDATE kimai2_timesheet SET timezone = '" . $timezone . "'");
     }
 
     public function down(Schema $schema): void
