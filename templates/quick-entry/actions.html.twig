@@ -1,0 +1,5 @@
+{% macro quickEntries(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set event = actions(app.user, 'quick-entries', view, {}) %}
+    {{ widgets.page_actions(event.actions) }}
+{% endmacro %}

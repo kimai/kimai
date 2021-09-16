@@ -1256,6 +1256,13 @@
         <source>team.add_user.help</source>
         <target>Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
       </trans-unit>
+      <!--
+          QUICK ENTRIES
+      -->
+      <trans-unit id="quick-entry.title">
+        <source>quick-entry.title</source>
+        <target>Weekly form</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

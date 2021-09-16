@@ -10,6 +10,7 @@
 namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
+use App\Timesheet\TrackingModeService;
 use App\Twig\IconExtension;
 use App\Utils\MenuItemModel;
 use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
@@ -23,18 +24,16 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 final class MenuSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $security;
-    /**
      * @var IconExtension
      */
     private $icons;
+    private $security;
+    private $trackingModeService;
 
-    public function __construct(AuthorizationCheckerInterface $security)
+    public function __construct(AuthorizationCheckerInterface $security, TrackingModeService $service)
     {
         $this->security = $security;
-        $this->icons = new IconExtension();
+        $this->trackingModeService = $service;
     }
 
     public static function getSubscribedEvents(): array
@@ -65,6 +64,14 @@ final class MenuSubscriber implements EventSubscriberInterface
             $timesheets = new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], $this->getIcon('timesheet'));
             $timesheets->setChildRoutes(['timesheet_export', 'timesheet_edit', 'timesheet_create', 'timesheet_multi_update']);
             $menu->addItem($timesheets);
+
+            $mode = $this->trackingModeService->getActiveMode();
+            if ($mode->canEditDuration() || $mode->canEditEnd()) {
+                $menu->addItem(
+                    new MenuItemModel('quick-entry', 'quick-entry.title', 'quick-entry', [], $this->getIcon('quick-entry'))
+                );
+            }
+
             $menu->addItem(
                 new MenuItemModel('calendar', 'calendar.title', 'calendar', [], $this->getIcon('calendar'))
             );
@@ -164,8 +171,12 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
     }
 
-    private function getIcon(string $icon)
+    private function getIcon(string $icon): string
     {
+        if ($this->icons === null) {
+            $this->icons = new IconExtension();
+        }
+
         return $this->icons->icon($icon, $icon);
     }
 }

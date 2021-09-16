@@ -76,6 +76,7 @@ final class IconExtension extends AbstractExtension
         'profile' => 'fas fa-user-edit',
         'profile-stats' => 'far fa-chart-bar',
         'project' => 'fas fa-briefcase',
+        'quick-entry' => 'fas fa-forward',
         'repeat' => 'fas fa-redo-alt',
         'reporting' => 'far fa-chart-bar',
         'right' => 'fas fa-chevron-right',

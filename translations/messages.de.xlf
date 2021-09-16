@@ -1256,6 +1256,13 @@
         <source>team.add_user.help</source>
         <target>Durch Auswahl wird dem Team ein neuer Benutzer hinzugefügt. Sie können im Anschluss festlegen, ob der Benutzer ein Teamleiter sein soll.</target>
       </trans-unit>
+      <!--
+          QUICK ENTRIES
+      -->
+      <trans-unit id="quick-entry.title">
+        <source>quick-entry.title</source>
+        <target>Wochenübersicht</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
