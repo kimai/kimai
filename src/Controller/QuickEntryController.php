@@ -10,7 +10,9 @@
 namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
-use App\Timesheet\TrackingModeService;
+use App\Repository\Query\TimesheetQuery;
+use App\Repository\TimesheetRepository;
+use App\Timesheet\TimesheetService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,9 +27,9 @@ class QuickEntryController extends AbstractController
     /**
      * @Route(path="/", name="quick-entry", methods={"GET"})
      */
-    public function quickEntry(SystemConfiguration $configuration, TrackingModeService $service)
+    public function quickEntry(SystemConfiguration $configuration, TimesheetService $timesheetService, TimesheetRepository $repository)
     {
-        $mode = $service->getActiveMode();
+        $mode = $timesheetService->getActiveTrackingMode();
         $factory = $this->getDateTimeFactory();
         $defaultStart = $factory->createDateTime($configuration->getTimesheetDefaultBeginTime());
 
@@ -38,6 +40,27 @@ class QuickEntryController extends AbstractController
         }
 
         // TODO form handling
+
+        $startWeek = $factory->getStartOfWeek();
+        $endWeek = $factory->getEndOfWeek();
+        $tmpDay = clone $startWeek;
+        $week = [];
+        while ($tmpDay < $endWeek) {
+            $nextDay = clone $tmpDay;
+            $week[$nextDay->format('Y-m-d')] = $nextDay;
+            $tmpDay = $tmpDay->modify('+1 day');
+        }
+
+        dd($week);
+
+        $query = new TimesheetQuery();
+        $query->setName('quickEntryForm');
+        $query->setUser($this->getUser());
+
+        $result = $repository->getTimesheetResult($query);
+        $timesheets = $result->getResults();
+        foreach ($timesheets as $timesheet) {
+        }
 
         return $this->render('quick-entry/index.html.twig', [
             'now' => $factory->createDateTime(),
