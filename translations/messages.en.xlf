@@ -1126,6 +1126,10 @@
         <source>export.warn_result_amount</source>
         <target>Your search leads to %count% results. If the export fails, you have to narrow down your search further.</target>
       </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Type</target>
+      </trans-unit>
       <!--
              Navbar - recent entries and activities
             -->
