@@ -92,7 +92,7 @@ class ActivityControllerTest extends APIControllerBaseTest
     }
 
     /**
-     * @return array<Project, Project, Activity>
+     * @return array<Project|Activity>
      * @throws \Exception
      */
     protected function loadActivityTestData(): array
