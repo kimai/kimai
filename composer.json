@@ -146,7 +146,7 @@
         "kimai:pre-commit":  [
             "@kimai:codestyle",
             "@kimai:phpstan",
-            "@kimai:code-lint",
+            "@linting",
             "@kimai:tests-unit"
         ],
         "kimai:code-check": "@code-check",
@@ -154,13 +154,15 @@
             "@kimai:pre-commit",
             "@kimai:tests-integration"
         ],
-        "kimai:code-lint":  [
+        "kimai:code-lint": "@linting",
+        "linting": [
             "composer validate --strict",
             "bin/console lint:container",
             "bin/console lint:yaml config --parse-tags",
             "bin/console lint:twig templates --show-deprecations",
             "bin/console lint:xliff translations",
-            "bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction"
+            "bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction",
+            "vendor/bin/phpunit tests/TranslationsTest.php"
         ],
         "kimai:tests": "vendor/bin/phpunit tests/",
         "kimai:tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
