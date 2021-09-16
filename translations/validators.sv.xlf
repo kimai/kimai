@@ -54,6 +54,18 @@
         <source>The entered passwords don't match.</source>
         <target>Lösenordet matchar inte.</target>
       </trans-unit>
+      <trans-unit id="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target>Denna e -postmeddelande används redan.</target>
+      </trans-unit>
+      <trans-unit id="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target>Detta användarnamn är upptaget.</target>
+      </trans-unit>
+      <trans-unit id="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target>Minst en teamledare måste tilldelas i teamet.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

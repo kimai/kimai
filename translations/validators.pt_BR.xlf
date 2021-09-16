@@ -58,6 +58,14 @@
         <source>At least one team leader must be assigned to the team.</source>
         <target>Pelo menos um líder de equipe deve ser designado para a equipe.</target>
       </trans-unit>
+      <trans-unit id="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target>Já existe um e-mail igual em uso.</target>
+      </trans-unit>
+      <trans-unit id="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target>Já existe um nome de usuário igual em uso.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

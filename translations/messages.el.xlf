@@ -1240,6 +1240,10 @@
         <source>add_user.label</source>
         <target>Προσθήκη χρήστη</target>
       </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>Η αναζήτηση σας αντιστοιχεί σε %count% αποτελέσματα. Εάν η εξαγωγή αποτυγχάνει, πρέπει να ορίσετε συγκεκριμένα κριτήρια για την αναζήτησή σας.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

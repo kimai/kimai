@@ -1243,6 +1243,10 @@
         <source>stats.percentUsed_month</source>
         <target>%percent%% usato questo mese</target>
       </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>La tua ricerca porta a %count% risultati. Se l'esportazione fallisce, dovrai restringere ulteriormente la tua ricerca.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
