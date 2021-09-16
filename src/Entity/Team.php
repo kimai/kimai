@@ -349,7 +349,7 @@ class Team
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("users"),
      * @Serializer\Groups({"Team_Entity"})
-     * @SWG\Property(ref="#/definitions/User")
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/User"))
      *
      * @return User[]
      */
