@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="registration.title">
         <source>registration.title</source>
-        <target>Bem-vindo %username%</target>
+        <target>Bem-vindo(a) %username%</target>
       </trans-unit>
       <trans-unit id="registration.button">
         <source>registration.button</source>
@@ -16,15 +16,15 @@
       </trans-unit>
       <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target>Se o botão não funcionar, por favor, copie e cole a seguinte URL no seu navegador: %url%</target>
+        <target>Se o botão não funcionar, por favor, copie e cole o seguinte URL no seu navegador: %url%</target>
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target>… então esqueceu sua senha? Não se preocupe: Kimai vai ajudá-lo a criar uma nova:</target>
+        <target>…então esqueceu-se da sua palavra-passe? Não se preocupe: o Kimai vai ajudá-lo a criar uma nova:</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
-        <target>Redefina sua senha</target>
+        <target>Redefinir a palavra-passe</target>
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
@@ -32,15 +32,15 @@
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
-        <target>Redefina sua senha</target>
+        <target>Redefinir a palavra-passe</target>
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target>Você se inscreveu no rastreador de tempo Kimai com o e-mail %email%. Agora você tem que ativar sua conta nas próximas horas, antes que o link expire.</target>
+        <target>Inscreveu-se no rastreador de tempo Kimai com o email %email%. Agora tem que ativar a sua conta nas próximas horas, antes da hiperligação expirar.</target>
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target>Este é um e-mail gerado automaticamente. Por favor, não responda, o endereço não será lido.</target>
+        <target>Isto é um email gerado automaticamente. Por favor não responda para este endereço, pois não será lido.</target>
       </trans-unit>
     </body>
   </file>

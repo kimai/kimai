@@ -27,7 +27,7 @@
       </trans-unit>
       <trans-unit id="create">
         <source>create</source>
-        <target>creëer</target>
+        <target>Creëer</target>
       </trans-unit>
       <trans-unit id="confirm.delete">
         <source>confirm.delete</source>
@@ -745,7 +745,7 @@
       </trans-unit>
       <trans-unit id="label.mark_as_exported">
         <source>label.mark_as_exported</source>
-        <target>Markeer als gefactureerd</target>
+        <target>Markeer als geëxporteerd</target>
       </trans-unit>
       <trans-unit id="label.template">
         <source>label.template</source>
@@ -960,7 +960,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Er zijn nog geen kosten geconfigureerd.</target>
+        <target>Er zijn nog geen kosten per uur geconfigureerd.</target>
       </trans-unit>
       <trans-unit id="label.rate_internal">
         <source>label.rate_internal</source>
@@ -1157,6 +1157,14 @@
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
         <target>Zoekterm</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Een mail is verstuurd naar %email%. Het bevat een activatielink om uw account te activeren.</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Verwijder favoriete zoekopdracht</target>
       </trans-unit>
     </body>
   </file>

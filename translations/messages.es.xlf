@@ -7,11 +7,11 @@
             -->
       <trans-unit id="time_tracking">
         <source>time_tracking</source>
-        <target>Control de Tiempo</target>
+        <target>Control de tiempo</target>
       </trans-unit>
       <trans-unit id="yes">
         <source>yes</source>
-        <target>Si</target>
+        <target>Sí</target>
       </trans-unit>
       <trans-unit id="no">
         <source>no</source>
@@ -23,7 +23,7 @@
       </trans-unit>
       <trans-unit id="This is a mandatory field">
         <source>This is a mandatory field</source>
-        <target>Requerido</target>
+        <target>Obligatorio</target>
       </trans-unit>
       <trans-unit id="create">
         <source>create</source>
@@ -31,11 +31,11 @@
       </trans-unit>
       <trans-unit id="confirm.delete">
         <source>confirm.delete</source>
-        <target>Está seguro que desea proceder con la eliminación?</target>
+        <target>¿Realmente quiere eliminarlo?</target>
       </trans-unit>
       <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>¡Estos datos también se eliminarán! Como alternativa, puede seleccionar un registro al que se le transferirán todos los datos:</target>
+        <target>¡Estos datos también se eliminarán! Como alternativa, puede seleccionar un registro al que se transferirán todos los datos:</target>
       </trans-unit>
       <trans-unit id="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -207,7 +207,7 @@
       </trans-unit>
       <trans-unit id="label.id">
         <source>label.id</source>
-        <target>ID</target>
+        <target>Id.</target>
       </trans-unit>
       <trans-unit id="label.visible">
         <source>label.visible</source>
@@ -321,7 +321,7 @@
       </trans-unit>
       <trans-unit id="dashboard.subtitle">
         <source>dashboard.subtitle</source>
-        <target>¡Bienvenido!</target>
+        <target>Le damos la bienvenida</target>
       </trans-unit>
       <trans-unit id="dashboard.all">
         <source>dashboard.all</source>
@@ -344,7 +344,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Proyectos de equipo &amp; presupuestos</target>
+        <target>Proyectos de equipo y presupuestos</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -375,11 +375,11 @@
       </trans-unit>
       <trans-unit id="label.daterange">
         <source>label.daterange</source>
-        <target>Rango de tiempo</target>
+        <target>Período de tiempo</target>
       </trans-unit>
       <trans-unit id="modal.columns.title">
         <source>modal.columns.title</source>
-        <target>Cambiar vista de columna</target>
+        <target>Cambiar visibilidad de columna</target>
       </trans-unit>
       <trans-unit id="modal.columns.description">
         <source>modal.columns.description</source>
@@ -398,11 +398,11 @@
             -->
       <trans-unit id="profile.title">
         <source>profile.title</source>
-        <target>Perfil</target>
+        <target>Perfil de usuario</target>
       </trans-unit>
       <trans-unit id="profile.about_me">
         <source>profile.about_me</source>
-        <target>Acerca de mi</target>
+        <target>Acerca de mí</target>
       </trans-unit>
       <trans-unit id="profile.first_entry">
         <source>profile.first_entry</source>
@@ -434,7 +434,7 @@
       </trans-unit>
       <trans-unit id="label.theme.collapsed_sidebar">
         <source>label.theme.collapsed_sidebar</source>
-        <target>Minimiza la barra lateral izquierda</target>
+        <target>Minimizar la barra lateral izquierda</target>
       </trans-unit>
       <trans-unit id="label.calendar.initial_view">
         <source>label.calendar.initial_view</source>
@@ -455,7 +455,7 @@
       </trans-unit>
       <trans-unit id="agendaDay">
         <source>agendaDay</source>
-        <target>Dia</target>
+        <target>Día</target>
       </trans-unit>
       <trans-unit id="label.timesheet.daily_stats">
         <source>label.timesheet.daily_stats</source>
@@ -626,7 +626,7 @@
       </trans-unit>
       <trans-unit id="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
-        <target>Tus horas trabajadas</target>
+        <target>Mis horas trabajadas</target>
       </trans-unit>
       <trans-unit id="stats.amountToday">
         <source>stats.amountToday</source>
@@ -674,27 +674,27 @@
       </trans-unit>
       <trans-unit id="stats.userTotal">
         <source>stats.userTotal</source>
-        <target>Cantidad total de usuarios</target>
+        <target>Usuarios</target>
       </trans-unit>
       <trans-unit id="stats.activityTotal">
         <source>stats.activityTotal</source>
-        <target>Cantidad total de actividades</target>
+        <target>Actividades</target>
       </trans-unit>
       <trans-unit id="stats.projectTotal">
         <source>stats.projectTotal</source>
-        <target>Cantidad total de proyectos</target>
+        <target>Proyectos</target>
       </trans-unit>
       <trans-unit id="stats.customerTotal">
         <source>stats.customerTotal</source>
-        <target>Cantidad total de clientes</target>
+        <target>Clientes</target>
       </trans-unit>
       <trans-unit id="stats.percentUsed">
         <source>stats.percentUsed</source>
-        <target>%percent%% utilizado</target>
+        <target>%percent% % utilizado</target>
       </trans-unit>
       <trans-unit id="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
-        <target>%percent%% utilizado (quedan %left%)</target>
+        <target>%percent% % utilizado (quedan %left%)</target>
       </trans-unit>
       <!--
               Invoice
@@ -713,7 +713,7 @@
       </trans-unit>
       <trans-unit id="button.preview">
         <source>button.preview</source>
-        <target>Vista previa</target>
+        <target>Previsualizar</target>
       </trans-unit>
       <trans-unit id="button.print">
         <source>button.print</source>
@@ -998,7 +998,7 @@
       </trans-unit>
       <trans-unit id="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
-        <target>Uso decimal duracion en exportar</target>
+        <target>Utilizar duración decimal al exportar</target>
       </trans-unit>
       <trans-unit id="label.theme.layout">
         <source>label.theme.layout</source>
@@ -1022,7 +1022,7 @@
       </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
-        <target>Empieza proyecto</target>
+        <target>Comienzo del proyecto</target>
       </trans-unit>
       <trans-unit id="label.orderDate">
         <source>label.orderDate</source>
@@ -1050,7 +1050,7 @@
       </trans-unit>
       <trans-unit id="button.preview_print">
         <source>button.preview_print</source>
-        <target state="translated">Imprimir previamente</target>
+        <target state="translated">Previsualizar impresión</target>
       </trans-unit>
       <trans-unit id="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
@@ -1094,7 +1094,7 @@
       </trans-unit>
       <trans-unit id="modal.dirty">
         <source>modal.dirty</source>
-        <target>El formulario ha cambiado. Por favor pulsa "Guardar" para guardar los cambios o "Cerrar" para cancelar.</target>
+        <target>El formulario ha cambiado. Pulse en «Guardar» para guardar los cambios o en «Cerrar» para cancelar.</target>
       </trans-unit>
       <trans-unit id="label.includeNoBudget">
         <source>label.includeNoBudget</source>
@@ -1187,6 +1187,42 @@
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
         <target>Término de búsqueda</target>
+      </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Añadir usuario</target>
+      </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>La búsqueda produjo %count% resultados. Si la exportación falla, deberá refinar su búsqueda.</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent% % utilizado (%left% aún abiertos este mes)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent% % utilizado este mes</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Ingresos</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Tiempo laborable</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>No se pudo procesar la solicitud; se encontraron demasiados resultados.</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Se ha enviado un mensaje. Contiene un enlace que debe seguir para restablecer su contraseña. Nota: solo se puede solicitar una contraseña nueva dentro de %tokenLifetime% horas. Si no ha recibido ningún mensaje, revise la carpeta de correo no deseado o vuelva a intentarlo.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Se ha enviado un mensaje a %email%. Contiene un enlace de activación que debe seguir para activar su cuenta.</target>
       </trans-unit>
     </body>
   </file>

@@ -34,6 +34,38 @@
         <source>You must select at least one user or team.</source>
         <target>U moet ten minste één gebruiker of team selecteren.</target>
       </trans-unit>
+      <trans-unit id="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target>Er moet tenminste één teamleider aan het team toegewezen zijn.</target>
+      </trans-unit>
+      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>Maximale {{ value }} uren toegestaan.</target>
+      </trans-unit>
+      <trans-unit id="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>Het budget is gebruikt. Van het beschikbare %budget%, is %used% al gebruikt, %free% kan nog gebruikt worden.</target>
+      </trans-unit>
+      <trans-unit id="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target>Een soortgelijke e-mail is al in gebruik.</target>
+      </trans-unit>
+      <trans-unit id="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target>Een soortgelijke gebruikersnaam is al in gebruik.</target>
+      </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>De gebruikersnaam is al in gebruik.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>De e-mail is al in gebruik.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>De ingevulde wachtwoorden komen niet overeen.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

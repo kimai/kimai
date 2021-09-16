@@ -1222,6 +1222,18 @@
         <source>stats.percentUsed_month</source>
         <target>%percent%% использовано в этом месяце</target>
       </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>В настоящее время существует %records% записей учета времени, общая длительность которых составляет %duration%.</target>
+      </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>%count% результатов в поиске. Если экспорт не удается, вам необходимо сузить область поиска.</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% использовано (%left% доступно в этом месяце)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

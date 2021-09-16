@@ -1180,6 +1180,10 @@
         <source>label.remove_default</source>
         <target>Ștergeți favoritele de căutare</target>
       </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>Căutarea dvs. duce la %count% rezultate. Dacă exportul eșuează, trebuie să restrângeți căutarea mai mult.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

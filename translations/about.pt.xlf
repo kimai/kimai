@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="website">
         <source>website</source>
-        <target>Homepage</target>
+        <target>Sítio web</target>
       </trans-unit>
       <trans-unit id="help">
         <source>help</source>
@@ -20,19 +20,19 @@
       </trans-unit>
       <trans-unit id="donate">
         <source>donate</source>
-        <target>Doe para o futuro do Kimai</target>
+        <target>Faça um donativo para o futuro do Kimai</target>
       </trans-unit>
       <trans-unit id="published_under">
         <source>published_under</source>
-        <target>%kimai% é publicado sobre</target>
+        <target>%kimai% é publicado sob</target>
       </trans-unit>
       <trans-unit id="special_thanks">
         <source>special_thanks</source>
-        <target>Agradecimentos especiais vão para …</target>
+        <target>Agradecimentos especiais aos…</target>
       </trans-unit>
       <trans-unit id="library_authors">
         <source>library_authors</source>
-        <target>… os autores das seguintes bibliotecas de software, Kimai não seria possível sem você 👍</target>
+        <target>…os autores das seguintes bibliotecas de software, o Kimai não seria possível sem vocês 👍</target>
       </trans-unit>
     </body>
   </file>

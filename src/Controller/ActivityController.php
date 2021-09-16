@@ -421,7 +421,6 @@ final class ActivityController extends AbstractController
             'action' => $url,
             'method' => 'POST',
             'currency' => $currency,
-            'customer' => true,
             'include_budget' => $this->isGranted('budget', $activity)
         ]);
     }
