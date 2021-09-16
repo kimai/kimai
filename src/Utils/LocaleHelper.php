@@ -27,6 +27,10 @@ final class LocaleHelper
     /**
      * @var NumberFormatter
      */
+    private $durationFormatter;
+    /**
+     * @var NumberFormatter
+     */
     private $moneyFormatter;
     /**
      * @var NumberFormatter
@@ -51,10 +55,12 @@ final class LocaleHelper
             $value = 0;
         }
 
-        return $this->getNumberFormatter()->format((float) $value);
+        return $this->getDurationFormatter()->format((float) $value);
     }
 
     /**
+     * Only used in twig filter |amount and invoice templates
+     *
      * @param string|float $amount
      * @return bool|false|string
      */
@@ -131,6 +137,16 @@ final class LocaleHelper
         }
 
         return $this->numberFormatter;
+    }
+
+    private function getDurationFormatter(): NumberFormatter
+    {
+        if (null === $this->numberFormatter) {
+            $this->durationFormatter = new NumberFormatter($this->locale, NumberFormatter::DECIMAL);
+            $this->durationFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
+        }
+
+        return $this->durationFormatter;
     }
 
     private function getMoneyFormatter(bool $withCurrency = true): NumberFormatter

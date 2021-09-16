@@ -146,7 +146,7 @@
         "kimai:pre-commit":  [
             "@kimai:codestyle",
             "@kimai:phpstan",
-            "@kimai:code-lint",
+            "@linting",
             "@kimai:tests-unit"
         ],
         "kimai:code-check": "@code-check",
@@ -154,7 +154,8 @@
             "@kimai:pre-commit",
             "@kimai:tests-integration"
         ],
-        "kimai:code-lint":  [
+        "kimai:code-lint": "@linting",
+        "linting": [
             "composer validate --strict",
             "bin/console lint:container",
             "bin/console lint:yaml config --parse-tags",

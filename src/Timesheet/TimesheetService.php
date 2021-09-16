@@ -226,7 +226,11 @@ final class TimesheetService
     public function stopTimesheet(Timesheet $timesheet): void
     {
         if (null !== $timesheet->getEnd()) {
-            throw new ValidationException('Timesheet entry already stopped');
+            // timesheet already stopped, nothing to do. in previous version, this method did throw a:
+            // new ValidationException('Timesheet entry already stopped');
+            // but this was removed, because it can happen in the frontend when using multiple tabs/devices and should
+            // simply be ignored - showing the message to the user with a "danger status" is not necessary
+            return;
         }
 
         $begin = clone $timesheet->getBegin();

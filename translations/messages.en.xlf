@@ -460,7 +460,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Team projects &amp; budgets</target>
+        <target>My projects</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -1125,6 +1125,10 @@
       <trans-unit id="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>Your search leads to %count% results. If the export fails, you have to narrow down your search further.</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Type</target>
       </trans-unit>
       <!--
              Navbar - recent entries and activities
