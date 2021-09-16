@@ -161,8 +161,7 @@
             "bin/console lint:yaml config --parse-tags",
             "bin/console lint:twig templates --show-deprecations",
             "bin/console lint:xliff translations",
-            "bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction",
-            "vendor/bin/phpunit tests/TranslationsTest.php"
+            "bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction"
         ],
         "kimai:tests": "vendor/bin/phpunit tests/",
         "kimai:tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
