@@ -886,18 +886,6 @@
         <source>export.mark_all</source>
         <target>وضع علامة على جميع السجلات المعروضة كمسح؟</target>
       </trans-unit>
-      <trans-unit id="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>تم ارسال البريد الإلكتروني. يحتوي على ارتباط يجب النقر فوقه لإعادة تعيين كلمة المرور الخاصة بك. ملاحظة: يمكنك فقط طلب كلمة مرور جديدة مرة واحدة خلال٪ وقت زمني٪ ساعة. إذا لم تتلق رسالة بريد إلكتروني ، فتحقق من مجلد البريد العشوائي أو حاول مرة أخرى.</target>
-      </trans-unit>
-      <trans-unit id="registration.check_email">
-        <source>registration.check_email</source>
-        <target>تم إرسال بريد إلكتروني إلى٪ email٪. يحتوي على ارتباط تنشيط يجب عليك النقر فوقه لتنشيط حسابك.</target>
-      </trans-unit>
-      <trans-unit id="update_multiple">
-        <source>update_multiple</source>
-        <target>٪ إجراء٪٪ عدد٪ إدخالات؟</target>
-      </trans-unit>
       <trans-unit id="label.set_as_default">
         <source>label.set_as_default</source>
         <target>حفظ الإعداد ات كمفضلة البحث</target>

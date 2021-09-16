@@ -1160,7 +1160,7 @@
       </trans-unit>
       <trans-unit id="registration.check_email">
         <source>registration.check_email</source>
-        <target>Een mail is verstuurd naar %mail%. Het bevat een activatielink om uw account te activeren.</target>
+        <target>Een mail is verstuurd naar %email%. Het bevat een activatielink om uw account te activeren.</target>
       </trans-unit>
       <trans-unit id="label.remove_default">
         <source>label.remove_default</source>
