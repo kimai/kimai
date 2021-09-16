@@ -37,6 +37,7 @@ class ActivityEditForm extends AbstractType
         $project = null;
         $customer = null;
         $new = true;
+        $isGlobal = false;
 
         if (isset($options['data'])) {
             /** @var Activity $entry */
@@ -46,6 +47,8 @@ class ActivityEditForm extends AbstractType
                 $project = $entry->getProject();
                 $customer = $project->getCustomer();
                 $options['currency'] = $customer->getCurrency();
+            } else {
+                $isGlobal = null === $entry->getProject();
             }
 
             $new = $entry->getId() === null;
@@ -80,7 +83,9 @@ class ActivityEditForm extends AbstractType
                         'project_enabled' => true,
                     ]);
             }
+        }
 
+        if ($new || !$isGlobal) {
             $builder
                 ->add('project', ProjectType::class, [
                     'required' => false,
