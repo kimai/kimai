@@ -292,6 +292,7 @@ class ActivityControllerTest extends APIControllerBaseTest
             'name' => 'foo',
             'comment' => '',
             'visible' => true,
+            'project' => 1,
             'budget' => '999',
             'timeBudget' => '7200',
         ];
