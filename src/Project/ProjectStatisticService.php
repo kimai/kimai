@@ -192,7 +192,6 @@ class ProjectStatisticService
     public function getBudgetStatisticModel(Project $project, DateTime $today): ProjectBudgetStatisticModel
     {
         $stats = new ProjectBudgetStatisticModel($project);
-
         $stats->setStatisticTotal($this->getProjectStatistics($project));
 
         $begin = null;
@@ -205,9 +204,6 @@ class ProjectStatisticService
         }
 
         $stats->setStatistic($this->getProjectStatistics($project, $begin, $end));
-
-        $event = new ProjectBudgetStatisticEvent([$stats], $begin, $end);
-        $this->dispatcher->dispatch($event);
 
         return $stats;
     }

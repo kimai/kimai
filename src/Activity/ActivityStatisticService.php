@@ -71,9 +71,6 @@ class ActivityStatisticService
 
         $stats->setStatistic($this->getActivityStatistics($activity, $begin, $end));
 
-        $event = new ActivityBudgetStatisticEvent([$stats], $begin, $end);
-        $this->dispatcher->dispatch($event);
-
         return $stats;
     }
 
