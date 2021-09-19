@@ -590,7 +590,7 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @Rest\RequestParam(name="copy", requirements="all|tags|rates|meta|description", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all, tags, rates, description, meta (default: nothing is copied)")
+     * @Rest\RequestParam(name="copy", requirements="all|tags|rates|meta|description|billable", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all, tags, rates, description, billable, meta (default: nothing is copied)")
      * @Rest\RequestParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Changes the restart date to the given one (default: now)")
      *
      * @ApiSecurity(name="apiUser")
@@ -640,6 +640,10 @@ class TimesheetController extends BaseApiController
                     $metaNew = clone $metaField;
                     $copyTimesheet->setMetaField($metaNew);
                 }
+            }
+
+            if (\in_array($copy, ['billable', 'all'])) {
+                $copyTimesheet->setBillable($timesheet->isBillable());
             }
         }
 
