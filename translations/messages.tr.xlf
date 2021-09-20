@@ -347,7 +347,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target state="translated">Takım projeleri ve bütçeleri</target>
+        <target state="translated">Projelerim</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -1246,6 +1246,10 @@
       <trans-unit id="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>Aramanız %count% sonuç veriyor. Dışa aktarma başarısız olursa, aramanızı daha da daraltmanız gerekir.</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Tür</target>
       </trans-unit>
     </body>
   </file>
