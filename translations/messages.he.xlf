@@ -370,7 +370,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>מיזמים ותקציבים לצוות</target>
+        <target>המיזמים שלי</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -1179,6 +1179,10 @@
       <trans-unit id="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>החיפוש שלך מניב %count% תוצאות. אם הייצוא נכשל, עליך לצמצם את החיפוש שלך עוד יותר.</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>סוג</target>
       </trans-unit>
     </body>
   </file>
