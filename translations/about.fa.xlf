@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fa" datatype="plaintext" original="about.en.xlf">
+    <body>
+      <trans-unit id="about.title">
+        <source>about.title</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="support">
+        <source>support</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="website">
+        <source>website</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="help">
+        <source>help</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="donate">
+        <source>donate</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="published_under">
+        <source>published_under</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="special_thanks">
+        <source>special_thanks</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="library_authors">
+        <source>library_authors</source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
