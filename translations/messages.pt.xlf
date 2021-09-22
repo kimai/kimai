@@ -1198,7 +1198,7 @@
       </trans-unit>
       <trans-unit id="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
-        <target>Ano financeiro</target>
+        <target>Exercício financeiro</target>
       </trans-unit>
       <trans-unit id="stats.revenue">
         <source>stats.revenue</source>
