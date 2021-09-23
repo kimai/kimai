@@ -1182,7 +1182,7 @@
       </trans-unit>
       <trans-unit id="stats.durationFinancialYear">
         <source>stats.durationFinancialYear</source>
-        <target>Ωράριο εργασίας κατά το τρέχον οικονομικό έτος</target>
+        <target>Ώρες εργασίας κατά το τρέχον οικονομικό έτος</target>
       </trans-unit>
       <trans-unit id="stats.revenue">
         <source>stats.revenue</source>
