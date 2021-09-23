@@ -440,7 +440,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Ομαδικές Εργασίες &amp; προϋπολογισμοί</target>
+        <target>Τα έργα μου</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -1243,6 +1243,10 @@
       <trans-unit id="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>Η αναζήτηση σας αντιστοιχεί σε %count% αποτελέσματα. Εάν η εξαγωγή αποτυγχάνει, πρέπει να ορίσετε συγκεκριμένα κριτήρια για την αναζήτησή σας.</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Τύπος</target>
       </trans-unit>
     </body>
   </file>
