@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Utils\FileHelper;
 use Composer\InstalledVersions;
 use PackageVersions\Versions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -40,24 +41,18 @@ class DoctorController extends AbstractController
      */
     public const DIRECTORIES_WRITABLE = [
         'var/cache/',
-        'var/data/',
         'var/log/',
-        'var/sessions/',
     ];
 
-    /**
-     * @var string
-     */
     private $projectDirectory;
-    /**
-     * @var string
-     */
     private $environment;
+    private $fileHelper;
 
-    public function __construct(string $projectDirectory, string $kernelEnvironment)
+    public function __construct(string $projectDirectory, string $kernelEnvironment, FileHelper $fileHelper)
     {
         $this->projectDirectory = $projectDirectory;
         $this->environment = $kernelEnvironment;
+        $this->fileHelper = $fileHelper;
     }
 
     /**
@@ -119,6 +114,8 @@ class DoctorController extends AbstractController
                 $versions[$package] = InstalledVersions::getPrettyVersion($package);
             }
         } else {
+            @trigger_error('Please upgrade your Composer to 2.x', E_USER_DEPRECATED);
+
             // @deprecated since 1.14, will be removed with 2.0
             $rootPackage = Versions::rootPackageName();
             foreach (Versions::VERSIONS as $name => $version) {
@@ -153,12 +150,6 @@ class DoctorController extends AbstractController
             if (\extension_loaded($extName)) {
                 $results[$extName] = true;
             }
-        }
-
-        $results['Freetype Support'] = true;
-        // @see AvatarService::hasDependencies()
-        if (!\function_exists('imagettfbbox')) {
-            $results['Freetype Support'] = false;
         }
 
         return $results;
@@ -218,20 +209,31 @@ class DoctorController extends AbstractController
 
     private function getFilePermissions()
     {
-        $results = [];
+        $testPaths = [];
+        $baseDir = $this->projectDirectory . DIRECTORY_SEPARATOR;
 
         foreach (self::DIRECTORIES_WRITABLE as $path) {
-            $results[$path] = false;
-            $fullPath = $this->projectDirectory . '/' . $path;
+            $fullPath = $baseDir . $path;
             $fullUri = realpath($fullPath);
 
             if ($fullUri === false && !file_exists($fullPath)) {
                 @mkdir($fullPath);
+                clearstatcache(true);
                 $fullUri = realpath($fullPath);
             }
 
+            $testPaths[] = $fullUri;
+        }
+
+        $results = [];
+        $testPaths[] = $this->fileHelper->getDataDirectory();
+        foreach ($testPaths as $fullUri) {
+            $fullUri = rtrim($fullUri, DIRECTORY_SEPARATOR);
+            $tmp = str_replace($baseDir, '', $fullUri) . DIRECTORY_SEPARATOR;
             if ($fullUri !== false && is_readable($fullUri) && is_writable($fullUri)) {
-                $results[$path] = true;
+                $results[$tmp] = true;
+            } else {
+                $results[$tmp] = false;
             }
         }
 
