@@ -15,6 +15,7 @@ use App\Entity\User;
 use App\Twig\LocaleFormatExtensions;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Intl\Util\IntlTestHelper;
+use Symfony\Component\Security\Core\Security;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
@@ -42,7 +43,11 @@ class LocaleFormatExtensionsTest extends TestCase
             $language = $dateSettings;
             $dateSettings = $locale;
         }
-        $sut = new LocaleFormatExtensions(new LanguageFormattings($dateSettings));
+
+        $security = $this->createMock(Security::class);
+        $security->expects($this->any())->method('getUser')->willReturn(new User());
+
+        $sut = new LocaleFormatExtensions(new LanguageFormattings($dateSettings), $security);
         $sut->setLocale($language);
 
         return $sut;
@@ -203,31 +208,18 @@ class LocaleFormatExtensionsTest extends TestCase
         $this->assertEquals('17:53', $sut->time('2016-06-23 17:53'));
     }
 
-    public function testHour24()
-    {
-        $sut = $this->getSut('en', [
-            'en' => ['24_hours' => false],
-        ]);
-        $this->assertEquals('bar', $sut->hour24('foo', 'bar'));
-
-        $sut = $this->getSut('de', [
-            'de' => ['24_hours' => true],
-        ]);
-        $this->assertEquals('foo', $sut->hour24('foo', 'bar'));
-    }
-
     public function testDateTimeFull()
     {
         $sut = $this->getSut('en', [
-            'en' => ['date_time_type' => 'yyyy-MM-dd HH:mm:ss'],
+            'en' => ['date_type' => 'dd-yyyy-MM-'],
         ]);
 
         $dateTime = new \DateTime('2019-08-17 12:29:47', new \DateTimeZone(date_default_timezone_get()));
         $dateTime->setDate(2019, 8, 17);
         $dateTime->setTime(12, 29, 47);
 
-        $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull($dateTime));
-        $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull('2019-08-17 12:29:47'));
+        $this->assertEquals('17-2019-08- 12:29', $sut->dateTimeFull($dateTime));
+        $this->assertEquals('17-2019-08- 12:29', $sut->dateTimeFull('2019-08-17 12:29:47'));
 
         // next test checks the fallback for errors while converting the date
         /* @phpstan-ignore-next-line */

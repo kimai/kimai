@@ -64,13 +64,12 @@ final class ConfigurationController extends BaseApiController
 
         $model = new I18nConfig();
         $model
-            ->setFormDateTime($formats->getDateTimeTypeFormat($locale))
             ->setFormDate($formats->getDateTypeFormat($locale))
             ->setDateTime($formats->getDateTimeFormat($locale))
             ->setDate($formats->getDateFormat($locale))
             ->setDuration($formats->getDurationFormat($locale))
             ->setTime($formats->getTimeFormat($locale))
-            ->setIs24hours($formats->isTwentyFourHours($locale))
+            ->setIs24hours($user->is24Hour())
             ->setNow($this->getDateTimeFactory()->createDateTime())
         ;
 

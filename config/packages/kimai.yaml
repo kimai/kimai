@@ -227,91 +227,74 @@ kimai:
 # --------------------------------------------------------------------------------
     languages:
         cs:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m H:i'
         da:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         de:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         de_AT:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         de_CH:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         el:  
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         en:
-            date_time_type: 'yyyy-MM-dd HH:mm'
             date_type: 'yyyy-MM-dd'
             date: 'Y-m-d'
             date_time: 'm-d H:i'
             duration: '%%h:%%m h'
         es:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         fi:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         fr:
-            date_time_type: 'dd/MM/yyyy HH:mm'
             date_type: 'dd/MM/yyyy'
             date: 'd/m/Y'
             date_time: 'd/m H:i'
             duration: '%%h h %%m'
         he:
-            date_time_type: 'dd/MM/yyyy HH:mm'
             date_type: 'dd/MM/yyyy'
             date: 'd/m/Y'
             date_time: 'd/m H:i'
             duration: '%%h:%%m'
         hu:
-            date_time_type: 'yyyy.MM.dd. HH:mm'
             date_type: 'yyyy.MM.dd.'
             date: 'Y.m.d.'
             date_time: 'm.d. H:i'
         it:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         nl:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
             duration: '%%hu%%m'
         pt_BR:
-            date_time_type: 'dd-MM-yyyy HH:mm'
             date_type: 'dd-MM-yyyy'
             date: 'd-m-Y'
             date_time: 'd-m H:i'
         ru:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         sk:
-            date_time_type: 'dd. MM. yyyy HH:mm'
             date_type: 'dd. MM. yyyy'
             date: 'd. m. Y'
             date_time: 'd. m.  H:i'
@@ -319,7 +302,6 @@ kimai:
             duration: '%%h:%%m tim'
             date_time: 'd/m H:i'
         pl:
-            date_time_type: 'dd. MM. yyyy HH:mm'
             date_type: 'dd. MM. yyyy'
             date: 'd. m. Y'
             date_time: 'd. m.  H:i'

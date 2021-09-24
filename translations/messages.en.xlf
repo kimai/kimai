@@ -1256,6 +1256,10 @@
         <source>team.add_user.help</source>
         <target>Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
       </trans-unit>
+      <trans-unit id="label.hours_24">
+        <source>label.hours_24</source>
+        <target>24 hours</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

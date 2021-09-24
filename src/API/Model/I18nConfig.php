@@ -19,16 +19,6 @@ use JMS\Serializer\Annotation as Serializer;
 final class I18nConfig
 {
     /**
-     * Format used for 'begin' and 'end'
-     *
-     * @var string
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="string")
-     */
-    private $formDateTime = '';
-    /**
      * Format used for toolbar queries
      *
      * @var string
@@ -102,13 +92,6 @@ final class I18nConfig
     public function setNow(\DateTime $now): I18nConfig
     {
         $this->now = $now;
-
-        return $this;
-    }
-
-    public function setFormDateTime(string $formDateTime): I18nConfig
-    {
-        $this->formDateTime = $formDateTime;
 
         return $this;
     }

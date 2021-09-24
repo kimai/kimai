@@ -15,6 +15,7 @@ use App\Entity\User;
 use App\Utils\LocaleFormats;
 use App\Utils\LocaleFormatter;
 use DateTime;
+use Symfony\Component\Security\Core\Security;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -22,10 +23,9 @@ use Twig\TwigTest;
 
 final class LocaleFormatExtensions extends AbstractExtension
 {
-    /**
-     * @var LanguageFormattings|null
-     */
     private $formats;
+    private $security;
+
     /**
      * @var LocaleFormats|null
      */
@@ -38,10 +38,12 @@ final class LocaleFormatExtensions extends AbstractExtension
      * @var string
      */
     private $locale;
+    private $userFormat;
 
-    public function __construct(LanguageFormattings $formats)
+    public function __construct(LanguageFormattings $formats, Security $security)
     {
         $this->formats = $formats;
+        $this->security = $security;
     }
 
     /**
@@ -159,7 +161,18 @@ final class LocaleFormatExtensions extends AbstractExtension
      */
     public function dateTimeFull($date)
     {
-        return $this->getFormatter()->dateTimeFull($date);
+        return $this->getFormatter()->dateTimeFull($date, $this->getUserTimeFormat());
+    }
+
+    private function getUserTimeFormat(): string
+    {
+        if ($this->userFormat === null) {
+            /** @var User|null $user */
+            $user = $this->security->getUser();
+            $this->userFormat = $user !== null ? $user->getTimeFormat() : 'H:i';
+        }
+
+        return $this->userFormat;
     }
 
     public function createDate(string $date, ?User $user = null): \DateTime
@@ -186,7 +199,7 @@ final class LocaleFormatExtensions extends AbstractExtension
      */
     public function time($date)
     {
-        return $this->getFormatter()->time($date);
+        return $this->getFormatter()->time($date, $this->getUserTimeFormat());
     }
 
     /**
@@ -225,7 +238,16 @@ final class LocaleFormatExtensions extends AbstractExtension
      */
     public function hour24($twentyFour, $twelveHour)
     {
-        return $this->getFormatter()->hour24($twentyFour, $twelveHour);
+        @trigger_error('Twig filter "hour24" is deprecated, use app.user.is24Hour() instead', E_USER_DEPRECATED);
+
+        /** @var User|null $user */
+        $user = $this->security->getUser();
+
+        if (null === $user) {
+            return true;
+        }
+
+        return $user->is24Hour();
     }
 
     public function getDurationFormat(): string

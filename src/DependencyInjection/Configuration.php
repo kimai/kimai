@@ -329,13 +329,19 @@ class Configuration implements ConfigurationInterface
             ->useAttributeAsKey('name', false) // see https://github.com/symfony/symfony/issues/18988
             ->arrayPrototype()
                 ->children()
-                    ->scalarNode('date_time_type')->defaultValue('yyyy-MM-dd HH:mm')->end()     // for DateTimeType
+                    ->scalarNode('date_time_type')                                              // for DateTimeType
+                        ->defaultValue('yyyy-MM-dd HH:mm')
+                        ->setDeprecated('date_time_type is deprecated since 1.16 and was replaced by the 24 user configuration')
+                    ->end()
                     ->scalarNode('date_type')->defaultValue('yyyy-MM-dd')->end()                // for DateType
                     ->scalarNode('date')->defaultValue('Y-m-d')->end()                          // for display via twig
                     ->scalarNode('date_time')->defaultValue('m-d H:i')->end()                   // for display via twig
                     ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()                  // for display via twig
                     ->scalarNode('time')->defaultValue('H:i')->end()                            // for display via twig
-                    ->booleanNode('24_hours')->defaultTrue()->end()                             // for DateTimeType JS component
+                    ->booleanNode('24_hours')                                                   // for DateTimeType JS component
+                        ->defaultTrue()
+                        ->setDeprecated('24_hours is deprecated since 1.16 and a user configuration now')
+                    ->end()
                 ->end()
             ->end()
         ;

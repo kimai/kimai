@@ -1256,6 +1256,10 @@
         <source>team.add_user.help</source>
         <target>Durch Auswahl wird dem Team ein neuer Benutzer hinzugefügt. Sie können im Anschluss festlegen, ob der Benutzer ein Teamleiter sein soll.</target>
       </trans-unit>
+      <trans-unit id="label.hours_24">
+        <source>label.hours_24</source>
+        <target>24 Stunden</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

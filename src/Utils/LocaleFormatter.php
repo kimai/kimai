@@ -49,6 +49,10 @@ final class LocaleFormatter
     /**
      * @var string
      */
+    private $dateTypeFormat = null;
+    /**
+     * @var string
+     */
     private $dateTimeTypeFormat = null;
     /**
      * @var string
@@ -216,6 +220,15 @@ final class LocaleFormatter
         return $date->format($this->dateFormat);
     }
 
+    private function getDateTypeFormat(): string
+    {
+        if (null === $this->dateTypeFormat) {
+            $this->dateTypeFormat = $this->localeFormats->getDateTypeFormat();
+        }
+
+        return $this->dateTypeFormat;
+    }
+
     /**
      * @param DateTime|string $date
      * @return string
@@ -239,12 +252,14 @@ final class LocaleFormatter
 
     /**
      * @param DateTime|string $date
+     * @param string $timeFormat
      * @return bool|false|string
      */
-    public function dateTimeFull($date)
+    public function dateTimeFull($date, string $timeFormat)
     {
         if (null === $this->dateTimeTypeFormat) {
-            $this->dateTimeTypeFormat = $this->localeFormats->getDateTimeTypeFormat();
+            $converter = new DateFormatConverter();
+            $this->dateTimeTypeFormat = $this->getDateTypeFormat() . ' ' . $converter->convert($timeFormat);
         }
 
         if (!$date instanceof DateTime) {
@@ -291,7 +306,7 @@ final class LocaleFormatter
      * @return string
      * @throws Exception
      */
-    public function time($date)
+    public function time($date, string $format = null)
     {
         if (null === $this->timeFormat) {
             $this->timeFormat = $this->localeFormats->getTimeFormat();
@@ -301,7 +316,7 @@ final class LocaleFormatter
             $date = new DateTime($date);
         }
 
-        return $date->format($this->timeFormat);
+        return $date->format($format ?? $this->timeFormat);
     }
 
     /**
@@ -334,23 +349,5 @@ final class LocaleFormatter
     public function dayName(\DateTime $dateTime, bool $short = false): string
     {
         return $this->formatIntl($dateTime, ($short ? 'EE' : 'EEEE'));
-    }
-
-    /**
-     * @param mixed $twentyFour
-     * @param mixed $twelveHour
-     * @return mixed
-     */
-    public function hour24($twentyFour, $twelveHour)
-    {
-        if (null === $this->isTwentyFourHour) {
-            $this->isTwentyFourHour = $this->localeFormats->isTwentyFourHours();
-        }
-
-        if (true === $this->isTwentyFourHour) {
-            return $twentyFour;
-        }
-
-        return $twelveHour;
     }
 }

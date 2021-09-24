@@ -33,6 +33,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractRendererTest extends KernelTestCase
@@ -51,8 +52,11 @@ abstract class AbstractRendererTest extends KernelTestCase
             ]
         ];
 
+        $security = $this->createMock(Security::class);
+        $security->expects($this->any())->method('getUser')->willReturn(new User());
+
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dateExtension = new LocaleFormatExtensions(new LanguageFormattings($languages));
+        $dateExtension = new LocaleFormatExtensions(new LanguageFormattings($languages), $security);
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
