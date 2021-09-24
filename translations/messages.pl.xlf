@@ -1223,6 +1223,38 @@
         <source>label.vat_id</source>
         <target>VAT-ID</target>
       </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>Obecnie istnieją rekordy czasu %records%, które sumują się do całkowitego czasu trwania %duration%.</target>
+      </trans-unit>
+      <trans-unit id="label.invoice_tax_number">
+        <source>label.invoice_tax_number</source>
+        <target>VAT no.:</target>
+      </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Dodaj nowego użytkownika do drużyny poprzez wybór z listy. Potem możesz zdecydować czy użytkownik powinien zostać przywódcą.</target>
+      </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Dodaj użytkownika</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Miesięcznie</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Typ budżetu</target>
+      </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Numer personelu</target>
+      </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>Twoje wyszukiwanie prowadzi do %count% wyników. Jeżeli eksport zawiedzie, musisz zawęzić wyszukiwanie.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
