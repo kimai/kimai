@@ -18,14 +18,6 @@
         <source>help</source>
         <target>مستندات</target>
       </trans-unit>
-      <trans-unit id="donate">
-        <source>donate</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="published_under">
-        <source>published_under</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="special_thanks">
         <source>special_thanks</source>
         <target>سپاس ویژه از…</target>
