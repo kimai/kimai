@@ -30,10 +30,6 @@
         <source>special_thanks</source>
         <target>سپاس ویژه از…</target>
       </trans-unit>
-      <trans-unit id="library_authors">
-        <source>library_authors</source>
-        <target/>
-      </trans-unit>
     </body>
   </file>
 </xliff>
