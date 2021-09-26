@@ -7,7 +7,7 @@
             -->
       <trans-unit id="time_tracking">
         <source>time_tracking</source>
-        <target>Evidencija vremena</target>
+        <target>Evidentiranje vremena</target>
       </trans-unit>
       <trans-unit id="yes">
         <source>yes</source>
@@ -1202,7 +1202,7 @@
       </trans-unit>
       <trans-unit id="label.includeNoWork">
         <source>label.includeNoWork</source>
-        <target>Pokaži unose bez knjiženja</target>
+        <target>Pokaži unose bez rezervacija</target>
       </trans-unit>
       <trans-unit id="label.includeNoBudget">
         <source>label.includeNoBudget</source>
@@ -1218,7 +1218,7 @@
       </trans-unit>
       <trans-unit id="label.last_record_before">
         <source>label.last_record_before</source>
-        <target>Zadnje knjiženje vremena</target>
+        <target>Zadnje rezerviranje vremena</target>
       </trans-unit>
       <trans-unit id="label.last_record">
         <source>label.last_record</source>
