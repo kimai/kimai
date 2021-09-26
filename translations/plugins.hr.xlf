@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="plugin.marketplace">
         <source>plugin.marketplace</source>
-        <target/>
+        <target>Kimai tržnica</target>
       </trans-unit>
     </body>
   </file>
