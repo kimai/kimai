@@ -4,39 +4,39 @@
     <body>
       <trans-unit id="access.denied">
         <source>access.denied</source>
-        <target></target>
+        <target>Pristup je odbijen</target>
       </trans-unit>
       <trans-unit id="stacktrace">
         <source>stacktrace</source>
-        <target></target>
+        <target>Problem se pojavio ovdje</target>
       </trans-unit>
       <trans-unit id="http_error.title">
         <source>http_error.title</source>
-        <target></target>
+        <target>Greška</target>
       </trans-unit>
       <trans-unit id="http_error.description">
         <source>http_error.description</source>
-        <target></target>
+        <target>Nešto nije u redu</target>
       </trans-unit>
       <trans-unit id="http_error.suggestion">
         <source>http_error.suggestion</source>
-        <target></target>
+        <target>Dogodila se kritična greška, pokušaj ponovo. Možda se radi o softverskom problemu, obrati se administratoru ako se problem nastavi pojavljivati.</target>
       </trans-unit>
       <trans-unit id="http_error_404.description">
         <source>http_error_404.description</source>
-        <target></target>
+        <target>Stranica nije pronađena</target>
       </trans-unit>
       <trans-unit id="http_error_404.suggestion">
         <source>http_error_404.suggestion</source>
-        <target></target>
+        <target>Nismo mogli pronaći stranicu koju tražiš. Vrati se na preglednu ploču i počni ispočetka.</target>
       </trans-unit>
       <trans-unit id="http_error_403.description">
         <source>http_error_403.description</source>
-        <target></target>
+        <target>Stranica je zaštićena</target>
       </trans-unit>
       <trans-unit id="http_error_403.suggestion">
         <source>http_error_403.suggestion</source>
-        <target></target>
+        <target>Nažalost, nemaš dozvole za prikaz ove stranice. Obrati se administratoru ako misliš da je ovo greška.</target>
       </trans-unit>
     </body>
   </file>
