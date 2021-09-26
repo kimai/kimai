@@ -4,15 +4,15 @@
     <body>
       <trans-unit id="default.pdf.twig">
         <source>default.pdf.twig</source>
-        <target></target>
+        <target>Standardno</target>
       </trans-unit>
       <trans-unit id="default-budget.pdf.twig">
         <source>default-budget.pdf.twig</source>
-        <target></target>
+        <target>S preostalim budžetom</target>
       </trans-unit>
       <trans-unit id="default-internal.pdf.twig">
         <source>default-internal.pdf.twig</source>
-        <target></target>
+        <target>S internim cijenama</target>
       </trans-unit>
     </body>
   </file>
