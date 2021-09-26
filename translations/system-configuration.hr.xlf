@@ -4,319 +4,319 @@
     <body>
       <trans-unit id="title">
         <source>title</source>
-        <target></target>
+        <target>Postavke</target>
       </trans-unit>
       <trans-unit id="subtitle">
         <source>subtitle</source>
-        <target></target>
+        <target>Promijeni globalne konfiguracije evidentiranja vremena</target>
       </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
-        <target></target>
+        <target>Vremenska tablica</target>
       </trans-unit>
       <trans-unit id="invoice">
         <source>invoice</source>
-        <target></target>
+        <target>Računi</target>
       </trans-unit>
       <trans-unit id="form_customer">
         <source>form_customer</source>
-        <target></target>
+        <target>Stvori standardne vrijednosti za kupca</target>
       </trans-unit>
       <trans-unit id="form_user">
         <source>form_user</source>
-        <target></target>
+        <target>Standardne vrijednosti za korisnika</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
-        <target></target>
+        <target>Tema</target>
       </trans-unit>
       <trans-unit id="calendar">
         <source>calendar</source>
-        <target></target>
+        <target>Kalendar</target>
       </trans-unit>
       <trans-unit id="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
-        <target></target>
+        <target>Dozvoli markdown formatiranje u opisima i komentarima</target>
       </trans-unit>
       <trans-unit id="label.theme.tags_create">
         <source>label.theme.tags_create</source>
-        <target></target>
+        <target>Oznake: koristi automatsko dovršavanje izraza u pretrazi i dozvoli stvaranje oznaka</target>
       </trans-unit>
       <trans-unit id="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
-        <target></target>
+        <target>Dozvoli korištenje URL-ova za slike avatara</target>
       </trans-unit>
       <trans-unit id="label.theme.random_colors">
         <source>label.theme.random_colors</source>
-        <target></target>
+        <target>Koristi slučajno odabrane boje za objekte bez dodijeljene boje</target>
       </trans-unit>
       <trans-unit id="label.timesheet.mode">
         <source>label.timesheet.mode</source>
-        <target></target>
+        <target>Modus evidentiranja vremena</target>
       </trans-unit>
       <trans-unit id="label.timesheet.mode_default">
         <source>label.timesheet.mode_default</source>
-        <target></target>
+        <target>[Standardno] vrijeme početka i kraja mogu se promijeniti</target>
       </trans-unit>
       <trans-unit id="label.timesheet.mode_duration_only">
         <source>label.timesheet.mode_duration_only</source>
-        <target></target>
+        <target>[Trajanje] zamjenjuje vrijeme kraja s poljem za unos trajanja</target>
       </trans-unit>
       <trans-unit id="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
-        <target></target>
+        <target>[Trajanje] može se konfigurirati fiksno vrijeme početka, promijeniti se može samo trajanje</target>
       </trans-unit>
       <trans-unit id="label.timesheet.mode_punch">
         <source>label.timesheet.mode_punch</source>
-        <target></target>
+        <target>[Sat] korisnik može pokrenuti i prekinuti snimanja, ali ne može mijenjati vrijeme niti trajanje</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.allow_future_times">
         <source>label.timesheet.rules.allow_future_times</source>
-        <target></target>
+        <target>Dozvoli unose vremena u budućnosti</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
         <source>label.timesheet.rules.allow_overbooking_budget</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
-        <target></target>
+        <target>Dozvoli preklapajuće unose vremena</target>
       </trans-unit>
       <trans-unit id="lockdown_period">
         <source>lockdown_period</source>
-        <target></target>
+        <target>Zaključano razdoblje</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_period_timezone">
         <source>label.timesheet.rules.lockdown_period_timezone</source>
-        <target></target>
+        <target>Vremenska zona (ako je polje prazno, koristi se vremenska zona dotičnog korisnika)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_period_start">
         <source>label.timesheet.rules.lockdown_period_start</source>
-        <target></target>
+        <target>Početak zaključanog razdoblja (PHP relativni datum do sada)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_period_end">
         <source>label.timesheet.rules.lockdown_period_end</source>
-        <target></target>
+        <target>Kraj zaključanog razdoblja (PHP relativni datum do sada)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
-        <target></target>
+        <target>Kraj dodatnog zaključanog razdoblja (PHP relativni datum do kraja zaključanog razdoblja)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.active_entries.hard_limit">
         <source>label.timesheet.active_entries.hard_limit</source>
-        <target></target>
+        <target>Dozvoljeni broj istovremenih mjerenja vremena</target>
       </trans-unit>
       <trans-unit id="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
-        <target></target>
+        <target>Minimalni broj slova za automatsko dovršavanje</target>
       </trans-unit>
       <trans-unit id="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
-        <target></target>
+        <target>Prikaži brojeve tjedana</target>
       </trans-unit>
       <trans-unit id="label.calendar.weekends">
         <source>label.calendar.weekends</source>
-        <target></target>
+        <target>Prikaži vikende</target>
       </trans-unit>
       <trans-unit id="label.calendar.businessHours.begin">
         <source>label.calendar.businessHours.begin</source>
-        <target></target>
+        <target>Početak uobičajenog radnog vremena (bit će istaknuto)</target>
       </trans-unit>
       <trans-unit id="label.calendar.businessHours.end">
         <source>label.calendar.businessHours.end</source>
-        <target></target>
+        <target>Kraj uobičajenog radnog vremena (bit će istaknuto)</target>
       </trans-unit>
       <trans-unit id="label.calendar.visibleHours.begin">
         <source>label.calendar.visibleHours.begin</source>
-        <target></target>
+        <target>Početak vidljivog vremenskog raspona</target>
       </trans-unit>
       <trans-unit id="label.calendar.visibleHours.end">
         <source>label.calendar.visibleHours.end</source>
-        <target></target>
+        <target>Kraj vidljivog vremenskog raspona</target>
       </trans-unit>
       <trans-unit id="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>
-        <target></target>
+        <target state="needs-translation">Vremenski okvir za pregled tjedna i dana (format: hh:mm:ss)</target>
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
-        <target></target>
+        <target>Moje poduzeće</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target></target>
+        <target>URL logotipa (zamjenjuje ime poduzeća na ekranu prijave)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target></target>
+        <target>Ime poduzeća</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
-        <target></target>
+        <target>Mali logotip (sklopljena bočna traka)</target>
       </trans-unit>
       <trans-unit id="label.theme.branding.title">
         <source>label.theme.branding.title</source>
-        <target></target>
+        <target>Naslov preglednika</target>
       </trans-unit>
       <trans-unit id="label.company.financial_year">
         <source>label.company.financial_year</source>
-        <target></target>
+        <target>Fiskalna godina</target>
       </trans-unit>
       <trans-unit id="rounding">
         <source>rounding</source>
-        <target></target>
+        <target>Zaokruživanje vremena</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.begin">
         <source>label.timesheet.rounding.default.begin</source>
-        <target></target>
+        <target>Zaokruživanje vremena početka u minutama (0 = deaktivirano)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.end">
         <source>label.timesheet.rounding.default.end</source>
-        <target></target>
+        <target>Zaokruživanje vremena kraja u minutama (0 = deaktivirano)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.duration">
         <source>label.timesheet.rounding.default.duration</source>
-        <target></target>
+        <target>Zaokruživanje trajanja u minutama (0 = deaktivirano)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.mode">
         <source>label.timesheet.rounding.default.mode</source>
-        <target></target>
+        <target>Modus zaokruživanja</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rounding.default.days">
         <source>label.timesheet.rounding.default.days</source>
-        <target></target>
+        <target>Dani u tjednu kad će se primijeniti zaokruživanje</target>
       </trans-unit>
       <trans-unit id="Monday">
         <source>Monday</source>
-        <target></target>
+        <target>Ponedjeljak</target>
       </trans-unit>
       <trans-unit id="Tuesday">
         <source>Tuesday</source>
-        <target></target>
+        <target>Utorak</target>
       </trans-unit>
       <trans-unit id="Wednesday">
         <source>Wednesday</source>
-        <target></target>
+        <target>Srijeda</target>
       </trans-unit>
       <trans-unit id="Thursday">
         <source>Thursday</source>
-        <target></target>
+        <target>Četvrtak</target>
       </trans-unit>
       <trans-unit id="Friday">
         <source>Friday</source>
-        <target></target>
+        <target>Petak</target>
       </trans-unit>
       <trans-unit id="Saturday">
         <source>Saturday</source>
-        <target></target>
+        <target>Subota</target>
       </trans-unit>
       <trans-unit id="Sunday">
         <source>Sunday</source>
-        <target></target>
+        <target>Nedjelja</target>
       </trans-unit>
       <trans-unit id="Ceil">
         <source>Ceil</source>
-        <target></target>
+        <target>Plafon: početak, kraj i trajanje će se zaokružiti prema gore</target>
       </trans-unit>
       <trans-unit id="Closest">
         <source>Closest</source>
-        <target></target>
+        <target>Najbliže: matematičko zaokruživanje na najbližu vrijednost</target>
       </trans-unit>
       <trans-unit id="Default">
         <source>Default</source>
-        <target></target>
+        <target>Standardno: početak će se zaokružiti prema dolje, kraj i trajanje prema gore</target>
       </trans-unit>
       <trans-unit id="Floor">
         <source>Floor</source>
-        <target></target>
+        <target>Pod: početak, kraj i trajanje će se zaokružiti prema dolje</target>
       </trans-unit>
       <trans-unit id="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
-        <target></target>
+        <target>Standardno vrijeme početka (ne koristi se u svim modusima evidentiranja vremena)</target>
       </trans-unit>
       <trans-unit id="label.simple_form">
         <source>label.simple_form</source>
-        <target></target>
+        <target>Jednostavna pretraga</target>
       </trans-unit>
       <trans-unit id="label.invoice.number_format">
         <source>label.invoice.number_format</source>
-        <target></target>
+        <target>Format broja računa</target>
       </trans-unit>
       <trans-unit id="first_weekday">
         <source>first_weekday</source>
-        <target></target>
+        <target>Prvi dan u tjednu</target>
       </trans-unit>
       <trans-unit id="label.timesheet.duration_increment">
         <source>label.timesheet.duration_increment</source>
-        <target></target>
+        <target>Biranje trajanja pomoću minuta</target>
       </trans-unit>
       <trans-unit id="label.timesheet.time_increment">
         <source>label.timesheet.time_increment</source>
-        <target></target>
+        <target>Biranje vremena „od” i „do” pomoću minuta</target>
       </trans-unit>
       <trans-unit id="increment_rounding">
         <source>increment_rounding</source>
-        <target></target>
+        <target>Koristi konfiguriranu vrijednost pravila zaokruživanja</target>
       </trans-unit>
       <trans-unit id="off">
         <source>off</source>
-        <target></target>
+        <target>Isključeno</target>
       </trans-unit>
       <trans-unit id="label.theme.colors_limited">
         <source>label.theme.colors_limited</source>
-        <target></target>
+        <target>Ograniči izbor boja</target>
       </trans-unit>
       <trans-unit id="label.theme.color_choices">
         <source>label.theme.color_choices</source>
-        <target></target>
+        <target>Dozvoljene boje</target>
       </trans-unit>
       <trans-unit id="help.theme.color_choices">
         <source>help.theme.color_choices</source>
-        <target></target>
+        <target>Popis HTML kodova boja odvojenih zarezima. Boje se mogu odrediti postavljanjem imena boje i okomite crte ispred koda boje, npr.: White|#ffffff, Black|#000000.</target>
       </trans-unit>
       <trans-unit id="authentication">
         <source>authentication</source>
-        <target></target>
+        <target>Autentifikacija</target>
       </trans-unit>
       <trans-unit id="label.user_auth_login">
         <source>label.user_auth_login</source>
-        <target></target>
+        <target>Obrazac za prijavu</target>
       </trans-unit>
       <trans-unit id="label.user_auth_registration">
         <source>label.user_auth_registration</source>
-        <target></target>
+        <target>Registracija korisnika</target>
       </trans-unit>
       <trans-unit id="label.user_auth_password_reset">
         <source>label.user_auth_password_reset</source>
-        <target></target>
+        <target>Zaboravljena lozinka</target>
       </trans-unit>
       <trans-unit id="label.user_auth_password_reset_retry_ttl">
         <source>label.user_auth_password_reset_retry_ttl</source>
-        <target></target>
+        <target>Zaboravljena lozinka – sekunde prije nego što korisnik može zatražiti sljedeći e-mail</target>
       </trans-unit>
       <trans-unit id="label.user_auth_password_reset_token_ttl">
         <source>label.user_auth_password_reset_token_ttl</source>
-        <target></target>
+        <target>Zaboravljena lozinka – sekunde prije nego što poveznica za obnavljanje istekne</target>
       </trans-unit>
       <trans-unit id="label.ldap_activate">
         <source>label.ldap_activate</source>
-        <target></target>
+        <target>LDAP prijava</target>
       </trans-unit>
       <trans-unit id="label.saml_activate">
         <source>label.saml_activate</source>
-        <target></target>
+        <target>SAML prijava</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.break_warning_duration">
         <source>label.timesheet.rules.break_warning_duration</source>
-        <target></target>
+        <target>Maksimalno trajanje zapisa vremenske tablice u minutama prije prikazivanja „upozorenje za pauzu” (0 = deaktivirano)</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.long_running_duration">
         <source>label.timesheet.rules.long_running_duration</source>
-        <target></target>
+        <target>Maksimalno trajanje zapisa vremenske tablice u minutama prije nego što se spremanje odbije (0 = deaktivirano)</target>
       </trans-unit>
       <trans-unit id="label.calendar.dragdrop_amount">
         <source>label.calendar.dragdrop_amount</source>
-        <target></target>
+        <target>Količina unosa za povlačenje i ispuštanje (0 = deaktivirano)</target>
       </trans-unit>
     </body>
   </file>
