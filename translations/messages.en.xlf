@@ -404,6 +404,10 @@
         <source>action.edit</source>
         <target>Edit</target>
       </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>Add</target>
+      </trans-unit>
       <trans-unit id="action.delete">
         <source>action.delete</source>
         <target>Delete</target>
@@ -1261,7 +1265,7 @@
       -->
       <trans-unit id="quick-entry.title">
         <source>quick-entry.title</source>
-        <target>Weekly form</target>
+        <target>Quick Entry</target>
       </trans-unit>
     </body>
   </file>

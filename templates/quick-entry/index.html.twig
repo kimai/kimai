@@ -5,62 +5,41 @@
 {% block page_actions %}{{ actions.quickEntries('index') }}{% endblock %}
 
 {% block main %}
-    {#
-    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
-    {% set formOptions = {
-        'title': (project.id is null ? 'create-project'|trans({}, 'actions') : 'edit'|trans({}, 'actions')),
-        'form': form,
-        'back': path('admin_project')
-    } %}
-    {% embed formEditTemplate with formOptions %}
-        {% block form_body %}
-            <div class="row">
-                <div class="col-md-10">
-                    {{ form_row(form.name) }}
-                </div>
-                <div class="col-md-2">
-                    {{ form_row(form.color) }}
-                </div>
-            </div>
-            {{ form_row(form.comment) }}
-            {{ form_row(form.customer) }}
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.orderNumber) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_row(form.orderDate) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.start) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_row(form.end) }}
-                </div>
-            </div>
-            {% if form.budget is defined %}
-            <div class="row">
-                <div class="col-md-4">
-                    {{ form_row(form.budget) }}
-                </div>
-                <div class="col-md-4">
-                    {{ form_row(form.timeBudget) }}
-                </div>
-                <div class="col-md-4">
-                    {{ form_row(form.budgetType) }}
-                </div>
-            </div>
-            {% endif %}
-            {{ form_row(form.visible) }}
-            {% if form.metaFields is defined and form.metaFields is not empty %}
-                {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
-                    {{ form_row(meta) }}
-                {% endfor %}
-            {% endif %}
-            {{ form_widget(form) }}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% block box_attributes %}id="quick_entry_box"{% endblock %}
+        {% block box_before %}{{ form_start(form, {attr: {class: 'form-dataTable'}}) }}{% endblock %}
+        {% block box_after %}{{ form_end(form) }}{% endblock %}
+        {% block box_title %}
+            {{ start_date|date_short }} &ndash; {{ end_date|date_short }}
+        {% endblock %}
+        {% block box_tools %}
+            <ul class="pagination pagination-sm inline">
+                <li class="prev"><a href="{{ path('quick-entry', {'begin': previous}) }}" rel="prev"><i class="{{ 'left'|icon }}"></i></a></li>
+                <li class="next"><a href="{{ path('quick-entry', {'begin': next}) }}" rel="next"><i class="{{ 'right'|icon }}"></i></a></li>
+            </ul>
+        {% endblock %}
+        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_footer %}
+            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+        {% endblock %}
+        {% block box_body %}
+            <table class="table dataTable">
+                <thead>
+                    <tr>
+                        <th>{{ 'label.project'|trans }}</th>
+                        <th>{{ 'label.activity'|trans }}</th>
+                        {% for id, week in days %}
+                        <th class="text-left">{{ week.day|date_short }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody id="ts-collection" data-index="{{ form.children|length - 1 }}">
+                    {{ form(form) }}
+                </tbody>
+            </table>
         {% endblock %}
     {% endembed %}
-    #}
+
 {% endblock %}

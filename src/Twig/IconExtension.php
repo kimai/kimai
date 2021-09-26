@@ -89,6 +89,7 @@ final class IconExtension extends AbstractExtension
         'stop' => 'fas fa-stop',
         'stop-small' => 'far fa-stop-circle',
         'success' => 'fas fa-check',
+        'table' => 'fas fa-th',
         'tag' => 'fas fa-tags',
         'team' => 'fas fa-users',
         'timesheet' => 'fas fa-clock',

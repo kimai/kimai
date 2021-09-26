@@ -8,6 +8,22 @@
     {{ parent() }}
 {% endblock form_label %}
 
+{% block quick_entry_week_row %}
+    <tr{% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' form-group' ~ (not valid ? ' has-error'))|trim})} %}{{ block('attributes') }}{% endwith %}>
+        <td>
+            {{ form_row(form.project) }}
+        </td>
+        <td>
+            {{ form_row(form.activity) }}
+        </td>
+        {% for timesheet in form.timesheets %}
+            <td class="text-right">
+                {{ form_row(timesheet) }}
+            </td>
+        {% endfor %}
+    </tr>
+{% endblock %}
+
 {% block _team_edit_form_members_entry_user_widget %}
     {#  this will convert the select box into a hidden field, which are exchangable from an HTML perspective #}
     {%- set type = 'hidden' -%}

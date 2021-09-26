@@ -10,28 +10,51 @@
 namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
+use App\Entity\Timesheet;
+use App\Form\QuickEntryForm;
+use App\Model\QuickEntryModel;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to enter times in weekly form.
  *
  * @Route(path="/quick-entry")
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
+ * @Security("is_granted('view_own_timesheet')")
  */
 class QuickEntryController extends AbstractController
 {
-    /**
-     * @Route(path="/", name="quick-entry", methods={"GET"})
-     */
-    public function quickEntry(SystemConfiguration $configuration, TimesheetService $timesheetService, TimesheetRepository $repository)
+    private $configuration;
+    private $timesheetService;
+    private $repository;
+
+    public function __construct(SystemConfiguration $configuration, TimesheetService $timesheetService, TimesheetRepository $repository)
     {
-        $mode = $timesheetService->getActiveTrackingMode();
+        $this->configuration = $configuration;
+        $this->timesheetService = $timesheetService;
+        $this->repository = $repository;
+    }
+
+    /**
+     * @Route(path="/{begin}", name="quick-entry", methods={"GET", "POST"})
+     * @Security("is_granted('edit_own_timesheet')")
+     */
+    public function quickEntry(Request $request, ?string $begin = null)
+    {
+        $mode = $this->timesheetService->getActiveTrackingMode();
         $factory = $this->getDateTimeFactory();
-        $defaultStart = $factory->createDateTime($configuration->getTimesheetDefaultBeginTime());
+        if ($begin === null) {
+            $begin = $factory->createDateTime();
+        } else {
+            $begin = $factory->createDateTime($begin);
+        }
+
+        $startWeek = $factory->getStartOfWeek($begin);
+        $endWeek = $factory->getEndOfWeek($begin);
 
         if (!$mode->canEditDuration() && !$mode->canEditEnd()) {
             $this->flashError('Not allowed');
@@ -39,36 +62,164 @@ class QuickEntryController extends AbstractController
             return $this->redirectToRoute('homepage');
         }
 
-        // TODO form handling
-
-        $startWeek = $factory->getStartOfWeek();
-        $endWeek = $factory->getEndOfWeek();
         $tmpDay = clone $startWeek;
         $week = [];
         while ($tmpDay < $endWeek) {
             $nextDay = clone $tmpDay;
-            $week[$nextDay->format('Y-m-d')] = $nextDay;
+            $week[$nextDay->format('Y-m-d')] = ['day' => $nextDay];
             $tmpDay = $tmpDay->modify('+1 day');
         }
 
-        dd($week);
-
         $query = new TimesheetQuery();
+        $query->setBegin($startWeek);
+        $query->setEnd($endWeek);
         $query->setName('quickEntryForm');
         $query->setUser($this->getUser());
 
-        $result = $repository->getTimesheetResult($query);
-        $timesheets = $result->getResults();
-        foreach ($timesheets as $timesheet) {
+        $result = $this->repository->getTimesheetResult($query);
+
+        $rows = [];
+        /** @var Timesheet $timesheet */
+        foreach ($result->getResults(true) as $timesheet) {
+            $i = 0;
+            $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
+            $day = $timesheet->getBegin()->format('Y-m-d');
+
+            while (\array_key_exists($id, $rows) && \array_key_exists('entry', $rows[$id]['days'][$day])) {
+                $i++;
+                $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId() . '_' . $i;
+            }
+
+            if (!\array_key_exists($id, $rows)) {
+                $rows[$id] = [
+                    'days' => $week,
+                    'project' => $timesheet->getProject(),
+                    'activity' => $timesheet->getActivity()
+                ];
+            }
+
+            $rows[$id]['days'][$day]['entry'] = $timesheet;
         }
 
+        ksort($rows);
+
+        // attach recent activities
+        $timesheets = $this->repository->getRecentActivities($this->getUser(), null, 5);
+        foreach ($timesheets as $timesheet) {
+            $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
+            if (\array_key_exists($id, $rows)) {
+                continue;
+            }
+            $rows[$id] = [
+                'days' => $week,
+                'project' => $timesheet->getProject(),
+                'activity' => $timesheet->getActivity()
+            ];
+        }
+
+        $beginTime = $this->configuration->getTimesheetDefaultBeginTime();
+
+        /** @var QuickEntryModel[] $models */
+        $models = [];
+        foreach ($rows as $id => $row) {
+            $model = new QuickEntryModel($row['project'], $row['activity']);
+            foreach ($row['days'] as $dayId => $day) {
+                if (!\array_key_exists('entry', $day)) {
+                    $tmp = new Timesheet();
+                    $tmp->setProject($row['project']);
+                    $tmp->setActivity($row['activity']);
+                    $tmp->setBegin($day['day']);
+                    $tmp->getBegin()->modify($beginTime);
+                    $model->addTimesheet($tmp);
+                } else {
+                    $model->addTimesheet($day['entry']);
+                }
+            }
+            $models[] = $model;
+        }
+
+        for ($a = 0; $a < 3; $a++) {
+            $model = new QuickEntryModel(null, null);
+            foreach ($week as $dayId => $day) {
+                $tmp = new Timesheet();
+                $tmp->setBegin($day['day']);
+                $tmp->getBegin()->modify($beginTime);
+                $model->addTimesheet($tmp);
+            }
+            $models[] = $model;
+        }
+
+        $form = $this->createForm(QuickEntryForm::class, $models, [
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
+        ]);
+
+        $form->handleRequest($request);
+
+        $allowDelete = $this->isGranted('delete_own_timesheet');
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $saveTimesheets = [];
+            $deleteTimesheets = [];
+            /** @var QuickEntryModel[] $data */
+            $data = $form->getData();
+            foreach ($data as $tmpModel) {
+                foreach ($tmpModel->getTimesheets() as $timesheet) {
+                    $save = false;
+
+                    if ($timesheet->getId() !== null) {
+                        if ($timesheet->getDuration() === null || $timesheet->getEnd() === null) {
+                            if ($allowDelete) {
+                                $deleteTimesheets[] = $timesheet;
+                            }
+                        } else {
+                            $save = true;
+                        }
+                    } else {
+                        if ($timesheet->getDuration() !== null) {
+                            $save = true;
+                        }
+                    }
+
+                    if ($save) {
+                        $timesheet->setUser($this->getUser());
+                        $timesheet->setActivity($tmpModel->getActivity());
+                        $timesheet->setProject($tmpModel->getProject());
+                        $saveTimesheets[] = $timesheet;
+                    }
+                }
+            }
+
+            $updated = false;
+            if (\count($deleteTimesheets) > 0) {
+                $this->timesheetService->deleteMultipleTimesheets($deleteTimesheets);
+                $updated = true;
+            }
+
+            if (\count($saveTimesheets) > 0) {
+                $this->timesheetService->updateMultipleTimesheets($saveTimesheets);
+                $updated = true;
+            }
+
+            if ($updated) {
+                return $this->redirectToRoute('quick-entry', ['begin' => $begin->format('Y-m-d')]);
+            }
+        }
+
+        $previous = clone $startWeek;
+        $previous->modify('-1 day');
+
+        $next = clone $endWeek;
+        $next->modify('+1 week');
+
         return $this->render('quick-entry/index.html.twig', [
+            'days' => $week,
+            'week' => $rows,
+            'form' => $form->createView(),
             'now' => $factory->createDateTime(),
-            'default_start' => $defaultStart,
-            'default_start_time' => $defaultStart->format('h:i:s'),
-            'can_edit_begin' => $mode->canEditBegin(),
-            'can_edit_end' => $mode->canEditBegin(),
-            'can_edit_duration' => $mode->canEditDuration(),
+            'start_date' => $startWeek,
+            'end_date' => $endWeek,
+            'previous' => $previous->format('Y-m-d'),
+            'next' => $next->format('Y-m-d'),
         ]);
     }
 }

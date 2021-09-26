@@ -49,30 +49,34 @@ trait FormTrait
         ]);
     }
 
-    protected function addProject(FormBuilderInterface $builder, bool $isNew, ?Project $project = null, ?Customer $customer = null)
+    protected function buildProjectOptions(array $options = []): array
     {
-        $builder->add('project', ProjectType::class, [
-            'placeholder' => '',
-            'activity_enabled' => true,
+        return array_merge(['placeholder' => '', 'activity_enabled' => true], $options);
+    }
+
+    protected function addProject(FormBuilderInterface $builder, bool $isNew, ?Project $project = null, ?Customer $customer = null, array $options = [])
+    {
+        $options = $this->buildProjectOptions($options);
+
+        $builder->add('project', ProjectType::class, array_merge($options, [
             'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer) {
                 $query = new ProjectFormTypeQuery($project, $customer);
                 $query->setUser($builder->getOption('user'));
+                $query->setWithCustomer(true);
 
                 return $repo->getQueryBuilderForFormType($query);
             },
-        ]);
+        ]));
 
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $project, $customer, $isNew) {
+            function (FormEvent $event) use ($builder, $project, $customer, $isNew, $options) {
                 $data = $event->getData();
                 $customer = isset($data['customer']) && !empty($data['customer']) ? $data['customer'] : null;
                 $project = isset($data['project']) && !empty($data['project']) ? $data['project'] : $project;
 
-                $event->getForm()->add('project', ProjectType::class, [
-                    'placeholder' => '',
-                    'activity_enabled' => true,
+                $event->getForm()->add('project', ProjectType::class, array_merge($options, [
                     'group_by' => null,
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer, $isNew) {
                         // is there a better wa to prevent starting a record with a hidden project ?
@@ -90,44 +94,50 @@ trait FormTrait
                         }
                         $query = new ProjectFormTypeQuery($project, $customer);
                         $query->setUser($builder->getOption('user'));
+                        $query->setWithCustomer(true);
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
-                ]);
+                ]));
             }
         );
     }
 
-    protected function addActivity(FormBuilderInterface $builder, ?Activity $activity = null, ?Project $project = null)
+    protected function buildActivityOptions(array $options = []): array
     {
-        $builder->add('activity', ActivityType::class, [
-            'placeholder' => '',
+        return array_merge(['placeholder' => ''], $options);
+    }
+
+    protected function addActivity(FormBuilderInterface $builder, ?Activity $activity = null, ?Project $project = null, array $options = [])
+    {
+        $options = $this->buildActivityOptions($options);
+
+        $builder->add('activity', ActivityType::class, array_merge($options, [
             'query_builder' => function (ActivityRepository $repo) use ($builder, $activity, $project) {
                 $query = new ActivityFormTypeQuery($activity, $project);
                 $query->setUser($builder->getOption('user'));
 
                 return $repo->getQueryBuilderForFormType($query);
             },
-        ]);
+        ]));
 
         // replaces the activity select after submission, to make sure only activities for the selected project are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $activity) {
+            function (FormEvent $event) use ($builder, $activity, $options) {
                 $data = $event->getData();
                 if (!isset($data['project']) || empty($data['project'])) {
                     return;
                 }
 
-                $event->getForm()->add('activity', ActivityType::class, [
-                    'placeholder' => '',
+                $event->getForm()->add('activity', ActivityType::class, array_merge($options, [
                     'query_builder' => function (ActivityRepository $repo) use ($builder, $data, $activity) {
                         $query = new ActivityFormTypeQuery($activity, $data['project']);
                         $query->setUser($builder->getOption('user'));
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
-                ]);
+                ]));
             }
         );
     }

@@ -91,6 +91,15 @@ table.dataTable {
     }
 }
 
+/* Quick entry form */
+.form-dataTable {
+    table.dataTable {
+        .form-group {
+            margin-bottom: 0;
+        }
+    }
+}
+
 table.table-hover {
     tr {
         &.exported {

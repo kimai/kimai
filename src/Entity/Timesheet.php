@@ -371,7 +371,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     {
         $this->begin = $begin;
         $this->timezone = $begin->getTimezone()->getName();
-        // make sure that the original date is always
+        // make sure that the original date is always kept in UTC
         $this->date = new DateTime($begin->format('Y-m-d 00:00:00'), new DateTimeZone('UTC'));
 
         return $this;
@@ -421,12 +421,13 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     /**
      * Do not rely on the results of this method for running records.
      *
+     * @param bool $calculate
      * @return int|null
      */
-    public function getDuration(): ?int
+    public function getDuration(bool $calculate = true): ?int
     {
         // only auto calculate if manually set duration is null - the result is important for eg. validations
-        if ($this->duration === null && $this->begin !== null && $this->end !== null) {
+        if ($this->duration === null && $calculate && $this->begin !== null && $this->end !== null) {
             return $this->end->getTimestamp() - $this->begin->getTimestamp();
         }
 

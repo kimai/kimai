@@ -40,13 +40,13 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
                 return;
             }
 
-            let formPrefix = jQuery(this).parents('form').first().attr('name');
+            let formPrefix = this.dataset['formPrefix'];
             if (formPrefix === undefined || formPrefix === null) {
                 formPrefix = '';
-            } else {
+            } else if (formPrefix.length > 0) {
                 formPrefix += '_';
             }
-            
+
             let newApiUrl = self._buildUrlWithFormFields(this.dataset['apiUrl'], formPrefix);
 
             const selectValue = jQuery(this).val();
@@ -74,11 +74,12 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
         let newApiUrl = apiUrl;
 
         apiUrl.split('?')[1].split('&').forEach(item => {
-            let [key, value] = item.split('=');
-            let decoded = decodeURIComponent(value);
-            let test = decoded.match(/%(.*)%/);
+            const [key, value] = item.split('=');
+            const decoded = decodeURIComponent(value);
+            const test = decoded.match(/%(.*)%/);
             if (test !== null) {
-                let targetField = jQuery('#' + formPrefix + test[1]);
+                const targetSelector = '#' + formPrefix + test[1];
+                const targetField = jQuery(targetSelector);
                 let newValue = '';
                 if (targetField.length === 0) {
                     // happens for example:
