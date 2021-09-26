@@ -4,99 +4,99 @@
     <body>
       <trans-unit id="stop">
         <source>stop</source>
-        <target></target>
+        <target>Prekini</target>
       </trans-unit>
       <trans-unit id="back">
         <source>back</source>
-        <target></target>
+        <target>Natrag</target>
       </trans-unit>
       <trans-unit id="edit">
         <source>edit</source>
-        <target></target>
+        <target>Uredi</target>
       </trans-unit>
       <trans-unit id="trash">
         <source>trash</source>
-        <target></target>
+        <target>Izbriži</target>
       </trans-unit>
       <trans-unit id="report">
         <source>report</source>
-        <target></target>
+        <target>Izvještaj</target>
       </trans-unit>
       <trans-unit id="repeat">
         <source>repeat</source>
-        <target></target>
+        <target>Počni iznova</target>
       </trans-unit>
       <trans-unit id="profile-stats">
         <source>profile-stats</source>
-        <target></target>
+        <target>Profil</target>
       </trans-unit>
       <trans-unit id="settings">
         <source>settings</source>
-        <target></target>
+        <target>Postavke</target>
       </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
-        <target></target>
+        <target>Vremenske tablice</target>
       </trans-unit>
       <trans-unit id="customer">
         <source>customer</source>
-        <target></target>
+        <target>Filtriraj kupce</target>
       </trans-unit>
       <trans-unit id="project">
         <source>project</source>
-        <target></target>
+        <target>Filtriraj projekte</target>
       </trans-unit>
       <trans-unit id="activity">
         <source>activity</source>
-        <target></target>
+        <target>Filtriraj aktivnosti</target>
       </trans-unit>
       <trans-unit id="copy">
         <source>copy</source>
-        <target></target>
+        <target>Stvori kopiju</target>
       </trans-unit>
       <trans-unit id="home">
         <source>home</source>
-        <target></target>
+        <target>Web-stranica</target>
       </trans-unit>
       <trans-unit id="create-project">
         <source>create-project</source>
-        <target></target>
+        <target>Stvori projekt</target>
       </trans-unit>
       <trans-unit id="create-activity">
         <source>create-activity</source>
-        <target></target>
+        <target>Stvori aktivnost</target>
       </trans-unit>
       <trans-unit id="create-timesheet">
         <source>create-timesheet</source>
-        <target></target>
+        <target>Stvori vremensku tablicu</target>
       </trans-unit>
       <trans-unit id="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>
-        <target></target>
+        <target>Za više korisnika</target>
       </trans-unit>
       <trans-unit id="permissions">
         <source>permissions</source>
-        <target></target>
+        <target>Timske dozvole</target>
       </trans-unit>
       <trans-unit id="details">
         <source>details</source>
-        <target></target>
+        <target>Pokaži</target>
       </trans-unit>
       <trans-unit id="download">
         <source>download</source>
-        <target></target>
+        <target>Preuzmi</target>
       </trans-unit>
       <trans-unit id="invoice.pending">
         <source>invoice.pending</source>
-        <target></target>
+        <target>Čeka na uplatu</target>
       </trans-unit>
       <trans-unit id="invoice.paid">
         <source>invoice.paid</source>
-        <target></target>
+        <target>Račun plaćen</target>
       </trans-unit>
       <trans-unit id="filter">
         <source>filter</source>
-        <target></target>
+        <target>Filtriraj podatke</target>
       </trans-unit>
     </body>
   </file>
