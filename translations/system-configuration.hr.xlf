@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
         <source>label.timesheet.rules.allow_overbooking_budget</source>
-        <target/>
+        <target>Dozvoli rezerviranja veća od spremljenih budžeta</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
@@ -136,7 +136,7 @@
       </trans-unit>
       <trans-unit id="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>
-        <target state="needs-translation">Vremenski okvir za pregled tjedna i dana (format: hh:mm:ss)</target>
+        <target state="translated">Trajanje vremenskog razdoblja za pregled tjedna i dana (format: hh:mm:ss)</target>
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
