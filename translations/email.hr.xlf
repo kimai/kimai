@@ -4,43 +4,43 @@
     <body>
       <trans-unit id="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target></target>
+        <target>Ako gumb ne radi, kopiraj i umetni sljedeći URL u preglednik: %url%</target>
       </trans-unit>
       <trans-unit id="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target></target>
+        <target>Ovo je automatski generirani e-mail. Nemoj odgovarati, adresa se neće čitati.</target>
       </trans-unit>
       <trans-unit id="registration.subject">
         <source>registration.subject</source>
-        <target></target>
+        <target>Aktiviraj svoj račun</target>
       </trans-unit>
       <trans-unit id="registration.title">
         <source>registration.title</source>
-        <target></target>
+        <target>Zdravo %username%</target>
       </trans-unit>
       <trans-unit id="registration.button">
         <source>registration.button</source>
-        <target></target>
+        <target>Aktiviraj svoj račun</target>
       </trans-unit>
       <trans-unit id="registration.intro">
         <source>registration.intro</source>
-        <target></target>
+        <target>Prijavio/prijavila si se u Kimai evidenciju vremena pomoću e-mail adrese %email%. Aktiviraj svoj račun u sljedećih nekoliko sati, prije nego što poveznica istekne.</target>
       </trans-unit>
       <trans-unit id="reset.subject">
         <source>reset.subject</source>
-        <target></target>
+        <target>Obnovi lozinku</target>
       </trans-unit>
       <trans-unit id="reset.title">
         <source>reset.title</source>
-        <target></target>
+        <target>To se može dogoditi …</target>
       </trans-unit>
       <trans-unit id="reset.button">
         <source>reset.button</source>
-        <target></target>
+        <target>Obnovi lozinku</target>
       </trans-unit>
       <trans-unit id="reset.intro">
         <source>reset.intro</source>
-        <target></target>
+        <target>… ne sjećaš se više kako glasi lozinka? Ne brini: Kimai će ti pomoći stvoriti novu:</target>
       </trans-unit>
     </body>
   </file>
