@@ -33,6 +33,10 @@ class QuickEntryModelValidator extends ConstraintValidator
             return;
         }
 
+        if ($model->isPrototype()) {
+            return;
+        }
+
         if ($model->hasExistingTimesheet() || $model->hasNewTimesheet()) {
             if ($model->getActivity() === null) {
                 $this->context->buildViolation($constraint->messageActivityRequired)
@@ -49,9 +53,6 @@ class QuickEntryModelValidator extends ConstraintValidator
             }
 
             return;
-        }
-
-        if (!$model->hasExistingTimesheet()) {
         }
     }
 }

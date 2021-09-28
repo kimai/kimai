@@ -12,18 +12,35 @@ namespace App\Model;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Entity\User;
 
 class QuickEntryModel
 {
+    private $user;
     private $project;
     private $activity;
     /** @var Timesheet[] */
     private $timesheets = [];
 
-    public function __construct(?Project $project = null, ?Activity $activity = null)
+    public function __construct(?User $user = null, ?Project $project = null, ?Activity $activity = null)
     {
+        $this->user = $user;
         $this->project = $project;
         $this->activity = $activity;
+    }
+
+    public function isPrototype(): bool
+    {
+        if ($this->hasExistingTimesheet()) {
+            return false;
+        }
+
+        return $this->getUser() === null && $this->getProject() === null && $this->getActivity() === null;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
     }
 
     public function getProject(): ?Project
@@ -86,6 +103,9 @@ class QuickEntryModel
         return false;
     }
 
+    /**
+     * @return Timesheet[]
+     */
     public function getTimesheets(): array
     {
         return array_values($this->timesheets);
@@ -106,5 +126,49 @@ class QuickEntryModel
         foreach ($timesheets as $timesheet) {
             $this->addTimesheet($timesheet);
         }
+    }
+
+    public function getLatestEntry(): Timesheet
+    {
+        $latest = null;
+
+        foreach ($this->timesheets as $timesheet) {
+            if ($timesheet->getBegin() === null) {
+                continue;
+            }
+
+            if ($latest === null) {
+                $latest = $timesheet;
+                continue;
+            }
+
+            if ($latest->getBegin() < $timesheet->getBegin()) {
+                $latest = $timesheet;
+            }
+        }
+
+        return $latest;
+    }
+
+    public function getFirstEntry(): Timesheet
+    {
+        $first = null;
+
+        foreach ($this->timesheets as $timesheet) {
+            if ($timesheet->getBegin() === null) {
+                continue;
+            }
+
+            if ($first === null) {
+                $first = $timesheet;
+                continue;
+            }
+
+            if ($first->getBegin() > $timesheet->getBegin()) {
+                $first = $timesheet;
+            }
+        }
+
+        return $first;
     }
 }

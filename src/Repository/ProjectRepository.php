@@ -263,32 +263,7 @@ class ProjectRepository extends EntityRepository
         $qb->andWhere($qb->expr()->eq('c.visible', ':customer_visible'));
 
         if (!$query->isIgnoreDate()) {
-            $now = new DateTime();
-            $qb->andWhere(
-                $qb->expr()->andX(
-                    $qb->expr()->orX(
-                        $qb->expr()->lte('p.start', ':start'),
-                        $qb->expr()->isNull('p.start')
-                    ),
-                    $qb->expr()->orX(
-                        $qb->expr()->gte('p.end', ':start'),
-                        $qb->expr()->isNull('p.end')
-                    )
-                )
-            )->setParameter('start', $now);
-
-            $qb->andWhere(
-                $qb->expr()->andX(
-                    $qb->expr()->orX(
-                        $qb->expr()->gte('p.end', ':end'),
-                        $qb->expr()->isNull('p.end')
-                    ),
-                    $qb->expr()->orX(
-                        $qb->expr()->lte('p.start', ':end'),
-                        $qb->expr()->isNull('p.start')
-                    )
-                )
-            )->setParameter('end', $now);
+            $this->addProjectStartAndEndDate($qb, $query->getProjectStart(), $query->getProjectEnd());
         }
 
         $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
@@ -370,38 +345,7 @@ class ProjectRepository extends EntityRepository
         // begin > from and end < to
         // ... and more ...
 
-        $begin = $query->getProjectStart();
-        $end = $query->getProjectEnd();
-
-        if (null !== $begin) {
-            $qb->andWhere(
-                $qb->expr()->andX(
-                    $qb->expr()->orX(
-                        $qb->expr()->lte('p.start', ':start'),
-                        $qb->expr()->isNull('p.start')
-                    ),
-                    $qb->expr()->orX(
-                        $qb->expr()->gte('p.end', ':start'),
-                        $qb->expr()->isNull('p.end')
-                    )
-                )
-            )->setParameter('start', $query->getProjectStart());
-        }
-
-        if (null !== $end) {
-            $qb->andWhere(
-                $qb->expr()->andX(
-                    $qb->expr()->orX(
-                        $qb->expr()->gte('p.end', ':end'),
-                        $qb->expr()->isNull('p.end')
-                    ),
-                    $qb->expr()->orX(
-                        $qb->expr()->lte('p.start', ':end'),
-                        $qb->expr()->isNull('p.start')
-                    )
-                )
-            )->setParameter('end', $query->getProjectEnd());
-        }
+        $this->addProjectStartAndEndDate($qb, $query->getProjectStart(), $query->getProjectEnd());
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
@@ -438,6 +382,39 @@ class ProjectRepository extends EntityRepository
         }
 
         return $qb;
+    }
+
+    private function addProjectStartAndEndDate(QueryBuilder $qb, ?DateTime $begin, ?DateTime $end)
+    {
+        if (null !== $begin) {
+            $qb->andWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->orX(
+                        $qb->expr()->lte('p.start', ':start'),
+                        $qb->expr()->isNull('p.start')
+                    ),
+                    $qb->expr()->orX(
+                        $qb->expr()->gte('p.end', ':start'),
+                        $qb->expr()->isNull('p.end')
+                    )
+                )
+            )->setParameter('start', $begin);
+        }
+
+        if (null !== $end) {
+            $qb->andWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->orX(
+                        $qb->expr()->gte('p.end', ':end'),
+                        $qb->expr()->isNull('p.end')
+                    ),
+                    $qb->expr()->orX(
+                        $qb->expr()->lte('p.start', ':end'),
+                        $qb->expr()->isNull('p.start')
+                    )
+                )
+            )->setParameter('end', $end);
+        }
     }
 
     public function countProjectsForQuery(ProjectQuery $query): int

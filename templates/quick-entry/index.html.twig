@@ -12,17 +12,17 @@
         {% block box_before %}{{ form_start(form, {attr: {class: 'form-dataTable'}}) }}{% endblock %}
         {% block box_after %}{{ form_end(form) }}{% endblock %}
         {% block box_title %}
-            {{ start_date|date_short }} &ndash; {{ end_date|date_short }}
-        {% endblock %}
-        {% block box_tools %}
-            <ul class="pagination pagination-sm inline">
-                <li class="prev"><a href="{{ path('quick-entry', {'begin': previous}) }}" rel="prev"><i class="{{ 'left'|icon }}"></i></a></li>
-                <li class="next"><a href="{{ path('quick-entry', {'begin': next}) }}" rel="next"><i class="{{ 'right'|icon }}"></i></a></li>
-            </ul>
+            {{ form_widget(form.date) }}
         {% endblock %}
         {% block box_body_class %}no-padding{% endblock %}
         {% block box_footer %}
             <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+            {#
+            <button class="btn btn-success add-item-link" data-collection-prototype="{{ form.vars.id }}" data-collection-holder="ts-collection">
+                <i class="{{ 'create'|icon }}"></i>
+                {{ 'action.add'|trans }}
+            </button>
+            #}
         {% endblock %}
         {% block box_body %}
             <table class="table dataTable">
@@ -31,7 +31,10 @@
                         <th>{{ 'label.project'|trans }}</th>
                         <th>{{ 'label.activity'|trans }}</th>
                         {% for id, week in days %}
-                        <th class="text-left">{{ week.day|date_short }}</th>
+                        <th class="text-center">
+                            {{ week.day|day_name(true) }}<br>
+                            {{ week.day|format_date('short') }}
+                        </th>
                         {% endfor %}
                     </tr>
                 </thead>
@@ -42,4 +45,42 @@
         {% endblock %}
     {% endembed %}
 
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            {% if form.user is defined %}
+            jQuery('#{{ form.user.vars.id }}').on('change', function(ev) {
+                jQuery(this).closest('form').submit();
+            });
+            {% endif %}
+            jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
+                location.href = '{{ path('quick-entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', jQuery(this).val());
+            });
+            {#
+            const addFormToCollection = (e) => {
+                const collectionHolder = document.getElementById(e.currentTarget.dataset.collectionHolder);
+                const collectionPrototype = document.getElementById(e.currentTarget.dataset.collectionPrototype);
+
+                const newItem = collectionPrototype
+                    .dataset
+                    .prototype
+                    .replace(
+                        /__name__/g,
+                        collectionHolder.dataset.index
+                    );
+
+                collectionHolder.innerHTML += newItem;
+                collectionHolder.dataset.index++;
+            };
+
+            document
+                .querySelectorAll('.add-item-link')
+                .forEach(btn => btn.addEventListener("click", addFormToCollection));
+            #}
+        });
+    </script>
 {% endblock %}

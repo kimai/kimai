@@ -154,43 +154,51 @@ final class TimesheetValidator extends ConstraintValidator
                 ->addViolation();
         }
 
+        self::validateProjectBeginAndEnd($timesheet, $context, 'begin', 'end');
+    }
+
+    public static function validateProjectBeginAndEnd(TimesheetEntity $timesheet, ExecutionContextInterface $context, ?string $pathStart = null, ?string $pathEnd = null)
+    {
+        $project = $timesheet->getProject();
         $projectBegin = $project->getStart();
         $projectEnd = $project->getEnd();
 
-        if (null !== $projectBegin || null !== $projectEnd) {
-            $timesheetStart = $timesheet->getBegin();
-            $timesheetEnd = $timesheet->getEnd();
+        if (null === $projectBegin && null === $projectEnd) {
+            return;
+        }
 
-            if (null !== $timesheetStart) {
-                if (null !== $projectBegin && $timesheetStart->getTimestamp() < $projectBegin->getTimestamp()) {
-                    $context->buildViolation('The project has not started at that time.')
-                        ->atPath('begin')
-                        ->setTranslationDomain('validators')
-                        ->setCode(TimesheetConstraint::PROJECT_NOT_STARTED)
-                        ->addViolation();
-                } elseif (null !== $projectEnd && $timesheetStart->getTimestamp() > $projectEnd->getTimestamp()) {
-                    $context->buildViolation('The project is finished at that time.')
-                        ->atPath('begin')
-                        ->setTranslationDomain('validators')
-                        ->setCode(TimesheetConstraint::PROJECT_ALREADY_ENDED)
-                        ->addViolation();
-                }
+        $timesheetStart = $timesheet->getBegin();
+        $timesheetEnd = $timesheet->getEnd();
+
+        if (null !== $timesheetStart && $pathStart !== null) {
+            if (null !== $projectBegin && $timesheetStart->getTimestamp() < $projectBegin->getTimestamp()) {
+                $context->buildViolation('The project has not started at that time.')
+                    ->atPath($pathStart)
+                    ->setTranslationDomain('validators')
+                    ->setCode(TimesheetConstraint::PROJECT_NOT_STARTED)
+                    ->addViolation();
+            } elseif (null !== $projectEnd && $timesheetStart->getTimestamp() > $projectEnd->getTimestamp()) {
+                $context->buildViolation('The project is finished at that time.')
+                    ->atPath($pathStart)
+                    ->setTranslationDomain('validators')
+                    ->setCode(TimesheetConstraint::PROJECT_ALREADY_ENDED)
+                    ->addViolation();
             }
+        }
 
-            if (null !== $timesheetEnd) {
-                if (null !== $projectEnd && $timesheetEnd->getTimestamp() > $projectEnd->getTimestamp()) {
-                    $context->buildViolation('The project is finished at that time.')
-                        ->atPath('end')
-                        ->setTranslationDomain('validators')
-                        ->setCode(TimesheetConstraint::PROJECT_ALREADY_ENDED)
-                        ->addViolation();
-                } elseif (null !== $projectBegin && $timesheetEnd->getTimestamp() < $projectBegin->getTimestamp()) {
-                    $context->buildViolation('The project has not started at that time.')
-                        ->atPath('end')
-                        ->setTranslationDomain('validators')
-                        ->setCode(TimesheetConstraint::PROJECT_NOT_STARTED)
-                        ->addViolation();
-                }
+        if (null !== $timesheetEnd && $pathEnd !== null) {
+            if (null !== $projectEnd && $timesheetEnd->getTimestamp() > $projectEnd->getTimestamp()) {
+                $context->buildViolation('The project is finished at that time.')
+                    ->atPath($pathEnd)
+                    ->setTranslationDomain('validators')
+                    ->setCode(TimesheetConstraint::PROJECT_ALREADY_ENDED)
+                    ->addViolation();
+            } elseif (null !== $projectBegin && $timesheetEnd->getTimestamp() < $projectBegin->getTimestamp()) {
+                $context->buildViolation('The project has not started at that time.')
+                    ->atPath($pathEnd)
+                    ->setTranslationDomain('validators')
+                    ->setCode(TimesheetConstraint::PROJECT_NOT_STARTED)
+                    ->addViolation();
             }
         }
     }

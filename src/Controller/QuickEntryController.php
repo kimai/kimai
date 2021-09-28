@@ -13,6 +13,7 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Form\QuickEntryForm;
 use App\Model\QuickEntryModel;
+use App\Model\QuickEntryWeek;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
@@ -46,6 +47,13 @@ class QuickEntryController extends AbstractController
     public function quickEntry(Request $request, ?string $begin = null)
     {
         $mode = $this->timesheetService->getActiveTrackingMode();
+
+        if (!$mode->canEditDuration() && !$mode->canEditEnd()) {
+            $this->flashError('Not allowed');
+
+            return $this->redirectToRoute('homepage');
+        }
+
         $factory = $this->getDateTimeFactory();
         if ($begin === null) {
             $begin = $factory->createDateTime();
@@ -55,12 +63,6 @@ class QuickEntryController extends AbstractController
 
         $startWeek = $factory->getStartOfWeek($begin);
         $endWeek = $factory->getEndOfWeek($begin);
-
-        if (!$mode->canEditDuration() && !$mode->canEditEnd()) {
-            $this->flashError('Not allowed');
-
-            return $this->redirectToRoute('homepage');
-        }
 
         $tmpDay = clone $startWeek;
         $week = [];
@@ -118,11 +120,12 @@ class QuickEntryController extends AbstractController
         }
 
         $beginTime = $this->configuration->getTimesheetDefaultBeginTime();
+        $user = $this->getUser();
 
         /** @var QuickEntryModel[] $models */
         $models = [];
         foreach ($rows as $id => $row) {
-            $model = new QuickEntryModel($row['project'], $row['activity']);
+            $model = new QuickEntryModel($user, $row['project'], $row['activity']);
             foreach ($row['days'] as $dayId => $day) {
                 if (!\array_key_exists('entry', $day)) {
                     $tmp = new Timesheet();
@@ -138,19 +141,34 @@ class QuickEntryController extends AbstractController
             $models[] = $model;
         }
 
-        for ($a = 0; $a < 3; $a++) {
-            $model = new QuickEntryModel(null, null);
+        $empty = null;
+
+        $amountEmptyRows = 3;
+        if (\count($models) < 5) {
+            $amountEmptyRows = 5;
+        }
+
+        for ($a = 0; $a < $amountEmptyRows; $a++) {
+            $model = new QuickEntryModel();
             foreach ($week as $dayId => $day) {
                 $tmp = new Timesheet();
                 $tmp->setBegin($day['day']);
                 $tmp->getBegin()->modify($beginTime);
                 $model->addTimesheet($tmp);
             }
+
+            if ($empty === null) {
+                $empty = $model;
+            }
+
             $models[] = $model;
         }
 
-        $form = $this->createForm(QuickEntryForm::class, $models, [
+        $formModel = new QuickEntryWeek($startWeek, $models);
+
+        $form = $this->createForm(QuickEntryForm::class, $formModel, [
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
+            'prototype_data' => $empty,
         ]);
 
         $form->handleRequest($request);
@@ -160,9 +178,9 @@ class QuickEntryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $saveTimesheets = [];
             $deleteTimesheets = [];
-            /** @var QuickEntryModel[] $data */
+            /** @var QuickEntryWeek $data */
             $data = $form->getData();
-            foreach ($data as $tmpModel) {
+            foreach ($data->getRows() as $tmpModel) {
                 foreach ($tmpModel->getTimesheets() as $timesheet) {
                     $save = false;
 
@@ -205,21 +223,10 @@ class QuickEntryController extends AbstractController
             }
         }
 
-        $previous = clone $startWeek;
-        $previous->modify('-1 day');
-
-        $next = clone $endWeek;
-        $next->modify('+1 week');
-
         return $this->render('quick-entry/index.html.twig', [
             'days' => $week,
             'week' => $rows,
             'form' => $form->createView(),
-            'now' => $factory->createDateTime(),
-            'start_date' => $startWeek,
-            'end_date' => $endWeek,
-            'previous' => $previous->format('Y-m-d'),
-            'next' => $next->format('Y-m-d'),
         ]);
     }
 }
