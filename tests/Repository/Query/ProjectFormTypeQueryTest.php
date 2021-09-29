@@ -31,7 +31,7 @@ class ProjectFormTypeQueryTest extends BaseFormTypeQueryTest
         $sut->setWithCustomer(true);
         self::assertTrue($sut->withCustomer());
         self::assertNull($sut->getProjectToIgnore());
-        self::assertInstanceOf(ProjectFormTypeQuery::class, $sut->setProjectToIgnore($project));
+        $sut->setProjectToIgnore($project);
         self::assertSame($project, $sut->getProjectToIgnore());
     }
 }

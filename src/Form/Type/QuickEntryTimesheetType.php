@@ -61,7 +61,7 @@ class QuickEntryTimesheetType extends AbstractType
         // make sure that duration is mapped back to end field
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            function (FormEvent $event) use ($options) {
+            function (FormEvent $event) {
                 /** @var Timesheet $data */
                 $data = $event->getData();
                 $duration = $data->getDuration(false);

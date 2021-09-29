@@ -26,12 +26,12 @@ class QuickEntryModelValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, QuickEntryModelConstraint::class);
         }
 
-        /** @var QuickEntryModel $model */
-        $model = $value;
-
-        if ($model === null || (\is_string($model) && empty(trim($model)))) {
+        if ($value === null || (\is_string($value) && empty(trim($value)))) {
             return;
         }
+
+        /** @var QuickEntryModel $model */
+        $model = $value;
 
         if ($model->isPrototype()) {
             return;

@@ -27,13 +27,25 @@ class QuickEntryTimesheetValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, QuickEntryTimesheetConstraint::class);
         }
 
+        if ($value === null || (\is_string($value) && empty(trim($value)))) {
+            return;
+        }
+
         /** @var TimesheetEntity $timesheet */
         $timesheet = $value;
 
         if ($timesheet->getId() === null && $timesheet->getDuration(false) === null) {
             return;
         }
-
+        /*
+                if ($timesheet->isExported()) {
+                    $this->context->buildViolation('Cannot create record for disabled project.')
+                        ->atPath('duration')
+                        ->setTranslationDomain('validators')
+                        ->setCode(TimesheetConstraint::DISABLED_PROJECT_ERROR)
+                        ->addViolation();
+                }
+        */
         if (($project = $timesheet->getProject()) !== null) {
             if ($timesheet->getId() === null && !$project->isVisible()) {
                 $this->context->buildViolation('Cannot create record for disabled project.')
