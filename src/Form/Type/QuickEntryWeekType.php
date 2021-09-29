@@ -36,31 +36,21 @@ class QuickEntryWeekType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $projectOptions = ['label' => false, 'required' => false];
-        $projectFullOptions = $this->buildProjectOptions($projectOptions);
+        $projectOptions = ['label' => false, 'required' => false, 'group_by_submit' => true];
+        $this->addProject($builder, true, null, null, $projectOptions);
 
-        $builder->add('project', ProjectType::class, array_merge($projectFullOptions, [
-            'query_builder' => function (ProjectRepository $repo) use ($builder) {
-                $query = new ProjectFormTypeQuery();
-                $query->setUser($builder->getOption('user'));
-                $query->setWithCustomer(true);
-
-                return $repo->getQueryBuilderForFormType($query);
-            },
-        ]));
-
-        $projectFunction = function (FormEvent $event) use ($builder, $projectFullOptions) {
+        $projectFunction = function (FormEvent $event) use ($builder, $projectOptions) {
+            $projectFullOptions = $this->buildProjectOptions($projectOptions);
             /** @var QuickEntryModel $data */
             $data = $event->getData();
             if ($data === null || $data->getProject() === null) {
                 return;
             }
+
             $event->getForm()->add('project', ProjectType::class, array_merge($projectFullOptions, [
                 'query_builder' => function (ProjectRepository $repo) use ($builder, $data) {
-                    $project = $data->getProject();
-                    $customer = $project->getCustomer();
-
-                    $query = new ProjectFormTypeQuery($project, $customer);
+                    // with a pre-selected customer, the project could not be changed any longer => keep it null!
+                    $query = new ProjectFormTypeQuery($data->getProject(), null);
                     $query->setUser($builder->getOption('user'));
                     $query->setWithCustomer(true);
 
@@ -77,23 +67,15 @@ class QuickEntryWeekType extends AbstractType
             ]));
         };
 
-        // replaces the project select after submission, to make sure only projects for the selected customer are displayed
+        // a form with records for ended project or invisible activity/project/customer will fail without this listener
         $builder->addEventListener(FormEvents::SUBMIT, $projectFunction);
         $builder->addEventListener(FormEvents::PRE_SET_DATA, $projectFunction);
 
         $activityOptions = ['label' => false, 'required' => false];
-        $activityFullOptions = $this->buildActivityOptions($activityOptions);
+        $this->addActivity($builder, null, null, $activityOptions);
 
-        $builder->add('activity', ActivityType::class, array_merge($activityFullOptions, [
-            'query_builder' => function (ActivityRepository $repo) use ($builder) {
-                $query = new ActivityFormTypeQuery();
-                $query->setUser($builder->getOption('user'));
-
-                return $repo->getQueryBuilderForFormType($query);
-            },
-        ]));
-
-        $activityFunction = function (FormEvent $event) use ($builder, $activityFullOptions) {
+        $activityFunction = function (FormEvent $event) use ($builder, $activityOptions) {
+            $activityFullOptions = $this->buildActivityOptions($activityOptions);
             /** @var QuickEntryModel $data */
             $data = $event->getData();
             if ($data === null || $data->getActivity() === null) {
@@ -102,7 +84,10 @@ class QuickEntryWeekType extends AbstractType
 
             $event->getForm()->add('activity', ActivityType::class, array_merge($activityFullOptions, [
                 'query_builder' => function (ActivityRepository $repo) use ($builder, $data) {
-                    $query = new ActivityFormTypeQuery($data->getActivity(), $data->getProject());
+                    $activity = $data->getActivity();
+                    $project = $data->getProject();
+
+                    $query = new ActivityFormTypeQuery($activity, $project);
                     $query->setUser($builder->getOption('user'));
 
                     return $repo->getQueryBuilderForFormType($query);
@@ -110,6 +95,7 @@ class QuickEntryWeekType extends AbstractType
             ]));
         };
 
+        // a form with records for ended invisible activity/project/customer will fail without this listener
         $builder->addEventListener(FormEvents::SUBMIT, $activityFunction);
         $builder->addEventListener(FormEvents::PRE_SET_DATA, $activityFunction);
 
@@ -123,14 +109,21 @@ class QuickEntryWeekType extends AbstractType
                 'duration_minutes' => $options['duration_minutes'],
                 'duration_hours' => $options['duration_hours'],
             ],
+            'allow_add' => true,
             'constraints' => [
-// ???                new Valid(),
+                new Valid(),
                 new All(['constraints' => [new QuickEntryTimesheet()]])
             ],
         ]);
 
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder, $options) {
+            if ($event->getData() === null) {
+                $event->setData(clone $options['prototype_data']);
+            }
+        });
+
         $builder->addModelTransformer(new CallbackTransformer(
-            function ($transformValue) {
+            function ($transformValue) use ($options) {
                 /** @var QuickEntryModel $transformValue */
                 if ($transformValue === null || $transformValue->isPrototype()) {
                     return $transformValue;
@@ -139,25 +132,13 @@ class QuickEntryWeekType extends AbstractType
                 $project = $transformValue->getProject();
                 $activity = $transformValue->getActivity();
 
+                // this case needs to be handled by the validator
                 if ($project === null || $activity === null) {
-                    $emptyRow = true;
-
-                    foreach ($transformValue->getTimesheets() as $timesheet) {
-                        if ($timesheet->getId() !== null) {
-                            $emptyRow = false;
-                        }
-                    }
-
-                    if (!$emptyRow) {
-                        return $transformValue;
-                    }
-
-                    //return null;
                     return $transformValue;
                 }
 
                 foreach ($transformValue->getTimesheets() as $timesheet) {
-                    $timesheet->setUser($transformValue->getUser());
+                    $timesheet->setUser($transformValue->getUser() ?? $options['user']);
                     $timesheet->setProject($project);
                     $timesheet->setActivity($activity);
                 }
@@ -168,6 +149,21 @@ class QuickEntryWeekType extends AbstractType
                 return $reverseTransformValue;
             }
         ));
+
+        // make sure that duration is mapped back to end field
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            function (FormEvent $event) use ($options) {
+                /** @var QuickEntryModel $data */
+                $data = $event->getData();
+                $newRecords = $data->getNewTimesheet();
+                foreach ($newRecords as $record) {
+                    $record->setUser($data->getUser());
+                    $record->setProject($data->getProject());
+                    $record->setActivity($data->getActivity());
+                }
+            }
+        );
     }
 
     /**
@@ -180,6 +176,8 @@ class QuickEntryWeekType extends AbstractType
             'timezone' => date_default_timezone_get(),
             'duration_minutes' => null,
             'duration_hours' => 10,
+            'start_date' => new \DateTime(),
+            'prototype_data' => null,
         ]);
     }
 }

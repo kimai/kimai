@@ -62,6 +62,7 @@ class ProjectType extends AbstractType
             'group_by' => function (Project $project, $key, $index) {
                 return $project->getCustomer()->getName();
             },
+            'group_by_submit' => true,
             'query_builder_for_user' => true,
             'activity_enabled' => false,
             'activity_select' => 'activity',

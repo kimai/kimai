@@ -35,6 +35,10 @@ class QuickEntryModel
             return false;
         }
 
+        if ($this->hasNewTimesheet()) {
+            return false;
+        }
+
         return $this->getUser() === null && $this->getProject() === null && $this->getActivity() === null;
     }
 
@@ -74,6 +78,9 @@ class QuickEntryModel
         return false;
     }
 
+    /**
+     * @return Timesheet[]
+     */
     public function getNewTimesheet(): array
     {
         $new = [];
@@ -108,13 +115,12 @@ class QuickEntryModel
      */
     public function getTimesheets(): array
     {
-        return array_values($this->timesheets);
+        return $this->timesheets;
     }
 
     public function addTimesheet(Timesheet $timesheet): void
     {
-        $day = clone $timesheet->getBegin();
-        $this->timesheets[$day->format('Y-m-d')] = $timesheet;
+        $this->timesheets[] = $timesheet;
     }
 
     /**
@@ -170,5 +176,15 @@ class QuickEntryModel
         }
 
         return $first;
+    }
+
+    public function __clone()
+    {
+        $records = $this->timesheets;
+        $this->timesheets = [];
+
+        foreach ($records as $record) {
+            $this->timesheets[] = clone $record;
+        }
     }
 }

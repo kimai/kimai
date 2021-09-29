@@ -66,10 +66,6 @@ class QuickEntryTimesheetType extends AbstractType
                 $data = $event->getData();
                 $duration = $data->getDuration(false);
                 if (null !== $duration) {
-                    if ($data->getBegin() === null) {
-                        $begin = new \DateTime('now', $options['timezone']);
-                        $data->setBegin($begin);
-                    }
                     $end = clone $data->getBegin();
                     $end->modify('+ ' . $duration . 'seconds');
                     $data->setEnd($end);

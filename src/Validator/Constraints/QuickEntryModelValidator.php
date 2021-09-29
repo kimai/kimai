@@ -51,8 +51,6 @@ class QuickEntryModelValidator extends ConstraintValidator
                     ->setCode(QuickEntryModelConstraint::PROJECT_REQUIRED)
                     ->addViolation();
             }
-
-            return;
         }
     }
 }

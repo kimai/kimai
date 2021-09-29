@@ -63,6 +63,7 @@ class QuickEntryController extends AbstractController
 
         $startWeek = $factory->getStartOfWeek($begin);
         $endWeek = $factory->getEndOfWeek($begin);
+        $user = $this->getUser();
 
         $tmpDay = clone $startWeek;
         $week = [];
@@ -120,7 +121,6 @@ class QuickEntryController extends AbstractController
         }
 
         $beginTime = $this->configuration->getTimesheetDefaultBeginTime();
-        $user = $this->getUser();
 
         /** @var QuickEntryModel[] $models */
         $models = [];
@@ -129,9 +129,10 @@ class QuickEntryController extends AbstractController
             foreach ($row['days'] as $dayId => $day) {
                 if (!\array_key_exists('entry', $day)) {
                     $tmp = new Timesheet();
+                    $tmp->setUser($user);
                     $tmp->setProject($row['project']);
                     $tmp->setActivity($row['activity']);
-                    $tmp->setBegin($day['day']);
+                    $tmp->setBegin(clone $day['day']);
                     $tmp->getBegin()->modify($beginTime);
                     $model->addTimesheet($tmp);
                 } else {
@@ -141,27 +142,32 @@ class QuickEntryController extends AbstractController
             $models[] = $model;
         }
 
-        $empty = null;
-
-        $amountEmptyRows = 3;
-        if (\count($models) < 5) {
-            $amountEmptyRows = 5;
+        // create prototype model
+        $empty = new QuickEntryModel($user);
+        foreach ($week as $dayId => $day) {
+            $tmp = new Timesheet();
+            $tmp->setUser($user);
+            $tmp->setBegin(clone $day['day']);
+            $tmp->getBegin()->modify($beginTime);
+            $empty->addTimesheet($tmp);
         }
 
-        for ($a = 0; $a < $amountEmptyRows; $a++) {
-            $model = new QuickEntryModel();
-            foreach ($week as $dayId => $day) {
-                $tmp = new Timesheet();
-                $tmp->setBegin($day['day']);
-                $tmp->getBegin()->modify($beginTime);
-                $model->addTimesheet($tmp);
-            }
+        // add empty rows for simpler starting
+        $minRows = 3;
+        if (\count($models) < $minRows) {
+            $newRows = $minRows - \count($models);
+            for ($a = 0; $a < $newRows; $a++) {
+                $model = new QuickEntryModel();
+                foreach ($week as $dayId => $day) {
+                    $tmp = new Timesheet();
+                    $tmp->setUser($user);
+                    $tmp->setBegin(clone $day['day']);
+                    $tmp->getBegin()->modify($beginTime);
+                    $model->addTimesheet($tmp);
+                }
 
-            if ($empty === null) {
-                $empty = $model;
+                $models[] = $model;
             }
-
-            $models[] = $model;
         }
 
         $formModel = new QuickEntryWeek($startWeek, $models);
@@ -173,53 +179,49 @@ class QuickEntryController extends AbstractController
 
         $form->handleRequest($request);
 
-        $allowDelete = $this->isGranted('delete_own_timesheet');
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $saveTimesheets = [];
-            $deleteTimesheets = [];
             /** @var QuickEntryWeek $data */
             $data = $form->getData();
+
+            $saveTimesheets = [];
+            $deleteTimesheets = [];
+
             foreach ($data->getRows() as $tmpModel) {
                 foreach ($tmpModel->getTimesheets() as $timesheet) {
-                    $save = false;
-
                     if ($timesheet->getId() !== null) {
                         if ($timesheet->getDuration() === null || $timesheet->getEnd() === null) {
-                            if ($allowDelete) {
-                                $deleteTimesheets[] = $timesheet;
-                            }
+                            $deleteTimesheets[] = $timesheet;
                         } else {
-                            $save = true;
+                            $saveTimesheets[] = $timesheet;
                         }
                     } else {
                         if ($timesheet->getDuration() !== null) {
-                            $save = true;
+                            $saveTimesheets[] = $timesheet;
                         }
-                    }
-
-                    if ($save) {
-                        $timesheet->setUser($this->getUser());
-                        $timesheet->setActivity($tmpModel->getActivity());
-                        $timesheet->setProject($tmpModel->getProject());
-                        $saveTimesheets[] = $timesheet;
                     }
                 }
             }
 
-            $updated = false;
-            if (\count($deleteTimesheets) > 0) {
-                $this->timesheetService->deleteMultipleTimesheets($deleteTimesheets);
-                $updated = true;
+            if ($this->isGranted('delete_own_timesheet') && \count($deleteTimesheets) > 0) {
+                try {
+                    $this->timesheetService->deleteMultipleTimesheets($deleteTimesheets);
+
+                    return $this->redirectToRoute('quick-entry', ['begin' => $begin->format('Y-m-d')]);
+                } catch (\Exception $ex) {
+                    $this->flashError('action.delete.error');
+                    $this->logException($ex);
+                }
             }
 
             if (\count($saveTimesheets) > 0) {
-                $this->timesheetService->updateMultipleTimesheets($saveTimesheets);
-                $updated = true;
-            }
+                try {
+                    $this->timesheetService->updateMultipleTimesheets($saveTimesheets);
 
-            if ($updated) {
-                return $this->redirectToRoute('quick-entry', ['begin' => $begin->format('Y-m-d')]);
+                    return $this->redirectToRoute('quick-entry', ['begin' => $begin->format('Y-m-d')]);
+                } catch (\Exception $ex) {
+                    $this->flashError('action.update.error');
+                    $this->logException($ex);
+                }
             }
         }
 

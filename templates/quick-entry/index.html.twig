@@ -17,12 +17,10 @@
         {% block box_body_class %}no-padding{% endblock %}
         {% block box_footer %}
             <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-            {#
-            <button class="btn btn-success add-item-link" data-collection-prototype="{{ form.vars.id }}" data-collection-holder="ts-collection">
+            <button type="button" class="btn btn-success add-item-link" data-collection-prototype="{{ form.rows.vars.id }}" data-collection-holder="ts-collection">
                 <i class="{{ 'create'|icon }}"></i>
                 {{ 'action.add'|trans }}
             </button>
-            #}
         {% endblock %}
         {% block box_body %}
             <table class="table dataTable">
@@ -38,7 +36,7 @@
                         {% endfor %}
                     </tr>
                 </thead>
-                <tbody id="ts-collection" data-index="{{ form.children|length - 1 }}">
+                <tbody id="ts-collection" data-index="{{ form.rows.children|length }}">
                     {{ form(form) }}
                 </tbody>
             </table>
@@ -51,36 +49,41 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
+        document.addEventListener('kimai.initialized', function(event) {
             {% if form.user is defined %}
             jQuery('#{{ form.user.vars.id }}').on('change', function(ev) {
                 jQuery(this).closest('form').submit();
             });
             {% endif %}
+
             jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
                 location.href = '{{ path('quick-entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', jQuery(this).val());
             });
-            {#
-            const addFormToCollection = (e) => {
+
+            const kimai = event.detail.kimai;
+
+            const addFormToCollection = function(e) {
                 const collectionHolder = document.getElementById(e.currentTarget.dataset.collectionHolder);
                 const collectionPrototype = document.getElementById(e.currentTarget.dataset.collectionPrototype);
 
-                const newItem = collectionPrototype
+                const node = document.createElement('tr');
+                node.innerHTML = collectionPrototype
                     .dataset
                     .prototype
                     .replace(
                         /__name__/g,
                         collectionHolder.dataset.index
                     );
+                collectionHolder.appendChild(node);
 
-                collectionHolder.innerHTML += newItem;
+                jQuery(node).find('.selectpicker').each(function(i, el) {
+                    kimai.getPlugin('form-select').activateSelectPickerByElement(el, 'body');
+                });
+
                 collectionHolder.dataset.index++;
             };
 
-            document
-                .querySelectorAll('.add-item-link')
-                .forEach(btn => btn.addEventListener("click", addFormToCollection));
-            #}
+            document.querySelectorAll('.add-item-link').forEach(btn => btn.addEventListener("click", addFormToCollection));
         });
     </script>
 {% endblock %}

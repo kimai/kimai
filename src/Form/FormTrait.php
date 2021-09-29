@@ -51,7 +51,7 @@ trait FormTrait
 
     protected function buildProjectOptions(array $options = []): array
     {
-        return array_merge(['placeholder' => '', 'activity_enabled' => true], $options);
+        return array_merge(['placeholder' => '', 'activity_enabled' => true, 'group_by_submit' => false], $options);
     }
 
     protected function addProject(FormBuilderInterface $builder, bool $isNew, ?Project $project = null, ?Customer $customer = null, array $options = [])
@@ -76,8 +76,12 @@ trait FormTrait
                 $customer = isset($data['customer']) && !empty($data['customer']) ? $data['customer'] : null;
                 $project = isset($data['project']) && !empty($data['project']) ? $data['project'] : $project;
 
+                // not grouped when used in timesheet edit screen after selecting a customer
+                if (!$options['group_by_submit']) {
+                    $options['group_by'] = null;
+                }
+
                 $event->getForm()->add('project', ProjectType::class, array_merge($options, [
-                    'group_by' => null,
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer, $isNew) {
                         // is there a better wa to prevent starting a record with a hidden project ?
                         if ($isNew && !empty($project) && (\is_int($project) || \is_string($project))) {
