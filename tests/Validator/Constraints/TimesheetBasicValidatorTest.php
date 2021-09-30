@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
+ * @covers \App\Validator\Constraints\TimesheetBasic
  * @covers \App\Validator\Constraints\TimesheetBasicValidator
  */
 class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase

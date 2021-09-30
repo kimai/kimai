@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
+ * @covers \App\Validator\Constraints\TimesheetLockdown
  * @covers \App\Validator\Constraints\TimesheetLockdownValidator
  */
 class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
