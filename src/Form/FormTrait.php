@@ -17,11 +17,7 @@ use App\Form\Type\CustomerType;
 use App\Form\Type\DescriptionType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\TagsType;
-use App\Repository\ActivityRepository;
-use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\Query\ActivityFormTypeQuery;
-use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\ProjectFormTypeQuery;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -29,18 +25,16 @@ use Symfony\Component\Form\FormEvents;
 
 /**
  * Helper functions to manage dependent customer-project-activity fields.
+ *
+ * If you always want to show the list of all available projects/activities, use the form types directly.
  */
 trait FormTrait
 {
     protected function addCustomer(FormBuilderInterface $builder, ?Customer $customer = null)
     {
         $builder->add('customer', CustomerType::class, [
-            'query_builder' => function (CustomerRepository $repo) use ($builder, $customer) {
-                $query = new CustomerFormTypeQuery($customer);
-                $query->setUser($builder->getOption('user'));
-
-                return $repo->getQueryBuilderForFormType($query);
-            },
+            'query_builder_for_user' => true,
+            'customers' => $customer,
             'data' => $customer ? $customer : '',
             'required' => false,
             'placeholder' => '',
@@ -49,23 +43,18 @@ trait FormTrait
         ]);
     }
 
-    protected function buildProjectOptions(array $options = []): array
-    {
-        return array_merge(['placeholder' => '', 'activity_enabled' => true, 'group_by_submit' => false], $options);
-    }
-
     protected function addProject(FormBuilderInterface $builder, bool $isNew, ?Project $project = null, ?Customer $customer = null, array $options = [])
     {
-        $options = $this->buildProjectOptions($options);
+        $options = array_merge([
+            'placeholder' => '',
+            'activity_enabled' => true,
+            'query_builder_for_user' => true,
+            'join_customer' => true
+        ], $options);
 
         $builder->add('project', ProjectType::class, array_merge($options, [
-            'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer) {
-                $query = new ProjectFormTypeQuery($project, $customer);
-                $query->setUser($builder->getOption('user'));
-                $query->setWithCustomer(true);
-
-                return $repo->getQueryBuilderForFormType($query);
-            },
+            'projects' => $project,
+            'customers' => $customer,
         ]));
 
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
@@ -76,12 +65,8 @@ trait FormTrait
                 $customer = isset($data['customer']) && !empty($data['customer']) ? $data['customer'] : null;
                 $project = isset($data['project']) && !empty($data['project']) ? $data['project'] : $project;
 
-                // not grouped when used in timesheet edit screen after selecting a customer
-                if (!$options['group_by_submit']) {
-                    $options['group_by'] = null;
-                }
-
                 $event->getForm()->add('project', ProjectType::class, array_merge($options, [
+                    'group_by' => null,
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer, $isNew) {
                         // is there a better wa to prevent starting a record with a hidden project ?
                         if ($isNew && !empty($project) && (\is_int($project) || \is_string($project))) {
@@ -107,41 +92,27 @@ trait FormTrait
         );
     }
 
-    protected function buildActivityOptions(array $options = []): array
-    {
-        return array_merge(['placeholder' => ''], $options);
-    }
-
     protected function addActivity(FormBuilderInterface $builder, ?Activity $activity = null, ?Project $project = null, array $options = [])
     {
-        $options = $this->buildActivityOptions($options);
+        $options = array_merge(['placeholder' => '', 'query_builder_for_user' => true], $options);
 
-        $builder->add('activity', ActivityType::class, array_merge($options, [
-            'query_builder' => function (ActivityRepository $repo) use ($builder, $activity, $project) {
-                $query = new ActivityFormTypeQuery($activity, $project);
-                $query->setUser($builder->getOption('user'));
+        $options['projects'] = $project;
+        $options['activities'] = $activity;
 
-                return $repo->getQueryBuilderForFormType($query);
-            },
-        ]));
+        $builder->add('activity', ActivityType::class, $options);
 
         // replaces the activity select after submission, to make sure only activities for the selected project are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $activity, $options) {
+            function (FormEvent $event) use ($options) {
                 $data = $event->getData();
                 if (!isset($data['project']) || empty($data['project'])) {
                     return;
                 }
 
-                $event->getForm()->add('activity', ActivityType::class, array_merge($options, [
-                    'query_builder' => function (ActivityRepository $repo) use ($builder, $data, $activity) {
-                        $query = new ActivityFormTypeQuery($activity, $data['project']);
-                        $query->setUser($builder->getOption('user'));
+                $options['projects'] = $data['project'];
 
-                        return $repo->getQueryBuilderForFormType($query);
-                    },
-                ]));
+                $event->getForm()->add('activity', ActivityType::class, $options);
             }
         );
     }

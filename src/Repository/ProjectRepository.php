@@ -26,6 +26,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
@@ -182,16 +183,26 @@ class ProjectRepository extends EntityRepository
         return $stats;
     }
 
-    public function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    public function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
     {
+        $permissions = $this->getPermissionCriteria($qb, $user, $teams);
+        if ($permissions->count() > 0) {
+            $qb->andWhere($permissions);
+        }
+    }
+
+    public function getPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): Andx
+    {
+        $andX = $qb->expr()->andX();
+
         // make sure that all queries without a user see all projects
         if (null === $user && empty($teams)) {
-            return;
+            return $andX;
         }
 
         // make sure that admins see all projects
         if (null !== $user && $user->canSeeAllData()) {
-            return;
+            return $andX;
         }
 
         if (null !== $user) {
@@ -199,29 +210,31 @@ class ProjectRepository extends EntityRepository
         }
 
         if (empty($teams)) {
-            $qb->andWhere('SIZE(c.teams) = 0');
-            $qb->andWhere('SIZE(p.teams) = 0');
+            $andX->add('SIZE(c.teams) = 0');
+            $andX->add('SIZE(p.teams) = 0');
 
-            return;
+            return $andX;
         }
 
         $orProject = $qb->expr()->orX(
             'SIZE(p.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'p.teams')
         );
-        $qb->andWhere($orProject);
+        $andX->add($orProject);
 
         $orCustomer = $qb->expr()->orX(
             'SIZE(c.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
-        $qb->andWhere($orCustomer);
+        $andX->add($orCustomer);
 
         $ids = array_values(array_unique(array_map(function (Team $team) {
             return $team->getId();
         }, $teams)));
 
         $qb->setParameter('teams', $ids);
+
+        return $andX;
     }
 
     /**
@@ -259,32 +272,46 @@ class ProjectRepository extends EntityRepository
             $qb->addSelect('c');
         }
 
-        $qb->andWhere($qb->expr()->eq('p.visible', ':visible'));
-        $qb->andWhere($qb->expr()->eq('c.visible', ':customer_visible'));
+        $mainQuery = $qb->expr()->andX();
 
-        if (!$query->isIgnoreDate()) {
-            $this->addProjectStartAndEndDate($qb, $query->getProjectStart(), $query->getProjectEnd());
-        }
-
+        $mainQuery->add($qb->expr()->eq('p.visible', ':visible'));
         $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+
+        $mainQuery->add($qb->expr()->eq('c.visible', ':customer_visible'));
         $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
 
-        if ($query->hasProjects()) {
-            $qb->orWhere($qb->expr()->in('p.id', ':project'))
-                ->setParameter('project', $query->getProjects());
+        if (!$query->isIgnoreDate()) {
+            $andx = $this->addProjectStartAndEndDate($qb, $query->getProjectStart(), $query->getProjectEnd());
+            $mainQuery->add($andx);
         }
 
         if ($query->hasCustomers()) {
-            $qb->andWhere($qb->expr()->in('p.customer', ':customer'))
-                ->setParameter('customer', $query->getCustomers());
+            $mainQuery->add($qb->expr()->in('p.customer', ':customer'));
+            $qb->setParameter('customer', $query->getCustomers());
+        }
+
+        $permissions = $this->getPermissionCriteria($qb, $query->getUser(), $query->getTeams());
+        if ($permissions->count() > 0) {
+            $mainQuery->add($permissions);
+        }
+
+        $outerQuery = $qb->expr()->orX();
+
+        if ($query->hasProjects()) {
+            $outerQuery->add($qb->expr()->in('p.id', ':project'));
+            $qb->setParameter('project', $query->getProjects());
         }
 
         if (null !== $query->getProjectToIgnore()) {
-            $qb->andWhere($qb->expr()->neq('p.id', ':ignored'));
+            $mainQuery = $qb->expr()->andX(
+                $mainQuery,
+                $qb->expr()->neq('p.id', ':ignored')
+            );
             $qb->setParameter('ignored', $query->getProjectToIgnore());
         }
 
-        $this->addPermissionCriteria($qb, $query->getUser(), $query->getTeams());
+        $outerQuery->add($mainQuery);
+        $qb->andWhere($outerQuery);
 
         return $qb;
     }
@@ -344,8 +371,8 @@ class ProjectRepository extends EntityRepository
         // begin < to and end = null
         // begin > from and end < to
         // ... and more ...
-
-        $this->addProjectStartAndEndDate($qb, $query->getProjectStart(), $query->getProjectEnd());
+        $times = $this->addProjectStartAndEndDate($qb, $query->getProjectStart(), $query->getProjectEnd());
+        $qb->andWhere($times);
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
@@ -384,10 +411,12 @@ class ProjectRepository extends EntityRepository
         return $qb;
     }
 
-    private function addProjectStartAndEndDate(QueryBuilder $qb, ?DateTime $begin, ?DateTime $end)
+    private function addProjectStartAndEndDate(QueryBuilder $qb, ?DateTime $begin, ?DateTime $end): Andx
     {
+        $and = $qb->expr()->andX();
+
         if (null !== $begin) {
-            $qb->andWhere(
+            $and->add(
                 $qb->expr()->andX(
                     $qb->expr()->orX(
                         $qb->expr()->lte('p.start', ':start'),
@@ -398,11 +427,12 @@ class ProjectRepository extends EntityRepository
                         $qb->expr()->isNull('p.end')
                     )
                 )
-            )->setParameter('start', $begin);
+            );
+            $qb->setParameter('start', $begin);
         }
 
         if (null !== $end) {
-            $qb->andWhere(
+            $and->add(
                 $qb->expr()->andX(
                     $qb->expr()->orX(
                         $qb->expr()->gte('p.end', ':end'),
@@ -413,8 +443,11 @@ class ProjectRepository extends EntityRepository
                         $qb->expr()->isNull('p.start')
                     )
                 )
-            )->setParameter('end', $end);
+            );
+            $qb->setParameter('end', $end);
         }
+
+        return $and;
     }
 
     public function countProjectsForQuery(ProjectQuery $query): int

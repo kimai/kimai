@@ -44,6 +44,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             'visibility' => '#',
             'download toolbar-action modal-ajax-form' => $this->createUrl('/timesheet/export/'),
             'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
+            'quick-entry create-ts' => $this->createUrl('/quick-entry'),
             'help' => 'https://www.kimai.org/documentation/timesheet.html'
         ]);
     }

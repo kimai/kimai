@@ -63,7 +63,7 @@
 {% endblock daterange_widget %}
 
 {% block duration_widget %}
-    {% if form.vars.duration_presets is defined and form.vars.duration_presets is not empty %}
+    {% if (form.vars.duration_presets is defined and form.vars.duration_presets is not empty) and (form.vars.disabled is same as (false)) %}
     <div class="input-group">
         {{ block('form_widget_simple') }}
         <div class="input-group-btn">

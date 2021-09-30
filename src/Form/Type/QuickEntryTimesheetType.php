@@ -12,12 +12,21 @@ namespace App\Form\Type;
 use App\Entity\Timesheet;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 
 class QuickEntryTimesheetType extends AbstractType
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -49,11 +58,15 @@ class QuickEntryTimesheetType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event) use ($durationOptions) {
                 /** @var Timesheet|null $data */
                 $data = $event->getData();
                 if (null === $data || null === $data->getEnd()) {
                     $event->getForm()->get('duration')->setData(null);
+                }
+
+                if (null !== $data && !$this->security->isGranted('edit', $data)) {
+                    $event->getForm()->add('duration', DurationType::class, array_merge(['disabled' => true], $durationOptions));
                 }
             }
         );
@@ -65,13 +78,16 @@ class QuickEntryTimesheetType extends AbstractType
                 /** @var Timesheet $data */
                 $data = $event->getData();
                 $duration = $data->getDuration(false);
-                if (null !== $duration) {
-                    $end = clone $data->getBegin();
-                    $end->modify('+ ' . $duration . 'seconds');
-                    $data->setEnd($end);
-                } else {
-                    $data->setEnd(null);
-                    $data->setDuration(null);
+                try {
+                    if (null !== $duration) {
+                        $end = clone $data->getBegin();
+                        $end->modify('+ ' . $duration . ' seconds');
+                        $data->setEnd($end);
+                    } else {
+                        $data->setDuration(null);
+                    }
+                } catch (\Exception $e) {
+                    $event->getForm()->addError(new FormError($e->getMessage()));
                 }
             }
         );

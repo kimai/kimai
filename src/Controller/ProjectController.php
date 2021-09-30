@@ -35,7 +35,6 @@ use App\Repository\ActivityRepository;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
-use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
 use Pagerfanta\Pagerfanta;
@@ -428,15 +427,9 @@ final class ProjectController extends AbstractController
                 ]
             ])
             ->add('project', ProjectType::class, [
-                'label' => 'label.project',
-                'query_builder' => function (ProjectRepository $repo) use ($project) {
-                    $query = new ProjectFormTypeQuery();
-                    $query->addCustomer($project->getCustomer());
-                    $query->setProjectToIgnore($project);
-                    $query->setUser($this->getUser());
-
-                    return $repo->getQueryBuilderForFormType($query);
-                },
+                'ignore_project' => $project,
+                'customers' => $project->getCustomer(),
+                'query_builder_for_user' => true,
                 'required' => false,
             ])
             ->setAction($this->generateUrl('admin_project_delete', ['id' => $project->getId()]))

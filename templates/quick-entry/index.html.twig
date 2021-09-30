@@ -5,7 +5,6 @@
 {% block page_actions %}{{ actions.quickEntries('index') }}{% endblock %}
 
 {% block main %}
-
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_attributes %}id="quick_entry_box"{% endblock %}
@@ -42,9 +41,7 @@
             </table>
         {% endblock %}
     {% endembed %}
-
 {% endblock %}
-
 
 {% block javascripts %}
     {{ parent() }}

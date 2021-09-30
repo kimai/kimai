@@ -11,13 +11,25 @@ namespace App\Validator\Constraints;
 
 use App\Entity\Timesheet as TimesheetEntity;
 use App\Validator\Constraints\QuickEntryTimesheet as QuickEntryTimesheetConstraint;
-use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class QuickEntryTimesheetValidator extends ConstraintValidator
 {
+    /**
+     * @var Constraint[]
+     */
+    private $constraints;
+
+    /**
+     * @param Constraint[] $constraints
+     */
+    public function __construct(iterable $constraints)
+    {
+        $this->constraints = $constraints;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -27,8 +39,8 @@ class QuickEntryTimesheetValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, QuickEntryTimesheetConstraint::class);
         }
 
-        if ($value === null || (\is_string($value) && empty(trim($value)))) {
-            return;
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
         /** @var TimesheetEntity $timesheet */
@@ -37,51 +49,13 @@ class QuickEntryTimesheetValidator extends ConstraintValidator
         if ($timesheet->getId() === null && $timesheet->getDuration(false) === null) {
             return;
         }
-        /*
-                if ($timesheet->isExported()) {
-                    $this->context->buildViolation('Cannot create record for disabled project.')
-                        ->atPath('duration')
-                        ->setTranslationDomain('validators')
-                        ->setCode(TimesheetConstraint::DISABLED_PROJECT_ERROR)
-                        ->addViolation();
-                }
-        */
-        if (($project = $timesheet->getProject()) !== null) {
-            if ($timesheet->getId() === null && !$project->isVisible()) {
-                $this->context->buildViolation('Cannot create record for disabled project.')
-                    ->atPath('duration')
-                    ->setTranslationDomain('validators')
-                    ->setCode(TimesheetConstraint::DISABLED_PROJECT_ERROR)
-                    ->addViolation();
-            }
-            if ($timesheet->getId() === null && !$project->getCustomer()->isVisible()) {
-                $this->context->buildViolation('Cannot create record for disabled customer.')
-                    ->atPath('duration')
-                    ->setTranslationDomain('validators')
-                    ->setCode(TimesheetConstraint::DISABLED_PROJECT_ERROR)
-                    ->addViolation();
-            }
-            if ($timesheet->getId() === null) {
-                TimesheetValidator::validateProjectBeginAndEnd($timesheet, $this->context, 'duration');
-            }
-        }
 
-        if (($activity = $timesheet->getActivity()) !== null) {
-            if ($timesheet->getId() === null && !$activity->isVisible()) {
-                $this->context->buildViolation('Cannot create record for disabled activity.')
-                    ->atPath('duration')
-                    ->setTranslationDomain('validators')
-                    ->setCode(TimesheetConstraint::DISABLED_ACTIVITY_ERROR)
-                    ->addViolation();
-            }
-        }
-
-        if (null !== $activity && null !== $project && null !== $activity->getProject() && $activity->getProject() !== $project) {
-            $this->context->buildViolation('Project mismatch, project specific activity and timesheet project are different.')
+        foreach ($this->constraints as $constraint) {
+            $this->context
+                ->getValidator()
+                ->inContext($this->context)
                 ->atPath('duration')
-                ->setTranslationDomain('validators')
-                ->setCode(TimesheetConstraint::ACTIVITY_PROJECT_MISMATCH_ERROR)
-                ->addViolation();
+                ->validate($timesheet, $constraint, [Constraint::DEFAULT_GROUP]);
         }
     }
 }

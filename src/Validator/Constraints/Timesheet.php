@@ -18,16 +18,26 @@ use Symfony\Component\Validator\Constraint;
  */
 class Timesheet extends Constraint
 {
-    public const MISSING_BEGIN_ERROR = 'kimai-timesheet-81';
-    public const END_BEFORE_BEGIN_ERROR = 'kimai-timesheet-82';
-    public const MISSING_ACTIVITY_ERROR = 'kimai-timesheet-84';
-    public const MISSING_PROJECT_ERROR = 'kimai-timesheet-85';
-    public const ACTIVITY_PROJECT_MISMATCH_ERROR = 'kimai-timesheet-86';
-    public const DISABLED_ACTIVITY_ERROR = 'kimai-timesheet-87';
-    public const DISABLED_PROJECT_ERROR = 'kimai-timesheet-88';
-    public const DISABLED_CUSTOMER_ERROR = 'kimai-timesheet-89';
-    public const PROJECT_NOT_STARTED = 'kimai-timesheet-91';
-    public const PROJECT_ALREADY_ENDED = 'kimai-timesheet-92';
+    /** @deprecated since 1.15.3 - use TimesheetBasic::MISSING_BEGIN_ERROR instead */
+    public const MISSING_BEGIN_ERROR = TimesheetBasic::MISSING_BEGIN_ERROR;
+    /** @deprecated since 1.15.3 - use TimesheetBasic::END_BEFORE_BEGIN_ERROR instead */
+    public const END_BEFORE_BEGIN_ERROR = TimesheetBasic::END_BEFORE_BEGIN_ERROR;
+    /** @deprecated since 1.15.3 - use TimesheetBasic::MISSING_ACTIVITY_ERROR instead */
+    public const MISSING_ACTIVITY_ERROR = TimesheetBasic::MISSING_ACTIVITY_ERROR;
+    /** @deprecated since 1.15.3 - use TimesheetBasic::MISSING_PROJECT_ERROR instead */
+    public const MISSING_PROJECT_ERROR = TimesheetBasic::MISSING_PROJECT_ERROR;
+    /** @deprecated since 1.15.3 - use TimesheetBasic::ACTIVITY_PROJECT_MISMATCH_ERROR instead */
+    public const ACTIVITY_PROJECT_MISMATCH_ERROR = TimesheetBasic::ACTIVITY_PROJECT_MISMATCH_ERROR;
+    /** @deprecated since 1.15.3 - use TimesheetBasic::DISABLED_ACTIVITY_ERROR instead */
+    public const DISABLED_ACTIVITY_ERROR = TimesheetBasic::DISABLED_ACTIVITY_ERROR;
+    /** @deprecated since 1.15.3 - use TimesheetBasic::DISABLED_PROJECT_ERROR instead */
+    public const DISABLED_PROJECT_ERROR = TimesheetBasic::DISABLED_PROJECT_ERROR;
+    /** @deprecated since 1.15.3 - use TimesheetBasic::DISABLED_CUSTOMER_ERROR instead */
+    public const DISABLED_CUSTOMER_ERROR = TimesheetBasic::DISABLED_CUSTOMER_ERROR;
+    /** @deprecated since 1.15.3 - use TimesheetBasic::PROJECT_NOT_STARTED instead */
+    public const PROJECT_NOT_STARTED = TimesheetBasic::PROJECT_NOT_STARTED;
+    /** @deprecated since 1.15.3 - use TimesheetBasic::PROJECT_ALREADY_ENDED instead */
+    public const PROJECT_ALREADY_ENDED = TimesheetBasic::PROJECT_ALREADY_ENDED;
 
     protected static $errorNames = [
         self::MISSING_BEGIN_ERROR => 'You must submit a begin date.',

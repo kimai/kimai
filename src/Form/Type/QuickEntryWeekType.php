@@ -9,14 +9,9 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Project;
-use App\Form\FormTrait;
 use App\Model\QuickEntryModel;
-use App\Repository\ActivityRepository;
-use App\Repository\ProjectRepository;
-use App\Repository\Query\ActivityFormTypeQuery;
-use App\Repository\Query\ProjectFormTypeQuery;
 use App\Validator\Constraints\QuickEntryTimesheet;
+use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -29,76 +24,65 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 class QuickEntryWeekType extends AbstractType
 {
-    use FormTrait;
-
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $projectOptions = ['label' => false, 'required' => false, 'group_by_submit' => true];
-        $this->addProject($builder, true, null, null, $projectOptions);
+        $projectOptions = [
+            'label' => false,
+            'required' => false,
+            'join_customer' => true,
+            'query_builder_for_user' => true,
+            'placeholder' => '',
+            'activity_enabled' => true
+        ];
 
-        $projectFunction = function (FormEvent $event) use ($builder, $projectOptions) {
-            $projectFullOptions = $this->buildProjectOptions($projectOptions);
+        $builder->add('project', ProjectType::class, $projectOptions);
 
+        $projectFunction = function (FormEvent $event) use ($projectOptions) {
             /** @var QuickEntryModel|null $data */
             $data = $event->getData();
             if ($data === null || $data->getProject() === null) {
                 return;
             }
 
-            $event->getForm()->add('project', ProjectType::class, array_merge($projectFullOptions, [
-                'query_builder' => function (ProjectRepository $repo) use ($builder, $data) {
-                    // with a pre-selected customer, the project could not be changed any longer => keep it null!
-                    $query = new ProjectFormTypeQuery($data->getProject(), null);
-                    $query->setUser($builder->getOption('user'));
-                    $query->setWithCustomer(true);
+            $begin = clone $data->getFirstEntry()->getBegin();
+            $begin->setTime(0, 0, 0);
+            $projectOptions['project_date_start'] = $begin;
 
-                    $begin = clone $data->getFirstEntry()->getBegin();
-                    $begin->setTime(0, 0, 0);
-                    $query->setProjectStart($begin);
+            $end = clone $data->getLatestEntry()->getBegin();
+            $end->setTime(23, 59, 59);
+            $projectOptions['project_date_end'] = $begin;
+            $projectOptions['projects'] = [$data->getProject()];
 
-                    $end = clone $data->getLatestEntry()->getBegin();
-                    $end->setTime(23, 59, 59);
-                    $query->setProjectEnd($end);
-
-                    return $repo->getQueryBuilderForFormType($query);
-                },
-            ]));
+            $event->getForm()->add('project', ProjectType::class, $projectOptions);
         };
 
-        // a form with records for ended project or invisible activity/project/customer will fail without this listener
-        $builder->addEventListener(FormEvents::SUBMIT, $projectFunction);
         $builder->addEventListener(FormEvents::PRE_SET_DATA, $projectFunction);
 
-        $activityOptions = ['label' => false, 'required' => false];
-        $this->addActivity($builder, null, null, $activityOptions);
+        $activityOptions = [
+            'label' => false,
+            'required' => false,
+            'placeholder' => '',
+            'query_builder_for_user' => true,
+        ];
 
-        $activityFunction = function (FormEvent $event) use ($builder, $activityOptions) {
-            $activityFullOptions = $this->buildActivityOptions($activityOptions);
+        $builder->add('activity', ActivityType::class, $activityOptions);
 
+        $activityFunction = function (FormEvent $event) use ($activityOptions) {
             /** @var QuickEntryModel|null $data */
             $data = $event->getData();
             if ($data === null || $data->getActivity() === null) {
                 return;
             }
 
-            $event->getForm()->add('activity', ActivityType::class, array_merge($activityFullOptions, [
-                'query_builder' => function (ActivityRepository $repo) use ($builder, $data) {
-                    $activity = $data->getActivity();
-                    $project = $data->getProject();
+            $activityOptions['activities'] = [$data->getActivity()];
+            $activityOptions['projects'] = [$data->getProject()];
 
-                    $query = new ActivityFormTypeQuery($activity, $project);
-                    $query->setUser($builder->getOption('user'));
-
-                    return $repo->getQueryBuilderForFormType($query);
-                },
-            ]));
+            $event->getForm()->add('activity', ActivityType::class, $activityOptions);
         };
 
-        // a form with records for ended invisible activity/project/customer will fail without this listener
-        $builder->addEventListener(FormEvents::SUBMIT, $activityFunction);
         $builder->addEventListener(FormEvents::PRE_SET_DATA, $activityFunction);
 
         $builder->add('timesheets', CollectionType::class, [
@@ -178,7 +162,7 @@ class QuickEntryWeekType extends AbstractType
             'timezone' => date_default_timezone_get(),
             'duration_minutes' => null,
             'duration_hours' => 10,
-            'start_date' => new \DateTime(),
+            'start_date' => new DateTime(),
             'prototype_data' => null,
         ]);
     }
