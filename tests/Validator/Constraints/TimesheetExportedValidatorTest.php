@@ -101,4 +101,10 @@ class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
 
         $this->assertNoViolation();
     }
+
+    public function testGetTargets()
+    {
+        $constraint = new TimesheetExported();
+        self::assertEquals('class', $constraint->getTargets());
+    }
 }

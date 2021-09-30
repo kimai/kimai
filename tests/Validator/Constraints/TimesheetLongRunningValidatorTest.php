@@ -141,4 +141,10 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($timesheet, new TimesheetLongRunning());
         $this->assertNoViolation();
     }
+
+    public function testGetTargets()
+    {
+        $constraint = new TimesheetLongRunning();
+        self::assertEquals('class', $constraint->getTargets());
+    }
 }

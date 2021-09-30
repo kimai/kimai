@@ -233,4 +233,10 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         }
         $assertion->assertRaised();
     }
+
+    public function testGetTargets()
+    {
+        $constraint = new TimesheetBasic();
+        self::assertEquals('class', $constraint->getTargets());
+    }
 }

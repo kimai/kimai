@@ -48,4 +48,10 @@ class ProjectValidatorTest extends ConstraintValidatorTestCase
             ->setCode(ProjectConstraint::END_BEFORE_BEGIN_ERROR)
             ->assertRaised();
     }
+
+    public function testGetTargets()
+    {
+        $constraint = new ProjectConstraint();
+        self::assertEquals('class', $constraint->getTargets());
+    }
 }
