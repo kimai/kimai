@@ -15,7 +15,7 @@ class QuickEntrySubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {
-        return 'quick_entries';
+        return 'weekly_times';
     }
 
     public function onActions(PageActionsEvent $event): void
@@ -24,6 +24,6 @@ class QuickEntrySubscriber extends AbstractActionsSubscriber
             $event->addBack($this->path('timesheet'));
         }
 
-        $event->addHelp($this->documentationLink('quick_entries.html'));
+        $event->addHelp($this->documentationLink('weekly-times.html'));
     }
 }
