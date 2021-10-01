@@ -67,14 +67,51 @@ class QuickEntryModelTest extends TestCase
         $t2 = new Timesheet();
         $t2->setBegin(new \DateTime('2020-01-19'));
         $sut->addTimesheet($t2);
-        self::assertSame($t1, $sut->getLatestEntry());
-        self::assertSame($t2, $sut->getFirstEntry());
+        $t3 = new Timesheet();
+        $t3->setBegin(new \DateTime('2020-06-01'));
+        $sut->addTimesheet($t3);
+        $t4 = new Timesheet();
+        $t4->setBegin(new \DateTime('2020-01-09'));
+        $sut->addTimesheet($t4);
+        self::assertSame($t3, $sut->getLatestEntry());
+        self::assertEquals('2020-06-01', $sut->getLatestEntry()->getBegin()->format('Y-m-d'));
+        self::assertSame($t4, $sut->getFirstEntry());
+        self::assertEquals('2020-01-09', $sut->getFirstEntry()->getBegin()->format('Y-m-d'));
 
-        self::assertCount(3, $sut->getNewTimesheet());
-        self::assertCount(4, $sut->getTimesheets());
+        self::assertCount(5, $sut->getNewTimesheet());
+        self::assertCount(6, $sut->getTimesheets());
 
         self::assertFalse($sut->hasExistingTimesheet());
         self::assertTrue($sut->hasTimesheetWithDuration());
+
+        $sut->setProject(null);
+        self::assertNull($sut->getProject());
+        $project2 = new Project();
+        $sut->setProject($project2);
+        self::assertSame($project2, $sut->getProject());
+
+        $sut->setActivity(null);
+        self::assertNull($sut->getActivity());
+        $activity2 = new Activity();
+        $sut->setActivity($activity2);
+        self::assertSame($activity2, $sut->getActivity());
+
+        $sut->setTimesheets([$t1, $t2, $t3, $t4]);
+        self::assertCount(4, $sut->getNewTimesheet());
+        self::assertCount(4, $sut->getTimesheets());
+    }
+
+    public function testHasExistingTimesheet()
+    {
+        $sut = new QuickEntryModel();
+
+        self::assertTrue($sut->isPrototype());
+        self::assertFalse($sut->hasExistingTimesheet());
+        $mock = $this->createMock(Timesheet::class);
+        $mock->method('getId')->willReturn(1);
+        $sut->addTimesheet($mock);
+        self::assertTrue($sut->hasExistingTimesheet());
+        self::assertFalse($sut->isPrototype());
     }
 
     public function testDefaultModel()

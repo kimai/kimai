@@ -143,10 +143,21 @@ class QuickEntryWeekType extends AbstractType
                 /** @var QuickEntryModel $data */
                 $data = $event->getData();
                 $newRecords = $data->getNewTimesheet();
+
+                $user = $data->getUser();
+                $project = $data->getProject();
+                $activity = $data->getActivity();
+
                 foreach ($newRecords as $record) {
-                    $record->setUser($data->getUser());
-                    $record->setProject($data->getProject());
-                    $record->setActivity($data->getActivity());
+                    if ($user !== null) {
+                        $record->setUser($user);
+                    }
+                    if ($project !== null) {
+                        $record->setProject($project);
+                    }
+                    if ($activity !== null) {
+                        $record->setActivity($activity);
+                    }
                 }
             }
         );
