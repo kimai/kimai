@@ -1113,7 +1113,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Lagprojekt &amp; budget</target>
+        <target>Mina projekt</target>
       </trans-unit>
       <trans-unit id="resetting.check_email">
         <source>resetting.check_email</source>
@@ -1250,6 +1250,10 @@
       <trans-unit id="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
         <target>%percent%% används den här månaden</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Typ</target>
       </trans-unit>
     </body>
   </file>
