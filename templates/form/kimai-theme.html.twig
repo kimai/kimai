@@ -150,7 +150,7 @@
 {%- endblock monthpicker_widget %}
 
 {% block weekpicker_widget -%}
-    <div class="btn-group">
+    <div class="btn-group week-picker-btn-group">
         <a class="btn btn-default btn-left" href="#" onclick="$('#{{ form.vars.id }}').val('{{ previousWeek|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}">
             <i class="{{ 'left'|icon }}"></i>
         </a>
