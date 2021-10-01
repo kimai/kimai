@@ -33,5 +33,16 @@ class ProjectFormTypeQueryTest extends BaseFormTypeQueryTest
         self::assertNull($sut->getProjectToIgnore());
         $sut->setProjectToIgnore($project);
         self::assertSame($project, $sut->getProjectToIgnore());
+
+        self::assertNotNull($sut->getProjectStart());
+        self::assertNotNull($sut->getProjectEnd());
+
+        $date = new \DateTime('2019-04-20');
+        $sut->setProjectStart($date);
+        self::assertSame($date, $sut->getProjectStart());
+
+        $date = new \DateTime('2020-01-01');
+        $sut->setProjectEnd($date);
+        self::assertSame($date, $sut->getProjectEnd());
     }
 }
