@@ -40,11 +40,6 @@ class QuickEntryWeek
         return $this->rows;
     }
 
-    public function setDate(\DateTime $date): void
-    {
-        $this->date = $date;
-    }
-
     /**
      * @param QuickEntryModel[] $rows
      */
