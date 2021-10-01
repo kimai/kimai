@@ -78,8 +78,7 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
             const decoded = decodeURIComponent(value);
             const test = decoded.match(/%(.*)%/);
             if (test !== null) {
-                const targetSelector = '#' + formPrefix + test[1];
-                const targetField = jQuery(targetSelector);
+                const targetField = jQuery('#' + formPrefix + test[1]);
                 let newValue = '';
                 if (targetField.length === 0) {
                     // happens for example:
