@@ -88,7 +88,6 @@ final class IconExtension extends AbstractExtension
         'stop' => 'fas fa-stop',
         'stop-small' => 'far fa-stop-circle',
         'success' => 'fas fa-check',
-        'weekly-times' => 'fas fa-th',
         'tag' => 'fas fa-tags',
         'team' => 'fas fa-users',
         'timesheet' => 'fas fa-clock',
@@ -100,6 +99,7 @@ final class IconExtension extends AbstractExtension
         'users' => 'fas fa-user-friends',
         'visibility' => 'far fa-eye',
         'warning' => 'fas fa-exclamation-triangle',
+        'weekly-times' => 'fas fa-th',
         'xlsx' => 'fas fa-file-excel',
     ];
 
