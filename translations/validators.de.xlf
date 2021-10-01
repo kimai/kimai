@@ -66,6 +66,18 @@
                 <source>Maximum duration of {{ value }} hours exceeded.</source>
                 <target>Erlaubt sind max. {{ value }} Stunden.</target>
             </trans-unit>
+            <trans-unit id="An activity needs to be selected.">
+                <source>An activity needs to be selected.</source>
+                <target>Eine Tätigkeit muss ausgewählt werden.</target>
+            </trans-unit>
+            <trans-unit id="A project needs to be selected.">
+                <source>A project needs to be selected.</source>
+                <target>Ein Projekt muss ausgewählt werden.</target>
+            </trans-unit>
+            <trans-unit id="This timesheet is already exported.">
+                <source>This timesheet is already exported.</source>
+                <target>Dieser Eintrag wurde bereits exportiert.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

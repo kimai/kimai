@@ -17,8 +17,8 @@ use Symfony\Component\Validator\Constraint;
  */
 class QuickEntryModel extends Constraint
 {
-    public const ACTIVITY_REQUIRED = 'ya34gh7-dsfef3-1234-5678-2g8jkfr56d82';
-    public const PROJECT_REQUIRED = 'ya34gh7-dsfef3-1234-5678-2g8jkfr56d84';
+    public const ACTIVITY_REQUIRED = 'quick-entry-model-01';
+    public const PROJECT_REQUIRED = 'quick-entry-model-02';
 
     public $messageActivityRequired = 'An activity needs to be selected.';
     public $messageProjectRequired = 'A project needs to be selected.';

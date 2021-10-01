@@ -42,8 +42,8 @@ class Timesheet extends Constraint
     protected static $errorNames = [
         self::MISSING_BEGIN_ERROR => 'You must submit a begin date.',
         self::END_BEFORE_BEGIN_ERROR => 'End date must not be earlier then start date.',
-        self::MISSING_ACTIVITY_ERROR => 'A timesheet must have an activity.',
-        self::MISSING_PROJECT_ERROR => 'A timesheet must have a project.',
+        self::MISSING_ACTIVITY_ERROR => 'An activity needs to be selected.',
+        self::MISSING_PROJECT_ERROR => 'A project needs to be selected.',
         self::ACTIVITY_PROJECT_MISMATCH_ERROR => 'Project mismatch, project specific activity and timesheet project are different.',
         self::DISABLED_ACTIVITY_ERROR => 'Cannot start a disabled activity.',
         self::DISABLED_PROJECT_ERROR => 'Cannot start a disabled project.',

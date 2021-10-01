@@ -70,7 +70,7 @@ final class TimesheetBasicValidator extends ConstraintValidator
     protected function validateActivityAndProject(TimesheetEntity $timesheet, ExecutionContextInterface $context)
     {
         if (null === ($activity = $timesheet->getActivity())) {
-            $context->buildViolation('A timesheet must have an activity.')
+            $context->buildViolation('An activity needs to be selected.')
                 ->atPath('activity')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::MISSING_ACTIVITY_ERROR)
@@ -78,7 +78,7 @@ final class TimesheetBasicValidator extends ConstraintValidator
         }
 
         if (null === ($project = $timesheet->getProject())) {
-            $context->buildViolation('A timesheet must have a project.')
+            $context->buildViolation('A project needs to be selected.')
                 ->atPath('project')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::MISSING_PROJECT_ERROR)

@@ -57,10 +57,10 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $this->buildViolation('You must submit a begin date.')
             ->atPath('property.path.begin')
             ->setCode(TimesheetBasic::MISSING_BEGIN_ERROR)
-            ->buildNextViolation('A timesheet must have an activity.')
+            ->buildNextViolation('An activity needs to be selected.')
             ->atPath('property.path.activity')
             ->setCode(TimesheetBasic::MISSING_ACTIVITY_ERROR)
-            ->buildNextViolation('A timesheet must have a project.')
+            ->buildNextViolation('A project needs to be selected.')
             ->atPath('property.path.project')
             ->setCode(TimesheetBasic::MISSING_PROJECT_ERROR)
             ->assertRaised();
@@ -75,10 +75,10 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($timesheet, new TimesheetBasic(['message' => 'myMessage']));
 
         $this
-            ->buildViolation('A timesheet must have an activity.')
+            ->buildViolation('An activity needs to be selected.')
             ->atPath('property.path.activity')
             ->setCode(TimesheetBasic::MISSING_ACTIVITY_ERROR)
-            ->buildNextViolation('A timesheet must have a project.')
+            ->buildNextViolation('A project needs to be selected.')
             ->atPath('property.path.project')
             ->setCode(TimesheetBasic::MISSING_PROJECT_ERROR)
             // The test context is not able to handle calls to validate() - see ConstraintValidatorTestCase::createContext()
@@ -104,10 +104,10 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $this->buildViolation('End date must not be earlier then start date.')
             ->atPath('property.path.end')
             ->setCode(TimesheetBasic::END_BEFORE_BEGIN_ERROR)
-            ->buildNextViolation('A timesheet must have an activity.')
+            ->buildNextViolation('An activity needs to be selected.')
             ->atPath('property.path.activity')
             ->setCode(TimesheetBasic::MISSING_ACTIVITY_ERROR)
-            ->buildNextViolation('A timesheet must have a project.')
+            ->buildNextViolation('A project needs to be selected.')
             ->atPath('property.path.project')
             ->setCode(TimesheetBasic::MISSING_PROJECT_ERROR)
             ->assertRaised();
