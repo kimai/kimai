@@ -14,12 +14,17 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 
+/**
+ * @internal
+ */
 class QuickEntryModel
 {
     private $user;
     private $project;
     private $activity;
-    /** @var Timesheet[] */
+    /**
+     * @var Timesheet[]
+     */
     private $timesheets = [];
 
     public function __construct(?User $user = null, ?Project $project = null, ?Activity $activity = null)

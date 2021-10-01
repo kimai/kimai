@@ -9,6 +9,9 @@
 
 namespace App\Model;
 
+/**
+ * @internal
+ */
 class QuickEntryWeek
 {
     private $date;
@@ -42,6 +45,9 @@ class QuickEntryWeek
         $this->date = $date;
     }
 
+    /**
+     * @param QuickEntryModel[] $rows
+     */
     public function setRows(array $rows): void
     {
         $this->rows = $rows;
