@@ -51,7 +51,7 @@ class QuickEntryControllerTest extends ControllerBaseTest
 
         $this->assertPageActions($client, [
             'back' => $this->createUrl('/timesheet/'),
-            'help' => 'https://www.kimai.org/documentation/quick_entries.html'
+            'help' => 'https://www.kimai.org/documentation/weekly-times.html'
         ]);
     }
 }
