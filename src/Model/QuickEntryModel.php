@@ -134,7 +134,7 @@ class QuickEntryModel
         }
     }
 
-    public function getLatestEntry(): Timesheet
+    public function getLatestEntry(): ?Timesheet
     {
         $latest = null;
 
@@ -156,7 +156,7 @@ class QuickEntryModel
         return $latest;
     }
 
-    public function getFirstEntry(): Timesheet
+    public function getFirstEntry(): ?Timesheet
     {
         $first = null;
 
