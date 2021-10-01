@@ -18,6 +18,6 @@ class QuickEntrySubscriberTest extends AbstractActionsSubscriberTest
 {
     public function testEventName()
     {
-        $this->assertGetSubscribedEvent(QuickEntrySubscriber::class, 'quick_entries');
+        $this->assertGetSubscribedEvent(QuickEntrySubscriber::class, 'weekly_times');
     }
 }
