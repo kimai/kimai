@@ -1265,7 +1265,7 @@
       -->
       <trans-unit id="quick-entry.title">
         <source>quick-entry.title</source>
-        <target>Quick Entry</target>
+        <target>Weekly working hours</target>
       </trans-unit>
     </body>
   </file>

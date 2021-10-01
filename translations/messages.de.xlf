@@ -1265,7 +1265,7 @@
       -->
       <trans-unit id="quick-entry.title">
         <source>quick-entry.title</source>
-        <target>Schnelleingabe</target>
+        <target>Wöchentliche Arbeitsstunden</target>
       </trans-unit>
     </body>
   </file>
