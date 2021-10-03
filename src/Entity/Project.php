@@ -474,6 +474,9 @@ class Project implements EntityWithMetaFields, EntityWithBudget
         if ($this->getCustomer() !== null && !$this->getCustomer()->isVisible()) {
             return false;
         }
+        if ($this->getStart() !== null && $dateTime < $this->getStart()) {
+            return false;
+        }
         if ($this->getEnd() !== null && $dateTime > $this->getEnd()) {
             return false;
         }

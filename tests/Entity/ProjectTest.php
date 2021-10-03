@@ -247,5 +247,11 @@ class ProjectTest extends AbstractEntityTest
         self::assertTrue($sut->isVisibleAtDate($now));
         $sut->setEnd(new \DateTime('-1 hour'));
         self::assertFalse($sut->isVisibleAtDate($now));
+        $sut->setEnd(new \DateTime('+1 hour'));
+        self::assertTrue($sut->isVisibleAtDate($now));
+        $sut->setStart(new \DateTime('-1 hour'));
+        self::assertTrue($sut->isVisibleAtDate($now));
+        $sut->setStart(new \DateTime('+1 hour'));
+        self::assertFalse($sut->isVisibleAtDate($now));
     }
 }
