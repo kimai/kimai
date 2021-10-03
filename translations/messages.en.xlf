@@ -1263,8 +1263,8 @@
       <!--
           QUICK ENTRIES
       -->
-      <trans-unit id="quick-entry.title">
-        <source>quick-entry.title</source>
+      <trans-unit id="quick_entry.title">
+        <source>quick_entry.title</source>
         <target>Weekly working hours</target>
       </trans-unit>
     </body>

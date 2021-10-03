@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Controller used to enter times in weekly form.
  *
- * @Route(path="/quick-entry")
+ * @Route(path="/quick_entry")
  * @Security("is_granted('view_own_timesheet')")
  */
 class QuickEntryController extends AbstractController
@@ -41,7 +41,7 @@ class QuickEntryController extends AbstractController
     }
 
     /**
-     * @Route(path="/{begin}", name="quick-entry", methods={"GET", "POST"})
+     * @Route(path="/{begin}", name="quick_entry", methods={"GET", "POST"})
      * @Security("is_granted('edit_own_timesheet')")
      */
     public function quickEntry(Request $request, ?string $begin = null)
@@ -206,7 +206,7 @@ class QuickEntryController extends AbstractController
                 try {
                     $this->timesheetService->deleteMultipleTimesheets($deleteTimesheets);
 
-                    return $this->redirectToRoute('quick-entry', ['begin' => $begin->format('Y-m-d')]);
+                    return $this->redirectToRoute('quick_entry', ['begin' => $begin->format('Y-m-d')]);
                 } catch (\Exception $ex) {
                     $this->flashError('action.delete.error');
                     $this->logException($ex);
@@ -217,7 +217,7 @@ class QuickEntryController extends AbstractController
                 try {
                     $this->timesheetService->updateMultipleTimesheets($saveTimesheets);
 
-                    return $this->redirectToRoute('quick-entry', ['begin' => $begin->format('Y-m-d')]);
+                    return $this->redirectToRoute('quick_entry', ['begin' => $begin->format('Y-m-d')]);
                 } catch (\Exception $ex) {
                     $this->flashError('action.update.error');
                     $this->logException($ex);

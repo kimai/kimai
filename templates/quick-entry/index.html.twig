@@ -1,7 +1,7 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "quick-entry/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'quick-entry.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'quick_entry.title'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.quickEntries('index') }}{% endblock %}
 
 {% block main %}
@@ -54,7 +54,7 @@
             {% endif %}
 
             jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
-                location.href = '{{ path('quick-entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', jQuery(this).val());
+                location.href = '{{ path('quick_entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', jQuery(this).val());
             });
 
             const kimai = event.detail.kimai;

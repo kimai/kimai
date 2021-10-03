@@ -18,13 +18,13 @@ class QuickEntryControllerTest extends ControllerBaseTest
 {
     public function testIsSecure()
     {
-        $this->assertUrlIsSecured('/quick-entry');
+        $this->assertUrlIsSecured('/quick_entry');
     }
 
     public function testIndexAction()
     {
         $client = $this->getClientForAuthenticatedUser();
-        $this->request($client, '/quick-entry');
+        $this->request($client, '/quick_entry');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $node = $client->getCrawler()->filter('section.content form[name=quick_entry_form]');
@@ -67,7 +67,7 @@ class QuickEntryControllerTest extends ControllerBaseTest
         $fixture->setStartDate(new \DateTime('-7 days'));
         $this->importFixture($fixture);
 
-        $this->request($client, '/quick-entry');
+        $this->request($client, '/quick_entry');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $node = $client->getCrawler()->filter('section.content form[name=quick_entry_form]');
