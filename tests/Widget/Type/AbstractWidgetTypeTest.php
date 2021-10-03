@@ -21,12 +21,17 @@ abstract class AbstractWidgetTypeTest extends TestCase
 
     abstract public function getDefaultOptions(): array;
 
-    public function testDefaultValues()
+    protected function assertDefaultData(AbstractWidgetType $sut)
+    {
+        self::assertNull($sut->getData());
+    }
+
+    public function testDefaultData()
     {
         $sut = $this->createSut();
         self::assertInstanceOf(AbstractWidgetType::class, $sut);
         self::assertEquals($this->getDefaultOptions(), $sut->getOptions());
-        self::assertNull($sut->getData());
+        $this->assertDefaultData($sut);
         self::assertEquals('bar', $sut->getOption('foo', 'bar'));
     }
 
