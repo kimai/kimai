@@ -22,7 +22,6 @@ final class TotalsCustomer extends SimpleWidget implements UserWidget, Authorize
     public function __construct(CustomerRepository $customer)
     {
         $this->customer = $customer;
-        $this->setId('customerTotal');
         $this->setTitle('stats.customerTotal');
     }
 

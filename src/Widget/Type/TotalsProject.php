@@ -22,7 +22,6 @@ final class TotalsProject extends SimpleWidget implements UserWidget, Authorized
     public function __construct(ProjectRepository $project)
     {
         $this->project = $project;
-        $this->setId('projectTotal');
         $this->setTitle('stats.projectTotal');
     }
 

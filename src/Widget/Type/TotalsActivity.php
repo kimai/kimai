@@ -22,7 +22,6 @@ final class TotalsActivity extends SimpleWidget implements UserWidget, Authorize
     public function __construct(ActivityRepository $activity)
     {
         $this->activity = $activity;
-        $this->setId('activityTotal');
         $this->setTitle('stats.activityTotal');
     }
 
