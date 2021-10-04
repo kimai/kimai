@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Ustawienia</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Ustawienia globalne serwisu rejestrowania</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Ewidencje</target>

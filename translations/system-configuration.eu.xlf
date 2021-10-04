@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Aukerak</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Denbora kontrol aukerak aldatu</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Ordu taula</target>

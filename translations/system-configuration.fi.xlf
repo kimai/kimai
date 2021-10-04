@@ -6,10 +6,6 @@
                 <source>title</source>
                 <target state="translated">Asetukset</target>
             </trans-unit>
-            <trans-unit id="subtitle">
-                <source>subtitle</source>
-                <target state="translated">Muuta työajanhallintasi globaaleja asetuksia</target>
-            </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
                 <target state="translated">Työajanseuranta</target>

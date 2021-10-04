@@ -6,10 +6,6 @@
         <source>title</source>
         <target>إعدادات</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>قم بتغيير التكوينات العالمية لمتتبع الوقت الخاص بك</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>الجداول الزمنية</target>

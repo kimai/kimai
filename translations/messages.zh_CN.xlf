@@ -865,10 +865,6 @@
         <source>export.title</source>
         <target>输出</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>以多种格式输出时间表数据</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>过滤数据以输出</target>

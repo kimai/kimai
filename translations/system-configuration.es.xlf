@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Configuración</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Cambia las configuraciones globales de tu gestor de tiempo</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Parte de horas</target>

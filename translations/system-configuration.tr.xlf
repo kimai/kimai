@@ -6,10 +6,6 @@
         <source>title</source>
         <target state="translated">Ayarlar</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target state="translated">Zaman izleyicinizin genel yapılandırma ayarlarını değiştirin</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target state="translated">Zaman çizelgesi</target>

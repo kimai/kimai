@@ -145,10 +145,6 @@
         <source>export.filter</source>
         <target>Daten für Export filtern</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Exportieren Sie aufgezeichnete Zeiten in verschiedene Zielformate</target>
-      </trans-unit>
       <trans-unit id="export.title">
         <source>export.title</source>
         <target>Export</target>

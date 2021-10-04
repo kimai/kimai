@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Configurações</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Alterar as configurações globais do seu rastreador de tempo</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Horário</target>

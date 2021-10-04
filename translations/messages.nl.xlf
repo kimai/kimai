@@ -838,10 +838,6 @@
         <source>export.title</source>
         <target>Exporteren</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Exporteer prestaties in verschillende bestandsformaten</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>Filter gegevens voor export</target>

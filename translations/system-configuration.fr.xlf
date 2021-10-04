@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Paramètres</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Modifiez la configuration générale de votre service de suivi du temps</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Fiche de temps</target>

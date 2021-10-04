@@ -6,10 +6,6 @@
                 <source>title</source>
                 <target>Indstillinger</target>
             </trans-unit>
-            <trans-unit id="subtitle">
-                <source>subtitle</source>
-                <target>Skift globale konfigureringer for din tidstracker</target>
-            </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
                 <target>Timeseddel</target>

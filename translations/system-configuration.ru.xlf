@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Настройки</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Редактирование глобальных параметров вашего счетчика времени</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Учет времени</target>

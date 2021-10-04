@@ -9,10 +9,6 @@
         <source>title</source>
         <target>הגדרות</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>שנה הגדרות גלובליות</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>גיליון שעות</target>

@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Einstellungen</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Globale Einstellungen ihrer Zeiterfassung ändern</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Zeiterfassung</target>

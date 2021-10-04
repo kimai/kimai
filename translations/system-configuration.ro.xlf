@@ -1,17 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ro" datatype="plaintext" original="system-configuration.en.xlf">
-    <header>
-      <tool tool-id="symfony" tool-name="Symfony"/>
-    </header>
     <body>
       <trans-unit id="title">
         <source>title</source>
         <target>Setari</target>
-      </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Schimba configurarile globale ale sistemului de pontaj</target>
       </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>

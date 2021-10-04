@@ -757,10 +757,6 @@
         <source>export.title</source>
         <target state="translated">Exportera</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target state="translated">Exportera tidrapport till olika format</target>
-      </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
         <target>Period</target>
