@@ -19,11 +19,7 @@
     {% endfor %}
     <div class="btn-group">
         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {% if default.title is not defined %}
-            {{ dump(default) }} <span class="caret"></span>
-            {% else %}
             {{ 'label.menu'|trans({'%menu%': (default.title|trans({}, default.translation_domain ?? null))}) }} <span class="caret"></span>
-            {% endif %}
         </button>
         <ul class="dropdown-menu">
             {% for icon, values in tools %}
