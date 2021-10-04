@@ -24,7 +24,7 @@ trait BudgetTrait
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
      *
-     * @Exporter\Expose(label="label.budget")
+     * @Exporter\Expose(label="label.budget", type="float")
      *
      * @ORM\Column(name="budget", type="float", nullable=false)
      * @Assert\Range(min=0.00, max=900000000000.00)
