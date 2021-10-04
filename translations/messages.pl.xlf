@@ -885,10 +885,6 @@
         <source>export.title</source>
         <target>Export</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Export ewidencji do róznych formatów</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>Filtruj dane do eksportu</target>

@@ -981,10 +981,6 @@
         <source>export.title</source>
         <target>Esporta</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Esporta schede attività in vari formati</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>Filtra dati da esportare</target>

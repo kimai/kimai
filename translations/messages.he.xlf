@@ -884,10 +884,6 @@
         <source>export.title</source>
         <target>ייצוא</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>ייצוא גיליון שעות עבודה במספר תצורות</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>סינון נתונים לייצוא</target>

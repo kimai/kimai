@@ -945,10 +945,6 @@
         <source>export.title</source>
         <target>Xuất</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Xuất dữ liệu bảng chấm công sang các định dạng khác nhau</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>Lọc dữ liệu để xuất</target>

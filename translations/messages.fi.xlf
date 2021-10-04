@@ -981,10 +981,6 @@
         <source>export.title</source>
         <target state="translated">Vie</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target state="translated">Vie tuntilomake eri tiedostomuodoissa</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target state="translated">Suodata vietävät tiedot</target>

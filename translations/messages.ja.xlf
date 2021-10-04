@@ -753,10 +753,6 @@
         <source>export.title</source>
         <target>エクスポート</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>タイムシートのデータを種々のフォーマットにエクスポートします。</target>
-      </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
         <target>期間</target>

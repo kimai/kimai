@@ -781,10 +781,6 @@
         <source>export.title</source>
         <target>Export</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Exportovat odpracovanou dobu do různých formátů</target>
-      </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
         <target>Období</target>

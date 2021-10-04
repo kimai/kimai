@@ -758,10 +758,6 @@
         <source>export.title</source>
         <target>Export</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Exporter les fiches de temps en différents formats</target>
-      </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
         <target>Periode</target>

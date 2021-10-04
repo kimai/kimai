@@ -830,10 +830,6 @@
         <source>export.title</source>
         <target>Exportar</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Exportar la información de los partes de horas en varios formatos</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>Filtrar datos para exportar</target>

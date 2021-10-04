@@ -758,10 +758,6 @@
         <source>export.title</source>
         <target>Exportar</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Exportar dados do quadro de horários para vários formatos</target>
-      </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
         <target>Período</target>

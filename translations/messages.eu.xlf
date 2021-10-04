@@ -870,10 +870,6 @@
         <source>export.title</source>
         <target>Exportar</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Ordu taulak hainbat formatutan exportatu</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>Exportatzeko datuak filtratu</target>

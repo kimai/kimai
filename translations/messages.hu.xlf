@@ -761,10 +761,6 @@
         <source>export.title</source>
         <target>Exportálás</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Rögzített órák exportálása különböző formátumokba</target>
-      </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
         <target>Exportált időszak</target>
