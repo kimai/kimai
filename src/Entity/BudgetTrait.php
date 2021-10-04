@@ -56,7 +56,7 @@ trait BudgetTrait
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
      *
-     * @ Exporter\Expose(label="label.timeBudget", type="duration")
+     * @Exporter\Expose(label="label.budgetType")
      *
      * @ORM\Column(name="budget_type", type="string", length=10, nullable=true)
      */
