@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Export\Annotation as Exporter;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
