@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Rendszer beállítások</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Az időrögzítő globális beállításainak a módosítása</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Rögzített órák</target>

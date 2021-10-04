@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Nastavení</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Změna globálního nastavení pro docházkový systém</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Pracovní výkaz</target>

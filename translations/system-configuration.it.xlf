@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Impostazioni</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Cambia le impostazioni globali di tracciamento del tempo</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Scheda attività</target>

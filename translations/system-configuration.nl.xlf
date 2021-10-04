@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Instellingen</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Wijzig de algemene instellingen van uw tijdregistratie</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Tijdregistratie</target>

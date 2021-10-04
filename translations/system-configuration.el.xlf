@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Ρυθμίσεις</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Αλλαγή καθολικών ρυθμίσεων των λειτουργιών παρακολούθησης ώρας</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Δελτίο ωρών απασχόλησης</target>

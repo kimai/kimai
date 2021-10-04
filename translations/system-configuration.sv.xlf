@@ -6,10 +6,6 @@
         <source>title</source>
         <target state="translated">Inställningar</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target state="translated">Ändra globala konfigurationer för din tidsredovisning</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target state="translated">Tidrapport</target>

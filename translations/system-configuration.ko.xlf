@@ -6,10 +6,6 @@
         <source>title</source>
         <target state="translated">설정 </target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target state="translated">타임 트래커의 글로벌 구성 변경</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target state="translated">타임시트</target>

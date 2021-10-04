@@ -6,10 +6,6 @@
                 <source>title</source>
                 <target>Cài đặt</target>
             </trans-unit>
-            <trans-unit id="subtitle">
-                <source>subtitle</source>
-                <target>phụ đề</target>
-            </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
                 <target>Bảng chấm công</target>

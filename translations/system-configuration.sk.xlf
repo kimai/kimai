@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Nastavenia</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Zmena globálnych konfigurácií vášho sledovača času</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Pracovný výkaz</target>

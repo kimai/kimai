@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Agordoj</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Ŝanĝi ĝeneralajn agordojn de via tempospurilo</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Temposlipo</target>
