@@ -135,6 +135,9 @@ class ActivityTest extends AbstractEntityTest
             ['label.id', 'integer'],
             ['label.name', 'string'],
             ['label.project', 'string'],
+            ['label.budget', 'float'],
+            ['label.timeBudget', 'duration'],
+            ['label.budgetType', 'string'],
             ['label.color', 'string'],
             ['label.visible', 'boolean'],
             ['label.comment', 'string'],
@@ -151,7 +154,7 @@ class ActivityTest extends AbstractEntityTest
         foreach ($expected as $item) {
             $column = $columns[$i++];
             self::assertEquals($item[0], $column->getLabel());
-            self::assertEquals($item[1], $column->getType());
+            self::assertEquals($item[1], $column->getType(), 'Wrong type for field: ' . $item[0]);
         }
     }
 
