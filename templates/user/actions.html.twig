@@ -4,6 +4,12 @@
     {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 
+{% macro users_views(view, user) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set event = actions(app.user, 'user_views', view, {'user': user}) %}
+    {{ widgets.page_views(event.actions) }}
+{% endmacro %}
+
 {% macro user_permissions(view) %}
     {% deprecated 'The "user_permissions" macro from user/action.html.twig is deprecated since 1.14 and will be removed with 2.0. Use "permission/actions.html.twig" instead.' %}
     {% import "permission/actions.html.twig" as realMacro %}

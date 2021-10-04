@@ -4,10 +4,11 @@
 
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.user(user, tab) }}{% endblock %}
+{% block page_views %}{{ actions.users_views('index', user) }}{% endblock %}
 
 {% block main %}
     <div class="row">
-        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
+        <div class="col-lg-12">
             {% block profile_intro %}
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -18,12 +19,6 @@
                 </div>
             {% endblock %}
             {% block profile_content %}{% endblock %}
-        </div>
-        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
-            <div class="hidden-xs">
-            {% set event = actions(app.user, 'user', tab, {'user': user}) %}
-            {{ widgets.list_group_actions(event.actions, app.request.requestUri) }}
-            </div>
             {% block profile_navbar %}{% endblock %}
         </div>
     </div>

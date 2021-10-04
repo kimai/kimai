@@ -11,15 +11,16 @@ namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
 
-class ReportingSubscriber extends AbstractActionsSubscriber
+class TimesheetsViewsSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {
-        return 'reporting';
+        return 'timesheets_views';
     }
 
     public function onActions(PageActionsEvent $event): void
     {
-        $event->addHelp($this->documentationLink('reporting.html'));
+        $event->addAction('timesheet', ['url' => $this->path('timesheet'), 'title' => 'menu.timesheet']);
+        $event->addAction('calendar', ['url' => $this->path('calendar'), 'title' => 'calendar.title']);
     }
 }

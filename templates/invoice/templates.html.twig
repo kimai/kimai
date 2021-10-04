@@ -22,6 +22,7 @@
 
 {% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.invoice_templates('index') }}{% endblock %}
+{% block page_views %}{{ actions.invoices_views('templates') }}{% endblock %}
 
 {% block main_before %}
     {{ tables.data_table_column_modal(tableName, columns) }}

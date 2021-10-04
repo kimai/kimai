@@ -6,6 +6,14 @@
 
 {% block page_title %}{{- get_title() -}}{% endblock %}
 
+{% block page_full_title %}
+    {% if block('page_views') is defined %}
+        {{ block('page_views') }}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block after_body_start %}
     {% embed 'embeds/modal.html.twig' %}
         {% block modal_id %}remote_form_modal{% endblock %}

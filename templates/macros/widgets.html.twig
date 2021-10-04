@@ -10,6 +10,35 @@
     </div>
 {%- endmacro -%}
 
+{%- macro page_views(tools) -%}
+    {% set default = tools|first %}
+    {% for icon, values in tools %}
+        {% if 'divider' not in icon and values is not null and values.url == app.request.requestUri %}
+            {% set default = values %}
+        {% endif %}
+    {% endfor %}
+    <div class="btn-group">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% if default.title is not defined %}
+            {{ dump(default) }} <span class="caret"></span>
+            {% else %}
+            {{ 'label.menu'|trans({'%menu%': (default.title|trans({}, default.translation_domain ?? null))}) }} <span class="caret"></span>
+            {% endif %}
+        </button>
+        <ul class="dropdown-menu">
+            {% for icon, values in tools %}
+                {% if 'divider' in icon and values is null %}
+                    {% if not loop.last %}
+                        <li class="divider"></li>
+                    {% endif %}
+                {% else %}
+                    <li>{{ _self.action_button(icon, values, false) }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{%- endmacro -%}
+
 {%- macro entity_actions(tools) -%}
     <div class="breadcrumb">
         <div class="box-tools">

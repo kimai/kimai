@@ -22,12 +22,6 @@ class InvoicesSubscriber extends AbstractActionsSubscriber
     {
         $event->addColumnToggle('#modal_invoice');
 
-        $event->addAction('list', ['url' => $this->path('admin_invoice_list')]);
-
-        if ($this->isGranted('manage_invoice_template')) {
-            $event->addAction('invoice-template', ['url' => $this->path('admin_invoice_template')]);
-        }
-
         if ($this->isGranted('system_configuration')) {
             $event->addAction('settings', ['url' => $this->path('system_configuration_section', ['section' => 'invoice']), 'class' => 'modal-ajax-form']);
         }

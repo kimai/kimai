@@ -454,6 +454,10 @@
         <source>label.toggle_dropdown</source>
         <target>Show menu</target>
       </trans-unit>
+      <trans-unit id="label.menu">
+        <source>label.menu</source>
+        <target>Menu: %menu%</target>
+      </trans-unit>
       <trans-unit id="label.my_teams">
         <source>label.my_teams</source>
         <target>My teams</target>
@@ -930,6 +934,10 @@
       <trans-unit id="invoice.title">
         <source>invoice.title</source>
         <target>Invoices</target>
+      </trans-unit>
+      <trans-unit id="invoice.create">
+        <source>invoice.create</source>
+        <target>Create invoice</target>
       </trans-unit>
       <trans-unit id="invoice.filter">
         <source>invoice.filter</source>

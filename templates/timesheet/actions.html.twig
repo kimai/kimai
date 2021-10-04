@@ -4,6 +4,12 @@
     {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 
+{% macro timesheets_views(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set event = actions(app.user, 'timesheets_views', view) %}
+    {{ widgets.page_views(event.actions) }}
+{% endmacro %}
+
 {% macro timesheet(timesheet, view, options) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set event = actions(app.user, 'timesheet', view, {'timesheet': timesheet}) %}

@@ -30,34 +30,6 @@ class UserSubscriber extends AbstractActionsSubscriber
             return;
         }
 
-        if ($this->isGranted('view', $user)) {
-            $event->addAction('profile-stats', ['icon' => 'avatar', 'url' => $this->path('user_profile', ['username' => $user->getUsername()]), 'translation_domain' => 'actions']);
-            $event->addDivider();
-        }
-
-        if ($this->isGranted('edit', $user)) {
-            $event->addActionToSubmenu('edit', 'edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUsername()]), 'title' => 'edit', 'translation_domain' => 'actions']);
-        }
-        if ($this->isGranted('preferences', $user)) {
-            $event->addActionToSubmenu('edit', 'settings', ['url' => $this->path('user_profile_preferences', ['username' => $user->getUsername()]), 'title' => 'settings', 'translation_domain' => 'actions']);
-        }
-        if ($this->isGranted('password', $user)) {
-            $event->addActionToSubmenu('edit', 'password', ['url' => $this->path('user_profile_password', ['username' => $user->getUsername()]), 'title' => 'profile.password']);
-        }
-        if ($this->isGranted('api-token', $user)) {
-            $event->addActionToSubmenu('edit', 'api-token', ['url' => $this->path('user_profile_api_token', ['username' => $user->getUsername()]), 'title' => 'profile.api-token']);
-        }
-        if ($this->isGranted('teams', $user)) {
-            $event->addActionToSubmenu('edit', 'teams', ['url' => $this->path('user_profile_teams', ['username' => $user->getUsername()]), 'title' => 'profile.teams']);
-        }
-        if ($this->isGranted('roles', $user)) {
-            $event->addActionToSubmenu('edit', 'roles', ['url' => $this->path('user_profile_roles', ['username' => $user->getUsername()]), 'title' => 'profile.roles']);
-        }
-
-        if ($event->hasSubmenu('edit')) {
-            $event->addDivider();
-        }
-
         $viewOther = $this->isGranted('view_other_timesheet');
         if ($this->isGranted('view_reporting')) {
             // also found in App\Controller\Reporting\ReportByUserController

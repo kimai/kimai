@@ -20,10 +20,6 @@ class InvoiceTemplatesSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        if ($this->isGranted('view_invoice')) {
-            $event->addBack($this->path('invoice'));
-        }
-
         $event->addColumnToggle('#modal_invoice_template');
 
         if ($this->isGranted('manage_invoice_template')) {

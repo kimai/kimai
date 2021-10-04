@@ -4,6 +4,12 @@
     {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 
+{% macro invoices_views(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set event = actions(app.user, 'invoices_views', view) %}
+    {{ widgets.page_views(event.actions) }}
+{% endmacro %}
+
 {% macro invoice(invoice, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set event = actions(app.user, 'invoice', view, {'invoice': invoice}) %}

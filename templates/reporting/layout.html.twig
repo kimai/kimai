@@ -7,6 +7,10 @@
     {% set event = actions(app.user, 'reporting', 'index') %}
     {{ widgets.page_actions(event.actions) }}
 {% endblock %}
+{% block page_views %}
+    {% set event = actions(app.user, 'reporting_views', 'index') %}
+    {{ widgets.page_views(event.actions) }}
+{% endblock %}
 
 {% block main %}
     <div class="row">
