@@ -100,6 +100,11 @@ trait BudgetTrait
         $this->budgetType = $budgetType;
     }
 
+    public function setIsMonthlyBudget(): void
+    {
+        $this->setBudgetType('month');
+    }
+
     public function getBudgetType(): ?string
     {
         return $this->budgetType;

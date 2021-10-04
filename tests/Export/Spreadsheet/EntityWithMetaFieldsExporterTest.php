@@ -58,17 +58,21 @@ class EntityWithMetaFieldsExporterTest extends TestCase
         $spreadsheet = $sut->export(Project::class, [$project], new ProjectMetaDisplayEvent(new ProjectQuery(), ProjectMetaDisplayEvent::EXPORT));
         $worksheet = $spreadsheet->getActiveSheet();
 
-        self::assertNull($worksheet->getCellByColumnAndRow(1, 2)->getValue());
-        self::assertEquals('test project', $worksheet->getCellByColumnAndRow(2, 2)->getValue());
-        self::assertEquals('A customer', $worksheet->getCellByColumnAndRow(3, 2)->getValue());
-        self::assertEquals(1234567890, $worksheet->getCellByColumnAndRow(4, 2)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(5, 2)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(6, 2)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(7, 2)->getValue());
-        self::assertEquals('#ababab', $worksheet->getCellByColumnAndRow(8, 2)->getValue());
-        self::assertFalse($worksheet->getCellByColumnAndRow(9, 2)->getValue());
-        self::assertEquals('Lorem Ipsum', $worksheet->getCellByColumnAndRow(10, 2)->getValue());
-        self::assertEquals('some magic', $worksheet->getCellByColumnAndRow(11, 2)->getValue());
-        self::assertEquals('is happening', $worksheet->getCellByColumnAndRow(12, 2)->getValue());
+        $i = 0;
+        self::assertNull($worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals('test project', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals('A customer', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals(1234567890, $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals('', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals('', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals('', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals(123456.7890, $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals('=1234567890/86400', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals('', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals('#ababab', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertFalse($worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals('Lorem Ipsum', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals('some magic', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertEquals('is happening', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
     }
 }
