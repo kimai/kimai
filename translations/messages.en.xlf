@@ -128,8 +128,8 @@
         <target>Repeat password</target>
       </trans-unit>
       <trans-unit id="label.logout">
-        <source>label.logout</source>
-        <target>Logout</target>
+        <source>Log out</source>
+        <target>Log out</target>
       </trans-unit>
       <trans-unit id="label.user_profile">
         <source>label.user_profile</source>
@@ -176,8 +176,8 @@
         <target>System</target>
       </trans-unit>
       <trans-unit id="menu.logout">
-        <source>menu.logout</source>
-        <target>Logout</target>
+        <source>Log out</source>
+        <target>Log out</target>
       </trans-unit>
       <trans-unit id="menu.timesheet">
         <source>menu.timesheet</source>
