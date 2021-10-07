@@ -12,6 +12,9 @@ framework:
 
     session:
         handler_id: App\Security\SessionHandler
+        cookie_secure: auto
+        cookie_httponly: true
+        cookie_samesite: lax
 
     #esi: ~
     #fragments: ~
