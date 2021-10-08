@@ -289,7 +289,7 @@ class ProjectControllerTest extends APIControllerBaseTest
             'end' => '2020-02-08T21:11:42',
             'budget' => '999',
             'timeBudget' => '7200',
-            'orderNumber' => '1234567890/WXYZ/SUBPROJECT/1234/CONTRACT/EMPLOYEE',
+            'orderNumber' => '1234567890/WXYZ/SUBPROJECT/1234/CONTRACT/EMPLOYEE1',
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
