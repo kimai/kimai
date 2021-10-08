@@ -15,7 +15,7 @@ use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * @version 1.15
+ * @version 1.16
  */
 final class Version20211008092010 extends AbstractMigration
 {
@@ -27,12 +27,14 @@ final class Version20211008092010 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $projects = $schema->getTable('kimai2_projects');
-        $projects->changeColumn('order_number', ['length' => 50]);
+        $column = $projects->getColumn('order_number');
+        $column->setOptions(['length' => 50]);
     }
 
     public function down(Schema $schema): void
     {
         $projects = $schema->getTable('kimai2_projects');
-        $projects->changeColumn('order_number', ['length' => 20]);
+        $column = $projects->getColumn('order_number');
+        $column->setOptions(['length' => 20]);
     }
 }

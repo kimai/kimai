@@ -301,6 +301,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         self::assertEquals('2018-02-08T13:02:54+0000', $result['orderDate']);
         self::assertEquals('2019-02-01T19:32:17+0000', $result['start']);
         self::assertEquals('2020-02-08T21:11:42+0000', $result['end']);
+        self::assertEquals('1234567890/WXYZ/SUBPROJECT/1234/CONTRACT/EMPLOYEE1', $result['orderNumber']);
     }
 
     public function testPostActionWithLeastFields()

@@ -111,7 +111,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="label.orderNumber")
      *
-     * @ORM\Column(name="order_number", type="text", length=20, nullable=true)
+     * @ORM\Column(name="order_number", type="text", length=50, nullable=true)
      * @Assert\Length(max=50)
      */
     private $orderNumber;
