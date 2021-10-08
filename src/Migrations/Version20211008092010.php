@@ -26,14 +26,13 @@ final class Version20211008092010 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-      $projects = $schema->getTable('kimai2_projects');
-      $projects->changeColumn('order_number', ['length' => 50]);
-
+        $projects = $schema->getTable('kimai2_projects');
+        $projects->changeColumn('order_number', ['length' => 50]);
     }
 
     public function down(Schema $schema): void
     {
-      $projects = $schema->getTable('kimai2_projects');
-      $projects->changeColumn('order_number', ['length' => 20]);
+        $projects = $schema->getTable('kimai2_projects');
+        $projects->changeColumn('order_number', ['length' => 20]);
     }
 }
