@@ -76,7 +76,7 @@
         <target state="translated">确认密码</target>
       </trans-unit>
       <trans-unit id="label.logout">
-        <source>label.logout</source>
+        <source>Log out</source>
         <target>退出</target>
       </trans-unit>
       <trans-unit id="label.user_profile">
@@ -111,7 +111,7 @@
         <target>系统</target>
       </trans-unit>
       <trans-unit id="menu.logout">
-        <source>menu.logout</source>
+        <source>Log out</source>
         <target>退出</target>
       </trans-unit>
       <trans-unit id="menu.timesheet">
@@ -351,7 +351,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>团队项目 &amp; 预算</target>
+        <target>我的项目</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -1029,7 +1029,7 @@
       </trans-unit>
       <trans-unit id="label.last_record">
         <source>label.last_record</source>
-        <target state="needs-translation">最后的条目</target>
+        <target state="translated">上一条目</target>
       </trans-unit>
       <trans-unit id="label.account_number">
         <source>label.account_number</source>
@@ -1081,7 +1081,7 @@
       </trans-unit>
       <trans-unit id="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
-        <target state="needs-translation">本月使用的%百分比%</target>
+        <target state="translated">本月已用 %percent%%</target>
       </trans-unit>
       <trans-unit id="stats.userActiveFinancialYear">
         <source>stats.userActiveFinancialYear</source>
