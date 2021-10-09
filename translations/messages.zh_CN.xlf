@@ -1211,6 +1211,10 @@
         <source>label.searchTerm</source>
         <target>搜索词</target>
       </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% 已使用（%left% 本月仍空余）</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
