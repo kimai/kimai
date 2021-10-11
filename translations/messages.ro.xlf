@@ -89,7 +89,7 @@
         <target>Repetă parola</target>
       </trans-unit>
       <trans-unit id="label.logout">
-        <source>label.logout</source>
+        <source>Log out</source>
         <target>Deconectare</target>
       </trans-unit>
       <trans-unit id="label.user_profile">
@@ -121,7 +121,7 @@
         <target>Sistem</target>
       </trans-unit>
       <trans-unit id="menu.logout">
-        <source>menu.logout</source>
+        <source>Log out</source>
         <target>Deconectare</target>
       </trans-unit>
       <trans-unit id="menu.timesheet">
