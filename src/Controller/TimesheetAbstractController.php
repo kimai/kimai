@@ -215,6 +215,9 @@ abstract class TimesheetAbstractController extends AbstractController
     {
         $copyTimesheet = clone $timesheet;
 
+        $event = new TimesheetMetaDefinitionEvent($copyTimesheet);
+        $this->dispatcher->dispatch($event);
+
         $form = $this->getDuplicateForm($copyTimesheet, $timesheet);
         $form->handleRequest($request);
 
