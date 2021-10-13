@@ -14,14 +14,6 @@
         <source>invoice</source>
         <target>Fakturoj</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Krei defaŭltajn valorojn de kliento</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Defaŭltaj valoroj de uzanto</target>
-      </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
         <target>Etoso</target>

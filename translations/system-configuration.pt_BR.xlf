@@ -10,14 +10,6 @@
         <source>timesheet</source>
         <target>Horário</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Criar cliente - Valores padrões</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Usuário - Valores padrões</target>
-      </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
         <target>Tema</target>

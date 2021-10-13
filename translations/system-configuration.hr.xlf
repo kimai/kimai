@@ -18,14 +18,6 @@
         <source>invoice</source>
         <target>Računi</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Stvori standardne vrijednosti za kupca</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Standardne vrijednosti za korisnika</target>
-      </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
         <target>Tema</target>

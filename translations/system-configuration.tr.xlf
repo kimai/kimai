@@ -10,14 +10,6 @@
         <source>timesheet</source>
         <target state="translated">Zaman çizelgesi</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target state="translated">Müşteri oluştur—öntanımlı değerler</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target state="translated">Kullanıcı—öntanımlı değerler</target>
-      </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
         <target state="translated">Tema</target>

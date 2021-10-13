@@ -14,14 +14,6 @@
         <source>invoice</source>
         <target>Τιμολόγια</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Δημιουργία πελάτη - προεπιλεγμένες τιμές</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Χρήστης - προεπιλεγμένες τιμές</target>
-      </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
         <target>Θέμα</target>
