@@ -7,15 +7,6 @@ coverage:
   round: down
   range: "80...100"
 
-  status:
-    project:
-      default:
-        threshold: 0.5%
-    patch:
-      default:
-        threshold: 50%
-    changes: no
-
 parsers:
   gcov:
     branch_detection:
