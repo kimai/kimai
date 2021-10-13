@@ -503,6 +503,714 @@
         <source>label.amount</source>
         <target>Mengde</target>
       </trans-unit>
+      <trans-unit id="menu.homepage">
+        <source>menu.homepage</source>
+        <target>Oversikt</target>
+      </trans-unit>
+      <trans-unit id="time_tracking">
+        <source>time_tracking</source>
+        <target>Tidsregistrering</target>
+      </trans-unit>
+      <trans-unit id="confirm.delete">
+        <source>confirm.delete</source>
+        <target state="needs-translation">Ønsker du å slette denne?</target>
+      </trans-unit>
+      <trans-unit id="admin_entity.delete_confirm">
+        <source>admin_entity.delete_confirm</source>
+        <target>Dataen vil også bli slettet. Alternativt kan du velge en oppføring å overføre den til:</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>En e-post har blitt sendt. Den inneholder en lenke du må klikke for å tilbakestille passordet ditt. Merk: Du kan kun forespørre nytt passord én gang i løpet av %tokenLifetime% timer. Hvis du ikke får en e-post kan du sjekke søppelposten eller prøve igjen.</target>
+      </trans-unit>
+      <trans-unit id="cancel">
+        <source>cancel</source>
+        <target>Avbryt</target>
+      </trans-unit>
+      <trans-unit id="delete.not_in_use">
+        <source>delete.not_in_use</source>
+        <target>Dette elementet kan slettes trygt.</target>
+      </trans-unit>
+      <trans-unit id="rates.title">
+        <source>rates.title</source>
+        <target>Gebyr</target>
+      </trans-unit>
+      <trans-unit id="rates.empty">
+        <source>rates.empty</source>
+        <target>Ingen timevise satser har blitt satt opp enda.</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Totalt</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Skjemaet har endret seg. Klikk «Lagre» for å lagre endringer, eller «Lukk» for å avbryte.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>En e-post har blitt sendt til %email%. Den inneholder en invitasjonslenke du må klikke for å aktivere kontoen din.</target>
+      </trans-unit>
+      <trans-unit id="menu.invoice">
+        <source>menu.invoice</source>
+        <target>Fakturaer</target>
+      </trans-unit>
+      <trans-unit id="menu.export">
+        <source>menu.export</source>
+        <target>Eksporter</target>
+      </trans-unit>
+      <trans-unit id="menu.reporting">
+        <source>menu.reporting</source>
+        <target>Rapportering</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_customer">
+        <source>menu.admin_customer</source>
+        <target>Kunder</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_project">
+        <source>menu.admin_project</source>
+        <target>Prosjekter</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_activity">
+        <source>menu.admin_activity</source>
+        <target>Aktiviteter</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_user">
+        <source>menu.admin_user</source>
+        <target>Brukere</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_team">
+        <source>menu.admin_team</source>
+        <target>Lag</target>
+      </trans-unit>
+      <trans-unit id="menu.plugin">
+        <source>menu.plugin</source>
+        <target>Programtillegg</target>
+      </trans-unit>
+      <trans-unit id="menu.system_configuration">
+        <source>menu.system_configuration</source>
+        <target>Innstillinger</target>
+      </trans-unit>
+      <trans-unit id="label.date">
+        <source>label.date</source>
+        <target>Dato</target>
+      </trans-unit>
+      <trans-unit id="label.starttime">
+        <source>label.starttime</source>
+        <target>Begynnelse</target>
+      </trans-unit>
+      <trans-unit id="label.hourlyRate">
+        <source>label.hourlyRate</source>
+        <target>Timesats</target>
+      </trans-unit>
+      <trans-unit id="label.hourly_rate">
+        <source>label.hourly_rate</source>
+        <target>Timesats</target>
+      </trans-unit>
+      <trans-unit id="label.skin">
+        <source>label.skin</source>
+        <target state="needs-translation">Vis: farger</target>
+      </trans-unit>
+      <trans-unit id="label.rate">
+        <source>label.rate</source>
+        <target>Sats</target>
+      </trans-unit>
+      <trans-unit id="help.rate">
+        <source>help.rate</source>
+        <target>Timevis sats å fakturere</target>
+      </trans-unit>
+      <trans-unit id="label.rate_internal">
+        <source>label.rate_internal</source>
+        <target>Intern sats</target>
+      </trans-unit>
+      <trans-unit id="label.recalculate_rates">
+        <source>label.recalculate_rates</source>
+        <target>Regn ut satser igjen</target>
+      </trans-unit>
+      <trans-unit id="label.language">
+        <source>label.language</source>
+        <target>Språk</target>
+      </trans-unit>
+      <trans-unit id="label.customer">
+        <source>label.customer</source>
+        <target>Kunde</target>
+      </trans-unit>
+      <trans-unit id="label.email">
+        <source>label.email</source>
+        <target>E-post</target>
+      </trans-unit>
+      <trans-unit id="label.team">
+        <source>label.team</source>
+        <target>Lag</target>
+      </trans-unit>
+      <trans-unit id="label.teamlead">
+        <source>label.teamlead</source>
+        <target>Lagleder</target>
+      </trans-unit>
+      <trans-unit id="menu.timesheet">
+        <source>menu.timesheet</source>
+        <target state="needs-translation">Min timeseddel</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_timesheet">
+        <source>menu.admin_timesheet</source>
+        <target state="needs-translation">Timesedler</target>
+      </trans-unit>
+      <trans-unit id="help.rate_internal">
+        <source>help.rate_internal</source>
+        <target>Interne kostnader (hvis dette ikke er angitt bruker normal sats)</target>
+      </trans-unit>
+      <trans-unit id="label.create_more">
+        <source>label.create_more</source>
+        <target>Opprett flere oppføringer</target>
+      </trans-unit>
+      <trans-unit id="placeholder.type_message">
+        <source>placeholder.type_message</source>
+        <target>Skriv meldingen din …</target>
+      </trans-unit>
+      <trans-unit id="label.billable">
+        <source>label.billable</source>
+        <target>Fakturerbar</target>
+      </trans-unit>
+      <trans-unit id="label.actions">
+        <source>label.actions</source>
+        <target>Handlinger</target>
+      </trans-unit>
+      <trans-unit id="label.my_teams">
+        <source>label.my_teams</source>
+        <target>Mine lag</target>
+      </trans-unit>
+      <trans-unit id="timesheet.edit">
+        <source>timesheet.edit</source>
+        <target>Rediger oppføring</target>
+      </trans-unit>
+      <trans-unit id="label.daterange">
+        <source>label.daterange</source>
+        <target>Tidsområde</target>
+      </trans-unit>
+      <trans-unit id="modal.columns.title">
+        <source>modal.columns.title</source>
+        <target>Endre kolonnens synlighet</target>
+      </trans-unit>
+      <trans-unit id="label.fixedRate">
+        <source>label.fixedRate</source>
+        <target>Fast sats</target>
+      </trans-unit>
+      <trans-unit id="label.appendTags">
+        <source>label.appendTags</source>
+        <target>Legg til etiketter</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.initial_view">
+        <source>label.calendar.initial_view</source>
+        <target>Startvisning for kalender</target>
+      </trans-unit>
+      <trans-unit id="label.login.initial_view">
+        <source>label.login.initial_view</source>
+        <target>Startvisning etter innlogging</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.daily_stats">
+        <source>label.timesheet.daily_stats</source>
+        <target>Vis daglig statistikk i tidstabell</target>
+      </trans-unit>
+      <trans-unit id="dashboard.title">
+        <source>dashboard.title</source>
+        <target>Oversikt</target>
+      </trans-unit>
+      <trans-unit id="label.plus_more">
+        <source>label.plus_more</source>
+        <target>+%count% til</target>
+      </trans-unit>
+      <trans-unit id="timesheet.title">
+        <source>timesheet.title</source>
+        <target>Min timeseddel</target>
+      </trans-unit>
+      <trans-unit id="modal.columns.description">
+        <source>modal.columns.description</source>
+        <target>Ved lagring vil kolonner som ikke er valgt bli skjult og innstillingen vil bli lagret i en nettleserkake. Hvis du sletter kakene dine vil innstillingene bli endret tilbake.</target>
+      </trans-unit>
+      <trans-unit id="help.fixedRate">
+        <source>help.fixedRate</source>
+        <target>Hver tidsoppføring får samme verdi, uavhengig av varighet</target>
+      </trans-unit>
+      <trans-unit id="profile.first_entry">
+        <source>profile.first_entry</source>
+        <target>Arbeidet siden</target>
+      </trans-unit>
+      <trans-unit id="profile.registration_date">
+        <source>profile.registration_date</source>
+        <target>Registrert</target>
+      </trans-unit>
+      <trans-unit id="label.theme.collapsed_sidebar">
+        <source>label.theme.collapsed_sidebar</source>
+        <target>Minimer venstre sidefelt</target>
+      </trans-unit>
+      <trans-unit id="label.fax">
+        <source>label.fax</source>
+        <target>Faks.</target>
+      </trans-unit>
+      <trans-unit id="label.title">
+        <source>label.title</source>
+        <target>Tittel</target>
+      </trans-unit>
+      <trans-unit id="label.active">
+        <source>label.active</source>
+        <target>Aktiv</target>
+      </trans-unit>
+      <trans-unit id="Allowed character: A-Z and _">
+        <source>Allowed character: A-Z and _</source>
+        <target state="needs-translation">Tillatte tegn: A-Å og _</target>
+      </trans-unit>
+      <trans-unit id="ROLE_SUPER_ADMIN">
+        <source>ROLE_SUPER_ADMIN</source>
+        <target>Systemadministrator</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeToday">
+        <source>stats.workingTimeToday</source>
+        <target>I dag, %day%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeWeek">
+        <source>stats.workingTimeWeek</source>
+        <target>Kalenderuke %week%</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Inntekter</target>
+      </trans-unit>
+      <trans-unit id="stats.durationToday">
+        <source>stats.durationToday</source>
+        <target>Arbeidstimer i dag</target>
+      </trans-unit>
+      <trans-unit id="stats.durationWeek">
+        <source>stats.durationWeek</source>
+        <target>Arbeidstimer denne uken</target>
+      </trans-unit>
+      <trans-unit id="stats.durationMonth">
+        <source>stats.durationMonth</source>
+        <target>Arbeidstimer denne måneden</target>
+      </trans-unit>
+      <trans-unit id="stats.durationYear">
+        <source>stats.durationYear</source>
+        <target>Arbeidstimer dette året</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.export_decimal">
+        <source>label.timesheet.export_decimal</source>
+        <target>Bruk desimalvarighet i eksport</target>
+      </trans-unit>
+      <trans-unit id="admin_timesheet.title">
+        <source>admin_timesheet.title</source>
+        <target>Tidstabeller</target>
+      </trans-unit>
+      <trans-unit id="label.vat_id">
+        <source>label.vat_id</source>
+        <target>Moms-ID</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeYear">
+        <source>stats.workingTimeYear</source>
+        <target>Helår %year%</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Budsjettår</target>
+      </trans-unit>
+      <trans-unit id="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Oppdater nettlesertittel</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Hvis du vil slette en oppføring, må du dra den mot bunnen.</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Skattesats</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeMonth">
+        <source>stats.workingTimeMonth</source>
+        <target>%month% %year%</target>
+      </trans-unit>
+      <trans-unit id="stats.durationTotal">
+        <source>stats.durationTotal</source>
+        <target>Arbeidstimer totalt</target>
+      </trans-unit>
+      <trans-unit id="stats.yourWorkingHours">
+        <source>stats.yourWorkingHours</source>
+        <target>Mine arbeidstimer</target>
+      </trans-unit>
+      <trans-unit id="stats.amountToday">
+        <source>stats.amountToday</source>
+        <target>Inntekter i dag</target>
+      </trans-unit>
+      <trans-unit id="stats.amountWeek">
+        <source>stats.amountWeek</source>
+        <target>Inntekter denne uken</target>
+      </trans-unit>
+      <trans-unit id="stats.amountMonth">
+        <source>stats.amountMonth</source>
+        <target>Inntekter denne måneden</target>
+      </trans-unit>
+      <trans-unit id="stats.amountYear">
+        <source>stats.amountYear</source>
+        <target>Inntekter dette året</target>
+      </trans-unit>
+      <trans-unit id="stats.amountTotal">
+        <source>stats.amountTotal</source>
+        <target>Lønn totalt</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveToday">
+        <source>stats.userActiveToday</source>
+        <target>Aktive brukere i dag</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveWeek">
+        <source>stats.userActiveWeek</source>
+        <target>Aktive brukere denne uken</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveMonth">
+        <source>stats.userActiveMonth</source>
+        <target>Aktive brukere denne måneden</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveYear">
+        <source>stats.userActiveYear</source>
+        <target>Aktive brukere dette året</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveTotal">
+        <source>stats.userActiveTotal</source>
+        <target>Aktive brukere noensinne</target>
+      </trans-unit>
+      <trans-unit id="stats.activeRecordings">
+        <source>stats.activeRecordings</source>
+        <target>Aktive oppføringer</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% brukt denne måneden</target>
+      </trans-unit>
+      <trans-unit id="admin_invoice_template.title">
+        <source>admin_invoice_template.title</source>
+        <target>Fakturamal</target>
+      </trans-unit>
+      <trans-unit id="label.due_days">
+        <source>label.due_days</source>
+        <target>Betalingsfrist i dager</target>
+      </trans-unit>
+      <trans-unit id="invoice.due_days">
+        <source>invoice.due_days</source>
+        <target>Forfallsdato</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Betalingsdag</target>
+      </trans-unit>
+      <trans-unit id="invoice.from">
+        <source>invoice.from</source>
+        <target>Fra</target>
+      </trans-unit>
+      <trans-unit id="invoice.to">
+        <source>invoice.to</source>
+        <target>Til</target>
+      </trans-unit>
+      <trans-unit id="invoice.number">
+        <source>invoice.number</source>
+        <target>Fakturanummer</target>
+      </trans-unit>
+      <trans-unit id="invoice.total">
+        <source>invoice.total</source>
+        <target>Totalt</target>
+      </trans-unit>
+      <trans-unit id="label.total_rate">
+        <source>label.total_rate</source>
+        <target>Total pris</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Arbeidstimer dette budsjettåret</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Inntekter dette budsjettåret</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Aktive brukere dette budsjettåret</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft">
+        <source>stats.percentUsedLeft</source>
+        <target>%percent%% brukt (%left% tilgjengelig)</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% brukt (%left% tilgjengelig denne måneden)</target>
+      </trans-unit>
+      <trans-unit id="invoice.filter">
+        <source>invoice.filter</source>
+        <target>Filtrer fakturadata</target>
+      </trans-unit>
+      <trans-unit id="invoice.subtotal">
+        <source>invoice.subtotal</source>
+        <target state="needs-translation">Nettobeløp</target>
+      </trans-unit>
+      <trans-unit id="invoice.tax">
+        <source>invoice.tax</source>
+        <target>Skatt</target>
+      </trans-unit>
+      <trans-unit id="invoice.service_date">
+        <source>invoice.service_date</source>
+        <target>Ytelsesdato</target>
+      </trans-unit>
+      <trans-unit id="label.orderDate">
+        <source>label.orderDate</source>
+        <target>Ordredato</target>
+      </trans-unit>
+      <trans-unit id="label.entryState">
+        <source>label.entryState</source>
+        <target>Oppføringer</target>
+      </trans-unit>
+      <trans-unit id="entryState.not_exported">
+        <source>entryState.not_exported</source>
+        <target>Åpne</target>
+      </trans-unit>
+      <trans-unit id="entryState.all">
+        <source>entryState.all</source>
+        <target>Alle</target>
+      </trans-unit>
+      <trans-unit id="entryState.running">
+        <source>entryState.running</source>
+        <target>Aktiv</target>
+      </trans-unit>
+      <trans-unit id="entryState.stopped">
+        <source>entryState.stopped</source>
+        <target>Stoppet</target>
+      </trans-unit>
+      <trans-unit id="export.clear_all">
+        <source>export.clear_all</source>
+        <target>Marker alle viste oppføringer som åpne?</target>
+      </trans-unit>
+      <trans-unit id="export.mark_all">
+        <source>export.mark_all</source>
+        <target>Marker alle viste oppføringer som tømt?</target>
+      </trans-unit>
+      <trans-unit id="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>Ytterligere felter</target>
+      </trans-unit>
+      <trans-unit id="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Ikke eksportert</target>
+      </trans-unit>
+      <trans-unit id="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Ikke fakturert</target>
+      </trans-unit>
+      <trans-unit id="label.invoice_tax_number">
+        <source>label.invoice_tax_number</source>
+        <target>Moms-nr:</target>
+      </trans-unit>
+      <trans-unit id="label.decimalDuration">
+        <source>label.decimalDuration</source>
+        <target>Vis varighet som desimalnummer</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Hoppet over forhåndsvisning av %rows% flere rader …</target>
+      </trans-unit>
+      <trans-unit id="export.document_title">
+        <source>export.document_title</source>
+        <target>Eksport av tidstabeller</target>
+      </trans-unit>
+      <trans-unit id="export.page_of">
+        <source>export.page_of</source>
+        <target>Side %page% av %pages%</target>
+      </trans-unit>
+      <trans-unit id="export.date_copyright">
+        <source>export.date_copyright</source>
+        <target>Laget %date% med %kimai%</target>
+      </trans-unit>
+      <trans-unit id="recent.activities">
+        <source>recent.activities</source>
+        <target>Start én av dine siste aktiviteter igjen</target>
+      </trans-unit>
+      <trans-unit id="recent.activities.format">
+        <source>recent.activities.format</source>
+        <target>%activity% i %project% for %customer%</target>
+      </trans-unit>
+      <trans-unit id="label.exported">
+        <source>label.exported</source>
+        <target>Eksportert</target>
+      </trans-unit>
+      <trans-unit id="entryState.exported">
+        <source>entryState.exported</source>
+        <target>Tømt</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Vis oppføringer uten budsjett</target>
+      </trans-unit>
+      <trans-unit id="invoice.signature_user">
+        <source>invoice.signature_user</source>
+        <target>Bekreftelse: Dato/konsulentnavn/signatur</target>
+      </trans-unit>
+      <trans-unit id="invoice.signature_customer">
+        <source>invoice.signature_customer</source>
+        <target>Bekreftelse: Dato/kundenavn/signatur</target>
+      </trans-unit>
+      <trans-unit id="export.filter">
+        <source>export.filter</source>
+        <target>Filtrer dato for eksport</target>
+      </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>Søke ditt leder til %count% resultater. Hvis eksporten mislyktes må du begrense søket ditt ytterligere.</target>
+      </trans-unit>
+      <trans-unit id="timesheet.start">
+        <source>timesheet.start</source>
+        <target>Opprett ny tidsregistrering</target>
+      </trans-unit>
+      <trans-unit id="label.globalsOnly">
+        <source>label.globalsOnly</source>
+        <target>Kun globalt</target>
+      </trans-unit>
+      <trans-unit id="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target>Felter som skal oppdateres må først aktiveres ved å klikke på tilknyttet avkryssningsboks.</target>
+      </trans-unit>
+      <trans-unit id="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Vis oppføringer uten reservasjoner</target>
+      </trans-unit>
+      <trans-unit id="label.last_record">
+        <source>label.last_record</source>
+        <target>Siste oppføring</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Månedlig</target>
+      </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Legg til bruker</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Budsjett-type</target>
+      </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Legg til en ny bruker i laget ved å velge fra listen. Etterpå kan du bestemme om brukeren skal bli lagleder.</target>
+      </trans-unit>
+      <trans-unit id="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Ingen tidsreservasjoner siden</target>
+      </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Stabsnummer</target>
+      </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>For tiden finnes %records% tidsoppføringer, som totalt har en varighet på %duration%.</target>
+      </trans-unit>
+      <trans-unit id="label.payment_terms">
+        <source>label.payment_terms</source>
+        <target>Betalingsvilkår</target>
+      </trans-unit>
+      <trans-unit id="export.period">
+        <source>export.period</source>
+        <target>Periode</target>
+      </trans-unit>
+      <trans-unit id="menu.doctor">
+        <source>menu.doctor</source>
+        <target>Doktor</target>
+      </trans-unit>
+      <trans-unit id="menu.tags">
+        <source>menu.tags</source>
+        <target>Etiketter</target>
+      </trans-unit>
+      <trans-unit id="error.no_entries_found">
+        <source>error.no_entries_found</source>
+        <target>Ingen oppføringer funnet basert på valgte filtre.</target>
+      </trans-unit>
+      <trans-unit id="error.no_comments_found">
+        <source>error.no_comments_found</source>
+        <target>Ingen kommentarer enda.</target>
+      </trans-unit>
+      <trans-unit id="timesheet.all">
+        <source>timesheet.all</source>
+        <target>Vis alle oppføringer</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target state="needs-translation">Forespørselen kunne ikke behandles. For mange resultater.</target>
+      </trans-unit>
+      <trans-unit id="invoice.title">
+        <source>invoice.title</source>
+        <target>Fakturaer</target>
+      </trans-unit>
+      <trans-unit id="invoice_print">
+        <source>invoice_print</source>
+        <target>Faktura</target>
+      </trans-unit>
+      <trans-unit id="label.mark_as_exported">
+        <source>label.mark_as_exported</source>
+        <target>Marker som eksportert</target>
+      </trans-unit>
+      <trans-unit id="label.unit_price">
+        <source>label.unit_price</source>
+        <target>Enhetspris</target>
+      </trans-unit>
+      <trans-unit id="invoice.total_working_time">
+        <source>invoice.total_working_time</source>
+        <target>Total varighet</target>
+      </trans-unit>
+      <trans-unit id="label.status">
+        <source>label.status</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="status.pending">
+        <source>status.pending</source>
+        <target>Utestående</target>
+      </trans-unit>
+      <trans-unit id="export.title">
+        <source>export.title</source>
+        <target>Eksporter</target>
+      </trans-unit>
+      <trans-unit id="export.full_list">
+        <source>export.full_list</source>
+        <target>Full liste</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Type</target>
+      </trans-unit>
+      <trans-unit id="label.orderNumber">
+        <source>label.orderNumber</source>
+        <target>Ordrenummer</target>
+      </trans-unit>
+      <trans-unit id="label.invoice_bank_account">
+        <source>label.invoice_bank_account</source>
+        <target>Bankkonto</target>
+      </trans-unit>
+      <trans-unit id="status.new">
+        <source>status.new</source>
+        <target>Ny</target>
+      </trans-unit>
+      <trans-unit id="status.paid">
+        <source>status.paid</source>
+        <target>Betalt</target>
+      </trans-unit>
+      <trans-unit id="export.summary">
+        <source>export.summary</source>
+        <target>Sammendrag</target>
+      </trans-unit>
+      <trans-unit id="active.entries">
+        <source>active.entries</source>
+        <target>Dine aktive tidsmålinger</target>
+      </trans-unit>
+      <trans-unit id="label.pageSize">
+        <source>label.pageSize</source>
+        <target>Sidestørrelse</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Forvalgte verdier for nye oppføringer</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
