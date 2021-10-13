@@ -111,7 +111,7 @@
         <target>系统</target>
       </trans-unit>
       <trans-unit id="menu.logout">
-        <source>label.logout</source>
+        <source>menu.logout</source>
         <target>退出</target>
       </trans-unit>
       <trans-unit id="menu.timesheet">

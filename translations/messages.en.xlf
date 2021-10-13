@@ -176,7 +176,7 @@
         <target>System</target>
       </trans-unit>
       <trans-unit id="menu.logout">
-        <source>label.logout</source>
+        <source>menu.logout</source>
         <target>Logout</target>
       </trans-unit>
       <trans-unit id="menu.timesheet">
