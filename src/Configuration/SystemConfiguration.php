@@ -232,6 +232,11 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (string) $this->find('timesheet.default_begin');
     }
 
+    public function getTimesheetDefaultBillable(): bool
+    {
+        return (bool) $this->find('defaults.timesheet.billable');
+    }
+
     public function isTimesheetAllowFutureTimes(): bool
     {
         return (bool) $this->find('timesheet.rules.allow_future_times');
