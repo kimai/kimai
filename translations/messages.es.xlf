@@ -69,7 +69,7 @@
         <target>Repetir contraseña</target>
       </trans-unit>
       <trans-unit id="label.logout">
-        <source>Log out</source>
+        <source>label.logout</source>
         <target>Salir</target>
       </trans-unit>
       <trans-unit id="label.user_profile">
@@ -104,7 +104,7 @@
         <target>Sistema</target>
       </trans-unit>
       <trans-unit id="menu.logout">
-        <source>Log out</source>
+        <source>label.logout</source>
         <target>Salir</target>
       </trans-unit>
       <trans-unit id="menu.timesheet">

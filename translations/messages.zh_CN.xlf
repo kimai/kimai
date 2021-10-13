@@ -76,7 +76,7 @@
         <target state="translated">确认密码</target>
       </trans-unit>
       <trans-unit id="label.logout">
-        <source>Log out</source>
+        <source>label.logout</source>
         <target>退出</target>
       </trans-unit>
       <trans-unit id="label.user_profile">
@@ -111,7 +111,7 @@
         <target>系统</target>
       </trans-unit>
       <trans-unit id="menu.logout">
-        <source>Log out</source>
+        <source>label.logout</source>
         <target>退出</target>
       </trans-unit>
       <trans-unit id="menu.timesheet">

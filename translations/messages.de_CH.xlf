@@ -1127,11 +1127,16 @@
       </trans-unit>
       <trans-unit id="registration.check_email">
         <source>registration.check_email</source>
-        <target>Ein E-Mail wurde an %email% gesendet. Es enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.</target>
+        <target>Eine E-Mail wurde an %email% gesendet. Diese enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.</target>
       </trans-unit>
       <trans-unit id="resetting.check_email">
         <source>resetting.check_email</source>
-        <target>Ein E-Mail wurde verschickt. Es beinhaltet einen Link zum Zurücksetzen des Passwortes. Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden. Eventuell wurde dieses E-Mail als Spam markiert, wenn sie nicht angekommen ist.</target>
+        <target>
+          Eine E-Mail wurde verschickt. Diese beinhaltet einen Link zum Zurücksetzen des Passwortes.
+          Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden.
+
+          Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.
+        </target>
       </trans-unit>
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
