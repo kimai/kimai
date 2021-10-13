@@ -364,6 +364,10 @@ abstract class TimesheetAbstractController extends AbstractController
                     $timesheet->setExported($dto->isExported());
                     $execute = true;
                 }
+                if (null !== $dto->isBillable()) {
+                    $timesheet->setBillable($dto->isBillable());
+                    $execute = true;
+                }
 
                 if ($dto->isRecalculateRates()) {
                     $timesheet->setFixedRate(null);
