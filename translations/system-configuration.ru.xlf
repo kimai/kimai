@@ -14,14 +14,6 @@
         <source>invoice</source>
         <target>Счета</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Создать клиента — значения по умолчанию</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Пользователь — значения по умолчанию</target>
-      </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
         <target>Тема</target>

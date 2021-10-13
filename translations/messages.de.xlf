@@ -725,7 +725,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>Profilbild</target>
+        <target>Profilbild (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1251,6 +1251,10 @@
       <trans-unit id="team.add_user.help">
         <source>team.add_user.help</source>
         <target>Durch Auswahl wird dem Team ein neuer Benutzer hinzugefügt. Sie können im Anschluss festlegen, ob der Benutzer ein Teamleiter sein soll.</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Standard Wert für neue Einträge</target>
       </trans-unit>
     </body>
   </file>

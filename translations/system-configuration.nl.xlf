@@ -14,14 +14,6 @@
         <source>invoice</source>
         <target>Facturen</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Maak standaard klant waardens aan</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Gebruiker—standaardwaarden</target>
-      </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
         <target>Thema</target>

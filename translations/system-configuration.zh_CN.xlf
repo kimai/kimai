@@ -10,14 +10,6 @@
         <source>timesheet</source>
         <target>时间表</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>创建客户-默认值</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>用户—默认值</target>
-      </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
         <target>主题</target>
