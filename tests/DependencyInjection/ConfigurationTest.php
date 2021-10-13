@@ -395,6 +395,9 @@ class ConfigurationTest extends TestCase
             'dashboard' => [],
             'widgets' => [],
             'defaults' => [
+                'timesheet' => [
+                    'billable' => true,
+                ],
                 'customer' => [
                     'timezone' => null,
                     'country' => 'DE',
