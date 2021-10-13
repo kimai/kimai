@@ -6,17 +6,9 @@
         <source>title</source>
         <target state="translated">Inställningar</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target state="translated">Ändra globala konfigurationer för din tidsredovisning</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target state="translated">Tidrapport</target>
-      </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target state="translated">Skapa kund - standardvärden</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
@@ -261,10 +253,6 @@
       <trans-unit id="label.theme.tags_create">
         <source>label.theme.tags_create</source>
         <target>Taggar: använd automatisk komplettering vid sökning och tillåt skapande av taggar</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Användare – standardvärden</target>
       </trans-unit>
       <trans-unit id="invoice">
         <source>invoice</source>

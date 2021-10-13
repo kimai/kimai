@@ -729,7 +729,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>Profile image</target>
+        <target>Profile image (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1094,10 +1094,6 @@
         <source>export.title</source>
         <target>Export</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Export timesheet data to various formats</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>Filter data for export</target>
@@ -1259,6 +1255,10 @@
       <trans-unit id="team.add_user.help">
         <source>team.add_user.help</source>
         <target>Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Default values for new entries</target>
       </trans-unit>
       <!--
           QUICK ENTRIES

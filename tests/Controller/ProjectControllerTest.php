@@ -214,6 +214,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $rate->setActivity($activity);
         $rate->setRate(123.45);
         $em->persist($rate);
+        $em->flush();
 
         $this->request($client, '/admin/project/1/duplicate');
         $this->assertIsRedirect($client, '/details');

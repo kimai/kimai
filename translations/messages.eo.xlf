@@ -929,10 +929,6 @@
         <source>export.title</source>
         <target>Eksporti</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Eksporti temposlipajn datumojn al diversaj dosierformoj</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>Filtri datumojn por eksporto</target>

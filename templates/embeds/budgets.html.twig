@@ -131,7 +131,7 @@
                         <tr>
                             <th colspan="3" class="text-nowrap text-right">
                                 {% if totalPercentReached < 100 %}
-                                    {{ 'stats.percentUsedLeft'|trans({'%percent%': totalPercentReached|number_format(2), '%left%': (entity.timeBudget - stats.rateBillable)|money(currency)}) }}
+                                    {{ 'stats.percentUsedLeft'|trans({'%percent%': totalPercentReached|number_format(2), '%left%': (entity.budget - stats.rateBillable)|money(currency)}) }}
                                 {% else %}
                                     {{ 'stats.percentUsed'|trans({'%percent%': totalPercentReached|number_format(2)}) }}
                                 {% endif %}

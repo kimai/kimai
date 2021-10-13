@@ -201,6 +201,11 @@ kimai:
             order: 50
             permission: view_all_data
             widgets: [amountToday, amountWeek, amountMonth, amountYear]
+        totals:
+            title: ~
+            order: 100
+            permission: ROLE_USER
+            widgets: [TotalsUser, TotalsCustomer, TotalsProject, TotalsActivity]
 # --------------------------------------------------------------------------------
 
 

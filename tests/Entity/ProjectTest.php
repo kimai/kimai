@@ -163,6 +163,9 @@ class ProjectTest extends AbstractEntityTest
             ['label.orderDate', 'datetime'],
             ['label.project_start', 'datetime'],
             ['label.project_end', 'datetime'],
+            ['label.budget', 'float'],
+            ['label.timeBudget', 'duration'],
+            ['label.budgetType', 'string'],
             ['label.color', 'string'],
             ['label.visible', 'boolean'],
             ['label.comment', 'string'],
@@ -246,6 +249,12 @@ class ProjectTest extends AbstractEntityTest
         $sut->setEnd($now);
         self::assertTrue($sut->isVisibleAtDate($now));
         $sut->setEnd(new \DateTime('-1 hour'));
+        self::assertFalse($sut->isVisibleAtDate($now));
+        $sut->setEnd(new \DateTime('+1 hour'));
+        self::assertTrue($sut->isVisibleAtDate($now));
+        $sut->setStart(new \DateTime('-1 hour'));
+        self::assertTrue($sut->isVisibleAtDate($now));
+        $sut->setStart(new \DateTime('+1 hour'));
         self::assertFalse($sut->isVisibleAtDate($now));
     }
 }

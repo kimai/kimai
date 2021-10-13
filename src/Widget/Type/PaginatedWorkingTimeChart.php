@@ -24,7 +24,6 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
     {
         $this->repository = $repository;
         $this->systemConfiguration = $systemConfiguration;
-        $this->setId('PaginatedWorkingTimeChart');
         $this->setTitle('stats.yourWorkingHours');
     }
 

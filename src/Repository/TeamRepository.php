@@ -211,7 +211,7 @@ class TeamRepository extends EntityRepository
             $or->add(
                 $qb->expr()->andX(
                     $qb->expr()->eq('members.user', ':id'),
-                    $qb->expr()->eq('members.teamlead', true),
+                    $qb->expr()->eq('members.teamlead', true)
                 )
             );
             $qb->setParameter('id', $user);

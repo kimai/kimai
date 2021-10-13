@@ -15,8 +15,8 @@ class SystemConfiguration
     public const SECTION_LOCKDOWN = 'lockdown_period';
     public const SECTION_TIMESHEET = 'timesheet';
     public const SECTION_FORM_INVOICE = 'invoice';
-    public const SECTION_FORM_CUSTOMER = 'form_customer';
-    public const SECTION_FORM_USER = 'form_user';
+    public const SECTION_FORM_CUSTOMER = 'customer';
+    public const SECTION_FORM_USER = 'user';
     public const SECTION_THEME = 'theme';
     public const SECTION_AUTHENTICATION = 'authentication';
     public const SECTION_CALENDAR = 'calendar';

@@ -45,10 +45,8 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
         $activity->setProject($project1);
 
         $timesheet = new TimesheetMultiUpdateDTO();
-        $timesheet
-            ->setActivity($activity)
-            ->setProject($project2)
-        ;
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project2);
 
         $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
 
@@ -91,10 +89,8 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
     public function testHourlyRateAndFixedRateInParallelAreNotAllowed()
     {
         $timesheet = new TimesheetMultiUpdateDTO();
-        $timesheet
-            ->setHourlyRate(10.12)
-            ->setFixedRate(123.45)
-        ;
+        $timesheet->setHourlyRate(10.12);
+        $timesheet->setFixedRate(123.45);
 
         $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
 
@@ -119,10 +115,8 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
         $activity->setProject($project);
 
         $timesheet = new TimesheetMultiUpdateDTO();
-        $timesheet
-            ->setActivity($activity)
-            ->setProject($project)
-        ;
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
 
         $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
 

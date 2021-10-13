@@ -354,7 +354,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target><![CDATA[Bugetul proiectelor echipei &]]></target>
+        <target>Proiectele mele</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -848,10 +848,6 @@
         <source>export.title</source>
         <target>Export</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Exportă datele în mai multe formate</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>Filtrează datele pentru export</target>
@@ -1183,6 +1179,10 @@
       <trans-unit id="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>Căutarea dvs. duce la %count% rezultate. Dacă exportul eșuează, trebuie să restrângeți căutarea mai mult.</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Tip</target>
       </trans-unit>
     </body>
   </file>
