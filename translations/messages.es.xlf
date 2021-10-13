@@ -1242,7 +1242,7 @@
       </trans-unit>
       <trans-unit id="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
-        <target>Actualmente %registros% existen registros de tiempo, que suman una duración total de %duración%.</target>
+        <target>Actualmente %records% existen registros de tiempo, que suman una duración total de %duration%.</target>
       </trans-unit>
     </body>
   </file>
