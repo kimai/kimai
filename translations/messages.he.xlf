@@ -594,7 +594,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>תמונת פרופיל</target>
+        <target>תמונת פרופיל (כתובת)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1179,6 +1179,10 @@
       <trans-unit id="label.type">
         <source>label.type</source>
         <target>סוג</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>ערכי ברירת מחדל לרשומות חדשות</target>
       </trans-unit>
     </body>
   </file>
