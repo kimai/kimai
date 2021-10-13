@@ -1099,6 +1099,106 @@
         <source>modal.dirty</source>
         <target>Az űrlap megváltozott. A "Mentés" gombbal elmentheted a változtatásokat, a "Bezárás" gombbal elvetheted őket.</target>
       </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Típus</target>
+      </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>A keresés eredménye %count% találat. Ha az exportálás sikertelen, a keresést tovább kell szűkíteni.</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Kedvenc keresés törlése</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Növekvő</target>
+      </trans-unit>
+      <trans-unit id="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Rendezés</target>
+      </trans-unit>
+      <trans-unit id="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>A kérés nem teljesíthető, túl sok találat.</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target>Fájl</target>
+      </trans-unit>
+      <trans-unit id="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Bevétel ebben a pénzügyi évben</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Pénzügyi év</target>
+      </trans-unit>
+      <trans-unit id="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Munkaórák ebben a pénzügyi évben</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% felhasználva (%left% még elérhető ebben a hónapban)</target>
+      </trans-unit>
+      <trans-unit id="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Előnézetből kihagyva %rows% további sor…</target>
+      </trans-unit>
+      <trans-unit id="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Áfa százalák</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Keresett szöveg</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Beállítások mentése mint kedvenc keresés</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Csökkenő</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Egy üzenet lett küldve a %email% címre. Ebben az üzenetben található az aktivációs link, amire kattintva aktiválhatod a fiókodat.</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Aktív felhasználók ebben a pénzügyi évben</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>E-mail üzenet elküldve. Ebben az üzenetben található a jelszó visszaállító link, amivel visszaállíthatod a jelszavadat. Megjegyzés: új jelszó csak egyszer kérhető minden %tokenLifetime% órában. Ha nem érkezett meg az e-mail, ellenőrizze a spam mappában is.</target>
+      </trans-unit>
+      <trans-unit id="action.save_all">
+        <source>action.save_all</source>
+        <target>Összes mentése</target>
+      </trans-unit>
+      <trans-unit id="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Munkaidő</target>
+      </trans-unit>
+      <trans-unit id="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Egy bejegyzés törléséhez, húzd a gombra.</target>
+      </trans-unit>
+      <trans-unit id="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Bevétel</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% felhasználva ebben a hónapban</target>
+      </trans-unit>
+      <trans-unit id="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Fizetés dátuma</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

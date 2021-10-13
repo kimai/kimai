@@ -176,7 +176,7 @@
       </trans-unit>
       <trans-unit id="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>Logo URL'si (giriş ekranındaki şirket adının yerini alır)</target>
+        <target>Logo URL'si (oturum açma ekranındaki şirket adının yerini alır)</target>
       </trans-unit>
       <trans-unit id="branding">
         <source>branding</source>
