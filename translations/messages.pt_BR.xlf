@@ -512,7 +512,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>Imagem de perfil</target>
+        <target>Imagem do perfil (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1197,7 +1197,7 @@
       </trans-unit>
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
-        <target>A solicitação não pôde ser processada, muitos resultados foram encontrados.</target>
+        <target>A solicitação não pôde ser processada. Muitos resultados foram encontrados.</target>
       </trans-unit>
       <trans-unit id="label.account_number">
         <source>label.account_number</source>
@@ -1246,6 +1246,10 @@
       <trans-unit id="label.type">
         <source>label.type</source>
         <target>Tipo</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Valores predefinidos para as novas entradas</target>
       </trans-unit>
     </body>
   </file>
