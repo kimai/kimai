@@ -207,6 +207,17 @@ class TimesheetMultiUpdate extends AbstractType
             ]);
         }
 
+        if ($options['include_billable']) {
+            $builder->add('billable', ChoiceType::class, [
+                'label' => 'label.billable',
+                'choices' => [
+                    '' => null,
+                    'yes' => true,
+                    'no' => false,
+                ],
+            ]);
+        }
+
         if ($options['include_rate']) {
             $builder
                 ->add('recalculateRates', YesNoType::class, [
@@ -279,6 +290,7 @@ class TimesheetMultiUpdate extends AbstractType
             'include_user' => false,
             'include_rate' => false,
             'include_exported' => false,
+            'include_billable' => true,
         ]);
     }
 }
