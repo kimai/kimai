@@ -9,6 +9,8 @@
 
 namespace App\Form;
 
+use App\Form\Type\TeamType;
+use App\Form\Type\UserRoleType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -42,6 +44,24 @@ class UserCreateType extends UserEditType
 
         parent::buildForm($builder, $options);
 
+        if ($options['include_teams'] === true) {
+            $builder
+                ->add('teams', TeamType::class, [
+                    'multiple' => true,
+                    'expanded' => false,
+                    'required' => false,
+                ]);
+        }
+
+        if ($options['include_roles'] === true) {
+            $builder
+                ->add('roles', UserRoleType::class, [
+                    'multiple' => true,
+                    'expanded' => false,
+                    'required' => false,
+                ]);
+        }
+
         if ($options['include_add_more'] === true) {
             $builder->add('create_more', CheckboxType::class, [
                 'label' => 'label.create_more',
@@ -58,6 +78,8 @@ class UserCreateType extends UserEditType
         $resolver->setDefaults([
             'validation_groups' => ['UserCreate', 'Registration'],
             'include_add_more' => false,
+            'include_roles' => false,
+            'include_teams' => false,
         ]);
     }
 }

@@ -241,6 +241,8 @@ final class UserController extends AbstractController
             'include_active_flag' => true,
             'include_preferences' => $this->isGranted('preferences', $user),
             'include_add_more' => true,
+            'include_teams' => $this->isGranted('teams_other_profile'),
+            'include_roles' => $this->isGranted('roles_other_profile'),
         ]);
     }
 }
