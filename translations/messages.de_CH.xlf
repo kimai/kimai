@@ -455,7 +455,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>Profilbild</target>
+        <target>Profilbild (URL)</target>
       </trans-unit>
       <trans-unit id="label.title">
         <source>label.title</source>
@@ -1140,7 +1140,7 @@
       </trans-unit>
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
-        <target>Anfrage konnte nicht verarbeitet werden, es wurden zu viele Ergebnisse gefunden.</target>
+        <target>Die Anfrage konnte nicht verarbeitet werden. Es wurden zu viele Ergebnisse gefunden.</target>
       </trans-unit>
       <trans-unit id="stats.workingTime">
         <source>stats.workingTime</source>
@@ -1181,6 +1181,10 @@
       <trans-unit id="team.add_user.help">
         <source>team.add_user.help</source>
         <target>Durch Auswahl wird dem Team ein neuer Benutzer hinzugefügt. Sie können im Anschluss festlegen, ob der Benutzer ein Teamleiter sein soll.</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Standard Wert für neue Einträge</target>
       </trans-unit>
     </body>
   </file>
