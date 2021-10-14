@@ -14,14 +14,6 @@
                 <source>invoice</source>
                 <target state="translated">Laskut</target>
             </trans-unit>
-            <trans-unit id="form_customer">
-                <source>form_customer</source>
-                <target state="translated">Luo asiakas—oletus arvot</target>
-            </trans-unit>
-            <trans-unit id="form_user">
-                <source>form_user</source>
-                <target state="translated">Käyttäjä—oletus arvot</target>
-            </trans-unit>
             <trans-unit id="theme">
                 <source>theme</source>
                 <target state="translated">Teema</target>

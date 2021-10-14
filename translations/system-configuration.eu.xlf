@@ -10,14 +10,6 @@
         <source>timesheet</source>
         <target>Ordu taula</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Bezeroa sortu - defektuzko balioekin</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Defektuzko balioak - erabiltzailea</target>
-      </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
         <target>Itxura</target>

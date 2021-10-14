@@ -17,14 +17,6 @@
         <source>invoice</source>
         <target>חשבוניות</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>צור ערכי ברירת מחדל ללקוח</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>ערכי ברירת מחדל למשתמש</target>
-      </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
         <target>ערכת עיצוב</target>

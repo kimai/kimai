@@ -10,14 +10,6 @@
         <source>timesheet</source>
         <target>Pracovní výkaz</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Vytvořit zákazníka—výchozí hodnota</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Uživatel—výchozí hodnota</target>
-      </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
         <target>Vzhled</target>

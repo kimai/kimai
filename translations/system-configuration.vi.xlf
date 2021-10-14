@@ -14,14 +14,6 @@
                 <source>invoice</source>
                 <target>Hóa đơn</target>
             </trans-unit>
-            <trans-unit id="form_customer">
-                <source>form_customer</source>
-                <target>Tạo giá trị mặc định của khách hàng</target>
-            </trans-unit>
-            <trans-unit id="form_user">
-                <source>form_user</source>
-                <target>Giá trị mặc định của người dùng</target>
-            </trans-unit>
             <trans-unit id="theme">
                 <source>theme</source>
                 <target>Chủ đề</target>

@@ -10,14 +10,6 @@
                 <source>timesheet</source>
                 <target>Timeseddel</target>
             </trans-unit>
-            <trans-unit id="form_customer">
-                <source>form_customer</source>
-                <target>Opret standardværdier for kunder</target>
-            </trans-unit>
-            <trans-unit id="form_user">
-                <source>form_user</source>
-                <target>Standardværdier for brugere</target>
-            </trans-unit>
             <trans-unit id="theme">
                 <source>theme</source>
                 <target>Tema</target>

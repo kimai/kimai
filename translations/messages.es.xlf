@@ -344,7 +344,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Proyectos de equipo y presupuestos</target>
+        <target>Mis proyectos</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -817,7 +817,7 @@
       </trans-unit>
       <trans-unit id="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
-        <target>CIF/NIF:</target>
+        <target>Id. de IVA:</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
@@ -978,7 +978,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target state="translated">No se han configurado honorarios aún.</target>
+        <target state="translated">Aún no se han configurado tarifas por hora.</target>
       </trans-unit>
       <trans-unit id="placeholder.type_message">
         <source>placeholder.type_message</source>
@@ -990,7 +990,7 @@
       </trans-unit>
       <trans-unit id="label.vat_id">
         <source>label.vat_id</source>
-        <target>Id. de IVA</target>
+        <target>CIF / NIF</target>
       </trans-unit>
       <trans-unit id="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
@@ -1219,6 +1219,30 @@
       <trans-unit id="registration.check_email">
         <source>registration.check_email</source>
         <target>Se ha enviado un mensaje a %email%. Contiene un enlace de activación que debe seguir para activar su cuenta.</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Tipo</target>
+      </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Número de personal</target>
+      </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Agregue un nuevo usuario al equipo seleccionándolo de la lista. Después puedes decidir si el usuario debe convertirse en líder de equipo.</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Tipo de Presupuesto</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Mensual</target>
+      </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>Actualmente %records% existen registros de tiempo, que suman una duración total de %duration%.</target>
       </trans-unit>
     </body>
   </file>

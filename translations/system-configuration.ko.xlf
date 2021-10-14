@@ -10,14 +10,6 @@
         <source>timesheet</source>
         <target state="translated">타임시트</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target state="translated">고객 생성—기본 값</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target state="translated">사용자—기본 값</target>
-      </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
         <target state="translated">테마</target>

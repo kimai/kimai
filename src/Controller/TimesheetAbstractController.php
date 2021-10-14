@@ -215,6 +215,9 @@ abstract class TimesheetAbstractController extends AbstractController
     {
         $copyTimesheet = clone $timesheet;
 
+        $event = new TimesheetMetaDefinitionEvent($copyTimesheet);
+        $this->dispatcher->dispatch($event);
+
         $form = $this->getDuplicateForm($copyTimesheet, $timesheet);
         $form->handleRequest($request);
 
@@ -359,6 +362,10 @@ abstract class TimesheetAbstractController extends AbstractController
                 }
                 if (null !== $dto->isExported()) {
                     $timesheet->setExported($dto->isExported());
+                    $execute = true;
+                }
+                if (null !== $dto->isBillable()) {
+                    $timesheet->setBillable($dto->isBillable());
                     $execute = true;
                 }
 

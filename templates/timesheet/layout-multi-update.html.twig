@@ -36,6 +36,11 @@
                 {{ form_row(form.exported) }}
             </fieldset>
             {% endif %}
+            {% if form.billable is defined %}
+            <fieldset>
+                {{ form_row(form.billable) }}
+            </fieldset>
+            {% endif %}
             {% if form.recalculateRates is defined %}
             <fieldset>
                 {{ form_row(form.recalculateRates) }}

@@ -382,6 +382,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setConstraints([
                             new GreaterThanOrEqual(['value' => 0])
                         ]),
+                    (new Configuration())
+                        ->setName('defaults.timesheet.billable')
+                        ->setType(YesNoType::class)
+                        ->setOptions(['help' => 'default_value_new', 'label' => 'label.billable']),
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_LOCKDOWN)
@@ -449,11 +453,12 @@ final class SystemConfigurationController extends AbstractController
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_FORM_INVOICE)
                 ->setConfiguration([
+                    // TODO that should be a custom type with validation
                     (new Configuration())
                         ->setName('invoice.number_format')
                         ->setLabel('invoice.number_format')
                         ->setRequired(true)
-                        ->setType(TextType::class) // TODO that should be a custom type with validation
+                        ->setType(TextType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
                         ->setName('invoice.simple_form')
@@ -470,15 +475,18 @@ final class SystemConfigurationController extends AbstractController
                         ->setName('defaults.customer.timezone')
                         ->setLabel('timezone')
                         ->setType(TimezoneType::class)
-                        ->setValue(date_default_timezone_get()),
+                        ->setValue(date_default_timezone_get())
+                        ->setOptions(['help' => 'default_value_new']),
                     (new Configuration())
                         ->setName('defaults.customer.country')
                         ->setLabel('country')
-                        ->setType(CountryType::class),
+                        ->setType(CountryType::class)
+                        ->setOptions(['help' => 'default_value_new']),
                     (new Configuration())
                         ->setName('defaults.customer.currency')
                         ->setLabel('currency')
-                        ->setType(CurrencyType::class),
+                        ->setType(CurrencyType::class)
+                        ->setOptions(['help' => 'default_value_new']),
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_FORM_USER)
@@ -487,19 +495,28 @@ final class SystemConfigurationController extends AbstractController
                         ->setName('defaults.user.timezone')
                         ->setLabel('timezone')
                         ->setType(TimezoneType::class)
-                        ->setValue(date_default_timezone_get()),
+                        ->setValue(date_default_timezone_get())
+                        ->setOptions(['help' => 'default_value_new']),
                     (new Configuration())
                         ->setName('defaults.user.language')
                         ->setLabel('language')
-                        ->setType(LanguageType::class),
+                        ->setType(LanguageType::class)
+                        ->setOptions(['help' => 'default_value_new']),
                     (new Configuration())
                         ->setName('defaults.user.theme')
                         ->setLabel('skin')
-                        ->setType(SkinType::class),
+                        ->setType(SkinType::class)
+                        ->setOptions(['help' => 'default_value_new']),
                     (new Configuration())
                         ->setName('defaults.user.currency')
                         ->setLabel('currency')
                         ->setType(CurrencyType::class),
+                    (new Configuration())
+                        ->setName('theme.avatar_url')
+                        ->setRequired(false)
+                        ->setLabel('theme.avatar_url')
+                        ->setType(CheckboxType::class)
+                        ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_THEME)
@@ -531,13 +548,6 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(ArrayToCommaStringType::class)
                         ->setOptions(['help' => 'help.theme.color_choices'])
                         ->setConstraints([new ColorChoices()])
-                        ->setTranslationDomain('system-configuration'),
-                    // allow avatar URLs
-                    (new Configuration())
-                        ->setName('theme.avatar_url')
-                        ->setRequired(false)
-                        ->setLabel('theme.avatar_url')
-                        ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
                     // random colors as fallback
                     (new Configuration())
