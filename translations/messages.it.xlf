@@ -656,7 +656,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>Immagine di profilo</target>
+        <target>Immagine di profilo (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1205,7 +1205,7 @@
       </trans-unit>
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
-        <target>La richiesta non può essere elaborata, sono stati trovati troppi risultati.</target>
+        <target>La richiesta non può essere elaborata. Sono stati trovati troppi risultati.</target>
       </trans-unit>
       <trans-unit id="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
@@ -1246,6 +1246,10 @@
       <trans-unit id="label.type">
         <source>label.type</source>
         <target>Tipo</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Valori predefiniti per le nuove voci</target>
       </trans-unit>
     </body>
   </file>
