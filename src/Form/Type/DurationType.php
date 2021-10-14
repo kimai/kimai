@@ -60,6 +60,12 @@ class DurationType extends AbstractType
         }
 
         $view->vars['duration_presets'] = $presets;
+
+        $class = 'duration-input';
+        if (isset($view->vars['attr']['class'])) {
+            $class .= ' ' . $view->vars['attr']['class'];
+        }
+        $view->vars['attr']['class'] = $class;
     }
 
     /**

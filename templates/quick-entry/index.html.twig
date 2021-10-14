@@ -38,6 +38,15 @@
                 <tbody id="ts-collection" data-index="{{ form.rows.children|length }}">
                     {{ form(form) }}
                 </tbody>
+                <tfoot>
+                    <tr class="summary">
+                        <td>{{ 'stats.durationTotal'|trans }}</td>
+                        <td class="text-center" id="qe-totals-week"></td>
+                        {% for id, week in days %}
+                            <td class="text-center" id="qe-totals-day-{{ loop.index0 }}"></td>
+                        {% endfor %}
+                    </tr>
+                </tfoot>
             </table>
         {% endblock %}
     {% endembed %}
@@ -47,6 +56,26 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function(event) {
+            const kimai = event.detail.kimai;
+            const DATES = kimai.getPlugin('date');
+            const FORMS = kimai.getPlugin('form-select');
+
+            const recalculateTotals = function(e) {
+                const allFields = document.getElementsByClassName('duration-input');
+                let totalsPerDay = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0};
+                let fullTotals = 0;
+                for (let durationInput of allFields) {
+                    let id = durationInput.id.replace(/_duration/, '').substr(-1);
+                    totalsPerDay[id] += DATES.getSecondsFromDurationString(durationInput.value);
+                }
+                for (const [id, total] of Object.entries(totalsPerDay)) {
+                    document.getElementById('qe-totals-day-' + id).innerText = DATES.formatSeconds(total);
+                    fullTotals += total;
+                }
+                document.getElementById('qe-totals-week').innerText = DATES.formatSeconds(fullTotals);
+            };
+            recalculateTotals();
+
             {% if form.user is defined %}
             jQuery('#{{ form.user.vars.id }}').on('change', function(ev) {
                 jQuery(this).closest('form').submit();
@@ -57,7 +86,7 @@
                 location.href = '{{ path('quick_entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', jQuery(this).val());
             });
 
-            const kimai = event.detail.kimai;
+            jQuery('body').on('change', '.duration-input', recalculateTotals);
 
             const addFormToCollection = function(e) {
                 const collectionHolder = document.getElementById(e.currentTarget.dataset.collectionHolder);
@@ -74,7 +103,7 @@
                 collectionHolder.appendChild(node);
 
                 jQuery(node).find('.selectpicker').each(function(i, el) {
-                    kimai.getPlugin('form-select').activateSelectPickerByElement(el, 'body');
+                    FORMS.activateSelectPickerByElement(el, 'body');
                 });
 
                 collectionHolder.dataset.index++;
