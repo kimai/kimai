@@ -417,7 +417,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>Изображение профиля</target>
+        <target>Изображение профиля (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
