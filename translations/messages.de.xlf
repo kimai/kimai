@@ -248,7 +248,7 @@
       </trans-unit>
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
-        <target>Anfrage konnte nicht verarbeitet werden, es wurden zu viele Ergebnisse gefunden.</target>
+        <target>Die Anfrage konnte nicht verarbeitet werden. Es wurden zu viele Ergebnisse gefunden.</target>
       </trans-unit>
       <!--
               General labels
@@ -1270,7 +1270,7 @@
       </trans-unit>
       <trans-unit id="default_value_new">
         <source>default_value_new</source>
-        <target>Standard Wert für neue Einträge</target>
+        <target>Standardwerte für neue Einträge</target>
       </trans-unit>
       <!--
           QUICK ENTRIES
