@@ -239,7 +239,7 @@
         <target>Još nema komentara.</target>
       </trans-unit>
       <trans-unit id="error.too_many_entries">
-        <source>error.too_many_entries</source>
+        <source>The request could not be processed. Too many results were found.</source>
         <target>Zahtjev se nije mogao obraditi, pronađeno je previše rezultata.</target>
       </trans-unit>
       <!--
@@ -717,7 +717,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>Slika profila</target>
+        <target>Slika profila (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1247,6 +1247,10 @@
       <trans-unit id="team.add_user.help">
         <source>team.add_user.help</source>
         <target>Dodaj novog korisnika u tim iz popisa. Nakon toga možeš odlučiti treba li korisnik postati voditelj tima.</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Standardne vrijednosti za nove unose</target>
       </trans-unit>
     </body>
   </file>
