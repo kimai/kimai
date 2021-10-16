@@ -23,17 +23,20 @@
                 {% set absoluteTotals = 0 %}
                 {% set totals = {} %}
                 <table class="table table-bordered table-hover dataTable">
-                    <tr>
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
-                        {% for day in stats.0.getDateTimes() %}
-                            <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}">
-                                {{ day|day_name(true) }}<br>
-                                {{ day|format_date('short') }}
-                            </th>
-                            {% set totals = totals|merge({(day|report_date): 0}) %}
-                        {% endfor %}
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            {% for day in stats.0.getDateTimes() %}
+                                <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}">
+                                    {{ day|day_name(true) }}<br>
+                                    {{ day|format_date('short') }}
+                                </th>
+                                {% set totals = totals|merge({(day|report_date): 0}) %}
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
                     {% for userDay in stats %}
                         {% set usersTotalDuration = 0 %}
                         <tr class="user">
@@ -59,17 +62,20 @@
                             {% endfor %}
                         </tr>
                     {% endfor %}
-                    <tr>
-                        <th>&nbsp;</th>
-                        <th class="text-center text-nowrap">
-                            {{ absoluteTotals|duration }}
-                        </th>
-                        {% for id, duration in totals %}
-                            <th class="text-center text-nowrap">
-                                {{ duration|duration }}
-                            </th>
-                        {% endfor %}
-                    </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="summary">
+                            <td>{{ 'stats.durationTotal'|trans }}</td>
+                            <td class="text-center text-nowrap">
+                                {{ absoluteTotals|duration }}
+                            </td>
+                            {% for id, duration in totals %}
+                                <td class="text-center text-nowrap">
+                                    {{ duration|duration }}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </tfoot>
                 </table>
             {% endif %}
         {% endblock %}

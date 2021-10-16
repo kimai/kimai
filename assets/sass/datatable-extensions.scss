@@ -89,6 +89,15 @@ table.dataTable {
             opacity: 0.8;
         }
     }
+    tfoot {
+        tr {
+            /* overwritten if used in tfoot, to switch the border from below to top */
+            &.summary td {
+                border-top: 1px solid #ccc;
+                border-bottom: 0;
+            }
+        }
+    }
 }
 
 table.table-hover {
