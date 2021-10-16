@@ -570,7 +570,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>Imagine de profil</target>
+        <target>Imagine de profil (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1161,8 +1161,8 @@
         <target>Dacă doriți să ștergeți o intrare, trebuie să o trageți pe buton.</target>
       </trans-unit>
       <trans-unit id="error.too_many_entries">
-        <source>error.too_many_entries</source>
-        <target>Cererea nu a putut fi procesată, au fost găsite prea multe rezultate.</target>
+        <source>The request could not be processed. Too many results were found.</source>
+        <target>Cererea nu a putut fi procesată. Au fost găsite prea multe rezultate.</target>
       </trans-unit>
       <trans-unit id="resetting.check_email">
         <source>resetting.check_email</source>
@@ -1183,6 +1183,10 @@
       <trans-unit id="label.type">
         <source>label.type</source>
         <target>Tip</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Valori implicite pentru noile intrări</target>
       </trans-unit>
     </body>
   </file>
