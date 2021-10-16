@@ -26,6 +26,7 @@ class MinuteIncrementType extends AbstractType
     {
         $resolver->setDefaults([
             'deactivate' => true,
+            'max_one_hour' => false,
         ]);
 
         $resolver->setDefault('choices', function (Options $options) {
@@ -47,8 +48,11 @@ class MinuteIncrementType extends AbstractType
             $choices['30'] = '30';
             $choices['45'] = '45';
             $choices['60'] = '60';
-            $choices['90'] = '90';
-            $choices['120'] = '120';
+
+            if (!$options['max_one_hour']) {
+                $choices['90'] = '90';
+                $choices['120'] = '120';
+            }
 
             return $choices;
         });
