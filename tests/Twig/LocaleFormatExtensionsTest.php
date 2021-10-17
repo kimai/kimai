@@ -529,6 +529,8 @@ class LocaleFormatExtensionsTest extends TestCase
         self::assertTrue(\call_user_func($test->getCallable(), new \DateTime()));
         self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('-1 day')));
         self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('+1 day')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \stdClass()));
+        self::assertFalse(\call_user_func($test->getCallable(), null));
     }
 
     public function testIsWeekend()
@@ -538,6 +540,8 @@ class LocaleFormatExtensionsTest extends TestCase
         self::assertTrue(\call_user_func($test->getCallable(), new \DateTime('first sunday this month')));
         self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first monday this month')));
         self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first friday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \stdClass()));
+        self::assertFalse(\call_user_func($test->getCallable(), null));
     }
 
     protected function getTimesheet($seconds)
