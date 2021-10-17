@@ -5,6 +5,7 @@
  * file that was distributed with this source code.
  */
 
+@import "variables";
 
 table.dataTable.table > tbody > tr > td {
     vertical-align: middle;
@@ -117,4 +118,9 @@ table.table-hover {
             }
         }
     }
+}
+
+table th.today,
+table td.today {
+    background-color: $highlight-today!important;
 }
