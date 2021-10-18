@@ -1251,6 +1251,10 @@
         <source>default_value_new</source>
         <target>Valori predefiniti per le nuove voci</target>
       </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>Aggiungi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
